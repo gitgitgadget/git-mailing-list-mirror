@@ -1,272 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC][PATCH] Re: git-rm isn't the inverse action of git-add
-Date: Sun, 08 Jul 2007 19:36:48 +0200
-Message-ID: <vpqfy3yajbj.fsf_-_@bauges.imag.fr>
-References: <46893F61.5060401@jaeger.mine.nu>
-	<20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<46895EA4.5040803@jaeger.mine.nu>
-	<20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<vpq7ipittl2.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0707022205210.4071@racer.site>
-	<vpqoditkc23.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0707031308170.4071@racer.site>
-	<vpqir91hagz.fsf@bauges.imag.fr>
-	<20070704200806.GA3991@efreet.light.src>
-	<vpqd4z7q820.fsf@bauges.imag.fr>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Sun, 08 Jul 2007 11:04:22 -0700
+Message-ID: <46912726.5080807@midwinter.com>
+References: <11839118073186-git-send-email-skimo@liacs.nl> <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707081729040.4248@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Yann Dirson <ydirson@altern.org>,
-	Christian Jaeger <christian@jaeger.mine.nu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 08 19:37:40 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: skimo@liacs.nl, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 08 20:04:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7ahY-0008Gm-Dt
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 19:37:40 +0200
+	id 1I7b7P-0003na-AR
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 20:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756046AbXGHRhh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 13:37:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755955AbXGHRhg
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 13:37:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:35087 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755427AbXGHRhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 13:37:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l68HamcO027463
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 8 Jul 2007 19:36:48 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1I7agi-0007qV-6d; Sun, 08 Jul 2007 19:36:48 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1I7agi-0005CX-42; Sun, 08 Jul 2007 19:36:48 +0200
-Mail-Followup-To: git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Yann Dirson <ydirson@altern.org>, Christian Jaeger <christian@jaeger.mine.nu>
-In-Reply-To: <vpqd4z7q820.fsf@bauges.imag.fr> (Matthieu Moy's message of "Thu\, 05 Jul 2007 15\:44\:23 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 08 Jul 2007 19:36:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753262AbXGHSEU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 14:04:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbXGHSET
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 14:04:19 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:53137
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752981AbXGHSET (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 14:04:19 -0400
+Received: (qmail 10724 invoked from network); 8 Jul 2007 18:04:18 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.17.123)
+  by tater.midwinter.com with SMTP; 8 Jul 2007 18:04:18 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <Pine.LNX.4.64.0707081729040.4248@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51898>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Johannes Schindelin wrote:
+> I am really unhappy that so much is talked about filtering out commits.  
+> That is amost certainly not what you want in most cases.  In particular, I 
+> suspect that most users would expect the _changes_ filtered out by such a 
+> command, which is just not true.
+>   
 
->>  - if (HEAD == index && index == version) unversion and unlink
->
-> Just to be more precise:
->
->    - if (HEAD == index && index == version) unversion and
->        * if (--cached is not given) unlink
->        * else do nothing
->
->>  - else if (HEAD == index || index == version) unversion
->>  - else print message and do nothing
->>
->> Would you consider that a sane behaviour?
+I agree that unless it's named and documented very carefully, users 
+might expect this to tweak history such that the commits in question 
+never happened (unlike revert, which of course adds a new commit and 
+leaves the old ones alone.) The documentation for this command could 
+stand to be more explicit about that.
 
-[...]
+> Further, I do not see much value in making this operation faster.  It is 
+> meant to be a one-time operation, for example when you open-source a 
+> product and have to cull a lot of history that you must not show for legal 
+> reasons.  It is a one-shot operation.
+>   
 
-> I'll try writting patch for that if people agree that this is saner
-> that the current behavior.
+Your recent changes to git-rebase (which, BTW, are great) include a 
+feature that's very similar to this: the "squash these commits together 
+in my history" feature. That'd be my use case for this, when I want to 
+publish my changes to other developers who don't care about all my 
+intermediate checkpoints of work in progress, and when the commits I'm 
+removing haven't been published anywhere else yet.
 
-Here's a first attempt (I'm still not familiar with the git codebase,
-so the patch is probably not so good).
+With this command, I could do something like:
 
-Note: currently, git-rm still shows those "rm '...'" messages on
-stdout. AAUI, they were actually useful at a time when git-rm didn't
-actually remove the files, and people actually ran the "rm" commands
-after. They can probably be removed now, but that's another topic.
+git rewrite-commits --grep="!@@@checkpoint"
+git push
 
+and it would strip out all my intermediate checkpoint commits (assuming 
+I've marked them as such in my commit comments, which I always do) 
+before pushing to my project's shared repo. Right now that's a much more 
+cumbersome, and very manual, operation. Even with the new git-rebase 
+changes, I still have to pick out those commits by hand, and it assumes 
+that I otherwise want to do a rebase in the first place.
 
->From f4f4aa047b2b9050d968704d1f2db07b2a1a79cc Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Sun, 8 Jul 2007 19:27:44 +0200
-Subject: [PATCH] Make git-rm obey in more circumstances.
+> So there are two things I see here that filter-branch cannot do yet.  The 
+> first is to rewrite _all_ branches, which should be easy to do, it only 
+> has to be done.
+>   
 
-In the previous behavior of git-rm, git refused to do anything in case of
-a difference between the file on disk, the index, and the HEAD. As a
-result, the -f flag is forced even for simple senarios like:
+I wonder if it makes sense to go that direction, though, or to make this 
+command do the things that filter-branch can do, for the simple reason 
+that filter-branch is a shell script and this is already a nice 
+non-shell-dependent C program. Obviously you end up in the same place 
+either way eventually once filter-branch percolates to the top of the 
+"port these scripts to C" list, but it seems odd to me to port features 
+from a C program back to a shell script only to have to convert the 
+shell script to C later on.
 
-$ git add foo
-# oops, I didn't want to version it
-$ git rm -f [--cached] foo
-# foo is deleted on disk if --cached isn't provided.
+Ironically, this app doesn't really speed up the one thing I find too 
+slow in filter-branch: the "remove a file from the tree in all 
+revisions" case. To do that you still have to launch a filter app for 
+every commit, which is especially bad when the file in question only 
+appears in a few revisions deep in the history of a repo.
 
-This patch proposes a saner behavior. When there are no difference at all
-between file, index and HEAD, the file is removed both from the index and
-the tree, as before.
+This command points us in the direction of a "remove/rename this file in 
+history" feature that doesn't require forking tens of thousands of child 
+processes on a repo with lots of history. For that alone I think it's 
+worthwhile, even though it's not there yet; that will never happen with 
+a shell script. And yeah, that's not a frequent operation, but it's sure 
+nice when even the infrequent operations are lightning fast.
 
-Otherwise, if the index matches either the file on disk or the HEAD, the
-file is removed from the index, but the file is kept on disk, it may
-contain important data.
-
-Otherwise, that's an error, and git-rm aborts.
-
-The above senario becomes
-
-$ git add foo
-$ git rm foo
-# back to the initial state.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-rm.txt |    9 ++++---
- builtin-rm.c             |   55 ++++++++++++++++++++++++++++++++++++---------
- 2 files changed, 49 insertions(+), 15 deletions(-)
-
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 78f45dc..180671c 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -11,10 +11,11 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Remove files from the working tree and from the index.  The
--files have to be identical to the tip of the branch, and no
--updates to its contents must have been placed in the staging
--area (aka index).
-+Remove files from the working tree and from the index. The content
-+placed in the staging area (aka index) must match either the content
-+of the file on disk, or the tip of the branch. If it matches only one
-+of them, the file is kept on disk for safety, but is still removed
-+from the index.
- 
- 
- OPTIONS
-diff --git a/builtin-rm.c b/builtin-rm.c
-index 4a0bd93..d2a8998 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -12,18 +12,27 @@
- static const char builtin_rm_usage[] =
- "git-rm [-f] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...";
- 
-+struct file_info {
-+	const char *name;
-+	int local_changes;
-+	int staged_changes;
-+};
-+
- static struct {
- 	int nr, alloc;
--	const char **name;
-+	struct file_info * files;
- } list;
- 
- static void add_list(const char *name)
- {
- 	if (list.nr >= list.alloc) {
- 		list.alloc = alloc_nr(list.alloc);
--		list.name = xrealloc(list.name, list.alloc * sizeof(const char *));
-+		list.files = xrealloc(list.files, list.alloc * sizeof(const char *));
- 	}
--	list.name[list.nr++] = name;
-+	list.files[list.nr].name = name;
-+	list.files[list.nr].local_changes  = 0;
-+	list.files[list.nr].staged_changes = 0;
-+	list.nr++;
- }
- 
- static int remove_file(const char *name)
-@@ -46,6 +55,26 @@ static int remove_file(const char *name)
- 	return ret;
- }
- 
-+static int remove_file_maybe(const struct file_info fi, int quiet)
-+{
-+	const char *path = fi.name;
-+	if (!fi.local_changes && !fi.staged_changes) {
-+		/* The file matches either the index or the HEAD.
-+		 * It's content exists somewhere else, it's safe to
-+		 * delete it.
-+		 */
-+		return remove_file(path);
-+	} else {
-+		if (!quiet)
-+			fprintf(stderr, 
-+				"note: file '%s' not removed "
-+				"(doesn't match %s).\n",
-+				path,
-+				fi.local_changes?"the index":"HEAD");
-+		return 0;
-+	}
-+}
-+
- static int check_local_mod(unsigned char *head)
- {
- 	/* items in list are already sorted in the cache order,
-@@ -62,7 +91,7 @@ static int check_local_mod(unsigned char *head)
- 		struct stat st;
- 		int pos;
- 		struct cache_entry *ce;
--		const char *name = list.name[i];
-+		const char *name = list.files[i].name;
- 		unsigned char sha1[20];
- 		unsigned mode;
- 
-@@ -87,13 +116,17 @@ static int check_local_mod(unsigned char *head)
- 			continue;
- 		}
- 		if (ce_match_stat(ce, &st, 0))
--			errs = error("'%s' has local modifications "
--				     "(hint: try -f)", ce->name);
-+			list.files[i].local_changes = 1;
-+
- 		if (no_head
- 		     || get_tree_entry(head, name, sha1, &mode)
- 		     || ce->ce_mode != create_ce_mode(mode)
- 		     || hashcmp(ce->sha1, sha1))
--			errs = error("'%s' has changes staged in the index "
-+			list.files[i].staged_changes = 1;
-+
-+		if (list.files[i].local_changes && 
-+		    list.files[i].staged_changes)
-+			errs = error("'%s' doesn't match neither HEAD nor the index "
- 				     "(hint: try -f)", name);
- 	}
- 	return errs;
-@@ -201,7 +234,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 * the index unless all of them succeed.
- 	 */
- 	for (i = 0; i < list.nr; i++) {
--		const char *path = list.name[i];
-+		const char *path = list.files[i].name;
- 		if (!quiet)
- 			printf("rm '%s'\n", path);
- 
-@@ -224,13 +257,13 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (!index_only) {
- 		int removed = 0;
- 		for (i = 0; i < list.nr; i++) {
--			const char *path = list.name[i];
--			if (!remove_file(path)) {
-+			if (!remove_file_maybe(list.files[i], quiet)) {
- 				removed = 1;
- 				continue;
- 			}
- 			if (!removed)
--				die("git-rm: %s: %s", path, strerror(errno));
-+				die("git-rm: %s: %s", 
-+				    list.files[i].name, strerror(errno));
- 		}
- 	}
- 
--- 
-1.5.3.rc0.63.gc956-dirty
-
-
-
--- 
-Matthieu
+-Steve
