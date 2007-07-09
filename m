@@ -1,96 +1,120 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
-Date: Mon, 9 Jul 2007 14:16:35 +0100
-Message-ID: <200707091416.39949.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org> <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net> <20070709115029.GD16032@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Mon, 9 Jul 2007 14:16:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707091409480.5546@racer.site>
+References: <11839118073186-git-send-email-skimo@liacs.nl>
+ <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707090011070.4248@racer.site>
+ <20070709123626.GC23494@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 09 15:16:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: skimo@liacs.nl, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 09 15:24:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7t6g-0005g0-I7
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 15:16:50 +0200
+	id 1I7tEE-0007HH-Ro
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 15:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063AbXGINQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 09:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752607AbXGINQs
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 09:16:48 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:39653 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578AbXGINQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 09:16:47 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so868528mue
-        for <git@vger.kernel.org>; Mon, 09 Jul 2007 06:16:45 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Dko0Kg89+p3UIU4z4BxEJ2AOeI7754lOX7jtmgpYkhTLpiGxj6ffP+jETgdUYWu9A/b5tnAFFocQ3bWOhkOXCmfYecvUuIxTpTeZZU4q9mHIJQvg2fbhTWs+nw0pR8EAxPeD1vgilFi9pO7HNVLixw/qAQJ5FKVCaJjGh/qwSKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tzomxZRzwWGjnZbf0n0edBShyZwd4yZveSpafw/5kH9POhoxPE9WMnJUPx/fbXbFSHFLAlmRi3b5vwv9hqBTk4nwzDvsJTMFbFUbQmUucmYykE2Mfpr9R4DxC/GMrzmk0xPTfZbWNuT7kEUiMKC4I4EgXrOJ+KUhF+zb/QVD+mc=
-Received: by 10.82.105.13 with SMTP id d13mr8165269buc.1183987005170;
-        Mon, 09 Jul 2007 06:16:45 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id c22sm31635882ika.2007.07.09.06.16.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 09 Jul 2007 06:16:44 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070709115029.GD16032@thunk.org>
-Content-Disposition: inline
+	id S1754158AbXGINX6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 09:23:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754038AbXGINX6
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 09:23:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52923 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754077AbXGINX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 09:23:56 -0400
+Received: (qmail invoked by alias); 09 Jul 2007 13:23:55 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 09 Jul 2007 15:23:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX194TfZbBpB4PQskTEh/2re44eavC7jy/mXSDrDPgD
+	Xe75z9UqAhrJrC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070709123626.GC23494@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51991>
 
-On Monday 2007 July 09, Theodore Tso wrote:
-> On Sun, Jul 08, 2007 at 10:39:41PM -0700, Junio C Hamano wrote:
-> > Are _identifiers with leading underscore Kosher thing to do, I
-> > wonder...  We do have ones with trailing ones (mostly qsort
-> > functions) and I think they are done that way for the sake of
-> > standards conformance.
->
-> _[a-z]* is kosher for file scopes or function scoping:
+Hi,
 
-Perhaps I'm reading it wrong but:
+On Mon, 9 Jul 2007, Jeff King wrote:
 
-"All identifiers beginning with an underscore are reserved for ordinary 
-identifiers (functions, variables, typedefs, enumeration constants) with file 
-scope."
+> On Mon, Jul 09, 2007 at 12:56:04AM +0100, Johannes Schindelin wrote:
+> 
+> > But hey, maybe it _is_ time to rethink the whole filter business, and 
+> > introduce some kind of regular expression based action language. Something 
+> > like
+> > 
+> > 	git rewrite-commits -e '/^author Darl McBribe/skip-commit' \
+> > 		-e 'substitute/^author Joahnnes/author Johannes/header' \
+> > 		-e 'substitute/poreclain/porcelain/body' \
+> > 		-e 'rewrite-commit-names'
+> 
+> This is starting to look an awful lot like sed.
 
-Doesn't agree with what you've said.  I think that you _can_ use _[a-z]* for 
-labels or structure members - however, not within file or function scope.
+Yep.  Fully intended.
 
-However, the rule of thumb I've always used is "don't start identifiers with 
-underscore".  I can't think of a situation that would mean you have to use an 
-underscore to start an identifier - so why get into detailed worries about 
-where it's allowed and where it isn't.  Just don't use it.  The document you 
-linked to gives exactly this advice:
+> Which is good, but I wonder if we can get sed to do the heavy lifting. I 
+> have had success with similar systems by writing the data structure out 
+> into a canonical format, editing it as text, and then "applying" the 
+> result.
+> 
+> Something like:
+>   git rewrite-generate oldbranch |
+>     sed 's/^author Darl McBribe/skip-commit/'
+>     sed 's/^author Joahnnes/author Johannes/' |
+>     git-rewrite-commit-names |
+>     git rewrite-apply newbranch
+> 
+> where git-rewrite-generate would generate something like git-log output,
+> and git-rewrite-apply would, given a log-ish input, write a new history
+> branch. A nice advantage is that it makes things like this very natural:
+>   git rewrite-generate oldbranch >history
+>   vi history
+>   git rewrite-apply newbranch <history
+> 
+> which allows interactive editing.
 
-"Don't give anything a name with a leading underscore."
+Granted.  It is a really nice idea, but again you lack the map function.
 
-> P.S.  Note that the Linux kernel does not worry about such rules; in
-> particular, _[a-z]* is very commonly used at the global scope level,
-> without any problems.  It doesn't have to be as portable as git
-> probably needs to be, however.
+> Of course, this is:
+>   - possibly inefficient, since rewrite-apply doesn't know what you
+>     changed and what you didn't change; it would have to recalculate
+>     a lot of sha1 hashes.
+>   - doesn't really deal with actual tree rewriting, unless there is some
+>     canonical text format for that, and then we are talking about making
+>     things _really_ inefficient
+> 
+> Hmm. Which makes me think that maybe 'git-format-patch' is really
+> git-rewrite-generate, and 'git-am' is really git-rewrite-apply (but with
+> some extensions to preserve committer info).
 
-The kernel doesn't use any standard library so there is nothing for it to 
-conflict with.  I don't think it's that the kernel doesn't worry about those 
-rules, it's that those rules don't apply (just as they don't for glibc).  The 
-underscore rules aren't a limitation of the language, they are a limitation 
-imposed by the standard library.  
+Of course, you miss out the merge commits.
 
+> So maybe a bad idea, but I thought I would throw it out there.
 
+Not so bad.  What you describe as possibly inefficient has been 
+implemented very, very efficiently already: git-fast-import!
 
-Andy
+So your idea brings me to another idea: Why not write git-fast-export?  
+Actually, let's not all it that, since repo.or.cz has that name already 
+(curiously enough, it is used for scripts exporting from _other_ SCMs, 
+feeding to git-fast-import...), but git-fast-dump.
 
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+The output should be _exactly_ as expected by git-fast-import, so that 
+"git fast-dump | git fast-import" would be a nop, data-wise.
+
+Of course, there is a more fundamental problem with that approach: how to 
+act on the commit message, conditional on the commit header?  I know, with 
+perl it would be really easy.  But then you have to write a complete perl 
+script, and the whole purpose of this 
+admin-rewritehist/filter-branch/rewrite-commits frackass is that it should 
+be _easy_ to use.
+
+Ciao,
+Dscho
