@@ -1,100 +1,83 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
-Date: Mon, 9 Jul 2007 16:28:12 +0100
-Message-ID: <200707091628.14377.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org> <200707091416.39949.andyparkins@gmail.com> <20070709144030.GE16032@thunk.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] rerere: record resolution even if file is not in merge base
+Date: Mon, 9 Jul 2007 17:32:09 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070709153209.GA19665@informatik.uni-freiburg.de>
+References: <20070709070725.GA4445@lala> <7vps32ugu2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091445450.5546@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 09 17:28:31 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:32:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7vA6-0003P8-SB
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:28:31 +0200
+	id 1I7vEC-0004JE-0c
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754207AbXGIP2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 11:28:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754107AbXGIP2Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:28:25 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:10132 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753807AbXGIP2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 11:28:24 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1151307ugf
-        for <git@vger.kernel.org>; Mon, 09 Jul 2007 08:28:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ryDPgtitUet/jPRVklynvQAJ+FWG/Sx2zostZ4Oh3lPy/oxvID2aAhZ+hfBwkltMnCg/stmSiFEfo5Ll2eH/mKn2jgSUpC+KZZ/h23GArRF/t7y2MLT5hpFRG5rd6gnr/fUlhIcT9gbH62yF7cIEupX7sdAiQe40hvLI0fgkL1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fRdM0/RGEhDIPMtD4vBuMWoiS5KTgr1wt92s83YFZoEGBmd43SPHB6+Ij7MHr5i4qIKk98nMDxhoQO9KHyYjxIbmHtsnRDx3ybBq8wl+nj3SpWVS7KpiH8Tg66pUhZNet1VN3wWLRXfPM/WxqSZwa9r+L1UsG3tlVh8Wmm6eutA=
-Received: by 10.82.108.9 with SMTP id g9mr8410713buc.1183994899535;
-        Mon, 09 Jul 2007 08:28:19 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id c22sm31848692ika.2007.07.09.08.28.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 09 Jul 2007 08:28:18 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070709144030.GE16032@thunk.org>
+	id S1754563AbXGIPcP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Jul 2007 11:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754545AbXGIPcP
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:32:15 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:39904 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754104AbXGIPcO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 11:32:14 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I7vDh-0007G0-Bx; Mon, 09 Jul 2007 17:32:13 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l69FWAh2020884;
+	Mon, 9 Jul 2007 17:32:10 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l69FW9TI020883;
+	Mon, 9 Jul 2007 17:32:09 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707091445450.5546@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52002>
 
-On Monday 2007 July 09, Theodore Tso wrote:
-> > "All identifiers beginning with an underscore are reserved for ordinary
-> > identifiers (functions, variables, typedefs, enumeration constants) with
-> > file
-> > scope."
+Hello Johannes, hello Junio,
 
-> I think the above does agree with what I said.  It says that you can
-> use functions, variables, typdefs, enumeration constants (not just
-> labels or structure members) WITH FILE SCOPE.  I.e., so long as it
-> doesn't leak across a .o linkage.  So one .o file can use a static
+Johannes Schindelin wrote:
+> Two-file merges were rare enough that they were dropped outside of th=
+e=20
+> radar.  This fix is a trivial change to builtin-rerere.c::find_confli=
+ct(). =20
+> It is still sane to insist that we do not do rerere for symlinks, and=
+=20
+> require to have stages #2 and #3, but we can drop the requirement to =
+have=20
+> stage #1. rerere does not use information from there anyway.
+>=20
+> This fix is from Junio, together with two tests to verify that it wor=
+ks
+> as expected.
+>=20
+> Noticed by Uwe Kleine-K=F6nig.
+when I tested Junio's patch and wrote that it doesn't work, I was wrong=
+=2E
+I just recompiled git-rerere and called that instead of the installed
+version.  The problem there was, that merge didn't called the updated.
 
-I'm reading it as meaning they are reserved at file scope; not that you can 
-use them at file scope.
+So:
 
-> _my_strdup, and another .o file can use a static _my_strdup, and they
-> don't have to worry about multiply defined function conflicts, since
-> they are static functions with file or smaller scoping.
+Acked-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
 
-Erm, but we're not talking about your own .o files we're talking about 
-conflicting with the library; what you say would be true for any identifier.  
-We have no way of guaranteeing that _my_strdup() isn't defined by one of the 
-standard library headers that have been included.  The standard header is 
-entitled to use underscore identifiers because they have been reserved at 
-file scope.
+--=20
+Uwe Kleine-K=F6nig
 
-Reading a little further into the FAQ you posted, I found the following in the 
-list of exceptions:
-
-"You may use identifiers consisting of an underscore followed by a digit or 
-lower case letter for labels and structure/union members." 
-and
-"You may use identifiers consisting of an underscore followed by a digit or 
-lower case letter at function, block, or prototype scope."
-
-I'm more sure now - you can't use underscore identifiers at file scope.
-
-Regardless, we're just splitting hairs now.  We seem to both agree that it's 
-easiest just to outright not use underscore-prefixed identifiers; so I'm 
-happy. :-)
-
-
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+http://www.google.com/search?q=3D1+hertz+in+sec**-1
