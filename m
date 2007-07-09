@@ -1,72 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-gc "--aggressive" somewhat broken
-Date: Sun, 08 Jul 2007 23:46:44 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707082341460.26459@xanadu.home>
-References: <alpine.LFD.0.999.0707061310390.8278@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707061512550.8278@woody.linux-foundation.org>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: git cvsimport branches not consistent with CVS branches
+Date: Sun, 08 Jul 2007 21:31:04 -0700
+Message-ID: <4691BA08.2080107@freedesktop.org>
+References: <46903396.1010507@heydon.com.au> <20070708054520.GD4087@lavos.net> <200707081253.06129.robin.rosenberg.lists@dewire.com> <3BA4D1AE-D5C9-42CB-81B4-38DC3946A966@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Brian Downing <bdowning@lavos.net>,
+	Gordon Heydon <gordon@heydon.com.au>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jul 09 05:46:58 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jul 09 06:31:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7kDB-0003W3-SA
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 05:46:58 +0200
+	id 1I7kuF-0000Rz-3U
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 06:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758723AbXGIDqq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 23:46:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758679AbXGIDqq
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 23:46:46 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:19221 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758631AbXGIDqp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 23:46:45 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JKW00COK7TWK120@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 08 Jul 2007 23:46:45 -0400 (EDT)
-In-reply-to: <alpine.LFD.0.999.0707061512550.8278@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1751344AbXGIEbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 00:31:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbXGIEbY
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 00:31:24 -0400
+Received: from mail4.sea5.speakeasy.net ([69.17.117.6]:48674 "EHLO
+	mail4.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221AbXGIEbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 00:31:23 -0400
+Received: (qmail 13535 invoked from network); 9 Jul 2007 04:31:22 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail4.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <prohaska@zib.de>; 9 Jul 2007 04:31:22 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <3BA4D1AE-D5C9-42CB-81B4-38DC3946A966@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51948>
 
-On Fri, 6 Jul 2007, Linus Torvalds wrote:
-
+Steffen Prohaska wrote:
+> On Jul 8, 2007, at 12:53 PM, Robin Rosenberg wrote:
+>> Corecode's fromcvs is pretty fast and incremental and AFAIK  
+>> accurate. I had
+>> plenty problems with cvsimport, but fromcvs keeps in sync with the  
+>> CVS repo.
+>> Get  it at http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs/ .
+>>
+>> It does not convert regular tags, only branches, however so there  
+>> is something to
+>> do for those that want a complete cvs import.
 > 
+> Did anyone compare
+>     * git-cvsimport with cvsps patches from [1]
+>     * parsecvs [2]
+>     * fromcvs
+> and can give a recommendation?
 > 
-> On Fri, 6 Jul 2007, Linus Torvalds wrote:
-> > 
-> > If we want to be really aggressive, we migth decide to pass a new flag to 
-> > pack-objects that does something closer to what "aggressive" was meant to 
-> > do: it would use existing delta's if they exist, but _despite_ existing it 
-> > could look if there are even better choices.
-> 
-> This is a totally untested patch that may or may not work.
-> 
-> The reason I say "may not work" is not just that I haven't really tested 
-> it, it's also because I haven't thought it through very well.
-> 
-> In particular, does this possibly cause infinite loops of delta chains? 
-> Probably. It would need code to explicitly make sure that we don't do 
-> that, but I couldn't even convince myself as to why we might not hit that 
-> case _already_ with delta re-use, so maybe there's something going that 
-> protects us against it.
+> My experience with plain git-cvsimport (without cvsps patches from [1])
+> is that it has a lot of problems. I'd recommend not to use it for
+> incremental import and be very suspicious about the git repository
+> created by git-cvsimport. You need to carefully validate the repository.
+> It's likely that you need to fix imported branches. The trunk seems to
+> be ok.
 
-There is.
+I've used both parsecvs and git-cvsimport, and I can definitely say from
+experience that cvsimport badly munges history, and parsecvs seems to handle
+it correctly.  parsecvs does have the limitations that it requires the ,v
+files and doesn't work incrementally, making it great for project repository
+conversions and painful for just wanting to use git on a CVS-(mis)managed
+project.
 
-> Anyway, consider this a starting point for somebody else who wants to 
-> really try to look into this.
+I've never used fromcvs.
 
-This is a real teaser.  But I have real work to do if I want to leave on 
-vacation this summer, and therefore I'll then be on vacation.  So if I 
-end up looking at it myself it will be in September.
+One idea to mitigate one of the limitations: how about modifying the CVS
+server to add an extension that supports downloading full ,v files?  CVS has
+had server extensions in the past, such as for ls/rls.  Once support for this
+extension makes its way out to most CVS servers, this problem goes away.
 
-
-Nicolas
+- Josh Triplett
