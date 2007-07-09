@@ -1,64 +1,63 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
-Date: Mon, 9 Jul 2007 07:50:29 -0400
-Message-ID: <20070709115029.GD16032@thunk.org>
-References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org> <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Mon, 9 Jul 2007 12:57:38 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707091256430.5546@racer.site>
+References: <11839118073186-git-send-email-skimo@liacs.nl> 
+ <1183911808787-git-send-email-skimo@liacs.nl>  <Pine.LNX.4.64.0707081729040.4248@racer.site>
+ <46912726.5080807@midwinter.com>  <Pine.LNX.4.64.0707081920410.4248@racer.site>
+ <20070708211034.GO1528MdfPADPa@greensroom.kotnet.org> <4691F96E.D869DF97@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 13:50:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 14:05:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7rlN-0004ip-Ay
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 13:50:45 +0200
+	id 1I7rzS-0007Wb-MQ
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 14:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619AbXGILum (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 07:50:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbXGILum
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 07:50:42 -0400
-Received: from THUNK.ORG ([69.25.196.29]:37432 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752063AbXGILum (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 07:50:42 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I7rtD-0003hA-Cg; Mon, 09 Jul 2007 07:58:51 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I7rl7-000681-LA; Mon, 09 Jul 2007 07:50:29 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751804AbXGIMFP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 08:05:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbXGIMFO
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 08:05:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48520 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751691AbXGIMFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 08:05:13 -0400
+Received: (qmail invoked by alias); 09 Jul 2007 12:05:11 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp041) with SMTP; 09 Jul 2007 14:05:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX186KfRlAlQ6LWIx8OjAeBIC4ruKoyFUuj15UVFfgr
+	o2CqukVziwGzEI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4691F96E.D869DF97@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51985>
 
-On Sun, Jul 08, 2007 at 10:39:41PM -0700, Junio C Hamano wrote:
-> Are _identifiers with leading underscore Kosher thing to do, I
-> wonder...  We do have ones with trailing ones (mostly qsort
-> functions) and I think they are done that way for the sake of
-> standards conformance.
+Hi,
 
-_[a-z]* is kosher for file scopes or function scoping:
+On Mon, 9 Jul 2007, Johannes Sixt wrote:
 
-	http://c-faq.com/decl/namespace.html
+> Sven Verdoolaege wrote:
+> > I guess the major thing that is missing is --subdirectory-filter.
+> > Anything else?
+> 
+> Yes, how about this:
+> 
+>   $ git rewrite-commits --index-map '
+>          testresult=$($HOME/bin/expensive-test);
+>          [ $testresult = t ] && $HOME/bin/tweak-index ' \
+>      --commit-map '
+>          [ $testresult = t ] && $HOME/bin/tweak-commit '
 
-Some Projects' coding styles prohibit use of _[a-z]* altogether, as
-_[_A-Z]* is reserved for C libraries and system header files, and it's
-simpler just to ban all identifiers begining with an underscore just
-on general princinpals.  It's not strictly speaking necessary, however.
+As skimo almost hinted: this will not work.  Once the index "map" exits, 
+testresult is forgotten.
 
-	       		     	    - Ted
-
-P.S.  Note that the Linux kernel does not worry about such rules; in
-particular, _[a-z]* is very commonly used at the global scope level,
-without any problems.  It doesn't have to be as portable as git
-probably needs to be, however.
+Ciao,
+Dscho
