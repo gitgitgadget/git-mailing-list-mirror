@@ -1,64 +1,66 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH 4/4] Add git-rewrite-commits
-Date: Mon, 09 Jul 2007 11:48:33 +0200
-Message-ID: <20070709094833.GQ1528MdfPADPa@greensroom.kotnet.org>
-References: <11839118073186-git-send-email-skimo@liacs.nl>
- <1183911808787-git-send-email-skimo@liacs.nl>
- <Pine.LNX.4.64.0707081729040.4248@racer.site> <46912726.5080807@midwinter.com>
- <Pine.LNX.4.64.0707081920410.4248@racer.site>
- <20070708211034.GO1528MdfPADPa@greensroom.kotnet.org>
- <4691F96E.D869DF97@eudaptics.com>
-Reply-To: skimo@liacs.nl
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Recent issues
+Date: Mon, 9 Jul 2007 19:28:06 +1000
+Message-ID: <18065.65446.474822.436800@cargo.ozlabs.ibm.com>
+References: <7v7ipcbrfd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 11:48:41 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jnareb@gmail.com, pasky@suse.cz,
+	ltuikov@yahoo.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 11:48:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7prC-0007aY-MM
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 11:48:39 +0200
+	id 1I7prL-0007cT-Od
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 11:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbXGIJsg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 05:48:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXGIJsf
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 05:48:35 -0400
-Received: from smtp19.wxs.nl ([195.121.247.10]:32777 "EHLO smtp19.wxs.nl"
+	id S1751974AbXGIJso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 05:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbXGIJso
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 05:48:44 -0400
+Received: from ozlabs.org ([203.10.76.45]:35256 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751501AbXGIJsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 05:48:35 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JKW0021POKXCS@smtp19.wxs.nl> for git@vger.kernel.org; Mon,
- 09 Jul 2007 11:48:34 +0200 (CEST)
-Received: (qmail 10992 invoked by uid 500); Mon, 09 Jul 2007 09:48:33 +0000
-In-reply-to: <4691F96E.D869DF97@eudaptics.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750759AbXGIJsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 05:48:43 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7A03FDDE4A; Mon,  9 Jul 2007 19:48:42 +1000 (EST)
+In-Reply-To: <7v7ipcbrfd.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51977>
 
-On Mon, Jul 09, 2007 at 11:01:34AM +0200, Johannes Sixt wrote:
-> Sven Verdoolaege wrote:
-> > I guess the major thing that is missing is --subdirectory-filter.
-> > Anything else?
-> 
-> Yes, how about this:
-> 
->   $ git rewrite-commits --index-map '
->          testresult=$($HOME/bin/expensive-test);
->          [ $testresult = t ] && $HOME/bin/tweak-index ' \
->      --commit-map '
->          [ $testresult = t ] && $HOME/bin/tweak-commit '
-> 
-> :-P
+Junio C Hamano writes:
 
-You can write the result of expensive-test to a temporary file.
+> * gitk --left-right
+> 
+>   From: Linus Torvalds <torvalds@linux-foundation.org>
+>   Message-ID: <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org>
+>   From: Junio C Hamano <junkio@cox.net>
+>   Message-ID: <7vabwifl23.fsf@assigned-by-dhcp.cox.net>
+> 
+> Paulus?
 
-skimo
+Looks mostly OK; I assume there's no possible downside to using git
+log -v --pretty=raw rather than git rev-list?
+
+Also, in the second patch, commitside needs to either be indexed by
+view as well as id, or needs to be "context-switched" by showview.
+I'll fix it.  Since neither you nor Linus included a signed-off-by,
+I'll combine the patches and fix up a few things.
+
+> * gitk tree view fix
+> 
+>   From: Brian Downing <bdowning@lavos.net>
+>   Subject: [PATCH] gitk: Fix for tree view ending in nested directories
+>   Message-ID: <20070704212643.GR4087@lavos.net>
+> 
+> Paulus?
+
+Looks reasonable.
+
+Paul.
