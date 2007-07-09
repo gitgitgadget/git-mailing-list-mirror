@@ -1,63 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 4/4] Add git-rewrite-commits
-Date: Mon, 9 Jul 2007 12:57:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707091256430.5546@racer.site>
-References: <11839118073186-git-send-email-skimo@liacs.nl> 
- <1183911808787-git-send-email-skimo@liacs.nl>  <Pine.LNX.4.64.0707081729040.4248@racer.site>
- <46912726.5080807@midwinter.com>  <Pine.LNX.4.64.0707081920410.4248@racer.site>
- <20070708211034.GO1528MdfPADPa@greensroom.kotnet.org> <4691F96E.D869DF97@eudaptics.com>
+Date: Mon, 9 Jul 2007 08:36:27 -0400
+Message-ID: <20070709123626.GC23494@sigill.intra.peff.net>
+References: <11839118073186-git-send-email-skimo@liacs.nl> <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707090011070.4248@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 14:05:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 09 14:36:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7rzS-0007Wb-MQ
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 14:05:37 +0200
+	id 1I7sTe-0005jj-Ri
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 14:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbXGIMFP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 08:05:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbXGIMFO
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 08:05:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48520 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751691AbXGIMFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 08:05:13 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 12:05:11 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp041) with SMTP; 09 Jul 2007 14:05:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX186KfRlAlQ6LWIx8OjAeBIC4ruKoyFUuj15UVFfgr
-	o2CqukVziwGzEI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4691F96E.D869DF97@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S1751905AbXGIMg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 08:36:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbXGIMg2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 08:36:28 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4989 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751905AbXGIMg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 08:36:27 -0400
+Received: (qmail 10089 invoked from network); 9 Jul 2007 12:36:51 -0000
+Received: from unknown (HELO sigill.intra.peff.net) (71.63.4.50)
+  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP
+  (cert postmaster@peff.net); 9 Jul 2007 12:36:51 -0000
+Received: (qmail 31336 invoked by uid 1000); 9 Jul 2007 12:36:27 -0000
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707090011070.4248@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51986>
 
-Hi,
+On Mon, Jul 09, 2007 at 12:56:04AM +0100, Johannes Schindelin wrote:
 
-On Mon, 9 Jul 2007, Johannes Sixt wrote:
-
-> Sven Verdoolaege wrote:
-> > I guess the major thing that is missing is --subdirectory-filter.
-> > Anything else?
+> But hey, maybe it _is_ time to rethink the whole filter business, and 
+> introduce some kind of regular expression based action language. Something 
+> like
 > 
-> Yes, how about this:
-> 
->   $ git rewrite-commits --index-map '
->          testresult=$($HOME/bin/expensive-test);
->          [ $testresult = t ] && $HOME/bin/tweak-index ' \
->      --commit-map '
->          [ $testresult = t ] && $HOME/bin/tweak-commit '
+> 	git rewrite-commits -e '/^author Darl McBribe/skip-commit' \
+> 		-e 'substitute/^author Joahnnes/author Johannes/header' \
+> 		-e 'substitute/poreclain/porcelain/body' \
+> 		-e 'rewrite-commit-names'
 
-As skimo almost hinted: this will not work.  Once the index "map" exits, 
-testresult is forgotten.
+This is starting to look an awful lot like sed. Which is good, but I
+wonder if we can get sed to do the heavy lifting. I have had success
+with similar systems by writing the data structure out into a canonical
+format, editing it as text, and then "applying" the result.
 
-Ciao,
-Dscho
+Something like:
+  git rewrite-generate oldbranch |
+    sed 's/^author Darl McBribe/skip-commit/'
+    sed 's/^author Joahnnes/author Johannes/' |
+    git-rewrite-commit-names |
+    git rewrite-apply newbranch
+
+where git-rewrite-generate would generate something like git-log output,
+and git-rewrite-apply would, given a log-ish input, write a new history
+branch. A nice advantage is that it makes things like this very natural:
+  git rewrite-generate oldbranch >history
+  vi history
+  git rewrite-apply newbranch <history
+
+which allows interactive editing.
+
+Of course, this is:
+  - possibly inefficient, since rewrite-apply doesn't know what you
+    changed and what you didn't change; it would have to recalculate
+    a lot of sha1 hashes.
+  - doesn't really deal with actual tree rewriting, unless there is some
+    canonical text format for that, and then we are talking about making
+    things _really_ inefficient
+
+Hmm. Which makes me think that maybe 'git-format-patch' is really
+git-rewrite-generate, and 'git-am' is really git-rewrite-apply (but with
+some extensions to preserve committer info).
+
+So maybe a bad idea, but I thought I would throw it out there.
+
+-Peff
