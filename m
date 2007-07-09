@@ -1,105 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rerere fails to record resolution if file doesn't exist in merge base
-Date: Mon, 09 Jul 2007 01:22:29 -0700
-Message-ID: <7vps32ugu2.fsf@assigned-by-dhcp.cox.net>
-References: <20070709070725.GA4445@lala>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [mingw port] Problem starting git subcommands
+Date: Mon, 09 Jul 2007 10:49:15 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4691F68B.832047D1@eudaptics.com>
+References: <87eacd830707081126x69b2edb3o9fd89733ff2258f4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Mon Jul 09 10:22:41 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 10:49:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7oW0-0000Sc-Gd
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 10:22:40 +0200
+	id 1I7ovS-0005Z4-G6
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 10:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbXGIIWc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Jul 2007 04:22:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbXGIIWc
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 04:22:32 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55721 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043AbXGIIWb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 04:22:31 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070709082230.EXRT22777.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Jul 2007 04:22:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MLNV1X0061kojtg0000000; Mon, 09 Jul 2007 04:22:30 -0400
-In-Reply-To: <20070709070725.GA4445@lala> (Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- =?utf-8?Q?'s?= message of
-	"Mon, 9 Jul 2007 09:07:25 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751492AbXGIIst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 04:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbXGIIst
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 04:48:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:34701 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751492AbXGIIss (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 04:48:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I7ovF-0006Gc-6E
+	for git@vger.kernel.org; Mon, 09 Jul 2007 10:48:45 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Jul 2007 10:48:45 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Jul 2007 10:48:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51972>
 
-Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
+Henning Rogge wrote:
+> 
+> I have experimented with GIT on my linux system successfully but one
+> of my projects has to be done on Windows (neither VMware Workstation
+> nor Wine can help at the moment) so I got a copy of the mingw port of
+> GIT (http://lilypond.org/git/binaries/mingw/git-1.5.2.1-1.mingw.exe).
+> 
+> Installation succeeded without a single error but when I tried to run
+> a few GIT commands I noticed a "bug":
+> 
+> the git.exe command does not recognize any scripted subcommand
+> (git-clone in my case) !
+> > C:\Programme\Git>git clone
+> > git: 'clone' is not a git-command
+> 
+> Do I need another software package ? I tried to install the Mingw
+> package itself, but it did not help at all.
 
-> Anyhow, the failure still exists, even though the original report was
-> sent when rerere was still a perl script ...
->
-> 	zeisberg@cassiopeia:/tmp/rerere$ git init
-> 	Initialized empty Git repository in .git/
-> 	zeisberg@cassiopeia:/tmp/rerere$ mkdir .git/rerere
+Yes, you need a shell and some Posix tools. Install MSYS, e.g.
 
-This should be creating .git/rr-cache, but what you said in your
-message is correct regardless.
+   MSYS-1.0.11-2004.04.30-1.exe
 
-> In my eyes the last command should have recorded the resolution for
-> lolo, shouldn't it?
+You will also want a ssh and perl, e.g. from
 
-I think two-file merge (ancestor did not have it, and you and he
-added the path differently) is rare enough that it was dropped
-outside of the radar.  A fix would probably be a trivial change
-to builtin-rerere.c::find_conflict(), I think.  While it would
-still be sane to insist that we do not do rerere for symlinks,
-and require to have stages #2 and #3, we should be able to drop
-the requirement to have stage #1.  rerere does not use
-information from there anyway.
+   msysDTK-1.0.1.exe
 
-Not even compile tested, but something like this should do.
+and MinGW's tcl/tk from
 
- builtin-rerere.c |   17 +++++++----------
- 1 files changed, 7 insertions(+), 10 deletions(-)
+   tcltk-8.4.1-1.exe
 
-diff --git a/builtin-rerere.c b/builtin-rerere.c
-index c25b3d5..6ffc43d 100644
---- a/builtin-rerere.c
-+++ b/builtin-rerere.c
-@@ -168,19 +168,16 @@ static int find_conflict(struct path_list *confli=
-ct)
- 	int i;
- 	if (read_cache() < 0)
- 		return error("Could not read index");
--	for (i =3D 0; i + 2 < active_nr; i++) {
--		struct cache_entry *e1 =3D active_cache[i];
--		struct cache_entry *e2 =3D active_cache[i+1];
--		struct cache_entry *e3 =3D active_cache[i+2];
--		if (ce_stage(e1) =3D=3D 1 &&
--		    ce_stage(e2) =3D=3D 2 &&
-+	for (i =3D 0; i+1 < active_nr; i++) {
-+		struct cache_entry *e2 =3D active_cache[i];
-+		struct cache_entry *e3 =3D active_cache[i+1];
-+		if (ce_stage(e2) =3D=3D 2 &&
- 		    ce_stage(e3) =3D=3D 3 &&
--		    ce_same_name(e1, e2) && ce_same_name(e1, e3) &&
--		    S_ISREG(ntohl(e1->ce_mode)) &&
-+		    ce_same_name(e2, e3) &&
- 		    S_ISREG(ntohl(e2->ce_mode)) &&
- 		    S_ISREG(ntohl(e3->ce_mode))) {
--			path_list_insert((const char *)e1->name, conflict);
--			i +=3D 2;
-+			path_list_insert((const char *)e2->name, conflict);
-+			i++; /* skip over both #2 and #3 */
- 		}
- 	}
- 	return 0;
+Also, git-am seems to require bash 3.1, e.g. from
+
+   bash-3.1-MSYS-1.0.11-snapshot.tar.bz2
+
+-- Hannes
