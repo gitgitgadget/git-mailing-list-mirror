@@ -1,126 +1,131 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] Add git-rewrite-commits
-Date: Mon, 9 Jul 2007 00:56:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707090011070.4248@racer.site>
-References: <11839118073186-git-send-email-skimo@liacs.nl>
- <1183911808787-git-send-email-skimo@liacs.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Document custom hunk header selection
+Date: Sun, 08 Jul 2007 17:14:19 -0700
+Message-ID: <7vir8uzb50.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon Jul 09 02:03:41 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 02:14:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7gj5-0008EC-3z
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 02:03:39 +0200
+	id 1I7gtd-0001AL-LQ
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 02:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbXGIADg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 20:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbXGIADg
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 20:03:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40149 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752398AbXGIADf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 20:03:35 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 00:03:33 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp055) with SMTP; 09 Jul 2007 02:03:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/zCj4E+MbzGsh1noVfFjHlPxO2+7fqT42A2RA4CO
-	N9HsRYgu/TbCOn
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1183911808787-git-send-email-skimo@liacs.nl>
-X-Y-GMX-Trusted: 0
+	id S1753953AbXGIAOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 20:14:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbXGIAOV
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 20:14:21 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43661 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753221AbXGIAOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 20:14:20 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070709001419.FTMA3098.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 8 Jul 2007 20:14:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MCEK1X0051kojtg0000000; Sun, 08 Jul 2007 20:14:19 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51936>
 
-Hi,
+Since the external interface seems to have stabilized for this
+new feature, let's document it properly.
 
-I am way too tired to comment in detail, but here are some preliminary 
-findings:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/gitattributes.txt |   55 ++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 51 insertions(+), 4 deletions(-)
 
-- your command line interface is very nice and elegant.
-
-- you use a lot of what was in cg-admin-rewritehist (including 
-  adjustments I made in the documentation for filter-branch), but you also 
-  make it more confusing for people used to that tool:
-
-	- instead of leaving the original branches as they are, you 
-	  overwrite them. That's okay. But then you put the originals into 
-	  refs/rewritten. Without cg-admin-rewritehist using that name 
-	  for the _result_, you could explain your way out of confusion. 
-	  As it is, you cannot.
-
-	- in spite of doing the same as cg-admin-rewritehist with filters, 
-	  you call them maps. But they are no maps. They are manipulators, 
-	  you can call them mutators or filters, too. Given what people 
-	  know of cg-admin-rewritehist, you really should keep the name 
-	  "filter".
-
-	- the name "map" itself is used in cg-admin-rewritehist, to map 
-	  commit names from old to new. By using that name differently, 
-	  again you contribute to confusion, for no good reason.
-
-- neat idea to abuse the decorator for rewriting purposes.
-
-- get_one_line() is a misnomer. It wants to be named get_linelen().
-
-- instead of spawning read-tree, you could use unpack_trees() to boost 
-  performance even more. But I guess it is probably left for later, to 
-  make it easier to review the patch.
-
-- your memspn() and memcspn() functions are very inefficient. Better walk 
-  the memory, introduce a GIT_HEXCHAR into ctype.c, ishexchar() into 
-  git-compat-util.h, and use that.
-
-- The example you give with "git update-index --remove" can fail, right? 
-  Tell the user about that.
-
-- The commit filter again deviates from the usage in cg-admin-rewritehist. 
-  I can see that you wanted to make it more versatile. However, it makes 
-  the tool potentially also a bit more cumbersome to use. Besides, you use 
-  a temporary file where there is no need to.
-
-- "map" is missing. This is a function that you can use in all filters in 
-  cg-admin-rewritehist, except (unfortunately) in the commit filter (for 
-  technical reasons). Alas, these technical reasons also prevent such a 
-  function to be usable by any of the filters ("maps", as you call them).
-
-- the more fundamental problem with the missing "map", I do not see a 
-  reasonable way to get the same functionality from any of the code 
-  snippets passed to rewrite-commits. Indeed, even the workaround of 
-  cg-admin-rewritehist, to read $TEMP/map/$sha1, does not work, since you 
-  are keeping it all in memory. On IRC, gitster suggested to use a 
-  bidirectional pipe (such as stdin/stdout) to get at the new commit 
-  names, but because of buffering, I guess this is no joy.
-
-As commented on IRC, the env/tree/parent/msg filters of 
-cg-admin-rewritehist could be all emulated by commit filters. However, 
-that would be really inconvenient. So at a later stage, these would have 
-to be integrated into rewrite-commits (even if it would be possible to 
-drive rewrite-commits by a shell porcelain, but I guess you are opposed to 
-that idea, since you want to do everything else in C, too).
-
-However, the biggest and very real problem is that your filters do not 
-have a "map" function to get the rewritten sha1 for a given sha1. That is 
-what makes the filters so versatile, though, since you can skip revisions 
-by much more complex rules than just greps on the commit message or 
-header.
-
-But hey, maybe it _is_ time to rethink the whole filter business, and 
-introduce some kind of regular expression based action language. Something 
-like
-
-	git rewrite-commits -e '/^author Darl McBribe/skip-commit' \
-		-e 'substitute/^author Joahnnes/author Johannes/header' \
-		-e 'substitute/poreclain/porcelain/body' \
-		-e 'rewrite-commit-names'
-
-Hmm?
-
-Ciao,
-Dscho
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index d3ac9c7..810df07 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -72,8 +72,8 @@ EFFECTS
+ -------
+ 
+ Certain operations by git can be influenced by assigning
+-particular attributes to a path.  Currently, three operations
+-are attributes-aware.
++particular attributes to a path.  Currently, the following
++operations are attributes-aware.
+ 
+ Checking-out and checking-in
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -199,7 +199,9 @@ Generating diff text
+ ~~~~~~~~~~~~~~~~~~~~
+ 
+ The attribute `diff` affects if `git diff` generates textual
+-patch for the path or just says `Binary files differ`.
++patch for the path or just says `Binary files differ`.  It also
++can affect what line is shown on the hunk header `@@ -k,l +n,m @@`
++line.
+ 
+ Set::
+ 
+@@ -224,7 +226,8 @@ String::
+ 	Diff is shown using the specified custom diff driver.
+ 	The driver program is given its input using the same
+ 	calling convention as used for GIT_EXTERNAL_DIFF
+-	program.
++	program.  This name is also used for custom hunk header
++	selection.
+ 
+ 
+ Defining a custom diff driver
+@@ -249,6 +252,50 @@ parameters, just like `GIT_EXTERNAL_DIFF` program is called.
+ See gitlink:git[7] for details.
+ 
+ 
++Defining a custom hunk-header
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Each group of changes (called "hunk") in the textual diff output
++is prefixed with a line of the form:
++
++	@@ -k,l +n,m @@ TEXT
++
++The text is called 'hunk header', and by default a line that
++begins with an alphabet, an underscore or a dollar sign is used,
++which matches what GNU `diff -p` output uses.  This default
++selection however is not suited for some contents, and you can
++use customized pattern to make a selection.
++
++First in .gitattributes, you would assign the `diff` attribute
++for paths.
++
++------------------------
++*.tex	diff=tex
++------------------------
++
++Then, you would define "diff.tex.funcname" configuration to
++specify a regular expression that matches a line that you would
++want to appear as the hunk header, like this:
++
++------------------------
++[diff "tex"]
++	funcname = "^\\(\\\\\\(sub\\)*section{.*\\)$"
++------------------------
++
++Note.  A single level of backslashes are eaten by the
++configuration file parser, so you would need to double the
++backslashes; the pattern above picks a line that begins with a
++backslash, and zero or more occurences of `sub` followed by
++`section` followed by open brace, to the end of line.
++
++There are a few built-in patterns to make this easier, and `tex`
++is one of them, so you do not have to write the above in your
++configuration file (you still need to enable this with the
++attribute mechanism, via `.gitattributes`).  Another built-in
++pattern is defined for `java` that defines a pattern suitable
++for program text in Java language.
++
++
+ Performing a three-way merge
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
