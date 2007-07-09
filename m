@@ -1,59 +1,112 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH] git-gui: Allow users to set commit.signoff from options.
-Date: Mon, 9 Jul 2007 07:43:14 +0000
-Message-ID: <20070709074314.18158.qmail@dd40bf21a4abfd.315fe32.mid.smarden.org>
-References: <20070706144654.12095.qmail@c8e1b1dc78de94.315fe32.mid.smarden.org> <20070708214832.GC4436@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] stash: implement "stash create"
+Date: Mon, 09 Jul 2007 00:57:53 -0700
+Message-ID: <7v3azyvwji.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 09 09:43:04 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 09:57:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7ntb-0001SO-J7
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 09:42:59 +0200
+	id 1I7o86-0003vS-6l
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 09:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbXGIHm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 03:42:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbXGIHm4
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 03:42:56 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:53044 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751171AbXGIHm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 03:42:56 -0400
-Received: (qmail 18159 invoked by uid 1000); 9 Jul 2007 07:43:14 -0000
-Mail-Followup-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070708214832.GC4436@spearce.org>
+	id S1751387AbXGIH5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 03:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbXGIH5z
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 03:57:55 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33352 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbXGIH5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 03:57:54 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070709075754.KUVV3098.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 9 Jul 2007 03:57:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MKxt1X0091kojtg0000000; Mon, 09 Jul 2007 03:57:54 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51969>
 
-On Sun, Jul 08, 2007 at 05:48:32PM -0400, Shawn O. Pearce wrote:
-> Gerrit Pape <pape@smarden.org> wrote:
-> > Users may want to automatically sign-off any commit for a specific
-> > repository.  If they are mostly a git-gui user they should be able to
-> > view/set this option from within the git-gui environment, rather than
-> > needing to edit a raw text file on their local filesystem.
-> 
-> Sure.  But your patch to git-gui actually just lets the user set
-> the flag, but doesn't make git-gui honor it.  So the user can set
-> "Automatically Sign-Off" through git-gui but it will have no effect
-> within git-gui (git-gui doesn't use git-commit.sh, it has its own
-> pure-Tcl implementation).
+This subcommand creates a stash from the current state and writes out the
+resulting commit object ID to the standard output, without updating the
+stash ref nor resetting the tree.  It is intended to be used by scripts
+to temporarily rewind the working tree to a clean state.
 
-Ups, sorry.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> I'm not applying this to git-gui, for the very same reason that
-> Junio already gave as to why he won't apply the git-commit.sh patch.
-> 
-> Within git-gui adding a signoff is either one mouse click (the
-> button on the toolbar), a single keystroke (Ctrl-S) or a menu action
-> (Commit->Signoff).  Three easy ways to insert the signoff line.
-> But it still needs to be a choice from the user, every time they
-> make a commit.
+ * This is currently only needed for the next one, which I do
+   not think is ready for 1.5.3, so both will stay in either
+   'pu' or perhaps in 'next'.
 
-Yes, thanks, Gerrit.
+ git-stash.sh |   25 +++++++++++++++++++++----
+ 1 files changed, 21 insertions(+), 4 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index de13dd1..8c22cd4 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -23,7 +23,7 @@ clear_stash () {
+ 	: >"$logfile"
+ }
+ 
+-save_stash () {
++create_stash () {
+ 	stash_msg="$1"
+ 
+ 	if no_changes
+@@ -31,9 +31,6 @@ save_stash () {
+ 		echo >&2 'No local changes to save'
+ 		exit 0
+ 	fi
+-	test -f "$GIT_DIR/logs/$ref_stash" ||
+-		clear_stash || die "Cannot initialize stash"
+-
+ 	# state of the base commit
+ 	if b_commit=$(git rev-parse --verify HEAD)
+ 	then
+@@ -79,7 +76,20 @@ save_stash () {
+ 	w_commit=$(printf '%s\n' "$stash_msg" |
+ 		git commit-tree $w_tree -p $b_commit -p $i_commit) ||
+ 		die "Cannot record working tree state"
++}
++
++save_stash () {
++	stash_msg="$1"
++
++	if no_changes
++	then
++		echo >&2 'No local changes to save'
++		exit 0
++	fi
++	test -f "$GIT_DIR/logs/$ref_stash" ||
++		clear_stash || die "Cannot initialize stash"
+ 
++	create_stash "$stash_msg"
+ 	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
+ 		die "Cannot save the current status"
+ 	printf >&2 'Saved "%s"\n' "$stash_msg"
+@@ -185,6 +195,13 @@ apply)
+ clear)
+ 	clear_stash
+ 	;;
++create)
++	if test $# -gt 0 && test "$1" = create
++	then
++		shift
++	fi
++	create_stash "$*" && echo "$w_commit"
++	;;
+ help | usage)
+ 	usage
+ 	;;
+-- 
+1.5.3.rc0.81.g1ed84
