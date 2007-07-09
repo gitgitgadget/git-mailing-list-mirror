@@ -1,82 +1,111 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: git cvsimport branches not consistent with CVS branches
-Date: Sun, 08 Jul 2007 21:31:04 -0700
-Message-ID: <4691BA08.2080107@freedesktop.org>
-References: <46903396.1010507@heydon.com.au> <20070708054520.GD4087@lavos.net> <200707081253.06129.robin.rosenberg.lists@dewire.com> <3BA4D1AE-D5C9-42CB-81B4-38DC3946A966@zib.de>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Preferring shallower deltas on repack
+Date: Sun, 8 Jul 2007 23:43:26 -0500
+Message-ID: <20070709044326.GH4087@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Brian Downing <bdowning@lavos.net>,
-	Gordon Heydon <gordon@heydon.com.au>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jul 09 06:31:32 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 06:43:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7kuF-0000Rz-3U
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 06:31:27 +0200
+	id 1I7l63-000233-Qc
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 06:43:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbXGIEbY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 00:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbXGIEbY
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 00:31:24 -0400
-Received: from mail4.sea5.speakeasy.net ([69.17.117.6]:48674 "EHLO
-	mail4.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbXGIEbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 00:31:23 -0400
-Received: (qmail 13535 invoked from network); 9 Jul 2007 04:31:22 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail4.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <prohaska@zib.de>; 9 Jul 2007 04:31:22 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <3BA4D1AE-D5C9-42CB-81B4-38DC3946A966@zib.de>
+	id S1751581AbXGIEnh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 00:43:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbXGIEnh
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 00:43:37 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:1029 "EHLO
+	asav13.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751488AbXGIEng (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 00:43:36 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav13.insightbb.com with ESMTP; 09 Jul 2007 00:43:35 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AnA9AHVZkUZKhvbzR2dsb2JhbACBTIVdiAQBAT8B
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id CE2D1309F31; Sun,  8 Jul 2007 23:43:26 -0500 (CDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51949>
 
-Steffen Prohaska wrote:
-> On Jul 8, 2007, at 12:53 PM, Robin Rosenberg wrote:
->> Corecode's fromcvs is pretty fast and incremental and AFAIK  
->> accurate. I had
->> plenty problems with cvsimport, but fromcvs keeps in sync with the  
->> CVS repo.
->> Get  it at http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs/ .
->>
->> It does not convert regular tags, only branches, however so there  
->> is something to
->> do for those that want a complete cvs import.
-> 
-> Did anyone compare
->     * git-cvsimport with cvsps patches from [1]
->     * parsecvs [2]
->     * fromcvs
-> and can give a recommendation?
-> 
-> My experience with plain git-cvsimport (without cvsps patches from [1])
-> is that it has a lot of problems. I'd recommend not to use it for
-> incremental import and be very suspicious about the git repository
-> created by git-cvsimport. You need to carefully validate the repository.
-> It's likely that you need to fix imported branches. The trunk seems to
-> be ok.
+SBCL, a Lisp implementation, has a file in their (CVS) repository called
+"version.lisp-expr" which is updated every commit.  This file looks like:
 
-I've used both parsecvs and git-cvsimport, and I can definitely say from
-experience that cvsimport badly munges history, and parsecvs seems to handle
-it correctly.  parsecvs does have the limitations that it requires the ,v
-files and doesn't work incrementally, making it great for project repository
-conversions and painful for just wanting to use git on a CVS-(mis)managed
-project.
+------------------------------------------------------------------------
+;;; This is the master value for LISP-IMPLEMENTATION-VERSION. It's
+;;; separated into its own file here so that it's easy for
+;;; text-munging make-ish or cvs-ish scripts to find and tweak it. For
+;;; the convenience of such scripts, only a simple subset of Lisp
+;;; reader syntax should be used here: semicolon-delimited comments,
+;;; possible blank lines or other whitespace, and a single
+;;; double-quoted string value alone on its own line.
+;;;
+;;; ANSI says LISP-IMPLEMENTATION-VERSION can be NIL "if no
+;;; appropriate and relevant result can be produced", but as long as
+;;; we control the build, we can always assign an appropriate and
+;;; relevant result, so this must be a string, not NIL.
+;;;
+;;; Conventionally a string like "0.6.6", with three numeric fields,
+;;; is used for released versions, and a string like "0.6.5.xyzzy",
+;;; with something arbitrary in the fourth field, is used for CVS
+;;; checkins which aren't released. (And occasionally for internal
+;;; versions, especially for internal versions off the main CVS
+;;; branch, it gets hairier, e.g. "0.pre7.14.flaky4.13".)
+"1.0.7.10"
+------------------------------------------------------------------------
 
-I've never used fromcvs.
+Only very rarely does anything but the last line change.
 
-One idea to mitigate one of the limitations: how about modifying the CVS
-server to add an extension that supports downloading full ,v files?  CVS has
-had server extensions in the past, such as for ls/rls.  Once support for this
-extension makes its way out to most CVS servers, this problem goes away.
+The current repack implementation, when given values like "--window=100
+--depth=1000", happily generates an incredibly deep tree for this file,
+maxing out the depth.  (I'm only using such a high depth to demonstrate
+the pessimal behavior.)  I noticed that it just takes the first delta
+it finds that is the smallest; it then only looks for deltas with a
+max_size of the old size - 1, so it can never find better matches with
+regard to depth.
 
-- Josh Triplett
+I modified this to prefer shallower deltas of the same size.  This made
+the deltas for this file a very wide tree with a maximum depth of about
+65.  Other (much smaller) improvements were seen elsewhere in the pack.
+Runtime does not seem to have been affected, as most of the work had
+already been done when it was tossing deltas before.
+
+Some simple statistics:
+
+SBCL, standard pack-objects, window 100, depth 1000:
+  Max depth: 980
+  Mean depth: 100.223622114502
+  Median depth: 12
+  Standard deviation: 188.214331919176
+
+SBCL, patched pack-objects, window 100, depth 1000:
+  Max depth: 787
+  Mean depth: 61.5669990817656
+  Median depth: 11
+  Standard deviation: 127.644652607399
+
+git, standard pack-objects, window 100, depth 1000:
+  Max depth: 925
+  Mean depth: 77.184264479754
+  Median depth: 8
+  Standard deviation: 150.112998198182
+
+git, patched pack-objects, window 100, depth 1000:
+  Max depth: 913
+  Mean depth: 74.9981877425496
+  Median depth: 7
+  Standard deviation: 147.900721785959
+
+The only negative effect I could see from this patch might be pack
+locality.  Unfortunately I don't know enough (read: anything) about pack
+access patterns to determine if this is the case.
+
+Patch to follow.
+
+-bcd
