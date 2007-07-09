@@ -1,287 +1,495 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Report information on branches from remote.h
-Date: Mon, 9 Jul 2007 01:10:25 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707090107390.6977@iabervon.org>
+Subject: [PATCH v2] Push code for transport library
+Date: Mon, 9 Jul 2007 01:10:21 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707090106300.6977@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jul 09 07:10:43 2007
+X-From: git-owner@vger.kernel.org Mon Jul 09 07:10:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7lWE-0005Pi-HF
+	id 1I7lWD-0005Pi-ON
 	for gcvg-git@gmane.org; Mon, 09 Jul 2007 07:10:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbXGIFKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 01:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbXGIFK3
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:10:29 -0400
-Received: from iabervon.org ([66.92.72.58]:4742 "EHLO iabervon.org"
+	id S1751719AbXGIFKZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 01:10:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbXGIFKZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:10:25 -0400
+Received: from iabervon.org ([66.92.72.58]:4738 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751815AbXGIFK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 01:10:26 -0400
-Received: (qmail 29230 invoked by uid 1000); 9 Jul 2007 05:10:25 -0000
+	id S1751687AbXGIFKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 01:10:22 -0400
+Received: (qmail 29219 invoked by uid 1000); 9 Jul 2007 05:10:21 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Jul 2007 05:10:25 -0000
+  by localhost with SMTP; 9 Jul 2007 05:10:21 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51954>
 
-This adds full parsing for branch.<name> sections and functions to
-interpret the results usefully. It incidentally corrects the fetch
-configuration information for legacy branches/* files with '#'
-characters in the URLs.
+This moves the code to call push backends into a library that can be
+extended to make matching fetch and push decisions based on the URL it
+gets, and which could be changed to have built-in implementations
+instead of calling external programs.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- remote.c |  157 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- remote.h |   18 +++++++
- 2 files changed, 164 insertions(+), 11 deletions(-)
+Okay, no more C99 initializers.
 
-diff --git a/remote.c b/remote.c
-index 500ca4d..4ea15b9 100644
---- a/remote.c
-+++ b/remote.c
-@@ -5,6 +5,12 @@
- static struct remote **remotes;
- static int allocated_remotes;
+ Makefile       |    3 +-
+ builtin-push.c |   82 ++++++-----------------
+ transport.c    |  197 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ transport.h    |   61 +++++++++++++++++
+ 4 files changed, 281 insertions(+), 62 deletions(-)
+ create mode 100644 transport.c
+ create mode 100644 transport.h
+
+diff --git a/Makefile b/Makefile
+index 4ea5e45..b8f9af1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -321,7 +321,8 @@ LIB_OBJS = \
+ 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+ 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
+-	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o
++	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o \
++	transport.o
  
-+static struct branch **branches;
-+static int allocated_branches;
-+
-+static struct branch *current_branch;
-+static const char *default_remote_name;
-+
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+diff --git a/builtin-push.c b/builtin-push.c
+index 2612f07..845d6fc 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -6,10 +6,11 @@
+ #include "run-command.h"
+ #include "builtin.h"
+ #include "remote.h"
++#include "transport.h"
  
-@@ -67,6 +73,54 @@ static struct remote *make_remote(const char *name, int len)
- 	return remotes[empty];
+ static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
+ 
+-static int all, force, thin = 1, verbose;
++static int all, thin = 1, verbose;
+ static const char *receivepack;
+ 
+ static const char **refspec;
+@@ -43,80 +44,38 @@ static void set_refspecs(const char **refs, int nr)
+ 	}
  }
  
-+static void add_merge(struct branch *branch, const char *name)
-+{
-+	int nr = branch->merge_nr + 1;
-+	branch->merge_name =
-+		xrealloc(branch->merge_name, nr * sizeof(char *));
-+	branch->merge_name[nr-1] = name;
-+	branch->merge_nr = nr;
-+}
-+
-+static struct branch *make_branch(const char *name, int len)
-+{
-+	int i, empty = -1;
-+	char *refname;
-+
-+	for (i = 0; i < allocated_branches; i++) {
-+		if (!branches[i]) {
-+			if (empty < 0)
-+				empty = i;
-+		} else {
-+			if (len ? (!strncmp(name, branches[i]->name, len) &&
-+				   !branches[i]->name[len]) :
-+			    !strcmp(name, branches[i]->name))
-+				return branches[i];
-+		}
-+	}
-+
-+	if (empty < 0) {
-+		empty = allocated_branches;
-+		allocated_branches += allocated_branches ? allocated_branches : 1;
-+		branches = xrealloc(branches,
-+				   sizeof(*branches) * allocated_branches);
-+		memset(branches + empty, 0,
-+		       (allocated_branches - empty) * sizeof(*branches));
-+	}
-+	branches[empty] = xcalloc(1, sizeof(struct branch));
-+	if (len)
-+		branches[empty]->name = xstrndup(name, len);
-+	else
-+		branches[empty]->name = xstrdup(name);
-+	refname = malloc(strlen(name) + strlen("refs/heads/") + 1);
-+	strcpy(refname, "refs/heads/");
-+	strcpy(refname + strlen("refs/heads/"),
-+	       branches[empty]->name);
-+	branches[empty]->refname = refname;
-+
-+	return branches[empty];
-+}
-+
- static void read_remotes_file(struct remote *remote)
+-static int do_push(const char *repo)
++static int do_push(const char *repo, int flags)
  {
- 	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
-@@ -116,6 +170,8 @@ static void read_remotes_file(struct remote *remote)
- static void read_branches_file(struct remote *remote)
- {
- 	const char *slash = strchr(remote->name, '/');
-+	char *frag;
-+	char *branch;
- 	int n = slash ? slash - remote->name : 1000;
- 	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
- 	char *s, *p;
-@@ -141,23 +197,40 @@ static void read_branches_file(struct remote *remote)
- 	strcpy(p, s);
- 	if (slash)
- 		strcat(p, slash);
-+	frag = strchr(p, '#');
-+	if (frag) {
-+		*(frag++) = '\0';
-+		branch = xmalloc(strlen(frag) + 12);
-+		strcpy(branch, "refs/heads/");
-+		strcat(branch, frag);
-+	} else {
-+		branch = "refs/heads/master";
-+	}
- 	add_uri(remote, p);
-+	add_fetch_refspec(remote, branch);
- }
+ 	int i, errs;
+-	int common_argc;
+-	const char **argv;
+-	int argc;
+ 	struct remote *remote = remote_get(repo);
  
--static char *default_remote_name = NULL;
--static const char *current_branch = NULL;
--static int current_branch_len = 0;
+ 	if (!remote)
+ 		die("bad repository '%s'", repo);
+ 
+-	if (remote->receivepack) {
+-		char *rp = xmalloc(strlen(remote->receivepack) + 16);
+-		sprintf(rp, "--receive-pack=%s", remote->receivepack);
+-		receivepack = rp;
+-	}
+ 	if (!refspec && !all && remote->push_refspec_nr) {
+ 		refspec = remote->push_refspec;
+ 		refspec_nr = remote->push_refspec_nr;
+ 	}
 -
- static int handle_config(const char *key, const char *value)
- {
- 	const char *name;
- 	const char *subkey;
- 	struct remote *remote;
--	if (!prefixcmp(key, "branch.") && current_branch &&
--	    !strncmp(key + 7, current_branch, current_branch_len) &&
--	    !strcmp(key + 7 + current_branch_len, ".remote")) {
--		free(default_remote_name);
--		default_remote_name = xstrdup(value);
-+	struct branch *branch;
-+	if (!prefixcmp(key, "branch.")) {
-+		name = key + 7;
-+		subkey = strrchr(name, '.');
-+		branch = make_branch(name, subkey - name);
-+		if (!subkey)
-+			return 0;
-+		if (!value)
-+			return 0;
-+		if (!strcmp(subkey, ".remote")) {
-+			branch->remote_name = xstrdup(value);
-+			if (branch == current_branch)
-+				default_remote_name = branch->remote_name;
-+		} else if (!strcmp(subkey, ".merge"))
-+			add_merge(branch, xstrdup(value));
-+		return 0;
- 	}
- 	if (prefixcmp(key,  "remote."))
- 		return 0;
-@@ -212,8 +285,8 @@ static void read_config(void)
- 	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
- 	    !prefixcmp(head_ref, "refs/heads/")) {
--		current_branch = head_ref + strlen("refs/heads/");
--		current_branch_len = strlen(current_branch);
-+		current_branch =
-+			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config);
- }
-@@ -289,6 +362,25 @@ int remote_has_uri(struct remote *remote, const char *uri)
- 	return 0;
- }
- 
-+/*
-+ * Returns true if, under the matching rules for fetching, name is the
-+ * same as the given full name.
-+ */
-+static int ref_matches_abbrev(const char *name, const char *full)
-+{
-+	if (!prefixcmp(name, "refs/") || !strcmp(name, "HEAD"))
-+		return !strcmp(name, full);
-+	if (prefixcmp(full, "refs/"))
-+		return 0;
-+	if (!prefixcmp(name, "heads/") ||
-+	    !prefixcmp(name, "tags/") ||
-+	    !prefixcmp(name, "remotes/"))
-+		return !strcmp(name, full + 5);
-+	if (prefixcmp(full + 5, "heads/"))
-+		return 0;
-+	return !strcmp(full + 11, name);
-+}
+-	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
+-	argv[0] = "dummy-send-pack";
+-	argc = 1;
+-	if (all)
+-		argv[argc++] = "--all";
+-	if (force)
+-		argv[argc++] = "--force";
+-	if (receivepack)
+-		argv[argc++] = receivepack;
+-	common_argc = argc;
+-
+ 	errs = 0;
+ 	for (i = 0; i < remote->uri_nr; i++) {
++		struct transport *transport =
++			transport_get(remote, remote->uri[i], 0);
+ 		int err;
+-		int dest_argc = common_argc;
+-		int dest_refspec_nr = refspec_nr;
+-		const char **dest_refspec = refspec;
+-		const char *dest = remote->uri[i];
+-		const char *sender = "send-pack";
+-		if (!prefixcmp(dest, "http://") ||
+-		    !prefixcmp(dest, "https://"))
+-			sender = "http-push";
+-		else {
+-			char *rem = xmalloc(strlen(remote->name) + 10);
+-			sprintf(rem, "--remote=%s", remote->name);
+-			argv[dest_argc++] = rem;
+-			if (thin)
+-				argv[dest_argc++] = "--thin";
+-		}
+-		argv[0] = sender;
+-		argv[dest_argc++] = dest;
+-		while (dest_refspec_nr--)
+-			argv[dest_argc++] = *dest_refspec++;
+-		argv[dest_argc] = NULL;
++		if (receivepack)
++			transport_set_option(transport,
++					     TRANS_OPT_RECEIVEPACK, receivepack);
++		if (thin)
++			transport_set_option(transport, TRANS_OPT_THIN, "yes");
 +
- int remote_find_tracking(struct remote *remote, struct refspec *refspec)
+ 		if (verbose)
+-			fprintf(stderr, "Pushing to %s\n", dest);
+-		err = run_command_v_opt(argv, RUN_GIT_CMD);
++			fprintf(stderr, "Pushing to %s\n", remote->uri[i]);
++		err = transport_push(transport, refspec_nr, refspec, flags);
++		err |= transport_disconnect(transport);
++
+ 		if (!err)
+ 			continue;
+ 
+ 		error("failed to push to '%s'", remote->uri[i]);
+-		switch (err) {
+-		case -ERR_RUN_COMMAND_FORK:
+-			error("unable to fork for %s", sender);
+-		case -ERR_RUN_COMMAND_EXEC:
+-			error("unable to exec %s", sender);
+-			break;
+-		case -ERR_RUN_COMMAND_WAITPID:
+-		case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
+-		case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
+-		case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
+-			error("%s died with strange error", sender);
+-		}
+ 		errs++;
+ 	}
+ 	return !!errs;
+@@ -125,6 +84,7 @@ static int do_push(const char *repo)
+ int cmd_push(int argc, const char **argv, const char *prefix)
  {
  	int i;
-@@ -574,3 +666,46 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 	}
- 	return 0;
++	int flags = 0;
+ 	const char *repo = NULL;	/* default repository */
+ 
+ 	for (i = 1; i < argc; i++) {
+@@ -144,7 +104,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--all")) {
+-			all = 1;
++			flags |= TRANSPORT_PUSH_ALL;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--tags")) {
+@@ -152,7 +112,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--force") || !strcmp(arg, "-f")) {
+-			force = 1;
++			flags |= TRANSPORT_PUSH_FORCE;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--thin")) {
+@@ -164,11 +124,11 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 		if (!prefixcmp(arg, "--receive-pack=")) {
+-			receivepack = arg;
++			receivepack = arg + 15;
+ 			continue;
+ 		}
+ 		if (!prefixcmp(arg, "--exec=")) {
+-			receivepack = arg;
++			receivepack = arg + 7;
+ 			continue;
+ 		}
+ 		usage(push_usage);
+@@ -177,5 +137,5 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (all && refspec)
+ 		usage(push_usage);
+ 
+-	return do_push(repo);
++	return do_push(repo, flags);
  }
+diff --git a/transport.c b/transport.c
+new file mode 100644
+index 0000000..ce03133
+--- /dev/null
++++ b/transport.c
+@@ -0,0 +1,197 @@
++#include "cache.h"
++#include "transport.h"
++#include "run-command.h"
 +
-+struct branch *branch_get(const char *name)
++static const struct transport_ops rsync_transport = {
++};
++
++static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags) {
++	const char **argv;
++	int argc;
++	int err;
++
++	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
++	argv[0] = "http-push";
++	argc = 1;
++	if (flags & TRANSPORT_PUSH_ALL)
++		argv[argc++] = "--all";
++	if (flags & TRANSPORT_PUSH_FORCE)
++		argv[argc++] = "--force";
++	argv[argc++] = transport->url;
++	while (refspec_nr--)
++		argv[argc++] = *refspec++;
++	argv[argc] = NULL;
++	err = run_command_v_opt(argv, RUN_GIT_CMD);
++	switch (err) {
++	case -ERR_RUN_COMMAND_FORK:
++		error("unable to fork for %s", argv[0]);
++	case -ERR_RUN_COMMAND_EXEC:
++		error("unable to exec %s", argv[0]);
++		break;
++	case -ERR_RUN_COMMAND_WAITPID:
++	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
++	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
++	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
++		error("%s died with strange error", argv[0]);
++	}
++	return !!err;
++}
++
++static const struct transport_ops curl_transport = {
++	/* set_option */	NULL,
++	/* push */		curl_transport_push
++};
++
++static const struct transport_ops bundle_transport = {
++};
++
++struct git_transport_data {
++	unsigned thin : 1;
++
++	const char *receivepack;
++};
++
++static int set_git_option(struct transport *connection,
++			  const char *name, const char *value)
 +{
-+	struct branch *ret;
++	struct git_transport_data *data = connection->data;
++	if (!strcmp(name, TRANS_OPT_RECEIVEPACK)) {
++		data->receivepack = value;
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_THIN)) {
++		data->thin = !!value;
++		return 0;
++	}
++	return 1;
++}
 +
-+	read_config();
-+	if (!name || !*name || !strcmp(name, "HEAD"))
-+		ret = current_branch;
-+	else
-+		ret = make_branch(name, 0);
-+	if (ret && ret->remote_name) {
-+		ret->remote = remote_get(ret->remote_name);
-+		if (ret->merge_nr) {
-+			int i;
-+			ret->merge = xcalloc(sizeof(*ret->merge),
-+					     ret->merge_nr);
-+			for (i = 0; i < ret->merge_nr; i++) {
-+				ret->merge[i] = xcalloc(1, sizeof(**ret->merge));
-+				ret->merge[i]->src = ret->merge_name[i];
-+				remote_find_tracking(ret->remote,
-+						     ret->merge[i]);
-+			}
-+		}
++static int git_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags) {
++	struct git_transport_data *data = transport->data;
++	const char **argv;
++	char *rem;
++	int argc;
++	int err;
++
++	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
++	argv[0] = "send-pack";
++	argc = 1;
++	if (flags & TRANSPORT_PUSH_ALL)
++		argv[argc++] = "--all";
++	if (flags & TRANSPORT_PUSH_FORCE)
++		argv[argc++] = "--force";
++	if (data->receivepack) {
++		char *rp = xmalloc(strlen(data->receivepack) + 16);
++		sprintf(rp, "--receive-pack=%s", data->receivepack);
++		argv[argc++] = rp;
++	}
++	if (data->thin)
++		argv[argc++] = "--thin";
++	rem = xmalloc(strlen(transport->remote->name) + 10);
++	sprintf(rem, "--remote=%s", transport->remote->name);
++	argv[argc++] = rem;
++	argv[argc++] = transport->url;
++	while (refspec_nr--)
++		argv[argc++] = *refspec++;
++	argv[argc] = NULL;
++	err = run_command_v_opt(argv, RUN_GIT_CMD);
++	switch (err) {
++	case -ERR_RUN_COMMAND_FORK:
++		error("unable to fork for %s", argv[0]);
++	case -ERR_RUN_COMMAND_EXEC:
++		error("unable to exec %s", argv[0]);
++		break;
++	case -ERR_RUN_COMMAND_WAITPID:
++	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
++	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
++	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
++		error("%s died with strange error", argv[0]);
++	}
++	return !!err;
++}
++
++static const struct transport_ops git_transport = {
++	/* set_option */	set_git_option,
++	/* push */		git_transport_push
++};
++
++static int is_local(const char *url)
++{
++	const char *colon = strchr(url, ':');
++	const char *slash = strchr(url, '/');
++	return !colon || (slash && slash < colon);
++}
++
++static int is_file(const char *url)
++{
++	struct stat buf;
++	if (stat(url, &buf))
++		return 0;
++	return S_ISREG(buf.st_mode);
++}
++
++struct transport *transport_get(struct remote *remote, const char *url,
++				int fetch)
++{
++	struct transport *ret = NULL;
++	if (!prefixcmp(url, "rsync://")) {
++		ret = xmalloc(sizeof(*ret));
++		ret->data = NULL;
++		ret->ops = &rsync_transport;
++	} else if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://") ||
++		   !prefixcmp(url, "ftp://")) {
++		ret = xmalloc(sizeof(*ret));
++		ret->ops = &curl_transport;
++		ret->data = NULL;
++	} else if (is_local(url) && is_file(url)) {
++		ret = xmalloc(sizeof(*ret));
++		ret->data = NULL;
++		ret->ops = &bundle_transport;
++	} else {
++		struct git_transport_data *data = xcalloc(1, sizeof(*data));
++		ret = xcalloc(1, sizeof(*ret));
++		ret->data = data;
++		data->thin = 1;
++		data->receivepack = "git-receive-pack";
++		if (remote->receivepack)
++			data->receivepack = remote->receivepack;
++		ret->ops = &git_transport;
++	}
++	if (ret) {
++		ret->remote = remote;
++		ret->url = url;
++		ret->fetch = !!fetch;
 +	}
 +	return ret;
 +}
 +
-+int branch_has_merge_config(struct branch *branch)
++int transport_set_option(struct transport *transport,
++			 const char *name, const char *value)
 +{
-+	return branch && !!branch->merge;
++	int ret = 1;
++	if (transport->ops->set_option)
++		ret = transport->ops->set_option(transport, name, value);
++	if (ret < 0)
++		fprintf(stderr, "For '%s' option %s cannot be set to '%s'\n",
++			transport->url, name, value);
++	if (ret > 0)
++		fprintf(stderr, "For '%s' option %s is ignored\n",
++			transport->url, name);
++	return ret;
 +}
 +
-+int branch_merges(struct branch *branch, const char *refname)
++int transport_push(struct transport *transport,
++		   int refspec_nr, const char **refspec, int flags)
 +{
-+	int i;
-+	if (!branch)
-+		return 0;
-+	for (i = 0; i < branch->merge_nr; i++) {
-+		if (ref_matches_abbrev(branch->merge[i]->src, refname))
-+			return 1;
-+	}
-+	return 0;
++	if (!transport->ops->push)
++		return 1;
++	return transport->ops->push(transport, refspec_nr, refspec, flags);
 +}
-diff --git a/remote.h b/remote.h
-index 01dbcef..9824a0d 100644
---- a/remote.h
-+++ b/remote.h
-@@ -38,4 +38,22 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
-  */
- int remote_find_tracking(struct remote *remote, struct refspec *refspec);
- 
-+struct branch {
-+	const char *name;
-+	const char *refname;
 +
-+	const char *remote_name;
++int transport_disconnect(struct transport *transport)
++{
++	int ret = 0;
++	if (transport->ops->disconnect)
++		ret = transport->ops->disconnect(transport);
++	free(transport);
++	return ret;
++}
+diff --git a/transport.h b/transport.h
+new file mode 100644
+index 0000000..5c2eb95
+--- /dev/null
++++ b/transport.h
+@@ -0,0 +1,61 @@
++#ifndef TRANSPORT_H
++#define TRANSPORT_H
++
++#include "cache.h"
++#include "remote.h"
++
++struct transport {
++	unsigned verbose : 1;
++	unsigned fetch : 1;
 +	struct remote *remote;
++	const char *url;
 +
-+	const char **merge_name;
-+	struct refspec **merge;
-+	int merge_nr;
++	void *data;
++
++	struct ref *remote_refs;
++
++	const struct transport_ops *ops;
 +};
 +
-+struct branch *branch_get(const char *name);
++#define TRANSPORT_PUSH_ALL 1
++#define TRANSPORT_PUSH_FORCE 2
 +
-+int branch_has_merge_config(struct branch *branch);
++struct transport_ops {
++	/**
++	 * Returns 0 if successful, positive if the option is not
++	 * recognized or is inapplicable, and negative if the option
++	 * is applicable but the value is invalid.
++	 **/
++	int (*set_option)(struct transport *connection, const char *name,
++			  const char *value);
 +
-+int branch_merges(struct branch *branch, const char *refname);
++	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
 +
- #endif
++	int (*disconnect)(struct transport *connection);
++};
++
++/* Returns a transport suitable for the url */
++struct transport *transport_get(struct remote *remote, const char *url,
++				int fetch);
++
++/* Transport options which apply to git:// and scp-style URLs */
++
++/* The program to use on the remote side to receive a pack */
++#define TRANS_OPT_RECEIVEPACK "receivepack"
++
++/* Transfer the data as a thin pack if not null */
++#define TRANS_OPT_THIN "thin"
++
++/**
++ * Returns 0 if the option was used, non-zero otherwise. Prints a
++ * message to stderr if the option is not used.
++ **/
++int transport_set_option(struct transport *transport, const char *name,
++			 const char *value);
++
++int transport_push(struct transport *connection,
++		   int refspec_nr, const char **refspec, int flags);
++
++int transport_disconnect(struct transport *transport);
++
++#endif
 -- 
 1.5.2.2.1399.g097d5-dirty
