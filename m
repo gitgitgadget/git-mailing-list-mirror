@@ -1,103 +1,88 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: rerere fails to record resolution if file doesn't exist in merge
-	base
-Date: Mon, 9 Jul 2007 09:07:25 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070709070725.GA4445@lala>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Preferring shallower deltas on repack
+Date: Mon, 09 Jul 2007 00:27:24 -0700
+Message-ID: <7vbqemvxyb.fsf@assigned-by-dhcp.cox.net>
+References: <20070709044326.GH4087@lavos.net>
+	<7v1wfixhvk.fsf@assigned-by-dhcp.cox.net>
+	<20070709065235.GJ4087@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 09 09:07:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: bdowning@lavos.net (Brian Downing)
+X-From: git-owner@vger.kernel.org Mon Jul 09 09:27:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7nLJ-0004YP-Ek
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 09:07:33 +0200
+	id 1I7nep-0007UK-PI
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 09:27:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbXGIHHb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Jul 2007 03:07:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751176AbXGIHHb
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 03:07:31 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:35539 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751124AbXGIHHa (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 03:07:30 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1I7nLE-00054C-UN
-	for git@vger.kernel.org; Mon, 09 Jul 2007 09:07:29 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6977R3A004890
-	for <git@vger.kernel.org>; Mon, 9 Jul 2007 09:07:27 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6977QOo004889
-	for git@vger.kernel.org; Mon, 9 Jul 2007 09:07:26 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1751501AbXGIH11 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 03:27:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXGIH11
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 03:27:27 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59590 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbXGIH10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 03:27:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070709072724.FZHT1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 9 Jul 2007 03:27:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MKTQ1X0031kojtg0000000; Mon, 09 Jul 2007 03:27:24 -0400
+In-Reply-To: <20070709065235.GJ4087@lavos.net> (Brian Downing's message of
+	"Mon, 9 Jul 2007 01:52:35 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51966>
 
-Hello,
+bdowning@lavos.net (Brian Downing) writes:
 
-Some time ago, I sent a test for that[1], but the patch doesn't apply
-anymore.
+> (These timings are for the Git pack on Linux/amd64, --window and --depth
+> both 100.  Since /usr/bin/time doesn't seem to report any useful memory
+> statistics on Linux, I also have a "ps aux" line from when the memory
+> size looked stable.  This was different from run to run but it shows the
+> two are in the same order of magnitude.)
+>
+> Unpatched:
+> 54.99user 0.18system 0:56.80elapsed 97%CPU (0avgtext+0avgdata 0maxresident)k
+> 0inputs+0outputs (14major+32417minor)pagefaults 0swaps
+> bdowning  5290 98.7  4.5 106788 92900 pts/1    R+   01:26   0:49 git pack-obj
+>
+> Patched:
+> 55.37user 0.19system 0:56.35elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
+> 0inputs+0outputs (0major+32249minor)pagefaults 0swaps
+> bdowning  6086  100  4.5 106880 92996 pts/1    R+   01:29   0:49 git pack-obj
 
-Anyhow, the failure still exists, even though the original report was
-sent when rerere was still a perl script ...
+The number of minor faults are comparable (slightly favorable),
+which is a good sign.
 
-	zeisberg@cassiopeia:/tmp/rerere$ git init
-	Initialized empty Git repository in .git/
-	zeisberg@cassiopeia:/tmp/rerere$ mkdir .git/rerere
-	zeisberg@cassiopeia:/tmp/rerere$ echo just something to commit > file
-	zeisberg@cassiopeia:/tmp/rerere$ git add file
-	zeisberg@cassiopeia:/tmp/rerere$ git commit -m 1
-	Created initial commit 51384cb: 1
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	 create mode 100644 file
-	zeisberg@cassiopeia:/tmp/rerere$ git branch b
-	zeisberg@cassiopeia:/tmp/rerere$ echo lala > lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git add lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git commit -m 2
-	Created commit 98b91cc: 2
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	 create mode 100644 lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git checkout b
-	Switched to branch "b"
-	zeisberg@cassiopeia:/tmp/rerere$ echo lali > lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git add lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git commit -m 2a
-	Created commit bb900f3: 2a
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	 create mode 100644 lolo
-	zeisberg@cassiopeia:/tmp/rerere$ git pull . master
-	Auto-merged lolo
-	CONFLICT (add/add): Merge conflict in lolo
-	Automatic merge failed; fix conflicts and then commit the result.
-	zeisberg@cassiopeia:/tmp/rerere$ perl -n -i -e "print if /^l/" lolo
-	zeisberg@cassiopeia:/tmp/rerere$ cat lolo
-	lali
-	lala
-	zeisberg@cassiopeia:/tmp/rerere$ git rerere
-	zeisberg@cassiopeia:/tmp/rerere$=20
+> The patched version is actually smaller in both SBCL's and Git's case
+> (again, --window 100 and --depth 100):
+>
+> SBCL: 61696 bytes smaller (13294225-13232529)
+> Git:  16010 bytes smaller (12690424-12674414)
+>
+> I believe the reason for this is that more deltas can get in under the
+> depth limit.
 
-In my eyes the last command should have recorded the resolution for
-lolo, shouldn't it?
+Very sensible indeed.
 
-Best regards
-Uwe
+>> It would become worrysome (*BUT* infinitely more interesting)
+>> once you start talking about a tradeoff between slightly larger
+>> delta and much shorter delta.  Such a tradeoff, if done right,
+>> would make a lot of sense, but I do not offhand think of a way
+>> to strike a proper balance between them efficiently.
+>
+> Yeah, I was thinking about that too, and came to the same conclusion.
+> I suspect you'd have to save a /lot/ of delta depth to want to pay any
+> more I/O, though.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/19267
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+stone%3D
+That may not be so.  Deeper delta also means more I/O (and
+worse, because they can be from discontiguous areas) plus delta
+application.
