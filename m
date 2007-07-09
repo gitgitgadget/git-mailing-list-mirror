@@ -1,165 +1,157 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] rerere: record resolution even if file is not in merge base
-Date: Mon, 9 Jul 2007 14:47:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707091445450.5546@racer.site>
-References: <20070709070725.GA4445@lala> <7vps32ugu2.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Mon, 9 Jul 2007 15:11:45 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707091450440.5546@racer.site>
+References: <11839118073186-git-send-email-skimo@liacs.nl>
+ <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707090011070.4248@racer.site>
+ <20070709094703.GP1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707091257470.5546@racer.site> <20070709134918.GT1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-883559467-1183988844=:5546"
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 15:55:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Mon Jul 09 16:19:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7thn-0005iZ-Nb
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 15:55:12 +0200
+	id 1I7u5I-0003Jb-7A
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 16:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100AbXGINzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 09:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753044AbXGINzA
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 09:55:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38730 "HELO mail.gmx.net"
+	id S1753344AbXGIOTY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 10:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753256AbXGIOTY
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 10:19:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40070 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752703AbXGINy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 09:54:59 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 13:54:57 -0000
+	id S1753308AbXGIOTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 10:19:23 -0400
+Received: (qmail invoked by alias); 09 Jul 2007 14:19:21 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 09 Jul 2007 15:54:57 +0200
+  by mail.gmx.net (mp057) with SMTP; 09 Jul 2007 16:19:21 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18DDNFhhBwD0PasSTwBDdUbSuOnYhKCY1uldMqgKw
-	pc2tRmLeXBPXRC
+X-Provags-ID: V01U2FsdGVkX18Sm+hCnEcSn3vYgrurkZCTiQFK8LAciZzDsAX5eJ
+	KSkW7uzaW9KOQ0
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vps32ugu2.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070709134918.GT1528MdfPADPa@greensroom.kotnet.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51995>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323584-883559467-1183988844=:5546
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+On Mon, 9 Jul 2007, Sven Verdoolaege wrote:
 
+> On Mon, Jul 09, 2007 at 01:57:10PM +0100, Johannes Schindelin wrote:
+>
+> > On Mon, 9 Jul 2007, Sven Verdoolaege wrote:
+> >
+> > > What if the commit message is larger than the pipe buffer?
+> > 
+> > You start_command().  Then you write() until it is all written, or the 
+> > pipe is broken.  Then you get the output via index_pipe().  Which is a 
+> > single sha1.  I do not understand your question.
+> 
+> Ah, but that is not how my commit "filter" works right now. It should 
+> produce the whole commit on stdout (as mentioned in the documentation). 
+> So the default filter is "cat" (and not "git-hash-object -t commit 
+> --stdin", as you seem to assume).
 
-Two-file merges were rare enough that they were dropped outside of the 
-radar.  This fix is a trivial change to builtin-rerere.c::find_conflict().  
-It is still sane to insist that we do not do rerere for symlinks, and 
-require to have stages #2 and #3, but we can drop the requirement to have 
-stage #1. rerere does not use information from there anyway.
+Sorry. Somehow I misread that index_pipe() for a read_pipe().
 
-This fix is from Junio, together with two tests to verify that it works
-as expected.
+> How about I change that to a filter that accepts a single SHA1 and
+> produces zero or more SHA1's as output?
+> A filter for the current rewrite-commits would then be replaced
+> by "xargs | git-cat-file commit | original-filter | git-hash-object -t commit --stdin"
 
-Noticed by Uwe Kleine-König.
+You still have not addressed the fundamental problem!  If the commit 
+filter takes the things as a whole commit buffer or as a single sha1, or 
+if it writes one, two or -1 commits is not really a fundamental problem.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+The real problem is that this filter can only act on _one_ commit.  Yes, 
+it wants to change only one commit at a time, but it might need 
+information from _other_ commits, too!
 
-	Heh, this time I steal your patch and take all the credit ;-)
+> > To enhance on the above example: you're rewriting the commit messages 
+> > so that commit names are rewritten to match the rewritten commits.  
+> > That is possible by a message filter in cg-admin-rewritehist.
+> > 
+> > But now somebody comes along, and says "I have a history I need to 
+> > rewrite.  All bug fixes.  The commit names were all abbreviated in the 
+> > commit messages, but they always had 'commit ' in front of them.  I 
+> > want to rewrite them, too."
+> 
+> The current git-rewrite-commits will rewrite all SHA1's it can find,
+> irrespective of any 'commit ' that may precede it.
 
- builtin-rerere.c  |   17 +++++++----------
- t/t4200-rerere.sh |   44 +++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 46 insertions(+), 15 deletions(-)
+Even abbreviated ones?
 
-diff --git a/builtin-rerere.c b/builtin-rerere.c
-index c25b3d5..6ffc43d 100644
---- a/builtin-rerere.c
-+++ b/builtin-rerere.c
-@@ -168,19 +168,16 @@ static int find_conflict(struct path_list *conflict)
- 	int i;
- 	if (read_cache() < 0)
- 		return error("Could not read index");
--	for (i = 0; i + 2 < active_nr; i++) {
--		struct cache_entry *e1 = active_cache[i];
--		struct cache_entry *e2 = active_cache[i+1];
--		struct cache_entry *e3 = active_cache[i+2];
--		if (ce_stage(e1) == 1 &&
--		    ce_stage(e2) == 2 &&
-+	for (i = 0; i+1 < active_nr; i++) {
-+		struct cache_entry *e2 = active_cache[i];
-+		struct cache_entry *e3 = active_cache[i+1];
-+		if (ce_stage(e2) == 2 &&
- 		    ce_stage(e3) == 3 &&
--		    ce_same_name(e1, e2) && ce_same_name(e1, e3) &&
--		    S_ISREG(ntohl(e1->ce_mode)) &&
-+		    ce_same_name(e2, e3) &&
- 		    S_ISREG(ntohl(e2->ce_mode)) &&
- 		    S_ISREG(ntohl(e3->ce_mode))) {
--			path_list_insert((const char *)e1->name, conflict);
--			i += 2;
-+			path_list_insert((const char *)e2->name, conflict);
-+			i++; /* skip over both #2 and #3 */
- 		}
- 	}
- 	return 0;
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 6f55ba0..cfcdb69 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -116,11 +116,12 @@ test_expect_success 'commit succeeds' \
- 
- test_expect_success 'recorded postimage' "test -f $rr/postimage"
- 
--git checkout -b third master
--git show second^:a1 | sed 's/To die: t/To die! T/' > a1
--git commit -q -a -m third
--
--test_expect_failure 'another conflicting merge' 'git pull . first'
-+test_expect_success 'another conflicting merge' '
-+	git checkout -b third master &&
-+	git show second^:a1 | sed "s/To die: t/To die! T/" > a1 &&
-+	git commit -q -a -m third &&
-+	! git pull . first
-+'
- 
- git show first:a1 | sed 's/To die: t/To die! T/' > expect
- test_expect_success 'rerere kicked in' "! grep ======= a1"
-@@ -164,4 +165,37 @@ test_expect_success 'garbage collection (part2)' 'git rerere gc'
- test_expect_success 'old records rest in peace' \
- 	"test ! -f $rr/preimage && test ! -f $rr2/preimage"
- 
-+test_expect_success 'file2 added differently in two branches' '
-+	git reset --hard &&
-+	git checkout -b fourth &&
-+	echo Hallo > file2 &&
-+	git add file2 &&
-+	git commit -m version1 &&
-+	git checkout third &&
-+	echo Bello > file2 &&
-+	git add file2 &&
-+	git commit -m version2 &&
-+	! git merge fourth &&
-+	sha1=$(sed -e "s/	.*//" .git/rr-cache/MERGE_RR) &&
-+	rr=.git/rr-cache/$sha1 &&
-+	echo Cello > file2 &&
-+	git add file2 &&
-+	git commit -m resolution
-+'
-+
-+test_expect_success 'resolution was recorded properly' '
-+	git reset --hard HEAD~2 &&
-+	git checkout -b fifth &&
-+	echo Hallo > file3 &&
-+	git add file3 &&
-+	git commit -m version1 &&
-+	git checkout third &&
-+	echo Bello > file3 &&
-+	git add file3 &&
-+	git commit -m version2 &&
-+	! git merge fifth &&
-+	git diff-files -q &&
-+	test Cello = "$(cat file3)"
-+'
-+
- test_done
--- 
-1.5.3.rc0.2769.gd9be2
+> > > What's wrong with --author='!Darl McBribe' ?
+> > 
+> > It is a very special use case.  Not always will you be able to get all 
+> > the information from the commit object you need for conditional 
+> > operations.  My example only showed that you can do the same with that 
+> > syntax.  But imagine what you could do if we just added a small 
+> > syntactical sugar:
+> > 
+> > 	-e '?has-path:README?substitute/v2/v3/'
+> 
+> So you want to introduce a whole language?
+> Isn't that a bit over-engineering?
 
+We already have a tool which is powerful enough to do that.  Yes, it is a 
+little complicated to operate, and yes, it is slower than your version.  
+But darn it, it _does_ more than your version.
 
---8323584-883559467-1183988844=:5546--
+It is a pity that you did not address the fundamental problem, so I have 
+to spend time (that I should really spend differently) thinking about it.
+
+Alas, I think I have a solution. You need a flag:
+
+	--write-sha1-mappings=<directory>
+
+Yes, it makes your code slower again, but only if you need those mappings.
+
+Yes, it is way less convenient than the "map" function, but then you could 
+automatically write a script into that directory, providing the 
+convenience functions, and exporting the path so that you can say
+
+	--commit-filter '. "$G"; ... map "$sha1"'
+
+and also add convenience functions "save <varname>" and "restore 
+<varname>" so that finally a bit of convenience is restored to the filter 
+writers.
+
+But those are no longer fundamental problems.  I'd be glad if you could 
+put these suggestions to use in rewrite-commits.
+
+While at it, you should also change the semantics for the commit filter, 
+probably even less so than you suggested: since you rewrite the parents, 
+and the tree, you should continue to pipe this information into the commit 
+filter.  That would be another place for a convenience function "commit", 
+which does the same as "git hash-object -w --stdin".
+
+Okay now. To be precise, here is my wish list:
+
+* rename the darned things to "filter" again.
+
+* --write-sha1-mappings=<directory> (or --write-commit-mappings), possibly 
+  defaulting to .git/mappings/.  Be careful not to overwrite an existing 
+  such directory.
+
+* change the semantics of the commit filter: the output is a list 
+  (possibly empty) of replacement sha1's for this commit.
+
+* if any filters are called, provide a script with convenience functions, 
+  and an environment variable pointing to it.  These functions should 
+  include:
+
+	* map
+	* commit
+	* save
+	* restore
+
+Ciao,
+Dscho
