@@ -1,84 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] branch --track: code cleanup and saner handling of local
- branches
-Date: Mon, 9 Jul 2007 22:05:14 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707092203100.5546@racer.site>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
- <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
- <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
- <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
- <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: Re: [PATCH] gitweb: New cgi parameter: filter
+Date: Mon, 9 Jul 2007 23:18:41 +0200
+Message-ID: <20070709211839.GT29994@genesis.frugalware.org>
+References: <20070708013543.GD29994@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 23:13:01 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Jl+DbTnyraiZ/loT"
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Luben Tuikov <ltuikov@yahoo.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 23:19:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I80XU-0000eO-MI
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 23:13:01 +0200
+	id 1I80dI-0002RX-O7
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 23:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071AbXGIVM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 17:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755062AbXGIVM4
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 17:12:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34797 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753565AbXGIVMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 17:12:55 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 21:12:50 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 09 Jul 2007 23:12:50 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19GMEhxWehGuDQNVjf/C4MkRwOk8pZ6HIlkgCdIRy
-	3/fHseP6PPXrJg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754493AbXGIVSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 17:18:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754438AbXGIVSx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 17:18:53 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:40142 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754219AbXGIVSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 17:18:52 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1I80d6-00088K-MM
+	from <vmiklos@frugalware.org>; Mon, 09 Jul 2007 23:18:48 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 310F816A8084; Mon,  9 Jul 2007 23:18:41 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070708013543.GD29994@genesis.frugalware.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
+	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52021>
 
-Hi,
 
-On Mon, 9 Jul 2007, Junio C Hamano wrote:
+--Jl+DbTnyraiZ/loT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > -static int get_remote_branch_name(const char *value)
-> > +static int tracking_config(const char *key, const char *value)
-> > [...]
-> >  	/*
-> > -	 * Try an exact match first.  I.e. handle the case where the
-> > -	 * value is "$anything:refs/foo/bar/baz" and start_ref is exactly
-> > -	 * "refs/foo/bar/baz". Then the name at the remote is $anything.
-> > +	 * A remote.<name>.fetch value can have two forms:
-> > +	 *
-> > +	 * - exact:
-> > +	 *
-> > +	 *	refs/heads/gnu:refs/heads/my-upstream
-> > +	 *
-> > +	 * - wildcard:
-> > +	 *
-> > +	 *	refs/heads/ *:refs/remotes/gnu/ *
-> > +	 *
-> > +	 * try exact match first:
-> >  	 */
-> 
-> It strikes me a bit odd if Daniel's remote.[ch] infrastructure
-> does not give you easy access to this kind of information...
+Hello,
 
-Yes, probably.  However, at the time he was sending that patch, I was 
-already preparing the patch.  Besides, we can always go back and change 
-the code, if you really want to pull in the remotes stuff into 
-builtin-branch (as of yet, they are almost independent).
+Na Sun, Jul 08, 2007 at 03:35:43AM +0200, Miklos Vajna <vmiklos@frugalware.=
+org> pisal(a):
+> Currently the only supported value is "nomerges". This allows one to filt=
+er
+> merges from many actions, like rss, log and shortlog.
+>=20
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 
-My vote is to have it indpendent for now, if only to fix existing issues.  
-But in the end it is your choice.
+What do you think about this patch? Is it something that useful only for
+me?
 
-Ciao,
-Dscho
+Some Frugalware users claimed about that most git-log-like command have
+a --no-merges opcion but the rss feed, that's why i added such a
+feature.
+
+Thanks,
+
+- VMiklos
+
+--Jl+DbTnyraiZ/loT
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFGkqYve81tAgORUJYRAgj8AJ9iKUhqI6nHr0NfmjiFXNoWlVtqAACfeEE7
+yiND2pZd1Nimg0tl/4gE5Ek=
+=3AQw
+-----END PGP SIGNATURE-----
+
+--Jl+DbTnyraiZ/loT--
