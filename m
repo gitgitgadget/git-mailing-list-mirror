@@ -1,86 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] branch.autosetupmerge: allow boolean values, or "all"
-Date: Mon, 9 Jul 2007 12:28:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707091025250.4248@racer.site>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
- <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
- <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: rerere fails to record resolution if file doesn't exist in merge base
+Date: Mon, 9 Jul 2007 13:35:43 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070709113543.GA12633@informatik.uni-freiburg.de>
+References: <20070709070725.GA4445@lala> <7vps32ugu2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 09 13:35:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 13:36:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7rWu-0001r3-Qi
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 13:35:49 +0200
+	id 1I7rX7-0001u5-9F
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 13:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbXGILfq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 07:35:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbXGILfp
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 07:35:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33004 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752629AbXGILfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 07:35:44 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 11:35:42 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 09 Jul 2007 13:35:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dtM0wRVVdSHCm2akK/JDO2Mry8n2AfKYkWgf0Kn
-	bx7IWfblrHXTlj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46919692.5020708@gnu.org>
-X-Y-GMX-Trusted: 0
+	id S1754158AbXGILft convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Jul 2007 07:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbXGILft
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 07:35:49 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:38004 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751757AbXGILfs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 07:35:48 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I7rWt-0002ZU-3U; Mon, 09 Jul 2007 13:35:47 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l69BZiMN013039;
+	Mon, 9 Jul 2007 13:35:44 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l69BZhh6013038;
+	Mon, 9 Jul 2007 13:35:43 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vps32ugu2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51981>
 
-Hi,
+Hello Junio,
 
-On Sun, 8 Jul 2007, Paolo Bonzini wrote:
+Junio C Hamano wrote:
+> Uwe Kleine-K=F6nig  <ukleinek@informatik.uni-freiburg.de> writes:
+>=20
+> > Anyhow, the failure still exists, even though the original report w=
+as
+> > sent when rerere was still a perl script ...
+> >
+> > 	zeisberg@cassiopeia:/tmp/rerere$ git init
+> > 	Initialized empty Git repository in .git/
+> > 	zeisberg@cassiopeia:/tmp/rerere$ mkdir .git/rerere
+>=20
+> This should be creating .git/rr-cache, but what you said in your
+> message is correct regardless.
+You're right.  copy-n-paste error.
+=20
+> > In my eyes the last command should have recorded the resolution for
+> > lolo, shouldn't it?
+>=20
+> I think two-file merge (ancestor did not have it, and you and he
+> added the path differently) is rare enough that it was dropped
+> outside of the radar.  A fix would probably be a trivial change
+> to builtin-rerere.c::find_conflict(), I think.  While it would
+> still be sane to insist that we do not do rerere for symlinks,
+> and require to have stages #2 and #3, we should be able to drop
+> the requirement to have stage #1.  rerere does not use
+> information from there anyway.
+>=20
+> Not even compile tested, but something like this should do.
+It compiles, but seems not to work.  I will try to make up a test.
 
-> [Paolo tried to hide the fact that it was Junio who wrote this:]
->
-> > Having prepared the patch below, I do not think if the original patch 
-> > even wanted to have 'all' semantics.  The surrounding text only talks 
-> > about "off a remote branch" and I strongly suspect that nobody wanted 
-> > to do this for a local branch case at all.
-> 
-> If I remember correctly, the problem was that you are not sure that 
-> remote branches are in refs/remotes.
+Best regards
+Uwe
 
-Then you code is incorrect.
+--=20
+Uwe Kleine-K=F6nig
 
-Basically, you use a confusing set of four functions to do the following:
-
-- read the config, and
-- write the branch.<name>.{remote,merge} variables
-
-Two functions would have been sufficient, and easier to read.  And as I 
-fully expect with non-simple code, a bug was lurking.  This time in 
-set_branch_defaults():
-
-you check if neither config_repo nor config_remote (which is a misnomer, 
-as it does not contain a "remote", but a "remote branch") is set.  But 
-that happens when there was no information in the config, too!
-
-Also you miss the case that there is ambiguous information:
-
-[remote "hello"]
-	url = git://blub/x.git
-	fetch = refs/heads/master:refs/heads/origin
-
-[remote "bello"]
-	url = git://yaddayadda/x.git
-	fetch = refs/heads/master:refs/heads/origin
-
-See? Your code just uses "bello".
-
-Will send out a fix shortly.
-
-Ciao,
-Dscho
+http://www.google.com/search?q=3D5+choose+3
