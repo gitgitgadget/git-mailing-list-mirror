@@ -1,79 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix "git log --parent -m" from emitting duplicated parent info
-Date: Sun, 08 Jul 2007 23:19:09 -0700
-Message-ID: <7vodimw142.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550707080737j56c161bdrf0c079b61877085b@mail.gmail.com>
-	<7vd4z2za2g.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707090220281.4248@racer.site>
-	<7vps32xsof.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550707082246k39286517o58fe89d80e05e08@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
+Date: Mon, 9 Jul 2007 02:37:34 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707090142130.6977@iabervon.org>
+References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org>
+ <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 08:19:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 08:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7maa-0006Eb-8x
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 08:19:16 +0200
+	id 1I7msN-0000Oq-9r
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 08:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbXGIGTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 02:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbXGIGTM
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 02:19:12 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:49026 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbXGIGTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 02:19:11 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070709061910.BTMD19529.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Jul 2007 02:19:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MJKA1X0011kojtg0000000; Mon, 09 Jul 2007 02:19:10 -0400
-In-Reply-To: <e5bfff550707082246k39286517o58fe89d80e05e08@mail.gmail.com>
-	(Marco Costalba's message of "Mon, 9 Jul 2007 07:46:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751090AbXGIGhg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 02:37:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751176AbXGIGhg
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 02:37:36 -0400
+Received: from iabervon.org ([66.92.72.58]:2555 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751069AbXGIGhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 02:37:35 -0400
+Received: (qmail 30125 invoked by uid 1000); 9 Jul 2007 06:37:34 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Jul 2007 06:37:34 -0000
+In-Reply-To: <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51963>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+On Sun, 8 Jul 2007, Junio C Hamano wrote:
 
-> Indeed we can use and _do_ use --full-history not only for printing
-> all revisions but to _walk_ the tree in a certain way, different from
-> default.
+> Are _identifiers with leading underscore Kosher thing to do, I
+> wonder...  We do have ones with trailing ones (mostly qsort
+> functions) and I think they are done that way for the sake of
+> standards conformance.
 
-Yes, --full-history essentially tells the machnery to walk all
-side branches even when a merge takes all the specified paths
-from one parent's version.  You will end up walking all five
-branches from the first pentapus "addafaf" in git.git history,
-even if history simplification with pathspec would have narrowed
-it down to three paths if you did not give that option.
+I'm not sure; I inherited that bit of code from Julian. Do we have a 
+standard idiom for a function that sets a bunch of static variables?
 
-> IMHO --parents + --full-history is absolutely legal because the first
-> flag indicate how to walk the tree and the second flag indicate what
-> to show to the user.
+> diff --git a/fetch-pack.h b/fetch-pack.h
+> new file mode 100644
+> index 0000000..2bd05a8
+> --- /dev/null
+> +++ b/fetch-pack.h
+> @@ -0,0 +1,16 @@
+> +#ifndef FETCH_PACK_API
+> 
+> We seem to say "#ifndef FETCH_PACK_H" in such a case, though.
 
-I think we are in agreement.  You are telling the machinery to
-walk all five branches with --full-history.  But you are not
-telling the machinery to keep the intermediate commits (i.e. you
-do not give --sparse), so these five branches can be simplified
-to lead to the same parent.  I think I was confused by dense vs
-simplify_history when I wrote that message in the thread
-Johannes pointed out:
+I was trying to convey that this is the C API to call fetch-pack directly, 
+rather than something used by the builtin, or by the wrapper for calling 
+the builtin. But the inclusion guard is probably not going to be noticed 
+anyway, and I don't think it's worth making the header filename verbose.
 
-	http://thread.gmane.org/gmane.comp.version-control.git/29222
+> Nobody seems to call setup_fetch_pack() yet.  How complete is
+> this patch meant to be?
 
-Making the duplicate parent removal depend on "dense" makes
-sense, but the rewrite_parent() codepath is used only when dense
-anyway.
+It's part of a series that leads up to making fetch a builtin. I'm trying 
+to get in bits that are bounded by logical APIs. The roadmap here is that 
+transport.{c,h} from one of my other patches will get a function to fetch 
+a set of refs, and it will (for a suitable URL format) call 
+setup_fetch_pack() with the appropriate options and then call 
+fetch_pack(). builtin-fetch will use this function to actually get objects 
+once it has determined which ones it should get.
 
-Thanks for a timely objection and sanity checking.
+I think I've now got the whole series to a point where everything's 
+submittable, if you'd like to see the whole thing. It's actually composed 
+of 6 initial independant sub-series (mostly single patches) of which I've 
+submitted 4 (three today and the one that modularizes the commit-walker 
+infrastructure and removes the obsolete ones), and a final series of 3 
+that implements fetch on top of the rest. How should I number this?
+
+	-Daniel
+*This .sig left intentionally blank*
