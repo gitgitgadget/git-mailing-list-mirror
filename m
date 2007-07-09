@@ -1,62 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
-Date: Sun, 08 Jul 2007 22:39:41 -0700
-Message-ID: <7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Preferring shallower deltas on repack
+Date: Sun, 8 Jul 2007 22:41:54 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707082238150.31544@woody.linux-foundation.org>
+References: <20070709044326.GH4087@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jul 09 07:39:46 2007
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Mon Jul 09 07:42:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7lyM-0000ss-6x
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 07:39:46 +0200
+	id 1I7m0f-0001Dv-J6
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 07:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849AbXGIFjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 01:39:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXGIFjn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:39:43 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:41008 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750AbXGIFjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 01:39:42 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070709053941.BJYL19529.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Jul 2007 01:39:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MHfh1X00P1kojtg0000000; Mon, 09 Jul 2007 01:39:42 -0400
-In-Reply-To: <Pine.LNX.4.64.0707090104120.6977@iabervon.org> (Daniel
-	Barkalow's message of "Mon, 9 Jul 2007 01:10:16 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751025AbXGIFmG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 01:42:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbXGIFmF
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:42:05 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55135 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750759AbXGIFmE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 01:42:04 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l695g0Uv023901
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 8 Jul 2007 22:42:01 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l695fsgE019651;
+	Sun, 8 Jul 2007 22:41:55 -0700
+In-Reply-To: <20070709044326.GH4087@lavos.net>
+X-Spam-Status: No, hits=-2.641 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51957>
 
-Are _identifiers with leading underscore Kosher thing to do, I
-wonder...  We do have ones with trailing ones (mostly qsort
-functions) and I think they are done that way for the sake of
-standards conformance.
 
-Gone is a "#if 0/#endif" which is good.
 
-diff --git a/fetch-pack.h b/fetch-pack.h
-new file mode 100644
-index 0000000..2bd05a8
---- /dev/null
-+++ b/fetch-pack.h
-@@ -0,0 +1,16 @@
-+#ifndef FETCH_PACK_API
+On Sun, 8 Jul 2007, Brian Downing wrote:
+> 
+> I modified this to prefer shallower deltas of the same size.  This made
+> the deltas for this file a very wide tree with a maximum depth of about
+> 65.  Other (much smaller) improvements were seen elsewhere in the pack.
+> Runtime does not seem to have been affected, as most of the work had
+> already been done when it was tossing deltas before.
 
-We seem to say "#ifndef FETCH_PACK_H" in such a case, though.
-Nobody seems to call setup_fetch_pack() yet.  How complete is
-this patch meant to be?
+This seems like a good thing to do, and on the face of it I think it's 
+worth it. I can't see any real downsides, at least, and while the upside 
+doesn't sound huge, it sounds real enough.
 
-The program is somehow much more pleasant to follow, even though
-there is no fundamental change anywhere.
+So here's at least an initial tentative "ack" from me.
+
+		Linus
