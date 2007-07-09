@@ -1,67 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: merge-one-file, was Re: [PATCH] merge-tree: sometimes, d/f conflict
- is not an issue
-Date: Mon, 9 Jul 2007 16:06:44 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707091604030.5546@racer.site>
-References: <20070405071615.2915.6837.reportbug@acer>
- <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org>
- <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
- <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0706131354250.4059@racer.site>
- <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0706131543140.4059@racer.site>
- <20070625071819.8091.qmail@5e4088a43a10fd.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0707080148370.4093@racer.site> <7vabu765r0.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707080248320.4093@racer.site> <7v644v5tr3.fsf@assigned-by-dhcp.cox.net>
- <7vwsxb4e2q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081353560.4248@racer.site>
- <7v8x9q1x5t.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
+Date: Mon, 9 Jul 2007 16:28:12 +0100
+Message-ID: <200707091628.14377.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org> <200707091416.39949.andyparkins@gmail.com> <20070709144030.GE16032@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	=?utf-8?Q?R?= =?utf-8?Q?=C3=A9mi?= Vanicat <vanicat@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 17:14:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:28:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7uwU-00088c-RK
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:14:27 +0200
+	id 1I7vA6-0003P8-SB
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751031AbXGIPOX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 11:14:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbXGIPOX
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:14:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49287 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750929AbXGIPOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 11:14:22 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 15:14:20 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 09 Jul 2007 17:14:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pRy4rGxhpc3gTEI7xZUWU03k79hegg5SqgdAfwU
-	PCmpF5kqNr1s1U
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v8x9q1x5t.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754207AbXGIP2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 11:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754107AbXGIP2Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:28:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:10132 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753807AbXGIP2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 11:28:24 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1151307ugf
+        for <git@vger.kernel.org>; Mon, 09 Jul 2007 08:28:23 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ryDPgtitUet/jPRVklynvQAJ+FWG/Sx2zostZ4Oh3lPy/oxvID2aAhZ+hfBwkltMnCg/stmSiFEfo5Ll2eH/mKn2jgSUpC+KZZ/h23GArRF/t7y2MLT5hpFRG5rd6gnr/fUlhIcT9gbH62yF7cIEupX7sdAiQe40hvLI0fgkL1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fRdM0/RGEhDIPMtD4vBuMWoiS5KTgr1wt92s83YFZoEGBmd43SPHB6+Ij7MHr5i4qIKk98nMDxhoQO9KHyYjxIbmHtsnRDx3ybBq8wl+nj3SpWVS7KpiH8Tg66pUhZNet1VN3wWLRXfPM/WxqSZwa9r+L1UsG3tlVh8Wmm6eutA=
+Received: by 10.82.108.9 with SMTP id g9mr8410713buc.1183994899535;
+        Mon, 09 Jul 2007 08:28:19 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id c22sm31848692ika.2007.07.09.08.28.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 09 Jul 2007 08:28:18 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070709144030.GE16032@thunk.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52001>
 
-Hi,
+On Monday 2007 July 09, Theodore Tso wrote:
+> > "All identifiers beginning with an underscore are reserved for ordinary
+> > identifiers (functions, variables, typedefs, enumeration constants) with
+> > file
+> > scope."
 
-On Sun, 8 Jul 2007, Junio C Hamano wrote:
+> I think the above does agree with what I said.  It says that you can
+> use functions, variables, typdefs, enumeration constants (not just
+> labels or structure members) WITH FILE SCOPE.  I.e., so long as it
+> doesn't leak across a .o linkage.  So one .o file can use a static
 
-> [PATCH] Fix merge-one-file for our-side-added/our-side-removed cases
+I'm reading it as meaning they are reserved at file scope; not that you can 
+use them at file scope.
 
-FWIW I have a patch series in my local repo, which makes merge-one-file a 
-builtin, and even avoids fork()+exec()ing the program when called from 
-unpack_trees().  However, I never came around to understand all the corner 
-cases, and therefore did not write tests for it.  Therefore, I am not 
-really sure if it works as intended.  So I'd be very grateful if you could 
-write tests while you are touching it anyway...
+> _my_strdup, and another .o file can use a static _my_strdup, and they
+> don't have to worry about multiply defined function conflicts, since
+> they are static functions with file or smaller scoping.
 
-Ciao,
-Dscho
+Erm, but we're not talking about your own .o files we're talking about 
+conflicting with the library; what you say would be true for any identifier.  
+We have no way of guaranteeing that _my_strdup() isn't defined by one of the 
+standard library headers that have been included.  The standard header is 
+entitled to use underscore identifiers because they have been reserved at 
+file scope.
+
+Reading a little further into the FAQ you posted, I found the following in the 
+list of exceptions:
+
+"You may use identifiers consisting of an underscore followed by a digit or 
+lower case letter for labels and structure/union members." 
+and
+"You may use identifiers consisting of an underscore followed by a digit or 
+lower case letter at function, block, or prototype scope."
+
+I'm more sure now - you can't use underscore identifiers at file scope.
+
+Regardless, we're just splitting hairs now.  We seem to both agree that it's 
+easiest just to outright not use underscore-prefixed identifiers; so I'm 
+happy. :-)
+
+
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
