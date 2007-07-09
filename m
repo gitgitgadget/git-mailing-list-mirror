@@ -1,85 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] Add git-rewrite-commits
-Date: Mon, 9 Jul 2007 15:59:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707091558090.5546@racer.site>
-References: <11839118073186-git-send-email-skimo@liacs.nl>
- <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707090011070.4248@racer.site>
- <20070709094703.GP1528MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0707091257470.5546@racer.site> <20070709134918.GT1528MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0707091450440.5546@racer.site> <20070709144248.GW1528MdfPADPa@greensroom.kotnet.org>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: [PATCH v2] Make fetch-pack a builtin with an internal API
+Date: Mon, 09 Jul 2007 17:10:36 +0200
+Message-ID: <874pkdlij7.fsf@mid.deneb.enyo.de>
+References: <Pine.LNX.4.64.0707090104120.6977@iabervon.org>
+	<7vwsxaw2xu.fsf@assigned-by-dhcp.cox.net>
+	<20070709115029.GD16032@thunk.org>
+	<200707091416.39949.andyparkins@gmail.com>
+	<20070709144030.GE16032@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon Jul 09 17:07:31 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:10:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7upl-0006Hx-5s
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:07:29 +0200
+	id 1I7uss-0007FK-DU
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 17:10:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754328AbXGIPHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 11:07:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754264AbXGIPHZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:07:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51806 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750788AbXGIPHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 11:07:24 -0400
-Received: (qmail invoked by alias); 09 Jul 2007 15:07:22 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp032) with SMTP; 09 Jul 2007 17:07:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18aRmhOkfgapnbdUFDmA9m9O8ks69VeCFzl4pqVl7
-	yVUXbTdm8jG5xU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070709144248.GW1528MdfPADPa@greensroom.kotnet.org>
-X-Y-GMX-Trusted: 0
+	id S1753327AbXGIPKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 11:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbXGIPKk
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 11:10:40 -0400
+Received: from mail.enyo.de ([212.9.189.167]:2346 "EHLO mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750750AbXGIPKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 11:10:39 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1I7usn-0006UD-KE
+	for git@vger.kernel.org; Mon, 09 Jul 2007 17:10:37 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.67)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1I7usm-0004ez-Iz
+	for git@vger.kernel.org; Mon, 09 Jul 2007 17:10:36 +0200
+In-Reply-To: <20070709144030.GE16032@thunk.org> (Theodore Tso's message of
+	"Mon, 9 Jul 2007 10:40:30 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51999>
 
-Hi,
+* Theodore Tso:
 
-On Mon, 9 Jul 2007, Sven Verdoolaege wrote:
+> On Mon, Jul 09, 2007 at 02:16:35PM +0100, Andy Parkins wrote:
 
-> On Mon, Jul 09, 2007 at 03:11:45PM +0100, Johannes Schindelin wrote:
-> > On Mon, 9 Jul 2007, Sven Verdoolaege wrote:
-> > > The current git-rewrite-commits will rewrite all SHA1's it can find,
-> > > irrespective of any 'commit ' that may precede it.
-> > 
-> > Even abbreviated ones?
-> 
-> Yes.  I'll add that to the documentation.
+>> Perhaps I'm reading it wrong but:
+>> 
+>> "All identifiers beginning with an underscore are reserved for ordinary 
+>> identifiers (functions, variables, typedefs, enumeration constants) with file 
+>                                                                       ^^^^^^^^^
+>> scope."
+>   ^^^^^^
+>> 
+>> Doesn't agree with what you've said.  I think that you _can_ use _[a-z]* for 
+>> labels or structure members - however, not within file or function scope.
+>
+> I think the above does agree with what I said.  It says that you can
+> use functions, variables, typdefs, enumeration constants (not just
+> labels or structure members) WITH FILE SCOPE.
 
-That is definitely something you want to control.  I have seen commit 
-messages referencing certain hexadecimal numbers, and they were definitely 
-no commit names.  The shorter they are, the more likely they are to be 
-rewritten by your magic.
+No, they are are reserved.
 
-> > * rename the darned things to "filter" again.
-> > 
-> > * --write-sha1-mappings=<directory> (or --write-commit-mappings), possibly 
-> >   defaulting to .git/mappings/.  Be careful not to overwrite an existing 
-> >   such directory.
-> > 
-> > * change the semantics of the commit filter: the output is a list 
-> >   (possibly empty) of replacement sha1's for this commit.
-> > 
-> > * if any filters are called, provide a script with convenience functions, 
-> >   and an environment variable pointing to it.  These functions should 
-> >   include:
-> > 
-> > 	* map
-> > 	* commit
-> > 	* save
-> > 	* restore
-> 
-> Hmm... you're tricking me into write shell code.
+> I.e., so long as it doesn't leak across a .o linkage.  So one .o
+> file can use a static _my_strdup, and another .o file can use a
+> static _my_strdup, and they don't have to worry about multiply
+> defined function conflicts, since they are static functions with
+> file or smaller scoping.
 
-Ah, oh well.  If you do the rest, I'll do the shell code.
-
-Ciao,
-Dscho
+This is not sufficient because the implementation might have a
+*typedef* for _my_strdup in any header file, and neither translation
+unit would compile.  Or they could have been declared with a different
+prototype.
