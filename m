@@ -1,60 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch --track: code cleanup and saner handling of local branches
-Date: Mon, 09 Jul 2007 15:01:25 -0700
-Message-ID: <7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
-	<7vhcof2rur.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707081336020.4248@racer.site>
-	<7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
-	<7vhcoexqeh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707091228290.5546@racer.site>
-	<7v4pkduw2f.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707092203100.5546@racer.site>
+From: "Matt McCutchen" <hashproduct@gmail.com>
+Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
+Date: Mon, 9 Jul 2007 18:52:56 -0400
+Message-ID: <3bbc18d20707091552l29fb81b6v34da9cef3ec0df58@mail.gmail.com>
+References: <1183053733.6108.0.camel@mattlaptop2>
+	 <7v1wfi1rz6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 00:01:32 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 10 00:53:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I81IR-0003ae-5Y
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 00:01:31 +0200
+	id 1I826H-0005mk-IJ
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 00:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756797AbXGIWB2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 18:01:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756780AbXGIWB2
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 18:01:28 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64685 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756696AbXGIWB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 18:01:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070709220126.MMXC1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Jul 2007 18:01:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Ma1R1X00M1kojtg0000000; Mon, 09 Jul 2007 18:01:26 -0400
-In-Reply-To: <Pine.LNX.4.64.0707092203100.5546@racer.site> (Johannes
-	Schindelin's message of "Mon, 9 Jul 2007 22:05:14 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754478AbXGIWw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 18:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbXGIWw6
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 18:52:58 -0400
+Received: from nz-out-0506.google.com ([64.233.162.231]:62496 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754375AbXGIWw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 18:52:57 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so826551nze
+        for <git@vger.kernel.org>; Mon, 09 Jul 2007 15:52:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LPptScOyIx9yvoJHvrY3ip+rQSmdHF5wYspbhh5sGhe3VzL14sKVaXQuR2AvOR7znWGno/GmVZNMHTjqYiZi68B0CYDHMtxdVMmZJFe5WKPunU7kqImmXnPgZ8CZMjorFa91pi3RpPxupY6Bo+XYgkQZ887zZ9+7nPz3giTuQcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y8BOCczhww+mjP3XKx/MPon06uKZAJ7fe2D7j+f+/qsECJcsRLW+ghr3fUwMyiU169MWw3hjtNNQFgq4qGFeWWZbn18kf04sVTsyMxqBb2+7UBObhpChUdMo1glduUz/TrosfdwhnDWpDemhNSLzbD6b3q7vu6XWrqM6bSOom6I=
+Received: by 10.142.106.18 with SMTP id e18mr266907wfc.1184021576217;
+        Mon, 09 Jul 2007 15:52:56 -0700 (PDT)
+Received: by 10.143.30.9 with HTTP; Mon, 9 Jul 2007 15:52:56 -0700 (PDT)
+In-Reply-To: <7v1wfi1rz6.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52023>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> It strikes me a bit odd if Daniel's remote.[ch] infrastructure
->> does not give you easy access to this kind of information...
+On 7/8/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Matt McCutchen <hashproduct@gmail.com> writes:
 >
-> Yes, probably.  However, at the time he was sending that patch, I was 
-> already preparing the patch.
+> > -sub gitweb_have_snapshot {
+> > -     my ($ctype, $suffix, $command) = gitweb_check_feature('snapshot');
+> > -     my $have_snapshot = (defined $ctype && defined $suffix);
+> > -
+> > -     return $have_snapshot;
+>
+> Although you are removing this function, you still have a couple
+> of callers left in the code.
 
-I was talking about existing remote.[ch] patches, which has been
-in tree since late May this year, not his recent round of
-"approach to builtin git-fetch" series.
+OK, I will revise the patch, submit it and see if I can get it to
+appear as a reply to this thread.  Incidentally, when only one format
+is offered, would you prefer the snapshot link to appear as
+"_snapshot_" (the same as before) or "_snapshot (tgz)_" instead of the
+"snapshot (_tgz_)" that the current patch does?
+
+Matt
