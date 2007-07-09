@@ -1,63 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch.autosetupmerge: allow boolean values, or "all"
-Date: Sun, 08 Jul 2007 19:27:34 -0700
-Message-ID: <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
-	<7vhcof2rur.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707081336020.4248@racer.site>
-	<7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Sun, 08 Jul 2007 23:22:41 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0707082320480.26459@xanadu.home>
+References: <Pine.LNX.4.64.0707041905570.4071@racer.site>
+ <alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
+ <7vejjnhpap.fsf@assigned-by-dhcp.cox.net>
+ <7vwsxfe96i.fsf@assigned-by-dhcp.cox.net>
+ <7vlkdve93o.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0707051223520.9789@racer.site>
+ <7v8x9uexji.fsf_-_@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0707061051020.9434@woody.linux-foundation.org>
+ <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 09 04:27:50 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 05:22:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7iyV-0001cH-PH
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 04:27:44 +0200
+	id 1I7jpv-0000ZX-34
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 05:22:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757998AbXGIC1g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 22:27:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758027AbXGIC1g
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 22:27:36 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:48372 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757106AbXGIC1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 22:27:35 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070709022735.HHZU3098.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 8 Jul 2007 22:27:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id METa1X0071kojtg0000000; Sun, 08 Jul 2007 22:27:34 -0400
-In-Reply-To: <46919692.5020708@gnu.org> (Paolo Bonzini's message of "Sun, 08
-	Jul 2007 21:59:46 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758452AbXGIDWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 23:22:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758057AbXGIDWn
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 23:22:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:45340 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757495AbXGIDWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 23:22:42 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JKW00I5Q6PT4O40@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 08 Jul 2007 23:22:41 -0400 (EDT)
+In-reply-to: <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51946>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+On Fri, 6 Jul 2007, Junio C Hamano wrote:
 
-> 	> Having prepared the patch below, I do not think if the original
->> patch even wanted to have 'all' semantics.  The surrounding text
->> only talks about "off a remote branch" and I strongly suspect
->> that nobody wanted to do this for a local branch case at all.
->
-> If I remember correctly, the problem was that you are not sure that
-> remote branches are in refs/remotes.
+> About the comment from Johannes regarding hunk_header vs
+> funcname, I would actually prefer hunk_header, since that is
+> what this is about ("funcname" and "find_func" were misnomer
+> from the beginning), but I'd rename hunk_header to funcname for
+> the sake of consistency and minimizing the diff.
 
-Yes, the user can use traditional layout (e.g. refs/heads/origin
-is used as a remote tracking branch).
+I think "minimizing the diff" in this case is a bad reason.  Using 
+hunk_header is so much better than funcname IMHO.
 
-So the check with refs/remotes/ is not technically correct, but
-it should probably look-up the configuration to check the
-tracking, if we really want to be strict about it.
 
-I personally do not care too much about it, though.
+Nicolas
