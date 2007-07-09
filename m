@@ -1,66 +1,55 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] cvsimport: added warning doc, cvsimport may fail to handle history
-Date: Mon,  9 Jul 2007 07:42:42 +0200
-Message-ID: <11839597623847-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 09 07:42:49 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Preferring shallower deltas on repack
+Date: Sun, 08 Jul 2007 22:43:26 -0700
+Message-ID: <7vsl7yw2rl.fsf@assigned-by-dhcp.cox.net>
+References: <20070709044326.GH4087@lavos.net>
+	<7v1wfixhvk.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: bdowning@lavos.net (Brian Downing)
+X-From: git-owner@vger.kernel.org Mon Jul 09 07:43:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7m1G-0001In-HA
-	for gcvg-git@gmane.org; Mon, 09 Jul 2007 07:42:46 +0200
+	id 1I7m1y-0001OH-Qt
+	for gcvg-git@gmane.org; Mon, 09 Jul 2007 07:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751069AbXGIFmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 01:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750989AbXGIFmo
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:42:44 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55458 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818AbXGIFmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 01:42:43 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l695ggaY001697
-	for <git@vger.kernel.org>; Mon, 9 Jul 2007 07:42:42 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l695ggWb025759;
-	Mon, 9 Jul 2007 07:42:42 +0200 (MEST)
-X-Mailer: git-send-email 1.5.1.3
+	id S1751090AbXGIFn2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 01:43:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbXGIFn2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 01:43:28 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:65300 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869AbXGIFn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 01:43:27 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070709054326.EAIM22777.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 9 Jul 2007 01:43:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MHjS1X0071kojtg0000000; Mon, 09 Jul 2007 01:43:27 -0400
+In-Reply-To: <7v1wfixhvk.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 08 Jul 2007 22:31:43 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51959>
 
-There are discussions on the mailing list that git-cvsimport
-fails to handle history. This should be noted in the documentation
-of cvsimport.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- Documentation/git-cvsimport.txt |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+> It would become worrysome (*BUT* infinitely more interesting)
+> once you start talking about a tradeoff between slightly larger
+> delta and much shorter delta.  Such a tradeoff, if done right,
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index fdd7ec7..b4a5ebd 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -31,6 +31,16 @@ to work with; after that, you need to 'git merge' incremental imports, or
- any CVS branches, yourself.  It is advisable to specify a named remote via
- -r to separate and protect the incoming branches.
- 
-+There were rumors on the mailing list that git-cvsimport fails to
-+handle history correctly.  Especially cvs branches seem to cause 
-+problems. See the following thread on the mailing list for more details
-+link:http://marc.info/?t=118385570200002&r=1&w=2[http://marc.info/?t=118385570200002&r=1&w=2].
-+Alternatives discussed on the mailing list are
-+
-+  * parsecvs from link:http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git/[http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git/]
-+  * fromcvs from link:http://ww2.fs.ei.tum.de/%7Ecorecode/hg/fromcvs/[http://ww2.fs.ei.tum.de/%7Ecorecode/hg/fromcvs/]
-+
-+As of July 2007 there is no definite recommendation which tool to use.
- 
- OPTIONS
- -------
--- 
-1.5.3.rc0.22.gd22ed
+s/and much shorter delta/and much shallower depth/.
+
+Should be obvious from the context, but just in case -- without
+the above correction what I said does not make any sense ;-).
+
+> would make a lot of sense, but I do not offhand think of a way
+> to strike a proper balance between them efficiently.
