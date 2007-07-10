@@ -1,88 +1,112 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [WIP] Get rid of msys in favor of busybox port for windows
-Date: Tue, 10 Jul 2007 12:45:15 -0400
-Message-ID: <fcaeb9bf0707100945i2195ed79jf3bbd0d250fc2f2a@mail.gmail.com>
-References: <fcaeb9bf0707100832j3c2ff076gab5c9bd4f9d3f4a0@mail.gmail.com>
-	 <Pine.LNX.4.64.0707101638521.4047@racer.site>
-	 <fcaeb9bf0707100908o4be761b9t920cdc65a72d9aee@mail.gmail.com>
-	 <Pine.LNX.4.64.0707101719390.4047@racer.site>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] send-email: extend sanitize_address_rfc822 to do rfc2047 quoting
+Date: Tue, 10 Jul 2007 19:02:43 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <11840869641759-git-send-email-ukleinek@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 18:45:24 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 19:02:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Iq3-00057Y-KL
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 18:45:24 +0200
+	id 1I8J74-0000qa-7W
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 19:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbXGJQpR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 12:45:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754371AbXGJQpR
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 12:45:17 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:17410 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753837AbXGJQpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 12:45:15 -0400
-Received: by an-out-0708.google.com with SMTP id d31so275568and
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 09:45:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Vr2Y9DaT/zAMKZLJnbd9B2DrHTc5BzNhYMTfH8LSb4O8LU9H5hWl8Du1xMU+DyA8r9p+KPRQihqLSeMEqoIJdcDBipL/sQA5lIvDLngnbcXqRth/mO+YGLOMSrwjhhAa4+KWAAxqMZ6uxd0LDg3BaENczL8OrTAk139dYmWsQHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TBZqK4FxvtxzvF7/VtDcVNydwpD1w7ZShzxEOtlf1F5vuAmm1x07LAPqflJdD3b2fTJsEpyaljakM6DyvjbhJBqhAAdQ48+9nuLHfLFtOXXlnqaTvioCKMWfsz/KaOaKEr1MKwtiHFqN6oAg/NiCDa/zx5MfkW9J72OBY83MKY8=
-Received: by 10.100.121.12 with SMTP id t12mr2297471anc.1184085915079;
-        Tue, 10 Jul 2007 09:45:15 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Tue, 10 Jul 2007 09:45:15 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707101719390.4047@racer.site>
-Content-Disposition: inline
+	id S1754745AbXGJRCy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Jul 2007 13:02:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754371AbXGJRCx
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 13:02:53 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:50611 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754189AbXGJRCx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jul 2007 13:02:53 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I8J6w-00025D-RD; Tue, 10 Jul 2007 19:02:51 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6AH2nje025004;
+	Tue, 10 Jul 2007 19:02:49 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6AH2mbX025003;
+	Tue, 10 Jul 2007 19:02:48 +0200 (MEST)
+X-Mailer: git-send-email 1.5.3.rc0.823.gdedbf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52093>
 
-On 7/10/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 10 Jul 2007, Nguyen Thai Ngoc Duy wrote:
->
-> > On 7/10/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > On Tue, 10 Jul 2007, Nguyen Thai Ngoc Duy wrote:
-> > >
-> > > > I'm integrating some code from busybox to mingw tree so that mingw port
-> > > > can work without msys. Posix utilities such as sed, awk, head, tail...
-> > > > seem to work well. The main obstacle is ash, which is no where near
-> > > > usable state (fork issues as always). Busybox ash is about 13000 lines
-> > > > of code, not too big.
-> > > >
-> > > > Anyone interested in?
-> > >
-> > > Definitely.
-> > >
-> > > Last time I wanted to assess how much work it is to compile that on MinGW,
-> > > though, it seemed to be too much to be tractable.
-> >
-> > The exact answer is "I don't know" :-) I cross compile all the time
-> > however it should build fine on MinGW as it now uses git Makefile.
-> > I'll push the patch into mob soon.
->
-> Do you mean the whole busybox thing?
->
-> If so, please do not put it into mingw.git.  Rather, start a busybox.git
-> project (I saw that you have already some projects on repo.or.cz, so it
-> should be easy for you.)
+Without this patch I'm not able to properly send emails as I have a
+non-ascii character in my name.
 
-No, I don't port the whole busybox (too big, too difficult). I
-extracted stuffs that need to run shell scripts (mainly coreutils and
-ash) and put them in my mingw tree. Just wanted to push it if you
-wanted to try.. maybe later.
+Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@informatik.uni-freiburg.=
+de>
+---
+As I'm not a perl profi, someone wants to check this code.
 
--- 
-Duy
+Actually this series is a test, as it is sended with the patched send-e=
+mail.
+
+I hope it works :-)
+
+Uwe
+
+ git-send-email.perl |   24 +++++++++++++++++++-----
+ 1 files changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 89f7c36..8b3d450 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -459,16 +459,30 @@ sub unquote_rfc2047 {
+ 	return "$_";
+ }
+=20
+-# If an address contains a . in the name portion, the name must be quo=
+ted.
++# If an address contains a non-ascii char in the name port, quote it a=
+ccording
++# to rfc2047.
++# If an address contains a . in the name portion, the name must be quo=
+ted using
++# double quotes.
+ sub sanitize_address_rfc822
+ {
+ 	my ($recipient) =3D @_;
+-	my ($recipient_name) =3D ($recipient =3D~ /^(.*?)\s+</);
++	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?)(\s=
++<.*)/);
++
++	if ($recipient_name && $recipient_name =3D~ /[^-a-zA-Z0-9!*+\/ ]/ && =
+$recipient_name !~ /=3D\?utf-8\?q?.*\?=3D/) {
++		$recipient_name =3D~ s/([^-a-zA-Z0-9!*+ ])/sprintf("=3D%02X", ord($1=
+))/eg;
++		$recipient_name =3D~ s/ /_/;
++		$recipient_name =3D~ s/(.*)/=3D\?utf-8\?q\?$1\?=3D/;
++	}
++
+ 	if ($recipient_name && $recipient_name =3D~ /\./ && $recipient_name !=
+~ /^".*"$/) {
+-		my ($name, $addr) =3D ($recipient =3D~ /^(.*?)(\s+<.*)/);
+-		$recipient =3D "\"$name\"$addr";
++		$recipient_name =3D "\"$recipient_name\"";
++	}
++
++	if ($recipient_name) {
++		return "$recipient_name$recipient_addr";
++	} else {
++		return "$recipient";
+ 	}
+-	return $recipient;
+ }
+=20
+ sub send_message
+--=20
+1.5.3.rc0.823.gdedbf
