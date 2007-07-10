@@ -1,65 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach the --cover-letter option to format-patch
-Date: Tue, 10 Jul 2007 18:20:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707101819350.4047@racer.site>
-References: <Pine.LNX.4.64.0707100126250.6977@iabervon.org>
- <7vejjgsq3y.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707101424140.4047@racer.site>
- <Pine.LNX.4.64.0707101300450.6977@iabervon.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: pushing changes to a remote branch
+Date: Tue, 10 Jul 2007 13:34:01 -0400
+Message-ID: <20070710173401.GB5032@sigill.intra.peff.net>
+References: <20070710143614.GA29681@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 19:28:29 2007
+Content-Type: text/plain; charset=us-ascii
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 10 19:34:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8JVk-0007E7-A7
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 19:28:28 +0200
+	id 1I8JbG-0000Hx-BA
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 19:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762904AbXGJR2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 13:28:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762978AbXGJR2V
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 13:28:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42743 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759039AbXGJR2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 13:28:19 -0400
-Received: (qmail invoked by alias); 10 Jul 2007 17:28:17 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp050) with SMTP; 10 Jul 2007 19:28:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18n9zMdBBYnI332+jhhv1a5Kx0CR5q7O40Awyiyzi
-	jkdnaIIQkSsdQ0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0707101300450.6977@iabervon.org>
-X-Y-GMX-Trusted: 0
+	id S1757646AbXGJReG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 13:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756239AbXGJReG
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 13:34:06 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1625 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757351AbXGJReF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 13:34:05 -0400
+Received: (qmail 30934 invoked from network); 10 Jul 2007 17:34:28 -0000
+Received: from unknown (HELO sigill.intra.peff.net) (128.61.125.94)
+  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP
+  (cert postmaster@peff.net); 10 Jul 2007 17:34:28 -0000
+Received: (qmail 5065 invoked by uid 1000); 10 Jul 2007 17:34:01 -0000
+Content-Disposition: inline
+In-Reply-To: <20070710143614.GA29681@piper.oerlikon.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52098>
 
-Hi,
+On Tue, Jul 10, 2007 at 04:36:14PM +0200, martin f krafft wrote:
 
-On Tue, 10 Jul 2007, Daniel Barkalow wrote:
+>   git checkout origin/vim
+>     Note: moving to "origin/vim" which isn't a local branch
+>   echo change > newfile; git add newfile
+>   git commit -m'make change'
+>     Created commit 64b8b2e: make change
+>      1 files changed, 1 insertions(+), 0 deletions(-)
+>       create mode 100644 newfile
+>   
+> If I now checkout master and then return to origin/vim, the commit
+> is gone.
 
-> I think this is missing the ultra-important "extra_headers" stuff, which 
-> is what makes my messages actually reach the right people. That's why 
-> I'd like the code shared for generating headers (except for Subject) for 
-> a rev_info between the code that does it for patch messages and the code 
-> for the cover letter. I think it's also missing making [PATCH 1/N] a 
-> reply to it if the series is set up as replies.
+That's because 'origin/vim' is a tracking branch for the remote; it's
+where you store the information "here's what the remote 'origin' thinks
+is in the branch 'vim'." That's why you get the "note" warning above.
 
-Ah yes. Both issues should be relatively easy to integrate into my patch.
+If you want to make changes, you should make a local branch starting
+from that point:
 
-> I like the design, in any case. I want the blurb actually stored in the 
-> objects directory somehow, so that I don't have to trawl through my sent 
-> email for it when I send the series again for some reason, but that's a 
-> relatively straightforward extension to your code. (Read an object with 
-> a hash and stick the text in instead of the ***...*** parts.)
+  git-checkout -b vim origin/vim
+  # hack hack hack
+  git-commit -m changes
 
-I do not understand. But then, my patch should be a good starting point. 
-Go wild.
+> Much more, however, I am interested how I am supposed to push
+> commits back to select remote branches.
 
-Ciao,
-Dscho
+Now when you issue a git-push, you will push _your_ 'vim' branch to the
+remote's 'vim' branch. Before, you didn't _have_ a vim branch, so
+nothing was pushed.
+
+So the key thing you are missing in all of this is that you shouldn't be
+doing _anything_ with branches in origin/* (which are, of course,
+actually refs/remotes/origin/*) except for read-only operations (like
+diffing against them, merging with them, etc). They are purely for
+tracking the remote's branches.
+
+-Peff
