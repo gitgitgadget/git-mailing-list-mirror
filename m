@@ -1,81 +1,76 @@
 From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: pushing changes to a remote branch
-Date: Tue, 10 Jul 2007 14:10:01 -0400
-Message-ID: <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
-References: <20070710143614.GA29681@piper.oerlikon.madduck.net> <20070710173401.GB5032@sigill.intra.peff.net>
+Subject: Re: how to combine two clones in a collection
+Date: Tue, 10 Jul 2007 14:27:39 -0400
+Message-ID: <72218C10-EE5E-4CD9-B5DE-DFEC40EBEF27@silverinsanity.com>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org> <20070710062104.GA22603@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707100950520.3412@woody.linux-foundation.org> <20070710174543.GA16054@piper.oerlikon.madduck.net>
 Mime-Version: 1.0 (Apple Message framework v752.3)
 Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git discussion list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 10 20:10:39 2007
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Jul 10 20:27:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8KAU-00014x-Hz
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:10:34 +0200
+	id 1I8KR8-0004uj-R8
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760315AbXGJSKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 14:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763517AbXGJSKG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:10:06 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:54759 "EHLO
+	id S1759131AbXGJS1m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 14:27:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754781AbXGJS1m
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:27:42 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:42760 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761300AbXGJSKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 14:10:04 -0400
+	with ESMTP id S1757301AbXGJS1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 14:27:41 -0400
 Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id B8EBE1FFC003;
-	Tue, 10 Jul 2007 18:10:02 +0000 (UTC)
-In-Reply-To: <20070710173401.GB5032@sigill.intra.peff.net>
+	by silverinsanity.com (Postfix) with ESMTP id 954A21FFC01F;
+	Tue, 10 Jul 2007 18:27:40 +0000 (UTC)
+In-Reply-To: <20070710174543.GA16054@piper.oerlikon.madduck.net>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52104>
 
 
-On Jul 10, 2007, at 1:34 PM, Jeff King wrote:
-
-> On Tue, Jul 10, 2007 at 04:36:14PM +0200, martin f krafft wrote:
+On Jul 10, 2007, at 1:45 PM, martin f krafft wrote:
+> I wonder how to create a project with two completely independent
+> branches which have no common ancestry. I don't think it's possible.
+> One needs a throwaway branch to create the first commit, then branch
+> each of the two branches off that, then delete the throwaya branch
+> (or keep it around).
 >
->>   git checkout origin/vim
->>     Note: moving to "origin/vim" which isn't a local branch
->>   echo change > newfile; git add newfile
->>   git commit -m'make change'
->>     Created commit 64b8b2e: make change
->>      1 files changed, 1 insertions(+), 0 deletions(-)
->>       create mode 100644 newfile
->>
->> If I now checkout master and then return to origin/vim, the commit
->> is gone.
->
-> That's because 'origin/vim' is a tracking branch for the remote; it's
-> where you store the information "here's what the remote 'origin'  
-> thinks
-> is in the branch 'vim'." That's why you get the "note" warning above.
->
-> If you want to make changes, you should make a local branch starting
-> from that point:
->
->   git-checkout -b vim origin/vim
->   # hack hack hack
->   git-commit -m changes
+> But this is getting academic now...
 
-Indeed, in master, git outputs a hint to that when you checkout the  
-remote branch.
+But interesting.
 
-   $ git checkout origin/master
-   Note: moving to "origin/master" which isn't a local branch
-   If you want to create a new branch from this checkout, you may do so
-   (now or later) by using -b with the checkout command again. Example:
-     git checkout -b <new_branch_name>
-   HEAD is now at f4855d4... 1
+What you describe won't create two independent branches.  They'll  
+share the root commit.  I think what you have do is create the first  
+branch as normal, then clear out the working copy (be sure not to  
+delete .git) and do the commit manually.  I believe it goes something  
+like this:
 
-Perhaps git-commit should also also output a warning?  "Commit made  
-on detached HEAD.  Use "git branch <new_branch_name>" to save your  
-commit"?  That's bad wording, but the idea is there.
+   git init
+   # Create files for master
+   git add .
+   git commit
+   rm -rf * .git/index
+   # Create files for second branch
+   git add .
+   tree=$(git write-tree)
+   # Edit commit message into some file (commit-msg here)
+   commit=$(git commit-tree $tree < commit-msg)
+   git update-ref refs/branches/independent $commit
+
+The important bits are to be sure to remove the index so you don't  
+commit the wrong files and the last four lines that do the heavy  
+lifting.  You could also create the branch in a second repository and  
+pull it from there into the first (probably simpler), or perhaps  
+trick git-commit into thinking there isn't any commits yet (remove  
+the index and HEAD perhaps?).
 
 ~~ Brian
