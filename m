@@ -1,67 +1,97 @@
-From: "=?windows-1251?B?Tmlr?=" <bonus_10@pochta.ru>
-Subject: =?windows-1251?B?RXh0cmEgSW5jb21lISBObyBTY2hvb2wgZGVncmVlLCB3b3JrIGZyb20gaG9tZS4gICAgICAgICAgICAgTkpWc1g=?=
-Date: Tue, 10 Jul 2007 04:18:40 +0200
-Message-ID: <003301c7c2fc$af0130a3$917d4aff@cuiovvlboojd>
-Reply-To: "=?windows-1251?B?Tmlr?=" <surga@mail.primorye.ru>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: how to combine two clones in a collection
+Date: Mon, 9 Jul 2007 19:35:21 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="windows-1251";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 04:19:10 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Jul 10 04:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I85Jg-0002fZ-6F
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 04:19:04 +0200
+	id 1I85Zp-0005OJ-Fx
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 04:35:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758121AbXGJCSv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 22:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758027AbXGJCSv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 22:18:51 -0400
-Received: from smtp19.orange.fr ([80.12.242.19]:17243 "EHLO smtp19.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756643AbXGJCSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 22:18:50 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf1922.orange.fr (SMTP Server) with ESMTP id 03B901C000A1
-	for <git@vger.kernel.org>; Tue, 10 Jul 2007 04:18:49 +0200 (CEST)
-Received: from poste01 (LAubervilliers-151-13-108-64.w217-128.abo.wanadoo.fr [217.128.179.64])
-	by mwinf1922.orange.fr (SMTP Server) with SMTP id D52E51C00095
-	for <git@vger.kernel.org>; Tue, 10 Jul 2007 04:18:48 +0200 (CEST)
-X-ME-UUID: 20070710021848873.D52E51C00095@mwinf1922.orange.fr
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.2180
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+	id S1758470AbXGJCfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 22:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758227AbXGJCfm
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 22:35:42 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:33428 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758470AbXGJCfl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2007 22:35:41 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6A2ZQ9T005460
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 9 Jul 2007 19:35:28 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6A2ZL8H030780;
+	Mon, 9 Jul 2007 19:35:21 -0700
+In-Reply-To: <20070709222250.GA8007@piper.oerlikon.madduck.net>
+X-Spam-Status: No, hits=-2.638 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.3 points;
- *  0.6 SUBJ_HAS_SPACES Subject contains lots of white space
- *  0.5 FROM_ENDS_IN_NUMS From: ends in numbers
- *  1.1 SUBJ_HAS_UNIQ_ID Subject contains a unique ID
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?217.128.179.64>]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52033>
 
-Hello! Please read this interesting offer if you are looking for an extra income or second job.
 
-CPA Tools Company is currently seeking for people in Australia for "Transaction Handling" position, you do not have to have any school degree nor past experience. 
 
-This is a genuine offer that you can rely on until December the 25th 2007. You will be able to make 1100-1600 AUD a week spending only 2 hours a day Monday-Thursday. 
+On Tue, 10 Jul 2007, martin f krafft wrote:
+> 
+> I am now ready to move to using git for most of my everyday work,
+> but I am still unsure how to tackle one specific aspect of it, for
+> which I used svn:externals in the past. I know about git
+> subprojects, but these aren't what I want, really.
 
-Who Can Apply?
+I really _think_ that what you want is to just use separate branches, if I 
+understand correctly. That makes it really easy to just have both lines of 
+development (both the "trunk" and your "debian" one) in one git 
+repository.
 
-.>> 18+ y/o. 
-.>> You are located in Australia.
-.>> You will be able to check your e-mail several times a day.
-.>> You will have couple hours of free time Monday-Thursday.
+Of course, especially if you want to continue to work the way you probably 
+worked with SVN (ie you are used to seeing those two branches as two 
+separate directories), that means that while you can (and should) see it 
+as a single git project, you'd normally end up just having two copies of 
+that project: they'd _both_ have two branches, but they'd just en dup 
+having different branches checked out.
 
-If you meet requirements you are more than welcome to obtain more information by replying to: CPAtools.business@gmail.com  Good Luck!
+Of course, after you get comfy enough with the setup, you might end up 
+just deciding that you might as well just switch branches around in a 
+single repository (which is what a lot of git users end up doing), but at 
+least initially, it's probably easier from a conceptual standpoint to just 
+have the two branches checked out in separate copies of the repos.
 
------------------
-oljDK
+> With SVN, I would have a directory with two external entries:
+> 
+>   upstream.trunk svn+ssh://svn.upstream.org/path/to/trunk
+>   upstream.trunk/debian svn+ssh://svn.debian.org/svn/pkg/trunk/debian
+
+So in git, you'd have just one "project" with two branches - perhaps just 
+called "upstream" and "debian".
+
+Of course, with git, that single "project" can then exist in a distributed 
+manner in many different places, and having two copies with different 
+branches checked out would just happen to be the one that most closely 
+resembles your current situation.
+
+> How can I do this with git? I am aware that maybe the best way would
+> be to use git-svn to track the upstream branch remotely and to add
+> ./debian in a separate git branch (and to stop using SVN and switch
+> to git for ./debian)
+
+I don't think you'd have to stop using SVN. Just continue to track the 
+"upstream" branch with git-svn, and then you can merge in the upstream 
+into your "debian" branch that also has all the debian-specific stuff.
+
+(And no, I don't know what the standard debian package management setup 
+looks like, but I would hope that your extra stuff would be just a few 
+files and package descriptions, and obviously any of the local debian 
+changes to the project).
+
+		Linus
