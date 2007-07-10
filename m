@@ -1,52 +1,52 @@
 From: Matt McCutchen <hashproduct@gmail.com>
 Subject: [PATCH] gitweb: snapshot cleanups & support for offering multiple
 	formats
-Date: Mon, 09 Jul 2007 21:14:20 -0400
-Message-ID: <1184030060.11726.0.camel@mattlaptop2>
+Date: Mon, 09 Jul 2007 21:14:52 -0400
+Message-ID: <1184030092.14364.0.camel@mattlaptop2>
 References: <7vr6nht9yq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 10 03:15:06 2007
+X-From: git-owner@vger.kernel.org Tue Jul 10 03:15:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I84Jl-0002XY-PF
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 03:15:06 +0200
+	id 1I84Jv-0002ZY-IV
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 03:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758816AbXGJBPC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 21:15:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757179AbXGJBPB
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 21:15:01 -0400
+	id S1760055AbXGJBPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 21:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759750AbXGJBPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 21:15:09 -0400
 Received: from wx-out-0506.google.com ([66.249.82.232]:38721 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757159AbXGJBPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 21:15:00 -0400
+	with ESMTP id S1758939AbXGJBPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 21:15:06 -0400
 Received: by wx-out-0506.google.com with SMTP id h31so1045259wxd
-        for <git@vger.kernel.org>; Mon, 09 Jul 2007 18:14:59 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 09 Jul 2007 18:15:06 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=N34TJQSKjO2twgPvFxyIUPVfVfisOPE6qvxjBX2d0uxX6sedRvkTfY1C5PJ9JWe+WcVUSqVNc2w7J+zhxEr4Q1wha5A8vPwzN+o8mjmpeM+kok1BBZr43IfN5nFe95fG95Q4a72E62Au2b2exEGA7Lh3clVj2WgQIS1uNasvK3Y=
+        b=ETlSzN3LIy3UWp03qvIwb6UBv5Sq75iVe1rjOX22szbFTmxd6hdREvnrOcFTFKXEJyiXSwTrDGUw5kqeOk5PJoePIG7oue/IXZkkxcen2UwH8OV0N1EYQ/BwTsJ7LqUH1NJtarJwdMjjvy7tRGHwbZ5ZGCTtdYhZAyiXkx70mwI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=JAtSJYe78Zl8xsQjXgPi2fPBZj+TZ+vuqEuSKq7ODBDQMsjT8FJ39CVBGCGF+i8jkcSZKQqOVNe4u1W+/av8VbyXJDxYM8QpmbDU67lhb11yqde6xqz+6qBQmhyB1oV8LX0J+ArUwNBBUKesP2/UplYAfH7RjIVe0QcGPf1H64M=
-Received: by 10.70.70.7 with SMTP id s7mr6775267wxa.1184030099360;
-        Mon, 09 Jul 2007 18:14:59 -0700 (PDT)
+        b=ZRomCGqyYIbxWfrtQVtebj6D1hHmn92b2retikVDvUkTPAhczFe8V3ow83McdCd6LYCoRwqj/UPe21bvxH6QcIoD9F4xcuCe61mZbqtwtcvfU4VboJtLCxMesa/iYbGJr3syB+rkdMdnqq9cPGX6qiqmtdEvf/bGnm3N4Ui9ems=
+Received: by 10.70.9.8 with SMTP id 8mr6796772wxi.1184030105847;
+        Mon, 09 Jul 2007 18:15:05 -0700 (PDT)
 Received: from ?192.168.1.10? ( [69.234.35.98])
-        by mx.google.com with ESMTP id n29sm17484690elf.2007.07.09.18.14.55
+        by mx.google.com with ESMTP id c29sm1867952elf.2007.07.09.18.15.03
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Jul 2007 18:14:58 -0700 (PDT)
+        Mon, 09 Jul 2007 18:15:05 -0700 (PDT)
 In-Reply-To: <7vr6nht9yq.fsf@assigned-by-dhcp.cox.net>
 X-Mailer: Evolution 2.10.2 (2.10.2-3.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52029>
 
 - Centralize knowledge about snapshot formats (mime types, extensions,
   commands) in %known_snapshot_formats and improve how some of that
