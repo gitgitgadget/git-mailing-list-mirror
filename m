@@ -1,137 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
-Date: Wed, 11 Jul 2007 01:41:59 +0200
-Organization: At home
-Message-ID: <f715g6$2sv$1@sea.gmane.org>
-References: <3bbc18d20707091552l29fb81b6v34da9cef3ec0df58@mail.gmail.com> <1184023318.9703.1.camel@mattlaptop2>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: how to combine two clones in a collection
+Date: Wed, 11 Jul 2007 01:45:27 +0200
+Message-ID: <200707110145.28931.robin.rosenberg.lists@dewire.com>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <m3644suki6.fsf@host32.eke.fi> <47015E14-FEA7-45C5-B9CB-C949B87B6494@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 11 01:42:19 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Kalle Pokki <kalle.pokki@iki.fi>, git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 01:44:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8PLW-0001sd-Pk
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 01:42:19 +0200
+	id 1I8PNn-0002Ba-8O
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 01:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758597AbXGJXmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 19:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753747AbXGJXmO
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 19:42:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:36876 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752762AbXGJXmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 19:42:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I8PLJ-0006Zv-M3
-	for git@vger.kernel.org; Wed, 11 Jul 2007 01:42:05 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 01:42:05 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 01:42:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1758373AbXGJXoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 19:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757907AbXGJXoh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 19:44:37 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:27177 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1757851AbXGJXog (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 19:44:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5D1438026DE;
+	Wed, 11 Jul 2007 01:37:32 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 19267-08; Wed, 11 Jul 2007 01:37:32 +0200 (CEST)
+Received: from [10.9.0.7] (unknown [10.9.0.7])
+	by dewire.com (Postfix) with ESMTP id 09AC580019B;
+	Wed, 11 Jul 2007 01:37:32 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <47015E14-FEA7-45C5-B9CB-C949B87B6494@silverinsanity.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52121>
 
-Matt McCutchen wrote:
-
-> - Centralize knowledge about snapshot formats (mime types, extensions,
->   commands) in %known_snapshot_formats and improve how some of that
->   information is specified.  In particular, zip files are no longer a
->   special case.
+tisdag 10 juli 2007 skrev Brian Gernhardt:
 > 
-> - Add support for offering multiple snapshot formats to the user so
->   that he/she can download a snapshot in the format he/she prefers.
->   The site-wide or project configuration now gives a list of formats
->   to offer, and the "_snapshot_" link is replaced with, say,
->   "snapshot (_tbz2_ _zip_)".
+> On Jul 10, 2007, at 3:27 PM, Kalle Pokki wrote:
 > 
-> - Fix out-of-date "tarball" -> "archive" in comment.
+> > You can also just create two different git repositories and start  
+> > making
+> > the commits in the master (or any other) branch. Then combine the
+> > repositories by fetching
+> >
+> >         cd repo1
+> >         git fetch ../repo2 master:repo2
+> >
+> > This way the branches don't share anything, do they?
 > 
-> Alert for gitweb site administrators: This patch changes the format of
-> $feature{'snapshot'}{'default'} in gitweb_config.perl from a list of three
-> pieces of information about a single format to a list of one or more formats
-> you wish to offer from the set ('tgz', 'tbz2', 'zip').  Update your
-> gitweb_config.perl appropriately.
+> Yes, that's what I was referring to at the end when I wrote:
+> 
+> > You could also create the branch in a second repository and pull it  
+> > from there into the first (probably simpler),
+> 
+> But it seemed too simple.  ;-)  And that is exactly how I'd do it...   
+> Assuming I thought of it before using write-tree, commit-tree, and  
+> update-ref.  (Which is what happened.  I thought of the complicated  
+> method and wrote it up before thinking "duh, just use a second repo.")
 
-Quite nice and I think needed refactoring of a snapshot code. Nevertheless
-I have some comments on the changes introduced by this patch; not only
-change to gitweb_config.perl is needed (which gitweb admin has control
-over), but also repo config for individual repositories might need to
-be changed (which gitweb admin might not have control over, and which is
-much harder to do).
+And the simplest way to create an new indpendent branch:
 
-> +# information about snapshot formats that gitweb is capable of serving
-> +# name => [mime type, filename suffix, --format for git-archive,
-> +#          compressor command suffix]
-> +our %known_snapshot_formats = (
-> +     'tgz'  => ['application/x-gzip' , '.tar.gz' , 'tar', '| gzip' ],
-> +     'tbz2' => ['application/x-bzip2', '.tar.bz2', 'tar', '| bzip2'],
-> +     'zip'  => ['application/zip'    , '.zip'    , 'zip', ''       ],
-> +);
+echo ref: refs/heads/newbranch >.git/HEAD
+Then prepare the content and commit like you used to do.
 
-First, is full mimetype really needed? Earlier code assumed that mimetype
-for snapshot is of the form of application/<something>, and it provided
-only <something>.
-
-Second, I'd rather have 'gzip' and 'bzip2' aliases to 'tgz' and 'tbz2',
-so the old config continues to work. I can see that it would be hard
-to do without special-casing code, or changing the assumption that list
-of default available snapshot formats is keys of above hash.
-
-> -     # and in project config gitweb.snapshot = none|gzip|bzip2|zip;
-> +     # and in project config, a comma-separated list of formats or "none"
-> +     # to disable.  Example: gitweb.snapshot = tbz2,zip;
-
-I would relax the syntax, so "tbz2, zip" would also work, or even
-"tbz2 zip". I'd like for old config to also work, meaning that "gzip"
-would be the same as "tgz" and "bzip2" as "tbz2".
-
-> -     if ($val eq 'gzip') {
-> -             return ('x-gzip', 'gz', 'gzip');
-> -     } elsif ($val eq 'bzip2') {
-> -             return ('x-bzip2', 'bz2', 'bzip2');
-> -     } elsif ($val eq 'zip') {
-> -             return ('x-zip', 'zip', '');
-> -     } elsif ($val eq 'none') {
-> -             return ();
-
-Very nice getting rid of this swith-like statement...
-
-> +     if ($val) {
-> +             @fmts = ($val eq 'none' ? () : split /,/, $val);
-
-... but I would relax this regexp.
-
-> +# Generates undef or something like "snapshot (tbz2 zip)", linked.
-> +# Pass the hash.
-> +sub format_snapshot_links {
-> +     my ($hash) = @_;
-> +     my @snapshot_fmts = gitweb_check_feature('snapshot');
-> +     if (@snapshot_fmts) {
-> +             return "snapshot (" . join(' ', map $cgi->a(
-> +                     {-href => href(action=>"snapshot", hash=>$hash, snapshot_format=>$_)}, "$_"),
-> +                     @snapshot_fmts)
-> +             . ")";
-> +     } else {
-> +             return undef;
-> +     }
-> +}
-
-Nice separation into subroutine.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- robin
