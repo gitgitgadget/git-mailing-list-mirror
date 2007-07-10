@@ -1,100 +1,62 @@
-From: "David Frech" <david@nimblemachines.com>
-Subject: Re: [PATCH] Support wholesale directory renames in fast-import
-Date: Tue, 10 Jul 2007 12:55:46 -0700
-Message-ID: <7154c5c60707101255k7fcd207fg62f1c59518ba5039@mail.gmail.com>
-References: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com>
-	 <20070710031036.GA9045@spearce.org>
-	 <7154c5c60707092116p70aaeb8l90cda9265311b999@mail.gmail.com>
-	 <20070710140338.GA18450@informatik.uni-freiburg.de>
-	 <20070710141442.GM4436@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: how to combine two clones in a collection
+Date: Tue, 10 Jul 2007 16:00:49 -0400
+Message-ID: <47015E14-FEA7-45C5-B9CB-C949B87B6494@silverinsanity.com>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org> <20070710062104.GA22603@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707100950520.3412@woody.linux-foundation.org> <20070710174543.GA16054@piper.oerlikon.madduck.net> <72218C10-EE5E-4CD9-B5DE-DFEC40EBEF27@silverinsanity.com> <m3644suki6.fsf@host32.eke.fi>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?=" 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 21:56:00 2007
+Cc: git@vger.kernel.org
+To: Kalle Pokki <kalle.pokki@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jul 10 22:00:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8LoV-0007Cb-K9
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 21:55:59 +0200
+	id 1I8LtJ-000867-6T
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 22:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761298AbXGJTz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 15:55:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761165AbXGJTz4
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 15:55:56 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:59440 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761254AbXGJTzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 15:55:50 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2002393wah
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 12:55:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=cYzKvgTecNm7+Tb2+7eqwi+5UHcJxy4HexXkKWSe/y226umxj2rVanuExsmT/R/A/JgHbC7MtliwaU70RqidhMMVwZj/HancJ3M4W9DnfN1EBbQ5WgBBZjPMTDdiqOHmkro4gscVzv9HwCrBDG7u7lUTT2UDihbU1844bfIr8FM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=bRzyk14RhDxr3a64CkjAhyNBLbPiy1k7QL/JXELUOt/M6t7NrbpmBs9DdgNgDFy08rx6Mbq7O8u5Tt2YyEM+kRdAxlCdMHBU4ifPO1gQN7BAk6EDPIV9psuBHBeWfBV25qXHeYvpL2zNh5RgpNFU+zcUm+qPr3OFl83qXECjtEU=
-Received: by 10.114.126.1 with SMTP id y1mr4512460wac.1184097346509;
-        Tue, 10 Jul 2007 12:55:46 -0700 (PDT)
-Received: by 10.115.59.9 with HTTP; Tue, 10 Jul 2007 12:55:46 -0700 (PDT)
-In-Reply-To: <20070710141442.GM4436@spearce.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 4c9189bad9e9f293
+	id S1755912AbXGJUAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 16:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754972AbXGJUAw
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 16:00:52 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:51455 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754952AbXGJUAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 16:00:52 -0400
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id A9B151FFC003;
+	Tue, 10 Jul 2007 20:00:51 +0000 (UTC)
+In-Reply-To: <m3644suki6.fsf@host32.eke.fi>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52110>
 
-Hmm. I think Uwe is right. Copy is probably the "right" primitive, and
-rename can always be synthesized from copy+delete.
 
-Since Subversion is built around the idea of "cheap copies" there is
-no incentive for them to represent renames other than as "copy, then
-delete".
+On Jul 10, 2007, at 3:27 PM, Kalle Pokki wrote:
 
-But isn't the same true in a way of git? If I copy a directory (a
-tree), then the new tree is the same tree - it has the same SHA-1
-hash, so I can simply refer to the existing object. Same for file
-blobs.
-
-Subversion dump files have *lots* of copies. Might be nice to be able
-to feed these directly into fast-import and have it DTRT, esp if it
-was smart about sharing identical data structures.
-
-- David
-
-On 7/10/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Uwe Kleine-K??nig <ukleinek@informatik.uni-freiburg.de> wrote:
-> > David Frech wrote:
-> > > Now my challenge is that the svn dump doesn't *actually* say "rename
-> > > a/ to b/"; it says "copy a/ to b/; delete a/", so I have to infer the
-> > > rename.
-> >
-> > I don't know fast-import very well, but why not doing exactly what the
-> > dump file suggests:  copy a b; delete a ?
+> You can also just create two different git repositories and start  
+> making
+> the commits in the master (or any other) branch. Then combine the
+> repositories by fetching
 >
-> Because there is no copy operator in fast-import.  So you cannot
-> do "copy a b".  Apparently that's what I should have implemented,
-> as rename in Git really is as simple as the copy/delete pair.  Ugh.
+>         cd repo1
+>         git fetch ../repo2 master:repo2
 >
-> Copy isn't really that hard, it just can't be nearly as efficient as
-> rename, as copying a subtree will force me to either duplicate data
-> in memory or reload trees from disk to duplicate data in memory.
-> But its a copy, so data duplication is expected.  ;-)
->
-> I'll implement a copy opertor soon.  Shouldn't be too difficult.
-> Maybe someone else would like to take a shot at implementing it...
->
-> --
-> Shawn.
->
+> This way the branches don't share anything, do they?
 
+Yes, that's what I was referring to at the end when I wrote:
 
--- 
-If I have not seen farther, it is because I have stood in the
-footsteps of giants.
+> You could also create the branch in a second repository and pull it  
+> from there into the first (probably simpler),
+
+But it seemed too simple.  ;-)  And that is exactly how I'd do it...   
+Assuming I thought of it before using write-tree, commit-tree, and  
+update-ref.  (Which is what happened.  I thought of the complicated  
+method and wrote it up before thinking "duh, just use a second repo.")
+
+~~ Brian
