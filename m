@@ -1,131 +1,79 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: pushing changes to a remote branch
-Date: Tue, 10 Jul 2007 16:36:14 +0200
-Message-ID: <20070710143614.GA29681@piper.oerlikon.madduck.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [RFC] series headers
+Date: Tue, 10 Jul 2007 10:48:09 -0400
+Message-ID: <20070710144808.GA27033@thunk.org>
+References: <Pine.LNX.4.64.0707100126250.6977@iabervon.org> <7vejjgsq3y.fsf@assigned-by-dhcp.cox.net> <20070710132401.GJ2343@thunk.org> <Pine.LNX.4.64.0707101452250.4047@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 16:36:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 10 16:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8GpC-0006Fe-1U
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:36:22 +0200
+	id 1I8H0t-0000sU-0v
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbXGJOgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 10:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbXGJOgS
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:36:18 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:33922 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752979AbXGJOgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 10:36:17 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id DDC49895D73
-	for <git@vger.kernel.org>; Tue, 10 Jul 2007 16:36:15 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 13151-02 for <git@vger.kernel.org>;
-	Tue, 10 Jul 2007 16:36:15 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id AAA55895D72
-	for <git@vger.kernel.org>; Tue, 10 Jul 2007 16:36:15 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id DA0839F121
-	for <git@vger.kernel.org>; Tue, 10 Jul 2007 16:36:14 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id B1C1F43FC; Tue, 10 Jul 2007 16:36:14 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
+	id S1754170AbXGJOsR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 10:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151AbXGJOsR
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:48:17 -0400
+Received: from THUNK.ORG ([69.25.196.29]:56480 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754040AbXGJOsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 10:48:17 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1I8H8c-0004fq-Ct; Tue, 10 Jul 2007 10:56:26 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1I8H0b-0002IU-5L; Tue, 10 Jul 2007 10:48:09 -0400
 Content-Disposition: inline
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+In-Reply-To: <Pine.LNX.4.64.0707101452250.4047@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52082>
 
+On Tue, Jul 10, 2007 at 02:56:48PM +0100, Johannes Schindelin wrote:
+> And what is so wrong with
+> 
+> [insert before format-patch] $EDITOR my-cover-letter.txt
+> 
+> [replace $EDITOR 0000-cover-letter.txt] $EDITOR my-cover-letter.txt 
+> 	0000-cover-letter.patch
+> 
+> and paste the changed text?
 
---ReaqsoxgOBHFXBhH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nothing is *wrong* with it per-se, but if you have multiple things
+that you are working on at the same-time, you might not want to keep
+0000-cover-letter.patch in your working directory.  
 
-Hi list,
+The simplest place to put it is in .git/patches/<branch> while I'm
+working with it using guilt (or the equivalent place in stgit), and if
+you include it in the series file then it becomes easier to hack it so
+that git-format-patches will create the cover letter for you.  (And
+ideally, you would be able to use guilt to edit the cover letter using
+"guilt header -e cover-letter" but that feature hasn't been added yet;
+should be simple, though.)
 
-I am using git-remote to clone a remote repository and track only
-a select number of branches:
+Basically, the issue is of handling the cover letter as a first-class
+object, as opposed to something whic his manually handled via
+cut-and-paste.  A lot of the tools are actually there already if you
+are using tools like guilt and stgit.  So it's basically making a
+particular workflow a bit more optimized, that's all.  
 
-  git remote add -f -t vim -t ssh origin git://git.server.org/path/to/repo.=
-git
-  git branch -r
-    origin/ssh
-    origin/vim
-  git merge ...
+There certainly is nothing *wrong* with manual maintenance of the
+cover-letter file plus cut-and-paste when you want to update it.  Just
+as there's nothing *wrong* with using git-write-tree instead of
+git-commit.  Just a question of which is more convenient and less
+error prone.  :-)
 
-I now merge these into the local repo and decide that I need to make
-a change to origin/vim. So I figure that it's probably easiest if
-I just checkout the remote branch, make the change, commit it, push
-it, return to the master branch, git-remote update and merge, but:
-
-  git checkout origin/vim
-    Note: moving to "origin/vim" which isn't a local branch
-  echo change > newfile; git add newfile
-  git commit -m'make change'
-    Created commit 64b8b2e: make change
-     1 files changed, 1 insertions(+), 0 deletions(-)
-      create mode 100644 newfile
- =20
-If I now checkout master and then return to origin/vim, the commit
-is gone.
-
-If I repeat all this and, instead of returning to master, I push the
-commit to origin, git suggests success (the push looks normal).
-However, I then cannot find the commit anymore. It's not available
-locally, nor in origin/vim, nor in the local master branch or in
-origin/master.
-
-This is curious and I'd love to find out what's going on.
-
-Much more, however, I am interested how I am supposed to push
-commits back to select remote branches.
-
-Using
-
-  git push git://git.server.org/path/to/repo.git \
-    7fbb0655:refs/heads/vim
-
-does push commit 7fbb0655 to the vim branch in the remote
-repository, but I should be able to do this using origin/vim, no?
-How?
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"the worst part of being old is remembering when you was young."
-                                -- alvin straight (the straight story)
-
---ReaqsoxgOBHFXBhH
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGk5leIgvIgzMMSnURAiNpAJ4m2wyeH0xP2cc6mj2lIgK3RwxwoACgsQkp
-IIBgnARlGSNXqHxMXNZERlo=
-=v6GJ
------END PGP SIGNATURE-----
-
---ReaqsoxgOBHFXBhH--
+						- Ted
