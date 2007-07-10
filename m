@@ -1,53 +1,49 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: git-svn problems with branches containing spaces
-Date: Tue, 10 Jul 2007 13:42:35 +0000
-Message-ID: <20070710134236.2870.qmail@986bac8bfff25d.315fe32.mid.smarden.org>
-References: <3F225D5F64550C4AA5F23286244275D4298C84@srvkrsexc07.nov.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: git-svn and renames
+Date: Tue, 10 Jul 2007 15:42:34 +0200
+Message-ID: <87odik74tx.fsf@mid.deneb.enyo.de>
+References: <46938594.2010607@dawes.za.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 15:42:38 2007
+X-From: git-owner@vger.kernel.org Tue Jul 10 15:42:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Fz5-0001Kb-IY
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:42:31 +0200
+	id 1I8FzF-0001MT-Th
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbXGJNmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 09:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbXGJNmT
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:42:19 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:58583 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752405AbXGJNmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 09:42:18 -0400
-Received: (qmail 2871 invoked by uid 1000); 10 Jul 2007 13:42:36 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <3F225D5F64550C4AA5F23286244275D4298C84@srvkrsexc07.nov.com>
+	id S1753009AbXGJNmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 09:42:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbXGJNmh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:42:37 -0400
+Received: from mail.enyo.de ([212.9.189.167]:3457 "EHLO mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753009AbXGJNmh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 09:42:37 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1I8Fz9-0006ZV-MM
+	for git@vger.kernel.org; Tue, 10 Jul 2007 15:42:35 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.67)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1I8Fz8-0005Pt-88
+	for git@vger.kernel.org; Tue, 10 Jul 2007 15:42:34 +0200
+In-Reply-To: <46938594.2010607@dawes.za.net> (Rogan Dawes's message of "Tue,
+	10 Jul 2007 15:11:48 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52069>
 
-On Wed, Jun 27, 2007 at 08:53:06AM +0200, Ewald, Robert wrote:
-> As I have reported yesterday on IRC, git-svn has problems with branches
-> containing spaces.
-> I get the following message, when I want to clone from the repository
-> containing a branch with a space.
-> Cloning until the revision the branch is created everything works fine.
-> 
-> fatal: refs/remotes/Modbus Error Limit Fix: cannot lock the ref
-> update-ref -m r1897 refs/remotes/Modbus Error Limit Fix
-> ff0819c8e9c97c24e9865bc868c503fd9b64f980: command returned error: 128
-> 
-> Thanks for your help.
+* Rogan Dawes:
 
-Hi, the same problem has been reported some time ago through
- http://bugs.debian.org/430518
+> $ git svn dcommit
+> RA layer request failed: PROPFIND request failed on '/svn/trunk/
+> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
+> PROPFIND of '/svn/trunk/
+> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
+> 400 Bad Request (https://webgoat.googlecode.com) at
+> /home/rdawes/bin/git-svn line 400
 
-There's a patch attached to the report, but from a first glance, I don't
-think it's the solution.
-
-Thanks, Gerrit.
+Does the "lessons" directory exist before that commit?
