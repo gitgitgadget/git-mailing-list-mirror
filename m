@@ -1,72 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] Add for_each_remote() function, and extend remote_find_tracking()
-Date: Tue, 10 Jul 2007 11:38:36 -0700
-Message-ID: <7vtzscqf2r.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
-	<7vhcof2rur.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707081336020.4248@racer.site>
-	<7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
-	<7vhcoexqeh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707091228290.5546@racer.site>
-	<7v4pkduw2f.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707092203100.5546@racer.site>
-	<7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707100401070.4131@racer.site>
-	<7vy7hosv7v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707101848050.4047@racer.site>
+From: Kalle Pokki <kalle.pokki@iki.fi>
+Subject: Re: how to combine two clones in a collection
+Date: 10 Jul 2007 22:27:45 +0300
+Message-ID: <m3644suki6.fsf@host32.eke.fi>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org> <20070710062104.GA22603@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707100950520.3412@woody.linux-foundation.org> <20070710174543.GA16054@piper.oerlikon.madduck.net> <72218C10-EE5E-4CD9-B5DE-DFEC40EBEF27@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 20:39:18 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 21:35:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8KcH-0007Pd-Rt
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:39:18 +0200
+	id 1I8LUP-0002Sa-C4
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 21:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764228AbXGJSij (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 14:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbXGJSij
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:38:39 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35858 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754250AbXGJSii (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 14:38:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070710183835.IIII1393.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 10 Jul 2007 14:38:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Muec1X00K1kojtg0000000; Tue, 10 Jul 2007 14:38:37 -0400
-In-Reply-To: <Pine.LNX.4.64.0707101848050.4047@racer.site> (Johannes
-	Schindelin's message of "Tue, 10 Jul 2007 18:48:40 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755451AbXGJTfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 15:35:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752044AbXGJTfI
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 15:35:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:36122 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753378AbXGJTfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 15:35:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1I8LUE-00044h-9g
+	for git@vger.kernel.org; Tue, 10 Jul 2007 21:35:02 +0200
+Received: from 194.100.36.62 ([194.100.36.62])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 21:35:02 +0200
+Received: from kalle.pokki by 194.100.36.62 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 21:35:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 194.100.36.62
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52107>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-> The function for_each_remote() does exactly what the name suggests.
->
-> The function remote_find_tracking() was extended to be able to search
-> remote refs for a given local ref.  You have to set the parameter
-> "reverse" to true for that behavior.
+> What you describe won't create two independent branches.  They'll
+> share the root commit.  I think what you have do is create the first
+> branch as normal, then clear out the working copy (be sure not to
+> delete .git) and do the commit manually.  I believe it goes something
+> like this:
 
-The updated patch does not use "reverse" but the old description
-is still there.
+You can also just create two different git repositories and start making
+the commits in the master (or any other) branch. Then combine the
+repositories by fetching
 
-Daniel, one thing I fear about your "I want to store the message
-in the object store so that I can reuse even after I re-polish
-the series" desire on the cover letter topic is this kind of
-gotcha, and that is why I suggested "*** BLURB GOES HERE ***".
-Both the summary (diffstat and shortlog) part and the
-description part should be kept fresh in the updated 0/N; while
-we can automate the summary part whenever we re-generate 0/N,
-you cannot automate the description part.
+        cd repo1
+        git fetch ../repo2 master:repo2
+
+This way the branches don't share anything, do they?
