@@ -1,112 +1,72 @@
-From: Ed Schouten <ed@fxq.nl>
-Subject: Patch for Makefile - LIBMD_SHA1: -lmd on FreeBSD
-Date: Tue, 10 Jul 2007 15:19:06 +0200
-Message-ID: <20070710131906.GC55449@hoeg.nl>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: I used git pull instead of stg pull !
+Date: Tue, 10 Jul 2007 15:29:57 +0200
+Message-ID: <20070710132957.GA9297@diana.vm.bytemark.co.uk>
+References: <469356EF.201@eclis.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Km1U/tdNT/EmXiR1"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 15:29:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jean-Christian de Rivaz <jc@eclis.ch>
+X-From: git-owner@vger.kernel.org Tue Jul 10 15:30:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8FmO-0006mT-Rp
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:29:25 +0200
+	id 1I8Fnm-000771-Kj
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508AbXGJN3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 09:29:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbXGJN3W
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:29:22 -0400
-Received: from mx0.hoeg.nl ([83.98.131.211]:50069 "EHLO palm.hoeg.nl"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750929AbXGJN3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 09:29:21 -0400
-X-Greylist: delayed 612 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2007 09:29:21 EDT
-Received: by palm.hoeg.nl (Postfix, from userid 1000)
-	id D60741CD03; Tue, 10 Jul 2007 15:19:06 +0200 (CEST)
+	id S1752956AbXGJNas convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Jul 2007 09:30:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752803AbXGJNas
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:30:48 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4694 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752743AbXGJNar (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 09:30:47 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1I8Fmv-0002na-00; Tue, 10 Jul 2007 14:29:57 +0100
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <469356EF.201@eclis.ch>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52066>
 
+On 2007-07-10 11:52:47 +0200, Jean-Christian de Rivaz wrote:
 
---Km1U/tdNT/EmXiR1
-Content-Type: multipart/mixed; boundary="qjNfmADvan18RZcF"
-Content-Disposition: inline
+> I have made the error to use the "git pull" command instead of the
+> "stg pull" command. The "git pull" have been executed successfuly,
+> but now stg seem to be confused:
+>
+> stg pull -n
+> stg pull: local changes in the tree. Use "refresh" to commit them
+>
+> stg new dummy -m "dummy"
+> stg new: HEAD and top are not the same. You probably committed
+>   changes to the tree outside of StGIT. If you know what you
+>   are doing, use the "refresh -f" command
+>
+> How can I restore the archive to a normal state for stg ?
 
+The problem is that you have committed a merge on top of the StGIT
+stack, and StGIT can't deal with that. You can undo the merge
+(provided that you haven't committed anything else on top of it) with
+"git reset --hard HEAD^".
 
---qjNfmADvan18RZcF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  NOTE: "reset --hard" will erase uncommitted modifications to working
+  tree files, so first make sure that "git status" doesn't report any
+  modifications you want to keep.
 
-Hello,
+If you want to get a better view of what it is you're doing, you could
+fire up gitk and find the sha1 of the commit that is supposed to be at
+the top of the StGIT stack, and "git reset <sha1>" to that commit.
 
-Once in a while I send in some patches to the FreeBSD folks for the
-devel/git port. I just wrote a patch for Git that makes it possible to
-link it against the FreeBSD Message Digest library (libmd), removing the
-dependency on OpenSSL.
+Once the merge is undone, just "stg pull" like you wanted to do in the
+first place.
 
-The patch adds the switch LIBMD_SHA1. When set, it just uses sha.h and
--lmd. I've also added proper documentation to the top of the Makefile.
-
-Yours,
 --=20
- Ed Schouten <ed@fxq.nl>
- WWW: http://g-rave.nl/
-
---qjNfmADvan18RZcF
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="git-libmd.diff"
-Content-Transfer-Encoding: quoted-printable
-
---- Makefile	2007-07-10 15:16:03.000000000 +0200
-+++ Makefile	2007-07-10 15:17:31.000000000 +0200
-@@ -55,6 +55,9 @@
- # specify your own (or DarwinPort's) include directories and
- # library directories by defining CFLAGS and LDFLAGS appropriately.
- #
-+# Define LIBMD_SHA1 environment variable when running make to make use
-+# of FreeBSD's libmd SHA1 routines.
-+#
- # Define PPC_SHA1 environment variable when running make to make use of
- # a bundled SHA1 routine optimized for PowerPC.
- #
-@@ -637,6 +640,10 @@
- 	BASIC_CFLAGS +=3D -DOLD_ICONV
- endif
-=20
-+ifdef LIBMD_SHA1
-+	SHA1_HEADER =3D "sha.h"
-+	EXTLIBS +=3D -lmd
-+else
- ifdef PPC_SHA1
- 	SHA1_HEADER =3D "ppc/sha1.h"
- 	LIB_OBJS +=3D ppc/sha1.o ppc/sha1ppc.o
-@@ -654,6 +661,7 @@
- endif
- endif
- endif
-+endif
- ifdef NO_PERL_MAKEMAKER
- 	export NO_PERL_MAKEMAKER
- endif
-
---qjNfmADvan18RZcF--
-
---Km1U/tdNT/EmXiR1
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (FreeBSD)
-
-iD8DBQFGk4dK52SDGA2eCwURAuBcAJ4vfU6jpHNMprsLNq659MUF3nSEFACfRYBn
-wIljohSzNtc7sIE/l7JumRc=
-=/QGA
------END PGP SIGNATURE-----
-
---Km1U/tdNT/EmXiR1--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
