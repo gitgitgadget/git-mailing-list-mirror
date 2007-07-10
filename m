@@ -1,61 +1,137 @@
-From: Alberto Bertogli <albertito@gmail.com>
-Subject: What happened with git-note?
-Date: Tue, 10 Jul 2007 20:17:35 -0300
-Message-ID: <20070710231735.GZ1813@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
+Date: Wed, 11 Jul 2007 01:41:59 +0200
+Organization: At home
+Message-ID: <f715g6$2sv$1@sea.gmane.org>
+References: <3bbc18d20707091552l29fb81b6v34da9cef3ec0df58@mail.gmail.com> <1184023318.9703.1.camel@mattlaptop2>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 11 01:25:35 2007
+X-From: git-owner@vger.kernel.org Wed Jul 11 01:42:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8P5J-0007nf-G5
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 01:25:33 +0200
+	id 1I8PLW-0001sd-Pk
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 01:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbXGJXZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 19:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbXGJXZV
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 19:25:21 -0400
-Received: from wx-out-0506.google.com ([66.249.82.239]:40216 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751054AbXGJXZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 19:25:20 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1384847wxd
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 16:25:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
-        b=oHatfryTAfcOA/+HY/LCoaQ2BHKzjTyzw4dFmiAWvensMRfy3FHAPrP497fJb8HvR5yY58+beBbb0p2aL0iCcUEEgRiFmM2gcMjnPCdjKQ07kbtJhVRGYdhJzq3j05MlUkrX/Ti2sZcLJKmi1dgmwJQ83d+5CzBsg5d9iCPba+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
-        b=TNFrmIJIn8/bANOw4CKNKH1ser3MPBXS9MKgFSXN6xAtc8NlfvNEPtTixq/0OSvf2nyYpjfbAauqgyFMZgLud7rQnwW3dNZwpUI7oqRSABfYeJXmIMNfF6cgxHZrjv1wBZRO/SjGqP7BCK8pk8WN1f9+YNjoPhjrNaATfYtEnw8=
-Received: by 10.70.39.11 with SMTP id m11mr8554264wxm.1184109919628;
-        Tue, 10 Jul 2007 16:25:19 -0700 (PDT)
-Received: from gmail.com ( [201.253.217.29])
-        by mx.google.com with ESMTP id i37sm24133131wxd.2007.07.10.16.25.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 10 Jul 2007 16:25:18 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1758597AbXGJXmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 19:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753747AbXGJXmO
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 19:42:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:36876 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752762AbXGJXmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 19:42:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I8PLJ-0006Zv-M3
+	for git@vger.kernel.org; Wed, 11 Jul 2007 01:42:05 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 01:42:05 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 01:42:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52120>
 
+Matt McCutchen wrote:
 
-Hi!
+> - Centralize knowledge about snapshot formats (mime types, extensions,
+>   commands) in %known_snapshot_formats and improve how some of that
+>   information is specified.  In particular, zip files are no longer a
+>   special case.
+> 
+> - Add support for offering multiple snapshot formats to the user so
+>   that he/she can download a snapshot in the format he/she prefers.
+>   The site-wide or project configuration now gives a list of formats
+>   to offer, and the "_snapshot_" link is replaced with, say,
+>   "snapshot (_tbz2_ _zip_)".
+> 
+> - Fix out-of-date "tarball" -> "archive" in comment.
+> 
+> Alert for gitweb site administrators: This patch changes the format of
+> $feature{'snapshot'}{'default'} in gitweb_config.perl from a list of three
+> pieces of information about a single format to a list of one or more formats
+> you wish to offer from the set ('tgz', 'tbz2', 'zip').  Update your
+> gitweb_config.perl appropriately.
 
-There was a very long thread about a proposed feature, git-note
-(http://thread.gmane.org/gmane.comp.version-control.git/46770/focus=48540),
-around May this year.
+Quite nice and I think needed refactoring of a snapshot code. Nevertheless
+I have some comments on the changes introduced by this patch; not only
+change to gitweb_config.perl is needed (which gitweb admin has control
+over), but also repo config for individual repositories might need to
+be changed (which gitweb admin might not have control over, and which is
+much harder to do).
 
-I was wondering what happened to it, because some issues were brought up
-but then everything seem to have stalled.
+> +# information about snapshot formats that gitweb is capable of serving
+> +# name => [mime type, filename suffix, --format for git-archive,
+> +#          compressor command suffix]
+> +our %known_snapshot_formats = (
+> +     'tgz'  => ['application/x-gzip' , '.tar.gz' , 'tar', '| gzip' ],
+> +     'tbz2' => ['application/x-bzip2', '.tar.bz2', 'tar', '| bzip2'],
+> +     'zip'  => ['application/zip'    , '.zip'    , 'zip', ''       ],
+> +);
 
-Is someone working on it? Is there a clear list of the pending issues
-somewhere?
+First, is full mimetype really needed? Earlier code assumed that mimetype
+for snapshot is of the form of application/<something>, and it provided
+only <something>.
 
-Thanks,
-		Alberto
+Second, I'd rather have 'gzip' and 'bzip2' aliases to 'tgz' and 'tbz2',
+so the old config continues to work. I can see that it would be hard
+to do without special-casing code, or changing the assumption that list
+of default available snapshot formats is keys of above hash.
+
+> -     # and in project config gitweb.snapshot = none|gzip|bzip2|zip;
+> +     # and in project config, a comma-separated list of formats or "none"
+> +     # to disable.  Example: gitweb.snapshot = tbz2,zip;
+
+I would relax the syntax, so "tbz2, zip" would also work, or even
+"tbz2 zip". I'd like for old config to also work, meaning that "gzip"
+would be the same as "tgz" and "bzip2" as "tbz2".
+
+> -     if ($val eq 'gzip') {
+> -             return ('x-gzip', 'gz', 'gzip');
+> -     } elsif ($val eq 'bzip2') {
+> -             return ('x-bzip2', 'bz2', 'bzip2');
+> -     } elsif ($val eq 'zip') {
+> -             return ('x-zip', 'zip', '');
+> -     } elsif ($val eq 'none') {
+> -             return ();
+
+Very nice getting rid of this swith-like statement...
+
+> +     if ($val) {
+> +             @fmts = ($val eq 'none' ? () : split /,/, $val);
+
+... but I would relax this regexp.
+
+> +# Generates undef or something like "snapshot (tbz2 zip)", linked.
+> +# Pass the hash.
+> +sub format_snapshot_links {
+> +     my ($hash) = @_;
+> +     my @snapshot_fmts = gitweb_check_feature('snapshot');
+> +     if (@snapshot_fmts) {
+> +             return "snapshot (" . join(' ', map $cgi->a(
+> +                     {-href => href(action=>"snapshot", hash=>$hash, snapshot_format=>$_)}, "$_"),
+> +                     @snapshot_fmts)
+> +             . ")";
+> +     } else {
+> +             return undef;
+> +     }
+> +}
+
+Nice separation into subroutine.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
