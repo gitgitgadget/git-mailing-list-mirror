@@ -1,418 +1,371 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Support wholesale directory renames in fast-import
-Date: Mon, 9 Jul 2007 23:10:36 -0400
-Message-ID: <20070710031036.GA9045@spearce.org>
-References: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 2/2] branch --track: code cleanup and saner handling of local
+ branches
+Date: Tue, 10 Jul 2007 04:05:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707100403550.4131@racer.site>
+References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
+ <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
+ <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
+ <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
+ <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
+ <7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Frech <david@nimblemachines.com>
-X-From: git-owner@vger.kernel.org Tue Jul 10 05:10:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 10 05:14:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I867h-0001fs-SD
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 05:10:46 +0200
+	id 1I86B0-00029N-7N
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 05:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760957AbXGJDKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 23:10:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760936AbXGJDKl
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 23:10:41 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47180 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758935AbXGJDKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 23:10:40 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I867O-0004uJ-A5; Mon, 09 Jul 2007 23:10:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9496920FBAE; Mon,  9 Jul 2007 23:10:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1762726AbXGJDNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 23:13:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762722AbXGJDNi
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 23:13:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39395 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761830AbXGJDNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 23:13:36 -0400
+Received: (qmail invoked by alias); 10 Jul 2007 03:13:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp043) with SMTP; 10 Jul 2007 05:13:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/1ijYUVX/1PgUWCyx/LEbX7vFp9VsDjo8kYlvaLE
+	v5mTz0YRLY6HEL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52036>
 
-Some source material (e.g. Subversion dump files) perform directory
-renames without telling us exactly which files in that subdirectory
-were moved.  This makes it hard for a frontend to convert such data
-formats to a fast-import stream, as all the frontend has on hand
-is "Rename a/ to b/" with no details about what files are in a/,
-unless the frontend also kept track of all files.
 
-The new 'R' subcommand within a commit allows the frontend to
-rename either a file or an entire subdirectory, without needing to
-know the object's SHA-1 or the specific files contained within it.
-The rename is performed as efficiently as possible internally,
-making it cheaper than a 'D'/'M' pair for a file rename.
+This patch cleans up some complicated code, and replaces it with a
+cleaner version, using code from remote.[ch], which got extended a
+little in the process.  This also enables us to fix two cases:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+The earlier "fix" to setup tracking only when the original ref started
+with "refs/remotes" is wrong.  You are absolutely allowed to use a
+separate layout for your tracking branches.  The correct fix, of course,
+is to set up tracking information only when there is a matching
+remote.<nick>.fetch line containing a colon.
+
+Another corner case was not handled properly.  If two remotes write to
+the original ref, just warn the user and do not set up tracking.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
- David Frech <david@nimblemachines.com> wrote:
- > Git can track file renames implicitly. If I delete and then add (under
- > a different name) the same content, git will figure that out.
- > 
- > But if a directory was renamed, I have no way to tell fast-import
- > about it. I can't delete the directory (using a 'D' command) and then
- > add it back (with a different name) with all its contents, because my
- > source material (an svn dump file) doesn't tell me, at that point,
- > about all the files involved because nothing about them has changed.
- > 
- > fast-import knows about the contents of the directory I want to
- > rename, but doesn't give me a primitive to do the rename. Is this
- > something we need to add? My frontend could keep track of this, but I
- > would duplicating work that fast-import is already doing.
+	... and again I was bitten by the minimality of the script. The
+	original diff was _unreadable_, because it matched some empty 
+	lines here and there, or some lonely curly brackets.
 
- Does the following do the trick for you?  It is also available
- from my fastimport.git master branch:
+	Therefore I manually tweaked it to show first the cruft that was 
+	removed, and then the rewrite using remote.[ch]. As a consequence, 
+	the diffstat is not the one of this patch, but the one "git show 
+	--stat" showed.
 
-	git://repo.or.cz/git/fastimport.git      master
-	http://repo.or.cz/r/git/fastimport.git   master
+ builtin-branch.c  |  167 ++++++++++++++++------------------------------------
+ t/t3200-branch.sh |   21 ++++---
+ 2 files changed, 63 insertions(+), 125 deletions(-)
 
- Yes, it passes all tests...
-
- Documentation/git-fast-import.txt |   28 ++++++++++-
- fast-import.c                     |   91 ++++++++++++++++++++++++++++++-------
- t/t9300-fast-import.sh            |   68 +++++++++++++++++++++++++++
- 3 files changed, 168 insertions(+), 19 deletions(-)
-
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index c66af7c..80a8ee0 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -302,7 +302,7 @@ change to the project.
- 	data
- 	('from' SP <committish> LF)?
- 	('merge' SP <committish> LF)?
--	(filemodify | filedelete | filedeleteall)*
-+	(filemodify | filedelete | filerename | filedeleteall)*
- 	LF
- ....
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 49195a1..0dbd6d7 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -10,6 +10,7 @@
+ #include "refs.h"
+ #include "commit.h"
+ #include "builtin.h"
++#include "remote.h"
  
-@@ -325,11 +325,13 @@ commit message use a 0 length data.  Commit messages are free-form
- and are not interpreted by Git.  Currently they must be encoded in
- UTF-8, as fast-import does not permit other encodings to be specified.
+ static const char builtin_branch_usage[] =
+   "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]] [--sort-by-date]";
+@@ -22,7 +23,7 @@ static const char builtin_branch_usage[] =
+ static const char *head;
+ static unsigned char head_sha1[20];
  
--Zero or more `filemodify`, `filedelete` and `filedeleteall` commands
-+Zero or more `filemodify`, `filedelete`, `filename` and
-+`filedeleteall` commands
- may be included to update the contents of the branch prior to
- creating the commit.  These commands may be supplied in any order.
- However it is recommended that a `filedeleteall` command preceed
--all `filemodify` commands in the same commit, as `filedeleteall`
-+all `filemodify` and `filerename` commands in the same commit, as
-+`filedeleteall`
- wipes the branch clean (see below).
+-static int branch_track = 1; /* 0 = none, 1 = remotes, 2 = all */
++static int branch_track = 1;
  
- `author`
-@@ -495,6 +497,26 @@ here `<path>` is the complete path of the file or subdirectory to
- be removed from the branch.
- See `filemodify` above for a detailed description of `<path>`.
- 
-+`filerename`
-+^^^^^^^^^^^^
-+Renames an existing file or subdirectory to a different location
-+within the branch.  The existing file or directory must exist. If
-+the destination exists it will be replaced by the source directory.
-+
-+....
-+	'R' SP <path> SP <path> LF
-+....
-+
-+here the first `<path>` is the source location and the second
-+`<path>` is the destination.  See `filemodify` above for a detailed
-+description of what `<path>` may look like.  To use a source path
-+that contains SP the path must be quoted.
-+
-+A `filerename` command takes effect immediately.  Once the source
-+location has been renamed to the destination any future commands
-+applied to the source location will create new files there and not
-+impact the destination of the rename.
-+
- `filedeleteall`
- ^^^^^^^^^^^^^^^
- Included in a `commit` command to remove all files (and also all
-diff --git a/fast-import.c b/fast-import.c
-index f9bfcc7..a1cb13f 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -26,9 +26,10 @@ Format of STDIN stream:
-     lf;
-   commit_msg ::= data;
- 
--  file_change ::= file_clr | file_del | file_obm | file_inm;
-+  file_change ::= file_clr | file_del | file_rnm | file_obm | file_inm;
-   file_clr ::= 'deleteall' lf;
-   file_del ::= 'D' sp path_str lf;
-+  file_rnm ::= 'R' sp path_str sp path_str lf;
-   file_obm ::= 'M' sp mode sp (hexsha1 | idnum) sp path_str lf;
-   file_inm ::= 'M' sp mode sp 'inline' sp path_str lf
-     data;
-@@ -1154,7 +1155,8 @@ static int tree_content_set(
- 	struct tree_entry *root,
- 	const char *p,
- 	const unsigned char *sha1,
--	const uint16_t mode)
-+	const uint16_t mode,
-+	struct tree_content *subtree)
- {
- 	struct tree_content *t = root->tree;
- 	const char *slash1;
-@@ -1168,20 +1170,22 @@ static int tree_content_set(
- 		n = strlen(p);
- 	if (!n)
- 		die("Empty path component found in input");
-+	if (!slash1 && !S_ISDIR(mode) && subtree)
-+		die("Non-directories cannot have subtrees");
- 
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
- 		if (e->name->str_len == n && !strncmp(p, e->name->str_dat, n)) {
- 			if (!slash1) {
--				if (e->versions[1].mode == mode
-+				if (!S_ISDIR(mode)
-+						&& e->versions[1].mode == mode
- 						&& !hashcmp(e->versions[1].sha1, sha1))
- 					return 0;
- 				e->versions[1].mode = mode;
- 				hashcpy(e->versions[1].sha1, sha1);
--				if (e->tree) {
-+				if (e->tree)
- 					release_tree_content_recursive(e->tree);
--					e->tree = NULL;
--				}
-+				e->tree = subtree;
- 				hashclr(root->versions[1].sha1);
- 				return 1;
- 			}
-@@ -1191,7 +1195,7 @@ static int tree_content_set(
- 			}
- 			if (!e->tree)
- 				load_tree(e);
--			if (tree_content_set(e, slash1 + 1, sha1, mode)) {
-+			if (tree_content_set(e, slash1 + 1, sha1, mode, subtree)) {
- 				hashclr(root->versions[1].sha1);
- 				return 1;
- 			}
-@@ -1209,9 +1213,9 @@ static int tree_content_set(
- 	if (slash1) {
- 		e->tree = new_tree_content(8);
- 		e->versions[1].mode = S_IFDIR;
--		tree_content_set(e, slash1 + 1, sha1, mode);
-+		tree_content_set(e, slash1 + 1, sha1, mode, subtree);
- 	} else {
--		e->tree = NULL;
-+		e->tree = subtree;
- 		e->versions[1].mode = mode;
- 		hashcpy(e->versions[1].sha1, sha1);
+ static int branch_use_color;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -66,12 +67,8 @@ static int git_branch_config(const char *var, const char *value)
+ 		color_parse(value, var, branch_colors[slot]);
+ 		return 0;
  	}
-@@ -1219,7 +1223,10 @@ static int tree_content_set(
- 	return 1;
- }
- 
--static int tree_content_remove(struct tree_entry *root, const char *p)
-+static int tree_content_remove(
-+	struct tree_entry *root,
-+	const char *p,
-+	struct tree_entry *backup_leaf)
- {
- 	struct tree_content *t = root->tree;
- 	const char *slash1;
-@@ -1239,13 +1246,14 @@ static int tree_content_remove(struct tree_entry *root, const char *p)
- 				goto del_entry;
- 			if (!e->tree)
- 				load_tree(e);
--			if (tree_content_remove(e, slash1 + 1)) {
-+			if (tree_content_remove(e, slash1 + 1, backup_leaf)) {
- 				for (n = 0; n < e->tree->entry_count; n++) {
- 					if (e->tree->entries[n]->versions[1].mode) {
- 						hashclr(root->versions[1].sha1);
- 						return 1;
- 					}
- 				}
-+				backup_leaf = NULL;
- 				goto del_entry;
- 			}
- 			return 0;
-@@ -1254,10 +1262,11 @@ static int tree_content_remove(struct tree_entry *root, const char *p)
- 	return 0;
- 
- del_entry:
--	if (e->tree) {
-+	if (backup_leaf)
-+		memcpy(backup_leaf, e, sizeof(*backup_leaf));
-+	else if (e->tree)
- 		release_tree_content_recursive(e->tree);
--		e->tree = NULL;
+-	if (!strcmp(var, "branch.autosetupmerge")) {
+-		if (!strcmp(value, "all"))
+-			branch_track = 2;
+-		else
++	if (!strcmp(var, "branch.autosetupmerge"))
+ 			branch_track = git_config_bool(var, value);
 -	}
-+	e->tree = NULL;
- 	e->versions[1].mode = 0;
- 	hashclr(e->versions[1].sha1);
- 	hashclr(root->versions[1].sha1);
-@@ -1629,7 +1638,7 @@ static void file_change_m(struct branch *b)
- 			    typename(type), command_buf.buf);
- 	}
  
--	tree_content_set(&b->branch_tree, p, sha1, S_IFREG | mode);
-+	tree_content_set(&b->branch_tree, p, sha1, S_IFREG | mode, NULL);
- 	free(p_uq);
+ 	return git_default_config(var, value);
+ }
+@@ -349,125 +346,67 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev,
+ 	free_ref_list(&ref_list);
  }
  
-@@ -1645,10 +1654,58 @@ static void file_change_d(struct branch *b)
- 			die("Garbage after path in: %s", command_buf.buf);
- 		p = p_uq;
- 	}
--	tree_content_remove(&b->branch_tree, p);
-+	tree_content_remove(&b->branch_tree, p, NULL);
- 	free(p_uq);
- }
- 
-+static void file_change_r(struct branch *b)
+-static char *config_repo;
+-static char *config_remote;
+-static const char *start_ref;
+-
+-static int get_remote_branch_name(const char *value)
+-{
+-	const char *colon;
+-	const char *end;
+-
+-	if (*value == '+')
+-		value++;
+-
+-	colon = strchr(value, ':');
+-	if (!colon)
+-		return 0;
+-
+-	end = value + strlen(value);
+-
+-	/*
+-	 * Try an exact match first.  I.e. handle the case where the
+-	 * value is "$anything:refs/foo/bar/baz" and start_ref is exactly
+-	 * "refs/foo/bar/baz". Then the name at the remote is $anything.
+-	 */
+-	if (!strcmp(colon + 1, start_ref)) {
+-		/* Truncate the value before the colon. */
+-		nfasprintf(&config_repo, "%.*s", colon - value, value);
+-		return 1;
+-	}
+-
+-	/*
+-	 * Is this a wildcard match?
+-	 */
+-	if ((end - 2 <= value) || end[-2] != '/' || end[-1] != '*' ||
+-	    (colon - 2 <= value) || colon[-2] != '/' || colon[-1] != '*')
+-		return 0;
+-
+-	/*
+-	 * Value is "refs/foo/bar/<asterisk>:refs/baz/boa/<asterisk>"
+-	 * and start_ref begins with "refs/baz/boa/"; the name at the
+-	 * remote is refs/foo/bar/ with the remaining part of the
+-	 * start_ref.  The length of the prefix on the RHS is (end -
+-	 * colon - 2), including the slash immediately before the
+-	 * asterisk.
+-	 */
+-	if ((strlen(start_ref) < end - colon - 2) ||
+-	    memcmp(start_ref, colon + 1, end - colon - 2))
+-		return 0; /* does not match prefix */
+-
+-	/* Replace the asterisk with the remote branch name.  */
+-	nfasprintf(&config_repo, "%.*s%s",
+-		   (colon - 1) - value, value,
+-		   start_ref + (end - colon - 2));
+-	return 1;
+-}
+-
+-static int get_remote_config(const char *key, const char *value)
+-{
+-	const char *var;
+-	if (prefixcmp(key, "remote."))
+-		return 0;
+-
+-	var = strrchr(key, '.');
+-	if (var == key + 6 || strcmp(var, ".fetch"))
+-		return 0;
+-	/*
+-	 * Ok, we are looking at key == "remote.$foo.fetch";
+-	 */
+-	if (get_remote_branch_name(value))
+-		nfasprintf(&config_remote, "%.*s", var - (key + 7), key + 7);
+-
+-	return 0;
+-}
+-
+-static void set_branch_merge(const char *name, const char *config_remote,
+-			     const char *config_repo)
+-{
+-	char key[1024];
+-	if (sizeof(key) <=
+-	    snprintf(key, sizeof(key), "branch.%s.remote", name))
+-		die("what a long branch name you have!");
+-	git_config_set(key, config_remote);
+-
+-	/*
+-	 * We do not have to check if we have enough space for
+-	 * the 'merge' key, since it's shorter than the
+-	 * previous 'remote' key, which we already checked.
+-	 */
+-	snprintf(key, sizeof(key), "branch.%s.merge", name);
+-	git_config_set(key, config_repo);
+-}
+-
+-static void set_branch_defaults(const char *name, const char *real_ref)
+-{
+-	/*
+-	 * name is the name of new branch under refs/heads;
+-	 * real_ref is typically refs/remotes/$foo/$bar, where
+-	 * $foo is the remote name (there typically are no slashes)
+-	 * and $bar is the branch name we map from the remote
+-	 * (it could have slashes).
+-	 */
+-	start_ref = real_ref;
+-	git_config(get_remote_config);
+-	if (!config_repo && !config_remote &&
+-	    !prefixcmp(real_ref, "refs/heads/")) {
+-		set_branch_merge(name, ".", real_ref);
+-		printf("Branch %s set up to track local branch %s.\n",
+-		       name, real_ref);
+-	}
+-
+-	if (config_repo && config_remote) {
+-		set_branch_merge(name, config_remote, config_repo);
+-		printf("Branch %s set up to track remote branch %s.\n",
+-		       name, real_ref);
+-	}
+-
+-	if (config_repo)
+-		free(config_repo);
+-	if (config_remote)
+-		free(config_remote);
++struct tracking {
++	struct refspec spec;
++	char *dst;
++	const char *remote;
++	int matches;
++};
++
++static int find_tracked_branch(struct remote *remote, void *priv)
 +{
-+	const char *s, *d;
-+	char *s_uq, *d_uq;
-+	const char *endp;
-+	struct tree_entry leaf;
++	struct tracking *tracking = priv;
 +
-+	s = command_buf.buf + 2;
-+	s_uq = unquote_c_style(s, &endp);
-+	if (s_uq) {
-+		if (*endp != ' ')
-+			die("Missing space after source: %s", command_buf.buf);
-+	}
-+	else {
-+		endp = strchr(s, ' ');
-+		if (!endp)
-+			die("Missing space after source: %s", command_buf.buf);
-+		s_uq = xmalloc(endp - s + 1);
-+		memcpy(s_uq, s, endp - s);
-+		s_uq[endp - s] = 0;
-+	}
-+	s = s_uq;
-+
-+	endp++;
-+	if (!*endp)
-+		die("Missing dest: %s", command_buf.buf);
-+
-+	d = endp;
-+	d_uq = unquote_c_style(d, &endp);
-+	if (d_uq) {
-+		if (*endp)
-+			die("Garbage after dest in: %s", command_buf.buf);
-+		d = d_uq;
++	if (!remote_find_tracking(remote, &tracking->spec, 1)) {
++		if (++tracking->matches == 1) {
++			tracking->dst = tracking->spec.dst;
++			tracking->remote = remote->name;
++		} else {
++			free(tracking->spec.dst);
++			free(tracking->dst);
++			tracking->dst = NULL;
++		}
 +	}
 +
-+	memset(&leaf, 0, sizeof(leaf));
-+	tree_content_remove(&b->branch_tree, s, &leaf);
-+	if (!leaf.versions[1].mode)
-+		die("Path %s not in branch", s);
-+	tree_content_set(&b->branch_tree, d,
-+		leaf.versions[1].sha1,
-+		leaf.versions[1].mode,
-+		leaf.tree);
-+
-+	free(s_uq);
-+	free(d_uq);
++	return 0;
 +}
 +
- static void file_change_deleteall(struct branch *b)
- {
- 	release_tree_content_recursive(b->branch_tree.tree);
-@@ -1816,6 +1873,8 @@ static void cmd_new_commit(void)
- 			file_change_m(b);
- 		else if (!prefixcmp(command_buf.buf, "D "))
- 			file_change_d(b);
-+		else if (!prefixcmp(command_buf.buf, "R "))
-+			file_change_r(b);
- 		else if (!strcmp("deleteall", command_buf.buf))
- 			file_change_deleteall(b);
- 		else
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 53774c8..bf3720d 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -580,4 +580,72 @@ test_expect_success \
- 	 git diff --raw L^ L >output &&
- 	 git diff expect output'
++
++/*
++ * This is called when new_ref is branched off of orig_ref, and tries
++ * to infer the settings for branch.<new_ref>.{remote,merge} from the
++ * config.
++ */
++static int setup_tracking(const char *new_ref, const char *orig_ref)
++{
++	char key[1024];
++	struct tracking tracking;
++
++	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
++		return error("Tracking not set up: name too long: %s",
++				new_ref);
++
++	memset(&tracking, 0, sizeof(tracking));
++	tracking.spec.src = orig_ref;
++	if (for_each_remote(find_tracked_branch, &tracking) ||
++			!tracking.matches)
++		return 1;
++
++	if (tracking.matches > 1)
++		return error("Not tracking: ambiguous information for ref %s",
++				orig_ref);
++
++	if (tracking.matches == 1) {
++		sprintf(key, "branch.%s.remote", new_ref);
++		git_config_set(key, tracking.remote ?  tracking.remote : ".");
++		sprintf(key, "branch.%s.merge", new_ref);
++		git_config_set(key, tracking.dst);
++		free(tracking.dst);
++		printf("Branch %s set up to track remote branch %s.\n",
++			       new_ref, orig_ref);
++	}
++
++	return 0;
+ }
  
-+###
-+### series M
-+###
-+
-+test_tick
-+cat >input <<INPUT_END
-+commit refs/heads/M1
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+file rename
-+COMMIT
-+
-+from refs/heads/branch^0
-+R file2/newf file2/n.e.w.f
-+
-+INPUT_END
-+
-+cat >expect <<EOF
-+:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	file2/newf	file2/n.e.w.f
-+EOF
-+test_expect_success \
-+	'M: rename file in same subdirectory' \
-+	'git-fast-import <input &&
-+	 git diff-tree -M -r M1^ M1 >actual &&
-+	 compare_diff_raw expect actual'
-+
-+cat >input <<INPUT_END
-+commit refs/heads/M2
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+file rename
-+COMMIT
-+
-+from refs/heads/branch^0
-+R file2/newf i/am/new/to/you
-+
-+INPUT_END
-+
-+cat >expect <<EOF
-+:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	file2/newf	i/am/new/to/you
-+EOF
-+test_expect_success \
-+	'M: rename file to new subdirectory' \
-+	'git-fast-import <input &&
-+	 git diff-tree -M -r M2^ M2 >actual &&
-+	 compare_diff_raw expect actual'
-+
-+cat >input <<INPUT_END
-+commit refs/heads/M3
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+file rename
-+COMMIT
-+
-+from refs/heads/M2^0
-+R i other/sub
-+
-+INPUT_END
-+
-+cat >expect <<EOF
-+:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	i/am/new/to/you	other/sub/am/new/to/you
-+EOF
-+test_expect_success \
-+	'M: rename subdirectory to new subdirectory' \
-+	'git-fast-import <input &&
-+	 git diff-tree -M -r M3^ M3 >actual &&
-+	 compare_diff_raw expect actual'
-+
- test_done
+ static void create_branch(const char *name, const char *start_name,
+@@ -529,10 +468,8 @@ static void create_branch(const char *name, const char *start_name,
+ 	/* When branching off a remote branch, set up so that git-pull
+ 	   automatically merges from there.  So far, this is only done for
+ 	   remotes registered via .git/config.  */
+-	if (real_ref && (track == 2 ||
+-				(track == 1 &&
+-				 !prefixcmp(real_ref, "refs/remotes/"))))
+-		set_branch_defaults(name, real_ref);
++	if (real_ref && track)
++		setup_tracking(name, real_ref);
+ 
+ 	if (write_ref_sha1(lock, sha1, msg) < 0)
+ 		die("Failed to write ref: %s.", strerror(errno));
+@@ -604,7 +541,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
+ 		if (!strcmp(arg, "--track")) {
+-			track = 2;
++			track = 1;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--no-track")) {
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index a19e961..ef1eeb7 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -148,13 +148,14 @@ test_expect_success 'test tracking setup via config' \
+      test $(git config branch.my3.remote) = local &&
+      test $(git config branch.my3.merge) = refs/heads/master'
+ 
+-test_expect_success 'autosetupmerge = all' '
++test_expect_success 'avoid ambiguous track' '
+ 	git config branch.autosetupmerge true &&
++	git config remote.ambi1.url = lalala &&
++	git config remote.ambi1.fetch = refs/heads/lalala:refs/heads/master &&
++	git config remote.ambi2.url = lilili &&
++	git config remote.ambi2.fetch = refs/heads/lilili:refs/heads/master &&
+ 	git branch all1 master &&
+-	test -z "$(git config branch.all1.merge)" &&
+-	git config branch.autosetupmerge all &&
+-	git branch all2 master &&
+-	test $(git config branch.all2.merge) = refs/heads/master
++	test -z "$(git config branch.all1.merge)"
+ '
+ 
+ test_expect_success 'test overriding tracking setup via --no-track' \
+@@ -167,10 +168,10 @@ test_expect_success 'test overriding tracking setup via --no-track' \
+      ! test "$(git config branch.my2.remote)" = local &&
+      ! test "$(git config branch.my2.merge)" = refs/heads/master'
+ 
+-test_expect_success 'test local tracking setup' \
++test_expect_success 'no tracking without .fetch entries' \
+     'git branch --track my6 s &&
+-     test $(git config branch.my6.remote) = . &&
+-     test $(git config branch.my6.merge) = refs/heads/s'
++     test -z "$(git config branch.my6.remote)" &&
++     test -z "$(git config branch.my6.merge)"'
+ 
+ test_expect_success 'test tracking setup via --track but deeper' \
+     'git config remote.local.url . &&
+@@ -182,8 +183,8 @@ test_expect_success 'test tracking setup via --track but deeper' \
+ 
+ test_expect_success 'test deleting branch deletes branch config' \
+     'git branch -d my7 &&
+-     test "$(git config branch.my7.remote)" = "" &&
+-     test "$(git config branch.my7.merge)" = ""'
++     test -z "$(git config branch.my7.remote)" &&
++     test -z "$(git config branch.my7.merge)"'
+ 
+ test_expect_success 'test deleting branch without config' \
+     'git branch my7 s &&
 -- 
-1.5.3.rc0.879.g64b8
+1.5.3.rc0.2769.gd9be2
