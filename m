@@ -1,167 +1,71 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: git-svn and renames
-Date: Tue, 10 Jul 2007 16:18:52 +0200
-Message-ID: <4693954C.90907@dawes.za.net>
-References: <46938594.2010607@dawes.za.net> <86fy3wpf95.fsf@lola.quinscape.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Add for_each_remote() function, and extend
+ remote_find_tracking()
+Date: Tue, 10 Jul 2007 15:11:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707101511440.4047@racer.site>
+References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
+ <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
+ <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
+ <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
+ <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
+ <7vzm25tex6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707100401070.4131@racer.site>
+ <Pine.LNX.4.64.0707092323160.6977@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 16:19:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jul 10 16:19:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8GYz-00025H-7K
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:19:37 +0200
+	id 1I8GZ9-00028M-09
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160AbXGJOTe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 10:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbXGJOTe
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:19:34 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:52625 "EHLO
-	spunkymail-a15.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753120AbXGJOTd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jul 2007 10:19:33 -0400
-Received: from [192.168.201.103] (dsl-146-24-230.telkomadsl.co.za [165.146.24.230])
-	by spunkymail-a15.dreamhost.com (Postfix) with ESMTP id B67857F066;
-	Tue, 10 Jul 2007 07:19:28 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
-In-Reply-To: <86fy3wpf95.fsf@lola.quinscape.zz>
+	id S1753537AbXGJOTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 10:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbXGJOTh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:19:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57510 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753358AbXGJOTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 10:19:36 -0400
+Received: (qmail invoked by alias); 10 Jul 2007 14:19:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 10 Jul 2007 16:19:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+95Us6TXy96ZmVn7iIg4Q1Yz2Xv07W0/E+SKFA4b
+	li472dFi7QDmg4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0707092323160.6977@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52078>
 
-David Kastrup wrote:
-> Rogan Dawes <lists@dawes.za.net> writes:
+Hi,
+
+On Mon, 9 Jul 2007, Daniel Barkalow wrote:
+
+> On Tue, 10 Jul 2007, Johannes Schindelin wrote:
 > 
->> However, when I try to push this change to the Google repo, git-svn
->> dies with the following error:
->>
->> $ git svn dcommit
->> RA layer request failed: PROPFIND request failed on '/svn/trunk/
->> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
->> PROPFIND of '/svn/trunk/
->> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
->> 400 Bad Request (https://webgoat.googlecode.com) at
->> /home/rdawes/bin/git-svn line 400
->>
->> [Yes, those paths have a space in them, however this does not seem to
->> have prevented me from committing the previous 20 or so changes.]
->>
->> I noted the following in the git-svn documentation, with regards to
->> handling renames. However, I am not renaming a directory, only a
->> couple of files.
+> > The function for_each_remote() does exactly what the name suggests.
+> > 
+> > The function remote_find_tracking() was extended to be able to search
+> > remote refs for a given local ref.  You have to set the parameter
+> > "reverse" to true for that behavior.
 > 
->> ---- quote ----
+> I think I'd like this better if reverse meant that it looked at 
+> refspec->dst and set refspec->src, rather than returning the refspec 
+> reversed; the current version sets the refspec so that it's effectively 
+> something from the list, which makes it easier to understand.
 > 
-> [...]
->> Renamed and copied directories are not detected by git and hence not
->> tracked when committing to SVN.  I do not plan on adding support for
->> this as it's quite difficult and time-consuming to get working for all
->> the possible corner cases (git doesn't do it, either).  Committing
->> renamed and copied files are fully supported if they're similar enough
->> for git to detect them.
-> 
->> Any ideas?
-> 
->   dcommit          Commit several diffs to merge with upstream
->                      --quiet, -q 
->                      --fetch-all, --all 
->                      --no-auth-cache 
->                      --no-rebase 
->                      --no-checkout 
->                      --rmdir 
->                      --dry-run, -n 
->                      --find-copies-harder 
->                      --follow-parent, --follow! 
->                      --authors-file, -A <arg>
->                      --copy-similarity, -C <num>
->                      --username <arg>
->                      --repack-flags, --repack-args, --repack-opts <arg>
->                      --repack <num>
->                      --verbose, -v 
->                      --edit, -e 
->                      --log-window-size <num>
->                      --config-dir <arg>
->                      -l <num>
->                      --merge, -m, -M 
->                      --strategy, -s <arg>
-> 
-> 
-> Try playing with the --copy-similarity and --find-copies-harder flags.
-> 
+> Maybe make it so the user calls it with at most one of src and dst NULL, 
+> and it returns with neither NULL or returns -1 if it can't find anything?
 
-Thanks for the suggestion.
+Will do.
 
-However, even going all the way to 50% had no impact. I get the exact 
-same message.
-
-$ git svn --find-copies-harder -C 50 dcommit
-RA layer request failed: PROPFIND request failed on '/svn/trunk/ 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java': 
-PROPFIND of '/svn/trunk/ 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java': 
-400 Bad Request (https://webgoat.googlecode.com) at 
-/home/rdawes/bin/git-svn line 400
-
-Unfortunately, the error seems to be in the SVN::Ra library, and I can 
-find no way to enable debugging output on this code.
-
-One thing I did note is that performing a dry-run completes successfully:
-
-$ git svn dcommit -n
-diff-tree 486416188a3e49d60e1510166ac197e5e66cc4d2~1 
-486416188a3e49d60e1510166ac197e5e66cc4d2
-diff-tree e0100ee6353c2160eca642ec600639004d92a99e~1 
-e0100ee6353c2160eca642ec600639004d92a99e
-diff-tree ba64aa781efdc31a4ffceed8648ece45ac955186~1 
-ba64aa781efdc31a4ffceed8648ece45ac955186
-diff-tree 23202df6f1533bf79c0ad127fdcb06db35d8b634~1 
-23202df6f1533bf79c0ad127fdcb06db35d8b634
-diff-tree 42af98c396e66cc2c0377e267e5431414fb8d580~1 
-42af98c396e66cc2c0377e267e5431414fb8d580
-diff-tree 16c76a9129cb66378851bb0bec8e983354d0c936~1 
-16c76a9129cb66378851bb0bec8e983354d0c936
-diff-tree d1a1992abfdcba1a97989c29dd0f25257b03f16a~1 
-d1a1992abfdcba1a97989c29dd0f25257b03f16a
-diff-tree dc7071e954e33a0c859db575f3b4be767194fa7e~1 
-dc7071e954e33a0c859db575f3b4be767194fa7e
-diff-tree 107ef202137ba38325c28b95983ded23d67cae89~1 
-107ef202137ba38325c28b95983ded23d67cae89
-diff-tree 01891b7a0cc03234145a29582dbd5061aed0b347~1 
-01891b7a0cc03234145a29582dbd5061aed0b347
-diff-tree f047c06823632a10379255957302698375e62d26~1 
-f047c06823632a10379255957302698375e62d26
-diff-tree 634664ef291c5f33594202dec9f5e081348e10d2~1 
-634664ef291c5f33594202dec9f5e081348e10d2
-diff-tree 13e731927bc32e27a240cba647f1c6425cea6247~1 
-13e731927bc32e27a240cba647f1c6425cea6247
-diff-tree df62b0a2ef3f5556b52b933b08409dc05a2ba671~1 
-df62b0a2ef3f5556b52b933b08409dc05a2ba671
-diff-tree 745ec078b881cc87234a7bfe59635f7856094d8e~1 
-745ec078b881cc87234a7bfe59635f7856094d8e
-diff-tree 91b08b5f2bc6bc1d235cb9d624be23346c5a2749~1 
-91b08b5f2bc6bc1d235cb9d624be23346c5a2749
-diff-tree 8c1805e3be9595099832d9c55cdf740f3c20bd16~1 
-8c1805e3be9595099832d9c55cdf740f3c20bd16
-diff-tree b06b234c5dbb046e4a56ee30f4a8b1bf17758794~1 
-b06b234c5dbb046e4a56ee30f4a8b1bf17758794
-diff-tree 52313b6cb19fc962a7c51eacf9016870b93e2467~1 
-52313b6cb19fc962a7c51eacf9016870b93e2467
-diff-tree 8689b19c8fc48a603c0b9992a7ba04f7e57f4e70~1 
-8689b19c8fc48a603c0b9992a7ba04f7e57f4e70
-diff-tree 23e348e97ee5220e7514249a163647b187aa4f8b~1 
-23e348e97ee5220e7514249a163647b187aa4f8b
-diff-tree 76479ab494bd6edfa306271be0919d4b210d1296~1 
-76479ab494bd6edfa306271be0919d4b210d1296
-
-[word wrapped, unfortunately]
-
-Thanks for your help.
-
-Regards,
-
-Rogan
+Ciao,
+Dscho
