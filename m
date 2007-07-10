@@ -1,76 +1,81 @@
-From: "Russ Dill" <russ.dill@gmail.com>
-Subject: git-svn+cygwin failed fetch
-Date: Tue, 10 Jul 2007 11:06:16 -0700
-Message-ID: <f9d2a5e10707101106w305e28acy55f465e558485298@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: pushing changes to a remote branch
+Date: Tue, 10 Jul 2007 14:10:01 -0400
+Message-ID: <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
+References: <20070710143614.GA29681@piper.oerlikon.madduck.net> <20070710173401.GB5032@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 20:06:39 2007
+Cc: git discussion list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 10 20:10:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8K6d-00007L-Vs
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:06:36 +0200
+	id 1I8KAU-00014x-Hz
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760047AbXGJSGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 14:06:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762669AbXGJSGT
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:06:19 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:10566 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759068AbXGJSGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 14:06:18 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so95890nfb
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 11:06:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dRreP4ixHw3EqjLi72KkedX7ba3/016yiuA7UCZdGX0oUjoGjOPY+63YtXx2jt84iUvLEzd3H5WE0CsgQnl98kxvMeB3RBYw6+372+m5iStn1MGGlltIGvRdIftTman5WuGM+oKvqYwTPNJECOJ8G4sLZtT/6q9oT7iNP64NzdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=UjjMA3TCFvgo3WQRMzhwoQ7fomeWvQgvMYLGrh8dTeRNRxAdNcufmgvcYAVmFy8bYLYF331Apc3pr4NGNqrTz5Oeb15ub++BpHYyxHBvXPO8iwvjw33fDMENjEjDqJtHLlO4R2VfjJc2aM+3jXSdzcwBKBC/Rse8mej6AdRdfQs=
-Received: by 10.82.105.13 with SMTP id d13mr9992640buc.1184090776946;
-        Tue, 10 Jul 2007 11:06:16 -0700 (PDT)
-Received: by 10.82.149.11 with HTTP; Tue, 10 Jul 2007 11:06:16 -0700 (PDT)
-Content-Disposition: inline
+	id S1760315AbXGJSKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 14:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763517AbXGJSKG
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:10:06 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:54759 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761300AbXGJSKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 14:10:04 -0400
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id B8EBE1FFC003;
+	Tue, 10 Jul 2007 18:10:02 +0000 (UTC)
+In-Reply-To: <20070710173401.GB5032@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52103>
 
-[...]/src $ mkdir foo
-[...]/src $ cd foo
-[...]/src/foo $ git-svn init -t tags -b branches -T trunk
-https://www.[...].com/svn/foo/bar/bla
-Initialized empty Git repository in .git/
-Using higher level of URL: https://www.[...].com/svn/foo/bar/bla =>
-https://www.[...].com/svn/foo
 
-[...]/src/foo $ git-svn fetch
-config --get svn-remote.svn.url: command returned error: 1
+On Jul 10, 2007, at 1:34 PM, Jeff King wrote:
 
-[...]/src/foo $ git config --get svn-remote.svn.url
-https://www.[...].com/svn/foo
+> On Tue, Jul 10, 2007 at 04:36:14PM +0200, martin f krafft wrote:
+>
+>>   git checkout origin/vim
+>>     Note: moving to "origin/vim" which isn't a local branch
+>>   echo change > newfile; git add newfile
+>>   git commit -m'make change'
+>>     Created commit 64b8b2e: make change
+>>      1 files changed, 1 insertions(+), 0 deletions(-)
+>>       create mode 100644 newfile
+>>
+>> If I now checkout master and then return to origin/vim, the commit
+>> is gone.
+>
+> That's because 'origin/vim' is a tracking branch for the remote; it's
+> where you store the information "here's what the remote 'origin'  
+> thinks
+> is in the branch 'vim'." That's why you get the "note" warning above.
+>
+> If you want to make changes, you should make a local branch starting
+> from that point:
+>
+>   git-checkout -b vim origin/vim
+>   # hack hack hack
+>   git-commit -m changes
 
-[...]/src/foo $ cat .git/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[svn-remote "svn"]
-        url =  https://www.[...].com/svn/foo
-        fetch = bar/bla/trunk:refs/remotes/trunk
-        branches = bar/bla/branches/*:refs/remotes/*
-        tags = bar/bla/tags/*:refs/remotes/tags/*
+Indeed, in master, git outputs a hint to that when you checkout the  
+remote branch.
 
-[...]/src/foo $ git --version
-git version 1.5.2.2
+   $ git checkout origin/master
+   Note: moving to "origin/master" which isn't a local branch
+   If you want to create a new branch from this checkout, you may do so
+   (now or later) by using -b with the checkout command again. Example:
+     git checkout -b <new_branch_name>
+   HEAD is now at f4855d4... 1
 
-[...]/src/foo $ git-svn --version
-git-svn version 1.5.2.2 (svn 1.4.3)
+Perhaps git-commit should also also output a warning?  "Commit made  
+on detached HEAD.  Use "git branch <new_branch_name>" to save your  
+commit"?  That's bad wording, but the idea is there.
 
-My versions of git and svn are the one that comes with cygwin.
+~~ Brian
