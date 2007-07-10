@@ -1,65 +1,42 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/2] Add for_each_remote() function, and extend
- remote_find_tracking()
-Date: Tue, 10 Jul 2007 01:23:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707100109290.6977@iabervon.org>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
- <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
- <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
- <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
- <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
- <7vzm25tex6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707100401070.4131@racer.site>
- <7vy7hosv7v.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Some cosmetic changes to remote library
+Date: Mon, 09 Jul 2007 22:33:02 -0700
+Message-ID: <7vr6ngsu0h.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707100045380.6977@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 10 07:23:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jul 10 07:33:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I88CN-0001nO-CO
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 07:23:43 +0200
+	id 1I88Ld-0002x0-11
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 07:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266AbXGJFXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 01:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbXGJFXj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 01:23:39 -0400
-Received: from iabervon.org ([66.92.72.58]:4654 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751174AbXGJFXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 01:23:38 -0400
-Received: (qmail 20928 invoked by uid 1000); 10 Jul 2007 05:23:37 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Jul 2007 05:23:37 -0000
-In-Reply-To: <7vy7hosv7v.fsf@assigned-by-dhcp.cox.net>
+	id S1751189AbXGJFdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 01:33:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbXGJFdE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 01:33:04 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50977 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbXGJFdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 01:33:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070710053304.UDYW1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 10 Jul 2007 01:33:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MhZ21X00N1kojtg0000000; Tue, 10 Jul 2007 01:33:03 -0400
+In-Reply-To: <Pine.LNX.4.64.0707100045380.6977@iabervon.org> (Daniel
+	Barkalow's message of "Tue, 10 Jul 2007 00:47:26 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52044>
 
-On Mon, 9 Jul 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > 	You're right. I completely missed that functionality. Well, a
-> > 	few tweaks were needed. If this clashes too seriously with
-> > 	Daniel's work, I will gladly redo it after his changes are
-> > 	in "next".
-> 
-> No offence meant to Daniel, but I am inclined to postpone the
-> current round of changes from him to move the stuff further
-> to get us closer to built-in git-fetch until 1.5.3 final is
-> done.  The amount of C code changes otherwise would be a bit too
-> much for me to be comfortable between -rc0 and -rc1.
-
-That's what I'd expect; I'm posting stuff now so that I'm not proposing it 
-unreviewed after 1.5.3. Certainly anything that's needed to fix current 
-issues should go ahead of these changes, and it doesn't look like there 
-would be any conflicts anyway, aside from maybe adding two functions in 
-the same place in the file, which is trivial to fix by hand.
-
-	-Daniel
-*This .sig left intentionally blank*
+Thanks for good readability improvements.  Will apply.
