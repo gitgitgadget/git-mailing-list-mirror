@@ -1,108 +1,288 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: git-svn set-tree
-Date: Wed, 11 Jul 2007 00:45:53 +0200
-Message-ID: <000901c7c344$12b431a0$02ac10ac@Jocke>
-References: <20070709054541.GA2301@mayonaise>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] t7004: Add tests for the git tag -n option.
+Date: Wed, 11 Jul 2007 01:11:53 +0200
+Message-ID: <46941239.4060101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Eric Wong'" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jul 11 00:46:15 2007
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 11 01:12:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8OTE-0001Hn-1g
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 00:46:12 +0200
+	id 1I8OsO-0005oA-UT
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 01:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321AbXGJWqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 18:46:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbXGJWqI
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 18:46:08 -0400
-Received: from mail.transmode.se ([83.241.175.147]:37450 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755819AbXGJWqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 18:46:07 -0400
-Received: from Jocke ([84.217.3.187]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Wed, 11 Jul 2007 00:46:00 +0200
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AcfB7xztBdWT5nBoTQmX8IJRBzXHmgAOYKNA
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-In-Reply-To: <20070709054541.GA2301@mayonaise>
-X-OriginalArrivalTime: 10 Jul 2007 22:46:00.0940 (UTC) FILETIME=[16B372C0:01C7C344]
+	id S1756205AbXGJXL6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 19:11:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755903AbXGJXL6
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 19:11:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:19087 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755831AbXGJXL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 19:11:57 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1442769ugf
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 16:11:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=Sj9LJYrglRlQ39QgjgP8iCerqTOT87Fcvn4ybIljI4ABs6VTWSI+j8wA3MRyRnKVhWwtLeSmqhrJwoxCMqFTpFtR3QxOZNCAthwgEOqjX1YfTB4lqNiz97Zum6zBRvtiNRcDm0MPnzOGTyZmf5NaPtWCgq+7X3XClYWG363kScM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=Zz7fdtS4SZ4CaIDsI/zUNEE3hKFJrAgCYCZufAQvPilYX3G+0mh6YPwxbax9/M0Dyov5i4mEdBmQI4wWJIDXLOMThtPHdDaCDyL1EAiWY134ElQIBY885wb7kjNl/IUZxSwsBMZPmhTt4aXNEBhmNI6OfVPaGAZx+qcNwrDfL8M=
+Received: by 10.66.232.10 with SMTP id e10mr6244195ugh.1184109115375;
+        Tue, 10 Jul 2007 16:11:55 -0700 (PDT)
+Received: from ?192.168.0.194? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id 24sm4507155ugf.2007.07.10.16.11.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 10 Jul 2007 16:11:54 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52118>
 
- 
+These tests check the syntax for the git tag -n option
+and its output when one, none or many lines of the
+message are requested.
 
-> -----Original Message-----
-> From: Eric Wong [mailto:normalperson@yhbt.net] 
-> Sent: den 9 juli 2007 07:46
-> To: Tjernlund
-> Cc: git@vger.kernel.org
-> Subject: Re: git-svn set-tree
-> 
-> Tjernlund <tjernlund@tjernlund.se> wrote:
-> > I have noticed that if I do a git-svn set-tree, remotes/git-svn
-> > retains the parent from the branch where set-tree was performed.
-> > 
-> > If a coworker wants recreate my tree by using git-svn init 
-> && git-svn
-> > fetch he looses the parent I have in my tree.
-> > 
-> > I wonder if not git-svn set-tree can record the parent 
-> information in
-> > the svn repos log, so that git-svn init/fetch can recreate 
-> the parent
-> > relationship?
-> 
-> We could at yet another non-standardized property into SVN to handle
-> merges.  Currently there are at least two properties used in 
-> the SVN/SVK
-> world to represent merges (Sam Vilain can give you the fun details of
-> each one!).
+Also this commit adds a missing && in the test
+that checks the sorted output of git tag -l.
 
-I have read his page, quite informative.
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
+ t/t7004-tag.sh |  202 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 201 insertions(+), 1 deletions(-)
 
-> 
-> I'm afraid adding a third incompatible yet similair property 
-> for git-svn
-> would just confuse people. 
-> 
-> I've become very much against crazy stuff like set-tree which ends up
-> creating a M:N history mapping between git and svn.  1:1 is 
-> the simplest
-> and easiest.  I'm more than willing to sacrifice multi-parent 
-> histories
-> in git for easier compatibility with other systems.
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index b785080..17de2a9 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -164,7 +164,7 @@ test_expect_success 'listing all tags should print them ordered' '
+ 	git tag a1 &&
+ 	git tag v1.0 &&
+ 	git tag t210 &&
+-	git tag -l > actual
++	git tag -l > actual &&
+ 	git diff expect actual
+ '
 
-set-tree is needed for starting a SVN tree from a git tree, I don't
-know of any other way to do that. I got both linux and u-boot
-git trees in which I do custom mods. I then use git-svn 
-to maintain a svn tree which I start with set-tree to commit
-the initial tree, then I dcommit my local mods. 
+@@ -437,6 +437,106 @@ test_expect_success \
+ 	git diff expect actual
+ '
 
-Maybe maybe an option to git-svn init/clone where you can specify the git
-parent for a certain svn revision? 
++# listing messages for annotated non-signed tags:
++
++test_expect_success \
++	'listing the one-line message of a non-signed tag should succeed' '
++	git-tag -m "A msg" tag-one-line &&
++
++	echo "tag-one-line" >expect &&
++	git-tag -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l tag-one-line >actual &&
++	git diff expect actual &&
++
++	echo "tag-one-line    A msg" >expect &&
++	git-tag -n xxx -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n "" -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^tag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l tag-one-line >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l tag-one-line >actual &&
++	git diff expect actual &&
++	git-tag -n 999 -l tag-one-line >actual &&
++	git diff expect actual
++'
++
++test_expect_success \
++	'listing the zero-lines message of a non-signed tag should succeed' '
++	git-tag -m "" tag-zero-lines &&
++
++	echo "tag-zero-lines" >expect &&
++	git-tag -l | grep "^tag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^tag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l tag-zero-lines >actual &&
++	git diff expect actual &&
++
++	echo "tag-zero-lines  " >expect &&
++	git-tag -n 1 -l | grep "^tag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^tag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l tag-zero-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l tag-zero-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 999 -l tag-zero-lines >actual &&
++	git diff expect actual
++'
++
++echo 'tag line one' >annotagmsg
++echo 'tag line two' >>annotagmsg
++echo 'tag line three' >>annotagmsg
++test_expect_success \
++	'listing many message lines of a non-signed tag should succeed' '
++	git-tag -F annotagmsg tag-lines &&
++
++	echo "tag-lines" >expect &&
++	git-tag -l | grep "^tag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^tag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l tag-lines >actual &&
++	git diff expect actual &&
++
++	echo "tag-lines       tag line one" >expect &&
++	git-tag -n 1 -l | grep "^tag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^tag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l tag-lines >actual &&
++	git diff expect actual &&
++
++	echo "    tag line two" >>expect &&
++	git-tag -n 2 -l | grep "^ *tag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l tag-lines >actual &&
++	git diff expect actual &&
++
++	echo "    tag line three" >>expect &&
++	git-tag -n 3 -l | grep "^ *tag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 3 -l tag-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 4 -l | grep "^ *tag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 4 -l tag-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 99 -l | grep "^ *tag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 99 -l tag-lines >actual &&
++	git diff expect actual
++'
++
+ # trying to verify annotated non-signed tags:
 
-> 
-> Heck, linear history is just easier to deal with and probably 
-> preferable
-> in most/many cases.  I'm sure that the rising popularity of 
-> git-rebase,
-> quilt, stgit, guilt, mq and other like tools is a testament to that.
->
+ test_expect_success \
+@@ -651,6 +751,106 @@ test_expect_success \
+ 	git-tag -v commentnonlfile-signed-tag
+ '
 
-git rebase is a bit annoying as you loose the old tree if you don't take precations.
-Also, I am not sure what will be committed to SVN if I rebase my local mods on top
-of linus latest.
++# listing messages for signed tags:
++
++test_expect_success \
++	'listing the one-line message of a signed tag should succeed' '
++	git-tag -s -m "A message line signed" stag-one-line &&
++
++	echo "stag-one-line" >expect &&
++	git-tag -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l stag-one-line >actual &&
++	git diff expect actual &&
++
++	echo "stag-one-line   A message line signed" >expect &&
++	git-tag -n xxx -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n "" -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^stag-one-line" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l stag-one-line >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l stag-one-line >actual &&
++	git diff expect actual &&
++	git-tag -n 999 -l stag-one-line >actual &&
++	git diff expect actual
++'
++
++test_expect_success \
++	'listing the zero-lines message of a signed tag should succeed' '
++	git-tag -s -m "" stag-zero-lines &&
++
++	echo "stag-zero-lines" >expect &&
++	git-tag -l | grep "^stag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^stag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l stag-zero-lines >actual &&
++	git diff expect actual &&
++
++	echo "stag-zero-lines " >expect &&
++	git-tag -n 1 -l | grep "^stag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^stag-zero-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l stag-zero-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l stag-zero-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 999 -l stag-zero-lines >actual &&
++	git diff expect actual
++'
++
++echo 'stag line one' >sigtagmsg
++echo 'stag line two' >>sigtagmsg
++echo 'stag line three' >>sigtagmsg
++test_expect_success \
++	'listing many message lines of a signed tag should succeed' '
++	git-tag -s -F sigtagmsg stag-lines &&
++
++	echo "stag-lines" >expect &&
++	git-tag -l | grep "^stag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l | grep "^stag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 0 -l stag-lines >actual &&
++	git diff expect actual &&
++
++	echo "stag-lines      stag line one" >expect &&
++	git-tag -n 1 -l | grep "^stag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n -l | grep "^stag-lines" >actual &&
++	git diff expect actual &&
++	git-tag -n 1 -l stag-lines >actual &&
++	git diff expect actual &&
++
++	echo "    stag line two" >>expect &&
++	git-tag -n 2 -l | grep "^ *stag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 2 -l stag-lines >actual &&
++	git diff expect actual &&
++
++	echo "    stag line three" >>expect &&
++	git-tag -n 3 -l | grep "^ *stag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 3 -l stag-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 4 -l | grep "^ *stag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 4 -l stag-lines >actual &&
++	git diff expect actual &&
++	git-tag -n 99 -l | grep "^ *stag.line" >actual &&
++	git diff expect actual &&
++	git-tag -n 99 -l stag-lines >actual &&
++	git diff expect actual
++'
++
+ # tags pointing to objects different from commits:
 
- Jocke
- 
-> -- 
-> Eric Wong
-> 
+ tree=$(git rev-parse HEAD^{tree})
+-- 
+1.5.0
