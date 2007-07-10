@@ -1,93 +1,105 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: git-svn and renames
-Date: Tue, 10 Jul 2007 15:11:48 +0200
-Message-ID: <46938594.2010607@dawes.za.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-svn and renames
+Date: Tue, 10 Jul 2007 15:20:06 +0200
+Message-ID: <86fy3wpf95.fsf@lola.quinscape.zz>
+References: <46938594.2010607@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jul 10 15:12:33 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 15:21:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8FW2-0002uQ-6o
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:12:30 +0200
+	id 1I8FeP-0004rF-NY
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 15:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbXGJNM0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 09:12:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750708AbXGJNM0
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:12:26 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:54792 "EHLO
-	spunkymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751443AbXGJNMZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jul 2007 09:12:25 -0400
-Received: from [192.168.201.103] (dsl-146-24-230.telkomadsl.co.za [165.146.24.230])
-	by spunkymail-a11.g.dreamhost.com (Postfix) with ESMTP id 3DAF7B84EF;
-	Tue, 10 Jul 2007 06:12:21 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
+	id S1752623AbXGJNUf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 09:20:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbXGJNUW
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 09:20:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:38196 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754142AbXGJNUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 09:20:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I8FdV-0005wx-Tj
+	for git@vger.kernel.org; Tue, 10 Jul 2007 15:20:14 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 15:20:13 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 15:20:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:tttS2rAY1x7Ir7ovoo0PD5O9SdQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52063>
 
-Hi folks,
+Rogan Dawes <lists@dawes.za.net> writes:
 
-I am trying to push my local changes to an imported SVN project back to 
-the SVN repo. For anyone who cares, this is the WebGoat repository which 
-you can find at http://dawes.za.net/rogan/webgoat/webgoat.git/
+> However, when I try to push this change to the Google repo, git-svn
+> dies with the following error:
+>
+> $ git svn dcommit
+> RA layer request failed: PROPFIND request failed on '/svn/trunk/
+> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
+> PROPFIND of '/svn/trunk/
+> webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java':
+> 400 Bad Request (https://webgoat.googlecode.com) at
+> /home/rdawes/bin/git-svn line 400
+>
+> [Yes, those paths have a space in them, however this does not seem to
+> have prevented me from committing the previous 20 or so changes.]
+>
+> I noted the following in the git-svn documentation, with regards to
+> handling renames. However, I am not renaming a directory, only a
+> couple of files.
 
-I am trying to push it back to the primary GoogleCode repo. I have 
-successfully managed to push 20 or so commits, but I am now running up 
-against a problem with a renamed/moved file.
+> ---- quote ----
 
-I moved a file from a directory to a subdirectory, and made minimal 
-changes to this file so that it remained a valid Java class. i.e. I 
-changed the package, and a few other minor things. As can be seen at 
-<http://dawes.za.net/gitweb.cgi?p=rogan/webgoat/webgoat.git;a=commitdiff;h=486416188a3e49d60e1510166ac197e5e66cc4d2>, 
-  git detects the rename with 93% similarity.
+[...]
+>
+> Renamed and copied directories are not detected by git and hence not
+> tracked when committing to SVN.  I do not plan on adding support for
+> this as it's quite difficult and time-consuming to get working for all
+> the possible corner cases (git doesn't do it, either).  Committing
+> renamed and copied files are fully supported if they're similar enough
+> for git to detect them.
 
-However, when I try to push this change to the Google repo, git-svn dies 
-with the following error:
+> Any ideas?
 
-$ git svn dcommit
-RA layer request failed: PROPFIND request failed on '/svn/trunk/ 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java': 
-PROPFIND of '/svn/trunk/ 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/DefaultLessonAction.java': 
-400 Bad Request (https://webgoat.googlecode.com) at 
-/home/rdawes/bin/git-svn line 400
+  dcommit          Commit several diffs to merge with upstream
+                     --quiet, -q 
+                     --fetch-all, --all 
+                     --no-auth-cache 
+                     --no-rebase 
+                     --no-checkout 
+                     --rmdir 
+                     --dry-run, -n 
+                     --find-copies-harder 
+                     --follow-parent, --follow! 
+                     --authors-file, -A <arg>
+                     --copy-similarity, -C <num>
+                     --username <arg>
+                     --repack-flags, --repack-args, --repack-opts <arg>
+                     --repack <num>
+                     --verbose, -v 
+                     --edit, -e 
+                     --log-window-size <num>
+                     --config-dir <arg>
+                     -l <num>
+                     --merge, -m, -M 
+                     --strategy, -s <arg>
 
-[Yes, those paths have a space in them, however this does not seem to 
-have prevented me from committing the previous 20 or so changes.]
 
-I noted the following in the git-svn documentation, with regards to 
-handling renames. However, I am not renaming a directory, only a couple 
-of files.
+Try playing with the --copy-similarity and --find-copies-harder flags.
 
----- quote ----
-BUGS
-----
-
-We ignore all SVN properties except svn:executable.  Any unhandled
-properties are logged to $GIT_DIR/svn/<refname>/unhandled.log
-
-Renamed and copied directories are not detected by git and hence not
-tracked when committing to SVN.  I do not plan on adding support for
-this as it's quite difficult and time-consuming to get working for all
-the possible corner cases (git doesn't do it, either).  Committing
-renamed and copied files are fully supported if they're similar enough
-for git to detect them.
----- end quote ----
-
-This is using the latest git as of today:
-
-$ git --version
-git version 1.5.3.rc0.81.g1ed84
-
-Any ideas?
-
-Thanks
-
-Rogan
+-- 
+David Kastrup
