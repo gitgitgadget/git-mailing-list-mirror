@@ -1,68 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Support wholesale directory renames in fast-import
-Date: Tue, 10 Jul 2007 10:14:42 -0400
-Message-ID: <20070710141442.GM4436@spearce.org>
-References: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com> <20070710031036.GA9045@spearce.org> <7154c5c60707092116p70aaeb8l90cda9265311b999@mail.gmail.com> <20070710140338.GA18450@informatik.uni-freiburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Frech <nimblemachines@gmail.com>, git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 16:15:04 2007
+From: Johannes Sixt <j.sixt@eudaptics.com>
+Subject: [PATCH] Work around a bad interaction between Tcl and cmd.exe with "^{tree}"
+Date: Tue, 10 Jul 2007 15:09:29 +0200
+Message-ID: <11840729692004-git-send-email-j.sixt@eudaptics.com>
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 16:18:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8GUW-0000fL-2E
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:15:00 +0200
+	id 1I8GXf-0001XJ-2i
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 16:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753837AbXGJOOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 10:14:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbXGJOOr
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:14:47 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:40178 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553AbXGJOOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 10:14:47 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I8GUC-0006Yp-2D; Tue, 10 Jul 2007 10:14:40 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AD54520FBAE; Tue, 10 Jul 2007 10:14:42 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070710140338.GA18450@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752302AbXGJOSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 10:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbXGJOSI
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 10:18:08 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:47038 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773AbXGJOSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 10:18:07 -0400
+X-Greylist: delayed 4107 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2007 10:18:07 EDT
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <j.sixt@telecom.at>)
+	id 1I8FTE-0003JT-1N; Tue, 10 Jul 2007 15:09:36 +0200
+Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 19A226EF; Tue, 10 Jul 2007 15:09:30 +0200 (CEST)
+Received: by srv.linz.eudaptics (Postfix, from userid 503)
+	id D1F0C102; Tue, 10 Jul 2007 15:09:29 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc0.32.g2968f
+X-Spam-Score: 2.1 (++)
+X-Spam-Report: AWL=-1.574, BAYES_99=3.5, FORGED_RCVD_HELO=0.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52076>
 
-Uwe Kleine-K??nig <ukleinek@informatik.uni-freiburg.de> wrote:
-> David Frech wrote:
-> > Now my challenge is that the svn dump doesn't *actually* say "rename
-> > a/ to b/"; it says "copy a/ to b/; delete a/", so I have to infer the
-> > rename.
-> 
-> I don't know fast-import very well, but why not doing exactly what the
-> dump file suggests:  copy a b; delete a ?
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-Because there is no copy operator in fast-import.  So you cannot
-do "copy a b".  Apparently that's what I should have implemented,
-as rename in Git really is as simple as the copy/delete pair.  Ugh.
+It seems that MSYS's wish does some quoting for Bourne shells, in
+particular, escape the first '{' of the "^{tree}" suffix, but then it uses
+cmd.exe to run the "git rev-parse" command. However, cmd.exe does not remove
+the backslash, so that the resulting ref expression ends up in git's guts
+as unrecognizable garbage.
 
-Copy isn't really that hard, it just can't be nearly as efficient as
-rename, as copying a subtree will force me to either duplicate data
-in memory or reload trees from disk to duplicate data in memory.
-But its a copy, so data duplication is expected.  ;-)
+Fortunately, recent versions of git can refer to the root tree object using
+the notation "$commit:", which avoids the problematic case.
 
-I'll implement a copy opertor soon.  Shouldn't be too difficult.
-Maybe someone else would like to take a shot at implementing it...
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ lib/commit.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index dc7c88c..43a5aca 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -258,7 +258,7 @@ proc commit_committree {fd_wt curHEAD msg} {
+ 	# -- Verify this wasn't an empty change.
+ 	#
+ 	if {$commit_type eq {normal}} {
+-		set old_tree [git rev-parse "$PARENT^{tree}"]
++		set old_tree [git rev-parse "$PARENT:"]
+ 		if {$tree_id eq $old_tree} {
+ 			info_popup {No changes to commit.
+ 
 -- 
-Shawn.
+1.5.3.rc0.32.g2968f
