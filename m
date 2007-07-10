@@ -1,187 +1,418 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Add for_each_remote() function, and extend remote_find_tracking()
-Date: Tue, 10 Jul 2007 04:02:02 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707100401070.4131@racer.site>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
- <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
- <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
- <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
- <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
- <7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Support wholesale directory renames in fast-import
+Date: Mon, 9 Jul 2007 23:10:36 -0400
+Message-ID: <20070710031036.GA9045@spearce.org>
+References: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 10 05:09:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Frech <david@nimblemachines.com>
+X-From: git-owner@vger.kernel.org Tue Jul 10 05:10:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I866k-0001Yx-KW
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 05:09:46 +0200
+	id 1I867h-0001fs-SD
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 05:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761660AbXGJDJn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Jul 2007 23:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760874AbXGJDJn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 23:09:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35566 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760983AbXGJDJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2007 23:09:42 -0400
-Received: (qmail invoked by alias); 10 Jul 2007 03:09:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 10 Jul 2007 05:09:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18HBPQf4wEHzH8Zfb2MKUiTWasCXcJ92+WyCu2viY
-	VLVi/tVTF4rUGP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzm25tex6.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1760957AbXGJDKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Jul 2007 23:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760936AbXGJDKl
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Jul 2007 23:10:41 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:47180 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758935AbXGJDKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2007 23:10:40 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1I867O-0004uJ-A5; Mon, 09 Jul 2007 23:10:26 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9496920FBAE; Mon,  9 Jul 2007 23:10:36 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52035>
 
+Some source material (e.g. Subversion dump files) perform directory
+renames without telling us exactly which files in that subdirectory
+were moved.  This makes it hard for a frontend to convert such data
+formats to a fast-import stream, as all the frontend has on hand
+is "Rename a/ to b/" with no details about what files are in a/,
+unless the frontend also kept track of all files.
 
-The function for_each_remote() does exactly what the name suggests.
+The new 'R' subcommand within a commit allows the frontend to
+rename either a file or an entire subdirectory, without needing to
+know the object's SHA-1 or the specific files contained within it.
+The rename is performed as efficiently as possible internally,
+making it cheaper than a 'D'/'M' pair for a file rename.
 
-The function remote_find_tracking() was extended to be able to search
-remote refs for a given local ref.  You have to set the parameter
-"reverse" to true for that behavior.
-
-Both changes are required for the next step: simplification of
-git-branch's --track functionality.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
 
-	You're right. I completely missed that functionality. Well, a
-	few tweaks were needed. If this clashes too seriously with
-	Daniel's work, I will gladly redo it after his changes are
-	in "next".
+ David Frech <david@nimblemachines.com> wrote:
+ > Git can track file renames implicitly. If I delete and then add (under
+ > a different name) the same content, git will figure that out.
+ > 
+ > But if a directory was renamed, I have no way to tell fast-import
+ > about it. I can't delete the directory (using a 'D' command) and then
+ > add it back (with a different name) with all its contents, because my
+ > source material (an svn dump file) doesn't tell me, at that point,
+ > about all the files involved because nothing about them has changed.
+ > 
+ > fast-import knows about the contents of the directory I want to
+ > rename, but doesn't give me a primitive to do the rename. Is this
+ > something we need to add? My frontend could keep track of this, but I
+ > would duplicating work that fast-import is already doing.
 
- remote.c    |   42 ++++++++++++++++++++++++++++++++----------
- remote.h    |    7 ++++++-
- send-pack.c |    3 +--
- 3 files changed, 39 insertions(+), 13 deletions(-)
+ Does the following do the trick for you?  It is also available
+ from my fastimport.git master branch:
 
-diff --git a/remote.c b/remote.c
-index cf98a44..21adb0d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -279,6 +279,26 @@ struct remote *remote_get(const char *name)
- 	return ret;
+	git://repo.or.cz/git/fastimport.git      master
+	http://repo.or.cz/r/git/fastimport.git   master
+
+ Yes, it passes all tests...
+
+ Documentation/git-fast-import.txt |   28 ++++++++++-
+ fast-import.c                     |   91 ++++++++++++++++++++++++++++++-------
+ t/t9300-fast-import.sh            |   68 +++++++++++++++++++++++++++
+ 3 files changed, 168 insertions(+), 19 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index c66af7c..80a8ee0 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -302,7 +302,7 @@ change to the project.
+ 	data
+ 	('from' SP <committish> LF)?
+ 	('merge' SP <committish> LF)?
+-	(filemodify | filedelete | filedeleteall)*
++	(filemodify | filedelete | filerename | filedeleteall)*
+ 	LF
+ ....
+ 
+@@ -325,11 +325,13 @@ commit message use a 0 length data.  Commit messages are free-form
+ and are not interpreted by Git.  Currently they must be encoded in
+ UTF-8, as fast-import does not permit other encodings to be specified.
+ 
+-Zero or more `filemodify`, `filedelete` and `filedeleteall` commands
++Zero or more `filemodify`, `filedelete`, `filename` and
++`filedeleteall` commands
+ may be included to update the contents of the branch prior to
+ creating the commit.  These commands may be supplied in any order.
+ However it is recommended that a `filedeleteall` command preceed
+-all `filemodify` commands in the same commit, as `filedeleteall`
++all `filemodify` and `filerename` commands in the same commit, as
++`filedeleteall`
+ wipes the branch clean (see below).
+ 
+ `author`
+@@ -495,6 +497,26 @@ here `<path>` is the complete path of the file or subdirectory to
+ be removed from the branch.
+ See `filemodify` above for a detailed description of `<path>`.
+ 
++`filerename`
++^^^^^^^^^^^^
++Renames an existing file or subdirectory to a different location
++within the branch.  The existing file or directory must exist. If
++the destination exists it will be replaced by the source directory.
++
++....
++	'R' SP <path> SP <path> LF
++....
++
++here the first `<path>` is the source location and the second
++`<path>` is the destination.  See `filemodify` above for a detailed
++description of what `<path>` may look like.  To use a source path
++that contains SP the path must be quoted.
++
++A `filerename` command takes effect immediately.  Once the source
++location has been renamed to the destination any future commands
++applied to the source location will create new files there and not
++impact the destination of the rename.
++
+ `filedeleteall`
+ ^^^^^^^^^^^^^^^
+ Included in a `commit` command to remove all files (and also all
+diff --git a/fast-import.c b/fast-import.c
+index f9bfcc7..a1cb13f 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -26,9 +26,10 @@ Format of STDIN stream:
+     lf;
+   commit_msg ::= data;
+ 
+-  file_change ::= file_clr | file_del | file_obm | file_inm;
++  file_change ::= file_clr | file_del | file_rnm | file_obm | file_inm;
+   file_clr ::= 'deleteall' lf;
+   file_del ::= 'D' sp path_str lf;
++  file_rnm ::= 'R' sp path_str sp path_str lf;
+   file_obm ::= 'M' sp mode sp (hexsha1 | idnum) sp path_str lf;
+   file_inm ::= 'M' sp mode sp 'inline' sp path_str lf
+     data;
+@@ -1154,7 +1155,8 @@ static int tree_content_set(
+ 	struct tree_entry *root,
+ 	const char *p,
+ 	const unsigned char *sha1,
+-	const uint16_t mode)
++	const uint16_t mode,
++	struct tree_content *subtree)
+ {
+ 	struct tree_content *t = root->tree;
+ 	const char *slash1;
+@@ -1168,20 +1170,22 @@ static int tree_content_set(
+ 		n = strlen(p);
+ 	if (!n)
+ 		die("Empty path component found in input");
++	if (!slash1 && !S_ISDIR(mode) && subtree)
++		die("Non-directories cannot have subtrees");
+ 
+ 	for (i = 0; i < t->entry_count; i++) {
+ 		e = t->entries[i];
+ 		if (e->name->str_len == n && !strncmp(p, e->name->str_dat, n)) {
+ 			if (!slash1) {
+-				if (e->versions[1].mode == mode
++				if (!S_ISDIR(mode)
++						&& e->versions[1].mode == mode
+ 						&& !hashcmp(e->versions[1].sha1, sha1))
+ 					return 0;
+ 				e->versions[1].mode = mode;
+ 				hashcpy(e->versions[1].sha1, sha1);
+-				if (e->tree) {
++				if (e->tree)
+ 					release_tree_content_recursive(e->tree);
+-					e->tree = NULL;
+-				}
++				e->tree = subtree;
+ 				hashclr(root->versions[1].sha1);
+ 				return 1;
+ 			}
+@@ -1191,7 +1195,7 @@ static int tree_content_set(
+ 			}
+ 			if (!e->tree)
+ 				load_tree(e);
+-			if (tree_content_set(e, slash1 + 1, sha1, mode)) {
++			if (tree_content_set(e, slash1 + 1, sha1, mode, subtree)) {
+ 				hashclr(root->versions[1].sha1);
+ 				return 1;
+ 			}
+@@ -1209,9 +1213,9 @@ static int tree_content_set(
+ 	if (slash1) {
+ 		e->tree = new_tree_content(8);
+ 		e->versions[1].mode = S_IFDIR;
+-		tree_content_set(e, slash1 + 1, sha1, mode);
++		tree_content_set(e, slash1 + 1, sha1, mode, subtree);
+ 	} else {
+-		e->tree = NULL;
++		e->tree = subtree;
+ 		e->versions[1].mode = mode;
+ 		hashcpy(e->versions[1].sha1, sha1);
+ 	}
+@@ -1219,7 +1223,10 @@ static int tree_content_set(
+ 	return 1;
  }
  
-+int for_each_remote(each_remote_fn fn, void *priv)
+-static int tree_content_remove(struct tree_entry *root, const char *p)
++static int tree_content_remove(
++	struct tree_entry *root,
++	const char *p,
++	struct tree_entry *backup_leaf)
+ {
+ 	struct tree_content *t = root->tree;
+ 	const char *slash1;
+@@ -1239,13 +1246,14 @@ static int tree_content_remove(struct tree_entry *root, const char *p)
+ 				goto del_entry;
+ 			if (!e->tree)
+ 				load_tree(e);
+-			if (tree_content_remove(e, slash1 + 1)) {
++			if (tree_content_remove(e, slash1 + 1, backup_leaf)) {
+ 				for (n = 0; n < e->tree->entry_count; n++) {
+ 					if (e->tree->entries[n]->versions[1].mode) {
+ 						hashclr(root->versions[1].sha1);
+ 						return 1;
+ 					}
+ 				}
++				backup_leaf = NULL;
+ 				goto del_entry;
+ 			}
+ 			return 0;
+@@ -1254,10 +1262,11 @@ static int tree_content_remove(struct tree_entry *root, const char *p)
+ 	return 0;
+ 
+ del_entry:
+-	if (e->tree) {
++	if (backup_leaf)
++		memcpy(backup_leaf, e, sizeof(*backup_leaf));
++	else if (e->tree)
+ 		release_tree_content_recursive(e->tree);
+-		e->tree = NULL;
+-	}
++	e->tree = NULL;
+ 	e->versions[1].mode = 0;
+ 	hashclr(e->versions[1].sha1);
+ 	hashclr(root->versions[1].sha1);
+@@ -1629,7 +1638,7 @@ static void file_change_m(struct branch *b)
+ 			    typename(type), command_buf.buf);
+ 	}
+ 
+-	tree_content_set(&b->branch_tree, p, sha1, S_IFREG | mode);
++	tree_content_set(&b->branch_tree, p, sha1, S_IFREG | mode, NULL);
+ 	free(p_uq);
+ }
+ 
+@@ -1645,10 +1654,58 @@ static void file_change_d(struct branch *b)
+ 			die("Garbage after path in: %s", command_buf.buf);
+ 		p = p_uq;
+ 	}
+-	tree_content_remove(&b->branch_tree, p);
++	tree_content_remove(&b->branch_tree, p, NULL);
+ 	free(p_uq);
+ }
+ 
++static void file_change_r(struct branch *b)
 +{
-+	int i, result = 0;
-+	read_config();
-+	for (i = 0; i < allocated_remotes; i++) {
-+		struct remote *r = remotes[i];
-+		if (!r)
-+			continue;
-+		if (!r->fetch)
-+			r->fetch = parse_ref_spec(r->fetch_refspec_nr,
-+					r->fetch_refspec);
-+		if (!r->push)
-+			r->push = parse_ref_spec(r->push_refspec_nr,
-+					r->push_refspec);
-+		if ((result = fn(r, priv)))
-+			break;
++	const char *s, *d;
++	char *s_uq, *d_uq;
++	const char *endp;
++	struct tree_entry leaf;
++
++	s = command_buf.buf + 2;
++	s_uq = unquote_c_style(s, &endp);
++	if (s_uq) {
++		if (*endp != ' ')
++			die("Missing space after source: %s", command_buf.buf);
 +	}
-+	return result;
++	else {
++		endp = strchr(s, ' ');
++		if (!endp)
++			die("Missing space after source: %s", command_buf.buf);
++		s_uq = xmalloc(endp - s + 1);
++		memcpy(s_uq, s, endp - s);
++		s_uq[endp - s] = 0;
++	}
++	s = s_uq;
++
++	endp++;
++	if (!*endp)
++		die("Missing dest: %s", command_buf.buf);
++
++	d = endp;
++	d_uq = unquote_c_style(d, &endp);
++	if (d_uq) {
++		if (*endp)
++			die("Garbage after dest in: %s", command_buf.buf);
++		d = d_uq;
++	}
++
++	memset(&leaf, 0, sizeof(leaf));
++	tree_content_remove(&b->branch_tree, s, &leaf);
++	if (!leaf.versions[1].mode)
++		die("Path %s not in branch", s);
++	tree_content_set(&b->branch_tree, d,
++		leaf.versions[1].sha1,
++		leaf.versions[1].mode,
++		leaf.tree);
++
++	free(s_uq);
++	free(d_uq);
 +}
 +
- int remote_has_uri(struct remote *remote, const char *uri)
+ static void file_change_deleteall(struct branch *b)
  {
- 	int i;
-@@ -289,34 +309,36 @@ int remote_has_uri(struct remote *remote, const char *uri)
- 	return 0;
- }
+ 	release_tree_content_recursive(b->branch_tree.tree);
+@@ -1816,6 +1873,8 @@ static void cmd_new_commit(void)
+ 			file_change_m(b);
+ 		else if (!prefixcmp(command_buf.buf, "D "))
+ 			file_change_d(b);
++		else if (!prefixcmp(command_buf.buf, "R "))
++			file_change_r(b);
+ 		else if (!strcmp("deleteall", command_buf.buf))
+ 			file_change_deleteall(b);
+ 		else
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 53774c8..bf3720d 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -580,4 +580,72 @@ test_expect_success \
+ 	 git diff --raw L^ L >output &&
+ 	 git diff expect output'
  
--int remote_find_tracking(struct remote *remote, struct refspec *refspec)
-+int remote_find_tracking(struct remote *remote, struct refspec *refspec,
-+		int reverse)
- {
- 	int i;
- 	for (i = 0; i < remote->fetch_refspec_nr; i++) {
- 		struct refspec *fetch = &remote->fetch[i];
-+		const char *src = reverse ? fetch->dst : fetch->src;
-+		const char *dst = reverse ? fetch->src : fetch->dst;
- 		if (!fetch->dst)
- 			continue;
- 		if (fetch->pattern) {
--			if (!prefixcmp(refspec->src, fetch->src)) {
-+			if (!prefixcmp(refspec->src, src)) {
- 				refspec->dst =
--					xmalloc(strlen(fetch->dst) +
-+					xmalloc(strlen(dst) +
- 						strlen(refspec->src) -
--						strlen(fetch->src) + 1);
--				strcpy(refspec->dst, fetch->dst);
--				strcpy(refspec->dst + strlen(fetch->dst),
--				       refspec->src + strlen(fetch->src));
-+						strlen(src) + 1);
-+				strcpy(refspec->dst, dst);
-+				strcpy(refspec->dst + strlen(dst),
-+				       refspec->src + strlen(src));
- 				refspec->force = fetch->force;
- 				return 0;
- 			}
- 		} else {
--			if (!strcmp(refspec->src, fetch->src)) {
--				refspec->dst = xstrdup(fetch->dst);
-+			if (!strcmp(refspec->src, src)) {
-+				refspec->dst = xstrdup(dst);
- 				refspec->force = fetch->force;
- 				return 0;
- 			}
- 		}
- 	}
--	refspec->dst = NULL;
- 	return -1;
- }
- 
-diff --git a/remote.h b/remote.h
-index 01dbcef..9ab7eb6 100644
---- a/remote.h
-+++ b/remote.h
-@@ -20,6 +20,9 @@ struct remote {
- 
- struct remote *remote_get(const char *name);
- 
-+typedef int each_remote_fn(struct remote *remote, void *priv);
-+int for_each_remote(each_remote_fn fn, void *priv);
++###
++### series M
++###
 +
- int remote_has_uri(struct remote *remote, const char *uri);
- 
- struct refspec {
-@@ -35,7 +38,9 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 
- /*
-  * For the given remote, reads the refspec's src and sets the other fields.
-+ * If reverse is 1, the given src is the local ref, and we want the remote.
-  */
--int remote_find_tracking(struct remote *remote, struct refspec *refspec);
-+int remote_find_tracking(struct remote *remote, struct refspec *refspec,
-+	int reverse);
- 
- #endif
-diff --git a/send-pack.c b/send-pack.c
-index fecbda9..9fdd7b4 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -305,8 +305,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 		if (remote) {
- 			struct refspec rs;
- 			rs.src = ref->name;
--			remote_find_tracking(remote, &rs);
--			if (rs.dst) {
-+			if (!remote_find_tracking(remote, &rs, 0)) {
- 				struct ref_lock *lock;
- 				fprintf(stderr, " Also local %s\n", rs.dst);
- 				if (will_delete_ref) {
++test_tick
++cat >input <<INPUT_END
++commit refs/heads/M1
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++file rename
++COMMIT
++
++from refs/heads/branch^0
++R file2/newf file2/n.e.w.f
++
++INPUT_END
++
++cat >expect <<EOF
++:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	file2/newf	file2/n.e.w.f
++EOF
++test_expect_success \
++	'M: rename file in same subdirectory' \
++	'git-fast-import <input &&
++	 git diff-tree -M -r M1^ M1 >actual &&
++	 compare_diff_raw expect actual'
++
++cat >input <<INPUT_END
++commit refs/heads/M2
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++file rename
++COMMIT
++
++from refs/heads/branch^0
++R file2/newf i/am/new/to/you
++
++INPUT_END
++
++cat >expect <<EOF
++:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	file2/newf	i/am/new/to/you
++EOF
++test_expect_success \
++	'M: rename file to new subdirectory' \
++	'git-fast-import <input &&
++	 git diff-tree -M -r M2^ M2 >actual &&
++	 compare_diff_raw expect actual'
++
++cat >input <<INPUT_END
++commit refs/heads/M3
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++file rename
++COMMIT
++
++from refs/heads/M2^0
++R i other/sub
++
++INPUT_END
++
++cat >expect <<EOF
++:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc R100	i/am/new/to/you	other/sub/am/new/to/you
++EOF
++test_expect_success \
++	'M: rename subdirectory to new subdirectory' \
++	'git-fast-import <input &&
++	 git diff-tree -M -r M3^ M3 >actual &&
++	 compare_diff_raw expect actual'
++
+ test_done
 -- 
-1.5.3.rc0.2769.gd9be2
+1.5.3.rc0.879.g64b8
