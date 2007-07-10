@@ -1,68 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: pushing changes to a remote branch
-Date: Tue, 10 Jul 2007 18:04:58 -0400
-Message-ID: <20070710220458.GA2295@coredump.intra.peff.net>
-References: <20070710143614.GA29681@piper.oerlikon.madduck.net> <20070710173401.GB5032@sigill.intra.peff.net> <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git-svn set-tree
+Date: Wed, 11 Jul 2007 00:45:53 +0200
+Message-ID: <000901c7c344$12b431a0$02ac10ac@Jocke>
+References: <20070709054541.GA2301@mayonaise>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 00:05:57 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Eric Wong'" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 11 00:46:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Nq6-0001dh-7n
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 00:05:46 +0200
+	id 1I8OTE-0001Hn-1g
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 00:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763662AbXGJWFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 18:05:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763581AbXGJWFE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 18:05:04 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1505 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763414AbXGJWFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 18:05:00 -0400
-Received: (qmail 1057 invoked from network); 10 Jul 2007 22:05:24 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 10 Jul 2007 22:05:24 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2007 18:04:58 -0400
-Content-Disposition: inline
-In-Reply-To: <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
+	id S1757321AbXGJWqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 18:46:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbXGJWqI
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 18:46:08 -0400
+Received: from mail.transmode.se ([83.241.175.147]:37450 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755819AbXGJWqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 18:46:07 -0400
+Received: from Jocke ([84.217.3.187]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 11 Jul 2007 00:46:00 +0200
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AcfB7xztBdWT5nBoTQmX8IJRBzXHmgAOYKNA
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+In-Reply-To: <20070709054541.GA2301@mayonaise>
+X-OriginalArrivalTime: 10 Jul 2007 22:46:00.0940 (UTC) FILETIME=[16B372C0:01C7C344]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52117>
 
-On Tue, Jul 10, 2007 at 02:10:01PM -0400, Brian Gernhardt wrote:
+ 
 
-> Perhaps git-commit should also also output a warning?  "Commit made on 
-> detached HEAD.  Use "git branch <new_branch_name>" to save your commit"?  
-> That's bad wording, but the idea is there.
+> -----Original Message-----
+> From: Eric Wong [mailto:normalperson@yhbt.net] 
+> Sent: den 9 juli 2007 07:46
+> To: Tjernlund
+> Cc: git@vger.kernel.org
+> Subject: Re: git-svn set-tree
+> 
+> Tjernlund <tjernlund@tjernlund.se> wrote:
+> > I have noticed that if I do a git-svn set-tree, remotes/git-svn
+> > retains the parent from the branch where set-tree was performed.
+> > 
+> > If a coworker wants recreate my tree by using git-svn init 
+> && git-svn
+> > fetch he looses the parent I have in my tree.
+> > 
+> > I wonder if not git-svn set-tree can record the parent 
+> information in
+> > the svn repos log, so that git-svn init/fetch can recreate 
+> the parent
+> > relationship?
+> 
+> We could at yet another non-standardized property into SVN to handle
+> merges.  Currently there are at least two properties used in 
+> the SVN/SVK
+> world to represent merges (Sam Vilain can give you the fun details of
+> each one!).
 
-There was much discussion in this area, and the conclusion (and current
-behavior) is:
+I have read his page, quite informative.
 
-1. Notify about the state change to detached HEAD, since some commands
-   will be subtly different.
-2. Don't warn about commiting on detached HEAD, since there is nothing
-   technically wrong with it.
-3. When moving away from detached HEAD, print the previous HEAD
-   position, so the user knows what might have been lost.
+> 
+> I'm afraid adding a third incompatible yet similair property 
+> for git-svn
+> would just confuse people. 
+> 
+> I've become very much against crazy stuff like set-tree which ends up
+> creating a M:N history mapping between git and svn.  1:1 is 
+> the simplest
+> and easiest.  I'm more than willing to sacrifice multi-parent 
+> histories
+> in git for easier compatibility with other systems.
 
-See this message (and a bunch of surrounding messages):
+set-tree is needed for starting a SVN tree from a git tree, I don't
+know of any other way to do that. I got both linux and u-boot
+git trees in which I do custom mods. I then use git-svn 
+to maintain a svn tree which I start with set-tree to commit
+the initial tree, then I dcommit my local mods. 
 
-  http://article.gmane.org/gmane.comp.version-control.git/38254
+Maybe maybe an option to git-svn init/clone where you can specify the git
+parent for a certain svn revision? 
 
-It would be nice if we could allow (3) only when commits weren't being
-lost, but that would require doing a reachability analysis from all
-refs, which is expensive. The reflog for HEAD makes those commits
-recoverable, as well.
+> 
+> Heck, linear history is just easier to deal with and probably 
+> preferable
+> in most/many cases.  I'm sure that the rising popularity of 
+> git-rebase,
+> quilt, stgit, guilt, mq and other like tools is a testament to that.
+>
 
-Personally, I think (2) (commits on detached HEAD) should simply be
-disallowed, since it is simple enough to 'git checkout -b newbranch' as
-an override (and I have not personally found a need for commits on
-detached HEAD, anyway), and it saves the exact newbie error that Martin
-ran into. But others obviously disagree.
+git rebase is a bit annoying as you loose the old tree if you don't take precations.
+Also, I am not sure what will be committed to SVN if I rebase my local mods on top
+of linus latest.
 
--Peff
+ Jocke
+ 
+> -- 
+> Eric Wong
+> 
