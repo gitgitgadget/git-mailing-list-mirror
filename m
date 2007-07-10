@@ -1,68 +1,42 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: "svn switch" equivalent when using git-svn -- git-filter-branch?
-Date: Tue, 10 Jul 2007 10:24:06 +0200
-Message-ID: <86ejjgzmxl.fsf@lola.quinscape.zz>
-References: <86sl7x7nzq.fsf@lola.quinscape.zz> <20070710054038.GA17675@muzzle>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [PATCH] Support wholesale directory renames in fast-import
+Date: Tue, 10 Jul 2007 10:44:08 +0200
+Message-ID: <469346D8.4080906@dawes.za.net>
+References: <7154c5c60707091809y7e0b67d5u3f94658b7e814325@mail.gmail.com> <20070710031036.GA9045@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 10:24:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Frech <david@nimblemachines.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 10 10:44:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8B1P-0006r7-9P
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 10:24:35 +0200
+	id 1I8BKw-000280-Dx
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 10:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760955AbXGJIYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 04:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759221AbXGJIYX
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 04:24:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:46821 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758173AbXGJIYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 04:24:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I8B14-0006Xk-Br
-	for git@vger.kernel.org; Tue, 10 Jul 2007 10:24:14 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 10:24:14 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Jul 2007 10:24:14 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:M5Mp+PEOWmyj7hY9RZc9EDLyFq4=
+	id S1757577AbXGJIoo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 04:44:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756996AbXGJIoo
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 04:44:44 -0400
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:55955 "EHLO
+	spunkymail-a19.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756121AbXGJIon (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jul 2007 04:44:43 -0400
+Received: from [192.168.201.103] (dsl-146-24-230.telkomadsl.co.za [165.146.24.230])
+	by spunkymail-a19.g.dreamhost.com (Postfix) with ESMTP id 4040C11A13;
+	Tue, 10 Jul 2007 01:44:40 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
+In-Reply-To: <20070710031036.GA9045@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52055>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Shawn O. Pearce wrote:
+> -Zero or more `filemodify`, `filedelete` and `filedeleteall` commands
+> +Zero or more `filemodify`, `filedelete`, `filename` and
+                                                 ^^ filerename
 
-> David Kastrup <dak@gnu.org> wrote:
->> Hi,
->> 
->> an upstream svn repository that I access with git-svn has moved.  I
->> seem to be too stupid to use git-filter-branch and/or .git/config
->> and/or git-reset to make my git mirror follow the switch.
->
-> Just changing the url key in the [svn-remote] section of the .git/config
-> file should be enough.
->
-> You'll probably need to fetch at least one revision from the new URL
-> before being able to dcommit, though.
-
-git-fetch works, but git-rebase -l still complains:
-
-git-svn rebase -l
-Unable to determine upstream SVN information from working tree history
-
-And consequently I can't actually update.
-
--- 
-David Kastrup
+Rogan
