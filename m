@@ -1,355 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 2/2] branch --track: code cleanup and saner handling of
- local branches
-Date: Tue, 10 Jul 2007 18:50:44 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707101850140.4047@racer.site>
-References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
- <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
- <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
- <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
- <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
- <7vzm25tex6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707100401070.4131@racer.site>
- <7vy7hosv7v.fsf@assigned-by-dhcp.cox.net>
+From: "Russ Dill" <russ.dill@gmail.com>
+Subject: git-svn+cygwin failed fetch
+Date: Tue, 10 Jul 2007 11:06:16 -0700
+Message-ID: <f9d2a5e10707101106w305e28acy55f465e558485298@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 10 19:58:33 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 20:06:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Jyq-0006Oq-MO
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 19:58:33 +0200
+	id 1I8K6d-00007L-Vs
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 20:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759068AbXGJR63 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 13:58:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757332AbXGJR63
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 13:58:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41005 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755440AbXGJR61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 13:58:27 -0400
-Received: (qmail invoked by alias); 10 Jul 2007 17:58:25 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp025) with SMTP; 10 Jul 2007 19:58:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rf9UlVNQrm9ZNQ2DB4zEyOAJ1I6neKb+1xxxJMY
-	5PkWXPE2nMrT9p
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vy7hosv7v.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1760047AbXGJSGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 14:06:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762669AbXGJSGT
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 14:06:19 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:10566 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759068AbXGJSGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 14:06:18 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so95890nfb
+        for <git@vger.kernel.org>; Tue, 10 Jul 2007 11:06:17 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dRreP4ixHw3EqjLi72KkedX7ba3/016yiuA7UCZdGX0oUjoGjOPY+63YtXx2jt84iUvLEzd3H5WE0CsgQnl98kxvMeB3RBYw6+372+m5iStn1MGGlltIGvRdIftTman5WuGM+oKvqYwTPNJECOJ8G4sLZtT/6q9oT7iNP64NzdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=UjjMA3TCFvgo3WQRMzhwoQ7fomeWvQgvMYLGrh8dTeRNRxAdNcufmgvcYAVmFy8bYLYF331Apc3pr4NGNqrTz5Oeb15ub++BpHYyxHBvXPO8iwvjw33fDMENjEjDqJtHLlO4R2VfjJc2aM+3jXSdzcwBKBC/Rse8mej6AdRdfQs=
+Received: by 10.82.105.13 with SMTP id d13mr9992640buc.1184090776946;
+        Tue, 10 Jul 2007 11:06:16 -0700 (PDT)
+Received: by 10.82.149.11 with HTTP; Tue, 10 Jul 2007 11:06:16 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52102>
 
+[...]/src $ mkdir foo
+[...]/src $ cd foo
+[...]/src/foo $ git-svn init -t tags -b branches -T trunk
+https://www.[...].com/svn/foo/bar/bla
+Initialized empty Git repository in .git/
+Using higher level of URL: https://www.[...].com/svn/foo/bar/bla =>
+https://www.[...].com/svn/foo
 
-This patch cleans up some complicated code, and replaces it with a
-cleaner version, using code from remote.[ch], which got extended a
-little in the process.  This also enables us to fix two cases:
+[...]/src/foo $ git-svn fetch
+config --get svn-remote.svn.url: command returned error: 1
 
-The earlier "fix" to setup tracking only when the original ref started 
-with "refs/remotes" is wrong.  You are absolutely allowed to use a 
-separate layout for your tracking branches.  The correct fix, of course, 
-is to set up tracking information only when there is a matching 
-remote.<nick>.fetch line containing a colon.
+[...]/src/foo $ git config --get svn-remote.svn.url
+https://www.[...].com/svn/foo
 
-Another corner case was not handled properly.  If two remotes write to
-the original ref, just warn the user and do not set up tracking.
+[...]/src/foo $ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[svn-remote "svn"]
+        url =  https://www.[...].com/svn/foo
+        fetch = bar/bla/trunk:refs/remotes/trunk
+        branches = bar/bla/branches/*:refs/remotes/*
+        tags = bar/bla/tags/*:refs/remotes/tags/*
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+[...]/src/foo $ git --version
+git version 1.5.2.2
 
-	Sorry, but I really do not feel like manually making the patch
-	nicer to read today.  It is really annoying to me to see the
-	empty and the not-really-interesting lines match up.  Oh, well.
+[...]/src/foo $ git-svn --version
+git-svn version 1.5.2.2 (svn 1.4.3)
 
- builtin-branch.c  |  170 +++++++++++++++++------------------------------------
- t/t3200-branch.sh |   21 ++++---
- 2 files changed, 66 insertions(+), 125 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 49195a1..d16d3f2 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -10,6 +10,7 @@
- #include "refs.h"
- #include "commit.h"
- #include "builtin.h"
-+#include "remote.h"
- 
- static const char builtin_branch_usage[] =
-   "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]] [--sort-by-date]";
-@@ -22,7 +23,7 @@ static const char builtin_branch_usage[] =
- static const char *head;
- static unsigned char head_sha1[20];
- 
--static int branch_track = 1; /* 0 = none, 1 = remotes, 2 = all */
-+static int branch_track = 1;
- 
- static int branch_use_color;
- static char branch_colors[][COLOR_MAXLEN] = {
-@@ -66,12 +67,8 @@ static int git_branch_config(const char *var, const char *value)
- 		color_parse(value, var, branch_colors[slot]);
- 		return 0;
- 	}
--	if (!strcmp(var, "branch.autosetupmerge")) {
--		if (!strcmp(value, "all"))
--			branch_track = 2;
--		else
-+	if (!strcmp(var, "branch.autosetupmerge"))
- 			branch_track = git_config_bool(var, value);
--	}
- 
- 	return git_default_config(var, value);
- }
-@@ -349,125 +346,70 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev,
- 	free_ref_list(&ref_list);
- }
- 
--static char *config_repo;
--static char *config_remote;
--static const char *start_ref;
-+struct tracking {
-+	struct refspec spec;
-+	char *src;
-+	const char *remote;
-+	int matches;
-+};
- 
--static int get_remote_branch_name(const char *value)
-+static int find_tracked_branch(struct remote *remote, void *priv)
- {
--	const char *colon;
--	const char *end;
-+	struct tracking *tracking = priv;
- 
--	if (*value == '+')
--		value++;
--
--	colon = strchr(value, ':');
--	if (!colon)
--		return 0;
--
--	end = value + strlen(value);
--
--	/*
--	 * Try an exact match first.  I.e. handle the case where the
--	 * value is "$anything:refs/foo/bar/baz" and start_ref is exactly
--	 * "refs/foo/bar/baz". Then the name at the remote is $anything.
--	 */
--	if (!strcmp(colon + 1, start_ref)) {
--		/* Truncate the value before the colon. */
--		nfasprintf(&config_repo, "%.*s", colon - value, value);
--		return 1;
-+	if (!remote_find_tracking(remote, &tracking->spec)) {
-+		if (++tracking->matches == 1) {
-+			tracking->src = tracking->spec.src;
-+			tracking->remote = remote->name;
-+		} else {
-+			free(tracking->spec.src);
-+			if (tracking->src) {
-+				free(tracking->src);
-+				tracking->src = NULL;
-+			}
-+		}
-+		tracking->spec.src = NULL;
- 	}
- 
--	/*
--	 * Is this a wildcard match?
--	 */
--	if ((end - 2 <= value) || end[-2] != '/' || end[-1] != '*' ||
--	    (colon - 2 <= value) || colon[-2] != '/' || colon[-1] != '*')
--		return 0;
--
--	/*
--	 * Value is "refs/foo/bar/<asterisk>:refs/baz/boa/<asterisk>"
--	 * and start_ref begins with "refs/baz/boa/"; the name at the
--	 * remote is refs/foo/bar/ with the remaining part of the
--	 * start_ref.  The length of the prefix on the RHS is (end -
--	 * colon - 2), including the slash immediately before the
--	 * asterisk.
--	 */
--	if ((strlen(start_ref) < end - colon - 2) ||
--	    memcmp(start_ref, colon + 1, end - colon - 2))
--		return 0; /* does not match prefix */
--
--	/* Replace the asterisk with the remote branch name.  */
--	nfasprintf(&config_repo, "%.*s%s",
--		   (colon - 1) - value, value,
--		   start_ref + (end - colon - 2));
--	return 1;
--}
--
--static int get_remote_config(const char *key, const char *value)
--{
--	const char *var;
--	if (prefixcmp(key, "remote."))
--		return 0;
--
--	var = strrchr(key, '.');
--	if (var == key + 6 || strcmp(var, ".fetch"))
--		return 0;
--	/*
--	 * Ok, we are looking at key == "remote.$foo.fetch";
--	 */
--	if (get_remote_branch_name(value))
--		nfasprintf(&config_remote, "%.*s", var - (key + 7), key + 7);
--
- 	return 0;
- }
- 
--static void set_branch_merge(const char *name, const char *config_remote,
--			     const char *config_repo)
-+
-+/*
-+ * This is called when new_ref is branched off of orig_ref, and tries
-+ * to infer the settings for branch.<new_ref>.{remote,merge} from the
-+ * config.
-+ */
-+static int setup_tracking(const char *new_ref, const char *orig_ref)
- {
- 	char key[1024];
--	if (sizeof(key) <=
--	    snprintf(key, sizeof(key), "branch.%s.remote", name))
--		die("what a long branch name you have!");
--	git_config_set(key, config_remote);
--
--	/*
--	 * We do not have to check if we have enough space for
--	 * the 'merge' key, since it's shorter than the
--	 * previous 'remote' key, which we already checked.
--	 */
--	snprintf(key, sizeof(key), "branch.%s.merge", name);
--	git_config_set(key, config_repo);
--}
-+	struct tracking tracking;
- 
--static void set_branch_defaults(const char *name, const char *real_ref)
--{
--	/*
--	 * name is the name of new branch under refs/heads;
--	 * real_ref is typically refs/remotes/$foo/$bar, where
--	 * $foo is the remote name (there typically are no slashes)
--	 * and $bar is the branch name we map from the remote
--	 * (it could have slashes).
--	 */
--	start_ref = real_ref;
--	git_config(get_remote_config);
--	if (!config_repo && !config_remote &&
--	    !prefixcmp(real_ref, "refs/heads/")) {
--		set_branch_merge(name, ".", real_ref);
--		printf("Branch %s set up to track local branch %s.\n",
--		       name, real_ref);
--	}
-+	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
-+		return error("Tracking not set up: name too long: %s",
-+				new_ref);
- 
--	if (config_repo && config_remote) {
--		set_branch_merge(name, config_remote, config_repo);
-+	memset(&tracking, 0, sizeof(tracking));
-+	tracking.spec.dst = (char *)orig_ref;
-+	if (for_each_remote(find_tracked_branch, &tracking) ||
-+			!tracking.matches)
-+		return 1;
-+
-+	if (tracking.matches > 1)
-+		return error("Not tracking: ambiguous information for ref %s",
-+				orig_ref);
-+
-+	if (tracking.matches == 1) {
-+		sprintf(key, "branch.%s.remote", new_ref);
-+		git_config_set(key, tracking.remote ?  tracking.remote : ".");
-+		sprintf(key, "branch.%s.merge", new_ref);
-+		git_config_set(key, tracking.src);
-+		free(tracking.src);
- 		printf("Branch %s set up to track remote branch %s.\n",
--		       name, real_ref);
-+			       new_ref, orig_ref);
- 	}
- 
--	if (config_repo)
--		free(config_repo);
--	if (config_remote)
--		free(config_remote);
-+	return 0;
- }
- 
- static void create_branch(const char *name, const char *start_name,
-@@ -529,10 +471,8 @@ static void create_branch(const char *name, const char *start_name,
- 	/* When branching off a remote branch, set up so that git-pull
- 	   automatically merges from there.  So far, this is only done for
- 	   remotes registered via .git/config.  */
--	if (real_ref && (track == 2 ||
--				(track == 1 &&
--				 !prefixcmp(real_ref, "refs/remotes/"))))
--		set_branch_defaults(name, real_ref);
-+	if (real_ref && track)
-+		setup_tracking(name, real_ref);
- 
- 	if (write_ref_sha1(lock, sha1, msg) < 0)
- 		die("Failed to write ref: %s.", strerror(errno));
-@@ -604,7 +544,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 		if (!strcmp(arg, "--track")) {
--			track = 2;
-+			track = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--no-track")) {
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a19e961..ef1eeb7 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -148,13 +148,14 @@ test_expect_success 'test tracking setup via config' \
-      test $(git config branch.my3.remote) = local &&
-      test $(git config branch.my3.merge) = refs/heads/master'
- 
--test_expect_success 'autosetupmerge = all' '
-+test_expect_success 'avoid ambiguous track' '
- 	git config branch.autosetupmerge true &&
-+	git config remote.ambi1.url = lalala &&
-+	git config remote.ambi1.fetch = refs/heads/lalala:refs/heads/master &&
-+	git config remote.ambi2.url = lilili &&
-+	git config remote.ambi2.fetch = refs/heads/lilili:refs/heads/master &&
- 	git branch all1 master &&
--	test -z "$(git config branch.all1.merge)" &&
--	git config branch.autosetupmerge all &&
--	git branch all2 master &&
--	test $(git config branch.all2.merge) = refs/heads/master
-+	test -z "$(git config branch.all1.merge)"
- '
- 
- test_expect_success 'test overriding tracking setup via --no-track' \
-@@ -167,10 +168,10 @@ test_expect_success 'test overriding tracking setup via --no-track' \
-      ! test "$(git config branch.my2.remote)" = local &&
-      ! test "$(git config branch.my2.merge)" = refs/heads/master'
- 
--test_expect_success 'test local tracking setup' \
-+test_expect_success 'no tracking without .fetch entries' \
-     'git branch --track my6 s &&
--     test $(git config branch.my6.remote) = . &&
--     test $(git config branch.my6.merge) = refs/heads/s'
-+     test -z "$(git config branch.my6.remote)" &&
-+     test -z "$(git config branch.my6.merge)"'
- 
- test_expect_success 'test tracking setup via --track but deeper' \
-     'git config remote.local.url . &&
-@@ -182,8 +183,8 @@ test_expect_success 'test tracking setup via --track but deeper' \
- 
- test_expect_success 'test deleting branch deletes branch config' \
-     'git branch -d my7 &&
--     test "$(git config branch.my7.remote)" = "" &&
--     test "$(git config branch.my7.merge)" = ""'
-+     test -z "$(git config branch.my7.remote)" &&
-+     test -z "$(git config branch.my7.merge)"'
- 
- test_expect_success 'test deleting branch without config' \
-     'git branch my7 s &&
--- 
-1.5.3.rc0.2783.gf3f7
+My versions of git and svn are the one that comes with cygwin.
