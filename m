@@ -1,62 +1,51 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: how to combine two clones in a collection
-Date: Tue, 10 Jul 2007 16:00:49 -0400
-Message-ID: <47015E14-FEA7-45C5-B9CB-C949B87B6494@silverinsanity.com>
-References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org> <20070710062104.GA22603@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707100950520.3412@woody.linux-foundation.org> <20070710174543.GA16054@piper.oerlikon.madduck.net> <72218C10-EE5E-4CD9-B5DE-DFEC40EBEF27@silverinsanity.com> <m3644suki6.fsf@host32.eke.fi>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: git-filter-branch exits early
+Date: Tue, 10 Jul 2007 22:52:02 +0200
+Message-ID: <20070710205202.GA3212@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Kalle Pokki <kalle.pokki@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Jul 10 22:00:59 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 10 22:52:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8LtJ-000867-6T
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 22:00:57 +0200
+	id 1I8Mgt-0002Tb-Vi
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 22:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755912AbXGJUAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 16:00:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754972AbXGJUAw
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 16:00:52 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:51455 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754952AbXGJUAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 16:00:52 -0400
-Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id A9B151FFC003;
-	Tue, 10 Jul 2007 20:00:51 +0000 (UTC)
-In-Reply-To: <m3644suki6.fsf@host32.eke.fi>
-X-Mailer: Apple Mail (2.752.3)
+	id S1760780AbXGJUwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 16:52:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760945AbXGJUwI
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 16:52:08 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:40597 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760307AbXGJUwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 16:52:06 -0400
+Received: from tigra.home (Fa968.f.strato-dslnet.de [195.4.169.104])
+	by post.webmailer.de (mrclete mo4) (RZmta 8.3)
+	with ESMTP id h00272j6AIenRy ; Tue, 10 Jul 2007 22:52:03 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 91E30277BD;
+	Tue, 10 Jul 2007 22:52:03 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id E4554C164; Tue, 10 Jul 2007 22:52:02 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2hcNmQFKE=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52111>
 
+I have a Debian system where git-filter-branch exits immediately after
+"unset CDPATH" in git-sh-setup (the command exits with 1, as CDPATH is
+not defined). The system still has bash-2.05a.
 
-On Jul 10, 2007, at 3:27 PM, Kalle Pokki wrote:
+git-filter-branch has "set -e", which is why the script finishes
+prematurely. If this is not really needed, maybe it can be removed?
 
-> You can also just create two different git repositories and start  
-> making
-> the commits in the master (or any other) branch. Then combine the
-> repositories by fetching
->
->         cd repo1
->         git fetch ../repo2 master:repo2
->
-> This way the branches don't share anything, do they?
-
-Yes, that's what I was referring to at the end when I wrote:
-
-> You could also create the branch in a second repository and pull it  
-> from there into the first (probably simpler),
-
-But it seemed too simple.  ;-)  And that is exactly how I'd do it...   
-Assuming I thought of it before using write-tree, commit-tree, and  
-update-ref.  (Which is what happened.  I thought of the complicated  
-method and wrote it up before thinking "duh, just use a second repo.")
-
-~~ Brian
+I'll see if the system can be upgraded, but I suspect someone can get
+a similar problem.
