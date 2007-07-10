@@ -1,51 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: git-filter-branch exits early
-Date: Tue, 10 Jul 2007 22:52:02 +0200
-Message-ID: <20070710205202.GA3212@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2 1/2] Add for_each_remote() function, and extend
+ remote_find_tracking()
+Date: Tue, 10 Jul 2007 17:09:45 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707101503470.6977@iabervon.org>
+References: <Pine.LNX.4.64.0707062252390.4093@racer.site>
+ <7vhcof2rur.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707081336020.4248@racer.site>
+ <7vzm2620wp.fsf@assigned-by-dhcp.cox.net> <46919692.5020708@gnu.org>
+ <7vhcoexqeh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707091228290.5546@racer.site>
+ <7v4pkduw2f.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707092203100.5546@racer.site>
+ <7vzm25tex6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707100401070.4131@racer.site>
+ <7vy7hosv7v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707101848050.4047@racer.site>
+ <7vtzscqf2r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 22:52:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 10 23:09:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Mgt-0002Tb-Vi
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 22:52:12 +0200
+	id 1I8Mxy-0006L2-CS
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 23:09:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760780AbXGJUwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 16:52:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760945AbXGJUwI
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 16:52:08 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:40597 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760307AbXGJUwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 16:52:06 -0400
-Received: from tigra.home (Fa968.f.strato-dslnet.de [195.4.169.104])
-	by post.webmailer.de (mrclete mo4) (RZmta 8.3)
-	with ESMTP id h00272j6AIenRy ; Tue, 10 Jul 2007 22:52:03 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 91E30277BD;
-	Tue, 10 Jul 2007 22:52:03 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id E4554C164; Tue, 10 Jul 2007 22:52:02 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2hcNmQFKE=
-X-RZG-CLASS-ID: mo07
+	id S1759493AbXGJVJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 17:09:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759705AbXGJVJq
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 17:09:46 -0400
+Received: from iabervon.org ([66.92.72.58]:4635 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758422AbXGJVJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 17:09:46 -0400
+Received: (qmail 2641 invoked by uid 1000); 10 Jul 2007 21:09:45 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Jul 2007 21:09:45 -0000
+In-Reply-To: <7vtzscqf2r.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52112>
 
-I have a Debian system where git-filter-branch exits immediately after
-"unset CDPATH" in git-sh-setup (the command exits with 1, as CDPATH is
-not defined). The system still has bash-2.05a.
+On Tue, 10 Jul 2007, Junio C Hamano wrote:
 
-git-filter-branch has "set -e", which is why the script finishes
-prematurely. If this is not really needed, maybe it can be removed?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > The function for_each_remote() does exactly what the name suggests.
+> >
+> > The function remote_find_tracking() was extended to be able to search
+> > remote refs for a given local ref.  You have to set the parameter
+> > "reverse" to true for that behavior.
+> 
+> The updated patch does not use "reverse" but the old description
+> is still there.
+> 
+> Daniel, one thing I fear about your "I want to store the message
+> in the object store so that I can reuse even after I re-polish
+> the series" desire on the cover letter topic is this kind of
+> gotcha, and that is why I suggested "*** BLURB GOES HERE ***".
+> Both the summary (diffstat and shortlog) part and the
+> description part should be kept fresh in the updated 0/N; while
+> we can automate the summary part whenever we re-generate 0/N,
+> you cannot automate the description part.
 
-I'll see if the system can be upgraded, but I suspect someone can get
-a similar problem.
+It seems to me that commit messages are much more likely to mention the 
+sorts of details that are affected by review than cover letters are. 
+Furthermore, if the message is coming out of a tag on the head of the 
+series, whatever is used to put the tag onto the new head of the series 
+would present the buffer for editting again, just like commit --amend 
+does. So the user would be just as likely to think to update a series 
+header as a commit message, and less likely to need to.
+
+	-Daniel
+*This .sig left intentionally blank*
