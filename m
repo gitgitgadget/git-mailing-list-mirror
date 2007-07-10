@@ -1,53 +1,59 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: "svn switch" equivalent when using git-svn -- git-filter-branch?
-Date: Mon, 9 Jul 2007 22:40:38 -0700
-Message-ID: <20070710054038.GA17675@muzzle>
-References: <86sl7x7nzq.fsf@lola.quinscape.zz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [RFC] series headers
+Date: Tue, 10 Jul 2007 02:14:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707100126250.6977@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jul 10 07:40:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 10 08:14:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I88Sy-000467-E9
-	for gcvg-git@gmane.org; Tue, 10 Jul 2007 07:40:52 +0200
+	id 1I88zM-00016m-EO
+	for gcvg-git@gmane.org; Tue, 10 Jul 2007 08:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbXGJFkk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Jul 2007 01:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbXGJFkj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 01:40:39 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37740 "EHLO hand.yhbt.net"
+	id S1751475AbXGJGOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Jul 2007 02:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXGJGOE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Jul 2007 02:14:04 -0400
+Received: from iabervon.org ([66.92.72.58]:4478 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751307AbXGJFkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2007 01:40:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 742152DC032;
-	Mon,  9 Jul 2007 22:40:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <86sl7x7nzq.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751099AbXGJGOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2007 02:14:03 -0400
+Received: (qmail 21460 invoked by uid 1000); 10 Jul 2007 06:14:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Jul 2007 06:14:00 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52046>
 
-David Kastrup <dak@gnu.org> wrote:
-> Hi,
-> 
-> an upstream svn repository that I access with git-svn has moved.  I
-> seem to be too stupid to use git-filter-branch and/or .git/config
-> and/or git-reset to make my git mirror follow the switch.
+I'd like to be able to get format-patch to produce a [PATCH 0/N] message, 
+with a message that's actually in my repository, plus various goodies 
+generated either from diffing the ends of the series or by running through 
+the log an extra time to pick up summary information.
 
-Just changing the url key in the [svn-remote] section of the .git/config
-file should be enough.
+The second best idea I have for this currently is to have a commit at the 
+end of the series which specifies which has the same tree as its parent 
+and has a message with a line "Since <sha1 of the first commit of the 
+series>" and has the text. This goes at the end of the series, because it 
+describes the state with all of the changes made, which is only a good 
+description of a commit at the end of the series, not a commit at the 
+start of the series. Making it [PATCH 0/N] is just because it belongs 
+first in presentation, regardless of whether the other commits are 
+presented with recent commits first or last.
 
-You'll probably need to fetch at least one revision from the new URL
-before being able to dcommit, though.
+The better idea I just had was to have format-patch notice if the "until" 
+side is a tag object instead of a commit, and generate a [0/N] with the 
+tag message.
 
-I've never looked at git-filter-branch, either.
+As far as implementing this... would it be sane to make struct 
+rev_info.commit_format a callback, so that the code to generate an email 
+message can be somewhere that's easy to use to generate an email that 
+isn't for a commit in the log? I don't *think* git's quite fast enough for 
+the indirect jump to a callback instead of an if tree for an enum will 
+actually hurt us.
 
--- 
-Eric Wong
+	-Daniel
+*This .sig left intentionally blank*
