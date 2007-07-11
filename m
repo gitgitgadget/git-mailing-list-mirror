@@ -1,57 +1,102 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: cg switch -l doesn't work when branches point to the same commit
-Date: Wed, 11 Jul 2007 15:36:39 +0200
-Message-ID: <81b0412b0707110636u77b56f1biccb221489933972a@mail.gmail.com>
-References: <f158199e0707110559q43c290b4x2caee13cac46cf29@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] update-server-info: honor core.sharedRepository
+Date: Wed, 11 Jul 2007 15:56:56 +0200
+Message-ID: <20070711135656.GA28593@piper.oerlikon.madduck.net>
+References: <Pine.LNX.4.64.0707111338360.4516@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Bradford Smith" <bradford.carl.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 15:36:50 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 11 15:57:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8cN5-0007w6-4H
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 15:36:47 +0200
+	id 1I8cgq-0004eY-0W
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 15:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764939AbXGKNgn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 09:36:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764824AbXGKNgm
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 09:36:42 -0400
-Received: from ik-out-1112.google.com ([66.249.90.179]:19175 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764923AbXGKNgl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 09:36:41 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so1178971ika
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 06:36:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LE0sLUEr/vq7ULJ2/5rPHCT0HgL5aSbsZOLCqwPVi3vjxK15danoEz33RvCAY+Ye6tKZMduhlNSheDB/weJ/SpDq6LESsCza/C0ilvxUM74idR9KeJs0bBb9uXL05YMyI7HuHuz5R9f3fNu2JgEy7HAAi/WvZVKHLSXhUkic9Ls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k2QjC1t6OwXQu5FH9Sbui83PzoeEHejyfyEK7l6GM1tVzpuYSKQm3U/EJVx/5HoDOJV4h4Zm8jcbcYFqMDoEl70z4v2BNBVKoBh31wQ4l24Y1nEgWPqIgCzeXQWDQsNYSWy+bwDA9aPCkEi00PDeyddSFuoL3qoXd6qLBvOf3Go=
-Received: by 10.78.159.7 with SMTP id h7mr2425539hue.1184160999140;
-        Wed, 11 Jul 2007 06:36:39 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Wed, 11 Jul 2007 06:36:39 -0700 (PDT)
-In-Reply-To: <f158199e0707110559q43c290b4x2caee13cac46cf29@mail.gmail.com>
+	id S1757861AbXGKN5I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 09:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756738AbXGKN5H
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 09:57:07 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:55754 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756028AbXGKN5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 09:57:06 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 4EC3E895D78;
+	Wed, 11 Jul 2007 15:56:58 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 31570-08; Wed, 11 Jul 2007 15:56:58 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 9B1E7895D73;
+	Wed, 11 Jul 2007 15:56:57 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id F36269F15D;
+	Wed, 11 Jul 2007 15:56:56 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id BDA0943FC; Wed, 11 Jul 2007 15:56:56 +0200 (CEST)
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707111338360.4516@racer.site>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52160>
 
-On 7/11/07, Bradford Smith <bradford.carl.smith@gmail.com> wrote:
-> The message below applies to software versions:
->
-> git version 1.4.4.2
 
-It is fixed sometime between your version and git-1.5.2.2.
-Use git checkout.
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> cogito-0.18.2
+also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.11.14=
+39 +0200]:
+> Earlier, update-server-info used the umask, even if
+> core.sharedRepository =3D 1.
+>=20
+> Noticed by madduck on IRC.
+> 	Does this work for you?
 
-Cogito is unmaintained ATM.
+Yes, it does, but only if I put =3D all/group into the config. init-db
+--shared=3Dall however sets core.sharedRepository=3D2, and then
+update-server-info produces a 0660 file.
+
+This may be another bug...
+
+Thanks!
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+"even if you persuade me, you won't persuade me."
+                                                       -- aristophanes
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGlOGoIgvIgzMMSnURAsCIAJ9eOUPlPDOs8NBcKxFN2kd7yMDbYgCgtdDR
++rUQRwYcLzVJgxu/VemEOjA=
+=MpsH
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
