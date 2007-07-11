@@ -1,66 +1,63 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: user manual wrong about remote branches?
-Date: Wed, 11 Jul 2007 11:28:16 -0400
-Message-ID: <20070711152816.GB4138@fieldses.org>
-References: <f158199e0707110821k50a55e66p8fb0b92a3dec9ed2@mail.gmail.com>
+From: Claudio Scordino <cloud.of.andor@gmail.com>
+Subject: Re: Hook after pull ?
+Date: Wed, 11 Jul 2007 17:29:19 +0200
+Message-ID: <4694F74F.8050908@gmail.com>
+References: <4694EC0F.10003@gmail.com> <81b0412b0707110751i7947ac5bv819e1c2de4e94621@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bradford Smith <bradford.carl.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 17:28:23 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 17:29:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8e74-00028B-8Q
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 17:28:22 +0200
+	id 1I8e84-0002Qg-Qn
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 17:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760124AbXGKP2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 11:28:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760103AbXGKP2T
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 11:28:19 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:41690 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758790AbXGKP2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 11:28:18 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1I8e6y-0002FU-OR; Wed, 11 Jul 2007 11:28:16 -0400
-Content-Disposition: inline
-In-Reply-To: <f158199e0707110821k50a55e66p8fb0b92a3dec9ed2@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1758293AbXGKP3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 11:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758452AbXGKP3W
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 11:29:22 -0400
+Received: from ms01.sssup.it ([193.205.80.99]:47080 "EHLO sssup.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757064AbXGKP3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 11:29:21 -0400
+Received: from [193.205.82.7] (HELO gandalf.sssup.it)
+  by sssup.it (CommuniGate Pro SMTP 4.1.8)
+  with ESMTP-TLS id 31862495; Wed, 11 Jul 2007 17:20:42 +0200
+Received: from [10.30.3.110] ([10.30.3.110])
+	by gandalf.sssup.it (8.12.10/8.12.10) with ESMTP id l6BEQTqi031089;
+	Wed, 11 Jul 2007 16:26:29 +0200
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <81b0412b0707110751i7947ac5bv819e1c2de4e94621@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52170>
 
-On Wed, Jul 11, 2007 at 11:21:53AM -0400, Bradford Smith wrote:
-> I got the latest git source like this:
->
-> git clone git://git.kernel.org/pub/scm/git/git.git
+Alex Riesen wrote:
+> On 7/11/07, Claudio Scordino <cloud.of.andor@gmail.com> wrote:
+>> Hi all.
+>>
+>> Does any hook being called after the pull (that means, after fetch or 
+>> merge) ?
+>>
+> 
+> There are some
 
-What version of git did you do this first clone with?
+Which one of those inside the .git/hooks directory is called afret a pull?
 
-> Then I did:
->
-> make prefix=/usr/local all doc
-> make prefix=/usr/local install install-doc
->
-> So my current version is:
->
-> git version 1.5.3.rc0.gbaa79
->
-> Now, Documentation/user-manual.txt says I should be able to see the
-> remote branch I cloned from when I do this in the source directory.
->
-> git branch -r
->
-> However, this command gives no output at all.  What gives?  Does this
-> mean git-fetch and git-pull won't work properly to keep me up-to-date
-> with the main repository?
+> 
+>> If no, does exist any easy way of creating such hook ?
+>>
+> 
+> What for? What do you want to do?
+> 
+I just need my script to be called after a pull. My script just sends an email 
+saying that the repository has been pulled (I already did it for the push).
 
-The remote branch setup  is done on the initial clone.  So if you clone
-again with the newly installed version of git, you'll probably see
-what's expected.
+Thanks,
 
---b.
+         Claudio
