@@ -1,105 +1,63 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] git-merge: run commit hooks when making merge commits
-Date: Wed, 11 Jul 2007 22:32:00 +1200
-Message-ID: <11841499201242-git-send-email-sam.vilain@catalyst.net.nz>
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to combine two clones in a collection
+Date: Wed, 11 Jul 2007 12:46:39 +0200
+Organization: At home
+Message-ID: <f72ceh$ke6$1@sea.gmane.org>
+References: <20070709222250.GA8007@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707091923300.3412@woody.linux-foundation.org> <20070710062104.GA22603@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0707100950520.3412@woody.linux-foundation.org> <20070710174543.GA16054@piper.oerlikon.madduck.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 11 12:32:20 2007
+X-From: git-owner@vger.kernel.org Wed Jul 11 12:47:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8ZUZ-0001TK-OK
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 12:32:20 +0200
+	id 1I8Zin-00052G-JC
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 12:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759647AbXGKKcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 06:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759485AbXGKKcF
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 06:32:05 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:40371 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759129AbXGKKcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 06:32:04 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1I8ZUG-0006fR-7f; Wed, 11 Jul 2007 22:32:00 +1200
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id 3165A5CF6F; Wed, 11 Jul 2007 22:32:00 +1200 (NZST)
-X-Mailer: git-send-email 1.5.2.1.1131.g3b90-dirty
+	id S1759057AbXGKKq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 06:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759158AbXGKKq6
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 06:46:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:43266 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759057AbXGKKq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 06:46:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I8Zic-0003oK-HI
+	for git@vger.kernel.org; Wed, 11 Jul 2007 12:46:50 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 12:46:50 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 12:46:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52149>
 
-git-merge.sh was not running the commit hooks, so run them in the two
-places where we go to commit.
+martin f krafft wrote:
 
-Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
----
-   Not sure if it should call these or some specialist hooks, like
-   git-am does.
+> I wonder how to create a project with two completely independent
+> branches which have no common ancestry. I don't think it's possible.
+> One needs a throwaway branch to create the first commit, then branch
+> each of the two branches off that, then delete the throwaya branch
+> (or keep it around).
 
- git-merge.sh |   27 +++++++++++++++++++++++++++
- 1 files changed, 27 insertions(+), 0 deletions(-)
+Git repository itself  has a few completely independent branches, some of
+them visible. One of them, the 'todo' branch is actually from independent
+repository, two other, 'man' and 'html' are generated automatically by the
+build script.
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 981d69d..ef4f51b 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -117,6 +117,29 @@ merge_name () {
- 	fi
- }
- 
-+call_pre_hooks () {
-+	message="$1"
-+	if test -x "$GIT_DIR"/hooks/pre-commit
-+	then
-+		"$GIT_DIR"/hooks/pre-commit || exit 1
-+	fi
-+	if test -x "$GIT_DIR"/hooks/commit-msg
-+	then
-+		printf '%s\n' "$message" > "$GIT_DIR"/MERGE_MSG
-+		"$GIT_DIR"/hooks/commit-msg "$GIT_DIR"/MERGE_MSG || exit 1
-+		cat "$GIT_DIR"/MERGE_MSG
-+	else
-+		echo "$message"
-+	fi
-+}
-+
-+call_post_hook () {
-+	if test -x "$GIT_DIR"/hooks/post-commit
-+	then
-+		"$GIT_DIR"/hooks/post-commit
-+	fi
-+}
-+
- case "$#" in 0) usage ;; esac
- 
- have_message=
-@@ -334,11 +357,13 @@ f,*)
- 		   result_tree=$(git-write-tree)
- 		then
- 			echo "Wonderful."
-+			merge_msg=$(call_pre_hooks "$merge_msg")
- 			result_commit=$(
- 				printf '%s\n' "$merge_msg" |
- 				git-commit-tree $result_tree -p HEAD -p "$1"
- 			) || exit
- 			finish "$result_commit" "In-index merge"
-+			call_post_hook
- 			dropsave
- 			exit 0
- 		fi
-@@ -440,8 +465,10 @@ done
- if test '' != "$result_tree"
- then
-     parents=$(git-show-branch --independent "$head" "$@" | sed -e 's/^/-p /')
-+    merge_msg=$(call_pre_hooks "$merge_msg")
-     result_commit=$(printf '%s\n' "$merge_msg" | git-commit-tree $result_tree $parents) || exit
-     finish "$result_commit" "Merge made by $wt_strategy."
-+    call_post_hook
-     dropsave
-     exit 0
- fi
 -- 
-1.5.2.1.1131.g3b90
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
