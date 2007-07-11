@@ -1,62 +1,55 @@
-From: "Yakov Lerner" <iler.ml@gmail.com>
-Subject: 'git log FILE' slow
-Date: Wed, 11 Jul 2007 23:33:41 +0300
-Message-ID: <f36b08ee0707111333q38004cb5x152f25e2055e2796@mail.gmail.com>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: cg switch -l doesn't work when branches point to the same
+ commit
+Date: Wed, 11 Jul 2007 16:34:46 -0400
+Message-ID: <20070711163446.cb8d9c52.seanlkml@sympatico.ca>
+References: <f158199e0707110559q43c290b4x2caee13cac46cf29@mail.gmail.com>
+	<81b0412b0707110636u77b56f1biccb221489933972a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 22:33:50 2007
+Cc: "Bradford Smith" <bradford.carl.smith@gmail.com>,
+	git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 22:35:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8ise-0005CI-7V
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 22:33:48 +0200
+	id 1I8iud-0005gA-8B
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 22:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754809AbXGKUdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 16:33:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753050AbXGKUdo
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 16:33:44 -0400
-Received: from wr-out-0506.google.com ([64.233.184.228]:39137 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753915AbXGKUdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 16:33:44 -0400
-Received: by wr-out-0506.google.com with SMTP id i30so923664wra
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 13:33:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=AgXGgMSICLEEVLQ3W9vd/Sl1dcyO54uJe+nyv5y6fZ+mR79qLIYZSRouyt21hgvg7GXq8DYeqpH4ikGqXqiWdXfwce76sz8n1hMcuva6PP5WBIOtAEIJY6UH0L511XJQJNLiV5lOmUEzJVim9fJX8Tb8b8pbMg7I/jrEtqj2Cwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=VgO0Zj70BVwmGiY7f/nf/hlvEKw2Bh2P+X44SNauAer304z+WbTjFrwbkillYGRNPkJ07i1ZE+q6UnubGj90nQPraJ2+x3hVnqOZI6EAnSsUFTVDmlx4YIvPvAzcSnv/3IdW1VmEZKgA5jthJIV2xItnZhisA/ErXxc+dQUhdjg=
-Received: by 10.142.84.3 with SMTP id h3mr434109wfb.1184186021998;
-        Wed, 11 Jul 2007 13:33:41 -0700 (PDT)
-Received: by 10.142.116.4 with HTTP; Wed, 11 Jul 2007 13:33:41 -0700 (PDT)
-Content-Disposition: inline
+	id S1755720AbXGKUfs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 16:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755534AbXGKUfs
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 16:35:48 -0400
+Received: from bay0-omc3-s14.bay0.hotmail.com ([65.54.246.214]:27404 "EHLO
+	bay0-omc3-s14.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755587AbXGKUfr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jul 2007 16:35:47 -0400
+Received: from BAYC1-PASMTP07.bayc1.hotmail.com ([65.54.191.167]) by bay0-omc3-s14.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Wed, 11 Jul 2007 13:35:47 -0700
+X-Originating-IP: [65.93.40.159]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP07.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Wed, 11 Jul 2007 13:36:39 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1I8iuX-0002On-8w; Wed, 11 Jul 2007 16:35:45 -0400
+In-Reply-To: <81b0412b0707110636u77b56f1biccb221489933972a@mail.gmail.com>
+X-Mailer: Sylpheed 2.4.1 (GTK+ 2.10.11; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 11 Jul 2007 20:36:39.0468 (UTC) FILETIME=[2EEA8EC0:01C7C3FB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52199>
 
-[git version 1.5.1.3]
+On Wed, 11 Jul 2007 15:36:39 +0200
+"Alex Riesen" <raa.lkml@gmail.com> wrote:
 
-'git-log FILE' takes 10-13 sec.  What can I do to identify
-the reason ? 'git log >/dev/null' takes 0.1 sec (cached).
-On the cloned copy, the times are approximately same.
+> Cogito is unmaintained ATM.
 
-The 'git-count-objects -v' shows:
+Wonder who maintains the http://git.kernel.org site?  The front page
+there still suggests the use of Cogito.
 
-count: 9830
-size: 241412
-in-pack: 12080
-packs: 18
-prune-packable: 188
-garbage: 0
-
-The strace shows only thousands of sbrk during the 10-13 sec time
-(after some initial I/O). Ltrace, I was not able to complete, takes too much.
-
-Yakov
+Sean
