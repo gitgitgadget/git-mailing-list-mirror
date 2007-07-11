@@ -1,63 +1,90 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] send-email: extend sanitize_address_rfc822 to do rfc2047
- quoting
-Date: Wed, 11 Jul 2007 14:49:28 +0200
-Message-ID: <20070711124928.GJ1528MdfPADPa@greensroom.kotnet.org>
-References: <11840869641759-git-send-email-ukleinek@informatik.uni-freiburg.de>
- <20070711084232.GE1528MdfPADPa@greensroom.kotnet.org>
- <20070711114909.GA14086@informatik.uni-freiburg.de>
- <81b0412b0707110538s7eda05e8g6973e20fc4d91931@mail.gmail.com>
-Reply-To: skimo@liacs.nl
+From: "Bradford Smith" <bradford.carl.smith@gmail.com>
+Subject: cg switch -l doesn't work when branches point to the same commit
+Date: Wed, 11 Jul 2007 08:59:57 -0400
+Message-ID: <f158199e0707110559q43c290b4x2caee13cac46cf29@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 14:49:36 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 15:00:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8bdP-0005Dc-OS
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 14:49:36 +0200
+	id 1I8bnZ-0007cJ-Gr
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 15:00:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762548AbXGKMtc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 Jul 2007 08:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762596AbXGKMtc
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 08:49:32 -0400
-Received: from smtp17.wxs.nl ([195.121.247.8]:38054 "EHLO smtp17.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762370AbXGKMtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 08:49:31 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp17.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JL00037YMAGJ0@smtp17.wxs.nl> for git@vger.kernel.org; Wed,
- 11 Jul 2007 14:49:29 +0200 (CEST)
-Received: (qmail 15844 invoked by uid 500); Wed, 11 Jul 2007 12:49:28 +0000
-In-reply-to: <81b0412b0707110538s7eda05e8g6973e20fc4d91931@mail.gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1758386AbXGKNAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 09:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756642AbXGKNAA
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 09:00:00 -0400
+Received: from ik-out-1112.google.com ([66.249.90.182]:6279 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757944AbXGKM77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 08:59:59 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so1168744ika
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 05:59:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZU1NLG9noiWo7H3hQG4shDJCCuHGdRQ0Z24go6SWjgXTfoUQ/Fpr3Ra9esCAadYOlgRE24yOpWU9RFKu0NbpUfrbVqnoP5282sz5uEGwzREWmc0PO8N9V1TTmW186Wf4UK1xfD1yFwk9XLj1O2YvKhJBMlbPyLRIT+v1twgcEkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=jkJ3drPAqkH7wmO99Ojt4RGROKQqIvobYg/nKA2eI8/y54lfSHnr7Hyb3pE1HFhFn3yt3vy7LLIMS/3X4Gga/Gson0tQ+XG1ssNeMqtgodiSiFx2X4FzwjzGGVSoMguUsYHZZj5ez5WVZwddWni/Fb9mzRbMCVakrgyp4x29qME=
+Received: by 10.78.180.16 with SMTP id c16mr2406918huf.1184158797630;
+        Wed, 11 Jul 2007 05:59:57 -0700 (PDT)
+Received: by 10.78.178.10 with HTTP; Wed, 11 Jul 2007 05:59:57 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52158>
 
-On Wed, Jul 11, 2007 at 02:38:11PM +0200, Alex Riesen wrote:
-> On 7/11/07, Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> =
-wrote:
-> >Try:
-> >
-> >        my $recipient =3D 'skimo@kotnet.org';
-> >        my ($recipient_name, $recipient_addr) =3D ($recipient =3D~=20
-> >        /^(.*?)(\s+<.*)/);
-> >        print "Hoppla\n" if (!$recipient_name);
->=20
-> Still wrong. Try it on "0 <0user@buildhost.localnet>"
+The message below applies to software versions:
 
-I was going to suggest using defined($recipient_name) to make it clear,
-but it won't affect correctness as "0" won't match the regexps in
-sanitize_address_rfc822 anyway.
+git version 1.4.4.2
+cogito-0.18.2
 
-skimo
+Why doesn't cg switch -l save local changes when you switch to a
+branch that points at the same commit you're already on?  Here's the
+case I ran into.
+
+1. On my master branch I was part of the way through making a fairly
+complex change when I discovered an unrelated bug.  So, I wanted to:
+     a. move my partial changes to a topical branch
+     b. fix the bug on master
+     c. finish my changes on the topical branch
+     d. merge the topical branch back into master
+
+2. I didn't really want to _commit_ my partial changes yet, though,
+because I was really in mid-thought there, so I wanted to do it this
+way:
+
+# create the topical branch, carrying my local changes along with me
+cg switch -c topical-branch
+# switch back to master, leaving my local changes with the topical branch
+cg switch -l master
+# fix bug on master then
+cg commit
+# switch back to topical branch
+cg switch topical-branch
+# continue with changes and eventually
+cg commit
+cg switch master
+cg merge topical-branch
+
+Unfortunately, I found that 'cg switch -l master' did NOT save my
+local changes.  I had to switch back to the branch, commit my partial
+changes, then back to master to fix the bug.  So, I was able to work
+around this, but I still found the behavior surprising.  If this is
+expected behavior, shouldn't it be documented in the cg-switch man
+page?
+
+BTW, in a test repository/working directory I was able to confirm that
+cg switch -l worked as documented when the two branches involved
+pointed to different commits.
+
+Thanks,
+
+Bradford C. Smith
