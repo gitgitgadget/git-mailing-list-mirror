@@ -1,76 +1,105 @@
-From: "Russ Dill" <russ.dill@gmail.com>
-Subject: Re: git-svn+cygwin failed fetch
-Date: Wed, 11 Jul 2007 02:54:46 -0700
-Message-ID: <f9d2a5e10707110254j46d1123fuade955f17da0a8c5@mail.gmail.com>
-References: <f9d2a5e10707101106w305e28acy55f465e558485298@mail.gmail.com>
-	 <20070711090600.GB29676@muzzle>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jul 11 11:55:09 2007
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: [PATCH] git-merge: run commit hooks when making merge commits
+Date: Wed, 11 Jul 2007 22:32:00 +1200
+Message-ID: <11841499201242-git-send-email-sam.vilain@catalyst.net.nz>
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 12:32:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8YuX-00030P-Hn
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 11:55:05 +0200
+	id 1I8ZUZ-0001TK-OK
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 12:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757765AbXGKJyt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 05:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758429AbXGKJyt
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 05:54:49 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:12211 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757765AbXGKJys (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 05:54:48 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so1824801mue
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 02:54:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s6aRBmp4BQMLMU1YoEMZgRKlHm4TrV2nquuu/IOubt1V0AQkh//2arSkdeO3qhCTxzDiuHPjqMXVLPuEW1v7RbEfdvYkHQdWNTFtOc8K4uyt5sPLan3f6CNGf/UWX9J/cTqeHb/AVqebRYiNSKsa/VL83N2mMBDkF7BdR2IxK/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EP61YhtgC1mh1ThvwRh+tfW5FaitnhlD811dzmoeZ1MDf9/ghDWTAoP1GiRD19xT4FGxI6sHOWo39fTjvgkQAYm479FgQrvSlWAogoFMqEhJta4wFcDO4jDlv66LbMc+xduofAvxWHV5VoLg/LxcDIUj9QxPMVLBJ6zODAQ0iA8=
-Received: by 10.82.116.15 with SMTP id o15mr10628096buc.1184147687042;
-        Wed, 11 Jul 2007 02:54:47 -0700 (PDT)
-Received: by 10.82.149.11 with HTTP; Wed, 11 Jul 2007 02:54:46 -0700 (PDT)
-In-Reply-To: <20070711090600.GB29676@muzzle>
-Content-Disposition: inline
+	id S1759647AbXGKKcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 06:32:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759485AbXGKKcF
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 06:32:05 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:40371 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759129AbXGKKcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 06:32:04 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1I8ZUG-0006fR-7f; Wed, 11 Jul 2007 22:32:00 +1200
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id 3165A5CF6F; Wed, 11 Jul 2007 22:32:00 +1200 (NZST)
+X-Mailer: git-send-email 1.5.2.1.1131.g3b90-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52148>
 
-On 7/11/07, Eric Wong <normalperson@yhbt.net> wrote:
-> Russ Dill <russ.dill@gmail.com> wrote:
-> > [...]/src $ mkdir foo
-> > [...]/src $ cd foo
-> > [...]/src/foo $ git-svn init -t tags -b branches -T trunk
-> > https://www.[...].com/svn/foo/bar/bla
-> > Initialized empty Git repository in .git/
-> > Using higher level of URL: https://www.[...].com/svn/foo/bar/bla =>
-> > https://www.[...].com/svn/foo
-> >
-> > [...]/src/foo $ git-svn fetch
-> > config --get svn-remote.svn.url: command returned error: 1
-> >
-> > [...]/src/foo $ git config --get svn-remote.svn.url
-> > https://www.[...].com/svn/foo
->
-> Sorry, I can't help here other than recommending a real UNIX with
-> fork + pipe + exec and all that fun stuff.
->
-> git-svn relies heavily[1] on both input and output pipes of the
-> safer-but-made-for-UNIX fork + pipe + exec(@list) variety, so I suspect
-> this is just the tip of the iceberg for Windows incompatibilies with
-> git-svn...
+git-merge.sh was not running the commit hooks, so run them in the two
+places where we go to commit.
 
-Its actually reading and writing quite a bit of stuff from the config
-file, so why this one simple command would fail eludes me. Especially
-since it wrote it there in the first place. If I comment out the
-command_oneline and hardcode the value I know it should return,
-git-fetch runs. Its actually been running for several hours now.
+Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+---
+   Not sure if it should call these or some specialist hooks, like
+   git-am does.
+
+ git-merge.sh |   27 +++++++++++++++++++++++++++
+ 1 files changed, 27 insertions(+), 0 deletions(-)
+
+diff --git a/git-merge.sh b/git-merge.sh
+index 981d69d..ef4f51b 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -117,6 +117,29 @@ merge_name () {
+ 	fi
+ }
+ 
++call_pre_hooks () {
++	message="$1"
++	if test -x "$GIT_DIR"/hooks/pre-commit
++	then
++		"$GIT_DIR"/hooks/pre-commit || exit 1
++	fi
++	if test -x "$GIT_DIR"/hooks/commit-msg
++	then
++		printf '%s\n' "$message" > "$GIT_DIR"/MERGE_MSG
++		"$GIT_DIR"/hooks/commit-msg "$GIT_DIR"/MERGE_MSG || exit 1
++		cat "$GIT_DIR"/MERGE_MSG
++	else
++		echo "$message"
++	fi
++}
++
++call_post_hook () {
++	if test -x "$GIT_DIR"/hooks/post-commit
++	then
++		"$GIT_DIR"/hooks/post-commit
++	fi
++}
++
+ case "$#" in 0) usage ;; esac
+ 
+ have_message=
+@@ -334,11 +357,13 @@ f,*)
+ 		   result_tree=$(git-write-tree)
+ 		then
+ 			echo "Wonderful."
++			merge_msg=$(call_pre_hooks "$merge_msg")
+ 			result_commit=$(
+ 				printf '%s\n' "$merge_msg" |
+ 				git-commit-tree $result_tree -p HEAD -p "$1"
+ 			) || exit
+ 			finish "$result_commit" "In-index merge"
++			call_post_hook
+ 			dropsave
+ 			exit 0
+ 		fi
+@@ -440,8 +465,10 @@ done
+ if test '' != "$result_tree"
+ then
+     parents=$(git-show-branch --independent "$head" "$@" | sed -e 's/^/-p /')
++    merge_msg=$(call_pre_hooks "$merge_msg")
+     result_commit=$(printf '%s\n' "$merge_msg" | git-commit-tree $result_tree $parents) || exit
+     finish "$result_commit" "Merge made by $wt_strategy."
++    call_post_hook
+     dropsave
+     exit 0
+ fi
+-- 
+1.5.2.1.1131.g3b90
