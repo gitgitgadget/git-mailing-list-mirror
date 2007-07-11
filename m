@@ -1,66 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-merge: run commit hooks when making merge commits
-Date: Wed, 11 Jul 2007 14:26:09 -0700
-Message-ID: <7vd4yy4opa.fsf@assigned-by-dhcp.cox.net>
-References: <11841499201242-git-send-email-sam.vilain@catalyst.net.nz>
+Subject: Re: --ignore-invalid flag to git log et al.?
+Date: Wed, 11 Jul 2007 14:26:15 -0700
+Message-ID: <7vvecq3a4o.fsf@assigned-by-dhcp.cox.net>
+References: <18068.34542.502048.222112@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:26:42 2007
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Jul 11 23:27:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8jhp-0007ny-1K
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:26:41 +0200
+	id 1I8jiP-0007v9-5u
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755435AbXGKV0O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 17:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754142AbXGKV0N
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:26:13 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59370 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754437AbXGKV0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 17:26:10 -0400
+	id S1758386AbXGKV1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 17:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758456AbXGKV1J
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:27:09 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45857 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758308AbXGKV1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 17:27:08 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070711212610.CQVY1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 11 Jul 2007 17:26:10 -0400
+          id <20070711212617.DSHQ1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 11 Jul 2007 17:26:17 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id NMS81X00Z1kojtg0000000; Wed, 11 Jul 2007 17:26:09 -0400
+	id NMSF1X00W1kojtg0000000; Wed, 11 Jul 2007 17:26:16 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52206>
 
-Sam Vilain <sam.vilain@catalyst.net.nz> writes:
+Paul Mackerras <paulus@samba.org> writes:
 
-> git-merge.sh was not running the commit hooks, so run them in the two
-> places where we go to commit.
+> What would you think about a --ignore-invalid flag for things like git
+> rev-list and git log, to tell it to ignore any refs on the command
+> line that are not valid objects?
 >
-> Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
-> ---
->    Not sure if it should call these or some specialist hooks, like
->    git-am does.
+> Currently there is a buglet in gitk where if a user puts some sort of
+> ref on the command line, and then makes the ref invalid (e.g. by
+> deleting the ref if it is a head or tag, or doing a git prune if it is
+> a sha1 ID with no head/tag pointing to it), and then does "Update" in
+> gitk, it will get an error because of the now-invalid ref.  (Yes, this
+> is a bit of a corner case, but I have had a user point out this
+> behaviour to me.)  With a --ignore-invalid flag, gitk could use this
+> when doing "Update" to avoid the error.
 
-I suspect some people have pre-commit scripts that have been
-meant to catch style errors for their own commits, and invoking
-that on merge would wreak havoc --- there is not much you can do
-if you want to get the work done by somebody else at that point.
-Introducing a new pre-merge-commit hook would probably be safer;
-if one wants to use the same check as one's pre-commit does, the
-new hook in the repository can exec $GIT_DIR/hooks/pre-commit.
+I suspect a much less corner case schenario is an old saved view
+where you used to care about "master..experimental -- gitweb/",
+but now you are done with gitweb experiments and got rid of the
+branch.  Then choosing that view would say "experimental? what
+are you talking about?".
 
-The commit-msg hook I have no clue what people usually use it
-for in the real world, but a merge commit message tends to be
-quite different from the message you would give to your own
-straight line commits, so custom reformatting rules people have
-in commit-msg hook may not apply to merge commit messages.
+I wonder what the "--ignore-invalid" option should do.  If it
+silently ignores, the command line to rev-list from the saved
+view would become "^master -- gitweb" and the user is left with
+emptiness without any indication of errors.  Is that a better
+behaviour?  I would think not.  Giving results from a command
+that is different from what the user thought is done without
+telling the user is not very nice, so I think you would instead
+need "--error-on-invalid".
 
-Same for post-commit, but probably to lessor extent, as I
-suspect people use that mostly for per-commit notification
-mechanism.
+> An alternative would be to have some way to validate refs.  I don't
+> know how to do that efficiently.  I think I would not want to have to
+> do a fork/exec for every ref that I wanted to check.
+
+Is it a possibility to let the rev-list do its job when there is
+no error, but catch the error if it does not understand the
+command line, because of a revision that is now made invalid,
+and then in the error path validate the revs one by one?  At
+that point in the error path you do not particularly care about
+the efficiency I would think.
