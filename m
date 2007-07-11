@@ -1,64 +1,129 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: mtimes of working files
-Date: Wed, 11 Jul 2007 19:05:44 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707111902040.4516@racer.site>
-References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: how to combine two clones in a collection
+Date: Wed, 11 Jul 2007 20:13:01 +0200
+Message-ID: <20070711181301.GA26815@piper.oerlikon.madduck.net>
+References: <200707110145.28931.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Yakov Lerner <iler.ml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 20:05:52 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="OgqxwSJOaUobr8KG"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 11 20:13:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8gZR-0006C0-FK
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 20:05:49 +0200
+	id 1I8gga-0007wK-U6
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 20:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757903AbXGKSFs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 14:05:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbXGKSFs
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 14:05:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41271 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754705AbXGKSFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 14:05:47 -0400
-Received: (qmail invoked by alias); 11 Jul 2007 18:05:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 11 Jul 2007 20:05:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Qq4157MqQNx2DGGOjAiTAJSaibgIdSlhptgeCwU
-	l4AznKiAMdBZUe
-X-X-Sender: gene099@racer.site
-In-Reply-To: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1754469AbXGKSNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 14:13:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbXGKSNF
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 14:13:05 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:45121 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754040AbXGKSNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 14:13:04 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id B8841895D73
+	for <git@vger.kernel.org>; Wed, 11 Jul 2007 20:13:02 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 31006-08 for <git@vger.kernel.org>;
+	Wed, 11 Jul 2007 20:13:02 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 83408895D72
+	for <git@vger.kernel.org>; Wed, 11 Jul 2007 20:13:02 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id D5C6C9F15D
+	for <git@vger.kernel.org>; Wed, 11 Jul 2007 20:13:01 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id A1F8543FC; Wed, 11 Jul 2007 20:13:01 +0200 (CEST)
+Mail-Followup-To: git discussion list <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200707110145.28931.robin.rosenberg.lists@dewire.com>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52181>
 
-Hi,
 
-On Wed, 11 Jul 2007, Yakov Lerner wrote:
+--OgqxwSJOaUobr8KG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> How difficult is it to have script (or maybe existing git option) that 
-> would make mtimes of all working files equal to time of last commit ?
+also sprach robin:
+> And the simplest way to create an new indpendent branch:
 
-I wonder if there was a secret alien invasion three days ago, with an evil 
-mental virus weapon?  It seems that this question has been asked three 
-times in the last three days, twice on IRC, and once here.
+> echo ref: refs/heads/newbranch >.git/HEAD
+> Then prepare the content and commit like you used to do.
 
-So now, I really, really, really, (repeat that 97 more times in your head, 
-please) want to know why?
+Hi Robin, thanks for this nice suggestion, which doesn't only
+createa a new, independent branch, it also teaches me yet a bit
+more about git.
 
-There must be some super uber-cool application of that, that people 
-_insist_ on having it.  And I do not want to be left out.  Please tell me 
-how I could use that feature to make my workflow better.
+I am a little uneasy about touching files in .git with non-git
+tools, but everyone seems to be doing it, so I guess it's okay, and
+it make git a lot more powerful too.
 
-Please, please, please.
+Anyway, I tried your method and there is one small problem:
 
-Ciao,
-Dscho
+  piper:~> git init-db
+  Initialized empty Git repository in .git/
+  piper:~> date > date; git add date; git commit -m.
+  Created initial commit 2dd8d6f: .
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 date
+  piper:~> echo ref: refs/heads/newbranch >| .git/HEAD
+  piper:~> git status
+  # On branch newbranch
+  #
+  # Initial commit
+  #
+  # Changes to be committed:
+  #   (use "git rm --cached <file>..." to unstage)
+  #
+  #       new file: date
+  #
 
-P.S.: I know how to do it, too.  And no, it does not help to try insulting 
-me (unsuccessfully), even in a private chat.
+If I were to run commit now, the file 'date' would become part of
+the first commit to newbranch. But it's already in the master
+branch.
+
+Is there anyway I can prevent this and start a new branch from
+scratch without having to unstage all previous additions?
+
+Thanks,
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+"anyone who is capable of getting themselves made president
+ should on no account be allowed to do the job"
+                                                      -- douglas adams
+
+--OgqxwSJOaUobr8KG
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGlR2tIgvIgzMMSnURAqMWAJ9GxK/i5LV4j7wzoqt3az/iyysQqwCfU1vt
+REl54nuqL9vjtmT5K8Uqe9o=
+=l4pT
+-----END PGP SIGNATURE-----
+
+--OgqxwSJOaUobr8KG--
