@@ -1,88 +1,70 @@
-From: "David Frech" <david@nimblemachines.com>
-Subject: Re: test suite fails if sh != bash || tar != GNU tar
-Date: Wed, 11 Jul 2007 14:57:00 -0700
-Message-ID: <7154c5c60707111457o424cd1a3g192cecc2e00936a8@mail.gmail.com>
-References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com>
-	 <Pine.LNX.4.64.0707110347580.4047@racer.site>
-	 <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org>
-	 <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com>
-	 <Pine.LNX.4.64.0707111209160.4516@racer.site>
-	 <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
-	 <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
-	 <7v7ip639cb.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix --cherry-pick with given paths
+Date: Wed, 11 Jul 2007 15:00:17 -0700
+Message-ID: <7vsl7u1tzi.fsf@assigned-by-dhcp.cox.net>
+References: <469378AB.7030909@vilain.net> <4693800F.4010308@vilain.net>
+	<Pine.LNX.4.64.0707101449220.4047@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:57:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 12 00:00:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8kBI-0005q2-UH
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:57:09 +0200
+	id 1I8kER-0006RD-RX
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 00:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761088AbXGKV5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 17:57:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755906AbXGKV5E
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:57:04 -0400
-Received: from nz-out-0506.google.com ([64.233.162.226]:48272 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755188AbXGKV5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 17:57:02 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1490424nze
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 14:57:01 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=oKcPFpeJMmOt1SYic8Omp+96hG3ujCsA8hVgm9IEFLIxusI2N36ByD1WfHLiEs7nSu4J5iGBPZDiO+cOeGIrEJ4lPsMvP7PaTlLyP5rBeD0Hu3uWwf6K3O6+Vp2J9zVi6l8W+LPnJXL6leOoLR/gG09U9Z1XtfmbpvKy2EE+Z2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=noXexEWZiBmujZDd89YVfzOXWqZPNSBcC2yLfeqQP53YWIi8UkMo9X2Xhv9Zuw+xTXNt49IxUTDuYzW8UPFH11y8UM5CqhHgUkrktyx09lkLWEjhx5UTQLOpcJBb43CQWpD8VGAmts5kCuQEdU3Igw2KFX9JuSPHkTaIt6pl+y4=
-Received: by 10.114.179.1 with SMTP id b1mr5525022waf.1184191020399;
-        Wed, 11 Jul 2007 14:57:00 -0700 (PDT)
-Received: by 10.115.59.9 with HTTP; Wed, 11 Jul 2007 14:57:00 -0700 (PDT)
-In-Reply-To: <7v7ip639cb.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: be2204bc0a6882c3
+	id S1761088AbXGKWAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 18:00:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760585AbXGKWAU
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 18:00:20 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:45436 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756895AbXGKWAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 18:00:18 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070711220019.HYMK1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 11 Jul 2007 18:00:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id NN0H1X00G1kojtg0000000; Wed, 11 Jul 2007 18:00:17 -0400
+In-Reply-To: <Pine.LNX.4.64.0707101449220.4047@racer.site> (Johannes
+	Schindelin's message of "Tue, 10 Jul 2007 14:50:49 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52218>
 
-On 7/11/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "David Frech" <david@nimblemachines.com> writes:
->
-> > One issue is that my server is on dynamic IP, and my lame ISP (the
-> > local telco) doesn't give me a proper SMTP relay - they want us to
-> > send our mail via HTTP to MSN! Completely lame.
-> >
-> > So sending mail can be an issue, if the receiver blocks mail from dynamic IPs.
->
-> I think I heard gmail has incoming SMTP for its subscribers, and
-> I would not be surprised if other free e-mail providers have the
-> same.  Perhaps you can use one of them for this purpose?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yes, I have managed to relay thru gmail. It was a bit hard to set up -
-build Postfix with SASL, sniff the traffic to figure out who signed
-gmail's SSL cert (Thawte), download CA cert - but I know how to do it.
-;-)
+> 	> Sam Vilain wrote:
+> 	> > I'm interested in extending the cherry analysis to allow 
+> 	> > specification of the diff options used when calculating diff 
+> 	> > IDs, presenting the calculated diff IDs for analysis by 
+> 	> > external tools, and even calculating and dealing with per-hunk 
+> 	> > diff IDs.
+> 	> 
+> 	> On reflection I think so long as --cherry-pick works together 
+> 	> with a file selection, it would probably be enough.
+> 	> 
+> 	> ie, if I have these commits:
+> 	> 
+> 	> A---B
+> 	>  \
+> 	>   \
+> 	>    C
+> 	> 
+> 	> B changes a file foo.c, adding a line of text.  C changes foo.c 
+> 	> as well as bar.c, but the change in foo.c was identical to 
+> 	> change B.
+> 	> 
+> 	> I want this to show me nothing:
+> 	> 
+> 	>   git-rev-list --left-right --cherry-pick B...C -- foo.c
 
-The downside is, the gmail relay rewrites the headers in annoying
-ways, so I'm not using it in general. If necessary I could relay just
-the "build breakage" thru them.
-
-Actually my incoming nimblemachines.com mail gets sent from my dynamic
-IP thru normal (non-AUTH, non-SSL) SMTP to gmail, and they accept it
-fine. So if I can send the build results to a gmail account, there are
-no problems. Hmm - and that account could forward to the git list...
-
-- David
-
--- 
-If I have not seen farther, it is because I have stood in the
-footsteps of giants.
+Thanks, both.
