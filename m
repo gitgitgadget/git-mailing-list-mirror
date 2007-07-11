@@ -1,75 +1,102 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Getting version output for a file.
-Date: Wed, 11 Jul 2007 15:48:51 -0400
-Message-ID: <A084830C-F1CD-4EDC-A13D-573DFC68DF77@silverinsanity.com>
-References: <86abu3dv9o.fsf@lola.quinscape.zz>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 21:49:30 2007
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: mtimes of working files
+Date: Wed, 11 Jul 2007 22:26:15 +0200
+Message-ID: <20070711202615.GE3069@efreet.light.src>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com> <Pine.LNX.4.64.0707111902040.4516@racer.site> <f36b08ee0707111136t198cf559vc85c561decf9707f@mail.gmail.com> <Pine.LNX.4.64.0707111940080.4516@racer.site>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4Epv4kl9IRBfg3rk"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 11 22:26:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8iBl-0004Pd-Gs
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 21:49:29 +0200
+	id 1I8ilc-0003Vt-Tp
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 22:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932792AbXGKTs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 15:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932660AbXGKTs7
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 15:48:59 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:49590 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099AbXGKTs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 15:48:58 -0400
-Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 1618E1FFC003;
-	Wed, 11 Jul 2007 19:48:56 +0000 (UTC)
-In-Reply-To: <86abu3dv9o.fsf@lola.quinscape.zz>
-X-Mailer: Apple Mail (2.752.3)
+	id S1760103AbXGKU0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 16:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759930AbXGKU0U
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 16:26:20 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:53963 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756643AbXGKU0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 16:26:20 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 11DAC57317;
+	Wed, 11 Jul 2007 22:26:19 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id ZI5XYHC8PMiN; Wed, 11 Jul 2007 22:26:17 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 4BADE57292;
+	Wed, 11 Jul 2007 22:26:17 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1I8ilL-00049y-Do; Wed, 11 Jul 2007 22:26:15 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707111940080.4516@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52196>
 
-I don't know lisp very well, and elisp not at all, but I can help you  
-with what command lines would give you the results you might want.
 
-On Jul 11, 2007, at 7:39 AM, David Kastrup wrote:
+--4Epv4kl9IRBfg3rk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> (vc-git-previous-version FILE REV)
-> Return the version number immediately preceding REV for FILE,
-> or nil if there is no previous version.
+On Wed, Jul 11, 2007 at 19:42:10 +0100, Johannes Schindelin wrote:
+> Hi list,
+>=20
+> > > > How difficult is it to have script (or maybe existing git option)=
+=20
+> > > > that would make mtimes of all working files equal to time of last=
+=20
+> > > > commit ?
+>=20
+> Now I slowly get really curious.  Does _anybody_ know a scenario where=20
+> this makes sense?
+>=20
+> (No, Eric, there are enough corner cases where your example of a clustere=
+d=20
+> webserver breaks down, so I am not fully convinced that this is a useful=
+=20
+> case.)
+>=20
+> Anybody enlighten me?
 
-If you want the last revision where the file was altered, you could  
-easily use
+I don't see any case where it would be useful, though I know some version
+control systems that provide that feature. I think it is supposed to just be
+used for checking which view has newer version.
 
-git rev-list -2 $current_rev -- $file | tail -1
+I first thought the idea had something to do with make, but it will actually
+promptly break most build tools, because change to earlier version is
+a change too, but they wouldn't detect it.
 
-The result would be a SHA-1 of the next commit where the file was  
-altered.
+However I am getting really curious about different thing -- the solution.
+Because I think the arguments from keyword expansion discussion apply here
+that prevent any *reliable* (you can have unreliable ones just as you can
+have unreliable keyword expansion) solution.
 
-> (vc-git-next-version FILE REV)
-> Return the version number immediately following REV for FILE,
-> or nil if there is no previous version.
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-This is a little more problematic as git doesn't have forward links  
-in it's history.  If you have a ref to start with (HEAD is a good one  
-to use, if you don't have anything else) you could use a similar  
-command to the above
+--4Epv4kl9IRBfg3rk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-git rev-list $ref -- $file | grep -C1 -m1 $current_rev | head -1
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-If you don't have a ref to start from, you could use --all, but that  
-may not be what the user expects.
+iD8DBQFGlTznRel1vVwhjGURAkd+AKDVJIOA9lAulD2ANGIic0bNrH03dQCeN0N+
+JsDp7p06mJH/r1cXCLWhhNU=
+=E3Qb
+-----END PGP SIGNATURE-----
 
-If you want a human readable name for either you could use name-rev.   
-(Add "| git name-rev --stdin" to the end of the above.)  It places a  
-human readable name after the SHA-1 in parentheses.  (example:  
-"54dadbdb29668fbd51effefd0a0c65d915f5422b (master~3)")
-
-~~ Brian
+--4Epv4kl9IRBfg3rk--
