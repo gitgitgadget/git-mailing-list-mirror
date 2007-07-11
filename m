@@ -1,87 +1,76 @@
-From: "Bradford Smith" <bradford.carl.smith@gmail.com>
-Subject: Re: user manual wrong about remote branches?
-Date: Wed, 11 Jul 2007 11:34:26 -0400
-Message-ID: <f158199e0707110834sdaa29f2x65df784f4b3a6b5e@mail.gmail.com>
-References: <f158199e0707110821k50a55e66p8fb0b92a3dec9ed2@mail.gmail.com>
-	 <20070711152816.GB4138@fieldses.org>
+From: Scott Lamb <slamb@slamb.org>
+Subject: Re: git-cvsimport newbie question
+Date: Wed, 11 Jul 2007 08:45:48 -0700
+Message-ID: <4694FB2C.4070505@slamb.org>
+References: <469484AA.7040701@slamb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 17:34:40 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 17:46:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8eD5-0003qm-2D
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 17:34:35 +0200
+	id 1I8eOi-0006SF-0V
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 17:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755103AbXGKPeb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 11:34:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755248AbXGKPeb
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 11:34:31 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:32531 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755103AbXGKPea (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 11:34:30 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so139212ugf
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 08:34:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fv3ByHb5bq24i3Ha17vRXvwm6N4Y4HGJAfh/u9j1j2x2dGRSgX6gcrjyYrWmGLutSYk2WUtNopbBKnh1QSS+b1Xt2z9w20HlJ3T6/x6Y+jHSUZLqohhnToKQ+FIEUUpBqiR1JUhYol/+KT8EPK6SQ6GaXZziQqMwodrVOgKPFq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EfhJ2A4Jz6uDp3l1un4ydHwd6FdxtPcPh/Xi8oTBiNDs6epKG7MZ1zwcnfXpVX/O/qHIZUQXypMngiazEfRRH7hw1pk9jNF6m83ZDoGkMDLUbwtHQyOPl4o0izTsQrbpI9v28LutdClJadlwUj8qOdGHohyOj/D2fBOSwOa3js0=
-Received: by 10.78.162.4 with SMTP id k4mr2451840hue.1184168066094;
-        Wed, 11 Jul 2007 08:34:26 -0700 (PDT)
-Received: by 10.78.178.10 with HTTP; Wed, 11 Jul 2007 08:34:26 -0700 (PDT)
-In-Reply-To: <20070711152816.GB4138@fieldses.org>
-Content-Disposition: inline
+	id S1758754AbXGKPqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 11:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756651AbXGKPqL
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 11:46:11 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:44217 "EHLO hobbes.slamb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755561AbXGKPqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 11:46:10 -0400
+Received: from spiff.local (ppp-71-139-183-188.dsl.snfc21.pacbell.net [71.139.183.188])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hobbes.slamb.org (Postfix) with ESMTP id A631B980D0
+	for <git@vger.kernel.org>; Wed, 11 Jul 2007 08:46:08 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <469484AA.7040701@slamb.org>
+X-Enigmail-Version: 0.95.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52172>
 
-OK, the problem was the old version of git (1.4.4.2) I used to do the
-original clone.  Cloning with the latest version gives me what the
-manual says I should get.
+Scott Lamb wrote:
+> But from the manpage, it appears I'm reverting to a much older way of
+> doing things. Maybe I should be giving the newer way a shot? Was this
+> "-r" way meant to be used with cloning the mirrored repository? If so,
+> what's the workflow there? maybe I should reset racoon2.git's "master"
+> branch to the beginning of time (to avoid confusion), update head to
+> point to remotes/wide/master (so simple "git clone" and "git pull"
+> commands get CVS HEAD), and then update remote.origin.fetch on each
+> cloned repository to pull in other branches as needed? But even after
+> doing that, "git remote show origin" on a cloned repository still won't
+> give me the list of branches I want. So this seems doesn't seem as good
+> as the old way.
+> 
+> Is there any way to make a repository cloned from a new-style
+> cvsimported one show the list of branches? It looks like I can't have a
+> remote in one repository refer to a remote in another repository - it
+> wants a direct reference. Most things seem to ignore origin's remotes,
+> at least unless I explicitly name one like "git pull origin
+> refs/remotes/wide/master".
 
-Thanks!
+Hmm...I just saw in a git-svn howto [1] this text:
 
-Bradford C. Smith
+    [FIXME] This is all very important information for people setting
+    up central tracking servers. This needs expansion, probably its own
+    section. Talk about tracking server symlink tricks
+    (eg refs/heads/svn -> ../remotes and
+    refs/ttags/svn -> ../remotes/tags)
 
-On 7/11/07, J. Bruce Fields <bfields@fieldses.org> wrote:
-> On Wed, Jul 11, 2007 at 11:21:53AM -0400, Bradford Smith wrote:
-> > I got the latest git source like this:
-> >
-> > git clone git://git.kernel.org/pub/scm/git/git.git
->
-> What version of git did you do this first clone with?
->
-> > Then I did:
-> >
-> > make prefix=/usr/local all doc
-> > make prefix=/usr/local install install-doc
-> >
-> > So my current version is:
-> >
-> > git version 1.5.3.rc0.gbaa79
-> >
-> > Now, Documentation/user-manual.txt says I should be able to see the
-> > remote branch I cloned from when I do this in the source directory.
-> >
-> > git branch -r
-> >
-> > However, this command gives no output at all.  What gives?  Does this
-> > mean git-fetch and git-pull won't work properly to keep me up-to-date
-> > with the main repository?
->
-> The remote branch setup  is done on the initial clone.  So if you clone
-> again with the newly installed version of git, you'll probably see
-> what's expected.
->
-> --b.
->
+Maybe I want to be doing something similar with git-cvsimport? I'm sure
+there's *some* reason way to take advantage of the my named remote; I
+just haven't figured out what it is yet. Could someone please fill in
+details on this text?
+
+Best regards,
+Scott
+
+
+[1] - http://utsl.gen.nz/talks/git-svn/intro.html
