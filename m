@@ -1,92 +1,77 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: git-rm isn't the inverse action of git-add
-Date: Wed, 11 Jul 2007 20:56:44 +0200
-Message-ID: <20070711185644.GA3069@efreet.light.src>
-References: <46893F61.5060401@jaeger.mine.nu> <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net> <46895EA4.5040803@jaeger.mine.nu> <f72hu8$65g$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Function stripspace now gets a buffer instead file
+ descriptors.
+Date: Wed, 11 Jul 2007 20:17:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707112010560.4516@racer.site>
+References: <4695267A.7080202@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cWoXeonUoKmBZSoM"
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 20:57:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 21:17:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8hNQ-00017h-OJ
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 20:57:29 +0200
+	id 1I8hgY-0005VO-5m
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 21:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761283AbXGKS5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 14:57:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759836AbXGKS47
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 14:56:59 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:40120 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759414AbXGKS46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 14:56:58 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 655D257397;
-	Wed, 11 Jul 2007 20:56:57 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id bCGPr3ZGABNN; Wed, 11 Jul 2007 20:56:55 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id AF4C7572C7;
-	Wed, 11 Jul 2007 20:56:55 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I8hMj-0002fv-3e; Wed, 11 Jul 2007 20:56:45 +0200
-Content-Disposition: inline
-In-Reply-To: <f72hu8$65g$1@sea.gmane.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1757716AbXGKTRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 15:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757463AbXGKTRK
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 15:17:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59979 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757205AbXGKTRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 15:17:09 -0400
+Received: (qmail invoked by alias); 11 Jul 2007 19:17:07 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 11 Jul 2007 21:17:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+31kxpbja3bi3W6VRHKsDpqebvHMBBteVO6MttqD
+	TGEOCQ6wsWcxGV
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4695267A.7080202@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52190>
 
+Hi,
 
---cWoXeonUoKmBZSoM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 11 Jul 2007, Carlos Rica wrote:
 
-On Wed, Jul 11, 2007 at 14:20:24 +0200, Jakub Narebski wrote:
-> Christian Jaeger wrote:
-> > I don't per se require undo actions. I just don't understand why git-rm
-> > refuses to remove the file from the index, even if I didn't commit it.
-> > The index is just an intermediate record of the changes in my
-> > understandings, and the rm action would also be intermediate until it's
-> > being committed. And a non-committed action being deleted shouldn't need
-> > a special confirmation from me, especially not one which is consisting
-> > of a combination of two flags (of which one is a destructive one).
->=20
-> Should git-rm refuse to remove index entry if it is different from working
-> directory version or not?
+> @@ -28,52 +26,67 @@ static int cleanup(char *line, int len)
+>   * Remove empty lines from the beginning and end
+>   * and also trailing spaces from every line.
+>   *
+> + * Note that the buffer will not be null-terminated.
+> + *
+>   * Turn multiple consecutive empty lines between paragraphs
+>   * into just one empty line.
+>   *
+>   * If the input has only empty lines and spaces,
+>   * no output will be produced.
+>   *
+> + * If last line has a newline at the end, it will be removed.
+> + *
 
-IMHO it should refuse to remove index entry if it is different from both
-working-tree version and versions in all parents.
+Please let me comment about the rationale for both changes: The 
+stripspace() function (which this hunk is about) is more useful if it does 
+not allocate a new buffer, but works in-place.
 
-If index matches any of that, but the working tree version does not match a=
-ny
-parent, the index entry should be removed (which currently isn't -- that's
-the proposed change), but the file left in wokring tree. That would make
-git-add + git-rm get you right back where you started, with nothing in index
-and unversioned file in working tree.
+And since it knows the new length already, it can just as well return the 
+length, and _not_ NUL terminate (which would mean that we have to 
+reallocate if we used read_pipe() to get the buffer).
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+The reason for the missing newline at the end is the same: since we accept 
+buffers with a missing newline at the end, we would have to reallocate in 
+that case.
 
---cWoXeonUoKmBZSoM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+So for the sake of simplicity, we neither NUL-terminate, nor \n terminate 
+the buffer, and leave that to the callers.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGlSfsRel1vVwhjGURAi5nAKDJKgQB1xMES+Gs8YRLYAucti5rfwCg5NMC
-90BJmhXxo4H86DYVlurlWiY=
-=Dqkv
------END PGP SIGNATURE-----
-
---cWoXeonUoKmBZSoM--
+Ciao,
+Dscho
