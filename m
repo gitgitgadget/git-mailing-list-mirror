@@ -1,48 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Shoddy pack information tool
-Date: Wed, 11 Jul 2007 14:55:26 -0700
-Message-ID: <7vwsx61u7l.fsf@assigned-by-dhcp.cox.net>
-References: <20070709044326.GH4087@lavos.net>
-	<7v1wfixhvk.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0707090954550.26459@xanadu.home>
-	<7vir8tv8dr.fsf@assigned-by-dhcp.cox.net>
-	<20070709185353.GL4087@lavos.net> <20070709193017.GN4087@lavos.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: test suite fails if sh != bash || tar != GNU tar
+Date: Wed, 11 Jul 2007 22:56:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707112240120.4516@racer.site>
+References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com> 
+ <Pine.LNX.4.64.0707110347580.4047@racer.site> 
+ <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org> 
+ <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com> 
+ <Pine.LNX.4.64.0707111209160.4516@racer.site>  <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
+ <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:56:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: David Frech <david@nimblemachines.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 23:56:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8kAB-0005YC-SZ
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:56:00 +0200
+	id 1I8kAl-0005ha-L2
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933018AbXGKVzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 17:55:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932979AbXGKVza
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:55:30 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:47407 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932910AbXGKVz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 17:55:28 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070711215526.BSFJ1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 11 Jul 2007 17:55:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id NMvS1X00A1kojtg0000000; Wed, 11 Jul 2007 17:55:27 -0400
-In-Reply-To: <20070709193017.GN4087@lavos.net> (Brian Downing's message of
-	"Mon, 9 Jul 2007 14:30:18 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763009AbXGKV42 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 17:56:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755188AbXGKV42
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:56:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39692 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751772AbXGKV41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 17:56:27 -0400
+Received: (qmail invoked by alias); 11 Jul 2007 21:56:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp057) with SMTP; 11 Jul 2007 23:56:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX186mYgIPMQ6xWNa7QOA5JJIqXX9/0/FFBN49UBQt3
+	PiMWDJi/CJiu/F
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52216>
 
-I do not think this is particularlly Shoddy.  Care to move it
-somewhere in contrib/ (say, contrib/stats/packinfo.pl) and sign
-off the patch?
+Hi,
+
+On Wed, 11 Jul 2007, David Frech wrote:
+
+> On 7/11/07, Junio C Hamano <gitster@pobox.com> wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > >> I'll see what I can do. As I'm planning on running git on both 
+> > >> FreeBSD and DragonFly for the forseeable future, and plan to track 
+> > >> git's evolution (running stable releases if not more bleeding-edge 
+> > >> code), I can run the test suite every time I build a new git.
+> > >
+> > > If you want to, I can help you setting up a nightly cron job to 
+> > > fetch what is the current "next", run the tests, and report failures 
+> > > by email.
+> > 
+> > Wow.  Nightly builds of 'next' on various platforms would actually be 
+> > quite useful, especially from non Linux and non bash world.
+> 
+> I found and fixed the shell issues. Once I've got a "fix" for tar I'll 
+> send a patch. I think the BSD sh has a bug wrt to negating the return 
+> code from a pipeline.
+
+Cool!  Please be sure to give Documentation/SubmittingPatches a quick 
+glance before sending, to avoid hassles for the reviewers.
+
+> I'd be happy to do a nightly build on my DragonFly box, and that should 
+> catch anything that also doesn't work for FreeBSD. The failure modes 
+> were exactly the same - though the DFly box has an additional 
+> iconv-related problem (with git-mailinfo) that I still haven't tracked 
+> down...
+> 
+> Is there a canned script to get me started?
+
+Well, I would have started from scratch, as in
+
+5 0 * * *       (cd /xx/git && sh test-it.sh)
+
+And in test-it.sh there could be something like
+
+	(git pull origin next && make test > test-it.out 2>&1 ) || 
+	some-script-that-sends-the-email.sh
+
+> One issue is that my server is on dynamic IP, and my lame ISP (the local 
+> telco) doesn't give me a proper SMTP relay - they want us to send our 
+> mail via HTTP to MSN! Completely lame.
+
+It is lame.
+
+> So sending mail can be an issue, if the receiver blocks mail from 
+> dynamic IPs.
+
+But maybe you can just upload the status somewhere public?  Or ssh into a 
+machine which allows you to send an email, with public key authentication?
+
+Ciao,
+Dscho
