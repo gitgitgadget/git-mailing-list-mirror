@@ -1,152 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: finding the right remote branch for a commit
-Date: Wed, 11 Jul 2007 22:26:23 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707112226170.4516@racer.site>
-References: <20070710144907.GA324@piper.oerlikon.madduck.net>
+From: "David Frech" <david@nimblemachines.com>
+Subject: Re: test suite fails if sh != bash || tar != GNU tar
+Date: Wed, 11 Jul 2007 14:33:03 -0700
+Message-ID: <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
+References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com>
+	 <Pine.LNX.4.64.0707110347580.4047@racer.site>
+	 <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org>
+	 <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com>
+	 <Pine.LNX.4.64.0707111209160.4516@racer.site>
+	 <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git discussion list <git@vger.kernel.org>,
-	Matthias Lederhofer <matled@gmx.net>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:27:18 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 23:33:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8jiP-0007v9-LW
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:27:17 +0200
+	id 1I8jo6-0000br-AQ
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758456AbXGKV1P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 17:27:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758594AbXGKV1N
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:27:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49872 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758535AbXGKV1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 17:27:12 -0400
-Received: (qmail invoked by alias); 11 Jul 2007 21:26:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 11 Jul 2007 23:26:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+m1LBG3y6m0MmlvVNCFFAKvw0PfOjUyP7oyTeolJ
-	vHWRw5WMNXnmX5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070710144907.GA324@piper.oerlikon.madduck.net>
-X-Y-GMX-Trusted: 0
+	id S1754977AbXGKVdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 17:33:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752526AbXGKVdF
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:33:05 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:48225 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754977AbXGKVdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 17:33:04 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2479112wah
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 14:33:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=VLpR76VWryZ3gymVGPVKLz+GOE9Fpj9j1goPrINmY5HZHj3uqLR8GuCVhkto472sSTEp1YF9F/XV05dvfASWVSr4wSRc2gfQjwvyr5s2iN+IpnBlAIPyxiScZECqN1O+dWt59F26UR2sSlMLnPrw1UXaURHNSjyViFLGcNXWSiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=GFlDBnnyI/+N9SwwmoLqP6P43JGORAEx5W1U6OrTQLpykhLBZ7W4guoQiX89t2/xzxV9GymF6k2/j+ijAoa8U9mXbfIZB596f04AL88CcPAJL5hdDCRahIJVDjoyeoBDBJbXI38oY5zkeai4rNURwXQRDcFvWsELCCiM4ul7mZQ=
+Received: by 10.115.107.1 with SMTP id j1mr5509576wam.1184189583392;
+        Wed, 11 Jul 2007 14:33:03 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Wed, 11 Jul 2007 14:33:03 -0700 (PDT)
+In-Reply-To: <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: bd25535e08bfd9fe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52212>
 
-Hi,
-
-On Tue, 10 Jul 2007, martin f krafft wrote:
-
-> I am trying to figure out a way to store ~/.etc in git. With SVN,
-> I would have a .etc repository for each machine, which would use
-> svn:externals to reference locations of the various subdirectories,
-> which SVN would then pull and assemble. Thus, my ~/.etc might be
-> 
->   ~/.etc
->   ~/.etc/ssh [svn+ssh://svn.madduck.net/priv/etc/ssh]
->   ~/.etc/vim [svn+ssh://svn.madduck.net/pub/etc/vim]
->   ...
+On 7/11/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> [...] 
-> 
-> Thus, the vim repository might look like this:
-> 
->   .etc/
->   |-- vim/
->   |   `-- rc.vim
->   `-- .vimrc -> .etc/vim/rc.vim
-> 
-> and the ssh configuration might be
-> 
->   .etc/
->   |-- ssh/
->   |   |-- config
->   |   `-- authorized_keys
->   `-- .ssh -> .etc/ssh/
+> >> I'll see what I can do. As I'm planning on running git on both FreeBSD
+> >> and DragonFly for the forseeable future, and plan to track git's
+> >> evolution (running stable releases if not more bleeding-edge code), I
+> >> can run the test suite every time I build a new git.
+> >
+> > If you want to, I can help you setting up a nightly cron job to fetch what
+> > is the current "next", run the tests, and report failures by email.
+>
+> Wow.  Nightly builds of 'next' on various platforms would
+> actually be quite useful, especially from non Linux and non bash
+> world.
 
-Okay, after discussing this for a bit on IRC, here is what I would do (I 
-already said this on IRC, but the mailing list is really the better medium 
-for this):
+I found and fixed the shell issues. Once I've got a "fix" for tar I'll
+send a patch. I think the BSD sh has a bug wrt to negating the return
+code from a pipeline.
 
-I would actually rename .etc/ into gits/, because it is not a directory 
-containing settings, but a directory containing repositories.
+I'd be happy to do a nightly build on my DragonFly box, and that
+should catch anything that also doesn't work for FreeBSD. The failure
+modes were exactly the same - though the DFly box has an additional
+iconv-related problem (with git-mailinfo) that I still haven't tracked
+down...
 
-Then I would create bare repositories gits/vim.git/, gits/ssh.git/, 
-gits/mutt.git/, etc. but as soon as I created them, I would make them 
-"unbare", i.e. "git config core.bare false".
+Is there a canned script to get me started?
 
-Everytime I would work on, say, .vimrc, I would say 
-"--git-dir=$HOME/gits/vim.git", or maybe even make an alias in 
-$HOME/.gitconfig, which spares me that:
+One issue is that my server is on dynamic IP, and my lame ISP (the
+local telco) doesn't give me a proper SMTP relay - they want us to
+send our mail via HTTP to MSN! Completely lame.
 
-$ git config --global vim '!git --git-dir=$HOME/gits/vim.git'
+So sending mail can be an issue, if the receiver blocks mail from dynamic IPs.
 
-Then I could see the status with
+- David
 
-$ git vim status
-
-Come to think of it, this is maybe what I would have done, but it appears 
-to me that this is the _ideal_ use case for worktree:
-
-In $HOME/gits:
-
-$ mkdir vim.git && cd vim.git
-$ git --work-tree=$HOME init
-$ cat >> info/exclude < EOF
-*
-!/.vimrc
-EOF
-
-Then you could do all Git operations like push, fetch, pull, log in 
-$HOME/gits/vim.git, and all editing in $HOME.
-
-At least that is the theory.
-
-In practice, and I consider these all bugs, it does not work:
-
-- you have to say
-
-  $ git --work-tree=$HOME --bare init
-
-  which is a bit counterintuitive.  After all, it is _not_ a bare 
-  repository.  The whole purpose of worktree, as far as I understand, is 
-  to have a _detached_ repository, which would otherwise be called bare.
-
-- $ git status
-
-  does not do what you would expect: it fails, telling you that it needs a 
-  work tree, of all things. You can say (tongue-in-cheek)
-
-  $ (export GIT_DIR="$(pwd)" && cd "$(git config core.worktree)" &&
-     git status)
-
-  So, git knows about the location of the working tree, but just ignores 
-  that.
-
-- In the case that you forget to set GIT_DIR, you better not have any 
-  .git/ repository in $HOME/ or $HOME/gits/, because it will pick up that 
-  instead!  Even if you are _inside_ a detached git directory!
-
-  So you better not try some games like this in a subdirectory of your 
-  local git.git repository.  It is a fine way to get completely confused.  
-  And certainly do _not_ do something like "git reset --hard <branch>" 
-  there.
-
-- Of course, it would be nice if something like that worked:
-
-  $ cd $HOME/gits/vim.git
-  $ git add $HOME/.vimrc
-
-  But it does not work, because it wants to _be_ in the work tree.  Of 
-  course, you have to specify the GIT_DIR again, because the working tree 
-  does not know about the location of the repository, but vice versa.
-
-Those are serious bugs.  Matthias, any idea how to fix them?
-
-Ciao,
-Dscho
+-- 
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
