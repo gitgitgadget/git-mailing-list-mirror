@@ -1,61 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Hook after pull ?
-Date: Wed, 11 Jul 2007 20:33:41 +0200
-Message-ID: <20070711183341.GA2798@steel.home>
-References: <4694EC0F.10003@gmail.com> <81b0412b0707110751i7947ac5bv819e1c2de4e94621@mail.gmail.com> <4694F74F.8050908@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: Re: mtimes of working files
+Date: Wed, 11 Jul 2007 21:36:25 +0300
+Message-ID: <f36b08ee0707111136t198cf559vc85c561decf9707f@mail.gmail.com>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
+	 <Pine.LNX.4.64.0707111902040.4516@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: Claudio Scordino <cloud.of.andor@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 20:33:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 11 20:36:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8h0Y-0004BM-I1
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 20:33:50 +0200
+	id 1I8h3C-0004fg-3m
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 20:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667AbXGKSds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 14:33:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbXGKSdr
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 14:33:47 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:49231 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452AbXGKSdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 14:33:47 -0400
-Received: from tigra.home (Fa968.f.strato-dslnet.de [195.4.169.104])
-	by post.webmailer.de (mrclete mo22) (RZmta 8.3)
-	with ESMTP id R00201j6BFtG4c ; Wed, 11 Jul 2007 20:33:45 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C09DE277BD;
-	Wed, 11 Jul 2007 20:33:41 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3CDC6C164; Wed, 11 Jul 2007 20:33:40 +0200 (CEST)
+	id S1754778AbXGKSg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 14:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbXGKSg1
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 14:36:27 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:4446 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765540AbXGKSg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 14:36:26 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1439378nze
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 11:36:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Wd5qhbUInBt9ZcghEOttESUZCOMpP/snn5p+lkUXCNObWkggWQM5arRCqV+8eZ6Y3nyDxvDh+xTAkCDaSm4ir7Bs0T7MA1qUFHEzQj8ezr6/QgXFnK6zgeRt/ivZtGlQeX0cXGYcfTDxyGtUYZAH416KLqrF83kSAXExuGsdh0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sW+zE4skBxPbGbxjxBDS78K4raulywE1V2xrRE7C/eZUoAD15Br3A0ooftoZLvhDPfLozw/dPkB2za3YEdVFm9IY7if22DfDj0rCAq/eRPc8qi0F//qJSnKokdNAo5/dlVmDmChGhg/AYCYHxS+rEtKMDsGQbYdmr53cALCBsnI=
+Received: by 10.143.160.1 with SMTP id m1mr430174wfo.1184178985036;
+        Wed, 11 Jul 2007 11:36:25 -0700 (PDT)
+Received: by 10.142.116.4 with HTTP; Wed, 11 Jul 2007 11:36:25 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707111902040.4516@racer.site>
 Content-Disposition: inline
-In-Reply-To: <4694F74F.8050908@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2hcNmQFKE=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52184>
 
-Claudio Scordino, Wed, Jul 11, 2007 17:29:19 +0200:
-> >>If no, does exist any easy way of creating such hook ?
-> >
-> >What for? What do you want to do?
-> >
-> I just need my script to be called after a pull. My script just sends an 
-> email saying that the repository has been pulled (I already did it for the 
-> push).
+On 7/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 11 Jul 2007, Yakov Lerner wrote:
+>
+> > How difficult is it to have script (or maybe existing git option) that
+> > would make mtimes of all working files equal to time of last commit ?
+>
+> I wonder if there was a secret alien invasion three days ago, with an evil
+> mental virus weapon?  It seems that this question has been asked three
+> times in the last three days, twice on IRC, and once here.
+>
+> So now, I really, really, really, (repeat that 97 more times in your head,
+> please) want to know why?
+>
+> There must be some super uber-cool application of that, that people
+> _insist_ on having it.  And I do not want to be left out.
 
-Ach, on _remote_ repo. Where it is _pulled_from_.
-There are none. You can catch log output of git-daemon, but...
-Isn't it a bit extreme? A fetch (part of a pull) is *very* common
-operation, sometime you'll get a *real* lot of mail.
+I gave you my reason on IRC, you ignored it. And you continued with
+"You must defend your reason. Until you defend your reason, I do not give
+you the solution, although I know it". That sounded rude. If you are *curious*,
+try to speak not from position of "punishing authority", but as curious people
+would normally speak.
 
-P.S. BTW, there is no hooks for pull in local (where it is pulled
-into): it is not needed, you already control everything what happens.
-But it is not your situation, as far I understand.
+> P.S.: I know how to do it, too.  And no, it does not help to try insulting
+> me (unsuccessfully), even in a private chat.
+
+If modifying mtimes of working file breaks the git, you should have
+mentioned that.
+
+I think  it does not break anything in git.  If this is so you should
+have said so
+and to give the solution (which you said you know).  I am lost in guesses
+as to what makes you keep your monopolistic solution secret.
+Hope I can figure it without you.
+
+In the chat, you told me that you know the answer but won't tell me.
+
+I have to tell you that demanding from me that I tell you why other
+people asked this, and to withhold the answer on the ground that
+I must mind-read them and tell you their mind ... I think this is stupid
+attitude on yous part.
+
+Yakov
