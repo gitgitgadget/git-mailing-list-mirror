@@ -1,124 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Function stripspace now gets a buffer instead file descriptors.
-Date: Wed, 11 Jul 2007 15:24:03 -0700
-Message-ID: <7vd4yy1svw.fsf@assigned-by-dhcp.cox.net>
-References: <4695267A.7080202@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] gitweb: new cgi parameter: option
+Date: Thu, 12 Jul 2007 01:00:38 +0200
+Message-ID: <20070711230038.GN19386@genesis.frugalware.org>
+References: <20070708013543.GD29994@genesis.frugalware.org> <f73hhc$uo1$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 00:24:13 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 12 01:00:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8kbT-0002WQ-Sp
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 00:24:12 +0200
+	id 1I8lB2-00012W-9H
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 01:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762966AbXGKWYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 18:24:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762132AbXGKWYH
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 18:24:07 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55580 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758012AbXGKWYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 18:24:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070711222404.IKFB1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 11 Jul 2007 18:24:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id NNQ31X00D1kojtg0000000; Wed, 11 Jul 2007 18:24:03 -0400
-In-Reply-To: <4695267A.7080202@gmail.com> (Carlos Rica's message of "Wed, 11
-	Jul 2007 20:50:34 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761589AbXGKXAx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 19:00:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757409AbXGKXAx
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 19:00:53 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:42488 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757919AbXGKXAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 19:00:52 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1I8lAr-00029E-3D
+	from <vmiklos@frugalware.org>; Thu, 12 Jul 2007 01:00:48 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E3F0D18681D4; Thu, 12 Jul 2007 01:00:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <f73hhc$uo1$1@sea.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -0.4
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-0.4 required=5.9 tests=BAYES_20,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
+	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
+	-0.5 BAYES_20               BODY: Bayesian spam probability is 5 to 20%
+	[score: 0.1133]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52220>
 
-Carlos Rica <jasampler@gmail.com> writes:
+Currently the only supported value is '--no-merges' for the 'rss', 'atom',
+'log', 'shortlog' and 'history' actions, but it can be easily extended to allow
+other parameters for other actions.
 
-> diff --git a/builtin-stripspace.c b/builtin-stripspace.c
-> index d8358e2..949b640 100644
-> --- a/builtin-stripspace.c
-> +++ b/builtin-stripspace.c
-> @@ -2,12 +2,11 @@
->  #include "cache.h"
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+
+Na Wed, Jul 11, 2007 at 11:19:41PM +0200, Jakub Narebski <jnareb@gmail.com> pisal(a):
+> Miklos Vajna wrote:
 >
->  /*
-> - * Remove trailing spaces from a line.
-> + * Returns the length of a line removing trailing spaces.
-
-This did not parse well for me; perhaps a comma before
-"removing" would make it easier to read?
-
-> @@ -28,52 +26,67 @@ static int cleanup(char *line, int len)
->   * Remove empty lines from the beginning and end
->   * and also trailing spaces from every line.
->   *
-> + * Note that the buffer will not be null-terminated.
-> + *
-
-The name of the sentinel character '\0' is NUL, not null (which
-is a different word, used to call a pointer that points
-nowhere).  The buffer will not be "NUL-terminated".
-
-> -void stripspace(FILE *in, FILE *out, int skip_comments)
-> +size_t stripspace(char *buffer, size_t length, int skip_comments)
->  {
-> +		newlen = cleanup(buffer + i, len);
+> > +((defined $filter and $filter == "nomerges") ? ("--no-merges") : ()),
 >
->  		/* Not just an empty line? */
-> +		if (newlen) {
-> +			if (empties != -1)
-> +				buffer[j++] = '\n';
->  			if (empties > 0)
-> +				buffer[j++] = '\n';
->  			empties = 0;
-> +			memmove(buffer + j, buffer + i, newlen);
->  			continue;
->  		}
+> Shouldn't it be '$filter eq "nomerges"' instead?
 
-It somehow strikes me odd that, given this:
+Yes, that works too (I'm not a perl addict :) )
 
-	buffer       j        i
-        **********************texttext  \n.......
+> Besides, I'd rather have generalized way to provide additional options
+> to git commands, like '--no-merges' for RSS and Atom feeds, log, shortlog
+> and history views, '-C' for commitdiff view, '--remove-empty' for history
+> view for a file, perhaps even '-c' or '--cc' for commitdiff for merges
+> instead of abusing 'hp' argument for that.
+>
+> But that doesn't mean that this patch should be not applied... it doesn't
+> mean it should be applied neither ;-)
 
-you would first do this with cleanup():
+What about this one?
 
-	buffer       j        i
-        **********************texttext\n.......
+ gitweb/gitweb.perl |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-and then do this with this memmove():
-
-	buffer       j        i
-        *************texttext\n.......
-
-Would it become simpler if cleanup() knew where the final text
-goes (i.e. buffer+j)?
-
->  int cmd_stripspace(int argc, const char **argv, const char *prefix)
->  {
-> -	stripspace(stdin, stdout, 0);
-> +	char *buffer;
-> +	unsigned long size;
-> +
-> +	size = 1024;
-> +	buffer = xmalloc(size);
-> +	if (read_pipe(0, &buffer, &size))
-> +		die("could not read the input");
-
-The command used to be capable of streaming and filtering a few
-hundred gigabytes of text on a machine with small address space,
-as it operated one line at a time, but now it cannot as it has
-to hold everything in core before starting.
-
-I do not think we miss that loss of capability too much, but I
-wonder if we can be a bit more clever about it, perhaps feeding
-a chunk at a time.  Not a very strong request, but just
-wondering if it is an easy change.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index dc609f4..f3530ba 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -383,6 +383,20 @@ if (defined $hash_base) {
+ 	}
+ }
+ 
++my %options = (
++	"--no-merges" => [('rss', 'atom', 'log', 'shortlog', 'history')],
++);
++
++our $option = $cgi->param('option');
++if (defined $option) {
++	if (not grep(/^$option$/, keys %options)) {
++		die_error(undef, "Invalid option parameter");
++	}
++	if (not grep(/^$action$/, @{$options{$option}})) {
++		die_error(undef, "Invalid option parameter for this action");
++	}
++}
++
+ our $hash_parent_base = $cgi->param('hpb');
+ if (defined $hash_parent_base) {
+ 	if (!validate_refname($hash_parent_base)) {
+@@ -534,6 +548,7 @@ sub href(%) {
+ 		action => "a",
+ 		file_name => "f",
+ 		file_parent => "fp",
++		option => "option",
+ 		hash => "h",
+ 		hash_parent => "hp",
+ 		hash_base => "hb",
+@@ -1770,6 +1785,7 @@ sub parse_commits {
+ 		($arg ? ($arg) : ()),
+ 		("--max-count=" . $maxcount),
+ 		("--skip=" . $skip),
++		((defined $option) ? ($option) : ()),
+ 		$commit_id,
+ 		"--",
+ 		($filename ? ($filename) : ())
+-- 
+1.5.3.rc0.39.g46f7-dirty
