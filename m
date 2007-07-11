@@ -1,102 +1,83 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH] update-server-info: honor core.sharedRepository
-Date: Wed, 11 Jul 2007 15:56:56 +0200
-Message-ID: <20070711135656.GA28593@piper.oerlikon.madduck.net>
-References: <Pine.LNX.4.64.0707111338360.4516@racer.site>
+From: "pradeep singh" <pradeep.rautela@gmail.com>
+Subject: git-update-server-info may be required,cannot clone and pull from a remote repository
+Date: Wed, 11 Jul 2007 19:38:22 +0530
+Message-ID: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 11 15:57:12 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 16:08:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8cgq-0004eY-0W
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 15:57:12 +0200
+	id 1I8crk-0007er-LH
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 16:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757861AbXGKN5I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 09:57:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756738AbXGKN5H
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 09:57:07 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:55754 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756028AbXGKN5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 09:57:06 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 4EC3E895D78;
-	Wed, 11 Jul 2007 15:56:58 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 31570-08; Wed, 11 Jul 2007 15:56:58 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 9B1E7895D73;
-	Wed, 11 Jul 2007 15:56:57 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id F36269F15D;
-	Wed, 11 Jul 2007 15:56:56 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id BDA0943FC; Wed, 11 Jul 2007 15:56:56 +0200 (CEST)
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
+	id S1761523AbXGKOIY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 10:08:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761343AbXGKOIY
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 10:08:24 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:20166 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759546AbXGKOIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 10:08:23 -0400
+Received: by py-out-1112.google.com with SMTP id d32so3048866pye
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 07:08:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=A7B4xyg6qKNZ6kpZ2zwntLBdUftwXjbu5E1vWvLCvzREeGU3wEoWOrZKzSF/zAbyRbKzsKyvB1X8fF89Qk5Ncr9HywqbnILAWN/tvZ7qVaxvMLg0HRVHx4hDNHxoaGluhxj3szF8e27Pw3J+Fjhr/UkK2kUx0bpJX2nUwmjeTes=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Gwp6BdqBrG8UfH3QRIPvZh6bFtr6CrHTTGzhEhVPChjvUZUSllsXVDjtRlR/b/+HeJKJsuVJbHti2gGTDwd/OqnHK2MbNat0vas7Psu1IHkApyBQ0Aswbybsu9NYcyWakbE1bYdNwRHPaUcFyfSyfF9TrBf2cmmh35aJn++4KHY=
+Received: by 10.35.117.5 with SMTP id u5mr10488683pym.1184162902305;
+        Wed, 11 Jul 2007 07:08:22 -0700 (PDT)
+Received: by 10.35.72.8 with HTTP; Wed, 11 Jul 2007 07:08:22 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707111338360.4516@racer.site>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52161>
 
+hi All,
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please bear with me as i am completely new to git.
+I tired setting up git repository on one of my Ubuntu 7.04 machines.
 
-also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.11.14=
-39 +0200]:
-> Earlier, update-server-info used the umask, even if
-> core.sharedRepository =3D 1.
->=20
-> Noticed by madduck on IRC.
-> 	Does this work for you?
+I followed the howto instruction for setting up a git repo over http
+using the HOWTO  given in the /usr/share/doc/git-doc/howtos .
 
-Yes, it does, but only if I put =3D all/group into the config. init-db
---shared=3Dall however sets core.sharedRepository=3D2, and then
-update-server-info produces a 0660 file.
+All went correct.
+Now i am facing some trouble here.
 
-This may be another bug...
+1. I already have a source tree controlled by git on the same
+machine.I want to make this as the master for the new public
+repository. I created a bare git repo in it as per the howto. Now i
+want to commit my local git repo to this public repository.I failed to
+do so sadly :-/.Can anyone point me to the correct place or link?
 
-Thanks!
+2. Even when i did a (from another machine)
+ $git-clone http://100.121.232/work.git work
+ It says,
+ Cannot get remote repository information.
+ Perhaps git-update-server-info needs to be run there?
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"even if you persuade me, you won't persuade me."
-                                                       -- aristophanes
+ I ran git-update-server on the original machine, restarted even
+apache2 but still same thing.
 
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
+Can any one help me with this?
+I ll appreciate some good documents or howtos on setting up git
+repository painlessly.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+BTW how am i supposed to use gitweb?
+PS: I am not an expert sysadmin so i am completely unaware of apache2
+tweaks and cgi pecularities.
 
-iD8DBQFGlOGoIgvIgzMMSnURAsCIAJ9eOUPlPDOs8NBcKxFN2kd7yMDbYgCgtdDR
-+rUQRwYcLzVJgxu/VemEOjA=
-=MpsH
------END PGP SIGNATURE-----
+Any help or pointers will be great.
 
---sdtB3X0nJg68CQEu--
+Thank you
+--pradeep
+-- 
+Pradeep
