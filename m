@@ -1,94 +1,80 @@
 From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: pushing changes to a remote branch
-Date: Wed, 11 Jul 2007 21:29:59 +0200
-Message-ID: <20070711192959.GB3069@efreet.light.src>
-References: <20070710143614.GA29681@piper.oerlikon.madduck.net>
+Date: Wed, 11 Jul 2007 21:31:52 +0200
+Message-ID: <20070711193152.GC3069@efreet.light.src>
+References: <20070710143614.GA29681@piper.oerlikon.madduck.net> <20070710173401.GB5032@sigill.intra.peff.net> <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xXmbgvnjoT4axfJE"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 21:31:10 2007
+	protocol="application/pgp-signature"; boundary="p2kqVDKq5asng8Dg"
+Cc: Jeff King <peff@peff.net>,
+	git discussion list <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 21:32:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8hty-0000Rc-VL
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 21:31:07 +0200
+	id 1I8hv5-0000hh-9T
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 21:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933174AbXGKTaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 15:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759902AbXGKTaH
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 15:30:07 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:47480 "EHLO ns1.bluetone.cz"
+	id S933751AbXGKTb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 15:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933725AbXGKTb5
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 15:31:57 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:48870 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933667AbXGKTaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 15:30:04 -0400
+	id S933828AbXGKTb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 15:31:56 -0400
 Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 53D2557348
-	for <git@vger.kernel.org>; Wed, 11 Jul 2007 21:30:01 +0200 (CEST)
+	by ns1.bluetone.cz (Postfix) with ESMTP id 313A45737B;
+	Wed, 11 Jul 2007 21:31:55 +0200 (CEST)
 Received: from ns1.bluetone.cz ([192.168.13.1])
 	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 0EqKykEy7MLE for <git@vger.kernel.org>;
-	Wed, 11 Jul 2007 21:29:59 +0200 (CEST)
+	with ESMTP id RP5S0Ysc0Ip8; Wed, 11 Jul 2007 21:31:53 +0200 (CEST)
 Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id DC28F57333
-	for <git@vger.kernel.org>; Wed, 11 Jul 2007 21:29:59 +0200 (CEST)
+	by ns1.bluetone.cz (Postfix) with ESMTP id 6967B57348;
+	Wed, 11 Jul 2007 21:31:52 +0200 (CEST)
 Received: from bulb by efreet.light.src with local (Exim 4.67)
 	(envelope-from <bulb@ucw.cz>)
-	id 1I8hst-0002ke-9W
-	for git@vger.kernel.org; Wed, 11 Jul 2007 21:29:59 +0200
+	id 1I8hui-0002ku-8L; Wed, 11 Jul 2007 21:31:52 +0200
 Content-Disposition: inline
-In-Reply-To: <20070710143614.GA29681@piper.oerlikon.madduck.net>
+In-Reply-To: <844FC382-DFB3-4762-93C2-6512612136AC@silverinsanity.com>
 User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52193>
 
 
---xXmbgvnjoT4axfJE
+--p2kqVDKq5asng8Dg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 10, 2007 at 16:36:14 +0200, martin f krafft wrote:
->   git checkout origin/vim
->     Note: moving to "origin/vim" which isn't a local branch
+On Tue, Jul 10, 2007 at 14:10:01 -0400, Brian Gernhardt wrote:
+> Indeed, in master, git outputs a hint to that when you checkout the remot=
+e=20
+> branch.
+>
+>   $ git checkout origin/master
+>   Note: moving to "origin/master" which isn't a local branch
+>   If you want to create a new branch from this checkout, you may do so
+>   (now or later) by using -b with the checkout command again. Example:
+>     git checkout -b <new_branch_name>
+>   HEAD is now at f4855d4... 1
 
-There is more to that message, no? However, it only says "Head is now at
-<commit-id>", which does not really indicate, that the HEAD has been
-"detached". This means that it now contains a commit-id rather than name of
-some branch.
+The problem of this warning is, that it does not actually say anything about
+detached and that potential commit won't update the ref being checked out.
 
-Git detaches head whenever you check out, without -b option, anything other
-than branch (without it's refs/heads prefix). If you than check out a branc=
-h,
-you can't see the commit on any branch anymore. However, you can still acce=
-ss
-it in reflog, ie. via expressions like HEAD@{1} or HEAD@{1 hour ago}.
-
-You should also be able to:
-
- git push origin HEAD:vim
-
-after the commit, and even (I didn't try it, but documentation seems to cla=
-im
-it should work):
-
- git push origin HEAD@{1}:vim
-
-if you already changed HEAD more.
-
-You can see this "metahistory" of HEAD via:
-
- git reflog
-
-which is shorthand for git reflog show HEAD
+> Perhaps git-commit should also also output a warning?  "Commit made on=20
+> detached HEAD.  Use "git branch <new_branch_name>" to save your commit"? =
+=20
+> That's bad wording, but the idea is there.
 
 --=20
 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
---xXmbgvnjoT4axfJE
+--p2kqVDKq5asng8Dg
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 Content-Disposition: inline
@@ -96,9 +82,9 @@ Content-Disposition: inline
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFGlS+3Rel1vVwhjGURAjJZAJ94W1QSigKho7eL0DjNLHNUTctwmACaA3Ej
-zFVCo18DsT+BTi5mZrOUU2Q=
-=VQRf
+iD8DBQFGlTAoRel1vVwhjGURAjZrAJ0TjJAtBdM+3OFCkDoGRbVXYqy8WwCeJGY1
+GyE0wWrEb34MNq8XqIacrUM=
+=K/q7
 -----END PGP SIGNATURE-----
 
---xXmbgvnjoT4axfJE--
+--p2kqVDKq5asng8Dg--
