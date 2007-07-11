@@ -1,80 +1,85 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Getting version output for a file.
-Date: Wed, 11 Jul 2007 13:39:31 +0200
-Message-ID: <86abu3dv9o.fsf@lola.quinscape.zz>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] send-email: extend sanitize_address_rfc822 to do rfc2047 quoting
+Date: Wed, 11 Jul 2007 13:49:09 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070711114909.GA14086@informatik.uni-freiburg.de>
+References: <11840869641759-git-send-email-ukleinek@informatik.uni-freiburg.de> <20070711084232.GE1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 11 13:39:58 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Wed Jul 11 13:49:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8aY2-0006wn-6F
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 13:39:58 +0200
+	id 1I8ah3-0000ac-Pe
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 13:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763516AbXGKLjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 07:39:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763413AbXGKLjy
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 07:39:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:44867 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762977AbXGKLjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 07:39:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I8aXk-0008BW-0H
-	for git@vger.kernel.org; Wed, 11 Jul 2007 13:39:40 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 13:39:39 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 13:39:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:WmaDYN77iDqKJvxsii3K6trOXVM=
+	id S1762337AbXGKLtO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 Jul 2007 07:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760329AbXGKLtO
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 07:49:14 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:56784 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759876AbXGKLtN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jul 2007 07:49:13 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I8agx-0006sq-Sq; Wed, 11 Jul 2007 13:49:12 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6BBn9FG014284;
+	Wed, 11 Jul 2007 13:49:09 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6BBn9hq014283;
+	Wed, 11 Jul 2007 13:49:09 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	skimo@liacs.nl, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070711084232.GE1528MdfPADPa@greensroom.kotnet.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52153>
 
+Sven Verdoolaege wrote:
+> On Tue, Jul 10, 2007 at 07:02:43PM +0200, Uwe Kleine-K=F6nig wrote:
+> >  	my ($recipient) =3D @_;
+> > -	my ($recipient_name) =3D ($recipient =3D~ /^(.*?)\s+</);
+> > +	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?=
+)(\s+<.*)/);
+> > +
+> > +	if ($recipient_name && $recipient_name =3D~ /[^-a-zA-Z0-9!*+\/ ]/=
+ && $recipient_name !~ /=3D\?utf-8\?q?.*\?=3D/) {
+>=20
+> Why the extra test for truthness of $recipient_name ?
+Try:
 
-Hi,
+	my $recipient =3D 'skimo@kotnet.org';
+	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?)(\s+=
+<.*)/);
+	print "Hoppla\n" if (!$recipient_name);
 
-the Emacs support for git is incomplete, making it bomb out, for
-example, when doing
-C-u C-x v =
+i.e. if the pattern doesn't match, recipient_name is undefined.
 
-In order to have it work better, I need to fill in the following
-functions:
+But the function could be simplyfied anyhow.  e.g.
 
-(vc-git-previous-version FILE REV)
-Return the version number immediately preceding REV for FILE,
-or nil if there is no previous version.
+	if ($recipient_name) {
+		... do all the quoting ...
+		return "$recipient_name$recipient_addr";
+	} else {
+		return $recipient;
+	}
 
-(vc-git-next-version FILE REV)
-Return the version number immediately following REV for FILE,
-or nil if there is no previous version.
+Best regards
+Uwe
 
-REV will tend to be a symbolic reference like "master" or possibly
-"master{2}" (I am fuzzy about the details, but at least repeated
-invocations of vc-git-previous-version should work with the previous
-output).  The corresponding next and previous versions should be
-changes that actually changed the file in question.
+--=20
+Uwe Kleine-K=F6nig
 
-There is likely going to be some magic shell invocation of
-git-rev-list, git-symbolic-ref and/or similar things to achieve this
-task.  I don't have enough of a clue to fill in the necessary details,
-but I'd be able to convert them into Elisp.
-
-Anybody with good suggestions?  It would be beneficial if this would
-not require the newest git version in order to work.  If that means
-that the output needs to be somewhat more massaged, that's ok.
-
-Thanks,
-
--- 
-David Kastrup
+http://www.google.com/search?q=3Dsquare+root+of+2
