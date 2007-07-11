@@ -1,57 +1,78 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Build error with qgit4
-Date: Wed, 11 Jul 2007 21:49:25 +0530
-Message-ID: <cc723f590707110919i7def2fbal94b1a437f189040@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Document git-filter-branch
+Date: Wed, 11 Jul 2007 18:53:29 +0200
+Organization: At home
+Message-ID: <f731u9$1ir$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0707031746400.4071@racer.site> <20070703220540.GN12721@planck.djpig.de> <Pine.LNX.4.64.0707040004200.4071@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Marco Costalba" <mcostalba@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 18:19:31 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 18:53:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8euY-0005rk-LP
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 18:19:31 +0200
+	id 1I8fRf-0006xD-8z
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 18:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756834AbXGKQT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 12:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756853AbXGKQT1
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 12:19:27 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:6187 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756834AbXGKQT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 12:19:26 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2361919wah
-        for <git@vger.kernel.org>; Wed, 11 Jul 2007 09:19:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=m/tXhJgDc0eZIkY35nLtdSLtYltEjxrLqmoewgrGLLMq4UHp04djc5T9rT/QAr/3GXc7DPmxLofrePm5F8HmPLNntkv27oz17LD4HhHVW6v8mkEQVeyMMgPA2F3uftJxURTXkURLVvkAglUO1LAq6NCu/y0ABc3aujNp67xGMLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=qZglasUPJNV7D+d23z8CUVufR+jZdPB5b1G/G026Lz5IACD387e2Fgr2HLxXv+3scp2OSPM4yFD7DLxbKAr+nAXA9C3WAjPmltG2wdtoskAjT4/V+hO4gYkp4s5Hx2gxBt5HkRVVhcPzgSEEJNv1I2ktGelMjwpbvjc1UMEzacU=
-Received: by 10.114.59.1 with SMTP id h1mr5274296waa.1184170765939;
-        Wed, 11 Jul 2007 09:19:25 -0700 (PDT)
-Received: by 10.114.240.11 with HTTP; Wed, 11 Jul 2007 09:19:25 -0700 (PDT)
-Content-Disposition: inline
+	id S1751706AbXGKQxj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 12:53:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbXGKQxj
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 12:53:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:54061 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751620AbXGKQxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 12:53:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I8fRY-0002WU-0Q
+	for git@vger.kernel.org; Wed, 11 Jul 2007 18:53:36 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 18:53:36 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 18:53:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52175>
 
-lude/qt4/QtGui -I/usr/include/qt4 -I../src -I../build -I../build -o
-../build/fileview.o fileview.cpp
-../build/ui_fileview.h: In member function 'void Ui_TabFile::setupUi(QWidget*)':
-../build/ui_fileview.h:63: error: 'class QHBoxLayout' has no member
-named 'setLeftMargin'
-../build/ui_fileview.h:64: error: 'class QHBoxLayout' has no member
-named 'setTopMargin'
-../build/ui_fileview.h:65: error: 'class QHBoxLayout' has no member
-named 'setRightMargin'
-../build/ui_fileview.h:66: error: 'class QHBoxLayout' has no member
-named 'setBottomMargin'
-../build/ui_fileview.h:71: error: 'class QVBoxLayout' has no member
-named 'setLeftMargin'
+[Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Frank Lichtenheld <frank@lichtenheld.de>]
+
+Johannes Schindelin wrote:
+> On Wed, 4 Jul 2007, Frank Lichtenheld wrote:
+
+>>> +Note that since this operation is extensively I/O expensive, it might
+>>> +be a good idea to redirect the temporary directory it off-disk, e.g. on
+
+By the way, could git-filter-branch use git-fast-import to reduce I/O?
+
+>>> +the id of the commit being rewritten.  The author/committer environment
+>>> +variables are set before the first filter is run.
+>> 
+>> Maybe give the actual names of the environment variables here?
+> 
+> If you think so:
+> 
+>       Also, GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_AUTHOR_DATE, 
+>       GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE is 
+>       set according to the current commit.
+
+Or
+
+        Also, GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_AUTHOR_DATE, 
+        GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE  
+        are filled with data taken from the current commit. 
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
