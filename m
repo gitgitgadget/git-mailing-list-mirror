@@ -1,69 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: test suite fails if sh != bash || tar != GNU tar
-Date: Wed, 11 Jul 2007 12:09:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707111209160.4516@racer.site>
-References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com> 
- <Pine.LNX.4.64.0707110347580.4047@racer.site> 
- <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org>
- <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Getting version output for a file.
+Date: Wed, 11 Jul 2007 13:39:31 +0200
+Message-ID: <86abu3dv9o.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: David Frech <david@nimblemachines.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 13:17:35 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 13:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8aCK-0002f7-Ph
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 13:17:33 +0200
+	id 1I8aY2-0006wn-6F
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 13:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759729AbXGKLR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 07:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759740AbXGKLR3
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 07:17:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52731 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757126AbXGKLR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 07:17:28 -0400
-Received: (qmail invoked by alias); 11 Jul 2007 11:17:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 11 Jul 2007 13:17:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+erlEtXa2etuEa2x4MytJHXszpktcac0slqLlU+s
-	wDAOwXp3jiUmFu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1763516AbXGKLjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 07:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763413AbXGKLjy
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 07:39:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:44867 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762977AbXGKLjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 07:39:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I8aXk-0008BW-0H
+	for git@vger.kernel.org; Wed, 11 Jul 2007 13:39:40 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 13:39:39 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 13:39:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:WmaDYN77iDqKJvxsii3K6trOXVM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52152>
+
 
 Hi,
 
-On Tue, 10 Jul 2007, David Frech wrote:
+the Emacs support for git is incomplete, making it bomb out, for
+example, when doing
+C-u C-x v =
 
-> On 7/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > On Wed, 11 Jul 2007, Johannes Schindelin wrote:
-> > > As for GNU tar, I think that this is easily fixable if you have 
-> > > access to non-GNU tar.  We do not use tar _ever_, except for the 
-> > > test suite, to verify that things are working as expected.
-> > >
-> > > If you could put in some time to make the tests work, that would be 
-> > > awesome.
-> > 
-> > Yeah, it would be a good thing to get rid of any bashisms, but to 
-> > _keep_ it working somebody would then need to test every once in a 
-> > while that it still works ;)
-> 
-> I'll see what I can do. As I'm planning on running git on both FreeBSD 
-> and DragonFly for the forseeable future, and plan to track git's 
-> evolution (running stable releases if not more bleeding-edge code), I 
-> can run the test suite every time I build a new git.
+In order to have it work better, I need to fill in the following
+functions:
 
-If you want to, I can help you setting up a nightly cron job to fetch what 
-is the current "next", run the tests, and report failures by email.
+(vc-git-previous-version FILE REV)
+Return the version number immediately preceding REV for FILE,
+or nil if there is no previous version.
 
-Ciao,
-Dscho
+(vc-git-next-version FILE REV)
+Return the version number immediately following REV for FILE,
+or nil if there is no previous version.
+
+REV will tend to be a symbolic reference like "master" or possibly
+"master{2}" (I am fuzzy about the details, but at least repeated
+invocations of vc-git-previous-version should work with the previous
+output).  The corresponding next and previous versions should be
+changes that actually changed the file in question.
+
+There is likely going to be some magic shell invocation of
+git-rev-list, git-symbolic-ref and/or similar things to achieve this
+task.  I don't have enough of a clue to fill in the necessary details,
+but I'd be able to convert them into Elisp.
+
+Anybody with good suggestions?  It would be beneficial if this would
+not require the newest git version in order to work.  If that means
+that the output needs to be somewhat more massaged, that's ok.
+
+Thanks,
+
+-- 
+David Kastrup
