@@ -1,66 +1,45 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn+cygwin failed fetch
-Date: Wed, 11 Jul 2007 02:06:00 -0700
-Message-ID: <20070711090600.GB29676@muzzle>
-References: <f9d2a5e10707101106w305e28acy55f465e558485298@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: --ignore-invalid flag to git log et al.?
+Date: Wed, 11 Jul 2007 19:07:32 +1000
+Message-ID: <18068.40404.772354.34192@cargo.ozlabs.ibm.com>
+References: <18068.34542.502048.222112@cargo.ozlabs.ibm.com>
+	<81b0412b0707110046n5ec27328pab0ff33c183f79e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Russ Dill <russ.dill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 11:06:18 2007
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 11:07:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8Y9J-0001hV-0C
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 11:06:17 +0200
+	id 1I8YAi-00020h-D3
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 11:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757376AbXGKJGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 05:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756914AbXGKJGE
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 05:06:04 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:40080 "EHLO hand.yhbt.net"
+	id S1757010AbXGKJHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 05:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756734AbXGKJHk
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 05:07:40 -0400
+Received: from ozlabs.org ([203.10.76.45]:56777 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754689AbXGKJGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 05:06:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 4B03D2DC032;
-	Wed, 11 Jul 2007 02:06:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <f9d2a5e10707101106w305e28acy55f465e558485298@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756768AbXGKJHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 05:07:39 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id AA346DDE2C; Wed, 11 Jul 2007 19:07:38 +1000 (EST)
+In-Reply-To: <81b0412b0707110046n5ec27328pab0ff33c183f79e@mail.gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52146>
 
-Russ Dill <russ.dill@gmail.com> wrote:
-> [...]/src $ mkdir foo
-> [...]/src $ cd foo
-> [...]/src/foo $ git-svn init -t tags -b branches -T trunk
-> https://www.[...].com/svn/foo/bar/bla
-> Initialized empty Git repository in .git/
-> Using higher level of URL: https://www.[...].com/svn/foo/bar/bla =>
-> https://www.[...].com/svn/foo
-> 
-> [...]/src/foo $ git-svn fetch
-> config --get svn-remote.svn.url: command returned error: 1
-> 
-> [...]/src/foo $ git config --get svn-remote.svn.url
-> https://www.[...].com/svn/foo
+Alex Riesen writes:
 
-Sorry, I can't help here other than recommending a real UNIX with
-fork + pipe + exec and all that fun stuff.
+> git rev-parse --revs-only ref1 ref2 ref3 ...?
 
-git-svn relies heavily[1] on both input and output pipes of the
-safer-but-made-for-UNIX fork + pipe + exec(@list) variety, so I suspect
-this is just the tip of the iceberg for Windows incompatibilies with
-git-svn...
+That stops when it sees an invalid ref and doesn't check the rest.
+Also if you give it a string of 40 hex digits it will print it out
+whether it's a valid object ID or not.
 
-Maybe somebody can finally libify git? :)
-
-
-[1] - probably more so than anything else in git
-
--- 
-Eric Wong
+Paul.
