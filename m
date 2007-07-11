@@ -1,153 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Fix core.sharedRepository = 2
-Date: Wed, 11 Jul 2007 15:18:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707111517050.4516@racer.site>
-References: <Pine.LNX.4.64.0707111338360.4516@racer.site>
- <20070711135656.GA28593@piper.oerlikon.madduck.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
+Date: Wed, 11 Jul 2007 16:31:20 +0200
+Message-ID: <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com>
+References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Jul 11 16:26:11 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "pradeep singh" <pradeep.rautela@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 16:31:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8d8s-0003Uw-3w
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 16:26:10 +0200
+	id 1I8dDy-0004lv-Gu
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 16:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763057AbXGKO0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 10:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762700AbXGKO0E
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 10:26:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43892 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759978AbXGKO0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 10:26:03 -0400
-Received: (qmail invoked by alias); 11 Jul 2007 14:26:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 11 Jul 2007 16:26:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+c37oQt6Sca2m7MCqfzDqchKpiKvB0yuVHcxBHp8
-	cU9Q4woUDze1hD
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070711135656.GA28593@piper.oerlikon.madduck.net>
-X-Y-GMX-Trusted: 0
+	id S1761962AbXGKObX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 10:31:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759391AbXGKObX
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 10:31:23 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:7997 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758727AbXGKObW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 10:31:22 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so125197ugf
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 07:31:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H5v2tM2A0hAWbBXJG4o79wWo+Z5gDbl87mUXnZFq5IcWge84ApIglFomjyjv7Wq41NzRSDX/Ga5rW3bU33uBlBij14L93OhAiB5NyOdV43ZsiNunapH+TW/8fNoC8+LlmEduqTWNmtcXlIYP2cToLGACr3NqjU+9z6jqBq1gE7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D3PcwAkE8aJocKHm6Jj7EORYbjyfLBDe+1HnEPsucz0YXEQjjMvFC0EeJIBFG7yoboi62pEWgNO4a/+zm6seZKYcwnxXUm3NgsKowTYMdDL0uNqWGw4RvgnmW3zir7iUUmW1ZfRsSOj09JGl7UnGKQC/UDPDvE4HsKdQqb3bJqM=
+Received: by 10.78.149.15 with SMTP id w15mr2431462hud.1184164280571;
+        Wed, 11 Jul 2007 07:31:20 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Wed, 11 Jul 2007 07:31:20 -0700 (PDT)
+In-Reply-To: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52163>
 
+On 7/11/07, pradeep singh <pradeep.rautela@gmail.com> wrote:
 
-For compatibility reasons, "git init --shared=all" does not write
-"all" into the config, but a number.  In the shared setup, you
-really have to support even older clients on the _same_ repository.
+> I followed the howto instruction for setting up a git repo over http
+> using the HOWTO  given in the /usr/share/doc/git-doc/howtos .
+>
 
-But git_config_perm() did not pick up on it.
+You may want to consider an upgrade to your git installation.
+But it is unrelated to your problems.
 
-Also, "git update-server-info" failed to pick up on the shared
-permissions.
+> 1. I already have a source tree controlled by git on the same
+> machine.I want to make this as the master for the new public
+> repository. I created a bare git repo in it as per the howto. Now i
+> want to commit my local git repo to this public repository.I failed to
+> do so sadly :-/.Can anyone point me to the correct place or link?
 
-This patch fixes both issues, and adds a test to prove it.
+Try Documentation/everyday.txt in git source distribution
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> 2. Even when i did a (from another machine)
+>  $git-clone http://100.121.232/work.git work
+>  It says,
+>  Cannot get remote repository information.
 
-	On Wed, 11 Jul 2007, martin f krafft wrote:
+Well, you can try this link in your browser.
+Does it show something?
+Does http://100.121.232/work.git/objects/info/packs work?
 
-	> also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de>
-	> > Earlier, update-server-info used the umask, even if
-	> > core.sharedRepository = 1.
-	> > 
-	> > Noticed by madduck on IRC.
-	> > 	Does this work for you?
-	>	 
-	> Yes, it does, but only if I put = all/group into the config. 
-	> init-db --shared=all however sets core.sharedRepository=2, and 
-	> then update-server-info produces a 0660 file.
+>  Perhaps git-update-server-info needs to be run there?
 
-	Should be fixed now.
+Yes. But it wont help unless your web server is setup correctly.
 
- server-info.c          |    2 ++
- setup.c                |    4 ++++
- t/t1301-shared-repo.sh |   27 +++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 0 deletions(-)
- create mode 100755 t/t1301-shared-repo.sh
+> Can any one help me with this?
 
-diff --git a/server-info.c b/server-info.c
-index f9be5a7..0d1312c 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -38,6 +38,7 @@ static int update_info_refs(int force)
- 		return error("unable to update %s", path0);
- 	for_each_ref(add_info_ref, NULL);
- 	fclose(info_ref_fp);
-+	adjust_shared_perm(path1);
- 	rename(path1, path0);
- 	free(path0);
- 	free(path1);
-@@ -227,6 +228,7 @@ static int update_info_packs(int force)
- 		return error("cannot open %s", name);
- 	write_pack_info_file(fp);
- 	fclose(fp);
-+	adjust_shared_perm(name);
- 	rename(name, infofile);
- 	return 0;
- }
-diff --git a/setup.c b/setup.c
-index bb26f3a..7b07144 100644
---- a/setup.c
-+++ b/setup.c
-@@ -364,6 +364,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- int git_config_perm(const char *var, const char *value)
- {
- 	if (value) {
-+		int i;
- 		if (!strcmp(value, "umask"))
- 			return PERM_UMASK;
- 		if (!strcmp(value, "group"))
-@@ -372,6 +373,9 @@ int git_config_perm(const char *var, const char *value)
- 		    !strcmp(value, "world") ||
- 		    !strcmp(value, "everybody"))
- 			return PERM_EVERYBODY;
-+		i = atoi(value);
-+		if (i > 1)
-+			return i;
- 	}
- 	return git_config_bool(var, value);
- }
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-new file mode 100755
-index 0000000..bb5f302
---- /dev/null
-+++ b/t/t1301-shared-repo.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes Schindelin
-+#
-+
-+test_description='Test shared repository initialization'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'shared=all' '
-+	mkdir sub &&
-+	cd sub &&
-+	git init --shared=all &&
-+	test 2 = $(git config core.sharedrepository)
-+'
-+
-+test_expect_success 'update-server-info honors core.sharedRepository' '
-+	: > a1 &&
-+	git add a1 &&
-+	test_tick &&
-+	git commit -m a1 &&
-+	umask 0277 &&
-+	git update-server-info &&
-+	test 444 = $(stat -c %a .git/info/refs)
-+'
-+
-+test_done
--- 
-1.5.3.rc0.2783.gf3f7
+Any reason you cannot use ssh?
+
+> I ll appreciate some good documents or howtos on setting up git
+> repository painlessly.
+
+Usually it is as simple as "git init" in directory where you want it.
