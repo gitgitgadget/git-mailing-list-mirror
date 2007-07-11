@@ -1,103 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "David Frech" <david@nimblemachines.com>
 Subject: Re: test suite fails if sh != bash || tar != GNU tar
-Date: Wed, 11 Jul 2007 22:56:23 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707112240120.4516@racer.site>
-References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com> 
- <Pine.LNX.4.64.0707110347580.4047@racer.site> 
- <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org> 
- <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com> 
- <Pine.LNX.4.64.0707111209160.4516@racer.site>  <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
- <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
+Date: Wed, 11 Jul 2007 14:57:00 -0700
+Message-ID: <7154c5c60707111457o424cd1a3g192cecc2e00936a8@mail.gmail.com>
+References: <7154c5c60707101939sc921b07wef1d14f85086947d@mail.gmail.com>
+	 <Pine.LNX.4.64.0707110347580.4047@racer.site>
+	 <alpine.LFD.0.999.0707102020020.3412@woody.linux-foundation.org>
+	 <7154c5c60707102108g59280301pa5c3c0dc3911753d@mail.gmail.com>
+	 <Pine.LNX.4.64.0707111209160.4516@racer.site>
+	 <7v7ip64opa.fsf@assigned-by-dhcp.cox.net>
+	 <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
+	 <7v7ip639cb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
 	git@vger.kernel.org
-To: David Frech <david@nimblemachines.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:56:38 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 23:57:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8kAl-0005ha-L2
-	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:56:35 +0200
+	id 1I8kBI-0005q2-UH
+	for gcvg-git@gmane.org; Wed, 11 Jul 2007 23:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763009AbXGKV42 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 17:56:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755188AbXGKV42
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:56:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39692 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751772AbXGKV41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 17:56:27 -0400
-Received: (qmail invoked by alias); 11 Jul 2007 21:56:25 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp057) with SMTP; 11 Jul 2007 23:56:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX186mYgIPMQ6xWNa7QOA5JJIqXX9/0/FFBN49UBQt3
-	PiMWDJi/CJiu/F
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7154c5c60707111433r64ae5109o314778655cbc017e@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1761088AbXGKV5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 17:57:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755906AbXGKV5E
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 17:57:04 -0400
+Received: from nz-out-0506.google.com ([64.233.162.226]:48272 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755188AbXGKV5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 17:57:02 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1490424nze
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 14:57:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=oKcPFpeJMmOt1SYic8Omp+96hG3ujCsA8hVgm9IEFLIxusI2N36ByD1WfHLiEs7nSu4J5iGBPZDiO+cOeGIrEJ4lPsMvP7PaTlLyP5rBeD0Hu3uWwf6K3O6+Vp2J9zVi6l8W+LPnJXL6leOoLR/gG09U9Z1XtfmbpvKy2EE+Z2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=noXexEWZiBmujZDd89YVfzOXWqZPNSBcC2yLfeqQP53YWIi8UkMo9X2Xhv9Zuw+xTXNt49IxUTDuYzW8UPFH11y8UM5CqhHgUkrktyx09lkLWEjhx5UTQLOpcJBb43CQWpD8VGAmts5kCuQEdU3Igw2KFX9JuSPHkTaIt6pl+y4=
+Received: by 10.114.179.1 with SMTP id b1mr5525022waf.1184191020399;
+        Wed, 11 Jul 2007 14:57:00 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Wed, 11 Jul 2007 14:57:00 -0700 (PDT)
+In-Reply-To: <7v7ip639cb.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: be2204bc0a6882c3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52217>
 
-Hi,
+On 7/11/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "David Frech" <david@nimblemachines.com> writes:
+>
+> > One issue is that my server is on dynamic IP, and my lame ISP (the
+> > local telco) doesn't give me a proper SMTP relay - they want us to
+> > send our mail via HTTP to MSN! Completely lame.
+> >
+> > So sending mail can be an issue, if the receiver blocks mail from dynamic IPs.
+>
+> I think I heard gmail has incoming SMTP for its subscribers, and
+> I would not be surprised if other free e-mail providers have the
+> same.  Perhaps you can use one of them for this purpose?
 
-On Wed, 11 Jul 2007, David Frech wrote:
+Yes, I have managed to relay thru gmail. It was a bit hard to set up -
+build Postfix with SASL, sniff the traffic to figure out who signed
+gmail's SSL cert (Thawte), download CA cert - but I know how to do it.
+;-)
 
-> On 7/11/07, Junio C Hamano <gitster@pobox.com> wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > >> I'll see what I can do. As I'm planning on running git on both 
-> > >> FreeBSD and DragonFly for the forseeable future, and plan to track 
-> > >> git's evolution (running stable releases if not more bleeding-edge 
-> > >> code), I can run the test suite every time I build a new git.
-> > >
-> > > If you want to, I can help you setting up a nightly cron job to 
-> > > fetch what is the current "next", run the tests, and report failures 
-> > > by email.
-> > 
-> > Wow.  Nightly builds of 'next' on various platforms would actually be 
-> > quite useful, especially from non Linux and non bash world.
-> 
-> I found and fixed the shell issues. Once I've got a "fix" for tar I'll 
-> send a patch. I think the BSD sh has a bug wrt to negating the return 
-> code from a pipeline.
+The downside is, the gmail relay rewrites the headers in annoying
+ways, so I'm not using it in general. If necessary I could relay just
+the "build breakage" thru them.
 
-Cool!  Please be sure to give Documentation/SubmittingPatches a quick 
-glance before sending, to avoid hassles for the reviewers.
+Actually my incoming nimblemachines.com mail gets sent from my dynamic
+IP thru normal (non-AUTH, non-SSL) SMTP to gmail, and they accept it
+fine. So if I can send the build results to a gmail account, there are
+no problems. Hmm - and that account could forward to the git list...
 
-> I'd be happy to do a nightly build on my DragonFly box, and that should 
-> catch anything that also doesn't work for FreeBSD. The failure modes 
-> were exactly the same - though the DFly box has an additional 
-> iconv-related problem (with git-mailinfo) that I still haven't tracked 
-> down...
-> 
-> Is there a canned script to get me started?
+- David
 
-Well, I would have started from scratch, as in
-
-5 0 * * *       (cd /xx/git && sh test-it.sh)
-
-And in test-it.sh there could be something like
-
-	(git pull origin next && make test > test-it.out 2>&1 ) || 
-	some-script-that-sends-the-email.sh
-
-> One issue is that my server is on dynamic IP, and my lame ISP (the local 
-> telco) doesn't give me a proper SMTP relay - they want us to send our 
-> mail via HTTP to MSN! Completely lame.
-
-It is lame.
-
-> So sending mail can be an issue, if the receiver blocks mail from 
-> dynamic IPs.
-
-But maybe you can just upload the status somewhere public?  Or ssh into a 
-machine which allows you to send an email, with public key authentication?
-
-Ciao,
-Dscho
+-- 
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
