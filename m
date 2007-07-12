@@ -1,79 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/6] Add functions for parsing integers with size suffixes
-Date: Thu, 12 Jul 2007 14:07:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707121404450.4516@racer.site>
-References: <1184244952554-git-send-email-bdowning@lavos.net>
- <1184244952173-git-send-email-bdowning@lavos.net>
+Subject: Re: git-update-server-info may be required,cannot clone and pull
+ from a remote repository
+Date: Thu, 12 Jul 2007 14:13:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707121411070.4516@racer.site>
+References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com> 
+ <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com> 
+ <a901b49a0707112227m2ea746ectd367031fdc8d3537@mail.gmail.com> 
+ <f74tk8$k21$1@sea.gmane.org>  <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
+ <a901b49a0707120552y649fba20p4fa14ca48be4be54@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 15:07:55 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: pradeep singh <pradeep.rautela@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 15:13:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8yOa-00084q-Ok
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 15:07:49 +0200
+	id 1I8yU2-0000zj-As
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 15:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763743AbXGLNHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 09:07:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763767AbXGLNHq
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 09:07:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36931 "HELO mail.gmx.net"
+	id S1760477AbXGLNNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 09:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761426AbXGLNNY
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 09:13:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42035 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763743AbXGLNHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 09:07:45 -0400
-Received: (qmail invoked by alias); 12 Jul 2007 13:07:43 -0000
+	id S1760338AbXGLNNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 09:13:23 -0400
+Received: (qmail invoked by alias); 12 Jul 2007 13:13:21 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 12 Jul 2007 15:07:43 +0200
+  by mail.gmx.net (mp012) with SMTP; 12 Jul 2007 15:13:21 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/plL8fSu/prGGK+fcDTbkunb/BVmwdUQhDrbk4GL
-	/ytCNUZzdeN7zU
+X-Provags-ID: V01U2FsdGVkX1/tVvocRBbtUs9jiNb55EoKWrsa41d+NbMK8GHOz4
+	G+SDIGLw0p9zI2
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1184244952173-git-send-email-bdowning@lavos.net>
+In-Reply-To: <a901b49a0707120552y649fba20p4fa14ca48be4be54@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52285>
 
 Hi,
 
-On Thu, 12 Jul 2007, Brian Downing wrote:
+On Thu, 12 Jul 2007, pradeep singh wrote:
 
-> Split out the nnn{k,m,g} parsing code from git_config_int into 
-> git_parse_long, so command-line parameters can enjoy the same 
-> functionality.  Also add get_parse_ulong for unsigned values.
+> On 7/12/07, pradeep singh <pradeep.rautela@gmail.com> wrote:
+> > On 7/12/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> > > What information does gitweb/INSTALL lack?
+> > 
+> > May be i am running some old version on my Ubuntu Edgy machine 
+> > perhaps? I cannot find such a file anywhere?
+> > 
+> > Looks like it is available in newer versions. Does it works for 
+> > git-1.4.4?
 
-Nice!
-
-> +		if (!*end)
-> +			*ret = val;
-> +		else if (!strcasecmp(end, "k"))
-> +			*ret = val * 1024;
-> +		else if (!strcasecmp(end, "m"))
-> +			*ret = val * 1024 * 1024;
-> +		else if (!strcasecmp(end, "g"))
-> +			*ret = val * 1024 * 1024 * 1024;
-> +		else
-> +			return 0;
-
-This could be an own static function, like this:
-
-unsigned long get_unit_factor(const char *end)
-{
-	if (!*end)
-		return 1;
-	if (!strcasecmp(end, "k"))
-		return 1024;
-	...
-	error("Unknown unit: %s", end);
-	return 1;
-}
-
-to avoid duplicated code.
+IMHO it is not good to start with anything prior to 1.5.0, if you did not 
+have any exposure to older Git.  In terms of user friendliness, 
+1.4.4.4->1.5.0 is a leap by an astronomic unit.
 
 Ciao,
 Dscho
