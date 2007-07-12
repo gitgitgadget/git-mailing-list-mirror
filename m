@@ -1,80 +1,77 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] gitweb: new cgi parameter: option
-Date: Thu, 12 Jul 2007 12:49:44 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707121248530.4516@racer.site>
-References: <20070708013543.GD29994@genesis.frugalware.org> <f73hhc$uo1$1@sea.gmane.org>
- <20070711230038.GN19386@genesis.frugalware.org> <200707121211.32813.jnareb@gmail.com>
+Subject: Re: Installation failure caused by CDPATH environment variable
+Date: Thu, 12 Jul 2007 12:52:58 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707121250170.4516@racer.site>
+References: <9693D8E9-6F11-4AA1-AFCA-7E8456FA6420@wincent.com>
+ <Pine.LNX.4.64.0707111807470.4516@racer.site> <86sl7u12m3.fsf@lola.quinscape.zz>
+ <7vodiivx50.fsf@assigned-by-dhcp.cox.net> <4C80B6B8-F6D6-4C8B-86F5-629B5662247C@wincent.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 13:49:52 2007
+Cc: Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 13:53:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8xBA-0007wX-F8
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 13:49:52 +0200
+	id 1I8xEP-0000Cg-KN
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 13:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156AbXGLLtt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 07:49:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbXGLLtt
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 07:49:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42262 "HELO mail.gmx.net"
+	id S1754530AbXGLLxK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 07:53:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXGLLxJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 07:53:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50839 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752096AbXGLLtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 07:49:49 -0400
-Received: (qmail invoked by alias); 12 Jul 2007 11:49:47 -0000
+	id S1753257AbXGLLxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 07:53:07 -0400
+Received: (qmail invoked by alias); 12 Jul 2007 11:53:06 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 12 Jul 2007 13:49:47 +0200
+  by mail.gmx.net (mp029) with SMTP; 12 Jul 2007 13:53:06 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/ZLd8NhU/tEI4Yu3b4wpFk+gAwZzX/gU66r+TMg
-	rFTHwS/bxJH/GU
+X-Provags-ID: V01U2FsdGVkX1/8/RgP6cX8lb/T8m6tMGLSt3E1DCHuI+8Gwx1wKT
+	ukIKiFchRXX8gY
 X-X-Sender: gene099@racer.site
-In-Reply-To: <200707121211.32813.jnareb@gmail.com>
+In-Reply-To: <4C80B6B8-F6D6-4C8B-86F5-629B5662247C@wincent.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52270>
 
 Hi,
 
-On Thu, 12 Jul 2007, Jakub Narebski wrote:
+On Thu, 12 Jul 2007, Wincent Colaiuta wrote:
 
-> On Thu, 12 Jul 2007, Miklos Vajna wrote:
-> > Currently the only supported value is '--no-merges' for the 'rss', 'atom',
-> > 'log', 'shortlog' and 'history' actions, but it can be easily extended to allow
-> > other parameters for other actions.
-> >
-> > Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> El 12/7/2007, a las 10:34, Junio C Hamano escribi?:
 > 
-> Micronit: it is unwritten (as of yet) requirement to word wrap commit
-> message at 80 columns or less.
+> > David Kastrup <dak@gnu.org> writes:
+> > 
+> > > Don't educate people.  Just don't trigger their problems.  Of 
+> > > course, there are millions of ways of shooting oneself in the foot, 
+> > > but in this case the same foot has been hit several times already.
+> > 
+> > Yup.  We do exactly that in git-clone, git-sh-setup and t/test-lib to 
+> > avoid getting bugged by this stupidity.
+> 
+> El 12/7/2007, a las 9:51, David Kastrup escribi?:
+> 
+> > [ "X" = "X$CDPATH" ] || unset CDPATH # ignore braindamaged exports
+> 
+> Whatever decision is taken in the end, I think we should avoid terms 
+> like "stupidity" and "braindamaged" to avoid causing possible offense. 
+> Exporting CDPATH is a simple mistake that can be made inadvertently or 
+> unwittingly, but very easily (Googling for "export CDPATH" yields 
+> 18,000+ results, many of them purporting to be Bash "tutorials").
 
-It's not really difficult:
+Sorry, my words were indeed to strong.  I apologise.  My only excuse is 
+that this crops up ever so often, and it does get slightly annoying.  Of 
+course, you did not read all those mails, and so my words were unmerited.  
 
-- snipsnap -
-[PATCH] SubmittingPatches: mention line wrap
+For an example, see
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+http://article.gmane.org/gmane.comp.version-control.git/13736/match=cdpath
 
----
-
- Documentation/SubmittingPatches |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 01354c2..066e284 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -9,6 +9,8 @@ Checklist (and a short version for the impatient):
- 	- provide a meaningful commit message
- 	- the first line of the commit message should be a short
- 	  description and should skip the full stop
-+	- please use no lines longer than 76 characters, since you
-+	  want to send this message as email
- 	- if you want your work included in git.git, add a
- 	  "Signed-off-by: Your Name <your@email.com>" line to the
- 	  commit message (or just use the option "-s" when
+Ciao,
+Dscho
