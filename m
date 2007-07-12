@@ -1,49 +1,60 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/5] Memory-limited pack-object window support
-Date: Thu, 12 Jul 2007 00:38:27 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707120036200.32552@xanadu.home>
-References: <11842100581060-git-send-email-bdowning@lavos.net>
+From: "pradeep singh" <pradeep.rautela@gmail.com>
+Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
+Date: Thu, 12 Jul 2007 10:57:46 +0530
+Message-ID: <a901b49a0707112227m2ea746ectd367031fdc8d3537@mail.gmail.com>
+References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
+	 <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 06:38:32 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 07:27:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8qRj-0000Hj-Gk
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 06:38:31 +0200
+	id 1I8rDT-0006c2-FS
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 07:27:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbXGLEi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 00:38:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbXGLEi2
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 00:38:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:20404 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbXGLEi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 00:38:27 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JL100NCKU832SD0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Jul 2007 00:38:27 -0400 (EDT)
-In-reply-to: <11842100581060-git-send-email-bdowning@lavos.net>
-X-X-Sender: nico@xanadu.home
+	id S1751369AbXGLF1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 01:27:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbXGLF1r
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 01:27:47 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:41017 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742AbXGLF1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 01:27:46 -0400
+Received: by py-out-1112.google.com with SMTP id d32so72317pye
+        for <git@vger.kernel.org>; Wed, 11 Jul 2007 22:27:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gxR9+tyq3N4U2kPhqEtY/WZ6yZcyUtAet4sZW/LVwBw+/gNDQ4pdhbE0UrXjUU63dy1wXSdDjmc5FsLiSmEmqkE0fRdrm8AxDMSvUpNVNFa9SPRX82ajc+3+Jm4RGPxal2Y5FF34EorUP9mmhFr7XZKrHIN3guZ8NQDqjwC8OtI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZjEK6RH6gD1JlyDdsj7hvLIfUnxVP5wXPyh3gmYaZnGF7ivvjW5MWQlRu4PnhrTXu8+mapthp8erJ5K6q1xfFRqRW1iqQqytBhHcoMASvpwOqOKQNQKuYptlVlJZFVYvMkhHQFjfjRYZnowQBX3RbW5ygk9z2GAnuaT15LAus1I=
+Received: by 10.35.125.20 with SMTP id c20mr478808pyn.1184218066215;
+        Wed, 11 Jul 2007 22:27:46 -0700 (PDT)
+Received: by 10.35.72.8 with HTTP; Wed, 11 Jul 2007 22:27:46 -0700 (PDT)
+In-Reply-To: <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52245>
 
-On Wed, 11 Jul 2007, Brian Downing wrote:
+On 7/11/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> On 7/11/07, pradeep singh <pradeep.rautela@gmail.com> wrote:
+[snip]
+>
+[...]
+ok, i got the repo up. Thanks for the suggestion Alex.
+Anyway i could not get gitweb running after running git-instaweb.
 
-> This patch series implements a memory limit on the window size for
-> pack-objects and repack.  Basically, the window size will temporarily
-> grow smaller than the --window option specifies if the total memory
-> usage of the window is over the specified limit.
+Any thoughts on how to setup a gitweb interface ?
 
-Besides the small issues I've pointed out already, I think this is a 
-very good thing.
-
-
-Nicolas
+Thanks
+-- 
+Pradeep
