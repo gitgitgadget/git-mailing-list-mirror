@@ -1,73 +1,95 @@
-From: "David Frech" <nimblemachines@gmail.com>
-Subject: sharing between local "work" and "nightly build" git repos
-Date: Thu, 12 Jul 2007 16:36:58 -0700
-Message-ID: <7154c5c60707121636l585b42d4l931b08f1468ddfc@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/3] Document long options '--message=<msg>' and '--no-commit'
+Date: Fri, 13 Jul 2007 01:54:07 +0200
+Message-ID: <11842844531700-git-send-email-jnareb@gmail.com>
+References: <11842844481113-git-send-email-jnareb@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 13 01:37:08 2007
+X-From: git-owner@vger.kernel.org Fri Jul 13 01:54:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I98Db-0001d0-MH
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 01:37:08 +0200
+	id 1I98UQ-0006r5-KQ
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 01:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759849AbXGLXhB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 19:37:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759776AbXGLXhB
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 19:37:01 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:59526 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758785AbXGLXhA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 19:37:00 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so378201wah
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
+	id S1757965AbXGLXyS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 19:54:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757467AbXGLXyR
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 19:54:17 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:59833 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754880AbXGLXyQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 19:54:16 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so457427ugf
+        for <git@vger.kernel.org>; Thu, 12 Jul 2007 16:54:14 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=N2BE1V5/Au+srPrzW4iZrwUIA4fuDbNfbfd2lzkAlCzIPgcvvq2LIib7VYm5qkSfkmkdiaGA+dt4M5XWpjCEuVmTn1aTb+8E3hl4Awge0xGXqMzby29NBkG77/NJAIMES3uAHAxbGGJG1n76876CPbS72Su6L6zB6etLc7e+OIk=
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=cLOmPHGNi3s8l0hmluWlLmfJUjqXZWagJuQjzH48FrjJDsU/tAb9JA4Y/CqDbA0vjSEAgRCLYTqi5dEs0UvdD4+XNlBUCiK9H1UC/5iJ6hkTr9Mvis4McDkSRNqm7F9UcSvGFOwCuGWpaXpTFKy0YUj3ceydruipLVf49IzcO4E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ejmvAQkGa3THb1PuNRHweu9CHDjl8L3Trbty+4NXxAVvt1Sx9NVHL6gjXHI82R6g1JjiCyo7d3t0sh961L9dS+RXJFlvgJzl6BK3ljWFC62VJZlWhHAQSeTuldYjKXj16ODQ9HpOItmmqzGZz0ME/Ocl1k92BesdKjMJNENfATw=
-Received: by 10.114.159.1 with SMTP id h1mr1061747wae.1184283418682;
-        Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
-Received: by 10.115.59.9 with HTTP; Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
-Content-Disposition: inline
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=uuyZOxAmn+QH+m3PDOiarGWMKbL1WkBfWYLQ29M7t9i3iTlfFodIWdYkqzWANqF3CCCmb9sIQOvwHhDcCgtyVbJb0k8PoAna1j/FPeKXiSdxtY9xQSqdK/6xcWCThQ4sRbOW2kAcDXuCNK9g/2tWKEyKNtUhD1L7awk3hmFvJHs=
+Received: by 10.67.28.2 with SMTP id f2mr1574415ugj.1184284454578;
+        Thu, 12 Jul 2007 16:54:14 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.8.65])
+        by mx.google.com with ESMTP id c25sm35471393ika.2007.07.12.16.54.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Jul 2007 16:54:12 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l6CNsERq002395;
+	Fri, 13 Jul 2007 01:54:14 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l6CNsDCr002392;
+	Fri, 13 Jul 2007 01:54:13 +0200
+X-Mailer: git-send-email 1.5.2.2
+In-Reply-To: <11842844481113-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52343>
 
-I'd like to have the following setup: a ~david/git directory, where I
-am free to work on things, and a ~david/nightly-git, where a cron job
-is going build and test a nightly "next" branch.
+Document that '--message=<msg>' is long version of '-m <msg>' in
+git-commit, and that '--no-checkout' is long version of '-n' in
+git-clone.
 
-I'd like to share as much as possible between the two repos. My naive
-first attempt was to clone the local repo (~david/git) using -l and -s
-(which I admit I do not completely understand). This sort of worked,
-but one issue is that doing a "git pull" in nightly is going to pull
-from the *locally*-cloned repo, not from the main git. Another is that
-a checkout in nightly failed with the obscure error:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch was silently skipped in the 11 patches long series
+of documenting undocumented long options
+  "[PATCH 00/11] Document missing options"
+(or rather two patches which are concatenated into this one).
 
-[david@tashtego ~/git-nightly]% git checkout -b nightly-next next
-git checkout: updating paths is incompatible with switching branches/forcing
-Did you intend to checkout 'next' which can not be resolved as commit?
+ Documentation/git-clone.txt  |    1 +
+ Documentation/git-commit.txt |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-I assume this is because too much state is being shared the repos, and
-something is unfinished in the "git" directory.
-
-I'd love some pointers on how to:
-
-* share as many objects as possible
-* share as little state as possible
-* make git pull pull from remote in both repos.
-
-Cheers,
-
-- David
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 2f39864..a0a10e3 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -64,6 +64,7 @@ OPTIONS
+ 	Operate quietly.  This flag is passed to "rsync" and
+ 	"git-fetch-pack" commands when given.
+ 
++--no-checkout::
+ -n::
+ 	No checkout of HEAD is performed after the clone is complete.
+ 
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 53a7bb0..352a494 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -71,7 +71,7 @@ OPTIONS
+ 	Override the author name used in the commit.  Use
+ 	`A U Thor <author@example.com>` format.
+ 
+--m <msg>::
++-m <msg>|--message=<msg>::
+ 	Use the given <msg> as the commit message.
+ 
+ -s|--signoff::
 -- 
-If I have not seen farther, it is because I have stood in the
-footsteps of giants.
+1.5.2.2
