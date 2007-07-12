@@ -1,88 +1,102 @@
-From: "pradeep singh" <pradeep.rautela@gmail.com>
-Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
-Date: Thu, 12 Jul 2007 18:22:03 +0530
-Message-ID: <a901b49a0707120552y649fba20p4fa14ca48be4be54@mail.gmail.com>
-References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
-	 <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com>
-	 <a901b49a0707112227m2ea746ectd367031fdc8d3537@mail.gmail.com>
-	 <f74tk8$k21$1@sea.gmane.org>
-	 <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 14:52:11 2007
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCH 2/6] Support fetching the memory usage of a delta index
+Date: Thu, 12 Jul 2007 07:55:48 -0500
+Message-ID: <11842449522040-git-send-email-bdowning@lavos.net>
+References: <1184244952554-git-send-email-bdowning@lavos.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Brian Downing <bdowning@lavos.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 12 14:55:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8y9S-0004bc-D7
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 14:52:10 +0200
+	id 1I8yD6-0005M9-SP
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 14:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761016AbXGLMwH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 08:52:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761426AbXGLMwG
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 08:52:06 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:49046 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759109AbXGLMwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 08:52:05 -0400
-Received: by py-out-1112.google.com with SMTP id d32so251944pye
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 05:52:03 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EMu5by3AS3wvbB4gOtYjVo+U3dZxK1cAM1lFnxopZH7pmK+IozPzHZjthcR5FQMoDI6QBi83296fdvFEpd5L1gsU3DPfgT1vmBvighR7dKSx6qezd5FxBWfEdOWw9MzsmrEOznEAExzDgVlyVVsE1EeUgH57toMzDbyNXCAS6Bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZVye/YlVA5EXvK5EqRcAye4yJojufDNG4O8/XGX7CNdYoH59jBvItqITWSSey7NYpeps8hxXiBY01+AzINm4o8GAMYsY+DplDfciHFU+727RbHWoneyFARyBTyA9PEVfaPxbyYlBPT+Xplp+NELbTpsgdXYIf1PemAqnGEaeY70=
-Received: by 10.35.96.11 with SMTP id y11mr1051028pyl.1184244723447;
-        Thu, 12 Jul 2007 05:52:03 -0700 (PDT)
-Received: by 10.35.72.8 with HTTP; Thu, 12 Jul 2007 05:52:03 -0700 (PDT)
-In-Reply-To: <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
-Content-Disposition: inline
+	id S1763354AbXGLMzy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 08:55:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbXGLMzx
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 08:55:53 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com ([74.134.246.243]:56632 "EHLO
+	silvara" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758199AbXGLMzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 08:55:50 -0400
+Received: by silvara (Postfix, from userid 1000)
+	id 8733552135; Thu, 12 Jul 2007 07:55:52 -0500 (CDT)
+X-Mailer: git-send-email 1.5.2.GIT
+In-Reply-To: <1184244952554-git-send-email-bdowning@lavos.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52273>
 
-sorry forgot to CC gitlist in my last mail.
-On 7/12/07, pradeep singh <pradeep.rautela@gmail.com> wrote:
-> On 7/12/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> > [Cc: git@vger.kernel.org, Pradeep Singh <pradeep.rautela@gmail.com>,
-> >  Eric Wong <normalperson@yhbt.net> (instaweb creator)]
-> >
-> > pradeep singh wrote:
-> >
-> > > Anyway i could not get gitweb running after running git-instaweb.
-> > >
-> > > Any thoughts on how to setup a gitweb interface ?
-> >
-> > What information does gitweb/INSTALL lack?
->
-> May be i am running some old version on my Ubuntu Edgy machine perhaps?
-> I cannot find such a file anywhere?
->
-> Looks like it is available in newer versions.
-> Does it works for git-1.4.4?
->
-> thanks for help.
-> >
-> > --
-> > Jakub Narebski
-> > Warsaw, Poland
-> > ShadeHawk on #git
-> >
-> >
-> >
->
->
-> --
-> Pradeep
->
+Delta indexes, at least on 64-bit platforms, tend to be larger than
+the actual uncompressed data.  As such, keeping track of this storage
+is important if you want to successfully limit the memory size of your
+pack window.
 
+Squirrel away the total allocation size inside the delta_index struct,
+and add an accessor "sizeof_delta_index" to access it.
 
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
+ delta.h      |    7 +++++++
+ diff-delta.c |   10 ++++++++++
+ 2 files changed, 17 insertions(+), 0 deletions(-)
+
+diff --git a/delta.h b/delta.h
+index 7b3f86d..40ccf5a 100644
+--- a/delta.h
++++ b/delta.h
+@@ -24,6 +24,13 @@ create_delta_index(const void *buf, unsigned long bufsize);
+ extern void free_delta_index(struct delta_index *index);
+ 
+ /*
++ * sizeof_delta_index: returns memory usage of delta index
++ *
++ * Given pointer must be what create_delta_index() returned, or NULL.
++ */
++extern unsigned long sizeof_delta_index(struct delta_index *index);
++
++/*
+  * create_delta: create a delta from given index for the given buffer
+  *
+  * This function may be called multiple times with different buffers using
+diff --git a/diff-delta.c b/diff-delta.c
+index faf96e4..3af5835 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -119,6 +119,7 @@ struct index_entry {
+ };
+ 
+ struct delta_index {
++	unsigned long memsize;
+ 	const void *src_buf;
+ 	unsigned long src_size;
+ 	unsigned int hash_mask;
+@@ -159,6 +160,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	mem = hash + hsize;
+ 	entry = mem;
+ 
++	index->memsize = memsize;
+ 	index->src_buf = buf;
+ 	index->src_size = bufsize;
+ 	index->hash_mask = hmask;
+@@ -228,6 +230,14 @@ void free_delta_index(struct delta_index *index)
+ 	free(index);
+ }
+ 
++unsigned long sizeof_delta_index(struct delta_index *index)
++{
++	if (index)
++		return index->memsize;
++	else
++		return 0;
++}
++
+ /*
+  * The maximum size for any opcode sequence, including the initial header
+  * plus Rabin window plus biggest copy.
 -- 
-Pradeep
+1.5.2.GIT
