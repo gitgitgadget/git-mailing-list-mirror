@@ -1,84 +1,187 @@
 From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH 0/5] Memory-limited pack-object window support
-Date: Wed, 11 Jul 2007 22:14:13 -0500
-Message-ID: <11842100581060-git-send-email-bdowning@lavos.net>
+Subject: [PATCH 3/5] Add pack-objects window memory usage limit
+Date: Wed, 11 Jul 2007 22:14:16 -0500
+Message-ID: <11842100582887-git-send-email-bdowning@lavos.net>
+References: <11842100581060-git-send-email-bdowning@lavos.net>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Brian Downing <bdowning@lavos.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 12 05:14:27 2007
+X-From: git-owner@vger.kernel.org Thu Jul 12 05:14:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8p8K-0005sZ-Sv
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 05:14:25 +0200
+	id 1I8p8M-0005sZ-CN
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 05:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765377AbXGLDOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 23:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765356AbXGLDOT
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 23:14:19 -0400
-Received: from 74-134-246-243.dhcp.insightbb.com ([74.134.246.243]:60167 "EHLO
+	id S934829AbXGLDOY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 23:14:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934651AbXGLDOY
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 23:14:24 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com ([74.134.246.243]:56564 "EHLO
 	silvara" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1759339AbXGLDOR (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1765304AbXGLDOR (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Jul 2007 23:14:17 -0400
 Received: by silvara (Postfix, from userid 1000)
-	id 1754752133; Wed, 11 Jul 2007 22:14:18 -0500 (CDT)
+	id 317AD52137; Wed, 11 Jul 2007 22:14:18 -0500 (CDT)
 X-Mailer: git-send-email 1.5.2.GIT
+In-Reply-To: <11842100581060-git-send-email-bdowning@lavos.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52239>
 
-This patch series implements a memory limit on the window size for
-pack-objects and repack.  Basically, the window size will temporarily
-grow smaller than the --window option specifies if the total memory
-usage of the window is over the specified limit.
+This adds an option (--window-bytes=N) and configuration variable
+(pack.windowBytes = N) to limit the memory size of the pack-objects
+delta search window.  This works by removing the oldest unpacked objects
+whenever the total size goes above the limit.  It will always leave
+at least one object, though, so as not to completely eliminate the
+possibility of computing deltas.
 
-With this series I can run even with --window=1000 on my troublesome
-repository (described in an email a couple of days ago; basically, it
-has a 20MB file with around 200 revisions, plus a bunch of normal sized
-files) with memory usage limited to 512MB and it will happily scale down
-the window to accommodate the file without blowing out my machine.
+This is an extra limit on top of the normal window size (--window=N);
+the window will not dynamically grow above the fixed number of entries
+specified to fill the memory limit.
 
-The --window option still specifies the size of the window and is still
-required; the window will not grow to reach the memory limit, it will
-only shrink to fit.  I think this may be a feature, as running with a
-very large window depth and a memory limit basically means that you will
-pack at an approximately constant slow speed, rather than rushing ahead
-as it does now for very small objects.
+With this, repacking a repository with a mix of large and small objects
+is possible even with a very large window.
 
-I took the easy way out and expire objects out of the window after
-allocation has occurred, rather than figuring out how much needed to
-be cleared before allocating.  This made the logic much more feasible,
-though.
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
+ builtin-pack-objects.c |   56 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 49 insertions(+), 7 deletions(-)
 
-I chose --window-bytes=N and pack.windowBytes=N as my option and
-configuration names.  I'm not in love with them, though; no other
-configuration in Git mentions bytes in the name as far as I can see,
-but I wanted to clearly differentiate it from the window "size" that
---window gets you.
-
-The first patch in this series is optional, but I recommend it.  It makes
-it so that files that are much smaller than a potential delta source
-don't even try to delta with it.  This is handy for running in a mixed
-file size repository with a large window, as it means that when you get
-to small files again you start moving fast without having to wait for
-the large objects to trickle out of the window.  The cut-off is currently
-if it is 1/32 the size, but that number was completely arbitrary.
-
- [PATCH 1/5] Don't try to delta if target is much smaller than source
- [PATCH 2/5] Support fetching the memory usage of a delta index
- [PATCH 3/5] Add pack-objects window memory usage limit
- [PATCH 4/5] Add --window-bytes option to git-repack
- [PATCH 5/5] Add documentation for --window-bytes, pack.windowBytes
-
- Documentation/config.txt           |    5 +++
- Documentation/git-pack-objects.txt |    8 +++++
- Documentation/git-repack.txt       |    8 +++++
- builtin-pack-objects.c             |   58 +++++++++++++++++++++++++++++++----
- delta.h                            |    7 ++++
- diff-delta.c                       |   10 ++++++
- git-repack.sh                      |    3 +-
- 7 files changed, 91 insertions(+), 8 deletions(-)
-
--bcd
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 132ce96..6e441b7 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -16,8 +16,9 @@
+ #include "progress.h"
+ 
+ static const char pack_usage[] = "\
+-git-pack-objects [{ -q | --progress | --all-progress }] [--max-pack-size=N] \n\
+-	[--local] [--incremental] [--window=N] [--depth=N] \n\
++git-pack-objects [{ -q | --progress | --all-progress }] \n\
++	[--max-pack-size=N] [--local] [--incremental] \n\
++	[--window=N] [--window-bytes=N] [--depth=N] \n\
+ 	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
+ 	[--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
+ 	[--stdout | base-name] [<ref-list | <object-list]";
+@@ -79,6 +80,9 @@ static unsigned long delta_cache_size = 0;
+ static unsigned long max_delta_cache_size = 0;
+ static unsigned long cache_max_small_delta_size = 1000;
+ 
++static unsigned long window_memory_usage = 0;
++static unsigned long window_memory_limit = 0;
++
+ /*
+  * The object names in objects array are hashed with this hashtable,
+  * to help looking up the entry by object name.
+@@ -1351,12 +1355,14 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 		if (sz != trg_size)
+ 			die("object %s inconsistent object length (%lu vs %lu)",
+ 			    sha1_to_hex(trg_entry->idx.sha1), sz, trg_size);
++		window_memory_usage += sz;
+ 	}
+ 	if (!src->data) {
+ 		src->data = read_sha1_file(src_entry->idx.sha1, &type, &sz);
+ 		if (sz != src_size)
+ 			die("object %s inconsistent object length (%lu vs %lu)",
+ 			    sha1_to_hex(src_entry->idx.sha1), sz, src_size);
++		window_memory_usage += sz;
+ 	}
+ 	if (!src->index) {
+ 		src->index = create_delta_index(src->data, src_size);
+@@ -1366,6 +1372,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 				warning("suboptimal pack - out of memory");
+ 			return 0;
+ 		}
++		window_memory_usage += sizeof_delta_index(src->index);
+ 	}
+ 
+ 	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
+@@ -1408,9 +1415,22 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	return m;
+ }
+ 
++static void free_unpacked(struct unpacked *n)
++{
++	window_memory_usage -= sizeof_delta_index(n->index);
++	free_delta_index(n->index);
++	n->index = NULL;
++	if (n->data) {
++		free(n->data);
++		n->data = NULL;
++		window_memory_usage -= n->entry->size;
++	}
++	n->entry = NULL;
++}
++
+ static void find_deltas(struct object_entry **list, int window, int depth)
+ {
+-	uint32_t i = nr_objects, idx = 0, processed = 0;
++	uint32_t i = nr_objects, idx = 0, count = 0, processed = 0;
+ 	unsigned int array_size = window * sizeof(struct unpacked);
+ 	struct unpacked *array;
+ 	int max_depth;
+@@ -1445,12 +1465,21 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 		if (entry->no_try_delta)
+ 			continue;
+ 
+-		free_delta_index(n->index);
+-		n->index = NULL;
+-		free(n->data);
+-		n->data = NULL;
++		free_unpacked(n);
+ 		n->entry = entry;
+ 
++		while (window_memory_limit &&
++		       window_memory_usage > window_memory_limit &&
++		       count > 1) {
++			uint32_t tail = idx - count;
++			if (tail > idx) {
++				tail += window + 1;
++				tail %= window;
++			}
++			free_unpacked(array + tail);
++			count--;
++		}
++
+ 		/*
+ 		 * If the current object is at pack edge, take the depth the
+ 		 * objects that depend on the current object into account
+@@ -1485,6 +1514,8 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 
+ 		next:
+ 		idx++;
++		if (count < window)
++			count++;
+ 		if (idx >= window)
+ 			idx = 0;
+ 	} while (i > 0);
+@@ -1523,6 +1554,10 @@ static int git_pack_config(const char *k, const char *v)
+ 		window = git_config_int(k, v);
+ 		return 0;
+ 	}
++	if(!strcmp(k, "pack.windowbytes")) {
++		window_memory_limit = git_config_int(k, v);
++		return 0;
++	}
+ 	if(!strcmp(k, "pack.depth")) {
+ 		depth = git_config_int(k, v);
+ 		return 0;
+@@ -1699,6 +1734,13 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 				usage(pack_usage);
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--window-bytes=")) {
++			char *end;
++			window_memory_limit = strtoul(arg+15, &end, 0);
++			if (!arg[15] || *end)
++				usage(pack_usage);
++			continue;
++		}
+ 		if (!prefixcmp(arg, "--depth=")) {
+ 			char *end;
+ 			depth = strtoul(arg+8, &end, 0);
+-- 
+1.5.2.GIT
