@@ -1,72 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-log --follow?
-Date: Thu, 12 Jul 2007 12:01:24 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707121154240.20061@woody.linux-foundation.org>
-References: <20070704203541.GA13286@artemis.corp> <7vzm22vyin.fsf@assigned-by-dhcp.cox.net>
- <7vsl7uvx8v.fsf_-_@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.999.0707121026080.20061@woody.linux-foundation.org>
- <7vsl7ttq97.fsf@assigned-by-dhcp.cox.net>
+From: "Ryan Moszynski" <ryan.m.public@gmail.com>
+Subject: git .pack expansion question
+Date: Thu, 12 Jul 2007 15:03:01 -0400
+Message-ID: <5ed683f50707121203q52084b72o106616f1c8710141@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 21:01:55 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 12 21:03:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I93vH-0001wg-3H
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 21:01:55 +0200
+	id 1I93wq-0002UF-QW
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 21:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbXGLTBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 15:01:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754166AbXGLTBs
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 15:01:48 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:45677 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753597AbXGLTBs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jul 2007 15:01:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6CJ1T1o014182
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Jul 2007 12:01:30 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6CJ1OuT027662;
-	Thu, 12 Jul 2007 12:01:24 -0700
-In-Reply-To: <7vsl7ttq97.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.615 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756140AbXGLTDF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 15:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756080AbXGLTDE
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 15:03:04 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:6873 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761422AbXGLTDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 15:03:03 -0400
+Received: by py-out-1112.google.com with SMTP id d32so466150pye
+        for <git@vger.kernel.org>; Thu, 12 Jul 2007 12:03:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=jZ1m7mk9BaXi34bOOd0jJigzHumlJvOOe8H5ra2BZhGe5+F7qV9eJWLgUIht6JgIDCiSbqb52FBkx068vSK9l3hq3Hd/qRA9pjvMnk7Tps0KuOZFCeIz5SpR2hqzobf/Yw0hNUkjCb0J9jq2eIxUjpNthg4xNOOCZARDbQVlEY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ls6KZRQnT3UAssN+23HeHucZjUXaPTezlWZtf8OLu9UxWP2DMxvCgo1CuRDtzf9UvqfPInISRR64llUNGzom9I/8ib76zucsjVLm9oIr88XhGw/kEAcXHkFZn9o+vIQLrXShmUEP4W0ZjbG5YhfZ69JTW+rigBQs39QjiwPiiug=
+Received: by 10.35.62.19 with SMTP id p19mr1600950pyk.1184266981743;
+        Thu, 12 Jul 2007 12:03:01 -0700 (PDT)
+Received: by 10.65.232.10 with HTTP; Thu, 12 Jul 2007 12:03:01 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52322>
+
+hopefully this is the right list for this:
+
+am i understanding this right?
+
+if i run the command:
+git-repack
+this creates an .idx and a .pack file that together hold all the files
+and other metadata for my git directory.  What i can't figure out
+though, is how to send just these two files to another machine over
+the network, and then using only these two files, have git create a
+replica of the original git directory that the .pack file was made
+from.  I've tried
+
+mkdir git-test
+cd git-test
+cp pack-92fadfab20e56acbbf28ed45851d61dc0d35c6ab.idx && .pack ./
+git-init-db
+git add .
+git-unpack-objects < pack-92fadfab20e56acbbf28ed45851d61dc0d35c6ab.pack
 
 
+now, the objects that were created from my original files are in the
+objects directory, but I need them expanded so my git directory is a
+copy of the one i originally git-repack'ed.  Is there an easy way to
+do this?  This is for back up and archival purposes.
 
-On Thu, 12 Jul 2007, Junio C Hamano wrote:
-> 
-> Yeah, I just tried the blame from 'pu' (I have been carrying
-> that original patch from you there).  The output is not very
-> intuitive in that it talks about each commit but it is not
-> apparent _why_ the command talks about that commit.  Maybe
-> adding "there are the lines in the final image of the blob you
-> are blaming that came from this commit" to the output would make
-> the output easier to read.
+here are three ways i know to do this already, none of which I like very much.
 
-That doesn't necessarily work, at least not incrementally. The same commit 
-can show up multiple times for *different* 'blame_entry' things, and I 
-don't think we want to show such a commit multiple times, and I also don't 
-think we know what all the blame entries are going to be until the end.
+cloning a repository over a network,
+drawback: git has to be installed on both machines
+or
+scp'ing my whole git directory over the network,
+drawback: too many little files, scp is too slow
+or
+tar'ing up my git directory so i can send one file for everything,
+drawback: since git already has a compression/expansion tool built in,
+i shouldn't have to use another to be able to do what i need.
 
-So right now I use that METAINFO_SHOWN flag to just show the commit once. 
-That makes the log a *lot* more readable.
+any comments appreciated,
 
-In my original patch (the one you apparently have in 'pu'), I did that 
-differently (and not very well), but maybe that approach lends itself 
-better to showing some kind of patch.
-
-I think my newer version is likely better.
-
-		Linus
+ryan
