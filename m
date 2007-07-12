@@ -1,71 +1,234 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Better handling of local changes in 'gitk'?
-Date: Thu, 12 Jul 2007 14:01:00 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707121356430.20061@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0707121214420.20061@woody.linux-foundation.org>
- <7vir8ptksi.fsf@assigned-by-dhcp.cox.net>
- <7vejjdtkl0.fsf@assigned-by-dhcp.cox.net>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH 2/2] Make git-tag a builtin.
+Date: Thu, 12 Jul 2007 23:01:57 +0200
+Message-ID: <1b46aba20707121401n12796827n77b7e1d1ccde330c@mail.gmail.com>
+References: <46952755.2050307@gmail.com>
+	 <7vps2yxjgq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 23:02:00 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"=?ISO-8859-1?Q?Kristian_H=F8gsberg?=" <krh@redhat.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 23:02:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I95nK-0004KK-EK
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 23:01:50 +0200
+	id 1I95nb-0004Ts-LD
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 23:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933610AbXGLVBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 17:01:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933501AbXGLVBq
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 17:01:46 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:45779 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933491AbXGLVBp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jul 2007 17:01:45 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6CL16l2022601
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Jul 2007 14:01:07 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6CL10oO002326;
-	Thu, 12 Jul 2007 14:01:00 -0700
-In-Reply-To: <7vejjdtkl0.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.614 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S934134AbXGLVCB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 12 Jul 2007 17:02:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934041AbXGLVCB
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 17:02:01 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:4802 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933888AbXGLVB7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jul 2007 17:01:59 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so254547nze
+        for <git@vger.kernel.org>; Thu, 12 Jul 2007 14:01:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D3WFvbonVXNoCsGRIcEEagkbbEGskUdiOnCAuqfbMUWvrue5qUQZzsaJMUQ+LbXTuIHvH/x36XvlnBD/qu5uXdHNqltgsDTn2/hnQrIcVqTmBjcLqcbc3oDoWY8ncTF+P4af4dCeihQm+DXX5/A9v/JK7SjxKjR2ZfIGr1cDbcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S72fAkiD8RM4Nb17tGLiPgWu5f2Zx+sPdhUbC4z+pkHPCX6VKNpiVSvDvO29VMgeHyDK2Z1CXcb4I6VSvaB3Lyp89cY7fKTYMFYDQG3qceCtXzzgr2IjLFrS+aKBWEHLJvJfWL3mZpgc6rruGnvq8jzrm+twh1kxInxtj1Fg8SM=
+Received: by 10.115.18.1 with SMTP id v1mr981499wai.1184274117902;
+        Thu, 12 Jul 2007 14:01:57 -0700 (PDT)
+Received: by 10.114.57.10 with HTTP; Thu, 12 Jul 2007 14:01:57 -0700 (PDT)
+In-Reply-To: <7vps2yxjgq.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52336>
 
+Thank you for your review, Junio, I'm studing all of your suggestions.
 
-
-On Thu, 12 Jul 2007, Junio C Hamano wrote:
+2007/7/12, Junio C Hamano <gitster@pobox.com>:
+> Carlos Rica <jasampler@gmail.com> writes:
 >
-> I just meant that I agree with you that --cc between HEAD, index and the 
-> working tree is a wonderful way to view the current state.
+> > Mime-Version: 1.0
+> > Content-Type: text/plain; charset=3Dwindows-1252
+>
+> Hmmmmmm.....
 
-Heh. I wasn't thinking of --cc, and if seen as a combination diff, I think 
---combined would be better (we very much want to see *all* changes, not 
-just the conflicting ones, no?).
+> > diff --git a/builtin-tag.c b/builtin-tag.c
+> > new file mode 100644
+> > index 0000000..1824379
+> > --- /dev/null
+> > +++ b/builtin-tag.c
+> > @@ -0,0 +1,430 @@
+> > +/*
+> > + * Builtin "git tag"
+> > + *
+> > + * Copyright (c) 2007 Kristian H??gsberg <krh@redhat.com>,
+>
+> I do not know how the above would come out, but it surely was
+> not H=F8gsberg in the copy I received...
 
-I was literally meaning two separate diffs, as two separate commits. But 
-yes, I do agree that it might be very interesting to make "git diff-index" 
-know about --combined/--cc in addition to --cached.
+I think it is my fault. My original builtin-tag.c file has the
+name encoded in UTF-8, and the patch too, except because
+I also added his name in the commit's message in Latin-1 encoding,
+and then, programs cannot recode or recognize both. Sorry.
 
-> It might make sense to teach "git diff" itself to show this
-> 3-way diff with a new option ("git diff --h-i-w").  The
-> necessary machinery is already there to handle "git diff maint
-> master next pu" (four trees!), and "git diff maint:Makefile
-> master:Makefile next:Makefile" (three blobs).
+>
+> > + *                    Carlos Rica <jasampler@gmail.com>
+> > + * Based on git-tag.sh and mktag.c by Linus Torvalds.
+> > + */
+> > +
+> > +#include "cache.h"
+> > +#include "builtin.h"
+> > +#include "refs.h"
+> > +#include "tag.h"
+> > +#include "run-command.h"
+> > +
+> > +static const char builtin_tag_usage[] =3D
+> > +  "git-tag [-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [=
+-f | -d | -v] [-m <msg>] <tagname> [<head>]";
+> > +
+> > +static char signingkey[1000];
+> > +static int lines;
+> > +
+> > +static void launch_editor(const char *path, char **buffer, unsigne=
+d long *len)
+> > +{
+> > +     const char *editor, *terminal;
+> > +     struct child_process child;
+> > +     const char *args[3];
+> > +     int fd;
+> > +
+> > +     editor =3D getenv("VISUAL");
+> > +     if (!editor)
+> > +             editor =3D getenv("EDITOR");
+> > +
+> > +     terminal =3D getenv("TERM");
+> > +     if (!editor && (!terminal || !strcmp(terminal, "dumb"))) {
+> > +             fprintf(stderr,
+> > +             "Terminal is dumb but no VISUAL nor EDITOR defined.\n=
+"
+> > +             "Please supply the message using either -m or -F opti=
+on.\n");
+> > +             exit(1);
+> > +     }
+>
+> Ah, this is taken from git-commit.sh ;-) Does your "git tag"
+> support the -F option (builtin_tag_usage[] does not seem to
+> mention it)?  I wonder what happens when this function migrates
+> to editor.c and a new program, other than git-tag and
+> git-commit, that is without -F nor -m options wants to call
+> this.
 
-Actually, I think that if you teach "git diff-index" about --combined and 
---cc, then you'll automatically get it when you just do "git diff HEAD". 
-No?
+I will include that -F option in the builtin_tag_usage and I will also =
+find
+if documentation already has it.
 
-		Linus
+As I said above, launch_editor is copied and modified from the builtin-=
+commit.c
+that Kristian is currently writing. Indeed, I removed every mention on
+it related
+specifically to commits, so it will be difficult to share the code betw=
+een both
+versions in the current state. Perhaps a raw function not printing out =
+errors
+(and returning error codes instead) could be the only option to reuse i=
+t. I need
+to ask Kristian for this.
+
+> > +static int run_verify_tag_command(unsigned char *sha1)
+> > +{
+> > +     int ret;
+> > +     const char *argv_verify_tag[] =3D {"git-verify-tag",
+> > +                                     "-v", "SHA1_HEX", NULL};
+> > +     argv_verify_tag[2] =3D sha1_to_hex(sha1);
+> > +
+> > +     ret =3D run_command_v_opt(argv_verify_tag, 0);
+> > +
+> > +     if (ret <=3D -10000)
+> > +             die("unable to run %s\n", argv_verify_tag[0]);
+> > +     return -ret;
+> > +}
+>
+> I wonder why you need to differentiate between ERR_RUN_COMMAND_*
+> and non-zero exit status...  Also do you need to "return -ret",
+> instead of not negating?  In C programs error returns are often
+> negative and finish_command() follows that convention.
+
+The point here was to mimic the behaviour of git-tag.sh,
+returning the exit status returned by the called script: "git-verify-ta=
+g.sh".
+However, I didn't realize that git-verify tag.sh was exiting only with =
+1 or 0,
+so "return ret;" will also work since the call to the function is:
+   if (run_verify_tag_command(sha1))
+      had_error =3D 1;
+
+When die is called (because of an ERR_RUN_COMMAND_* error condition),
+it will return 128 to the system, and won't do more processing to other=
+ tags.
+Do yo mean that it would be better to remove this "die" call here?
+
+>
+> > +     if (!message) {
+> > ...
+> > +     }
+> > +     else {
+> > +             buffer =3D message;
+> > +             size =3D strlen(message);
+> > +     }
+> > +
+> > +     size =3D stripspace(buffer, size, 1);
+> > +
+> > +     if (!message && !size)
+> > +             die("no tag message?");
+>
+> Why check 'message' here?
+
+Because the behaviour of git-tag.sh here is not allow empty
+messages when the editor is executed, but allow them when
+-m or -F options are given (message then will be not NULL).
+
+> > +int cmd_tag(int argc, const char **argv, const char *prefix)
+> > +{
+> > ...
+> > +             if (!strcmp(arg, "-F")) {
+> > +                     unsigned long len;
+> > +                     annotate =3D 1;
+> > +                     i++;
+> > +                     if  (i =3D=3D argc)
+> > +                             die("option -F needs an argument.");
+> > +
+> > +                     fd =3D open(argv[i], O_RDONLY);
+> > +                     if (fd < 0)
+> > +                             die("cannot open %s", argv[1]);
+>
+> The shell script version relies on the magic "cat -" to read
+> from standard input upon "git tag -F -".  It is understandable
+> that both of you and Dscho missed it, though.
+
+It should be easy to implement, I will do it.
+
+> > +                     len =3D 1024;
+> > +                     message =3D xmalloc(len);
+> > +                     if (read_pipe(fd, &message, &len))
+> > +                             die("cannot read %s", argv[1]);
+> > +                     message =3D xrealloc(message, len + 1);
+> > +                     message[len] =3D '\0';
+> > +                     continue;
+> > +             }
+>
+> We might be better off if read_pipe() is renamed to read_fd()
+> and made internally always NUL-terminate the buffer (but not
+> count that NUL as part of length).  I dunno.
+
+I saw an implementation for read_pipe named read_fd from Kristian:
+http://article.gmane.org/gmane.comp.version-control.git/51366
+but it is only focused on allowing NULL and 0 in pointer and size
+parameters. It should be harmless NUL-terminating the buffer
+since the routine is already allocating more memory than needed
+for efficiency purposes.
