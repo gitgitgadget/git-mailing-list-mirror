@@ -1,102 +1,136 @@
 From: skimo@liacs.nl
-Subject: [PATCH 3/6] Define ishex(x) in git-compat-util.h
-Date: Thu, 12 Jul 2007 21:06:00 +0200
-Message-ID: <11842671632000-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 4/6] refs.c: lock cached_refs during for_each_ref
+Date: Thu, 12 Jul 2007 21:06:01 +0200
+Message-ID: <11842671632300-git-send-email-skimo@liacs.nl>
 References: <11842671631744-git-send-email-skimo@liacs.nl>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 21:07:24 2007
+X-From: git-owner@vger.kernel.org Thu Jul 12 21:08:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I940W-0003wn-O9
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 21:07:21 +0200
+	id 1I941X-0004QU-NU
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 21:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405AbXGLTGo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 15:06:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbXGLTGo
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 15:06:44 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:46082 "EHLO rhodium.liacs.nl"
+	id S1755382AbXGLTHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 15:07:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754744AbXGLTHs
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 15:07:48 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:46133 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753119AbXGLTGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 15:06:44 -0400
+	id S1756080AbXGLTHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 15:07:48 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l6CJ63pW029832;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l6CJ63RO029833;
 	Thu, 12 Jul 2007 21:06:08 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id B56CE3C00D; Thu, 12 Jul 2007 21:06:03 +0200 (CEST)
+	id C47123C00E; Thu, 12 Jul 2007 21:06:03 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.rc0.63.gc956
 In-Reply-To: <11842671631744-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52327>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
+If the function called by for_each_ref modifies a ref in any way,
+the cached_refs that for_each_ref was looping over would be
+removed, resulting in undefined behavior.
+
+This patch prevents the cached_refs from being removed
+while for_each_ref is still iterating over them.
+
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- builtin-name-rev.c |    1 -
- ctype.c            |    5 +++--
- git-compat-util.h  |    5 ++++-
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ refs.c |   37 +++++++++++++++++++++++++++++++++----
+ 1 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-name-rev.c b/builtin-name-rev.c
-index 61eba34..b2ac40c 100644
---- a/builtin-name-rev.c
-+++ b/builtin-name-rev.c
-@@ -233,7 +233,6 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 				break;
+diff --git a/refs.c b/refs.c
+index 4dc7e8b..e710903 100644
+--- a/refs.c
++++ b/refs.c
+@@ -153,6 +153,8 @@ static struct ref_list *sort_ref_list(struct ref_list *list)
+ static struct cached_refs {
+ 	char did_loose;
+ 	char did_packed;
++	char is_locked;
++	char is_invalidated;
+ 	struct ref_list *loose;
+ 	struct ref_list *packed;
+ } cached_refs;
+@@ -170,6 +172,11 @@ static void invalidate_cached_refs(void)
+ {
+ 	struct cached_refs *ca = &cached_refs;
  
- 			for (p_start = p; *p; p++) {
--#define ishex(x) (isdigit((x)) || ((x) >= 'a' && (x) <= 'f'))
- 				if (!ishex(*p))
- 					forty = 0;
- 				else if (++forty == 40 &&
-diff --git a/ctype.c b/ctype.c
-index ee06eb7..97b5724 100644
---- a/ctype.c
-+++ b/ctype.c
-@@ -6,7 +6,8 @@
- #include "cache.h"
++	if (ca->is_locked) {
++		ca->is_invalidated = 1;
++		return;
++	}
++
+ 	if (ca->did_loose && ca->loose)
+ 		free_ref_list(ca->loose);
+ 	if (ca->did_packed && ca->packed)
+@@ -178,6 +185,24 @@ static void invalidate_cached_refs(void)
+ 	ca->did_loose = ca->did_packed = 0;
+ }
  
- #define SS GIT_SPACE
--#define AA GIT_ALPHA
-+#define HA GIT_HEXAL
-+#define AA GIT_OTHAL
- #define DD GIT_DIGIT
++static void lock_cached_refs(void)
++{
++	struct cached_refs *ca = &cached_refs;
++
++	ca->is_locked = 1;
++}
++
++static void unlock_cached_refs(void)
++{
++	struct cached_refs *ca = &cached_refs;
++
++	ca->is_locked = 0;
++	if (ca->is_invalidated) {
++		invalidate_cached_refs();
++		ca->is_invalidated = 0;
++	}
++}
++
+ static void read_packed_refs(FILE *f, struct cached_refs *cached_refs)
+ {
+ 	struct ref_list *list = NULL;
+@@ -518,10 +543,12 @@ int peel_ref(const char *ref, unsigned char *sha1)
+ static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+ 			   void *cb_data)
+ {
+-	int retval;
++	int retval = 0;
+ 	struct ref_list *packed = get_packed_refs();
+ 	struct ref_list *loose = get_loose_refs();
  
- unsigned char sane_ctype[256] = {
-@@ -16,7 +17,7 @@ unsigned char sane_ctype[256] = {
- 	DD, DD, DD, DD, DD, DD, DD, DD, DD, DD,  0,  0,  0,  0,  0,  0,		/* 48-15 */
- 	 0, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,		/* 64-15 */
- 	AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,  0,  0,  0,  0,  0,		/* 80-15 */
--	 0, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,		/* 96-15 */
-+	 0, HA, HA, HA, HA, HA, HA, AA, AA, AA, AA, AA, AA, AA, AA, AA,		/* 96-15 */
- 	AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,  0,  0,  0,  0,  0,		/* 112-15 */
- 	/* Nothing in the 128.. range */
- };
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 362e040..1a36f4c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -325,12 +325,15 @@ static inline int has_extension(const char *filename, const char *ext)
- extern unsigned char sane_ctype[256];
- #define GIT_SPACE 0x01
- #define GIT_DIGIT 0x02
--#define GIT_ALPHA 0x04
-+#define GIT_HEXAL 0x04
-+#define GIT_OTHAL 0x08
-+#define GIT_ALPHA (GIT_HEXAL | GIT_OTHAL)
- #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
- #define isspace(x) sane_istest(x,GIT_SPACE)
- #define isdigit(x) sane_istest(x,GIT_DIGIT)
- #define isalpha(x) sane_istest(x,GIT_ALPHA)
- #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
-+#define ishex(x) sane_istest(x,GIT_HEXAL | GIT_DIGIT)
- #define tolower(x) sane_case((unsigned char)(x), 0x20)
- #define toupper(x) sane_case((unsigned char)(x), 0)
++	lock_cached_refs();
++
+ 	while (packed && loose) {
+ 		struct ref_list *entry;
+ 		int cmp = strcmp(packed->name, loose->name);
+@@ -538,15 +565,17 @@ static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+ 		}
+ 		retval = do_one_ref(base, fn, trim, cb_data, entry);
+ 		if (retval)
+-			return retval;
++			goto out;
+ 	}
  
+ 	for (packed = packed ? packed : loose; packed; packed = packed->next) {
+ 		retval = do_one_ref(base, fn, trim, cb_data, packed);
+ 		if (retval)
+-			return retval;
++			goto out;
+ 	}
+-	return 0;
++ out:
++	unlock_cached_refs();
++	return retval;
+ }
+ 
+ int head_ref(each_ref_fn fn, void *cb_data)
 -- 
 1.5.3.rc0.100.ge60b4
