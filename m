@@ -1,63 +1,81 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
-Date: Thu, 12 Jul 2007 17:05:52 +0200
-Message-ID: <81b0412b0707120805l105bc692yfa8698293683f492@mail.gmail.com>
-References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com>
-	 <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com>
-	 <a901b49a0707112227m2ea746ectd367031fdc8d3537@mail.gmail.com>
-	 <f74tk8$k21$1@sea.gmane.org>
-	 <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
-	 <a901b49a0707120552y649fba20p4fa14ca48be4be54@mail.gmail.com>
-	 <Pine.LNX.4.64.0707121411070.4516@racer.site>
-	 <a901b49a0707120632m1654733as94839e88bd993bb1@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH] apply delta depth bias to already deltified objects
+Date: Thu, 12 Jul 2007 10:20:16 -0500
+Message-ID: <20070712152016.GB19073@lavos.net>
+References: <alpine.LFD.0.999.0707120049120.32552@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "pradeep singh" <pradeep.rautela@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 17:06:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jul 12 17:20:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I90Ev-0003Gf-Bx
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 17:05:57 +0200
+	id 1I90T5-0006oD-HJ
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 17:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757069AbXGLPFy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 11:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756507AbXGLPFy
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 11:05:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:24696 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756007AbXGLPFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 11:05:53 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so356082ugf
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 08:05:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CQ87/GmOTN1TS0YQ3YC9KQIVGNk86XDRFY+9Aif1sIQZoAIfdZIMKbiqNE2bVGfC63ZZvfO1tsWYh3PNE06wE9GABkfM1liSX5HmvyNi4AyA424aKnGY4M18iIyqsEydZ3viOPaOONqkAlwMIf2YzL1ad1YTvFDZVYJyZbQSyKM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cgaB193DoeOChNIb56iFhO2zKyWNQdREU2qooRSh+BxHBtnXPChQcHLxe0tCueYU+JIc113JzjKmxVNZChq9H57J0LkXkvN6IzJRmOJOZEbbhrwYDcAL+k39aZJN8522uDF0ydtzi+GXrPtKVDh/YPeROdlAggXOie+T2BEcsQM=
-Received: by 10.78.170.17 with SMTP id s17mr169293hue.1184252752307;
-        Thu, 12 Jul 2007 08:05:52 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Thu, 12 Jul 2007 08:05:52 -0700 (PDT)
-In-Reply-To: <a901b49a0707120632m1654733as94839e88bd993bb1@mail.gmail.com>
+	id S1758470AbXGLPU0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 11:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758467AbXGLPU0
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 11:20:26 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:25613 "EHLO
+	asav03.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757765AbXGLPU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 11:20:26 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav03.insightbb.com with ESMTP; 12 Jul 2007 11:20:25 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AutRAH3jlUZKhvbzRmdsb2JhbACBS4VfiAgBAQE+
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id B2130309F31; Thu, 12 Jul 2007 10:20:16 -0500 (CDT)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707120049120.32552@xanadu.home>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52298>
 
-On 7/12/07, pradeep singh <pradeep.rautela@gmail.com> wrote:
-> If i upgrade to git 1.5.x will i loose my earlier git info and all the stuff?
+On Thu, Jul 12, 2007 at 02:38:30AM -0400, Nicolas Pitre wrote:
+> This apparently makes BRian's patological case worse (although better 
+> than before his same-size-shallower patch), but I think that the 
+> improvement in the general case is worth it.  Even Brian's pack gets 
+> smaller so...
 
-No
+I've found why this makes my case worse, and I think it's correctable
+and will benefit everything when fixed:
 
-> I hope having differnt git versions on different machines does not hurts?
+Let's say we've currently got a delta match of 11 bytes at depth 5.
+So trg_entry->delta_size = 11 and trg_entry->depth = 5.  max_depth is
+100.
 
-It does not hurt, but you'll find you like the new one.
+Now let's say the next object we're comparing against is at depth 2
+(src_entry->depth = 2).  Even if we can find a delta of the same size
+we should take it.
+
+Now, with Nico's new patch:
+
+		max_size = trg_entry->delta_size * max_depth /
+				(max_depth - trg_entry->depth + 1);
+
+max_size is now 11.  So far so good.
+
+Now, however, the other bias happens:
+
+	max_size = max_size * (max_depth - src_entry->depth) / max_depth;
+
+    max_size = 11 * (100 - 2) / 100;
+    max_size = 1078 / 100;
+    max_size = 10;
+
+This was okay when max_size was always (trg_size/2 - 20) here, but now
+it's cutting it off too much.  max_size is now 10, and we can't make
+a better depth match of the same size anymore.
+
+I think the second bias equation should be scaled so as not to take
+effect unless (src_entry->depth [+ 1?] > trg_entry->depth).
+
+Other than this flaw I think this patch looks great.
+
+-bcd
