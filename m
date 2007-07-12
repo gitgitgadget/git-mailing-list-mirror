@@ -1,67 +1,57 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: git-svn and renames
-Date: Thu, 12 Jul 2007 18:51:09 +0200
-Message-ID: <46965BFD.5080702@dawes.za.net>
-References: <46938594.2010607@dawes.za.net> <20070711082000.GA29371@muzzle> <20070712090635.GA18155@mayonaise>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: mtimes of working files
+Date: Thu, 12 Jul 2007 18:27:26 +0100
+Message-ID: <1184261246.31598.139.camel@pmac.infradead.org>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
+	 <Pine.LNX.4.64.0707111940080.4516@racer.site>
+	 <20070711202615.GE3069@efreet.light.src>
+	 <200707120857.53090.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 18:51:53 2007
+Cc: git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 19:27:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I91tL-0006Xt-4F
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 18:51:47 +0200
+	id 1I92Rz-0007m4-2U
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 19:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758572AbXGLQvo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 12:51:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759228AbXGLQvo
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 12:51:44 -0400
-Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:39086 "EHLO
-	spunkymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756938AbXGLQvn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jul 2007 12:51:43 -0400
-Received: from [192.168.201.103] (dsl-146-24-230.telkomadsl.co.za [165.146.24.230])
-	by spunkymail-a5.g.dreamhost.com (Postfix) with ESMTP id 3284B14D6B1;
-	Thu, 12 Jul 2007 09:51:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
-In-Reply-To: <20070712090635.GA18155@mayonaise>
+	id S1753076AbXGLR1b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 13:27:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbXGLR1b
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 13:27:31 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:48192 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071AbXGLR1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 13:27:30 -0400
+Received: from pmac.infradead.org ([2001:8b0:10b:1:20d:93ff:fe7a:3f2c])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1I92Rr-0002XS-48; Thu, 12 Jul 2007 18:27:27 +0100
+In-Reply-To: <200707120857.53090.andyparkins@gmail.com>
+X-Mailer: Evolution 2.10.2 (2.10.2-2.fc7.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52307>
 
-Eric Wong wrote:
-
->> I've personally noted a rename issue with committing funky characters
->> "#{}" in filenames (I was renaming to get rid of those funky characters of
->> course).   Haven't had proper time to look into it.
->>
->> Did any previous successful commits have renames in them?  You may want
->> to set similarity to 100% to disable rename detection.
+On Thu, 2007-07-12 at 08:57 +0100, Andy Parkins wrote:
+> The only time you get an unnecessary rebuild is if you do
 > 
-> SVN over HTTP is most definitely behaves differently from svn:// and
-> file:// wrt strange file names.  I'll see if I can work on this again in
-> day or two, or if anybody wants to pick up where I left off, my
-> work-in-progress test case is below (it's currently failing, of course).
+>  git checkout branch1
+>  git checkout branch2
+>  git checkout branch1
 > 
-> I'll have to look into how (if) svk handles it and also at the svn
-> command-line client.  I'm fairly sure the command-line svn client
-> handles it somehow...
-> 
-> Right now I'm getting sleepy, my vision is blurring and I'm seeing
-> "SVN" as "S/M" through my tired eyes...
-> 
+> But we can hardly expect git to be responsible for that. 
 
-Hi Eric,
+Indeed. That's a user error. Git makes it cheap and easy to have
+separate _trees_. Just use them -- branches are just another mental
+hangover from CVS which we should try to cure ourselves of :)
 
-This doesn't seem to be my problem. In my case, the filenames are quite 
-simple and straightforward.
-
-
-Thanks
-
-Rogan
+-- 
+dwmw2
