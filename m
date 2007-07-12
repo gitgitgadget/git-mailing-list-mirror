@@ -1,48 +1,52 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/6] Pack window memory limit, take 2
-Date: Thu, 12 Jul 2007 11:46:28 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707121144110.32552@xanadu.home>
-References: <1184244952554-git-send-email-bdowning@lavos.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Volume of commits
+Date: Thu, 12 Jul 2007 18:21:47 +0200
+Message-ID: <20070712162147.GA31743@diana.vm.bytemark.co.uk>
+References: <m3ps2xu5hc.fsf@pc7.dolda2000.com> <20070712140304.GB28310@diana.vm.bytemark.co.uk> <m3ir8pu133.fsf@pc7.dolda2000.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 17:46:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Fredrik Tolf <fredrik@dolda2000.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 18:22:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I90sH-0005Fq-2d
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 17:46:37 +0200
+	id 1I91Qq-000720-VA
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 18:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757325AbXGLPqa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 11:46:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757740AbXGLPqa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 11:46:30 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30444 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756266AbXGLPq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 11:46:29 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JL200DH2P5GMH80@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Jul 2007 11:46:28 -0400 (EDT)
-In-reply-to: <1184244952554-git-send-email-bdowning@lavos.net>
-X-X-Sender: nico@xanadu.home
+	id S1758988AbXGLQVz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 12 Jul 2007 12:21:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759974AbXGLQVz
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 12:21:55 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1280 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758820AbXGLQVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 12:21:54 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1I91QJ-0008Nt-00; Thu, 12 Jul 2007 17:21:47 +0100
+Content-Disposition: inline
+In-Reply-To: <m3ir8pu133.fsf@pc7.dolda2000.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52300>
 
-On Thu, 12 Jul 2007, Brian Downing wrote:
+On 2007-07-12 16:51:44 +0200, Fredrik Tolf wrote:
 
-> This series has my circular buffer errors (hopefully) corrected, and
-> the code is a lot cleaner as a bonus.  Also, the options are now named
-> --window-memory and pack.windowMemory, and both can take {k,m,g} suffixes.
+> I see. Initially, it sounds like a lot of work, but the more I think
+> about it, the more I realize that it probably isn't that bad.
 
-Acked-by: Nicolas Pitre <nico@cam.org>
-(including the amended patches).
+You're right that it isn't that much work, but it still is work. The
+point is that just like investing time in making code nice and
+readable, investing time in making the history nice and readable is a
+net win. Others can follow what you do, which makes reviewing the
+changes much cheaper, and you can look back six months and actually
+understand what you were thinking back then.
 
-
-Nicolas
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
