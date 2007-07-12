@@ -1,61 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
-Date: Thu, 12 Jul 2007 11:58:38 +0200
-Organization: At home
-Message-ID: <f74tk8$k21$1@sea.gmane.org>
-References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com> <81b0412b0707110731n4ffa25afoea5395a856869325@mail.gmail.com> <a901b49a0707112227m2ea746ectd367031fdc8d3537@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH 3/5] Add pack-objects window memory usage limit
+Date: Thu, 12 Jul 2007 05:02:51 -0500
+Message-ID: <20070712100251.GT4087@lavos.net>
+References: <11842100581060-git-send-email-bdowning@lavos.net> <11842100582887-git-send-email-bdowning@lavos.net> <alpine.LFD.0.999.0707112356330.32552@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 12 11:52:24 2007
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jul 12 12:03:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8vLT-0001mb-SO
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 11:52:24 +0200
+	id 1I8vVu-0003wk-OE
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 12:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756349AbXGLJwU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 05:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbXGLJwU
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 05:52:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:53888 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751220AbXGLJwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 05:52:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I8vLL-0003em-O6
-	for git@vger.kernel.org; Thu, 12 Jul 2007 11:52:15 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 11:52:15 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 11:52:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1759059AbXGLKDH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 06:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758983AbXGLKDG
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 06:03:06 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:47839 "EHLO
+	asav09.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758388AbXGLKDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 06:03:05 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav09.insightbb.com with ESMTP; 12 Jul 2007 06:03:03 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AutRADCZlUZKhvbzRmdsb2JhbACBS4VfiAgBAQE+
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 0283B309F31; Thu, 12 Jul 2007 05:02:52 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707112356330.32552@xanadu.home>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52263>
 
-[Cc: git@vger.kernel.org, Pradeep Singh <pradeep.rautela@gmail.com>,
- Eric Wong <normalperson@yhbt.net> (instaweb creator)]
-
-pradeep singh wrote:
-
-> Anyway i could not get gitweb running after running git-instaweb.
+On Thu, Jul 12, 2007 at 12:25:54AM -0400, Nicolas Pitre wrote:
+> On Wed, 11 Jul 2007, Brian Downing wrote:
 > 
-> Any thoughts on how to setup a gitweb interface ?
+> > +		while (window_memory_limit &&
+> > +		       window_memory_usage > window_memory_limit &&
+> > +		       count > 1) {
+> > +			uint32_t tail = idx - count;
+> > +			if (tail > idx) {
+> > +				tail += window + 1;
+> > +				tail %= window;
+> > +			}
+> > +			free_unpacked(array + tail);
+> > +			count--;
+> > +		}
+> 
+> This is bogus.  Suppose window = 10 and only array entries 8, 9, 0, 1 
+> and 2 are populated.  In that case idx = 2 and count should be 4 (not 
+> counting the current entry yet).  You want to evict entry 8.
 
-What information does gitweb/INSTALL lack?
+The current idx has already been depopulated by the time that code is
+run, and count is probably one higher than you are expecting, so this
+does actually work.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+However, looking at it again, I think if the window hasn't been saturated
+yet in my current code count will be what you expect in this situation
+and it will screw up as you describe.
+
+Besides, it is admittedly clumsy as hell (a common affliction when
+dealing with circular buffers for me it seems).  I'll see if I can get
+something better that works.
+
+Thanks,
+-bcd
