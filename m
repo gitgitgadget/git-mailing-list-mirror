@@ -1,87 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Fix git-rebase -i to allow squashing of fast-forwardable commits
-Date: Fri, 13 Jul 2007 00:30:35 +0200
-Message-ID: <20070712223035.GB30532@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "David Frech" <nimblemachines@gmail.com>
+Subject: sharing between local "work" and "nightly build" git repos
+Date: Thu, 12 Jul 2007 16:36:58 -0700
+Message-ID: <7154c5c60707121636l585b42d4l931b08f1468ddfc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 13 00:30:42 2007
+X-From: git-owner@vger.kernel.org Fri Jul 13 01:37:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I97BJ-0000Xh-CL
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 00:30:41 +0200
+	id 1I98Db-0001d0-MH
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 01:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758772AbXGLWai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 18:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758793AbXGLWai
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 18:30:38 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:44283 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758349AbXGLWah (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 18:30:37 -0400
-Received: from tigra.home (Fc891.f.strato-dslnet.de [195.4.200.145])
-	by post.webmailer.de (mrclete mo14) (RZmta 8.3)
-	with ESMTP id d001d9j6CIF7Zx ; Fri, 13 Jul 2007 00:30:36 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 100DC277BD;
-	Fri, 13 Jul 2007 00:30:36 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id E3F36C164; Fri, 13 Jul 2007 00:30:35 +0200 (CEST)
+	id S1759849AbXGLXhB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 19:37:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759776AbXGLXhB
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 19:37:01 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:59526 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758785AbXGLXhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 19:37:00 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so378201wah
+        for <git@vger.kernel.org>; Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=N2BE1V5/Au+srPrzW4iZrwUIA4fuDbNfbfd2lzkAlCzIPgcvvq2LIib7VYm5qkSfkmkdiaGA+dt4M5XWpjCEuVmTn1aTb+8E3hl4Awge0xGXqMzby29NBkG77/NJAIMES3uAHAxbGGJG1n76876CPbS72Su6L6zB6etLc7e+OIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ejmvAQkGa3THb1PuNRHweu9CHDjl8L3Trbty+4NXxAVvt1Sx9NVHL6gjXHI82R6g1JjiCyo7d3t0sh961L9dS+RXJFlvgJzl6BK3ljWFC62VJZlWhHAQSeTuldYjKXj16ODQ9HpOItmmqzGZz0ME/Ocl1k92BesdKjMJNENfATw=
+Received: by 10.114.159.1 with SMTP id h1mr1061747wae.1184283418682;
+        Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Thu, 12 Jul 2007 16:36:58 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+bxu8=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52342>
 
-Without this change the commits will be left standalone, with
-duplicated commit message.
+I'd like to have the following setup: a ~david/git directory, where I
+am free to work on things, and a ~david/nightly-git, where a cron job
+is going build and test a nightly "next" branch.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+I'd like to share as much as possible between the two repos. My naive
+first attempt was to clone the local repo (~david/git) using -l and -s
+(which I admit I do not completely understand). This sort of worked,
+but one issue is that doing a "git pull" in nightly is going to pull
+from the *locally*-cloned repo, not from the main git. Another is that
+a checkout in nightly failed with the obscure error:
 
-Noticed when trying to blend the second commit in a branch into the
-first. Squash didn't work at all (apart from commit message
-duplication).
+[david@tashtego ~/git-nightly]% git checkout -b nightly-next next
+git checkout: updating paths is incompatible with switching branches/forcing
+Did you intend to checkout 'next' which can not be resolved as commit?
 
- git-rebase--interactive.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+I assume this is because too much state is being shared the repos, and
+something is unfinished in the "git" directory.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d9563ec..f395076 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -84,6 +84,7 @@ pick_one () {
- 	current_sha1=$(git rev-parse --verify HEAD)
- 	if [ $current_sha1 = $parent_sha1 ]; then
- 		git reset --hard $sha1
-+		test "a$1" = a-n && git reset --soft $current_sha1
- 		sha1=$(git rev-parse --short $sha1)
- 		warn Fast forward to $sha1
- 	else
-@@ -193,14 +194,14 @@ do_next () {
- 			die "Cannot 'squash' without a previous commit"
- 
- 		mark_action_done
--		failed=f
--		pick_one -n $sha1 || failed=t
- 		MSG="$DOTEST"/message
- 		echo "# This is a combination of two commits." > "$MSG"
- 		echo "# The first commit's message is:" >> "$MSG"
- 		echo >> "$MSG"
- 		git cat-file commit HEAD | sed -e '1,/^$/d' >> "$MSG"
- 		echo >> "$MSG"
-+		failed=f
-+		pick_one -n $sha1 || failed=t
- 		echo "# And this is the 2nd commit message:" >> "$MSG"
- 		echo >> "$MSG"
- 		git cat-file commit $sha1 | sed -e '1,/^$/d' >> "$MSG"
+I'd love some pointers on how to:
+
+* share as many objects as possible
+* share as little state as possible
+* make git pull pull from remote in both repos.
+
+Cheers,
+
+- David
 -- 
-1.5.3.rc0.116.gc35c1-dirty
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
