@@ -1,152 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Teach read-tree 2-way merge to ignore intermediate symlinks
-Date: Thu, 12 Jul 2007 01:04:16 -0700
-Message-ID: <7vzm22vyin.fsf@assigned-by-dhcp.cox.net>
+Subject: git-log --follow?
+Date: Thu, 12 Jul 2007 01:31:44 -0700
+Message-ID: <7vsl7uvx8v.fsf_-_@assigned-by-dhcp.cox.net>
 References: <20070704203541.GA13286@artemis.corp>
+	<7vzm22vyin.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jul 12 10:04:28 2007
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 12 10:32:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8tf1-00064V-WA
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 10:04:28 +0200
+	id 1I8u6c-0003Ec-Ru
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 10:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667AbXGLIEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 04:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754631AbXGLIEW
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 04:04:22 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:55995 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754673AbXGLIES (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 04:04:18 -0400
+	id S1763456AbXGLIbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 04:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762280AbXGLIbs
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 04:31:48 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:64209 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763456AbXGLIbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 04:31:45 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070712080418.MSRZ1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 12 Jul 2007 04:04:18 -0400
+          id <20070712083144.KORL1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 12 Jul 2007 04:31:44 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id NY4G1X0071kojtg0000000; Thu, 12 Jul 2007 04:04:16 -0400
-In-Reply-To: <20070704203541.GA13286@artemis.corp> (Pierre Habouzit's message
-	of "Wed, 4 Jul 2007 22:35:41 +0200")
+	id NYXk1X00E1kojtg0000000; Thu, 12 Jul 2007 04:31:45 -0400
+In-Reply-To: <7vzm22vyin.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 12 Jul 2007 01:04:16 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52258>
 
-Earlier in 16a4c61, we taught "read-tree -m -u" not to be
-confused when switching from a branch that has a path frotz/filfre
-to another branch that has a symlink frotz that points at xyzzy/
-directory.  The fix was incomplete in that it was still confused
-when coming back (i.e. switching from a branch with frotz -> xyzzy/
-to another branch with frotz/filfre).
+The message I am following up is a patch to unpack-trees.c,
+whose basic code structure is Daniel's work, so I wanted to CC
+him and the easiest way to look his address up was to run
+git-log on it.
 
-This fix is rather expensive in that for a path that is created
-we would need to see if any of the leading component of that
-path exists as a symbolic link in the filesystem (in which case,
-we know that path itself does not exist, and the fact we already
-decided to check it out tells us that in the index we already
-know that symbolic link is going away as there is no D/F
-conflict).
+Not so.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+The "blame -C unpack-trees.c" output consists of this
+distribution of origin:
 
-  Re: [BUG (or misfeature?)] git checkout and symlinks
+    464 read-tree.c
+    337 unpack-trees.c
+     74 builtin-read-tree.c
+     11 tree.c
+      8 tree.h
 
-  Pierre Habouzit <madcoder@debian.org> writes:
+and most of the work by Daniel was done when the bulk of code
+was still in read-tree.c.  Naturally the log output of
+unpack-trees.c does not have a single commit by him.  "git log
+-- unpack-trees.c" would not follow into read-tree.c, but I
+thought "git log --follow -- unpack-trees.c" is supposed to; I
+tried it for the first time, but it does not seem to work as
+well as I hoped.
 
-  >   if in a branch [branch1] you track the file: dir1/file1.c
-  > and in the branch [branch2] you track elsewhere/file1.c and dir1 be
-  > symlink on elsewhere, then it's not possible to checkout the branch
-  > [branch1] if your previous checkout was [branch2]. You have to manually
-  > remove the symlink `dir1` else git complains that checkouting branch1
-  > would overwrite dir1/file1.c.
-  >
-  >   I'm not sure how to fix this, and it's quite painful actually :)
+I think this is just a testament that "following renames" is not
+as useful in a real project as people seem to believe, not a
+real complaint.
 
-  We probably could add a path buffer to cache the last look-up
-  made by has_symlink_leading_path(), like the other caller
-  does, but this is to give the fix a wider exposure and testing
-  early.
+When 16da134 created unpack-trees.c, it initially moved only
+very small part of builtin-read-tree.c to it.  Later 076b0adc
+made further code movements from builtin-read-tree.c to
+unpack-trees.c.
 
- t/t2007-checkout-symlink.sh |   50 +++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c              |    3 ++
- 2 files changed, 53 insertions(+), 0 deletions(-)
- create mode 100755 t/t2007-checkout-symlink.sh
-
-diff --git a/t/t2007-checkout-symlink.sh b/t/t2007-checkout-symlink.sh
-new file mode 100755
-index 0000000..0526fce
---- /dev/null
-+++ b/t/t2007-checkout-symlink.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Junio C Hamano
-+
-+test_description='git checkout to switch between branches with symlink<->dir'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	mkdir frotz &&
-+	echo hello >frotz/filfre &&
-+	git add frotz/filfre &&
-+	test_tick &&
-+	git commit -m "master has file frotz/filfre" &&
-+
-+	git branch side &&
-+
-+	echo goodbye >nitfol &&
-+	git add nitfol
-+	test_tick &&
-+	git commit -m "master adds file nitfol" &&
-+
-+	git checkout side &&
-+
-+	git rm --cached frotz/filfre &&
-+	mv frotz xyzzy &&
-+	ln -s xyzzy frotz &&
-+	git add xyzzy/filfre frotz &&
-+	test_tick &&
-+	git commit -m "side moves frotz/ to xyzzy/ and adds frotz->xyzzy/"
-+
-+'
-+
-+test_expect_success 'switch from symlink to dir' '
-+
-+	git checkout master
-+
-+'
-+
-+rm -fr frotz xyzzy nitfol &&
-+git checkout -f master || exit
-+
-+test_expect_success 'switch from dir to symlink' '
-+
-+	git checkout side
-+
-+'
-+
-+test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index cac2411..89dd279 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -495,6 +495,9 @@ static void verify_absent(const char *path, const char *action,
- 	if (o->index_only || o->reset || !o->update)
- 		return;
- 
-+	if (has_symlink_leading_path(path, NULL))
-+		return;
-+
- 	if (!lstat(path, &st)) {
- 		int cnt;
- 
+An interesting thing is that builtin-read-tree.c immediately
+before 16da134 is much similar to unpack-trees.c in 076b0adc
+than unpack-trees.c in 16da134, exactly because of this stepwise
+code movements.  I do not think people can argue that "human
+user knows he is renaming the file so recording the human
+intention would have helped git a lot better" in this case, as
+the human user who made 16da134 did not even intend to do a
+rename.
