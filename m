@@ -1,62 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] apply delta depth bias to already deltified objects
-Date: Thu, 12 Jul 2007 14:07:27 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707121404090.32552@xanadu.home>
-References: <alpine.LFD.0.999.0707120049120.32552@xanadu.home>
- <20070712152016.GB19073@lavos.net>
- <alpine.LFD.0.999.0707121146550.32552@xanadu.home>
- <20070712164458.GC19073@lavos.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: mtimes of working files
+Date: Thu, 12 Jul 2007 11:25:02 -0700
+Message-ID: <20070712182502.GA24854@hand.yhbt.net>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com> <Pine.LNX.4.64.0707111902040.4516@racer.site> <f36b08ee0707111136t198cf559vc85c561decf9707f@mail.gmail.com> <Pine.LNX.4.64.0707111940080.4516@racer.site> <20070712062605.GD29676@muzzle> <86myy122mm.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 20:07:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 20:25:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I934s-0000HS-7Y
-	for gcvg-git@gmane.org; Thu, 12 Jul 2007 20:07:46 +0200
+	id 1I93Ln-0004ry-16
+	for gcvg-git@gmane.org; Thu, 12 Jul 2007 20:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbXGLSHn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 14:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754796AbXGLSHn
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 14:07:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36687 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753866AbXGLSHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 14:07:42 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JL200H0EVOFXU60@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Jul 2007 14:07:28 -0400 (EDT)
-In-reply-to: <20070712164458.GC19073@lavos.net>
-X-X-Sender: nico@xanadu.home
+	id S1757197AbXGLSZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 14:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755691AbXGLSZH
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 14:25:07 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:40756 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754834AbXGLSZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 14:25:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 5EA5C2DC032;
+	Thu, 12 Jul 2007 11:25:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <86myy122mm.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52311>
 
-On Thu, 12 Jul 2007, Brian Downing wrote:
-
-> On Thu, Jul 12, 2007 at 12:27:02PM -0400, Nicolas Pitre wrote:
-> > Better yet, the integer truncation error should be compensated for, with 
-> > this:
-> > 
-> >     max_size =
-> >         (trg_entry->delta_size * max_depth + max_depth - trg_entry->depth) /
-> >                     (max_depth - trg_entry->depth + 1);
+"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
 > 
-> Yep, with this, my degenerate case seems to find the optimum solution
-> (depth ~ 65) even at crazy maximum depths like 1000.
+> Eric> open FH, "git log -r --name-only --no-color --pretty=raw -z @ARGV |" or die $!;
 > 
-> Looks good to me.
+> This breaks needlessly on @ARGV names that contain spaces.  You want:
+> 
+>   open FH, "-|", qw(git log -r --name-only --no-color --pretty=raw -z), @ARGV or die $!;
+> 
+> But that sounds familiar.... I think there's a function somewhere included in
+> the git distro that does this.  I'm old and senile though. :)
 
-Great.
+Yep, I added that @ARGV at the last second and didn't care enough to fix
+it.  I didn't want to link this into the git build system so that it
+could find Git.pm, either.
 
-Now to conclude this, I have a patch with much simpler math which I'll 
-post rsn.
+So I'll just go with this 5.8-ism.  I didn't really intend for that
+script to go anywhere, maybe somebody who wants it badly enough can make
+the ls-files call respect any path limiting intended in @ARGV but still
+allow revision ranges to be passed (my original intention of supporting
+@ARGV was only revision ranges).
 
-
-Nicolas
+-- 
+Eric Wong
