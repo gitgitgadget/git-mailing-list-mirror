@@ -1,256 +1,474 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 2/4] Add matching and parsing for fetch-side refspec rules
-Date: Wed, 11 Jul 2007 21:37:05 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707112107270.6977@iabervon.org>
+Subject: [PATCH 3/4] Add fetch methods to transport library.
+Date: Wed, 11 Jul 2007 21:37:08 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707112107520.6977@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 03:37:16 2007
+X-From: git-owner@vger.kernel.org Thu Jul 12 03:37:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I8ncJ-0000Ct-Te
+	id 1I8ncK-0000Ct-CY
 	for gcvg-git@gmane.org; Thu, 12 Jul 2007 03:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764084AbXGLBhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Jul 2007 21:37:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763262AbXGLBhJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 21:37:09 -0400
-Received: from iabervon.org ([66.92.72.58]:1586 "EHLO iabervon.org"
+	id S932186AbXGLBhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Jul 2007 21:37:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763094AbXGLBhN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Jul 2007 21:37:13 -0400
+Received: from iabervon.org ([66.92.72.58]:1588 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761347AbXGLBhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2007 21:37:07 -0400
-Received: (qmail 31933 invoked by uid 1000); 12 Jul 2007 01:37:05 -0000
+	id S1763980AbXGLBhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2007 21:37:10 -0400
+Received: (qmail 31937 invoked by uid 1000); 12 Jul 2007 01:37:08 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Jul 2007 01:37:05 -0000
+  by localhost with SMTP; 12 Jul 2007 01:37:08 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52231>
 
-Also exports parse_ref_spec() and reads the "tagopt" config option.
+These don't include bundle or rsync. It would be great if people would 
+write at least bundle; rsync may well be deprecatable at this point (since 
+people are more likely to have http than anonymous rsync and more likely 
+to have ssh+git than non-anonymous rsync).
+
+In any case, it identifies such URLs and fails cleanly on them.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- remote.c |  125 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- remote.h |   24 ++++++++++++
- 2 files changed, 148 insertions(+), 1 deletions(-)
+ transport.c |  286 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ transport.h |   23 +++++-
+ 2 files changed, 305 insertions(+), 4 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index fa4af05..bba44c3 100644
---- a/remote.c
-+++ b/remote.c
-@@ -208,6 +208,7 @@ static void read_branches_file(struct remote *remote)
- 	}
- 	add_uri(remote, p);
- 	add_fetch_refspec(remote, branch);
-+	remote->fetch_tags = 1; /* always auto-follow */
- }
- 
- static int handle_config(const char *key, const char *value)
-@@ -274,6 +275,9 @@ static int handle_config(const char *key, const char *value)
- 			remote->uploadpack = xstrdup(value);
- 		else
- 			error("more than one uploadpack given, using the first");
-+	} else if (!strcmp(subkey, ".tagopt")) {
-+		if (!strcmp(value, "--no-tags"))
-+			remote->fetch_tags = -1;
- 	}
- 	return 0;
- }
-@@ -296,7 +300,7 @@ static void read_config(void)
- 	git_config(handle_config);
- }
- 
--static struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
-+struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
- {
- 	int i;
- 	struct refspec *rs = xcalloc(sizeof(*rs), nr_refspec);
-@@ -352,6 +356,10 @@ struct remote *remote_get(const char *name)
- 		add_uri(ret, name);
- 	if (!ret->uri)
- 		return NULL;
-+	if (!strcmp(name, ".")) {
-+		// we always fetch "refs/*:refs/*", which is trivial
-+		add_fetch_refspec(ret, "refs/*:refs/*");
-+	}
- 	ret->fetch = parse_ref_spec(ret->fetch_refspec_nr, ret->fetch_refspec);
- 	ret->push = parse_ref_spec(ret->push_refspec_nr, ret->push_refspec);
- 	return ret;
-@@ -424,6 +432,14 @@ struct ref *alloc_ref(unsigned namelen)
- 	return ret;
- }
- 
-+static struct ref *copy_ref(struct ref *ref)
+diff --git a/transport.c b/transport.c
+index ce03133..487d315 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1,6 +1,39 @@
+ #include "cache.h"
+ #include "transport.h"
+ #include "run-command.h"
++#include "http.h"
++#include "pkt-line.h"
++#include "fetch-pack.h"
++#include "walker.h"
++
++/* Generic functions for using commit walkers */
++
++static int fetch_objs_via_walker(const struct transport *transport,
++				 int nr_objs, char **objs)
 +{
-+	struct ref *ret = xmalloc(sizeof(struct ref) + strlen(ref->name) + 1);
-+	memcpy(ret, ref, sizeof(struct ref) + strlen(ref->name) + 1);
-+	ret->next = NULL;
-+	return ret;
++	char *dest = xstrdup(transport->url);
++	struct walker *walker = transport->data;
++
++	walker->get_all = 1;
++	walker->get_tree = 1;
++	walker->get_history = 1;
++	walker->get_verbosely = transport->verbose;
++	walker->get_recover = 0;
++
++	if (walker_fetch(walker, nr_objs, objs, NULL, dest))
++		die("Fetch failed.");
++
++	free(dest);
++	return 0;
 +}
 +
- void free_refs(struct ref *ref)
- {
- 	struct ref *next;
-@@ -734,3 +750,110 @@ int branch_merges(struct branch *branch, const char *refname)
- 	}
- 	return 0;
- }
-+
-+static struct ref *get_expanded_map(struct ref *remote_refs,
-+				    const struct refspec *refspec)
++static int disconnect_walker(struct transport *transport)
 +{
-+	struct ref *ref;
-+	struct ref *ret = NULL;
-+	struct ref **tail = &ret;
++	struct walker *walker = transport->data;
++	if (walker)
++		walker_free(walker);
++	return 0;
++}
+ 
+ static const struct transport_ops rsync_transport = {
+ };
+@@ -37,9 +70,119 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
+ 	return !!err;
+ }
+ 
++#ifndef NO_CURL
++static int missing__target(int code, int result)
++{
++	return	/* file:// URL -- do we ever use one??? */
++		(result == CURLE_FILE_COULDNT_READ_FILE) ||
++		/* http:// and https:// URL */
++		(code == 404 && result == CURLE_HTTP_RETURNED_ERROR) ||
++		/* ftp:// URL */
++		(code == 550 && result == CURLE_FTP_COULDNT_RETR_FILE)
++		;
++}
 +
-+	int remote_prefix_len = strlen(refspec->src);
-+	int local_prefix_len = strlen(refspec->dst);
++#define missing_target(a) missing__target((a)->http_code, (a)->curl_result)
 +
-+	for (ref = remote_refs; ref; ref = ref->next) {
-+		if (strchr(ref->name, '^'))
-+			continue; /* a dereference item */
-+		if (!prefixcmp(ref->name, refspec->src)) {
-+			char *match;
-+			struct ref *cpy = copy_ref(ref);
-+			match = ref->name + remote_prefix_len;
++static struct ref *get_refs_via_curl(const struct transport *transport)
++{
++	struct buffer buffer;
++	char *data, *start, *mid;
++	char *ref_name;
++	char *refs_url;
++	int i = 0;
 +
-+			cpy->peer_ref = alloc_ref(local_prefix_len +
-+						  strlen(match) + 1);
-+			sprintf(cpy->peer_ref->name, "%s%s",
-+				refspec->dst, match);
-+			if (refspec->force)
-+				cpy->peer_ref->force = 1;
-+			*tail = cpy;
-+			tail = &cpy->next;
++	struct active_request_slot *slot;
++	struct slot_results results;
++
++	struct ref *refs = NULL;
++	struct ref *ref = NULL;
++	struct ref *last_ref = NULL;
++
++	data = xmalloc(4096);
++	buffer.size = 4096;
++	buffer.posn = 0;
++	buffer.buffer = data;
++
++	refs_url = xmalloc(strlen(transport->url) + 11);
++	sprintf(refs_url, "%s/info/refs", transport->url);
++
++	http_init();
++
++	slot = get_active_slot();
++	slot->results = &results;
++	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
++	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
++	curl_easy_setopt(slot->curl, CURLOPT_URL, refs_url);
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
++	if (start_active_slot(slot)) {
++		run_active_slot(slot);
++		if (results.curl_result != CURLE_OK) {
++			if (missing_target(&results)) {
++				free(buffer.buffer);
++				return NULL;
++			} else {
++				free(buffer.buffer);
++				error("%s", curl_errorstr);
++				return NULL;
++			}
 +		}
++	} else {
++		free(buffer.buffer);
++		error("Unable to start request");
++		return NULL;
 +	}
 +
-+	return ret;
++	http_cleanup();
++
++	data = buffer.buffer;
++	start = NULL;
++	mid = data;
++	while (i < buffer.posn) {
++		if (!start)
++			start = &data[i];
++		if (data[i] == '\t')
++			mid = &data[i];
++		if (data[i] == '\n') {
++			data[i] = 0;
++			ref_name = mid + 1;
++			ref = xmalloc(sizeof(struct ref) +
++				      strlen(ref_name) + 1);
++			memset(ref, 0, sizeof(struct ref));
++			strcpy(ref->name, ref_name);
++			get_sha1_hex(start, ref->old_sha1);
++			if (!refs)
++				refs = ref;
++			if (last_ref)
++				last_ref->next = ref;
++			last_ref = ref;
++			start = NULL;
++		}
++		i++;
++	}
++
++	free(buffer.buffer);
++
++	return refs;
 +}
 +
-+static struct ref *find_ref_by_name_abbrev(struct ref *refs, const char *name)
++#else
++
++static struct ref *get_refs_via_curl(const struct transport *transport)
 +{
-+	struct ref *ref;
-+	for (ref = refs; ref; ref = ref->next) {
-+		if (ref_matches_abbrev(name, ref->name))
-+			return ref;
-+	}
++	die("Cannot fetch from '%s' without curl ...", transport->url);
 +	return NULL;
 +}
 +
-+struct ref *get_remote_ref(struct ref *remote_refs, const char *name)
++#endif
++
+ static const struct transport_ops curl_transport = {
+ 	/* set_option */	NULL,
+-	/* push */		curl_transport_push
++	/* get_refs_list */	get_refs_via_curl,
++	/* fetch_refs */	NULL,
++	/* fetch_objs */	fetch_objs_via_walker,
++	/* push */		curl_transport_push,
++	/* disconnect */	disconnect_walker
+ };
+ 
+ static const struct transport_ops bundle_transport = {
+@@ -47,7 +190,13 @@ static const struct transport_ops bundle_transport = {
+ 
+ struct git_transport_data {
+ 	unsigned thin : 1;
++	unsigned keep : 1;
+ 
++	int unpacklimit;
++
++	int depth;
++
++	const char *uploadpack;
+ 	const char *receivepack;
+ };
+ 
+@@ -55,16 +204,86 @@ static int set_git_option(struct transport *connection,
+ 			  const char *name, const char *value)
+ {
+ 	struct git_transport_data *data = connection->data;
+-	if (!strcmp(name, TRANS_OPT_RECEIVEPACK)) {
++	if (!strcmp(name, TRANS_OPT_UPLOADPACK)) {
++		data->uploadpack = value;
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_RECEIVEPACK)) {
+ 		data->receivepack = value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_THIN)) {
+ 		data->thin = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_KEEP)) {
++		data->keep = !!value;
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_UNPACKLIMIT)) {
++		data->unpacklimit = atoi(value);
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_DEPTH)) {
++		if (!value)
++			data->depth = 0;
++		else
++			data->depth = atoi(value);
++		return 0;
+ 	}
+ 	return 1;
+ }
+ 
++static struct ref *get_refs_via_connect(const struct transport *transport)
 +{
-+	struct ref *ref = find_ref_by_name_abbrev(remote_refs, name);
++	struct git_transport_data *data = transport->data;
++	struct ref *refs;
++	int fd[2];
++	pid_t pid;
++	char *dest = xstrdup(transport->url);
 +
-+	if (!ref)
-+		die("Couldn't find remote ref %s\n", name);
++	pid = git_connect(fd, dest, data->uploadpack, 0);
 +
-+	return copy_ref(ref);
++	if (pid < 0)
++		die("Failed to connect to \"%s\"", transport->url);
++
++	get_remote_heads(fd[0], &refs, 0, NULL, 0);
++	packet_flush(fd[1]);
++
++	finish_connect(pid);
++
++	free(dest);
++
++	return refs;
 +}
 +
-+static struct ref *get_local_ref(const char *name)
++static int fetch_refs_via_pack(const struct transport *transport,
++			       int nr_heads, char **heads)
 +{
-+	struct ref *ret;
-+	if (!name)
-+		return NULL;
++	struct git_transport_data *data = transport->data;
++	struct ref *refs;
++	char *dest = xstrdup(transport->url);
++	struct fetch_pack_args args;
 +
-+	if (!prefixcmp(name, "refs/")) {
-+		ret = alloc_ref(strlen(name) + 1);
-+		strcpy(ret->name, name);
-+		return ret;
-+	}
++	args.uploadpack = data->uploadpack;
++	args.quiet = 0;
++	args.keep_pack = data->keep;
++	args.unpacklimit = data->unpacklimit;
++	args.use_thin_pack = data->thin;
++	args.fetch_all = 0;
++	args.verbose = transport->verbose;
++	args.depth = data->depth;
++	args.no_progress = 0;
 +
-+	if (!prefixcmp(name, "heads/") ||
-+	    !prefixcmp(name, "tags/") ||
-+	    !prefixcmp(name, "remotes/")) {
-+		ret = alloc_ref(strlen(name) + 6);
-+		sprintf(ret->name, "refs/%s", name);
-+		return ret;
-+	}
++	setup_fetch_pack(&args);
 +
-+	ret = alloc_ref(strlen(name) + 12);
-+	sprintf(ret->name, "refs/heads/%s", name);
-+	return ret;
-+}
++	refs = fetch_pack(dest, nr_heads, heads);
 +
-+int get_fetch_map(struct ref *remote_refs,
-+		  const struct refspec *refspec,
-+		  struct ref ***tail)
-+{
-+	struct ref *ref_map, *rm;
++	// ???? check that refs got everything?
 +
-+	if (refspec->pattern) {
-+		ref_map = get_expanded_map(remote_refs, refspec);
-+	} else {
-+		ref_map = get_remote_ref(remote_refs,
-+					 refspec->src[0] ?
-+					 refspec->src : "HEAD");
++	/* free the memory used for the refs list ... */
 +
-+		ref_map->peer_ref = get_local_ref(refspec->dst);
++	free_refs(refs);
 +
-+		if (refspec->force)
-+			ref_map->peer_ref->force = 1;
-+	}
-+
-+	for (rm = ref_map; rm; rm = rm->next) {
-+		if (rm->peer_ref && check_ref_format(rm->peer_ref->name + 5))
-+			die("* refusing to create funny ref '%s' locally",
-+			    rm->peer_ref->name);
-+	}
-+
-+	tail_link_ref(ref_map, tail);
-+
++	free(dest);
 +	return 0;
 +}
-diff --git a/remote.h b/remote.h
-index 56e0ba6..2a5e87e 100644
---- a/remote.h
-+++ b/remote.h
-@@ -15,6 +15,14 @@ struct remote {
- 	struct refspec *fetch;
- 	int fetch_refspec_nr;
- 
-+	/*
-+	 * -1 to never fetch tags
-+	 * 0 to auto-follow tags on heuristic (default)
-+	 * 1 to always auto-follow tags
-+	 * 2 to always fetch tags
-+	 */
-+	int fetch_tags;
 +
- 	const char *receivepack;
- 	const char *uploadpack;
+ static int git_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags) {
+ 	struct git_transport_data *data = transport->data;
+ 	const char **argv;
+@@ -111,6 +330,9 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
+ 
+ static const struct transport_ops git_transport = {
+ 	/* set_option */	set_git_option,
++	/* get_refs_list */	get_refs_via_connect,
++	/* fetch_refs */	fetch_refs_via_pack,
++	/* fetch_objs */	NULL,
+ 	/* push */		git_transport_push
  };
-@@ -38,10 +46,26 @@ struct ref *alloc_ref(unsigned namelen);
-  */
- void free_refs(struct ref *ref);
  
-+struct refspec *parse_ref_spec(int nr_refspec, const char **refspec);
-+
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 	       int nr_refspec, char **refspec, int all);
+@@ -141,7 +363,10 @@ struct transport *transport_get(struct remote *remote, const char *url,
+ 		   !prefixcmp(url, "ftp://")) {
+ 		ret = xmalloc(sizeof(*ret));
+ 		ret->ops = &curl_transport;
+-		ret->data = NULL;
++		if (fetch)
++			ret->data = get_http_walker(url);
++		else
++			ret->data = NULL;
+ 	} else if (is_local(url) && is_file(url)) {
+ 		ret = xmalloc(sizeof(*ret));
+ 		ret->data = NULL;
+@@ -151,14 +376,19 @@ struct transport *transport_get(struct remote *remote, const char *url,
+ 		ret = xcalloc(1, sizeof(*ret));
+ 		ret->data = data;
+ 		data->thin = 1;
++		data->uploadpack = "git-upload-pack";
++		if (remote->uploadpack)
++			data->uploadpack = remote->uploadpack;
+ 		data->receivepack = "git-receive-pack";
+ 		if (remote->receivepack)
+ 			data->receivepack = remote->receivepack;
++		data->unpacklimit = -1;
+ 		ret->ops = &git_transport;
+ 	}
+ 	if (ret) {
+ 		ret->remote = remote;
+ 		ret->url = url;
++		ret->remote_refs = NULL;
+ 		ret->fetch = !!fetch;
+ 	}
+ 	return ret;
+@@ -187,6 +417,54 @@ int transport_push(struct transport *transport,
+ 	return transport->ops->push(transport, refspec_nr, refspec, flags);
+ }
  
- /*
-+ * Given a list of the remote refs and the specification of things to
-+ * fetch, makes a (separate) list of the refs to fetch and the local
-+ * refs to store into.
-+ *
-+ * *tail is the pointer to the tail pointer of the list of results
-+ * beforehand, and will be set to the tail pointer of the list of
-+ * results afterward.
-+ */
-+int get_fetch_map(struct ref *remote_refs, const struct refspec *refspec,
-+		  struct ref ***tail);
++struct ref *transport_get_remote_refs(struct transport *transport)
++{
++	if (!transport->remote_refs)
++		transport->remote_refs =
++			transport->ops->get_refs_list(transport);
++	return transport->remote_refs;
++}
 +
-+struct ref *get_remote_ref(struct ref *remote_refs, const char *name);
++#define PACK_HEADS_CHUNK_COUNT 256
 +
-+/*
-  * For the given remote, reads the refspec's src and sets the other fields.
-  */
- int remote_find_tracking(struct remote *remote, struct refspec *refspec);
++int transport_fetch_refs(struct transport *transport, struct ref *refs)
++{
++	int i;
++	int nr_heads = 0;
++	char **heads = xmalloc(PACK_HEADS_CHUNK_COUNT * sizeof(char *));
++	struct ref *rm;
++	int use_objs = !transport->ops->fetch_refs;
++
++	for (rm = refs; rm; rm = rm->next) {
++		if (rm->peer_ref &&
++		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
++			continue;
++		if (use_objs) {
++			heads[nr_heads++] = xstrdup(sha1_to_hex(rm->old_sha1));
++		} else {
++			heads[nr_heads++] = xstrdup(rm->name);
++		}
++		if (nr_heads % PACK_HEADS_CHUNK_COUNT == 0)
++			heads = xrealloc(heads,
++					 (nr_heads + PACK_HEADS_CHUNK_COUNT) *
++					 sizeof(char *));
++	}
++
++	if (use_objs) {
++		if (transport->ops->fetch_objs(transport, nr_heads, heads))
++			return -1;
++	} else {
++		if (transport->ops->fetch_refs(transport, nr_heads, heads))
++			return -1;
++	}
++
++	/* free the memory used for the heads list ... */
++	for (i = 0; i < nr_heads; i++)
++		free(heads[i]);
++	free(heads);
++	return 0;
++}
++
+ int transport_disconnect(struct transport *transport)
+ {
+ 	int ret = 0;
+@@ -195,3 +473,5 @@ int transport_disconnect(struct transport *transport)
+ 	free(transport);
+ 	return ret;
+ }
++
++
+diff --git a/transport.h b/transport.h
+index 5c2eb95..947db66 100644
+--- a/transport.h
++++ b/transport.h
+@@ -29,6 +29,11 @@ struct transport_ops {
+ 	int (*set_option)(struct transport *connection, const char *name,
+ 			  const char *value);
+ 
++	struct ref *(*get_refs_list)(const struct transport *transport);
++	int (*fetch_refs)(const struct transport *transport,
++			  int nr_refs, char **refs);
++	int (*fetch_objs)(const struct transport *transport,
++			  int nr_objs, char **objs);
+ 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
+ 
+ 	int (*disconnect)(struct transport *connection);
+@@ -40,12 +45,24 @@ struct transport *transport_get(struct remote *remote, const char *url,
+ 
+ /* Transport options which apply to git:// and scp-style URLs */
+ 
++/* The program to use on the remote side to send a pack */
++#define TRANS_OPT_UPLOADPACK "uploadpack"
++
+ /* The program to use on the remote side to receive a pack */
+ #define TRANS_OPT_RECEIVEPACK "receivepack"
+ 
+ /* Transfer the data as a thin pack if not null */
+ #define TRANS_OPT_THIN "thin"
+ 
++/* Keep the pack that was transferred if not null */
++#define TRANS_OPT_KEEP "keep"
++
++/* Unpack the objects if fewer than this number of objects are fetched */
++#define TRANS_OPT_UNPACKLIMIT "unpacklimit"
++
++/* Limit the depth of the fetch if not null */
++#define TRANS_OPT_DEPTH "depth"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
+@@ -53,9 +70,13 @@ struct transport *transport_get(struct remote *remote, const char *url,
+ int transport_set_option(struct transport *transport, const char *name,
+ 			 const char *value);
+ 
+-int transport_push(struct transport *connection,
++int transport_push(struct transport *connection, 
+ 		   int refspec_nr, const char **refspec, int flags);
+ 
++struct ref *transport_get_remote_refs(struct transport *transport);
++
++int transport_fetch_refs(struct transport *transport, struct ref *refs);
++
+ int transport_disconnect(struct transport *transport);
+ 
+ #endif
 -- 
 1.5.2.2.1600.ga4e5
