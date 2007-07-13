@@ -1,81 +1,83 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: sharing between local "work" and "nightly build" git repos
-Date: Fri, 13 Jul 2007 07:11:40 +0200
-Message-ID: <20070713051140.GB2430@steel.home>
-References: <7154c5c60707121636l585b42d4l931b08f1468ddfc@mail.gmail.com> <7vmyy1rwza.fsf@assigned-by-dhcp.cox.net> <7154c5c60707121727k36854891u82afc4a8be822861@mail.gmail.com> <7154c5c60707121733r6584a407r8d60d5890b9c89e2@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] make git-send-email.perl handle email addresses with no names when Email::Valid is present
+Date: Thu, 12 Jul 2007 22:47:17 -0700
+Message-ID: <7vr6ncrh22.fsf@assigned-by-dhcp.cox.net>
+References: <20070713041749.GA28824@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Frech <nimblemachines@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 07:11:47 2007
+Cc: git@vger.kernel.org
+To: Greg KH <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 07:47:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9DRS-0004oR-Rq
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 07:11:47 +0200
+	id 1I9E02-0003JV-Ui
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 07:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751541AbXGMFLo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 01:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbXGMFLn
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 01:11:43 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:60342 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbXGMFLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 01:11:42 -0400
-Received: from tigra.home (Fc891.f.strato-dslnet.de [195.4.200.145])
-	by post.webmailer.de (fruni mo2) (RZmta 8.3)
-	with ESMTP id Z000acj6D1ALwx ; Fri, 13 Jul 2007 07:11:40 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 8C1D6277BD;
-	Fri, 13 Jul 2007 07:11:40 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id DE821C164; Fri, 13 Jul 2007 07:11:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7154c5c60707121733r6584a407r8d60d5890b9c89e2@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+bxu8=
-X-RZG-CLASS-ID: mo07
+	id S933957AbXGMFrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 01:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933794AbXGMFrV
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 01:47:21 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39286 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933668AbXGMFrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 01:47:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070713054718.GDIY1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 13 Jul 2007 01:47:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id NtnJ1X0011kojtg0000000; Fri, 13 Jul 2007 01:47:19 -0400
+In-Reply-To: <20070713041749.GA28824@kroah.com> (Greg KH's message of "Thu, 12
+	Jul 2007 21:17:49 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52361>
 
-David Frech, Fri, Jul 13, 2007 02:33:19 +0200:
-> On 7/12/07, David Frech <nimblemachines@gmail.com> wrote:
-> >On 7/12/07, Junio C Hamano <gitster@pobox.com> wrote:
-> >> Then a nightly update would go like this:
-> >>
-> >>  $ cd ~/nightly-git
-> >>  $ git pull origin next
-> >>  $ make clean
-> >>  $ make test || barf
-> 
-> One more thing: would it make sense to do "make -k test" so that *all*
-> failures (if >1) show up?
+Greg KH <greg@kroah.com> writes:
 
-Yes, definitely. You'll find you will see failures which you know are
-already fixed, just didn't reach the nightly-build yet.
+> When using git-send-email.perl on a changeset that has:
+> 	Cc: <stable@kernel.org>
+> in the body of the description, and the Email::Valid perl module is
+> installed on the system, the email address will be deemed "invalid" for
+> some reason (Email::Valid isn't smart enough to handle this?) and
+> complain and not send the address the email.
 
-BTW, do _not_ send the errors to this mailing list. It just too easy
-gets out of control. And consider saving the build log somewhere after
-doing a _completely_ clean build, i.e. like this:
+That appears to be the case.
 
-    #!/bin/bash
-    cd ~/nightly-git || exit
-    echo 'Subject: Nightly build git next ' $(date) >/tmp/mail.msg
-    echo >>/tmp/mail.msg
-    {
-	rm -rf * # it does not remove .git
-	git reset --hard
-	git pull origin next || exit 1
-	make || exit 1
-	make -k test|| exit 1
-    } &>> /tmp/mail.msg
+        bad foo
+        bad <foo@bar.baz>
+        ok  foo@bar.baz
+        ok  Foo <foo@bar.baz>
 
-    $ nightly-build || sendmail local-user@localhost < /tmp/mail.msg
+> Anyway, this tiny patch fixes this problem for me.  Note, my perl-foo is
+> quite week, so this could probably be easily done in one line for those
+> with better reg-ex skills.
 
-It is simplier to find out what went wrong if you know what state did
-you have before doing the test. And the state after rm -rf * is very
-simple to predict.
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -410,6 +410,9 @@ sub extract_valid_address {
+>  	return $address if ($address =~ /^($local_part_regexp)$/);
+>  
+>  	if ($have_email_valid) {
+> +		if ($address =~ s/^<//) {
+> +			$address =~ s/>$//;
+> +		}
+>  		return scalar Email::Valid->address($address);
+>  	} else {
+
+I'd probably do:
+
+	if ($have_email_valid) {
+		$address =~ s/^<(.*)>$/$1/;
+		return scalar Email::Valid->address($address);
+	} else {
+
+instead, but they are moral equivalents.
+
+Thanks for a fix.
