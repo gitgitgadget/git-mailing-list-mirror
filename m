@@ -1,74 +1,59 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: git fetch inside a bare repo does nothing
-Date: Fri, 13 Jul 2007 12:33:03 +0200
-Message-ID: <20070713103303.GD18199@xp.machine.xx>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: Better handling of local changes in 'gitk'?
+Date: Fri, 13 Jul 2007 12:33:02 +0200
+Organization: eudaptics software gmbh
+Message-ID: <469754DE.4A4EE499@eudaptics.com>
+References: <alpine.LFD.0.999.0707121214420.20061@woody.linux-foundation.org> <18071.19489.6733.665052@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 13 12:31:54 2007
+X-From: git-owner@vger.kernel.org Fri Jul 13 12:32:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9IRF-00066o-Um
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 12:31:54 +0200
+	id 1I9IRi-0006IU-TP
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 12:32:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541AbXGMKbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 06:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754637AbXGMKbu
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 06:31:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37920 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753650AbXGMKbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 06:31:49 -0400
-Received: (qmail invoked by alias); 13 Jul 2007 10:31:48 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp034) with SMTP; 13 Jul 2007 12:31:48 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX19j2skKg6Rj/vNv8gD8MTA/d5tnPjmYTDW3ql5FlO
-	K2YV7BQyxB5chX
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S1754804AbXGMKcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 06:32:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754784AbXGMKcT
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 06:32:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:54985 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754734AbXGMKcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 06:32:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I9IRX-0007Rf-TJ
+	for git@vger.kernel.org; Fri, 13 Jul 2007 12:32:11 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 12:32:11 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 12:32:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52383>
 
-kblin on IRC wanted to know how to update a bare repo with fetching.
-He wants to have a bare repo of samba as a mirror and clone from this
-mirror to avoid network traffic and to have several git repos which
-could all have a different branch checked out. For a better description
-see [1].
+Paul Mackerras wrote:
+> Try this, let me know what you think.  I called the changes in the
+> working directory "Local uncommitted changes, not checked in to index"
+> and the changes in the index "Local changes checked in to index but
+> not committed".  If you prefer some other wording, let me know.
 
-I suggested to use "git fetch --bare" inside the bare repo, but this
-doesn't work. So what I'm asking now if this is intenional behaviour or
-a bug, so please could someone  shed some light on it?  Or how is the
-prefered method to update a bare repo *without* pushing to it?
+Maybe you go with git-gui's wording:
 
--Peter
+Index: Staged changes
+WD:    Unstaged changes
 
-[1]: http://wiki.samba.org/index.php/Using_Git_for_Samba_Development
-
-IRC log (unneccessary comments removed):
-
-11:30 < kblin> how do I update a branch I cloned with --bare?
-11:31 < madduck> GIT_DIR=/path/to/dir git pull >
-11:31 < madduck> ?
-11:31 < madduck> without the >
-11:32 < kblin> and for remote repositories, I'd use a URL?
-11:37 < madduck> uh, you can't reallly "update" remote repositories in that sense
-11:37 < madduck> what are you trying to do?
-11:37 < madduck> let's have more info!
-11:51 < kblin> madduck: I'm trying to follow http://wiki.samba.org/index.php/Using_Git_for_Samba_Development
-11:52 < kblin> madduck: basically, I want to have a --bare repository that mirrors the remote repository
-               and have a couple of working repositories for the different branches
-11:57 < siprbaum> kblin: I think "git --bare fetch" inside your bare repo will solve your problem
-[...]
-12:01 < kblin> siprbaum: git --bare fetch doesn't seem to fetch anything new either
-12:01 < siprbaum> perhaps there isn't anything new to fetch?
-12:02 < siprbaum> but i'm just guessing here and reading the manpage (git) suggested that git --bare fetch _could_ work
-12:02 < kblin> siprbaum: that'd surpise me. I've got a clone without the --bare, and that has a new commit
-[...]
-12:14 < siprbaum> kblin: and you are right. i just tried to fetch inside a bare repo and it doesn't work
+-- Hannes
