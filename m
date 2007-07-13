@@ -1,67 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] lockfile.c: schedule remove_lock_file only once.
-Date: Fri, 13 Jul 2007 11:23:07 -0700
-Message-ID: <7vabu0noxg.fsf@assigned-by-dhcp.cox.net>
-References: <20070713141450.GA8392MdfPADPa@greensroom.kotnet.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] More permissive "git-rm --cached" behavior without -f.
+Date: Fri, 13 Jul 2007 20:53:38 +0200
+Message-ID: <vpq8x9kp231.fsf@bauges.imag.fr>
+References: <vpq8x9k9peu.fsf@bauges.imag.fr>
+	<11843484982037-git-send-email-Matthieu.Moy@imag.fr>
+	<20070713175737.GA20416@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sven Verdoolaege <skimo@kotnet.org>
-X-From: git-owner@vger.kernel.org Fri Jul 13 20:23:31 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 13 20:54:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9Pnc-0000Gq-JQ
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 20:23:28 +0200
+	id 1I9QHB-0001l2-Vd
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 20:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934287AbXGMSXP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 14:23:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759667AbXGMSXO
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 14:23:14 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:47671 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760588AbXGMSXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 14:23:09 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070713182308.OBHP1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 13 Jul 2007 14:23:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id P6P71X00H1kojtg0000000; Fri, 13 Jul 2007 14:23:08 -0400
-In-Reply-To: <20070713141450.GA8392MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Fri, 13 Jul 2007 16:14:50 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758472AbXGMSx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 14:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758251AbXGMSx6
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 14:53:58 -0400
+Received: from imag.imag.fr ([129.88.30.1]:57602 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753307AbXGMSx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 14:53:57 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6DIrcSc007022
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 13 Jul 2007 20:53:38 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1I9QGo-0006VK-6J; Fri, 13 Jul 2007 20:53:38 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1I9QGo-0007DM-3i; Fri, 13 Jul 2007 20:53:38 +0200
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <20070713175737.GA20416@coredump.intra.peff.net> (Jeff King's message of "Fri\, 13 Jul 2007 13\:57\:37 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 13 Jul 2007 20:53:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52411>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Removing a lockfile once should be enough.
+> On Fri, Jul 13, 2007 at 07:41:38PM +0200, Matthieu Moy wrote:
+>
+>> Previously, the index had to match the file *and* the HEAD. With
+>> --cached, the index must now match the file *or* the HEAD. The behavior
+>> without --cached is unchanged, but provides better error messages.
+>
+> This does make more sense, but there are still some inconsistencies. Is
+> it OK to lose content that is only in the index, or not?
 
-Yeah.  I wonder what we were smoking.  415e96c8 which introduces
-the atexit to index.c does:
+I'd say it isn't OK. At least, that's what the previous git-rm
+considered.
 
-    int hold_index_file_for_update(struct cache_file *cf, const char *path)
-    {
-           sprintf(cf->lockfile, "%s.lock", path);
-           cf->next = cache_file_list;
-           cache_file_list = cf;
-           if (!cf->next) {
-                   signal(SIGINT, remove_lock_file_on_signal);
-                   atexit(remove_lock_file);
-           }
-           return open(cf->lockfile, O_RDWR | O_CREAT | O_EXCL, 0600);
-    }
+> If it is OK, then --cached shouldn't need _any_ safety valve (and after
+> all, anything you remove in that manner is recoverable with git-fsck
+> until the next prune).
+>
+> If it isn't OK, then you are not addressing the cases where git-rm
+> without --cached loses index content (that is different than HEAD and
+> the working tree).
 
-whose intent is exactly "do this once, only for the first one".
+Either I didn't understand your question, or the answer is "yes, I
+do.". The behavior without --cached is not modified, except for the
+error message, and the previous was to require -f whenever the index
+doesn't match the head, *or* doesn't match the file. So, without
+--cached, you need to have file=index=HEAD to be able to git-rm.
 
-The reason we do not use lk->next but instead check lk->on_list,
-and the reason why we do not remove the lock from the list, are
-described in 1084b845.
+If I missunderstand you, please, provide a senario where my patch
+doesn't do the expected.
 
-But your "fire atexit() once" fix is needed.  Thanks.
+-- 
+Matthieu
