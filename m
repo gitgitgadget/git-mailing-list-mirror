@@ -1,68 +1,75 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: Lump commit HOWTO?
-Date: Thu, 12 Jul 2007 20:21:17 -0500
-Message-ID: <625fc13d0707121821l70e2d6aaw555c79b5d700585f@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH] reduce git-pack-objects memory usage a little more
+Date: Thu, 12 Jul 2007 20:42:28 -0500
+Message-ID: <20070713014228.GE19073@lavos.net>
+References: <alpine.LFD.0.999.0707121703240.32552@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 13 03:21:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Jul 13 03:42:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I99qX-00044m-2h
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 03:21:25 +0200
+	id 1I9ABC-0008CF-0B
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 03:42:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbXGMBVU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 21:21:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbXGMBVU
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 21:21:20 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:19435 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844AbXGMBVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 21:21:19 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so5802fkz
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 18:21:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SDBDCqH2E/yNR7e7m1kaDHesT37pW1feZpkRKbcgG2D34ZtwJqF+ecRA/PhdDouE5vskQtFjECfKQNM7kEJgJIveui32FmR6INmIeTulxJ07Xiu3c8AYIDdHajQLw9mUbohNCcAxlwRTr364teTm5ysTORjCIVsZXeNtiIn8exU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=oEPG0cBh2Og40zTMLR7uFzcIIe+qn7UdYkbia44avGqW/3ZvauI+3qYbDbCwB0k+JNvxe+kD5xJedFVsCjSJbub0HGtZVbvS1AdIRjnAN6vj1G+TyYuFI3GbK01Z7SXWT1Re2cKscFe5zs8bF9iI3vz0krxONy4ad9Y3OmYMosE=
-Received: by 10.82.108.9 with SMTP id g9mr1447032buc.1184289677256;
-        Thu, 12 Jul 2007 18:21:17 -0700 (PDT)
-Received: by 10.82.114.16 with HTTP; Thu, 12 Jul 2007 18:21:17 -0700 (PDT)
+	id S1755369AbXGMBml (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 21:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbXGMBmk
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 21:42:40 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:10802 "EHLO
+	asav09.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754751AbXGMBmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 21:42:40 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav09.insightbb.com with ESMTP; 12 Jul 2007 21:42:39 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AglXAO51lkZKhvbzRmdsb2JhbACBS4VfiAoBAQE+
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 856D5309F31; Thu, 12 Jul 2007 20:42:28 -0500 (CDT)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707121703240.32552@xanadu.home>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52353>
 
-Hi All,
+On Thu, Jul 12, 2007 at 05:07:59PM -0400, Nicolas Pitre wrote:
+> The delta depth doesn't have to be stored in the global object array 
+> structure since it is only used during the deltification pass.
 
-I have a specific workflow in mind that I'm not entirely sure how to
-accomplish with git.  What I'd like to do is track a project in a
-local branch, and do commits of my own there as well.  Then when I'm
-ready to submit the work, I want to take all the incremental commits
-and lump them into a single new commit and push that out as a patch or
-into a branch for people to pull from.
+This patch breaks pack-objects pretty horribly:
 
-E.g.
+:; PATH=~/src/git:$PATH /usr/bin/time ~/src/git/git-repack -a -d -f
 
-1) clone upstream into foo branch
-2) commit A
-3) commit B
-4) pull upstream changes into foo branch
-5) commit C
-6) commit D
-7) repeat steps 2 - 6 in various orders
-8) take all local commits (A - D) and create a single commit without
-any of the upstream changes in it
+:; ls -l .git/objects/pack
+total 153916
+-r--r--r-- 1 bdowning bdowning   1312136 2007-07-12 20:39 pack-9ac926ee1f5810c434707d3f816f5ad2cbd14668.idx
+-r--r--r-- 1 bdowning bdowning 156130933 2007-07-12 20:39 pack-9ac926ee1f5810c434707d3f816f5ad2cbd14668.pack
 
-Is something like that easily accomplished?  Or perhaps a different
-workflow that would allow similar results?
+chain length = 1: 6182 objects
+chain length = 2: 66 objects
+chain length = 3: 27 objects
+chain length = 4: 20 objects
+chain length = 5: 15 objects
+chain length = 6: 9 objects
+chain length = 7: 5 objects
+chain length = 8: 5 objects
+chain length = 9: 6 objects
+chain length = 10: 4 objects
+chain length = 11: 6 objects
+chain length = 12: 4 objects
+chain length = 13: 3 objects
+chain length = 14: 3 objects
+chain length = 15: 2 objects
+chain length = 16: 2 objects
+chain length = 17: 1 object
+chain length = 18: 1 object
+chain length = 19: 1 object
 
-josh
+Unfortunately I didn't notice until I tried v1.5.3-rc1...
+
+-bcd
