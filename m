@@ -1,96 +1,54 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git-svn patch faulty (was: failing to send patches to the list)
-Date: Fri, 13 Jul 2007 11:56:44 +0200
-Message-ID: <20070713095644.GA26743@lapse.madduck.net>
-References: <20070713093050.GA18001@lapse.madduck.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Better handling of local changes in 'gitk'?
+Date: Fri, 13 Jul 2007 20:09:05 +1000
+Message-ID: <18071.20289.270560.640460@cargo.ozlabs.ibm.com>
+References: <alpine.LFD.0.999.0707121214420.20061@woody.linux-foundation.org>
+	<18071.19489.6733.665052@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IJpNTDwzlM2Ie8A6"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 13 11:57:18 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 13 12:09:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9Htl-00040R-TC
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 11:57:18 +0200
+	id 1I9I5P-0007iN-0o
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 12:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775AbXGMJ41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 05:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbXGMJ40
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 05:56:26 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:48314 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775AbXGMJ4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 05:56:24 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id A2B3B895D6F
-	for <git@vger.kernel.org>; Fri, 13 Jul 2007 11:56:18 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 20223-07 for <git@vger.kernel.org>;
-	Fri, 13 Jul 2007 11:56:18 +0200 (CEST)
-Received: from lapse.madduck.net (p549C364A.dip0.t-ipconnect.de [84.156.54.74])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id D8DCC895D6D
-	for <git@vger.kernel.org>; Fri, 13 Jul 2007 11:56:17 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 72A4D4FD41; Fri, 13 Jul 2007 11:56:44 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070713093050.GA18001@lapse.madduck.net>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1753765AbXGMKJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 06:09:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753039AbXGMKJN
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 06:09:13 -0400
+Received: from ozlabs.org ([203.10.76.45]:38100 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751259AbXGMKJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 06:09:12 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 87DB4DDE26; Fri, 13 Jul 2007 20:09:11 +1000 (EST)
+In-Reply-To: <18071.19489.6733.665052@cargo.ozlabs.ibm.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52380>
 
+I wrote:
 
---IJpNTDwzlM2Ie8A6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Try this, let me know what you think.  I called the changes in the
+> working directory "Local uncommitted changes, not checked in to index"
+> and the changes in the index "Local changes checked in to index but
+> not committed".  If you prefer some other wording, let me know.  I
+> made the working directory commit red (as before) and the index commit
+> magenta, as being between red and blue.  The index commit gets a fake
+> SHA1 id of 00..001.
 
-Hi there,
+I should add that I'm sure that gitk won't yet do the right thing if
+there are files in the index at other than stage 0, or if the local
+changes are the result of an incomplete merge.  (In the latter case I
+suppose one or other of the fake commits should have multiple parents,
+but I don't have the infrastructure to add fake commits with multiple
+parents yet.)
 
-still not having figured out the problem with the list (and I did
-contact postmaster@), I just discovered that in fact the patch only
-handles git-svn clone, not git-svn init. Thus, it's best to ignore
-it for now. I am sorry for not taking enough care before publishing
-it.
-
-The openssl-autodetect patch does work and is ready for inclusion,
-if you agree.
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"if builders built buildings the way
- programmers wrote programs,
- then the first woodpecker that came along
- would destroy civilization."
-                                                  -- gerald weinberg
-
---IJpNTDwzlM2Ie8A6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGl0xcIgvIgzMMSnURAr2hAKCaMF8bzLLwAgHam6EuRVv+31dgagCfYft3
-CbJM7miTew8mFlKabD+8EJc=
-=hI/6
------END PGP SIGNATURE-----
-
---IJpNTDwzlM2Ie8A6--
+Paul.
