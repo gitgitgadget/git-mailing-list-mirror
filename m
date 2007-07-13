@@ -1,73 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation for git-log --follow
-Date: Fri, 13 Jul 2007 15:47:19 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707131540490.14781@racer.site>
-References: <20070712145230.GA21590@dervierte>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: CVS -> SVN -> Git
+Date: Fri, 13 Jul 2007 15:48:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 16:47:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 13 16:48:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9MR0-0003wC-E4
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 16:47:54 +0200
+	id 1I9MRq-0004GU-3L
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 16:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760310AbXGMOru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 10:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760181AbXGMOru
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 10:47:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53144 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759349AbXGMOrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 10:47:49 -0400
-Received: (qmail invoked by alias); 13 Jul 2007 14:47:47 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
-  by mail.gmx.net (mp055) with SMTP; 13 Jul 2007 16:47:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18gEnAUzlMg9g2BxEPyhtoBiqcJABVHPGyJlI7sfq
-	qE6BIm3Y8dJjAL
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070712145230.GA21590@dervierte>
-X-Y-GMX-Trusted: 0
+	id S1761520AbXGMOso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 10:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761719AbXGMOsn
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 10:48:43 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36456 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761300AbXGMOsm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jul 2007 10:48:42 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 2BD31C616A
+	for <git@vger.kernel.org>; Fri, 13 Jul 2007 15:48:41 +0100 (BST)
+Received: (qmail 31926 invoked by uid 103); 13 Jul 2007 15:48:40 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.3/3652. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.032481 secs); 13 Jul 2007 14:48:40 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 13 Jul 2007 15:48:40 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52397>
 
-Hi,
 
-On Thu, 12 Jul 2007, Steven Walter wrote:
+Has anyone managed to succssfully import a Subversion repository that was 
+initially imported from CVS using cvs2svn using fast-import?
 
-> +--follow::
-> +	Continue listing the history of a file beyond renames.
-> +
+It looks like cvs2svn has created a rather big mess.   It has created 
+single commits that change files in more than one branch and/or tag. 
+It also creates tags using more than one commit.  Now I come to try and 
+import the Subversion history into git and I'm having trouble creating a 
+sensible stream to feed into fast-import.
 
-Maybe say "Follow the history of a file beyond renames"?
+I'm trying to use fast-import because git-svnimport creates a incorrect 
+repository that is missing files and even whole directories (I suppose 
+this could be due to the confusion from cvs2svn), and git-svn is a) _way_ 
+too slow, b) doesn't do merges and c) munges the commit comments.
 
-> @@ -91,6 +94,12 @@ git log -r --name-status release..test::
->  	in the "release" branch, along with the list of paths
->  	each commit modifies.
->  
-> +git log --follow builtin-rev-list.c::
-> +
-> +	Shows the commits that changed builtin-rev-list.c, including
-> +	those commits that occurred before the file was given its
-> +	present name.
-> +
+-- 
+Julian
 
-This is not particularly clear IMHO.  Probably it would be a good thing to 
-contrast vs no-follow:
-
-	The output of "git log builtin-rev-list.c" stops with commit 
-	"v1.4.0-rc1~126", as if the file was created there.
-
-	With "--follow", git will detect that this file was renamed 
-	from "rev-list.c" and minimally modified in that commit.  After 
-	this, it will continue with the log, using the file name 
-	"rev-list.c".
-
-Ciao,
-Dscho
+  ---
+Riffle West Virginia is so small that the Boy Scout had to double as the
+town drunk.
