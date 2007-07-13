@@ -1,83 +1,46 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] make git-send-email.perl handle email addresses with no names when Email::Valid is present
-Date: Thu, 12 Jul 2007 22:47:17 -0700
-Message-ID: <7vr6ncrh22.fsf@assigned-by-dhcp.cox.net>
-References: <20070713041749.GA28824@kroah.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: pull-fetch-param.txt
+Date: Fri, 13 Jul 2007 05:53:46 +0000
+Message-ID: <20070713055346.634.qmail@1e54e4f4e1041d.315fe32.mid.smarden.org>
+References: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de> <7vhcymt07a.fsf@assigned-by-dhcp.cox.net> <452211C2.8020402@s5r6.in-berlin.de> <7vven1rfpj.fsf@assigned-by-dhcp.cox.net> <45222B18.1090305@s5r6.in-berlin.de> <20070712130631.13667.qmail@594d46613ccd9b.315fe32.mid.smarden.org> <7vvecps2rz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 07:47:31 2007
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 13 07:53:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9E02-0003JV-Ui
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 07:47:31 +0200
+	id 1I9E5r-0005Fb-RN
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 07:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933957AbXGMFrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 01:47:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933794AbXGMFrV
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 01:47:21 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39286 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933668AbXGMFrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 01:47:19 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070713054718.GDIY1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 13 Jul 2007 01:47:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id NtnJ1X0011kojtg0000000; Fri, 13 Jul 2007 01:47:19 -0400
-In-Reply-To: <20070713041749.GA28824@kroah.com> (Greg KH's message of "Thu, 12
-	Jul 2007 21:17:49 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932122AbXGMFx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 01:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbXGMFx1
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 01:53:27 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:41402 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932910AbXGMFx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 01:53:27 -0400
+Received: (qmail 635 invoked by uid 1000); 13 Jul 2007 05:53:46 -0000
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vvecps2rz.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52362>
 
-Greg KH <greg@kroah.com> writes:
+On Thu, Jul 12, 2007 at 02:58:08PM -0700, Junio C Hamano wrote:
+> Gerrit Pape <pape@smarden.org> writes:
+> > Hi, this still is a problem, at least on Debian/unstable; with asciidoc
+> > 8.2.1, the git-push(1) and git-fetch(1) man pages have this 'broken'
+> > refspec description[0].
+> 
+> Quick question.  Is the build done with "make
+> ASCIIDOC8=YesPlease"?
 
-> When using git-send-email.perl on a changeset that has:
-> 	Cc: <stable@kernel.org>
-> in the body of the description, and the Email::Valid perl module is
-> installed on the system, the email address will be deemed "invalid" for
-> some reason (Email::Valid isn't smart enough to handle this?) and
-> complain and not send the address the email.
+No, must have missed that.  This solves the first issue with the refspec
+in git-push(1), git-fetch(1), but not the second one with callout lists.
 
-That appears to be the case.
-
-        bad foo
-        bad <foo@bar.baz>
-        ok  foo@bar.baz
-        ok  Foo <foo@bar.baz>
-
-> Anyway, this tiny patch fixes this problem for me.  Note, my perl-foo is
-> quite week, so this could probably be easily done in one line for those
-> with better reg-ex skills.
-
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -410,6 +410,9 @@ sub extract_valid_address {
->  	return $address if ($address =~ /^($local_part_regexp)$/);
->  
->  	if ($have_email_valid) {
-> +		if ($address =~ s/^<//) {
-> +			$address =~ s/>$//;
-> +		}
->  		return scalar Email::Valid->address($address);
->  	} else {
-
-I'd probably do:
-
-	if ($have_email_valid) {
-		$address =~ s/^<(.*)>$/$1/;
-		return scalar Email::Valid->address($address);
-	} else {
-
-instead, but they are moral equivalents.
-
-Thanks for a fix.
+Thanks, Gerrit.
