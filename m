@@ -1,85 +1,142 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] More permissive "git-rm --cached" behavior without -f.
-Date: Fri, 13 Jul 2007 20:53:38 +0200
-Message-ID: <vpq8x9kp231.fsf@bauges.imag.fr>
-References: <vpq8x9k9peu.fsf@bauges.imag.fr>
-	<11843484982037-git-send-email-Matthieu.Moy@imag.fr>
-	<20070713175737.GA20416@coredump.intra.peff.net>
+From: "Bradford Smith" <bradford.carl.smith@gmail.com>
+Subject: Fwd: git-svn: trunk missing, checks out tag instead
+Date: Fri, 13 Jul 2007 15:05:01 -0400
+Message-ID: <f158199e0707131205w358676e5j88f8e4c63b1be1f5@mail.gmail.com>
+References: <f158199e0707131024o5eb27b72v900f0d0613bc834b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 13 20:54:06 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 13 21:05:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9QHB-0001l2-Vd
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 20:54:02 +0200
+	id 1I9QRy-0005Eh-0w
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 21:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758472AbXGMSx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 14:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758251AbXGMSx6
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 14:53:58 -0400
-Received: from imag.imag.fr ([129.88.30.1]:57602 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753307AbXGMSx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 14:53:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6DIrcSc007022
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 13 Jul 2007 20:53:38 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1I9QGo-0006VK-6J; Fri, 13 Jul 2007 20:53:38 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1I9QGo-0007DM-3i; Fri, 13 Jul 2007 20:53:38 +0200
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <20070713175737.GA20416@coredump.intra.peff.net> (Jeff King's message of "Fri\, 13 Jul 2007 13\:57\:37 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 13 Jul 2007 20:53:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1758316AbXGMTFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 15:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758897AbXGMTFF
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 15:05:05 -0400
+Received: from ik-out-1112.google.com ([66.249.90.180]:44366 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758280AbXGMTFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 15:05:03 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so442184ika
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 12:05:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BYBbASCyGvA/jYAE4/MiMliBVcyDwtHGnh/0o7uyDnota7Q5dS1x9T0HksUjjzr0BOkWT2l39DsJg3WtNvucL3xvZT3J7gVQ/WW00pp4VKrkrzloBOIUx2sg1cp1t65+cE73dcKwR+9Xc5VDEmfLW07aFsm5sPw5Owx0uo10rXA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AeBusOt9GhwKY3xkDmf10oAEme69u/ZW/haWa2U8GrPAwfuDDus0vf26+6cgDtW4OzIZzi1stceY0zOBo/klSFhMZvFWf2cvv1QbF1eUqSgg7PWbEcBWoLJKrzlUwqRWg7Pu9swxCQTg0HU5/4CjjYJZopGIwCF3L2SW8Bn+zU8=
+Received: by 10.78.138.14 with SMTP id l14mr549466hud.1184353501613;
+        Fri, 13 Jul 2007 12:05:01 -0700 (PDT)
+Received: by 10.78.178.10 with HTTP; Fri, 13 Jul 2007 12:05:01 -0700 (PDT)
+In-Reply-To: <f158199e0707131024o5eb27b72v900f0d0613bc834b@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52412>
 
-Jeff King <peff@peff.net> writes:
+UPDATE:
 
-> On Fri, Jul 13, 2007 at 07:41:38PM +0200, Matthieu Moy wrote:
->
->> Previously, the index had to match the file *and* the HEAD. With
->> --cached, the index must now match the file *or* the HEAD. The behavior
->> without --cached is unchanged, but provides better error messages.
->
-> This does make more sense, but there are still some inconsistencies. Is
-> it OK to lose content that is only in the index, or not?
+I get the same behavior even after checking in a new change on the trunk.
 
-I'd say it isn't OK. At least, that's what the previous git-rm
-considered.
+Oh, well...
 
-> If it is OK, then --cached shouldn't need _any_ safety valve (and after
-> all, anything you remove in that manner is recoverable with git-fsck
-> until the next prune).
->
-> If it isn't OK, then you are not addressing the cases where git-rm
-> without --cached loses index content (that is different than HEAD and
-> the working tree).
+Bradford
 
-Either I didn't understand your question, or the answer is "yes, I
-do.". The behavior without --cached is not modified, except for the
-error message, and the previous was to require -f whenever the index
-doesn't match the head, *or* doesn't match the file. So, without
---cached, you need to have file=index=HEAD to be able to git-rm.
+---------- Forwarded message ----------
+From: Bradford Smith <bradford.carl.smith@gmail.com>
+Date: Jul 13, 2007 1:24 PM
+Subject: git-svn: trunk missing, checks out tag instead
+To: git@vger.kernel.org
 
-If I missunderstand you, please, provide a senario where my patch
-doesn't do the expected.
 
--- 
-Matthieu
+I am using git-svn version 1.5.3.rc1.4.gaf83 (svn 1.4.3), and I work
+with an SVN repository that is layed out like this:
+
+/trunk/proj1/
+...
+/trunk/proj2/
+...
+/trunk/testing/
+...
+
+/branches/proj1/
+...
+/branches/proj2/
+...
+/branches/testing/
+/branches/testing/0000-baseline
+
+/tags/proj1/
+...
+/tags/proj2/
+...
+/tags/testing/
+/tags/testing/0000-baseline-0
+
+I want to track the testing project, so I tried to use this git-svn
+command line:
+
+git-svn clone <base-url> -T/trunk/testing -t/tags/testing
+-b/branches/testing testing
+
+This appears to work, though I do get this warning message (edited for privacy):
+
+W: Ignoring error from SVN, path probably does not exist: (175002): RA
+layer request failed: REPORT request failed on
+'/<server_path>/!svn/bc/101': REPORT of '/<server_path>!svn/bc/101':
+Could not read chunk size: Secure connection truncated
+(https://<myserver>)
+
+When I run 'git branch -a' in the new testing directory I get this:
+
+* master
+  0000-baseline
+  0000-baseline@1546
+  1.0
+  1.0@1549
+  1.0@1656
+  tags/0000-baseline
+  tags/0000-baseline-0
+  tags/0000-baseline@1663
+
+Where is the remote branch for trunk? And, why do I have remote
+entries for the defunct 1.0 branch that I deleted from svn earlier
+today?  What's more, the latest changes from /trunk/testing do not
+appear in my working directory, and gitk confirms that master is
+pointing at the same commit as tags/0000-baseline-0.
+
+If I just try to track the trunk like this:
+
+git-svn clone <base-url>/trunk/testing
+
+Then I get all of the latest changes and 'git branch -a' shows:
+
+* master
+  git-svn
+
+So that seems OK at least.  It just doesn't work when I try to get
+branches and tags.  For now, I'll just work this way.
+
+FWIW, I suspect this behavior may be related to recent changes I made
+to the Subversion repository.  I created
+/branches/testing/0000-baseline today by copying an _old_ revision of
+/trunk/testing.  Then I created /tags/testing/0000-baseline-0 by
+copying /branches/testing/0000-baseline.  No commits have been done on
+/testing/trunk since then.  Perhaps the recent (probably latest)
+commit that copied an OLD version of trunk is somehow confusing
+git-svn?  Once I commit a change to the subversion trunk, I'll try to
+clone trunk, branches, and tags again and post an update to this
+message.  Maybe it will work then.
+
+Thanks for your help.
+
+Bradford C. Smith
