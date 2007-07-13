@@ -1,79 +1,62 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git fetch inside a bare repo does nothing
-Date: Fri, 13 Jul 2007 13:54:26 +0200
-Message-ID: <20070713115426.GA4608@xp.machine.xx>
-References: <20070713103303.GD18199@xp.machine.xx> <20070713113209.GA9046@prefect.vdbonline.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Volume of commits
+Date: Fri, 13 Jul 2007 14:46:32 +0200
+Message-ID: <81b0412b0707130546j5ee34fach1b0db1549f039e25@mail.gmail.com>
+References: <m3ps2xu5hc.fsf@pc7.dolda2000.com>
+	 <20070712132937.GQ19386@genesis.frugalware.org>
+	 <Pine.LNX.4.64.0707121451290.4516@racer.site>
+	 <20070713103025.GR1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: CJ van den Berg <cj@vdbonline.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 13:53:18 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	VMiklos <vmiklos@frugalware.org>,
+	"Fredrik Tolf" <fredrik@dolda2000.com>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Fri Jul 13 14:46:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9Ji1-0005mp-Ra
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 13:53:18 +0200
+	id 1I9KXi-0007BS-Fs
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 14:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755291AbXGMLxN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 07:53:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755830AbXGMLxN
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 07:53:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53281 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755009AbXGMLxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 07:53:12 -0400
-Received: (qmail invoked by alias); 13 Jul 2007 11:53:10 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp046) with SMTP; 13 Jul 2007 13:53:10 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX188bP0GPVg8XGVN59HDK4+5bzKeV8hcgolWsbaGHT
-	8kjShq4Mm7mWd0
-Mail-Followup-To: CJ van den Berg <cj@vdbonline.com>, git@vger.kernel.org
+	id S1756847AbXGMMqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 08:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756300AbXGMMqf
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 08:46:35 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:41855 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755217AbXGMMqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 08:46:34 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so322606wra
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 05:46:33 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mOnoAykhusTyG9MRqOzn8UBPVtGhAxKqiDVyl34wqMg+SOKXK2hblsjuFq5r+cW41L6g/paqRmU9v+rjFP8xItodCk5br9w8vWa+nZ3Km5SsnaL+SWUKrvts6a9FBWnTJjEuGb70nOTwHNaUPvpTrYk9vhzc72VvKDX9yBmDsNQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=U0znFQsiYfr3vGTUZczkwQWsx4Alkxdjnu3uchVnwHYWix+m0awxuA5x9wZOxRLHyZyDbDfDB074NXvvHMaTH3Noc9AS4SGLATrmDAHWeQEAKc/zYAkPkMMOQzuRWhJxi1WCGNmnANYB1G8mQbqaPRhOTvVfYWb175IZFzUSnS4=
+Received: by 10.78.201.10 with SMTP id y10mr474960huf.1184330792617;
+        Fri, 13 Jul 2007 05:46:32 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Fri, 13 Jul 2007 05:46:32 -0700 (PDT)
+In-Reply-To: <20070713103025.GR1528MdfPADPa@greensroom.kotnet.org>
 Content-Disposition: inline
-In-Reply-To: <20070713113209.GA9046@prefect.vdbonline.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52387>
 
-On Fri, Jul 13, 2007 at 01:32:10PM +0200, CJ van den Berg wrote:
-> On Fri, Jul 13, 2007 at 12:33:03PM +0200, Peter Baumann wrote:
-> > kblin on IRC wanted to know how to update a bare repo with fetching.
-> > He wants to have a bare repo of samba as a mirror and clone from this
-> > mirror to avoid network traffic and to have several git repos which
-> > could all have a different branch checked out. For a better description
-> > see [1].
-> > 
-> > I suggested to use "git fetch --bare" inside the bare repo, but this
-> > doesn't work. So what I'm asking now if this is intenional behaviour or
-> > a bug, so please could someone  shed some light on it?  Or how is the
-> > prefered method to update a bare repo *without* pushing to it?
-> 
-> "git fetch" works fine in a bare repo. The issue you're probably having is
-> that "git clone --bare" does not add a [remote "origin"] section to the
-> config file like regular "git clone" does, so "git fetch" has nothing to
-> do. Just add a remote section (either with "git remote add" or manually) and
-> regular "git fetch" will work fine.
-> 
-> Just for reference, this is the remote section that is equivalent to the
-> original "git clone --bare your_uri_here":
-> 
-> [remote "origin"]
->         url = your_uri_here
->         fetch = +refs/heads/*:refs/heads/*
-> 
-> 
-Thx. This wasn't exactly my problem but it lead me to the real problem:
-I used
-	git fetch /path/to/repo master
+On 7/13/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> If I squash a whole series of commits, how do I prevent git-rebase -i
+> from firing up an editor after every single commit in the series?
 
-and had forgotten that I had to specify the local ref, too.
+It is started only for squashed commits. But you can set VISUAL to true or ":".
 
-	git fetch /path/to/repo master:master
+> a commit message that contains the commit message of "c" twice and
+> after the rebase there are still three commits in the history.
 
-worked as expected. Sorry for the noise.
-
--Peter
+Known, fixed (but not yet approved) in
+[PATCH] Fix git-rebase -i to allow squashing of fast-forwardable commits
