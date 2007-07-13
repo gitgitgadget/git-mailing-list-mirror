@@ -1,81 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-update-server-info may be required,cannot clone and pull from a remote repository
-Date: Fri, 13 Jul 2007 02:17:37 +0200
-Message-ID: <200707130217.37817.jnareb@gmail.com>
-References: <a901b49a0707110708o7c883bb0s707d9791f344f1f6@mail.gmail.com> <f74tk8$k21$1@sea.gmane.org> <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
+From: "David Frech" <nimblemachines@gmail.com>
+Subject: Re: sharing between local "work" and "nightly build" git repos
+Date: Thu, 12 Jul 2007 17:27:16 -0700
+Message-ID: <7154c5c60707121727k36854891u82afc4a8be822861@mail.gmail.com>
+References: <7154c5c60707121636l585b42d4l931b08f1468ddfc@mail.gmail.com>
+	 <7vmyy1rwza.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "pradeep singh" <pradeep.rautela@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 02:17:43 2007
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 02:27:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I98qs-00060X-PC
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 02:17:43 +0200
+	id 1I990E-0000Nu-Of
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 02:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758904AbXGMARj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Jul 2007 20:17:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758736AbXGMARj
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 20:17:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:19630 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756817AbXGMARi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2007 20:17:38 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so460366ugf
-        for <git@vger.kernel.org>; Thu, 12 Jul 2007 17:17:37 -0700 (PDT)
+	id S1757831AbXGMA1S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Jul 2007 20:27:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758031AbXGMA1R
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Jul 2007 20:27:17 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:39471 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757674AbXGMA1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2007 20:27:17 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so390217wah
+        for <git@vger.kernel.org>; Thu, 12 Jul 2007 17:27:16 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mrrki/pODcqe7MU+qD30AXN+UVKaIka+ZcNkexcg013WrN2wD8PlaSAGD2KjqVM8L4J/9D6uV/tggMiRtcVtfXby0UYbMvhPtBsENEYFQZldYONCJtCX1K7eLDQqY5qmXl3Wh/v2kY6x9O21wK21JqG5XnJcNXaViMD8nYIWV+c=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eRvfPyZsOGQZmaILVHryBNuRKzARUvpiyyM75H+iofu64MGPBbAf05QqnJlCIIYBfGaCTg3p2JrJPIa6MnM+5+5xiexjc+fa7mEWQBVLTxN/DYigLjtnX11aB2w+B5f76yaYqeztNd9llxgL01oMKLUeeCrPf91RNPucEq/ewA4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kjMUDjBXK5i3UoH2nj0hqGAGb7XvOkXowiuf6572gzELRHYcrkDbpp3QvAr4LbbMP50lIH6WVrcDDuaRJ8QgeSMG+OrFuC1FcbUZWTbH1pFXHPHliDttIxmh5FD/Mln6KqkUIYfgYUYsopfiKIO6QeA2ngQgbY0pBWql+ajuyKE=
-Received: by 10.86.23.17 with SMTP id 17mr871483fgw.1184285857071;
-        Thu, 12 Jul 2007 17:17:37 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTP id y18sm1623896fkd.2007.07.12.17.17.35
-        (version=SSLv3 cipher=OTHER);
-        Thu, 12 Jul 2007 17:17:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <a901b49a0707120550i9361e30wc5811bd5d3305f59@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q8POerFc7BXIboHUQSk95lfSglkMP5AOuaoWK6YBlEaggsTxYK9mo976ywm942FSd9j4NzsA37u0SdKAl3MrOlHbXb59kzix5JFrgDZdJwEacphEGCOeG23UQaD2ZeofqsMbQHROC6ik+YYiOs+0SWZPvOjkCoONRC+pJxjj/o8=
+Received: by 10.114.57.1 with SMTP id f1mr339523waa.1184286436323;
+        Thu, 12 Jul 2007 17:27:16 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Thu, 12 Jul 2007 17:27:16 -0700 (PDT)
+In-Reply-To: <7vmyy1rwza.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52349>
 
-Pradeep Singh wrote:
-> On 7/12/07, Jakub Narebski <jnareb@gmail.com> wrote:
->> [Cc: git@vger.kernel.org, Pradeep Singh <pradeep.rautela@gmail.com>,
->>  Eric Wong <normalperson@yhbt.net> (instaweb creator)]
->>
->> pradeep singh wrote:
->>
->>> Anyway i could not get gitweb running after running git-instaweb.
->>>
->>> Any thoughts on how to setup a gitweb interface ?
->>
->> What information does gitweb/INSTALL lack?
-> 
-> May be I am running some old version on my Ubuntu Edgy machine
-> perhaps? I cannot find such a file anywhere?
+On 7/12/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "David Frech" <nimblemachines@gmail.com> writes:
+> If you are willing to redo the nightly repository from scratch,
+> I would probably recommend using --reference option when
+> cloning, like this:
+>
+>  $ git clone --reference ~david/git git://git.kernel.org/... ~/nightly-git
+>  $ cd ~/nightly-git
+>  $ git checkout --track -b next origin/next
+>
+> Then a nightly update would go like this:
+>
+>  $ cd ~/nightly-git
+>  $ git pull origin next
+>  $ make clean
+>  $ make test || barf
 
-You can always look up this file at git.git gitweb (either kernel.org 
-one, or repo.or.cz one), e.g.
+This makes sense, including the --track, which I neglected to set.
 
-  http://repo.or.cz/w/alt-git.git/:gitweb/INSTALL
- 
-> Looks like it is available in newer versions.
-> Does it works for git-1.4.4?
+Could you, for my sake and the list's (if others are as confused) be
+clearer about the distinctions among -l, -s, and --reference? Exactly
+what they do, and their orthogonality (or lack of) really isn't clear
+from reading the man page.
 
-The installation instructions may have changed a bit since then. It is 
-much easier to use 1.5.x series, nevertheless.
+Thanks for your help! I'll set this up and hopefully start running it tonight.
 
+If the build or test barfs, who should get the mail?
+
+BTW, I figured out a sneaky way (using filters in Gmail) to send it
+thru my Gmail account, so I won't have any issues with sending via
+SMTP from a dynamic IP.
+
+Cheers,
+
+- David
 -- 
-Jakub Narebski
-Poland
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
