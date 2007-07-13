@@ -1,63 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] Move the --decorate option from builtin-log.c to
- revision.c.
-Date: Fri, 13 Jul 2007 16:38:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707131626200.14781@racer.site>
-References: <Pine.LNX.4.64.0707110220340.4047@racer.site>
- <Pine.LNX.4.64.0707110229120.4047@racer.site> <7v4pk9v4tp.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: failing to send patches to the list
+Date: Fri, 13 Jul 2007 11:55:16 -0400
+Message-ID: <20070713155516.GA2712@sigill.intra.peff.net>
+References: <20070713093050.GA18001@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 17:39:31 2007
+Content-Type: text/plain; charset=us-ascii
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 13 17:55:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9NEw-0007cR-Jf
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 17:39:30 +0200
+	id 1I9NUH-000551-PM
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 17:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759055AbXGMPj0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 11:39:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757806AbXGMPj0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 11:39:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56241 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756195AbXGMPjZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 11:39:25 -0400
-Received: (qmail invoked by alias); 13 Jul 2007 15:39:23 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
-  by mail.gmx.net (mp048) with SMTP; 13 Jul 2007 17:39:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/CArp4xoDC5uHazKFj5wN9HudVCDCPuZcmJd5zLa
-	r5uPsTYOgujBbx
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4pk9v4tp.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1760525AbXGMPzS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 11:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757673AbXGMPzR
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 11:55:17 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2019 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757594AbXGMPzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 11:55:16 -0400
+Received: (qmail 16394 invoked from network); 13 Jul 2007 15:55:42 -0000
+Received: from unknown (HELO sigill.intra.peff.net) (10.0.0.7)
+  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 13 Jul 2007 15:55:42 -0000
+Received: (qmail 2875 invoked by uid 1000); 13 Jul 2007 15:55:16 -0000
+Content-Disposition: inline
+In-Reply-To: <20070713093050.GA18001@lapse.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52400>
 
-Hi,
+On Fri, Jul 13, 2007 at 11:30:50AM +0200, martin f krafft wrote:
 
-On Thu, 12 Jul 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>   git format-patch -s --stdout | sendmail git@vger.kernel.org
 > 
-> > ---decorate::
-> > -	Print out the ref names of any commits that are shown.
-> > -
-> > ...
-> > +
-> > +--decorate::
-> > +	When a commit is shown, and it matches a ref, print that ref name
-> > +	in brackets after the commit name.
-> 
-> The character-pair ( and ) are usually called parentheses, not
-> brackets.
+> Even though my mail server seems to have delivered them correctly:
+> [...]
+> they never made it onto the list.
 
-Okay.  You want me to resend, or will you fix it?
+vger will reject messages without a message-id. git-format-patch by
+default does not generate a message-id, so unless sendmail generates one
+on the fly, that is your problem.
 
-Ciao,
-Dscho
+In general, git-format-patch output is probably not suitable for direct
+sending...have you looked at git-send-email?
+
+-Peff
