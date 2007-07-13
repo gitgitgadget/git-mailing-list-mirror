@@ -1,86 +1,68 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH] Fix git-p4 on Windows to not use the Posix sysconf
-Date: Fri, 13 Jul 2007 15:33:54 +0200
-Message-ID: <200707131533.55544.simon@lst.de>
-References: <46977660.7070207@trolltech.com> <81b0412b0707130603q69857564i1ba418b74397a33d@mail.gmail.com>
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Re: Lump commit HOWTO?
+Date: Fri, 13 Jul 2007 08:43:15 -0500
+Message-ID: <625fc13d0707130643v1fb739bejb894648dcf16bd3@mail.gmail.com>
+References: <625fc13d0707121821l70e2d6aaw555c79b5d700585f@mail.gmail.com>
+	 <20070713045447.GA2430@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1910681.MZ3Q4r739d";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Marius Storm-Olsen" <marius@trolltech.com>, git@vger.kernel.org,
-	"Junio C Hamano" <junkio@cox.net>
+Cc: "Git Mailing List" <git@vger.kernel.org>
 To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 15:33:31 2007
+X-From: git-owner@vger.kernel.org Fri Jul 13 15:43:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9LH0-0000Vs-UU
-	for gcvg-git@gmane.org; Fri, 13 Jul 2007 15:33:31 +0200
+	id 1I9LQy-0004K3-3D
+	for gcvg-git@gmane.org; Fri, 13 Jul 2007 15:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757088AbXGMNd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 09:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756974AbXGMNd1
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 09:33:27 -0400
-Received: from verein.lst.de ([213.95.11.210]:39259 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756777AbXGMNd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 09:33:26 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l6DDXKNK030831
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Fri, 13 Jul 2007 15:33:21 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <81b0412b0707130603q69857564i1ba418b74397a33d@mail.gmail.com>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1756657AbXGMNnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 09:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932943AbXGMNnT
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 09:43:19 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:44332 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932864AbXGMNnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 09:43:17 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so566185ugf
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 06:43:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ol5LFQefAnaOcJqIhUAyLtxhEa7f8CWMHJeDQzyHfk075vGQByWEZuimEjj5OhDDNQj+uYHKCXAXtb8nKPvRtNt635ev4YK6RkYHPMyRTvKCrs2yHrVlSfa7BbYeGGds/3nkReagZcuGMs7HBcZYey3fSDCWRbPbqhOs1jbFOzg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iZa4iLLlNFMG9CgmrmC4Nxz1McwZNXi9R6XDacd0xMec/Qc7Sq+zGaYHjl/hLpNwR9g/y1ksFH9dy7rlhq/6u4CVmBikkM4WBkdFFjZX1TMD3EuH4CVYXi5XA57BTMd1N3M2b2g9WAI2Oi7lyYLXxXfGm9I4XJ1w/BQSHTAol9s=
+Received: by 10.82.116.15 with SMTP id o15mr1971802buc.1184334195646;
+        Fri, 13 Jul 2007 06:43:15 -0700 (PDT)
+Received: by 10.82.114.16 with HTTP; Fri, 13 Jul 2007 06:43:15 -0700 (PDT)
+In-Reply-To: <20070713045447.GA2430@steel.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52393>
 
---nextPart1910681.MZ3Q4r739d
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Friday 13 July 2007 15:03:51 Alex Riesen wrote:
-> On 7/13/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> >      argmax =3D min(4000, os.sysconf('SC_ARG_MAX'))
+On 7/12/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> Josh Boyer, Fri, Jul 13, 2007 03:21:17 +0200:
+> > Hi All,
+> >
+> > I have a specific workflow in mind that I'm not entirely sure how to
+> > accomplish with git.  What I'd like to do is track a project in a
+> > local branch, and do commits of my own there as well.  Then when I'm
+> > ready to submit the work, I want to take all the incremental commits
+> > and lump them into a single new commit and push that out as a patch or
+> > into a branch for people to pull from.
 >
-> I wonder why the code in question does not use "-x"?
-> I use it git-p4-import and haven't seen the limit yet.
-> I.e.:
->
->    $ ls |p4 -x - print -q
->    $ p4 help usage
->    ...
->    The -x flag instructs p4 to read arguments, one per line, from the
->    named file.  If the file is named '-', then standard input is read.
->    ...
+> See git merge --squash. It is exactly that.
 
-Good idea!
+Hm, OK.  I'll have to play with that.
 
+> Also git-rebase --interactive and git cherry-pick -n can help you to
+> get the same.
 
-I still think the patch makes sense as stop-gap for 1.5.3 though, because=20
-without it git-p4 doesn't work at all on Windows.
+Gah... I totally missed git rebase.  Looks massively useful.  Thanks!
 
-Simon
-
---nextPart1910681.MZ3Q4r739d
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGl39DWXvMThJCpvIRAtW5AJoCSTCIooFmANb4g4Sk/mvPAwH+CQCcDOJw
-D3+6KKBt0kuwDaeTX0gVkcQ=
-=G9cE
------END PGP SIGNATURE-----
-
---nextPart1910681.MZ3Q4r739d--
+josh
