@@ -1,67 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] More permissive "git-rm --cached" behavior without -f.
-Date: Fri, 13 Jul 2007 23:42:21 -0400
-Message-ID: <20070714034221.GA23328@coredump.intra.peff.net>
-References: <vpq8x9k9peu.fsf@bauges.imag.fr> <11843484982037-git-send-email-Matthieu.Moy@imag.fr> <20070713175737.GA20416@coredump.intra.peff.net> <vpq8x9kp231.fsf@bauges.imag.fr>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [PATCH] make git-send-email.perl handle email addresses with
+	no names when Email::Valid is present
+Date: Fri, 13 Jul 2007 21:00:50 -0700
+Message-ID: <20070714040050.GA11773@kroah.com>
+References: <20070713041749.GA28824@kroah.com> <7vr6ncrh22.fsf@assigned-by-dhcp.cox.net> <20070713063414.GN24317@kroah.com> <20070713182818.fd37372f.sfr@canb.auug.org.au>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 05:42:38 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: git-owner@vger.kernel.org Sat Jul 14 06:01:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9YWj-0000Tt-Ls
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 05:42:37 +0200
+	id 1I9Yoo-00035Z-Qw
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 06:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756947AbXGNDmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 23:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753603AbXGNDmY
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 23:42:24 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4088 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756433AbXGNDmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 23:42:23 -0400
-Received: (qmail 23314 invoked from network); 14 Jul 2007 03:42:48 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 14 Jul 2007 03:42:48 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jul 2007 23:42:21 -0400
+	id S1750865AbXGNEBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 00:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbXGNEBQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 00:01:16 -0400
+Received: from canuck.infradead.org ([209.217.80.40]:44345 "EHLO
+	canuck.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbXGNEBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 00:01:15 -0400
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
+	by canuck.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1I9Yob-0007r3-01; Sat, 14 Jul 2007 00:01:05 -0400
 Content-Disposition: inline
-In-Reply-To: <vpq8x9kp231.fsf@bauges.imag.fr>
+In-Reply-To: <20070713182818.fd37372f.sfr@canb.auug.org.au>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52437>
 
-On Fri, Jul 13, 2007 at 08:53:38PM +0200, Matthieu Moy wrote:
-
-> do.". The behavior without --cached is not modified, except for the
-> error message, and the previous was to require -f whenever the index
-> doesn't match the head, *or* doesn't match the file. So, without
-> --cached, you need to have file=index=HEAD to be able to git-rm.
+On Fri, Jul 13, 2007 at 06:28:18PM +1000, Stephen Rothwell wrote:
+> On Thu, 12 Jul 2007 23:34:14 -0700 Greg KH <greg@kroah.com> wrote:
+> >
+> > On Thu, Jul 12, 2007 at 10:47:17PM -0700, Junio C Hamano wrote:
+> > > Greg KH <greg@kroah.com> writes:
+> > > 
+> > > > When using git-send-email.perl on a changeset that has:
+> > > > 	Cc: <stable@kernel.org>
+> > > > in the body of the description, and the Email::Valid perl module is
+> > > > installed on the system, the email address will be deemed "invalid" for
+> > > > some reason (Email::Valid isn't smart enough to handle this?) and
+> > > > complain and not send the address the email.
+> > > 
+> > > That appears to be the case.
+> > > 
+> > >         bad foo
+> > >         bad <foo@bar.baz>
+> > >         ok  foo@bar.baz
+> > >         ok  Foo <foo@bar.baz>
 > 
-> If I missunderstand you, please, provide a senario where my patch
-> doesn't do the expected.
+> This would be a bug in Email::Valid as it complains that the second
+> address fails the rfc822 check, however rfc822 says that the "display
+> name" before the '<' is optional.
 
-Right, my point was that there is a case where running without --cached
-could lose content: when there is no working tree file. However,
-thinking about it more, I recall that Junio made the point that allowing
-that behavior means the CVS idiom of "rm file; git-rm file" will just
-work.
+I agree, do you know how to get such a fix made?
 
-Not that that was a problem you introduced; I merely wanted to push for
-total consistency rather than just handling --cached. But I think the
-non --cached behavior is actually right now, so let me retract my
-complaint.
+thanks,
 
-And assuming the "git-rm when no working tree file" current behavior is
-OK, then I think your patch removes the last consistency problem that I
-mentioned in my state table here:
-
-  http://article.gmane.org/gmane.comp.version-control.git/51449
-
-So in a round-about way, I totally approve of your patch. Sorry for the
-confusion.
-
--Peff
+greg k-h
