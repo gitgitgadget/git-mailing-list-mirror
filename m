@@ -1,97 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] More permissive "git-rm --cached" behavior without -f.
-Date: Sat, 14 Jul 2007 12:14:04 +0200
-Message-ID: <vpqy7hjl2c3.fsf@bauges.imag.fr>
-References: <vpq8x9k9peu.fsf@bauges.imag.fr>
-	<11843484982037-git-send-email-Matthieu.Moy@imag.fr>
-	<7vfy3rlbnp.fsf@assigned-by-dhcp.cox.net>
-	<7vy7hjjw01.fsf@assigned-by-dhcp.cox.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: failing to send patches to the list
+Date: Sat, 14 Jul 2007 08:59:28 +0200
+Message-ID: <20070714065928.GB27136@lapse.madduck.net>
+References: <20070713093050.GA18001@lapse.madduck.net> <f79742$j44$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 12:14:29 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 14 12:17:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9edv-0002eF-G4
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:14:27 +0200
+	id 1I9egv-0003OX-PF
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221AbXGNKOY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:14:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXGNKOY
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:14:24 -0400
-Received: from imag.imag.fr ([129.88.30.1]:61167 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752221AbXGNKOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 06:14:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6EAE4sa017063
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 14 Jul 2007 12:14:04 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1I9edY-0007a7-Bg; Sat, 14 Jul 2007 12:14:04 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1I9edY-0006f1-95; Sat, 14 Jul 2007 12:14:04 +0200
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <7vy7hjjw01.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 14 Jul 2007 00\:16\:14 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 14 Jul 2007 12:14:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755015AbXGNKRb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:17:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbXGNKRb
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:31 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56168 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866AbXGNKRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 06:17:30 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id ACE19895D73
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 27725-05 for <git@vger.kernel.org>;
+	Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+Received: from lapse.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 74E37895D72
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 23C8A4FD42; Sat, 14 Jul 2007 08:59:27 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <f79742$j44$2@sea.gmane.org>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52461>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Although I would not be using it often myself, I think this
->> would make "git rm" more pleasant to use.
->>
->> Thanks for the patch, and my thanks also go to people who
->> commented on the patch.
->
-> Having said that, I think this comment is not quite right.
->
-> +		else if (!index_only) {
-> +			/* It's not dangerous to git-rm --cached a
-> +			 * file if the index matches the file or the
-> +			 * HEAD, since it means the deleted content is
-> +			 * still available somewhere.
-> +			 */
->
-> Personally I do not think "rm --cached" needs any such "safety",
-> even though I'll keep the check for now, primarily because
-> loosening the restriction later is always easier than adding new
-> restriction.  I really do not think this is about protecting the
-> user from "deleted content is not available anywhere else".
+--WhfpMioaduB5tiZL
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I agree that this is something you can argue about.
+also sprach Jakub Narebski <jnareb@gmail.com> [2007.07.14.0258 +0200]:
+> Shouldn't this be rather in configure.in? Main Makefile has only
+> defaults for different systems, but does not do tests.
 
-But in this case, the behavior without -f should be changed too. If
-the file matches HEAD, then "git-rm file" should work, regardless of
-the index then (but this situation is less frequent).
+You are right, except git HEAD already comes with a Makefile (rather
+than a Makefile.in), so I just ran it while testing out patches.
+I introduced the test because I thought the computer could find out
+about libssl for me, rather than myself having to forget to specify
+NO_OPENSSL every time.
 
-In any case, the situation where you might lose content in the index
-by doing git-rm are rare: it means you started working on a file, did
-"git-add" at least once, and edited the file again later, and then
-decided you wanted to remove the file. So, requiring the -f flag in
-those situation is not a real problem, even if the situation is
-slightly-dangerous-but-not-quite-so.
+I agree that this should be (also) in configure.ac; the question is
+more whether we *could* also add it to the Makefile to make
+=66rom-source compilations easier.
 
-I'm willing to work on another patch on top of this one if there's an
-agreement on a better semantics. This one was about fixing something
-which was IMHO wrong, but doesn't necessarily achieve perfection ;-).
+On the other hand, I wonder: if the mozilla/sha.h implementation is
+in the tree anyway, why even bother with libssl? The SHA
+implementation is unlikely to be changed anytime soon, so the extra
+library dependency seems overkill just for the SHA hash
+functionality.
 
--- 
-Matthieu
+Just my 2=A2
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+"to get back my youth i would do anything in the world, except take
+ exercise, get up early, or be respectable."
+                                                        -- oscar wilde
+
+--WhfpMioaduB5tiZL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGmHRQIgvIgzMMSnURAvq0AJ9rDBPtVRgho4QyxenMacOv7dgRowCgwuRG
+E29OL6SCW2ZWGnywJEO6E4g=
+=wmy3
+-----END PGP SIGNATURE-----
+
+--WhfpMioaduB5tiZL--
