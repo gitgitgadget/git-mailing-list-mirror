@@ -1,105 +1,115 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: failing to send patches to the list
-Date: Sat, 14 Jul 2007 08:59:28 +0200
-Message-ID: <20070714065928.GB27136@lapse.madduck.net>
-References: <20070713093050.GA18001@lapse.madduck.net> <f79742$j44$2@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
+Date: Sat, 14 Jul 2007 11:25:28 +0200
+Message-ID: <1184405128718-git-send-email-madduck@madduck.net>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Jul 14 12:17:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9egv-0003OX-PF
+	id 1I9egw-0003OX-8d
 	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbXGNKRb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:17:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbXGNKRb
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:31 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56168 "EHLO
+	id S1755166AbXGNKRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:17:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbXGNKRc
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:32 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56172 "EHLO
 	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753866AbXGNKRa (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1754558AbXGNKRa (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 14 Jul 2007 06:17:30 -0400
 Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id ACE19895D73
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+	by albatross.madduck.net (postfix) with ESMTP id 8AF07895D7D
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:29 +0200 (CEST)
 Received: from albatross.madduck.net ([127.0.0.1])
 	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 27725-05 for <git@vger.kernel.org>;
-	Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+	with LMTP id 30832-04 for <git@vger.kernel.org>;
+	Sat, 14 Jul 2007 12:17:29 +0200 (CEST)
 Received: from lapse.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 74E37895D72
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:28 +0200 (CEST)
+	by albatross.madduck.net (postfix) with ESMTP id 4717E895D72
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:29 +0200 (CEST)
 Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 23C8A4FD42; Sat, 14 Jul 2007 08:59:27 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <f79742$j44$2@sea.gmane.org>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id 66F564FD4B; Sat, 14 Jul 2007 11:25:27 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc1.9.gf029
 X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52462>
 
+The --stdlayout option to git-svn init/clone initialises the default
+Subversion values of trunk,tags,branches: -T trunk -b branches -t tags.
+If any of the -T/-t/-b options are given in addition, they are given
+preference.
 
---WhfpMioaduB5tiZL
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: martin f. krafft <madduck@madduck.net>
+---
+ Documentation/git-svn.txt |    6 +++++-
+ git-svn.perl              |   11 +++++++++--
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-also sprach Jakub Narebski <jnareb@gmail.com> [2007.07.14.0258 +0200]:
-> Shouldn't this be rather in configure.in? Main Makefile has only
-> defaults for different systems, but does not do tests.
-
-You are right, except git HEAD already comes with a Makefile (rather
-than a Makefile.in), so I just ran it while testing out patches.
-I introduced the test because I thought the computer could find out
-about libssl for me, rather than myself having to forget to specify
-NO_OPENSSL every time.
-
-I agree that this should be (also) in configure.ac; the question is
-more whether we *could* also add it to the Makefile to make
-=66rom-source compilations easier.
-
-On the other hand, I wonder: if the mozilla/sha.h implementation is
-in the tree anyway, why even bother with libssl? The SHA
-implementation is unlikely to be changed anytime soon, so the extra
-library dependency seems overkill just for the SHA hash
-functionality.
-
-Just my 2=A2
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"to get back my youth i would do anything in the world, except take
- exercise, get up early, or be respectable."
-                                                        -- oscar wilde
-
---WhfpMioaduB5tiZL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGmHRQIgvIgzMMSnURAvq0AJ9rDBPtVRgho4QyxenMacOv7dgRowCgwuRG
-E29OL6SCW2ZWGnywJEO6E4g=
-=wmy3
------END PGP SIGNATURE-----
-
---WhfpMioaduB5tiZL--
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 0a210e4..9e74b27 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -44,10 +44,14 @@ COMMANDS
+ --tags=<tags_subdir>;;
+ -b<branches_subdir>;;
+ --branches=<branches_subdir>;;
++--stdlayout;;
+ 	These are optional command-line options for init.  Each of
+ 	these flags can point to a relative repository path
+ 	(--tags=project/tags') or a full url
+-	(--tags=https://foo.org/project/tags)
++	(--tags=https://foo.org/project/tags). The option --stdlayout is
++	a shorthand way of setting trunk,tags,branches as the relative paths,
++	which is the Subversion default. If any of the other options are given
++	as well, they take precedence.
+ --no-metadata;;
+ 	Set the 'noMetadata' option in the [svn-remote] config.
+ --use-svm-props;;
+diff --git a/git-svn.perl b/git-svn.perl
+index b3dffcc..affba8e 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -77,11 +77,12 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+ 		   \$Git::SVN::_repack_flags,
+ 		%remote_opts );
+ 
+-my ($_trunk, $_tags, $_branches);
++my ($_trunk, $_tags, $_branches, $_stdlayout);
+ my %icv;
+ my %init_opts = ( 'template=s' => \$_template, 'shared:s' => \$_shared,
+                   'trunk|T=s' => \$_trunk, 'tags|t=s' => \$_tags,
+                   'branches|b=s' => \$_branches, 'prefix=s' => \$_prefix,
++                  'stdlayout' => \$_stdlayout,
+                   'minimize-url|m' => \$Git::SVN::_minimize_url,
+ 		  'no-metadata' => sub { $icv{noMetadata} = 1 },
+ 		  'use-svm-props' => sub { $icv{useSvmProps} = 1 },
+@@ -292,7 +293,8 @@ sub init_subdir {
+ sub cmd_clone {
+ 	my ($url, $path) = @_;
+ 	if (!defined $path &&
+-	    (defined $_trunk || defined $_branches || defined $_tags) &&
++	    (defined $_trunk || defined $_branches || defined $_tags ||
++		defined $_stdlayout) &&
+ 	    $url !~ m#^[a-z\+]+://#) {
+ 		$path = $url;
+ 	}
+@@ -302,6 +304,11 @@ sub cmd_clone {
+ }
+ 
+ sub cmd_init {
++        if (defined $_stdlayout) {
++          $_trunk = 'trunk' if (!defined $_trunk);
++          $_tags = 'tags' if (!defined $_tags);
++          $_branches = 'branches' if (!defined $_branches);
++        }
+ 	if (defined $_trunk || defined $_branches || defined $_tags) {
+ 		return cmd_multi_init(@_);
+ 	}
+-- 
+1.5.3.rc1.9.gf029
