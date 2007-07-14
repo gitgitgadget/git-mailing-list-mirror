@@ -1,70 +1,116 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] fall back to mozilla's sha.h if openssl/sha.h is not available
-Date: Sat, 14 Jul 2007 17:12:31 +0200
-Message-ID: <20070714151231.GD2544@steel.home>
-References: <11844050771857-git-send-email-madduck@madduck.net> <20070714142350.GB2544@steel.home> <20070714145013.GA14488@piper.oerlikon.madduck.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH] Add --show-size to git log to print message size
+Date: Sat, 14 Jul 2007 18:52:10 +0200
+Message-ID: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 17:12:46 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jul 14 18:52:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9jIV-0006CX-FV
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 17:12:39 +0200
+	id 1I9kqy-0007lX-Fq
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 18:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756957AbXGNPMf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 11:12:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756771AbXGNPMe
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 11:12:34 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:52723 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756889AbXGNPMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 11:12:34 -0400
-Received: from tigra.home (Fc894.f.strato-dslnet.de [195.4.200.148])
-	by post.webmailer.de (mrclete mo48) (RZmta 8.3)
-	with ESMTP id R00299j6EAOVWX for <git@vger.kernel.org>;
-	Sat, 14 Jul 2007 17:12:32 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 29E08277BD
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 17:12:32 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 97CF7C164; Sat, 14 Jul 2007 17:12:31 +0200 (CEST)
+	id S1755606AbXGNQwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 12:52:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755557AbXGNQwR
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 12:52:17 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:6176 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755348AbXGNQwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 12:52:16 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so988198wah
+        for <git@vger.kernel.org>; Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=imBmNFqZIUMDoaNf/jeVj4TGtDt/cKoTpMYalGTs8Kfor3rAfuL0em8gB2xMQH5igu61yry9rkY79EH41YzIuGfcQRq+R4CSeCJALSLqt0Hlut7MDApkTxhNS1I2zT5kWzQikWob5dh0hGFFyUTDy0L+Yns/4nCkluv/NuHPL24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=esRufd7Moxh1AbUSF7MNQ1amTsK4dGLhXOuyAKFu/76HhxR9NxYEWT3peVgh2iLdB+uh6f3GpmyUQWOB42TCWRbEiqaHBobTfkDGlW2dhAM5F4U7tldRKcKNzmeWL0IGac2twWEmW54pqprMRvo5owPGJX49OlxVpGi1yqM7aoo=
+Received: by 10.114.146.1 with SMTP id t1mr2685712wad.1184431930598;
+        Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20070714145013.GA14488@piper.oerlikon.madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+by+8=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52487>
 
-martin f krafft, Sat, Jul 14, 2007 16:50:13 +0200:
-> also sprach Alex Riesen <raa.lkml@gmail.com> [2007.07.14.1623 +0200]:
-> > > This should possibly go to configure.ac, but maybe *also* to Makefile to make
-> > 
-> > Definitely. It should it least skip the test if NO_OPENSSL is already
-> > defined.
-> 
-> Reading this as a yes, here is the patch adding this. ...
+Print message size just before the corresponding message
+to speedup the parsing by scripts/porcelains tools.
 
-I was not clear. Read it as NO.
+Because git log output is normally read incrementally by
+porcelain tools, if message size is ignored then an
+expensive seek of the delimiting char, as example '\0'
+must be done when parsing the output stream.
 
-> My autotools knowledge is limited, but I might then look at adding
-> the fall back to configure.ac too.
+With this patch it is possible to avoid an otherwise
+mandatory seek for '\0' starting from the beginning
+of log body.
 
-Some (me, for one) will consider it the only place where it should be
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
 
-> Btw: I've done a lot of things wrong on this mailing list already,
-> for which I'd like to apologise. Thanks to those who told me
-> privately off my faux pas. I hope those won't be necessary anymore.
+This little patch makes great difference in loading
+performance of our loved ;-) tool....and probably
+also others.
 
-If I were you, I would have considered CPPFLAGS and CFLAGS and added a
-check if HAS_OPENSSL already set.
+Please apply.
 
-And BTW doesn't it strike you as a little bit odd that noone has done
-that in Makefile before you? Could that be because configure is
-considered the _right_ place for this kind of stuff?
+Thanks
+Marco
+
+
+ log-tree.c |    3 +++
+ revision.c |    4 ++++
+ revision.h |    1 +
+ 3 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 8624d5a..2fb7761 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -295,6 +295,9 @@ void show_log(struct rev_info *opt,
+ 	if (opt->add_signoff)
+  		len = append_signoff(&msgbuf, &msgbuf_len, len,
+ 				     opt->add_signoff);
++ 	if (opt->show_size)
++		printf("size %i\n", len);
++
+  	printf("%s%s%s", msgbuf, extra, sep);
+  	free(msgbuf);
+ }
+diff --git a/revision.c b/revision.c
+index 33ee9ee..3850a1e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1136,6 +1136,10 @@ int setup_revisions(int argc,
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--show-size")) {
++				revs->show_size = 1;
++				continue;
++			}
+
+ 			/*
+ 			 * Grepping the commit log
+diff --git a/revision.h b/revision.h
+index f46b4d5..584b3f1 100644
+--- a/revision.h
++++ b/revision.h
+@@ -81,6 +81,7 @@ struct rev_info {
+  	const char	*log_reencode;
+  	const char	*subject_prefix;
+ 	int		no_inline;
++	int		show_size;
+
+ 	/* Filter by commit log message */
+  	struct grep_opt	*grep_filter;
+-- 
+1.5.3.rc0.81.g1ed84-dirty
