@@ -1,76 +1,54 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Exporting a tree from a repository
-Date: Sat, 14 Jul 2007 22:46:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707142237190.13310@beast.quantumfyre.co.uk>
-References: <8e04b5820707141325o400e170bu9eb80b304cae506b@mail.gmail.com>
+From: Oswald Buddenhagen <ossi@kde.org>
+Subject: Re: CVS -> SVN -> Git
+Date: Sat, 14 Jul 2007 23:50:31 +0200
+Message-ID: <20070714215031.GA3833@ugly.local>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk> <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com> <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Ciprian Dorin Craciun <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 23:46:21 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9pRV-0000o1-7J
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 23:46:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762559AbXGNVqO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 17:46:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761771AbXGNVqO
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 17:46:14 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:60591 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761276AbXGNVqN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jul 2007 17:46:13 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 5206BC6104
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 22:46:12 +0100 (BST)
-Received: (qmail 26191 invoked by uid 103); 14 Jul 2007 22:46:11 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.3/3665. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.033254 secs); 14 Jul 2007 21:46:11 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 14 Jul 2007 22:46:11 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <8e04b5820707141325o400e170bu9eb80b304cae506b@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
+	dev <dev@cvs2svn.tigris.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: dev-return-2042-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sat Jul 14 23:50:40 2007
+Return-path: <dev-return-2042-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1I9pVf-0001ld-Q4
+	for gcvscd-dev@gmane.org; Sat, 14 Jul 2007 23:50:40 +0200
+Received: (qmail 13863 invoked by uid 5000); 14 Jul 2007 21:50:35 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52510>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 13853 invoked from network); 14 Jul 2007 21:50:35 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAFrimEaD9nj6jWdsb2JhbACPNwEBAgcGBgkGHw
+X-IronPort-AV: i="4.16,539,1175497200"; 
+   d="scan'208"; a="62155235:sNHT17808840"
+X-IRONPORT: SCANNED
+Mail-Followup-To: "Eric S. Raymond" <esr@thyrsus.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
+	dev <dev@cvs2svn.tigris.org>
+Content-Disposition: inline
+In-Reply-To: <20070714195252.GB11010@thyrsus.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52511>
 
-On Sat, 14 Jul 2007, Ciprian Dorin Craciun wrote:
-
->   Hello all!
+On Sat, Jul 14, 2007 at 03:52:52PM -0400, Eric S. Raymond wrote:
+> That being the case, two-step conversion with tools that import CVS to
+> SVN and export from SVN to whatever actually works extremely well.
 >
->   I am a new GIT user, I like it, so I started playing with it for
-> different projects I work on.
->
->   Currently I am playing with "Linux from Scratch", and I have
-> written some scripts to automatize the build process -- kind of
-> install scripts...
->
->   For this I use GIT to store all the source packages -- each inside
-> it's own branch :).
->
->   My question is the following: How can I export an entire tree
-> without using a working directory, or cloning the repository. (Because
-> from what I have seen so far there is no way to use the same
-> repository with many working directories...)
-
-You can have as many working directories as you want from one repository 
-using the git-new-workdir script from contrib/workdir.  You do need to be 
-careful when updating references though (you basically want to avoid 
-updating a reference that you are using in another working directory).
-
-You should also be able to use this to get an "export" - simply create the 
-new workdir and then remove the .git (being careful not to accidentally do 
-this in your actual repository).  However I expect there is a better way 
-to do this ...
+well, yes. hoooowever ... you are missing a few details:
+- conversion time. until we have incremental conversions, this is
+  absolutely critical to many organizations.
+- psychology. cvs2xxx is simpler than cvs2svn + svn2xxx. it's also sort
+  of a mindset thing. don't underestimate this.
 
 -- 
-Julian
-
-  ---
-Quark!  Quark!  Beware the quantum duck!
+Hi! I'm a .signature virus! Copy me into your ~/.signature, please!
+--
+Chaos, panic, and disorder - my work here is done.
