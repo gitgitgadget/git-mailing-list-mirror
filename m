@@ -1,102 +1,140 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: CVS -> SVN -> Git
-Date: Sun, 15 Jul 2007 00:19:11 +0200
-Message-ID: <46994BDF.6050803@alum.mit.edu>
-References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk> <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com> <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: mtimes of working files
+Date: Sun, 15 Jul 2007 00:22:21 +0200
+Message-ID: <20070714222221.GB3678@efreet.light.src>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com> <Pine.LNX.4.64.0707111940080.4516@racer.site> <20070711202615.GE3069@efreet.light.src> <200707120857.53090.andyparkins@gmail.com> <1184261246.31598.139.camel@pmac.infradead.org> <20070713003700.GA21304@thunk.org> <1184367619.2785.58.camel@shinybook.infradead.org> <alpine.LFD.0.999.0707131617270.20061@woody.linux-foundation.org> <1184370414.2785.79.camel@shinybook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-        Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-        dev <dev@cvs2svn.tigris.org>
-To: esr@thyrsus.com
-X-From: dev-return-2044-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sun Jul 15 00:19:21 2007
-Return-path: <dev-return-2044-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1I9pxQ-0008Ip-SX
-	for gcvscd-dev@gmane.org; Sun, 15 Jul 2007 00:19:21 +0200
-Received: (qmail 27516 invoked by uid 5000); 14 Jul 2007 22:19:16 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qcHopEYAB45HaUaB"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 00:22:38 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1I9q0W-0000bb-Bx
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 00:22:32 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1764137AbXGNWW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 18:22:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763862AbXGNWW3
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 18:22:29 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:57380 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762102AbXGNWW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 18:22:28 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id C57AF57283;
+	Sun, 15 Jul 2007 00:22:27 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 7W9GuDD8EAX5; Sun, 15 Jul 2007 00:22:26 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 935B85726E;
+	Sun, 15 Jul 2007 00:22:24 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1I9q0L-0002cB-FB; Sun, 15 Jul 2007 00:22:21 +0200
+Content-Disposition: inline
+In-Reply-To: <1184370414.2785.79.camel@shinybook.infradead.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 27506 invoked from network); 14 Jul 2007 22:19:16 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAABjomEbAbSoIk2dsb2JhbACPOwEBAgcEBgcIGA
-X-IronPort-AV: i="4.16,539,1175497200"; 
-   d="scan'208"; a="62155913:sNHT56658574"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <20070714195252.GB11010@thyrsus.com>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52512>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52513>
 
-Eric S. Raymond wrote:
-> In slightly more detail: I just finished forward-porting sccs2rcs to
-> Python, I've been moving some Subversion-hosted stuff to Mercurial,
-> and I've been thinking about writing a simple rcs2svn because the last
-> time I tried using cvs2svn on a large RCS history (the Jargon File, as
-> it happens, a couple years back) it did a very poor job of coalescing
-> related commits without the CVS metadata.  I'm going to hope 2.0.0 has
-> fixed that; I'll experiment and see.
 
-Could you give a quick summary of the relevant differences between CVS
-and RCS files in this context?  Then I'd be happy to try to figure out
-how bad the situation still is today, and whether it can be easily improved.
+--qcHopEYAB45HaUaB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> [...]
-> So, I hear about plans to make cvs2svn generate something other than
-> Subversion, and here's my instant reaction:
-> 
-> 	    	       	   DON'T DO IT!
-> 
-> This is not because I think Subversion is some kind of final answer to the
-> VCS problem.  Fame from it -- I'm moving towards Mercurial.  No, the
-> real reason I think this would be a waste of time is subtler than that.
-> 
-> Subversion, by design, is very good at capturing the metadata from
-> SCCS and RCS and the various CVS variants floating around.  In fact,
-> lifting from those into Subversion is basically lossless - the real
-> problems are that (a) as Michael notes, the data you're losslessly
-> lifting is scratchy, and (b) as I've noted, you have to use heuristics
-> to coalesce file histories into changesets and those don't always make
-> the links they should.
-> 
-> That being the case, two-step conversion with tools that import CVS to
-> SVN and export from SVN to whatever actually works extremely well.
+On Sat, Jul 14, 2007 at 00:46:54 +0100, David Woodhouse wrote:
+> On the occasions I actually try to _use_ branches, I find it very
+> suboptimal. Perhaps it's just because I'm stupid. I'm sure that's why I
+> ended up committing changes to the wrong branch. But having to rebuild
+> (even with ccache) after changing branches is a PITA. Just changing
+> branches at all is a PITA if you have uncommitted changes (which I
+> usually do because I've usually tested _some_ random patch in a build
+> tree for the hardware which is closest to hand). Pulling a whole bunch
+> of unwanted changes on the 'development' branch while on GPRS, when all
+> I really needed was a single commit from the 'stable' branch also didn't
+> amuse me, although I'm sure if I had the time to play with it I'd have
+> been able to avoid that.
 
-Other people have complained about having to convert from SVN to
-distributed SCMs, because the SVN model doesn't map so easily to their
-favorite.
+I have to say it's the exact oposite for me. I used to have branches checked
+out separately, with arch and than bzr, and I find the git way much easier =
+in
+the end. Exactly because I don't need the multiple checkouts. Often, each of
+them needed to contain some local stuff (like test data or some configurati=
+on
+for building) and rebuilding in one of them does not help the others (usual=
+ly
+they are very close to each other).
 
-You are basically suggesting that an SVN repository is the best lingua
-franca of the SCM world, which I don't believe.  The CVS history *does*
-have to be deformed a bit to fit into SVN, and an svn2xxx converter
-would have to undo the deformation.
+For uncommited changes, git makes it possible (yes, I agree it is an extra
+command one might want to avoid) to commit them and them uncommit or amend
+the commit when you get back to them.
 
-My idea is not to built (for example) cvs2git; rather, I'd like cvs2svn
-to be split conceptually into two tools:
+Pulling something into the wrong place can happen quite as likely, at least
+to me, with separate checkouts as with switching in one place. And than git
+actually makes it much easier to fix it when you are in a single tree. Until
+you publish, you git allows fixing anything with commit --amend and/or rese=
+t.
 
-cvs2<abstract_description_of_cvs_history>, whose job it is to determine
-the most likely "true" CVS history based on the data stored in the CVS
-repository, and
+> I can, and do, mirror stuff from all kinds of suboptimal version control
+> systems into single-branch git trees. And I include multi-branched git
+> trees in my definition of 'suboptimal'. My ability to do that doesn't
+> really help the newbies who are expected with branches, though.
 
-<abstract_description_of_cvs_history>2svn
+For newbies, the bzr approach is much easier to grasp, even though I really
+find that the git one is actually a little nicer to work with.
 
-Then later write
+> I just wish people would make stuff available on the _servers_ in
+> separate trees rather than in branches -- if some people prefer branches
+> locally then that's their option; at the moment we kind of force people
+> into it. They _could_ avoid it but they'd have to know what they're
+> doing.
 
-<abstract_description_of_cvs_history>2git
-<abstract_description_of_cvs_history>2hg
+You can treat the servers as separate trees! When cloning and/or pulling, y=
+ou
+can set up to pull just the one branch you are interested in. Having them as
+separate trees would either be inefficient (the data would not be shared), =
+or
+would bring it's own class of problems.
 
-etc.
+I would like, if git could have something like "checkouts". The idea is, th=
+at
+a checkout would contain the working tree, .git/HEAD saying what revision it
+is at and .git/index and everything else would be linked from the repository
+it is checked out from. That would allow you to have different branches
+checked out at different places, while not only sharing all the data, but
+also all of them available in all the checkouts and commands like pull
+updating it in all of them.
 
-The first split is partly done in cvs2svn 2.0.  And I naively imagine
-that writing the new output back ends won't be all that much work.
+It would be IMHO possible to symlink all the stuff in .git except HEAD and
+index, except for one problem. This is if you have two checkouts from the
+same branch and check out of them, the other one needs to know, that it's
+head should now be detached to stay where it was.
 
-Michael
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--qcHopEYAB45HaUaB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGmUydRel1vVwhjGURAtmNAJ9g+57292vBgcNwYZgT6MHlcP1e4wCg3a/X
+tphaHRspIEsjVt8FEeAJjnA=
+=RLh6
+-----END PGP SIGNATURE-----
+
+--qcHopEYAB45HaUaB--
