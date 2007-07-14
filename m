@@ -1,115 +1,110 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] --decorate now decorates ancestors, too
-Date: Sat, 14 Jul 2007 01:23:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707140123141.14781@racer.site>
-References: <Pine.LNX.4.64.0707110220340.4047@racer.site>
- <Pine.LNX.4.64.0707110229320.4047@racer.site> <20070711022714.GI27033@thunk.org>
- <7vmyy1tq96.fsf@assigned-by-dhcp.cox.net>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: mtimes of working files
+Date: Sat, 14 Jul 2007 01:36:33 +0100
+Message-ID: <1184373393.2785.99.camel@shinybook.infradead.org>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
+	 <Pine.LNX.4.64.0707111940080.4516@racer.site>
+	 <20070711202615.GE3069@efreet.light.src>
+	 <200707120857.53090.andyparkins@gmail.com>
+	 <1184261246.31598.139.camel@pmac.infradead.org>
+	 <20070713003700.GA21304@thunk.org>
+	 <1184367619.2785.58.camel@shinybook.infradead.org>
+	 <alpine.LFD.0.999.0707131617270.20061@woody.linux-foundation.org>
+	 <1184370414.2785.79.camel@shinybook.infradead.org>
+	 <alpine.LFD.0.999.0707131704000.20061@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 02:24:06 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Theodore Tso <tytso@mit.edu>, Andy Parkins <andyparkins@gmail.com>,
+	git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jul 14 02:35:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9VQX-0000mG-Gh
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 02:24:01 +0200
+	id 1I9Vbp-0002wN-6G
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 02:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755787AbXGNAXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Jul 2007 20:23:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755313AbXGNAXv
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 20:23:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36591 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753516AbXGNAXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2007 20:23:50 -0400
-Received: (qmail invoked by alias); 14 Jul 2007 00:23:48 -0000
-Received: from R180a.r.pppool.de (EHLO noname) [89.54.24.10]
-  by mail.gmx.net (mp032) with SMTP; 14 Jul 2007 02:23:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hUZhmg4MhxT4pReh1GWpjoPMLF2wbaKYvbcBLEO
-	vnNkfXfS8f+iRf
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vmyy1tq96.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752951AbXGNAfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 20:35:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbXGNAfi
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 20:35:38 -0400
+Received: from canuck.infradead.org ([209.217.80.40]:43794 "EHLO
+	canuck.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752398AbXGNAfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 20:35:37 -0400
+Received: from shinybook-bcm.infradead.org ([2001:8b0:10b:1:20a:95ff:fef3:9992])
+	by canuck.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1I9Vbg-0006WS-Nj; Fri, 13 Jul 2007 20:35:33 -0400
+In-Reply-To: <alpine.LFD.0.999.0707131704000.20061@woody.linux-foundation.org>
+X-Mailer: Evolution 2.10.2 (2.10.2-2.fc7.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by canuck.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52427>
 
-Hi,
-
-On Thu, 12 Jul 2007, Junio C Hamano wrote:
-
-> Theodore Tso <tytso@mit.edu> writes:
+On Fri, 2007-07-13 at 17:10 -0700, Linus Torvalds wrote:
 > 
-> > On Wed, Jul 11, 2007 at 02:29:49AM +0100, Johannes Schindelin wrote:
-> >> 
-> >> The option --decorate changed default behavior: Earlier, it decorated
-> >> commits pointed to by any ref.  The new behavior is this: decorate the
-> >> with the given refs and its ancestors, i.e.
-> >> 
-> >> 	git log --decorate next master
-> >> 
-> >> will show "next", "next^", "next~2", ..., "master", "master^", ...
-> >> in parenthesis after the commit name.
-> >
-> > I'm wondering how useful the default is.  The arguments get used for
-> > two things; both for git-log to decide what revisions to display, and
-> > which refs to decorate, right?  I'm not sure that overloading is such
-> > a great idea.
-> >
-> > Also, I note that "git log --decorate" does nothing at all.  Maybe it
-> > would be better to keep the default to be "any-ref" instead of "given"?
+> On Sat, 14 Jul 2007, David Woodhouse wrote:
+> > 
+> > On the occasions I actually try to _use_ branches, I find it very
+> > suboptimal.
 > 
-> I think defaulting to "given" is a regression.  It could be
-> argued that "tag-ref" or "tag" might be a better default
-> (judging from my experience with "name-rev"), but keeping
-> "any-ref" would probably be the safest.
+> This seems to be very personal.
 
-Okay, fair enough.  I kind of expected people to disagree as of the 
-default mode.  My preference would have been "tag", since I need that 
-quite often, but I am willing to put my wishes aside there.
+Yeah, much of it. Although I've also seen other people trying to get to
+grips with git and tripping up over branches recently. It _was_ getting
+easier, for a while :)
 
-Probably I should follow up with a replacement patch, and a config 
-variable "commit.decorateMode" patch, leaving the default at "any-ref"?
+> But I literally tend to just use branches for something small. I don't 
+> personally tend to have any long-term live branches (apart from the remove 
+> ones, obviously). I create a branch, do something in it, merge it, and 
+> go back to master.
 
-> But in general I do not see ("I haven't realized" might turn out to be a 
-> better expression) much value in this series yet except for the initial 
-> clean-up patches, while I think this option would be quite expensive in 
-> terms of memory footprints on projects with nontrivial size of history.  
-> I dunno.
+I don't usually bother with that. I just do something in HEAD and then
+reset (possibly after pushing it to some tree elsewhere for posterity).
 
-There are a few points I want to make to convince you:
+> I don't even use ccache, and I don't care. Probably because most of the 
+> time the rebuild time really isn't that long for me, and for the kernel, 
+> the much more painful part is actually the rebooting part.
 
-- I need this quite often to see which version introduced a certain 
-  feature.  This is most visible on IRC, where people ask "how can I do X, 
-  I have version Y", and me responding "There is a feature P, but 
-  unfortunately, it is only available from revision Q~N" where Q > Y.
+I can usually find some other machine to reboot than the machine I'm
+working on. Don't these people send you enough toys? :)
 
-  I really want other people to do this easily, without having to know how 
-  name-rev (which has a dash in its name, and thus is kind of 
-  plumbing-ish) works.
+I've also spent most of the last year travelling and hence working on my
+laptop, which isn't the beefiest build machine I've ever had the
+pleasure of using. Changing branches, when I've done it, really has been
+a pain.
 
+> But the place where branches *really* rock is when you don't even switch 
+> to them, but use the data from them locally (cherry-picking from them, 
+> or doing something like "git show origin/pu:builtin-blame.c" etc).
 
-- It is _not_ expensive.  It only ever allocates something in the case of 
-  merges (at least that's how I designed it), and should free the used 
-  memory when the commit name is not used at all (but maybe I forgot that 
-  part...).  So you will have at most one allocation of a few bytes per 
-  merge, and I really do not see how this could break down for 
-  pathological, but real-world, cases.
+You can achieve much of that just by sharing object directories, and
+I'll admit that sometimes I do set up temporary branches just for the
+purpose of cherry-picking by name ('foo^^' etc.) without having to paste
+sha1sums from the other tree.
 
-- 40-character commit names seem to be really hard on people.
+> And for that to work, you have to get used to having multiple branches in 
+> the tree, even if you don't check them out - and once you do that, 
+> switching between them isn't really that confusing any more, because it's 
+> already part of your "mind map" of how the repo works.
 
-To drive the 3rd point home: I often see people confused as to what those 
-long commit names are.  They do not even realise that they are _object_ 
-names, actually, not only applicable to commit objects.
+I'm sure it's true that if I persist I'll get used to it, as will the
+newbies who have trouble with branches. But mostly I suspect that I'll
+get used to it by learning how best to work around it and keep separate
+trees of my own, even when people persist in having multiple branches on
+their servers. And while today's set of newbies will get used to it,
+tomorrow's set of newbies will also find it troubling.
 
-IMHO a great way to teach users that commit names are equivalent to 
-shortcuts like "v1.5.0-rc1~20" would be to even enable decoration by tags 
-by default.
+Nothing really prevents you from using branches _locally_ if you want
+to, but still keeping separate trees on the _servers_. I just think that
+might be a more cunning way forward. But as you correctly point out,
+that's just my personal viewpoint.
 
-Ciao,
-Dscho
+-- 
+dwmw2
