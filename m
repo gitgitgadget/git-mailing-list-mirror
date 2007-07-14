@@ -1,79 +1,135 @@
-From: Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] make git-send-email.perl handle email addresses with no
- names when Email::Valid is present
-Date: Sat, 14 Jul 2007 20:38:42 +1000
-Message-ID: <20070714203842.bf6c43cc.sfr@canb.auug.org.au>
-References: <20070713041749.GA28824@kroah.com>
-	<7vr6ncrh22.fsf@assigned-by-dhcp.cox.net>
-	<20070713063414.GN24317@kroah.com>
-	<20070713182818.fd37372f.sfr@canb.auug.org.au>
-	<20070714040050.GA11773@kroah.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
+Date: Sat, 14 Jul 2007 03:50:10 -0700
+Message-ID: <20070714105010.GA14842@muzzle>
+References: <1184405128718-git-send-email-madduck@madduck.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Sat__14_Jul_2007_20_38_42_+1000_O8MLgXgpMn/kr=lj"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 12:39:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "martin f. krafft" <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Sat Jul 14 12:50:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9f1m-0007ew-30
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:39:06 +0200
+	id 1I9fCr-0001dQ-M1
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239AbXGNKiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:38:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755015AbXGNKiv
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:38:51 -0400
-Received: from chilli.pcug.org.au ([203.10.76.44]:54637 "EHLO smtps.tip.net.au"
+	id S1756487AbXGNKuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756639AbXGNKuO
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:50:14 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:41648 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755117AbXGNKiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 06:38:51 -0400
-Received: from localhost (ta-1-1.tip.net.au [203.11.71.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by smtps.tip.net.au (Postfix) with ESMTP id F1449368041;
-	Sat, 14 Jul 2007 20:38:48 +1000 (EST)
-In-Reply-To: <20070714040050.GA11773@kroah.com>
-X-Mailer: Sylpheed 2.4.3 (GTK+ 2.10.13; i486-pc-linux-gnu)
+	id S1756419AbXGNKuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 06:50:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 308762DC032;
+	Sat, 14 Jul 2007 03:50:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1184405128718-git-send-email-madduck@madduck.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52469>
 
---Signature=_Sat__14_Jul_2007_20_38_42_+1000_O8MLgXgpMn/kr=lj
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"martin f. krafft" <madduck@madduck.net> wrote:
+> The --stdlayout option to git-svn init/clone initialises the default
+> Subversion values of trunk,tags,branches: -T trunk -b branches -t tags.
+> If any of the -T/-t/-b options are given in addition, they are given
+> preference.
+> 
+> Signed-off-by: martin f. krafft <madduck@madduck.net>
 
-On Fri, 13 Jul 2007 21:00:50 -0700 Greg KH <greg@kroah.com> wrote:
->
-> On Fri, Jul 13, 2007 at 06:28:18PM +1000, Stephen Rothwell wrote:
-> >=20
-> > This would be a bug in Email::Valid as it complains that the second
-> > address fails the rfc822 check, however rfc822 says that the "display
-> > name" before the '<' is optional.
->=20
-> I agree, do you know how to get such a fix made?
+Thanks.  I've been meaning to do this myself, but keep on putting it
+off...
 
-I would be inclined to make it my distribution's problem :-) i.e. on
-Debian I would report a bug against libemail-valid-perl.
+This looks good and useful, but can I also have a  shorthand "-s" for
+this, too?  I'm lazy, thanks :)
 
---=20
-Cheers,
-Stephen Rothwell                    sfr@canb.auug.org.au
-http://www.canb.auug.org.au/~sfr/
+Also, nitpicking, there's been some whitespace damage:
 
---Signature=_Sat__14_Jul_2007_20_38_42_+1000_O8MLgXgpMn/kr=lj
-Content-Type: application/pgp-signature
+I use tab characters for indentation, and (should be using) spaces for
+alignment.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+> ---
+>  Documentation/git-svn.txt |    6 +++++-
+>  git-svn.perl              |   11 +++++++++--
+>  2 files changed, 14 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index 0a210e4..9e74b27 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -44,10 +44,14 @@ COMMANDS
+>  --tags=<tags_subdir>;;
+>  -b<branches_subdir>;;
+>  --branches=<branches_subdir>;;
+> +--stdlayout;;
+>  	These are optional command-line options for init.  Each of
+>  	these flags can point to a relative repository path
+>  	(--tags=project/tags') or a full url
+> -	(--tags=https://foo.org/project/tags)
+> +	(--tags=https://foo.org/project/tags). The option --stdlayout is
+> +	a shorthand way of setting trunk,tags,branches as the relative paths,
+> +	which is the Subversion default. If any of the other options are given
+> +	as well, they take precedence.
+>  --no-metadata;;
+>  	Set the 'noMetadata' option in the [svn-remote] config.
+>  --use-svm-props;;
+> diff --git a/git-svn.perl b/git-svn.perl
+> index b3dffcc..affba8e 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -77,11 +77,12 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+>  		   \$Git::SVN::_repack_flags,
+>  		%remote_opts );
+>  
+> -my ($_trunk, $_tags, $_branches);
+> +my ($_trunk, $_tags, $_branches, $_stdlayout);
+>  my %icv;
+>  my %init_opts = ( 'template=s' => \$_template, 'shared:s' => \$_shared,
+>                    'trunk|T=s' => \$_trunk, 'tags|t=s' => \$_tags,
+>                    'branches|b=s' => \$_branches, 'prefix=s' => \$_prefix,
+> +                  'stdlayout' => \$_stdlayout,
+>                    'minimize-url|m' => \$Git::SVN::_minimize_url,
+>  		  'no-metadata' => sub { $icv{noMetadata} = 1 },
+>  		  'use-svm-props' => sub { $icv{useSvmProps} = 1 },
 
-iD8DBQFGmKe2TgG2atn1QN8RAkLdAJ0ZRP7pif/oM0eqI5pmkvYBJEfuNgCfc0/A
-10N8sY9V2TF3StoJGcv0blM=
-=Sh6r
------END PGP SIGNATURE-----
+Yes, I'm not consistent myself with using spaces for alignment :(
+Thanks for using spaces here.
 
---Signature=_Sat__14_Jul_2007_20_38_42_+1000_O8MLgXgpMn/kr=lj--
+> @@ -292,7 +293,8 @@ sub init_subdir {
+>  sub cmd_clone {
+>  	my ($url, $path) = @_;
+>  	if (!defined $path &&
+> -	    (defined $_trunk || defined $_branches || defined $_tags) &&
+> +	    (defined $_trunk || defined $_branches || defined $_tags ||
+> +		defined $_stdlayout) &&
+
+The lines above and below use spaces for alignment, so this one should,
+definitely be using spaces after the initial tab too.
+
+>  	    $url !~ m#^[a-z\+]+://#) {
+>  		$path = $url;
+>  	}
+> @@ -302,6 +304,11 @@ sub cmd_clone {
+>  }
+>  
+>  sub cmd_init {
+> +        if (defined $_stdlayout) {
+> +          $_trunk = 'trunk' if (!defined $_trunk);
+> +          $_tags = 'tags' if (!defined $_tags);
+> +          $_branches = 'branches' if (!defined $_branches);
+> +        }
+
+Indentation is always done in tabs in git-svn.  I *should* be using
+spaces for alignment but I myself have been sloppy :x
+
+>  	if (defined $_trunk || defined $_branches || defined $_tags) {
+>  		return cmd_multi_init(@_);
+>  	}
+
+-- 
+Eric Wong
