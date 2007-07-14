@@ -1,116 +1,67 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Add --show-size to git log to print message size
-Date: Sat, 14 Jul 2007 18:52:10 +0200
-Message-ID: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: CVS -> SVN -> Git
+Date: Sat, 14 Jul 2007 19:09:30 +0200
+Message-ID: <4699034A.9090603@alum.mit.edu>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>	 <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jul 14 18:52:20 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9kqy-0007lX-Fq
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 18:52:20 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755606AbXGNQwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 12:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755557AbXGNQwR
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 12:52:17 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:6176 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755348AbXGNQwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 12:52:16 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so988198wah
-        for <git@vger.kernel.org>; Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=imBmNFqZIUMDoaNf/jeVj4TGtDt/cKoTpMYalGTs8Kfor3rAfuL0em8gB2xMQH5igu61yry9rkY79EH41YzIuGfcQRq+R4CSeCJALSLqt0Hlut7MDApkTxhNS1I2zT5kWzQikWob5dh0hGFFyUTDy0L+Yns/4nCkluv/NuHPL24=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=esRufd7Moxh1AbUSF7MNQ1amTsK4dGLhXOuyAKFu/76HhxR9NxYEWT3peVgh2iLdB+uh6f3GpmyUQWOB42TCWRbEiqaHBobTfkDGlW2dhAM5F4U7tldRKcKNzmeWL0IGac2twWEmW54pqprMRvo5owPGJX49OlxVpGi1yqM7aoo=
-Received: by 10.114.146.1 with SMTP id t1mr2685712wad.1184431930598;
-        Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Sat, 14 Jul 2007 09:52:10 -0700 (PDT)
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
+        dev <dev@cvs2svn.tigris.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: dev-return-2037-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sat Jul 14 19:09:47 2007
+Return-path: <dev-return-2037-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1I9l7r-000473-5D
+	for gcvscd-dev@gmane.org; Sat, 14 Jul 2007 19:09:47 +0200
+Received: (qmail 9258 invoked by uid 5000); 14 Jul 2007 17:09:42 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52487>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 9248 invoked from network); 14 Jul 2007 17:09:42 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAMOgmEbAbSoIk2dsb2JhbACPNwEBAgcIBgcIHQ
+X-IronPort-AV: i="4.16,539,1175497200"; 
+   d="scan'208"; a="62145734:sNHT149664473"
+X-IRONPORT: SCANNED
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52488>
 
-Print message size just before the corresponding message
-to speedup the parsing by scripts/porcelains tools.
+Martin Langhoff wrote:
+> On 7/14/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Incidentally, now that cvs2svn 2.0.0 is nearly out, I am thinking about
+>> what it would take to write some other back ends for cvs2svn--turning
+>> it, essentially, into cvs2xxx.  Most of the work that cvs2svn does is
+>> inferring the most plausible history of the repository from CVS's
+>> sketchy, incomplete, idiomatic, and often corrupt data.  This work
+>> should also be useful for a cvs2git or cvs2hg or cvs2baz or ...
+> 
+> Great to hear that. I'm game if we can do something in this direction
+> - surely we can make it talk to fastimport ;-)
 
-Because git log output is normally read incrementally by
-porcelain tools, if message size is ignored then an
-expensive seek of the delimiting char, as example '\0'
-must be done when parsing the output stream.
+We added some hooks to cvs2svn 2.0 to start working in this direction.
+But I don't really know what information is needed for a git import.
+One quick-and-dirty idea that I had was to have cvs2svn output
+information compatible with cvsps's output, as I believe that several
+tools rely on cvsps to do the dirty work and so could perhaps be
+persuaded to use cvs2svn out of the box.
 
-With this patch it is possible to avoid an otherwise
-mandatory seek for '\0' starting from the beginning
-of log body.
+> Does cvs2svn handle incremental imports, remembering any "guesses"
+> taken earlier? Last time I looked at it, it had far better logic than
+> cvsps, but it didn't do incremental imports, and repeated imports done
+> at different times would "guess" different branching points for new
+> branches, so it _really_ didn't support incrementals
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
+That's correct; cvs2svn does not support incremental conversion at all
+(at least not yet).
 
-This little patch makes great difference in loading
-performance of our loved ;-) tool....and probably
-also others.
-
-Please apply.
-
-Thanks
-Marco
-
-
- log-tree.c |    3 +++
- revision.c |    4 ++++
- revision.h |    1 +
- 3 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 8624d5a..2fb7761 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -295,6 +295,9 @@ void show_log(struct rev_info *opt,
- 	if (opt->add_signoff)
-  		len = append_signoff(&msgbuf, &msgbuf_len, len,
- 				     opt->add_signoff);
-+ 	if (opt->show_size)
-+		printf("size %i\n", len);
-+
-  	printf("%s%s%s", msgbuf, extra, sep);
-  	free(msgbuf);
- }
-diff --git a/revision.c b/revision.c
-index 33ee9ee..3850a1e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1136,6 +1136,10 @@ int setup_revisions(int argc,
- 				continue;
- 			}
-+			if (!strcmp(arg, "--show-size")) {
-+				revs->show_size = 1;
-+				continue;
-+			}
-
- 			/*
- 			 * Grepping the commit log
-diff --git a/revision.h b/revision.h
-index f46b4d5..584b3f1 100644
---- a/revision.h
-+++ b/revision.h
-@@ -81,6 +81,7 @@ struct rev_info {
-  	const char	*log_reencode;
-  	const char	*subject_prefix;
- 	int		no_inline;
-+	int		show_size;
-
- 	/* Filter by commit log message */
-  	struct grep_opt	*grep_filter;
--- 
-1.5.3.rc0.81.g1ed84-dirty
+Michael
