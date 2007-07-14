@@ -1,72 +1,94 @@
-From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
-Subject: Exporting a tree from a repository
-Date: Sat, 14 Jul 2007 23:25:52 +0300
-Message-ID: <8e04b5820707141325o400e170bu9eb80b304cae506b@mail.gmail.com>
+From: "Satyam Sharma" <satyam.sharma@gmail.com>
+Subject: Re: Confusing language in man page
+Date: Sun, 15 Jul 2007 01:57:52 +0530
+Message-ID: <a781481a0707141327k5b6f8f43sc6330ff8cc504dd1@mail.gmail.com>
+References: <a781481a0707141108g4664a627w94e0d21c3629cb49@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 22:26:07 2007
+X-From: git-owner@vger.kernel.org Sat Jul 14 22:27:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9oBq-0000Ns-P3
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 22:26:07 +0200
+	id 1I9oDc-0000qS-Oe
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 22:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761136AbXGNUZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 16:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760256AbXGNUZy
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 16:25:54 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:16992 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755904AbXGNUZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 16:25:53 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so801423wxd
-        for <git@vger.kernel.org>; Sat, 14 Jul 2007 13:25:53 -0700 (PDT)
+	id S1760989AbXGNU1y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 16:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762325AbXGNU1y
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 16:27:54 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:33129 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760989AbXGNU1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 16:27:53 -0400
+Received: by py-out-1112.google.com with SMTP id d32so1504372pye
+        for <git@vger.kernel.org>; Sat, 14 Jul 2007 13:27:52 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Tdc9QIqBS6Hcu7HL+iA7h5nyIzSZnV3lomMPJK/4GbWLEFM92ysUDixIl7X6l16b/v1KGbYLY5iR3Mq3Lru9uHrNSQ1Rq4tL0HPg0nTSBPxvn5J6fOGdR8lLQxWPj+3fxsKGPw8IvQDD+6zoT32S02vz6FD4v2s01Hh42iAlYS0=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AzUq2awgTH3uRXwD/kpRwN0jtSrDMte2P19pDWH/0OLJly5IRHXo80ccQ9RmH9LEPX4stYA0m448b6EhFZel8Z/Tij/JPZuXSxIsDgDxEsujnj7AoxNVC3wfCHYSvFJ7Cl+1ib5YNKmhcZru5i1k0sOblqKIDFcVxA8mBCP0KE4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=mN+Xg3kuWpxbg7WauLNj145u91PTEhw/5stPwiEi2c1I1KKZ58fnVn0S3URhyx2RYj7T7XMsDAF1qQTzxPnDRCbw+5Og4XEtP48IWTyRyyfUV+BzjQKFOF5rUTThZhysxidpXmELOOqSt3Dr5Ti7CbxVPyU+TswsACBiDeMgaKo=
-Received: by 10.70.113.16 with SMTP id l16mr5148476wxc.1184444752744;
-        Sat, 14 Jul 2007 13:25:52 -0700 (PDT)
-Received: by 10.70.123.17 with HTTP; Sat, 14 Jul 2007 13:25:52 -0700 (PDT)
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BKqQLeKnq1aC5orw1tsFvcu4TXQoO4bEZOqiU9iFnrubJaVsaMdQ0mLKGAs0fWKi7lAywIw4aX1ltC31cMGz22HEVwHhXaQNBKX/L2l22LcZtQ0Jm+C1SfvNcx0Bg1kRVboxv0OvJCELr+IdYkFGBgfXvOG3RrqTqxhu4WqbkYM=
+Received: by 10.142.187.2 with SMTP id k2mr214534wff.1184444872172;
+        Sat, 14 Jul 2007 13:27:52 -0700 (PDT)
+Received: by 10.142.83.19 with HTTP; Sat, 14 Jul 2007 13:27:52 -0700 (PDT)
+In-Reply-To: <a781481a0707141108g4664a627w94e0d21c3629cb49@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52505>
 
-    Hello all!
+On 7/14/07, Satyam Sharma <satyam.sharma@gmail.com> wrote:
+> Hi,
+>
+> [ I'm using Fedora's latest package. ]
 
-    I am a new GIT user, I like it, so I started playing with it for
-different projects I work on.
+I should probably clarify:
 
-    Currently I am playing with "Linux from Scratch", and I have
-written some scripts to automatize the build process -- kind of
-install scripts...
+$ git --version
+git version 1.5.0.6
 
-    For this I use GIT to store all the source packages -- each inside
-it's own branch :).
+Perhaps man pages / functionality have been updated significantly
+since that, so let me know if that's the case.
 
-    My question is the following: How can I export an entire tree
-without using a working directory, or cloning the repository. (Because
-from what I have seen so far there is no way to use the same
-repository with many working directories...)
+> From git-checkout(1) and git-branch(1):
+>
+> -l     Create the new branch's ref log. This activates recording of
+> all changes to made the
+>        branch ref, enabling use of date
+>
+> I'd be glad if someone could explain that a bit more verbosely
+> in the man page
+> (or just here in a reply), or at least make that grammatically
+> correct/readable :-)
 
-    Now I know that I can use "git archive | tar -x"... I am looking
-for the same functionality but without the intermediary file... Maybe
-something like "git archive --format=tree <branch>"...
+Ok, another confusion I hit (as I learn more about git) tonight:
 
-    Also there is also a possible drawback by using git archive with
-tar format, that is if I decide to make the repository available to
-the public then it would be nice to have this export functionality...
-I think this could be also used for kernel sources as an alternative
-to downloading the tar.bz2 file or copying the entire tree...
+* What exactly is the use of git-diff's "-p" option?
 
-    Thank you all for your feedback!
-    Ciprian Craciun.
+$ git diff
+
+and
+
+$ git diff -p
+
+produce the same output / do the same thing -- the man page mentions
+"Generate patch (see section on generating patches)" but I couldn't find
+said section (is that referring to some other man page?)
+
+* On my system, doing:
+
+$ git diff
+
+with no outstanding changes in my current working tree produces some
+bogus newlines, throwing the prompt to the bottom of the xterm window.
+This sounds like weird / undesirable behaviour and I have a feeling must
+already be fixed in latest git (?)
+
+Thanks,
+Satyam
