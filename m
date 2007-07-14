@@ -1,72 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Draft release notes for v1.5.3, as of -rc1
-Date: Sat, 14 Jul 2007 11:13:57 -0700
-Message-ID: <7vvecmj1ju.fsf@assigned-by-dhcp.cox.net>
-References: <7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
-	<7vejl0546b.fsf@assigned-by-dhcp.cox.net>
-	<7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
-	<7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
-	<7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
-	<7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
-	<7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com>
-	<7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net>
-	<7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vlkdkq00o.fsf_-_@assigned-by-dhcp.cox.net>
-	<20070713092908.GO1528MdfPADPa@greensroom.kotnet.org>
-	<Pine.LNX.4.64.0707141517450.14781@racer.site>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] git-cvsserver: detect/diagnose write failure, etc.
+Date: Sat, 14 Jul 2007 20:48:42 +0200
+Message-ID: <87abtyn7n9.fsf@rho.meyering.net>
+References: <87vecx4tel.fsf@rho.meyering.net>
+	<7v1wfe38xp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 14 20:14:13 2007
+Cc: git@vger.kernel.org, Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 20:48:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9m8C-0003F2-Nd
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 20:14:13 +0200
+	id 1I9mfl-0002zx-B6
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 20:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758772AbXGNSOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 14:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758706AbXGNSOA
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 14:14:00 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47034 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758766AbXGNSN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 14:13:59 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070714181358.EZBC1349.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Jul 2007 14:13:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PWDy1X0061kojtg0000000; Sat, 14 Jul 2007 14:13:58 -0400
-In-Reply-To: <Pine.LNX.4.64.0707141517450.14781@racer.site> (Johannes
-	Schindelin's message of "Sat, 14 Jul 2007 15:22:22 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759480AbXGNSsu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 14:48:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759466AbXGNSsu
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 14:48:50 -0400
+Received: from server1.f7.net ([64.34.169.74]:52132 "EHLO f7.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755253AbXGNSst (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 14:48:49 -0400
+X-Envelope-From: jim@meyering.net
+Received: from mx.meyering.net (server1.f7.net [64.34.169.74])
+	by f7.net (8.11.7-20030920/8.11.7) with ESMTP id l6EImhF16782;
+	Sat, 14 Jul 2007 13:48:43 -0500
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id C463935AFC; Sat, 14 Jul 2007 20:48:42 +0200 (CEST)
+In-Reply-To: <7v1wfe38xp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed\, 11 Jul 2007 14\:52\:02 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52494>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> It is really unfortunate that rewrite-commits came in so late in the 
-> release cycle, and I am quite sure it should not be in 1.5.3.  There is 
-> just too much new in it, and too many things to flesh out.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Jim Meyering <jim@meyering.net> writes:
 >
-> Junio, if you want to include it in 1.5.3, it should be marked as alpha 
-> code, as it has not seen any time in "next", let alone "master".
+>> Beware: in some contexts (when running as server), one must
+>> not "die", but rather return an "error" indicator to the client.
+>> I did that in the second hunk.  However, I haven't carefully
+>> audited the others, and so, some of the "die" calls I added may
+>> end up killing the server, when a gentler failure is required.
+>>
+>> I've just looked, and can confirm that my change to req_Modified
+>> (first hunk) is wrong.  It should not die.  Rather, it should probably
+>> do something like the "print "E ... in hunk#2.  Ideally, someone
+>> would write a test to exercise code like this, to make sure it works.
+>>
+>> Jim
+>
+>> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+>> index 5cbf27e..8d8d6f5 100755
+>> --- a/git-cvsserver.perl
+>> +++ b/git-cvsserver.perl
+>> @@ -644,7 +644,7 @@ sub req_Modified
+>>          $bytesleft -= $blocksize;
+>>      }
+>>
+>> -    close $fh;
+>> +    close $fh or die "Failed to write temporary, $filename: $!";
+>
+> True; dying is not appropriate here.
+...
 
-I am not considering rewrite-commits for inclusion right now.
+Hi Jun,
 
-I was hoping that filter-branch will stay.  Its interface is
-something people are already familiar with since the days of its
-its older incarnation cg-admin-rewritehist, and it would be
-really really nice that anything that attempts to replace it
-builds on and extends its external interface.
+Thanks for the feedback.
+Since no one else stepped forward, I've gone ahead and addressed the
+problems -- though I haven't tested any of these server-side diagnostics.
+I've added two new checks in req_Modified, to better diagnose an
+incomplete request.  Also, I converted each of the "die" stmts in
+req_annotate to print "E..." + return.
 
-Maybe rewrite-commits can be used to delegate the implementation
-of heavy lifting from filter-branch?  IOW can the latter be
-just a thin wrapper around the former?
+Signed-off-by: Jim Meyering <jim@meyering.net>
+---
+ git-cvsserver.perl |   50 +++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 33 insertions(+), 17 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 10aba50..ae7d511 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -623,8 +623,12 @@ sub req_Modified
+     my ( $cmd, $data ) = @_;
+ 
+     my $mode = <STDIN>;
++    defined $mode
++        or (print "E end of file reading mode for $data\n"), return;
+     chomp $mode;
+     my $size = <STDIN>;
++    defined $size
++        or (print "E end of file reading size of $data\n"), return;
+     chomp $size;
+ 
+     # Grab config information
+@@ -644,7 +648,8 @@ sub req_Modified
+         $bytesleft -= $blocksize;
+     }
+ 
+-    close $fh;
++    close $fh
++        or (print "E failed to write temporary, $filename: $!\n"), return;
+ 
+     # Ensure we have something sensible for the file mode
+     if ( $mode =~ /u=(\w+)/ )
+@@ -901,8 +906,13 @@ sub req_update
+     # projects (heads in this case) to checkout.
+     #
+     if ($state->{module} eq '') {
++	my $heads_dir = $state->{CVSROOT} . '/refs/heads';
++	if (!opendir HEADS, $heads_dir) {
++	    print "E [server aborted]: Failed to open directory, "
++	      . "$heads_dir: $!\nerror\n";
++	    return 0;
++	}
+         print "E cvs update: Updating .\n";
+-	opendir HEADS, $state->{CVSROOT} . '/refs/heads';
+ 	while (my $head = readdir(HEADS)) {
+ 	    if (-f $state->{CVSROOT} . '/refs/heads/' . $head) {
+ 	        print "E cvs update: New directory `$head'\n";
+@@ -1737,14 +1747,16 @@ sub req_annotate
+ 	system("git-read-tree", $lastseenin);
+ 	unless ($? == 0)
+ 	{
+-	    die "Error running git-read-tree $lastseenin $file_index $!";
++	    print "E error running git-read-tree $lastseenin $file_index $!\n";
++	    return;
+ 	}
+ 	$log->info("Created index '$file_index' with commit $lastseenin - exit status $?");
+ 
+         # do a checkout of the file
+         system('git-checkout-index', '-f', '-u', $filename);
+         unless ($? == 0) {
+-            die "Error running git-checkout-index -f -u $filename : $!";
++            print "E error running git-checkout-index -f -u $filename : $!\n";
++            return;
+         }
+ 
+         $log->info("Annotate $filename");
+@@ -1754,7 +1766,11 @@ sub req_annotate
+         # git-jsannotate telling us about commits we are hiding
+         # from the client.
+ 
+-        open(ANNOTATEHINTS, ">$tmpdir/.annotate_hints") or die "Error opening > $tmpdir/.annotate_hints $!";
++        my $a_hints = "$tmpdir/.annotate_hints";
++        if (!open(ANNOTATEHINTS, '>', $a_hints)) {
++            print "E failed to open '$a_hints' for writing: $!\n";
++            return;
++        }
+         for (my $i=0; $i < @$revisions; $i++)
+         {
+             print ANNOTATEHINTS $revisions->[$i][2];
+@@ -1765,11 +1781,14 @@ sub req_annotate
+         }
+ 
+         print ANNOTATEHINTS "\n";
+-        close ANNOTATEHINTS;
++        close ANNOTATEHINTS
++            or (print "E failed to write $a_hints: $!\n"), return;
+ 
+-        my $annotatecmd = 'git-annotate';
+-        open(ANNOTATE, "-|", $annotatecmd, '-l', '-S', "$tmpdir/.annotate_hints", $filename)
+-	    or die "Error invoking $annotatecmd -l -S $tmpdir/.annotate_hints $filename : $!";
++        my @cmd = (qw(git-annotate -l -S), $a_hints, $filename);
++        if (!open(ANNOTATE, "-|", @cmd)) {
++            print "E error invoking ". join(' ',@cmd) .": $!\n";
++            return;
++        }
+         my $metadata = {};
+         print "E Annotations for $filename\n";
+         print "E ***************\n";
+@@ -1996,12 +2015,12 @@ sub transmitfile
+         {
+             open NEWFILE, ">", $targetfile or die("Couldn't open '$targetfile' for writing : $!");
+             print NEWFILE $_ while ( <$fh> );
+-            close NEWFILE;
++            close NEWFILE or die("Failed to write '$targetfile': $!");
+         } else {
+             print "$size\n";
+             print while ( <$fh> );
+         }
+-        close $fh or die ("Couldn't close filehandle for transmitfile()");
++        close $fh or die ("Couldn't close filehandle for transmitfile(): $!");
+     } else {
+         die("Couldn't execute git-cat-file");
+     }
+@@ -2501,17 +2520,14 @@ sub update
+                     if ($parent eq $lastpicked) {
+                         next;
+                     }
+-                    open my $p, 'git-merge-base '. $lastpicked . ' '
+-                    . $parent . '|';
+-                    my @output = (<$p>);
+-                    close $p;
+-                    my $base = join('', @output);
++                    my $base = safe_pipe_capture('git-merge-base',
++						 $lastpicked, $parent);
+                     chomp $base;
+                     if ($base) {
+                         my @merged;
+                         # print "want to log between  $base $parent \n";
+                         open(GITLOG, '-|', 'git-log', "$base..$parent")
+-                        or die "Cannot call git-log: $!";
++			  or die "Cannot call git-log: $!";
+                         my $mergedhash;
+                         while (<GITLOG>) {
+                             chomp;
+-- 
+1.5.3.rc1.5.g9d947
