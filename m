@@ -1,179 +1,102 @@
-From: "Bradford Smith" <bradford.carl.smith@gmail.com>
-Subject: Fwd: git-svn: trunk missing, checks out tag instead
-Date: Sat, 14 Jul 2007 15:04:36 -0400
-Message-ID: <f158199e0707141204n6fd9f79dg26453c5581a97c4d@mail.gmail.com>
-References: <f158199e0707131024o5eb27b72v900f0d0613bc834b@mail.gmail.com>
-	 <f158199e0707131205w358676e5j88f8e4c63b1be1f5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] Add git-rewrite-commits
+Date: Sat, 14 Jul 2007 12:26:01 -0700
+Message-ID: <7v7ip2hjna.fsf@assigned-by-dhcp.cox.net>
+References: <11842671631744-git-send-email-skimo@liacs.nl>
+	<11842671631635-git-send-email-skimo@liacs.nl>
+	<Pine.LNX.4.64.0707141140510.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 21:04:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 14 21:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9mv3-0006lo-U6
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 21:04:42 +0200
+	id 1I9nFt-0003Is-Sz
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 21:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760339AbXGNTEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 15:04:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760107AbXGNTEj
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 15:04:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:12377 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759375AbXGNTEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 15:04:38 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so756259ugf
-        for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:04:37 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hsUoVpdvAWPm5grJncLQL4tjKeV1lbXq2op48xPR12bxjZRYPPoWnyd+s68Tfuwtom3iThLkXn+d08+JObc3+9ipxOxNa+qUQn0MVj1KSiVukr5eiWH1Pv7e9tYPkytZonzmeogjiqzJceUeV/AJ8sF6++v5L25fpV6Rv6JBbN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uk8utCqw8yKUq6keIjdnjS0sJsHKcNCd2mTMvi9Uuaa/H/0bQ2TpobDEg0g8v/3zjeaRfe2Tmph8c7kakDWMax14gS29wze/KLYwFp0ADDMohS10G8Zd5TcggJ/jxjJehs8QbPE2z0ITdmVpyZAQNSW2WkjgeZKbJAHLAFf1Ehk=
-Received: by 10.78.204.7 with SMTP id b7mr769742hug.1184439876080;
-        Sat, 14 Jul 2007 12:04:36 -0700 (PDT)
-Received: by 10.78.178.10 with HTTP; Sat, 14 Jul 2007 12:04:36 -0700 (PDT)
-In-Reply-To: <f158199e0707131205w358676e5j88f8e4c63b1be1f5@mail.gmail.com>
-Content-Disposition: inline
+	id S1761896AbXGNT0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 15:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760804AbXGNT0E
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 15:26:04 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52130 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761896AbXGNT0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 15:26:03 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070714192603.HDSE1393.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 14 Jul 2007 15:26:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PXS11X00J1kojtg0000000; Sat, 14 Jul 2007 15:26:02 -0400
+In-Reply-To: <Pine.LNX.4.64.0707141140510.14781@racer.site> (Johannes
+	Schindelin's message of "Sat, 14 Jul 2007 13:49:59 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52499>
 
-TWIMC,
-(Cc: to git-svn author, Eric Wong)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I tried it again today, and it worked!  Looking at the command more
-closely and playing with it a bit I discovered I had written the
-command line slightly differently.
+>> +Examples
+>> +--------
+>> +
+>> +Suppose you want to remove a file (containing confidential information
+>> +or copyright violation) from all commits:
+>> +
+>> +----------------------------------------------------------------------------
+>> +git rewrite-commits --index-filter 'git update-index --remove filename || :'
+>
+> We seem to prefer "$ git" instead of just "git" in the other man pages' 
+> examples.
 
-This works:
+"git update-index --remove Foo" does not remove the index entry
+Foo if the file Foo still exists in the working tree (use "git
+update-index --force-remove" for that).
 
-git-svn clone https://my.server.net/repos/path/ -Ttrunk/testing -ttags/testing \
-                     -bbranches/testing testing
+But this leads to more fundamental issues.  It is not obvious
+from the description what environment rewrite-commits runs in.
+Does it run at the toplevel of the current working tree, or is
+it run in a separate temporary directory like filter-branch
+does?  What "index" and "HEAD" do operations done by filters
+affect (I think it is safe to assume that readers familiar
+enough with other parts of git would be able to guess that
+filters should operate on the "HEAD" and index given by
+rewrite-commits to its execution environment without mucking
+with GIT_DIR nor GIT_INDEX_FILE)?  Are filters allowed to modify
+files in the working tree, and if so what is the consequence of
+doing so?
 
-This doesn't:
+>> +----------------------------------------------------------------------------
+>> +
+>> +Now, you will get the rewritten history saved in your current branch
+>> +(the old branch is saved in refs/original).
+>
+> 						The "|| :" construct 
+> + prevents the filter to fail when the given file was not present in the 
+> + index.
 
-git-svn clone https://my.server.net/repos/path -T/trunk/testing
--t/tags/testing \
-                     -b/branches/testing testing
+prevents the filter from failing?  But is that really what we
+want?  Why are we ignoring the error, and if there is a valid
+reason to ignore shouldn't we explain why?
 
-So, clearly this command is extremely sensitive to where the slashes go.
+>> +To move the whole tree into a subdirectory, or remove it from there:
+>> +
+>> +---------------------------------------------------------------
+>> +git rewrite-commits --index-filter \
+>> +	'git ls-files -s | sed "s-\t-&newsubdir/-" |
+>> +		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+>> +			git update-index --index-info &&
+>> +	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE'
+>> +---------------------------------------------------------------
 
-With the "good" version of the command I get a trunk branch.  With the
-"bad" version I don't.  Either way, I get the defunct 1.0 branch and
-the error message mentioned in the original email below.
+I see only one operation in the example, and "or remove it from
+there" confuses the reader.
 
-HTH,
-
-Bradford C, Smith
-
-
----------- Forwarded message ----------
-From: Bradford Smith <bradford.carl.smith@gmail.com>
-Date: Jul 13, 2007 3:05 PM
-Subject: Fwd: git-svn: trunk missing, checks out tag instead
-To: git@vger.kernel.org
-
-UPDATE:
-
-I get the same behavior even after checking in a new change on the trunk.
-
-Oh, well...
-
-Bradford
-
----------- Forwarded message ----------
-From: Bradford Smith <bradford.carl.smith@gmail.com>
-Date: Jul 13, 2007 1:24 PM
-Subject: git-svn: trunk missing, checks out tag instead
-To: git@vger.kernel.org
-
-
-I am using git-svn version 1.5.3.rc1.4.gaf83 (svn 1.4.3), and I work
-with an SVN repository that is layed out like this:
-
-/trunk/proj1/
-...
-/trunk/proj2/
-...
-/trunk/testing/
-...
-
-/branches/proj1/
-...
-/branches/proj2/
-...
-/branches/testing/
-/branches/testing/0000-baseline
-
-/tags/proj1/
-...
-/tags/proj2/
-...
-/tags/testing/
-/tags/testing/0000-baseline-0
-
-I want to track the testing project, so I tried to use this git-svn
-command line:
-
-git-svn clone <base-url> -T/trunk/testing -t/tags/testing
--b/branches/testing testing
-
-This appears to work, though I do get this warning message (edited for privacy):
-
-W: Ignoring error from SVN, path probably does not exist: (175002): RA
-layer request failed: REPORT request failed on
-'/<server_path>/!svn/bc/101': REPORT of '/<server_path>!svn/bc/101':
-Could not read chunk size: Secure connection truncated
-(https://<myserver>)
-
-When I run 'git branch -a' in the new testing directory I get this:
-
-* master
-  0000-baseline
-  0000-baseline@1546
-  1.0
-  1.0@1549
-  1.0@1656
-  tags/0000-baseline
-  tags/0000-baseline-0
-  tags/0000-baseline@1663
-
-Where is the remote branch for trunk? And, why do I have remote
-entries for the defunct 1.0 branch that I deleted from svn earlier
-today?  What's more, the latest changes from /trunk/testing do not
-appear in my working directory, and gitk confirms that master is
-pointing at the same commit as tags/0000-baseline-0.
-
-If I just try to track the trunk like this:
-
-git-svn clone <base-url>/trunk/testing
-
-Then I get all of the latest changes and 'git branch -a' shows:
-
-* master
-  git-svn
-
-So that seems OK at least.  It just doesn't work when I try to get
-branches and tags.  For now, I'll just work this way.
-
-FWIW, I suspect this behavior may be related to recent changes I made
-to the Subversion repository.  I created
-/branches/testing/0000-baseline today by copying an _old_ revision of
-/trunk/testing.  Then I created /tags/testing/0000-baseline-0 by
-copying /branches/testing/0000-baseline.  No commits have been done on
-/testing/trunk since then.  Perhaps the recent (probably latest)
-commit that copied an OLD version of trunk is somehow confusing
-git-svn?  Once I commit a change to the subversion trunk, I'll try to
-clone trunk, branches, and tags again and post an update to this
-message.  Maybe it will work then.
-
-Thanks for your help.
-
-Bradford C. Smith
+I'll refrain from comments on the code right now, until I read
+the series over.
