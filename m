@@ -1,92 +1,76 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: failing to send patches to the list
-Date: Sat, 14 Jul 2007 08:52:42 +0200
-Message-ID: <20070714065242.GA27136@lapse.madduck.net>
-References: <20070713093050.GA18001@lapse.madduck.net> <20070713155516.GA2712@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gBBFr7Ir9EOA20Yy"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 14 12:17:54 2007
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: [PATCH] fall back to mozilla's sha.h if openssl/sha.h is not available
+Date: Sat, 14 Jul 2007 11:24:37 +0200
+Message-ID: <11844050771857-git-send-email-madduck@madduck.net>
+Cc: "martin f. krafft" <madduck@madduck.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 14 12:17:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9ehB-0003Ss-Um
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:17:50 +0200
+	id 1I9ehC-0003Ss-Sy
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289AbXGNKRe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:17:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbXGNKRe
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:34 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56180 "EHLO
+	id S1755307AbXGNKRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755239AbXGNKRh
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:37 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56188 "EHLO
 	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819AbXGNKRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 06:17:31 -0400
+	with ESMTP id S1753552AbXGNKRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 06:17:34 -0400
 Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 2FB7D895D77
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:30 +0200 (CEST)
+	by albatross.madduck.net (postfix) with ESMTP id 7C91D895D84;
+	Sat, 14 Jul 2007 12:17:32 +0200 (CEST)
 Received: from albatross.madduck.net ([127.0.0.1])
 	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 27725-07 for <git@vger.kernel.org>;
-	Sat, 14 Jul 2007 12:17:30 +0200 (CEST)
+	with LMTP id 27725-08; Sat, 14 Jul 2007 12:17:32 +0200 (CEST)
 Received: from lapse.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 68097895D7C
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:17:29 +0200 (CEST)
+	by albatross.madduck.net (postfix) with ESMTP id E849C895D77;
+	Sat, 14 Jul 2007 12:17:31 +0200 (CEST)
 Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 879EE4FD41; Sat, 14 Jul 2007 08:52:42 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070713155516.GA2712@sigill.intra.peff.net>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id C40634FD40; Sat, 14 Jul 2007 11:24:37 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc1.9.gf029
 X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52465>
 
+Uses $(CPP) to attempt to preprocess an include <openssl/sha.h> directive. If
+that fails, NO_OPENSSL is defined, causing the Makefile to fall back to using
+mozilla's SHA implementation.
 
---gBBFr7Ir9EOA20Yy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This should possibly go to configure.ac, but maybe *also* to Makefile to make
+from-source compilations easier. git HEAD already comes with a Makefile (rather
+than a Makefile.in), so I just ran it while testing out patches. I introduced
+the test because I thought the computer could find out about libssl for me,
+rather than myself having to forget to specify NO_OPENSSL every time.
 
-also sprach Jeff King <peff@peff.net> [2007.07.13.1755 +0200]:
-> vger will reject messages without a message-id. git-format-patch by
-> default does not generate a message-id, so unless sendmail generates one
-> on the fly, that is your problem.
->=20
-> In general, git-format-patch output is probably not suitable for direct
-> sending...have you looked at git-send-email?
+Signed-off-by: martin f. krafft <madduck@madduck.net>
+---
+ Makefile |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-I just ran a test and found out: sendmail does generate a message ID
-on the fly on the client, so this cannot be the problem.
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-http://www.transnationalrepublic.org/
-
---gBBFr7Ir9EOA20Yy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGmHK6IgvIgzMMSnURAhm0AJ9yVDCsLPC8smYD9SW53o+oRuu7pgCgspn2
-/M2DoJ9tAdTP6jNp4iM424s=
-=LTRo
------END PGP SIGNATURE-----
-
---gBBFr7Ir9EOA20Yy--
+diff --git a/Makefile b/Makefile
+index d7541b4..1676343 100644
+--- a/Makefile
++++ b/Makefile
+@@ -532,6 +532,12 @@ ifndef NO_CURL
+ 	endif
+ endif
+ 
++HAS_OPENSSL := $(shell echo "\#include <openssl/sha.h>" \
++			| $(CPP) -o/dev/null - 2>/dev/null || echo no)
++ifeq "$(HAS_OPENSSL)" "no"
++	NO_OPENSSL = "openssl_sha.h_not_found"
++endif
++
+ ifndef NO_OPENSSL
+ 	OPENSSL_LIBSSL = -lssl
+ 	ifdef OPENSSLDIR
+-- 
+1.5.3.rc1.9.gf029
