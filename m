@@ -1,121 +1,61 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Possible to make a totally empty repository for remote access?
-Date: Sat, 14 Jul 2007 04:19:41 +0200
-Message-ID: <95A1FBFA-DCB7-4767-B857-89660822C6E6@wincent.com>
-References: <54C69B03-C589-480E-80D3-75166DBF2D29@wincent.com> <7vtzs8lzgk.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 04:20:25 2007
+Date: Fri, 13 Jul 2007 22:58:19 -0400
+Message-ID: <20070714025819.GA22559@coredump.intra.peff.net>
+References: <54C69B03-C589-480E-80D3-75166DBF2D29@wincent.com> <7vtzs8lzgk.fsf@assigned-by-dhcp.cox.net> <95A1FBFA-DCB7-4767-B857-89660822C6E6@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 04:58:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9XF8-00045K-Qa
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 04:20:23 +0200
+	id 1I9Xq7-0001fd-R9
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 04:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760025AbXGNCUB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 13 Jul 2007 22:20:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758741AbXGNCUB
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 22:20:01 -0400
-Received: from wincent.com ([72.3.236.74]:46775 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757547AbXGNCUA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jul 2007 22:20:00 -0400
-Received: from [192.168.1.99] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l6E2JvYZ009428;
-	Fri, 13 Jul 2007 21:19:58 -0500
-In-Reply-To: <7vtzs8lzgk.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1761927AbXGNC6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Jul 2007 22:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762807AbXGNC6V
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Jul 2007 22:58:21 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1645 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759756AbXGNC6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2007 22:58:21 -0400
+Received: (qmail 22984 invoked from network); 14 Jul 2007 02:58:46 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 14 Jul 2007 02:58:46 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jul 2007 22:58:19 -0400
+Content-Disposition: inline
+In-Reply-To: <95A1FBFA-DCB7-4767-B857-89660822C6E6@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52434>
 
-El 14/7/2007, a las 0:18, Junio C Hamano escribi=F3:
+On Sat, Jul 14, 2007 at 04:19:41AM +0200, Wincent Colaiuta wrote:
 
-> Note that the private working place does not have to be a clone
-> of the empty one.  That actually is backwards.  Your work
-> started from your private working place to the publishing one.
+> To make such pushes easier in the future you can create a local shortcut 
+> file, .git/remotes/shortcut (or similar), with contents like:
+>
+> URL: git.server.example.com:/pub/git/test.git
+> Push: master
 
-Thanks very much for the clarification, Junio. I didn't realize I =20
-could push like that (thought it had to be from a clone); that's very =20
-flexible indeed.
+The "new" way (by "new" I mean available for over a year, since v1.4.1)
+is to put such configuration into your .git/config file:
 
-=46or the benefit of others who might stumble across this question in =20
-the archives, the basic pattern is:
+[remote "shortcut"]
+  url = git.server.example.com:/pub/git/test.git
 
-# create the bare, empty public repository on the remote server:
-mkdir test.git
-cd test.git
-git --bare init
-touch git-daemon-export-ok
+Though if this is going to be the upstream from which you will be
+pushing and pulling, you may want to call it "origin" (which will make
+it the default for pushing and pulling).
 
-# locally, create some initial content
-mkdir test
-cd test
-git init
-vi foobar # etc
-git add .
-git commit -s
-git tag -s v0.0.1
+Even more simply, you can get the same remote config that git-clone
+would have set up by using the git-remote command:
 
-# push initial contents
-git push git.server.example.com:/pub/git/test.git master
+  $ git-init
+  $ git-remote origin server:/pub/git/test.git
 
-This assumes that you have git-daemon set up to provide public read-=20
-only access, and appropriate SSH accounts and configuration for those =20
-who need write access, but that's all fairly well documented =20
-elsewhere (ie in the git-daemon man page, and in abundant information =20
-on the web about setting up SSH access with public-key auth).
-
-To make such pushes easier in the future you can create a local =20
-shortcut file, .git/remotes/shortcut (or similar), with contents like:
-
-URL: git.server.example.com:/pub/git/test.git
-Push: master
-
-If other developers will have write access to the remote repo then =20
-you can add "Pull:" statements as well so as to keep up to date (as =20
-detailed in the git-push man page, and in the "Everyday GIT With 20 =20
-Commands Or So" document: <http://www.kernel.org/pub/software/scm/git/=20
-docs/everyday.html>), and you can synchronize multiple branches in =20
-both directions by adding additional "Push:" and "Pull:" =20
-declarations. With the shortcut file in place you could have written =20
-the above push as:
-
-git push shortcut
-
-To push your initial tag you would do:
-
-git push shortcut v.0.0.1
-
-(Or you could have included the tag in the original push by passing =20
-the --tags switch.)
-
-One thing to note: the ".git/remotes/shortcut" file should not be =20
-confused with the directories under ".git/refs/remotes".
-
-=46inally, now that the remote repository actually has some content in =
-=20
-it you also have the option of just creating a fresh local clone of =20
-it, and thus benefitting from the automatic set-up that "git clone" =20
-does for you:
-
-git clone git://git.server.example.com/test
-
-The Git documentation is shockingly good; almost too good: there is =20
-so much of it that sometimes it can be hard to find exactly what =20
-you're looking for. For reference, the "Git core tutorial for =20
-developers" was the one place which I could find which explicitly =20
-talked about the missing piece of the puzzle: pushing from a private =20
-repo (not a clone) to an empty public one:
-
-<http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html>
-
-Cheers,
-Wincent
+-Peff
