@@ -1,102 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Add git-rewrite-commits
-Date: Sat, 14 Jul 2007 12:26:01 -0700
-Message-ID: <7v7ip2hjna.fsf@assigned-by-dhcp.cox.net>
-References: <11842671631744-git-send-email-skimo@liacs.nl>
-	<11842671631635-git-send-email-skimo@liacs.nl>
-	<Pine.LNX.4.64.0707141140510.14781@racer.site>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: remove leading slashes from fetch lines in the generate config
+Date: Sat, 14 Jul 2007 12:40:32 -0700
+Message-ID: <20070714194031.GA5160@soma>
+References: <f158199e0707131024o5eb27b72v900f0d0613bc834b@mail.gmail.com> <f158199e0707131205w358676e5j88f8e4c63b1be1f5@mail.gmail.com> <f158199e0707141159t290d3aa9g90c6799e98520f56@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 14 21:26:15 2007
+Cc: git@vger.kernel.org, Bradford Smith <bradford.carl.smith@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 21:40:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9nFt-0003Is-Sz
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 21:26:14 +0200
+	id 1I9nTr-0006mu-Ii
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 21:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761896AbXGNT0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 15:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760804AbXGNT0E
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 15:26:04 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52130 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761896AbXGNT0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 15:26:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070714192603.HDSE1393.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Jul 2007 15:26:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PXS11X00J1kojtg0000000; Sat, 14 Jul 2007 15:26:02 -0400
-In-Reply-To: <Pine.LNX.4.64.0707141140510.14781@racer.site> (Johannes
-	Schindelin's message of "Sat, 14 Jul 2007 13:49:59 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762402AbXGNTkf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 15:40:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762127AbXGNTkf
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 15:40:35 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:41828 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760924AbXGNTke (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 15:40:34 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 671602DC032;
+	Sat, 14 Jul 2007 12:40:32 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 14 Jul 2007 12:40:32 -0700
+Content-Disposition: inline
+In-Reply-To: <f158199e0707141159t290d3aa9g90c6799e98520f56@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52500>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+We were previously sensitive to leading slashes in the fetch
+lines and incorrectly writing them to the config if the user
+used them (needlessly) in the command-line.
 
->> +Examples
->> +--------
->> +
->> +Suppose you want to remove a file (containing confidential information
->> +or copyright violation) from all commits:
->> +
->> +----------------------------------------------------------------------------
->> +git rewrite-commits --index-filter 'git update-index --remove filename || :'
+This fixes the issue and allows us to play nicely with legacy
+configs that have leading slashes in fetch lines.
+
+Thanks to Bradford Smith for figuring this out for me:
 >
-> We seem to prefer "$ git" instead of just "git" in the other man pages' 
-> examples.
-
-"git update-index --remove Foo" does not remove the index entry
-Foo if the file Foo still exists in the working tree (use "git
-update-index --force-remove" for that).
-
-But this leads to more fundamental issues.  It is not obvious
-from the description what environment rewrite-commits runs in.
-Does it run at the toplevel of the current working tree, or is
-it run in a separate temporary directory like filter-branch
-does?  What "index" and "HEAD" do operations done by filters
-affect (I think it is safe to assume that readers familiar
-enough with other parts of git would be able to guess that
-filters should operate on the "HEAD" and index given by
-rewrite-commits to its execution environment without mucking
-with GIT_DIR nor GIT_INDEX_FILE)?  Are filters allowed to modify
-files in the working tree, and if so what is the consequence of
-doing so?
-
->> +----------------------------------------------------------------------------
->> +
->> +Now, you will get the rewritten history saved in your current branch
->> +(the old branch is saved in refs/original).
+> This works:
 >
-> 						The "|| :" construct 
-> + prevents the filter to fail when the given file was not present in the 
-> + index.
+> git-svn clone https://my.server.net/repos/path/ -Ttrunk/testing
+>   -ttags/testing -bbranches/testing testing
+>
+> This doesn't:
+>
+> git-svn clone https://my.server.net/repos/path -T/trunk/testing
+>   -t/tags/testing -b/branches/testing testing
 
-prevents the filter from failing?  But is that really what we
-want?  Why are we ignoring the error, and if there is a valid
-reason to ignore shouldn't we explain why?
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
->> +To move the whole tree into a subdirectory, or remove it from there:
->> +
->> +---------------------------------------------------------------
->> +git rewrite-commits --index-filter \
->> +	'git ls-files -s | sed "s-\t-&newsubdir/-" |
->> +		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
->> +			git update-index --index-info &&
->> +	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE'
->> +---------------------------------------------------------------
-
-I see only one operation in the example, and "or remove it from
-there" confuses the reader.
-
-I'll refrain from comments on the code right now, until I read
-the series over.
+diff --git a/git-svn.perl b/git-svn.perl
+index b3dffcc..299b40f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1026,7 +1026,9 @@ sub read_all_remotes {
+ 	my $r = {};
+ 	foreach (grep { s/^svn-remote\.// } command(qw/config -l/)) {
+ 		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*refs/remotes/(.+)\s*$!) {
+-			$r->{$1}->{fetch}->{$2} = $3;
++			my ($remote, $local_ref, $remote_ref) = ($1, $2, $3);
++			$local_ref =~ s{^/}{};
++			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
+ 		} elsif (m!^(.+)\.url=\s*(.*)\s*$!) {
+ 			$r->{$1}->{url} = $2;
+ 		} elsif (m!^(.+)\.(branches|tags)=
+@@ -1146,6 +1148,7 @@ sub init_remote_config {
+ 	unless ($no_write) {
+ 		command_noisy('config',
+ 			      "svn-remote.$self->{repo_id}.url", $url);
++		$self->{path} =~ s{^/}{};
+ 		command_noisy('config', '--add',
+ 			      "svn-remote.$self->{repo_id}.fetch",
+ 			      "$self->{path}:".$self->refname);
+-- 
+Eric Wong
