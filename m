@@ -1,73 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/6] Define ishex(x) in git-compat-util.h
-Date: Sat, 14 Jul 2007 11:18:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707141115270.14781@racer.site>
-References: <11842671631744-git-send-email-skimo@liacs.nl>
- <11842671632000-git-send-email-skimo@liacs.nl>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Possible to make a totally empty repository for remote access?
+Date: Sat, 14 Jul 2007 12:26:38 +0200
+Message-ID: <20070714102638.GA5378@lapse.madduck.net>
+References: <20070714025819.GA22559@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sat Jul 14 12:18:30 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 14 12:26:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9ehq-0003c1-0l
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:18:30 +0200
+	id 1I9epP-0005Bp-IZ
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756088AbXGNKS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:18:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755770AbXGNKS1
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:18:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44323 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755830AbXGNKS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 06:18:26 -0400
-Received: (qmail invoked by alias); 14 Jul 2007 10:18:24 -0000
-Received: from R063a.r.pppool.de (EHLO noname) [89.54.6.58]
-  by mail.gmx.net (mp043) with SMTP; 14 Jul 2007 12:18:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Hbylkj5vHN3phYa/tqUPx6TAePq85DlcvVIQ5R7
-	DuaK08NnkzOMgT
-X-X-Sender: gene099@racer.site
-In-Reply-To: <11842671632000-git-send-email-skimo@liacs.nl>
-X-Y-GMX-Trusted: 0
+	id S1753866AbXGNK0L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:26:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbXGNK0L
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:26:11 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:58292 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753552AbXGNK0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 06:26:10 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 5D42A895D73
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:26:09 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 06054-06 for <git@vger.kernel.org>;
+	Sat, 14 Jul 2007 12:26:09 +0200 (CEST)
+Received: from lapse.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 2C8A6895D72
+	for <git@vger.kernel.org>; Sat, 14 Jul 2007 12:26:09 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id D08C04F89B; Sat, 14 Jul 2007 12:26:37 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070714025819.GA22559@coredump.intra.peff.net>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52467>
 
-Hi,
 
-On Thu, 12 Jul 2007, skimo@liacs.nl wrote:
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 362e040..1a36f4c 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -325,12 +325,15 @@ static inline int has_extension(const char *filename, const char *ext)
->  extern unsigned char sane_ctype[256];
->  #define GIT_SPACE 0x01
->  #define GIT_DIGIT 0x02
-> -#define GIT_ALPHA 0x04
-> +#define GIT_HEXAL 0x04
-> +#define GIT_OTHAL 0x08
-> +#define GIT_ALPHA (GIT_HEXAL | GIT_OTHAL)
+also sprach Jeff King <peff@peff.net> [2007.07.14.0458 +0200]:
+> The "new" way (by "new" I mean available for over a year, since v1.4.1)
+> is to put such configuration into your .git/config file:
 
-I'd have left GIT_ALPHA, and added GIT_HEXDIGIT.
+Have a look also at
 
->  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
->  #define isspace(x) sane_istest(x,GIT_SPACE)
->  #define isdigit(x) sane_istest(x,GIT_DIGIT)
->  #define isalpha(x) sane_istest(x,GIT_ALPHA)
->  #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
-> +#define ishex(x) sane_istest(x,GIT_HEXAL | GIT_DIGIT)
+  http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories
 
-I know, I originally proposed this.  In the mean time, however, I found 
-that this gem should be even better (in terms of diff size):
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+it is ok to let your mind go blank,
+but please turn off the sound.
 
-#define ishex(x) (hexval(x) >= 0)
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGmKTdIgvIgzMMSnURAhwwAKC+ZoWYDSTS5qsjJM60yZUBpkhqeQCfZA8x
+UZlYbgOtiCPyWrCFRareUtk=
+=9pna
+-----END PGP SIGNATURE-----
+
+--EeQfGwPcQSOJBaQU--
