@@ -1,76 +1,73 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: [PATCH] fall back to mozilla's sha.h if openssl/sha.h is not available
-Date: Sat, 14 Jul 2007 11:24:37 +0200
-Message-ID: <11844050771857-git-send-email-madduck@madduck.net>
-Cc: "martin f. krafft" <madduck@madduck.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 12:17:53 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/6] Define ishex(x) in git-compat-util.h
+Date: Sat, 14 Jul 2007 11:18:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707141115270.14781@racer.site>
+References: <11842671631744-git-send-email-skimo@liacs.nl>
+ <11842671632000-git-send-email-skimo@liacs.nl>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sat Jul 14 12:18:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9ehC-0003Ss-Sy
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:17:51 +0200
+	id 1I9ehq-0003c1-0l
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 12:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307AbXGNKRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 06:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755239AbXGNKRh
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:17:37 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56188 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753552AbXGNKRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 06:17:34 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 7C91D895D84;
-	Sat, 14 Jul 2007 12:17:32 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 27725-08; Sat, 14 Jul 2007 12:17:32 +0200 (CEST)
-Received: from lapse.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id E849C895D77;
-	Sat, 14 Jul 2007 12:17:31 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id C40634FD40; Sat, 14 Jul 2007 11:24:37 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc1.9.gf029
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1756088AbXGNKS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 06:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755770AbXGNKS1
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 06:18:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44323 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755830AbXGNKS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 06:18:26 -0400
+Received: (qmail invoked by alias); 14 Jul 2007 10:18:24 -0000
+Received: from R063a.r.pppool.de (EHLO noname) [89.54.6.58]
+  by mail.gmx.net (mp043) with SMTP; 14 Jul 2007 12:18:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Hbylkj5vHN3phYa/tqUPx6TAePq85DlcvVIQ5R7
+	DuaK08NnkzOMgT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11842671632000-git-send-email-skimo@liacs.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52466>
 
-Uses $(CPP) to attempt to preprocess an include <openssl/sha.h> directive. If
-that fails, NO_OPENSSL is defined, causing the Makefile to fall back to using
-mozilla's SHA implementation.
+Hi,
 
-This should possibly go to configure.ac, but maybe *also* to Makefile to make
-from-source compilations easier. git HEAD already comes with a Makefile (rather
-than a Makefile.in), so I just ran it while testing out patches. I introduced
-the test because I thought the computer could find out about libssl for me,
-rather than myself having to forget to specify NO_OPENSSL every time.
+On Thu, 12 Jul 2007, skimo@liacs.nl wrote:
 
-Signed-off-by: martin f. krafft <madduck@madduck.net>
----
- Makefile |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 362e040..1a36f4c 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -325,12 +325,15 @@ static inline int has_extension(const char *filename, const char *ext)
+>  extern unsigned char sane_ctype[256];
+>  #define GIT_SPACE 0x01
+>  #define GIT_DIGIT 0x02
+> -#define GIT_ALPHA 0x04
+> +#define GIT_HEXAL 0x04
+> +#define GIT_OTHAL 0x08
+> +#define GIT_ALPHA (GIT_HEXAL | GIT_OTHAL)
 
-diff --git a/Makefile b/Makefile
-index d7541b4..1676343 100644
---- a/Makefile
-+++ b/Makefile
-@@ -532,6 +532,12 @@ ifndef NO_CURL
- 	endif
- endif
- 
-+HAS_OPENSSL := $(shell echo "\#include <openssl/sha.h>" \
-+			| $(CPP) -o/dev/null - 2>/dev/null || echo no)
-+ifeq "$(HAS_OPENSSL)" "no"
-+	NO_OPENSSL = "openssl_sha.h_not_found"
-+endif
-+
- ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
- 	ifdef OPENSSLDIR
--- 
-1.5.3.rc1.9.gf029
+I'd have left GIT_ALPHA, and added GIT_HEXDIGIT.
+
+>  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
+>  #define isspace(x) sane_istest(x,GIT_SPACE)
+>  #define isdigit(x) sane_istest(x,GIT_DIGIT)
+>  #define isalpha(x) sane_istest(x,GIT_ALPHA)
+>  #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
+> +#define ishex(x) sane_istest(x,GIT_HEXAL | GIT_DIGIT)
+
+I know, I originally proposed this.  In the mean time, however, I found 
+that this gem should be even better (in terms of diff size):
+
+#define ishex(x) (hexval(x) >= 0)
+
+Ciao,
+Dscho
