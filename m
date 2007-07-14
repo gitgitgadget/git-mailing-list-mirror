@@ -1,58 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-reset: allow --soft in a bare repo
-Date: Sat, 14 Jul 2007 01:24:05 -0400
-Message-ID: <20070714052405.GA26107@coredump.intra.peff.net>
-References: <20070714044916.GA24911@coredump.intra.peff.net> <7vir8nmujo.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: CVS -> SVN -> Git
+Date: Sat, 14 Jul 2007 17:30:33 +1200
+Message-ID: <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>
+	 <469804B4.1040509@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 07:24:26 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Julian Phillips" <julian@quantumfyre.co.uk>, git@vger.kernel.org
+To: "Michael Haggerty" <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Jul 14 07:30:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9a7B-00075Y-4C
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 07:24:21 +0200
+	id 1I9aDS-00080h-Ab
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 07:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbXGNFYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 01:24:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbXGNFYJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 01:24:09 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3254 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751239AbXGNFYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 01:24:08 -0400
-Received: (qmail 25223 invoked from network); 14 Jul 2007 05:24:33 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 14 Jul 2007 05:24:33 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jul 2007 01:24:05 -0400
+	id S1751748AbXGNFag (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 01:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbXGNFag
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 01:30:36 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:21132 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbXGNFaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 01:30:35 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so678574wxd
+        for <git@vger.kernel.org>; Fri, 13 Jul 2007 22:30:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D3/34GutTroSqiA9n9//+R9utRG2JhVz/1wSBADtfGixrKjMNQhRPUVbK0z61DQtZIcJM57vaFa7EBXjUcZ2x5ln6qhqzw4ChZkDe6XqTCKWWwHfszkrGdhG9MLKqIk1ItqPAwm+0ayhfP3MZ9UeGQAqV6ahR6723u+6tb0pb7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pxTC4TDFnxRahgdL1CgSAhWTUL4NO4cLkkfPS62VmKZqgS+qVioTE23ODOD0oH7NiJYypVrWDYIzZcYWHHMbkfuHcrJcLWZoXhorKB/n/jaoLsvxRB7Ki+8A0mNUrOOPzCbU+fb8iT0/PfulJw8nFF3C2Ki7xl56iGKKKnyuT6g=
+Received: by 10.90.36.3 with SMTP id j3mr2219170agj.1184391033977;
+        Fri, 13 Jul 2007 22:30:33 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Fri, 13 Jul 2007 22:30:33 -0700 (PDT)
+In-Reply-To: <469804B4.1040509@alum.mit.edu>
 Content-Disposition: inline
-In-Reply-To: <7vir8nmujo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52441>
 
-On Fri, Jul 13, 2007 at 10:19:23PM -0700, Junio C Hamano wrote:
+On 7/14/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Incidentally, now that cvs2svn 2.0.0 is nearly out, I am thinking about
+> what it would take to write some other back ends for cvs2svn--turning
+> it, essentially, into cvs2xxx.  Most of the work that cvs2svn does is
+> inferring the most plausible history of the repository from CVS's
+> sketchy, incomplete, idiomatic, and often corrupt data.  This work
+> should also be useful for a cvs2git or cvs2hg or cvs2baz or ...
 
-> > Somebody asked about this on irc ("how do I rewind history in a bare
-> > repo"). The only other ways right now are to update the ref manually
-> > (which involves plumbing), or to "git-push -f" from a non-bare
-> > repository. I can't think of any good reason why a soft reset shouldn't
-> > be allowed.
-> 
-> How about "git branch -f this $that"???
+Great to hear that. I'm game if we can do something in this direction
+- surely we can make it talk to fastimport ;-)
 
-Ah, I hadn't thought of that. It seems a bit of a contortion, though,
-since git-branch is usually used for _making_ a branch, whereas
-git-reset is usually used for _changing_ a branch. But maybe that's just
-me.
+Does cvs2svn handle incremental imports, remembering any "guesses"
+taken earlier? Last time I looked at it, it had far better logic than
+cvsps, but it didn't do incremental imports, and repeated imports done
+at different times would "guess" different branching points for new
+branches, so it _really_ didn't support incrementals
 
-At any rate, it might still be worth applying the patch. It should be
-harmless to loosen the restriction, and even if there are several ways
-to accomplish the same thing, why punish people who try git-reset first?
-On the other hand, this is the first time I've seen it come up, so maybe
-this isn't confusing people.
+cheers,
 
--Peff
+
+
+m
