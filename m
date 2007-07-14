@@ -1,78 +1,125 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
-Date: Sat, 14 Jul 2007 13:38:05 -0700
-Message-ID: <20070714203805.GA5419@soma>
-References: <1184405128718-git-send-email-madduck@madduck.net> <20070714105010.GA14842@muzzle> <20070714110431.GA3854@piper.oerlikon.madduck.net> <20070714113435.GC14842@muzzle> <20070714120450.GA21890@piper.oerlikon.madduck.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Sat, 14 Jul 2007 22:46:39 +0200
+Message-ID: <e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+	 <7vodiehko7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 22:38:13 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 22:46:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9oNZ-0003ID-AZ
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 22:38:13 +0200
+	id 1I9oVo-0005EW-85
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 22:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762510AbXGNUiK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 16:38:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762205AbXGNUiI
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 16:38:08 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:41854 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761280AbXGNUiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 16:38:07 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id E8B052DC032;
-	Sat, 14 Jul 2007 13:38:05 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 14 Jul 2007 13:38:05 -0700
+	id S1762205AbXGNUql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 16:46:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761595AbXGNUql
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 16:46:41 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:65265 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761558AbXGNUqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 16:46:40 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1042947wah
+        for <git@vger.kernel.org>; Sat, 14 Jul 2007 13:46:40 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ycr0sYcM9ifvVlhscZNIYKMh2/JSlP+4ULWIt8tWLHKqtxEYY4DaZVOF2MytXeT9E9vOzF7A0MNheQ2ctwjrT2QYwayuSnMs2XkvGAhYKhArCHLwELPauO9QSWqf9++pvH2IosiGJrCeAeprZdqeW0HDIZs4CmQ+LFcnqRxAdMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m9zGRfpCicvL/uuoSCdLKcN24+cMze7Ds8qxbdC6jU9vFsbR44X2WV8RPSDJpWOJuYeibQHlqDRVSLWsLXPjk3pfB20mQkrZJwPdktvreb66MocHJfKY5KzbSrt9YgByO2KlwODA3MNqDj+3fin5ypixvkOuWA8kO0v7ms1VjCM=
+Received: by 10.114.176.1 with SMTP id y1mr2794590wae.1184445999816;
+        Sat, 14 Jul 2007 13:46:39 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Sat, 14 Jul 2007 13:46:39 -0700 (PDT)
+In-Reply-To: <7vodiehko7.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <20070714120450.GA21890@piper.oerlikon.madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52508>
 
-martin f krafft <madduck@madduck.net> wrote:
-> also sprach Eric Wong <normalperson@yhbt.net> [2007.07.14.1334 +0200]:
-> > I have highlighting search set in my editor (vim :set hls)
-> > and usually just search for spaces vs tabs to make sure I'm clean.
-> 
-> Try:
-> 
->   :se lcs=tab:>-,trail,-
+On 7/14/07, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "size" is a bit vague here.  What if we later want to extend
+> things so that you can ask for the entire log entry size
+> including the patch output part (I am not saying that would be
+> an easy change --- I am more worried about the stability of the
+> external interface).  So is --show-"size".  "message-size" would
+> have been a bit easier to swallow, but I sense the problem runs
+> deeper.
 
-That didn't work, this does:
+What about --section-sizes?
 
-    :se lcs=tab:>-,trail:-
+You can add in the output line all the sizes you want, message, patch
+and future extensions separated by a space. An example output for
+message and patch sizes.
 
->   augroup listinsert
->     autocmd InsertEnter * set nolist
->     autocmd InsertLeave * set list
->   augroup end
+sizes 456 565\n
 
-Eep.  Too confusing ;)  I have my hls color set to be a red underscore
-(which nothing else in my syntax higlighting uses), so it's less
-intrusive for me.
+Or, as a stream friendly alternative (and also more elegant) you can
+output 'section size' before each section, so as example
 
-> > Of course, maintaining a consistent whitespace style helps a *lot*
-> > with the git/Linux patch exchange development style because it
-> > avoids needless patch application conflicts that arise from
-> > whitespace differences.
-> 
-> Using tabs also makes it impossible to X-cut-paste patches from
-> emails; you *have* to use git-am and/or a temporary file, which
-> i don't like at all.
+commit d9e940....
+section size 456
+< log header and message body>
+section size 565
+<patch diff content>
+section size 232
+<other type of content>
 
-Ah.  I that's one of the reasons I rarely use X-cut-paste for multi-line
-strings.
 
-When I apply patches with or without git-am from email, I just start
-mutt inside the working source directory I'm in, and from the mutt index
-I spawn vim to edit any email (just hit 'e'), go into visual mode,
-select the part I want to apply and pipe that to whatever patch
-application program I want to use, and :q! out of vim.
+> I have a more basic question. If you are reading from non "-p"
+> output, where do you exactly have the wasted cycles in your
+> reader's processing?
 
--- 
-Eric Wong
+qgit loading works like this:
+
+git log output is read as a series of big binary chunks by a Qt
+library function that calls read(), these chunks are read each one in
+a different buffer and there they stay for all the application life
+time (or until a data refresh), so there is no copy of data in qgit,
+the buffers are allocated and the pointers passed to read(), that's
+all.
+
+It's a kind of software DMA ;-)
+
+The only information that qgit needs to infere at startup is where to
+find the first line of each commit, for parent information and
+revision's counting, all the other data is read and consumed only on
+demand, i.e. for showing to user, but because only the screen visible
+part of the list is needed, data is read from these buffers and parsed
+*in small chunks* and only when user scrolls the view.
+
+The problem is that to get the first line of each revision the message
+boundaries of _all_ the commits must be known/found.
+
+Because currently there is no message size information the application have to:
+
+-get the offset of commit first line
+-try to find the delimiting '\0' if existing (binary chunks could be
+truncated at any point)
+-get the offset of commit first line of next revision
+-and so on for all the revisions
+
+Finding the delimiting '\0' it means to loop across the whole buffers
+and _this_ is the expensive and not needed part. If just after the
+first line would be possible to point to the beginning of the next
+revision this seeking for '\0' would be not necessary anymore.
+
+When user asks for data of revision 'x' then because offset of
+revision 'x' is known, application could just point to the correct
+offset in the correct data buffer and parse out the (small) needed
+info.
+
+Hope I have explained clearly enough, I have some problems writing in
+at late evening ;-)
+
+
+Marco
