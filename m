@@ -1,100 +1,80 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git-svn: tagging trunk in SVN with git-svn?
-Date: Sat, 14 Jul 2007 16:03:59 +0200
-Message-ID: <20070714140359.GA5738@piper.oerlikon.madduck.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Draft release notes for v1.5.3, as of -rc1
+Date: Sat, 14 Jul 2007 15:22:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707141517450.14781@racer.site>
+References: <7vmyzv1acz.fsf@assigned-by-dhcp.cox.net> <7vejl0546b.fsf@assigned-by-dhcp.cox.net>
+ <7v4plqoyg5.fsf@assigned-by-dhcp.cox.net> <7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
+ <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com> <7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
+ <7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com> <7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net>
+ <7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net> <7vlkdkq00o.fsf_-_@assigned-by-dhcp.cox.net>
+ <20070713092908.GO1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cWoXeonUoKmBZSoM"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 14 16:04:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sat Jul 14 16:22:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9iED-0005k1-Nr
-	for gcvg-git@gmane.org; Sat, 14 Jul 2007 16:04:10 +0200
+	id 1I9iWF-0002UN-UG
+	for gcvg-git@gmane.org; Sat, 14 Jul 2007 16:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757919AbXGNOEF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 10:04:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757950AbXGNOEE
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 10:04:04 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:40492 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757524AbXGNOED (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 10:04:03 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id CFF0E895D73
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 16:04:00 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 07421-04 for <git@vger.kernel.org>;
-	Sat, 14 Jul 2007 16:04:00 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 8EF81895D72
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 16:04:00 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id E54209F121
-	for <git@vger.kernel.org>; Sat, 14 Jul 2007 16:03:59 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id BD04C43FC; Sat, 14 Jul 2007 16:03:59 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1757870AbXGNOWf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 10:22:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757204AbXGNOWf
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 10:22:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57840 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752162AbXGNOWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 10:22:34 -0400
+Received: (qmail invoked by alias); 14 Jul 2007 14:22:32 -0000
+Received: from R526b.r.pppool.de (EHLO noname) [89.54.82.107]
+  by mail.gmx.net (mp017) with SMTP; 14 Jul 2007 16:22:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19NOqkRJzBNUg16Dz+v77ZSmEkoaXuvqyOwwaV9pJ
+	+zGnxGUZX+rlr6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070713092908.GO1528MdfPADPa@greensroom.kotnet.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52482>
 
+Hi,
 
---cWoXeonUoKmBZSoM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 13 Jul 2007, Sven Verdoolaege wrote:
 
-Dear list,
+> On Thu, Jul 12, 2007 at 11:40:39PM -0700, Junio C Hamano wrote:
+> >   - "git-filter-branch" lets you rewrite the revision history of
+> >     the current branch, creating a new branch. You can specify a
+> >     number of filters to modify the commits, files and trees.
+> 
+> Are you sure you want to announce this so publicly given that
+> Dscho has basically declared git-filter-branch dead?
+> (I know, I'm mostly to blame.)
 
-I searched the list(s) and even read the code of git-svn, but I am
-none the wiser now. From what I understand, git-svn is primarily
-used to interact with subversion, rather than doing one-shot imports
-(which it can do as well).
+It is really unfortunate that rewrite-commits came in so late in the 
+release cycle, and I am quite sure it should not be in 1.5.3.  There is 
+just too much new in it, and too many things to flesh out.
 
-I am using it now and it works like a charm (thanks!). However,
-I cannot really figure out how to tag the remote trunk from within
-git-svn. I tried `git tag tags/1.2.57`, `git tag 1.2.57` and `git
-branch tags/1.2.57`, but in none of the three cases does dcommit
-think that it needs to push anything upstream.
+Junio, if you want to include it in 1.5.3, it should be marked as alpha 
+code, as it has not seen any time in "next", let alone "master".
 
-Is what I am trying to do possible, or do I need to use svn for
-that?
+However, no matter if rewrite-commits is included in 1.5.3, I am not sure 
+what to do about filter-branch.
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"nothing can cure the soul but the senses,
- just as nothing can cure the senses but the soul."
-                                                        -- oscar wilde
+Since it saw a lot of testing in its admin-rewritehist form, and has had 
+at least some eye pairs looking over it, I have the feeling that it is 
+stable enough to include.  How to tell people that it will soon be 
+obsoleted by rewrite-commits, I have no idea.
 
---cWoXeonUoKmBZSoM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
+It would be a much less difficult problem if the syntax of filter-branch 
+and rewrite-commits was identical.  Maybe we should make it so, by 
+changing filter-branch?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Thoughts?
 
-iD8DBQFGmNfPIgvIgzMMSnURAhF0AKCEyZOMsYccMYSArdtVjae1RBl73ACeIiVL
-fE0YYbES5q5f0frnf0CSEZQ=
-=ECXu
------END PGP SIGNATURE-----
-
---cWoXeonUoKmBZSoM--
+Ciao,
+Dscho
