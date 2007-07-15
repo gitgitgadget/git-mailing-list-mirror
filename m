@@ -1,132 +1,62 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Fix whitespace in "Format of STDIN stream" of fast-import
-Date: Sun, 15 Jul 2007 10:57:40 +0200
-Message-ID: <20070715085740.GB2568@steel.home>
+Subject: Re: Exporting a tree from a repository
+Date: Sun, 15 Jul 2007 11:15:10 +0200
+Message-ID: <20070715091510.GC2568@steel.home>
+References: <8e04b5820707141325o400e170bu9eb80b304cae506b@mail.gmail.com> <Pine.LNX.4.64.0707142237190.13310@beast.quantumfyre.co.uk> <8e04b5820707150012r13c5db69g96b97d910dc1b137@mail.gmail.com>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jul 15 10:57:47 2007
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ciprian Dorin Craciun <ciprian.craciun@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 11:15:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9zvH-0000Xi-AV
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 10:57:47 +0200
+	id 1IA0CD-0003Zm-W4
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 11:15:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504AbXGOI5o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 04:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754526AbXGOI5n
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 04:57:43 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:56147 "EHLO
+	id S1752956AbXGOJPO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 05:15:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbXGOJPO
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 05:15:14 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:8882 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754404AbXGOI5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 04:57:42 -0400
+	with ESMTP id S1752956AbXGOJPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 05:15:12 -0400
 Received: from tigra.home (Fca5f.f.strato-dslnet.de [195.4.202.95])
-	by post.webmailer.de (klopstock mo22) (RZmta 8.3)
-	with ESMTP id R01b83j6F760kR ; Sun, 15 Jul 2007 10:57:41 +0200 (MEST)
+	by post.webmailer.de (klopstock mo14) (RZmta 8.3)
+	with ESMTP id d01b59j6F3E5ob ; Sun, 15 Jul 2007 11:15:10 +0200 (MEST)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id DE7CA277BD;
-	Sun, 15 Jul 2007 10:57:40 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id 43F4C277BD;
+	Sun, 15 Jul 2007 11:15:10 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id BA623C164; Sun, 15 Jul 2007 10:57:40 +0200 (CEST)
+	id 1EC7AC164; Sun, 15 Jul 2007 11:15:09 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <8e04b5820707150012r13c5db69g96b97d910dc1b137@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTNzsQ==
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52536>
 
-Something probably assumed that HT indentation is 4 characters.
+Ciprian Dorin Craciun, Sun, Jul 15, 2007 09:12:08 +0200:
+>    Now for the export thing... I know that I can just clone the
+> remote repository and then remove the .git folder, but for my purpose
+> I just want to have the HEAD tree downloaded, without any history...
+> And by using git clone I end up downloading much more than I actually
+> need.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Well, if you have a ssh access to remote repository, you can run
+git-archive there:
 
----
- fast-import.c |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+    $ ssh -n 'cd /dir/repo/.git && git --bare archive --prefix=<local-path> <tree>' |tar xf -
 
-diff --git a/fast-import.c b/fast-import.c
-index 99a19d8..25877e8 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -11,7 +11,7 @@ Format of STDIN stream:
-         ;
- 
-   new_blob ::= 'blob' lf
--	mark?
-+    mark?
-     file_content;
-   file_content ::= data;
- 
-@@ -42,7 +42,7 @@ Format of STDIN stream:
- 
-   new_tag ::= 'tag' sp tag_str lf
-     'from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf
--	'tagger' sp name '<' email '>' when lf
-+    'tagger' sp name '<' email '>' when lf
-     tag_msg;
-   tag_msg ::= data;
- 
-@@ -56,9 +56,9 @@ Format of STDIN stream:
-      # note: the first idnum in a stream should be 1 and subsequent
-      # idnums should not have gaps between values as this will cause
-      # the stream parser to reserve space for the gapped values.  An
--	 # idnum can be updated in the future to a new object by issuing
-+     # idnum can be updated in the future to a new object by issuing
-      # a new mark directive with the old idnum.
--	 #
-+     #
-   mark ::= 'mark' sp idnum lf;
-   data ::= (delimited_data | exact_data)
-     lf;
-@@ -68,7 +68,7 @@ Format of STDIN stream:
-     # delim.
-   delimited_data ::= 'data' sp '<<' delim lf
-     (data_line lf)*
--	delim lf;
-+    delim lf;
- 
-      # note: declen indicates the length of binary_data in bytes.
-      # declen does not include the lf preceeding the binary data.
-@@ -78,10 +78,10 @@ Format of STDIN stream:
- 
-      # note: quoted strings are C-style quoting supporting \c for
-      # common escapes of 'c' (e..g \n, \t, \\, \") or \nnn where nnn
--	 # is the signed byte value in octal.  Note that the only
-+     # is the signed byte value in octal.  Note that the only
-      # characters which must actually be escaped to protect the
-      # stream formatting is: \, " and LF.  Otherwise these values
--	 # are UTF8.
-+     # are UTF8.
-      #
-   ref_str     ::= ref;
-   sha1exp_str ::= sha1exp;
-@@ -104,9 +104,9 @@ Format of STDIN stream:
-   lf ::= # ASCII newline (LF) character;
- 
-      # note: a colon (':') must precede the numerical value assigned to
--	 # an idnum.  This is to distinguish it from a ref or tag name as
-+     # an idnum.  This is to distinguish it from a ref or tag name as
-      # GIT does not permit ':' in ref or tag strings.
--	 #
-+     #
-   idnum   ::= ':' bigint;
-   path    ::= # GIT style file path, e.g. "a/b/c";
-   ref     ::= # GIT ref name, e.g. "refs/heads/MOZ_GECKO_EXPERIMENT";
-@@ -115,9 +115,9 @@ Format of STDIN stream:
-   hexsha1 ::= # SHA1 in hexadecimal format;
- 
-      # note: name and email are UTF8 strings, however name must not
--	 # contain '<' or lf and email must not contain any of the
-+     # contain '<' or lf and email must not contain any of the
-      # following: '<', '>', lf.
--	 #
-+     #
-   name  ::= # valid GIT author/committer name;
-   email ::= # valid GIT author/committer email;
-   ts    ::= # time since the epoch in seconds, ascii base10 notation;
--- 
-1.5.3.rc1.36.ga297
+or even simplier:
+
+    $ git archive --remote=<remote-host:remote-path> --prefix=<local-path>/ <tree> |tar xf -
+
+(for whatever reason it does not work with just git-daemon).
