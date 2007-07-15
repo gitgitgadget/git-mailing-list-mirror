@@ -1,78 +1,144 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Add --show-size to git log to print message size
-Date: Sun, 15 Jul 2007 11:04:15 -0400
-Message-ID: <20070715110415.33692142.seanlkml@sympatico.ca>
-References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
-	<7vodiehko7.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
-	<20070715093529.GD2568@steel.home>
-	<e5bfff550707150306t3196f723ia3071ac301fb3f24@mail.gmail.com>
-	<20070715104858.GG2568@steel.home>
-	<e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
-	<e5bfff550707150529l7e9bdd9fu253d38f99d4d2ed7@mail.gmail.com>
-	<20070715083529.6855a858.seanlkml@sympatico.ca>
-	<e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: question about git-submodule
+Date: Sun, 15 Jul 2007 17:21:01 +0200
+Message-ID: <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org>
+References: <20070713214630.GB7106@genesis.frugalware.org>
+ <20070715083959.GC999MdfPADPa@greensroom.kotnet.org>
+ <20070715104712.GF2568@steel.home>
+ <20070715105450.GD7106@genesis.frugalware.org>
+ <20070715135057.GI2568@steel.home>
+ <20070715135453.GE7106@genesis.frugalware.org>
+ <20070715140244.GF999MdfPADPa@greensroom.kotnet.org>
+ <20070715142624.GF7106@genesis.frugalware.org>
+ <20070715144835.GI999MdfPADPa@greensroom.kotnet.org>
+ <20070715150540.GH7106@genesis.frugalware.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <raa.lkml@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 17:06:39 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: VMiklos <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 17:21:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA5gE-0004LY-Lk
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:06:38 +0200
+	id 1IA5uX-0000CS-JQ
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758544AbXGOPGd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 11:06:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758315AbXGOPGd
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:06:33 -0400
-Received: from bay0-omc1-s14.bay0.hotmail.com ([65.54.246.86]:40753 "EHLO
-	bay0-omc1-s14.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758444AbXGOPGc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 11:06:32 -0400
-Received: from BAYC1-PASMTP05.bayc1.hotmail.com ([65.54.191.165]) by bay0-omc1-s14.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 08:06:32 -0700
-X-Originating-IP: [65.93.40.159]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 08:06:31 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IA5g6-0000fK-IE; Sun, 15 Jul 2007 11:06:30 -0400
-In-Reply-To: <e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.11; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 15 Jul 2007 15:06:31.0843 (UTC) FILETIME=[BA4DD730:01C7C6F1]
+	id S1758933AbXGOPVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 11:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758345AbXGOPVG
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:21:06 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:39564 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758360AbXGOPVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 11:21:04 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JL800HOQ7Z1O0@psmtp09.wxs.nl> for git@vger.kernel.org; Sun,
+ 15 Jul 2007 17:21:02 +0200 (MEST)
+Received: (qmail 20161 invoked by uid 500); Sun, 15 Jul 2007 15:21:01 +0000
+In-reply-to: <20070715150540.GH7106@genesis.frugalware.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52565>
 
-On Sun, 15 Jul 2007 16:58:16 +0200
-"Marco Costalba" <mcostalba@gmail.com> wrote:
+On Sun, Jul 15, 2007 at 05:05:40PM +0200, VMiklos wrote:
+> Hello,
+> 
+> Na Sun, Jul 15, 2007 at 04:48:35PM +0200, Sven Verdoolaege <skimo@kotnet.org> pisal(a):
+> > Isn't that what "git submodule update" does ?
+> 
+> i can't get it to work, but here is a log:
+> 
 
-> On 7/15/07, Sean <seanlkml@sympatico.ca> wrote:
-> >
-> > If you only look for ^\0 (ie. first position only) the parsing should
-> > be okay.  Not that it helps with the performance issue you're trying
-> > to address.
-> >
-> revisions are streamed, there is only one first revision, all the
-> others are linked togheter in a big stream.
+> vmiklos@vmobile:~/git/test$ ls
+> vmiklos@vmobile:~/git/test$ mkdir server
+> vmiklos@vmobile:~/git/test$ cd server
+> vmiklos@vmobile:~/git/test/server$ mkdir main
+> vmiklos@vmobile:~/git/test/server$ cd main
+> vmiklos@vmobile:~/git/test/server/main$ git init
+> Initialized empty Git repository in .git/
+> vmiklos@vmobile:~/git/test/server/main$ echo "foo" > main.c
+> vmiklos@vmobile:~/git/test/server/main$ git add main.c
+> vmiklos@vmobile:~/git/test/server/main$ git commit -m "import main"
+> Created initial commit 1ceae8f: import main
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 main.c
+> vmiklos@vmobile:~/git/test/server/main$ cd ..
+> vmiklos@vmobile:~/git/test/server$ mkdir libfoo
+> vmiklos@vmobile:~/git/test/server$ cd libfoo
+> vmiklos@vmobile:~/git/test/server/libfoo$ git init
+> Initialized empty Git repository in .git/
+> vmiklos@vmobile:~/git/test/server/libfoo$ echo "foo" > libfoo.c
+> vmiklos@vmobile:~/git/test/server/libfoo$ git add libfoo.c
+> vmiklos@vmobile:~/git/test/server/libfoo$ git commit -m "import libfoo"
+> Created initial commit 5979d36: import libfoo
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 libfoo.c
+> vmiklos@vmobile:~/git/test/server/libfoo$ cd ../..
+> vmiklos@vmobile:~/git/test$ mkdir client
+> vmiklos@vmobile:~/git/test$ cd client
+> vmiklos@vmobile:~/git/test/client$ git clone ../server/main
+> Initialized empty Git repository in /home/vmiklos/git/test/client/main/.git/
+> remote: Generating pack...
+> Done counting 3 objects.
+> Deltifying 3 objects...
+>  100% (3/3) done
+> Total 3 remote: (delta 0), reused 0 (delta 0)
+> Indexing 3 objects...
+>  100% (3/3) done
+> 
+> vmiklos@vmobile:~/git/test/client$ cd main
+> vmiklos@vmobile:~/git/test/client/main$ ls
+> main.c
+> vmiklos@vmobile:~/git/test/client/main$ git submodule add ../../server/libfoo/ libfoo
 
-Right, but how does that alter the notion that ^\0 is the safe way to
-test for the "real" NUL terminator?
+Here you add a submodule in the copy of the superproject in client.
 
-> Actually I ended up looking for the character after the '\0' (if any)
-> to be 'c' that is the beginning of "commit <sha> ....." but it's a bit
-> hacky.
+> Initialized empty Git repository in /home/vmiklos/git/test/client/main/libfoo/.git/
+> remote: Generating pack...
+> remote: Done counting 3 objects.
+> remote: Deltifying 3 objects...
+>  100% (3/3) done
+> Total 3 (delta 0), reused 0 (delta 0)
+> Indexing 3 objects...
+>  100% (3/3) done
+> 
+> vmiklos@vmobile:~/git/test/client/main$ git submodule init
+> Submodule 'libfoo' (/home/vmiklos/git/test/server/libfoo/.git) registered for path 'libfoo'
+> vmiklos@vmobile:~/git/test/client/main$ git commit -a -m "registered libfoo submodule"
+> Created commit 2c65310: registered libfoo submodule
+>  2 files changed, 4 insertions(+), 0 deletions(-)
+>  create mode 100644 .gitmodules
+>  create mode 160000 libfoo
+> vmiklos@vmobile:~/git/test/client/main$ cd ../../server/main
+> vmiklos@vmobile:~/git/test/server/main$ echo bar >> main.c
+> vmiklos@vmobile:~/git/test/server/main$ git add git commit -m "bar in main"
+> vmiklos@vmobile:~/git/test/server/main$ git add main.c
+> vmiklos@vmobile:~/git/test/server/main$ git commit -m "bar in main"
+> Created commit 1c26399: bar in main
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> vmiklos@vmobile:~/git/test/server/main$ cd ../libfoo
+> vmiklos@vmobile:~/git/test/server/libfoo$ echo bar >> libfoo.c
+> vmiklos@vmobile:~/git/test/server/libfoo$ git add libfoo.c
+> vmiklos@vmobile:~/git/test/server/libfoo$ git commit -m "bar in libfoo"
+> Created commit 07ceadb: bar in libfoo
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> vmiklos@vmobile:~/git/test/server/libfoo$ cd ../../client/main
+> vmiklos@vmobile:~/git/test/client/main$ git submodule update
+> 
+> at the end of it, git submodule update does not pull anything, while
+> there are changes both in the main and in the libfoo repo, too
 
-Much more hacky than just testing for ^\0.  AFAIU, the NUL is
-guaranteed to come at the start of the line and _all_ other NUL
-characters are guaranteed to appear somewhere else.  Your current
-test will fail if a "c" happens to follow NUL in the patch text.
+The last time you told the superproject about any changes
+in the subprojects was when you added the subproject (in client),
+so as far as the superproject is concerned nothing happened
+in any submodule.  The submodules don't even exist in server.
 
-Sean
+skimo
