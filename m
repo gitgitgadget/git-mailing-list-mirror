@@ -1,76 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Draft release notes for v1.5.3, as of -rc1
-Date: Mon, 16 Jul 2007 00:53:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707160053130.14781@racer.site>
-References: <7vmyzv1acz.fsf@assigned-by-dhcp.cox.net> <7vejl0546b.fsf@assigned-by-dhcp.cox.net>
- <7v4plqoyg5.fsf@assigned-by-dhcp.cox.net> <7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
- <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com> <7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
- <7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com> <7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net>
- <7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net> <7vlkdkq00o.fsf_-_@assigned-by-dhcp.cox.net>
- <20070713092908.GO1528MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0707141517450.14781@racer.site> <7vvecmj1ju.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Support output ISO 8601 format dates
+Date: Sun, 15 Jul 2007 16:57:39 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707151657230.20061@woody.linux-foundation.org>
+References: <20070713202258.14107.18196.stgit@lathund.dewire.com>
+ <20070715212359.GB18293@efreet.light.src>
+ <200707160119.34509.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: skimo@liacs.nl, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 01:54:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>, junkio@cox.net, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jul 16 01:58:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IADuq-0006LF-Sp
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 01:54:17 +0200
+	id 1IADyl-0006uy-AS
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 01:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249AbXGOXyO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 19:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756185AbXGOXyO
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 19:54:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38598 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755125AbXGOXyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 19:54:13 -0400
-Received: (qmail invoked by alias); 15 Jul 2007 23:54:11 -0000
-Received: from R04e1.r.pppool.de (EHLO noname) [89.54.4.225]
-  by mail.gmx.net (mp044) with SMTP; 16 Jul 2007 01:54:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nFMJaHt7nZNsb5h7lnAMm645tIsXChJZMbpnbCO
-	5eEOGWt/mtyW+1
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vvecmj1ju.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1755637AbXGOX6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 19:58:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755249AbXGOX6Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 19:58:16 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:38840 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753811AbXGOX6P (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 19:58:15 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6FNvj9X016241
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 15 Jul 2007 16:57:46 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6FNvd7G024428;
+	Sun, 15 Jul 2007 16:57:39 -0700
+In-Reply-To: <200707160119.34509.robin.rosenberg@dewire.com>
+X-Spam-Status: No, hits=-4.622 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52612>
 
-Hi,
 
-On Sat, 14 Jul 2007, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, 16 Jul 2007, Robin Rosenberg wrote:
 > 
-> > It is really unfortunate that rewrite-commits came in so late in the 
-> > release cycle, and I am quite sure it should not be in 1.5.3.  There is 
-> > just too much new in it, and too many things to flesh out.
-> >
-> > Junio, if you want to include it in 1.5.3, it should be marked as alpha 
-> > code, as it has not seen any time in "next", let alone "master".
-> 
-> I am not considering rewrite-commits for inclusion right now.
+> By "mutual agreement" I mean that I tell you what it looks like and you agree :)
 
-Fair enough.
+ROTFL.
 
-> I was hoping that filter-branch will stay.  Its interface is something 
-> people are already familiar with since the days of its its older 
-> incarnation cg-admin-rewritehist, and it would be really really nice 
-> that anything that attempts to replace it builds on and extends its 
-> external interface.
-> 
-> Maybe rewrite-commits can be used to delegate the implementation of 
-> heavy lifting from filter-branch?  IOW can the latter be just a thin 
-> wrapper around the former?
-
-That is a very good idea.
-
-Ciao,
-Dscho
+		Linus
