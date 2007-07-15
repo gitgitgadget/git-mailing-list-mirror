@@ -1,135 +1,107 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: question about git-submodule
-Date: Sun, 15 Jul 2007 17:40:28 +0200
-Message-ID: <20070715154028.GI7106@genesis.frugalware.org>
-References: <20070715083959.GC999MdfPADPa@greensroom.kotnet.org> <20070715104712.GF2568@steel.home> <20070715105450.GD7106@genesis.frugalware.org> <20070715135057.GI2568@steel.home> <20070715135453.GE7106@genesis.frugalware.org> <20070715140244.GF999MdfPADPa@greensroom.kotnet.org> <20070715142624.GF7106@genesis.frugalware.org> <20070715144835.GI999MdfPADPa@greensroom.kotnet.org> <20070715150540.GH7106@genesis.frugalware.org> <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Sun, 15 Jul 2007 17:58:21 +0200
+Message-ID: <e5bfff550707150858i1825e01clf0897ad4db319373@mail.gmail.com>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+	 <e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+	 <20070715093529.GD2568@steel.home>
+	 <e5bfff550707150306t3196f723ia3071ac301fb3f24@mail.gmail.com>
+	 <20070715104858.GG2568@steel.home>
+	 <e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
+	 <e5bfff550707150529l7e9bdd9fu253d38f99d4d2ed7@mail.gmail.com>
+	 <20070715083529.6855a858.seanlkml@sympatico.ca>
+	 <e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
+	 <20070715110415.33692142.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vs0rQTeTompTJjtd"
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sun Jul 15 17:40:43 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Alex Riesen" <raa.lkml@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Sun Jul 15 17:58:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA6DC-0006yl-G5
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:40:42 +0200
+	id 1IA6UW-0004Ft-9Z
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758936AbXGOPkj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 11:40:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758873AbXGOPkj
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:40:39 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:53421 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758711AbXGOPki (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 11:40:38 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IA6D3-0006DX-Cv
-	from <vmiklos@frugalware.org>; Sun, 15 Jul 2007 17:40:36 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C1E95176813C; Sun, 15 Jul 2007 17:40:28 +0200 (CEST)
+	id S1759161AbXGOP6X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 11:58:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759050AbXGOP6X
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:58:23 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:33159 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758905AbXGOP6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 11:58:22 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1296496wah
+        for <git@vger.kernel.org>; Sun, 15 Jul 2007 08:58:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nGuL20hfZtoikCOpWnDWrb3Qr1uVgcwoiycE5qQB+D8/EEfMR0BrXgNwsI+RL96lcADT3UvMA1NuymsaBBcjivw96SPkj0xEpp3bE+gVwN5fkSPOwtd1e2sl2Q/cn5+6zBsP/j/1olkLTHGcTzn6g8xND9093YhyabjuZDjGRQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VLNZ2Oh0jhj1GFXT/7s0h+6ysctezE1FSuJ5qU8J0cqIqmdGm3Fx5ELCLX9boNbIEoMjUHtB0S9X5AhAm3ivJ8P/DhM4zqSJf/R1NLMABUgMn4IhSCotdcKkvUv6ORozjwJtUL2g8UqC/1r1Gsetx6JcwnBUtxrQhpdcTpWvW6o=
+Received: by 10.114.196.1 with SMTP id t1mr3374898waf.1184515101739;
+        Sun, 15 Jul 2007 08:58:21 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Sun, 15 Jul 2007 08:58:21 -0700 (PDT)
+In-Reply-To: <20070715110415.33692142.seanlkml@sympatico.ca>
 Content-Disposition: inline
-In-Reply-To: <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4861]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52567>
+
+On 7/15/07, Sean <seanlkml@sympatico.ca> wrote:
+>
+> characters are guaranteed to appear somewhere else.  Your current
+> test will fail if a "c" happens to follow NUL in the patch text.
+>
+
+Yes sir, I agree with you 100%
+
+The real issue IMHO is that a 'delimiting character' should not appear
+in the content that it is trying to delimit. That's all the point
+around this thing. If a real 'delimiting character' does not exist
+because the content is free perhaps we should find a way to understand
+when we are at revision boundaries. The simplest (and most efficient)
+way is to know the size of the message in advance.
+
+Also if git log filters out the '\0' chars in the content it is
+suboptimal because we could miss to see we have a '\0' in content. BTW
+the above mentioned patch in Linux tree was all around removing that
+garbage '\0'. If diff output was filtered out perhaps the author could
+have missed that patch opportunity.
+
+Marco
+
+BTW, perhaps I'm retarded, but I fail to see what to search for with ^\0.
+
+As example if I have this output:
 
 
---vs0rQTeTompTJjtd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    Signed-off-by: Steven Whitehouse <swhiteho@redhat.com>
 
-Hello,
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index fd3fd90..36c523d 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -444,7 +444,6 @@ static int compute_bitstructs(struct gfs2_rgrpd *rgd)
+ }
 
-Na Sun, Jul 15, 2007 at 05:21:01PM +0200, Sven Verdoolaege <skimo@kotnet.or=
-g> pisal(a):
-> > vmiklos@vmobile:~/git/test/client/main$ git submodule add ../../server/=
-libfoo/ libfoo
->=20
-> Here you add a submodule in the copy of the superproject in client.
+ /**
+-^@
+  * gfs2_ri_total - Total up the file system space, according to the rindex.
+  *
+  */
+^@commit 8fb68595d508fd30ec90939572484b263600376c
+fad59c1390045b5adb7c7249ec4e77e0f868aca5
+tree 218a457675c111e2224fb57998d38e45d5786bd1
+parent fad59c1390045b5adb7c7249ec4e77e0f868aca5
 
-correct
 
-> > vmiklos@vmobile:~/git/test/client/main$ git submodule update
-> >=20
-> > at the end of it, git submodule update does not pull anything, while
-> > there are changes both in the main and in the libfoo repo, too
->=20
-> The last time you told the superproject about any changes
-> in the subprojects was when you added the subproject (in client),
-> so as far as the superproject is concerned nothing happened
-> in any submodule.  The submodules don't even exist in server.
-
-okay, let me continue the example, then:
-
-vmiklos@vmobile:~/git/test/client2$ git clone ../client/main
-Initialized empty Git repository in /home/vmiklos/git/test/client2/main/.gi=
-t/
-remote: Generating pack...
-remote: Done counting 11 objects.
-remote: Deltifying 11 objects...
-remote:  100% (11/11) done
-Indexing 11 objects...
- 100% (11/11) done
-Resolving 2 deltas...
- 100% (2/2) done
-remote: Total 11 (delta 2), reused 3 (delta 0)
-vmiklos@vmobile:~/git/test/client2$ ls
-main/
-vmiklos@vmobile:~/git/test/client2$ cd ../client/main/
-vmiklos@vmobile:~/git/test/client/main$ git pull
-Already up-to-date.
-vmiklos@vmobile:~/git/test/client/main$ cd libfoo
-vmiklos@vmobile:~/git/test/client/main/libfoo$ git pull
-remote: Generating pack...
-remote: Done counting 5 objects.
-Result has 3 objects.
-remote: Deltifying 3 objects...
- 100% (3/3) done
-Total 3 (delta 0), reused 0 (delta remote: 0)
-Unpacking 3 objects...
- 100% (3/3) done
-* refs/remotes/origin/master: fast forward to branch 'master' of /home/vmik=
-los/git/test/server/libfoo/
-  old..new: 5979d36..07ceadb
-Updating 5979d36..07ceadb
-Fast forward
- libfoo.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-vmiklos@vmobile:~/git/test/client/main/libfoo$ cd ../../../client2/main
-vmiklos@vmobile:~/git/test/client2/main$ git submodule update
-
-so the submodule exists now on the server and there would be something,
-to update in the submodule, but git submodule update seem not to do
-anything
-
-thanks,
-- VMiklos
-
---vs0rQTeTompTJjtd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGmj/se81tAgORUJYRApgVAJ0auk6/jaC6doWrgT7F3/xDOto9mQCfTVmm
-rWgIm2H2ftGpDRoAnbKT+S0=
-=D7Vc
------END PGP SIGNATURE-----
-
---vs0rQTeTompTJjtd--
+What should I search for to find the revision boundary? "\n\0" ? is
+this that you mean with ^\0
