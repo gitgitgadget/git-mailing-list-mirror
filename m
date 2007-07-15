@@ -1,64 +1,56 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add --show-size to git log to print message size
-Date: Sun, 15 Jul 2007 11:35:29 +0200
-Message-ID: <20070715093529.GD2568@steel.home>
-References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com> <7vodiehko7.fsf@assigned-by-dhcp.cox.net> <e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+Subject: Re: Confusing language in man page
+Date: Sun, 15 Jul 2007 11:40:38 +0200
+Message-ID: <20070715094038.GE2568@steel.home>
+References: <a781481a0707141108g4664a627w94e0d21c3629cb49@mail.gmail.com> <a781481a0707141327k5b6f8f43sc6330ff8cc504dd1@mail.gmail.com>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 11:35:35 2007
+Cc: git@vger.kernel.org
+To: Satyam Sharma <satyam.sharma@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 11:41:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA0Vq-0006wC-OM
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 11:35:35 +0200
+	id 1IA0bE-0007wx-N3
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 11:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755622AbXGOJfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 05:35:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbXGOJfc
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 05:35:32 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:52398 "EHLO
+	id S1757191AbXGOJkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 05:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757450AbXGOJkl
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 05:40:41 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:24721 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755416AbXGOJfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 05:35:31 -0400
+	with ESMTP id S1757057AbXGOJkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 05:40:40 -0400
 Received: from tigra.home (Fca5f.f.strato-dslnet.de [195.4.202.95])
-	by post.webmailer.de (mrclete mo35) (RZmta 8.3)
-	with ESMTP id a00259j6F51PBM ; Sun, 15 Jul 2007 11:35:29 +0200 (MEST)
+	by post.webmailer.de (klopstock mo50) (RZmta 8.3)
+	with ESMTP id z01c11j6F8fN82 ; Sun, 15 Jul 2007 11:40:38 +0200 (MEST)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 67BBB277BD;
-	Sun, 15 Jul 2007 11:35:29 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id CE30C277BD;
+	Sun, 15 Jul 2007 11:40:38 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id 4404AC164; Sun, 15 Jul 2007 11:35:29 +0200 (CEST)
+	id A7948C164; Sun, 15 Jul 2007 11:40:38 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+In-Reply-To: <a781481a0707141327k5b6f8f43sc6330ff8cc504dd1@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTNzsQ==
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52538>
 
-Marco Costalba, Sat, Jul 14, 2007 22:46:39 +0200:
-> Finding the delimiting '\0' it means to loop across the whole buffers
-> and _this_ is the expensive and not needed part. If just after the
+Satyam Sharma, Sat, Jul 14, 2007 22:27:52 +0200:
+> * On my system, doing:
+> 
+> $ git diff
+> 
+> with no outstanding changes in my current working tree produces some
+> bogus newlines, throwing the prompt to the bottom of the xterm window.
+> This sounds like weird / undesirable behaviour and I have a feeling must
+> already be fixed in latest git (?)
 
-It is _not_ expensive. It could be made expensive, though. By using
-QString and QByteArray, for instance.
-
-> first line would be possible to point to the beginning of the next
-> revision this seeking for '\0' would be not necessary anymore.
-
-But this will make your reading different: you have to handle the case
-when the next revision is not _fully_ read in yet, but you already
-know its size.
-
-> Hope I have explained clearly enough, I have some problems writing in
-> at late evening ;-)
-
-P.S. BTW, why do you have some 20 source files marked executable in
-your qgit4 repository?
+It is not git. It is the program less which git uses. The problem is
+known to the author of less.
