@@ -1,56 +1,67 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: question about git-submodule
-Date: Sun, 15 Jul 2007 23:45:30 +0200
-Message-ID: <20070715214530.GK999MdfPADPa@greensroom.kotnet.org>
-References: <20070715104712.GF2568@steel.home>
- <20070715105450.GD7106@genesis.frugalware.org>
- <20070715135057.GI2568@steel.home>
- <20070715135453.GE7106@genesis.frugalware.org>
- <20070715140244.GF999MdfPADPa@greensroom.kotnet.org>
- <20070715142624.GF7106@genesis.frugalware.org>
- <20070715144835.GI999MdfPADPa@greensroom.kotnet.org>
- <20070715150540.GH7106@genesis.frugalware.org>
- <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org>
- <20070715154028.GI7106@genesis.frugalware.org>
-Reply-To: skimo@liacs.nl
+From: Scott Lamb <slamb@slamb.org>
+Subject: Re: [PATCH 0/4] Move git-p4import into contrib directory.
+Date: Sun, 15 Jul 2007 14:53:53 -0700
+Message-ID: <469A9771.1000805@slamb.org>
+References: <20070715154804.2877361d.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: VMiklos <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Jul 15 23:45:36 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Sun Jul 15 23:54:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IABuJ-0005hq-Py
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:45:36 +0200
+	id 1IAC2n-0007xe-N3
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbXGOVpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 17:45:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbXGOVpd
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:45:33 -0400
-Received: from smtp19.wxs.nl ([195.121.247.10]:45003 "EHLO smtp19.wxs.nl"
+	id S1752079AbXGOVyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 17:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbXGOVyS
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:54:18 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:56651 "EHLO hobbes.slamb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751858AbXGOVpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 17:45:32 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JL800KTWPRUGJ@smtp19.wxs.nl> for git@vger.kernel.org; Sun,
- 15 Jul 2007 23:45:31 +0200 (CEST)
-Received: (qmail 28857 invoked by uid 500); Sun, 15 Jul 2007 21:45:30 +0000
-In-reply-to: <20070715154028.GI7106@genesis.frugalware.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751637AbXGOVyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 17:54:18 -0400
+Received: from spiff.local (ppp-71-139-183-188.dsl.snfc21.pacbell.net [71.139.183.188])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hobbes.slamb.org (Postfix) with ESMTP id D2A4998105;
+	Sun, 15 Jul 2007 14:54:16 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <20070715154804.2877361d.seanlkml@sympatico.ca>
+X-Enigmail-Version: 0.95.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52590>
 
-On Sun, Jul 15, 2007 at 05:40:28PM +0200, VMiklos wrote:
-> vmiklos@vmobile:~/git/test/client2/main$ git submodule update
+Sean wrote:
+> Hi Junio,
+> 
+> Having caught up on some list emails, it appears that Git now has a
+> much better option for importing from Perforce in the git-p4 front
+> end to fast-import.
+> 
+> Is there anyone out there actually even using git-p4import?  It was
+> written for a very specific case, by a git wannabe hacker who had
+> never used Perforce before, and not intended for inclusion in Git
+> proper...
+> 
+> My guess is that it could be removed outright without pain to anyone,
+> but as a first step, it could be moved into contrib for 1.5.3.
 
-You should do a git submodule init first.
+I vote for removing it immediately. It has serious bugs - e.g.,
+incremental mode is totally broken. I sent in a patch a month ago to fix
+this particular bug, which remains unapplied. Now that git-p4 has made
+it into git.git, I don't think anyone - myself included - is interested
+in creating or merging git-p4import.py fixes. Keeping git-p4import.py in
+this broken state just wastes the time of anyone unlucky enough to see
+it first.
 
-skimo
+Best regards,
+Scott
+
+-- 
+Scott Lamb <http://www.slamb.org/>
