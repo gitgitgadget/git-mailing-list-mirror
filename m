@@ -1,68 +1,103 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [PATCH 4/4] Update 1.5.3 release notes: git-p4import has been
- deprecated
-Date: Sun, 15 Jul 2007 15:53:35 -0400
-Message-ID: <20070715155335.2784dd0f.seanlkml@sympatico.ca>
-References: <20070715154804.2877361d.seanlkml@sympatico.ca>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] Support output ISO 8601 format dates
+Date: Sun, 15 Jul 2007 23:23:59 +0200
+Message-ID: <20070715212359.GB18293@efreet.light.src>
+References: <20070713202258.14107.18196.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 15 21:56:01 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
+Cc: junkio@cox.net, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 23:24:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAACF-0000Ev-U1
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 21:56:00 +0200
+	id 1IABZc-0000dQ-0K
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbXGOTz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 15:55:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbXGOTz4
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 15:55:56 -0400
-Received: from bay0-omc1-s35.bay0.hotmail.com ([65.54.246.107]:52958 "EHLO
-	bay0-omc1-s35.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751032AbXGOTzz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 15:55:55 -0400
-Received: from BAYC1-PASMTP01.bayc1.hotmail.com ([65.54.191.161]) by bay0-omc1-s35.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 12:55:55 -0700
-X-Originating-IP: [65.93.40.159]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 12:55:54 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IAAC9-000178-NS
-	for git@vger.kernel.org; Sun, 15 Jul 2007 15:55:53 -0400
-In-Reply-To: <20070715154804.2877361d.seanlkml@sympatico.ca>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.11; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 15 Jul 2007 19:55:55.0021 (UTC) FILETIME=[27908BD0:01C7C71A]
+	id S1751858AbXGOVYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 17:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbXGOVYG
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:24:06 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:41674 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751681AbXGOVYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 17:24:05 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id F1ABA57577;
+	Sun, 15 Jul 2007 23:24:02 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id aGr8zg7jYLoG; Sun, 15 Jul 2007 23:24:01 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B0F13572F9;
+	Sun, 15 Jul 2007 23:24:01 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IABZP-0006rN-M1; Sun, 15 Jul 2007 23:23:59 +0200
+Content-Disposition: inline
+In-Reply-To: <20070713202258.14107.18196.stgit@lathund.dewire.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52585>
 
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
----
- Documentation/RelNotes-1.5.3.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+--eJnRUKwClWJh1Khz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/RelNotes-1.5.3.txt b/Documentation/RelNotes-1.5.3.txt
-index e2e809e..00b2b93 100644
---- a/Documentation/RelNotes-1.5.3.txt
-+++ b/Documentation/RelNotes-1.5.3.txt
-@@ -172,6 +172,11 @@ Updates since v1.5.2
-     concatenate them into a single line and treat the result as
-     "oneline".
- 
-+  - "git p4import" has been demoted to contrib status.  For
-+    a superior option, checkout the git-p4 front end to
-+    git-fast-import (also in contrib).  The man page and p4
-+    rpm have been removed as well.
-+
- * Builds
- 
-   - old-style function definitions (most notably, a function
--- 
-1.5.3.rc0.826.gc301a3
+Hello,
+
+On Fri, Jul 13, 2007 at 22:22:58 +0200, Robin Rosenberg wrote:
+> +	else if (mode =3D=3D DATE_ISO8601)
+> +		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d:%02d %+05d",
+> +				tm->tm_year + 1900,
+> +				tm->tm_mon + 1,
+> +				tm->tm_mday,
+> +				tm->tm_hour, tm->tm_min, tm->tm_sec,
+> +				tz);
+
+I apologise for nitpicking, but ISO 8601 (and RFC 3339) says separator betw=
+een
+date and time is 'T' and there is no separator between time and timezone. So
+this should be
+
++		sprintf(timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+05d",
+
+for 100% conformance to the standard. RFC 3339 explicitely mentions using
+space instead of 'T' as separator as allowed, but does not seem to mention
+space before time zone. There may be applications that would stop at such
+space and assume no timezone information.
+
+Furthermore RFC 3339 seems to require colon in the timezone, so it would be:
+
++		sprintf(timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
++				tm->tm_year + 1900,
++				tm->tm_mon + 1,
++				tm->tm_mday,
++				tm->tm_hour, tm->tm_min, tm->tm_sec,
++				tz / 100, abs(tz % 100));
+
+ISO 8601 makes separators optional, so simple 4-digit timezone is OK.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--eJnRUKwClWJh1Khz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGmpBvRel1vVwhjGURAo9sAKCxj5qsghl3fdgmatzC/WVG5IhDPwCfeUEp
+Zyk0sBfEbMggOW8DVWjpsNc=
+=OYhT
+-----END PGP SIGNATURE-----
+
+--eJnRUKwClWJh1Khz--
