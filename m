@@ -1,67 +1,56 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH] Revert 'Disallow non-patch args to "stg show" (gna
-	#8453).'
-Date: Sun, 15 Jul 2007 23:32:11 +0200
-Message-ID: <20070715213211.6855.69618.stgit@gandelf.nowhere.earth>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: question about git-submodule
+Date: Sun, 15 Jul 2007 23:45:30 +0200
+Message-ID: <20070715214530.GK999MdfPADPa@greensroom.kotnet.org>
+References: <20070715104712.GF2568@steel.home>
+ <20070715105450.GD7106@genesis.frugalware.org>
+ <20070715135057.GI2568@steel.home>
+ <20070715135453.GE7106@genesis.frugalware.org>
+ <20070715140244.GF999MdfPADPa@greensroom.kotnet.org>
+ <20070715142624.GF7106@genesis.frugalware.org>
+ <20070715144835.GI999MdfPADPa@greensroom.kotnet.org>
+ <20070715150540.GH7106@genesis.frugalware.org>
+ <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org>
+ <20070715154028.GI7106@genesis.frugalware.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 23:32:59 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: VMiklos <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 23:45:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IABi4-0002dS-FI
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:32:56 +0200
+	id 1IABuJ-0005hq-Py
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752539AbXGOVcv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 17:32:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbXGOVcv
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:32:51 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:47876 "EHLO smtp3-g19.free.fr"
+	id S1752316AbXGOVpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 17:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbXGOVpd
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:45:33 -0400
+Received: from smtp19.wxs.nl ([195.121.247.10]:45003 "EHLO smtp19.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174AbXGOVcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 17:32:51 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C5C7D5A24C;
-	Sun, 15 Jul 2007 23:32:49 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 403D020D9;
-	Sun, 15 Jul 2007 23:32:12 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1751858AbXGOVpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 17:45:32 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp19.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JL800KTWPRUGJ@smtp19.wxs.nl> for git@vger.kernel.org; Sun,
+ 15 Jul 2007 23:45:31 +0200 (CEST)
+Received: (qmail 28857 invoked by uid 500); Sun, 15 Jul 2007 21:45:30 +0000
+In-reply-to: <20070715154028.GI7106@genesis.frugalware.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52589>
 
-This patch has a lot of side-effects that will break people's
-expectations.  There is much more that just this to do if we want to
-sanitize patch/commit/range addressing on the command-line, so that
-will wait till after 0.13.
+On Sun, Jul 15, 2007 at 05:40:28PM +0200, VMiklos wrote:
+> vmiklos@vmobile:~/git/test/client2/main$ git submodule update
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+You should do a git submodule init first.
 
- stgit/commands/show.py |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/stgit/commands/show.py b/stgit/commands/show.py
-index 2b22744..45ca253 100644
---- a/stgit/commands/show.py
-+++ b/stgit/commands/show.py
-@@ -55,7 +55,12 @@ def func(parser, options, args):
-     elif len(args) == 0:
-         patches = ['HEAD']
-     else:
--        patches = parse_patches(args, applied + unapplied +\
-+        if len(args) == 1 and args[0].find('..') == -1 \
-+               and not crt_series.patch_exists(args[0]):
-+            # it might be just a commit id
-+            patches = args
-+        else:
-+            patches = parse_patches(args, applied + unapplied +\
-                                 crt_series.get_hidden(), len(applied))
- 
-     if options.diff_opts:
+skimo
