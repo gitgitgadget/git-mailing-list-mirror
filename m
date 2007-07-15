@@ -1,82 +1,64 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [PATCH] Minor addition to git-check-ref-format man page
-Date: Sun, 15 Jul 2007 08:18:08 -0400
-Message-ID: <20070715081808.17e0564e.seanlkml@sympatico.ca>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Sun, 15 Jul 2007 14:29:04 +0200
+Message-ID: <e5bfff550707150529l7e9bdd9fu253d38f99d4d2ed7@mail.gmail.com>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+	 <7vodiehko7.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+	 <20070715093529.GD2568@steel.home>
+	 <e5bfff550707150306t3196f723ia3071ac301fb3f24@mail.gmail.com>
+	 <20070715104858.GG2568@steel.home>
+	 <e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 15 14:20:31 2007
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 14:29:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA35P-0006Y1-3N
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 14:20:27 +0200
+	id 1IA3Dv-00005n-1b
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 14:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754419AbXGOMUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 08:20:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753627AbXGOMUX
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 08:20:23 -0400
-Received: from bay0-omc3-s32.bay0.hotmail.com ([65.54.246.232]:9766 "EHLO
-	bay0-omc3-s32.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753515AbXGOMUW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 08:20:22 -0400
-Received: from BAYC1-PASMTP08.bayc1.hotmail.com ([65.54.191.168]) by bay0-omc3-s32.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 05:20:22 -0700
-X-Originating-IP: [65.93.40.159]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 05:21:43 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IA35I-0000VI-E6
-	for git@vger.kernel.org; Sun, 15 Jul 2007 08:20:20 -0400
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.11; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 15 Jul 2007 12:21:43.0281 (UTC) FILETIME=[B4430610:01C7C6DA]
+	id S1756228AbXGOM3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 08:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755702AbXGOM3K
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 08:29:10 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:39354 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755487AbXGOM3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 08:29:09 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1249695wah
+        for <git@vger.kernel.org>; Sun, 15 Jul 2007 05:29:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=scj02L6dBZFQ6TRNz1vzcKFWP81+J94oQ5VpgIscWgM08cs8N3U54FzQAnFfmW2SDmo5bRhHSUdKKszlmXNFzuOEYc92dAY064YeUdHWN4VfUmfqXtVnK4ECPQiZ7PX4+/YvrtPOHAF53af9/mUBoHlQJGC05vIuKw7R5ck4iO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dD4q8k2wfFwoVhlJDVZ6gOVtvwhQCvJOfaSr8DJMyxSZ4PzM6nzmnGHusCPIEzNUVKt6P1tuZ18JyJ3Gc23qrIkhn5Z+5cRnvI8bw/cuaS79cs+8umvNoBqUnok+w0h+An823C6HNkntKDPRxLrUdiwgUOdsyBs1dv/nnN+KLSs=
+Received: by 10.114.154.1 with SMTP id b1mr3267710wae.1184502544697;
+        Sun, 15 Jul 2007 05:29:04 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Sun, 15 Jul 2007 05:29:04 -0700 (PDT)
+In-Reply-To: <e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52548>
 
+To further push for git patch, please check this from current linux tree:
 
-Mention that refname must include at least one slash to
-be considered valid.
+git log --parents --pretty=raw -z -r -p c4201214
 
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
----
- Documentation/git-check-ref-format.txt |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+As you can see the diff contains a '\0' value (actually removed by the patch).
 
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index 13a5f43..4f80053 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -11,11 +11,13 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Checks if a given 'refname' is acceptable, and exits non-zero if
--it is not.
-+Checks if a given 'refname' is acceptable and exits with zero if
-+it is all right.  To be considered acceptable, the refname must
-+contain at least one slash '/' character (eg. heads/master).
- 
- A reference is used in git to specify branches and tags.  A
--branch head is stored under `$GIT_DIR/refs/heads` directory, and
-+branch head is stored under `$GIT_DIR/refs/heads` directory, a
-+remote-branch head is stored under `$GIT_DIR/refs/remotes`, and
- a tag is stored under `$GIT_DIR/refs/tags` directory.  git
- imposes the following rules on how refs are named:
- 
-@@ -32,7 +34,7 @@ imposes the following rules on how refs are named:
- 
- . It cannot end with a slash `/`.
- 
--These rules makes it easy for shell script based tools to parse
-+These rules make it easy for shell script based tools to parse
- refnames, pathname expansion by the shell when a refname is used
- unquoted (by mistake), and also avoids ambiguities in certain
- refname expressions (see gitlink:git-rev-parse[1]).  Namely:
--- 
-1.5.2.2
+qgit of course fails, as any tool based on parsing '\0' delimiting
+character records. If the size of the patch was explicitly given
+instead no fail will occur.
+
+Marco
