@@ -1,54 +1,57 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Questions about git-fast-import for cvs2svn
-Date: Sun, 15 Jul 2007 23:56:56 +0200
-Message-ID: <200707152356.58304.robin.rosenberg.lists@dewire.com>
-References: <469A2B1D.2040107@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Support output ISO 8601 format dates
+Date: Sun, 15 Jul 2007 15:14:51 -0700
+Message-ID: <7vveclco10.fsf@assigned-by-dhcp.cox.net>
+References: <20070713202258.14107.18196.stgit@lathund.dewire.com>
+	<20070715212359.GB18293@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 15 23:56:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, junkio@cox.net,
+	git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Jul 16 00:15:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAC4Y-0008V3-B2
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:56:10 +0200
+	id 1IACMr-0004No-HS
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 00:15:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbXGOV4H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Jul 2007 17:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbXGOV4G
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:56:06 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:22556 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751483AbXGOV4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 17:56:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 9821480266A;
-	Sun, 15 Jul 2007 23:48:55 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14406-09; Sun, 15 Jul 2007 23:48:55 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 58C54800199;
-	Sun, 15 Jul 2007 23:48:55 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <469A2B1D.2040107@alum.mit.edu>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1753163AbXGOWOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 18:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbXGOWOx
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 18:14:53 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43652 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636AbXGOWOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 18:14:53 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070715221452.WHRV1393.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 15 Jul 2007 18:14:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id PyEr1X00K1kojtg0000000; Sun, 15 Jul 2007 18:14:52 -0400
+In-Reply-To: <20070715212359.GB18293@efreet.light.src> (Jan Hudec's message of
+	"Sun, 15 Jul 2007 23:23:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52592>
 
-s=F6ndag 15 juli 2007 skrev Michael Haggerty:
->    b. CVS tag/branch creation events do not even include a username.
-> Any suggestions for what to use here?
+Jan Hudec <bulb@ucw.cz> writes:
 
-The CVSROOT/history file contains the user name and timestamp of the ta=
-g
-creation. CVS can be told not to update the file. It is appended to by =
-default.
+> I apologise for nitpicking, but ISO 8601 (and RFC 3339) says separator between
+> date and time is 'T' and there is no separator between time and timezone. So
+> this should be
+> ...
+> ISO 8601 makes separators optional, so simple 4-digit timezone is OK.
 
--- robin
+My reading of 8601 was that it is allowed to drop [T] as long as
+it is clear from the context by agreement between the parties
+involved, although I admit the only copy I have handy is JIS
+X0301 (2002), which is matching Japanese industrial standard
+that consists of translation of ISO 8601 (2000) plus Japanese
+"emperor's era" extensions.
