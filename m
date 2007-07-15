@@ -1,103 +1,70 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] Support output ISO 8601 format dates
-Date: Sun, 15 Jul 2007 23:23:59 +0200
-Message-ID: <20070715212359.GB18293@efreet.light.src>
-References: <20070713202258.14107.18196.stgit@lathund.dewire.com>
+From: "Satyam Sharma" <satyam.sharma@gmail.com>
+Subject: Re: Confusing language in man page
+Date: Mon, 16 Jul 2007 02:55:42 +0530
+Message-ID: <a781481a0707151425q11e35280rd0118ac9e122c55d@mail.gmail.com>
+References: <a781481a0707141108g4664a627w94e0d21c3629cb49@mail.gmail.com>
+	 <a781481a0707141327k5b6f8f43sc6330ff8cc504dd1@mail.gmail.com>
+	 <20070715094038.GE2568@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
-Cc: junkio@cox.net, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 23:24:13 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 23:25:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IABZc-0000dQ-0K
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:24:12 +0200
+	id 1IABb9-000121-BY
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 23:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbXGOVYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 17:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbXGOVYG
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:24:06 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:41674 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751681AbXGOVYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 17:24:05 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id F1ABA57577;
-	Sun, 15 Jul 2007 23:24:02 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id aGr8zg7jYLoG; Sun, 15 Jul 2007 23:24:01 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B0F13572F9;
-	Sun, 15 Jul 2007 23:24:01 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IABZP-0006rN-M1; Sun, 15 Jul 2007 23:23:59 +0200
+	id S1751220AbXGOVZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 17:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbXGOVZo
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 17:25:44 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:6149 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751110AbXGOVZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 17:25:44 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so686565nze
+        for <git@vger.kernel.org>; Sun, 15 Jul 2007 14:25:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ecknyP5SwXCK4hJblmvMsiXyzj+W96X3ceEyvnKjIiccIleKsXFXyTRkjnigJ7W6aJkC5ZQ2hpAtLLr8iDcGpZZNMt5B67OT8/VenaxdBfAPMal0r5uUtJtXT9J3sH7IXHcVpgcKZy2vk3UjvCMixMvNsd4yBHvVif5rEOT3K3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a+cSrpjlS3vCy3+9i7+SjsM067KaCzYSJ1oT+Tf7I6hTczlQWmqk6p+udE2xInF+TH/58TWV1vaBlR7pCCR+RiwZTyon/WYK2XI2J9xIg+ZXmWIySMRoAl7YAlI/w/KUyaCvdyeFWrTRDPnv3DiC8kLVGM+s/pixvZ7AXyCdYgU=
+Received: by 10.142.155.4 with SMTP id c4mr271260wfe.1184534742999;
+        Sun, 15 Jul 2007 14:25:42 -0700 (PDT)
+Received: by 10.142.83.19 with HTTP; Sun, 15 Jul 2007 14:25:42 -0700 (PDT)
+In-Reply-To: <20070715094038.GE2568@steel.home>
 Content-Disposition: inline
-In-Reply-To: <20070713202258.14107.18196.stgit@lathund.dewire.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52586>
 
+On 7/15/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> Satyam Sharma, Sat, Jul 14, 2007 22:27:52 +0200:
 
---eJnRUKwClWJh1Khz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok, the first two were silly questions I got answered as I got to
+know more about git automatically :-)
 
-Hello,
+> > * On my system, doing:
+> >
+> > $ git diff
+> >
+> > with no outstanding changes in my current working tree produces some
+> > bogus newlines, throwing the prompt to the bottom of the xterm window.
+> > This sounds like weird / undesirable behaviour and I have a feeling must
+> > already be fixed in latest git (?)
+>
+> It is not git. It is the program less which git uses. The problem is
+> known to the author of less.
 
-On Fri, Jul 13, 2007 at 22:22:58 +0200, Robin Rosenberg wrote:
-> +	else if (mode =3D=3D DATE_ISO8601)
-> +		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d:%02d %+05d",
-> +				tm->tm_year + 1900,
-> +				tm->tm_mon + 1,
-> +				tm->tm_mday,
-> +				tm->tm_hour, tm->tm_min, tm->tm_sec,
-> +				tz);
+As for this one, I sent out a mail to bug-less@ just in case -- it's a weird
+and annoying thing.
 
-I apologise for nitpicking, but ISO 8601 (and RFC 3339) says separator betw=
-een
-date and time is 'T' and there is no separator between time and timezone. So
-this should be
-
-+		sprintf(timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+05d",
-
-for 100% conformance to the standard. RFC 3339 explicitely mentions using
-space instead of 'T' as separator as allowed, but does not seem to mention
-space before time zone. There may be applications that would stop at such
-space and assume no timezone information.
-
-Furthermore RFC 3339 seems to require colon in the timezone, so it would be:
-
-+		sprintf(timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday,
-+				tm->tm_hour, tm->tm_min, tm->tm_sec,
-+				tz / 100, abs(tz % 100));
-
-ISO 8601 makes separators optional, so simple 4-digit timezone is OK.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---eJnRUKwClWJh1Khz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGmpBvRel1vVwhjGURAo9sAKCxj5qsghl3fdgmatzC/WVG5IhDPwCfeUEp
-Zyk0sBfEbMggOW8DVWjpsNc=
-=OYhT
------END PGP SIGNATURE-----
-
---eJnRUKwClWJh1Khz--
+Thanks!
