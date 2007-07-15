@@ -1,99 +1,111 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: question about git-submodule
-Date: Mon, 16 Jul 2007 00:29:48 +0200
-Message-ID: <20070715222948.GL7106@genesis.frugalware.org>
-References: <20070715105450.GD7106@genesis.frugalware.org> <20070715135057.GI2568@steel.home> <20070715135453.GE7106@genesis.frugalware.org> <20070715140244.GF999MdfPADPa@greensroom.kotnet.org> <20070715142624.GF7106@genesis.frugalware.org> <20070715144835.GI999MdfPADPa@greensroom.kotnet.org> <20070715150540.GH7106@genesis.frugalware.org> <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org> <20070715154028.GI7106@genesis.frugalware.org> <20070715214530.GK999MdfPADPa@greensroom.kotnet.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: finding the right remote branch for a commit
+Date: Mon, 16 Jul 2007 00:33:41 +0200
+Message-ID: <20070715223341.GA3797@moooo.ath.cx>
+References: <20070710144907.GA324@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707112226170.4516@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="m+jEI8cDoTn6Mu9E"
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon Jul 16 00:30:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 00:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IACbW-0007Rp-C1
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 00:30:14 +0200
+	id 1IACey-0008KN-Ot
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 00:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753668AbXGOW35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 18:29:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbXGOW35
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 18:29:57 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:40669 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753504AbXGOW34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 18:29:56 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IACbC-0000QY-Kd
-	from <vmiklos@frugalware.org>; Mon, 16 Jul 2007 00:29:54 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 25FB216A8091; Mon, 16 Jul 2007 00:29:49 +0200 (CEST)
+	id S1753906AbXGOWdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 18:33:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbXGOWdp
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 18:33:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60850 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753742AbXGOWdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 18:33:44 -0400
+Received: (qmail invoked by alias); 15 Jul 2007 22:33:43 -0000
+Received: from pD9EB8A0A.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.138.10]
+  by mail.gmx.net (mp032) with SMTP; 16 Jul 2007 00:33:43 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+UtddbkviUIcdoUb1x4+Mqqd0F6ENlxVBg52Q2Pb
+	KPa1bfL12KANZz
 Content-Disposition: inline
-In-Reply-To: <20070715214530.GK999MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
-	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+In-Reply-To: <Pine.LNX.4.64.0707112226170.4516@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52594>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> In practice, and I consider these all bugs, it does not work:
+> 
+> - you have to say
+> 
+>   $ git --work-tree=$HOME --bare init
+> 
+>   which is a bit counterintuitive.  After all, it is _not_ a bare 
+>   repository.  The whole purpose of worktree, as far as I understand, is 
+>   to have a _detached_ repository, which would otherwise be called bare.
 
---m+jEI8cDoTn6Mu9E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Use
 
-Hello,
+    $ git --work-tree "$HOME" --git-dir . init
 
-Na Sun, Jul 15, 2007 at 11:45:30PM +0200, Sven Verdoolaege <skimo@kotnet.org> pisal(a):
-> You should do a git submodule init first.
+instead.
 
-nice, now it works :)
+IMHO the --bare flag did not make much sense before the introduction
+of GIT_WORK_TREE and doesn't after, at least not with the meaning it
+has: why should 'git --bare' mean to use the repository from cwd?
+Ok, git --bare implies that you cannot use a working tree because
+you're at the top of the git repository directory which may not be
+used as working tree.
 
-then my question would be if the following workflow is possible or not:
+Now bare only means that some protection mechanisms are disabled and
+some default values change (i.e. overwrite HEAD, enable/disable
+reflogs by default).  So maybe the name bare itself is a bit
+counterintuitive now.
 
-1) you told me how to do the following:
+> - $ git status
+> 
+>   does not do what you would expect: it fails, telling you that it needs a 
+>   work tree, of all things. You can say (tongue-in-cheek)
+> 
+>   $ (export GIT_DIR="$(pwd)" && cd "$(git config core.worktree)" &&
+>      git status)
+> 
+>   So, git knows about the location of the working tree, but just ignores 
+>   that.
+> 
+> - In the case that you forget to set GIT_DIR, you better not have any 
+>   .git/ repository in $HOME/ or $HOME/gits/, because it will pick up that 
+>   instead!  Even if you are _inside_ a detached git directory!
+> 
+>   So you better not try some games like this in a subdirectory of your 
+>   local git.git repository.  It is a fine way to get completely confused.  
+>   And certainly do _not_ do something like "git reset --hard <branch>" 
+>   there.
+>
+> - Of course, it would be nice if something like that worked:
+> 
+>   $ cd $HOME/gits/vim.git
+>   $ git add $HOME/.vimrc
+> 
+>   But it does not work, because it wants to _be_ in the work tree.  Of 
+>   course, you have to specify the GIT_DIR again, because the working tree 
+>   does not know about the location of the repository, but vice versa.
 
-a) somebody updates libfoo
+Up to now you are supposed to be in the working tree all the time when
+using it.  Therefore I'd call these feature requests rather than bugs :)
 
-b) a dev of main pulls libfoo, commits something like:
+For git status it should be quite easy to add a special case to change
+to the top of the working tree as long as no paths are used as
+parameters.
 
-diff --git a/libfoo b/libfoo
-index 07ceadb..459b61f 160000
---- a/libfoo
-+++ b/libfoo
-@@ -1 +1 @@
--Subproject commit 07ceadb17ca73636b0d96cb91688baecb1763d9b
-+Subproject commit 459b61fa4bba78a6e6542b8fcc0fd8f320eafa8c
-
-c) users have to "git pull; git submodule update" and they'll be happy
-
-2) is it possible to do this without step b)?
-
-i mean adding something like: "Subproject commit HEAD" or "Subproject
-commit mybranch"
-
-thanks,
-- VMiklos
-
---m+jEI8cDoTn6Mu9E
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGmp/ce81tAgORUJYRAqXKAJ9mVLIvEAKVko3jDVkuF21qk7bg1QCfZlNZ
-swSqjeY7WaDTQfUxqL0AKGU=
-=o/6z
------END PGP SIGNATURE-----
-
---m+jEI8cDoTn6Mu9E--
+When paths are used (either with git status or git add) you'd have to
+translate the specified path to a path relative to the working tree.
+This should be possible with chdir, getcwd and prefixcmp.  If this
+gets implemented for git status/git add it should probably get
+implemented for all commands for which it makes sense.  I think this
+would be nice to have but I'm not sure how complicated this is to
+implement.
