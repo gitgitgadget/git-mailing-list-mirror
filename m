@@ -1,114 +1,67 @@
 From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Questions about git-fast-import for cvs2svn
-Date: Sun, 15 Jul 2007 12:01:49 -0400
-Message-ID: <20070715120149.3271b736.seanlkml@sympatico.ca>
-References: <469A2B1D.2040107@alum.mit.edu>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Sun, 15 Jul 2007 12:16:00 -0400
+Message-ID: <20070715121600.792982ef.seanlkml@sympatico.ca>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+	<e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+	<20070715093529.GD2568@steel.home>
+	<e5bfff550707150306t3196f723ia3071ac301fb3f24@mail.gmail.com>
+	<20070715104858.GG2568@steel.home>
+	<e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
+	<e5bfff550707150529l7e9bdd9fu253d38f99d4d2ed7@mail.gmail.com>
+	<20070715083529.6855a858.seanlkml@sympatico.ca>
+	<e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
+	<20070715110415.33692142.seanlkml@sympatico.ca>
+	<e5bfff550707150858i1825e01clf0897ad4db319373@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 15 18:05:54 2007
+Cc: "Alex Riesen" <raa.lkml@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 18:18:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA6an-000686-Az
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 18:05:19 +0200
+	id 1IA6o8-00024k-33
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 18:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762061AbXGOQEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 12:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761805AbXGOQEI
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 12:04:08 -0400
-Received: from bay0-omc3-s29.bay0.hotmail.com ([65.54.246.229]:17263 "EHLO
-	bay0-omc3-s29.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760491AbXGOQEH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 12:04:07 -0400
-Received: from BAYC1-PASMTP07.bayc1.hotmail.com ([65.54.191.167]) by bay0-omc3-s29.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 09:04:06 -0700
+	id S1763649AbXGOQSU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 12:18:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762558AbXGOQST
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 12:18:19 -0400
+Received: from bay0-omc2-s36.bay0.hotmail.com ([65.54.246.172]:50165 "EHLO
+	bay0-omc2-s36.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760815AbXGOQSS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 12:18:18 -0400
+Received: from BAYC1-PASMTP08.bayc1.hotmail.com ([65.54.191.168]) by bay0-omc2-s36.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 15 Jul 2007 09:18:17 -0700
 X-Originating-IP: [65.93.40.159]
 X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP07.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 15 Jul 2007 09:05:02 -0700
+Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 15 Jul 2007 09:19:38 -0700
 Received: from guru.attic.local ([10.10.10.28])
 	by linux1 with smtp (Exim 4.43)
-	id 1IA6Zo-0000iM-II; Sun, 15 Jul 2007 12:04:04 -0400
-In-Reply-To: <469A2B1D.2040107@alum.mit.edu>
+	id 1IA6nY-0000pr-8a; Sun, 15 Jul 2007 12:18:16 -0400
+In-Reply-To: <e5bfff550707150858i1825e01clf0897ad4db319373@mail.gmail.com>
 X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.11; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 15 Jul 2007 16:05:02.0593 (UTC) FILETIME=[E6DFC710:01C7C6F9]
+X-OriginalArrivalTime: 15 Jul 2007 16:19:39.0140 (UTC) FILETIME=[F1563C40:01C7C6FB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52569>
 
-On Sun, 15 Jul 2007 16:11:41 +0200
-Michael Haggerty <mhagger@alum.mit.edu> wrote:
+On Sun, 15 Jul 2007 17:58:21 +0200
+"Marco Costalba" <mcostalba@gmail.com> wrote:
 
-Hi Michael,
+> What should I search for to find the revision boundary? "\n\0" ? is
+> this that you mean with ^\0
 
-Will take a stab at answering your questions...
+Essentially yes.  That pattern will never appear inside the comment
+or patch text because both sections are always indented.  So in the
+example you cite, "\n\0" would match the proper terminator, and the
+"\n-\0" NUL would be ignored.
 
-> 1. Is it a problem to create blobs that are never referenced?  The
-> easiest point to create blobs is when the RCS files are originally
-> parsed, but later we discard some CVS revisions, meaning that the
-> corresponding blobs would never be needed.  Would this be a problem?
-
-Not a problem.  Running "git gc" later will cleanup any unused objects.
-
-> 2. It appears that author/committer require an email address.  How
-> important is a valid email address here?
-
-It's not necessary for the operation of Git itself; it's up to you to
-decide how important the information is to your project.  You should
-be able to set an empty email address for author or committer in
-git fast-import as "name <>".
-
->    a. CVS commits include a username but not an email address.  If an
-> email address is really required, then I suppose the person doing the
-> conversion would have to supply a lookup table mapping username -> email
-> address.
-
-Yes, take a look at the format supported by git-cvsimport and git-svnimport,
-which can map each username into an appropriate name and email addy for Git.
-
->    b. CVS tag/branch creation events do not even include a username.
-> Any suggestions for what to use here?
-
-Perhaps just use your own username or one specifically created to
-run the conversion process.
-
-> 3. I expect we should set 'committer' to the value determined from CVS
-> and leave 'author' unused.  But I suppose another possibility would be
-> to set the 'committer' to 'cvs2svn' and the 'author' to the original CVS
-> author.  Which one makes sense?
-
-Another option is to just allow Git to set author and committer to the
-same value.  As noted in the man page: "If author is omitted then
-fast-import will automatically use the committer's information for
-the author portion of the commit".
-
-> 4. It appears that a commit can only have a single 'from', which I
-> suppose means that files can only be added to one branch from a single
-> source branch/revision in a single commit.  But CVS branches and tags
-> can include files from multiple source branches and/or revisions.  What
-> would be the most git-like way to handle this situation?  Should the
-> branch be created in one commit, then have files from other sources
-> added to it in other commits?  Or should (is this even possible?) all
-> files be added to the branch in a single commit, using multiple "merge"
-> sources?
-
-Git supports the ability to merge from multiple branches at once (known
-as an octopus merge).  So it's possible to start a new branch, drawing
-in files from more than one source branch in a single commit.  As i
-understand it, fast-import allows only a single "from" line for a commit,
-but allows multiple "merge" lines for additional parentage info. 
-
-> 5. Is there any significance at all to the order that commits are output
-> to git-fast-import?  Obviously, blobs have to be defined before they are
-> used, and '<committish>'s have to be defined before they are referenced.
->  But is there any other significance to the order of commits?
-
-Don't think so, except perhaps for the packfile optimization issues
-mentioned in the man page.
-
-HTH,
 Sean
