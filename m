@@ -1,68 +1,86 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH 6/6] Add git-rewrite-commits
-Date: Sun, 15 Jul 2007 16:07:55 +0200
-Message-ID: <20070715140755.GG999MdfPADPa@greensroom.kotnet.org>
-References: <11842671631744-git-send-email-skimo@liacs.nl>
- <11842671631635-git-send-email-skimo@liacs.nl>
- <Pine.LNX.4.64.0707141140510.14781@racer.site>
- <7v7ip2hjna.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Questions about git-fast-import for cvs2svn
+Date: Sun, 15 Jul 2007 16:11:41 +0200
+Message-ID: <469A2B1D.2040107@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 16:08:10 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 16:11:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA4lc-0006jC-U5
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 16:08:09 +0200
+	id 1IA4pE-0007aL-Uv
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 16:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757352AbXGOOIE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 10:08:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757402AbXGOOIB
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 10:08:01 -0400
-Received: from smtp15.wxs.nl ([195.121.247.6]:44195 "EHLO smtp15.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757352AbXGOOH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 10:07:56 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp15.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JL8000754L7ND@smtp15.wxs.nl> for git@vger.kernel.org; Sun,
- 15 Jul 2007 16:07:55 +0200 (CEST)
-Received: (qmail 19105 invoked by uid 500); Sun, 15 Jul 2007 14:07:55 +0000
-In-reply-to: <7v7ip2hjna.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1756597AbXGOOLu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 10:11:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756521AbXGOOLu
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 10:11:50 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:37400 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755863AbXGOOLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 10:11:49 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.135] (kaiserty.in-dsl.de [217.197.85.174])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l6FEBfs8031273
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 15 Jul 2007 16:11:42 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52558>
 
-On Sat, Jul 14, 2007 at 12:26:01PM -0700, Junio C Hamano wrote:
-> But this leads to more fundamental issues.  It is not obvious
-> from the description what environment rewrite-commits runs in.
+I've been reading the documentation for git-fast-import (thanks for the
+fine documentation!) as part of determining how much work it would be to
+add a git back end to cvs2svn, and I have a few questions.
 
-I'll try to make that more clear in the next round.
+1. Is it a problem to create blobs that are never referenced?  The
+easiest point to create blobs is when the RCS files are originally
+parsed, but later we discard some CVS revisions, meaning that the
+corresponding blobs would never be needed.  Would this be a problem?
 
-> >> +To move the whole tree into a subdirectory, or remove it from there:
-> >> +
-> >> +---------------------------------------------------------------
-> >> +git rewrite-commits --index-filter \
-> >> +	'git ls-files -s | sed "s-\t-&newsubdir/-" |
-> >> +		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
-> >> +			git update-index --index-info &&
-> >> +	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE'
-> >> +---------------------------------------------------------------
-> 
-> I see only one operation in the example, and "or remove it from
-> there" confuses the reader.
+2. It appears that author/committer require an email address.  How
+important is a valid email address here?
 
-I found it confusing too (I copied it from the filter-branch manual).
-I'll remove it.
+   a. CVS commits include a username but not an email address.  If an
+email address is really required, then I suppose the person doing the
+conversion would have to supply a lookup table mapping username -> email
+address.
 
-skimo
+   b. CVS tag/branch creation events do not even include a username.
+Any suggestions for what to use here?
+
+3. I expect we should set 'committer' to the value determined from CVS
+and leave 'author' unused.  But I suppose another possibility would be
+to set the 'committer' to 'cvs2svn' and the 'author' to the original CVS
+author.  Which one makes sense?
+
+4. It appears that a commit can only have a single 'from', which I
+suppose means that files can only be added to one branch from a single
+source branch/revision in a single commit.  But CVS branches and tags
+can include files from multiple source branches and/or revisions.  What
+would be the most git-like way to handle this situation?  Should the
+branch be created in one commit, then have files from other sources
+added to it in other commits?  Or should (is this even possible?) all
+files be added to the branch in a single commit, using multiple "merge"
+sources?
+
+5. Is there any significance at all to the order that commits are output
+to git-fast-import?  Obviously, blobs have to be defined before they are
+used, and '<committish>'s have to be defined before they are referenced.
+ But is there any other significance to the order of commits?
+
+All in all, I don't think that a git back end for cvs2svn would be very
+trick at all.  There will be a bit of refactoring work to allow the user
+to switch between SVN/git output at runtime, but so far I don't see any
+reason that the fundamental algorithms of cvs2svn will have to be changed.
+
+Thanks,
+Michael
