@@ -1,74 +1,64 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: CVS -> SVN -> Git
-Date: Sun, 15 Jul 2007 13:48:46 +0200
-Message-ID: <469A099E.6060906@alum.mit.edu>
-References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>	 <469804B4.1040509@alum.mit.edu>	 <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>	 <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>	 <46994BDF.6050803@alum.mit.edu> <7154c5c60707141623s3f70e967s226e5da29965a173@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: question about git-submodule
+Date: Sun, 15 Jul 2007 13:51:48 +0200
+Message-ID: <20070715115148.GD999MdfPADPa@greensroom.kotnet.org>
+References: <20070713214630.GB7106@genesis.frugalware.org>
+ <20070715083959.GC999MdfPADPa@greensroom.kotnet.org>
+ <20070715104712.GF2568@steel.home>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: esr@thyrsus.com, Martin Langhoff <martin.langhoff@gmail.com>,
-        Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-        dev <dev@cvs2svn.tigris.org>
-To: David Frech <david@nimblemachines.com>
-X-From: dev-return-2055-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sun Jul 15 13:48:54 2007
-Return-path: <dev-return-2055-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IA2ar-0007tx-G0
-	for gcvscd-dev@gmane.org; Sun, 15 Jul 2007 13:48:53 +0200
-Received: (qmail 27937 invoked by uid 5000); 15 Jul 2007 11:48:50 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: VMiklos <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 13:51:55 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IA2dm-00008u-Ut
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 13:51:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758842AbXGOLvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 07:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758679AbXGOLvu
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 07:51:50 -0400
+Received: from smtp14.wxs.nl ([195.121.247.5]:56543 "EHLO smtp14.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758541AbXGOLvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 07:51:50 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp14.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JL700I5RYACVX@smtp14.wxs.nl> for git@vger.kernel.org; Sun,
+ 15 Jul 2007 13:51:48 +0200 (CEST)
+Received: (qmail 18319 invoked by uid 500); Sun, 15 Jul 2007 11:51:48 +0000
+In-reply-to: <20070715104712.GF2568@steel.home>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 27926 invoked from network); 15 Jul 2007 11:48:50 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAE6mmUbAbSoIh2dsb2JhbACPPAEBAQgKJw
-X-IronPort-AV: i="4.16,540,1175497200"; 
-   d="scan'208"; a="77332950:sNHT19161338"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <7154c5c60707141623s3f70e967s226e5da29965a173@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52544>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52545>
 
-David Frech wrote:
-> I have a modest svn repo (about 800 commits) that contains fifteen or
-> so small projects. It started life as a CVS repo, and as the projects
-> grew and changed, and as I learned more about CVS, things got moved
-> around. Later, when I got interested in svn (in 2005) I converted the
-> repo, using cvs2svn. It got a few things wrong - mostly, that it
-> thought there was one project in the repo, and created toplevel
-> trunk/, branches/, and tags/ directories, and lumped everything below
-> these.
+On Sun, Jul 15, 2007 at 12:47:12PM +0200, Alex Riesen wrote:
+> Count me out. Junio convinced me instead and having tried the
+> subprojects I find it really convenient: I can choose when and what
+> should be updated and I can see what _can_ be updated, iff I decide
+> to. Subprojects defined in such a loosely way are more flexible then
+> having git-pull fetch subprojects by default.
 
-I know this tangential to the main point of your post, but BTW
-multiproject conversions were added to cvs2svn in release 1.5.
+I agree that fetching should probably be left as a separate operation,
+but if you have all the data, then I find it very inconvenient that
+every time you switch to a different commit you have to update
+all the subprojects separately too.
+Did you change your mind about this part too?
 
-> It took a day and half to get the svn dump parsing right (it's an
-> egregiously bad format) but only a couple of hours to write the
-> fast-import backend.
+> Sometimes I even want be
+> _sure_ the subprojects are completely untouched (I have some critical
+> parts in them).
 
-I'm surprised you think that; I find the svn dump format quite easy and
-straightforward.  (Of course it assumes some Subversionisms, like easy
-deep directory copies, which I can imagine would be annoying in other
-contexts.)  What don't you like about the format?
+The update in the superproject would fail if the subproject is dirty
+(just as with files.)
 
-> Having done all this, I realized that this is a good way to go.
-> Separating, as Michael suggests, the "parsing" part from the "commit
-> generating" part, not only makes the tools easier to write, but makes
-> them more flexible. If hg or bzr had a git-like fast-import (maybe
-> they do) it would take me about 35 minutes to target that instead. And
-> in the process I came across some "missing features" in fast-import,
-> which Shawn Pearce was able to quickly add.
-
-Yes, fast-import is a very easy-to-write format and looks to be very
-well documented.  I don't think that having to write output in
-fast-import format would be any kind of a hindrance for such a tool.
-
-Michael
+skimo
