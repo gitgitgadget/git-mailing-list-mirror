@@ -1,82 +1,66 @@
-From: esr@thyrsus.com (Eric S. Raymond)
-Subject: Re: CVS -> SVN -> Git
-Date: Sat, 14 Jul 2007 21:39:49 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20070715013949.GA20850@thyrsus.com>
-References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk> <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com> <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com> <46994BDF.6050803@alum.mit.edu>
-Reply-To: esr@thyrsus.com
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: mtimes of working files
+Date: Sat, 14 Jul 2007 21:46:47 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707142135090.14596@iabervon.org>
+References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
+ <Pine.LNX.4.64.0707111940080.4516@racer.site> <20070711202615.GE3069@efreet.light.src>
+ <200707120857.53090.andyparkins@gmail.com> <1184261246.31598.139.camel@pmac.infradead.org>
+ <20070713003700.GA21304@thunk.org> <1184367619.2785.58.camel@shinybook.infradead.org>
+ <alpine.LFD.0.999.0707131617270.20061@woody.linux-foundation.org>
+ <1184370414.2785.79.camel@shinybook.infradead.org> <20070714222221.GB3678@efreet.light.src>
+ <Pine.LNX.4.64.0707142331380.14090@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	git@vger.kernel.org, dev <dev@cvs2svn.tigris.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 15 03:40:13 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Hudec <bulb@ucw.cz>, David Woodhouse <dwmw2@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sun Jul 15 03:46:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9t5o-0001LO-FY
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 03:40:12 +0200
+	id 1I9tCF-0002T7-T5
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 03:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757797AbXGOBkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 21:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760534AbXGOBkI
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 21:40:08 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:59317
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757797AbXGOBkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 21:40:06 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id F32A03C0663; Sat, 14 Jul 2007 21:39:49 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <46994BDF.6050803@alum.mit.edu>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1760534AbXGOBqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Jul 2007 21:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761469AbXGOBqs
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 21:46:48 -0400
+Received: from iabervon.org ([66.92.72.58]:3671 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759065AbXGOBqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2007 21:46:48 -0400
+Received: (qmail 9491 invoked by uid 1000); 15 Jul 2007 01:46:47 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Jul 2007 01:46:47 -0000
+In-Reply-To: <Pine.LNX.4.64.0707142331380.14090@beast.quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52521>
 
-Michael Haggerty <mhagger@alum.mit.edu>:
-> Could you give a quick summary of the relevant differences between CVS
-> and RCS files in this context?  Then I'd be happy to try to figure out
-> how bad the situation still is today, and whether it can be easily improved.
+On Sat, 14 Jul 2007, Julian Phillips wrote:
 
-I found my copy of the bug report, and I misremembered the problem
-slightly.  It turns out to be even more relevant to this 
-discussion than I thought.
+> On Sun, 15 Jul 2007, Jan Hudec wrote:
+> 
+> > It would be IMHO possible to symlink all the stuff in .git except HEAD and
+> > index, except for one problem. This is if you have two checkouts from the
+> > same branch and check out of them, the other one needs to know, that it's
+> > head should now be detached to stay where it was.
+> 
+> You basically just described what the git-new-workdir script in
+> contrib/workdir does ... it doesn't address the issue of reference updating.
 
-Thread begins with <20040810031409.GA25564@thyrsus.com> on
-9 Aug 2004.  The thread title was "RFC -- enhancing cvs2svn to have a
-notion of spans of mergeable commits".  Your mailing-list archive
-search can't seem to find it, unfortunately.  I'll repost the query
-iseparately
+That's where keeping the index's parents in the index would help. Various 
+people have implemented it at various times, but it's never quite become 
+sufficiently important to people to have the correct behavior worked out 
+and put into mainline. IIRC, not too long ago Junio had an implementation 
+in pu, but ended up dropping it because almost nobody would see a difference, 
+and the people who did see a difference only had it interfere with what 
+they were trying to do.
 
-> Other people have complained about having to convert from SVN to
-> distributed SCMs, because the SVN model doesn't map so easily to their
-> favorite.
-
-OK.  But I think that if SVN -> X is hard, CVS -> X is going to be harder.
-
-> You are basically suggesting that an SVN repository is the best lingua
-> franca of the SCM world, which I don't believe.
-
-Not quite.  I'm suggesting it's an appropriate lingua franca for centralized
-VCSes with branching, e.g. everything pre-Arch.
-
->                                               The CVS history *does*
-> have to be deformed a bit to fit into SVN, and an svn2xxx converter
-> would have to undo the deformation.
-
-Then perhaps the right thing to think about is this: how exactly does
-CVS history need to be deformed, and is there some way to express the
-lost information as conventional properties or tags?
-
-> My idea is not to built (for example) cvs2git; rather, I'd like cvs2svn
-> to be split conceptually into two tools:
-
-Well, that makes more sense.  But how would whatever the first half outputs
-be different from an svn dump file? 
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+	-Daniel
+*This .sig left intentionally blank*
