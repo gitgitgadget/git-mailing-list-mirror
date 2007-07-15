@@ -1,66 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: mtimes of working files
-Date: Sat, 14 Jul 2007 21:46:47 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707142135090.14596@iabervon.org>
-References: <f36b08ee0707110808h56ecbc7at9c92727c01cca508@mail.gmail.com>
- <Pine.LNX.4.64.0707111940080.4516@racer.site> <20070711202615.GE3069@efreet.light.src>
- <200707120857.53090.andyparkins@gmail.com> <1184261246.31598.139.camel@pmac.infradead.org>
- <20070713003700.GA21304@thunk.org> <1184367619.2785.58.camel@shinybook.infradead.org>
- <alpine.LFD.0.999.0707131617270.20061@woody.linux-foundation.org>
- <1184370414.2785.79.camel@shinybook.infradead.org> <20070714222221.GB3678@efreet.light.src>
- <Pine.LNX.4.64.0707142331380.14090@beast.quantumfyre.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: CVS -> SVN -> Git
+Date: Sat, 14 Jul 2007 22:22:03 -0400
+Message-ID: <20070715022203.GW4436@spearce.org>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk> <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com> <4699034A.9090603@alum.mit.edu> <EC3B307E-EA83-4128-BABD-D9BDB78F987E@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jan Hudec <bulb@ucw.cz>, David Woodhouse <dwmw2@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Theodore Tso <tytso@mit.edu>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jul 15 03:46:56 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I9tCF-0002T7-T5
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 03:46:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760534AbXGOBqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Jul 2007 21:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761469AbXGOBqs
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Jul 2007 21:46:48 -0400
-Received: from iabervon.org ([66.92.72.58]:3671 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759065AbXGOBqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2007 21:46:48 -0400
-Received: (qmail 9491 invoked by uid 1000); 15 Jul 2007 01:46:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Jul 2007 01:46:47 -0000
-In-Reply-To: <Pine.LNX.4.64.0707142331380.14090@beast.quantumfyre.co.uk>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Simon Hausmann <simon@lst.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	dev <dev@cvs2svn.tigris.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: dev-return-2051-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sun Jul 15 04:22:21 2007
+Return-path: <dev-return-2051-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1I9tkY-0008LO-5o
+	for gcvscd-dev@gmane.org; Sun, 15 Jul 2007 04:22:18 +0200
+Received: (qmail 9865 invoked by uid 5000); 15 Jul 2007 02:22:14 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52521>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 9852 invoked from network); 15 Jul 2007 02:22:14 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAC4hmUZAJhTik2dsb2JhbACPOwEBAgcEBgcGGg
+X-IronPort-AV: i="4.16,539,1175497200"; 
+   d="scan'208"; a="62162682:sNHT109714899"
+X-IRONPORT: SCANNED
+Content-Disposition: inline
+In-Reply-To: <EC3B307E-EA83-4128-BABD-D9BDB78F987E@zib.de>
+Sender: spearce@spearce.org
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - cvs2svn.tigris.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52522>
 
-On Sat, 14 Jul 2007, Julian Phillips wrote:
-
-> On Sun, 15 Jul 2007, Jan Hudec wrote:
+Steffen Prohaska <prohaska@zib.de> wrote:
+> On Jul 14, 2007, at 7:09 PM, Michael Haggerty wrote:
+> >Martin Langhoff wrote:
+> >>On 7/14/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> >>>Incidentally, now that cvs2svn 2.0.0 is nearly out, I am thinking  
+> >>>about
+> >>>what it would take to write some other back ends for cvs2svn-- 
+> >>>turning
+> >>>it, essentially, into cvs2xxx.  Most of the work that cvs2svn  
+...
+> >>
+> >>Great to hear that. I'm game if we can do something in this direction
+> >>- surely we can make it talk to fastimport ;-)
+> >
+> >We added some hooks to cvs2svn 2.0 to start working in this direction.
+> >But I don't really know what information is needed for a git import.
+> >One quick-and-dirty idea that I had was to have cvs2svn output
+> >information compatible with cvsps's output, as I believe that several
+> >tools rely on cvsps to do the dirty work and so could perhaps be
+> >persuaded to use cvs2svn out of the box.
 > 
-> > It would be IMHO possible to symlink all the stuff in .git except HEAD and
-> > index, except for one problem. This is if you have two checkouts from the
-> > same branch and check out of them, the other one needs to know, that it's
-> > head should now be detached to stay where it was.
+> From my understanding, piping data to git fast-import would be
+> a sane gateway to git. The input format of fast-import is document
+> in [1].
 > 
-> You basically just described what the git-new-workdir script in
-> contrib/workdir does ... it doesn't address the issue of reference updating.
+> Maybe Shaw Pearce has some comments on that. Shawn did most
+> (maybe all) of the work on git-fast-import.
 
-That's where keeping the index's parents in the index would help. Various 
-people have implemented it at various times, but it's never quite become 
-sufficiently important to people to have the correct behavior worked out 
-and put into mainline. IIRC, not too long ago Junio had an implementation 
-in pu, but ended up dropping it because almost nobody would see a difference, 
-and the people who did see a difference only had it interfere with what 
-they were trying to do.
+You must be new to this discussion.  ;-)
 
-	-Daniel
-*This .sig left intentionally blank*
+git-fast-import started as a backend for a hacked up version of
+cvs2svn that Jon Smirl was working on to convert the massive Mozilla
+CVS repository into Git.  Jon started from the cvs2svn codebase
+because it best handled the damaged RCS files that exist in the
+Mozilla repository.  Many emails have been exchanged between myself,
+Michael and Jon on this subject.
+
+So yes, git-fast-import was designed to act as a backend behind
+something like cvs2xxx.  Some of the "oddities" of the fast-import
+input language are the way they are partly because of the way
+the (older) cvs2svn code generated output in SVN dump format.
+Certain data was available at certain times and not at others,
+so Jon wanted to feed it to git-fast-import when he had it, rather
+than needing to buffer it or rearrange code.
+
+I'm staying far away from writing fast-import frontends.  Anyone that
+wants/needs a CVS frontend is welcome to implement one, but it
+won't written be me.  I gave up CVS a long time ago and will never
+return to it.  My only VCS is Git, and converting Git->Git is sort
+of stupid.  So I have no need for a fast-import frontend.
+
+But I do maintain fast-import.  Well over 99% of it was written
+by me.  ;-)
+
+-- 
+Shawn.
