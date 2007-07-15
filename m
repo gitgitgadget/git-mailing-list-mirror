@@ -1,66 +1,73 @@
-From: esr@thyrsus.com (Eric S. Raymond)
-Subject: Re: CVS -> SVN -> Git
-Date: Sun, 15 Jul 2007 09:36:55 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20070715133655.GA9302@thyrsus.com>
-References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk> <469804B4.1040509@alum.mit.edu> <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com> <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com> <46994BDF.6050803@alum.mit.edu> <20070715013949.GA20850@thyrsus.com> <469A0D54.8010303@alum.mit.edu>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: question about git-submodule
+Date: Sun, 15 Jul 2007 15:42:12 +0200
+Message-ID: <20070715134212.GH2568@steel.home>
+References: <20070713214630.GB7106@genesis.frugalware.org> <20070715083959.GC999MdfPADPa@greensroom.kotnet.org> <20070715104712.GF2568@steel.home> <20070715115148.GD999MdfPADPa@greensroom.kotnet.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-	dev <dev@cvs2svn.tigris.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: dev-return-2057-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sun Jul 15 15:37:18 2007
-Return-path: <dev-return-2057-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IA4Hl-0007wb-Ld
-	for gcvscd-dev@gmane.org; Sun, 15 Jul 2007 15:37:18 +0200
-Received: (qmail 10735 invoked by uid 5000); 15 Jul 2007 13:37:13 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
-Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 10721 invoked from network); 15 Jul 2007 13:37:13 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAABbAmUZHovMFemdsb2JhbACPPAEB
-X-IronPort-AV: i="4.16,540,1175497200"; 
-   d="scan'208"; a="77339700:sNHT18225396"
-X-IRONPORT: SCANNED
+Cc: VMiklos <vmiklos@frugalware.org>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Jul 15 15:42:28 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IA4Ml-0000em-Ev
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 15:42:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752385AbXGONmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 09:42:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbXGONmQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 09:42:16 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:30038 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752382AbXGONmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 09:42:16 -0400
+Received: from tigra.home (Fca5f.f.strato-dslnet.de [195.4.202.95])
+	by post.webmailer.de (fruni mo24) (RZmta 8.3)
+	with ESMTP id v000c9j6FBKFpH ; Sun, 15 Jul 2007 15:42:14 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 6EAB4277BD;
+	Sun, 15 Jul 2007 15:42:13 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 05B85C164; Sun, 15 Jul 2007 15:42:12 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <469A0D54.8010303@alum.mit.edu>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.12-2006-07-14
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52550>
+In-Reply-To: <20070715115148.GD999MdfPADPa@greensroom.kotnet.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTNzsQ==
+X-RZG-CLASS-ID: mo07
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52551>
 
-Michael Haggerty <mhagger@alum.mit.edu>:
-> For example, cvs2svn internally deduces which files should be added to a
-> given branch in a given commit.  But the information cannot be output to
-> SVN in that form.  Instead, cvs2svn has to figure out which
-> *directories* to copy to the branch directory, then which files to
-> remove from the copied directory (because they shouldn't have been
-> tagged), and which other files to copy from other sources.  This extra
-> work, which is quite time- and space-consuming, is worse than pointless
-> when converting to git, because git has to invert the process to figure
-> out which individual files have to be tagged!
+Sven Verdoolaege, Sun, Jul 15, 2007 13:51:48 +0200:
+> On Sun, Jul 15, 2007 at 12:47:12PM +0200, Alex Riesen wrote:
+> > Count me out. Junio convinced me instead and having tried the
+> > subprojects I find it really convenient: I can choose when and what
+> > should be updated and I can see what _can_ be updated, iff I decide
+> > to. Subprojects defined in such a loosely way are more flexible then
+> > having git-pull fetch subprojects by default.
+> 
+> I agree that fetching should probably be left as a separate operation,
+> but if you have all the data, then I find it very inconvenient that
+> every time you switch to a different commit you have to update
+> all the subprojects separately too.
 
-OK, that's a fair point.  I might have known the showstopper would be
-somewhere near Subversion's tags-are-directories assumption.  And this
-also neatly explains why I didn't see any problems or poor performance
-during my recent conversions; the projects I was lifting had no tags.
+I found I do _not_ need to do it every time I switch to a different
+commit.
 
-> The interface between the two halves does not necessarily need to be a
-> serialized data stream; it could just as well be via the Python API that
-> is used internally by cvs2svn to access the reconstructed commits and
-> supporting databases.  This would require the second half to be written
-> in Python, but otherwise would be very flexible and would avoid the need
-> to find a be-all serialized format.
+> Did you change your mind about this part too?
 
-Or...wait for it...the generator for the serialized format could be one
-of the back ends!   Probably a good idea to have for debugging reasons, 
-if nothing else.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Yep. I have less to transfer (and in fact, the subproject I mentioned
+is kind of heavy and has a lot of binary stuff in it).
+
+> > Sometimes I even want be
+> > _sure_ the subprojects are completely untouched (I have some critical
+> > parts in them).
+> 
+> The update in the superproject would fail if the subproject is dirty
+> (just as with files.)
+
+Haven't noticed this yet. Merge ignores subprojects. What do you mean?
