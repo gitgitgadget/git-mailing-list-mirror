@@ -1,83 +1,78 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: question about git-submodule
-Date: Sun, 15 Jul 2007 17:05:40 +0200
-Message-ID: <20070715150540.GH7106@genesis.frugalware.org>
-References: <20070713214630.GB7106@genesis.frugalware.org> <20070715083959.GC999MdfPADPa@greensroom.kotnet.org> <20070715104712.GF2568@steel.home> <20070715105450.GD7106@genesis.frugalware.org> <20070715135057.GI2568@steel.home> <20070715135453.GE7106@genesis.frugalware.org> <20070715140244.GF999MdfPADPa@greensroom.kotnet.org> <20070715142624.GF7106@genesis.frugalware.org> <20070715144835.GI999MdfPADPa@greensroom.kotnet.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Sun, 15 Jul 2007 11:04:15 -0400
+Message-ID: <20070715110415.33692142.seanlkml@sympatico.ca>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+	<7vodiehko7.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550707141346q2eba4ab8ka1c85e8b5a2c1b1d@mail.gmail.com>
+	<20070715093529.GD2568@steel.home>
+	<e5bfff550707150306t3196f723ia3071ac301fb3f24@mail.gmail.com>
+	<20070715104858.GG2568@steel.home>
+	<e5bfff550707150432v780d8361yba2fc729504d5b73@mail.gmail.com>
+	<e5bfff550707150529l7e9bdd9fu253d38f99d4d2ed7@mail.gmail.com>
+	<20070715083529.6855a858.seanlkml@sympatico.ca>
+	<e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="l06SQqiZYCi8rTKz"
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sun Jul 15 17:06:29 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Alex Riesen" <raa.lkml@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 17:06:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IA5g4-0004It-RJ
-	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:06:29 +0200
+	id 1IA5gE-0004LY-Lk
+	for gcvg-git@gmane.org; Sun, 15 Jul 2007 17:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758727AbXGOPF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 11:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758711AbXGOPF4
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:05:56 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:39947 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758665AbXGOPFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 11:05:55 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IA5fN-0003pR-TM
-	from <vmiklos@frugalware.org>; Sun, 15 Jul 2007 17:05:53 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D540E176813C; Sun, 15 Jul 2007 17:05:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070715144835.GI999MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4991]
+	id S1758544AbXGOPGd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 11:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758315AbXGOPGd
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 11:06:33 -0400
+Received: from bay0-omc1-s14.bay0.hotmail.com ([65.54.246.86]:40753 "EHLO
+	bay0-omc1-s14.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758444AbXGOPGc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 11:06:32 -0400
+Received: from BAYC1-PASMTP05.bayc1.hotmail.com ([65.54.191.165]) by bay0-omc1-s14.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 15 Jul 2007 08:06:32 -0700
+X-Originating-IP: [65.93.40.159]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.40.159]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 15 Jul 2007 08:06:31 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1IA5g6-0000fK-IE; Sun, 15 Jul 2007 11:06:30 -0400
+In-Reply-To: <e5bfff550707150758h7a9e893frb068d4a9508bc3b2@mail.gmail.com>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.11; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 15 Jul 2007 15:06:31.0843 (UTC) FILETIME=[BA4DD730:01C7C6F1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, 15 Jul 2007 16:58:16 +0200
+"Marco Costalba" <mcostalba@gmail.com> wrote:
 
---l06SQqiZYCi8rTKz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On 7/15/07, Sean <seanlkml@sympatico.ca> wrote:
+> >
+> > If you only look for ^\0 (ie. first position only) the parsing should
+> > be okay.  Not that it helps with the performance issue you're trying
+> > to address.
+> >
+> revisions are streamed, there is only one first revision, all the
+> others are linked togheter in a big stream.
 
-Hello,
+Right, but how does that alter the notion that ^\0 is the safe way to
+test for the "real" NUL terminator?
 
-Na Sun, Jul 15, 2007 at 04:48:35PM +0200, Sven Verdoolaege <skimo@kotnet.org> pisal(a):
-> Isn't that what "git submodule update" does ?
+> Actually I ended up looking for the character after the '\0' (if any)
+> to be 'c' that is the beginning of "commit <sha> ....." but it's a bit
+> hacky.
 
-i can't get it to work, but here is a log:
+Much more hacky than just testing for ^\0.  AFAIU, the NUL is
+guaranteed to come at the start of the line and _all_ other NUL
+characters are guaranteed to appear somewhere else.  Your current
+test will fail if a "c" happens to follow NUL in the patch text.
 
-http://frugalware.org/~vmiklos/logs/git-submodule.log
-
-at the end of it, git submodule update does not pull anything, while
-there are changes both in the main and in the libfoo repo, too
-
-have i missed something?
-
-thanks,
-- VMiklos
-
---l06SQqiZYCi8rTKz
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGmjfEe81tAgORUJYRAuYAAJ9dc922yJC/DcFefwkMV7phF+VNXACfaSf3
-KEHQlZ5y3NjnHCguHQt7YGA=
-=T8t6
------END PGP SIGNATURE-----
-
---l06SQqiZYCi8rTKz--
+Sean
