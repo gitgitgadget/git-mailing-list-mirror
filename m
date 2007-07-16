@@ -1,309 +1,164 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix commiting renames over DAV with funky file names
-Date: Sun, 15 Jul 2007 21:53:50 -0700
-Message-ID: <20070716045350.GA15307@mayonaise>
-References: <46938594.2010607@dawes.za.net> <20070711082000.GA29371@muzzle> <20070712090635.GA18155@mayonaise>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] Add git-notes
+Date: Sun, 15 Jul 2007 22:11:28 -0700
+Message-ID: <7v8x9h6igv.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+	<Pine.LNX.4.64.0707160023360.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rogan Dawes <lists@dawes.za.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 06:54:13 2007
+Cc: Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 07:11:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAIb5-0004fe-EA
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 06:54:11 +0200
+	id 1IAIrs-0007bL-Uv
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 07:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751949AbXGPExy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 00:53:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbXGPExx
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 00:53:53 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:42478 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751826AbXGPExw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 00:53:52 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D73492DC08D;
-	Sun, 15 Jul 2007 21:53:50 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 15 Jul 2007 21:53:50 -0700
-Content-Disposition: inline
-In-Reply-To: <20070712090635.GA18155@mayonaise>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751510AbXGPFLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 01:11:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXGPFLb
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 01:11:31 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50463 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbXGPFLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 01:11:30 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070716051131.VNNI1358.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Jul 2007 01:11:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Q5BU1X00F1kojtg0000000; Mon, 16 Jul 2007 01:11:30 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52636>
 
-Renaming files with non-URI friendly characters caused
-breakage when committing to DAV repositories (over http(s)).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Even if I try leaving out the $self->{url} from the return value
-of url_path(), a partial (without host), unescaped path name
-does not work.
+> This script allows you to edit and show commit notes easily.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  .gitignore   |    1 +
+>  Makefile     |    2 +-
+>  git-notes.sh |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 63 insertions(+), 1 deletions(-)
+>  create mode 100755 git-notes.sh
+>
+> diff --git a/git-notes.sh b/git-notes.sh
+> new file mode 100755
+> index 0000000..e0ad0b9
+> --- /dev/null
+> +++ b/git-notes.sh
+> @@ -0,0 +1,61 @@
+> +#!/bin/sh
+> +
+> +USAGE="(edit | show) [commit]"
+> +. git-sh-setup
+> +
+> +test -n "$3" && usage
+> +
+> +test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
+> +test -z "$GIT_NOTES_REF" &&
+> +	die "No notes ref set."
 
-Filenames for DAV repos need to be URI-encoded before being
-passed to the library.  Since this bug did not affect file://
-and svn:// repos, the git-svn test library needed to be expanded
-to include support for starting Apache with mod_dav_svn enabled.
+	test -n "${GIT_NOTES_REF=$(git config core.notesref)}" || die
 
-This new test is not enabled by default, but can be enabled by
-setting SVN_HTTPD_PORT to any available TCP/IP port on
-127.0.0.1.
+> +COMMIT=$(git rev-parse --verify --default HEAD "$2")
 
-Additionally, for running this test, the following variables
-(with defaults shown) can be changed for the suitable system.
-The default values are set for Debian systems:
+This silently annotates the HEAD commit if $2 is misspelled, I
+suspect.  Also if HEAD does not exist, COMMIT will be empty and
+this whole command will exit with non-zero status, which you
+would want to catch here...
 
-  SVN_HTTPD_MODULE_PATH=/usr/lib/apache2/modules
-  SVN_HTTPD_PATH=/usr/sbin/apache2
+> +NAME=$(echo $COMMIT | sed "s/^../&\//")
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+... or here.
 
- Rogan: the patch should help, a single space anywhere in the
- path causes SVN to screw up the file names.  Of course I'm at a
- loss as to why only DAV repositories need it and why the SVN
- libraries don't abstract that away from me.
+> +case "$1" in
+> +edit)
+> +	MESSAGE="$GIT_DIR"/new-notes
+> +	GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MESSAGE"
 
- git-svn.perl                             |    3 +
- t/lib-git-svn.sh                         |   34 ++++++++++
- t/t9115-git-svn-dcommit-funky-renames.sh |   54 +++++++++++++++
- t/t9115/funky-names.dump                 |  105 ++++++++++++++++++++++++++++++
- 4 files changed, 196 insertions(+), 0 deletions(-)
- create mode 100755 t/t9115-git-svn-dcommit-funky-renames.sh
- create mode 100644 t/t9115/funky-names.dump
+$MESSAGE and its associated temporary file needs to be cleaned
+up upon command exit; perhaps a trap is in order.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 299b40f..01c3904 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2724,6 +2724,9 @@ sub repo_path {
- 
- sub url_path {
- 	my ($self, $path) = @_;
-+	if ($self->{url} =~ m#^https?://#) {
-+		$path =~ s/([^a-zA-Z0-9_.-])/uc sprintf("%%%02x",ord($1))/eg;
-+	}
- 	$self->{url} . '/' . $self->repo_path($path);
- }
- 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index f6fe78c..8d4a447 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -48,3 +48,37 @@ svnrepo="file://$svnrepo"
- poke() {
- 	test-chmtime +1 "$1"
- }
-+
-+SVN_HTTPD_MODULE_PATH=${SVN_HTTPD_MODULE_PATH-'/usr/lib/apache2/modules'}
-+SVN_HTTPD_PATH=${SVN_HTTPD_PATH-'/usr/sbin/apache2'}
-+
-+start_httpd () {
-+	if test -z "$SVN_HTTPD_PORT"
-+	then
-+		echo >&2 'SVN_HTTPD_PORT is not defined!'
-+		return
-+	fi
-+
-+	mkdir "$GIT_DIR"/logs
-+
-+	cat > "$GIT_DIR/httpd.conf" <<EOF
-+ServerName "git-svn test"
-+ServerRoot "$GIT_DIR"
-+DocumentRoot "$GIT_DIR"
-+PidFile "$GIT_DIR/httpd.pid"
-+Listen 127.0.0.1:$SVN_HTTPD_PORT
-+LoadModule dav_module $SVN_HTTPD_MODULE_PATH/mod_dav.so
-+LoadModule dav_svn_module $SVN_HTTPD_MODULE_PATH/mod_dav_svn.so
-+<Location /svn>
-+	DAV svn
-+	SVNPath $rawsvnrepo
-+</Location>
-+EOF
-+	"$SVN_HTTPD_PATH" -f "$GIT_DIR"/httpd.conf -k start
-+	svnrepo=http://127.0.0.1:$SVN_HTTPD_PORT/svn
-+}
-+
-+stop_httpd () {
-+	test -z "$SVN_HTTPD_PORT" && return
-+	"$SVN_HTTPD_PATH" -f "$GIT_DIR"/httpd.conf -k stop
-+}
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-new file mode 100755
-index 0000000..182299c
---- /dev/null
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -0,0 +1,54 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Eric Wong
-+
-+
-+test_description='git-svn dcommit can commit renames of files with ugly names'
-+
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'load repository with strange names' "
-+	svnadmin load -q $rawsvnrepo < ../t9115/funky-names.dump &&
-+	start_httpd
-+	"
-+
-+test_expect_success 'init and fetch repository' "
-+	git svn init $svnrepo &&
-+	git svn fetch &&
-+	git reset --hard git-svn
-+	"
-+
-+test_expect_success 'create file in existing ugly and empty dir' '
-+	mkdir "#{bad_directory_name}" &&
-+	echo hi > "#{bad_directory_name}/ foo" &&
-+	git update-index --add "#{bad_directory_name}/ foo" &&
-+	git commit -m "new file in ugly parent" &&
-+	git svn dcommit
-+	'
-+
-+test_expect_success 'rename ugly file' '
-+	git mv "#{bad_directory_name}/ foo" "file name with feces" &&
-+	git commit -m "rename ugly file" &&
-+	git svn dcommit
-+	'
-+
-+test_expect_success 'rename pretty file' '
-+	echo :x > pretty &&
-+	git update-index --add pretty &&
-+	git commit -m "pretty :x" &&
-+	git svn dcommit &&
-+	mkdir regular_dir_name &&
-+	git mv pretty regular_dir_name/pretty &&
-+	git commit -m "moved pretty file" &&
-+	git svn dcommit
-+	'
-+
-+test_expect_success 'rename pretty file into ugly one' '
-+	git mv regular_dir_name/pretty "#{bad_directory_name}/ booboo" &&
-+	git commit -m booboo &&
-+	git svn dcommit
-+	'
-+
-+stop_httpd
-+
-+test_done
-diff --git a/t/t9115/funky-names.dump b/t/t9115/funky-names.dump
-new file mode 100644
-index 0000000..da0440a
---- /dev/null
-+++ b/t/t9115/funky-names.dump
-@@ -0,0 +1,105 @@
-+SVN-fs-dump-format-version: 2
-+
-+UUID: 819c44fe-2bcc-4066-88e4-985e2bc0b418
-+
-+Revision-number: 0
-+Prop-content-length: 56
-+Content-length: 56
-+
-+K 8
-+svn:date
-+V 27
-+2007-07-12T07:54:26.062914Z
-+PROPS-END
-+
-+Revision-number: 1
-+Prop-content-length: 152
-+Content-length: 152
-+
-+K 7
-+svn:log
-+V 44
-+what will those wacky people think of next?
-+
-+K 10
-+svn:author
-+V 12
-+normalperson
-+K 8
-+svn:date
-+V 27
-+2007-07-12T08:00:05.011573Z
-+PROPS-END
-+
-+Node-path:  leading space
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path:  leading space file
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Text-content-length: 5
-+Text-content-md5: e4fa20c67542cdc21271e08d329397ab
-+Content-length: 15
-+
-+PROPS-END
-+ugly
-+
-+
-+Node-path: #{bad_directory_name}
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: #{cool_name}
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Text-content-length: 18
-+Text-content-md5: 87dac40ca337dfa3dcc8911388c3ddda
-+Content-length: 28
-+
-+PROPS-END
-+strange name here
-+
-+
-+Node-path: dir name with spaces
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: file name with spaces
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Text-content-length: 7
-+Text-content-md5: c1f10cfd640618484a2a475c11410fd3
-+Content-length: 17
-+
-+PROPS-END
-+spaces
-+
-+
-+Node-path: regular_dir_name
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
--- 
-1.5.3.rc2.1.g4e223
+> +	GIT_INDEX_FILE="$MESSAGE".idx
+> +	export GIT_INDEX_FILE
+> +
+> +	CURRENT_HEAD=$(git show-ref $GIT_NOTES_REF | cut -f 1 -d ' ')
+> +	if [ -z "$CURRENT_HEAD" ]; then
+> +		PARENT=
+> +	else
+> +		PARENT="-p $OLDTIP"
+> +		git read-tree $GIT_NOTES_REF || die "Could not read index"
+> +		git cat-file blob :$NAME >> "$MESSAGE" 2> /dev/null
+> +	fi
 
--- 
-Eric Wong
+I take that OLDTIP is a typo.
+
+	if CURRENT_HEAD=$(git show-ref -s "$GIT_NOTES_REF")
+        then
+		PARENT="-p $CURRENT_HEAD"
+                ...
+	else
+        	PARENT=
+	fi
+
+> +
+> +	${VISUAL:-${EDITOR:-vi}} "$MESSAGE"
+> +
+> +	grep -v ^# < "$MESSAGE" | git stripspace > "$MESSAGE".processed
+
+Makes us wonder if we would want to teach hash-stripping to
+git-stripspace, doesn't it?
+
+> +	mv "$MESSAGE".processed "$MESSAGE"
+> +	if [ -z "$(cat "$MESSAGE")" ]; then
+
+Make this 'if test -s "$MESSAGE"' and swap then/else clause
+around; no reason to slurp the value into your shell.
+
+> +		test -z "$CURRENT_HEAD" &&
+> +			die "Will not initialise with empty tree"
+> +		git update-index --force-remove $NAME ||
+> +			die "Could not update index"
+> +	else
+> +		BLOB=$(git hash-object -w "$MESSAGE") ||
+> +			die "Could not write into object database"
+> +		git update-index --add --cacheinfo 0644 $BLOB $NAME ||
+> +			die "Could not write index"
+> +	fi
+> +
+> +	TREE=$(git write-tree) || die "Could not write tree"
+> +	NEW_HEAD=$(: | git commit-tree $TREE $PARENT) ||
+> +		die "Could not annotate"
+
+Hmph.  How about "echo Annotate $COMMIT | git commit-tree..."?
+
+> +	case "$CURRENT_HEAD" in
+> +	'') git update-ref $GIT_NOTES_REF $NEW_HEAD ;;
+> +	*) git update-ref $GIT_NOTES_REF $NEW_HEAD $CURRENT_HEAD;;
+> +	esac
+> +;;
+
+There are some places that have "$GIT_NOTES_REF" in dq and some
+places you don't.  I think GIT_NOTES_REF begins with refs/ and
+consists only of valid refname characters, so unless the user
+wants to shoot himself in the foot it should be Ok, but we
+probably would want to quote it.
+
+Also, as unquoted $CURRENT_HEAD will not even count as a
+parameter to update-ref, you do not have to do that case/esac,
+but simply do:
+
+	git update-ref "$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
+
+Would we have reflog for this ref?  What would we want to see as
+the message if we do?
