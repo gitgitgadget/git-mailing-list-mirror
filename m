@@ -1,71 +1,69 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it ispossible to create hardlinks for directories as root under solaris)
-Date: Mon, 16 Jul 2007 21:57:04 +0200
-Organization: Organization?!?
-Message-ID: <85644knmun.fsf@lola.goethe.zz>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716134529.GC26675@cip.informatik.uni-erlangen.de> <469B821E.85E5EDA9@eudaptics.com> <20070716154559.GD19073@lavos.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Do _not_ call unlink on a directory
+Date: Mon, 16 Jul 2007 12:58:14 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707161252330.20061@woody.linux-foundation.org>
+References: 469B821E.85E5EDA9@eudaptics.com
+ <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 21:57:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 21:58:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAWhB-0008Ob-0m
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 21:57:25 +0200
+	id 1IAWiL-0000Ke-7D
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 21:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762201AbXGPT5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 15:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762052AbXGPT5V
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 15:57:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:53435 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761806AbXGPT5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 15:57:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IAWh0-0007I3-CS
-	for git@vger.kernel.org; Mon, 16 Jul 2007 21:57:14 +0200
-Received: from dslb-084-061-090-188.pools.arcor-ip.net ([84.61.90.188])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Jul 2007 21:57:14 +0200
-Received: from dak by dslb-084-061-090-188.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Jul 2007 21:57:14 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-084-061-090-188.pools.arcor-ip.net
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:JWWcyXfd3CkHxcyMlvmlsZ0voy0=
+	id S1755651AbXGPT6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 15:58:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751614AbXGPT6e
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 15:58:34 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:39947 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754094AbXGPT6d (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 15:58:33 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6GJwKst014767
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 16 Jul 2007 12:58:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6GJwEl2030533;
+	Mon, 16 Jul 2007 12:58:14 -0700
+In-Reply-To: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
+X-Spam-Status: No, hits=-4.628 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52711>
 
-bdowning@lavos.net (Brian Downing) writes:
 
-> On Mon, Jul 16, 2007 at 04:35:10PM +0200, Johannes Sixt wrote:
->> It tries to remove a *file* that is in the way and create the directory
->> in its place. But since your unlink() behaves incorrectly (it is
->> supposed to *fail* for directories), the logic does not quite work as
->> expected - it mistakes the directory for a file.
+
+On Mon, 16 Jul 2007, Thomas Glanzmann wrote:
 >
-> http://www.opengroup.org/onlinepubs/007908799/xsh/unlink.html
->
-> | The path argument must not name a directory unless the process has
-> | appropriate privileges and the implementation supports using unlink() on
-> | directories.
+> Calling unlink on a directory on a Solaris UFS filesystem as root makes it
+> inconsistent. Thanks to Johannes Sixt for the obvious fix.
 
-Isn't it funny?  The problem with the git code is that the path
-argument must not name a directory _if_ the process has appropriate
-privileges and the implementation supports using unlink() on
-directories.
+Ack, I think this is the right thing to do.
 
-Failure is not an option, it is a requirement.
+As pointed out, it doesn't _guarantee_ that git won't call "unlink()" on a 
+directory (race conditions etc), but that's fundamentally true (there is 
+no "funlink()" like there is "fstat()"), and besides, that is in no way 
+git-specific (ie it's true of *any* application that gets run as root).
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+The theoretical race would only happen if somebody on purpose tries to 
+screw things over, it would never happen under any reasonable usage. 
+
+The old ordering of those tests was designed for sane operating systems, 
+so that you could basically do the unlink() without bothering, but 
+switching the order around is certainly not a disaster either, and if it 
+avoids the nasty bug in Solaris it's worth doing.
+
+I have to say that I'm still a bit shocked that Solaris would have that 
+kind of behaviour. And they call that pile of sh*t "enterprise class"..
+
+		Linus
