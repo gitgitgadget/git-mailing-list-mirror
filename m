@@ -1,80 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add --show-size to git log to print message size
-Date: Mon, 16 Jul 2007 15:37:59 -0700
-Message-ID: <7vveck2cvs.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
-	<7vodiehko7.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550707160504p52770227l9af66aa750d9efd6@mail.gmail.com>
-	<81b0412b0707160531mad35ed4x4c89b2d6c6f5f707@mail.gmail.com>
-	<7v4pk444rd.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550707161055i2f12b858n7be155765fb664@mail.gmail.com>
-	<e5bfff550707161102n3b6da174i7bbff64e1739a1b2@mail.gmail.com>
+Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
+Date: Mon, 16 Jul 2007 15:46:17 -0700
+Message-ID: <7vps2s2chy.fsf@assigned-by-dhcp.cox.net>
+References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com>
+	<dbfc82860707160237v6772b5b8o541f2045ccd824d5@mail.gmail.com>
+	<f158199e0707160433v27fe7073w9c550712c41c32e8@mail.gmail.com>
+	<f158199e0707160626j1025ab2cp3339ca6ab91d9af0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Alex Riesen" <raa.lkml@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 00:38:33 2007
+Cc: "Nikolai Weibull" <now@bitwi.se>, git@vger.kernel.org
+To: "Bradford Smith" <bradford.carl.smith@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 00:46:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAZD2-0000MT-P7
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 00:38:29 +0200
+	id 1IAZKo-0002t6-K0
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 00:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765979AbXGPWiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 18:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755436AbXGPWiD
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 18:38:03 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56465 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765666AbXGPWiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 18:38:00 -0400
+	id S1751968AbXGPWqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 18:46:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751752AbXGPWqT
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 18:46:19 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61950 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751452AbXGPWqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 18:46:18 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070716223800.PYBD1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 16 Jul 2007 18:38:00 -0400
+          id <20070716224618.JKOQ1358.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Jul 2007 18:46:18 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id QNdz1X00e1kojtg0000000; Mon, 16 Jul 2007 18:38:00 -0400
-In-Reply-To: <e5bfff550707161102n3b6da174i7bbff64e1739a1b2@mail.gmail.com>
-	(Marco Costalba's message of "Mon, 16 Jul 2007 20:02:39 +0200")
+	id QNmH1X00B1kojtg0000000; Mon, 16 Jul 2007 18:46:17 -0400
+In-Reply-To: <f158199e0707160626j1025ab2cp3339ca6ab91d9af0@mail.gmail.com>
+	(Bradford Smith's message of "Mon, 16 Jul 2007 09:26:01 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52731>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+"Bradford Smith" <bradford.carl.smith@gmail.com> writes:
 
-> On 7/16/07, Marco Costalba <mcostalba@gmail.com> wrote:
->> On 7/16/07, Junio C Hamano <gitster@pobox.com> wrote:
->> >
->> > I'd say making --show-message-size option incompatible with diff output
->> > would be good enough futureproofing for now.
->> >
->> Oooops, I didn't see your post.
->>
->> I agree 100%, please tell me if doc it's clear enough or it would be
->> better to clarify that "message log" it means only message and no diff
->> content.
->>
->
-> Sorry to bother you again, but my English is very bad and I would like
-> to be clear.
->
-> When i say no diff content I mean that git log --log-size -p it's a
-> perfect valid command but --log-size will make git print the size of
-> _only_ the log part, it means from the line after "log size xxx\n"
-> until the end of log message that can be '\0' (if no diff) or the
-> beginning of diff part.
+> ...  So, I guess I need to add a GIT_CONFIG_HOME
+> environment variable.
 
-What I originally meant with my comment was to _error_ out if
-the user says "git log --log-size -p" (or "git show --log-size"
-without "-s").
+I suspect that is going down a wrong path.
 
-But I guess it is probably fine, as long as it is crystal clear
-to the users that we do not do size for non log part.  I still
-have this nagging feeling that this is an ugly workaround for Qt
-library's programming interface, though...
+We use the sequence:
+
+	fd = creat("temporary location");
+        write(fd, ...);
+        close(fd);
+        rename("temporary location", "final location");
+
+in quite a lot of codepaths.  I think they can be factored out,
+to take the "final location" (and perhaps a suggested temporary
+directory) as an parameter, and that code can check that "final
+location" is a symlink to somewhere else and create the
+temporary next to the target file.
