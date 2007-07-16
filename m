@@ -1,59 +1,96 @@
-From: "Aubrey Li" <aubreylee@gmail.com>
-Subject: Re: git proxy issue
-Date: Mon, 16 Jul 2007 11:55:10 +0800
-Message-ID: <6d6a94c50707152055m4a8e24b8v7dc90101316e6b88@mail.gmail.com>
-References: <6d6a94c50707151921h7f2a65fes65c94c3c1090937a@mail.gmail.com>
-	 <7vk5t1avcn.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 05:55:32 2007
+From: Scott Lamb <slamb@slamb.org>
+Subject: [PATCH 1/2] git-p4: use subprocess in p4CmdList
+Date: Sun, 15 Jul 2007 20:58:10 -0700
+Message-ID: <11845582912155-git-send-email-slamb@slamb.org>
+Cc: git@vger.kernel.org, Scott Lamb <slamb@slamb.org>
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 05:58:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAHgJ-0003wx-PL
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 05:55:32 +0200
+	id 1IAHj0-0004OG-3m
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 05:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760460AbXGPDzN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 23:55:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760418AbXGPDzN
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 23:55:13 -0400
-Received: from nz-out-0506.google.com ([64.233.162.235]:42663 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760460AbXGPDzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2007 23:55:11 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so723534nze
-        for <git@vger.kernel.org>; Sun, 15 Jul 2007 20:55:10 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qo2Cy1fma693IAqUJTyjVldE2oXRFReIc/U2zaI7CF3ZuGAQaBVhFyrjPIlkGFff+Wajif7AbdxtOVS+AGCuEULmTLUi0KlE7J85WllxCrMDufQRkvsoY82ME44BY9Js7jNHIaLMLj6B/9nCn7SmSMUXGmokfFMlKUR86XAEIsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QGFQl5PyWiCulSHUSHs6g3DLBBLt0V8qb+rNnCovwTpkBgSxbWAyBggZ2wloofuDfg3rfuMnvEHayG1MNkXhkDqWa6QlsSGUEUAdaOWexIJhocxAwEc1exfebi/oqHyggGXGz1GGgJcA+7dDHTtIpqktaOBOtY+sfSSwTbVT8HE=
-Received: by 10.142.84.3 with SMTP id h3mr287439wfb.1184558110474;
-        Sun, 15 Jul 2007 20:55:10 -0700 (PDT)
-Received: by 10.142.99.20 with HTTP; Sun, 15 Jul 2007 20:55:10 -0700 (PDT)
-In-Reply-To: <7vk5t1avcn.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1760521AbXGPD6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 23:58:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760570AbXGPD6P
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 23:58:15 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:48987 "EHLO hobbes.slamb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760483AbXGPD6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 23:58:14 -0400
+Received: from hobbes.slamb.org (localhost [127.0.0.1])
+	by hobbes.slamb.org (Postfix) with ESMTP id 3E97798105;
+	Sun, 15 Jul 2007 20:58:12 -0700 (PDT)
+X-Spam-Score: -4.4
+X-Spam-Checker-Version: SpamAssassin 3.1.9 (2007-02-13) on hobbes.slamb.org
+X-Spam-Level: 
+X-Spam-Hammy: 0.001-+--H*r:172.16.0, 0.002-+--H*m:org
+X-Spam-Status: No, score=-4.4 required=4.5 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.1.9
+X-Spam-Spammy: 0.993-1--cmd, 0.958-1--verbose
+Received: from localhost.localdomain (rosalyn.vpn.slamb.org [172.16.0.2])
+	by hobbes.slamb.org (Postfix) with ESMTP;
+	Sun, 15 Jul 2007 20:58:12 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.2.238.g7cbf2f2-dirty
+X-Envelope-From: <slamb@slamb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52633>
 
-On 7/16/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Aubrey Li" <aubreylee@gmail.com> writes:
->
-> > From which release version git proxy is supported?
->
-> v0.99.9k (Nov 25 2005) is the first tagged release (the patch
-> itself was from Nov 4 2005).
->
->
-oh, so how to config it?
-Thanks,
--Aubrey
+This allows bidirectional piping - useful for "-x -" to avoid commandline
+arguments - and is a step toward bypassing the shell.
+
+Signed-off-by: Scott Lamb <slamb@slamb.org>
+---
+ contrib/fast-import/git-p4 |   23 ++++++++++++++++++-----
+ 1 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index d877150..d93e656 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -63,21 +63,34 @@ def system(cmd):
+     if os.system(cmd) != 0:
+         die("command failed: %s" % cmd)
+ 
+-def p4CmdList(cmd):
++def p4CmdList(cmd, stdin=None, stdin_mode='w+b'):
+     cmd = "p4 -G %s" % cmd
+     if verbose:
+         sys.stderr.write("Opening pipe: %s\n" % cmd)
+-    pipe = os.popen(cmd, "rb")
++
++    # Use a temporary file to avoid deadlocks without
++    # subprocess.communicate(), which would put another copy
++    # of stdout into memory.
++    stdin_file = None
++    if stdin is not None:
++        stdin_file = tempfile.TemporaryFile(prefix='p4-stdin', mode=stdin_mode)
++        stdin_file.write(stdin)
++        stdin_file.flush()
++        stdin_file.seek(0)
++
++    p4 = subprocess.Popen(cmd, shell=True,
++                          stdin=stdin_file,
++                          stdout=subprocess.PIPE)
+ 
+     result = []
+     try:
+         while True:
+-            entry = marshal.load(pipe)
++            entry = marshal.load(p4.stdout)
+             result.append(entry)
+     except EOFError:
+         pass
+-    exitCode = pipe.close()
+-    if exitCode != None:
++    exitCode = p4.wait()
++    if exitCode != 0:
+         entry = {}
+         entry["p4ExitCode"] = exitCode
+         result.append(entry)
+-- 
+1.5.2.2.238.g7cbf2f2-dirty
