@@ -1,77 +1,76 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH 1/2] git-p4: use subprocess in p4CmdList
-Date: Mon, 16 Jul 2007 20:33:56 +0200
-Message-ID: <200707162033.56888.simon@lst.de>
-References: <11845582912155-git-send-email-slamb@slamb.org>
+From: Scott Lamb <slamb@slamb.org>
+Subject: Re: [PATCH] Do _not_ call unlink on a directory
+Date: Mon, 16 Jul 2007 12:05:33 -0700
+Message-ID: <469BC17D.60806@slamb.org>
+References: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de> <vpqd4yss1vo.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart9407572.dloZlKypit";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Scott Lamb <slamb@slamb.org>
-X-From: git-owner@vger.kernel.org Mon Jul 16 20:33:49 2007
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 16 21:06:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAVOG-0005Xh-Iy
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 20:33:48 +0200
+	id 1IAVtU-0000pI-Ik
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 21:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbXGPSdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 14:33:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758288AbXGPSdn
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 14:33:43 -0400
-Received: from verein.lst.de ([213.95.11.210]:52861 "EHLO mail.lst.de"
+	id S1753608AbXGPTGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 15:06:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbXGPTGA
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 15:06:00 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:54047 "EHLO hobbes.slamb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751538AbXGPSdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 14:33:42 -0400
-Received: from luria.local (2.84-48-121.nextgentel.com [84.48.121.2])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l6GIXbNK023122
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 16 Jul 2007 20:33:38 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <11845582912155-git-send-email-slamb@slamb.org>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1753608AbXGPTF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 15:05:59 -0400
+Received: from spiff.local (ppp-71-139-183-188.dsl.snfc21.pacbell.net [71.139.183.188])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hobbes.slamb.org (Postfix) with ESMTP id A58B598105;
+	Mon, 16 Jul 2007 12:05:57 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <vpqd4yss1vo.fsf@bauges.imag.fr>
+X-Enigmail-Version: 0.95.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52707>
 
---nextPart9407572.dloZlKypit
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Matthieu Moy wrote:
+> Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+> 
+> I believe you still have a race condition if ...
+> 
+>> -				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
+>> -					continue;
+> 
+> ... buf exists here as a file ...
+> 
+>>  				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
+>>  					continue; /* ok */
+> 
+> ... and became a directory here.
+> 
+>> +				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
+>> +					continue;
+> 
+> But that's quite unlikely to happen. And I have no fix to propose.
+> 
 
-On Monday 16 July 2007 05:58:10 Scott Lamb wrote:
-> This allows bidirectional piping - useful for "-x -" to avoid commandline
-> arguments - and is a step toward bypassing the shell.
+If arbitrary other tasks are running, the only way to be absolutely
+certain you're not calling unlink() in a directory is to never call
+unlink().
 
-Thanks! I have pushed your two patches into
+SUS describes a safe remove(), but Solaris's implementation contains the
+same race:
 
-	http://gitweb.freedesktop.org/?p=3Dusers/hausmann/git-p4;a=3Dsummary
+http://src.opensolaris.org/source/xref/pef/phase_I/usr/src/lib/libc/port/gen/rename.c
 
-Unless somebody else wants to try earlier I intend to ask Junio to pull you=
-r=20
-changes from there after 1.5.3.
+so I think this patch is the best that can be done.
 
+Best regards,
+Scott
 
-Simon
-
---nextPart9407572.dloZlKypit
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGm7oUWXvMThJCpvIRAnkgAKCY7segvCkyvcrN1LRJyyYXVNNZNwCg0+CU
-CDHt7e1sN2AhJw4dAhArrnI=
-=BnjE
------END PGP SIGNATURE-----
-
---nextPart9407572.dloZlKypit--
+-- 
+Scott Lamb <http://www.slamb.org/>
