@@ -1,58 +1,84 @@
-From: "nathan bullock" <nathanbullock@gmail.com>
-Subject: I never want to push a given change
-Date: Mon, 16 Jul 2007 10:18:09 -0600
-Message-ID: <916b88c10707160918n7a4948g5fb55a9d8ace9833@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/6] Introduce commit notes
+Date: Mon, 16 Jul 2007 17:26:31 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707161724110.14781@racer.site>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+ <200707160857.48725.andyparkins@gmail.com> <7vbqec4vk2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 18:18:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Alberto Bertogli <albertito@gmail.com>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 16 18:26:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IATH4-0001Ek-5P
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:18:14 +0200
+	id 1IATPQ-00049F-BF
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759633AbXGPQSL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 12:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759166AbXGPQSL
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:18:11 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:41694 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755422AbXGPQSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 12:18:10 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1633428wah
-        for <git@vger.kernel.org>; Mon, 16 Jul 2007 09:18:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ddtQfX0JV+E7vlWHQt2INYHV7Vcuaks1jSpQ/w70aFz1WcLO7GRMqA4RP5ZObVaJW8mEDegKh3GLBhc2VhCIKDudo84YWYrv6li9q+Y7EAf1gIKCRpjhH84IpD4jg0czJa6AuN1+KsWuem50JLKzDum/RU8uJJolZzfK0O/d/G4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=VozKhxJrNJhPcsMj6tD3WMkrgJ7CUwDWNkjwyxQI9pKjOuGYbaWQmUIlaQ8sCLlvFY2LAN+LuPM2CFRODtAjtblhEyvYjjS4AuRw04Id3GmkdjJWpZ1uwYDeoGeMFuxX5/LfSDIsbnx/f4CR/Qm+w1GeCzEXFAryo35Ai5/xgWQ=
-Received: by 10.115.108.1 with SMTP id k1mr4257163wam.1184602689751;
-        Mon, 16 Jul 2007 09:18:09 -0700 (PDT)
-Received: by 10.115.74.2 with HTTP; Mon, 16 Jul 2007 09:18:09 -0700 (PDT)
-Content-Disposition: inline
+	id S1759598AbXGPQ0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 12:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759166AbXGPQ0t
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:26:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39698 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758823AbXGPQ0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 12:26:48 -0400
+Received: (qmail invoked by alias); 16 Jul 2007 16:26:46 -0000
+Received: from R412d.r.pppool.de (EHLO noname) [89.54.65.45]
+  by mail.gmx.net (mp034) with SMTP; 16 Jul 2007 18:26:46 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/79zdgXQ37J1F83m/yca0KiHYguQV4hL1EglqLML
+	1WNCjMdGtJl0PS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vbqec4vk2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52683>
 
-I have been using git for a little while and one thing that I would like to
-be able to do is never push a given change, or set of changes.
+Hi,
 
-So lets say I clone a .git repository. Then I make a couple of changes
-that I don't want anyone else to see, do a commit. Then I make some
-other changes that I want everyone else to see and do another commit.
+On Mon, 16 Jul 2007, Junio C Hamano wrote:
 
-How do I push just the second commit?
-And how do I make it so that every other time I do a push after this that
-first commit will never be sent?
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+> > On Monday 2007 July 16, Johannes Schindelin wrote:
+> >
+> >> The biggest obstacle was a thinko about the scalability.  Tree 
+> >> objects take free form name entries, and therefore a binary search by 
+> >> name is not possible.
+> >
+> > I might be misunderstanding, but in the case of the notes tree objects 
+> > isn't it true that the name entries aren't free form, but are 
+> > guaranteed to be of a fixed length form:
+> >
+> >   XX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+> >
+> > In which case you can binary search?
+> 
+> Hmph, you are right.  In this sequence:
+> 
+> 	hex = sha1_to_hex(commit->object.sha1);
+> 	snprintf(name, sizeof(name), "%s:%.*s/%.*s",
+> 			notes_ref_name, 2, hex, 38, hex + 2);
+> 	if (get_sha1(name, sha1))
+> 		return;
+> 
+> Instead, we could read the tree object by hand in the commit that is 
+> referenced by notes_ref_name, which has uniform two letter names for 
+> subtrees which can be binary searched, open the tree for that entry, 
+> again by hand, and do another binary search because that tree has 
+> uniform 38-letter names.  That certainly could be done.
+> 
+> Sounds like a "fun" project for some definition of the word.
 
-Thanks,
-Nathan
+I disagree.  One disadvantage to using tree objects is that it is much 
+easier to have pilot errors.  You could even make a new working tree 
+checking out refs/notes/commits and change/add/remove files.
 
-ps. I am really enjoying using git. Thanks.
+Ciao,
+Dscho
