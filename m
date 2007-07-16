@@ -1,74 +1,128 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WIP PATCH 6/6] notes: add notes-index for a substantial speedup.
-Date: Mon, 16 Jul 2007 17:29:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707161726430.14781@racer.site>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <Pine.LNX.4.64.0707160025480.14781@racer.site> <20070716060117.GF32566@spearce.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Can someone explain this git-blame/git-rev behavior to me?
+Date: Mon, 16 Jul 2007 18:38:56 +0200
+Message-ID: <867ip05mn3.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Johan Herland <johan@herland.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 16 18:30:51 2007
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 18:39:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IATTF-0005MX-Cp
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:30:49 +0200
+	id 1IATbP-00082L-90
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:39:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762120AbXGPQaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 12:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762054AbXGPQaR
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:30:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47607 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759966AbXGPQaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 12:30:15 -0400
-Received: (qmail invoked by alias); 16 Jul 2007 16:30:13 -0000
-Received: from R412d.r.pppool.de (EHLO noname) [89.54.65.45]
-  by mail.gmx.net (mp036) with SMTP; 16 Jul 2007 18:30:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+m4c1VuKOmDbKyQPVFhqzWfZGW83U1EwhMX1r7uK
-	nUz5ihmv/3Jysg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070716060117.GF32566@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1758192AbXGPQjM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 12:39:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759598AbXGPQjL
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:39:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:36369 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755066AbXGPQjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 12:39:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IATbG-0003LL-AR
+	for git@vger.kernel.org; Mon, 16 Jul 2007 18:39:06 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 18:39:06 +0200
+Received: from J.Sixt by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 18:39:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:IQ7KCzIcDz+uyzdrfQeReu98CFU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52686>
 
-Hi,
+--=-=-=
 
-On Mon, 16 Jul 2007, Shawn O. Pearce wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > Actually, this commit adds two methods for a notes index:
-> > 
-> > - a sorted list with a fan out to help binary search, and
-> > - a modified hash table.
-> > 
-> > It also adds a test which is used to determine the best algorithm.
+Oops, I accidentally sent the following mail in private.  So I have to
+forward back to the list (don't have the original):
+
+
+--=-=-=
+Content-Type: message/rfc822
+Content-Disposition: inline
+
+Message-ID: <469B9843.835B5356@eudaptics.com>
+Date: Mon, 16 Jul 2007 18:09:39 +0200
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+To: David Kastrup <dak@gnu.org>
+Subject: Re: Can someone explain this git-blame/git-rev behavior to me?
+References: <86sl7oaasx.fsf@lola.quinscape.zz>
+		<469B71A5.D5299A80@eudaptics.com> <86ps2s736g.fsf@lola.quinscape.zz>
+MIME-Version: 1.0
+
+David Kastrup wrote:
 > 
-> I know this is a nice backwards compatible way to organize notes,
-> and to make them reasonably efficiently found, but I'd almost
-> rather just see them crammed into the packfile alongside of the
-> commit it annotates, so that the packfile reader can quickly find
-> the annotation at the same time it finds the commit.
+> Johannes Sixt <J.Sixt@eudaptics.com> writes:
 > 
-> aka packv4.
+> > David Kastrup wrote:
 > 
-> Ok, enough dreaming for today.
+> >> [nonsense not really related to the problem he has been seeing]
+> 
+> > [Johannes replied with a reasonable analysis]
+> 
+> Ok, scratch that.  I got completely confused.  Here is the gist of the
+> problem that kicked me, this time boiled down to the actually relevant
+> part:
+> 
+> I am looking for a descendant of tags/v1.4.4-rc1~72 with regard to
+> contrib/emacs/vc-git.el by scanning the output of the first command
+> in the following pipeline:
+> 
+> git-rev-list --parents HEAD ^tags/v1.4.4-rc1~72 -- vc-git.el|git-name-rev --stdin|fgrep tags/v1.4.4-rc1
+> 
+> This gives:
+> 4de0f9f9b6ed1731de00b67952504e5a783f54a4 (tags/v1.5.0-rc0~31) 1259404c7e5cd88b7f6692986469cd20cbfacdad (tags/v1.4.4-rc1~71)
+> 1259404c7e5cd88b7f6692986469cd20cbfacdad (tags/v1.4.4-rc1~71) b4aee09e610567529dc619d7324dc2fe85a11db5 (tags/v1.4.4-rc1~72) 0abc0260fa3419de649fcc1444e3d256a17ca6c7 (tags/v1.4.3.2~6)
+> 
+> And this looks like it would tell us that tags/v1.4.4-rc1~72 has with
+> regard to vc-git.el a child tags/v1.4.4-rc1~71 and a grandchild of
+> tags/v1.5.0-rc0~31.
+> 
+> Now if I instead do
+> git-rev-list --parents HEAD -- vc-git.el|git-name-rev --stdin|fgrep tags/v1.4.4-rc1
+> 
+> 4de0f9f9b6ed1731de00b67952504e5a783f54a4 (tags/v1.5.0-rc0~31) b4aee09e610567529dc619d7324dc2fe85a11db5 (tags/v1.4.4-rc1~72)
+> b4aee09e610567529dc619d7324dc2fe85a11db5 (tags/v1.4.4-rc1~72) 474a90fef9ebcdedee041b2def4b9a98b94cd146 (tags/v1.4.3.2~8)
+> 
+> I get to see that the child of tags/v1.4.4-rc1~72 is actually
+> tags/v1.5.0-rc0~31, skipping tags/v1.4.4-rc1~71 which presumably did
+> not change vc-git.el.
+> 
+> So the ^tags/v1.4.4-rc1~72 specification caused an additional mention
+> of tags/v1.4.4-rc1~71 even though, with regard to vc-git.el, it would
+> be equivalent to tags/v1.4.4-rc1~72.
+> 
+> So is there a way I can get the information of the second call without
+> the performance loss of going through the entire history?
 
-Yes, I also dream of having the time to play with packv4.  If you read my 
-comments in the commit-annotation thread, you'll see that I stated that 
-packv4 would solve the problem, too.
+You better send the question again, this time to the list. I'm certainly
+not the one who can answer this or even solve it.
 
-The reason I did this series was not to push commit notes, but to make 
-good for stalling Johan's efforts.  Including a proof that the commit 
-notes as I introduced them can be relatively cheap, too.
+It seems that there is an unwanted interaction between --parents and
+history simplification at the edge commits. I don't think that there
+will be an easy solution.
 
-Ciao,
-Dscho
+-- Hannes
+
+
+--=-=-=
+
+
+
+So anybody has an idea how to go about this?
+
+-- 
+David Kastrup
+
+--=-=-=--
