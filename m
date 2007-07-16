@@ -1,60 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix git-p4 on Windows to not use the Posix sysconf
-Date: Mon, 16 Jul 2007 00:00:22 -0700
-Message-ID: <7vr6n84yux.fsf@assigned-by-dhcp.cox.net>
-References: <46977660.7070207@trolltech.com>
-	<81b0412b0707130603q69857564i1ba418b74397a33d@mail.gmail.com>
-	<200707131533.55544.simon@lst.de> <20070715024928.GY4436@spearce.org>
-	<7vmyxydwld.fsf@assigned-by-dhcp.cox.net>
-	<20070716053511.GC32566@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 0/6] Introduce commit notes
+Date: Mon, 16 Jul 2007 08:57:46 +0100
+Message-ID: <200707160857.48725.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Simon Hausmann <simon@lst.de>, Alex Riesen <raa.lkml@gmail.com>,
-	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 16 09:00:31 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alberto Bertogli <albertito@gmail.com>, gitster@pobox.com,
+	Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 09:57:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAKZH-0001gB-JA
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 09:00:27 +0200
+	id 1IALSv-000792-Lh
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 09:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361AbXGPHAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 03:00:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbXGPHAY
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 03:00:24 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42490 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752921AbXGPHAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 03:00:24 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070716070024.DIMP1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 16 Jul 2007 03:00:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Q70N1X0071kojtg0000000; Mon, 16 Jul 2007 03:00:23 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753750AbXGPH5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 03:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbXGPH5y
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 03:57:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:6034 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753000AbXGPH5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 03:57:53 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so925917ugf
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 00:57:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NAGa3KB9KOkyPKo2ADszYZMJTog1gUmD9Tp/ajXG39S5vClLXdtwpA5Zj0otz/kzaZTTox3V7JV7/OsnTvphjv457Qvqe4iHQpOTLzn1501ZxtxgClvb02qY24U4YXF7/8yneDm4LcdBCldC6TgqMPh8twgfazVTp/bdcatSJ8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HtWF3Qe4lLCRArHQGmW1PAIgsWV91C6hvLOwmHQymRHvPYN0VjyTSfZNHhTKjrNbDz6shpmjCxlDiLns9O3XbS5epqAVEEjecjLgmFMn2Vm7jdyh8LI+auYMc9eqvxG5M82Y7lgJCFnqzrchev8fpguthNO45VHwvsVkm2MY768=
+Received: by 10.67.22.14 with SMTP id z14mr4140768ugi.1184572672133;
+        Mon, 16 Jul 2007 00:57:52 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b30sm45411109ika.2007.07.16.00.57.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 16 Jul 2007 00:57:51 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52648>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Monday 2007 July 16, Johannes Schindelin wrote:
 
-> I'm more than happy to play patch monkey and ship them through the
-> fastimport repository, but since I'm not a p4 user that offers little
-> value to the process, other than perhaps to save you a little time.
->
-> Simon suggested he might setup a git fork on repo.or.cz himself, at
-> which point you could pull the patches for git-p4 directly from him.
->
-> Simon?
+> The biggest obstacle was a thinko about the scalability.  Tree objects
+> take free form name entries, and therefore a binary search by name is not
+> possible.
 
-Pulling from Simon sounds the sanest.
+I might be misunderstanding, but in the case of the notes tree objects isn't 
+it true that the name entries aren't free form, but are guaranteed to be of a 
+fixed length form:
 
-How big is the population that can help testing and cheering-on
-git-p4 on this list?  If we can have git-p4 subgroup that would
-be wonderful, as I do not interoperate with p4 myself.
+  XX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+In which case you can binary search?
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
