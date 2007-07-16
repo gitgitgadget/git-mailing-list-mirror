@@ -1,70 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Do _not_ call unlink on a directory
-Date: Mon, 16 Jul 2007 19:18:51 +0200
-Message-ID: <vpqd4yss1vo.fsf@bauges.imag.fr>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: [PATCH] Do _not_ call unlink on a directory
+Date: Mon, 16 Jul 2007 19:38:41 +0200
+Message-ID: <11846075213759-git-send-email-sithglan@stud.uni-erlangen.de>
 References: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-X-From: git-owner@vger.kernel.org Mon Jul 16 19:21:47 2007
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 16 19:39:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAUGY-0005U7-Hz
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 19:21:46 +0200
+	id 1IAUXN-0002mR-KD
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 19:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755171AbXGPRVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 13:21:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbXGPRVo
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 13:21:44 -0400
-Received: from imag.imag.fr ([129.88.30.1]:56356 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752571AbXGPRVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 13:21:43 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6GHIpwA009318
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 16 Jul 2007 19:18:51 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IAUDj-00030i-Id; Mon, 16 Jul 2007 19:18:51 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IAUDj-0000TJ-G7; Mon, 16 Jul 2007 19:18:51 +0200
-Mail-Followup-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>, git@vger.kernel.org,  gitster@pobox.com
-In-Reply-To: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de> (Thomas Glanzmann's message of "Mon\, 16 Jul 2007 19\:12\:52 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 16 Jul 2007 19:18:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757556AbXGPRio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 13:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756828AbXGPRin
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 13:38:43 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:46457 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756508AbXGPRim (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 13:38:42 -0400
+Received: from faui02.informatik.uni-erlangen.de (faui02.informatik.uni-erlangen.de [131.188.30.102])
+	by faui03.informatik.uni-erlangen.de (Postfix) with ESMTP id DFAB43F40C;
+	Mon, 16 Jul 2007 19:38:41 +0200 (CEST)
+Received: (from sithglan@localhost)
+	by faui02.informatik.uni-erlangen.de (8.13.8/8.12.3/Debian-8) id l6GHcfUk029426;
+	Mon, 16 Jul 2007 19:38:41 +0200
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52694>
 
-Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+Calling unlink on a directory on a Solaris UFS filesystem as root makes it
+inconsistent. Thanks to Johannes Sixt for the obvious fix.
 
-I believe you still have a race condition if ...
+Signed-off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+---
+ entry.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> -				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
-> -					continue;
-
-... buf exists here as a file ...
-
->  				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
->  					continue; /* ok */
-
-... and became a directory here.
-
-> +				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
-> +					continue;
-
-But that's quite unlikely to happen. And I have no fix to propose.
-
+diff --git a/entry.c b/entry.c
+index 82bf725..907293f 100644
+--- a/entry.c
++++ b/entry.c
+@@ -6,18 +6,18 @@ static void create_directories(const char *path, const struct checkout *state)
+ 	int len = strlen(path);
+ 	char *buf = xmalloc(len + 1);
+ 	const char *slash = path;
++        struct stat st;
+ 
+ 	while ((slash = strchr(slash+1, '/')) != NULL) {
+ 		len = slash - path;
+ 		memcpy(buf, path, len);
+ 		buf[len] = 0;
++                if (!stat(buf, &st) && S_ISDIR(st.st_mode))
++                        continue; /* ok */
+ 		if (mkdir(buf, 0777)) {
+ 			if (errno == EEXIST) {
+-				struct stat st;
+ 				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
+ 					continue;
+-				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
+-					continue; /* ok */
+ 			}
+ 			die("cannot create directory at %s", buf);
+ 		}
 -- 
-Matthieu
+1.5.2.1
