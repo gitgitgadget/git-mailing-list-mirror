@@ -1,51 +1,67 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is
-	possible to create hardlinks for directories as root under solaris)
-Date: Mon, 16 Jul 2007 15:15:37 +0200
-Message-ID: <20070716131537.GA26675@cip.informatik.uni-erlangen.de>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716104342.GB24036@cip.informatik.uni-erlangen.de> <86644kaaf1.fsf@lola.quinscape.zz> <20070716123913.GJ24036@cip.informatik.uni-erlangen.de> <86myxw8pzg.fsf@lola.quinscape.zz>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: Can someone explain this git-blame/git-rev behavior to me?
+Date: Mon, 16 Jul 2007 15:24:53 +0200
+Organization: eudaptics software gmbh
+Message-ID: <469B71A5.D5299A80@eudaptics.com>
+References: <86sl7oaasx.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 16 15:15:48 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 15:24:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAQQQ-0004GM-FF
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 15:15:42 +0200
+	id 1IAQYh-00077h-BQ
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 15:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758445AbXGPNPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 09:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757638AbXGPNPi
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 09:15:38 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:58331 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756125AbXGPNPi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 09:15:38 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 212263F446; Mon, 16 Jul 2007 15:15:37 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <86myxw8pzg.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1758887AbXGPNYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 09:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757977AbXGPNYM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 09:24:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:55273 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758726AbXGPNYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 09:24:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IAQYQ-000140-Eq
+	for git@vger.kernel.org; Mon, 16 Jul 2007 15:23:58 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 15:23:58 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 15:23:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52673>
 
-Hello David,
+David Kastrup wrote:
+> git-name-rev b5dd9d20
+> b5dd9d20 tags/v1.4.2-rc1~88
+> 
+> So what is it I am doing wrong here?  The problem I have is that in
+> Emacs, one can go to the "next version" in an annotated file, and I
+> get stuck in a loop here, since tags/v1.4.2-rc1~88 delivers
+> 
+> git-rev-list HEAD --not tags/v1.4.2-rc1~88 --parents contrib/emacs/vc-git.el|tail -1|git-name-rev --stdin
+> 
+> d87b90e47f7430455385edcf8506288b9a73d3b5 (tags/v1.4.2-rc1~87) b5dd9d2027c1bd5758033c7baf6d087752b0263d (tags/v1.4.2-rc1~88) 280242d1cc1fe2847f649d2f16b273e168fcbc48 (tags/v1.4.2-rc1~92)
+> 
+> So we have tags/v1.4.2-rc1~87 listed as successor again, so I get into
+> a loop of blame.
+> 
+> Is there something I don't understand about merges?
 
-> Hm?  The hard link counter is "broken" by creating or not creating
-> subdirectories, since their ".." is a hard link.
+rev-list --parents list both the commit and its parent(s). If you are
+only interested in the parents, ignore the first SHA1 on the line.
 
-exactly. The question is: Is it a Solaris bug or is it something that is
-supposed a user is able to do (it doesn't make sense for me)? I posted
-this problem to comp.unix.solaris and also contacted the UFS Maintainer
-of Solaris (it is not the first UFS bug I original found). If I don't
-receive feedback, I am going to open a call with Sun. Whatever is going
-on (hopefully it isn't PEBKAC - but I don't think so) and this time it
-isn't broken hardware either (like the last time I reported a serious
-git bug) because it happens on two machines.
-
-        Thomas
+-- Hannes
