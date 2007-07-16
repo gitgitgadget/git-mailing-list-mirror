@@ -1,60 +1,149 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it ispossible to create hardlinks for directories as root under solaris)
-Date: Mon, 16 Jul 2007 10:50:28 -0500
-Message-ID: <20070716155028.GE19073@lavos.net>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716134529.GC26675@cip.informatik.uni-erlangen.de> <469B821E.85E5EDA9@eudaptics.com> <20070716154559.GD19073@lavos.net>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: Changes in function read_pipe
+Date: Mon, 16 Jul 2007 18:13:45 +0200
+Message-ID: <469B9939.5050800@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 17:51:05 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 18:14:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IASqi-0007wc-C7
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 17:51:00 +0200
+	id 1IATCy-00083i-Lw
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760680AbXGPPuj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 11:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754331AbXGPPui
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 11:50:38 -0400
-Received: from gateway.insightbb.com ([74.128.0.19]:4488 "EHLO
-	asav06.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760684AbXGPPui (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 11:50:38 -0400
-Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
-  by asav06.insightbb.com with ESMTP; 16 Jul 2007 11:50:37 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AigcAEgwm0ZKhvbzRmdsb2JhbACBSI1rAQEBNQ
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 7A313309F31; Mon, 16 Jul 2007 10:50:28 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20070716154559.GD19073@lavos.net>
-User-Agent: Mutt/1.5.9i
+	id S1757708AbXGPQN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 16 Jul 2007 12:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759145AbXGPQN5
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:13:57 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:29532 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755612AbXGPQN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 12:13:56 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1009919ugf
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 09:13:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=g8iFt4x90hvNfvgagAx6Cqvf9/3FNIOHToXVF5C2jy1aZeUMakKPA/3XgqsTSVvNCxxe8xYiQzKYAvnkeiSuV/n22DuEmrokcgkemdmhrUJniMWhqb0jxYOIEf2ptnz9ez1dTjB31xjubtP5DKrEfJT1UkcreZJSzlQfmVweTiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=tWYQYXc74xmJVZstdb2pwtyKudiVx/q7qFeKA+LFmGP8LAgncSwxGKb07jswif8PE4wKk+W7vrPCGXqqdMxazQxcMkcb4wbLTTzJDKG+1TGbTGtlVVxdbTZ3zxNn7ff0KrgVESNo8IiBGv22fnwVVkaQKHME/dEp9GMBS2IxOkE=
+Received: by 10.66.222.9 with SMTP id u9mr4414652ugg.1184602435237;
+        Mon, 16 Jul 2007 09:13:55 -0700 (PDT)
+Received: from ?192.168.0.194? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id j34sm1464833ugc.2007.07.16.09.13.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Jul 2007 09:13:54 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52681>
 
-On Mon, Jul 16, 2007 at 10:45:59AM -0500, Brian Downing wrote:
-> http://www.opengroup.org/onlinepubs/007908799/xsh/unlink.html
-> 
-> | The path argument must not name a directory unless the process has
-> | appropriate privileges and the implementation supports using unlink() on
-> | directories.
-> 
-> The above seems to imply that implementations are free to do something
-> with directories passed to unlink, and that it is the responsibility
-> if the user not to do that unless they know what is going to happen.
+Some people talked recently about renaming the function read_pipe
+(sha1_file.c) to the better name read_fd.
+Here I discuss other possible changes to the current version:
 
-Also, the HISTORY section of the FreeBSD manpages states:
+1. It now requires to allocate memory for the buffer before calling it,
+you cannot pass it a pointer set to NULL or not initializated at all.
 
-| The unlink system call traditionally allows the super-user to unlink
-| directories which can damage the filesystem integrity. This
-| implementation no longer permits it.
+2. The function doesn't terminate the data with NUL, and if you
+need that, you must to realloc before adding the '\0', because
+the function only returns the size of the data, not the buffer size.
 
-Great.
+3. When function fails in reading (xread returns < 0), buffer is not
+freed.
 
--bcd
+I'm not sure which of those issues are really important,
+so I thought it was better to ask this in the list.
+This is the current implementation of the function:
+
+/*
+ * reads from fd as long as possible into a supplied buffer of size byt=
+es.
+ * If necessary the buffer's size is increased using realloc()
+ *
+ * returns 0 if anything went fine and -1 otherwise
+ *
+ * NOTE: both buf and size may change, but even when -1 is returned
+ * you still have to free() it yourself.
+ */
+int read_pipe(int fd, char** return_buf, unsigned long* return_size)
+{
+	char* buf =3D *return_buf;
+	unsigned long size =3D *return_size;
+	ssize_t iret;
+	unsigned long off =3D 0;
+
+	do {
+		iret =3D xread(fd, buf + off, size - off);
+		if (iret > 0) {
+			off +=3D iret;
+			if (off =3D=3D size) {
+				size *=3D 2;
+				buf =3D xrealloc(buf, size);
+			}
+		}
+	} while (iret > 0);
+
+	*return_buf =3D buf;
+	*return_size =3D off;
+
+	if (iret < 0)
+		return -1;
+	return 0;
+}
+
+Kristian H=F8gsberg recently sent some changes to the function
+to replace the function with another one easier to call, but
+with a different behavior:
+
+ /*
+- * reads from fd as long as possible into a supplied buffer of size by=
+tes.
+- * If necessary the buffer's size is increased using realloc()
++ * reads from fd as long as possible and allocates a buffer to hold
++ * the contents.  The buffer and size of the contents is returned in
++ * *return_buf and *return_size.  In case of failure, the allocated
++ * buffers are freed, otherwise, the buffer must be freed using xfree.
+  *
+  * returns 0 if anything went fine and -1 otherwise
+- *
+- * NOTE: both buf and size may change, but even when -1 is returned
+- * you still have to free() it yourself.
+  */
+-int read_pipe(int fd, char** return_buf, unsigned long* return_size)
++int read_fd(int fd, char** return_buf, unsigned long* return_size)
+ {
+-	char* buf =3D *return_buf;
+-	unsigned long size =3D *return_size;
++	unsigned long size =3D 4096;
++	char* buf =3D xmalloc(size);
+ 	ssize_t iret;
+ 	unsigned long off =3D 0;
+
+@@ -2328,21 +2327,22 @@ int read_pipe(int fd, char** return_buf, unsign=
+ed long* return_size)
+ 	*return_buf =3D buf;
+ 	*return_size =3D off;
+
+-	if (iret < 0)
++	if (iret < 0) {
++		free(buf);
+ 		return -1;
++	}
++
+ 	return 0;
+ }
+
+Any other ideas? read_pipe is really handy to reuse on builtins,
+so we need to decide how we should call to it now before starting
+to reuse it in many places.
+
+Comments will be appreciated.
