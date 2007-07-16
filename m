@@ -1,61 +1,46 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: [PATCH] Do _not_ call unlink on a directory
-Date: Mon, 16 Jul 2007 19:12:52 +0200
-Message-ID: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 16 19:13:24 2007
+From: Thomas Glanzmann <thomas@glanzmann.de>
+Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is
+	possible to create hardlinks for directories as root under solaris)
+Date: Mon, 16 Jul 2007 19:17:32 +0200
+Message-ID: <20070716171732.GE6134@cip.informatik.uni-erlangen.de>
+References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716133602.GB26675@cip.informatik.uni-erlangen.de> <alpine.LFD.0.999.0707161001300.20061@woody.linux-foundation.org> <alpine.LFD.0.999.0707161004550.20061@woody.linux-foundation.org> <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716133602.GB26675@cip.informatik.uni-erlangen.de> <alpine.LFD.0.999.0707161001300.20061@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 16 19:17:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAU8Q-0002rd-U0
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 19:13:23 +0200
+	id 1IAUCW-00049w-AM
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 19:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760684AbXGPRMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 13:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760791AbXGPRMy
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 13:12:54 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:44372 "EHLO
+	id S1752109AbXGPRRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 13:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbXGPRRd
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 13:17:33 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:44890 "EHLO
 	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760684AbXGPRMx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 13:12:53 -0400
-Received: from faui02.informatik.uni-erlangen.de (faui02.informatik.uni-erlangen.de [131.188.30.102])
-	by faui03.informatik.uni-erlangen.de (Postfix) with ESMTP id 896063F42F;
-	Mon, 16 Jul 2007 19:12:52 +0200 (CEST)
-Received: (from sithglan@localhost)
-	by faui02.informatik.uni-erlangen.de (8.13.8/8.12.3/Debian-8) id l6GHCqaH022446;
-	Mon, 16 Jul 2007 19:12:52 +0200
-X-Mailer: git-send-email 1.5.2.1
-In-Reply-To: 469B821E.85E5EDA9@eudaptics.com
-References: 469B821E.85E5EDA9@eudaptics.com
+	by vger.kernel.org with ESMTP id S1750980AbXGPRRc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 13:17:32 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id 33C453F434; Mon, 16 Jul 2007 19:17:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707161004550.20061@woody.linux-foundation.org> <alpine.LFD.0.999.0707161001300.20061@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52692>
 
-Calling unlink on a directory on a Solaris UFS filesystem as root makes it
-inconsistent. Thanks to Johannes Sixt for the obvious fix.
----
- entry.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Hello Linus,
 
-diff --git a/entry.c b/entry.c
-index 82bf725..1f2e34d 100644
---- a/entry.c
-+++ b/entry.c
-@@ -14,10 +14,10 @@ static void create_directories(const char *path, const struct checkout *state)
- 		if (mkdir(buf, 0777)) {
- 			if (errno == EEXIST) {
- 				struct stat st;
--				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
--					continue;
- 				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
- 					continue; /* ok */
-+				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
-+					continue;
- 			}
- 			die("cannot create directory at %s", buf);
- 		}
--- 
-1.5.2.1
+> I'd suggest making a bug-report. ENOTEMPTY is not an optional error.
+> Posix says "Shall fail".  The "unlink directories" is so old-fashioned
+> that it's not even funny. The whole reason "rmdir()" was created was
+> to *not* have that behaviour in the OS. 
+
+I asked the UFS maintainer to reconsider to fix this.
+
+        Thomas
