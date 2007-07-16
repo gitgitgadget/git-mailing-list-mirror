@@ -1,79 +1,60 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [PATCH] git-svn: fix commiting renames over DAV with funky file
- names
-Date: Mon, 16 Jul 2007 08:36:27 +0200
-Message-ID: <469B11EB.8020003@dawes.za.net>
-References: <46938594.2010607@dawes.za.net> <20070711082000.GA29371@muzzle> <20070712090635.GA18155@mayonaise> <20070716045350.GA15307@mayonaise>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix git-p4 on Windows to not use the Posix sysconf
+Date: Mon, 16 Jul 2007 00:00:22 -0700
+Message-ID: <7vr6n84yux.fsf@assigned-by-dhcp.cox.net>
+References: <46977660.7070207@trolltech.com>
+	<81b0412b0707130603q69857564i1ba418b74397a33d@mail.gmail.com>
+	<200707131533.55544.simon@lst.de> <20070715024928.GY4436@spearce.org>
+	<7vmyxydwld.fsf@assigned-by-dhcp.cox.net>
+	<20070716053511.GC32566@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 16 08:37:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Simon Hausmann <simon@lst.de>, Alex Riesen <raa.lkml@gmail.com>,
+	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 16 09:00:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAKDQ-0005nZ-Dq
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 08:37:52 +0200
+	id 1IAKZH-0001gB-JA
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 09:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795AbXGPGht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 02:37:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753731AbXGPGhs
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 02:37:48 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:39918 "EHLO
-	spunkymail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753249AbXGPGhs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 02:37:48 -0400
-Received: from [192.168.201.103] (dsl-146-26-37.telkomadsl.co.za [165.146.26.37])
-	by spunkymail-a18.g.dreamhost.com (Postfix) with ESMTP id 8FF9D5B532;
-	Sun, 15 Jul 2007 23:37:43 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
-In-Reply-To: <20070716045350.GA15307@mayonaise>
+	id S1753361AbXGPHAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 03:00:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbXGPHAY
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 03:00:24 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42490 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752921AbXGPHAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 03:00:24 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070716070024.DIMP1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Jul 2007 03:00:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Q70N1X0071kojtg0000000; Mon, 16 Jul 2007 03:00:23 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52647>
 
-Eric Wong wrote:
-> Renaming files with non-URI friendly characters caused
-> breakage when committing to DAV repositories (over http(s)).
-> 
-> Even if I try leaving out the $self->{url} from the return value
-> of url_path(), a partial (without host), unescaped path name
-> does not work.
-> 
-> Filenames for DAV repos need to be URI-encoded before being
-> passed to the library.  Since this bug did not affect file://
-> and svn:// repos, the git-svn test library needed to be expanded
-> to include support for starting Apache with mod_dav_svn enabled.
-> 
-> This new test is not enabled by default, but can be enabled by
-> setting SVN_HTTPD_PORT to any available TCP/IP port on
-> 127.0.0.1.
-> 
-> Additionally, for running this test, the following variables
-> (with defaults shown) can be changed for the suitable system.
-> The default values are set for Debian systems:
-> 
->   SVN_HTTPD_MODULE_PATH=/usr/lib/apache2/modules
->   SVN_HTTPD_PATH=/usr/sbin/apache2
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
-> 
->  Rogan: the patch should help, a single space anywhere in the
->  path causes SVN to screw up the file names.  Of course I'm at a
->  loss as to why only DAV repositories need it and why the SVN
->  libraries don't abstract that away from me.
-> 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Hi Eric,
+> I'm more than happy to play patch monkey and ship them through the
+> fastimport repository, but since I'm not a p4 user that offers little
+> value to the process, other than perhaps to save you a little time.
+>
+> Simon suggested he might setup a git fork on repo.or.cz himself, at
+> which point you could pull the patches for git-p4 directly from him.
+>
+> Simon?
 
-Unfortunately, I cannot test this patch, as I have since worked around 
-the problem, and it has not reappeared.
+Pulling from Simon sounds the sanest.
 
-If it does, I'll be sure to test and let you know. Unless this patch 
-makes it into the version of git I am using, of course!
-
-Rogan
+How big is the population that can help testing and cheering-on
+git-p4 on this list?  If we can have git-p4 subgroup that would
+be wonderful, as I do not interoperate with p4 myself.
