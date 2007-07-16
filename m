@@ -1,84 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/6] Introduce commit notes
-Date: Mon, 16 Jul 2007 17:26:31 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707161724110.14781@racer.site>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <200707160857.48725.andyparkins@gmail.com> <7vbqec4vk2.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is possible to create hardlinks for directories as root under solaris)
+Date: Mon, 16 Jul 2007 18:29:07 +0200
+Message-ID: <86d4ys71nw.fsf@lola.quinscape.zz>
+References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716133602.GB26675@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Alberto Bertogli <albertito@gmail.com>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 18:26:53 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 18:29:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IATPQ-00049F-BF
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:26:52 +0200
+	id 1IATRu-0004yh-4I
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 18:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759598AbXGPQ0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 12:26:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759166AbXGPQ0t
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:26:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39698 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758823AbXGPQ0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 12:26:48 -0400
-Received: (qmail invoked by alias); 16 Jul 2007 16:26:46 -0000
-Received: from R412d.r.pppool.de (EHLO noname) [89.54.65.45]
-  by mail.gmx.net (mp034) with SMTP; 16 Jul 2007 18:26:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/79zdgXQ37J1F83m/yca0KiHYguQV4hL1EglqLML
-	1WNCjMdGtJl0PS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqec4vk2.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1761059AbXGPQ3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 12:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760868AbXGPQ3W
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 12:29:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:33550 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759997AbXGPQ3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 12:29:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IATRj-0002Gj-FE
+	for git@vger.kernel.org; Mon, 16 Jul 2007 18:29:15 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 18:29:15 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 18:29:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:tnAQdCOmLhA82lhm2j8XL6WcCHg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52684>
 
-Hi,
+Thomas Glanzmann <thomas@glanzmann.de> writes:
 
-On Mon, 16 Jul 2007, Junio C Hamano wrote:
+> Hello,
+> might that be related to the problem:
+>
+>
+>         lstat64("profiles/icpc", 0xFFBFF350)            Err#2 ENOENT
+> =>       mkdir("profiles", 0777)                         = 0
+>         stat64(".git/objects/66/6197b02f46c92f0273f16ac77d34d76b28f4f0",
+>         0xFFBFF088) = 0
+>         open64(".git/objects/66/6197b02f46c92f0273f16ac77d34d76b28f4f0",
+>         O_RDONLY) = 4
+>         mmap64(0x00000000, 284, PROT_READ, MAP_PRIVATE, 4, 0) = 0xFF230000
+>         close(4)                                        = 0
+>         munmap(0xFF230000, 284)                         = 0
+>         open64("profiles/icpc", O_WRONLY|O_CREAT|O_EXCL, 0666) = 4
+>         open64("profiles/.gitattributes", O_RDONLY)     Err#2 ENOENT
+>         write(4, " #   I C P C   P r o f i".., 420)     = 420
+>         close(4)                                        = 0
+>         lstat64("profiles/sithglan", 0xFFBFF350)        Err#2 ENOENT
+> =>      mkdir("profiles", 0777)                         Err#17 EEXIST
+> =>      unlink("profiles")                              = 0
+> =>      mkdir("profiles", 0777)                         = 0
+>
+> I think it is. Damn it. What seems to hapen here is that git does:
+>
+>         - create a subdirectory
+>         - puts a file in
+>         - deletes a subdirectory (by call unlink - that would normally fail,
+>           but with solaris as root it does not fail)
+>
+>                 => here comes the dangling hard link counter
+>
+>         - created the directory again
+>         - puts the file in
+>
+> That is why I only see one file in each subdirectory (the one that got
+> checkedout last). So the fix for git should be straight forward. But I still
+> think that Solaris is obviously broken. Because if you ask me it should not be
+> possible to unlink a directory that has files in it?!
 
-> Andy Parkins <andyparkins@gmail.com> writes:
-> 
-> > On Monday 2007 July 16, Johannes Schindelin wrote:
-> >
-> >> The biggest obstacle was a thinko about the scalability.  Tree 
-> >> objects take free form name entries, and therefore a binary search by 
-> >> name is not possible.
-> >
-> > I might be misunderstanding, but in the case of the notes tree objects 
-> > isn't it true that the name entries aren't free form, but are 
-> > guaranteed to be of a fixed length form:
-> >
-> >   XX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-> >
-> > In which case you can binary search?
-> 
-> Hmph, you are right.  In this sequence:
-> 
-> 	hex = sha1_to_hex(commit->object.sha1);
-> 	snprintf(name, sizeof(name), "%s:%.*s/%.*s",
-> 			notes_ref_name, 2, hex, 38, hex + 2);
-> 	if (get_sha1(name, sha1))
-> 		return;
-> 
-> Instead, we could read the tree object by hand in the commit that is 
-> referenced by notes_ref_name, which has uniform two letter names for 
-> subtrees which can be binary searched, open the tree for that entry, 
-> again by hand, and do another binary search because that tree has 
-> uniform 38-letter names.  That certainly could be done.
-> 
-> Sounds like a "fun" project for some definition of the word.
+<URL:http://www.opengroup.org/onlinepubs/000095399/functions/unlink.html>
 
-I disagree.  One disadvantage to using tree objects is that it is much 
-easier to have pilot errors.  You could even make a new working tree 
-checking out refs/notes/commits and change/add/remove files.
+    The path argument shall not name a directory unless the process has
+    appropriate privileges and the implementation supports using unlink()
+    on directories.
 
-Ciao,
-Dscho
+So Solaris has the right to do this.
+
+    APPLICATION USAGE
+
+        Applications should use rmdir() to remove a directory.
+
+    RATIONALE
+
+        Unlinking a directory is restricted to the superuser in many
+        historical implementations for reasons given in link() (see
+        also rename()).
+
+
+In short: git should not call remove, ever.  It may succeed, and is a
+badly low-level call.  If something is known to be a directory, then
+it needs to be removed using rmdir, and if it is a nondirectory, with
+unlink.
+
+Hm, browsing through Posix indicates that unlink is probably the same
+as remove.  Pity.  I thought that just "remove" was the potential
+evildoer.
+
+-- 
+David Kastrup
