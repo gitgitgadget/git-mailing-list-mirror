@@ -1,97 +1,81 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] translate bad characters in refnames during git-svn
-	fetch
-Date: Mon, 16 Jul 2007 13:15:09 +0200
-Message-ID: <20070716111509.GC18293@efreet.light.src>
-References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle>
+From: "Bradford Smith" <bradford.carl.smith@gmail.com>
+Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
+Date: Mon, 16 Jul 2007 07:33:56 -0400
+Message-ID: <f158199e0707160433v27fe7073w9c550712c41c32e8@mail.gmail.com>
+References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com>
+	 <dbfc82860707160237v6772b5b8o541f2045ccd824d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2JFBq9zoW8cOFH7v"
-Cc: git discussion list <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 16 13:15:22 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Nikolai Weibull" <now@bitwi.se>
+X-From: git-owner@vger.kernel.org Mon Jul 16 13:34:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAOXw-00011A-P2
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 13:15:21 +0200
+	id 1IAOq3-00062O-Ji
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 13:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757708AbXGPLPS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 07:15:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756784AbXGPLPS
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 07:15:18 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:47416 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757173AbXGPLPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 07:15:16 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 3083157371;
-	Mon, 16 Jul 2007 13:15:15 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id zCjVERRQMFPn; Mon, 16 Jul 2007 13:15:13 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 233F05725E;
-	Mon, 16 Jul 2007 13:15:12 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IAOXl-0000GW-8B; Mon, 16 Jul 2007 13:15:09 +0200
+	id S1755163AbXGPLd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 07:33:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754826AbXGPLd7
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 07:33:59 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:21509 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754058AbXGPLd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 07:33:59 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so507704wra
+        for <git@vger.kernel.org>; Mon, 16 Jul 2007 04:33:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VGs17dHd6iO3LIVE96vtWTCywmDmB1dbSSyew7fHnHYbMOMizwB2mKjjEw+pcjl1JzeUcLnm6s7VEM5lk093Xn8SecnaP+b0U7jMERPnYhr26vyrBTrIkefHMpH3+G5WEt3O7Bu+JUxc+7Qcf5t3GWjeKQZSTeM//drPI/vbaRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GbN8ue3x9f3ey1YWJveuGyuxECnhSw0aTcbsEBnJvbbXKzoEIyGHm+fR+H1Tk31KqVXXG9ometcrfiJ4QR4jPfFlP5Y36dsDKSfxStiN7XyOIUo+BNxRPd8TcL++DN+T1+g8PEWojTsKMwY97Fe8ze2bjfvj9FJwAtP206fIh3Q=
+Received: by 10.78.160.2 with SMTP id i2mr1141776hue.1184585636242;
+        Mon, 16 Jul 2007 04:33:56 -0700 (PDT)
+Received: by 10.78.178.10 with HTTP; Mon, 16 Jul 2007 04:33:56 -0700 (PDT)
+In-Reply-To: <dbfc82860707160237v6772b5b8o541f2045ccd824d5@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070716033050.GA29521@muzzle>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52663>
 
+On 7/16/07, Nikolai Weibull <now@bitwi.se> wrote:
+> On 7/15/07, Bradford Smith <bradford.carl.smith@gmail.com> wrote:
+> > Since the number of dot-files and dot-directories that I have in my
+> > home directory these days is somewhat overwhelming, I like to keep
+> > those I directly edit all together in an ~/etc directory so I can
+> > easily back them up and/or copy them in bulk to new accounts.  So,
+> > several of my home dot-files are just symlinks to something in ~/etc,
+> > including ~/.gitconfig.
+>
+> How about adding an environment variable telling Git where to find
+> user-global .gitconfig instead?
+> > home directory these days is somewhat overwhelming, I like to keep
+> > those I directly edit all together in an ~/etc directory so I can
+> > easily back them up and/or copy them in bulk to new accounts.  So,
+> > several of my home dot-files are just symlinks to something in ~/etc,
+> > including ~/.gitconfig.
+>
+> How about adding an environment variable telling Git where to find
+> user-global .gitconfig instead?
 
---2JFBq9zoW8cOFH7v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for suggesting that.
 
-On Sun, Jul 15, 2007 at 20:30:50 -0700, Eric Wong wrote:
-> The major issue with this is that it doesn't handle odd cases
-> where a refname is sanitized into something
-> (say "1234~2" sanitizes to "1234=3D2"), and then another branch
-> is created named "1234=3D2".
->=20
-> git-svn should at least keep track of what it got sanitized to, to
-> avoid clobbering branches.
->=20
-> I started working on this a while back but haven't gotten around
-> to revisiting it:
-> http://thread.gmane.org/gmane.comp.version-control.git/45651
+Actually, by looking at the code I discovered I could use the
+environment variable GIT_CONFIG to specify where the configuration
+file is, and I have already changed my setup to use this.
+Unfortunately, I found the documentation for this variable in
+git-config(1) confusing or I would have used it before.  If I get the
+chance, I'll submit a patch for git-config.txt, and maybe for git.txt
+as well, since it lists lots of other environment variables but not
+GIT_CONFIG or GIT_CONFIG_LOCAL.
 
-I believe % is safe, right? So what if git-svn just url-escaped stuff in the
-branch name it does not like. Of course % would be included in the list of
-characters it does not like. Eg. 1234~2 would escape to 1234%7E2 and if the
-user ever head 1234%7E2 in svn, it would simply escape too, to 1234%257E2.
+Thanks,
 
-Space is rather common, but that's why there is the + rule in url-encoding =
---
-"foo bar" escapes to "foo+bar" and "foo+bar" escapes to "foo%2Bbar". Or you
-could use something else to escape space. I can only think of "=3D", "_" is=
- too
-common to have it escaped and anything else would conflict with either git =
-or
-shell.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---2JFBq9zoW8cOFH7v
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGm1M9Rel1vVwhjGURAo4JAKC4m2rV9SQ5WoPtemFXKGiUJYfFkgCeP//l
-vWtAK3wCHVYgAgyRBP9PMvg=
-=jOhU
------END PGP SIGNATURE-----
-
---2JFBq9zoW8cOFH7v--
+Bradford
