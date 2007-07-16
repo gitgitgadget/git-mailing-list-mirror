@@ -1,52 +1,66 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is
-	possible to create hardlinks for directories as root under solaris)
-Date: Mon, 16 Jul 2007 14:39:13 +0200
-Message-ID: <20070716123913.GJ24036@cip.informatik.uni-erlangen.de>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716104342.GB24036@cip.informatik.uni-erlangen.de> <86644kaaf1.fsf@lola.quinscape.zz>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Tips for debugging fast-import front-ends
+Date: Mon, 16 Jul 2007 13:45:13 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707161336570.24955@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 16 14:39:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 14:45:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAPrC-0001UX-UR
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 14:39:19 +0200
+	id 1IAPx3-0003ZC-KT
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 14:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756371AbXGPMjP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 08:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755995AbXGPMjP
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 08:39:15 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:55574 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755295AbXGPMjO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 08:39:14 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id AF6AE3F426; Mon, 16 Jul 2007 14:39:13 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <86644kaaf1.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1755479AbXGPMpS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 08:45:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755744AbXGPMpR
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 08:45:17 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36383 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754266AbXGPMpQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 08:45:16 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B680EC616C
+	for <git@vger.kernel.org>; Mon, 16 Jul 2007 13:45:14 +0100 (BST)
+Received: (qmail 15886 invoked by uid 103); 16 Jul 2007 13:45:13 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.3/3678. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.032752 secs); 16 Jul 2007 12:45:13 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 16 Jul 2007 13:45:13 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52669>
 
-Hello David,
-as I mentioned and showed in my original e-mail:
+I was wondering if anyone had some handy tips for debugging fast-import 
+based importers?
 
-        git checkout /path/to/repo
+I'm trying to import an SVN repository that was initially created by 
+cvs2svn and, since we started using branches quite heavily _before_ 
+switching to SVN, there is some quite messy history.
 
-triggers the problem also. So no, "cp -a" has nothing todo with it
-because root is able to read _all_ files no matter who the files are
-owned by and what the permissions of these files are[1]. This happens on
-a _local_ fileystem. And what worries me is that git does something that
-breaks the _hard link counter_ of a directory.
+At some point in the "messy" phase I get an error from fast-import saying:
 
-        Thomas
+fatal: path foo not in branch
 
-[1] Notes
-        Of course that doesn't apply to all filesystems. For example AFS
-        and NFS. But as I said before it happens on a _UFS_ filesystem.
+This seems to happen when I attempt to copy a file that is also changed in 
+the same commit.  What I would like to do is find out what things look 
+like just before that point - the problem is that fast-import seems to not 
+create anything on failure.  So, apart restarting the import and stopping 
+just before the broken commit, is there any way to find out what 
+fast-import thinks the branch looks like?
+
+Also, does anyone have any handy hints 'n' tips for working with 
+fast-import?
+
+-- 
+Julian
+
+  ---
+Air pollution is really making us pay through the nose.
