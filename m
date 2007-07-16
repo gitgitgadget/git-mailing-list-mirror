@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] Add git-notes
-Date: Sun, 15 Jul 2007 22:11:28 -0700
-Message-ID: <7v8x9h6igv.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 2/6] Introduce commit notes
+Date: Sun, 15 Jul 2007 22:11:26 -0700
+Message-ID: <7vejj96igx.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
-	<Pine.LNX.4.64.0707160023360.14781@racer.site>
+	<Pine.LNX.4.64.0707160022560.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
@@ -14,151 +14,202 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAIrs-0007bL-Uv
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 07:11:33 +0200
+	id 1IAIrs-0007bL-AZ
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 07:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbXGPFLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 01:11:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXGPFLb
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 01:11:31 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50463 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250AbXGPFLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 01:11:30 -0400
+	id S1751351AbXGPFL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 01:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbXGPFL3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 01:11:29 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33793 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182AbXGPFL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 01:11:28 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070716051131.VNNI1358.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 16 Jul 2007 01:11:31 -0400
+          id <20070716051129.YTMJ1349.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Jul 2007 01:11:29 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Q5BU1X00F1kojtg0000000; Mon, 16 Jul 2007 01:11:30 -0400
+	id Q5BS1X00Q1kojtg0000000; Mon, 16 Jul 2007 01:11:28 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52637>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This script allows you to edit and show commit notes easily.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .gitignore   |    1 +
->  Makefile     |    2 +-
->  git-notes.sh |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 63 insertions(+), 1 deletions(-)
->  create mode 100755 git-notes.sh
->
-> diff --git a/git-notes.sh b/git-notes.sh
-> new file mode 100755
-> index 0000000..e0ad0b9
+> +core.notesRef::
+> +	When showing commit messages, also show notes which are stored in
+> +	the given ref.  This ref is expected to contain paths of the form
+> +	??/*, where the directory name consists of the first two
+> +	characters of the commit name, and the base name consists of
+> +	the remaining 38 characters.
+> ++
+> +If such a path exists in the given ref, the referenced blob is read, and
+> +appended to the commit message, separated by a "Notes:" line.  If the
+> +given ref itself does not exist, it is not an error, but means that no
+> +notes should be print.
+> ++
+> +This setting defaults to "refs/notes/commits", and can be overridden by
+> +the `GIT_NOTES_REF` environment variable.
+> +
+
+This design forces "one blob and only one blob decorates a
+commit".  It certainly makes the implementation and semantics
+simpler -- if I have this note and you have that note on the
+same commit, comparing notes eventually should result in a merge
+of our notes.  But is it sufficient in real life usage scenarios
+(what's the use case)?  One example that was raised on the list
+is to collect "Acked-by", "Tested-by", etc., and in that case
+perhaps one set "refs/notes/acks" may hold the former while
+"refs/notes/tests" the latter.  If we wanted to show both at the
+same time, is it the only option to put them in the same "note"
+blob and not use "refs/notes/{acks,tests}"?
+
+> diff --git a/commit.c b/commit.c
+> index 0c350bc..3529b6a 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -6,6 +6,7 @@
+>  #include "interpolate.h"
+>  #include "diff.h"
+>  #include "revision.h"
+> +#include "notes.h"
+>  
+>  int save_commit_buffer = 1;
+>  
+> @@ -1254,6 +1255,10 @@ unsigned long pretty_print_commit(enum cmit_fmt fmt,
+>  	 */
+>  	if (fmt == CMIT_FMT_EMAIL && offset <= beginning_of_body)
+>  		buf[offset++] = '\n';
+> +
+> +	if (fmt != CMIT_FMT_ONELINE)
+> +		get_commit_notes(commit, buf_p, &offset, space_p);
+> +
+>  	buf[offset] = '\0';
+>  	free(reencoded);
+>  	return offset;
+
+This makes me wonder if there are cases where "notes" need to be
+reencoded to honor log_output_encoding.
+
+Since more and more people live in UTF-8 only world, and this is
+a _new_ feature anyway, we could declare that "notes" blobs MUST
+be encoded in UTF-8 upfront, but even if we did so we would need
+reencoding to log_output_encoding, I suspect.
+
+> diff --git a/notes.c b/notes.c
+> new file mode 100644
+> index 0000000..5d1bb1a
 > --- /dev/null
-> +++ b/git-notes.sh
-> @@ -0,0 +1,61 @@
-> +#!/bin/sh
+> +++ b/notes.c
+> @@ -0,0 +1,64 @@
+> +#include "cache.h"
+> +#include "commit.h"
+> +#include "notes.h"
+> +#include "refs.h"
 > +
-> +USAGE="(edit | show) [commit]"
-> +. git-sh-setup
+> +static int initialized;
 > +
-> +test -n "$3" && usage
+> +void get_commit_notes(const struct commit *commit,
+> +		char **buf_p, unsigned long *offset_p, unsigned long *space_p)
+> +{
+> +	char name[80];
+> +	const char *hex;
+> +	unsigned char sha1[20];
+> +	char *msg;
+> +	unsigned long msgoffset, msglen;
+> +	enum object_type type;
 > +
-> +test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
-> +test -z "$GIT_NOTES_REF" &&
-> +	die "No notes ref set."
+> +	if (!initialized) {
+> +		const char *env = getenv(GIT_NOTES_REF);
+> +		if (env) {
+> +			if (notes_ref_name)
+> +				free(notes_ref_name);
+> +			notes_ref_name = xstrdup(getenv(GIT_NOTES_REF));
 
-	test -n "${GIT_NOTES_REF=$(git config core.notesref)}" || die
+	xstrdup(env)?
 
-> +COMMIT=$(git rev-parse --verify --default HEAD "$2")
+> +		} else if (!notes_ref_name)
+> +			notes_ref_name = xstrdup("refs/notes/commits");
 
-This silently annotates the HEAD commit if $2 is misspelled, I
-suspect.  Also if HEAD does not exist, COMMIT will be empty and
-this whole command will exit with non-zero status, which you
-would want to catch here...
+We would probably want to give another preprocessor constant for
+this hardcoded string, next to GIT_NOTES_REF definition in cache.h.
 
-> +NAME=$(echo $COMMIT | sed "s/^../&\//")
-
-... or here.
-
-> +case "$1" in
-> +edit)
-> +	MESSAGE="$GIT_DIR"/new-notes
-> +	GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MESSAGE"
-
-$MESSAGE and its associated temporary file needs to be cleaned
-up upon command exit; perhaps a trap is in order.
-
-> +	GIT_INDEX_FILE="$MESSAGE".idx
-> +	export GIT_INDEX_FILE
+> +		if (notes_ref_name && read_ref(notes_ref_name, sha1)) {
+> +			free(notes_ref_name);
+> +			notes_ref_name = NULL;
+> +		}
+> +		initialized = 1;
+> +	}
+> +	if (!notes_ref_name)
+> +		return;
 > +
-> +	CURRENT_HEAD=$(git show-ref $GIT_NOTES_REF | cut -f 1 -d ' ')
-> +	if [ -z "$CURRENT_HEAD" ]; then
-> +		PARENT=
-> +	else
-> +		PARENT="-p $OLDTIP"
-> +		git read-tree $GIT_NOTES_REF || die "Could not read index"
-> +		git cat-file blob :$NAME >> "$MESSAGE" 2> /dev/null
-> +	fi
+> +	hex = sha1_to_hex(commit->object.sha1);
+> +	snprintf(name, sizeof(name), "%s:%.*s/%.*s",
+> +			notes_ref_name, 2, hex, 38, hex + 2);
 
-I take that OLDTIP is a typo.
+Too long a notes_ref_name and it won't overrun the buffer but
+the failure is not detected, and ...
 
-	if CURRENT_HEAD=$(git show-ref -s "$GIT_NOTES_REF")
-        then
-		PARENT="-p $CURRENT_HEAD"
-                ...
-	else
-        	PARENT=
-	fi
+> +	if (get_sha1(name, sha1))
+> +		return;
+
+... this would fail silently, leaving the user scratching his head.
 
 > +
-> +	${VISUAL:-${EDITOR:-vi}} "$MESSAGE"
+> +	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || !msglen)
+> +		return;
+
+What's in "type" at this point?  Having a tree there is not an
+error?
+
+> +	/* we will end the annotation by a newline anyway. */
+> +	if (msg[msglen - 1] == '\n')
+> +		msglen--;
+> +	ALLOC_GROW(*buf_p, *offset_p + 14 + msglen, *space_p);
+> +	*offset_p += sprintf(*buf_p + *offset_p, "\nNotes:\n");
+
+Fourteen is because...
+
 > +
-> +	grep -v ^# < "$MESSAGE" | git stripspace > "$MESSAGE".processed
-
-Makes us wonder if we would want to teach hash-stripping to
-git-stripspace, doesn't it?
-
-> +	mv "$MESSAGE".processed "$MESSAGE"
-> +	if [ -z "$(cat "$MESSAGE")" ]; then
-
-Make this 'if test -s "$MESSAGE"' and swap then/else clause
-around; no reason to slurp the value into your shell.
-
-> +		test -z "$CURRENT_HEAD" &&
-> +			die "Will not initialise with empty tree"
-> +		git update-index --force-remove $NAME ||
-> +			die "Could not update index"
-> +	else
-> +		BLOB=$(git hash-object -w "$MESSAGE") ||
-> +			die "Could not write into object database"
-> +		git update-index --add --cacheinfo 0644 $BLOB $NAME ||
-> +			die "Could not write index"
-> +	fi
+> +	for (msgoffset = 0; msgoffset < msglen;) {
+> +		int linelen = get_line_length(msg + msgoffset, msglen);
 > +
-> +	TREE=$(git write-tree) || die "Could not write tree"
-> +	NEW_HEAD=$(: | git commit-tree $TREE $PARENT) ||
-> +		die "Could not annotate"
+> +		ALLOC_GROW(*buf_p, *offset_p + linelen + 6, *space_p);
+> +		*offset_p += sprintf(*buf_p + *offset_p,
+> +				"    %.*s", linelen, msg + msgoffset);
 
-Hmph.  How about "echo Annotate $COMMIT | git commit-tree..."?
+Six is because...
 
-> +	case "$CURRENT_HEAD" in
-> +	'') git update-ref $GIT_NOTES_REF $NEW_HEAD ;;
-> +	*) git update-ref $GIT_NOTES_REF $NEW_HEAD $CURRENT_HEAD;;
-> +	esac
-> +;;
+> +		msgoffset += linelen;
+> +	}
+> +	ALLOC_GROW(*buf_p, *offset_p + 1, *space_p);
+> +	(*buf_p)[*offset_p] = '\n';
+> +	(*offset_p)++;
+> +	free(msg);
+> +}
+> +
+> +
+> diff --git a/notes.h b/notes.h
+> new file mode 100644
+> index 0000000..aed80e7
+> --- /dev/null
+> +++ b/notes.h
+> @@ -0,0 +1,9 @@
+> +#ifndef NOTES_H
+> +#define NOTES_H
+> +
+> +void get_commit_notes(const struct commit *commit,
+> +	char **buf_p, unsigned long *offset_p, unsigned long *space_p);
+> +
+> +#define GIT_NOTES_REF "GIT_NOTES_REF"
 
-There are some places that have "$GIT_NOTES_REF" in dq and some
-places you don't.  I think GIT_NOTES_REF begins with refs/ and
-consists only of valid refname characters, so unless the user
-wants to shoot himself in the foot it should be Ok, but we
-probably would want to quote it.
-
-Also, as unquoted $CURRENT_HEAD will not even count as a
-parameter to update-ref, you do not have to do that case/esac,
-but simply do:
-
-	git update-ref "$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
-
-Would we have reflog for this ref?  What would we want to see as
-the message if we do?
+Judging from the existing entries in cache.h, it seems that
+GIT_NOTES_REF_ENVIRONMENT would be more appropriate preprocessor
+symbol for this.  Also let's have this in cache.h next to
+GIT_DIR_ENVIRONMENT and friends, with another definition for
+"refs/notes/commits".
