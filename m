@@ -1,76 +1,73 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] vc-git: support asynchronous annotations, and improve versioning.
-Date: Mon, 16 Jul 2007 07:29:38 +0200
-Message-ID: <85k5t0or0d.fsf@lola.goethe.zz>
-References: <403842ba71506c7b194812cd9a4f669c847eb7bc.1184548803.git.dak@gnu.org>
-	<cfa5ed80635135dd7544f2b4c6df521a4353e90d.1184548803.git.dak@gnu.org>
-	<7v3azpavae.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Fix git-p4 on Windows to not use the Posix sysconf
+Date: Mon, 16 Jul 2007 01:35:11 -0400
+Message-ID: <20070716053511.GC32566@spearce.org>
+References: <46977660.7070207@trolltech.com> <81b0412b0707130603q69857564i1ba418b74397a33d@mail.gmail.com> <200707131533.55544.simon@lst.de> <20070715024928.GY4436@spearce.org> <7vmyxydwld.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: Simon Hausmann <simon@lst.de>, Alex Riesen <raa.lkml@gmail.com>,
+	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 07:30:38 2007
+X-From: git-owner@vger.kernel.org Mon Jul 16 07:35:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAJAE-0002Na-HJ
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 07:30:30 +0200
+	id 1IAJEx-0003Lx-El
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 07:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764601AbXGPF3m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 01:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764586AbXGPF3m
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 01:29:42 -0400
-Received: from mail-in-15.arcor-online.net ([151.189.21.55]:44836 "EHLO
-	mail-in-15.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764555AbXGPF3l (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2007 01:29:41 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id E93D64455A;
-	Mon, 16 Jul 2007 07:29:39 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id D75A4212FB7;
-	Mon, 16 Jul 2007 07:29:39 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-040-115.pools.arcor-ip.net [84.61.40.115])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id B6C5719B321;
-	Mon, 16 Jul 2007 07:29:39 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id A202B1CE30E9; Mon, 16 Jul 2007 07:29:38 +0200 (CEST)
-In-Reply-To: <7v3azpavae.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sun\, 15 Jul 2007 20\:20\:57 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1751996AbXGPFfT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 01:35:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366AbXGPFfT
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 01:35:19 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:47894 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbXGPFfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 01:35:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IAJEm-0007rx-M5; Mon, 16 Jul 2007 01:35:12 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 243CF20FBAE; Mon, 16 Jul 2007 01:35:11 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vmyxydwld.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52641>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > Thanks.  Marius' patch was whitespace damaged in the context lines,
+> > but it was easily repaired.  I've got a couple of other small items
+> > in my fastimport repository that I'm going to ask Junio to include
+> > in 1.5.3 shortly.
+> 
+> Thanks for taking care of this.  I have pulled gfi master into
+> 'master'.  Perhaps we would want to tag -rc2 this weekend, run
+> with it for a week or so and see if we need -rc3 before the
+> final.
 
-> David Kastrup <dak@gnu.org> writes:
->
->> (vc-git-symbolic-commit): Allow nil to pass through.
->> (vc-git-previous-version): Use explicit parent argument.
->> (vc-git-next-version): Simplify.
->> (vc-git-annotate-command): Use `vc-do-command'.
->> (vc-git-annotate-extract-revision-at-line): Rename from
->> `vc-annotate-extract-revision-at-line'.
->> (vc-git-checkout): Make nicer way of ensuring encoding.
->>
->
-> These do not seem to match what the patch does at all.
-> I give up.
+I'm not entirely sure how we're going to handle the git-p4 patches;
+I see there's already another set available to use '-x -' to avoid
+command line length problems.
 
-The previous changelog entry crept in as well.
+I'm more than happy to play patch monkey and ship them through the
+fastimport repository, but since I'm not a p4 user that offers little
+value to the process, other than perhaps to save you a little time.
 
-> Will apply only the "install .el, too" change from the confusing
-> series for now.
+Simon suggested he might setup a git fork on repo.or.cz himself, at
+which point you could pull the patches for git-p4 directly from him.
 
-Fair enough.
-
-How do I go about resubmitting with better comments?  Make an extra
-branch and redo the part in artificial new commits?
-
-I have no experience.  Any good pointers how one does this sort of
-propose, rewind, propose stuff most conveniently?
+Simon?
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Shawn.
