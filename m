@@ -1,63 +1,89 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is possible to create hardlinks for directories as root under solaris)
-Date: Mon, 16 Jul 2007 12:51:46 +0200
-Message-ID: <86644kaaf1.fsf@lola.quinscape.zz>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de> <20070716104342.GB24036@cip.informatik.uni-erlangen.de>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: Re: question about git-submodule
+Date: Mon, 16 Jul 2007 13:07:28 +0200
+Message-ID: <20070716110728.GQ7106@genesis.frugalware.org>
+References: <20070715135453.GE7106@genesis.frugalware.org> <20070715140244.GF999MdfPADPa@greensroom.kotnet.org> <20070715142624.GF7106@genesis.frugalware.org> <20070715144835.GI999MdfPADPa@greensroom.kotnet.org> <20070715150540.GH7106@genesis.frugalware.org> <20070715152101.GJ999MdfPADPa@greensroom.kotnet.org> <20070715154028.GI7106@genesis.frugalware.org> <20070715214530.GK999MdfPADPa@greensroom.kotnet.org> <20070715222948.GL7106@genesis.frugalware.org> <20070716103954.GM999MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 12:55:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="THYEXwetZJOK3OLY"
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Mon Jul 16 13:07:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAOEW-0003uG-Mz
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 12:55:17 +0200
+	id 1IAOQi-0007FB-Lc
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 13:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757717AbXGPKzM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 06:55:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755738AbXGPKzM
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 06:55:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:54275 "EHLO ciao.gmane.org"
+	id S1756565AbXGPLHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Jul 2007 07:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756287AbXGPLHj
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 07:07:39 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:47831 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754862AbXGPKzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 06:55:11 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IAOEI-0001T0-Tw
-	for git@vger.kernel.org; Mon, 16 Jul 2007 12:55:02 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Jul 2007 12:55:02 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Jul 2007 12:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:xcG9+TlYicAxcbg+iHzKZ6X2xAs=
+	id S1755738AbXGPLHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2007 07:07:38 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1IAOQQ-0002Ey-6E
+	from <vmiklos@frugalware.org>; Mon, 16 Jul 2007 13:07:37 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 108531868213; Mon, 16 Jul 2007 13:07:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070716103954.GM999MdfPADPa@greensroom.kotnet.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
+	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52661>
 
-Thomas Glanzmann <thomas@glanzmann.de> writes:
 
-> Hello,
-> I narrowed it down. It is in "git checkout" if I copy the ".git" dir via
-> "cp -a" and type in "git checkout" it breaks. And it _only_ breaks for
-> subdirectories:
+--THYEXwetZJOK3OLY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Another guess: cp -a copies files preserving all permissions and
-ownerships (which works only as root).  Nominally, the files now don't
-belong to you, and some scripts might take you by the word even if
-they _could_ just overwrite things if they actually tried.  Try
-making
+Hello,
 
-chown -R root.root .git
+Na Mon, Jul 16, 2007 at 12:39:55PM +0200, Sven Verdoolaege <skimo@kotnet.or=
+g> pisal(a):
+> No.  You have to specify the specific revision of the subproject
+> that is included in any revision of the superproject.
+>=20
+> Imagine someone making an incompatible change to a subproject.
+> You do not want to get this change in your copy of the superproject
+> unless the superproject has been adapted to this change.
 
-on your tree and see whether this makes git more comfortable.
+i don't say that the ability to stick to a given commit is bad, but imho
+there are scenarios where the ability to stick to a branch is better
 
--- 
-David Kastrup
+ok, i know, probably i should send a patch if i want this, then it can
+be discussed if this is useful or not
+
+anyway thanks for all your answers, now i at least know that what i
+wanted is currently not supported :)
+
+- VMiklos
+
+--THYEXwetZJOK3OLY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFGm1Fwe81tAgORUJYRAlUIAJ9/ZLx6duG28R904bTYo9SLn6tnBACeJ+9n
+ln1/4GZkJAHOIT7gEcDz3ow=
+=Dqnd
+-----END PGP SIGNATURE-----
+
+--THYEXwetZJOK3OLY--
