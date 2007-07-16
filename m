@@ -1,53 +1,56 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Support output ISO 8601 format dates
-Date: Sun, 15 Jul 2007 16:57:39 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707151657230.20061@woody.linux-foundation.org>
-References: <20070713202258.14107.18196.stgit@lathund.dewire.com>
- <20070715212359.GB18293@efreet.light.src>
- <200707160119.34509.robin.rosenberg@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] Introduce commit notes
+Date: Sun, 15 Jul 2007 17:05:01 -0700
+Message-ID: <7vhco5cixe.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+	<Pine.LNX.4.64.0707160022560.14781@racer.site>
+	<7vlkdhck8d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>, junkio@cox.net, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 01:58:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 16 02:05:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IADyl-0006uy-AS
-	for gcvg-git@gmane.org; Mon, 16 Jul 2007 01:58:19 +0200
+	id 1IAE5y-0008LA-VK
+	for gcvg-git@gmane.org; Mon, 16 Jul 2007 02:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637AbXGOX6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Jul 2007 19:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755249AbXGOX6Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 19:58:16 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38840 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753811AbXGOX6P (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2007 19:58:15 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6FNvj9X016241
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 15 Jul 2007 16:57:46 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6FNvd7G024428;
-	Sun, 15 Jul 2007 16:57:39 -0700
-In-Reply-To: <200707160119.34509.robin.rosenberg@dewire.com>
-X-Spam-Status: No, hits=-4.622 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757799AbXGPAFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Jul 2007 20:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763846AbXGPAFF
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Jul 2007 20:05:05 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:47216 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763840AbXGPAFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2007 20:05:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070716000501.ROBQ1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 15 Jul 2007 20:05:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Q0501X00W1kojtg0000000; Sun, 15 Jul 2007 20:05:01 -0400
+In-Reply-To: <7vlkdhck8d.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 15 Jul 2007 16:36:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52613>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> I wonder if it is worth using the fan-out tree structure for the
+> underlying "note" trees, as the notes-index would be the primary
+> way to access them.
 
-On Mon, 16 Jul 2007, Robin Rosenberg wrote:
-> 
-> By "mutual agreement" I mean that I tell you what it looks like and you agree :)
-
-ROTFL.
-
-		Linus
+Actually now I think about it I think this was a stupid
+suggestion.  Creation of a new note in a reasonably well
+populated note tree would be made 256-fold more efficient by
+having the fan-out, as write-tree does not have to recompute the
+other 255 tree objects thanks to the cache-tree data being
+fresh.
