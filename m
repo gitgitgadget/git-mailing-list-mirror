@@ -1,63 +1,63 @@
-From: Eric Wong <eric@petta-tech.com>
-Subject: Re: [PATCH] git-svn: Minimalistic patch which allows svn usernames with space(s).
-Date: Tue, 17 Jul 2007 12:55:59 -0700
-Message-ID: <20070717195559.GA20103@muzzle>
-References: <469CF641.4020707@st.com>
+From: Fredrik Tolf <fredrik@dolda2000.com>
+Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
+Date: Tue, 17 Jul 2007 22:35:45 +0200
+Message-ID: <m3wswyojj2.fsf@pc7.dolda2000.com>
+References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com> <dbfc82860707160237v6772b5b8o541f2045ccd824d5@mail.gmail.com> <f158199e0707160433v27fe7073w9c550712c41c32e8@mail.gmail.com> <f158199e0707160626j1025ab2cp3339ca6ab91d9af0@mail.gmail.com> <Pine.LNX.4.64.0707170834040.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard MUSIL <richard.musil@st.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 22:28:36 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 17 22:36:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAtet-0000qc-O0
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:28:36 +0200
+	id 1IAtmu-0003aT-Jh
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756531AbXGQU2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 16:28:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXGQU2d
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:28:33 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:43454 "EHLO hand.yhbt.net"
+	id S935437AbXGQUgF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 16:36:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935363AbXGQUgE
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:36:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:34976 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754377AbXGQU2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 16:28:32 -0400
-X-Greylist: delayed 1951 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2007 16:28:32 EDT
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 2713E2DC08D;
-	Tue, 17 Jul 2007 12:56:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <469CF641.4020707@st.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S935964AbXGQUgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 16:36:01 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IAtlz-0004wk-9N
+	for git@vger.kernel.org; Tue, 17 Jul 2007 22:35:55 +0200
+Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 22:35:55 +0200
+Received: from fredrik by 1-1-3-7a.rny.sth.bostream.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 22:35:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 1-1-3-7a.rny.sth.bostream.se
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:M4CufU9/7wwrF3nYdJ+ouxM2kxM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52799>
 
-Richard MUSIL <richard.musil@st.com> wrote:
-> Changed filter for username in svn-authors file, so even 'user name' is accepted.
-> ---
->  git-svn.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 01c3904..975075e 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -740,7 +740,7 @@ sub load_authors {
->         my $log = $cmd eq 'log';
->         while (<$authors>) {
->                 chomp;
-> -               next unless /^(\S+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
-> +               next unless /^(\.+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Surely you mean the following:
+> Hi,
+>
+> On Mon, 16 Jul 2007, Bradford Smith wrote:
+>
+>> So, I guess I need to add a GIT_CONFIG_HOME environment variable.  If I 
+>> get that done, I'll send a patch to the list including doc updates.
+>
+> Alternatively, you could actually not ignore my hint at readlink(2) and 
+> have a proper fix, instead of playing games with environment variables.
 
-+               next unless /^(.+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
+Wouldn't it be nicer to avoid a lot of the complexity in checking
+symlinks, environment variables and what not, and just overwrite the
+file in place (with open(..., O_TRUNC | O_CREAT))? Does it happen
+terribly often that git-config crashes in the middle and leaves the
+file broken?
 
-(No "\" before the ".")   "\." matches a dot/period (.), while "."
-matches anything.
-
--- 
-Eric Wong
+Fredrik Tolf
