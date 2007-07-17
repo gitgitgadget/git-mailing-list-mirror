@@ -1,110 +1,131 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] translate bad characters in refnames during git-svn fetch
-Date: Tue, 17 Jul 2007 05:28:52 -0700
-Message-ID: <20070717122852.GA21372@mayonaise>
-References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716111509.GC18293@efreet.light.src> <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716174731.GA4792@lapse.madduck.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: gitignore and shared worktrees (was: finding the right remote
+	branch for a commit)
+Date: Tue, 17 Jul 2007 15:09:36 +0200
+Message-ID: <20070717130936.GA19724@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 17 14:29:04 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 17 15:09:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAmAk-0000qK-Rh
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 14:28:59 +0200
+	id 1IAmoD-0007fs-1H
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 15:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbXGQM2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 08:28:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbXGQM2z
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 08:28:55 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:43282 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075AbXGQM2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 08:28:54 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 5488F2DC08D;
-	Tue, 17 Jul 2007 05:28:52 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 17 Jul 2007 05:28:52 -0700
+	id S1751622AbXGQNJk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 09:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbXGQNJk
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 09:09:40 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:51820 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622AbXGQNJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 09:09:39 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id E4F0D895D8F;
+	Tue, 17 Jul 2007 15:09:37 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 20066-10; Tue, 17 Jul 2007 15:09:37 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 87E32895D8E;
+	Tue, 17 Jul 2007 15:09:37 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 18DA29F166;
+	Tue, 17 Jul 2007 15:09:37 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id D3D5643EA; Tue, 17 Jul 2007 15:09:36 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <20070716174731.GA4792@lapse.madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52757>
-
-martin f krafft <madduck@madduck.net> wrote:
-> also sprach Eric Wong <normalperson@yhbt.net> [2007.07.16.0530 +0200]:
-> > The major issue with this is that it doesn't handle odd cases
-> > where a refname is sanitized into something (say "1234~2"
-> > sanitizes to "1234=2"), and then another branch is created named
-> > "1234=2".
-> 
-> Well, we can't please everyone, can we? :)
-> 
-> I like Jan's proposal about using the % escape, even though it
-> doesn't make pretty branch names.
-
-I like it, too.  How about something like the two functions below?  This
-will break things a bit for people currently using % in refnames,
-however.
-
-I think this will work rather nicely once I've figured out how the path
-globbing code works[1] and where to sanitize/desanitize the refnames
-properly.
-
-It would be far easier to take your approach and sanitize them only
-for the command-line, but storing unsanitized git refnames into the
-.git/config is something I want to avoid:
-
-  Somebody naming directories on the SVN side with the path component
-  ":refs/remotes" in them could screw things up for us.
-
-# transform the refname as per rules in git-check-ref-format(1):
-sub sanitize_ref_name {
-	my ($refname) = @_;
-
-	# It cannot end with a slash /, we'll throw up on this because
-	# SVN can't have directories with a slash in their name, either:
-	if ($refname =~ m{/$}) {
-		die "ref: '$refname' ends with a trailing slash, this is ",
-		    "not permitted by git nor Subversion\n";
-	}
-
-	# It cannot have ASCII control character space, tilde ~, caret ^,
-	# colon :, question-mark ?, asterisk *, or open bracket[ anywhere
-	#
-	# Additionally, % must be escaped because it is used for escaping
-	# and we want our escaped refname to be reversible
-	$refname =~ s{( \%~\^:\?\*\[\t)}{uc sprintf('%%%02x',ord($1))}eg;
-
-	# no slash-separated component can begin with a dot .
-	# /.* becomes /%2E*
-	$refname =~ s{/\.}{/%2E}g;
-	# It cannot have two consecutive dots .. anywhere
-	# .. becomes %2E%2E
-	$refname =~ s{\.\.}{%2E%2E}g;
-
-	$refname;
-}
-
-sub desanitize_ref_name {
-	my ($refname) = @_;
-	$refname =~ s{%(?:([0-9A-F]{2})}{chr hex($1)}g;
-
-	$refname;
-}
-
-> On the other hand, we could make the translation regexps
-> configurable...
-
-Hopefully not needed.  I fear it would just add to confusion.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52758>
 
 
-[1] I don't remember writing the globbing code myself, maybe it was my
-psychotic alter ego, but I'm having trouble following it at this time of
-the night/morning.
+--mYCpIKhGyMATD0i+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Eric Wong
+Sorry for the somewhat late reply, I just found time on the weekend
+to check out this suggestion by Johannes
+
+  (http://marc.info/?l=3Dgit&m=3D118418927823760&w=3D2)
+
+also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.11.21=
+26 +0200]:
+> Come to think of it, this is maybe what I would have done, but it
+> appears to me that this is the _ideal_ use case for worktree:
+>=20
+> In $HOME/gits:
+>=20
+> $ mkdir vim.git && cd vim.git
+> $ git --work-tree=3D$HOME init
+> $ cat >> info/exclude < EOF
+> *
+> !/.vimrc
+> EOF
+>=20
+> Then you could do all Git operations like push, fetch, pull, log in=20
+> $HOME/gits/vim.git, and all editing in $HOME.
+
+This actually seems to work really nicely, but I am somewhat
+displeased by the gitignore/exclude handling, since it's local. What
+I want to do is synchronise the vim configuration across many
+workstations with git, and I don't want to have to modify
+$GIT_DIR/info/exclude on each machine.
+
+So I am tempted to use .gitignore, but that lives in the worktree,
+and since the suggestion is to share worktrees between different git
+repos, I can only ever have one .gitignore file, which would have to
+list ignores for *all* repos in $HOME/gits, which breaks my head.
+
+Do you have any other idea on how to handle ignores? I guess one
+alternative is just to ignore git status output altogether, but
+that's not really nice.
+
+Would people consider honoring .gitignore-* in addition to just
+=2Egitignore? Or maybe even honouring .gitignore/*, if .gitignore is
+a directory, not a file?
+
+Cheers,
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+"i like .net for the same reason i like gentoo. it keeps all the
+ people with no clue from writing c code, which is much harder for me
+ to identify and eliminate from my systems. in the same way that
+ gentoo gives those people a place to be that isn't in debian"
+                                                    -- andrew suffield
+
+--mYCpIKhGyMATD0i+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGnL+QIgvIgzMMSnURAliWAJwMl8fDbCndyMuoO6SBIHFJa/yHXgCfQmfE
+DSwbSozAgYwm2Aa1GapKRhY=
+=X7pN
+-----END PGP SIGNATURE-----
+
+--mYCpIKhGyMATD0i+--
