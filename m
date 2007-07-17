@@ -1,61 +1,94 @@
-From: david@lang.hm
-Subject: Re: Do a better job at guessing unknown character sets
-Date: Tue, 17 Jul 2007 13:01:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0707171257420.2467@asgard.lang.hm>
-References: <alpine.LFD.0.999.0707171027100.19166@woody.linux-foundation.org>
- <Pine.LNX.4.64.0707172053030.14781@racer.site>
+From: Eddie Kohler <kohler@cs.ucla.edu>
+Subject: gitweb: get_file_owner and XML special characters
+Date: Tue, 17 Jul 2007 13:06:37 -0700
+Message-ID: <469D214D.7030101@cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 17 22:08:05 2007
+Content-Type: multipart/mixed;
+ boundary="------------050009010700090909000202"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 17 22:13:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAtKw-0002i2-Qs
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:07:59 +0200
+	id 1IAtQP-0004da-JG
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678AbXGQUHz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 16:07:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbXGQUHz
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:07:55 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:36348
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752120AbXGQUHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 16:07:54 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l6HK7eop019736;
-	Tue, 17 Jul 2007 13:07:40 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <Pine.LNX.4.64.0707172053030.14781@racer.site>
+	id S933597AbXGQUNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 16:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933337AbXGQUNb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:13:31 -0400
+Received: from smtp-8.smtp.ucla.edu ([169.232.47.138]:42900 "EHLO
+	smtp-8.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932923AbXGQUNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 16:13:30 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2007 16:13:30 EDT
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
+	by smtp-8.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6HK6SnS025195
+	for <git@vger.kernel.org>; Tue, 17 Jul 2007 13:06:28 -0700
+Received: from [131.179.33.130] (Cs-33-130.CS.UCLA.EDU [131.179.33.130])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6HK6RaH027707
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 17 Jul 2007 13:06:28 -0700
+User-Agent: Thunderbird 1.5.0.12 (X11/20070530)
+X-Probable-Spam: no
+X-Spam-Hits: 0.654
+X-Spam-Report: SPF_SOFTFAIL
+X-Scanned-By: smtp.ucla.edu on 169.232.47.138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52795>
 
-On Tue, 17 Jul 2007, Johannes Schindelin wrote:
+This is a multi-part message in MIME format.
+--------------050009010700090909000202
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> On Tue, 17 Jul 2007, Linus Torvalds wrote:
->
->> I think this makes sense from a "the world is moving to utf-8"
->> standpoint, even if obviously some people might consider it a bit ugly
->> to do per-line "guessing".
->>
->> Comments?
->
-> Encodings are such a hassle, and probably
-> only because the inventors of ASCII just were narrow-minded enough not to
-> care.
+Hi,
 
-to be perfectly fair, at the time ASCII was invented it was done to 
-eliminate the use of the different, incompatible character sets that were 
-in use at the time. And it did the job well (I think the only surviver 
-from those sets is EBCDIC, and only due to the legacy installed base)
+I think current gitweb generates invalid XHTML when get_file_owner returns a 
+string containing <>&.  (Version 1.5.2.1 certainly does, and in a quick browse 
+of current source I didn't notice relevant changes.)
 
-current character encodings are doing things that weren't dreamed of by 
-anyone at the time.
+Here is a dirty patch to fix this problem.  Apologies if it is no longer a 
+problem or if the patch is gross.
+Thanks,
+Eddie (newbie)
 
-David Lang
+
+--------------050009010700090909000202
+Content-Type: text/x-patch;
+ name="0001-Escape-HTML-special-characters-in-file-owner.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-Escape-HTML-special-characters-in-file-owner.patch"
+
+>From 1c6ba7b6b28808cea0f2f9ab46733ddefdac329a Mon Sep 17 00:00:00 2001
+From: Eddie Kohler <kohler@cs.ucla.edu>
+Date: Tue, 17 Jul 2007 13:06:08 -0700
+Subject: [PATCH] Escape HTML special characters in file owner
+
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c8ba3a2..540d9a6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2050,7 +2050,7 @@ sub get_file_owner {
+ 	}
+ 	my $owner = $gcos;
+ 	$owner =~ s/[,;].*$//;
+-	return to_utf8($owner);
++	return $cgi->escapeHTML(to_utf8($owner));
+ }
+ 
+ ## ......................................................................
+-- 
+1.5.2.2
+
+
+--------------050009010700090909000202--
