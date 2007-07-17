@@ -1,75 +1,65 @@
-From: Amit Walambe <awalambe@arcom.com>
-Subject: git bisect not accepting -git kernels
-Date: Tue, 17 Jul 2007 17:03:02 +0100
-Message-ID: <469CE836.6010508@arcom.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
+Date: Tue, 17 Jul 2007 17:09:42 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707171708210.14781@racer.site>
+References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com>
+ <tnx4pk39mju.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Amit Walambe (awalambe@arcom.com)" <awalambe@arcom.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 17 18:03:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bradford Smith <bradford.carl.smith@gmail.com>, git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 18:10:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IApW9-00072U-VD
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:03:18 +0200
+	id 1IApcq-00011o-Kz
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755066AbXGQQDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 12:03:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753879AbXGQQDI
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:03:08 -0400
-Received: from mail28.messagelabs.com ([216.82.249.131]:50872 "HELO
-	mail28.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753142AbXGQQDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 12:03:06 -0400
-X-VirusChecked: Checked
-X-Env-Sender: awalambe@arcom.com
-X-Msg-Ref: server-17.tower-28.messagelabs.com!1184688183!49230484!1
-X-StarScan-Version: 5.5.12.11; banners=arcom.com,-,-
-X-Originating-IP: [194.200.159.164]
-Received: (qmail 31947 invoked from network); 17 Jul 2007 16:03:04 -0000
-Received: from mail2.arcom.com (HELO mail2.arcom.com) (194.200.159.164)
-  by server-17.tower-28.messagelabs.com with SMTP; 17 Jul 2007 16:03:04 -0000
-Received: from amit.arcom.cc [10.2.2.55] by mail2.arcom.com with ESMTP
-  (SMTPD32-8.00) id A97376000DA; Tue, 17 Jul 2007 17:08:19 +0100
-User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
+	id S1758994AbXGQQKI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 12:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758001AbXGQQKG
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:10:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34487 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753051AbXGQQKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 12:10:05 -0400
+Received: (qmail invoked by alias); 17 Jul 2007 16:10:02 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 17 Jul 2007 18:10:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18jZ8sKAZcj/5dSrwCLRDtVkW1TSuv9eS98WsLl3f
+	PE9uTSN9oPXQBh
+X-X-Sender: gene099@racer.site
+In-Reply-To: <tnx4pk39mju.fsf@arm.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52766>
 
-Hi!
-I was trying to do a git bisect on 2.6.22-git6 and 2.6.22-git8. For 
-which I get following error :
-root@amit:/usr/src/linux-git # git bisect good v2.6.22-git6
-Bad rev input: v2.6.22-git6
+Hi,
 
-The repository is obtained by :
-root@amit:/usr/src # git clone 
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6 linux-git
+On Tue, 17 Jul 2007, Catalin Marinas wrote:
 
-I am running following git version on Debian Sid, updated today.
-# git --version
-git version 0.99.8.GIT
-'# dpkg -l | grep git' shows ' git-core 
-1:1.5.2.3-1'
+> "Bradford Smith" <bradford.carl.smith@gmail.com> wrote:
+> > However, when I tried running 'git-config --global color.diff auto'
+> > today, it removed my symlink and replaced it with a real file.  This
+> > left me briefly a bit confused when the changes I had made didn't show
+> > up in ~/etc/gitconfig, but git-config reported them anyway.
+> 
+> Another problem I have with 'git config --global' is that it changes
+> the access permission bits of ~/.gitconfig. Since I use the same file
+> to store global StGIT configuration like SMTP username and password,
+> I'd like to make its access 0600 but it always goes back to 0644 after
+> 'git config --global'.
+> 
+> Maybe fixing the symlink case would solve my problem as well.
 
-I tried searching man-pages/documentation/website but couldn't find any 
-references to git bisect on -git kernels. I would be grateful if anyone 
-can help me find what's going wrong.
+More likely not.  The way to solve it would be to follow the link if the 
+target path is one.  As such, the _file_ would be rewritten.
 
-As I am not subscribed to the mailing-list, please cc me to all the 
-messages on the thread.
-Thanks and Regards,
--- 
-Amit Walambe
-Design Engineer, Arcom Control Systems Ltd.
-http://www.arcom.com
-Tel: +44-(0)1223 411200 ext. 3204
-Direct: +44-(0)1223 403465
+So your problem is unrelated, and would need a separate fix.
 
-_____________________________________________________________________
-The message in this transmission is sent in confidence for the attention of the addressee only and should not be disclosed to any other party. Unauthorised recipients are requested to preserve this confidentiality. Please advise the sender if the addressee is not resident at the receiving end.  Email to and from Arcom is automatically monitored for operational and lawful business reasons.
-
-This message has been virus scanned by MessageLabs.
+Ciao,
+Dscho
