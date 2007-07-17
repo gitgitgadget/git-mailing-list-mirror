@@ -1,142 +1,70 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: [PATCH] Do _not_ call unlink on a directory
-Date: Tue, 17 Jul 2007 12:15:27 +0200
-Message-ID: <20070717101527.GB7774@cip.informatik.uni-erlangen.de>
-References: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de> <7vtzs3a0xg.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: Installation failure caused by CDPATH environment variable
+Date: Tue, 17 Jul 2007 13:40:24 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070717114024.GA12215@informatik.uni-freiburg.de>
+References: <9693D8E9-6F11-4AA1-AFCA-7E8456FA6420@wincent.com> <7vejje3a4k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 12:15:33 2007
+X-From: git-owner@vger.kernel.org Tue Jul 17 13:40:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAk5c-0000Cj-Tt
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 12:15:33 +0200
+	id 1IAlQ9-00016f-HI
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 13:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754402AbXGQKP3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 06:15:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbXGQKP2
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 06:15:28 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:48257 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754402AbXGQKP2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 06:15:28 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 1D85B3F442; Tue, 17 Jul 2007 12:15:27 +0200 (CEST)
+	id S932072AbXGQLkb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Jul 2007 07:40:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765728AbXGQLkb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 07:40:31 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:35556 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757482AbXGQLka (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 07:40:30 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IAlPp-0007d8-6X; Tue, 17 Jul 2007 13:40:29 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6HBePXi013467;
+	Tue, 17 Jul 2007 13:40:25 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6HBeOhM013466;
+	Tue, 17 Jul 2007 13:40:24 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vtzs3a0xg.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <7vejje3a4k.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52754>
 
-Hello Junio,
+Hello,
 
-> This is wrong.  If the filesystem has a symlink and we would want a
-> directory there, we should unlink().  So at least the stat there needs
-> to be lstat().
+Junio C Hamano wrote:
+> We could write it as "$(TAR) Ccf blt - ." if we can rely on the
+> 'C' option, but I suspect it is a GNU extension.  Does anybody
+> have POSIX.1 handy?
+I don't have POSIX.1 handy, but on Solaris 10, you need to say:
 
-I see.
+	tar cf - -C blt .
 
-> I wonder if anybody involved in the discussion has actually
-> tested this patch (or the other one, that has the same problem)?
+(That is, Solaris' tar has the 'C' option, which is quite a good
+indication, that it's included in POSIX :-)
 
-I tested it. But I did not test it with symlinks.
+Best regards
+Uwe
 
-> Does the following replacement work for you?  It adds far more lines
-> than your version, but they are mostly comments to make it clear why
-> we do things this way.
+--=20
+Uwe Kleine-K=F6nig
 
-Yes, it does. Excuse the delay but my build machine is not the fastest.
-
-	(faui04a) [/var/tmp] git clone ~/work/repositories/public/easix.git test-10
-	Initialized empty Git repository in /var/tmp/test-10/.git/
-	remote: Generating pack...
-	remote: Done counting 317 objects.
-	remote: Deltifying 317 objects...
-	remote: te: % (317/317) done: ) done
-	Indexing 317 objects...
-	remote: Total 317 (delta 182), reused 278 (delta 157)
-	100% (317/317) done
-	Resolving 182 deltas...
-	100% (182/182) done
-	(faui04a) [/var/tmp] cd test-10
-	./test-10
-	(faui04a) [/var/tmp/test-10] git status
-	# On branch master
-	nothing to commit (working directory clean)
-
-I rebased your patch on top of current HEAD (as I can access it on
-git.kernel.org) and removed trailing whitspace from one line (git-apply
-complained)
-
-	Thomas
-
->From 3b60b807007507ce5e1f8490f1469dac5bb95917 Mon Sep 17 00:00:00 2001
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Date: Tue, 17 Jul 2007 11:31:07 +0200
-Subject: [PATCH] Do _not_ call unlink on a directory
-
-Calling unlink on a directory on a Solaris UFS filesystem as root makes it
-inconsistent. Thanks to Junio for the not so obvious fix.
----
- entry.c |   37 ++++++++++++++++++++++++++++++-------
- 1 files changed, 30 insertions(+), 7 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index c540ae1..0625112 100644
---- a/entry.c
-+++ b/entry.c
-@@ -8,17 +8,40 @@ static void create_directories(const char *path, const struct checkout *state)
- 	const char *slash = path;
- 
- 	while ((slash = strchr(slash+1, '/')) != NULL) {
-+		struct stat st;
-+		int stat_status;
-+
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
-+
-+		if (len <= state->base_dir_len)
-+			/*
-+			 * checkout-index --prefix=<dir>; <dir> is
-+			 * allowed to be a symlink to an existing
-+			 * directory.
-+			 */
-+			stat_status = stat(buf, &st);
-+		else
-+			/*
-+			 * if there currently is a symlink, we would
-+			 * want to replace it with a real directory.
-+			 */
-+			stat_status = lstat(buf, &st);
-+
-+		if (!stat_status && S_ISDIR(st.st_mode))
-+			continue; /* ok, it is already a directory. */
-+
-+		/*
-+		 * We know stat_status == 0 means something exists
-+		 * there and this mkdir would fail, but that is an
-+		 * error codepath; we do not care, as we unlink and
-+		 * mkdir again in such a case.
-+		 */
- 		if (mkdir(buf, 0777)) {
--			if (errno == EEXIST) {
--				struct stat st;
--				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
--					continue;
--				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
--					continue; /* ok */
--			}
-+			if (errno == EEXIST && state->force &&
-+			    !unlink(buf) && !mkdir(buf, 0777))
-+				continue;
- 			die("cannot create directory at %s", buf);
- 		}
- 	}
--- 
-1.5.2.1
+http://www.google.com/search?q=3Dgigabyte+in+bit
