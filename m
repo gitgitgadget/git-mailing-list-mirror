@@ -1,136 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do _not_ call unlink on a directory
-Date: Tue, 17 Jul 2007 01:28:59 -0700
-Message-ID: <7vtzs3a0xg.fsf@assigned-by-dhcp.cox.net>
-References: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
+Subject: Re: [PATCH] Document "git stash message..."
+Date: Tue, 17 Jul 2007 01:50:49 -0700
+Message-ID: <7vps2r9zx2.fsf@assigned-by-dhcp.cox.net>
+References: <20070624192215.6117@nanako3.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-X-From: git-owner@vger.kernel.org Tue Jul 17 10:29:11 2007
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 10:51:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAiQf-0001hF-Of
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 10:29:10 +0200
+	id 1IAim4-0008AI-Qx
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 10:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757965AbXGQI3G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 04:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbXGQI3F
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 04:29:05 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:51124 "EHLO
+	id S1760519AbXGQIux convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Jul 2007 04:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932094AbXGQIuv
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 04:50:51 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:53937 "EHLO
 	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754473AbXGQI3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 04:29:01 -0400
+	with ESMTP id S1763641AbXGQIuu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 04:50:50 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao105.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070717082902.ZJJJ1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 17 Jul 2007 04:29:02 -0400
+          id <20070717085050.ZMDT1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 17 Jul 2007 04:50:50 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id QYV01X0051kojtg0000000; Tue, 17 Jul 2007 04:29:00 -0400
-In-Reply-To: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de>
-	(Thomas Glanzmann's message of "Mon, 16 Jul 2007 19:12:52 +0200")
+	id QYqp1X00G1kojtg0000000; Tue, 17 Jul 2007 04:50:50 -0400
+In-Reply-To: <20070624192215.6117@nanako3.bluebottle.com>
+	(nanako3@bluebottle.com's message of "Tue, 17 Jul 2007 17:15:42
+	+0900")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52750>
 
-Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nanak=
+o3@bluebottle.com> writes:
 
-> Calling unlink on a directory on a Solaris UFS filesystem as root makes it
-> inconsistent. Thanks to Johannes Sixt for the obvious fix.
-> ---
->  entry.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
+> The command was recently updated to take message on the command line,=
+ but
+> this feature has not been documented.
 >
-> diff --git a/entry.c b/entry.c
-> index 82bf725..1f2e34d 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -14,10 +14,10 @@ static void create_directories(const char *path, const struct checkout *state)
->  		if (mkdir(buf, 0777)) {
->  			if (errno == EEXIST) {
->  				struct stat st;
-> -				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
-> -					continue;
->  				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
->  					continue; /* ok */
-> +				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
-> +					continue;
->  			}
->  			die("cannot create directory at %s", buf);
->  		}
-> -- 
-> 1.5.2.1
+> Signed-off-by: Nanako Shiraishi <nanako3@bluebottle.com>
 
-This is wrong.  If the filesystem has a symlink and we would
-want a directory there, we should unlink().  So at least the
-stat there needs to be lstat().
+Thanks -- that was my fault.
 
-I wonder if anybody involved in the discussion has actually
-tested this patch (or the other one, that has the same problem)?
+>  Documentation/git-stash.txt |   11 +++++++----
+>  1 files changed, 7 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.tx=
+t
+> index ad95ed9..4404361 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -22,7 +23,9 @@ The modifications stashed away by this command can =
+be listed with
+>  `git-stash list`, inspected with `git-stash show`, and restored
+>  (potentially on top of a different commit) with `git-stash apply`.
+>  Calling git-stash without any arguments is equivalent to `git-stash
+> -save`.
+> +save`.  A stash is by default listed as "WIP on 'branchname' ...", b=
+ut
+> +you can give more descriptive message on the command line when
+> +you create one.
 
-Does the following replacement work for you?  It adds far more
-lines than your version, but they are mostly comments to make it
-clear why we do things this way.
-
----
- entry.c |   37 ++++++++++++++++++++++++++++++-------
- 1 files changed, 30 insertions(+), 7 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index f9e7dc5..42fda36 100644
---- a/entry.c
-+++ b/entry.c
-@@ -8,17 +8,40 @@ static void create_directories(const char *path, const struct checkout *state)
- 	const char *slash = path;
- 
- 	while ((slash = strchr(slash+1, '/')) != NULL) {
-+		struct stat st;
-+		int stat_status;
-+
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
-+
-+		if (len <= state->base_dir_len)
-+			/*
-+			 * checkout-index --prefix=<dir>; <dir> is
-+			 * allowed to be a symlink to an existing
-+			 * directory.
-+			 */
-+			stat_status = stat(buf, &st);
-+		else
-+			/*
-+			 * if there currently is a symlink, we would
-+			 * want to replace it with a real directory.
-+			 */
-+			stat_status = lstat(buf, &st);
-+
-+		if (!stat_status && S_ISDIR(st.st_mode))
-+			continue; /* ok, it is already a directory. */
-+		
-+		/*
-+		 * We know stat_status == 0 means something exists
-+		 * there and this mkdir would fail, but that is an
-+		 * error codepath; we do not care, as we unlink and
-+		 * mkdir again in such a case.
-+		 */
- 		if (mkdir(buf, 0777)) {
--			if (errno == EEXIST) {
--				struct stat st;
--				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
--					continue; /* ok */
--				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
--					continue;
--			}
-+			if (errno == EEXIST && state->force &&
-+			    !unlink(buf) && !mkdir(buf, 0777))
-+				continue;
- 			die("cannot create directory at %s", buf);
- 		}
- 	}
+Perhaps "give a more descriptive message"?
