@@ -1,130 +1,118 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Do a better job at guessing unknown character sets
-Date: Tue, 17 Jul 2007 10:34:44 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707171027100.19166@woody.linux-foundation.org>
+From: "Matt McCutchen" <hashproduct@gmail.com>
+Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
+Date: Tue, 17 Jul 2007 14:03:21 -0400
+Message-ID: <3bbc18d20707171103q262eaa8amb319ca9f835dbf67@mail.gmail.com>
+References: <1183053733.6108.0.camel@mattlaptop2>
+	 <7vir8q4opc.fsf@assigned-by-dhcp.cox.net>
+	 <3bbc18d20707111815i1de3cb35sadfa316ddee7f3f6@mail.gmail.com>
+	 <200707121307.03612.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 17 19:34:59 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>, "Luben Tuikov" <ltuikov@yahoo.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 20:03:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAqwr-00080I-AF
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 19:34:57 +0200
+	id 1IArOW-0002Rs-9X
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 20:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbXGQRez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 13:34:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752976AbXGQRey
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 13:34:54 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:56734 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753017AbXGQRey (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 13:34:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HHYoO9013168
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 17 Jul 2007 10:34:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HHYig6030267;
-	Tue, 17 Jul 2007 10:34:44 -0700
-X-Spam-Status: No, hits=-2.649 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S933593AbXGQSD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 14:03:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933632AbXGQSDZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 14:03:25 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:5123 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933593AbXGQSDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 14:03:22 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1230400nze
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 11:03:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=p6fcQZ4nTPK2mTCSreretJYYFe66/5H6Wj5ktYHQdfFIXILtOB/hnDeP9mhEDF0gQjDFbqUf3pJdmq6dr1S30WC/y34gNXnkSsj52ROKlaDBdm9Ytce+5pVpuIzlyqlX6aJVnDXGDBPCC5HaR6e/vkIHJECWRz7Vsbz6H8e/vD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IQn2R9YrJBWvdK5bzezvFaP5V8+BANwl0U6BlkLmZK0BW+kZsCmeiC6Ckaqnb3jAY2itFykE7DWurU1ycZ4B355ikxY+W56C/zmbVW+PNv36NDcsuuWkfXUB+uF3IxweAaJ/9QDRfyYH1GlWAj4dXWjWNpSgdyuqE+czERjC068=
+Received: by 10.142.110.3 with SMTP id i3mr55412wfc.1184695401491;
+        Tue, 17 Jul 2007 11:03:21 -0700 (PDT)
+Received: by 10.143.30.9 with HTTP; Tue, 17 Jul 2007 11:03:21 -0700 (PDT)
+In-Reply-To: <200707121307.03612.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52785>
 
+On 7/12/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> > The advantage of '| gzip' is that the lack of a compressor is
+> > not a special case.  This is why I wrote %known_snapshot_formats the
+> > way I did, but of course you all are welcome to overrule me.
+>
+> I wrote about this because I'm thinking about replacing the few
+> pipelines we use in gitweb[*1*], including the snapshot one, with
+> the list form, which has the advantage of avoiding spawning the shell
+> (performance) and not dealing with shell quoting of arguments (security
+> and errors), like we did for simple calling of git commands to read
+> from in the commit b9182987a80f7e820cbe1f8c7c4dc26f8586e8cd
+>   "gitweb: Use list for of open for running git commands, thorougly"
+>
+> Thus I'd rather have list of extra commands and arguments instead of
+> pipe as a string, i.e. 'gzip' instead of '| gzip', and 'gzip', '-9'
+> instead of '| gzip -9'.
+>
+> [*1*] We currently use pipelines for snapshots which need external
+> compressor, like tgz and tbz2, and for pickaxe search.
 
-At least in the kernel development community, we're generally slowly 
-converting to UTF-8 everywhere, and the old default of Latin1 in emails is 
-being supplanted by UTF-8, and it doesn't necessarily show up as such in 
-the mail headers (because, quite frankly, when people send patches 
-around, they want the email client to do as little as humanly possible 
-about the patch)
+OK, I changed the extra commands to list form.  The field is now a
+reference to the compressor argv like ['gzip'] or undef if there is no
+compressor.
 
-Despite that, it's often the case that email addresses etc still have 
-Latin1, so I've seen emails where this is a mixed bag, with Signed-off 
-parts being copied from email (and containing Latin1 characters), and the 
-rest of the email being a patch in UTF-8.
+> I also prefer the second option, perhaps as simple as 'gzip' => 'tbz'
+> and 'bzip2' => 'tbz2', and of course accompaning code to deal with this.
+>
+> As to "display name" column: I'm not sure if for example 'tar.gz'
+> instead of 'tgz' would be not easier to understand.
 
-So this suggests a very natural change: if the target character set is 
-utf-8 (the default), and if the source already looks like utf-8, just 
-assume that it doesn't need any conversion at all.
+I went ahead and added both aliases and display names (currently
+'tar.gz', 'tar.bz2', and 'zip').  Aliases are resolved in
+&feature_snapshot for repository configuration but not for side-wide
+configuration because then aliases in side-wide configuration would be
+resolved only if override is on, which would be weird.  For the same
+reason, I changed the filtering out of unknown formats in
+&feature_snapshot to apply only to repository configuration.
 
-Only assume that it needs conversion if it isn't already valid utf-8, in 
-which case we (for historical reasons) will assume it's Latin1.
+> > It would be possible to make the gitweb site configuration
+> > backward-compatible too; here's one possible approach.  On startup,
+> > gitweb would check whether $feature{'snapshot'}{'default'} is a
+> > three-element list that appears to be in the old format.  If so, it
+> > would save the settings in $known_snapshot_formats{'default'} and then
+> > set $feature{'snapshot'}{'default'} = 'default' .  This is a hack; is
+> > it justified by the compatibility benefit?
+>
+> If you implement 'gzip' and 'bzip2' as aliases, it could be as simple
+> as just taking last non-false element of array if the array has more
+> than one element.
 
-Basically no really _valid_ latin1 will ever look like utf-8, so while 
-this changes our historical behaviour, it doesn't do so in practice, and 
-makes the default behaviour saner for the case where the input was already 
-in proper format.
+No, because it must be possible for the site default to consist of
+multiple formats.  It would be possible to take all elements that are
+recognized as snapshot formats and ignore the others, but I would like
+to be able to distinguish between "formats" that are part of a legacy
+specification and completely bogus formats so that we can issue a
+warning or error for the latter.
 
-We could do a more fancy guess, of course, but this correctly handled a 
-series of patches I just got from Andrew that had a mixture of Latin1 and 
-UTF-8 (in different emails, but without any character set indication).
+> But I'm not sure if it is worth it.
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+At this point I am leaning against backward compatibility for the site
+configuration, and if I do implement it, I would just recognize the
+three exact specifications that currently appear in feature_snapshot.
+Recognizing other legacy specifications is iffy in the first place,
+and handling them would require the hack I described.
 
-I think this makes sense from a "the world is moving to utf-8" standpoint, 
-even if obviously some people might consider it a bit ugly to do per-line 
-"guessing".
+I will send the revised patch soon.
 
-Comments?
-
- builtin-mailinfo.c |   33 +++++++++++++++++++++++++++++----
- 1 files changed, 29 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 489c2c5..a37a4ff 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -499,15 +499,40 @@ static int decode_b_segment(char *in, char *ot, char *ep)
- 	return 0;
- }
- 
-+/*
-+ * When there is no known charset, guess.
-+ *
-+ * Right now we assume that if the target is UTF-8 (the default),
-+ * and it already looks like UTF-8 (which includes US-ASCII as its
-+ * subset, of course) then that is what it is and there is nothing
-+ * to do.
-+ *
-+ * Otherwise, we default to assuming it is Latin1 for historical
-+ * reasons.
-+ */
-+static const char *guess_charset(const char *line, const char *target_charset)
-+{
-+	if (is_encoding_utf8(target_charset)) {
-+		if (is_utf8(line))
-+			return NULL;
-+	}
-+	return "latin1";
-+}
-+
- static void convert_to_utf8(char *line, const char *charset)
- {
--	static const char latin_one[] = "latin1";
--	const char *input_charset = *charset ? charset : latin_one;
--	char *out = reencode_string(line, metainfo_charset, input_charset);
-+	char *out;
-+
-+	if (!charset || !*charset) {
-+		charset = guess_charset(line, metainfo_charset);
-+		if (!charset)
-+			return;
-+	}
- 
-+	out = reencode_string(line, metainfo_charset, charset);
- 	if (!out)
- 		die("cannot convert from %s to %s\n",
--		    input_charset, metainfo_charset);
-+		    charset, metainfo_charset);
- 	strcpy(line, out);
- 	free(out);
- }
+Matt
