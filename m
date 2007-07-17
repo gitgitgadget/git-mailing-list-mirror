@@ -1,90 +1,116 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Another question about importing SVN with fast-import
-Date: Mon, 16 Jul 2007 23:38:40 -0400
-Message-ID: <20070717033840.GK32566@spearce.org>
-References: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A question about git-rev-list
+Date: Mon, 16 Jul 2007 21:33:49 -0700
+Message-ID: <7v8x9fbqdu.fsf@assigned-by-dhcp.cox.net>
+References: <86wsx0wwvs.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0707161258560.20061@woody.linux-foundation.org>
+	<85bqecm4mn.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jul 17 05:38:59 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jul 17 06:33:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAdtp-0004Q5-Ut
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 05:38:58 +0200
+	id 1IAel2-0006F2-Bw
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 06:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204AbXGQDip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Jul 2007 23:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbXGQDip
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Jul 2007 23:38:45 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60711 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754186AbXGQDio (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2007 23:38:44 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IAdtO-000675-HW; Mon, 16 Jul 2007 23:38:30 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 28DF520FBAE; Mon, 16 Jul 2007 23:38:41 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751856AbXGQEdw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 00:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbXGQEdw
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 00:33:52 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:50276 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914AbXGQEdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 00:33:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070717043351.YBRT1358.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 17 Jul 2007 00:33:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id QUZp1X00F1kojtg0000000; Tue, 17 Jul 2007 00:33:50 -0400
+In-Reply-To: <85bqecm4mn.fsf@lola.goethe.zz> (David Kastrup's message of "Mon,
+	16 Jul 2007 23:16:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52738>
 
-Julian Phillips <julian@quantumfyre.co.uk> wrote:
-> First off, I would just like to say fast-import rocks.  It's well named 
-> too ...
+David Kastrup <dak@gnu.org> writes:
 
-I'm glad you like it.  ;-)
- 
-> Now the question.  Shawn recently added C and R operations - almost as 
-> soon as they were asked for too.
+> ...  The problem I have
+> with that is that "somefile.c" renders commits uninteresting, but
+> not if they have interesting parents (what do their parents have to do
+> with it?).  So if I have
+>
+> A -> B -> B1 -> C -> HEAD
+>
+> where somefile.c does not change between B and B1, then
+> git-rev-list HEAD --not B -- somefile.c
+> spews out
+> HEAD
+> C
+> and that's it.  Quite as expected.  However, 
+> git-rev-list HEAD --not B --parents -- somefile.c
+> spews out
+> HEAD C
+> C B1
+> B1 B
+>
+> and look and behold, B1 became interesting because of its unlisted
+> parent B.
+>
+> There is something wrong with that.
 
-Sometimes I'm responsive...
+There indeed is, and that is not what I am seeing.
 
-> However, how do you copy a file from a 
-> particular revision?
+Running this script in an empty directory gives me:
 
-and sometimes not so much.  You can't do that right now.  I've wanted
-to open up the data subcommand to allow another form that lets you
-specify data from a branch and file path (thus selecting a blob
-from another revision) but I haven't gotten around to it.  I also
-don't have time to do it during the earlier part of this week.
-Maybe I'll get to it later near the end of the week.
+    #!/bin/sh
 
-It shouldn't be too difficult now with the tree_content_get()
-function that I recently defined for the C/R commands.  The SHA-1
-comes back in the tree_entry leaf, but that codepath is only valid
-for the tip of a branch that fast-import knows about in memory.
-If it doesn't then you probably need to fallback into raw tree
-parsing.  Ugh.
+    GIT_AUTHOR_NAME='A U Thor'
+    GIT_AUTHOR_EMAIL=a.u.thor@example.xz
+    GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+    GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+    GIT_AUTHOR_DATE='2007-07-16 00:00:00 +0000'
+    GIT_COMMITTER_DATE='2007-07-16 00:00:00 +0000'
 
-The way prior frontends have handled this is they assigned marks
-to every blob, and then had a translation table within the frontend
-of revision->mark, so that anytime it needed a given revision of a
-file it knew what mark to send to fast-import.  This does require
-that the frontend maintain basically everything...
+    export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL \
+            GIT_AUTHOR_DATE GIT_COMMITTER_DATE
 
-> I have just hit a point where someone deleted a 
-> directory, and then copied one of the files from that directory back from 
-> an old revision (as two separate commits).  Since I'm not tracking any 
-> branch contents in my front-end, and the copy operation only works from 
-> the current branch head I seem to be stuck ... or have I missed something?
+    rm -fr .git
+    git init
+    echo A >somefile.c; git add somefile.c; git commit -m 'A'; git tag A
+    echo B >somefile.c; git add somefile.c; git commit -m 'B'; git tag B
+    echo B1 >another; git add another; git commit -m 'B1'; git tag B1
+    echo C >somefile.c; git add somefile.c; git commit -m 'C'; git tag C
+    echo H >somefile.c; git add somefile.c; git commit -m 'H'; git tag H
 
-Yea, I got nothing.  I can't think of any method to make that work
-aside from using marks.  Or teaching fast-import how to do tree
-lookup, like I described above.
+    git rev-list --parents HEAD --not B -- somefile.c |
+    git name-rev --tags --stdin
 
--- 
-Shawn.
+$ sh t000.sh
+Initialized empty Git repository in .git/
+Created initial commit 7a13cf5: A
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 somefile.c
+Created commit b66d40b: B
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+Created commit 5530c91: B1
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 another
+Created commit 7ee2b7e: C
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+Created commit 71fafc0: H
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+71fafc0f49ffb82b123c09ec0857f9f458ed32c4 (tags/H) 7ee2b7ed072190c56a2eedda3130f6bb729d0da1 (tags/C)
+7ee2b7ed072190c56a2eedda3130f6bb729d0da1 (tags/C) b66d40bd7ed6d7403c16d8e37e6e410852598247 (tags/B)
+
+
+The commit listed are H and then C; their (rewritten) parents
+are C and B, respectively.
