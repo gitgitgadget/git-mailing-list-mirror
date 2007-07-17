@@ -1,65 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
-Date: Tue, 17 Jul 2007 17:09:42 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707171708210.14781@racer.site>
-References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com>
- <tnx4pk39mju.fsf@arm.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: Seeing differences at origin/branch?
+Date: Tue, 17 Jul 2007 11:12:16 -0500
+Message-ID: <20070717161216.GP19073@lavos.net>
+References: <18071eea0707170853r41962edfge603ccec7b2e72cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bradford Smith <bradford.carl.smith@gmail.com>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 18:10:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Adam <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 18:12:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IApcq-00011o-Kz
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:10:13 +0200
+	id 1IApf6-00024H-4P
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758994AbXGQQKI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 12:10:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758001AbXGQQKG
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:10:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34487 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753051AbXGQQKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 12:10:05 -0400
-Received: (qmail invoked by alias); 17 Jul 2007 16:10:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 17 Jul 2007 18:10:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18jZ8sKAZcj/5dSrwCLRDtVkW1TSuv9eS98WsLl3f
-	PE9uTSN9oPXQBh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <tnx4pk39mju.fsf@arm.com>
-X-Y-GMX-Trusted: 0
+	id S1752858AbXGQQM1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 12:12:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbXGQQM1
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:12:27 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:29716 "EHLO
+	asav02.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751707AbXGQQM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 12:12:26 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav02.insightbb.com with ESMTP; 17 Jul 2007 12:12:25 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjMzAGiHnEZKhvbzRmdsb2JhbACHLogMAQEBNQ
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 496B0309F31; Tue, 17 Jul 2007 11:12:16 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <18071eea0707170853r41962edfge603ccec7b2e72cb@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52767>
 
-Hi,
-
-On Tue, 17 Jul 2007, Catalin Marinas wrote:
-
-> "Bradford Smith" <bradford.carl.smith@gmail.com> wrote:
-> > However, when I tried running 'git-config --global color.diff auto'
-> > today, it removed my symlink and replaced it with a real file.  This
-> > left me briefly a bit confused when the changes I had made didn't show
-> > up in ~/etc/gitconfig, but git-config reported them anyway.
+On Tue, Jul 17, 2007 at 04:53:03PM +0100, Thomas Adam wrote:
+> This is perhaps going to seem like a very CVS/SVN type of question,
+> but is there a way to see a list of differences between one's local
+> copy and the origin branch?  I'm after something analogous to "svn
+> status -u" really (yes, I know I could get my hands scorched for such
+> things.  :P).  Is this possible?
 > 
-> Another problem I have with 'git config --global' is that it changes
-> the access permission bits of ~/.gitconfig. Since I use the same file
-> to store global StGIT configuration like SMTP username and password,
-> I'd like to make its access 0600 but it always goes back to 0644 after
-> 'git config --global'.
+> I've tried:
 > 
-> Maybe fixing the symlink case would solve my problem as well.
+> git-diff-tree -p origin/master
+> 
+> But that won't list changes waiting for me that I would get when I
+> issue a "git pull".
 
-More likely not.  The way to solve it would be to follow the link if the 
-target path is one.  As such, the _file_ would be rewritten.
+Use "git fetch" to fetch the remote changes, but not merge them into
+your local tracked branches.  "git pull" basically just does "git fetch"
+then "git merge" into your current branch if it is tracking a remote
+branch.
 
-So your problem is unrelated, and would need a separate fix.
+You might as well use "git diff" as well, as "git-diff-tree" is
+definitely plumbing.
 
-Ciao,
-Dscho
+% git fetch origin
+...
+% git diff origin/master
+
+-bcd
