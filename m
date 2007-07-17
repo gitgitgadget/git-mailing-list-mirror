@@ -1,63 +1,68 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: Update a bare repository
-Date: Tue, 17 Jul 2007 09:41:12 +0200
-Message-ID: <20070717074112.GH5823@cip.informatik.uni-erlangen.de>
-References: <20070717063026.GA5823@cip.informatik.uni-erlangen.de> <20070717070428.GA13266@coredump.intra.peff.net> <20070717072635.GG5823@cip.informatik.uni-erlangen.de> <20070717073115.GA14629@coredump.intra.peff.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Add --show-size to git log to print message size
+Date: Tue, 17 Jul 2007 08:49:33 +0100
+Message-ID: <200707170849.35842.andyparkins@gmail.com>
+References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 17 09:41:44 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Marco Costalba" <mcostalba@gmail.com>,
+	"Junio C Hamano" <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 17 09:49:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAhgi-0005LG-K9
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 09:41:40 +0200
+	id 1IAhoY-0007Qj-9p
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 09:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754402AbXGQHlO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 03:41:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754325AbXGQHlO
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 03:41:14 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:33466 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754299AbXGQHlN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 03:41:13 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id B49703F42C; Tue, 17 Jul 2007 09:41:12 +0200 (CEST)
+	id S1761795AbXGQHtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 03:49:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761077AbXGQHtm
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 03:49:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:56270 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756121AbXGQHtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 03:49:40 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so102418ugf
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 00:49:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Wfl6RXuMtt6IGJfEesEapevfVWbb97IS3Uz7YVL620x+HSBMCDHkQUGtUq23d/oqGf85fp4yYwhgVUVvCI/XSdXxfgntEdUjHLyyXdyT4SODgZjtu9MMa6LRBbPXja754kYvKxfcvf+9kLwI8yaRJtzMkrRt1PbeKP5BbUmnbIU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=JPN5+lp6rd8i2kOYjpb8M89NloL/aPbElInnqXLPgWjRYs6lgMfKDMaRS2RA46K/YZWryMHZ372FInPDmJzzPYZMWKrFhr9h0e/r+s0SDKDriCzA3eMOz4LjaU9d8/Zp4SZb3NcLN5FeUi0ikp5hHSKIC4ez+4Lsb5lbndh+KOI=
+Received: by 10.66.221.17 with SMTP id t17mr130248ugg.1184658579739;
+        Tue, 17 Jul 2007 00:49:39 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b30sm47408972ika.2007.07.17.00.49.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 17 Jul 2007 00:49:38 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070717073115.GA14629@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52747>
 
-Hello Peff,
+On Saturday 2007 July 14, Marco Costalba wrote:
+> Print message size just before the corresponding message
+> to speedup the parsing by scripts/porcelains tools.
 
-> echo "echo Sorry, no pushing allowed.; exit 1" >.git/hooks/pre-receive
-> chmod +x .git/hooks/pre-receive
+Does this really give a speedup?
 
-thank you, that does exactly what I wanted:
+I'd be surprised, as long as the parse is being done during the output from 
+git using the QProcess::readyRead() signal once and only once, then git is 
+the bottle neck.  Parsing the stream is almost trivial in comparison to the 
+work that git is doing.
 
-	(faui03) [/var/tmp/git] git commit -a
-	Created commit 9e89d1d: added some whitespace
-	1 files changed, 1 insertions(+), 0 deletions(-)
-	(faui03) [/var/tmp/git] git push origin
-	updating 'refs/heads/master'
-	from 9dfdf14b3805e89aa2782458bda15b3dfae24c09
-	to   9e89d1d3890c6b0fd8546143a6e797820e274cb1
-	Generating pack...
-	Done counting 5 objects.
-	Result has 3 objects.
-	Deltifying 3 objects...
-	100% (3/3) done
-	Writing 3 objects...
-	100% (3/3) done
-	Total 3 (delta 2), reused 0 (delta 0)
-	Sorry, no pushing allowed.
-	error: hooks/pre-receive exited with error code 1
-	ng refs/heads/master pre-receive hook declined
-	error: failed to push to '131.188.30.103:/home/cip/adm/sithglan/work/repositories/mirror/git.git'
 
-		Thomas
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
