@@ -1,68 +1,97 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Add --show-size to git log to print message size
-Date: Tue, 17 Jul 2007 08:49:33 +0100
-Message-ID: <200707170849.35842.andyparkins@gmail.com>
-References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: [PATCH] Document "git stash message..."
+Date: Tue, 17 Jul 2007 17:15:42 +0900
+Message-ID: <20070624192215.6117@nanako3.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@gmail.com>,
-	"Junio C Hamano" <junkio@cox.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 17 09:49:46 2007
+X-From: git-owner@vger.kernel.org Tue Jul 17 10:16:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAhoY-0007Qj-9p
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 09:49:46 +0200
+	id 1IAiEi-0006qq-FJ
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 10:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761795AbXGQHtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 03:49:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761077AbXGQHtm
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 03:49:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:56270 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756121AbXGQHtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 03:49:40 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so102418ugf
-        for <git@vger.kernel.org>; Tue, 17 Jul 2007 00:49:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Wfl6RXuMtt6IGJfEesEapevfVWbb97IS3Uz7YVL620x+HSBMCDHkQUGtUq23d/oqGf85fp4yYwhgVUVvCI/XSdXxfgntEdUjHLyyXdyT4SODgZjtu9MMa6LRBbPXja754kYvKxfcvf+9kLwI8yaRJtzMkrRt1PbeKP5BbUmnbIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JPN5+lp6rd8i2kOYjpb8M89NloL/aPbElInnqXLPgWjRYs6lgMfKDMaRS2RA46K/YZWryMHZ372FInPDmJzzPYZMWKrFhr9h0e/r+s0SDKDriCzA3eMOz4LjaU9d8/Zp4SZb3NcLN5FeUi0ikp5hHSKIC4ez+4Lsb5lbndh+KOI=
-Received: by 10.66.221.17 with SMTP id t17mr130248ugg.1184658579739;
-        Tue, 17 Jul 2007 00:49:39 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id b30sm47408972ika.2007.07.17.00.49.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 17 Jul 2007 00:49:38 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
-Content-Disposition: inline
+	id S933393AbXGQIQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 04:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933388AbXGQIQN
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 04:16:13 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:46046 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933373AbXGQIQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 04:16:10 -0400
+Received: from fe0.bluebottle.com (internal.bluebottle.com [206.188.24.43])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6H8G7kB014425
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 17 Jul 2007 01:16:07 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:date:subject:message-id:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=bnt07dsjNLncPQ7ZG8Jie8Fr6kn8Ued5WctNJVyZTn8Tvtv8xT0n5lAchk298GcDx
+	iC3Qlno5s+1N9MQBVej5Aw0WIQL+yUmngNtN4rJUISVlmltd0Nkdj9bkfo4Q+It
+Received: from nanako3.mail.bluebottle.com (siraly-gw2.selyeuni.sk.133.111.195.in-addr.arpa [195.111.133.92] (may be forged))
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6H8G2bH001497
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 17 Jul 2007 01:16:06 -0700
+X-Trusted-Delivery: <23bb41db9f456aa903b12bdbc8b62584>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52748>
 
-On Saturday 2007 July 14, Marco Costalba wrote:
-> Print message size just before the corresponding message
-> to speedup the parsing by scripts/porcelains tools.
+The command was recently updated to take message on the command line, but
+this feature has not been documented.
 
-Does this really give a speedup?
+Signed-off-by: Nanako Shiraishi <nanako3@bluebottle.com>
+---
+ Documentation/git-stash.txt |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
-I'd be surprised, as long as the parse is being done during the output from 
-git using the QProcess::readyRead() signal once and only once, then git is 
-the bottle neck.  Parsing the stream is almost trivial in comparison to the 
-work that git is doing.
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index ad95ed9..4404361 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -8,7 +8,8 @@ git-stash - Stash the changes in a dirty working directory away
+ SYNOPSIS
+ --------
+ [verse]
+-'git-stash' (save | list | show [<stash>] | apply [<stash>] | clear)
++'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
++'git-stash' [save] [message...]
+ 
+ DESCRIPTION
+ -----------
+@@ -22,7 +23,9 @@ The modifications stashed away by this command can be listed with
+ `git-stash list`, inspected with `git-stash show`, and restored
+ (potentially on top of a different commit) with `git-stash apply`.
+ Calling git-stash without any arguments is equivalent to `git-stash
+-save`.
++save`.  A stash is by default listed as "WIP on 'branchname' ...", but
++you can give more descriptive message on the command line when
++you create one.
+ 
+ The latest stash you created is stored in `$GIT_DIR/refs/stash`; older
+ stashes are found in the reflog of this reference and can be named using
+@@ -48,8 +51,8 @@ list::
+ 	based on.
+ +
+ ----------------------------------------------------------------
+-stash@{0}: submit: 6ebd0e2... Add git-stash
+-stash@{1}: master: 9cc0589... Merge branch 'master' of gfi
++stash@{0}: WIP on submit: 6ebd0e2... Update git-stash documentation
++stash@{1}: On master: 9cc0589... Add git-stash
+ ----------------------------------------------------------------
+ 
+ show [<stash>]::
 
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email account with anti spam protection.
+http://www.bluebottle.com/tag/2
