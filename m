@@ -1,68 +1,63 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: [PATCH] Do _not_ call unlink on a directory
-Date: Tue, 17 Jul 2007 22:27:55 +0200
-Message-ID: <20070717202754.GB25037@cip.informatik.uni-erlangen.de>
-References: <11846059721204-git-send-email-sithglan@stud.uni-erlangen.de> <7vtzs3a0xg.fsf@assigned-by-dhcp.cox.net> <20070717101527.GB7774@cip.informatik.uni-erlangen.de> <7vlkdeang0.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <eric@petta-tech.com>
+Subject: Re: [PATCH] git-svn: Minimalistic patch which allows svn usernames with space(s).
+Date: Tue, 17 Jul 2007 12:55:59 -0700
+Message-ID: <20070717195559.GA20103@muzzle>
+References: <469CF641.4020707@st.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 22:28:01 2007
+To: Richard MUSIL <richard.musil@st.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 22:28:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAteK-0000fQ-Op
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:28:01 +0200
+	id 1IAtet-0000qc-O0
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755479AbXGQU14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 16:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbXGQU14
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:27:56 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:36586 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755075AbXGQU1z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 16:27:55 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 17E353F42C; Tue, 17 Jul 2007 22:27:55 +0200 (CEST)
+	id S1756531AbXGQU2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 16:28:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXGQU2d
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:28:33 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:43454 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754377AbXGQU2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 16:28:32 -0400
+X-Greylist: delayed 1951 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2007 16:28:32 EDT
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 2713E2DC08D;
+	Tue, 17 Jul 2007 12:56:00 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vlkdeang0.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <469CF641.4020707@st.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52798>
 
-Hello Junio,
+Richard MUSIL <richard.musil@st.com> wrote:
+> Changed filter for username in svn-authors file, so even 'user name' is accepted.
+> ---
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 01c3904..975075e 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -740,7 +740,7 @@ sub load_authors {
+>         my $log = $cmd eq 'log';
+>         while (<$authors>) {
+>                 chomp;
+> -               next unless /^(\S+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
+> +               next unless /^(\.+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
 
-> Ahhhh, by "testing", I meant "runnnig the testsuite shipped with
-> the source".  Both of your patches were failing in somewhere in
-> t2000 series of tests.
+Surely you mean the following:
 
-That was the last time, I am going to submit a patch _without_ running
-the whole testsuite before. I hate it myself when other people don't do
-the obvious tests and break something that worked before.
++               next unless /^(.+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
 
-> I am thinking that this fix should go to 'maint' and merged to
-> 'master', as it is a grave problem in at least one setup.
+(No "\" before the ".")   "\." matches a dot/period (.), while "."
+matches anything.
 
-Thanks. For packages that I distribute, I fixed it of course by myself.
-And to be precise I use git on Solaris a lot by myself but I don't work
-as root so the bug never showed up before and as you can see by the
-pastes that I provided to track down the bug I have
-
-	if [ $UID -eq 0 ]; then
-		export PS1="(${PROMPT_RED}\h${PROMPT_END}) [${PROMPT_BLUE}\w${PROMPT_END}] ";
-		alias bk='echo DO *NOT* RUN BK AS ROOT'
-		alias git='echo DO *NOT* RUN GIT AS ROOT'
-		alias links='echo DO *NOT* RUN LINKS AS ROOT'
-		alias elinks='echo DO *NOT* RUN ELINKS AS ROOT'
-	...
-
-in my distributed environment. But my coworker who I "show" git to work
-a lot as root. A very bad habbit that is hard to get rid of. Btw. I
-prepare to setup a automatic build script which I am going to let run
-automatic on a daily basis so that I catch Solaris compile problems
-early and report them to you.
-
-	Thomas
+-- 
+Eric Wong
