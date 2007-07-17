@@ -1,63 +1,59 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git bisect not accepting -git kernels
-Date: Tue, 17 Jul 2007 18:13:44 +0200
-Message-ID: <20070717161344.GB4815@xp.machine.xx>
-References: <469CE836.6010508@arcom.com>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: 'git gc' & number of unpacked objects ?
+Date: Tue, 17 Jul 2007 05:14:19 -1100
+Message-ID: <f36b08ee0707170914g7ece7124qf5d8d6a1307cc07e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Amit Walambe <awalambe@arcom.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 18:13:52 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 17 18:15:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IApgM-0002mb-JD
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:13:50 +0200
+	id 1IAphT-0003Mw-K5
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 18:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763995AbXGQQNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 12:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763275AbXGQQNi
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:13:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52784 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762014AbXGQQNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 12:13:37 -0400
-Received: (qmail invoked by alias); 17 Jul 2007 16:13:36 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp056) with SMTP; 17 Jul 2007 18:13:36 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18/GBtHT1Y/aGOB1CZkL2qsP/BTUKU1yn5X5lk7DI
-	HrAZOSgEMzaYeI
-Mail-Followup-To: Amit Walambe <awalambe@arcom.com>, git@vger.kernel.org
+	id S1754321AbXGQQOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 12:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbXGQQOW
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 12:14:22 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:33092 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752842AbXGQQOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 12:14:21 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so849172wra
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 09:14:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=AqYe1kYdl1GA+Bo2hAQOer3ilqQQyz5X5hGrkCDSlkyINaw6IOcU32JhaZ/c26V4uyhVxUO1ZQt3+3J6NokcnawGksh0A3BOtse7uJhp6LHmZflCFZkLcQPnxrLVC0WTHp20dwqKl+PUZ8NTUtgWeFB4ES1aRTx3nYANOzpBW4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Remvpx3QplyT7fgzw72S9P1ps/EQxpToXpf54NOXgFrBvFxNSrE0XuCVUQ+bC3u+vu5Fu/wDVL22aj8qpjcxh/N63Oja0ZsvFsr52X8XnOzMrXabc/tDua+L3qm5Jxb7Or8vItg8hQIWIYvFHkAXqgl6OR6Rm7tdIaceVRb8nuQ=
+Received: by 10.143.9.5 with SMTP id m5mr45929wfi.1184688859657;
+        Tue, 17 Jul 2007 09:14:19 -0700 (PDT)
+Received: by 10.142.116.4 with HTTP; Tue, 17 Jul 2007 09:14:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <469CE836.6010508@arcom.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52769>
 
-On Tue, Jul 17, 2007 at 05:03:02PM +0100, Amit Walambe wrote:
-> Hi!
-> I was trying to do a git bisect on 2.6.22-git6 and 2.6.22-git8. For which I 
-> get following error :
-> root@amit:/usr/src/linux-git # git bisect good v2.6.22-git6
-> Bad rev input: v2.6.22-git6
->
-> The repository is obtained by :
-> root@amit:/usr/src # git clone 
-> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6 linux-git
->
-> I am running following git version on Debian Sid, updated today.
-> # git --version
-> git version 0.99.8.GIT
+By the analogy with the maxtime and maxmount in the ext3 when it
+reminds you to fsck, when number of mounts since last fsck, or time since
+last fsck is above some limits. I think this makes practical sense. I think
+the similar thing makes sense wrt to 'git gc'.
 
-There is a very old GIT version in your PATH (version 0.99*), which
-takes preference over the version from sid.
+Is it possible that git repo had a parameter N, and when the counter of
+unpacked object hit this number,  then git operations start to print
+semi-annoying warnings
+      "Time to optimize your repo using 'git gc' command ... "
+?
 
-> '# dpkg -l | grep git' shows ' git-core 1:1.5.2.3-1'
->
+I am naive user. I forget things. Really. I rely on git to remember things.
+Is this a reasonable parameter  ?
 
--Peter
+Thanks
+Yakov
