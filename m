@@ -1,65 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] git-gui: Handle git versions of the form n.n.n.GIT
-Date: Tue, 17 Jul 2007 15:34:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707171532070.27353@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk>
- <20070717212103.11950.10363.julian@quantumfyre.co.uk> <20070717214011.GU19073@lavos.net>
- <20070717214510.GV19073@lavos.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: (no subject)
+Date: Tue, 17 Jul 2007 18:39:05 -0400
+Message-ID: <469D4509.1020806@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 00:36:06 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: paulus@samba.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 00:39:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAveI-0000TS-3m
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 00:36:06 +0200
+	id 1IAvhP-0001Ha-Pt
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 00:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759298AbXGQWgA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 18:36:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758322AbXGQWgA
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 18:36:00 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:42983 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754845AbXGQWf7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 18:35:59 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HMYgEp031636
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 17 Jul 2007 15:34:43 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HMYaAV010285;
-	Tue, 17 Jul 2007 15:34:37 -0700
-In-Reply-To: <20070717214510.GV19073@lavos.net>
-X-Spam-Status: No, hits=-4.665 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1759390AbXGQWjL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 18:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758480AbXGQWjK
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 18:39:10 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:31725 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756754AbXGQWjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 18:39:08 -0400
+Received: by an-out-0708.google.com with SMTP id d31so337076and
+        for <git@vger.kernel.org>; Tue, 17 Jul 2007 15:39:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=tjacHxGlEtimMyhFJ+KFsNYNJ4EEwDFWjsb43HYIVwf+sa2pCsQsTfa49VlP2qnK++yugp1aG3U8MEi4cSzs6/YD9weh6Bx8S93S2fMKeE3xlq+PRpSZoelXFrkKKfqKCfFLCpuEpHeGJ8iwPnN5N2/06desp7zwaChIOq6py64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=U3aUxJ3tCRp+joJMTVtWnaWgxOECdRx4sqkmO8YLFYiBy24OHvJXoenFQNOa683O0+rrisQh6kLSGzp3Vc6F4BIiG1TVrZYnSf1kUkYfYKdRV1mwDQv4kmPCmYVVEzJ6bAWsEEffq+uaXhpfuZpk5a80CLv6ktNf8KqwjOn7hO4=
+Received: by 10.100.141.13 with SMTP id o13mr620203and.1184711948101;
+        Tue, 17 Jul 2007 15:39:08 -0700 (PDT)
+Received: from ?192.168.100.117? ( [72.66.124.87])
+        by mx.google.com with ESMTPS id 32sm318730wri.2007.07.17.15.39.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Jul 2007 15:39:07 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52807>
 
+ From 567906ddb2fbbcf07325acc2808346ad6a472df1 Mon Sep 17 00:00:00 2001
+From: Mark Levedahl <mdl123@verizon.net>
+Date: Tue, 17 Jul 2007 18:35:46 -0400
+Subject: [PATCH] gitk - Ignore ctrl-z as EOF on windows
+To:        mlevedahl@verizon.net
+-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-
+Cygwin's Tcl is configured to honor any occurence of ctrl-z as an
+end-of-file marker, while some commits in the git repository and possibly
+elsewhere include that character in the commit comment. This causes gitk
+ignore commit history following such a comment and incorrect graphs. This
+change affects only Windows as Tcl on other platforms already has
+eofchar == {}. This fixes problems noted by me and by Ray Lehtiniemi, and
+the fix was suggested by Shawn Pierce.
 
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Tue, 17 Jul 2007, Brian Downing wrote:
-> 
-> D'oh, now I know why.  I'm trying git to keep my home directory config
-> stuff versioned, so GIT-VERSION-GEN, failing to find a .git directory
-> in my tar export, digs down and finds my home directory one instead.
-
-Ok, that's definitely a git misfeature.
-
-I think we could probably add a check something like:
-
- - once we have found a .git directory by walking up the tree, the 
-   directory we actually came _from_ should then be tracked by that git 
-   directory.
-
-but I wonder how to do that properly (we would probably need to load the 
-index, which we generally don't want to do).
-
-		Linus
+diff --git a/gitk b/gitk
+index 39e452a..238607e 100755
+--- a/gitk
++++ b/gitk
+@@ -101,7 +101,7 @@ proc start_rev_list {view} {
+     set commfd($view) $fd
+     set leftover($view) {}
+     set lookingforhead $showlocalchanges
+-    fconfigure $fd -blocking 0 -translation lf
++    fconfigure $fd -blocking 0 -translation lf -eofchar {}
+     if {$tclencoding != {}} {
+     fconfigure $fd -encoding $tclencoding
+     }
+--
+1.5.3.rc2.5.g66bbd
