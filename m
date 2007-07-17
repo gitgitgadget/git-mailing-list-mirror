@@ -1,61 +1,65 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH] git-gui: Handle git versions of the form n.n.n.GIT
-Date: Tue, 17 Jul 2007 14:49:36 -0700
-Message-ID: <31e9dd080707171449r26c430f1vacfb58eb00f578e5@mail.gmail.com>
+Date: Tue, 17 Jul 2007 15:34:36 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707171532070.27353@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk>
-	 <20070717212103.11950.10363.julian@quantumfyre.co.uk>
-	 <20070717214011.GU19073@lavos.net> <20070717214510.GV19073@lavos.net>
+ <20070717212103.11950.10363.julian@quantumfyre.co.uk> <20070717214011.GU19073@lavos.net>
+ <20070717214510.GV19073@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Julian Phillips" <julian@quantumfyre.co.uk>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Brian Downing" <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Tue Jul 17 23:49:44 2007
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Wed Jul 18 00:36:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAuvN-0003oj-V1
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 23:49:42 +0200
+	id 1IAveI-0000TS-3m
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 00:36:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512AbXGQVtj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 17:49:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754812AbXGQVtj
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 17:49:39 -0400
-Received: from wx-out-0506.google.com ([66.249.82.233]:53239 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754377AbXGQVth (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 17:49:37 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1660914wxd
-        for <git@vger.kernel.org>; Tue, 17 Jul 2007 14:49:37 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AWcDjXq+zDZBZ7ZZzgEA/d6XgYCk1tEOAqVKltaIb/uRTIV1R92GkoGY+uPo8lk/IQfqh59iYKJqYjuJCT1mc73f5dsitjvXhAmreIKluri/22bE1TVx1Gb21FhSfyNMp8SEn3WtEyUT/yj8OI2T7lKAFLKljVdFy8yEsZfmHmw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gn+RrwByhG+Ds/bGHhKaEQgEb1uWcm4+bJlUyLG2en74IU9FzTdFu/Mn+Vd2str8h22UQS5ljGu+x03Swl6ctY16f6GoK67pt43b97K/afds9aJfpuZNAHf8pKbwbQB7atD0cxZzomILzxdUmASbDzoIX2ADCQ7ASzkU9Deg6IY=
-Received: by 10.70.48.15 with SMTP id v15mr1437948wxv.1184708976917;
-        Tue, 17 Jul 2007 14:49:36 -0700 (PDT)
-Received: by 10.90.54.18 with HTTP; Tue, 17 Jul 2007 14:49:36 -0700 (PDT)
+	id S1759298AbXGQWgA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 18:36:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758322AbXGQWgA
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 18:36:00 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42983 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754845AbXGQWf7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 18:35:59 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HMYgEp031636
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 17 Jul 2007 15:34:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6HMYaAV010285;
+	Tue, 17 Jul 2007 15:34:37 -0700
 In-Reply-To: <20070717214510.GV19073@lavos.net>
-Content-Disposition: inline
+X-Spam-Status: No, hits=-4.665 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52806>
 
-On 7/17/07, Brian Downing <bdowning@lavos.net> wrote:
-> I take it this means that keeping your home directory under git
-> /directly/ as I have chosen to do is a bad idea...
 
-Interesting, because this is something I've wanted to do - I use
-several machines (work, work laptop, home, home laptop) and I'm always
-tweaking my various dotfiles... I could really use a way to keep them
-all synchronized.
 
-Just out of curiosity, what do you people do?
+On Tue, 17 Jul 2007, Brian Downing wrote:
+> 
+> D'oh, now I know why.  I'm trying git to keep my home directory config
+> stuff versioned, so GIT-VERSION-GEN, failing to find a .git directory
+> in my tar export, digs down and finds my home directory one instead.
 
-Jason
+Ok, that's definitely a git misfeature.
+
+I think we could probably add a check something like:
+
+ - once we have found a .git directory by walking up the tree, the 
+   directory we actually came _from_ should then be tracked by that git 
+   directory.
+
+but I wonder how to do that properly (we would probably need to load the 
+index, which we generally don't want to do).
+
+		Linus
