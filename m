@@ -1,94 +1,75 @@
-From: Eddie Kohler <kohler@cs.ucla.edu>
-Subject: gitweb: get_file_owner and XML special characters
-Date: Tue, 17 Jul 2007 13:06:37 -0700
-Message-ID: <469D214D.7030101@cs.ucla.edu>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: Installation failure caused by CDPATH environment variable
+Date: Tue, 17 Jul 2007 22:19:22 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070717201922.GA28072@informatik.uni-freiburg.de>
+References: <9693D8E9-6F11-4AA1-AFCA-7E8456FA6420@wincent.com> <7vejje3a4k.fsf@assigned-by-dhcp.cox.net> <20070717114024.GA12215@informatik.uni-freiburg.de> <7vhco2ancg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050009010700090909000202"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 17 22:13:39 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 22:19:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAtQP-0004da-JG
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:13:37 +0200
+	id 1IAtW8-0006cp-UH
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 22:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933597AbXGQUNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 16:13:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933337AbXGQUNb
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:13:31 -0400
-Received: from smtp-8.smtp.ucla.edu ([169.232.47.138]:42900 "EHLO
-	smtp-8.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932923AbXGQUNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 16:13:30 -0400
-X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2007 16:13:30 EDT
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
-	by smtp-8.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6HK6SnS025195
-	for <git@vger.kernel.org>; Tue, 17 Jul 2007 13:06:28 -0700
-Received: from [131.179.33.130] (Cs-33-130.CS.UCLA.EDU [131.179.33.130])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6HK6RaH027707
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 17 Jul 2007 13:06:28 -0700
-User-Agent: Thunderbird 1.5.0.12 (X11/20070530)
-X-Probable-Spam: no
-X-Spam-Hits: 0.654
-X-Spam-Report: SPF_SOFTFAIL
-X-Scanned-By: smtp.ucla.edu on 169.232.47.138
+	id S1757610AbXGQUT3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Jul 2007 16:19:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757233AbXGQUT3
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 16:19:29 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:39829 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755365AbXGQUT2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 16:19:28 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IAtW2-0007QE-Fd; Tue, 17 Jul 2007 22:19:26 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6HKJNK4028862;
+	Tue, 17 Jul 2007 22:19:23 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6HKJMp3028860;
+	Tue, 17 Jul 2007 22:19:22 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vhco2ancg.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52796>
 
-This is a multi-part message in MIME format.
---------------050009010700090909000202
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Hello Junio,
 
-Hi,
+Junio C Hamano wrote:
+> Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> writes:
+> > (That is, Solaris' tar has the 'C' option, which is quite a good
+> > indication, that it's included in POSIX :-)
+>=20
+> Oh, I cannot resist ;-)
+>=20
+> Solaris has unlink(2) capable of removing a directory, but I do
+> not think it is included in POSIX.
+I don't have access to the POSIX documents, but it would surprise me if
+they forbid unlink(2) being able to unlink directories. :-)
 
-I think current gitweb generates invalid XHTML when get_file_owner returns a 
-string containing <>&.  (Version 1.5.2.1 certainly does, and in a quick browse 
-of current source I didn't notice relevant changes.)
+You need some effort to support tar -C and to catch directories in
+unlink.  So Sun put the effort in tar, because it may be needed to be
+conformant to POSIX or some other standard.
 
-Here is a dirty patch to fix this problem.  Apologies if it is no longer a 
-problem or if the patch is gross.
-Thanks,
-Eddie (newbie)
+Best regards
+Uwe
 
+--=20
+Uwe Kleine-K=F6nig
 
---------------050009010700090909000202
-Content-Type: text/x-patch;
- name="0001-Escape-HTML-special-characters-in-file-owner.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0001-Escape-HTML-special-characters-in-file-owner.patch"
-
->From 1c6ba7b6b28808cea0f2f9ab46733ddefdac329a Mon Sep 17 00:00:00 2001
-From: Eddie Kohler <kohler@cs.ucla.edu>
-Date: Tue, 17 Jul 2007 13:06:08 -0700
-Subject: [PATCH] Escape HTML special characters in file owner
-
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c8ba3a2..540d9a6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2050,7 +2050,7 @@ sub get_file_owner {
- 	}
- 	my $owner = $gcos;
- 	$owner =~ s/[,;].*$//;
--	return to_utf8($owner);
-+	return $cgi->escapeHTML(to_utf8($owner));
- }
- 
- ## ......................................................................
--- 
-1.5.2.2
-
-
---------------050009010700090909000202--
+<script>alert("This is a virus for Outlook")</script>
