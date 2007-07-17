@@ -1,81 +1,116 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-config: replaces ~/.gitconfig symlink with real file
-Date: Tue, 17 Jul 2007 16:27:15 +0200
-Message-ID: <vpqbqebt8ak.fsf@bauges.imag.fr>
-References: <f158199e0707151427h52da3e38rae3be6e44e27e918@mail.gmail.com>
-	<dbfc82860707160237v6772b5b8o541f2045ccd824d5@mail.gmail.com>
-	<f158199e0707160433v27fe7073w9c550712c41c32e8@mail.gmail.com>
-	<f158199e0707160626j1025ab2cp3339ca6ab91d9af0@mail.gmail.com>
-	<Pine.LNX.4.64.0707170834040.14781@racer.site>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: [ANNOUNCE] Guilt v0.26
+Date: Tue, 17 Jul 2007 11:28:59 -0400
+Message-ID: <20070717152859.GA12247@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bradford Smith <bradford.carl.smith@gmail.com>,
-	Nikolai Weibull <now@bitwi.se>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 17 16:28:04 2007
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, brandon@ifup.org
+To: guilt@josefsipek.net
+X-From: git-owner@vger.kernel.org Tue Jul 17 17:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAo1z-0003Qt-Dm
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 16:28:03 +0200
+	id 1IAozQ-0002dT-H2
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 17:29:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002AbXGQO16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 10:27:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbXGQO16
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 10:27:58 -0400
-Received: from imag.imag.fr ([129.88.30.1]:37578 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752104AbXGQO15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 10:27:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6HERGjh028444
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Jul 2007 16:27:16 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IAo1E-0008BG-3r; Tue, 17 Jul 2007 16:27:16 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IAo1E-0004lu-1W; Tue, 17 Jul 2007 16:27:16 +0200
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Bradford Smith <bradford.carl.smith@gmail.com>, Nikolai Weibull <now@bitwi.se>,  git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0707170834040.14781@racer.site> (Johannes Schindelin's message of "Tue\, 17 Jul 2007 14\:56\:37 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 17 Jul 2007 16:27:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755648AbXGQP3F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 11:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbXGQP3E
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 11:29:04 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:38610 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752360AbXGQP3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 11:29:02 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6HFSxlu013956;
+	Tue, 17 Jul 2007 11:28:59 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6HFSxjW013954;
+	Tue, 17 Jul 2007 11:28:59 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52763>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Guilt v0.26 is available for download (once it mirrors out on kernel.org).
 
-> Hi,
->
-> On Mon, 16 Jul 2007, Bradford Smith wrote:
->
->> So, I guess I need to add a GIT_CONFIG_HOME environment variable.  If I 
->> get that done, I'll send a patch to the list including doc updates.
->
-> Alternatively, you could actually not ignore my hint at readlink(2) and 
-> have a proper fix, instead of playing games with environment variables.
+Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+queues-like functionality and interface to git.
 
-I second that.
+Tarballs:
+http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
 
-Using an environment variable means having a configuration which is
-about git in my shell's config file, and that's a source of a lot of
-troubles. Murphy's law implies that one day, the environment variable
-won't be set properly (because you changed your shell, because you
-launch git from something which isn't a shell, because you logged-in
-in a way that didn't read the config file in which the variable was
-set, ...).
+Git repo:
+git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
 
-I can do with it, like many other software require an environment
-variable, but I find the symlink trick much more robust.
 
--- 
-Matthieu
+Although there was a v0.26-rc1 release, I never announced it so the
+following summary includes all the changes since v0.25. Unfortunately, it
+took two months to get this release out. I promise to get back to the 2-3
+week release cycle.
+
+The major change since v0.25 (contributed by Pierre Habouzit) is that Guilt
+no longer depends on bash. Other than that, there have been a number of bug
+fixes, as well several new commands and options:
+
+	branch		Branch the repository & patch series
+	diff		Output a diff against the top-most applied patch
+	fold -k		Keep patch file
+	graph		Generate dot(1) patch dependecy graph
+	new -f		Force new patch creation
+	refresh --git	Detect renames & copies
+	series -g	Start gitk on the applied patches
+
+Additionally, Guilt now knows how to:
+
+	Grab Cc: lines from the patch descriptions for patchbomb
+	Strip 'Subject: ' from the first line of patch description
+
+All in all, quite a number of changes, so it is possible that I forgot to
+mention something. For more details, check the change list below, or the git
+repository near you :)
+
+As always, patches, and other feedback is welcome.
+
+Josef "Jeff" Sipek.
+
+------------
+Changes since v0.25:
+
+Josef 'Jeff' Sipek (20):
+      graph: generate a dot(1) dependency graph of patches
+      graph: Remove graph cache after command terminates
+      new: Added new option, -f to force new patch creation
+      refresh: Added --git option to generate more git friendly diff
+      new: current working dir should not be displayed
+      export: Create subdirectories before copying the patch files
+      series: Added -g option to start gitk
+      refresh: Reintroduce the --git option that got accidentally dropped
+      guilt: added -V/--version option to display only the version number
+      fold: Added -k option to keep patch file
+      Guilt v0.26-rc1
+      guilt: Strip "^Subject: " from first line of patch message
+      Docs/Requirements: sh is now required instead of bash
+      branch: new command to create a new branch with duplicated patches directory
+      Docs: A begining of a Features file
+      graph: Fixed graph generation
+      patchbomb: Grab additional Cc info from '^Cc:' lines in patch desc
+      patchbomb: Remove leftover debug code
+      diff: Create a diff against the top-most applied patch
+      Guilt v0.26
+
+Pierre Habouzit (8):
+      Add a guilt-export(1) command to export a guilt series to quilt.
+      guilt(1): Obvious bashisms fixed.
+      guilt(1): simplifications...
+      guilt(1): reimplement push_patch, using a subshell to avoid locals.
+      Remove bashisms - easy commands
+      guilt-status(1): Remove bashisms.
+      Remove last bashisms from remaining commands.
+      Regression test suite needs bash, that's OK.
+
+Theodore Ts'o (1):
+      Fix guilt to work correctly even if the refs are packed
