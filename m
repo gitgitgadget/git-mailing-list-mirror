@@ -1,75 +1,110 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: Problem running git-gui
-Date: Tue, 17 Jul 2007 14:04:53 +0200
-Message-ID: <20070717120453.GD7774@cip.informatik.uni-erlangen.de>
-References: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] translate bad characters in refnames during git-svn fetch
+Date: Tue, 17 Jul 2007 05:28:52 -0700
+Message-ID: <20070717122852.GA21372@mayonaise>
+References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716111509.GC18293@efreet.light.src> <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716174731.GA4792@lapse.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jul 17 14:04:59 2007
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 17 14:29:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAlnW-0000XS-CD
-	for gcvg-git@gmane.org; Tue, 17 Jul 2007 14:04:58 +0200
+	id 1IAmAk-0000qK-Rh
+	for gcvg-git@gmane.org; Tue, 17 Jul 2007 14:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbXGQMEz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 08:04:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbXGQMEz
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 08:04:55 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:58545 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750736AbXGQMEy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 08:04:54 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 928EE3F42C; Tue, 17 Jul 2007 14:04:53 +0200 (CEST)
+	id S1752393AbXGQM2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 08:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbXGQM2z
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 08:28:55 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:43282 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752075AbXGQM2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 08:28:54 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 5488F2DC08D;
+	Tue, 17 Jul 2007 05:28:52 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 17 Jul 2007 05:28:52 -0700
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <20070716174731.GA4792@lapse.madduck.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52757>
 
-Hello Julian,
+martin f krafft <madduck@madduck.net> wrote:
+> also sprach Eric Wong <normalperson@yhbt.net> [2007.07.16.0530 +0200]:
+> > The major issue with this is that it doesn't handle odd cases
+> > where a refname is sanitized into something (say "1234~2"
+> > sanitizes to "1234=2"), and then another branch is created named
+> > "1234=2".
+> 
+> Well, we can't please everyone, can we? :)
+> 
+> I like Jan's proposal about using the % escape, even though it
+> doesn't make pretty branch names.
 
-> 'Error in startup script: expected version number but got "1.5.3.GIT"'
+I like it, too.  How about something like the two functions below?  This
+will break things a bit for people currently using % in refnames,
+however.
 
-I get the same error. However it works with released versions of git:
+I think this will work rather nicely once I've figured out how the path
+globbing code works[1] and where to sanitize/desanitize the refnames
+properly.
 
-	(faui04a) [~] git gui
-	Error in startup script: invalid command name "git-version"
-	while executing
-	"git-version >= 1.5.3"
-	(in namespace eval "::blame" script line 36)
-	invoked from within
-	"namespace eval $class $body"
-	(procedure "class" line 16)
-	invoked from within
-	"class blame {
+It would be far easier to take your approach and sanitize them only
+for the command-line, but storing unsanitized git refnames into the
+.git/config is something I want to avoid:
 
-	image create photo ::blame::img_back_arrow -data {R0lGODlhGAAYAIUAAPwCBEzKXFTSZIz+nGzmhGzqfGTidIT+nEzGXHTqhGzmfGzifFzadETCVES+VARWDFzWb..."
-	(file "/usr/share/git-gui/lib/blame.tcl" line 4)
-	invoked from within
-	"source [file join $oguilib $p]"
-	("foreach" body line 3)
-	invoked from within
-	"foreach p $idx {
-			if {[lsearch -exact $loaded $p] >= 0} continue
-			source [file join $oguilib $p]
-			lappend loaded $p
-		}"
-	invoked from within
-	"if {$idx ne {}} {
-		set loaded [list]
-		foreach p $idx {
-			if {[lsearch -exact $loaded $p] >= 0} continue
-			source [file join $oguilib $p]
-			lappend loa..."
-	(file "/usr/bin/git-gui" line 98)
+  Somebody naming directories on the SVN side with the path component
+  ":refs/remotes" in them could screw things up for us.
 
-it is because "1.5.3.GIT" is not a number I guess.
+# transform the refname as per rules in git-check-ref-format(1):
+sub sanitize_ref_name {
+	my ($refname) = @_;
 
-	Thomas
+	# It cannot end with a slash /, we'll throw up on this because
+	# SVN can't have directories with a slash in their name, either:
+	if ($refname =~ m{/$}) {
+		die "ref: '$refname' ends with a trailing slash, this is ",
+		    "not permitted by git nor Subversion\n";
+	}
+
+	# It cannot have ASCII control character space, tilde ~, caret ^,
+	# colon :, question-mark ?, asterisk *, or open bracket[ anywhere
+	#
+	# Additionally, % must be escaped because it is used for escaping
+	# and we want our escaped refname to be reversible
+	$refname =~ s{( \%~\^:\?\*\[\t)}{uc sprintf('%%%02x',ord($1))}eg;
+
+	# no slash-separated component can begin with a dot .
+	# /.* becomes /%2E*
+	$refname =~ s{/\.}{/%2E}g;
+	# It cannot have two consecutive dots .. anywhere
+	# .. becomes %2E%2E
+	$refname =~ s{\.\.}{%2E%2E}g;
+
+	$refname;
+}
+
+sub desanitize_ref_name {
+	my ($refname) = @_;
+	$refname =~ s{%(?:([0-9A-F]{2})}{chr hex($1)}g;
+
+	$refname;
+}
+
+> On the other hand, we could make the translation regexps
+> configurable...
+
+Hopefully not needed.  I fear it would just add to confusion.
+
+
+[1] I don't remember writing the globbing code myself, maybe it was my
+psychotic alter ego, but I'm having trouble following it at this time of
+the night/morning.
+
+-- 
+Eric Wong
