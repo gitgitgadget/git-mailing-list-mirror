@@ -1,180 +1,43 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] filter-branch: introduce convenience function "skip_commit"
-Date: Wed, 18 Jul 2007 16:54:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707181653460.14781@racer.site>
+From: Peter Hartlich <wwsgj@hartlich.com>
+Subject: Re: Wrong time in git-log when using right/ timezone
+Date: Wed, 18 Jul 2007 18:04:24 +0200
+Message-ID: <20070718160424.GA29619@hartlich.com>
+References: <20070718153614.GA28815@hartlich.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 18 17:54:43 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 18 18:05:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBBrO-0001gg-Sy
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:54:43 +0200
+	id 1IBC1g-0005u3-1p
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 18:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757590AbXGRPyf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 11:54:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756492AbXGRPye
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:54:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47355 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757590AbXGRPye (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 11:54:34 -0400
-Received: (qmail invoked by alias); 18 Jul 2007 15:54:31 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 18 Jul 2007 17:54:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18mThBOQvAmeh9G6g3EF51NcUNmG1ip8dHoJ+itLH
-	QE0jHKZG1bGbRD
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1759953AbXGRQFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 12:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756681AbXGRQFG
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 12:05:06 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.18.44]:59760 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758901AbXGRQFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 12:05:04 -0400
+Received: (qmail 9868 invoked from network); 18 Jul 2007 16:04:51 -0000
+Received: from unknown (HELO port-87-234-148-89.dynamic.qsc.de) (278559@[87.234.148.89])
+          (envelope-sender <wwsgj@hartlich.com>)
+          by smtprelay06.ispgateway.de (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <git@vger.kernel.org>; 18 Jul 2007 16:04:51 -0000
+Content-Disposition: inline
+In-Reply-To: <20070718153614.GA28815@hartlich.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52873>
 
+I wrote:
 
-With this function, a commit filter can leave out unwanted commits
-(such as temporary commits).  It does _not_ undo the changeset
-corresponding to that commit, but it _skips_ the revision.  IOW
-its childrens' tree objects remain the same.
+> git-log 1.5.2.2 gives me output such as:
 
-If you like to commit early and often, but want to filter out all
-intermediate commits, marked by "@@@" in the commit message, you can
-now do this with
+Forgot to add that the bug is present in the current dev version.
 
-	git filter-branch --commit-filter '
-		if git cat-file commit $GIT_COMMIT | grep '@@@' > /dev/null;
-		then
-			skip_commit "$@";
-		else
-			git commit-tree "$@";
-		fi' newbranch
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-filter-branch.txt |   39 ++++++++++++++++++++++++----------
- git-filter-branch.sh                |   14 ++++++++++++
- t/t7003-filter-branch.sh            |    8 +------
- 3 files changed, 42 insertions(+), 19 deletions(-)
-
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index eaea82d..9dade65 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -111,6 +111,11 @@ OPTIONS
- As a special extension, the commit filter may emit multiple
- commit ids; in that case, ancestors of the original commit will
- have all of them as parents.
-++
-+You can use the 'map' convenience function in this filter, and other
-+convenience functions, too.  For example, calling 'skip_commit "$@"'
-+will leave out the current commit (but not its changes! If you want
-+that, use gitlink:git-rebase[1] instead).
- 
- --tag-name-filter <command>::
- 	This is the filter for rewriting tag names. When passed,
-@@ -199,34 +204,44 @@ To remove commits authored by "Darl McBribe" from the history:
- git filter-branch --commit-filter '
- 	if [ "$GIT_AUTHOR_NAME" = "Darl McBribe" ];
- 	then
--		shift;
--		while [ -n "$1" ];
--		do
--			shift;
--			echo "$1";
--			shift;
--		done;
-+		skip_commit "$@";
- 	else
- 		git commit-tree "$@";
- 	fi' newbranch
- ------------------------------------------------------------------------------
- 
-+Note that the changes introduced by the commits, and not reverted by
-+subsequent commits, will still be in the rewritten branch. If you want
-+to throw out _changes_ together with the commits, you should use the
-+interactive mode of gitlink:git-rebase[1].
-+
-+The function 'skip_commits' is defined as follows:
-+
-+--------------------------
-+skip_commit()
-+{
-+	shift;
-+	while [ -n "$1" ];
-+	do
-+		shift;
-+		map "$1";
-+		shift;
-+	done;
-+}
-+--------------------------
-+
- The shift magic first throws away the tree id and then the -p
- parameters.  Note that this handles merges properly! In case Darl
- committed a merge between P1 and P2, it will be propagated properly
- and all children of the merge will become merge commits with P1,P2
- as their parents instead of the merge commit.
- 
-+
- To restrict rewriting to only part of the history, specify a revision
- range in addition to the new branch name.  The new branch name will
- point to the top-most revision that a 'git rev-list' of this range
- will print.
- 
--Note that the changes introduced by the commits, and not reverted by
--subsequent commits, will still be in the rewritten branch. If you want
--to throw out _changes_ together with the commits, you should use the
--interactive mode of gitlink:git-rebase[1].
--
- Consider this history:
- 
- ------------------
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index b574612..91f3677 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -23,6 +23,20 @@ map()
- 	fi
- }
- 
-+# if you run 'skip_commit "$@"' in a commit filter, it will print
-+# the (mapped) parents, effectively skipping the commit.
-+
-+skip_commit()
-+{
-+	shift;
-+	while [ -n "$1" ];
-+	do
-+		shift;
-+		map "$1";
-+		shift;
-+	done;
-+}
-+
- # override die(): this version puts in an extra line break, so that
- # the progress is still visible
- 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 4ddd656..22bb14a 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -132,13 +132,7 @@ test_expect_success "remove a certain author's commits" '
- 	git-filter-branch --commit-filter "\
- 		if [ \"\$GIT_AUTHOR_NAME\" = \"B V Uips\" ];\
- 		then\
--			shift;\
--			while [ -n \"\$1\" ];\
--			do\
--				shift;\
--				echo \"\$1\";\
--				shift;\
--			done;\
-+			skip_commit \"\$@\";
- 		else\
- 			git commit-tree \"\$@\";\
- 		fi" removed-author &&
--- 
-1.5.3.rc1.16.g9d6f-dirty
+Regards,
+Peter Hartlich
