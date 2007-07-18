@@ -1,69 +1,66 @@
-From: Fredrik Tolf <fredrik@dolda2000.com>
-Subject: Re: Manpage rendering faults
-Date: Wed, 18 Jul 2007 22:06:36 +0200
-Message-ID: <m3k5sxiiib.fsf@pc7.dolda2000.com>
-References: <m3odi9im5y.fsf@pc7.dolda2000.com> <Pine.LNX.4.64.0707182024440.734@reaper.quantumfyre.co.uk>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Wrong time in git-log when using right/ timezone
+Date: Wed, 18 Jul 2007 22:29:15 +0200
+Message-ID: <20070718202915.GA29505@steel.home>
+References: <20070718153614.GA28815@hartlich.com> <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 18 22:06:59 2007
+Cc: Peter Hartlich <wwsgj@hartlich.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 22:29:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBFnW-00024V-Jk
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 22:06:58 +0200
+	id 1IBG9D-0001iD-UU
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 22:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759343AbXGRUGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 16:06:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757096AbXGRUGz
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 16:06:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:50553 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754613AbXGRUGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 16:06:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBFnG-0000mD-F1
-	for git@vger.kernel.org; Wed, 18 Jul 2007 22:06:42 +0200
-Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 22:06:42 +0200
-Received: from fredrik by 1-1-3-7a.rny.sth.bostream.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 22:06:42 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 1-1-3-7a.rny.sth.bostream.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:e2l5oifrue7fLTRccZzW/9t8va4=
+	id S1753334AbXGRU3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 16:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754599AbXGRU3U
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 16:29:20 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:18890 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752921AbXGRU3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 16:29:19 -0400
+Received: from tigra.home (Fc837.f.strato-dslnet.de [195.4.200.55])
+	by post.webmailer.de (fruni mo37) (RZmta 9.1)
+	with ESMTP id 4047c4j6IJwbeg ; Wed, 18 Jul 2007 22:29:16 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B217E277BD;
+	Wed, 18 Jul 2007 22:29:16 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id D4AB1C164; Wed, 18 Jul 2007 22:29:15 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWotvlQ==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52896>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+Linus Torvalds, Wed, Jul 18, 2007 19:01:31 +0200:
+> I get:
+> 
+> 	commit 9dfdf14b3805e89aa2782458bda15b3dfae24c09
+> 	Author: Junio C Hamano <gitster@pobox.com>
+> 	Date:   Mon Jul 16 01:41:17 2007
+> 
+> for the CET case, but for right/Europe/Berlin I get:
+> 
+> 	commit 9dfdf14b3805e89aa2782458bda15b3dfae24c09
+> 	Author: Junio C Hamano <gitster@pobox.com>
+> 	Date:   Mon Jul 16 01:39:54 2007
+> 
+> ie apparently Berlin is in a timezone of its own that is roughly one 
+> minute and 23 seconds away from CET.
+> 
+> What the *heck*?
+> 
 
-> On Wed, 18 Jul 2007, Fredrik Tolf wrote:
->
->> I often read manpages using a `man -t whatever | ggv -' command, since
->> I like how it is rendered in PostScript. However, it turns out that
->> some things in the Git manpages don't really render very well using
->> that method. For example, in the git-rebase manpage, there are two
->> history graphs that look like this when reading the manpages normally
->> in a terminal:
->
-> It's a proportional font issue ...
->
-> Running "groff -Tps -f C -man $(man -w git-rebase) | ggv -" should
-> display it correctly.  (The "-f C" being the part the man doesn't do)
->
-> No idea how to make it use that font by default though ... not even
-> sure if you can put that kind of information into a man page?
+Maybe the "right/" timezones are just a little too right?
 
-Well, if it were a "pure" manpage, I'd try to use pic(1) to do it for
-the PS version, but I don't suspect asciidoc has a similar feature. I
-don't actually know, though -- again, I know virtually nothing about
-asciidoc.
-
-Fredrik Tolf
+http://ecos.sourceware.org/ml/libc-alpha/2000-12/msg00068.html
