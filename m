@@ -1,58 +1,51 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Handle git versions of the form n.n.n.GIT
-Date: Tue, 17 Jul 2007 21:52:10 -0400
-Message-ID: <20070718015210.GS32566@spearce.org>
-References: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk> <20070717212103.11950.10363.julian@quantumfyre.co.uk> <20070717214011.GU19073@lavos.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Character set for the HTML documentation
+Date: Tue, 17 Jul 2007 19:02:15 -0700
+Message-ID: <7vd4yqa2qg.fsf@assigned-by-dhcp.cox.net>
+References: <469D516B.6030806@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 03:52:20 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 04:02:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAyiB-00069K-E5
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 03:52:19 +0200
+	id 1IAys2-0008Fl-Td
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 04:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756789AbXGRBwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 21:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756479AbXGRBwQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 21:52:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48150 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754667AbXGRBwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2007 21:52:16 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IAyhs-0004T9-F5; Tue, 17 Jul 2007 21:52:00 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 67D0420FBAE; Tue, 17 Jul 2007 21:52:10 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070717214011.GU19073@lavos.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1755777AbXGRCCR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 22:02:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbXGRCCR
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 22:02:17 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39433 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204AbXGRCCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 22:02:16 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070718020215.KZHB1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 17 Jul 2007 22:02:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Qq2F1X00L1kojtg0000000; Tue, 17 Jul 2007 22:02:16 -0400
+In-Reply-To: <469D516B.6030806@zytor.com> (H. Peter Anvin's message of "Tue,
+	17 Jul 2007 16:31:55 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52819>
 
-Brian Downing <bdowning@lavos.net> wrote:
-> Can we handle versions with '-dirty' at the end as well, or is this
-> ill-advised?  For some reason when I build my hacked-up personal debian
-> packages it usually winds up:
-> 
-> :; git --version
-> git version 1.5.3.GIT-dirty
-> 
-> and I haven't bothered to find out why.
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-Already fixed.  Please get the latest version of git-gui...
+> Can we switch the documentation over to UTF-8, this is 2007
+> after all...?
 
--- 
-Shawn.
+By all means, yes.
+
+I do not think we particularly wanted to use 8859-1, but nothing
+in Documentation/ tells the asciidoc toolchain that the document
+should come out in UTF-8 either.
