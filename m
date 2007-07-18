@@ -1,75 +1,103 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 08:07:37 +0200
-Message-ID: <858x9ez1li.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] Move bundle specific stuff into bundle.[ch]
+Date: Tue, 17 Jul 2007 23:13:18 -0700
+Message-ID: <7vy7he8cjl.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707172346450.14781@racer.site>
+	<Pine.LNX.4.64.0707172216420.14596@iabervon.org>
+	<Pine.LNX.4.64.0707172302560.14596@iabervon.org>
+	<20070718032907.GY32566@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 18 08:07:44 2007
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 08:13:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB2hM-0004Qn-80
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 08:07:44 +0200
+	id 1IB2mp-0005r0-0R
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 08:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbXGRGHl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 02:07:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbXGRGHk
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 02:07:40 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:41040 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751248AbXGRGHj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 02:07:39 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 567254C41C;
-	Wed, 18 Jul 2007 08:07:38 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 4415EABCE2;
-	Wed, 18 Jul 2007 08:07:38 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-042-236.pools.arcor-ip.net [84.61.42.236])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 20C00292B62;
-	Wed, 18 Jul 2007 08:07:38 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 8DAF31C3ACCE; Wed, 18 Jul 2007 08:07:37 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0707180135200.14781@racer.site> (Johannes Schindelin's message of "Wed\, 18 Jul 2007 01\:35\:35 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3690/Wed Jul 18 05:08:02 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1751196AbXGRGNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 02:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbXGRGNU
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 02:13:20 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62515 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750905AbXGRGNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 02:13:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070718061319.LWLW1358.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 18 Jul 2007 02:13:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id QuDJ1X00R1kojtg0000000; Wed, 18 Jul 2007 02:13:19 -0400
+In-Reply-To: <20070718032907.GY32566@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 17 Jul 2007 23:29:07 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52830>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Hi,
+> What about a patch format like this?  I doubt people move more than
+> 26 blocks in the same patch of the same file, so using a single
+> character block prefix when the before/after images are identical
+> might work OK.
 >
-> On Wed, 18 Jul 2007, David Kastrup wrote:
->
->> This must likely be the most common FAQ/rant/whatever concerning git.
->
-> If you had the idea already, I wonder why you did not find it.  It's not 
-> really anything like hard to find:
->
-> http://git.or.cz/gitwiki/GitFaq#head-1fbd4a018d45259c197b169e87dafce2a3c6b5f9
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 0443129..f13fa80 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> a@@ -632,6 +632,43 a@@ You are using [git-version]:
+>   
+>   ######################################################################
+>   ##
+> a+## feature option selection
+> ...
+> a+
+> a+######################################################################
+> a+##
+>   ## repository setup
+>   
+>   if {[catch {
+> a@@ -1598,43 +1635,6 a@@ apply_config
+>   
+>   ######################################################################
+>   ##
+> a-## feature option selection
+> ....
+> a-##
+>   ## ui construction
+>   
+>   set ui_comm {}
 
-The FAQ answer is weazeling on several accounts:
+Gaah, my eyes, my *eyes*!!
 
-a) No, git only cares about files, or rather git tracks content and
-   empty directories have no content.
+	runs, stays in bathroom for 10 minutes and washes, and
+        comes back...
 
-In the same manner as empty regular files have no contents, and git
-tracks those.  Existence and permissions are important.
+It might not be actually so bad.  But I wonder if it would be
+more obvious if you do not show the whole "a-" lines but leave
+just a marker there.  That is (ugliness of "a@@" and "a-" that
+made me wash my eyes needs to be fixed, though -- but that is
+only the syntax):
 
-b) The problem is not just that empty directories don't get added into
-the repository.  They also don't get removed again when switching to a
-different checkout.  When git-diff returns zero, I expect a subsequent
-checkout to not leave complete empty hierarchies around because git
-can't delete any empty leaves which it chose not to track.
+a@@ -1598,43 +1635,6 a@@ apply_config
+  
+  ######################################################################
+  ##
+a-<<< Block a was originally here >>>
+  ## ui construction
+  
+  set ui_comm {}
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+You are coming up with a new output format that is only used
+when it is a straight move and nothing else, so by definition
+there is really no need to show both removal and addition.
