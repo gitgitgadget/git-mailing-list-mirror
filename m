@@ -1,98 +1,96 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH 2/2] Makefile: use $(FIND) instead of find
-Date: Wed, 18 Jul 2007 16:45:36 +0200
-Message-ID: <e59329b96603b8ed323b57179608bb7df9b57322.1184770193.git.dak@gnu.org>
-References: <6e14af24a3aa8af7e21e0a3f92c83c82e147202a.1184770193.git.dak@gnu.org>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Rename read_pipe() with read_fd() and make its buffer nul-terminated.
+Date: Wed, 18 Jul 2007 17:40:09 +0200
+Message-ID: <1b46aba20707180840l6c12fecfy4c610fe3a1a36c5e@mail.gmail.com>
+References: <469DBC8A.6090704@gmail.com>
+	 <7vps2q6tjf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 18 16:55:10 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"=?ISO-8859-1?Q?Kristian_H=F8gsberg?=" <krh@redhat.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 17:40:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBAvl-0003Wc-MP
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 16:55:10 +0200
+	id 1IBBdQ-0004BY-EK
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754830AbXGROzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 10:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754289AbXGROzG
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 10:55:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:50075 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754527AbXGROzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 10:55:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IBAve-00019l-4D
-	for git@vger.kernel.org; Wed, 18 Jul 2007 16:55:02 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 16:55:02 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 16:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-In-Reply-To: <6e14af24a3aa8af7e21e0a3f92c83c82e147202a.1184770193.git.dak@gnu.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:9kdufk4LIlqSPTRFO07XM2VOgRQ=
+	id S1755363AbXGRPkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 11:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758738AbXGRPkM
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:40:12 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:49400 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754289AbXGRPkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 11:40:10 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so260867wah
+        for <git@vger.kernel.org>; Wed, 18 Jul 2007 08:40:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rmh5V67s/io1s73iykZH/XlaUtN2e1YTICbv2a0NgTSJRZunrHVceul6YvJoJfrK7zBS+9avWK1xVzXoZSrLtAi5TWQyYV/MtS5HeLB9tCsKn4JjkX8CBkcGiDwmed0MWsqkxg92iPfw7J81j0/KKGNt48vyXVO3UWQvHxX301I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h8abGyDZHosy4oZNG+fVb4Nxe88riZ3y+kr6VqedpTz7GpPWbL7X6Jqx6m7JwNDwyNKw9U8EqeLr00tZVOkR/cjQyZVSMetBt3RBcaNB3b8vHdem2HSawvzecaLCBNj9uzXY7hPL8OyfE321x7w1ddjILx513npQ1ZjwNocAW6c=
+Received: by 10.114.110.1 with SMTP id i1mr1587427wac.1184773209982;
+        Wed, 18 Jul 2007 08:40:09 -0700 (PDT)
+Received: by 10.114.61.17 with HTTP; Wed, 18 Jul 2007 08:40:09 -0700 (PDT)
+In-Reply-To: <7vps2q6tjf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52868>
 
+2007/7/18, Junio C Hamano <gitster@pobox.com>:
+>
+> >       unsigned long size = *return_size;
+> >       ssize_t iret;
+> >       unsigned long off = 0;
+> >
+> > +     if (!buf || size <= 1) {
+> > +             size = alloc_nr(size);
+> > +             buf = xrealloc(buf, size);
+> > +     }
+> > +
+>
+> Hmph.  The reason this is not "!size" is because you would want
+> more than one.  As your plan is to use this mostly for the -F
+> option of "tag/commit", I suspect using a bit larger default,
+> such as 80 (just a line), or probably 1k (most log messages
+> would fit in such a buffer), would be more practical.
 
-Some people might prefer to be able to specify the find utility to
-use, in particular for the more complicated usage in the
-install-symlinks target.
+The true reason is because I before tried using (size-1) instead of (size)
+in xread(..., size - off), and then I forgot to remove that condition. Sorry.
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- Makefile |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
+>
+> >       do {
+> >               iret = xread(fd, buf + off, size - off);
+> >               if (iret > 0) {
+> >                       off += iret;
+> >                       if (off == size) {
+> > -                             size *= 2;
+> > +                             size = alloc_nr(size);
+> >                               buf = xrealloc(buf, size);
+> >                       }
+> >               }
+> >       } while (iret > 0);
+> >
+> > +     if (off == size)
+> > +             buf = xrealloc(buf, size + 1);
+> > +     buf[off] = '\0';
+> > +
+>
+> I wonder if doing xread(... (size-1) - off) in the loop would
+> ensure (off <= size-1) here.  You also would need to update the
+> realloc condition inside loop if you do so.
 
-diff --git a/Makefile b/Makefile
-index 7e53378..cf72327 100644
---- a/Makefile
-+++ b/Makefile
-@@ -178,6 +178,7 @@ AR = ar
- RM = rm -f
- TAR = tar
- INSTALL = install
-+FIND = find
- RPMBUILD = rpmbuild
- TCL_PATH = tclsh
- TCLTK_PATH = wish
-@@ -904,11 +905,11 @@ doc:
- 
- TAGS:
- 	$(RM) TAGS
--	find . -name '*.[hcS]' -print | xargs etags -a
-+	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
- 
- tags:
- 	$(RM) tags
--	find . -name '*.[hcS]' -print | xargs ctags -a
-+	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
- 
- ### Detect prefix changes
- TRACK_CFLAGS = $(subst ','\'',$(ALL_CFLAGS)):\
-@@ -1000,10 +1001,10 @@ quick-install-doc:
- # The somewhat strange looking lines start with an ignored $(MAKE) in
- # order to be executed also in make -n calls.
- install-symlinks:
--	@: $(MAKE) && cd '$(prefix_SQ)' && find . -type d ! \( -iname 'git*' -prune \) -exec echo $(INSTALL) -m 755 -d '$(symlinkprefix)/{}' \;
--	@cd '$(prefix_SQ)' && find . -type d ! \( -iname 'git*' -prune \) -exec $(INSTALL) -m 755 -d '$(symlinkprefix)/{}' \;
--	@: $(MAKE) && cd '$(prefix_SQ)' && find . \( -type d -iname 'git*' -prune -o ! -type d \) -exec echo $(RM) -r '$(symlinkprefix)/{}' \; -exec echo ln -s '$(prefix_SQ)/{}' '$(symlinkprefix)/{}' \;
--	@cd '$(prefix_SQ)' && find . \( -type d -iname 'git*' -prune -o ! -type d \) -exec $(RM) -r '$(symlinkprefix)/{}' \; -exec ln -s '$(prefix_SQ)/{}' '$(symlinkprefix)/{}' \;
-+	@: $(MAKE) && cd '$(prefix_SQ)' && $(FIND) . -type d ! \( -iname 'git*' -prune \) -exec echo $(INSTALL) -m 755 -d '$(symlinkprefix)/{}' \;
-+	@cd '$(prefix_SQ)' && $(FIND) . -type d ! \( -iname 'git*' -prune \) -exec $(INSTALL) -m 755 -d '$(symlinkprefix)/{}' \;
-+	@: $(MAKE) && cd '$(prefix_SQ)' && $(FIND) . \( -type d -iname 'git*' -prune -o ! -type d \) -exec echo $(RM) -r '$(symlinkprefix)/{}' \; -exec echo ln -s '$(prefix_SQ)/{}' '$(symlinkprefix)/{}' \;
-+	@cd '$(prefix_SQ)' && $(FIND) . \( -type d -iname 'git*' -prune -o ! -type d \) -exec $(RM) -r '$(symlinkprefix)/{}' \; -exec ln -s '$(prefix_SQ)/{}' '$(symlinkprefix)/{}' \;
- 
- ### Maintainer's dist rules
- 
--- 
-1.5.3.rc2.41.gb47b1
+I have chosen that solution to leave the code easy to read, but the
+(size-1) version will avoid that additional (but non-frequent) realloc.
+
+I will resend the fixed patch along with the builtin-tag.c one.
