@@ -1,102 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 13:40:57 +0200
-Message-ID: <vpqejj6c52u.fsf@bauges.imag.fr>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
-	<858x9ez1li.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707181121520.14781@racer.site>
-	<86tzs2m1h7.fsf@lola.quinscape.zz>
-	<Pine.LNX.4.64.0707181218090.14781@racer.site>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 6/6] Add git-rewrite-commits
+Date: Wed, 18 Jul 2007 14:05:02 +0200
+Message-ID: <20070718120502.GZ999MdfPADPa@greensroom.kotnet.org>
+References: <11842671631744-git-send-email-skimo@liacs.nl>
+ <11842671631635-git-send-email-skimo@liacs.nl>
+ <Pine.LNX.4.64.0707141140510.14781@racer.site>
+ <20070715144435.GH999MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707160054340.14781@racer.site>
+ <20070716102407.GL999MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707181153200.14781@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 18 13:41:28 2007
+X-From: git-owner@vger.kernel.org Wed Jul 18 14:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB7uJ-0005V4-31
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 13:41:27 +0200
+	id 1IB8HG-0005hK-0N
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 14:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759994AbXGRLlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 07:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbXGRLlT
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 07:41:19 -0400
-Received: from imag.imag.fr ([129.88.30.1]:39759 "EHLO imag.imag.fr"
+	id S1754440AbXGRMFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 08:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbXGRMFG
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 08:05:06 -0400
+Received: from smtp13.wxs.nl ([195.121.247.4]:64567 "EHLO smtp13.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760777AbXGRLlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 07:41:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6IBevq4010344
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2007 13:40:58 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IB7tp-0005Et-Qq; Wed, 18 Jul 2007 13:40:57 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IB7tp-0006jU-OQ; Wed, 18 Jul 2007 13:40:57 +0200
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, David Kastrup <dak@gnu.org>,  git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0707181218090.14781@racer.site> (Johannes Schindelin's message of "Wed\, 18 Jul 2007 12\:24\:46 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 18 Jul 2007 13:40:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754440AbXGRMFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 08:05:04 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JLD00JNQIWEXZ@smtp13.wxs.nl> for git@vger.kernel.org; Wed,
+ 18 Jul 2007 14:05:03 +0200 (CEST)
+Received: (qmail 23523 invoked by uid 500); Wed, 18 Jul 2007 12:05:02 +0000
+In-reply-to: <Pine.LNX.4.64.0707181153200.14781@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52855>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Jul 18, 2007 at 12:02:50PM +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 16 Jul 2007, Sven Verdoolaege wrote:
+> 
+> > On Mon, Jul 16, 2007 at 01:38:11AM +0100, Johannes Schindelin wrote:
+> > > On Sun, 15 Jul 2007, Sven Verdoolaege wrote:
+> > > > TREECHANGE is only set when path pruning is in effect.
+> > > > If I didn't check for path_pruning, then all commits would be
+> > > > considered to have been pruned.  (Or am I missing something?
+> > > > Honestly, I found all that TREECHANGE stuff difficult to follow.)
+> > > 
+> > > AFAICT TREECHANGE means that parents were rewritten.
+> > 
+> > I think you'll find that if all commits touch a path in the
+> > path specifiers then all commits will have TREECHANGE set and
+> > so no parents will be rewritten.
+> 
+> The code suggests otherwise.
 
->> > We do not track permissions of directories at all.
->> 
->> Ok, this seems like something that should be done as well, even if we
->> can stipulate at first that a directory should have rwx for the user
->> in question if you hope to track it.
->
-> No, no, no.  It should not be tracked.  It is the responsibility of the 
-> _user_ to set it to something sane, be that by a umask or by sticky 
-> groups, or by setting the permissions of the parent directory.
->
-> It is _nothing_ we want to put into the repository.  That is the _wrong_ 
-> place to put it.
+Check again.
 
-I'm not sure it's wrong to be able to track permissions, but it's
-definitely wrong to track them by default.
+> But I really have to wonder: why do you play games with TREECHANGE?  I had 
+> the impression that commit->parents is set appropriately by the revision 
+> walker,
 
-GNU Arch had some permission tracking, and I got hit by it several
-times. You have several things you might have wanted to track:
+Only for unpruned commits and the references (explicitly specified
+on the command line if you wish) may have been pruned.
 
-* read/write for the user. But I can't imagine a case where you
-  wouldn't want to be able to read and write your own files.
+> > > > revision.c itself is also riddled with "prune_fn && ".
+> > > > Wouldn't it make sense to invert the meaning of this bit and call
+> > > > it, say, PRUNED, so that the default is off and you would only
+> > > > have to check if the bit was set ?
+> > > 
+> > > You meant the TREECHANGE bit?  No.
+> > 
+> > Yes.  Why?
+> 
+> Why invert the meaning of a perfectly fine bit?  Because you can?  It is 
+> working right now, and it is not even a buglet, so what is there to fix?
 
-* permissions for group. But that doesn't make any sense when several
-  persons work on the same project, and don't share the same
-  /etc/group.
+Because it is confusing.  As explained above, the bit doesn't have a
+meaning of its own.  You can only interpret the bit if some other
+conditions are met.
+It would be even more confusing if it meant what you claim it means.
 
-* permissions for others. But that, again, doesn't make sense when
-  several persons work on the same project with different setups. I
-  sometimes work at home, where I'm basically the only user, I don't
-  care at all about permissions for others. At work, it's totally
-  different, since it's a big NFS shared by all the lab. And I might
-  very well disclose my work to the rest of the lab, and work with
-  someone who do not want to do so.
+> 
+> > > BTW what do you plan to do about my objection to UNINTERESTING, given 
+> > > the example "git rewrite-commits A..B x/y"?
+> > 
+> > That was based on an apparent misunderstanding of my code
+> > that I tried to address above.  I did not intend to do what
+> > you claim I do and a quick test confirms that my code does
+> > indeed not to what you claim it does.
+> > 
+> > More specifically, the history will not be cut off at A
+> > because A is marked UNINTERESTING and is therefore not considered
+> > to have been pruned.
+> 
+> Why do you test for TREECHANGE | UNINTERESTING then?
 
-* Execute bit. This one is relevant. Indeed, it's more a kind of
-  metadata than really a permission (you can still execute the file
-  with /lib/ld-linux.so.2 /path/to/file or such kind of things).
+Exactly for the reason mentioned above.
+If the commit is marked UNINTERESTING then it has not been pruned,
+because it hasn't even been checked for TREECHANGE.
 
-Using GNU Arch, I got the cases in real life of a project in which
-some files had group read permission, some other not, because they
-were created by developers having different umask. Worse than this, I
-got some group-writable files in my $HOME without noticing it, which
-is basically a security hole.
+> > A commit is considered pruned if it was either explicitly marked
+> > as such or if TREECHANGE is not set, but the later check (in is_pruned)
+> > is only done on commits that were checked for tree changes.
+> 
+> I don't understand.  What do you mean by "a commit is pruned"?  Does it 
+> mean that this commit was left out from the revision walk?  What does that 
+> have to do with TREECHANGE, which means that the parents set was modified?
 
--- 
-Matthieu
+You just claim that that is what it means.  The code (see try_to_simplify_commit
+where the bit is set) and a simple experiment (explained above) show otherwise.
+
+skimo
