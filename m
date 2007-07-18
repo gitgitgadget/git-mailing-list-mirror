@@ -1,76 +1,73 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] git-gui: Handle git versions of the form n.n.n.GIT
-Date: Wed, 18 Jul 2007 11:10:13 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707181102100.19849@reaper.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0707171244080.13359@reaper.quantumfyre.co.uk>
- <20070717212103.11950.10363.julian@quantumfyre.co.uk> <20070718015138.GR32566@spearce.org>
- <46a038f90707171932m67c51388jb2304f0b1873e3a6@mail.gmail.com>
- <20070718025442.GX32566@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Empty directories...
+Date: Wed, 18 Jul 2007 11:26:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707181121520.14781@racer.site>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 12:10:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 12:26:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB6UC-00010W-P3
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 12:10:25 +0200
+	id 1IB6k0-0005wk-AV
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 12:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763062AbXGRKKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 06:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763041AbXGRKKS
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 06:10:18 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:38242 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756701AbXGRKKP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 06:10:15 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 19121B9A2D
-	for <git@vger.kernel.org>; Wed, 18 Jul 2007 11:10:14 +0100 (BST)
-Received: (qmail 4203 invoked by uid 103); 18 Jul 2007 11:10:13 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3689. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.032927 secs); 18 Jul 2007 10:10:13 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 18 Jul 2007 11:10:13 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20070718025442.GX32566@spearce.org>
+	id S1754435AbXGRK0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 06:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbXGRK0j
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 06:26:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38909 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754139AbXGRK0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 06:26:38 -0400
+Received: (qmail invoked by alias); 18 Jul 2007 10:26:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 18 Jul 2007 12:26:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18OE68rIIIOu11eDRSpI2to/Wp4nrQIA9x5N3VRYg
+	C5T8jpHjDzaJeF
+X-X-Sender: gene099@racer.site
+In-Reply-To: <858x9ez1li.fsf@lola.goethe.zz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52848>
 
-On Tue, 17 Jul 2007, Shawn O. Pearce wrote:
+Hi,
 
-> The first fixes the -dirty build problem.  The second drops off
-> the extra information that git-describe throws into the mix when
-> it generates output for a non-tagged commit.  The third kills the
-> rc* component if this is a release candidate.  Note that the rc*
-> killer must come after the git-describe killer, as the rc* part is
-> actually in the real tag.  The last one fixes the weird case where
-> the user has somehow bungled his git software distribution so it
-> cannot generate a git version via git-describe *and* they have no
-> `version` file in the source code directory.  Such people really
-> should fix their git.  But anyway we do support it now.
+On Wed, 18 Jul 2007, David Kastrup wrote:
 
-Well, I would say that my git is not broken, but simply temporary.  I 
-have a machine that is not connected to the internet where I want to run 
-git.  Normally I use release tarballs, but at the moment I need the recent 
-changes to fast-import, so I am running whatever was master at the time I 
-made the tarball.
+> The FAQ answer is weazeling on several accounts:
+> 
+> a) No, git only cares about files, or rather git tracks content and
+>    empty directories have no content.
+> 
+> In the same manner as empty regular files have no contents, and git
+> tracks those.  Existence and permissions are important.
 
-As soon as 1.5.3 comes out I will be back to using the official releases. 
-I just wanted to run git-gui blame (a rather nice tool) to look at what 
-the result of my latest test import looked like.  Since I wasn't using git 
-for anything other than playing with fast-import, creating a properly 
-versioned git seemed like more effort than it was worth.
+We do not track permissions of directories at all.  This is because Git is 
+primarily meant to track source code, and most "permissions" (i.e. 
+restrictions) do not make any sense there.
 
--- 
-Julian
+> b) The problem is not just that empty directories don't get added into
+> the repository.  They also don't get removed again when switching to a
+> different checkout.  When git-diff returns zero, I expect a subsequent
+> checkout to not leave complete empty hierarchies around because git
+> can't delete any empty leaves which it chose not to track.
 
-  ---
-The major difference between bonds and bond traders is that the bonds will
-eventually mature.
+I _like_ the behaviour that Git does not remove a directory it added, when 
+I put some untracked file into it.  And switching back to that branch, Git 
+has no problems, because it sees that the directory is already there.  In 
+case of a file, it would complain, and rightfully so.
+
+See the fundamental difference between a file and a directory now?  I 
+think it boils down to "an empty directory has _no_ contents, but an empty 
+file has an _empty_ content".
+
+Ciao,
+Dscho
