@@ -1,80 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 16:34:41 -0700
-Message-ID: <7vy7hd5lri.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Thu, 19 Jul 2007 01:42:05 +0200
+Message-ID: <85abttwa7m.fsf@lola.goethe.zz>
 References: <85lkdezi08.fsf@lola.goethe.zz>
-	<7v8x9ea1rg.fsf@assigned-by-dhcp.cox.net>
-	<85d4yqz24s.fsf@lola.goethe.zz>
-	<7vhco28aoq.fsf@assigned-by-dhcp.cox.net>
-	<867ioyqhgc.fsf@lola.quinscape.zz>
+	<Pine.LNX.4.64.0707180135200.14781@racer.site>
+	<858x9ez1li.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+	<vpq4pk1vf7q.fsf@bauges.imag.fr>
+	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
+	<85644hxujp.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 01:35:45 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 19 01:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBJ3Y-0000uv-JO
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 01:35:44 +0200
+	id 1IBJAH-0002Yy-76
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 01:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964961AbXGRXex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 19:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964953AbXGRXev
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 19:34:51 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48445 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964923AbXGRXer (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 19:34:47 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070718233443.GJUY1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Jul 2007 19:34:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RBag1X00i1kojtg0000000; Wed, 18 Jul 2007 19:34:41 -0400
-In-Reply-To: <867ioyqhgc.fsf@lola.quinscape.zz> (David Kastrup's message of
-	"Wed, 18 Jul 2007 09:49:55 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965045AbXGRXmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 19:42:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964917AbXGRXmL
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 19:42:11 -0400
+Received: from mail-in-08.arcor-online.net ([151.189.21.48]:49217 "EHLO
+	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S936783AbXGRXmI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 19:42:08 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id E01CD27B577;
+	Thu, 19 Jul 2007 01:42:06 +0200 (CEST)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id D274628EBD3;
+	Thu, 19 Jul 2007 01:42:06 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-086-214.pools.arcor-ip.net [84.61.86.214])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id B1E5C35E5AC;
+	Thu, 19 Jul 2007 01:42:06 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id B82E71C3ACCF; Thu, 19 Jul 2007 01:42:05 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> (Linus Torvalds's message of "Wed\, 18 Jul 2007 16\:16\:26 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3696/Wed Jul 18 14:56:36 2007 on mail-in-06.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52912>
 
-David Kastrup <dak@gnu.org> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Gaah.
 >
->> Having made it sound so easy, here are the issues I would expect
->> to be nontrivial (but probably not rocket surgery either).
->> ...
-> This would seem to imply that the index does not need to be
-> upwards-compatible: simplifying the code means that old indexes won't
-> be treated all too well.
+> I'm a damn softie (and soft in the head too, for writing the code).
+>
+> Ok, here's a trivial patch to start the ball rolling. I'm really not 
+> interested in taking this patch any further personally, but I'm hoping 
+> that maybe it can make somebody else who is actually _interested_ in 
+> trackign empty directories (hint hint) decide that it's a good enough 
+> start that they can fill in the details.
 
-I did not imply any such thing, by the way.  These are off the
-top of my head technical issues and there probably are more, but
-I limited the list to technical side of the things.
+Well, kudos.  Together with the analysis from Junio, this seems like a
+good start.  Would you have any recommendations about what stuff one
+should really read in order to get up to scratch about git internals?
 
-You of course have social side to take care of.  If you are
-breaking everybody else's index, you would need to tell
-everybody: "I am sorry but if you upgrade your git to this
-version that does what I want, you have to nuke your index and
-start over, so commit all changes first, and then update the
-git.  Sorry for causing you a minor inconvenience".  Everybody
-at this point involves (obviously) the kernel folks, wine,
-x.org, among many others.
-
-I suspect your saying that to them is probably not good enough
-for them to forgive the minor inconveniences, which means you
-need to convince _me_ to join you in defending, in the release
-notes, that this is a feature worth having even though there is
-a minor inconvenience to redo everybody's index files.  Which I
-suspect is quite unlikely to happen at this moment, though...
-
-A much less troublesome approach might be to do things
-differently from what I outlined, to keep the index compatible
-as long as it does not contain an empty directory, which is what
-we did for subprojects support.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
