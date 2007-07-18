@@ -1,76 +1,86 @@
-From: Geoff Richards <qef@ungwe.org>
-Subject: Re: Character set for the HTML documentation
-Date: Wed, 18 Jul 2007 06:26:15 +0100
-Message-ID: <20070718052615.GA4441@ungwe.org>
-References: <469D516B.6030806@zytor.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Empty directories...
+Date: Wed, 18 Jul 2007 07:56:03 +0200
+Message-ID: <85d4yqz24s.fsf@lola.goethe.zz>
+References: <85lkdezi08.fsf@lola.goethe.zz>
+	<7v8x9ea1rg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 07:26:44 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 07:56:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB23Z-0004Rq-SY
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 07:26:38 +0200
+	id 1IB2WF-0001xv-P5
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 07:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349AbXGRF0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 01:26:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXGRF0Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 01:26:24 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:17539 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751349AbXGRF0X (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 01:26:23 -0400
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20070718052618.SKPF4.mtaout02-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Wed, 18 Jul 2007 06:26:18 +0100
-Received: from blacktooth.laxan.com ([82.3.192.247])
-          by aamtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20070718052618.UJFJ17393.aamtaout02-winn.ispmail.ntl.com@blacktooth.laxan.com>
-          for <git@vger.kernel.org>; Wed, 18 Jul 2007 06:26:18 +0100
-Received: from qef by blacktooth.laxan.com with local (Exim 4.67)
-	(envelope-from <qef@laxan.com>)
-	id 1IB23D-0004Bk-Uj
-	for git@vger.kernel.org; Wed, 18 Jul 2007 06:26:15 +0100
-Content-Disposition: inline
-In-Reply-To: <469D516B.6030806@zytor.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1750807AbXGRF4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 01:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbXGRF4J
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 01:56:09 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:39573 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751389AbXGRF4H (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 01:56:07 -0400
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id B75652D485E;
+	Wed, 18 Jul 2007 07:56:05 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id A07391B8E02;
+	Wed, 18 Jul 2007 07:56:05 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-042-236.pools.arcor-ip.net [84.61.42.236])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 843A9332661;
+	Wed, 18 Jul 2007 07:56:04 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id B4B671C3ACCE; Wed, 18 Jul 2007 07:56:03 +0200 (CEST)
+In-Reply-To: <7v8x9ea1rg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Tue\, 17 Jul 2007 19\:23\:15 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3690/Wed Jul 18 05:08:02 2007 on mail-in-08.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52828>
 
-On Tue, Jul 17, 2007 at 04:31:55PM -0700, H. Peter Anvin wrote:
-> I just got the following email:
-> 
-> > The Git documentation at
-> > <http://www.kernel.org/pub/software/scm/git/docs/user-manual.html> is
-> > encoded in ISO 8859-1, but it is being served with a content-type header
-> > of "text/plain; charset=UTF-8".
-> > 
-> > The content-type header overrides the value declared in the <meta> tag
-> > of the HTML document, so this causes browsers to render the
-> > documentation incorrectly.
-> > 
-> > Apologies if this is a well known issue and you get a lot of mail like
-> > this BTW, just don't LART me too hard. ;)
-> 
-> The fact that browsers behave this way is of course a bug, but it's a
-> common one.  Can we switch the documentation over to UTF-8, this is 2007
-> after all...?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Unfortunately, it's not a bug.  The correct thing for a browser to do is
-give the 'Content-Type' HTTP header priority over the <meta> element.
-It's defined in an RFC somewhere.
+> David Kastrup <dak@gnu.org> writes:
+>
+>> or has somebody a better idea or interface or rationale?  I understand
+>> that there are use cases where one does not bother about empty
+>> directories, but for a _content_ tracker, not tracking directories
+>> because they are empty seems quite serious.
+>
+> No objections as long as a patch is cleanly made without
+> regression.  It's just nobody agreed that it is "quite serious"
+> yet so far, and no fundamental reason against it.
 
-Best thing to do is tell Apache (or whatever) not to send the HTTP
-header ("AddDefaultCharset off"), and make sure all the HTML has a
-correct <meta> element specifying the encoding.
+Thanks.  It certainly is not serious for the Linux kernel source, but
+seems awkward for quite a few situations.  Anyway, what is your take
+on the situation I described?
 
-And yes, putting everything in UTF-8 unless you've got a specific reason
-not to is probably going to make life simpler as well.
+That creating some directory hierarchy (happening to contain empty
+directories) with some external program, adding and committing it,
+then switching to a different branch (or maybe doing a git-reset
+--hard) leaves a skeleton of empty directories around?
 
-HTH,
-   geoff
+I find this almost worse than not being able to put them into the
+repository: you can't get rid of them anymore either!
+
+I'd be tempted to propose that git should remove empty subdirectories
+when cleaning up a removed tree in the working directory, even though
+that violates the principle to not delete anything it isn't tracking.
+But since you can't get it to track the stuff in the first place...
+
+But the real fix would be to track them.
+
+Does some trick work possibly at checkin time, like putting an empty
+file into every empty directory, adding to the index, then removing
+all empty files explicitly from the index and then checking in, or is
+this hopeless to work around with from the user side without affecting
+the repository itself?
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
