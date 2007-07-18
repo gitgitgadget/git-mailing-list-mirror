@@ -1,122 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 09:23:46 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
- <858x9ez1li.fsf@lola.goethe.zz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/3] Move bundle specific stuff into bundle.[ch]
+Date: Wed, 18 Jul 2007 12:25:06 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707181140450.14596@iabervon.org>
+References: <Pine.LNX.4.64.0707172346450.14781@racer.site>
+ <Pine.LNX.4.64.0707172216420.14596@iabervon.org> <Pine.LNX.4.64.0707181053130.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 18:24:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 18 18:25:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBCJu-00055w-8R
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 18:24:10 +0200
+	id 1IBCKv-0005TX-32
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 18:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755014AbXGRQYE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 12:24:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759839AbXGRQYD
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 12:24:03 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44282 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755738AbXGRQYA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 12:24:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6IGNqKP024746
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2007 09:23:53 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6IGNkED017830;
-	Wed, 18 Jul 2007 09:23:46 -0700
-In-Reply-To: <858x9ez1li.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-2.671 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1759464AbXGRQZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 12:25:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758778AbXGRQZK
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 12:25:10 -0400
+Received: from iabervon.org ([66.92.72.58]:1381 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753710AbXGRQZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 12:25:09 -0400
+Received: (qmail 30587 invoked by uid 1000); 18 Jul 2007 16:25:06 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Jul 2007 16:25:06 -0000
+In-Reply-To: <Pine.LNX.4.64.0707181053130.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52876>
 
+On Wed, 18 Jul 2007, Johannes Schindelin wrote:
 
-
-On Wed, 18 Jul 2007, David Kastrup wrote:
+> Hi,
 > 
-> In the same manner as empty regular files have no contents, and git
-> tracks those.  Existence and permissions are important.
+> On Tue, 17 Jul 2007, Daniel Barkalow wrote:
+> 
+> > You should use -C on this sort of thing, so that the interesting aspects 
+> > of the patch are easier to see. (It actually comes out longer in this 
+> > case, but it's far easier to tell that the code in the new file is the 
+> > same as the old code.)
+> 
+> Okay, I wanted it to be kept short, since I really get lost easily in 
+> hundreds of "-" lines, with possibly one in the midst being a "+".
 
-Yes, but directories really are different.
+Actually, putting the functions in the original order made the -C diff 
+shorter than without -C. In general, a hundred lines of '-' with maybe a 
+'+' is hard to read, but I think whole functions of '-' without anything 
+else are easy; scan the left column, and find that the whole thing goes 
+away. If a patch is discarding blocks which are exactly whole top-level 
+definitions, those changes are probably either correct or totally broken 
+(depending on whether those blocks were actually used); you just have to 
+get suspicious around preprocessor stuff. Your change ended up being 
+trivially what the message described: bunch of blocks not in one or the 
+other of the resulting files, some functions make not static, renamed, 
+and/or had arguments changed, and the function you have to call after 
+unbundle if you want it.
 
-First off, git wouldn't track the permissions anyway (git tracks execute 
-bits, but for directories that _has_ to be set or git couldn't use them 
-itself, so that's not going to happen).
+> > Aside from presentation, it looks good to me. Shall I stick the bundle 
+> > changes into my series? I'd like to have them come before the patch to 
+> > switch to builtin-fetch, so that there aren't any revisions where "git 
+> > fetch" doesn't have bundle support.
+> 
+> Looks fine to me.  Seems like you should add a SOB line, too.
 
-Second, and much more important, the directories will exist or not 
-*regardless* of what git does.
+Ah, yes. I'll have to see if I'll be the first person in git development 
+to have a SOB line that's neither first nor last. :)
 
-> b) The problem is not just that empty directories don't get added into
-> the repository.  They also don't get removed again when switching to a
-> different checkout.
+> > And I think it would be best to take part 3 as a review fix to my final 
+> > patch.
+> 
+> Yes, definitely.  This shows again (to me, at least), that just looking at 
+> the code is not enough, you have to run it, too, to review patches.
 
-Bzzt. Wrong.
-
-We *do* remove directories when all files under them go away.
-
-HOWEVER (and this is where one of the reasons for not tracking them comes 
-in):
-
-   ** YOU CANNOT REMOVE A DIRECTORY IF IT HAS SOME UNTRACKED CONTENTS **
-
-Think about that for five seconds, then think about it some more. Ponder 
-it.
-
-So the fact is, git *already* does ass good of a job as it could possibly 
-do wrt directories that go away: it tries to remove them if all the files 
-that are tracked in it have gone away.
-
-But that leaves a very common case, namely switching to another branch 
-without those files, and the directory still having stale object files etc 
-build crud in it.
-
-A SCM *must*not* just remove that directory. It would be horrible. The 
-fact that it has untracked files in it does not make those untracked files 
-"unimportant". Maybe you feel that way about object files, but what about 
-tracking some important parts of your home directory - does the fact that 
-you don't necessarily track *all* of it mean that the rest is totally 
-unimportant adn that git should just remove it? HELL NO!
-
-So directories really _are_ problematic. You cannot (and should not) track 
-them the same way as you track a file.
-
-And the difference is very fundamental indeed: when you track a regular 
-file, you track *all* of its content. But when you track a directory, 
-you don't track it's content *at*all*.
-
-Think about that, and then think about the fact that git is defined as a 
-"content tracker", and it's not "weasely" at all to say that you don't 
-track directories.
-
-So your argument is totally bogus. When you track an empty file, you very 
-much track the *content* of that file, and "empty" just happens to be a 
-very valid content.
-
-But when you track a "directory", you don't actually track its content at 
-all, you track it's *existence*, which is a very very very different 
-thing. I hope you understand from the above what is so different.
-
-(A true "directory content" tracker by definition would have to track 
-every single file under that directory. You can claim that for the case of 
-an empty directory the "existence tracking" is 100% equivalent with 
-"content tracking", but that's simply not true. It becomes non-true the 
-moment there are any files at all inside that directory, and be honest 
-now: the only _point_ of an empty directory is that you expect it to 
-potentially get files under it).
-
-So "existence" != "content". Git very much does not track "existence" of 
-files, it tracks the total content of them too.
-
-			Linus
+You caught that by running it? I've been running this code, and I've never 
+done anything with it which caused fetch_refs to fail and then checked the 
+result. I thought you must have found it by looking for missing checks of 
+return values. Or did you find it when you'd implemented half of bundle 
+support and it didn't complain?
