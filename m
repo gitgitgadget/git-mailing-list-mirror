@@ -1,96 +1,66 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: git-p4 pull request
-Date: Wed, 18 Jul 2007 17:42:07 +0200
-Message-ID: <200707181742.12046.simon@lst.de>
+From: Peter Hartlich <wwsgj@hartlich.com>
+Subject: Wrong time in git-log when using right/ timezone
+Date: Wed, 18 Jul 2007 17:36:14 +0200
+Message-ID: <20070718153614.GA28815@hartlich.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart35914933.KYmTa1NVAI";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 17:41:49 2007
+Content-Type: multipart/mixed; boundary="huq684BweRXVnRxX"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 18 17:43:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBBeu-0004st-In
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:41:48 +0200
+	id 1IBBgf-0005WY-Ka
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:43:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932065AbXGRPl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 11:41:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759388AbXGRPlZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:41:25 -0400
-Received: from verein.lst.de ([213.95.11.210]:41896 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757057AbXGRPlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 11:41:25 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l6IFelNK024116
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Wed, 18 Jul 2007 17:40:48 +0200
-User-Agent: KMail/1.9.7
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S933349AbXGRPnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 11:43:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933341AbXGRPnY
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:43:24 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.18.16]:50083 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933322AbXGRPnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 11:43:22 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Jul 2007 11:43:22 EDT
+Received: (qmail 16399 invoked from network); 18 Jul 2007 15:36:39 -0000
+Received: from unknown (HELO port-87-234-148-89.dynamic.qsc.de) (278559@[87.234.148.89])
+          (envelope-sender <wwsgj@hartlich.com>)
+          by smtprelay04.ispgateway.de (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <git@vger.kernel.org>; 18 Jul 2007 15:36:39 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52870>
 
---nextPart35914933.KYmTa1NVAI
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+
+--huq684BweRXVnRxX
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-The following changes since commit a5e407988b35b7353bd03c770afc647670c25981:
-  Jim Meyering (1):
-        git-cvsserver: detect/diagnose write failure, etc.
+Hi,
 
-are available in the git repository at:
+My timezone is set to right/Europe/Berlin. git-log 1.5.2.2 gives me output
+such as:
 
-  git://people.freedesktop.org/~hausmann/git-p4 master
+| Date:   Wed Jul 18 16:17:31 2007 +0159
 
-Scott Lamb (2):
-      git-p4: use subprocess in p4CmdList
-      git-p4: input to "p4 files" by stdin instead of arguments
+Note the timezone, which should be +0200.
 
-Simon Hausmann (3):
-      git-p4: Cleanup, make listExistingP4Branches a global function for later use.
-      git-p4: Fix upstream branch detection for submit/rebase with multiple branches.
-      git-p4: Cleanup, used common function for listing imported p4 branches
+I'm using tzcode/tzdata 2007f from <ftp://elsie.nci.nih.gov/pub/>. A small
+test script is attached.
 
- contrib/fast-import/git-p4 |  129 ++++++++++++++++++++++++--------------------
- 1 files changed, 70 insertions(+), 59 deletions(-)
+Regards,
+Peter Hartlich
 
+--huq684BweRXVnRxX
+Content-Type: application/x-sh
+Content-Disposition: attachment; filename="tz.sh"
+Content-Transfer-Encoding: quoted-printable
 
-I have used Scotts changes for two days now and had no problems at all.
-Based on Alex Riesen's suggestion they are a nice solution around the commandline
-limits when calling the p4 client.
-
-The other three changes fix a rather ugly bug when importing multiple depot
-paths through p4 branch mappings where it could happen in the end that changes
-that were done in git were submitted into the wrong depot paths in perforce itself
-due to a faulty rebase onto the wrong git branch.
-
-Would be great if those changes could be included in master.
-
-
-Thanks,
-Simon
-
---nextPart35914933.KYmTa1NVAI
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGnjTTWXvMThJCpvIRAsmcAJ4h2f6fqP9TnFFL/TLSME5GbzcJJwCgrwA4
-be6mw7290mSz60sZ55ETAEk=
-=qTYv
------END PGP SIGNATURE-----
-
---nextPart35914933.KYmTa1NVAI--
+#!/bin/sh=0A=0Atztest() {=0A	echo with timezone $TZ:=0A	>foo=0A	{ git init =
+&& git add foo && git commit -m foo; } >/dev/null=0A	git log | grep ^Date:=
+=0A}=0A=0Aexport TZ=0A=0ATZ=3DEurope/Berlin=0A(mkdir posix && cd posix && t=
+ztest)=0A=0ATZ=3Dright/Europe/Berlin =0A(mkdir right && cd right && tztest)=
+=0A
+--huq684BweRXVnRxX--
