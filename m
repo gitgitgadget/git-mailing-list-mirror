@@ -1,63 +1,65 @@
-From: Perrin Meyer <perrinmeyer@yahoo.com>
-Subject: git svn dcommit seg fault
-Date: Tue, 17 Jul 2007 19:51:27 -0700 (PDT)
-Message-ID: <951126.88373.qm@web52807.mail.re2.yahoo.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/3] Move bundle specific stuff into bundle.[ch]
+Date: Tue, 17 Jul 2007 23:23:49 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707172302560.14596@iabervon.org>
+References: <Pine.LNX.4.64.0707172346450.14781@racer.site>
+ <Pine.LNX.4.64.0707172216420.14596@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 18 04:58:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 18 05:24:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IAzjz-0001oK-91
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 04:58:15 +0200
+	id 1IB094-0006jg-TO
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 05:24:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756039AbXGRC6L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Jul 2007 22:58:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755425AbXGRC6K
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 22:58:10 -0400
-Received: from web52807.mail.re2.yahoo.com ([206.190.48.250]:26820 "HELO
-	web52807.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754725AbXGRC6J (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2007 22:58:09 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2007 22:58:08 EDT
-Received: (qmail 88787 invoked by uid 60001); 18 Jul 2007 02:51:28 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Message-ID;
-  b=lWa97ZKj8+X9D45VGnv1bIPPeshZk21qpqFmm5Qfu3Bz8gO0zyk/kHtq59mdj4u1vcSIiKmurBU62+62TEn2HG9CLFo5bZJoYUPlSwbe2nnQWxssEci7KhprMYdbb8IPiZjJfeUX0LcqDLjC8RTezCIc0gwXbmrBnWsbkm7tOqI=;
-X-YMail-OSG: jUK_ySgVM1mWUnc5wlfbL95hg4hBklFofak.UL9A16XbapZqrSiWoKYo7oTpg9G9yeOfyXfDF0ayKgz49caTvRtmT_bmhb98z4EMfhZOZFNeh1M-
-Received: from [216.52.12.233] by web52807.mail.re2.yahoo.com via HTTP; Tue, 17 Jul 2007 19:51:27 PDT
-X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.41.16
+	id S1752383AbXGRDX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Jul 2007 23:23:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933368AbXGRDX5
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Jul 2007 23:23:57 -0400
+Received: from iabervon.org ([66.92.72.58]:2347 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762935AbXGRDXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2007 23:23:50 -0400
+Received: (qmail 17666 invoked by uid 1000); 18 Jul 2007 03:23:49 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Jul 2007 03:23:49 -0000
+In-Reply-To: <Pine.LNX.4.64.0707172216420.14596@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52825>
 
+On Tue, 17 Jul 2007, Daniel Barkalow wrote:
 
-I'm able to clone svn repo's fine with
+> On Tue, 17 Jul 2007, Johannes Schindelin wrote:
+> 
+> > The transport specific stuff was moved into libgit.a, and the
+> > bundle specific stuff will not be left behind.
+> > 
+> > This is a big code move, with one exception: the function
+> > unbundle() no longer outputs the list of refs.  You have to call
+> > list_bundle_refs() yourself for that.
+> 
+> You should use -C on this sort of thing, so that the interesting aspects 
+> of the patch are easier to see. (It actually comes out longer in this 
+> case, but it's far easier to tell that the code in the new file is the 
+> same as the old code.) Can you tell I've been rearranging a lot of code 
+> lately and trying to make the patches not look really scary?
 
-$ git svn clone https://svn.eng.msli.com/perrin/trunk/TESTGIT/ .
+Actually, I ended up touching this up a tiny bit, too: I ordered the 
+functions in bundle.c the way they were in builtin-bundle.c (so that the 
+patch is more trivial) and removed the blank lines at the end of the file. 
+This makes the "git diff -C" output really obvious. 
 
-and I'm then able to use git commit to commit local changes, but 
-when I try 
+(Someday, I'd like to have a diff that can show that a substantial block 
+of '+' lines matches a block of lines from somewhere in the "before" 
+content, so reviewers can verify that the patch reorders code but doesn't 
+change it, or changes it in certain ways. But, of course, that's both hard 
+to generate and hard to display usefully.)
 
-$ git svn dcommit
-
-I get
-
-[perrin@whisper TESTGIT]$ git svn dcommit
-        M       test.c
-Committed r717
-Segmentation fault
-
-As far as I can tell, the commit worked fine (verified by trying 'svn update' on another box).
-
-I've tried git version 1.5.2.3, 1.5.3-rc2, and the latest build, and all give the seg fault. 
-
-I'm guessing it has something to do with using the https connection to svn?
-
-Thanks,
-
-Perrin Meyer
+	-Daniel
+*This .sig left intentionally blank*
