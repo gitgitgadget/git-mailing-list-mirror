@@ -1,75 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Wincent Colaiuta <win@wincent.com>
 Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 02:30:47 -0400
-Message-ID: <20070718063047.GA32566@spearce.org>
-References: <85lkdezi08.fsf@lola.goethe.zz> <vpqfy3m7dex.fsf@bauges.imag.fr> <85zm1uxmmw.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Date: Wed, 18 Jul 2007 08:34:27 +0200
+Message-ID: <BFBE8924-5F60-4D1F-9260-29545BEA0790@wincent.com>
+References: <85lkdezi08.fsf@lola.goethe.zz> <7v8x9ea1rg.fsf@assigned-by-dhcp.cox.net> <85d4yqz24s.fsf@lola.goethe.zz>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 08:30:56 2007
+X-From: git-owner@vger.kernel.org Wed Jul 18 08:35:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB33n-0002Ac-Rt
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 08:30:56 +0200
+	id 1IB389-0003Kd-F1
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 08:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319AbXGRGax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 02:30:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbXGRGax
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 02:30:53 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54950 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751260AbXGRGaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 02:30:52 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IB33g-0006zE-Dz; Wed, 18 Jul 2007 02:30:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DF5DD20FBAE; Wed, 18 Jul 2007 02:30:47 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <85zm1uxmmw.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753018AbXGRGfA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Jul 2007 02:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbXGRGfA
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 02:35:00 -0400
+Received: from wincent.com ([72.3.236.74]:57126 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752673AbXGRGe7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 02:34:59 -0400
+Received: from [192.168.1.99] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l6I6YrFT023419;
+	Wed, 18 Jul 2007 01:34:54 -0500
+In-Reply-To: <85d4yqz24s.fsf@lola.goethe.zz>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52833>
 
-David Kastrup <dak@gnu.org> wrote:
-> > ,----[ http://www.spinics.net/lists/git/msg30730.html ]
-> > | From: Linus Torvalds <torvalds@xxxxxxxxxxxxxxxxxxxx>
-> > | 
-> > | I wouldn't personally mind if somebody taught git to just track empty
-> > | directories too.
-> > | 
-> > | There is no fundamental git database reason not to allow them:
-> > | it's in fact quite easy to create an empty tree object.
-> > | The problems with empty directories are in the *index*, and they
-> > | shouldn't be insurmountable.
-> 
-> Stop right here: does that mean that I can script some "put empty
-> directories into the last commit manually" procedure bypassing the
-> index?
+El 18/7/2007, a las 7:56, David Kastrup escribi=F3:
 
-Yes.  But when you read that tree into the index later (by say
-checking out a branch that points to it) the empty directories
-will not be created, as they have no files to cause their creation.
-Committing changes on that branch will remove the empty directories.
-;-)
+> That creating some directory hierarchy (happening to contain empty
+> directories) with some external program, adding and committing it,
+> then switching to a different branch (or maybe doing a git-reset
+> --hard) leaves a skeleton of empty directories around?
+>
+> I find this almost worse than not being able to put them into the
+> repository: you can't get rid of them anymore either!
+>
+> I'd be tempted to propose that git should remove empty subdirectories
+> when cleaning up a removed tree in the working directory, even though
+> that violates the principle to not delete anything it isn't tracking.
+> But since you can't get it to track the stuff in the first place...
+>
+> But the real fix would be to track them.
 
-Oh, and the above question from you sounds like you think you can
-modify the last commit to include new directories that weren't
-there before.  You cannot do that without changing the tree SHA-1,
-which will cause the commit SHA-1 to change.  That in turns means you
-are not actually adding to the last commit but instead are creating
-an entirely different commit.  History in Git is always immutable.
+Although I haven't yet been "bitten" by this issue I understand where =20
+you're coming from. This could confuse users and appear inconsistent =20
+to them (seeing as empty *files* can be tracked). I think it's =20
+probably worth tackling for that reason alone, but it will have the =20
+additional benefit of enabling other workflows like the one you =20
+describe ("installation trees for some application").
 
--- 
-Shawn.
+> Does some trick work possibly at checkin time, like putting an empty
+> file into every empty directory, adding to the index, then removing
+> all empty files explicitly from the index and then checking in, or is
+> this hopeless to work around with from the user side without affectin=
+g
+> the repository itself?
+
+I wouldn't recommend any "tricks" here. I think the real solution is =20
+to allow the tracking of empty trees; everything else seems like a =20
+kludge. And then, as you've noted already that will allow Git to =20
+handle the "skeleton of empty directories" left behind problem that =20
+you describe.
+
+Cheers,
+Wincent
