@@ -1,105 +1,62 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH] Force listingblocks to be monospaced in manpages
-Date: Wed, 18 Jul 2007 22:33:57 +0100
-Message-ID: <20070718213725.31383.50523.julian@quantumfyre.co.uk>
-References: <m3k5sxiiib.fsf@pc7.dolda2000.com>
-Cc: git@vger.kernel.org
-To: Fredrik Tolf <fredrik@dolda2000.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 23:39:27 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Empty directories...
+Date: Wed, 18 Jul 2007 14:45:06 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+ <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
+ <85644hxujp.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 23:46:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBHF0-0008IU-Ei
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 23:39:26 +0200
+	id 1IBHLq-00024d-Ch
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 23:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760332AbXGRVjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 17:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760692AbXGRVjG
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 17:39:06 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:42436 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755333AbXGRVjB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 17:39:01 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 37C9DB9A2D
-	for <git@vger.kernel.org>; Wed, 18 Jul 2007 22:39:00 +0100 (BST)
-Received: (qmail 27217 invoked by uid 103); 18 Jul 2007 22:38:59 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3689. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.025041 secs); 18 Jul 2007 21:38:59 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 18 Jul 2007 22:38:59 +0100
-X-git-sha1: d143ec5a9834d62c96213ee97a6e3ff55ebf12a7 
-X-Mailer: git-mail-commits v0.1
-In-Reply-To: <m3k5sxiiib.fsf@pc7.dolda2000.com>
+	id S1756945AbXGRVqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 17:46:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756424AbXGRVqT
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 17:46:19 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:50376 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755639AbXGRVqT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 17:46:19 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6ILjCl1007665
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 18 Jul 2007 14:45:13 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6ILj6Ea030617;
+	Wed, 18 Jul 2007 14:45:06 -0700
+In-Reply-To: <85644hxujp.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-2.674 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52903>
 
-For the html output we can use a stylesheet to make sure that the
-listingblocks are presented in a monospaced font.  For the manpages do
-it manually by inserting a ".ft C" before and ".ft" after the block in
-question.
 
-In order for these roff commands to get through to the manpage they
-have to be element encoded to prevent quoting.
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
-
-On Wed, 18 Jul 2007, Fredrik Tolf wrote:
-
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
+On Wed, 18 Jul 2007, David Kastrup wrote:
 >
->> On Wed, 18 Jul 2007, Fredrik Tolf wrote:
->>
->>> I often read manpages using a `man -t whatever | ggv -' command, since
->>> I like how it is rendered in PostScript. However, it turns out that
->>> some things in the Git manpages don't really render very well using
->>> that method. For example, in the git-rebase manpage, there are two
->>> history graphs that look like this when reading the manpages normally
->>> in a terminal:
->>
->> It's a proportional font issue ...
->>
->> Running "groff -Tps -f C -man $(man -w git-rebase) | ggv -" should
->> display it correctly.  (The "-f C" being the part the man doesn't do)
->>
->> No idea how to make it use that font by default though ... not even
->> sure if you can put that kind of information into a man page?
->
-> Well, if it were a "pure" manpage, I'd try to use pic(1) to do it for
-> the PS version, but I don't suspect asciidoc has a similar feature. I
-> don't actually know, though -- again, I know virtually nothing about
-> asciidoc.
+> You said that you are not inclined to do any work in that area
+> since it does not touch _your_ use cases (well, at least not to a
+> degree that you consider worth bothering about) but that is no reason
+> to get into ridiculous arguments about other usage.
 
-How about this?
+How hard is it for you to admit that I also said "please send in a patch".
 
-Seems to work for me - but I'm not an asciidoc/docbook/roff expert ...
+I don't need it. You do. You do the work. I'm just explaining why the work 
+hasn't been done.
 
- Documentation/asciidoc.conf |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 6b6220d..d54fe29 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -27,7 +27,13 @@ ifdef::backend-docbook[]
- [listingblock]
- <example><title>{title}</title>
- <literallayout>
-+ifdef::doctype-manpage[]
-+&#10;&#x2302;ft C&#10;
-+endif::doctype-manpage[]
- |
-+ifdef::doctype-manpage[]
-+&#10;&#x2302;ft&#10;
-+endif::doctype-manpage[]
- </literallayout>
- {title#}</example>
- endif::backend-docbook[]
--- 
-1.5.2.2
+		Linus
