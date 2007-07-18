@@ -1,96 +1,96 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Rename read_pipe() with read_fd() and make its buffer nul-terminated.
-Date: Wed, 18 Jul 2007 17:40:09 +0200
-Message-ID: <1b46aba20707180840l6c12fecfy4c610fe3a1a36c5e@mail.gmail.com>
-References: <469DBC8A.6090704@gmail.com>
-	 <7vps2q6tjf.fsf@assigned-by-dhcp.cox.net>
+From: Simon Hausmann <simon@lst.de>
+Subject: git-p4 pull request
+Date: Wed, 18 Jul 2007 17:42:07 +0200
+Message-ID: <200707181742.12046.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart35914933.KYmTa1NVAI";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"=?ISO-8859-1?Q?Kristian_H=F8gsberg?=" <krh@redhat.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 17:40:16 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 17:41:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBBdQ-0004BY-EK
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:40:16 +0200
+	id 1IBBeu-0004st-In
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:41:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755363AbXGRPkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 11:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758738AbXGRPkM
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:40:12 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:49400 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754289AbXGRPkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 11:40:10 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so260867wah
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 08:40:10 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rmh5V67s/io1s73iykZH/XlaUtN2e1YTICbv2a0NgTSJRZunrHVceul6YvJoJfrK7zBS+9avWK1xVzXoZSrLtAi5TWQyYV/MtS5HeLB9tCsKn4JjkX8CBkcGiDwmed0MWsqkxg92iPfw7J81j0/KKGNt48vyXVO3UWQvHxX301I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=h8abGyDZHosy4oZNG+fVb4Nxe88riZ3y+kr6VqedpTz7GpPWbL7X6Jqx6m7JwNDwyNKw9U8EqeLr00tZVOkR/cjQyZVSMetBt3RBcaNB3b8vHdem2HSawvzecaLCBNj9uzXY7hPL8OyfE321x7w1ddjILx513npQ1ZjwNocAW6c=
-Received: by 10.114.110.1 with SMTP id i1mr1587427wac.1184773209982;
-        Wed, 18 Jul 2007 08:40:09 -0700 (PDT)
-Received: by 10.114.61.17 with HTTP; Wed, 18 Jul 2007 08:40:09 -0700 (PDT)
-In-Reply-To: <7vps2q6tjf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932065AbXGRPl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 11:41:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759388AbXGRPlZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:41:25 -0400
+Received: from verein.lst.de ([213.95.11.210]:41896 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757057AbXGRPlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 11:41:25 -0400
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l6IFelNK024116
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Wed, 18 Jul 2007 17:40:48 +0200
+User-Agent: KMail/1.9.7
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52869>
 
-2007/7/18, Junio C Hamano <gitster@pobox.com>:
->
-> >       unsigned long size = *return_size;
-> >       ssize_t iret;
-> >       unsigned long off = 0;
-> >
-> > +     if (!buf || size <= 1) {
-> > +             size = alloc_nr(size);
-> > +             buf = xrealloc(buf, size);
-> > +     }
-> > +
->
-> Hmph.  The reason this is not "!size" is because you would want
-> more than one.  As your plan is to use this mostly for the -F
-> option of "tag/commit", I suspect using a bit larger default,
-> such as 80 (just a line), or probably 1k (most log messages
-> would fit in such a buffer), would be more practical.
+--nextPart35914933.KYmTa1NVAI
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-The true reason is because I before tried using (size-1) instead of (size)
-in xread(..., size - off), and then I forgot to remove that condition. Sorry.
+The following changes since commit a5e407988b35b7353bd03c770afc647670c25981:
+  Jim Meyering (1):
+        git-cvsserver: detect/diagnose write failure, etc.
 
->
-> >       do {
-> >               iret = xread(fd, buf + off, size - off);
-> >               if (iret > 0) {
-> >                       off += iret;
-> >                       if (off == size) {
-> > -                             size *= 2;
-> > +                             size = alloc_nr(size);
-> >                               buf = xrealloc(buf, size);
-> >                       }
-> >               }
-> >       } while (iret > 0);
-> >
-> > +     if (off == size)
-> > +             buf = xrealloc(buf, size + 1);
-> > +     buf[off] = '\0';
-> > +
->
-> I wonder if doing xread(... (size-1) - off) in the loop would
-> ensure (off <= size-1) here.  You also would need to update the
-> realloc condition inside loop if you do so.
+are available in the git repository at:
 
-I have chosen that solution to leave the code easy to read, but the
-(size-1) version will avoid that additional (but non-frequent) realloc.
+  git://people.freedesktop.org/~hausmann/git-p4 master
 
-I will resend the fixed patch along with the builtin-tag.c one.
+Scott Lamb (2):
+      git-p4: use subprocess in p4CmdList
+      git-p4: input to "p4 files" by stdin instead of arguments
+
+Simon Hausmann (3):
+      git-p4: Cleanup, make listExistingP4Branches a global function for later use.
+      git-p4: Fix upstream branch detection for submit/rebase with multiple branches.
+      git-p4: Cleanup, used common function for listing imported p4 branches
+
+ contrib/fast-import/git-p4 |  129 ++++++++++++++++++++++++--------------------
+ 1 files changed, 70 insertions(+), 59 deletions(-)
+
+
+I have used Scotts changes for two days now and had no problems at all.
+Based on Alex Riesen's suggestion they are a nice solution around the commandline
+limits when calling the p4 client.
+
+The other three changes fix a rather ugly bug when importing multiple depot
+paths through p4 branch mappings where it could happen in the end that changes
+that were done in git were submitted into the wrong depot paths in perforce itself
+due to a faulty rebase onto the wrong git branch.
+
+Would be great if those changes could be included in master.
+
+
+Thanks,
+Simon
+
+--nextPart35914933.KYmTa1NVAI
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGnjTTWXvMThJCpvIRAsmcAJ4h2f6fqP9TnFFL/TLSME5GbzcJJwCgrwA4
+be6mw7290mSz60sZ55ETAEk=
+=qTYv
+-----END PGP SIGNATURE-----
+
+--nextPart35914933.KYmTa1NVAI--
