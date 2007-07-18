@@ -1,66 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git clone" executed as root on solaris 10 shreds UFS (it is
- possible to create hardlinks for directories as root under solaris)
-Date: Wed, 18 Jul 2007 08:45:29 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707180844150.27353@woody.linux-foundation.org>
-References: <20070716100803.GA24036@cip.informatik.uni-erlangen.de>
- <20070716133602.GB26675@cip.informatik.uni-erlangen.de>
- <alpine.LFD.0.999.0707161001300.20061@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707161004550.20061@woody.linux-foundation.org>
- <20070716100803.GA24036@cip.informatik.uni-erlangen.de>
- <20070716133602.GB26675@cip.informatik.uni-erlangen.de>
- <alpine.LFD.0.999.0707161001300.20061@woody.linux-foundation.org>
- <20070716171732.GE6134@cip.informatik.uni-erlangen.de>
- <20070716180910.GB16878@cip.informatik.uni-erlangen.de>
- <20070718085055.GL25037@cip.informatik.uni-erlangen.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] filter-branch: provide the convenience functions also
+ for commit filters
+Date: Wed, 18 Jul 2007 16:52:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707181650080.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Wed Jul 18 17:46:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jul 18 17:52:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBBjG-0006f4-Fz
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:46:18 +0200
+	id 1IBBpI-0000mj-FY
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 17:52:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759837AbXGRPqP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 11:46:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759741AbXGRPqO
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:46:14 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34062 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758738AbXGRPqO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 11:46:14 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6IFjZTU022129
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2007 08:45:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6IFjTPl016404;
-	Wed, 18 Jul 2007 08:45:29 -0700
-In-Reply-To: <20070718085055.GL25037@cip.informatik.uni-erlangen.de>
-X-Spam-Status: No, hits=-2.671 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1760302AbXGRPw3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 11:52:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760282AbXGRPw3
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 11:52:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47828 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759780AbXGRPw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 11:52:28 -0400
+Received: (qmail invoked by alias); 18 Jul 2007 15:52:25 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp008) with SMTP; 18 Jul 2007 17:52:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ELHBULA9EPEgjhoSN8mnwSbbqiTRjFkJ1gIi0Jo
+	RT0fIX/+4xHwY9
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52872>
 
 
+By sourcing git-filter-branch and stopping after the function definitions,
+the commit filter can now access the convenience functions like "map".
 
-On Wed, 18 Jul 2007, Thomas Glanzmann wrote:
->
-> > the bug is filed.
-> 
-> http://bugs.opensolaris.org/view_bug.do?bug_id=6581318
+This is done automatically if you specify a commit filter.
 
-I don't think the recipient "got it", since it already has a comment about 
-"just use rmdir".
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-filter-branch.sh |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-Can you please tell them that that isn't the point?
-
-		Linus
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 0d000ed..b574612 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -8,9 +8,6 @@
+ # a new branch. You can specify a number of filters to modify the commits,
+ # files and trees.
+ 
+-USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
+-. git-sh-setup
+-
+ warn () {
+         echo "$*" >&2
+ }
+@@ -69,6 +66,13 @@ set_ident () {
+ 	echo "[ -n \"\$GIT_${uid}_NAME\" ] || export GIT_${uid}_NAME=\"\${GIT_${uid}_EMAIL%%@*}\""
+ }
+ 
++# This script can be sourced by the commit filter to get the functions
++test "a$SOURCE_FUNCTIONS" = a1 && return
++this_script="$(cd "$(dirname "$0")"; pwd)"/$(basename "$0")
++
++USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
++. git-sh-setup
++
+ tempdir=.git-rewrite
+ filter_env=
+ filter_tree=
+@@ -118,7 +122,7 @@ do
+ 		filter_msg="$OPTARG"
+ 		;;
+ 	--commit-filter)
+-		filter_commit="$OPTARG"
++		filter_commit="SOURCE_FUNCTIONS=1 . \"$this_script\"; $OPTARG"
+ 		;;
+ 	--tag-name-filter)
+ 		filter_tag_name="$OPTARG"
+-- 
+1.5.3.rc1.16.g9d6f-dirty
