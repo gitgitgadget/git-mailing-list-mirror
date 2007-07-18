@@ -1,69 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] filter-branch: get rid of "set -e"
-Date: Wed, 18 Jul 2007 15:05:14 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707181503500.14781@racer.site>
-References: <20070710205202.GA3212@steel.home> <Pine.LNX.4.64.0707181416050.14781@racer.site>
- <86vechj0zz.fsf@lola.quinscape.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Makefile: create an install-symlinks target
+Date: Wed, 18 Jul 2007 16:06:23 +0200
+Message-ID: <861wf5iz6o.fsf@lola.quinscape.zz>
+References: <86bqe9lwy8.fsf@lola.quinscape.zz> <81b0412b0707180608j7c22631ak87f3ddd6481bccf2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 16:05:45 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 18 16:06:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBA9u-0000mr-QC
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 16:05:44 +0200
+	id 1IBAAn-0001KX-HG
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 16:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754746AbXGROFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 10:05:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbXGROFk
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 10:05:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55792 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752479AbXGROFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 10:05:39 -0400
-Received: (qmail invoked by alias); 18 Jul 2007 14:05:36 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 18 Jul 2007 16:05:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19q/Fx6z79qcHyaVG4hT6huFe0gwYynHG1x7VujiU
-	CdAUM613gBXzQG
-X-X-Sender: gene099@racer.site
-In-Reply-To: <86vechj0zz.fsf@lola.quinscape.zz>
-X-Y-GMX-Trusted: 0
+	id S1753132AbXGROGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 10:06:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbXGROGe
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 10:06:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:38514 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976AbXGROGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 10:06:34 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IBAAh-0005ll-GA
+	for git@vger.kernel.org; Wed, 18 Jul 2007 16:06:31 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Jul 2007 16:06:31 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Jul 2007 16:06:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:X7fv3WJTqfo5cqkkOx3FFXCOOpc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52864>
 
-Hi,
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-[please Cc me]
+> On 7/18/07, David Kastrup <dak@gnu.org> wrote:
+>> +       @: $(MAKE) && cd '$(prefix_SQ)' && find . -mindepth 1 ...
+>
+> Sometime about now you'll need to define $(FIND) or even $(GNUFIND)
+> for find. There are proprietary systems where find is not available or
+> does not do what you want it to. There is often a gfind installed somewhere
+> on these systems.
 
-On Wed, 18 Jul 2007, David Kastrup wrote:
+I think that the install-symlinks target is rather more specialized
+than the tags and TAGS targets, yet those use just "find".  I think
+I'll be able to throw out the -mindepth, however.  It was necessary in
+a version that used find $(prefix), since /opt/git matched
+-type d -name git*
+but with find . this should not be relevant.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > It was reported by Alex Riesen that "set -e" can break something as 
-> > trivial as "unset CDPATH" in bash.
-> 
-> Not in bash.  Just tried it.  But there are Bourne shells that do get
-> annoyed.
+I'll amend that patch and prepare a separate one that uses $(FIND)
+everywhere.
 
-The mail I was replying to _explicitely_ stated that it _was_ with bash.  
-Not your version of it, but some version.
-
-> > So get rid of "set -e".
-> 
-> I'd rather write
-> 
-> [ "X$CDPATH" = "X" ] || unset CDPATH
-
-We would write that as "test", not "[".
-
-But it is much cleaner to get rid of "set -e" anyway.
-
-Ciao,
-Dscho
+-- 
+David Kastrup
