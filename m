@@ -1,141 +1,168 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Empty directories...
-Date: Tue, 17 Jul 2007 23:53:25 -0700
-Message-ID: <7vhco28aoq.fsf@assigned-by-dhcp.cox.net>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<7v8x9ea1rg.fsf@assigned-by-dhcp.cox.net>
-	<85d4yqz24s.fsf@lola.goethe.zz>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] Rename read_pipe() with read_fd() and make its buffer nul-terminated.
+Date: Wed, 18 Jul 2007 09:08:58 +0200
+Message-ID: <469DBC8A.6090704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 08:53:33 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 09:09:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB3Pg-0007dm-H8
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 08:53:32 +0200
+	id 1IB3eo-0003Hy-2n
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 09:09:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752643AbXGRGx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 02:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751725AbXGRGx1
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 02:53:27 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40950 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751319AbXGRGx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 02:53:26 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070718065326.OQXM1349.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 18 Jul 2007 02:53:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id QutR1X0051kojtg0000000; Wed, 18 Jul 2007 02:53:25 -0400
-In-Reply-To: <85d4yqz24s.fsf@lola.goethe.zz> (David Kastrup's message of "Wed,
-	18 Jul 2007 07:56:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752258AbXGRHJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 03:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752194AbXGRHJG
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 03:09:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:56323 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751792AbXGRHJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 03:09:05 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so234154ugf
+        for <git@vger.kernel.org>; Wed, 18 Jul 2007 00:09:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=JJWtM/RQAXPr4EKw6kKZ5mkdJhxwi+osVybvbjivCB8vYJuKXoIm4fPZ11xQN34SjsGqjJ6WQa4CU4scijsBPSNTSfAl1+PAp/ZLeCnqzvvpliCE6l1XhFI1KRI2lxhjUuvnDRn5RJaQ7iZ8tQh9q9gcCc2Ifq+DjyMvXMRGUhw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=uNpXr0BXur3AHNTpV3jb3zk5kML2IYpSHIxpHc8LxSkDSlpYbU9qu2oL713oZZxQqfMxGBkT6nOo1W2Z79IbmUgt1DOWf6A0ovaUgGIHgs0LScm5JD7vioyEoIftbL3N+NVn5Iu1Be9swC5m1uPPbz3BOSqGJodVWuQoQ046fLQ=
+Received: by 10.67.29.7 with SMTP id g7mr119560ugj.1184742543460;
+        Wed, 18 Jul 2007 00:09:03 -0700 (PDT)
+Received: from ?192.168.0.194? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id o55sm2274613uga.2007.07.18.00.09.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Jul 2007 00:09:02 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52835>
 
-David Kastrup <dak@gnu.org> writes:
+The new name is closer to the purpose of the function.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> No objections as long as a patch is cleanly made without
->> regression.  It's just nobody agreed that it is "quite serious"
->> yet so far, and no fundamental reason against it.
->
-> Thanks.  It certainly is not serious for the Linux kernel source, but
-> seems awkward for quite a few situations.  Anyway, what is your take
-> on the situation I described?
+The other change just makes things easier for callers needing a
+NUL-terminated buffer.
 
-Didn't I say I do not have an objection for somebody who wants
-to track empty directories, already?  I probably would not do
-that myself but I do not see a reason to forbid it, either.
+Since the function returns only the memory written with data,
+almost always allocating more space than needed because final
+size is unknown, an extra NUL terminating the buffer is harmless.
+It is not included in the returned size, so the function
+remains working as before.
 
-The right approach to take probably would be to allow entries of
-mode 040000 in the index.  Traditionally, we allowed only 100644
-(blobs as regular files) and 120000 (blobs as symlinks).  We
-recently added 160000 (commit from outer space, aka subproject).
+Also, now the function allows the buffer passed to be NULL at first,
+and alloc_nr is now used for growing the buffer, instead size=*2.
 
-And we do that for all directories, not just empty ones.  So if
-you have fileA, empty/, sub/fileB tracked, your index would
-probably have these four entries, immediately after read-tree
-of an existing tree object:
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
+ builtin-stripspace.c |    4 +++-
+ cache.h              |    2 +-
+ mktag.c              |    2 +-
+ sha1_file.c          |   17 ++++++++++++++---
+ 4 files changed, 19 insertions(+), 6 deletions(-)
 
-	100644 15db6f1f27ef7a... 0	fileA
-	040000 4b825dc642cb6e... 0	empty
-	040000 e125e11d3b63e3... 0	sub
-	100644 52054201c2a872... 0	sub/fileB
+diff --git a/builtin-stripspace.c b/builtin-stripspace.c
+index 0c970aa..5571687 100644
+--- a/builtin-stripspace.c
++++ b/builtin-stripspace.c
+@@ -79,8 +79,10 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
 
-Making sure that empty/ directory exists in the working tree is
-probably done in entry.c; we have been touching that area in an
-unrelated thread in the past few days.
+ 	size = 1024;
+ 	buffer = xmalloc(size);
+-	if (read_pipe(0, &buffer, &size))
++	if (read_fd(0, &buffer, &size)) {
++		free(buffer);
+ 		die("could not read the input");
++	}
 
-If you add sub/fileC, with "update-index" (and "add"), you
-invalidate the SHA-1 object name you stored for "sub" (because
-there is no point recomputing the tree object until you know you
-need a subtree for "sub" part, which does not happen until the
-next "write-tree"), and end up with something like:
+ 	size = stripspace(buffer, size, 0);
+ 	write_or_die(1, buffer, size);
+diff --git a/cache.h b/cache.h
+index 328c1ad..ec9b43d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -265,7 +265,7 @@ extern int ie_match_stat(struct index_state *, struct cache_entry *, struct stat
+ extern int ie_modified(struct index_state *, struct cache_entry *, struct stat *, int);
+ extern int ce_path_match(const struct cache_entry *ce, const char **pathspec);
+ extern int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, enum object_type type, const char *path);
+-extern int read_pipe(int fd, char** return_buf, unsigned long* return_size);
++extern int read_fd(int fd, char** return_buf, unsigned long* return_size);
+ extern int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object);
+ extern int index_path(unsigned char *sha1, const char *path, struct stat *st, int write_object);
+ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+diff --git a/mktag.c b/mktag.c
+index b82e377..38acd5a 100644
+--- a/mktag.c
++++ b/mktag.c
+@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 
-	100644 15db6f1f27ef7a... 0	fileA
-	040000 4b825dc642cb6e... 0	empty
-	040000 00000000000000... 0	sub
-	100644 52054201c2a872... 0	sub/fileB
-	100644 705bf16c546f32... 0	sub/fileC
+ 	setup_git_directory();
 
-These "missing" SHA-1 would need to be recomputed on-demand.
+-	if (read_pipe(0, &buffer, &size)) {
++	if (read_fd(0, &buffer, &size)) {
+ 		free(buffer);
+ 		die("could not read from stdin");
+ 	}
+diff --git a/sha1_file.c b/sha1_file.c
+index 1efd9ae..563ec07 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2304,27 +2304,38 @@ int has_sha1_file(const unsigned char *sha1)
+  *
+  * returns 0 if anything went fine and -1 otherwise
+  *
++ * The buffer is always NUL-terminated, not including it in returned size.
++ *
+  * NOTE: both buf and size may change, but even when -1 is returned
+  * you still have to free() it yourself.
+  */
+-int read_pipe(int fd, char** return_buf, unsigned long* return_size)
++int read_fd(int fd, char** return_buf, unsigned long* return_size)
+ {
+ 	char* buf = *return_buf;
+ 	unsigned long size = *return_size;
+ 	ssize_t iret;
+ 	unsigned long off = 0;
 
-We have had necessary infrastructure to do this "keeping
-untouched tree object names in the index" for quite some time,
-but it is not a part of the index proper (it is stored in an
-extension section in the index file, to keep the index
-compatible with older versions of git).
++	if (!buf || size <= 1) {
++		size = alloc_nr(size);
++		buf = xrealloc(buf, size);
++	}
++
+ 	do {
+ 		iret = xread(fd, buf + off, size - off);
+ 		if (iret > 0) {
+ 			off += iret;
+ 			if (off == size) {
+-				size *= 2;
++				size = alloc_nr(size);
+ 				buf = xrealloc(buf, size);
+ 			}
+ 		}
+ 	} while (iret > 0);
 
-Having made it sound so easy, here are the issues I would expect
-to be nontrivial (but probably not rocket surgery either).
++	if (off == size)
++		buf = xrealloc(buf, size + 1);
++	buf[off] = '\0';
++
+ 	*return_buf = buf;
+ 	*return_size = off;
 
- * unpack-trees, which is the workhorse for twoway merge (aka
-   "switching branches") and threeway merge, has a convoluted
-   logic to avoid D/F conflicts; it can probably be cleaned up
-   once we do the above conversion so that the index starts
-   saying "Hey, I have a directory here" more explicitly.  The
-   end result would probably be a code easier to follow.
+@@ -2339,7 +2350,7 @@ int index_pipe(unsigned char *sha1, int fd, const char *type, int write_object)
+ 	char *buf = xmalloc(size);
+ 	int ret;
 
- * status, update-index --refresh, and diff-files cares about
-   the information cached in the index from the last time
-   lstat(2) is run on each entry.  What we should store there
-   for "tree" entries is very unclear to me, but probably we
-   should teach them to ignore the stat-matching logic for
-   these entries.
-
- * diff-index walks the index and a tree in parallel but does
-   not currently expect to see a tree object in the index.  It
-   needs to be taught to ignore these "tree" entries.
-
- * merge-recursive and merge-index walk the index, coming up
-   with the merge results one path at a time.  They also need to
-   be taught to ignore these "tree" entries.
-
- * diff-index and "read-tree -m" should be taught to take
-   advantage of the "tree" entries in the index.  For example,
-   if diff-index finds the "tree" entry in the index and the
-   subtree found from the tree object exactly match, it does not
-   even have to descend into the tree, which would be a huge
-   performance win (because you do not have to open the subtree
-   and its subtrees from the tree side; you already have read
-   everything on the index side, and still have to skip the
-   entries in the directory).  "read-tree -m" also should be
-   able to optimize two identical subtrees in the 2 or 3 trees
-   involved.
-
-   Even if we follow the "lazy invalidate" strategy to maintain
-   the "tree" entries in the normal codepath, we could have a
-   special operation that says "now update all the tree entries
-   by recomputing the tree object names as needed".  Perhaps we
-   might want to initiate such an operation before "read-tree
-   -m" automatically.
+-	if (read_pipe(fd, &buf, &size)) {
++	if (read_fd(fd, &buf, &size)) {
+ 		free(buf);
+ 		return -1;
+ 	}
+-- 
+1.5.0
