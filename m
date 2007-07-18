@@ -1,36 +1,81 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Rsync fetch?
-Date: Wed, 18 Jul 2007 12:37:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707181226020.14596@iabervon.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Empty directories...
+Date: Wed, 18 Jul 2007 18:39:21 +0200
+Message-ID: <vpq4pk1vf7q.fsf@bauges.imag.fr>
+References: <85lkdezi08.fsf@lola.goethe.zz>
+	<Pine.LNX.4.64.0707180135200.14781@racer.site>
+	<858x9ez1li.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 18 18:37:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 18:40:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBCWl-0001wH-Ei
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 18:37:27 +0200
+	id 1IBCa7-0003MF-SV
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 18:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758058AbXGRQhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 12:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932777AbXGRQhX
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 12:37:23 -0400
-Received: from iabervon.org ([66.92.72.58]:3265 "EHLO iabervon.org"
+	id S934763AbXGRQkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 12:40:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934747AbXGRQku
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 12:40:50 -0400
+Received: from imag.imag.fr ([129.88.30.1]:58635 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754246AbXGRQhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 12:37:22 -0400
-Received: (qmail 30866 invoked by uid 1000); 18 Jul 2007 16:37:21 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Jul 2007 16:37:21 -0000
+	id S934649AbXGRQkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 12:40:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6IGdlcl014167
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Jul 2007 18:39:48 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IBCYb-0005Vg-4S; Wed, 18 Jul 2007 18:39:21 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IBCYb-0000BH-2B; Wed, 18 Jul 2007 18:39:21 +0200
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>, David Kastrup <dak@gnu.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+In-Reply-To: <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> (Linus Torvalds's message of "Wed\, 18 Jul 2007 09\:23\:46 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 18 Jul 2007 18:39:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52880>
 
-The only thing that's totally missing at this point from my builtin-fetch 
-is rsync. Do we still care? Any takers for actually implementing it?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-	-Daniel
-*This .sig left intentionally blank*
+>> b) The problem is not just that empty directories don't get added into
+>> the repository.  They also don't get removed again when switching to a
+>> different checkout.
+>
+> Bzzt. Wrong.
+>
+> We *do* remove directories when all files under them go away.
+>
+> HOWEVER (and this is where one of the reasons for not tracking them comes 
+> in):
+>
+>    ** YOU CANNOT REMOVE A DIRECTORY IF IT HAS SOME UNTRACKED CONTENTS **
+
+I believe David's point was different.
+
+If you checkout a branch, create an empty directory in this branch
+(probably a placeholder, either for future versionned files, or for
+generated files), you cannot tell git "this empty directory is in this
+branch, but not in other ones" without adding a file in it.
+
+So, doing "git-checkout anotherbranch", this empty directory doesn't
+go away. It's just unversionned in both branches, git won't touch it.
+
+-- 
+Matthieu
