@@ -1,70 +1,69 @@
-From: David Kastrup <dak@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] filter-branch: get rid of "set -e"
-Date: Wed, 18 Jul 2007 15:27:12 +0200
-Message-ID: <86vechj0zz.fsf@lola.quinscape.zz>
+Date: Wed, 18 Jul 2007 15:05:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707181503500.14781@racer.site>
 References: <20070710205202.GA3212@steel.home> <Pine.LNX.4.64.0707181416050.14781@racer.site>
+ <86vechj0zz.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 18 15:27:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 16:05:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IB9Z4-00036k-6i
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 15:27:38 +0200
+	id 1IBA9u-0000mr-QC
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 16:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758963AbXGRN1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 09:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758514AbXGRN1e
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 09:27:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:52556 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758666AbXGRN1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 09:27:33 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IB9Yw-0002Ru-EV
-	for git@vger.kernel.org; Wed, 18 Jul 2007 15:27:30 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 15:27:30 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Jul 2007 15:27:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:7wNa0bnDjNDNbFtHtsnPWklyjag=
+	id S1754746AbXGROFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 10:05:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbXGROFk
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 10:05:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55792 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752479AbXGROFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 10:05:39 -0400
+Received: (qmail invoked by alias); 18 Jul 2007 14:05:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp021) with SMTP; 18 Jul 2007 16:05:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19q/Fx6z79qcHyaVG4hT6huFe0gwYynHG1x7VujiU
+	CdAUM613gBXzQG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <86vechj0zz.fsf@lola.quinscape.zz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52863>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> It was reported by Alex Riesen that "set -e" can break something as 
-> trivial as "unset CDPATH" in bash.
+[please Cc me]
 
-Not in bash.  Just tried it.  But there are Bourne shells that do get
-annoyed.
+On Wed, 18 Jul 2007, David Kastrup wrote:
 
-> So get rid of "set -e".
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > It was reported by Alex Riesen that "set -e" can break something as 
+> > trivial as "unset CDPATH" in bash.
+> 
+> Not in bash.  Just tried it.  But there are Bourne shells that do get
+> annoyed.
 
-I'd rather write
+The mail I was replying to _explicitely_ stated that it _was_ with bash.  
+Not your version of it, but some version.
 
-[ "X$CDPATH" = "X" ] || unset CDPATH
+> > So get rid of "set -e".
+> 
+> I'd rather write
+> 
+> [ "X$CDPATH" = "X" ] || unset CDPATH
 
+We would write that as "test", not "[".
 
-With regard to shells, there is an interesting document
-(info "(autoconf) Portable Shell")
-which is rather disillusioning.
+But it is much cleaner to get rid of "set -e" anyway.
 
-A real horror show is
-(info "(autoconf) Limitations of Builtins")
-where one learns that using if without else can lead to bad exit
-status, too.
-
--- 
-David Kastrup
+Ciao,
+Dscho
