@@ -1,88 +1,76 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Wrong time in git-log when using right/ timezone
-Date: Wed, 18 Jul 2007 18:55:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707181849060.1544@reaper.quantumfyre.co.uk>
-References: <20070718153614.GA28815@hartlich.com>
- <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Empty directories...
+Date: Wed, 18 Jul 2007 11:05:55 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707181103580.27353@woody.linux-foundation.org>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707180925030.27353@woody.linux-foundation.org>
+ <85r6n5y5m3.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Peter Hartlich <wwsgj@hartlich.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 19:56:13 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jul 18 20:06:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBDks-0005Tm-GS
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 19:56:06 +0200
+	id 1IBDv4-0001si-EO
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 20:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932823AbXGRR4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 13:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762361AbXGRR4A
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 13:56:00 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:37183 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762287AbXGRRz7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 13:55:59 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id D76C3B994D
-	for <git@vger.kernel.org>; Wed, 18 Jul 2007 18:55:57 +0100 (BST)
-Received: (qmail 19312 invoked by uid 103); 18 Jul 2007 18:55:57 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3689. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.031684 secs); 18 Jul 2007 17:55:57 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 18 Jul 2007 18:55:57 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org>
+	id S933903AbXGRSGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 14:06:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933805AbXGRSGe
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 14:06:34 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58231 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932270AbXGRSGe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 14:06:34 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6II603Q029987
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 18 Jul 2007 11:06:01 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6II5tpA021916;
+	Wed, 18 Jul 2007 11:05:55 -0700
+In-Reply-To: <85r6n5y5m3.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-2.672 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52886>
 
-On Wed, 18 Jul 2007, Linus Torvalds wrote:
 
-> ie apparently Berlin is in a timezone of its own that is roughly one
-> minute and 23 seconds away from CET.
->
-> What the *heck*?
->
-> I really don't think this is git that is confused: I get the exact same
-> thing with "date" too:
->
-> 	[torvalds@woody git]$ TZ=right/Europe/Berlin date ; TZ=CET date
-> 	Wed Jul 18 18:52:25 CEST 2007
-> 	Wed Jul 18 18:52:48 CEST 2007
->
-> so it really *is* the tzdata that says that Berlin is not +0200, and it's
-> not even +0159, it's something really strange with fractional minutes away
-> from UTC.
 
-Well ... not if you compare right/Europe/Berlin vs right/CET
+On Wed, 18 Jul 2007, David Kastrup wrote:
+> 
+> Since I did not try to argue this, could you beat another strawman?
 
-jp3@neutron: ~>TZ=right/CET date '+%H:%M:%S %z'; TZ=right/Europe/Berlin 
-date '+%H:%M:%S %z'
-19:49:45 +0200
-19:49:45 +0200
+How about a bit of honesty?
 
-but, I suspect that the following is the underlying cause of the problem?
+Here's the quote:
 
-jp3@neutron: ~>TZ=right/UTC date '+%H:%M:%S %z'; TZ=UTC date '+%H:%M:%S 
-%z'
-17:51:32 +0000
-17:51:55 +0000
+ "The FAQ answer is weazeling on several accounts:
 
-Is git working internally in TZ=UTC?
+  a) No, git only cares about files, or rather git tracks content and
+     empty directories have no content.
 
--- 
-Julian
+  In the same manner as empty regular files have no contents, and git
+  tracks those.  Existence and permissions are important."
 
-  ---
+You called it "weaselly" to say that git tracks only content, and then 
+very much tried to equate "existence and permissions" with content.
 
-Homer:	We always have one good kid and one lousy kid.  Why can't both
- 	our kids be good?
+That's the part I answered.
 
-Marge:	We have three kids, Homer.
+So it wasn't a strawman, it was a direct answer to your assertion. Now go 
+away and either come back with the patch to implement it (that I have 
+encouraged you to do), or add a ".gitignore" file to the directory (that 
+others have told you will solve your problems).
 
- 		   Separate Vacations
+Don't bother talking crap.
+
+			Linus
