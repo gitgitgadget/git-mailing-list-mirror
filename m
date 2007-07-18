@@ -1,81 +1,105 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Empty directories...
-Date: Wed, 18 Jul 2007 23:37:30 +0200
-Message-ID: <85644hxujp.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
-	<858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jul 18 23:37:39 2007
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH] Force listingblocks to be monospaced in manpages
+Date: Wed, 18 Jul 2007 22:33:57 +0100
+Message-ID: <20070718213725.31383.50523.julian@quantumfyre.co.uk>
+References: <m3k5sxiiib.fsf@pc7.dolda2000.com>
+Cc: git@vger.kernel.org
+To: Fredrik Tolf <fredrik@dolda2000.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 23:39:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBHDG-0007m7-Nt
-	for gcvg-git@gmane.org; Wed, 18 Jul 2007 23:37:39 +0200
+	id 1IBHF0-0008IU-Ei
+	for gcvg-git@gmane.org; Wed, 18 Jul 2007 23:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759657AbXGRVhf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 17:37:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757977AbXGRVhf
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 17:37:35 -0400
-Received: from mail-in-13.arcor-online.net ([151.189.21.53]:40265 "EHLO
-	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758058AbXGRVhe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 17:37:34 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id C4A4D1FD018;
-	Wed, 18 Jul 2007 23:37:32 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 9449A12D747;
-	Wed, 18 Jul 2007 23:37:32 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-086-214.pools.arcor-ip.net [84.61.86.214])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 5080F30A7AE;
-	Wed, 18 Jul 2007 23:37:32 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id BF08F1C3ACCF; Wed, 18 Jul 2007 23:37:30 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> (Linus Torvalds's message of "Wed\, 18 Jul 2007 10\:06\:13 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3696/Wed Jul 18 14:56:36 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1760332AbXGRVjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 17:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760692AbXGRVjG
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 17:39:06 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:42436 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755333AbXGRVjB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 17:39:01 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 37C9DB9A2D
+	for <git@vger.kernel.org>; Wed, 18 Jul 2007 22:39:00 +0100 (BST)
+Received: (qmail 27217 invoked by uid 103); 18 Jul 2007 22:38:59 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3689. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.025041 secs); 18 Jul 2007 21:38:59 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 18 Jul 2007 22:38:59 +0100
+X-git-sha1: d143ec5a9834d62c96213ee97a6e3ff55ebf12a7 
+X-Mailer: git-mail-commits v0.1
+In-Reply-To: <m3k5sxiiib.fsf@pc7.dolda2000.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52902>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+For the html output we can use a stylesheet to make sure that the
+listingblocks are presented in a monospaced font.  For the manpages do
+it manually by inserting a ".ft C" before and ".ft" after the block in
+question.
 
-> On Wed, 18 Jul 2007, Matthieu Moy wrote:
->> 
->> If you checkout a branch, create an empty directory in this branch
->> (probably a placeholder, either for future versionned files, or for
->> generated files), you cannot tell git "this empty directory is in this
->> branch, but not in other ones" without adding a file in it.
+In order for these roff commands to get through to the manpage they
+have to be element encoded to prevent quoting.
+
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
+
+On Wed, 18 Jul 2007, Fredrik Tolf wrote:
+
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
 >
-> Right. Which is the suggested setup: add an empty ".gitignore" file
-> to the directory, and you're done.
+>> On Wed, 18 Jul 2007, Fredrik Tolf wrote:
+>>
+>>> I often read manpages using a `man -t whatever | ggv -' command, since
+>>> I like how it is rendered in PostScript. However, it turns out that
+>>> some things in the Git manpages don't really render very well using
+>>> that method. For example, in the git-rebase manpage, there are two
+>>> history graphs that look like this when reading the manpages normally
+>>> in a terminal:
+>>
+>> It's a proportional font issue ...
+>>
+>> Running "groff -Tps -f C -man $(man -w git-rebase) | ggv -" should
+>> display it correctly.  (The "-f C" being the part the man doesn't do)
+>>
+>> No idea how to make it use that font by default though ... not even
+>> sure if you can put that kind of information into a man page?
+>
+> Well, if it were a "pure" manpage, I'd try to use pic(1) to do it for
+> the PS version, but I don't suspect asciidoc has a similar feature. I
+> don't actually know, though -- again, I know virtually nothing about
+> asciidoc.
 
-That implies that every directory in a versioned tree will exclusively
-be created under manual and conscious control.  Not by running some
-installer or script, unpacking some archive and so on.  But if every
-content on a disk was created and put there under manual control of
-the disk owner, we could still get along with floppy disks quite fine.
-In practice, much more content gets sent around and juggled than what
-is under immediate supervision of the user.
+How about this?
 
-This is getting silly: you don't need to pull out rabbits out of your
-head.  You said that you are not inclined to do any work in that area
-since it does not touch _your_ use cases (well, at least not to a
-degree that you consider worth bothering about) but that is no reason
-to get into ridiculous arguments about other usage.  No code will come
-of that.
+Seems to work for me - but I'm not an asciidoc/docbook/roff expert ...
 
+ Documentation/asciidoc.conf |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 6b6220d..d54fe29 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -27,7 +27,13 @@ ifdef::backend-docbook[]
+ [listingblock]
+ <example><title>{title}</title>
+ <literallayout>
++ifdef::doctype-manpage[]
++&#10;&#x2302;ft C&#10;
++endif::doctype-manpage[]
+ |
++ifdef::doctype-manpage[]
++&#10;&#x2302;ft&#10;
++endif::doctype-manpage[]
+ </literallayout>
+ {title#}</example>
+ endif::backend-docbook[]
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.2.2
