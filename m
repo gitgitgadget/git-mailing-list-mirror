@@ -1,87 +1,121 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Wed, 18 Jul 2007 16:40:32 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707181628270.27353@woody.linux-foundation.org>
-References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
- <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
- <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
- <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Force listingblocks to be monospaced in manpages
+Date: Wed, 18 Jul 2007 16:56:02 -0700
+Message-ID: <7vr6n55krx.fsf@assigned-by-dhcp.cox.net>
+References: <m3k5sxiiib.fsf@pc7.dolda2000.com>
+	<20070718213725.31383.50523.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>, David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 01:46:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 19 01:56:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBJDz-0003g2-Rd
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 01:46:32 +0200
+	id 1IBJNN-00060G-70
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 01:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937644AbXGRXqZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 19:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937733AbXGRXqY
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 19:46:24 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50959 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S937644AbXGRXqV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 19:46:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6INecaQ013908
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2007 16:40:39 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6INeWRe002854;
-	Wed, 18 Jul 2007 16:40:33 -0700
-In-Reply-To: <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.173 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1759464AbXGRX4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 19:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758260AbXGRX4H
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 19:56:07 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:52450 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757615AbXGRX4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 19:56:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070718235602.IFKT1358.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 18 Jul 2007 19:56:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RBw21X00P1kojtg0000000; Wed, 18 Jul 2007 19:56:03 -0400
+In-Reply-To: <20070718213725.31383.50523.julian@quantumfyre.co.uk> (Julian
+	Phillips's message of "Wed, 18 Jul 2007 22:33:57 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52914>
 
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-
-On Wed, 18 Jul 2007, Linus Torvalds wrote:
+> For the html output we can use a stylesheet to make sure that the
+> listingblocks are presented in a monospaced font.  For the manpages do
+> it manually by inserting a ".ft C" before and ".ft" after the block in
+> question.
 >
-> +		if (!S_ISDIR(st->st_mode))
-> +			return -1;
-> +		ce->ce_mode = htonl(S_IFDIR);
-> +		pretend_sha1_file(NULL, 0, OBJ_TREE, ce->sha1);
+> In order for these roff commands to get through to the manpage they
+> have to be element encoded to prevent quoting.
+>
+> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+> ...
+> How about this?
+>
+> Seems to work for me - but I'm not an asciidoc/docbook/roff expert ...
+>
+>  Documentation/asciidoc.conf |    6 ++++++
+>  1 files changed, 6 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+> index 6b6220d..d54fe29 100644
+> --- a/Documentation/asciidoc.conf
+> +++ b/Documentation/asciidoc.conf
+> @@ -27,7 +27,13 @@ ifdef::backend-docbook[]
+>  [listingblock]
+>  <example><title>{title}</title>
+>  <literallayout>
+> +ifdef::doctype-manpage[]
+> +&#10;&#x2302;ft C&#10;
+> +endif::doctype-manpage[]
+>  |
+> +ifdef::doctype-manpage[]
+> +&#10;&#x2302;ft&#10;
+> +endif::doctype-manpage[]
+>  </literallayout>
+>  {title#}</example>
+>  endif::backend-docbook[]
+> -- 
 
-Oh, one word of warning: that whole "pretend_sha1_file()" thing won't 
-create the object itself, and when I did the limited testing that I did, I 
-actually made sure had a magic zero-sized tree object in my object 
-directory.
+I tried with your patch, both with asciidoc7 and asciidoc8.  Did
+you really mean "&#x2302;" above?  Replacing them with "."  gave
+me a series of these changes (diff between output before and
+after your patch with the "s/\&#x2302;/./g" fixup):
 
-If you don't, some things will complain, because they end up getting a 
-SHA1 that they cannot look up, becasue *they* didn't create that pretend 
-entry.
+        @@ -83,10 +83,13 @@
+         .sp
+         .RS 3n
+         .nf
+        +.ft C
+             *** Commands ***
+               1: status       2: update       3: revert       4: add untracked
+               5: patch        6: diff         7: quit         8: help
+             What now> 1
+        +.ft
+        +
+         .fi
+         .RE
+         You also could say "s" or "sta" or "status" above as long as the choice is unique.
 
-I didn't know which way I wanted to go with that thing. I was kind of 
-thinking that maybe we would just have the zero-sized OBJ_BLOB and 
-OBJ_TREE objects as special magical things, and have all git programs just 
-do that "pretend" at the beginning.
+which seems reasonable, but I did not render them through roff.
+WIth "&#x2302;" I was getting:
 
-But that kind of thing is probably just a totally unnecessary special 
-case, and instead, that "pretend_sha1_file()" should have just been a
+        @@ -83,10 +83,14 @@
+         .sp
+         .RS 3n
+         .nf
+        +
+        +	ft C
+             *** Commands ***
+               1: status       2: update       3: revert       4: add untracked
+               5: patch        6: diff         7: quit         8: help
+             What now> 1
+        +	ft
+        +
+         .fi
+         .RE
+         You also could say "s" or "sta" or "status" above as long as the choice is unique.
 
-	write_sha1_file(NULL, 0, "tree", ce->sha1);
-
-instead.
-
-Anyway, if there are issues with not finding an object called 
-4b825dc642cb6eb9a060e54bf8d69288fbee4904, then that's the empty tree 
-object, and that pretend thing was the cause.
-
-(The git repo itself has the empty tree as an object in it, because one of 
-the commits has that - probably as a result of a bug, but there you have 
-it)
-
-		Linus
+whatever that 2302 is...
