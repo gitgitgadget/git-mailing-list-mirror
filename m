@@ -1,98 +1,72 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: [PATCH guilt] Handles slashes in branch names
-Date: Thu, 19 Jul 2007 12:17:01 -0700
-Message-ID: <87r6n4td8y.fsf@hubert.paunchy.net>
-References: <87y7hctf6o.fsf@hubert.paunchy.net>
-	<20070719184418.GA22463@filer.fsl.cs.sunysb.edu>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: CVS -> SVN -> Git
+Date: Thu, 19 Jul 2007 21:14:18 +0200
+Message-ID: <469FB80A.8000001@fs.ei.tum.de>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>	 <469804B4.1040509@alum.mit.edu>	 <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>	 <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>	 <46994BDF.6050803@alum.mit.edu> <20070715013949.GA20850@thyrsus.com> <46a038f90707151805j454b57fbvb4d7ed526e1e64ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>
-To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 19 21:17:37 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBbVI-0003kO-Sn
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 21:17:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933921AbXGSTRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 15:17:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934117AbXGSTRL
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 15:17:11 -0400
-Received: from smtp-7.smtp.ucla.edu ([169.232.46.138]:60553 "EHLO
-	smtp-7.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933856AbXGSTRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 15:17:09 -0400
-X-Greylist: delayed 2506 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jul 2007 15:17:09 EDT
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
-	by smtp-7.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6JJH5iE008653;
-	Thu, 19 Jul 2007 12:17:05 -0700
-Received: from localhost (adsl-75-26-187-235.dsl.scrm01.sbcglobal.net [75.26.187.235])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6JJH4dm023831
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 19 Jul 2007 12:17:04 -0700
-Received: by localhost (Postfix, from userid 1000)
-	id 438641E8009; Thu, 19 Jul 2007 12:17:01 -0700 (PDT)
-In-Reply-To: <20070719184418.GA22463@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Thu\, 19 Jul 2007 14\:44\:18 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
-X-Probable-Spam: no
-X-Spam-Report: none
-X-Scanned-By: smtp.ucla.edu on 169.232.46.138
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Cc: esr@thyrsus.com, Michael Haggerty <mhagger@alum.mit.edu>, 
+ Julian Phillips <julian@quantumfyre.co.uk>,
+  git@vger.kernel.org, dev <dev@cvs2svn.tigris.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: dev-return-2069-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Thu Jul 19 21:20:15 2007
+Return-path: <dev-return-2069-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IBbXq-0004pg-78
+	for gcvscd-dev@gmane.org; Thu, 19 Jul 2007 21:20:14 +0200
+Received: (qmail 19220 invoked by uid 5000); 19 Jul 2007 19:20:12 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53021>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Delivered-To: moderator for dev@cvs2svn.tigris.org
+Received: (qmail 15060 invoked from network); 19 Jul 2007 19:14:23 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq4HAF9Un0aBuzYH/2dsb2JhbAAt
+X-IronPort-AV: i="4.16,558,1175497200"; 
+   d="scan'208"; a="62491095:sNHT19628070"
+X-IRONPORT: SCANNED
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <46a038f90707151805j454b57fbvb4d7ed526e1e64ce@mail.gmail.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53022>
 
-When a branch name has a slash and autotagging is enabled, guilt barfs
-when updating the stack tags.  Make these branch names work.
+[sorry for jumping in so late, didn't read git@vger for a while]
 
-Also allow guilt to create the patches directory for these branches.
+Martin Langhoff wrote:
+> On 7/15/07, Eric S. Raymond <esr@thyrsus.com> wrote:
+>> Not quite.  I'm suggesting it's an appropriate lingua franca for 
+>> centralized
+>> VCSes with branching, e.g. everything pre-Arch.
 
-Signed-off-by: Eric Lesh <eclesh@ucla.edu>
----
-Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
+I do not think Eric is right here.  You will allways lose information when converting CVS to svn, and if it is just the uncertainty, the non-atomicity.  This is also information (hidden one, though).
 
->
-> Why mangle the branch name when we can do:
->
-> mkdir -p `basename $GIT_DIR/refs/tags/${branch}_top`
-> git-rev-parse .... 
->
-> Sure, it is ugly, but it preserves the branch name. Am I missing something?
->
+> That's a huge goal that gets in the way of waht we want to do here: we
+> are trying to save time, not embark on some huge mission.
+> 
+> cvs2svn has all the "wtf-did-cvs-mean-by-that" algorithms that are
+> very hard to write and maintain, and it seems to be the best one at
+> that. Of course, it also writes SVN repos -- but I'm sure that's the
+> easiest part.
 
-Yours is a lot less ugly than mine was.
+True.  However, cvs2svn has many assumptions (or at least has had when I last checked) which are targeted to svn, and unsuitable for a generic system (tags + branches).
 
- guilt      |    1 +
- guilt-init |    2 +-
- 2 files changed, 2 insertions(+), 1 deletions(-)
+>     We don't need no meta VCS for any of this.
 
-diff --git a/guilt b/guilt
-index 214def4..c913bd6 100755
---- a/guilt
-+++ b/guilt
-@@ -338,6 +338,7 @@ update_stack_tags()
- 		# there are patches applied, therefore we must get the top,
- 		# bottom and base hashes, and update the tags
- 
-+		mkdir -p `dirname $GIT_DIR/refs/tags/${branch}_top`
- 		git-rev-parse HEAD > "$GIT_DIR/refs/tags/${branch}_top"
- 		head -1 < $applied | cut -d: -f1 > "$GIT_DIR/refs/tags/${branch}_bottom"
- 		git-rev-parse $(head -1 < $applied | cut -d: -f1)^ > "$GIT_DIR/refs/tags/${branch}_base"
-diff --git a/guilt-init b/guilt-init
-index ffe2434..9136f89 100755
---- a/guilt-init
-+++ b/guilt-init
-@@ -24,7 +24,7 @@ if [ -d "$GUILT_DIR/$branch" ]; then
- fi
- 
- [ ! -d "$GUILT_DIR" ] && mkdir $GUILT_DIR
--mkdir $GUILT_DIR/$branch
-+mkdir -p $GUILT_DIR/$branch
- touch $GUILT_DIR/$branch/series
- touch $GUILT_DIR/$branch/status
- 
+Yes.  I've already done what people want, it is not called cvs2xxx, but fromcvs [1].  I don't think it is necessary to define an output format.  Of course, that's possible, but limiting yourself to a file format means you're losing flexibility, which is needed for efficient, correct and fast repository conversion.
+
+cheers
+  simon
+
+[1] http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs/
+
 -- 
-1.5.2
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low €€€ NOW!1  +++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
