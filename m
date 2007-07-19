@@ -1,134 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
-Date: Wed, 18 Jul 2007 18:12:56 -0700
-Message-ID: <7vvech42nb.fsf@assigned-by-dhcp.cox.net>
-References: <3bbc18d20707171103q262eaa8amb319ca9f835dbf67@mail.gmail.com>
-	<1184699486.9831.7.camel@mattlaptop2>
-	<200707190140.05235.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] filter-branch: provide the convenience functions
+ also for commit filters
+Date: Thu, 19 Jul 2007 02:16:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707190215460.14781@racer.site>
+References: <Pine.LNX.4.64.0707181650080.14781@racer.site>
+ <7vfy3l5jo4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Luben Tuikov <ltuikov@yahoo.com>
-To: Matt McCutchen <hashproduct@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 03:13:04 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 03:17:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBKZi-0006KU-G1
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 03:13:02 +0200
+	id 1IBKde-00076t-Rm
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 03:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933297AbXGSBM7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Jul 2007 21:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbXGSBM7
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 21:12:59 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33653 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932602AbXGSBM6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 21:12:58 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070719011256.FBTD1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Jul 2007 21:12:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RDCw1X00P1kojtg0000000; Wed, 18 Jul 2007 21:12:57 -0400
-In-Reply-To: <200707190140.05235.jnareb@gmail.com> (Jakub Narebski's message
-	of "Thu, 19 Jul 2007 01:40:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761831AbXGSBRD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 21:17:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760838AbXGSBRC
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 21:17:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55208 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760644AbXGSBRB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 21:17:01 -0400
+Received: (qmail invoked by alias); 19 Jul 2007 01:16:59 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 19 Jul 2007 03:16:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/X+c5zJtXXOYbGCFnPRwSkZ4hpadRoNIsTpv20hU
+	sQwugvaYk4SmmB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vfy3l5jo4.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52920>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> On Tue, 17 July 2007, Matt McCutchen napisa=C5=82:
-> ...
->> Alert for gitweb site administrators: This patch changes the format =
-of
->> $feature{'snapshot'}{'default'} in gitweb_config.perl from a list of
->> three pieces of information about a single format to a list of one o=
-r
->> more formats you wish to offer from the set ('tgz', 'tbz2', 'zip').
->> Update your gitweb_config.perl appropriately.  The preferred names f=
-or
->> gitweb.snapshot in repository configuration have also changed from
->> 'gzip' and 'bzip2' to 'tgz' and 'tbz2', but the old names are still
->> recognized for compatibility.
->
-> This alert/warning should probably be put in RelNotes for when it wou=
-ld
-> be in git.git
+On Wed, 18 Jul 2007, Junio C Hamano wrote:
 
-Does anybody else worry about the backward imcompatibility, I
-wonder...  List?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > +this_script="$(cd "$(dirname "$0")"; pwd)"/$(basename "$0")
+> > ...
+> > +		filter_commit="SOURCE_FUNCTIONS=1 . \"$this_script\"; $OPTARG"
+> 
+> Hmmmmmm.
+> 
+> Care to enlighten why this is not just:
+> 
+> 	filter_commit="SOURCE_FUNCTIONS=1 . \"$0\"; $OPTARG"
+> 
+> Is it because you cd(1) around in the script, and it can be
+> relative to where you started?
 
-I really hate to having to say something like that in the
-RelNotes.  I do not think this is a good enough reason to break
-existing configurations; I would not want to be defending that
-change.
+Yes.
 
->> I thought of another incompatibility: previously bookmarked snapshot
->> URLs will no longer work because they lack the new "sf" parameter.  =
-I
->> don't care about this; do any of you?
->
-> I think either having good error message, or using first format avaia=
-ble
-> would be good enough.
+> In either case, are you quoting potential funnies (such as '"'
+> or '\\') in "$0" sufficiently?  Exporting this_script variable,
+> and changing the above to
+> 
+> 	filter_commit='SOURCE_FUNCTIONS=1 . "$this_script";'" $OPTARG"
+> 
+> to arrange the shell that is invoked with 'sh -c' to expand its
+> value would make it smaller problem, I suspect.
 
-I doubt bookmarked snapshot URL would make sense to begin with,
-so this would be Ok.
+Will do.  You know, I do have my problems with correct quoting, and the 
+way I did it in this patch was always good enough for me.  Which does not 
+mean much...
 
-I am wondering if something like this patch (totally untested,
-mind you) to convert the old style %feature in configuration at
-the site at runtime would be sufficient.
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f17c983..cdec4d0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -236,9 +236,39 @@ our %feature =3D (
- 		'default' =3D> [0]},
- );
-=20
-+# Functions to convert values from older gitweb configuration
-+# into the current data format
-+sub gitweb_bc_feature_snapshot {
-+	my $def =3D $feature{'snapshot'}{'default'};
-+	# Older definition was to have either undef (to disable), or
-+	# a three-element array whose first element was content encoding
-+	# without leading "application/".
-+	return if (ref $def ne 'ARRAY');
-+	if (!defined $def->[0] && @$def =3D=3D 1) {
-+		# Disabled -- the new way to spell it is to have an empty
-+		# arrayref.
-+		$feature{'snapshot'}{'default'} =3D [];
-+		return;
-+	}
-+	return if (@$def !=3D 3);
-+	for ($def->[0]) {
-+		if (/x-gzip/) {
-+			$feature{'snapshot'}{'default'} =3D ['tgz'];
-+		}
-+		if (/x-bz2/) {
-+			$feature{'snapshot'}{'default'} =3D ['tbz2'];
-+		}
-+		if (/x-zip/) {
-+			$feature{'snapshot'}{'default'} =3D ['zip'];
-+		}
-+	}
-+}
-+
- sub gitweb_check_feature {
- 	my ($name) =3D @_;
- 	return unless exists $feature{$name};
-+	eval "gitweb_bc_feature_$name()";
-+
- 	my ($sub, $override, @defaults) =3D (
- 		$feature{$name}{'sub'},
- 		$feature{$name}{'override'},
+Ciao,
+Dscho
