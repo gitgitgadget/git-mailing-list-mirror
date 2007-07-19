@@ -1,71 +1,62 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 14:01:57 +0200
-Message-ID: <86ir8gbo0a.fsf@lola.quinscape.zz>
-References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site> <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk>
+From: Markus Schiltknecht <markus@bluegap.ch>
+Subject: Re: CVS -> SVN -> Git
+Date: Thu, 19 Jul 2007 14:02:07 +0200
+Message-ID: <469F52BF.8050300@bluegap.ch>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>	 <469804B4.1040509@alum.mit.edu>	 <46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>	 <4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>	 <46994BDF.6050803@alum.mit.edu> <20070715013949.GA20850@thyrsus.com> <46a038f90707151805j454b57fbvb4d7ed526e1e64ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 14:02:13 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBUhx-0000qH-Cw
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:02:13 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757656AbXGSMCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 08:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757384AbXGSMCI
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:02:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:59281 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756486AbXGSMCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 08:02:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBUhp-0001Wc-GT
-	for git@vger.kernel.org; Thu, 19 Jul 2007 14:02:05 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:02:05 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:02:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:JfTD5j49nhnl2b/nwf7xz8MPQbM=
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: esr@thyrsus.com, Michael Haggerty <mhagger@alum.mit.edu>,
+  Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
+  dev <dev@cvs2svn.tigris.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: dev-return-2065-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Thu Jul 19 14:02:41 2007
+Return-path: <dev-return-2065-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IBUiN-0000yd-Ds
+	for gcvscd-dev@gmane.org; Thu, 19 Jul 2007 14:02:39 +0200
+Received: (qmail 4510 invoked by uid 5000); 19 Jul 2007 12:02:37 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52976>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 4496 invoked from network); 19 Jul 2007 12:02:37 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAJbvnkZYxjr4/2dsb2JhbAA
+X-IronPort-AV: i="4.16,556,1175497200"; 
+   d="scan'208"; a="62465807:sNHT63489811"
+X-IRONPORT: SCANNED
+User-Agent: Icedove 1.5.0.12 (X11/20070607)
+In-Reply-To: <46a038f90707151805j454b57fbvb4d7ed526e1e64ce@mail.gmail.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52977>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+Hi,
 
-> On Thu, 19 Jul 2007, Johannes Schindelin wrote:
->
->> Hi,
->>
->> On Thu, 19 Jul 2007, martin f krafft wrote:
->>
->>> [...] I also wonder why use of a pager is default in git anyway. At
->>> least I find it to be contrary to what I am used to on the Unix command
->>> line.
->>
->> It was evidently liked unilaterally amongst the big whigs in the git
->> community.  Me too, I like it (which says nothing about my hair style).
->> Often it annoys me tremendously that all the other programs like make, ls,
->> etc. do not have this nice "-p" flag.
->
-> I love it. It's currently playing merry havoc with my Subversion usage
-> at work though.  I've got so used to git never chucking things off the
-> top of the screen that I keep forgetting to run 'svn ... | less'.
->
-> Also searching in a console isn't anywhere near as easy.
+Martin Langhoff wrote:
+> cvs2svn has all the "wtf-did-cvs-mean-by-that" algorithms that are
+> very hard to write and maintain, and it seems to be the best one at
+> that. Of course, it also writes SVN repos -- but I'm sure that's the
+> easiest part.
+> 
+>     We don't need no meta VCS for any of this.
 
-Is that the reason why users of screen get punished by default?
+Sure, we certainly need a meta format of some sort (not a full blown 
+VCS, agreed, but somehow we need to represent commits, tags and 
+branches). And IMO, the subversion based format is not a good one, 
+because it treats branches and tags very different from most other 
+systems (and from what it should be from a users perspective: an atomic 
+operation).
 
--- 
-David Kastrup
+We (Michael, Oswald and me) have discussed joining efforts of my cvs to 
+monotone converter, but I quickly dropped that idea because the cvs2svn 
+converter is too subversion specific. If cvs2svn wants to become a 
+universal cvs importer, it needs to get rid of those assumptions (and do 
+more work to unify tagging and branching).
+
+Regards
+
+Markus
