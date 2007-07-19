@@ -1,193 +1,150 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Wed, 18 Jul 2007 20:28:27 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <Pine.LNX.4.64.0707160022560.14781@racer.site> <7vejj96igx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707190258550.14781@racer.site>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
+Date: Wed, 18 Jul 2007 20:30:43 -0700 (PDT)
+Message-ID: <571532.59758.qm@web31813.mail.mud.yahoo.com>
+References: <7vvech42nb.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 19 05:29:16 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matt McCutchen <hashproduct@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 05:30:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBMhX-0007ar-K1
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 05:29:16 +0200
+	id 1IBMj1-0007vo-Du
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 05:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757004AbXGSD3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 23:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757918AbXGSD3L
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 23:29:11 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53818 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757767AbXGSD3K (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 23:29:10 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6J3SW2Q024872
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2007 20:28:33 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6J3SR6J011537;
-	Wed, 18 Jul 2007 20:28:27 -0700
-In-Reply-To: <Pine.LNX.4.64.0707190258550.14781@racer.site>
-X-Spam-Status: No, hits=-3.176 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1758283AbXGSDap convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Jul 2007 23:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758209AbXGSDap
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 23:30:45 -0400
+Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:22229 "HELO
+	web31813.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754158AbXGSDao (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 23:30:44 -0400
+Received: (qmail 59802 invoked by uid 60001); 19 Jul 2007 03:30:43 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=2rgochyROFM8Hti27nsAghcKwZcc7Y6a9fyMJM7+CORxHn1mC9l3Sdl8Y9wCoYjspbLLyR8tW1LNq5aWTbii9qy2YyOBcuH6BuXfsXnbsDG1BnvRUACfX0w7+VZ+ains2xBiNYxUqFPpWIyFBpFPTP8OWW/GSFL7o1zEo7xSjc8=;
+X-YMail-OSG: uTwpUKIVM1k5bG2JANGV0nenukIkC2lLOUuxtOXwmjHDLfQpB.larCfpEEYUR_Zdp33v_A--
+Received: from [68.186.61.63] by web31813.mail.mud.yahoo.com via HTTP; Wed, 18 Jul 2007 20:30:43 PDT
+In-Reply-To: <7vvech42nb.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52930>
 
+--- Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > On Tue, 17 July 2007, Matt McCutchen napisa=C5=82:
+> > ...
+> >> Alert for gitweb site administrators: This patch changes the forma=
+t of
+> >> $feature{'snapshot'}{'default'} in gitweb_config.perl from a list =
+of
+> >> three pieces of information about a single format to a list of one=
+ or
+> >> more formats you wish to offer from the set ('tgz', 'tbz2', 'zip')=
+=2E
+> >> Update your gitweb_config.perl appropriately.  The preferred names=
+ for
+> >> gitweb.snapshot in repository configuration have also changed from
+> >> 'gzip' and 'bzip2' to 'tgz' and 'tbz2', but the old names are stil=
+l
+> >> recognized for compatibility.
+> >
+> > This alert/warning should probably be put in RelNotes for when it w=
+ould
+> > be in git.git
+>=20
+> Does anybody else worry about the backward imcompatibility, I
+> wonder...  List?
 
+I wouldn't mind an improvement in the snapshot area of gitweb.
+I wasn't really happy with the snapshot feature as it was originally
+implemented, as it would generate a tar file with ".tar.bz2"
+name extension, but the file was NOT bz2, and I had to always
+manually rename, bz2, and rename back.
 
-On Thu, 19 Jul 2007, Johannes Schindelin wrote:
->
-> There is one severe shortcoming, though.  Since tree objects can
-> contain file names of a variable length, it is not possible to
-> do a binary search for the correct base name in the tree object's
-> contents.
+> I really hate to having to say something like that in the
+> RelNotes.  I do not think this is a good enough reason to break
+> existing configurations; I would not want to be defending that
+> change.
+>=20
+> >> I thought of another incompatibility: previously bookmarked snapsh=
+ot
+> >> URLs will no longer work because they lack the new "sf" parameter.=
+  I
+> >> don't care about this; do any of you?
+> >
+> > I think either having good error message, or using first format ava=
+iable
+> > would be good enough.
+>=20
+> I doubt bookmarked snapshot URL would make sense to begin with,
+> so this would be Ok.
+>=20
+> I am wondering if something like this patch (totally untested,
+> mind you) to convert the old style %feature in configuration at
+> the site at runtime would be sufficient.
 
-Well, I've been thinking about this, and that's not really entirely 
-correct.
+"totally untested" is a problem.  Anything going into gitweb for
+public consumption (master branch, next ok), should be completely
+and exhaustively tested.
 
-It *is* possible to do a binary search, it's just a bit complicated, 
-because you have to take the "halfway" thing, and find the beginning of 
-an entry.
+   Luben
 
-But the good news is that the tree entries have a very fixed format, and 
-one that is actually amenable to finding where they start. It gets a bit 
-complicated, but:
-
- - SHA1's contain random bytes, so we cannot really depend on their 
-   content. Fair enough. But on the other hand, they are fixed length, 
-   which means..
-
- - Each SHA1 is always preceded by a zero byte (it is what separates the 
-   filename from the SHA1), and while filenames too can have arbitrary 
-   content (and arbitrary length), we know that the *filename* doesn't 
-   have a zero byte in it.
-
- - so finding the beginning of a tree entry should be as easy as finding 
-   two zero bytes that are have at least 20 bytes in between them, and 
-   then you *know* that the second zero byte is the one that starts a new 
-   SHA1 (it cannot be _inside_ a SHA1: if it was, there would be less 
-   than twenty bytes to the previous '\0', and it cannot be inside the
-   filename either).
-
- - And you know that 20 bytes after that '\0' is the next tree entry!
-
-Now, what does this mean? It means that if we actually know the filename 
-we're looking for, and we're looking at a large range, we really *could* 
-start out with binary searching. We would do something like this:
-
-	unsigned char *start;
-	unsigned long size;
-
-	while (size > 200) {
-		/*
-		 * Look halfway, and then back up a bit, because we 
-		 * expect it to take us about 20 characters to find
-		 * the zero we look for, and an additional 20
-		 * characters is the subsequent SHA1.
-		 */
-		unsigned long guess = size / 2 - 40;
-
-		/*
-		 * This is the offset past which a zero means that 
-		 * we're good. If we don't find a zero in the first
-		 * twenty bytes, that means that the first zero we
-		 * find must be the beginning of a SHA1!
-		 */
-		unsigned long goal_zero = guess + 20;
-
-		for (;;) {
-			unsigned char c;
-
-			/*
-			 * We need at least 22 characters more: the
-			 * '\0' and the SHA1, and then the next entry.
-			 * We know the ASCII mode is 4 characters, so
-			 * we migth as well make the rule "within 26 of
-			 * end end".
-			 */
-			if (guess >= size-26)
-				goto fall_back_to_linear_search;
-			c = start[guess++];
-			if (c)
-				continue;
-			/* Found it? */
-			if (guess > goal_zero)
-				break;
-			/*
-			 * We found a zero that wasn't 20 bytes away, 
-			 * that means we have to reset out goal..
-			 */
-			last_zero = guess + 20;
-		}
-		/*
-		 * "guess" now points to one past the '\0': the SHA1 of
-		 * the previous entry. Add 20, and it points at the start
-		 * of a valid tree entry.
-		 */
-		guess = guess + 20;
-
-		/* Length of the entry: ascii string + '\0' + SHA1 */
-		thisentrylen = strlen(start + guess) + 1 + 20;
-
-		.. compare the entry we found with
-		.. the entry we are looking for!
-		if (found < lookedfor) {
-			size = guess;
-			continue;
-		} else if (found == lookedfor) {
-			Yay! FOUND!
-		} else {
-			guess += thisentry;
-			size -= guess;
-			start += guess;
-			continue;
-		}
-	}
-  fall_back_to_linear_search:
-
-	.. linear search in [ start, size ] ..
-
-
-Anyway, as you can tell, the above is totally untested, but I really think 
-it should work. Whether it really helps, I dunno. But if somebody is 
-interested in trying, it might be cool to see.
-
-And yes, the "search for zero bytes" is not *guaranteed* to find any 
-beginning at all, if you have lots of short names, *and* lots of zero 
-bytes in the SHA1's. But while short names may be common, zero bytes in 
-SHA1's are not so much (since you should expect to see a very even 
-distribution of bytes, and as such most SHA1's by far should have no zero 
-bytes at all!)
-
-So if you're really really *really* unlucky, you might end up having to 
-fall back on the linear search. But it still works!
-
-Can anybody see anything wrong in my thinking above?
-
-(And the real question is whether it really helps. I suspect it does 
-actually help for big directories, and that it is worth doing, but maybe 
-the magic number in "while (size > 200)" could be tweaked.
-
-The logic of that was that binary searching doesn't work very well for 
-just a few entries (and "size < 200" implies ~5-6 directory entries), but 
-also that linear search is actually perfectly good when it's just a couple 
-of cache-lines, and binary searching - especially with the complication of 
-having to find the beginning - isn't worth it unless it really means that 
-we can avoid a cache miss.
-
-Of course, it may well be that the *real* cost of the directories is just 
-the uncompression thing, and that the search is not the problem. Who 
-knows? 
-
-			Linus
+>=20
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index f17c983..cdec4d0 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -236,9 +236,39 @@ our %feature =3D (
+>  		'default' =3D> [0]},
+>  );
+> =20
+> +# Functions to convert values from older gitweb configuration
+> +# into the current data format
+> +sub gitweb_bc_feature_snapshot {
+> +	my $def =3D $feature{'snapshot'}{'default'};
+> +	# Older definition was to have either undef (to disable), or
+> +	# a three-element array whose first element was content encoding
+> +	# without leading "application/".
+> +	return if (ref $def ne 'ARRAY');
+> +	if (!defined $def->[0] && @$def =3D=3D 1) {
+> +		# Disabled -- the new way to spell it is to have an empty
+> +		# arrayref.
+> +		$feature{'snapshot'}{'default'} =3D [];
+> +		return;
+> +	}
+> +	return if (@$def !=3D 3);
+> +	for ($def->[0]) {
+> +		if (/x-gzip/) {
+> +			$feature{'snapshot'}{'default'} =3D ['tgz'];
+> +		}
+> +		if (/x-bz2/) {
+> +			$feature{'snapshot'}{'default'} =3D ['tbz2'];
+> +		}
+> +		if (/x-zip/) {
+> +			$feature{'snapshot'}{'default'} =3D ['zip'];
+> +		}
+> +	}
+> +}
+> +
+>  sub gitweb_check_feature {
+>  	my ($name) =3D @_;
+>  	return unless exists $feature{$name};
+> +	eval "gitweb_bc_feature_$name()";
+> +
+>  	my ($sub, $override, @defaults) =3D (
+>  		$feature{$name}{'sub'},
+>  		$feature{$name}{'override'},
+>=20
+>=20
