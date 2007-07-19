@@ -1,102 +1,102 @@
-From: David Kastrup <dak@gnu.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 18:21:40 +0200
-Message-ID: <86sl7k4b57.fsf@lola.quinscape.zz>
-References: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr> <20070719105105.GA4929@moonlight.home> <Pine.LNX.4.64.0707191310430.14781@racer.site> <86wswwa8ej.fsf@lola.quinscape.zz> <7FE87F7A-53AD-4B92-8F33-ECDFAE6A7EFB@silverinsanity.com> <Pine.LNX.4.64.0707191642270.14781@racer.site>
+Date: Thu, 19 Jul 2007 18:17:52 +0200
+Message-ID: <vpqsl7kiczz.fsf@bauges.imag.fr>
+References: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
+	<85644hxujp.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+	<85abttwa7m.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
+	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
+	<20070719053858.GE32566@spearce.org>
+	<20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr>
+	<20070719105105.GA4929@moonlight.home>
+	<Pine.LNX.4.64.0707191310430.14781@racer.site>
+	<86wswwa8ej.fsf@lola.quinscape.zz>
+	<7FE87F7A-53AD-4B92-8F33-ECDFAE6A7EFB@silverinsanity.com>
+	<Pine.LNX.4.64.0707191642270.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 18:22:19 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 19 18:27:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBYle-00062u-6d
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 18:22:18 +0200
+	id 1IBYqW-00089x-M5
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 18:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S939736AbXGSQV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 12:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939716AbXGSQVz
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 12:21:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:44233 "EHLO ciao.gmane.org"
+	id S933210AbXGSQ1P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 12:27:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933156AbXGSQ1O
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 12:27:14 -0400
+Received: from imag.imag.fr ([129.88.30.1]:40803 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S939654AbXGSQVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 12:21:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBYlE-0005on-Ox
-	for git@vger.kernel.org; Thu, 19 Jul 2007 18:21:52 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 18:21:52 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 18:21:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:kSVQFxsluHxQFAk8LPiJn5vsOQU=
+	id S1765942AbXGSQ1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 12:27:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6JGHqkQ023678
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 19 Jul 2007 18:17:52 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IBYhM-0000Ok-3A; Thu, 19 Jul 2007 18:17:52 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IBYhM-0002ta-0r; Thu, 19 Jul 2007 18:17:52 +0200
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Brian Gernhardt <benji@silverinsanity.com>,  David Kastrup <dak@gnu.org>, git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0707191642270.14781@racer.site> (Johannes Schindelin's message of "Thu\, 19 Jul 2007 16\:43\:30 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 19 Jul 2007 18:17:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53004>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, 19 Jul 2007, Brian Gernhardt wrote:
->
->> 
->> On Jul 19, 2007, at 8:24 AM, David Kastrup wrote:
->> 
->> > I think that the placeholder name should rather be ".".
->> 
->> For what it's worth, the more this gets discussed, the more I think your 
->> idea is a good one.
->
-> I do not like it at all. "." already has a very special meaning.  It is a 
-> _directory_, no place holder.
+> More and more I get the impression that this thread is just not worth it.  
+> The problem was solved long ago, and all that is talked about here is how 
+> to complicate things.
 
-And this is what it will be under my scheme: a directory.  It is just
-that "directory" is differentiated from a "tree".  Both are tracked in
-the repository (directory tracking is optional), and there is no such
-thing as an empty tree, a tree being defined by its contents and
-nothing else, as previously.  A "directory" has no contents, but only
-existence in index and repository.  A "tree" only exists in the
-repository, not in index or work directory.  It is mapped to physical
-directories in the work directory.  If no corresponding "directory"
-exists in index and/or repository, the work directories are created
-and deleted on the fly as before in order to represent the state of
-the "tree" in the repository.  So here are the concepts:
+The problem was not _solved_, it was _worked around_.
 
-entity     working directory        index           repository
---------------------------------------------------------------
-file       mapped to files          file            [blob]
-dir        mapped to dir existence  dir             [dir]
-tree       mapped to dir tree       unrepresented   [tree] (non-empty container)
+Adding a .gitignore or whatever other file to mean "the directory
+exists" is clearly a good workaround, but still, you have to use
+"git-add $dir/.gitignore" where you really _mean_ "git-add $dir/". I
+can see no reason for the presence of this .gitignore file other than
+"err, I've put it here because git doesn't manage empty directories".
 
-> More and more I get the impression that this thread is just not
-> worth it.  The problem was solved long ago, and all that is talked
-> about here is how to complicate things.
+The fact that you need a FAQ entry for that actually shows there is a
+problem. You don't have a FAQ for "Q: How to I add a file? A: Use
+git-add file", you shouldn't need a FAQ for "How do I add a
+directory", it should just work as expected.
 
-I disagree on both accounts: that the problem has been solved (the
-existence of a workaround involving constant manual intervention is
-not a solution for me), and that my proposal will constitute a
-complication to the user.
+You claim it "solves" the problem, but have you ever used an importer
+like git-svn on a project that uses empty directories as placeholders
+(I do have this problem in daily life because my colleagues still use
+SVN)? What is the meaning of this .gitignore file the day you export
+it to anything outside git?
 
-For projects setting a "." into the top level .gitignore, nothing at
-all will change, even when "core.adddirs: true" will become the
-default at some point of time.  Once this is the default, new users
-with new projects will not notice anything surprising, at least until
-the time that they pull from somebody with a repository with different
-non-explicit conventions.
+If you ignore problems because they have a workaround, then even CVS
+can be usable. People have been working around CVS's problems for
+years, and many people are happy with CVS because they didn't realise
+that solving problems is better than working around them (See the
+OpenCVS project ...). Fortunately, git doesn't have as many problems
+to work around as CVS ;-).
 
-This is something which may still require thought in order to result
-in the least complicated handling of cooperation.  But with regard to
-the internals itself, I don't see that there is too much non-obvious
-complexity involved here, and the framework appears very consistent,
-logical, and compatible with git's ideas to me.
+I'm happy with the answer "it should be done, but not by me, send a
+patch", and I can't really complain myself since I did not send a
+patch, but here, you're complaining about someone who actually starts
+volunteering to solve the problem, which I can't agree with.
 
 -- 
-David Kastrup
+Matthieu
