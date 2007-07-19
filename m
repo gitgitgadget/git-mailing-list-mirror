@@ -1,90 +1,112 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Thu, 19 Jul 2007 11:58:36 +0100
-Message-ID: <200707191158.37713.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site> <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net> <7vodi83fg7.fsf@assigned-by-dhcp.cox.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] Document how to tell git to not launch a pager
+Date: Thu, 19 Jul 2007 13:02:24 +0200
+Message-ID: <20070719110224.GA4293@piper.oerlikon.madduck.net>
+References: <20070719104351.GA17182@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alberto Bertogli <albertito@gmail.com>,
-	Johan Herland <johan@herland.net>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 12:58:56 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 13:02:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBTih-0004bH-Lj
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 12:58:56 +0200
+	id 1IBTmB-0005mk-O1
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 13:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757126AbXGSK6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 06:58:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759499AbXGSK6n
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 06:58:43 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:3980 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757126AbXGSK6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 06:58:42 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so382685ugf
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 03:58:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZxIYwr0nsxEQ3MkGPjzsorL5n7Fsa9ktz4Ae56dnT44unhgxiatH50kbKuDtu9GuXgHwXnJcy3DVJIWA13th6xYz0lBqSF4qOQCqmNp2BAI+q9RCO3I6KwURu+NKyuWwR5bRndzgXmJdKChzpNWJjlFkfBQktTcCokHM2poj2ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=hYj0k9KnTNa0z1A3AOOK46SeW6p9sdliBn9oQ0L9gKyldb9sXtcmSrVsu95M2lt2rnTjjgs//j4Ws2M4AUqi1c2eHuuF4C+mXUoqrcFy2OJvjt00TWJWFAyedRQqvdD+71tCyUq9kbQsEDpMHZW/43n/e/+EVU2xp/ILsDcjmGs=
-Received: by 10.67.119.9 with SMTP id w9mr1088272ugm.1184842721180;
-        Thu, 19 Jul 2007 03:58:41 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id z37sm3414554ikz.2007.07.19.03.58.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2007 03:58:40 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vodi83fg7.fsf@assigned-by-dhcp.cox.net>
+	id S1755539AbXGSLC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 07:02:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbXGSLC2
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 07:02:28 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:50495 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbXGSLC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 07:02:27 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 8339A895D73
+	for <git@vger.kernel.org>; Thu, 19 Jul 2007 13:02:25 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 29737-02 for <git@vger.kernel.org>;
+	Thu, 19 Jul 2007 13:02:25 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 4F185895D72
+	for <git@vger.kernel.org>; Thu, 19 Jul 2007 13:02:25 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id AD4989F194
+	for <git@vger.kernel.org>; Thu, 19 Jul 2007 13:02:24 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 892E943EA; Thu, 19 Jul 2007 13:02:24 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20070719104351.GA17182@midwinter.com>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52966>
-
-On Thursday 2007 July 19, Junio C Hamano wrote:
-
-> I've long time ago concluded that if we care about reliability
-> (and we do very much), a bisectable tree without breaking
-> backward compatibility is impossible.  I was hoping to find a
-> "hole" in tree object format so that I can place an extended
-
-In the case of the notes system, is there not a big hole available because the 
-layout is under tight control?
-
-100644 blob 24631df5c6fceef7f0859903397d81f99a723197    __notes_index
-040000 tree dd3f40129c8731b1bdce1d3939de3cdc24a87783    00
-040000 tree 2b25612b5d8ee9ef469e72bbf74eab0ec00ae87f    01
-
-In fact, this technique would work for normal tree objects too, except that 
-you'd have to be willing to pick some blob name that would always be the 
-first entry in every tree object, and would never clash with a real file in 
-the tree.  Speaking off the top of my head, anything with "/" in it would be 
-an invalid name so
-
-100644 blob 24631df5c6fceef7f0859903397d81f99a723197    /tree_index
-040000 tree dd3f40129c8731b1bdce1d3939de3cdc24a87783    00
-040000 tree 2b25612b5d8ee9ef469e72bbf74eab0ec00ae87f    01
-
-Would be an easy one to special case, and would be guaranteed not to clash 
-with a file in the tree.
-
-Just an idea.  I would imagine it's as daft as all my others :-)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52967>
 
 
+--/9DWx/yDrRhgMJTb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+also sprach Steven Grimm <koreth@midwinter.com> [2007.07.19.1243 +0200]:
+>  'GIT_PAGER'::
+> -	This environment variable overrides `$PAGER`.
+> +	This environment variable overrides `$PAGER`. If it is set
+> +	to an empty string or to the value "cat", git will not launch
+> +	a pager.
+
++1 on the patch, but I also wonder why use of a pager is default in
+git anyway. At least I find it to be contrary to what I am used to
+on the Unix command line.
+
+For reference, there was an argument about this in
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D424978, which
+includes a long IRC log in German, unfortunately, where a bunch of
+people agreed with my proposal *not* to use a pager by default,
+since it makes it difficult to use information from the output to
+assemble the next command on the command line. Every terminal in use
+nowadays can easily scroll and even search back 250 lines with the
+added benefit of not randomly clearing the screen when you quit
+$PAGER.
+
+I am sure there is a reason for the choice of using a pager by
+default. Could we please either rethink this reason and possibly
+make it non-default, or alternatively add the reason to the FAQ?
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+no micro$oft components were used
+in the creation or posting of this email.
+therefore, it is 100% virus free
+and does not use html by default (yuck!).
+
+--/9DWx/yDrRhgMJTb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGn0S/IgvIgzMMSnURAraSAKDLfB3LkpUUbw0TJlkQtoFrVx7B5gCfViG8
+5eUIrNv5Wlhf2ERkBbjgOos=
+=gfC5
+-----END PGP SIGNATURE-----
+
+--/9DWx/yDrRhgMJTb--
