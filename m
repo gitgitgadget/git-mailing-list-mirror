@@ -1,51 +1,99 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Proposal about --help options and man calls
-Date: Wed, 18 Jul 2007 23:49:47 -0400
-Message-ID: <4CE1D7B3-23AF-4BED-862C-B225B29E4811@silverinsanity.com>
-References: <85y7hdwfds.fsf@lola.goethe.zz> <7v644h715y.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 05:49:56 2007
+From: Eric Wong <eric@petta-tech.com>
+Subject: Re: [PATCH] Proposal for git-svn
+Date: Wed, 18 Jul 2007 21:22:55 -0700
+Message-ID: <20070719042255.GA17433@muzzle>
+References: <FAFA899D-EC45-4313-98ED-2D0A3FF37669@lrde.epita.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 19 06:23:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBN1X-0002uN-4c
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 05:49:55 +0200
+	id 1IBNXl-0000Pe-ES
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 06:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757057AbXGSDtw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 23:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757162AbXGSDtw
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 23:49:52 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:42121 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757057AbXGSDtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 23:49:51 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id B330A1FFC243;
-	Thu, 19 Jul 2007 03:49:50 +0000 (UTC)
-In-Reply-To: <7v644h715y.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1750792AbXGSEW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 00:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbXGSEW5
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 00:22:57 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:45191 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750768AbXGSEW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 00:22:57 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id DF52A2DC08D;
+	Wed, 18 Jul 2007 21:22:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <FAFA899D-EC45-4313-98ED-2D0A3FF37669@lrde.epita.fr>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52932>
 
+Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
+> Hello,
+> 
+> I'm importing many SVN repositories in Git and I ran across a problem:
+> ufloat.h has mode 120000but is not a link
+> 
+> I've read the code and checked-out the revision where the problem  
+> occured and it turns out that some stupid user commited a broken  
+> symlink and I think that's where the problem came from.  I'm  
+> proposing the following trivial change to let git-svn clone continue  
+> its work:
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 01c3904..a82baf4 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2555,8 +2555,8 @@ sub close_file {
+>                 sysseek($fh, 0, 0) or croak $!;
+>                 if ($fb->{mode_b} == 120000) {
+>                         sysread($fh, my $buf, 5) == 5 or croak $!;
+> -                       $buf eq 'link ' or die "$path has mode 120000",
+> -                                              "but is not a link\n";
+> +                       $buf eq 'link ' or warn "$path has mode 120000",
+> +                                              " but is not a link\n";
+>                 }
+>                 defined(my $pid = open my $out,'-|') or die "Can't  
+> fork: $!\n";
+>                 if (!$pid) {
+> 
+> (I also added a whitespace because "120000but" does not look good :D)
+> I checked out the problematic revision in git and I see the broken  
+> symlink just like in SVN so I assume this change is correct.
 
-On Jul 18, 2007, at 7:16 PM, Junio C Hamano wrote:
+Very strange.  Since $buf didn't have the string "link " in it, did it
+have a path name in it?  If so, the sysread() would've advanced the $fh
+offset by 5 bytes; causing an even more broken symlink to be added by git.
 
-> What's the reason to set GIT_PAGER and PAGER differently to
-> begin with?  Can people give examples of the reason why?
+Would the following be more correct?
 
-I currently have GIT_PAGER (actually, core.pager) set to tig.  Tig  
-has lots of useful features for visualizing history and jumping  
-between patches and logs.
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2552,9 +2552,15 @@ sub close_file {
+ 		}
+ 		sysseek($fh, 0, 0) or croak $!;
+ 		if ($fb->{mode_b} == 120000) {
+-			sysread($fh, my $buf, 5) == 5 or croak $!;
+-			$buf eq 'link ' or die "$path has mode 120000",
+-			                       "but is not a link\n";
++			eval {
++				sysread($fh, my $buf, 5) == 5 or croak $!;
++				$buf eq 'link ' or die "$path has mode 120000",
++						       " but is not a link";
++			};
++			if ($@) {
++				warn "$@\n";
++				sysseek($fh, 0, 0) or croak $!;
++			}
+ 		}
+ 		defined(my $pid = open my $out,'-|') or die "Can't fork: $!\n";
+ 		if (!$pid) {
 
-But for everything that isn't git, less is far better.
-
-~~ Brian
+-- 
+Eric Wong
