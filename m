@@ -1,99 +1,98 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 12:14:30 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707191155100.27353@woody.linux-foundation.org>
-References: <20070719104351.GA17182@midwinter.com> 
- <20070719110224.GA4293@piper.oerlikon.madduck.net> 
- <Pine.LNX.4.64.0707191211010.14781@racer.site> 
- <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk> 
- <86ir8gbo0a.fsf@lola.quinscape.zz>  <alpine.LFD.0.999.0707191128040.27353@woody.linux-foundation.org>
- <dbfc82860707191151w3e9571fcu60d113cba6c2f6dd@mail.gmail.com>
+From: Eric Lesh <eclesh@ucla.edu>
+Subject: [PATCH guilt] Handles slashes in branch names
+Date: Thu, 19 Jul 2007 12:17:01 -0700
+Message-ID: <87r6n4td8y.fsf@hubert.paunchy.net>
+References: <87y7hctf6o.fsf@hubert.paunchy.net>
+	<20070719184418.GA22463@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Nikolai Weibull <now@bitwi.se>
-X-From: git-owner@vger.kernel.org Thu Jul 19 21:15:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 19 21:17:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBbSz-0002t9-GN
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 21:15:13 +0200
+	id 1IBbVI-0003kO-Sn
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 21:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764561AbXGSTPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 15:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765193AbXGSTPJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 15:15:09 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41496 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764561AbXGSTPH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 15:15:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JJEams010640
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Jul 2007 12:14:37 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JJEUFh017525;
-	Thu, 19 Jul 2007 12:14:31 -0700
-In-Reply-To: <dbfc82860707191151w3e9571fcu60d113cba6c2f6dd@mail.gmail.com>
-X-Spam-Status: No, hits=-4.68 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S933921AbXGSTRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 15:17:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934117AbXGSTRL
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 15:17:11 -0400
+Received: from smtp-7.smtp.ucla.edu ([169.232.46.138]:60553 "EHLO
+	smtp-7.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933856AbXGSTRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 15:17:09 -0400
+X-Greylist: delayed 2506 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jul 2007 15:17:09 EDT
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
+	by smtp-7.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6JJH5iE008653;
+	Thu, 19 Jul 2007 12:17:05 -0700
+Received: from localhost (adsl-75-26-187-235.dsl.scrm01.sbcglobal.net [75.26.187.235])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6JJH4dm023831
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 19 Jul 2007 12:17:04 -0700
+Received: by localhost (Postfix, from userid 1000)
+	id 438641E8009; Thu, 19 Jul 2007 12:17:01 -0700 (PDT)
+In-Reply-To: <20070719184418.GA22463@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Thu\, 19 Jul 2007 14\:44\:18 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
+X-Probable-Spam: no
+X-Spam-Report: none
+X-Scanned-By: smtp.ucla.edu on 169.232.46.138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53021>
 
+When a branch name has a slash and autotagging is enabled, guilt barfs
+when updating the stack tags.  Make these branch names work.
 
+Also allow guilt to create the patches directory for these branches.
 
-On Thu, 19 Jul 2007, Nikolai Weibull wrote:
-> 
-> I don't want to start a holy war here, but what's wrong with screen?
+Signed-off-by: Eric Lesh <eclesh@ucla.edu>
+---
+Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
 
-I actually like screen as a way to keep connections around. But the whole 
-multiplexing is wrong, wrong, wrong. It violates the "do one thing, and do 
-it well" thing. It makes screen do two things, and do them really badly as 
-a result.
+>
+> Why mangle the branch name when we can do:
+>
+> mkdir -p `basename $GIT_DIR/refs/tags/${branch}_top`
+> git-rev-parse .... 
+>
+> Sure, it is ugly, but it preserves the branch name. Am I missing something?
+>
 
-So the "session" part makes sense. It's a worthy reason to use screen.
+Yours is a lot less ugly than mine was.
 
-And the "window manager" part is kind of a funny hack, but let's face it, 
-you can do better by using separate windows.
+ guilt      |    1 +
+ guilt-init |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-And the multiplexor could have been done (and historically _has_ been 
-done) better, by not limiting it to terminal sessions.
-
-But the *combination* of all three is just evil and stupid. And the choice 
-of ctrl-A as the default command sequence (can you even override it? Don't 
-know, don't care) is just insanity.
-
-It's somewhat sad that screen has made some better projects not as 
-successful.
-
- - multiplexing. I used better programs back in the 90's to multiplex 
-   arbitrary sessions over a single terminal pipe (not just terminal 
-   windows). I forget the name, because these days, everybody has real 
-   networking, and you'd generally use ssh tunnelling for it and 
-   ssh-agent. But screen was never very good at it.
-
- - "window manager". Quite frankly, I've never needed it. I doubt many 
-   people do. graphical environments and virtual terminals are better. And 
-   if you really want a virtual terminal on a single terminal, thinking 
-   that it should be mixed up with all the other things screen does is 
-   just nasty.
-
- - for session management and moving things around: I think this is the 
-   main reason people still use screen. It's a worthy use, but I think 
-   it's sad how it's mixed up with the bad features of screen. There was a 
-   "detach" program (or something similar) at some point that did just 
-   that part of screen. But screen is just widely enough spread that 
-   people are used to it, and I don't think it went anywhere.
-
-IOW, I think screen sucks because it tries to do totally independent 
-things, and then mixes them up in nasty ways, and for historical reasons 
-uses a bad break character too.
-
-Oh, well.
-
-			Linus
+diff --git a/guilt b/guilt
+index 214def4..c913bd6 100755
+--- a/guilt
++++ b/guilt
+@@ -338,6 +338,7 @@ update_stack_tags()
+ 		# there are patches applied, therefore we must get the top,
+ 		# bottom and base hashes, and update the tags
+ 
++		mkdir -p `dirname $GIT_DIR/refs/tags/${branch}_top`
+ 		git-rev-parse HEAD > "$GIT_DIR/refs/tags/${branch}_top"
+ 		head -1 < $applied | cut -d: -f1 > "$GIT_DIR/refs/tags/${branch}_bottom"
+ 		git-rev-parse $(head -1 < $applied | cut -d: -f1)^ > "$GIT_DIR/refs/tags/${branch}_base"
+diff --git a/guilt-init b/guilt-init
+index ffe2434..9136f89 100755
+--- a/guilt-init
++++ b/guilt-init
+@@ -24,7 +24,7 @@ if [ -d "$GUILT_DIR/$branch" ]; then
+ fi
+ 
+ [ ! -d "$GUILT_DIR" ] && mkdir $GUILT_DIR
+-mkdir $GUILT_DIR/$branch
++mkdir -p $GUILT_DIR/$branch
+ touch $GUILT_DIR/$branch/series
+ touch $GUILT_DIR/$branch/status
+ 
+-- 
+1.5.2
