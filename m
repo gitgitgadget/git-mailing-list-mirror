@@ -1,66 +1,59 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH (REVISED)] Add core.editor configuration variable
-Date: Thu, 19 Jul 2007 15:52:36 +0100
-Message-ID: <200707191552.37825.andyparkins@gmail.com>
-References: <11848281302504-git-send-email-aroben@apple.com> <200707190848.54655.andyparkins@gmail.com> <95E642DA-F848-4398-9D9D-52B03A235887@silverinsanity.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Thu, 19 Jul 2007 11:08:11 -0400
+Message-ID: <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com>
+References: <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com> <863azk78yp.fsf@lola.quinscape.zz>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Adam Roben <aroben@apple.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 16:53:01 2007
+Cc: "Shawn O.Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Jul 19 17:08:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBXNB-0002hk-DD
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:52:57 +0200
+	id 1IBXc8-00014O-9W
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 17:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758539AbXGSOws (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 10:52:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938784AbXGSOwr
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:52:47 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:39660 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S938777AbXGSOwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 10:52:44 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so423508ugf
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 07:52:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=isXWJPvQB6z4gHDM+xx/vhYO1Llhkt5KO7JVa1iaFJYwUjPvxlyT4pOEL4xgMy2nGXPW6CztOOWt64jeAdMcwlawSYaUFvdneVxMQ8HWESerNsS43hWDoGWRPhjDiPRe+f0Psah1S6XDxmD0DfWGwpyk+9FhdTPTMH+RDg9bZVM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qcuTTlEqYNB4ob+7ZB2jWrb4Acumcs/ZJFy0Mf71xXWZymtYyqOp+RnwoxovjxkJL9NjZT2OZfqMAm8GNmQHJ2JTAPC39sabz77NSmEHmav3QkdS2PhiaCmU8Pkr3oUodRm9iqEd111CgAtJBkKf6JioGnp6V4w7hI8z30wYJv4=
-Received: by 10.66.225.1 with SMTP id x1mr1236450ugg.1184856763378;
-        Thu, 19 Jul 2007 07:52:43 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id c24sm3962041ika.2007.07.19.07.52.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2007 07:52:42 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <95E642DA-F848-4398-9D9D-52B03A235887@silverinsanity.com>
-Content-Disposition: inline
+	id S934455AbXGSPIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 11:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766007AbXGSPIS
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 11:08:18 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:32869 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765811AbXGSPIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 11:08:16 -0400
+Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 1E7871FFC243;
+	Thu, 19 Jul 2007 15:08:13 +0000 (UTC)
+In-Reply-To: <863azk78yp.fsf@lola.quinscape.zz>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52996>
-
-On Thursday 2007 July 19, Brian Gernhardt wrote:
-
-> As far as [core] being only for plumbing, I disagree with that
-> premise as well.  Any option that is used across many of the git
-> commands is a core (meaning central) option.
-
-Fair enough.  With the definition core != plumbing; my argument has no weight.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52997>
 
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+On Jul 19, 2007, at 10:40 AM, David Kastrup wrote:
+
+> Have you synched with the current state of my proposals posted to the
+> mailing list before posting this note?  Perhaps your concerns have
+> already been addressed in them.
+
+Mail.app split the thread into two or three pieces.  I wrote this  
+after reading the first part, but had missed the rest.  I very much  
+like the proposals of separating trees from directories and the "."  
+entries.
+
+My apologies for the wasted bandwidth arguing for things that had  
+already been decided.
+
+~~ Brian
