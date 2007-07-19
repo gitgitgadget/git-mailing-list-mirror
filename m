@@ -1,77 +1,85 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH (REVISED)] Add core.editor configuration variable
-Date: Thu, 19 Jul 2007 10:24:37 -0400
-Message-ID: <95E642DA-F848-4398-9D9D-52B03A235887@silverinsanity.com>
-References: <11848281302504-git-send-email-aroben@apple.com> <200707190848.54655.andyparkins@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
+Date: Thu, 19 Jul 2007 15:33:47 +0100
+Message-ID: <200707191533.48641.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site> <200707191158.37713.andyparkins@gmail.com> <Pine.LNX.4.64.0707191209200.14781@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 16:25:07 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Alberto Bertogli <albertito@gmail.com>,
+	Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 19 16:34:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBWwC-00088M-Bn
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:25:04 +0200
+	id 1IBX50-0003dA-K5
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760996AbXGSOYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 10:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758063AbXGSOYj
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:24:39 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:55248 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755798AbXGSOYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 10:24:38 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 18C421FFC244;
-	Thu, 19 Jul 2007 14:24:36 +0000 (UTC)
-In-Reply-To: <200707190848.54655.andyparkins@gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1764894AbXGSOd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 10:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938312AbXGSOdy
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:33:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:12894 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S938303AbXGSOdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 10:33:52 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so419220ugf
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fJrOuS54mhkDosNmjs3eYdtHk/AePBXZhQgnGn6aUvodnPUywbYHfCDMQKM0Msc5hlt5BsH9VbktBNkwk/A7ye+iS2D+eMfhmBuUWa4dZ+DT152Nf4o880iGzbTFWKDUOR7/2FK7PWQm0EizUcR4ygFH9u+ZXt5sZMjAvQTosL8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=a5JQ2wvpP31nqNX6Dyox6zKfc+2UrAKiOuiJra+fGlmLZOi4BdPXIitOIRonVMS6VoJtjEeqv/6kn9imMswdHisRF0Xa68ajNkrt1g4GFxkh57DWoXh3ZM7p3EM8giCtmyLk+4io8YMlpLrjIQvNnjsPKt3shk893Appmjyexo0=
+Received: by 10.67.19.9 with SMTP id w9mr1197230ugi.1184855631880;
+        Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id z37sm3785186ikz.2007.07.19.07.33.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0707191209200.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52993>
 
+On Thursday 2007 July 19, Johannes Schindelin wrote:
 
-On Jul 19, 2007, at 3:48 AM, Andy Parkins wrote:
-
-> On Thursday 2007 July 19, Adam Roben wrote:
+> > In the case of the notes system, is there not a big hole available
+> > because the layout is under tight control?
 >
->>    Well, it turns out we already do launch an editor in other places,
->> namely "git am -i" and "git send-email --compose". So, this patch  
->> takes
->> care of those cases as well.
->
-> Perhaps I'm being overly pedantic, but it seems odd to put options  
-> that are
-> relevant only to porcelain under the "core" section.
->
-> core.pager is in the same category - but that's already in.
+> No.  It is a tree object, referenced from a ref.  You can always check it
+> out, modify it, and check it in.  If only by mistake.
 
-Since I'm the one who added that, I feel compelled to add in my $0.02.
+I was arguing for the tree-index being special cased though (ideally with an 
+invalid filename), such that it could never actually be checked out or 
+checked in, but would be maintained automatically "git-side".  For backwards 
+compatibility, it would be optional; and making it an invalid filename 
 
-First, there wasn't much argument on the list when core.pager was  
-added...  But that's not my major point.
+It was only a suggestion to answer Junio's request for a "hole" through which 
+a tree-object index could be poked.
 
-To many git users (myself included), claiming that commands like git- 
-commit, git-log, and other "porcelain" isn't part of "core" git is  
-ridiculous.  These are the commands that I use every day, and are a  
-part of the main git package, source, and repository.  If the  
-porcelain was maintained separately from the pluming, like cognito  
-was, perhaps that would be a more compelling argument to me.
+If we're only talking about the notes tree, then would it matter that it could 
+be checked out and checked in?  If someone chose to do that then it would be 
+their own fault when the index didn't work.  If I wanted I could 
+edit .git/objects/ directly - I wouldn't expect poor git to work correctly 
+afterwards though.
 
-For many people commit is more "core" to their git usage than write- 
-tree and commit-tree.  At this point, it's less an extra layer  
-porcelain and more the standard interface.  It's a result of the  
-wonderful attempts to make git more user friendly.
 
-As far as [core] being only for plumbing, I disagree with that  
-premise as well.  Any option that is used across many of the git  
-commands is a core (meaning central) option.
 
-~~ Brian
+Andy
+
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
