@@ -1,104 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 02:09:22 -0400
-Message-ID: <20070719060922.GF32566@spearce.org>
-References: <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	David Kastrup <dak@gnu.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
+From: Adam Roben <aroben@apple.com>
+Subject: Re: [PATCH] Add commit.editor configuration variable
+Date: Wed, 18 Jul 2007 23:17:55 -0700
+Message-ID: <47EE39C7-0D57-48EC-B5A0-C10E49997E32@apple.com>
+References: <11848235881723-git-send-email-aroben@apple.com> <7v7iox3oz8.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v895)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 08:09:42 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 08:18:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBPCm-0004aX-Fl
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 08:09:40 +0200
+	id 1IBPKp-0006hu-K2
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 08:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756774AbXGSGJf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 02:09:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756661AbXGSGJe
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 02:09:34 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39508 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756598AbXGSGJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 02:09:33 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IBPCV-0005gg-QO; Thu, 19 Jul 2007 02:09:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 46E0720FBAE; Thu, 19 Jul 2007 02:09:22 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070719053858.GE32566@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752319AbXGSGR4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 02:17:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbXGSGR4
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 02:17:56 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:61030 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813AbXGSGR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 02:17:56 -0400
+Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
+	by mail-out4.apple.com (Postfix) with ESMTP id B51E9C67BE6;
+	Wed, 18 Jul 2007 23:17:55 -0700 (PDT)
+Received: from relay8.apple.com (unknown [127.0.0.1])
+	by relay8.apple.com (Symantec Mail Security) with ESMTP id A5760400EF;
+	Wed, 18 Jul 2007 23:17:55 -0700 (PDT)
+X-AuditID: 11807126-a7448bb0000007e3-90-469f0213122e
+Received: from [17.112.108.175] (unknown [17.112.108.175])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by relay8.apple.com (Apple SCV relay) with ESMTP id 7C95C40080;
+	Wed, 18 Jul 2007 23:17:55 -0700 (PDT)
+In-Reply-To: <7v7iox3oz8.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.895)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52942>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Another issue I thought about was what you would do in the step
-> > 3 in the following:
-> > 
-> >  1. David says "mkdir D; git add D"; you add S_IFDIR entry in
-> >     the index at D;
-> > 
-> >  2. David says "date >D/F; git add D/F"; presumably you drop D
-> >     from the index (to keep the index more backward compatible)
-> >     and add S_IFREG entry at D/F.
-> > 
-> >  3. David says "git rm D/F".
-> > 
-> > Have we stopped keeping track of the "empty directory" at this
-> > point?
-> 
-> Sadly yes.  But I don't think that's what the folks who want to
-> track empty directories want to have happen here.
-> 
-> Which is why I'm thinking we just need to track the directory, as a
-> node in the index, even if there are files in it, and even if we got
-> that directory and its contained files there by just unpacking trees.
+On Jul 18, 2007, at 11:08 PM, Junio C Hamano wrote:
 
-I take this back.  I really don't want that behavior.
+> I do not think commit.editor is a good name.  Wouldn't we want
+> that customized editor for "git tag -a" as well?  Probably
+> core.editor would come nicely next to core.pager we already
+> have.
 
-If I do:
+    I considered core.editor, but if it's an editor that is *only*  
+used for commit messages then that seems to be a too-general name, and  
+something like core.commit_message_editor seemed far too long. Any  
+suggestions?
 
-  mkdir -p foo/bar
-  echo hello >foo/bar/world
-  git add foo
-  git -f rm foo/bar/world
+    I had forgotten about "git tag -a" -- I will add support for that  
+as well.
 
-I never asked for foo/bar or foo to stay.  In fact I want them
-to disappear from Git entirely, as foo/bar is now empty and has
-no content.
-
-
-But we also cannot do a special --mkdir option for update-index
-either, because how do we know that the user designated subtree is
-a directory we must always keep in the index?
-
-So I think the only way this works is to have a new mode that we use
-in tree (04755 ?) that tells us not only is this thing a subtree,
-but also that the user wants it to stay here, even if it is empty.
-Those trees are always in the index as a real tree entry, even if
-there are files contained in it.
-
-And as far as getting that directory entry created/removed from
-the index, well, I think a special flag to update-index would be
-in order, much like --chmod=[+-]x.
-
-Just my $0.0002 USD, which really ain't worth much at all.
-
--- 
-Shawn.
+-Adam
