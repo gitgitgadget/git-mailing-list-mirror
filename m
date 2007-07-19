@@ -1,59 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 11:29:08 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707191128040.27353@woody.linux-foundation.org>
-References: <20070719104351.GA17182@midwinter.com>
- <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site>
- <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk>
- <86ir8gbo0a.fsf@lola.quinscape.zz>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: [PATCH guilt] Handles slashes in branch names
+Date: Thu, 19 Jul 2007 14:44:18 -0400
+Message-ID: <20070719184418.GA22463@filer.fsl.cs.sunysb.edu>
+References: <87y7hctf6o.fsf@hubert.paunchy.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 20:29:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Joseph Jeff Sipek <jsipek@cs.sunysb.edu>,
+	Git mailing list <git@vger.kernel.org>
+To: Eric Lesh <eclesh@ucla.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 19 20:44:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBake-0003SD-Q9
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 20:29:25 +0200
+	id 1IBazK-0008Ng-KH
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 20:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759324AbXGSS3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 14:29:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759893AbXGSS3V
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 14:29:21 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47162 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758394AbXGSS3V (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 14:29:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JITEcs007989
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Jul 2007 11:29:15 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JIT8Lm015784;
-	Thu, 19 Jul 2007 11:29:09 -0700
-In-Reply-To: <86ir8gbo0a.fsf@lola.quinscape.zz>
-X-Spam-Status: No, hits=-4.677 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753893AbXGSSoa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 14:44:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756556AbXGSSoa
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 14:44:30 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:35812 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889AbXGSSo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 14:44:29 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6JIiIkL024640;
+	Thu, 19 Jul 2007 14:44:18 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6JIiIQ1024638;
+	Thu, 19 Jul 2007 14:44:18 -0400
+Content-Disposition: inline
+In-Reply-To: <87y7hctf6o.fsf@hubert.paunchy.net>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53016>
 
+On Thu, Jul 19, 2007 at 11:35:11AM -0700, Eric Lesh wrote:
+> When a branch name has a slash and autotagging is enabled, guilt barfs
+> when updating the stack tags.  Escape the branch name in the tags to
+> allow this to work.
+...
+> -		git-rev-parse HEAD > "$GIT_DIR/refs/tags/${branch}_top"
+> -		head -1 < $applied | cut -d: -f1 > "$GIT_DIR/refs/tags/${branch}_bottom"
+> -		git-rev-parse $(head -1 < $applied | cut -d: -f1)^ > "$GIT_DIR/refs/tags/${branch}_base"
+> +		git-rev-parse HEAD > "$GIT_DIR/refs/tags/${newbranch}_top"
+> +		head -1 < $applied | cut -d: -f1 > "$GIT_DIR/refs/tags/${newbranch}_bottom"
+> +		git-rev-parse $(head -1 < $applied | cut -d: -f1)^ > "$GIT_DIR/refs/tags/${newbranch}_base"
 
+Why mangle the branch name when we can do:
 
-On Thu, 19 Jul 2007, David Kastrup wrote:
-> 
-> Is that the reason why users of screen get punished by default?
+mkdir -p `basename $GIT_DIR/refs/tags/${branch}_top`
+git-rev-parse .... 
 
-No, the reason users of screen get punished is that we just think they are 
-fun to torment.
+Sure, it is ugly, but it preserves the branch name. Am I missing something?
 
-Just use GIT_PAGER=cat, and be happy. In fact, I'd suggest not using 
-screen at all (what a piece of horrid crap), but some people have trouble 
-letting go.
+Josef 'Jeff' Sipek.
 
-		Linus
+-- 
+A computer without Microsoft is like chocolate cake without mustard.
