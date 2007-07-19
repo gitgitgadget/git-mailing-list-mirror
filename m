@@ -1,55 +1,63 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Thu, 19 Jul 2007 11:54:00 +0200
-Message-ID: <20070719095400.GB999MdfPADPa@greensroom.kotnet.org>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <Pine.LNX.4.64.0707160022560.14781@racer.site>
- <7vejj96igx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707190258550.14781@racer.site>
-Reply-To: skimo@liacs.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add commit.editor configuration variable
+Date: Thu, 19 Jul 2007 10:54:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707191053230.14781@racer.site>
+References: <11848235881723-git-send-email-aroben@apple.com>
+ <7v7iox3oz8.fsf@assigned-by-dhcp.cox.net> <47EE39C7-0D57-48EC-B5A0-C10E49997E32@apple.com>
+ <20070719062302.GG32566@spearce.org> <7v1wf451fc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 19 11:54:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Adam Roben <aroben@apple.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 11:54:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBShz-0001WC-Dx
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 11:54:07 +0200
+	id 1IBSiE-0001Zf-P3
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 11:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169AbXGSJyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 05:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbXGSJyE
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 05:54:04 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:35427 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750925AbXGSJyC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 05:54:02 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JLF000RL7I0Y5@psmtp09.wxs.nl> for git@vger.kernel.org; Thu,
- 19 Jul 2007 11:54:00 +0200 (MEST)
-Received: (qmail 2047 invoked by uid 500); Thu, 19 Jul 2007 09:54:00 +0000
-In-reply-to: <Pine.LNX.4.64.0707190258550.14781@racer.site>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751156AbXGSJyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 05:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbXGSJyT
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 05:54:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36789 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750830AbXGSJyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 05:54:18 -0400
+Received: (qmail invoked by alias); 19 Jul 2007 09:54:16 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp004) with SMTP; 19 Jul 2007 11:54:16 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1//5e1oR1n/RZNfB0t+Nr4zKCgS9aXpiYLDoZHsMv
+	3n0Wm7QdVLYm5Z
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v1wf451fc.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52957>
 
-On Thu, Jul 19, 2007 at 03:30:43AM +0100, Johannes Schindelin wrote:
-> +If such a path exists in the given ref, the referenced blob is read, and
-> +appended to the commit message, separated by a "Notes:" line.  If the
-> +given ref itself does not exist, it is not an error, but means that no
-> +notes should be print.
+Hi,
 
-printed?
+On Wed, 18 Jul 2007, Junio C Hamano wrote:
 
-skimo
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > We only launch an editor for three reasons: commit messages, tag
+> > messages and git-rebase -i.  If we were to ever add a new editor
+> > using thingy, odds are the user would want the same editor by
+> > default for that too.
+> >
+> > So please, core.editor, and also use it in git-rebase--interactive.
+> 
+> Ah, add "git-am -i" to the mix.  Potentially, git-notes would
+> use it as well.
+
+Now with so many commands in the lot, how about putting the code into 
+git-sh-setup, into a function "get_editor()"?
+
+Ciao,
+Dscho
