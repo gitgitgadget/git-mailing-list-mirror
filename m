@@ -1,105 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
-Date: Thu, 19 Jul 2007 11:14:39 +0200
-Message-ID: <200707191114.39553.jnareb@gmail.com>
-References: <3bbc18d20707171103q262eaa8amb319ca9f835dbf67@mail.gmail.com> <1184699486.9831.7.camel@mattlaptop2>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Thu, 19 Jul 2007 14:46:47 +0200
+Message-ID: <863azka7d4.fsf@lola.quinscape.zz>
+References: <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr> <20070719105105.GA4929@moonlight.home> <86zm1sbpeh.fsf@lola.quinscape.zz> <20070719123214.GB4929@moonlight.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>, Luben Tuikov <ltuikov@yahoo.com>
-To: Matt McCutchen <hashproduct@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 14:47:23 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 19 14:47:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBVPd-0002iq-A5
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:47:21 +0200
+	id 1IBVPy-0002sM-Vf
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757995AbXGSMrT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Jul 2007 08:47:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758378AbXGSMrS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:47:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:61741 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757874AbXGSMrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 08:47:17 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so398111ugf
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 05:47:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=cIHhWqOKp35Rdao83ki+kw2rk8oweSJ7LU1zclpootzZP0Ar49kAqt/hKRkpyo7WHeQhB8GNNQcNHzK/M804io4ZBou0nt7t7M8uDa5DSua4oC5TOPR26LWzP9jSH00A3ywscKEvsK2o0J6gdjP+osGsGYpYLr2z+GpKetXxkn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=G7bos1e+Tj7l2lT8xStvGBgZf4KDPVhfeUJ7uVTW0SDb3r2mrVLBPE5nEHnxZdN7pvmliJ3lWGOdtyC3Arwn5ONTDQMaEQOBxycAT327ZcASvM1oQsnet/+ldpUjI8V4DPh7dvwcPXUfXx9zOuLwTa2P5RYYdSn7Pjlp2jCrnOE=
-Received: by 10.86.28.5 with SMTP id b5mr1913767fgb.1184849236719;
-        Thu, 19 Jul 2007 05:47:16 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id m1sm4372321fke.2007.07.19.05.47.15
-        (version=SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2007 05:47:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1184699486.9831.7.camel@mattlaptop2>
-Content-Disposition: inline
+	id S1757674AbXGSMrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 08:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754016AbXGSMrj
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:47:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:37254 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755211AbXGSMri (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 08:47:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IBVPf-0006Vm-Hp
+	for git@vger.kernel.org; Thu, 19 Jul 2007 14:47:23 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:47:23 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:47:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:TlWiTz23G6ZYw/JiK7KaoI8yoSs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52989>
 
-On Tue, 17 July 2007, Matt McCutchen wrote:
+Tomash Brechko <tomash.brechko@gmail.com> writes:
 
-> =A0sub feature_snapshot {
-> -=A0=A0=A0=A0=A0=A0=A0my ($ctype, $suffix, $command) =3D @_;
-> +=A0=A0=A0=A0=A0=A0=A0my (@fmts) =3D @_;
-> =A0
-> =A0=A0=A0=A0=A0=A0=A0=A0my ($val) =3D git_get_project_config('snapsho=
-t');
-> =A0
-> -=A0=A0=A0=A0=A0=A0=A0if ($val eq 'gzip') {
-> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ('x-gzip', 'gz',=
- 'gzip');
-> -=A0=A0=A0=A0=A0=A0=A0} elsif ($val eq 'bzip2') {
-> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ('x-bzip2', 'bz2=
-', 'bzip2');
-> -=A0=A0=A0=A0=A0=A0=A0} elsif ($val eq 'zip') {
-> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ('x-zip', 'zip',=
- '');
-> -=A0=A0=A0=A0=A0=A0=A0} elsif ($val eq 'none') {
-> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ();
-> +=A0=A0=A0=A0=A0=A0=A0if ($val) {
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0@fmts =3D ($val eq 'non=
-e' ? () : split /,/, $val);
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0@fmts =3D map $known_sn=
-apshot_format_aliases{$_} || $_, @fmts;
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0@fmts =3D grep exists $=
-known_snapshot_formats{$_}, @fmts;
-> =A0=A0=A0=A0=A0=A0=A0=A0}
-> =A0
-> -=A0=A0=A0=A0=A0=A0=A0return ($ctype, $suffix, $command);
-> -}
+> Hi David,
+>
+> On Thu, Jul 19, 2007 at 13:31:50 +0200, David Kastrup wrote:
+>> core.excludefile: .
+>
+> Really nice idea to give directories 'DIR/.' name.  I'm sure there are
+> several other ways to implement your proposal.  But why to put in in
+> Git itself?  Decomposition and abstraction principle tells me that
+> this should go to some other place.
 
-I would use more permissive (be forbidding in what you accept) regexp
-to split gitweb.snapshot value into list of snapshot formats, so one
-could use "tgz, zip", or perhaps even "tgz zip", and not only "tgz,zip"
-(no whitespace possible). For example
+Because of a fundamental law of computation: information maintained in
+two separate places will get out of synch eventually.
 
-+               @fmts =3D ($val eq 'none' ? () : split(/\s*,\s*/, $val)=
-);
+> Please consider this: I myself use Git to track my own local
+> projects, and for this usage you proposal have no value for me,
+> i.e. as a _Source_ Code Management system Git is rather complete.
+> But I also track /etc and ~/ in Git, and for this I'd love to have
+> directories, permissions, ownership, other attributes, to be
+> tracked.  I have Perl script wrapping Git that allows me to filter
+> tracked paths by full regexps instead of Git's file globs, and also
+> to filter out too big files assuming that they are binary anyway.
 
-or even
+Look, git _tracks_ contents.  Your permissions managements needs to be
+told explicitly when and how things change.  So you end up with git
+_tracking_ material and your permissions/directory management needing
+the level of manual handholding Subversion demands.
 
-+               @fmts =3D ($val eq 'none' ? () : split(/\s*[,\s]\s*/, $=
-val));
+> And my point is that rather than building the support for all of it
+> into core Git, and then implementing sophisticated configuration to
+> disable parts of it, wouldn't it be better to have a separate tools
+> orthogonal to Git itself?
 
-to allow "tgz zip".
+And my personal answer to that is "no".  We don't want orthogonality
+for intimately related things, because it forces us to work the
+"orthogonal" things in lockstep.  And if you force git to operate in
+lockstep with manual explicit tracking, then git becomes useless for
+tracking stuff automatically.
 
+> So the essence of my objection is that we should not pollute core
+> Git with file system state tracking more than it's required to know
+> where to put the contents to.  Everything else should go elsewhere.
+>
+> Again, I'd love to have your proposal be implemented, but only in a
+> way that won't interfere with pure SCM's operations.
 
-Your regexp for "tgz, zip" would get 'tgz', ' zip' (with leading space)
-as snapshot formats to use.
+Tell git to ignore "." and it won't "interfere".
 
---=20
-Jakub Narebski
-Poland
+-- 
+David Kastrup
