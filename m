@@ -1,88 +1,104 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] Force listingblocks to be monospaced in manpages
-Date: Thu, 19 Jul 2007 12:44:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707191239050.32611@reaper.quantumfyre.co.uk>
-References: <m3k5sxiiib.fsf@pc7.dolda2000.com> <20070718213725.31383.50523.julian@quantumfyre.co.uk>
- <7vr6n55krx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707190157430.1964@beast.quantumfyre.co.uk>
- <20070719113743.GA27553@diku.dk>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] Document how to tell git to not launch a pager
+Date: Thu, 19 Jul 2007 13:49:30 +0200
+Message-ID: <20070719114930.GA8477@piper.oerlikon.madduck.net>
+References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Jul 19 13:44:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 19 13:49:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBUQa-00039S-S2
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 13:44:17 +0200
+	id 1IBUVl-0004zc-Sn
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 13:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757716AbXGSLoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 07:44:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757609AbXGSLoK
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 07:44:10 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:33595 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757691AbXGSLoI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 07:44:08 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A94D9B0EB9
-	for <git@vger.kernel.org>; Thu, 19 Jul 2007 12:44:06 +0100 (BST)
-Received: (qmail 21898 invoked by uid 103); 19 Jul 2007 12:44:05 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3697. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.03244 secs); 19 Jul 2007 11:44:05 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 19 Jul 2007 12:44:05 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20070719113743.GA27553@diku.dk>
+	id S1752870AbXGSLte (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 07:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbXGSLte
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 07:49:34 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56891 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752373AbXGSLtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 07:49:33 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id A3189895D74;
+	Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 21960-02; Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 5FF47895D72;
+	Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 605EB9F1A1;
+	Thu, 19 Jul 2007 13:49:31 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id D918D43EA; Thu, 19 Jul 2007 13:49:30 +0200 (CEST)
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707191211010.14781@racer.site>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52975>
 
-On Thu, 19 Jul 2007, Jonas Fonseca wrote:
 
-> For the html output we can use a stylesheet to make sure that the
-> listingblocks are presented in a monospaced font.  For the manpages do
-> it manually by inserting a ".ft C" before and ".ft" after the block in
-> question.
->
-> In addition, also add an empty line after all verbatim blocks.
->
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> ---
->
->  Julian Phillips <julian@quantumfyre.co.uk> wrote Thu, Jul 19, 2007:
->  > On Wed, 18 Jul 2007, Junio C Hamano wrote:
->  >
->  > >I tried with your patch, both with asciidoc7 and asciidoc8.  Did
->  > >you really mean "&#x2302;" above?  Replacing them with "."  gave
->  > >me a series of these changes (diff between output before and
->  > >after your patch with the "s/\&#x2302;/./g" fixup):
->  >
->  > I did mean it.  I originally just had .ft, but I was getting \&.ft in the
->  > manpage, which then just came out as .ft in the console.
->
->  This is because AsciiDoc does the escaping. I think it would be cleaner
->  to do this thing when converting from DocBook to roff like we already
->  do for other things.
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No.  Docbook does the escaping (as it says here: 
-http://docbook.sourceforge.net/release/xsl/current/RELEASE-NOTES.html#V1.72.0
-).  I tried your approach first, but 1) I idn't want to copy that much 
-from the docbook xsl, as then we won't get updates/changes/fixes etc, 2) I 
-still had to use &#x2302; _anyway_.
+also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.19.13=
+13 +0200]:
+> It was evidently liked unilaterally amongst the big whigs in the git=20
+> community.  Me too, I like it (which says nothing about my hair style). =
+=20
+> Often it annoys me tremendously that all the other programs like make, ls=
+,=20
+> etc. do not have this nice "-p" flag.
 
-Just compare the chunk that you have copied from the docbook xsl to the 
-version from 1.72.0 and you will find that all the '.'s have become 
-&#x2302;s ...
+Thanks for the explanation. I'll come back and pick up this
+discussion once I became a big whig in the git community. Now
+I'll add the FAQ to the wiki.
 
--- 
-Julian
+http://git.or.cz/gitwiki/GitFaq#head-9dfc528b189148e801031d161201645af532a5=
+80
 
-  ---
-"It's when they say 2 + 2 = 5 that I begin to argue."
--- Eric Pepke
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+spamtraps: madduck.bogus@madduck.net
+=20
+"das internet wurde konzipiert, um einem atomschlag standzuhalten.
+ leider hatte kein milit=E4rstratege mit der deutschen telekom
+ gerechnet..."
+                                                      -- attila radnai=20
+
+--0OAP2g/MAC+5xKAE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature (GPG/PGP)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGn0/KIgvIgzMMSnURAnR4AJ96MXikNb+HYYdpjTK6IjzC7h/HGACdHVR0
+f8ZcDyjfLH/ylSRXlooQvZA=
+=Sd/j
+-----END PGP SIGNATURE-----
+
+--0OAP2g/MAC+5xKAE--
