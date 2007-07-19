@@ -1,87 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 10:13:22 +0200
-Message-ID: <vpqvecgvmjh.fsf@bauges.imag.fr>
-References: <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
-	<85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<85abttwa7m.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
-	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-	<20070719053858.GE32566@spearce.org>
-	<20070719060922.GF32566@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
+Date: Thu, 19 Jul 2007 11:05:32 +0200
+Message-ID: <E4F64312-3F86-49F3-B6BD-D148AFBAB520@wincent.com>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site> <Pine.LNX.4.64.0707160022560.14781@racer.site> <7vejj96igx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707190258550.14781@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Kastrup <dak@gnu.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 10:51:34 2007
+	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 19 11:06:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBRjP-00077A-7G
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 10:51:31 +0200
+	id 1IBRy0-0003Z0-GC
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 11:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759317AbXGSIv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 04:51:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757773AbXGSIv0
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 04:51:26 -0400
-Received: from imag.imag.fr ([129.88.30.1]:43577 "EHLO imag.imag.fr"
+	id S937262AbXGSJGS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Jul 2007 05:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937292AbXGSJGR
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 05:06:17 -0400
+Received: from wincent.com ([72.3.236.74]:59469 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753025AbXGSIvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 04:51:24 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l6J8DNrk015642
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 19 Jul 2007 10:13:23 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IBR8V-0002H1-1h; Thu, 19 Jul 2007 10:13:23 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IBR8U-0003EZ-Ua; Thu, 19 Jul 2007 10:13:22 +0200
-Mail-Followup-To: "Shawn O. Pearce" <spearce@spearce.org>, Junio C Hamano <gitster@pobox.com>, Linus Torvalds <torvalds@linux-foundation.org>, David Kastrup <dak@gnu.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <20070719060922.GF32566@spearce.org> (Shawn O. Pearce's message of "Thu\, 19 Jul 2007 02\:09\:22 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 19 Jul 2007 10:13:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1758833AbXGSJGQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 05:06:16 -0400
+Received: from [192.168.1.99] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l6J962f5029777;
+	Thu, 19 Jul 2007 04:06:02 -0500
+In-Reply-To: <Pine.LNX.4.64.0707190258550.14781@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52952>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+El 19/7/2007, a las 4:30, Johannes Schindelin escribi=F3:
 
-> If I do:
->
->   mkdir -p foo/bar
->   echo hello >foo/bar/world
->   git add foo
->   git -f rm foo/bar/world
->
-> I never asked for foo/bar or foo to stay.
+> Commit notes are blobs which are shown together with the commit
+> message.  These blobs are taken from the notes ref, which you can
+> configure by the config variable core.notesRef, which in turn can
+> be overridden by the environment variable GIT_NOTES_REF.
 
-Well, outside git, if you do
+I was trying to look back and find out what the rationale/usage =20
+scenario for these commit notes might be but Googling for 'git =20
+"commit notes"' doesn't turn up much other than the original patch =20
+you sent a few days ago.
 
-$ mkdir -p foo/bar
-$ echo hello > foo/bar/world
-$ rm -f foo/bar/world
+Is this an evolution of the "git-note: A mechanisim for providing =20
+free-form after-the-fact annotations on commits" first introduced here?=
+:
 
-You didn't ask foo/bar to stay either, and still, it's quite natural
-to have it stay in your filesystem. So, the same way you'd have ran
-"rm -r foo", it seems reasonable to me to ask for "git-rm -r foo" if
-the user wants to get rid of foo/ itself.
+<http://lists.zerezo.com/git/msg465441.html>
 
--- 
-Matthieu
+Cheers,
+Wincent
