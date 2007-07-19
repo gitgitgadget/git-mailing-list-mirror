@@ -1,99 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Wed, 18 Jul 2007 22:13:07 -0700
-Message-ID: <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
-	<Pine.LNX.4.64.0707160022560.14781@racer.site>
-	<7vejj96igx.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707190258550.14781@racer.site>
-	<alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Wed, 18 Jul 2007 22:28:12 -0700
+Message-ID: <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
+References: <85lkdezi08.fsf@lola.goethe.zz>
+	<Pine.LNX.4.64.0707180135200.14781@racer.site>
+	<858x9ez1li.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+	<vpq4pk1vf7q.fsf@bauges.imag.fr>
+	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
+	<85644hxujp.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+	<85abttwa7m.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
+Cc: David Kastrup <dak@gnu.org>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 07:13:15 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 07:28:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBOKB-0001Hu-6h
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 07:13:15 +0200
+	id 1IBOYj-0004Hi-No
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 07:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752445AbXGSFNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 01:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbXGSFNK
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 01:13:10 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33878 "EHLO
+	id S1751715AbXGSF2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 01:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbXGSF2O
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 01:28:14 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38810 "EHLO
 	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbXGSFNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 01:13:09 -0400
+	with ESMTP id S1751715AbXGSF2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 01:28:13 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070719051307.JBDP1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 19 Jul 2007 01:13:07 -0400
+          id <20070719052812.JGHJ1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Jul 2007 01:28:12 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id RHD71X00H1kojtg0000000; Thu, 19 Jul 2007 01:13:08 -0400
-In-Reply-To: <alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 18 Jul 2007 20:28:27 -0700 (PDT)")
+	id RHUC1X0081kojtg0000000; Thu, 19 Jul 2007 01:28:13 -0400
+In-Reply-To: <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 18 Jul 2007 17:22:57 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52935>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> And yes, the "search for zero bytes" is not *guaranteed* to find any 
-> beginning at all, if you have lots of short names, *and* lots of zero 
-> bytes in the SHA1's. But while short names may be common, zero bytes in 
-> SHA1's are not so much (since you should expect to see a very even 
-> distribution of bytes, and as such most SHA1's by far should have no zero 
-> bytes at all!)
+> On Thu, 19 Jul 2007, David Kastrup wrote:
+>> 
+>> Well, kudos.  Together with the analysis from Junio, this seems like a
+>> good start.  Would you have any recommendations about what stuff one
+>> should really read in order to get up to scratch about git internals?
 >
-> So if you're really really *really* unlucky, you might end up having to 
-> fall back on the linear search. But it still works!
+> Well, you do need to understand the index. That's where all the new 
+> subtlety happens.
 >
-> Can anybody see anything wrong in my thinking above?
+> The data structures themselves are trivial, and we've supported empty 
+> trees (at the top level) from the beginning, so that part is not anything 
+> new.
+>
+> However, now having a new entry type in the index (S_IFDIR) means that 
+> anything that interacts with the index needs to think twice. But a lot of 
+> that is just testing what happens, and so the first thing to do is to have 
+> a test-suite.
+>
+> There's also the question about how to show an empty tree in a diff. We've 
+> never had that: the only time we had empty trees was when we compared a 
+> totally empty "root" tree against another tree, and then it was obvious. 
+> But what if the empty tree is a subdirectory of another tree - how do you 
+> express that in a diff? Do you care? Right now, since we always recurse 
+> into the tree (and then not find anything), empty trees will simply not 
+> show up _at_all_ in any diffs.
+>
+> And what about usability issues elsewhere? With my patch, doing something 
+> like a
+>
+> 	git add directory/
+>
+> still won't do anything, because the behaviour of "git add" has always 
+> been to recurse into directories. So to add a new empty directory, you'd 
+> have to do
+>
+> 	git update-index --add directory
+>
+> and that's not exactly user-friendly.
+>
+> So do you add a "-n" flag to "git add" to tell it to not recurse? Or do 
+> you always recurse, but then if you notice that the end result is empty, 
+> you add it as a directory?
 
-Another anchoring clue you seem not to be exploiting fully is
-that the ASCII part must match "^[1-7][0-7]{4,5} " (mode bytes).
-But the real problem of this approach of course is that this is
-not reliable and can get a false match.  You can find your
-beginning NUL in the SHA-1 part of one entry, and terminating
-NUL later in the SHA-1 part of next entry, and you will never
-notice.
+Another issue I thought about was what you would do in the step
+3 in the following:
 
-However, in the case of Dscho's "notes" code, I do not think (1)
-you do not have to guess like the above, and (2) the problem is
-much simpler.
+ 1. David says "mkdir D; git add D"; you add S_IFDIR entry in
+    the index at D;
 
-Dcsho's "note" looks like a tree full of two-byte [0-9a-f]{2}
-names, each of them points at another tree, with the second
-level tree being full of 32-byte [0-9a-f]{38} names, each of
-them points at a blob.  So it is a much more regular, strict
-shape.  And in order to look for a note for an object whose name
-is ([0-9a-f]{2})([0-9a-f]{38}), you will find the blob that is
-at "$1/$2" in a "note".
+ 2. David says "date >D/F; git add D/F"; presumably you drop D
+    from the index (to keep the index more backward compatible)
+    and add S_IFREG entry at D/F.
 
-I was suggesting to have a specialized parser only to read such
-tree objects that are "abused" to represent notes.  You can
-cheaply validate that these trees are of expected shape.
+ 3. David says "git rm D/F".
 
- (1) Validate that size of the toplevel tree is multiple of 29 =
-     (5 + 1 + 2 + 1 + 20); the second level should be multiple
-     of 66 = (6 + 1 + 38 + 1 + 20).  These two levels of trees
-     are of fixed-entry-length that allows easy binary search.
-
- (2) While binary searching trees of either level, you can
-     validate that the entry looks like from a note (for the
-     toplevel, "40000 [0-9a-f]{2}\0", for the second level,
-     "100644 [0-9a-f]{38}\0").
-
-For an added safety, a "notes" writer could even throw in
-signature bytes (say, a symlink whose name is " !" in the
-top-level tree, and another symlink " !{37}" in the second-level
-tree) to protect the reader.
+Have we stopped keeping track of the "empty directory" at this
+point?
