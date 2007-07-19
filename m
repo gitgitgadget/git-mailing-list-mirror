@@ -1,85 +1,75 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Thu, 19 Jul 2007 15:33:47 +0100
-Message-ID: <200707191533.48641.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0707152326080.14781@racer.site> <200707191158.37713.andyparkins@gmail.com> <Pine.LNX.4.64.0707191209200.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Document how to tell git to not launch a pager
+Date: Thu, 19 Jul 2007 10:38:45 -0400
+Message-ID: <1F7F4219-8B2C-40A3-9F4D-BA79FAD7E2DB@silverinsanity.com>
+References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Alberto Bertogli <albertito@gmail.com>,
-	Johan Herland <johan@herland.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 16:34:16 2007
+Cc: git@vger.kernel.org
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Jul 19 16:38:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBX50-0003dA-K5
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:34:11 +0200
+	id 1IBX9X-0005QL-6j
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764894AbXGSOd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 10:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938312AbXGSOdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:33:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:12894 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S938303AbXGSOdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 10:33:52 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so419220ugf
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fJrOuS54mhkDosNmjs3eYdtHk/AePBXZhQgnGn6aUvodnPUywbYHfCDMQKM0Msc5hlt5BsH9VbktBNkwk/A7ye+iS2D+eMfhmBuUWa4dZ+DT152Nf4o880iGzbTFWKDUOR7/2FK7PWQm0EizUcR4ygFH9u+ZXt5sZMjAvQTosL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=a5JQ2wvpP31nqNX6Dyox6zKfc+2UrAKiOuiJra+fGlmLZOi4BdPXIitOIRonVMS6VoJtjEeqv/6kn9imMswdHisRF0Xa68ajNkrt1g4GFxkh57DWoXh3ZM7p3EM8giCtmyLk+4io8YMlpLrjIQvNnjsPKt3shk893Appmjyexo0=
-Received: by 10.67.19.9 with SMTP id w9mr1197230ugi.1184855631880;
-        Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id z37sm3785186ikz.2007.07.19.07.33.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2007 07:33:51 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0707191209200.14781@racer.site>
-Content-Disposition: inline
+	id S1755468AbXGSOir (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 10:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbXGSOir
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:38:47 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:49273 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751125AbXGSOiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 10:38:46 -0400
+Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 275091FFC243;
+	Thu, 19 Jul 2007 14:38:45 +0000 (UTC)
+In-Reply-To: <20070719110224.GA4293@piper.oerlikon.madduck.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52994>
 
-On Thursday 2007 July 19, Johannes Schindelin wrote:
 
-> > In the case of the notes system, is there not a big hole available
-> > because the layout is under tight control?
+On Jul 19, 2007, at 7:02 AM, martin f krafft wrote:
+
+> +1 on the patch, but I also wonder why use of a pager is default in
+> git anyway. At least I find it to be contrary to what I am used to
+> on the Unix command line.
 >
-> No.  It is a tree object, referenced from a ref.  You can always check it
-> out, modify it, and check it in.  If only by mistake.
+> For reference, there was an argument about this in
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=424978, which
+> includes a long IRC log in German, unfortunately, where a bunch of
+> people agreed with my proposal *not* to use a pager by default,
+> since it makes it difficult to use information from the output to
+> assemble the next command on the command line. Every terminal in use
+> nowadays can easily scroll and even search back 250 lines with the
+> added benefit of not randomly clearing the screen when you quit
+> $PAGER.
 
-I was arguing for the tree-index being special cased though (ideally with an 
-invalid filename), such that it could never actually be checked out or 
-checked in, but would be maintained automatically "git-side".  For backwards 
-compatibility, it would be optional; and making it an invalid filename 
+I think it's because much of the core git community lives more on the  
+console or simple terminals like xterm than in something with easy  
+search and scrolling features like konsole or Terminal.app.  Git  
+output tends to become very long very quickly, and usually you want  
+to start reading from the beginning.
 
-It was only a suggestion to answer Junio's request for a "hole" through which 
-a tree-object index could be poked.
+Many command line tools either output small chunks of input (ls, in  
+most directories), output slowly (make), or their input is mostly  
+only important when it errors out (make).  Git's output tends to be  
+quite long and have the most relevant (read: recent) information at  
+the beginning so paging is pretty much a must, instead of an  
+occasional need.
 
-If we're only talking about the notes tree, then would it matter that it could 
-be checked out and checked in?  If someone chose to do that then it would be 
-their own fault when the index didn't work.  If I wanted I could 
-edit .git/objects/ directly - I wouldn't expect poor git to work correctly 
-afterwards though.
+If someone thinks that git paging by default is obnoxious, it just  
+takes running "git config --global core.pager cat".  Now, no more  
+paging.  If you find your $PAGER clearing the screen when quitting  
+obnoxious, I suggest checking your configuration.  In particular, I  
+find setting $LESS to "FX" (at least) to be most useful.
 
-
-
-Andy
-
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+~~ Brian
