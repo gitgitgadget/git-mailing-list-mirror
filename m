@@ -1,104 +1,71 @@
-From: martin f krafft <madduck@madduck.net>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 13:49:30 +0200
-Message-ID: <20070719114930.GA8477@piper.oerlikon.madduck.net>
-References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site>
+Date: Thu, 19 Jul 2007 14:01:57 +0200
+Message-ID: <86ir8gbo0a.fsf@lola.quinscape.zz>
+References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site> <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 19 13:49:38 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 19 14:02:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBUVl-0004zc-Sn
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 13:49:38 +0200
+	id 1IBUhx-0000qH-Cw
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbXGSLte (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 07:49:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbXGSLte
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 07:49:34 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56891 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752373AbXGSLtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 07:49:33 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id A3189895D74;
-	Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 21960-02; Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 5FF47895D72;
-	Thu, 19 Jul 2007 13:49:32 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 605EB9F1A1;
-	Thu, 19 Jul 2007 13:49:31 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id D918D43EA; Thu, 19 Jul 2007 13:49:30 +0200 (CEST)
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707191211010.14781@racer.site>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-amd64 x86_64
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1757656AbXGSMCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 08:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757384AbXGSMCI
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:02:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:59281 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756486AbXGSMCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 08:02:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IBUhp-0001Wc-GT
+	for git@vger.kernel.org; Thu, 19 Jul 2007 14:02:05 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:02:05 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:02:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:JfTD5j49nhnl2b/nwf7xz8MPQbM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52976>
 
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
---0OAP2g/MAC+5xKAE
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, 19 Jul 2007, Johannes Schindelin wrote:
+>
+>> Hi,
+>>
+>> On Thu, 19 Jul 2007, martin f krafft wrote:
+>>
+>>> [...] I also wonder why use of a pager is default in git anyway. At
+>>> least I find it to be contrary to what I am used to on the Unix command
+>>> line.
+>>
+>> It was evidently liked unilaterally amongst the big whigs in the git
+>> community.  Me too, I like it (which says nothing about my hair style).
+>> Often it annoys me tremendously that all the other programs like make, ls,
+>> etc. do not have this nice "-p" flag.
+>
+> I love it. It's currently playing merry havoc with my Subversion usage
+> at work though.  I've got so used to git never chucking things off the
+> top of the screen that I keep forgetting to run 'svn ... | less'.
+>
+> Also searching in a console isn't anywhere near as easy.
 
-also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.19.13=
-13 +0200]:
-> It was evidently liked unilaterally amongst the big whigs in the git=20
-> community.  Me too, I like it (which says nothing about my hair style). =
-=20
-> Often it annoys me tremendously that all the other programs like make, ls=
-,=20
-> etc. do not have this nice "-p" flag.
+Is that the reason why users of screen get punished by default?
 
-Thanks for the explanation. I'll come back and pick up this
-discussion once I became a big whig in the git community. Now
-I'll add the FAQ to the wiki.
-
-http://git.or.cz/gitwiki/GitFaq#head-9dfc528b189148e801031d161201645af532a5=
-80
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-spamtraps: madduck.bogus@madduck.net
-=20
-"das internet wurde konzipiert, um einem atomschlag standzuhalten.
- leider hatte kein milit=E4rstratege mit der deutschen telekom
- gerechnet..."
-                                                      -- attila radnai=20
-
---0OAP2g/MAC+5xKAE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature (GPG/PGP)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGn0/KIgvIgzMMSnURAnR4AJ96MXikNb+HYYdpjTK6IjzC7h/HGACdHVR0
-f8ZcDyjfLH/ylSRXlooQvZA=
-=Sd/j
------END PGP SIGNATURE-----
-
---0OAP2g/MAC+5xKAE--
+-- 
+David Kastrup
