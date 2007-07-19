@@ -1,77 +1,98 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 15:21:24 +0200
-Message-ID: <86abts8r6z.fsf@lola.quinscape.zz>
-References: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr> <20070719105105.GA4929@moonlight.home> <86zm1sbpeh.fsf@lola.quinscape.zz> <86bqe8a7ql.fsf@lola.quinscape.zz>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH (REVISED)] Add core.editor configuration variable
+Date: Thu, 19 Jul 2007 15:23:40 +0100
+Message-ID: <200707191523.42086.andyparkins@gmail.com>
+References: <11848281302504-git-send-email-aroben@apple.com> <200707191148.46228.andyparkins@gmail.com> <Pine.LNX.4.64.0707191213300.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Adam Roben <aroben@apple.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 15:21:49 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 16:23:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBVwy-0008J2-Jk
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 15:21:48 +0200
+	id 1IBWv3-0007k4-QP
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 16:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755992AbXGSNVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 09:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754449AbXGSNVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 09:21:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:38254 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753730AbXGSNVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 09:21:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBVwm-0002av-6x
-	for git@vger.kernel.org; Thu, 19 Jul 2007 15:21:36 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 15:21:36 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 15:21:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:V5KUnWAFIQ83oI6HQfMp5Z267dY=
+	id S1756807AbXGSOXt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 10:23:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755886AbXGSOXt
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 10:23:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:64119 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753913AbXGSOXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 10:23:47 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so417228ugf
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 07:23:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R6AJJly44BERjJa6vXd4a372P+DtRjGvcgsaj85+rA7OY6a8Av8wsgVDmM9f3a77ojx11jAn7ZdCxJWVMHCWbBys72sLcZlyPazPD9QpoPLAr0xBvHN5PmtkwzzTVVPxMqAlE+Ti1IExJB9tSVhfT5VGXgnh/u96tV02qettSsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Wq6pYLvLiySIDeZpm/F2yVCe/gWivWGk0bsefGSZJdXwxlG5H2R+AxnR1ZXnv4SEL7AJZUg+g21CzM4uf3+LbCeJkkPl9EvZlPqwGgxami4RfQCa/6W3dI8Ui6ZKq4iPmTlsK9pIJPS2uaUwcPbwZ1qwsFT+kbgxDw6bKr9UsDU=
+Received: by 10.67.15.15 with SMTP id s15mr1213584ugi.1184855026245;
+        Thu, 19 Jul 2007 07:23:46 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id z33sm3756537ikz.2007.07.19.07.23.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jul 2007 07:23:45 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0707191213300.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52991>
 
-David Kastrup <dak@gnu.org> writes:
-
-> David Kastrup <dak@gnu.org> writes:
+On Thursday 2007 July 19, Johannes Schindelin wrote:
+> Hi,
 >
->> Although it would be natural to have
->> core.adddirs: false
->> be equivalent to
->> core.excludefile: .
->>
->> And so it might be possible to actually not need a separate
->> core.adddirs option at all, technically.
+> On Thu, 19 Jul 2007, Andy Parkins wrote:
+> > On Thursday 2007 July 19, Johannes Schindelin wrote:
+> > > On Thu, 19 Jul 2007, Andy Parkins wrote:
+> > > > Would porcelain.editor be a better name for this variable?
+> > >
+> > > From my point of view you can put into "myWonderfulGit.editor".  It
+> > > does not matter.
+> >
+> > By that argument, why do we bother with subsections at all.  In fact why
+> > not call the variable "xhxhxjjjll.yqlaoospsp"?
 >
-> To followup on myself here:
->
-> A project such as the linux kernel which presumably does not want to
-> have directories tracked will put the single pattern
-> .
-> into its top-level .gitignore file.  That is all.  At least if it does
-> not confuse current versions of git to do ugly things.
+> No.  I said, and I quote here, "From my point of view".
 
-Another followup: it doesn't.  I placed a single line
-.
-into a .gitignore file.  This did not cause git to ignore the contents
-of ., and even
-git-add .
-worked as previously, namely adding the contents of the current
-directory and subdirectories to the index.
+That doesn't change my point - these things are named to give meaning, they 
+aren't just arbitrary strings of characters.
 
-In short: the gitignore idea for policing directory management is
-perfectly upwards-compatible with current versions of git.
+> And how would having "core.pager" but "porcelain.editor" be easier to
+> remember?  Nah, not really.
 
+If there is no difference, then do you object so strongly?
+
+Besides, memory isn't just about having words, it's about meaning too.  
+Categorisation and hierarchy are important.  If I'm searching my brain for a 
+function that does something to strings then the fact that it starts 
+with "str" gets me a long way there.  The fact that they _all_ start 
+with "str" is what's important.
+
+I don't care _that_ strongly; just like you it won't make any difference to me 
+personally as I'll cope either way.  I'm trying to think like a noob, and it 
+seems that coherency is broken when we make distinctions between porcelain 
+and plumbing and then don't stick to them in the config file.
+
+Perhaps I am wrong in my assumption: I have always thought of core.* options 
+being those options which apply to plumbing - i.e. if I were a git-guru and 
+did everything with plumbing I would still need those options.
+
+
+
+Andy
 -- 
-David Kastrup
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
