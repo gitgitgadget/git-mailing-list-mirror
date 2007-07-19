@@ -1,91 +1,110 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
-Date: Thu, 19 Jul 2007 10:24:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707191016350.14781@racer.site>
+Date: Thu, 19 Jul 2007 02:34:00 -0700
+Message-ID: <7vodi83fg7.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <Pine.LNX.4.64.0707160022560.14781@racer.site> <7vejj96igx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707190258550.14781@racer.site> <E4F64312-3F86-49F3-B6BD-D148AFBAB520@wincent.com>
+	<Pine.LNX.4.64.0707160022560.14781@racer.site>
+	<7vejj96igx.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707190258550.14781@racer.site>
+	<alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
+	<7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
 	Johan Herland <johan@herland.net>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 11:25:12 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 19 11:34:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBSFy-0000UK-UN
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 11:25:11 +0200
+	id 1IBSOf-0003ij-EQ
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 11:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327AbXGSJZG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 05:25:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680AbXGSJZF
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 05:25:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752396AbXGSJZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 05:25:03 -0400
-Received: (qmail invoked by alias); 19 Jul 2007 09:25:01 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 19 Jul 2007 11:25:01 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18CACtBcKwCaPO+fDYLklAOQwWYQh57xTrlcXkc0w
-	pSFO/DuvfZi7W2
-X-X-Sender: gene099@racer.site
-In-Reply-To: <E4F64312-3F86-49F3-B6BD-D148AFBAB520@wincent.com>
-X-Y-GMX-Trusted: 0
+	id S933587AbXGSJeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 05:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760526AbXGSJeE
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 05:34:04 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:36583 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757535AbXGSJeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 05:34:01 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070719093401.NULO1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Jul 2007 05:34:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RMa01X0041kojtg0000000; Thu, 19 Jul 2007 05:34:01 -0400
+In-Reply-To: <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 18 Jul 2007 22:13:07 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52954>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, 19 Jul 2007, Wincent Colaiuta wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> ...
+>> So if you're really really *really* unlucky, you might end up having to 
+>> fall back on the linear search. But it still works!
+>>
+>> Can anybody see anything wrong in my thinking above?
+> ...
+> But the real problem of this approach of course is that this is
+> not reliable and can get a false match.  You can find your
+> beginning NUL in the SHA-1 part of one entry, and terminating
+> NUL later in the SHA-1 part of next entry, and you will never
+> notice.
 
-> El 19/7/2007, a las 4:30, Johannes Schindelin escribi?:
-> 
-> > Commit notes are blobs which are shown together with the commit
-> > message.  These blobs are taken from the notes ref, which you can
-> > configure by the config variable core.notesRef, which in turn can
-> > be overridden by the environment variable GIT_NOTES_REF.
-> 
-> I was trying to look back and find out what the rationale/usage scenario for
-> these commit notes might be but Googling for 'git "commit notes"' doesn't
-> turn up much other than the original patch you sent a few days ago.
-> 
-> Is this an evolution of the "git-note: A mechanisim for providing free-form
-> after-the-fact annotations on commits" first introduced here?:
-> 
-> <http://lists.zerezo.com/git/msg465441.html>
+In other words, if you are really really *really* unlucky, not
+only you might end up being fooled by random byte sequences in
+SHA-1 part of the tree object, you would not even notice that
+you have to fall back on the linear search.
 
-Almost.  It is an evolution of the evolution of this.
+I've long time ago concluded that if we care about reliability
+(and we do very much), a bisectable tree without breaking
+backward compatibility is impossible.  I was hoping to find a
+"hole" in tree object format so that I can place an extended
+section that is invisible to older versions of git, and place a
+table that records offsets of each tree entries to help
+bisection and/or perhaps a hash table to help look-up, but I do
+not think it is possible.  In the case of index file, the
+original file format had a hole after the cache-entry array
+where we can later squeeze an extension section that is
+invisible to older versions of git.  But the tree object format
+is designed so tight that I do not see there is any place to put
+an extension section.
 
-http://thread.gmane.org/gmane.comp.version-control.git/52598/focus=52603
+Side note: I also think adding "extension section" to tree
+object is not a good idea to begin with.  The data nor length of
+such a section cannot participate in hash computation to derive
+the tree's object name so that we can still compare two tree
+objects (with and without such extension) that have the same
+contents by only looking at their object names.  But having
+contents that are not counted as parts of the object's name goes
+against the reliability and safety of git.
 
-(which started this thread you were replying to) hints at that, but you're 
-right, I failed to give an explicit reference:
+> ...
+> I was suggesting to have a specialized parser only to read such
+> tree objects that are "abused" to represent notes.  You can
+> cheaply validate that these trees are of expected shape.
+> ...
+> For an added safety, a "notes" writer could even throw in
+> signature bytes (say, a symlink whose name is " !" in the
+> top-level tree, and another symlink " !{37}" in the second-level
+> tree) to protect the reader.
 
-http://article.gmane.org/gmane.comp.version-control.git/49588
-
-Background: It was discussed how to go about storing notes (in the mail 
-you cited).  I was convinced that Johan's 15-strong patch series was not 
-optimal, in that it tried to introduce a _second_ object store, 
-_exclusively_ for commit notes, with all kinds of problems like "how to 
-fetch it?".
-
-After thinking about how to avoid duplicating the object store, I posted 
-my proposal, in the second link I gave.
-
-It was shot down, because of scalability problems.  They were not serious, 
-but hurt enough that I stalled working on it, until Alberto reminded me.
-
-Since I felt bad about shooting down Johan's patch series, and then not 
-completing my alternative solution, I ended up working on it some more.  
-The WIP patch 6/6 hints at what I will submit in the next days, to speed 
-up in a transparent manner what would otherwise not scale well.
-
-Ciao,
-Dscho
+Of course, even with the above trick with relatively cheap
+validation based on size, entry format, and "signature entries",
+the way I outlined to speed up "notes" access really relies on
+the tree objects used in "notes" to be well formed.  If somebody
+throws in a tree that is not really a "note" to refs/notes/, and
+if I am really really *really* unlucky, not only I might end up
+being fooled by random byte sequences in SHA-1 part of the tree
+object, I would not even notice that I am reading garbage and
+end up giving garbage as "note" to the object back to the user.
