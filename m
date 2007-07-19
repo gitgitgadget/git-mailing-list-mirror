@@ -1,73 +1,101 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 01:38:58 -0400
-Message-ID: <20070719053858.GE32566@spearce.org>
-References: <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	David Kastrup <dak@gnu.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 07:39:17 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] Add commit.editor configuration variable
+Date: Wed, 18 Jul 2007 22:39:48 -0700
+Message-ID: <11848235881723-git-send-email-aroben@apple.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Adam Roben <aroben@apple.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 19 07:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBOjI-0006e8-Jr
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 07:39:12 +0200
+	id 1IBOjw-0006mE-T3
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 07:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246AbXGSFjI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 01:39:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755264AbXGSFjI
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 01:39:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38894 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755317AbXGSFjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 01:39:07 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IBOj7-0004mr-0E; Thu, 19 Jul 2007 01:39:01 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C218620FBAE; Thu, 19 Jul 2007 01:38:58 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753761AbXGSFju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 01:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753781AbXGSFju
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 01:39:50 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:58883 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753058AbXGSFjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 01:39:49 -0400
+Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
+	by mail-out4.apple.com (Postfix) with ESMTP id 1B401C67333;
+	Wed, 18 Jul 2007 22:39:49 -0700 (PDT)
+Received: from relay8.apple.com (unknown [127.0.0.1])
+	by relay8.apple.com (Symantec Mail Security) with ESMTP id 0539E40452;
+	Wed, 18 Jul 2007 22:39:49 -0700 (PDT)
+X-AuditID: 11807126-a6c47bb0000007e3-ac-469ef924536b
+Received: from localhost.localdomain (unknown [17.112.108.175])
+	by relay8.apple.com (Apple SCV relay) with ESMTP id B098C4044E;
+	Wed, 18 Jul 2007 22:39:48 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.2.620.g42358-dirty
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52937>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Another issue I thought about was what you would do in the step
-> 3 in the following:
-> 
->  1. David says "mkdir D; git add D"; you add S_IFDIR entry in
->     the index at D;
-> 
->  2. David says "date >D/F; git add D/F"; presumably you drop D
->     from the index (to keep the index more backward compatible)
->     and add S_IFREG entry at D/F.
-> 
->  3. David says "git rm D/F".
-> 
-> Have we stopped keeping track of the "empty directory" at this
-> point?
+This variable lets you specify a different editor for editing commit messages.
+If commit.editor is not set, git-commit falls back to VISUAL, then EDITOR as
+before.
 
-Sadly yes.  But I don't think that's what the folks who want to
-track empty directories want to have happen here.
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+ Documentation/git-commit.txt |    9 +++++----
+ git-commit.sh                |   13 +++++++------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-Which is why I'm thinking we just need to track the directory, as a
-node in the index, even if there are files in it, and even if we got
-that directory and its contained files there by just unpacking trees.
-
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f96142f..1a628be 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -244,10 +244,11 @@ on the Subject: line and the rest of the commit in the body.
+ 
+ include::i18n.txt[]
+ 
+-ENVIRONMENT VARIABLES
+----------------------
+-The command specified by either the VISUAL or EDITOR environment
+-variables is used to edit the commit log message.
++ENVIRONMENT AND CONFIGURATION VARIABLES
++---------------------------------------
++The editor used to edit the commit log message will be chosen from the
++commit.editor configuration variable, the VISUAL environment variable, or the
++EDITOR environment variable (in that order).
+ 
+ HOOKS
+ -----
+diff --git a/git-commit.sh b/git-commit.sh
+index 3f3de17..c4d8501 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -544,18 +544,19 @@ fi
+ 
+ case "$no_edit" in
+ '')
+-	case "${VISUAL:-$EDITOR},$TERM" in
++	commit_editor=$(git config commit.editor || echo ${VISUAL:-$EDITOR})
++	case "$commit_editor,$TERM" in
+ 	,dumb)
+-		echo >&2 "Terminal is dumb but no VISUAL nor EDITOR defined."
+-		echo >&2 "Please supply the commit log message using either"
+-		echo >&2 "-m or -F option.  A boilerplate log message has"
+-		echo >&2 "been prepared in $GIT_DIR/COMMIT_EDITMSG"
++		echo >&2 "Terminal is dumb but commit.editor, VISUAL, and EDITOR"
++		echo >&2 "are undefined. Please supply the commit log message"
++		echo >&2 "using either -m or -F option.  A boilerplate log message"
++		echo >&2 "has been prepared in $GIT_DIR/COMMIT_EDITMSG"
+ 		exit 1
+ 		;;
+ 	esac
+ 	git-var GIT_AUTHOR_IDENT > /dev/null  || die
+ 	git-var GIT_COMMITTER_IDENT > /dev/null  || die
+-	${VISUAL:-${EDITOR:-vi}} "$GIT_DIR/COMMIT_EDITMSG"
++	${commit_editor:-vi} "$GIT_DIR/COMMIT_EDITMSG"
+ 	;;
+ esac
+ 
 -- 
-Shawn.
+1.5.2.2.620.g42358-dirty
