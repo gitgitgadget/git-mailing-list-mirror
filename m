@@ -1,100 +1,122 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 14:38:42 +0200
-Message-ID: <86bqe8a7ql.fsf@lola.quinscape.zz>
-References: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr> <20070719105105.GA4929@moonlight.home> <86zm1sbpeh.fsf@lola.quinscape.zz>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 6/6] Add git-rewrite-commits
+Date: Thu, 19 Jul 2007 14:40:53 +0200
+Message-ID: <20070719124053.GC999MdfPADPa@greensroom.kotnet.org>
+References: <11842671631744-git-send-email-skimo@liacs.nl>
+ <11842671631635-git-send-email-skimo@liacs.nl>
+ <Pine.LNX.4.64.0707141140510.14781@racer.site>
+ <20070715144435.GH999MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707160054340.14781@racer.site>
+ <20070716200404.GT999MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707181205260.14781@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 14:39:03 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 19 14:41:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBVHX-0007O8-Il
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:38:59 +0200
+	id 1IBVJa-0008Qg-Qo
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 14:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756483AbXGSMi4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Jul 2007 08:38:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756435AbXGSMiz
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:38:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:49602 "EHLO ciao.gmane.org"
+	id S1756486AbXGSMk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 08:40:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756554AbXGSMk4
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 08:40:56 -0400
+Received: from smtp18.wxs.nl ([195.121.247.9]:34553 "EHLO smtp18.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753996AbXGSMiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 08:38:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBVHM-0005HU-P2
-	for git@vger.kernel.org; Thu, 19 Jul 2007 14:38:48 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:38:48 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 14:38:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:7+lz8O6MbmKUdPJnHS3f53p4uWY=
+	id S1755721AbXGSMkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 08:40:55 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp18.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JLF00GCYF857U@smtp18.wxs.nl> for git@vger.kernel.org; Thu,
+ 19 Jul 2007 14:40:54 +0200 (CEST)
+Received: (qmail 22531 invoked by uid 500); Thu, 19 Jul 2007 12:40:53 +0000
+In-reply-to: <Pine.LNX.4.64.0707181205260.14781@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52985>
 
-David Kastrup <dak@gnu.org> writes:
+On Wed, Jul 18, 2007 at 12:17:03PM +0100, Johannes Schindelin wrote:
+> Okay.  For me it does not at all exclude that.  If I want to replace a 
+> commit by no commit, I write a commit-filter which does not return 
+> anything.  If I return more than one SHA1s, I damned well want all of 
+> those be the replacement "commit".
 
-> Although it would be natural to have
-> core.adddirs: false
-> be equivalent to
-> core.excludefile: .
->
-> And so it might be possible to actually not need a separate
-> core.adddirs option at all, technically.
+So how about you telling me what it _means_ for one commit to
+be replaced by more than one commit or at least giving me an
+example?
 
-To followup on myself here:
+> > - if the parents of a commit have been rewritten to one or more
+> >   commits, then they are replaced by the new commits.
+> 
+> Yes, that is the primary use for the mapping.
+> 
+> >   If any parent has been pruned, then it is replaced by
+> >   the result of applying this operation on _its_ parents.
+> 
+> Why?  This is overy complicated.  If a commit has been pruned, why does 
+> the mapping not point to the _non-pruned_ parent?
 
-A project such as the linux kernel which presumably does not want to
-have directories tracked will put the single pattern
-=2E
-into its top-level .gitignore file.  That is all.  At least if it does
-not confuse current versions of git to do ugly things.
+It may not have any non-pruned parents and for the pruned ones, we
+wouldn't want to lose the relation with the non-pruned ancestors.
 
-A separate option core.adddirs is still necessary because
-man gitignore
-states:
+> IOW if you have 
+> something like this:
+> 
+> 	A - B - C - D - E - F
+> 
+> and all commits except A and F are pruned, the mapping for A, B, C, D and 
+> E should _all_ point to the (possibly rewritten) A.
 
-       When deciding whether to ignore a path, git normally  checks  gi=
-tignore
-       patterns from multiple sources, with the following order of prec=
-edence:
+I'm not sure what you mean by "mapping" here, but the operation
+described above would make all of B, C, D, E and F have (the
+possibly rewritten) A as single parent (and parenthood was all
+I was talking about above).
 
-       =C2=B7  Patterns read from the file specified by the configurati=
-on  variable
-          core.excludesfile.
+> > - a SHA1 of a commit that appears in a commit message is replaced
+> >   by the rewritten commit iff it was rewritten to a single commit.
+> >   That is, if the commit was pruned or rewritten (through a commit
+> >   filter to more than one commit), then the SHA1 is left alone.
+> 
+> Both this behaviour and the one you described in your reply are wrong.
 
-       =C2=B7  Patterns read from $GIT_DIR/info/exclude.
+So tell me what you would do then and why that would make sense.
 
-       =C2=B7  Patterns  read  from  a .gitignore file in the same dire=
-ctory as the
-          path, or in any parent directory, ordered from the deepest su=
-ch file
-          to  a file in the root of the repository. These patterns matc=
-h rela=E2=80=90
-          tive to the location of the  .gitignore  file.  A  project  n=
-ormally
-          includes  such  .gitignore  files in its repository, containi=
-ng pat=E2=80=90
-          terns for files generated as part of the project build.
+> > - the mapping available to filters
+> >     * if the commit was pruned, an empty file is created
+> >     * otherwise a file is created containing all rewritten SHA1s
+> 
+> As I stated above: it is utterly wrong to create an empty mapping for a 
+> commit that was pruned.  It does not take long to think of an example:
+> 
+> 	A - B - C - D
+> 
+> Now, A and D get pruned.  Do you want the whole branch to vanish?  _Hell, 
+> no_.
 
-The priority for "core.adddirs", however, should be below that so that
-preferences set in the repository's .gitignore files take precedence.
-So core.excludesfile seems to be the wrong place.
+Define "vanish" and, again, tell me what you would do.
 
-A project with the policy of always tracking directories would place
-!.
-into its top-level .gitignore file.
+> You have to at least give the users a chance to grasp what they are doing.  
+> And if that means to change the semantics to something saner, then so be 
+> it.
 
---=20
-David Kastrup
+Let's get things straight.  I've added the map files and the possibility
+for a commit filter to return more than one commit because you asked me to.
+I've tried to make sense of it, but if you think the behavior I defined
+is not what it is supposed to be, then it is up to _you_ to tell me what
+you think it should be instead of letting me guess.
+
+I think I'll just remove the possibility for the commit filter to
+return more than one SHA1 (or maybe even no SHA1s).
+filter-branch doesn't seem to allow either of those either.
+
+skimo
