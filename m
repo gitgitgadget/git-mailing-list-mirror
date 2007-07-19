@@ -1,77 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] filter-branch: provide the convenience functions
- also for commit filters
-Date: Thu, 19 Jul 2007 02:16:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707190215460.14781@racer.site>
-References: <Pine.LNX.4.64.0707181650080.14781@racer.site>
- <7vfy3l5jo4.fsf@assigned-by-dhcp.cox.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Force listingblocks to be monospaced in manpages
+Date: Thu, 19 Jul 2007 02:21:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707190157430.1964@beast.quantumfyre.co.uk>
+References: <m3k5sxiiib.fsf@pc7.dolda2000.com> <20070718213725.31383.50523.julian@quantumfyre.co.uk>
+ <7vr6n55krx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 03:17:10 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 03:21:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBKde-00076t-Rm
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 03:17:07 +0200
+	id 1IBKiL-00087h-6g
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 03:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761831AbXGSBRD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 21:17:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760838AbXGSBRC
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 21:17:02 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55208 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760644AbXGSBRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 21:17:01 -0400
-Received: (qmail invoked by alias); 19 Jul 2007 01:16:59 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 19 Jul 2007 03:16:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/X+c5zJtXXOYbGCFnPRwSkZ4hpadRoNIsTpv20hU
-	sQwugvaYk4SmmB
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vfy3l5jo4.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S934389AbXGSBVx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 21:21:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934215AbXGSBVw
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 21:21:52 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:58839 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1763692AbXGSBVv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jul 2007 21:21:51 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id CC90BB98BD
+	for <git@vger.kernel.org>; Thu, 19 Jul 2007 02:21:49 +0100 (BST)
+Received: (qmail 3126 invoked by uid 103); 19 Jul 2007 02:21:49 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3689. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.031193 secs); 19 Jul 2007 01:21:49 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 19 Jul 2007 02:21:49 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <7vr6n55krx.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52920>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52921>
 
 On Wed, 18 Jul 2007, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > +this_script="$(cd "$(dirname "$0")"; pwd)"/$(basename "$0")
-> > ...
-> > +		filter_commit="SOURCE_FUNCTIONS=1 . \"$this_script\"; $OPTARG"
-> 
-> Hmmmmmm.
-> 
-> Care to enlighten why this is not just:
-> 
-> 	filter_commit="SOURCE_FUNCTIONS=1 . \"$0\"; $OPTARG"
-> 
-> Is it because you cd(1) around in the script, and it can be
-> relative to where you started?
+> I tried with your patch, both with asciidoc7 and asciidoc8.  Did
+> you really mean "&#x2302;" above?  Replacing them with "."  gave
+> me a series of these changes (diff between output before and
+> after your patch with the "s/\&#x2302;/./g" fixup):
 
-Yes.
+I did mean it.  I originally just had .ft, but I was getting \&.ft in the 
+manpage, which then just came out as .ft in the console.
 
-> In either case, are you quoting potential funnies (such as '"'
-> or '\\') in "$0" sufficiently?  Exporting this_script variable,
-> and changing the above to
-> 
-> 	filter_commit='SOURCE_FUNCTIONS=1 . "$this_script";'" $OPTARG"
-> 
-> to arrange the shell that is invoked with 'sh -c' to expand its
-> value would make it smaller problem, I suspect.
+I got the &#x2302; from 
+http://docbook.sourceforge.net/release/xsl/current/manpages/utility.xsl, 
+so I assumed it was the "correct" thing to use ...
 
-Will do.  You know, I do have my problems with correct quoting, and the 
-way I did it in this patch was always good enough for me.  Which does not 
-mean much...
+This was with asciidoc 7 and docbook xsl stylesheet 1.72.0.
 
-Ciao,
-Dscho
+
+> whatever that 2302 is...
+
+&#x2302; (or U+2302) seems to be a character from the unicode "Misc. 
+Technical" section ... looks a bit like a house.
+
+See sixth bullet from 
+http://docbook.sourceforge.net/release/xsl/current/RELEASE-NOTES.html#V1.72.0_Manpages
+
+looks like it may need to depend on which docbook xsl version you are 
+using ...
+
+-- 
+Julian
+
+  ---
+The only way to amuse some people is to slip and fall on an icy pavement.
