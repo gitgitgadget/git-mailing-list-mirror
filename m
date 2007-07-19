@@ -1,138 +1,193 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 21:50:38 +0200
-Message-ID: <20070719195038.GP3396@cip.informatik.uni-erlangen.de>
-References: <20070719104351.GA17182@midwinter.com> <20070719110224.GA4293@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0707191211010.14781@racer.site> <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk> <86ir8gbo0a.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0707191128040.27353@woody.linux-foundation.org> <dbfc82860707191151w3e9571fcu60d113cba6c2f6dd@mail.gmail.com> <alpine.LFD.0.999.0707191155100.27353@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nikolai Weibull <now@bitwi.se>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 21:50:44 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] Print an error when falling back to vi on a dumb terminal
+Date: Thu, 19 Jul 2007 14:10:19 -0700
+Message-ID: <11848794193942-git-send-email-aroben@apple.com>
+References: <Pine.LNX.4.64.0707191944560.14781@racer.site>
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de,
+	Adam Roben <aroben@apple.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 19 23:10:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBc1M-0006tG-94
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 21:50:44 +0200
+	id 1IBdGa-0003PS-4q
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 23:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938227AbXGSTul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 15:50:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938218AbXGSTul
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 15:50:41 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:54174 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S936218AbXGSTuk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 15:50:40 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 02B233F40E; Thu, 19 Jul 2007 21:50:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0707191155100.27353@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1762296AbXGSVKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 17:10:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759418AbXGSVKQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 17:10:16 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:64856 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757485AbXGSVKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 17:10:14 -0400
+Received: from relay7.apple.com (relay7.apple.com [17.128.113.37])
+	by mail-out4.apple.com (Postfix) with ESMTP id 3BB66C780A2;
+	Thu, 19 Jul 2007 14:10:13 -0700 (PDT)
+Received: from relay7.apple.com (unknown [127.0.0.1])
+	by relay7.apple.com (Symantec Mail Security) with ESMTP id 260F1300A3;
+	Thu, 19 Jul 2007 14:10:13 -0700 (PDT)
+X-AuditID: 11807125-a1a1dbb0000007e5-98-469fd3357ce6
+Received: from localhost.localdomain (il0301e-dhcp181.apple.com [17.203.15.181])
+	by relay7.apple.com (Apple SCV relay) with ESMTP id F01EA30077;
+	Thu, 19 Jul 2007 14:10:12 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.rc2.21.gfc4a18-dirty
+In-Reply-To: <Pine.LNX.4.64.0707191944560.14781@racer.site>
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53032>
 
-Hello Linus,
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+On Jul 19, 2007, at 11:46 AM, Johannes Schindelin wrote:
 
-I personally use screen a lot. I have a few screen sessions running:
+> > -       commit_editor=$(git config core.editor || echo ${VISUAL:-$EDITOR})
+> > -       case "$commit_editor,$TERM" in
+> > +       case "$GIT_EDITOR,$TERM" in
+> >         ,dumb)
+> 
+>         This can no longer happen, since ...
+> 
+> >         +set_editor() {
+> >         +    GIT_EDITOR=$(git config core.editor || echo ${VISUAL:-${EDITOR:-vi}})
+> >         +    export GIT_EDITOR
+> >         +}
+> 
+>         ... "vi" is the last resort, not "", right?
+> 
+>         So I guess you just want to drag that test and warning into git-sh-setup 
+>         (where I think it has a better home anyway).
 
-	- a main screen carring 70 windows. Where I do my daily work and
-	  read my mail on. I recompiled screen to support more than 40
-	  winodws. This screen session runs on a well connected machine.
-	  And consumes 175M resistent memory and 450M virtual memory.
-	  That's mainly because I have 5000 lines of scrollback buffer
-	  in each window and I had to recompile screen with all it's
-	  buffers 2x to fight a symtom that it always crashed for me
-	  when I resized it to fullscreen on a monitor with resolution
-	  of 1600x1200. Yes I did fight symptoms some times even if I
-	  don't like it. But had you ever a look at the screen source
-	  code. It does make you puke.
+Here you go. I'm not terribly happy with the error message, though. I tried to
+be as clear as possible and to keep some of the nice information that was in
+the git-commit error message. Please improve upon it if you can.
 
-	- a local screen. If I do something on a local machine I don't
-	  open a single terminal I open a screen session with 5 windows.
-	  Even if I only need a single shell.  The local screen only
-	  stays open as long as I am logged in. I switch machines often.
-	  I have a workstation at home, one at university, a laptop and
-	  one at work.
+ git-am.sh                  |    4 ++--
+ git-commit.sh              |   11 +----------
+ git-rebase--interactive.sh |    2 +-
+ git-sh-setup.sh            |   15 +++++++++++++--
+ git-tag.sh                 |    2 +-
+ 5 files changed, 18 insertions(+), 16 deletions(-)
 
-	- a console screen (I do a lot of system administration) so the
-	  serial consoles of the main servers at university are
-	  connected to a screen session. Often are up to 5 people are
-	  connected to that session. When you have to do some sort of
-	  maintance work we often do a telephone conference while
-	  everyone sees what is going on.
-
-	- a so called development screen. As you can imagine having 70
-	  windows open you do a lot of context switches and as you
-	  stated before "do one thing and do it well" does not work that
-	  way when there is you mailreader in the way on window 6, so
-	  when I do something I have to focus on I use the development
-	  screen. For short projects I use the development screen.
-
-	- one screen for work related stuff.
-
-> I actually like screen as a way to keep connections around. But the
-> whole multiplexing is wrong, wrong, wrong. It violates the "do one
-> thing, and do it well" thing. It makes screen do two things, and do
-> them really badly as a result.
-
-so true, as I stated above. When I notice that I go sideways I use one
-screen per topic.
-
-> And the "window manager" part is kind of a funny hack, but let's face
-> it, you can do better by using separate windows.
-
-Why I started to use screen is because I often switch workstations. And
-I want to be able to go on where I left of. So I have the same
-environment on every machine I have access to and synchronize this
-environment. I use fvwm as window manager and have something configured
-I call SmartStart. This is a fvwm function which focus an application if
-it is already running and start it if it is not running.
-
-	Ctrl Shift s => Main Screen
-	Ctrl Shift l => Local Screen
-	Ctrl Shift o => Opera
-	...
-	(thinkpad) [~] grep SmartStart .fvwm2rc | wc -l
-	32
-
-
-> And the multiplexor could have been done (and historically _has_ been
-> done) better, by not limiting it to terminal sessions.
-
-I actually have a macro for university that allows me to start X
-application out of my screen session but most of the time I use local X
-applications or use ssh forwarding if I have to get it from a remote
-machine.
-
-> But the *combination* of all three is just evil and stupid. And the
-> choice of ctrl-A as the default command sequence (can you even
-> override it? Don't know, don't care) is just insanity.
-
-yes you can, but you get used to it.
-
->    networking, and you'd generally use ssh tunnelling for it and 
->    ssh-agent. But screen was never very good at it.
-
-My main screen is running in its own ssh-agent session. So does my work
-screen. My local has automatically the ssh-agent session from my
-desktop session.
-
-> IOW, I think screen sucks because it tries to do totally independent
-> things, and then mixes them up in nasty ways, and for historical
-> reasons uses a bad break character too.
-
-Well, I have to aggreee with you. Sometimes I come back to a windows
-where I stopped in the middle of doing something. And that is bad.
-However screen makes me work faster and makes it possible to switch
-locations often and pick up where you left of. It's biggest strength
-it's it biggest weakness, too.
-
-My screen configuration have dozens of people copied. I have this
-fancy sticky status bar on the bottom.
-
-http://wwwcip.informatik.uni-erlangen.de/~sithglan/shot.png
-
-	Thomas
+diff --git a/git-am.sh b/git-am.sh
+index a5de0a1..dd517f4 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -7,7 +7,6 @@ USAGE='[--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
+   or, when resuming [--skip | --resolved]'
+ . git-sh-setup
+ set_reflog_action am
+-set_editor
+ require_work_tree
+ 
+ git var GIT_COMMITTER_IDENT >/dev/null || exit
+@@ -365,7 +364,8 @@ do
+ 		[yY]*) action=yes ;;
+ 		[aA]*) action=yes interactive= ;;
+ 		[nN]*) action=skip ;;
+-		[eE]*) "$GIT_EDITOR" "$dotest/final-commit"
++		[eE]*) set_editor
++		       "$GIT_EDITOR" "$dotest/final-commit"
+ 		       action=again ;;
+ 		[vV]*) action=again
+ 		       LESS=-S ${PAGER:-less} "$dotest/patch" ;;
+diff --git a/git-commit.sh b/git-commit.sh
+index 9adb03c..4d5d898 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -6,7 +6,6 @@
+ USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i | -o] <path>...]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+-set_editor
+ require_work_tree
+ 
+ git rev-parse --verify HEAD >/dev/null 2>&1 || initial_commit=t
+@@ -545,15 +544,7 @@ fi
+ 
+ case "$no_edit" in
+ '')
+-	case "$GIT_EDITOR,$TERM" in
+-	,dumb)
+-		echo >&2 "Terminal is dumb but core.editor, VISUAL, and EDITOR"
+-		echo >&2 "are undefined. Please supply the commit log message"
+-		echo >&2 "using either -m or -F option.  A boilerplate log message"
+-		echo >&2 "has been prepared in $GIT_DIR/COMMIT_EDITMSG"
+-		exit 1
+-		;;
+-	esac
++	set_editor
+ 	git-var GIT_AUTHOR_IDENT > /dev/null  || die
+ 	git-var GIT_COMMITTER_IDENT > /dev/null  || die
+ 	$GIT_EDITOR "$GIT_DIR/COMMIT_EDITMSG"
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 32d1f53..27f8639 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -15,7 +15,6 @@ USAGE='(--continue | --abort | --skip | [--preserve-merges] [--verbose]
+ 
+ . git-sh-setup
+ require_work_tree
+-set_editor
+ 
+ DOTEST="$GIT_DIR/.dotest-merge"
+ TODO="$DOTEST"/todo
+@@ -415,6 +414,7 @@ EOF
+ 			die_abort "Nothing to do"
+ 
+ 		cp "$TODO" "$TODO".backup
++		set_editor
+ 		$GIT_EDITOR "$TODO" ||
+ 			die "Could not execute editor"
+ 
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index f43ab33..dbc4833 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -29,8 +29,19 @@ set_reflog_action() {
+ }
+ 
+ set_editor() {
+-    GIT_EDITOR=$(git config core.editor || echo ${VISUAL:-${EDITOR:-vi}})
+-    export GIT_EDITOR
++	GIT_EDITOR=$(git config core.editor || echo ${VISUAL:-${EDITOR}})
++	case "$GIT_EDITOR,$TERM" in
++	,dumb)
++		echo >&2 "No editor specified in core.editor, VISUAL, or EDITOR."
++		echo >&2 "Tried to fall back to vi but terminal is dumb."
++		echo >&2 "Please set one of these variables to an appropriate"
++		echo >&2 "editor or run $0 with options that will not cause an"
++		echo >&2 "editor to be invoked (e.g., -m or -F for git-commit)."
++		exit 1
++		;;
++	esac
++	GIT_EDITOR=${GIT_EDITOR:-vi}
++	export GIT_EDITOR
+ }
+ 
+ is_bare_repository () {
+diff --git a/git-tag.sh b/git-tag.sh
+index 0a6f2e7..f1a66d0 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -4,7 +4,6 @@
+ USAGE='[-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+-set_editor
+ 
+ message_given=
+ annotate=
+@@ -178,6 +177,7 @@ if [ "$annotate" ]; then
+         ( echo "#"
+           echo "# Write a tag message"
+           echo "#" ) > "$GIT_DIR"/TAG_EDITMSG
++        set_editor
+         $GIT_EDITOR "$GIT_DIR"/TAG_EDITMSG || exit
+     else
+         printf '%s\n' "$message" >"$GIT_DIR"/TAG_EDITMSG
+-- 
+1.5.3.rc2.21.gfc4a18-dirty
