@@ -1,188 +1,99 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Mak gitk bind keyboard actions to the command key on Mac OS
-Date: Thu, 19 Jul 2007 00:37:58 -0400
-Message-ID: <20070719043758.GA14752@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
+Date: Wed, 18 Jul 2007 22:13:07 -0700
+Message-ID: <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+	<Pine.LNX.4.64.0707160022560.14781@racer.site>
+	<7vejj96igx.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707190258550.14781@racer.site>
+	<alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 06:38:25 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 19 07:13:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBNmT-0002xy-92
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 06:38:25 +0200
+	id 1IBOKB-0001Hu-6h
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 07:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbXGSEiK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 00:38:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbXGSEiJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 00:38:09 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37829 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbXGSEiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 00:38:08 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IBNm7-0002T5-GJ; Thu, 19 Jul 2007 00:38:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3B4F620FBAE; Thu, 19 Jul 2007 00:37:59 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752445AbXGSFNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 01:13:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbXGSFNK
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 01:13:10 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33878 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbXGSFNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 01:13:09 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070719051307.JBDP1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Jul 2007 01:13:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RHD71X00H1kojtg0000000; Thu, 19 Jul 2007 01:13:08 -0400
+In-Reply-To: <alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 18 Jul 2007 20:28:27 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52934>
 
-git-gui already uses the command key for accelerators, but gitk has
-never done so.  I'm actually finding it very hard to move back and
-forth between the two applications as git-gui is following the Mac
-OS X conventions and gitk is not.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-This trick is the same one that git-gui uses to determine which
-key to bind actions to.
+> And yes, the "search for zero bytes" is not *guaranteed* to find any 
+> beginning at all, if you have lots of short names, *and* lots of zero 
+> bytes in the SHA1's. But while short names may be common, zero bytes in 
+> SHA1's are not so much (since you should expect to see a very even 
+> distribution of bytes, and as such most SHA1's by far should have no zero 
+> bytes at all!)
+>
+> So if you're really really *really* unlucky, you might end up having to 
+> fall back on the linear search. But it still works!
+>
+> Can anybody see anything wrong in my thinking above?
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- gitk |   75 +++++++++++++++++++++++++++++++++++++----------------------------
- 1 files changed, 43 insertions(+), 32 deletions(-)
+Another anchoring clue you seem not to be exploiting fully is
+that the ASCII part must match "^[1-7][0-7]{4,5} " (mode bytes).
+But the real problem of this approach of course is that this is
+not reliable and can get a false match.  You can find your
+beginning NUL in the SHA-1 part of one entry, and terminating
+NUL later in the SHA-1 part of next entry, and you will never
+notice.
 
-diff --git a/gitk b/gitk
-index 39e452a..6f58803 100755
---- a/gitk
-+++ b/gitk
-@@ -796,6 +796,12 @@ proc makewindow {} {
-         wm geometry . "$geometry(main)"
-     }
- 
-+    if {[tk windowingsystem] eq {aqua}} {
-+        set M1B M1
-+    } else {
-+        set M1B Control
-+    }
-+
-     bind .pwbottom <Configure> {resizecdetpanes %W %w}
-     pack .ctop -fill both -expand 1
-     bindall <1> {selcanvline %W %x %y}
-@@ -814,12 +820,12 @@ proc makewindow {} {
-     bindkey <Key-Left> "goback"
-     bind . <Key-Prior> "selnextpage -1"
-     bind . <Key-Next> "selnextpage 1"
--    bind . <Control-Home> "allcanvs yview moveto 0.0"
--    bind . <Control-End> "allcanvs yview moveto 1.0"
--    bind . <Control-Key-Up> "allcanvs yview scroll -1 units"
--    bind . <Control-Key-Down> "allcanvs yview scroll 1 units"
--    bind . <Control-Key-Prior> "allcanvs yview scroll -1 pages"
--    bind . <Control-Key-Next> "allcanvs yview scroll 1 pages"
-+    bind . <$M1B-Home> "allcanvs yview moveto 0.0"
-+    bind . <$M1B-End> "allcanvs yview moveto 1.0"
-+    bind . <$M1B-Key-Up> "allcanvs yview scroll -1 units"
-+    bind . <$M1B-Key-Down> "allcanvs yview scroll 1 units"
-+    bind . <$M1B-Key-Prior> "allcanvs yview scroll -1 pages"
-+    bind . <$M1B-Key-Next> "allcanvs yview scroll 1 pages"
-     bindkey <Key-Delete> "$ctext yview scroll -1 pages"
-     bindkey <Key-BackSpace> "$ctext yview scroll -1 pages"
-     bindkey <Key-space> "$ctext yview scroll 1 pages"
-@@ -839,15 +845,15 @@ proc makewindow {} {
-     bindkey ? findprev
-     bindkey f nextfile
-     bindkey <F5> updatecommits
--    bind . <Control-q> doquit
--    bind . <Control-f> dofind
--    bind . <Control-g> {findnext 0}
--    bind . <Control-r> dosearchback
--    bind . <Control-s> dosearch
--    bind . <Control-equal> {incrfont 1}
--    bind . <Control-KP_Add> {incrfont 1}
--    bind . <Control-minus> {incrfont -1}
--    bind . <Control-KP_Subtract> {incrfont -1}
-+    bind . <$M1B-q> doquit
-+    bind . <$M1B-f> dofind
-+    bind . <$M1B-g> {findnext 0}
-+    bind . <$M1B-r> dosearchback
-+    bind . <$M1B-s> dosearch
-+    bind . <$M1B-equal> {incrfont 1}
-+    bind . <$M1B-KP_Add> {incrfont 1}
-+    bind . <$M1B-minus> {incrfont -1}
-+    bind . <$M1B-KP_Subtract> {incrfont -1}
-     wm protocol . WM_DELETE_WINDOW doquit
-     bind . <Button-1> "click %W"
-     bind $fstring <Key-Return> dofind
-@@ -1088,12 +1094,17 @@ proc keys {} {
- 	raise $w
- 	return
-     }
-+    if {[tk windowingsystem] eq {aqua}} {
-+	set M1T Cmd
-+    } else {
-+	set M1T Ctrl
-+    }
-     toplevel $w
-     wm title $w "Gitk key bindings"
--    message $w.m -text {
-+    message $w.m -text "
- Gitk key bindings:
- 
--<Ctrl-Q>		Quit
-+<$M1T-Q>		Quit
- <Home>		Move to first commit
- <End>		Move to last commit
- <Up>, p, i	Move up one commit
-@@ -1102,12 +1113,12 @@ Gitk key bindings:
- <Right>, x, l	Go forward in history list
- <PageUp>	Move up one page in commit list
- <PageDown>	Move down one page in commit list
--<Ctrl-Home>	Scroll to top of commit list
--<Ctrl-End>	Scroll to bottom of commit list
--<Ctrl-Up>	Scroll commit list up one line
--<Ctrl-Down>	Scroll commit list down one line
--<Ctrl-PageUp>	Scroll commit list up one page
--<Ctrl-PageDown>	Scroll commit list down one page
-+<$M1T-Home>	Scroll to top of commit list
-+<$M1T-End>	Scroll to bottom of commit list
-+<$M1T-Up>	Scroll commit list up one line
-+<$M1T-Down>	Scroll commit list down one line
-+<$M1T-PageUp>	Scroll commit list up one page
-+<$M1T-PageDown>	Scroll commit list down one page
- <Shift-Up>	Move to previous highlighted line
- <Shift-Down>	Move to next highlighted line
- <Delete>, b	Scroll diff view up one page
-@@ -1115,20 +1126,20 @@ Gitk key bindings:
- <Space>		Scroll diff view down one page
- u		Scroll diff view up 18 lines
- d		Scroll diff view down 18 lines
--<Ctrl-F>		Find
--<Ctrl-G>		Move to next find hit
-+<$M1T-F>		Find
-+<$M1T-G>		Move to next find hit
- <Return>	Move to next find hit
- /		Move to next find hit, or redo find
- ?		Move to previous find hit
- f		Scroll diff view to next file
--<Ctrl-S>		Search for next hit in diff view
--<Ctrl-R>		Search for previous hit in diff view
--<Ctrl-KP+>	Increase font size
--<Ctrl-plus>	Increase font size
--<Ctrl-KP->	Decrease font size
--<Ctrl-minus>	Decrease font size
-+<$M1T-S>		Search for next hit in diff view
-+<$M1T-R>		Search for previous hit in diff view
-+<$M1T-KP+>	Increase font size
-+<$M1T-plus>	Increase font size
-+<$M1T-KP->	Decrease font size
-+<$M1T-minus>	Decrease font size
- <F5>		Update
--} \
-+" \
- 	    -justify left -bg white -border 2 -relief groove
-     pack $w.m -side top -fill both -padx 2 -pady 2
-     $w.m configure -font $uifont
--- 
-1.5.3.rc2.822.g75e72
+However, in the case of Dscho's "notes" code, I do not think (1)
+you do not have to guess like the above, and (2) the problem is
+much simpler.
+
+Dcsho's "note" looks like a tree full of two-byte [0-9a-f]{2}
+names, each of them points at another tree, with the second
+level tree being full of 32-byte [0-9a-f]{38} names, each of
+them points at a blob.  So it is a much more regular, strict
+shape.  And in order to look for a note for an object whose name
+is ([0-9a-f]{2})([0-9a-f]{38}), you will find the blob that is
+at "$1/$2" in a "note".
+
+I was suggesting to have a specialized parser only to read such
+tree objects that are "abused" to represent notes.  You can
+cheaply validate that these trees are of expected shape.
+
+ (1) Validate that size of the toplevel tree is multiple of 29 =
+     (5 + 1 + 2 + 1 + 20); the second level should be multiple
+     of 66 = (6 + 1 + 38 + 1 + 20).  These two levels of trees
+     are of fixed-entry-length that allows easy binary search.
+
+ (2) While binary searching trees of either level, you can
+     validate that the entry looks like from a note (for the
+     toplevel, "40000 [0-9a-f]{2}\0", for the second level,
+     "100644 [0-9a-f]{38}\0").
+
+For an added safety, a "notes" writer could even throw in
+signature bytes (say, a symlink whose name is " !" in the
+top-level tree, and another symlink " !{37}" in the second-level
+tree) to protect the reader.
