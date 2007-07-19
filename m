@@ -1,124 +1,147 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [REVISED PATCH 4/6] Add a test script for "git notes"
-Date: Thu, 19 Jul 2007 03:32:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707190331430.14781@racer.site>
+Subject: [REVISED PATCH 3/6] Add git-notes
+Date: Thu, 19 Jul 2007 03:31:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707190331050.14781@racer.site>
 References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
- <Pine.LNX.4.64.0707160024060.14781@racer.site> <7v3azp6igt.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0707160023360.14781@racer.site> <7v8x9h6igv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
 	Johan Herland <johan@herland.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 04:32:30 2007
+X-From: git-owner@vger.kernel.org Thu Jul 19 04:52:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBLob-0005Uc-EM
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 04:32:29 +0200
+	id 1IBM7l-000163-QY
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 04:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbXGSCcL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Jul 2007 22:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbXGSCcL
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 22:32:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37612 "HELO mail.gmx.net"
+	id S1753850AbXGSCwO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Jul 2007 22:52:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756712AbXGSCwO
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Jul 2007 22:52:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50198 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750727AbXGSCcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2007 22:32:09 -0400
-Received: (qmail invoked by alias); 19 Jul 2007 02:32:08 -0000
+	id S1753599AbXGSCwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2007 22:52:13 -0400
+Received: (qmail invoked by alias); 19 Jul 2007 02:31:26 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 19 Jul 2007 04:32:08 +0200
+  by mail.gmx.net (mp028) with SMTP; 19 Jul 2007 04:31:26 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1984PYQJ5V8YClTgglurtHCBH3Vhqn1izr4VbApxC
-	3xc4noMcZtPjby
+X-Provags-ID: V01U2FsdGVkX1/bK2xodZ/bSym1IW6WIgndLgkGFXIHmzzFWIo6+7
+	+zk0QTgGARMGFR
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v3azp6igt.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v8x9h6igv.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/52927>
 
 
-Incidentally, a test for "git notes" implies a test for the
-whole commit notes machinery.
+This script allows you to edit and show commit notes easily.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3301-notes.sh |   65 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 65 insertions(+), 0 deletions(-)
- create mode 100755 t/t3301-notes.sh
+ .gitignore   |    1 +
+ Makefile     |    2 +-
+ git-notes.sh |   62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 1 deletions(-)
+ create mode 100755 git-notes.sh
 
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+diff --git a/.gitignore b/.gitignore
+index 20ee642..125613f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -83,6 +83,7 @@ git-mktag
+ git-mktree
+ git-name-rev
+ git-mv
++git-notes
+ git-pack-redundant
+ git-pack-objects
+ git-pack-refs
+diff --git a/Makefile b/Makefile
+index 119d949..10a9342 100644
+--- a/Makefile
++++ b/Makefile
+@@ -213,7 +213,7 @@ SCRIPT_SH = \
+ 	git-merge-resolve.sh git-merge-ours.sh \
+ 	git-lost-found.sh git-quiltimport.sh git-submodule.sh \
+ 	git-filter-branch.sh \
+-	git-stash.sh
++	git-stash.sh git-notes.sh
+ 
+ SCRIPT_PERL = \
+ 	git-add--interactive.perl \
+diff --git a/git-notes.sh b/git-notes.sh
 new file mode 100755
-index 0000000..ba42c45
+index 0000000..031e911
 --- /dev/null
-+++ b/t/t3301-notes.sh
-@@ -0,0 +1,65 @@
++++ b/git-notes.sh
+@@ -0,0 +1,62 @@
 +#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes E. Schindelin
-+#
 +
-+test_description='Test commit notes'
++USAGE="(edit | show) [commit]"
++. git-sh-setup
 +
-+. ./test-lib.sh
++test -n "$3" && usage
 +
-+cat > fake_editor.sh << \EOF
-+echo "$MSG" > "$1"
-+echo "$MSG" >& 2
-+EOF
-+chmod a+x fake_editor.sh
-+VISUAL=./fake_editor.sh
-+export VISUAL
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="refs/notes/commits"
 +
-+test_expect_success 'cannot annotate non-existing HEAD' '
-+	! MSG=3 git notes edit
-+'
++COMMIT=$(git rev-parse --verify --default HEAD "$2") || die "Invalid ref: $2"
++NAME=$(echo $COMMIT | sed "s/^../&\//")
 +
-+test_expect_success setup '
-+	: > a1 &&
-+	git add a1 &&
-+	test_tick &&
-+	git commit -m 1st &&
-+	: > a2 &&
-+	git add a2 &&
-+	test_tick &&
-+	git commit -m 2nd
-+'
++MESSAGE="$GIT_DIR"/new-notes
++trap '
++	test -f "$MESSAGE" && rm "$MESSAGE"
++' 0
 +
-+test_expect_success 'need valid notes ref' '
-+	! MSG=1 GIT_NOTES_REF='/' git notes edit &&
-+	! MSG=2 GIT_NOTES_REF='/' git notes show
-+'
++case "$1" in
++edit)
++	GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MESSAGE"
 +
-+test_expect_success 'create notes' '
-+	git config core.notesRef refs/notes/commits &&
-+	MSG=b1 git notes edit &&
-+	test ! -f .git/new-notes &&
-+	test 1 = $(git ls-tree refs/notes/commits | wc -l) &&
-+	test b1 = $(git notes show) &&
-+	git show HEAD^ &&
-+	! git notes show HEAD^
-+'
++	GIT_INDEX_FILE="$MESSAGE".idx
++	export GIT_INDEX_FILE
 +
-+cat > expect << EOF
-+commit 268048bfb8a1fb38e703baceb8ab235421bf80c5
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:14:13 2005 -0700
++	CURRENT_HEAD=$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
++	if [ -z "$CURRENT_HEAD" ]; then
++		PARENT=
++	else
++		PARENT="-p $CURRENT_HEAD"
++		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
++		git cat-file blob :$NAME >> "$MESSAGE" 2> /dev/null
++	fi
 +
-+    2nd
++	${VISUAL:-${EDITOR:-vi}} "$MESSAGE"
 +
-+Notes:
-+    b1
-+EOF
++	grep -v ^# < "$MESSAGE" | git stripspace > "$MESSAGE".processed
++	mv "$MESSAGE".processed "$MESSAGE"
++	if [ -s "$MESSAGE" ]; then
++		BLOB=$(git hash-object -w "$MESSAGE") ||
++			die "Could not write into object database"
++		git update-index --add --cacheinfo 0644 $BLOB $NAME ||
++			die "Could not write index"
++	else
++		test -z "$CURRENT_HEAD" &&
++			die "Will not initialise with empty tree"
++		git update-index --force-remove $NAME ||
++			die "Could not update index"
++	fi
 +
-+test_expect_success 'show notes' '
-+	! (git cat-file commit HEAD | grep b1) &&
-+	git log -1 > output &&
-+	git diff expect output
-+'
-+
-+test_done
++	TREE=$(git write-tree) || die "Could not write tree"
++	NEW_HEAD=$(echo Annotate $COMMIT | git commit-tree $TREE $PARENT) ||
++		die "Could not annotate"
++	git update-ref -m "Annotate $COMMIT" \
++		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
++;;
++show)
++	git show "$GIT_NOTES_REF":$NAME
++;;
++*)
++	usage
++esac
 -- 
 1.5.3.rc1.16.g9d6f-dirty
