@@ -1,55 +1,89 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 12:34:12 -0400
-Message-ID: <CC669745-4434-478E-9A24-E474071578C6@silverinsanity.com>
-References: <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr> <20070719105105.GA4929@moonlight.home> <Pine.LNX.4.64.0707191310430.14781@racer.site> <86wswwa8ej.fsf@lola.quinscape.zz> <7FE87F7A-53AD-4B92-8F33-ECDFAE6A7EFB@silverinsanity.com> <Pine.LNX.4.64.0707191642270.14781@racer.site> <6C96EBA9-CDCE-40EA-B0EC-F9195DBE83DB@silverinsanity.com> <Pine.LNX.4.64.0707191715000.14781@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 19 18:34:28 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
+Date: Thu, 19 Jul 2007 10:20:34 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707191013440.27353@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site>
+ <Pine.LNX.4.64.0707160022560.14781@racer.site> <7vejj96igx.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0707190258550.14781@racer.site>
+ <alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org>
+ <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 19:22:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBYxM-0002Wl-CW
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 18:34:24 +0200
+	id 1IBZha-0004hA-Ue
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 19:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762287AbXGSQeO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 12:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765828AbXGSQeN
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 12:34:13 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:54225 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762287AbXGSQeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 12:34:12 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id E74801FFC244;
-	Thu, 19 Jul 2007 16:34:11 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.64.0707191715000.14781@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S940593AbXGSRV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 13:21:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S940412AbXGSRV1
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 13:21:27 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52629 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S940582AbXGSRVX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 13:21:23 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JHKfPq004204
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 19 Jul 2007 10:20:42 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6JHKYY2012722;
+	Thu, 19 Jul 2007 10:20:35 -0700
+In-Reply-To: <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3.177 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53007>
 
 
-On Jul 19, 2007, at 12:17 PM, Johannes Schindelin wrote:
 
-> Alas, we already have such a marker.  It is called ".gitignore",  
-> and has
-> been ignored by _you_.  There is _nothing_ wrong, from a technical
-> standpoint, to call this marker ".gitignore", and it is _also_ not  
-> wrong
-> to put this marker into the file system _in addition_ to the index.
->
-> So go and add your directories via that marker, and _be done with it_.
+On Wed, 18 Jul 2007, Junio C Hamano wrote:
+> 
+> Another anchoring clue you seem not to be exploiting fully is
+> that the ASCII part must match "^[1-7][0-7]{4,5} " (mode bytes).
 
-But this alters the content of the directory away from what I want it  
-to be, namely empty.  You aren't addressing the concept of tracking  
-an empty directory, you're just saying you won't do it.
+I did that on purpose.
 
-~~ Brian
+The SHA1 *can* contain those characters too, so that's not really useful 
+to us, and the only special character really is the NUL character (which 
+is the only one cannot exists in the ASCII part - old-style trees can 
+contain '/' too, although that's going away).
+
+Also, the mode bytes may not be visible: if we start in a long filename, 
+we'll never have looked at the mode bytes, but if we see a NUL character 
+after having seen 20 non-NUL characters (long filename), we already know 
+we got it. So I don't think we can even usefully use the other knowledge 
+of the format of the ASCII part (other than to know it doesn't contain 
+NUL's).
+
+Of course, we can (and should) verify that the tree entry we find is 
+valid, and *then* it makes sense to check the rules for the ASCII part. 
+But that's only after we have already found the place.
+
+> I was suggesting to have a specialized parser only to read such
+> tree objects that are "abused" to represent notes.  You can
+> cheaply validate that these trees are of expected shape.
+
+Sure. That said, I'm less interested in the notes than I am in the cost fo 
+"git blame", and that could be optimized by having some special code in 
+"tree_entry_interesting()" to find the tree entries using binary search.
+
+The special code would trigger only for:
+ - large trees
+ - "opt->nr_paths == 1"
+
+but the latter case is the one that matters for blame in the first place, 
+so..
+
+		Linus
