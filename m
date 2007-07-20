@@ -1,45 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Make git tag a builtin.
-Date: Fri, 20 Jul 2007 09:53:31 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707200928050.14781@racer.site>
+Date: Fri, 20 Jul 2007 02:10:48 -0700
+Message-ID: <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
 References: <469FF6E4.9010501@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 10:53:53 2007
+X-From: git-owner@vger.kernel.org Fri Jul 20 11:10:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBoFE-0004il-Km
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 10:53:52 +0200
+	id 1IBoVk-0001U9-2b
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 11:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755291AbXGTIxj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 04:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbXGTIxj
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 04:53:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33519 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752062AbXGTIxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 04:53:38 -0400
-Received: (qmail invoked by alias); 20 Jul 2007 08:53:36 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 20 Jul 2007 10:53:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX190Gog0L8t0DmYP+tqqylUXZQ3ZSwT0HRfEehQJI6
-	Q15E03TnDNvXsH
-X-X-Sender: gene099@racer.site
-In-Reply-To: <469FF6E4.9010501@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1754865AbXGTJKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 05:10:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754950AbXGTJKv
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 05:10:51 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:65239 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754865AbXGTJKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 05:10:50 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070720091047.EYBF1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Jul 2007 05:10:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RlAo1X00M1kojtg0000000; Fri, 20 Jul 2007 05:10:49 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53074>
 
-Hi,
+Carlos Rica <jasampler@gmail.com> writes:
 
-On Fri, 20 Jul 2007, Carlos Rica wrote:
+> This replaces the script "git-tag.sh" with "builtin-tag.c".
+
+Thanks.  Will queue in 'next', and perhaps with a few nit fixups
+to merge as the first thing after 1.5.3.
 
 > diff --git a/builtin-tag.c b/builtin-tag.c
 > new file mode 100644
@@ -50,102 +54,90 @@ On Fri, 20 Jul 2007, Carlos Rica wrote:
 > +/*
 > + * Builtin "git tag"
 > + *
-> + * Copyright (c) 2007 Kristian Hv/gsberg <krh@redhat.com>,
+> + * Copyright (c) 2007 Kristian H??gsberg <krh@redhat.com>,
 
-In case of encoding problems, I suggest uploading it to repo.or.cz, so it 
-can be pulled.  Uploading has more advantages, such as visibility and 
-a free backup, too...
+I've fixed up the name here in my copy.
 
-> +typedef int (*func_tag)(const char *name, const char *ref,
-> +				const unsigned char *sha1);
-> +
-> +static int do_tag_names(const char **argv, func_tag fn)
-
-Neat!  Just a minor style nit here, though: in refs.h, we have something 
-similar, and I would have expected to read "each_tag_name_fn" and 
-"for_each_tag_name" instead of "func_tag" and "do_tag_names", 
-respectively.  Hmm?
-
-> +static ssize_t do_sign(char *buffer, size_t size, size_t max)
+> +static void launch_editor(const char *path, char **buffer, unsigned long *len)
 > +{
-> +	struct child_process gpg;
-> +	const char *args[4];
-> +	char *bracket;
-> +	int len;
+> +	const char *editor, *terminal;
+> +	struct child_process child;
+> +	const char *args[3];
+> +	int fd;
 > +
-> +	if (!*signingkey) {
-> +		if (strlcpy(signingkey, git_committer_info(1),
-> +				sizeof(signingkey)) >= sizeof(signingkey))
-
-sizeof(signingkey) - 1?
-
-> +	len = read_in_full(gpg.out, buffer + size, max - size);
+> +	editor = getenv("VISUAL");
+> +	if (!editor)
+> +		editor = getenv("EDITOR");
 > +
-> +	finish_command(&gpg);
+> +	terminal = getenv("TERM");
+> +	if (!editor && (!terminal || !strcmp(terminal, "dumb"))) {
+> +		fprintf(stderr,
+> +		"Terminal is dumb but no VISUAL nor EDITOR defined.\n"
+> +		"Please supply the message using either -m or -F option.\n");
+> +		exit(1);
+> +	}
 > +
-> +	if (len == max - size)
-> +		return error("could not read the entire signature from gpg.");
+> +	if (!editor)
+> +		editor = "vi";
 
-Maybe at a later stage, and if this turns out to be not sufficient to 
-begin with, we might consider not using a buffer, but writing 
-incrementally into an object right away.  Think "git hash-object -w 
---stdin".
+launch-editor() would need adjustment for GIT_EDITOR and
+core.editor which should be straightforward.
 
-But at the moment, this is not a problem, so let's keep it as-is.
-
-> +static int git_tag_config(const char *var, const char *value)
+> +struct tag_filter {
+> +	const char *pattern;
+> +	int lines;
+> +};
+> +
+> +#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
+> +
+> +static int show_reference(const char *refname, const unsigned char *sha1,
+> +			  int flag, void *cb_data)
 > +{
-> +	if (!strcmp(var, "user.signingkey")) {
-> +		if (!value)
-> +			die("user.signingkey without value");
-> +		if (strlcpy(signingkey, value, sizeof(signingkey))
-> +						>= sizeof(signingkey))
+> +	struct tag_filter *filter = cb_data;
+> +
+> +	if (!fnmatch(filter->pattern, refname, 0)) {
+> +		int i;
+> +		unsigned long size;
+> +		enum object_type type;
+> +		char *buf, *sp, *eol;
+> +		size_t len;
+> +
+> +		if (!filter->lines) {
+> +			printf("%s\n", refname);
+> +			return 0;
+> +		}
+> +		printf("%-15s ", refname);
+> +
+> +		sp = buf = read_sha1_file(sha1, &type, &size);
+> +		if (!buf || !size)
+> +			return 0;
 
-sizeof(signingkey) - 1?
+Theoretically, I can create millions of lightweight tags, all of
+them pointing at a zero-length blob object (or an empty tree
+object) and kill you with memory leak here ;-).
 
-> +static void create_tag(const unsigned char *object, const char *tag,
-> +		       char *message, int sign, unsigned char *result)
+> +		/* skip header */
+> +		while (sp + 1 < buf + size &&
+> +				!(sp[0] == '\n' && sp[1] == '\n'))
+> +			sp++;
+> +		/* only take up to "lines" lines, and strip the signature */
+> +		for (i = 0, sp += 2; i < filter->lines && sp < buf + size &&
+> +				prefixcmp(sp, PGP_SIGNATURE "\n");
+> +				i++) {
+
+Minor nit; I would have split this to four physical lines, like:
+
+		for (i = 0, sp += 2;
+			i < filter->lines && sp < buf + size &&
+			prefixcmp(sp, PGP_SIGNATURE "\n");
+			i++) {
+
+The places that semicolons appear are more significant gaps when
+reading the code.
+
+> +int cmd_tag(int argc, const char **argv, const char *prefix)
 > +{
-> +	enum object_type type;
-> +	char header_buf[1024], *buffer;
-> +	int header_len, max_size;
-> +	unsigned long size;
-> +
-> +	type = sha1_object_info(object, NULL);
-> +	if (type <= 0)
-
-Maybe use OBJ_NONE instead of 0?  Dunno.
-
-> +	    die("bad object type.");
-> +
-> +	header_len = snprintf(header_buf, sizeof(header_buf),
-> +			  "object %s\n"
-> +			  "type %s\n"
-> +			  "tag %s\n"
-> +			  "tagger %s\n\n",
-> +			  sha1_to_hex(object),
-> +			  typename(type),
-> +			  tag,
-> +			  git_committer_info(1));
-> +
-> +	if (header_len >= sizeof(header_buf))
-
-sizeof(header_buf) - 1?
-
-> +	memmove(buffer + header_len, buffer, size);
-
-Just two ideas for the future (it is not really important now, so we 
-should not do it now):
-
-- Instead of memmove()ing, we could teach read_fd() to take an offset, 
-  too.
-
-- launch_editor() could learn to write the buffer itself (IMHO it is more 
-  common to write a buffer to the file before editing it, than editing an 
-  existing file).
-
-But as I said, this is just something to keep in mind, not to change now.
-
+> ...
 > +		if (!strcmp(arg, "-F")) {
 > +			unsigned long len;
 > +			int fd;
@@ -165,53 +157,42 @@ But as I said, this is just something to keep in mind, not to change now.
 > +			}
 > +			len = 1024;
 > +			message = xmalloc(len);
+
+You cannot anticipate how many bytes the user will type (or
+pipe-in), but when you opened the file you could fstat() to see
+how many bytes you would need to hold the contents of that
+file.  Even in stdin case fstat(fd) could tell you the size, but
+I am not sure how to tell if the st_size is reliable.  But for
+the purposes of "git tag", 1k buffer that grows on demand is
+probably cheaper than a fstat() syscall.
+
 > +			if (read_fd(fd, &message, &len)) {
-
-With your recent sanification of read_fd(), you can initialise len and 
-message to 0 and NULL, respectively.
-
-> +		if (!strcmp(arg, "-u")) {
-> +			annotate = 1;
-> +			sign = 1;
-> +			i++;
-> +			if (i == argc)
-> +				die("option -u needs an argument.");
-> +			if (strlcpy(signingkey, argv[i], sizeof(signingkey))
-> +							>= sizeof(signingkey))
-
-sizeof(signingkey) - 1?
-
-> +				die("argument to option -u too long");
+> +				free(message);
+> +				die("cannot read %s", argv[i]);
+> +			}
 > +			continue;
-> +		}
-> +		if (!strcmp(arg, "-l")) {
-> +			return list_tags(argv[i + 1], lines);
-> +		}
-> +		if (!strcmp(arg, "-d")) {
-> +			return do_tag_names(argv + i + 1, delete_tag);
-> +		}
-> +		if (!strcmp(arg, "-v")) {
-> +			return do_tag_names(argv + i + 1, verify_tag);
-> +		}
 
-Please lose the "{..}" around single lines.
+We seem to leak fd here, but the user is doing something insane
+if he gives more than one -F anyway, so it probably is Ok, as
+long as we have some sanity checks.  Should we barf on "git tag
+-m foo -F bar"?  What should we do with "git tag -m one -m two"?
 
-> +	if (get_sha1(object_ref, object))
-> +		die("Failed to resolve '%s' as a valid ref.", object_ref);
-> +
+Does the test suite check any of these conditions?
+
 > +	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) >= sizeof(ref))
+> +		die("tag name too long: %.*s...", 50, tag);
 
-sizeof(ref) - 1?
+Cute and considerate ;-).
 
 > diff --git a/git-tag.sh b/contrib/examples/git-tag.sh
 > similarity index 100%
 > rename from git-tag.sh
 > rename to contrib/examples/git-tag.sh
 
-That should make Nico and Junio happy.
+This actually caught my attention for completely different
+reason.  If this were removal of git-tag.sh, this would have
+conflicted when applied on top of Adam's GIT_EDITOR/core.editor
+patch.  With a rename, however, there is no preimage/context
+shown, so it just cleanly applied.
 
-These are my last minor nits.  If nobody else has objections, let's put 
-this ship to sea.
-
-Ciao,
-Dscho
+Also Johannes's final minor nits.
