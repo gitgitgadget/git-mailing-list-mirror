@@ -1,101 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Fri, 20 Jul 2007 03:34:36 -0700
-Message-ID: <7vk5svxt1f.fsf@assigned-by-dhcp.cox.net>
-References: <858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
-	<85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<85abttwa7m.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
-	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-	<20070719053858.GE32566@spearce.org>
-	<9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com>
-	<863azk78yp.fsf@lola.quinscape.zz>
-	<FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com>
-	<7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707191726510.27249@woody.linux-foundation.org>
-	<85644fvdrn.fsf@lola.goet he.zz> <46A08006.4020500@fs.ei.tum.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GSoC status report
+Date: Fri, 20 Jul 2007 11:37:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707201118550.14781@racer.site>
+References: <200707201024.35605.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Fri Jul 20 12:35:00 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-76565903-1184927842=:14781"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 12:37:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBpoy-0000bo-Uh
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:34:53 +0200
+	id 1IBprY-0001Le-Vd
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233AbXGTKei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 06:34:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXGTKei
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:34:38 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57455 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752088AbXGTKeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 06:34:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070720103437.JKJG1393.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Jul 2007 06:34:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Rmac1X00H1kojtg0000000; Fri, 20 Jul 2007 06:34:37 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752233AbXGTKh3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 06:37:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbXGTKh3
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:37:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48203 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751984AbXGTKh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 06:37:28 -0400
+Received: (qmail invoked by alias); 20 Jul 2007 10:37:27 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp028) with SMTP; 20 Jul 2007 12:37:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/gDndQsuTggupnVxwtrlWOwikoNz67tttDXHXcS0
+	3ruEdnFLylrkd1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200707201024.35605.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53081>
 
-Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> You are mistaking things.  Like the executable bit on a file
-> is not content, the fact that a directory should be kept
-> despite being empty is also an *attribute* of the directory.
-> This is meta-data, not actual data (content).  So no matter
-> how elegant tracking the "." entry might be (and I think it
-> is, because it covers a lot of corner cases already), it puts
-> the information at the wrong place.
+--8323584-76565903-1184927842=:14781
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Actually, I do not think there is absolute right or wrong here.
-The difference is not that the information is at the "right" or
-"wrong" place, but one approach places the information at more
-efficient-to-use place than the other.  In that sense, the
-attribute approach _is_ a more elegant solution between the two.
+Hi,
 
-Making it an attribute has a huge practical advantage.
+On Fri, 20 Jul 2007, Jakub Narebski wrote:
 
-By treating executable bit as a piece metadata, we can compare
-the "contents" quickly.  If you "chmod +x" a blob without
-changing anything else, we can detect that fact, because blob
-object names are equal.  At the philosophical level, you _could_
-argue that the executable-ness is one bit of content and include
-that in the object name computation for the blob.  There is
-nothing fundamentally wrong about that approach, but that
-destroys the nice "cheap comparability" between blobs that
-differ only by executable-ness.
+> How it goes with Google Summer of Code git projects:
+> builtinification, libification and GitTorrent?
 
-David's "." in tree is essentially the same argument as treating
-the executable-ness as one extra bit of content.  The fact that
-a particular tree wants to stay even after emptied can be
-treated as part of contents (thereby reflected in its object
-name).  There is nothing fundamentally wrong there, either.  But
-that means two trees that contain otherwise identical set of
-blobs and subtrees, but differ only in the behaviour of when
-they are emptied, would get different object names, hence you
-need to descend into them to see if they are different.
+For my part, I am very pleased with the progress Carlos is making with 
+builtinification.  He is quite familiar with the source code by now, and 
+with the style We Do Things Here(tm).  Even though _he_ thinks the 
+progress is slow, I do not.  The first phase was to get acquainted with 
+the code, and with the techniques to convert shell code into C.
 
-Using attribute that is detached from the content itself allows
-you to hoist that one bit one level up.  By treating
-executable-ness not as part of content, we can compare two blobs
-with different executable bits cheaply.  You can avoid
-descending into such a tree when comparing it with another tree
-that is different only by the "will-stay-when-emptied"-ness the
-same way.
+And since Kristian joined into the builtinification process, and since 
+Carlos and Kristian are working together quite nicely, I am even more 
+happy.
+
+FWIW this is the list of scripts that I would like to see converted by the 
+end of the year (feel free to object), ordered by their size:
+
+verify-tag, reset, repack, tag, checkout, rebase, bisect, 
+rebase--interactive, am, commit.
+
+It looks like 'tag' and 'commit' are pretty near to completion, with 'tag' 
+already being in the 'next' branch, and verify-tag will probably follow 
+soon.
+
+The list left out two clusters: 'fetch' related scripts (pull, ls-remote, 
+parse-remote, fetch, clone) and 'merge' related scripts (merge-ours, 
+merge-resolve, merge-stupid, merge-octopus, merge)¹.
+
+Julian and Daniel are working on the fetch front, and the progress is 
+awesome.  I especially like the abstraction we have now, so that new 
+transports are much easier to implement.  I am even tempted to have a go 
+at 'pushing' to bundles.
+
+Seems like I got the 4 people I wished for the builtin project, in a way 
+;-)
+
+IMHO 'stash', 'submodule' and 'filter-branch'² are not yet ready to be 
+made builtin.
+
+As for the merge stuff, I consider it too soon, too, especially since 
+"git-merge" is a critical part of core Git _and_ quite long (even if the 
+same arguments would apply to 'commit', too, but Kristian is already at 
+work ;-)
+
+Ciao,
+Dscho
+
+Footnote 1: I left out merge-one-file, since I have an (untested) builtin 
+in my tree.  So there is not really much work to do there, I only have to 
+find some time to research how to test this script properly.
+
+Footnote 2: Sven is working on rewrite-commits, which is somewhat more 
+limited than filter-branch ATM, though faster.  As Junio suggested, we can 
+always consider using rewrite-commits as a fast backend to filter-branch, 
+once both rewrite-commits and filter-branch stabilised.
+--8323584-76565903-1184927842=:14781--
