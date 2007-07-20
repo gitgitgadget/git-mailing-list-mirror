@@ -1,130 +1,105 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Add --log-size to git log to print message size
-Date: Fri, 20 Jul 2007 20:15:13 +0200
-Message-ID: <e5bfff550707201115v2531434erd9e10a2b816a59bf@mail.gmail.com>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: [PATCH] Internationalization of git-gui
+Date: Fri, 20 Jul 2007 11:34:50 -0700 (PDT)
+Message-ID: <772058.65660.qm@web38907.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 20:15:25 2007
+Content-Type: text/plain; charset=ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 20:35:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBx0b-0003TK-Kt
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 20:15:21 +0200
+	id 1IBxJm-0001Ep-Qb
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 20:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbXGTSPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 14:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761555AbXGTSPQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 14:15:16 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:10724 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754216AbXGTSPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 14:15:14 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1080814wah
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 11:15:14 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=KEm47jJsQwJMpJG7WVKu5ETh5nW1hF+phncYnfMfIJJNz1TngXikmA+t5aLMzi4wQdp1p/ZU1slUU+D345yal9pvWaf6Uu2Sx0jfCJKhYLywkzJWP3Z+sMRPu273PFCY1ksYm+fKwu+UrAHDgT4BEL7uCb+CLae+k7BpVbDV3+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kU0aWwx0pytJEzstmmqlGQrLRrYadLtmXpzvr7tGxNgTTYl8lgYS8fL2cGti/BL6yJ+WKEQDQaD4OUAHonggvIW/QmuaOhMMtGFRNiOBr55hxghr7xME/uFLYwmh9ky6RlWHaox0YViAaqXsmGn5gWCHHNbESkjvs7R2lKOWvdg=
-Received: by 10.114.107.19 with SMTP id f19mr699279wac.1184955313967;
-        Fri, 20 Jul 2007 11:15:13 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Fri, 20 Jul 2007 11:15:13 -0700 (PDT)
-Content-Disposition: inline
+	id S1761116AbXGTSez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 14:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757576AbXGTSex
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 14:34:53 -0400
+Received: from web38907.mail.mud.yahoo.com ([209.191.125.113]:44605 "HELO
+	web38907.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752258AbXGTSev (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 14:34:51 -0400
+Received: (qmail 65934 invoked by uid 60001); 20 Jul 2007 18:34:50 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
+  b=0vz+eO9eir2h7AjBHgQSrenoCjR+kO2GWZC/7SLCFEINNP/cybf5o1IH82Le5rKH9CnQjAueHXFDDS4Q65Y2xS9lIfBEXTcMbCKop43obkPhAZAx7UfpzQuZMmOWM2ufw+sb+uinUq802QBOJgWQiiyh1Z5PftvjaqKO/BTqnOg=;
+X-YMail-OSG: Y4xJ3FkVM1lvHpgr_TmRLrufHlb_4XAqiA0NNb6ybuJTWruJ84Pu9cifRqSgA_EKcL3mpIz8yMj2TOF0lAyocKWvIphKGdTw0o3GDoGV6u.3lCE-
+Received: from [128.251.102.158] by web38907.mail.mud.yahoo.com via HTTP; Fri, 20 Jul 2007 11:34:50 PDT
+X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.41.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53110>
 
-With this option git-log prints log message size
-just before the corresponding message.
+After the glossary of terms has been create, it is easy to create the catalog file (assuming we use Tcl's standard mechanism). Each locale should have it's own file, named <locale_name>.msg (for example, es.msg for spanish). Inside that file, you just create entries for each glossary term (the below assumes that the msgcat namespace was imported):
 
-Porcelain tools could use this to speedup parsing
-of git-log output.
+  mcset es Hello Hola
+  mcset es "Hello %s" "Hola %s"
+    .
+    .
+    .
 
-Note that size refers to log message only. If also
-patch content is shown its size is not included.
+You can find more out here if you like http://wiki.tcl.tk/msgcat
 
-In case it is not possible to know the size upfront
-size value is set to zero.
-
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
-
-This is take 3 of this patch. In this case has been clearly added that
-diff content size is not included.
+HTH,
+    --brett
 
 
-  Documentation/git-log.txt |    7 +++++++
- log-tree.c                |    3 +++
- revision.c                |    4 ++++
- revision.h                |    1 +
- 4 files changed, 15 insertions(+), 0 deletions(-)
+----- Original Message ----
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Shawn O. Pearce <spearce@spearce.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>; Christian Stimming <stimming@tuhh.de>; git@vger.kernel.org
+Sent: Friday, July 20, 2007 10:32:24 AM
+Subject: Re: [PATCH] Internationalization of git-gui
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 63c1dbe..40b9a09 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -64,6 +64,13 @@ include::pretty-options.txt[]
- --follow::
- 	Continue listing the history of a file beyond renames.
+On 7/20/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Thu, 19 Jul 2007, Christian Stimming wrote:
+> >
+> > > Does this implementation look okay?
+> >
+> > This is valuable work, but unfortunately, it does not follow the
+> > recommendation in Documentation/SubmittingPatches at all.
+> >
+> > For starters, please send the patches inlined, one per mail.  And you
+> > might want to Cc the maintainer of git-gui (Shawn Pearce), too...
+>
+> I agree that internationalization of git-gui is worth doing.
+> I've thought about working on it, but haven't yet because nobody
+> else has seemed interested in having it done.  Apparently someone
+> is, so patches towards that end are most welcome.
 
-+--log-size::
-+	Before the log message print out its size in bytes. Intended
-+	mainly for porcelain tools consumption. If git is unable to
-+	produce a valid value size is set to zero.
-+	Note that only message is considered, if also a diff is shown
-+	its size is not included.
-+
- <paths>...::
- 	Show only commits that affect the specified paths.
+Hi Shawn,
+I volunteer to translate all the git-gui messages in Italian.
 
-diff --git a/log-tree.c b/log-tree.c
-index 8624d5a..2dc6b1b 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -295,6 +295,9 @@ void show_log(struct rev_info *opt,
- 	if (opt->add_signoff)
-  		len = append_signoff(&msgbuf, &msgbuf_len, len,
- 				     opt->add_signoff);
-+ 	if (opt->show_log_size)
-+		printf("log size %i\n", len);
-+
-  	printf("%s%s%s", msgbuf, extra, sep);
-  	free(msgbuf);
- }
-diff --git a/revision.c b/revision.c
-index 28b5f2e..f1cbb1f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1149,6 +1149,10 @@ int setup_revisions(int argc, const
-  					die("unknown date format %s", arg);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--log-size")) {
-+				revs->show_log_size = 1;
-+				continue;
-+			}
+Just let me if you are interested and please give me an hint on how to
+produce the translation so that you can incorporate it.
 
- 			/*
- 			 * Grepping the commit log
-diff --git a/revision.h b/revision.h
-index f46b4d5..98a0a8f 100644
---- a/revision.h
-+++ b/revision.h
-@@ -81,6 +81,7 @@ struct rev_info {
-  	const char	*log_reencode;
-  	const char	*subject_prefix;
- 	int		no_inline;
-+	int		show_log_size;
+Thanks.
 
- 	/* Filter by commit log message */
-  	struct grep_opt	*grep_filter;
+Regards,
+
 -- 
-1.5.3.rc2-dirty
+Paolo
+"Tutto cio' che merita di essere fatto,merita di essere fatto bene"
+Philip Stanhope IV conte di Chesterfield
+-
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+
+
+       
+____________________________________________________________________________________
+Yahoo! oneSearch: Finally, mobile search 
+that gives answers, not web links. 
+http://mobile.yahoo.com/mobileweb/onesearch?refer=1ONXIC
