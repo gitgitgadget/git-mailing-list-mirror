@@ -1,36 +1,39 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Internationalization of git-gui
-Date: Fri, 20 Jul 2007 00:55:10 -0400
-Message-ID: <20070720045510.GL32566@spearce.org>
-References: <20070719125657.8utk85ynuow4ow48@webmail.tu-harburg.de> <Pine.LNX.4.64.0707191323510.14781@racer.site>
+Subject: Re: [REVISED PATCH 2/6] Introduce commit notes
+Date: Fri, 20 Jul 2007 00:59:09 -0400
+Message-ID: <20070720045909.GM32566@spearce.org>
+References: <Pine.LNX.4.64.0707152326080.14781@racer.site> <Pine.LNX.4.64.0707160022560.14781@racer.site> <7vejj96igx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707190258550.14781@racer.site> <alpine.LFD.0.999.0707181949490.27353@woody.linux-foundation.org> <7vfy3l3rj0.fsf@assigned-by-dhcp.cox.net> <7vodi83fg7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 20 06:55:52 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alberto Bertogli <albertito@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 06:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBkWt-0006M8-QU
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 06:55:52 +0200
+	id 1IBkaI-0006ua-Qy
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 06:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbXGTEzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 00:55:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbXGTEzs
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 00:55:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49330 "EHLO
+	id S1750911AbXGTE7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 00:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750886AbXGTE7U
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 00:59:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49405 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbXGTEzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 00:55:47 -0400
+	with ESMTP id S1750863AbXGTE7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 00:59:19 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1IBkWP-00017O-R4; Fri, 20 Jul 2007 00:55:21 -0400
+	id 1IBka8-0001EG-2n; Fri, 20 Jul 2007 00:59:12 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 467F620FBAE; Fri, 20 Jul 2007 00:55:10 -0400 (EDT)
+	id 660D620FBAE; Fri, 20 Jul 2007 00:59:10 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707191323510.14781@racer.site>
+In-Reply-To: <7vodi83fg7.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,23 +43,31 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53051>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 19 Jul 2007, Christian Stimming wrote:
-> 
-> > Does this implementation look okay?
-> 
-> This is valuable work, but unfortunately, it does not follow the 
-> recommendation in Documentation/SubmittingPatches at all.
-> 
-> For starters, please send the patches inlined, one per mail.  And you 
-> might want to Cc the maintainer of git-gui (Shawn Pearce), too...
+Junio C Hamano <gitster@pobox.com> wrote:
+> I've long time ago concluded that if we care about reliability
+> (and we do very much), a bisectable tree without breaking
+> backward compatibility is impossible.  I was hoping to find a
+> "hole" in tree object format so that I can place an extended
+> section that is invisible to older versions of git, and place a
+> table that records offsets of each tree entries to help
+> bisection and/or perhaps a hash table to help look-up, but I do
+> not think it is possible.
+...
+> But the tree object format
+> is designed so tight that I do not see there is any place to put
+> an extension section.
 
-I agree that internationalization of git-gui is worth doing.
-I've thought about working on it, but haven't yet because nobody
-else has seemed interested in having it done.  Apparently someone
-is, so patches towards that end are most welcome.
+I came to the same conclusion the last time I thought about this
+problem, for all the same reasons you outlined.  And came up with
+pack v4.  Because the only way I could see that we could produce
+a more optimal tree was to just use a different *compression* of
+the tree, while still keeping its data the same.  Nico seemed to
+agree at the time, because he worked on the prototype with me.  :-)
+
+Its still hanging around in my fastimport repository.  But has not
+been merged with any recent Git, and it still needs a lot of work.
 
 -- 
 Shawn.
