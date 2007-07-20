@@ -1,100 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Fri, 20 Jul 2007 23:02:57 +0200
-Message-ID: <200707202302.57788.johan@herland.net>
-References: <858x9ez1li.fsf@lola.goethe.zz>
- <7vk5svxt1f.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.999.0707201210550.27249@woody.linux-foundation.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Update listingblock monospace fix to support all docbook
+ versions
+Date: Fri, 20 Jul 2007 23:14:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707202309220.16498@reaper.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0707200806540.20056@beast.quantumfyre.co.uk>
+ <20070720121153.23352.73276.julian@quantumfyre.co.uk>
+ <3A4230BE-5F05-4AE9-AAB3-3B66C30DEF76@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 21 00:03:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 00:14:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IC0ZE-0008Dy-6s
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 00:03:20 +0200
+	id 1IC0kF-0002dA-ID
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 00:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759515AbXGTWDN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 18:03:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758595AbXGTWDM
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 18:03:12 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:51978 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758333AbXGTWDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 18:03:11 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jul 2007 18:03:11 EDT
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JLH00403X578B00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 20 Jul 2007 23:03:07 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JLH001YAX4Y0J90@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 20 Jul 2007 23:02:58 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JLH00D8HX4Y9U20@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 20 Jul 2007 23:02:58 +0200 (CEST)
-In-reply-to: <alpine.LFD.0.999.0707201210550.27249@woody.linux-foundation.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1761827AbXGTWON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 18:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761414AbXGTWOL
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 18:14:11 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:49733 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759461AbXGTWOK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 18:14:10 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A5219B0EBC
+	for <git@vger.kernel.org>; Fri, 20 Jul 2007 23:14:08 +0100 (BST)
+Received: (qmail 27059 invoked by uid 103); 20 Jul 2007 23:14:07 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3701. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.03199 secs); 20 Jul 2007 22:14:07 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 20 Jul 2007 23:14:07 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <3A4230BE-5F05-4AE9-AAB3-3B66C30DEF76@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53124>
 
-On Friday 20 July 2007, Linus Torvalds wrote:
-> [...]
-> 
-> But that doesn't change the fundamental issue: the limitation with 
-> executable bits and symlinks is a limitation of the broken environment, 
-> not of git. But "directories stay around after the last file is gone" is 
-> not that, it would simply be a design mistake in git itself.
-> 
-> There are other reasons to not do it. What about file renames? Maybe the 
-> directory got *renamed*. From a pure content angle, this is "all the files 
-> in that directory went away". If you have stupid rules like "directories 
-> stay around even though all the files went away", you would again have 
-> problems with this common case.
-> 
-> In other words: I don't care one whit about the whiners. What's MUCH more 
-> important than some random whiny person saying "Daddy, daddy, I want a 
-> pony" is whether you can afford to maintain that pony in the future. And 
-> this pony is just stupid.
-> 
-> So here:
-> 
-> 	No, you cannot have a pony. NOT YOURS.
-> 
-> but I still think we should support the concept of importing things from 
-> other systems, and thus eventually support empty directories. Just not any 
-> crazy semantics with sticky histories.
+On Fri, 20 Jul 2007, Brian Gernhardt wrote:
 
-Does this mean that you are firmly opposed to the concept of storing 
-directories in the index/tree as such, or that you are only opposed to 
-(some of) the implementation ideas that have been discussed so far?
+>
+> On Jul 20, 2007, at 8:06 AM, Julian Phillips wrote:
+>
+>> +while ($line = <>) {
+>> +	$line =~ s/^#GIT#SET#MAN#FONT#/.ft/;
+>> +	print $line;
+>> +}
+>
+> Why not use `perl -pe "s/^#GIT#SET#MAN#FONT#/.ft/"` or an equivalent sed 
+> command in the Makefile instead of having this as a separate script?
 
-If the former is the case, does this mean that there will be no support for 
-empty directories in git, alternatively that such support is limited to 
-incorporating e.g. Dscho's .gitignore workaround into porcelain commands 
-(i.e. "git add --directory some_dir" will be mangled/transformed 
-into "touch some_dir/.gitignore && git add some_dir/.gitignore")?
+Only because my perl foo is too weak to know the perl form, and I didn't 
+know how to get sed to replace unicode characters - which the original 
+version of the script did.  I rewrote the script in my lunchbreak after I 
+failed to find any better way to solve the problem, and it didn't occur to 
+me to move it to sed at that point.
 
-(Granted, Dscho's .gitignore workaround is fairly elegant as workarounds go, 
-but it still reeks of inheriting a CVS misfeature.)
-
-
-Have fun!
-
-...Johan
+However, given the other issues with docbook xsl 1.72 I think it would 
+cleaner to simply say that git doesn't support 1.72.  I wouldn't be 
+surprised if other projects weren't taking that approach.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Julian
+
+  ---
+It's computer hardware, of course it's worth having <g>
+ 	-- Espy on #Debian
