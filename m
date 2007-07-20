@@ -1,142 +1,135 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Fri, 20 Jul 2007 12:11:43 +0200
-Message-ID: <86k5svwfj4.fsf@lola.quinscape.zz>
-References: <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com> <863azk78yp.fsf@lola.quinscape.zz> <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com> <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org> <alpine.LFD.0.999.0707191726510.27249@woody.linux-foundation.org> <85644fvdrn.fsf@lola.goe
- t he.zz> <46A08006.4020500@fs.ei.tum.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make git tag a builtin.
+Date: Fri, 20 Jul 2007 11:15:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707201110460.14781@racer.site>
+References: <469FF6E4.9010501@gmail.com> <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 20 12:13:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 12:15:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBpTk-00037E-EV
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:12:56 +0200
+	id 1IBpWV-0003wP-P9
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758486AbXGTKMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 06:12:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbXGTKMF
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:12:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:58601 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758362AbXGTKMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 06:12:01 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBpSg-0000ma-N1
-	for git@vger.kernel.org; Fri, 20 Jul 2007 12:11:50 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 12:11:50 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 12:11:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:6HTGy+ix3jcwA0hmvMQ1ZpgVTJA=
+	id S1752864AbXGTKPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 06:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbXGTKPl
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:15:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42955 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752338AbXGTKPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 06:15:41 -0400
+Received: (qmail invoked by alias); 20 Jul 2007 10:15:39 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp032) with SMTP; 20 Jul 2007 12:15:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19w2Os85rdwAOnt3R9A1uctEdutynw8PbKSil7JhU
+	j4Zjkwhie5TBNq
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53077>
 
-Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
+Hi,
 
-> David Kastrup wrote:
->>> Otherwise you could have two very different trees that encode the
->>> same *content* (just with different ways of getting there -
->>> depending on whether you have a history with empty trees or not),
->>> and that's very much against the philosophy of git, and breaks some
->>> fundamental rules (like the fact that "same content == same SHA1").
->>
->> No, the content is _different_.  One tree contains a tracked
->> directory, the other does not.  That means that the trees behave
->> _differently_ when you manipulate them, and that means that they are
->> _not_ the same tree.
->
-> You are mistaking things.
+On Fri, 20 Jul 2007, Junio C Hamano wrote:
 
-No, I am redefining them, or rather the view on them.  Subtle
-difference.
+> Carlos Rica <jasampler@gmail.com> writes:
+> 
+> > This replaces the script "git-tag.sh" with "builtin-tag.c".
+> 
+> Thanks.  Will queue in 'next', and perhaps with a few nit fixups
+> to merge as the first thing after 1.5.3.
 
-> Like the executable bit on a file is not content, the fact that a
-> directory should be kept despite being empty is also an *attribute*
-> of the directory.  This is meta-data, not actual data (content).
+Nice!
 
-We need to track it, anyway.  So there is little point in not using
-the existing infrastructure for handling named entities.
+> launch-editor() would need adjustment for GIT_EDITOR and core.editor 
+> which should be straightforward.
 
-> So no matter how elegant tracking the "." entry might be (and I
-> think it is, because it covers a lot of corner cases already), it
-> puts the information at the wrong place.
+Yes.  As a separate commit?  After a couple of revisions, I lost track of 
+what I looked at, and what not...  So it would make it easier for me to 
+have these changes after the big builtin-tag commit.
 
-I don't see that the place is wrong: after all, that is where Unix
-places "." too, and for good reason.  I was arguing for _separating_
-the concept of "directory" and "tree" in the repository.  The tree is
-a container entity defined exclusively by its contents (which
-determine its hash).  That is how git already does things.  There is
-_no_ connection with the physical existence of a directory: in the
-work directory, git creates and deletes directories as a _side-effect_
-of storing and removing trees.  But git itself does not track
-directories as a physical entity at _all_.  If you had a flat
-filesystem allowing slashes in filenames, git would get along better
-than it does now, without ever creating or removing a directory.
-Trees are just a convenient selection and pattern matching mechanism
-for files as far as git is concerned.  The correspondence to physical
-directories in the work directory is a nuisance rather than an asset
-as far as git is concerned.
+> > +		sp = buf = read_sha1_file(sha1, &type, &size);
+> > +		if (!buf || !size)
+> > +			return 0;
+> 
+> Theoretically, I can create millions of lightweight tags, all of
+> them pointing at a zero-length blob object (or an empty tree
+> object) and kill you with memory leak here ;-).
 
-In a recent thread here, tags with slashes were supported by
-essentially doing
+Yes ;-)  Would we really want to say
 
-    mkdir -p "`dirname $TAG`"
-    touch $TAG
+	if (!buf)
+		return 0;
+	if (!size) {
+		free(buf);
+		return 0;
+	}
 
-where directory creation is just a side effect of supporting slashes.
-And that, if you look closely, is git's current relation with
-directories altogether.  The directories in the work file system are
-created by git just as a side effect for representing slashes, which
-in turn facilitate a certain manner of pattern matching.
+here?  IMHO that is overkill.
 
-And "." seems perfectly well suited to bring across the point that
-there actually is _physical_ existence associated with a directory,
-existence that remains when the rest of the tree is gone and _makes_ a
-difference to what the tree is, because it has a _different_
-representation in the work file system.
+> > +		/* skip header */
+> > +		while (sp + 1 < buf + size &&
+> > +				!(sp[0] == '\n' && sp[1] == '\n'))
+> > +			sp++;
+> > +		/* only take up to "lines" lines, and strip the signature */
+> > +		for (i = 0, sp += 2; i < filter->lines && sp < buf + size &&
+> > +				prefixcmp(sp, PGP_SIGNATURE "\n");
+> > +				i++) {
+> 
+> Minor nit; I would have split this to four physical lines, like:
+> 
+> 		for (i = 0, sp += 2;
+> 			i < filter->lines && sp < buf + size &&
+> 			prefixcmp(sp, PGP_SIGNATURE "\n");
+> 			i++) {
+> 
+> The places that semicolons appear are more significant gaps when
+> reading the code.
 
-Storing it as an _attribute_ of the tree is a bad idea, since then the
-simple rule "a tree without contents is empty" needs an exception.
-And a tree stops becoming just a container of its contents and all
-sort of new exceptions creep up.
+I am to blame for that.  That code was outlined by me.
 
-There are some systems where the difference between directory as a
-file and directory as a structuring method are more apparent than
-under Unix (some utilities like rsync differentiate between A/B and
-A/B/ to bring across that difference).
+> > +int cmd_tag(int argc, const char **argv, const char *prefix)
+> > +{
+> > ...
+> > +		if (!strcmp(arg, "-F")) {
+> > +			unsigned long len;
+> > +			int fd;
+> > +
+> > +			annotate = 1;
+> > +			i++;
+> > +			if (i == argc)
+> > +				die("option -F needs an argument.");
+> > +
+> > +			if (!strcmp(argv[i], "-"))
+> > +				fd = 0;
+> > +			else {
+> > +				fd = open(argv[i], O_RDONLY);
+> > +				if (fd < 0)
+> > +					die("could not open '%s': %s",
+> > +						argv[i], strerror(errno));
+> > +			}
+> > +			len = 1024;
+> > +			message = xmalloc(len);
+> 
+> You cannot anticipate how many bytes the user will type (or
+> pipe-in), but when you opened the file you could fstat() to see
+> how many bytes you would need to hold the contents of that
+> file.  Even in stdin case fstat(fd) could tell you the size, but
+> I am not sure how to tell if the st_size is reliable.  But for
+> the purposes of "git tag", 1k buffer that grows on demand is
+> probably cheaper than a fstat() syscall.
 
-Here is an example for some Emacs function concerned with the concept:
+For a one-shot program as git-tag, I agree, the current patch is 
+sufficient.
 
-    directory-file-name is a built-in function in `C source code'.
-    (directory-file-name DIRECTORY)
-
-    Returns the file name of the directory named DIRECTORY.
-    This is the name of the file that holds the data for the directory DIRECTORY.
-    This operation exists because a directory is also a file, but its name as
-    a directory is different from its name as a file.
-    In Unix-syntax, this function just removes the final slash.
-    On VMS, given a VMS-syntax directory name such as "[X.Y]",
-    it returns a file name such as "[X]Y.DIR.1".
-
-    [back]
-
-> That's sad, because otherwise it would be really elegant.
-
-If something is not elegant because of the angle of view, change the
-view.  And it is not like the different angle has no predecessors or
-no consistency.
-
--- 
-David Kastrup
+Ciao,
+Dscho
