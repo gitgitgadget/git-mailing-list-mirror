@@ -1,113 +1,88 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Fri, 20 Jul 2007 23:36:25 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707202320300.16498@reaper.quantumfyre.co.uk>
-References: <858x9ez1li.fsf@lola.goethe.zz> <7vk5svxt1f.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.999.0707201210550.27249@woody.linux-foundation.org>
- <200707202302.57788.johan@herland.net> <alpine.LFD.0.999.0707201421110.27249@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: gitk problems: can't unset "idinlist(...)"
+Date: Fri, 20 Jul 2007 16:05:54 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707201554540.27249@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 21 00:36:54 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: Git Mailing List <git@vger.kernel.org>,
+	Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Jul 21 01:06:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IC15d-0008HT-LO
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 00:36:50 +0200
+	id 1IC1Y7-0007bz-8c
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 01:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761196AbXGTWg3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 18:36:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756937AbXGTWg2
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 18:36:28 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:56288 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755583AbXGTWg1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 18:36:27 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 5477FB0EBB
-	for <git@vger.kernel.org>; Fri, 20 Jul 2007 23:36:26 +0100 (BST)
-Received: (qmail 27845 invoked by uid 103); 20 Jul 2007 23:36:25 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3701. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.032634 secs); 20 Jul 2007 22:36:25 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 20 Jul 2007 23:36:25 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <alpine.LFD.0.999.0707201421110.27249@woody.linux-foundation.org>
+	id S1758139AbXGTXGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 19:06:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbXGTXGI
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 19:06:08 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41735 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758273AbXGTXGG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 19:06:06 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6KN60k9008593
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Jul 2007 16:06:01 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6KN5sld021189;
+	Fri, 20 Jul 2007 16:05:54 -0700
+X-Spam-Status: No, hits=-2.714 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53126>
 
-On Fri, 20 Jul 2007, Linus Torvalds wrote:
 
->
->
-> On Fri, 20 Jul 2007, Johan Herland wrote:
->>
->> Does this mean that you are firmly opposed to the concept of storing
->> directories in the index/tree as such, or that you are only opposed to
->> (some of) the implementation ideas that have been discussed so far?
->
-> I've already sent out a *patch* to do so, for chissake. It handled all
-> these cases perfectly fine, as far as I know, but I didn't test it all
-> that deeply (and made it clear when I sent that patch out).
->
-> In fact, in this whole pointless discussion, I think I'm so far the only
-> one to have done anything constructive at all. Sad.
+Ok, color me stumped, but gitk is unhappy.
 
-There was Dscho's .gitignore based patch too ...
+Ingo and Thomas have just announced that they  have a unified x86 tree for 
+both i386/x86-64, so I did
 
->
-> So here's my standpoint:
->
-> - people who use git natively might as well use the ".gitignore" trick.
->   It really *does* work, and there really aren't any downsides. Those
->   directories will stay around forever, until you decide that you don't
->   want them any more. Problem solved.
->
->   Sure, if you export the git archive into some other format, you might
->   well want to do something about the ".gitignore" files (like just
->   delete them, since they won't be meaningful in an SVN environment, for
->   example, but you might also just convert them into SVN's "attributes"
->   or whatever it is that SVN uses to ignore files).
+	gitk arch/i386 arch/x86_64
 
-Personally I quite like this approach - I'm going to use it to keep all 
-the empty directories from Subversion in my importer.  It seems to address 
-everthing quite neatly.
+to look at what has happened recently in the kernel in that area.
 
-I don't really understand the objections ... especially since I can't see 
-why you want an empty directory if you're not going to put _something_ in 
-it - in which case, presumably you want to ignore it (so maybe a 
-.gitignore containing * would be better than an empty one)?  However, I'm 
-sure that if people want it, they have a reason.
+I get the gitk history view, but no actual diffs, and I get an application 
+error window saying
 
-> SCM is too important to play games with. Git gets things right, and I
-> doubt people really _realize_ that the "tracks content" is why git is so
-> much better, and why git can do merges so much faster and more reliably
-> than anybody else.
+	can't unset "idinlist(57d1c91fa6d9146b309b7511f6432dea2a24858b)": no such element in array
+	can't unset "idinlist(57d1c91fa6d9146b309b7511f6432dea2a24858b)": no such element in array
+	    while executing
+	"unset idinlist($id)"
+	    (procedure "layouttail" line 11)
+	    invoked from within
+	"layouttail"
+	    (procedure "layoutmore" line 35)
+	    invoked from within
+	"layoutmore $tlimit $allread"
+	    (procedure "chewcommits" line 9)
+	    invoked from within
+	"chewcommits 1"
+	    ("eval" body line 1)
+	    invoked from within
+	"eval $script"
+	    (procedure "dorunq" line 9)
+	    invoked from within
+	"dorunq"
+	    ("after" script)
 
-This is the thing that made me interested in git back in April '05.  I 
-couldn't see what we were going to end up with at that point - but I was 
-_convinced_ that due to the underlying design it was worth watching. 
-Being a python type (sorry ... :$) hg looked interesting when it sprang up 
-- but they threw away what I considered to be one of the most compelling 
-features of git (at the time there wasn't the wealth of really nice tools 
-that we now have).
+which really doesn't tell me much.
 
-In fact, I really should say "Thank you Linus", since I came that close to 
-writing an SCM from scratch myself - having been using Subversion with 
-branches for quite some time (and CVS before that - and yes I do mean 
-branches + CVS).  Now I no longer feel the need to write an SCM - just a 
-longing to use git.  git is probably better than anything I would have 
-come up with too. :D
+It doesn't seem to happen without path limiting, and it also doesn't seem 
+to happen for all paths (doing "gitk drivers/scsi" doesn't show it), but 
+somehow that "arch/i386" part seems to bring it out.
 
--- 
-Julian
+I'm not seeing anything interesting or special about that named commit, or 
+anything else that would make gitk unhappy. But it is.
 
-  ---
-She is descended from a long line that her mother listened to.
- 		-- Gypsy Rose Lee
+Current kernel tree. Anybody else has any ideas? Somebody who knows 
+tcl/tk, and gitk?
+
+			Linus
