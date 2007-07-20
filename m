@@ -1,91 +1,83 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH] Internationalization of git-gui
-Date: Fri, 20 Jul 2007 10:56:02 +0200
-Message-ID: <20070720105602.7dcm241ts0k0ww88@webmail.tu-harburg.de>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com>
-	<20070720050455.GN32566@spearce.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Git doesn't like symlinks?
+Date: Fri, 20 Jul 2007 13:19:07 +0200
+Message-ID: <46A09A2B.3030205@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 20 12:59:39 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 13:20:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBqCw-0007Hm-OK
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:59:39 +0200
+	id 1IBqX2-0004fC-Uk
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 13:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754007AbXGTK7e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 06:59:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbXGTK7e
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:59:34 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:46185 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753982AbXGTK7d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 06:59:33 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6K8u2IK008974
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 20 Jul 2007 10:56:02 +0200
-Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6K8u27R012255;
-	Fri, 20 Jul 2007 10:56:02 +0200
-Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
-	id 8D264E50349; Fri, 20 Jul 2007 10:56:02 +0200 (CEST)
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
-	webmail.tu-harburg.de (Horde MIME library) with HTTP; Fri, 20 Jul 2007
-	10:56:02 +0200
-In-Reply-To: <20070720050455.GN32566@spearce.org>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+	id S1755243AbXGTLTp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 07:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755883AbXGTLTp
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 07:19:45 -0400
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:40104
+	"EHLO spunkymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755074AbXGTLTo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 07:19:44 -0400
+Received: from [192.168.201.100] (dsl-146-26-37.telkomadsl.co.za [165.146.26.37])
+	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id DE9A2FFD5F
+	for <git@vger.kernel.org>; Fri, 20 Jul 2007 04:19:42 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53085>
 
-Quoting "Shawn O. Pearce" <spearce@spearce.org>:
-> Brett Schwarz <brett_schwarz@yahoo.com> wrote:
->> This is a good idea. However, I assume the _ proc is just sugar. It
->> might be better to follow a more "standard" way for this, and just
->> import the msgcat namespace, and then you can just use [mc].
->>
->> package require msgcat
->> namespace import ::msgcat::*
->>   .
->>   .
->> .mbar add cascade -label [mc Repository] -menu .mbar.repository
->
-> Not just better, I'd prefer it.  The proc name "_" is cute but
-> is just too darn short.  I would much prefer to use "mc" and just
-> say that "mc" in all of git-gui's namespaces is reserved for the
-> message catalog
+Hi folks,
 
-I used (and prefer) "_" because that's the standard function name for  
-i18n'd strings when using gettext (talking about a "standard" way). In  
-that case the convention from C simply carries over to tcl/tk, and  
-programmers who have worked with gettext in C before, which uses  
-_("some message"), directly apply what they already know. [mc ..], on  
-the other hand, would be a tcl-only function name which doesn't give  
-too much of a hint of what this function does, except for those  
-programmers who happen to know that tcl's translation is done by a  
-package called msgcat. One might rather consider something like [tr  
-...], for "translate", or even [i18n ...].
+I have been tasked with doing some development against an external SVN 
+repo, and keeping it largely in sync with an internal directory.
 
-That being said, I'm rather agnostic on which proc name you really  
-prefer. Just pick one.
+Seeing as how this is a git list, I obviously decided to do this using 
+git :-)
 
-Being a newcomer on this list, could you please explain to me how to  
-proceed with the i18n patches so far? Do you want to have patches  
-submitted after some further changes (which ones?) and/or in different  
-formats? Do you prefer to have all changes in a smaller number of  
-commit rather than split the way I did before? Should I wait for some  
-more days/weeks/whatever until you or particular other developers have  
-reviewed the patches? Thanks.
+So, I have a local git repo with my local changes from the SVN repo, and 
+I can push them to the SVN repo without too many problems. The problem 
+arises when I try to sync with the local directory.
 
-Christian
+Since the local directory's structure doesn't match the repo exactly, I 
+figured I could work around that by using a symlink to get to the right 
+place.
+
+ie. the local dir is
+C:\local\blah\release\5.2\<contents>
+
+and the structure of the SVN (and hence git) repo is:
+/top/main/<contents>
+
+where <contents> is/should be identical between the two places.
+
+Obviously, git won't work correctly in the local dir, so I tried the 
+following (on Cygwin)
+
+$ cd /tmp
+$ ~/git/contrib/workdir/git-new-workdir /my/git/repo/ repo-local
+$ cd repo-local/top
+$ rm -rf main/
+$ ln -s /c/local/blah/release/5.2/ main/
+$ git status
+
+This worked, and showed me that there were a few files out of sync.
+
+I decided to copy over one of the files from git to the local dir:
+
+$ git checkout top/main/some/file
+
+And git deleted my "main" symlink, and replaced it with a real dir, 
+containing "some/file".
+
+Everything _else_ was now "missing".
+
+Any ideas on how I can get this to work? I know this is not strictly 
+what git was designed for, but it could do a really good job if it would 
+only leave my symlink alone.
+
+Rogan
