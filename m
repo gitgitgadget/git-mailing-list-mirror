@@ -1,62 +1,57 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: [PATCH] Document how to tell git to not launch a pager
-Date: Thu, 19 Jul 2007 20:51:14 +0200
-Message-ID: <dbfc82860707191151w3e9571fcu60d113cba6c2f6dd@mail.gmail.com>
-References: <20070719104351.GA17182@midwinter.com>
-	 <20070719110224.GA4293@piper.oerlikon.madduck.net>
-	 <Pine.LNX.4.64.0707191211010.14781@racer.site>
-	 <Pine.LNX.4.64.0707191235490.32611@reaper.quantumfyre.co.uk>
-	 <86ir8gbo0a.fsf@lola.quinscape.zz>
-	 <alpine.LFD.0.999.0707191128040.27353@woody.linux-foundation.org>
+From: Karl Fogel <kfogel@red-bean.com>
+Subject: Re: CVS -> SVN -> Git
+Followup-To: gmane.comp.version-control.subversion.cvs2svn.devel
+Date: Thu, 19 Jul 2007 20:51:28 -0700
+Message-ID: <87tzrzivgf.fsf@red-bean.com>
+References: <Pine.LNX.4.64.0707131541140.11423@reaper.quantumfyre.co.uk>
+	<469804B4.1040509@alum.mit.edu>
+	<46a038f90707132230n120e6392uaf5cd86ff10b6012@mail.gmail.com>
+	<4699034A.9090603@alum.mit.edu> <20070714195252.GB11010@thyrsus.com>
+	<46994BDF.6050803@alum.mit.edu> <20070715013949.GA20850@thyrsus.com>
+	<46a038f90707151805j454b57fbvb4d7ed526e1e64ce@mail.gmail.com>
+	<469F52BF.8050300@bluegap.ch>
+Reply-To: Karl Fogel <kfogel@red-bean.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 20:51:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, esr@thyrsus.com,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	git@vger.kernel.org, dev <dev@cvs2svn.tigris.org>
+To: Markus Schiltknecht <markus@bluegap.ch>
+X-From: git-owner@vger.kernel.org Thu Jul 19 20:51:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBb5z-0002Ac-S2
-	for gcvg-git@gmane.org; Thu, 19 Jul 2007 20:51:28 +0200
+	id 1IBb6E-0002HL-5J
+	for gcvg-git@gmane.org; Thu, 19 Jul 2007 20:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbXGSSvQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 14:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXGSSvQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 14:51:16 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:4276 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750867AbXGSSvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 14:51:15 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so730319wah
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 11:51:14 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=YoF7zNhGd9seG0zc1Q4rx2vDPc036Dpg+sy0SFeAgj8LTkun17s+tQtbvPYRWkZPMyJ8b8Ww1AMdghykfq0g91OpoaKc2fJCqZXtPN6G7V1OcH9wEXD0XAYOfgIVdCj00Pd8Zrz0qBVP4F+yxENgglTuBe3xVkvMkaegB933d/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=cPsuaso7WOXAiISFsdb+AgmiJNMGeEjH5Afblcxtz/Ub0TzKlmvef+DrPOo8sqDPOh7D08MGew6MMEtLEjLJZhZIxDLklzqPF0IPrz3ziWFkqpCZQA7x9UoDccsvvEKDx3LgO4U+p0En5HePC0nKtHFsKiW2XJgXPx3Mrvlkd+M=
-Received: by 10.114.175.16 with SMTP id x16mr2823975wae.1184871074598;
-        Thu, 19 Jul 2007 11:51:14 -0700 (PDT)
-Received: by 10.114.196.8 with HTTP; Thu, 19 Jul 2007 11:51:14 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.999.0707191128040.27353@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 92c2a9cc0a3e3c40
+	id S1753324AbXGSSvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 14:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753139AbXGSSvh
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 14:51:37 -0400
+Received: from Sanpietro.red-bean.com ([66.146.193.61]:48188 "EHLO
+	sanpietro.red-bean.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbXGSSvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 14:51:36 -0400
+Received: from localhost ([127.0.0.1]:52557)
+	by sanpietro.red-bean.com with esmtp (Exim 4.63)
+	(envelope-from <kfogel@red-bean.com>)
+	id 1IBb66-0000Ih-PO; Thu, 19 Jul 2007 13:51:35 -0500
+Mail-followup-to: dev@cvs2svn.tigris.org
+In-Reply-To: <469F52BF.8050300@bluegap.ch> (Markus Schiltknecht's message of "Thu\, 19 Jul 2007 14\:02\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53019>
 
-On 7/19/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+Markus Schiltknecht <markus@bluegap.ch> writes:
+> Sure, we certainly need a meta format of some sort (not a full blown
+> VCS, agreed, but somehow we need to represent commits, tags and
+> branches). And IMO, the subversion based format is not a good one,
+> because it treats branches and tags very different from most other
+> systems (and from what it should be from a users perspective: an
+> atomic operation).
 
-> In fact, I'd suggest not using screen at all (what a piece of horrid crap),
-> but some people have trouble letting go.
-
-I don't want to start a holy war here, but what's wrong with screen?
-
-And what should we be embracing instead?
-
-  nikolai
+Huh?  I don't understand what you're saying about atomicity here.
