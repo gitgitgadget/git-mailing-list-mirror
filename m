@@ -1,133 +1,89 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH] Update listingblock monospace fix to support all docbook
-	versions
-Date: Fri, 20 Jul 2007 13:06:21 +0100
-Message-ID: <20070720121153.23352.73276.julian@quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0707200806540.20056@beast.quantumfyre.co.uk>
-Cc: Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 14:16:30 2007
+From: Johan Herland <johan@herland.net>
+Subject: Re: Empty directories...
+Date: Fri, 20 Jul 2007 14:18:26 +0200
+Message-ID: <200707201418.26534.johan@herland.net>
+References: <85lkdezi08.fsf@lola.goethe.zz> <200707201220.15114.johan@herland.net> <86tzrzuyyy.fsf@lola.quinscape.zz>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 14:18:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBrPG-00062K-Lr
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 14:16:27 +0200
+	id 1IBrRP-0006r9-UR
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 14:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664AbXGTMQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 08:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754299AbXGTMQV
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 08:16:21 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:51731 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753664AbXGTMQT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 08:16:19 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 69817C611C
-	for <git@vger.kernel.org>; Fri, 20 Jul 2007 13:16:18 +0100 (BST)
-Received: (qmail 6384 invoked by uid 103); 20 Jul 2007 13:16:18 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3701. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.025622 secs); 20 Jul 2007 12:16:18 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 20 Jul 2007 13:16:17 +0100
-X-git-sha1: 0776e7ff1bd8cf45bd19a93656b64745fdc079a3 
-X-Mailer: git-mail-commits v0.1
-In-Reply-To: <Pine.LNX.4.64.0707200806540.20056@beast.quantumfyre.co.uk>
+	id S1754365AbXGTMSg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 08:18:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756504AbXGTMSg
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 08:18:36 -0400
+Received: from sam.opera.com ([213.236.208.81]:36154 "EHLO sam.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754273AbXGTMSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 08:18:35 -0400
+Received: from pc166.lan019.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l6KCIQJc029460
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 20 Jul 2007 12:18:31 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <86tzrzuyyy.fsf@lola.quinscape.zz>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.90.1/3702/Fri Jul 20 09:04:11 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53089>
 
-The previous fix to force the listingblock to be monospaced would not
-work for docbook versions 1.72 or newer, as they now escape leading
-'.'s and you have to use U+2302 instead.  However you can't use U+2302
-in ealier versions ...
+On Friday 20 July 2007, David Kastrup wrote:
+> Johan Herland <johan@herland.net> writes:
+> > My point is fundamentally that selectively tracking directories is a
+> > more powerful concept than just tracking _all_ directories by
+> > default.
+> 
+> Perhaps you might read up on some of the past discussion before
+> beating dead horses.  This has been covered already, and more than
+> once.  I never asked for "all directories" to be tracked.  I outlined
+> cases where they are tracked and where not, and I tested that the
+> mechanisms in "man gitignore" already work _perfectly_ with the
+> pattern "." for configuring the _implied_ tracking at directory,
+> repository, project, and user preference level.
 
-So this uses the string '#GIT#SET#MAN#FONT#', and then changes that to
-.ft using a post-process perl script.
+It seems our discussion is based on so many misunderstandings of each other 
+that it's not very useful to reply to specific parts of it.
 
-Not pretty, but it works.
+AFAICS, from a high-level POV, we're pretty much in agreement on the following 
+points:
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
+1. Git should be able to track directories.
 
-On Fri, 20 Jul 2007, Julian Phillips wrote:
+2. Tracked directories should be kept alive, even if empty.
 
-> On Fri, 20 Jul 2007, Junio C Hamano wrote:
->
->>  Julian Phillips <julian@quantumfyre.co.uk> writes:
->>
->> >  In order for these roff commands to get through to the manpage they
->> >  have to be element encoded to prevent quoting.  In particular with
->> >  docbook xsl 1.72.0 and newer we have to use U+2302 instead of . to
->> >  prevent the roff command being escaped.  We also add a small perl
->> >  script for docbook < 1.72.0.
->>
->>  This does not work at all for docbook 1.71.  I get "^<TAB>ft C"
->>  as output from xmlto.
->
-> Oh, well ... that's handy? :S
->
-> I've just checked, and I do have a machine with docbook < 1.72, so I'll see
-> if I can get something working on both.  Probably early next week since I'm
-> away this weekend.
+3. Git must not necessarily track _all_ directories.
 
-This works ... but I'm not particularly proud of it.
 
-I've done this a patch ontop of master, since you seem to have already pushed
-out the tweaked version of my original patch.
+Conversely, we seem to disagree on these points:
 
- Documentation/Makefile                    |    3 +++
- Documentation/asciidoc.conf               |    4 ++--
- Documentation/insert_man_font_commands.pl |    6 ++++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
- create mode 100755 Documentation/insert_man_font_commands.pl
+4. Whether or not git should track directories by default. You say yes, I say 
+no.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b062757..70f4b44 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -121,6 +121,9 @@ clean:
- 
- %.1 %.5 %.7 : %.xml
- 	xmlto -m callouts.xsl man $<
-+	mv $@ $@.tmp
-+	./insert_man_font_commands.pl < $@.tmp > $@
-+	$(RM) $@.tmp
- 
- %.xml : %.txt
- 	$(RM) $@+ $@
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index af5b155..83fa03f 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -28,11 +28,11 @@ ifdef::backend-docbook[]
- <example><title>{title}</title>
- <literallayout>
- ifdef::doctype-manpage[]
--&#10;.ft C&#10;
-+&#10;#GIT#SET#MAN#FONT# C&#10;
- endif::doctype-manpage[]
- |
- ifdef::doctype-manpage[]
--&#10;.ft&#10;
-+&#10;#GIT#SET#MAN#FONT#&#10;
- endif::doctype-manpage[]
- </literallayout>
- {title#}</example>
-diff --git a/Documentation/insert_man_font_commands.pl b/Documentation/insert_man_font_commands.pl
-new file mode 100755
-index 0000000..c100534
---- /dev/null
-+++ b/Documentation/insert_man_font_commands.pl
-@@ -0,0 +1,6 @@
-+#!/usr/bin/perl -w
-+
-+while ($line = <>) {
-+	$line =~ s/^#GIT#SET#MAN#FONT#/.ft/;
-+	print $line;
-+}
+5. How the tracking of directories should be implemented in git's object 
+database. I want to keep the index/tree as-is except for adding directory 
+entries (w/mode 040000) for the tracked directories only. You seem to want to 
+add directory entries for _all_ directories and then additional "." entries 
+for directories you don't want deleted if/when empty.
+
+
+Am I making sense, or have I misunderstood our misunderstandings?
+
+
+...Johan
+
+
 -- 
-1.5.2.2
+Johan Herland, <johan@herland.net>
+www.herland.net
