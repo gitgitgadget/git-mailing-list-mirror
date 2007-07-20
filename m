@@ -1,119 +1,105 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Add --log-size to git log to print message size
-Date: Fri, 20 Jul 2007 22:49:17 +0200
-Message-ID: <e5bfff550707201349i52363837o739d27c6c4dc3ec8@mail.gmail.com>
-References: <e5bfff550707201115v2531434erd9e10a2b816a59bf@mail.gmail.com>
-	 <Pine.LNX.4.64.0707201939170.14781@racer.site>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH] Internationalization of git-gui
+Date: Fri, 20 Jul 2007 23:40:27 +0200
+Message-ID: <200707202340.27496.stimming@tuhh.de>
+References: <772058.65660.qm@web38907.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 20 22:49:24 2007
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Brett Schwarz <brett_schwarz@yahoo.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 23:40:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBzPd-00036z-NA
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 22:49:22 +0200
+	id 1IC0D7-0001pX-28
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 23:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762761AbXGTUtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 16:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762616AbXGTUtS
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 16:49:18 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:37007 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762323AbXGTUtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 16:49:17 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1125457wah
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 13:49:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kag2ScukrATjYjtEXTllFdnMZPwF3LXvd+BFKCGz+F/q9Qc3gDkqW81V51rD6w08jPTHARnHbLmNrifxv2XxpYvOs9PDAp8xbE5eoZt38dzmB4ckxS2Rapym1Px7tFJ1wuRkZ1sC2SPRB1xOf8H3iZ48KwxadK53PxuIdL8dTos=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KJBjKETq/p/e4pg+E/dP3m072okK4TfQ0fCT3XvVfOBVXQS+7s4oGPXxXUdLVAUyq5BNaPusJDZIRQNEKhYI6d6bJPtsNS+FoY5dUWjrI8GX6fGrnPvzz+JTUf8CcatO+d3BqGYehZAYSP1pHWGsr0bqFqodBOFdMe5Kjlg9KUU=
-Received: by 10.114.37.1 with SMTP id k1mr850552wak.1184964557044;
-        Fri, 20 Jul 2007 13:49:17 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Fri, 20 Jul 2007 13:49:17 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707201939170.14781@racer.site>
+	id S1753821AbXGTVkZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 17:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755411AbXGTVkZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 17:40:25 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45762 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752412AbXGTVkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 17:40:23 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6KLe9vK031904
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 20 Jul 2007 23:40:10 +0200
+Received: from [192.168.2.102] (p54902ADD.dip0.t-ipconnect.de [84.144.42.221])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6KLe8ff023004
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Jul 2007 23:40:09 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <772058.65660.qm@web38907.mail.mud.yahoo.com>
 Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53121>
 
-On 7/20/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Am Freitag, 20. Juli 2007 20:34 schrieb Brett Schwarz:
+> After the glossary of terms has been create, it is easy to create the
+> catalog file (assuming we use Tcl's standard mechanism). Each locale should
+> have it's own file, named <locale_name>.msg (for example, es.msg for
+> spanish). Inside that file, you just create entries for each glossary term
+> (the below assumes that the msgcat namespace was imported):
 >
-> On Fri, 20 Jul 2007, Marco Costalba wrote:
->
-> > This is take 3 of this patch. In this case has been clearly added that
-> > diff content size is not included.
->
-> Two concerns and a half:
->
-> - if you do not include the diff content size, don't you need to parse the
->   output anyway?
->
+>   mcset es Hello Hola
+>   mcset es "Hello %s" "Hola %s"
 
-First, dif content is included only when retrieving file history and
-not to show revisions at startup that is the main use.
+I beg your pardon, but I think you grossly misunderstood what I meant 
+by "glossary". So before we end up in further confusion, let me clarify how 
+the general translation approach works. I'll use gettext wording because 
+that's what I know (from being the i18n guy in the gnucash project), but you 
+can easily insert any other wording you like here.
 
-Second, also with diff content I don't parse the message because I
-jump directly to the beginning of the diff and, yes, from there I
-check for delimiting '\0', so I would say also in that case we have a
-speedup, but it's not very important because we are talking of speed
-up when you read thousands of revisions, few hundred (as typical in
-file histories) are not a problem.
+#1 For the translation in general, there is the set of all user-visible 
+strings in the source language (here: english). In gettext terms this is 
+called the "PO template file", git-gui.pot, also called the message template 
+file. This set of to-be-translated strings needs to be extracted from the 
+source code, which can be done by the xgettext program.
 
-Also because with -p option git log becomes a real bottleneck.
+#2 For each target language, there is a human-readable mapping file that maps 
+each source string (english) into the target language. In gettext terms this 
+is the "PO file", de.po and it.po and ja.po and whatnot, also called the 
+translation file. This is the *only* file translators actually work with. 
+Gettext uses its PO file format here and a plethora of different tools exist 
+to help translators editing these files. (Examples: emacs po-mode, 
+KBabel, ...)
 
+#3 For each target language, the translation files are converted to a 
+(potentially not human-readable) "compiled" mapping file, which is then read 
+at program runtime and used for the actual translation. For the gettext po 
+file format, the msgfmt program can convert this to Tcl's .msg files.
 
-> - what do you do if the underlying Git does not support --log-size? Exit?
->
+If I understand correctly, your above suggestion implies that for Tcl msgcat, 
+the file in #2 and #3 are one and the same? In my opinion this might make 
+sense if and only if that file format is supported by at least as many 
+translation tools and offers as flexible translation updates as gettext's po 
+file format does. From my experience the po file format indeed offers a bunch 
+of features that other translation file formats are missing but which are of 
+significant help to the translator. That's why I would strongly suggest to do 
+the actual translation inside a po file, and have it converted to the msg 
+file afterwards. 
 
-If for "not support" you mean that underlying Git sets size at zero
-(as allowed by specifications) this is of course handled: qgit falls
-back on legacy '\0' search. BTW the currently  published version does
-exactly that, it has already the shortcut logic, but falls back always
-on zero search because the modified git is _currently_ only on my hard
-disk.
+On the other hand when I mentioned a "glossary", I was talking about a simple 
+text file that should collect the 15-20 most important single words from 
+within the project. Those words usually show up in many different translation 
+strings, and as a translator you would easily lose track of which word you 
+translated into which translation. (Example glossary terms: repository, 
+commit [both the verb and the noun, heh], fetch, pull, push.) That's why you 
+would first collect that glossary, then come up with a one-to-one translation 
+for each of the 20 words of the glossary, and *then* use that fixed wording 
+throughout all 200-500 message translations of the actual project. 
 
-
-Otherwise, if you mean that git version is too old, in this case this
-is caught by the git version check done always at startup.
-
-Indeed I plan to add this feature only to new qgit4, will not be back
-ported to stable qgit-1.5.6
-
-> - Would it not be much quicker to read the rev-list, and read messages
->   only on demand?
->
-
-That's exactly what we are talking about ;-)
-
- All the output of git-log (no more git-rev-list) is stored in memory
-as a raw big binary blob, for quick retrieval, i.e. to avoid calling
-an external git command process, but messages are not parsed until are
-used. So _this_ is exactly the point of all this patch.
-
-If you mean using git-rev-list without --header options then , also
-not considering that currently we use git-log, the speed up is very
-small and when you have to show something to the user you always need
-to run a git command.
-
-Perhaps this could be accepted (perhaps not ;-) for mouse browsing
-through revisions, but what about sub string searching as example on
-author or log title fields? probably it would became super slow also
-for lists of only few hundred revs.
-
-
-> Ciao,
-> Dscho
-
-Ciao
-Marco
+Christian
