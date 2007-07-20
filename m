@@ -1,65 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 17:01:36 -0700
-Message-ID: <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net>
-References: <858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	<alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
-	<85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<85abttwa7m.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
-	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-	<20070719053858.GE32566@spearce.org>
-	<9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com>
-	<863azk78yp.fsf@lola.quinscape.zz>
-	<FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>,
-	"Shawn O.Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 02:01:46 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb cleanup: Move @diff_opts declaration earlier
+Date: Fri, 20 Jul 2007 02:15:09 +0200
+Message-ID: <11848905093747-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 20 02:08:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBfwE-0000Nu-7Y
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:01:42 +0200
+	id 1IBg2v-00020F-BK
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:08:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761077AbXGTABi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 20:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761069AbXGTABi
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:01:38 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58707 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759106AbXGTABh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 20:01:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070720000136.YKDF1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 19 Jul 2007 20:01:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Rc1b1X00Z1kojtg0000000; Thu, 19 Jul 2007 20:01:36 -0400
-In-Reply-To: <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com> (Brian
-	Gernhardt's message of "Thu, 19 Jul 2007 11:08:11 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1764264AbXGTAIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 20:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764165AbXGTAId
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:08:33 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:61179 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762214AbXGTAIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 20:08:32 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so519114ugf
+        for <git@vger.kernel.org>; Thu, 19 Jul 2007 17:08:31 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=p3GUw2MT2nPigysGSeTwKg0TyTxngzyRNTPFNtwSOgLziJfsRMq3JI8s2iPh1kwL7PntcgbmjUn6XcuwJ7MFrUqatu7jkl3gslZ/EhHcEaQ+jQ0HSA8taK97pkNXAJOUPRf5t1nfvV0/X+bJUVSU+wsa0TDKJx0nzB8xBXB61hI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=XQbFGwtLgG+bc6KnnE/zIy0yuuzYIP+9qtP8eNeF0AyGIdlzaBBXBt/IH6plLOkroN2ZOiCdjYOkYPEx9cvHD1VrgoGjRlLckkxP6L5aFHuFXZVMRdEQYwb0uUViZCw39yYaqdmxs2LepEQ8y0CB0JMuACEYiKs6psOGxXiTlbo=
+Received: by 10.66.220.17 with SMTP id s17mr1536499ugg.1184890111574;
+        Thu, 19 Jul 2007 17:08:31 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.8.65])
+        by mx.google.com with ESMTPS id z40sm4675122ikz.2007.07.19.17.08.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jul 2007 17:08:29 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l6K0FA6d029080;
+	Fri, 20 Jul 2007 02:15:11 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l6K0F9nb029079;
+	Fri, 20 Jul 2007 02:15:09 +0200
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53038>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+Move @diff_opts declaration earlier, so that all gitweb options are
+together (and not separated by %feature hash and some subroutines),
+with the exception of $GITWEB_CONFIG which must be after all option
+variables including %feature hash.
 
-> My apologies for the wasted bandwidth arguing for things that had
-> already been decided.
+While at it, in the moved comment, note that diff option '-C' implies
+'-M', instead of suggesting that '-M', '-C' is required.
 
-Sorry, who decided what?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c8ba3a2..6754e26 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -104,6 +104,16 @@ our $mimetypes_file = undef;
+ # could be even 'utf-8' for the old behavior)
+ our $fallback_encoding = 'latin1';
+ 
++# rename detection options for git-diff and git-diff-tree
++# - default is '-M', with the cost proportional to
++#   (number of removed files) * (number of new files).
++# - more costly is '-C' (which implies '-M'), with the cost proportional to
++#   (number of changed files + number of removed files) * (number of new files)
++# - even more costly is '-C', '--find-copies-harder' with cost
++#   (number of files in the original tree) * (number of new files)
++# - one might want to include '-B' option, e.g. '-B', '-M'
++our @diff_opts = ('-M'); # taken from git_commit
++
+ # You define site-wide feature defaults here; override them with
+ # $GITWEB_CONFIG as necessary.
+ our %feature = (
+@@ -310,16 +320,6 @@ sub check_export_ok {
+ 		(!$export_ok || -e "$dir/$export_ok"));
+ }
+ 
+-# rename detection options for git-diff and git-diff-tree
+-# - default is '-M', with the cost proportional to
+-#   (number of removed files) * (number of new files).
+-# - more costly is '-C' (or '-C', '-M'), with the cost proportional to
+-#   (number of changed files + number of removed files) * (number of new files)
+-# - even more costly is '-C', '--find-copies-harder' with cost
+-#   (number of files in the original tree) * (number of new files)
+-# - one might want to include '-B' option, e.g. '-B', '-M'
+-our @diff_opts = ('-M'); # taken from git_commit
+-
+ our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+ do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+ 
+-- 
+1.5.2.4
