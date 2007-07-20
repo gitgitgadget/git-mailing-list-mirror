@@ -1,144 +1,109 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Fri, 20 Jul 2007 15:23:47 +0200
-Message-ID: <86k5svus2k.fsf@lola.quinscape.zz>
-References: <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com> <863azk78yp.fsf@lola.quinscape.zz> <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com> <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org> <alpine.LFD.0.999.0707191726510.27249@woody.linux-foundation.org> <85644fvdrn.fsf@lola.goe
- t he.zz> <46A08006.4020500@fs.ei.tum.de> <7vk5svxt1f.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Feedback on native Win32 git from a Perl perspective
+Date: Sat, 21 Jul 2007 01:32:25 +1200
+Message-ID: <46a038f90707200632u1ce762c1i70eb1586e2542256@mail.gmail.com>
+References: <46A06C7F.5010601@phase-n.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 20 15:26:03 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Adam Kennedy" <adam@phase-n.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 15:32:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBsUZ-0004et-6n
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 15:25:59 +0200
+	id 1IBsas-00070M-Oa
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 15:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837AbXGTNZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 09:25:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755605AbXGTNZe
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 09:25:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:60840 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754822AbXGTNZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 09:25:33 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IBsTY-0003em-Dn
-	for git@vger.kernel.org; Fri, 20 Jul 2007 15:24:56 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 15:24:56 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 15:24:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:tv2Vj6BY3nHmoMn+JsepkLOEf6Y=
+	id S1757325AbXGTNc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 09:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXGTNc1
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 09:32:27 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:12811 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756729AbXGTNc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 09:32:26 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so837910wxd
+        for <git@vger.kernel.org>; Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NHm2GDkBeRxNMgLc+Ycv6mFApxLGomwdQjFypqh0Tq8MWlDuMLcTD/qo7jT0hdmfhOjfqvl85xTtxg7WkVrCeS8ZLe/mTQN/TDGzy1WMBK+LMj4WFhixlqVcuRsIH4+8AVvITD9FPM+4EUKMKfU3FCEjG0lFj1Vo+574AILQ9Q0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WrPf4k28HhLiqeJ6a41PpkLNfwEHth830yQ4/xl5o6WlwzrxmekfR9oiat/IHTIzlQIH/oliKZoLTWsRLs/PzZ85AWvpjY75cGXR3lJ2hDoQZlp3P7Fo+FyLtT/Cb996RFD4WcGtVxkyeMueIQUzQ3Z0jLQ6lZ5y7w8ZI94xiO0=
+Received: by 10.90.73.7 with SMTP id v7mr283620aga.1184938345551;
+        Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
+In-Reply-To: <46A06C7F.5010601@phase-n.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53093>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 7/20/07, Adam Kennedy <adam@phase-n.com> wrote:
+> A quick review of native Win32 git provoked by the current conversation
+> amoungst the Perl core maintainers about changing version control
+> systems and whether to go with svn or git (the main two candidates).
 
-> Actually, I do not think there is absolute right or wrong here.  The
-> difference is not that the information is at the "right" or "wrong"
-> place, but one approach places the information at more
-> efficient-to-use place than the other.
+Hi Adam,
 
-Agreed.
+The problem you hit is that you need the MinGW runtime -- I forget its
+name -- and that will have installed an item in your start menu. It's
+for a terminal that has all the MinGW stuff, you get a nice bash
+shell. I opened, added the GIT install directory to the path, and was
+all set.
 
-> In that sense, the attribute approach _is_ a more elegant solution
-> between the two.
+I think Sam Vilain (aka mugwump) is going to / at / returning from
+OSCON this week, so he migth take a while to reply. Oh, I see he
+posted in your blog too.
 
-Disagreed.  See below.
+He's been running imports of the Perl dev trees into git, they'll be
+at http://git.catalyst.net.nz/gitweb - fetchable via http at
+http://git.catalyst.net.nz/git/perl.git
 
-> Making it an attribute has a huge practical advantage.
->
-> By treating executable bit as a piece metadata, we can compare the
-> "contents" quickly.  If you "chmod +x" a blob without changing
-> anything else, we can detect that fact, because blob object names
-> are equal.  At the philosophical level, you _could_ argue that the
-> executable-ness is one bit of content and include that in the object
-> name computation for the blob.  There is nothing fundamentally wrong
-> about that approach, but that destroys the nice "cheap
-> comparability" between blobs that differ only by executable-ness.
->
-> David's "." in tree is essentially the same argument as treating the
-> executable-ness as one extra bit of content.  The fact that a
-> particular tree wants to stay even after emptied can be treated as
-> part of contents (thereby reflected in its object name).
+My notes above are because I have _just_ been setting up git at
+aclient site on Win32. Took me a bit of fiddling as I hadn't used
+Windows in years, but I got it going...
 
-Small nit here: the tree does not want to stay after emptied, since it
-is not empty as long as it contains ".".
+ - needs the mingw runtime - trivial
+ - runs pretty well from the commandline - impressed
+ - gitk and other Tk-based utilities work great ( _very_ impressed)
+but I had to fixup the wish executable name - minor
+ - the http protocol wasn't supported out of the box in the version I
+got, a pain for anon checkouts, and I've seen some discussion about
+that on the list -- unsure here
 
-> There is nothing fundamentally wrong there, either.  But that means
-> two trees that contain otherwise identical set of blobs and
-> subtrees, but differ only in the behaviour of when they are emptied,
-> would get different object names, hence you need to descend into
-> them to see if they are different.
+In terms of http support -- IIRC the problem is handling of forked
+processes, but there might be a way to sidestep the problem.  Very
+early versions of git did some odd curl cmdline that Cogito copied.
+Serialised, slow and not one bit as smart as what we do now, but we
+can perhaps reuse some of that.
 
-And here we disagree in our assessment, and where I find the example
-of the execute bit unfitting.  We are talking about _trees_ here, not
-files.  So this is only relevant if we have a _huge_, _flat_ tree with
-_lots_ of entries at _bottom_ level.
+Some things you point out can be improved once things are more
+polished -- like adding links to gitk and git gui but we'd need to
+sort out how to do this in a directory context. Heh - maybe we need
+one of those explorer.exe extensions...
 
-How often does it occur in practice that a _large_ tree has "."  added
-or removed and nothing else changes?  Never, because the normal use
-case is that a directory is either tracked from the start, or not
-tracked at all.  And even if you change the tracking for a whole
-project at once (which is a one-time job): the cost difference is
-looking at all _tree_ leaf entries, not at all the involved files.
+>From a "we are very limited Windows users" POV, no, we don't have
+TortoiseSVN unfortunately. But for developers used to mixed cli/gui
+environments, like I'm sure most Perl developers are, it'll be a
+breeze. It does need a bit of a howto though.
 
-> Using attribute that is detached from the content itself allows you
-> to hoist that one bit one level up.  By treating executable-ness not
-> as part of content, we can compare two blobs with different
-> executable bits cheaply.  You can avoid descending into such a tree
-> when comparing it with another tree that is different only by the
-> "will-stay-when-emptied"-ness the same way.
+> For reference, the reviewer (me) has 10 years of experience with Perl
+> development across both Windows, Linux, BSD, Solaris, Mac (old and new).
 
-But changing the executable bit of a file will happen often during
-development.  Adding or removing "." will never usually be done _ever_
-except when the tree is first created or removed, and then the cost is
-negligible.
+I'm guess in general terms I have a somewhat similar bg  -- though I
+don't develop Perl ;-) -- and perhaps it's a bit of luck. I had
+_never_ seen MinGW (I do know CygWin) and perhaps it was a stroke of
+luck that it only took me about 45 minutes to get things going,
+figuring out the stuff noted above.
 
-So "performance" is not an issue for making this an attribute or a
-flat entry.  While the user level abstraction need not match the
-actual representation, I think that it will make for lot less special
-cases and problematic behavior to pull through with "." as a directory
-entry that mostly behaves like other files and, like other files,
-requires git to create a directory to contain it.  All the logic for
-creating and deleting directories and creating and adding and ignoring
-files can _perfectly_ stay the same.
+cheers,
 
-There are just two differences:
 
-a) git always sees "." as a file in every directory in the work tree
-   and considers it a file.
-b) when it comes to actually creating or modifying or reading the
-   actual file in the work directory, it silently skips the
-   operation.
 
-It would not even be necessary to give the directory entry any special
-attributes or permissions to make this scheme work: declaring it a
-normal file and just special-casing the name "." on those operations
-would lead to consistent and working behavior, with no change of
-format in index and repository at all.
-
-Possibly even a) alone would suffice, at the cost of letting git
-complain and continue at every operation (or making a _really_ royal
-mess for Solaris root users).
-
-I might be tempted to make a proof-of-concept patch for that.
-
-But for backward-compatibility, it will be better to use an entry type
-which old versions of git will be able to ignore when checking out or
-in.  And for user-friendliness, one does not really want to list such
-entries as regular files.
-
--- 
-David Kastrup
+martin
