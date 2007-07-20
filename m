@@ -1,67 +1,81 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] Force listingblocks to be monospaced in manpages
-Date: Fri, 20 Jul 2007 08:09:49 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707200806540.20056@beast.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0707190157430.1964@beast.quantumfyre.co.uk>
- <20070719014852.4573.65336.julian@quantumfyre.co.uk> <7v3azj1rva.fsf@assigned-by-dhcp.cox.net>
+From: "David Frech" <david@nimblemachines.com>
+Subject: Re: Another question about importing SVN with fast-import
+Date: Fri, 20 Jul 2007 00:16:13 -0700
+Message-ID: <7154c5c60707200016x45f4493ep3635be87afdc3e2c@mail.gmail.com>
+References: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk>
+	 <7154c5c60707190009r6d460debs71158d4db9a028d4@mail.gmail.com>
+	 <20070720051142.GO32566@spearce.org>
+	 <Pine.LNX.4.64.0707200646400.18125@beast.quantumfyre.co.uk>
+	 <7154c5c60707192354k7db677a6m4f8cbd474747ca92@mail.gmail.com>
+	 <Pine.LNX.4.64.0707200759090.20056@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 09:10:04 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Julian Phillips" <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 20 09:16:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBmcm-0000yj-34
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 09:10:04 +0200
+	id 1IBmir-0002Uf-5G
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 09:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756595AbXGTHJv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 03:09:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754596AbXGTHJv
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 03:09:51 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:43265 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754518AbXGTHJu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 03:09:50 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id DAA71D75E1
-	for <git@vger.kernel.org>; Fri, 20 Jul 2007 08:09:49 +0100 (BST)
-Received: (qmail 28952 invoked by uid 103); 20 Jul 2007 08:09:49 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3701. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.031122 secs); 20 Jul 2007 07:09:49 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 20 Jul 2007 08:09:49 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <7v3azj1rva.fsf@assigned-by-dhcp.cox.net>
+	id S932714AbXGTHQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 03:16:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932518AbXGTHQQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 03:16:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:9112 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932306AbXGTHQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 03:16:15 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so709075nze
+        for <git@vger.kernel.org>; Fri, 20 Jul 2007 00:16:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=ZbUTmHRQBARU8jYBmeO5U7berLNAiREwRNp3HtH7qPGngj976iLX6GZUrPHrOtQYiZxzlUrptWcp9oqI0wtSMw+UHMyDhFf4cT5+QNXkuLBmWPCp+PnM9uoPS8v4ubh3wAhEkZhLJDeURY3wIAxTtatcru6gqruk/ae7xvMcVgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=p8VqnycOoDjAO8ublum15qJD09FQk01ztbWO+dGCTZei9c/FqDu+Rc6JpKnw09wH5lEqAVK62YfQ8H6ln4B12qNZS4D81SifAmUzLMo8EnjF9T2xS1C6fDQiMQZyxtsHspIj+TO26lK5KLJJFvSf6a1Wa+655DpXuFJpwqDArpc=
+Received: by 10.114.126.1 with SMTP id y1mr198405wac.1184915773995;
+        Fri, 20 Jul 2007 00:16:13 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Fri, 20 Jul 2007 00:16:13 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707200759090.20056@beast.quantumfyre.co.uk>
+Content-Disposition: inline
+X-Google-Sender-Auth: 86521e23d06e70b2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53066>
 
-On Fri, 20 Jul 2007, Junio C Hamano wrote:
-
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
+On 7/20/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> On Thu, 19 Jul 2007, David Frech wrote:
+> > Since we'll be referring to past commits via marks (with start with
+> > ":") how about this:
+> >
+> > 'C' SP srcpath:mark SP dstpath
 >
->> In order for these roff commands to get through to the manpage they
->> have to be element encoded to prevent quoting.  In particular with
->> docbook xsl 1.72.0 and newer we have to use U+2302 instead of . to
->> prevent the roff command being escaped.  We also add a small perl
->> script for docbook < 1.72.0.
+> Why only via marks?  That may be what you happen to want, but no other
+> command restricts you to _only_ using marks ...
+
+I was using the royal "we". ;-)
+
+Yes, you're right of course. My bad.
+
+- David
+
+> --
+> Julian
 >
-> This does not work at all for docbook 1.71.  I get "^<TAB>ft C"
-> as output from xmlto.
+>   ---
+> What say you, Mr. American Ambassador?
+>
+> Fuck Canada!
+>
 
-Oh, well ... that's handy? :S
-
-I've just checked, and I do have a machine with docbook < 1.72, so I'll 
-see if I can get something working on both.  Probably early next week 
-since I'm away this weekend.
 
 -- 
-Julian
-
-  ---
-Words are the voice of the heart.
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
