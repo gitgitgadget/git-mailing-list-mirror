@@ -1,79 +1,70 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH] Implement git commit as a builtin.
-Date: Fri, 20 Jul 2007 10:45:24 -0400
-Message-ID: <1184942724.26967.105.camel@hinata.boston.redhat.com>
-References: <11847863792344-git-send-email-krh@redhat.com>
-	 <1b46aba20707181427y12bd8b62pe30df61219e7c1f7@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 16:51:26 2007
+From: "Yann DIRSON" <yann.dirson@sagem.com>
+Subject: qgit: failed assertion involving unapplied stgit patches
+Date: Fri, 20 Jul 2007 16:31:42 +0200
+Message-ID: <OF2EB5CD3A.5A6F9DF7-ONC125731E.004BD62A-C125731E.004FCEC9@sagem.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+Cc: ydirson@altern.org, git@vger.kernel.org
+To: Marco Costalba <mcostalba@yahoo.it>
+X-From: git-owner@vger.kernel.org Fri Jul 20 17:25:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBtp9-00033J-UD
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 16:51:20 +0200
+	id 1IBuMW-0007Cd-8M
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 17:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764302AbXGTOpd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Jul 2007 10:45:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764294AbXGTOpd
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 10:45:33 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:59952 "EHLO mx1.redhat.com"
+	id S1765652AbXGTPFN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 11:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765531AbXGTPFM
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 11:05:12 -0400
+Received: from ns2.sagem.com ([62.160.59.241]:39794 "EHLO mx2.sagem.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763599AbXGTOpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 10:45:32 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l6KEjUT5027173;
-	Fri, 20 Jul 2007 10:45:30 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6KEjU7X016295;
-	Fri, 20 Jul 2007 10:45:30 -0400
-Received: from [192.168.1.102] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6KEjUbE023976;
-	Fri, 20 Jul 2007 10:45:30 -0400
-In-Reply-To: <1b46aba20707181427y12bd8b62pe30df61219e7c1f7@mail.gmail.com>
-X-Mailer: Evolution 2.11.4 (2.11.4-1.fc8) 
+	id S1765409AbXGTPFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 11:05:11 -0400
+X-Greylist: delayed 1970 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jul 2007 11:05:11 EDT
+X-Disclaimed: 15851
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53097>
 
-On Wed, 2007-07-18 at 23:27 +0200, Carlos Rica wrote:
-> 2007/7/18, Kristian H=C3=B8gsberg <krh@redhat.com>:
-> > +       if (buffer) {
-> > +               len =3D strip_lines(buffer, len);
-> > +
-> > +               if (fwrite(buffer, 1, len, fp) < len)
-> > +                       die("could not write commit template: %s\n"=
-,
-> > +                           strerror(errno));
-> > +       }
-> ....
-> > +       len =3D strip_lines(buffer, len);
-> > +
-> > +       if (message_is_empty(buffer, len))
-> > +               die("* no commit message?  aborting commit.");
-> > +
->=20
-> Hi Kristian, you could call to the new stripspace() function
-> in builtin-stripspace.c, to reduce code in your file. The only
-> thing you should consider is that the new stripspace()
-> removes always the last '\n' in the file (if any), so you have to
-> add it when you need.
 
-Yup, I'm keeping an eye on all your changes, and it looks like it's all
-falling in place nicely.  Once I have the last few pieces of
-functionality ported over I'll rebase and update builtin-commit to use
-the new functionality you've landed.
+Hi Marco,
 
-A couple of things that might be interesting right now is: 1) pick out
-the test case I made for commit and get it upstream, and 2) take the
-changes I did to wt-status.c (making it able to run on a different inde=
-x
-and output to a specified FILE pointer) and get that upstream.
+qgit 1.5.6 cannot show me the blame window for a given file, it complains
+with the following errors:
 
-cheers,
-Kristian
+ASSERT in getAncestor: ancestor of b617a11b801993b917e1598fd6c5a135ea74ce6f
+not found
+ASSERT in lookupAnnotation: no annotation for
+FELIN1=5FDRIVERS/spi/mpc5200=5Fspi.c
+
+The commit for which it cannot find an ancestor is an unapplied patch,
+whose preceding patch has been refreshed already (ie. there is no ref
+pointing to the parent commit), and I suspect this could be the reason for
+the failure. At least once I have pushed this patch and popped it again,
+the assertion does not show any more.
+
+However, I'm not sure why it walks this part of the tree, since the
+per-file history view does not show unapplied patches (it would be great to
+see them, though, as well as showing applied patches as such).
+
+Best regards,
+--
+Yann
+
+
+
+" Ce courriel et les documents qui y sont attaches peuvent contenir des inf=
+ormations confidentielles. Si vous n'etes  pas le destinataire escompte, me=
+rci d'en informer l'expediteur immediatement et de detruire ce courriel  ai=
+nsi que tous les documents attaches de votre systeme informatique. Toute di=
+vulgation, distribution ou copie du present courriel et des documents attac=
+hes sans autorisation prealable de son emetteur est interdite."=20
+
+" This e-mail and any attached documents may contain confidential or propri=
+etary information. If you are not the intended recipient, please advise the=
+ sender immediately and delete this e-mail and all attached documents from =
+your computer system. Any unauthorised disclosure, distribution or copying =
+hereof is prohibited."
