@@ -1,103 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb cleanup: Move @diff_opts declaration earlier
-Date: Fri, 20 Jul 2007 02:15:09 +0200
-Message-ID: <11848905093747-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 20 02:08:38 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Print an error when falling back to vi on a dumb terminal
+Date: Thu, 19 Jul 2007 17:15:24 -0700
+Message-ID: <7vfy3k2an7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707191944560.14781@racer.site>
+	<11848794193942-git-send-email-aroben@apple.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 02:15:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBg2v-00020F-BK
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:08:37 +0200
+	id 1IBg9h-0003Q9-Bh
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764264AbXGTAIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 20:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764165AbXGTAId
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:08:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:61179 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762214AbXGTAIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2007 20:08:32 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so519114ugf
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 17:08:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=p3GUw2MT2nPigysGSeTwKg0TyTxngzyRNTPFNtwSOgLziJfsRMq3JI8s2iPh1kwL7PntcgbmjUn6XcuwJ7MFrUqatu7jkl3gslZ/EhHcEaQ+jQ0HSA8taK97pkNXAJOUPRf5t1nfvV0/X+bJUVSU+wsa0TDKJx0nzB8xBXB61hI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=XQbFGwtLgG+bc6KnnE/zIy0yuuzYIP+9qtP8eNeF0AyGIdlzaBBXBt/IH6plLOkroN2ZOiCdjYOkYPEx9cvHD1VrgoGjRlLckkxP6L5aFHuFXZVMRdEQYwb0uUViZCw39yYaqdmxs2LepEQ8y0CB0JMuACEYiKs6psOGxXiTlbo=
-Received: by 10.66.220.17 with SMTP id s17mr1536499ugg.1184890111574;
-        Thu, 19 Jul 2007 17:08:31 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.8.65])
-        by mx.google.com with ESMTPS id z40sm4675122ikz.2007.07.19.17.08.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2007 17:08:29 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l6K0FA6d029080;
-	Fri, 20 Jul 2007 02:15:11 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l6K0F9nb029079;
-	Fri, 20 Jul 2007 02:15:09 +0200
-X-Mailer: git-send-email 1.5.2.4
+	id S1753871AbXGTAP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 20:15:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754829AbXGTAP0
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:15:26 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42116 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752378AbXGTAPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 20:15:25 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070720001524.YTLS1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Jul 2007 20:15:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RcFP1X00f1kojtg0000000; Thu, 19 Jul 2007 20:15:24 -0400
+In-Reply-To: <11848794193942-git-send-email-aroben@apple.com> (Adam Roben's
+	message of "Thu, 19 Jul 2007 14:10:19 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53039>
 
-Move @diff_opts declaration earlier, so that all gitweb options are
-together (and not separated by %feature hash and some subroutines),
-with the exception of $GITWEB_CONFIG which must be after all option
-variables including %feature hash.
+Adam Roben <aroben@apple.com> writes:
 
-While at it, in the moved comment, note that diff option '-C' implies
-'-M', instead of suggesting that '-M', '-C' is required.
+> Here you go. I'm not terribly happy with the error message, though. I tried to
+> be as clear as possible and to keep some of the nice information that was in
+> the git-commit error message. Please improve upon it if you can.
+>
+>  git-am.sh                  |    4 ++--
+>  git-commit.sh              |   11 +----------
+>  git-rebase--interactive.sh |    2 +-
+>  git-sh-setup.sh            |   15 +++++++++++++--
+>  git-tag.sh                 |    2 +-
+>  5 files changed, 18 insertions(+), 16 deletions(-)
+>
+> diff --git a/git-am.sh b/git-am.sh
+> index a5de0a1..dd517f4 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -7,7 +7,6 @@ USAGE='[--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
+>    or, when resuming [--skip | --resolved]'
+>  . git-sh-setup
+>  set_reflog_action am
+> -set_editor
+>  require_work_tree
+>  
+>  git var GIT_COMMITTER_IDENT >/dev/null || exit
+> @@ -365,7 +364,8 @@ do
+>  		[yY]*) action=yes ;;
+>  		[aA]*) action=yes interactive= ;;
+>  		[nN]*) action=skip ;;
+> -		[eE]*) "$GIT_EDITOR" "$dotest/final-commit"
+> +		[eE]*) set_editor
+> +		       "$GIT_EDITOR" "$dotest/final-commit"
+>  		       action=again ;;
+>  		[vV]*) action=again
+>  		       LESS=-S ${PAGER:-less} "$dotest/patch" ;;
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+Sounds sane.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c8ba3a2..6754e26 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -104,6 +104,16 @@ our $mimetypes_file = undef;
- # could be even 'utf-8' for the old behavior)
- our $fallback_encoding = 'latin1';
- 
-+# rename detection options for git-diff and git-diff-tree
-+# - default is '-M', with the cost proportional to
-+#   (number of removed files) * (number of new files).
-+# - more costly is '-C' (which implies '-M'), with the cost proportional to
-+#   (number of changed files + number of removed files) * (number of new files)
-+# - even more costly is '-C', '--find-copies-harder' with cost
-+#   (number of files in the original tree) * (number of new files)
-+# - one might want to include '-B' option, e.g. '-B', '-M'
-+our @diff_opts = ('-M'); # taken from git_commit
-+
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature = (
-@@ -310,16 +320,6 @@ sub check_export_ok {
- 		(!$export_ok || -e "$dir/$export_ok"));
- }
- 
--# rename detection options for git-diff and git-diff-tree
--# - default is '-M', with the cost proportional to
--#   (number of removed files) * (number of new files).
--# - more costly is '-C' (or '-C', '-M'), with the cost proportional to
--#   (number of changed files + number of removed files) * (number of new files)
--# - even more costly is '-C', '--find-copies-harder' with cost
--#   (number of files in the original tree) * (number of new files)
--# - one might want to include '-B' option, e.g. '-B', '-M'
--our @diff_opts = ('-M'); # taken from git_commit
--
- our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
- do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
- 
--- 
-1.5.2.4
+Could you please re-diff to make this into a single patch
+without intermediate "Oh, doing it this way is cleaner", and
+also with Dscho's Ack?  I do not think we would need to have 3
+commits for this topic --- it is not like wide userbase tested
+each iteration.
