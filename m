@@ -1,198 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make git tag a builtin.
-Date: Fri, 20 Jul 2007 02:10:48 -0700
-Message-ID: <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
-References: <469FF6E4.9010501@gmail.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Fri, 20 Jul 2007 11:27:34 +0200
+Message-ID: <46A08006.4020500@fs.ei.tum.de>
+References: <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org> <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com> <863azk78yp.fsf@lola.quinscape.zz> <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com> <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org> <alpine.LFD.0.999.0707191726510.27249@woody.linux-foundation.org> <85644fvdrn.fsf@lola.goet
+ he.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 11:10:57 2007
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 11:27:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBoVk-0001U9-2b
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 11:10:56 +0200
+	id 1IBolz-0006bZ-TF
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 11:27:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754865AbXGTJKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 05:10:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754950AbXGTJKv
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 05:10:51 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:65239 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754865AbXGTJKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 05:10:50 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070720091047.EYBF1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Jul 2007 05:10:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RlAo1X00M1kojtg0000000; Fri, 20 Jul 2007 05:10:49 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756498AbXGTJ1i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Jul 2007 05:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbXGTJ1i
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 05:27:38 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:34948 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756132AbXGTJ1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 05:27:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id A4B24280A5;
+	Fri, 20 Jul 2007 11:27:35 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id kIyBuJR7MxqK; Fri, 20 Jul 2007 11:27:35 +0200 (CEST)
+Received: from sweatshorts.home.corecode.ath.cx (85-218-11-202.dclient.lsne.ch [85.218.11.202])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 462A92809E;
+	Fri, 20 Jul 2007 11:27:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <85644fvdrn.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53075>
 
-Carlos Rica <jasampler@gmail.com> writes:
+David Kastrup wrote:
+>> Otherwise you could have two very different trees that encode the
+>> same *content* (just with different ways of getting there -
+>> depending on whether you have a history with empty trees or not),
+>> and that's very much against the philosophy of git, and breaks some
+>> fundamental rules (like the fact that "same content =3D=3D same SHA1=
+").
+>=20
+> No, the content is _different_.  One tree contains a tracked
+> directory, the other does not.  That means that the trees behave
+> _differently_ when you manipulate them, and that means that they are
+> _not_ the same tree.
 
-> This replaces the script "git-tag.sh" with "builtin-tag.c".
+You are mistaking things.  Like the executable bit on a file is not con=
+tent, the fact that a directory should be kept despite being empty is a=
+lso an *attribute* of the directory.  This is meta-data, not actual dat=
+a (content).  So no matter how elegant tracking the "." entry might be =
+(and I think it is, because it covers a lot of corner cases already), i=
+t puts the information at the wrong place.
 
-Thanks.  Will queue in 'next', and perhaps with a few nit fixups
-to merge as the first thing after 1.5.3.
+That's sad, because otherwise it would be really elegant.
 
-> diff --git a/builtin-tag.c b/builtin-tag.c
-> new file mode 100644
-> index 0000000..507f510
-> --- /dev/null
-> +++ b/builtin-tag.c
-> @@ -0,0 +1,450 @@
-> +/*
-> + * Builtin "git tag"
-> + *
-> + * Copyright (c) 2007 Kristian H??gsberg <krh@redhat.com>,
+cheers
+  simon
 
-I've fixed up the name here in my copy.
-
-> +static void launch_editor(const char *path, char **buffer, unsigned long *len)
-> +{
-> +	const char *editor, *terminal;
-> +	struct child_process child;
-> +	const char *args[3];
-> +	int fd;
-> +
-> +	editor = getenv("VISUAL");
-> +	if (!editor)
-> +		editor = getenv("EDITOR");
-> +
-> +	terminal = getenv("TERM");
-> +	if (!editor && (!terminal || !strcmp(terminal, "dumb"))) {
-> +		fprintf(stderr,
-> +		"Terminal is dumb but no VISUAL nor EDITOR defined.\n"
-> +		"Please supply the message using either -m or -F option.\n");
-> +		exit(1);
-> +	}
-> +
-> +	if (!editor)
-> +		editor = "vi";
-
-launch-editor() would need adjustment for GIT_EDITOR and
-core.editor which should be straightforward.
-
-> +struct tag_filter {
-> +	const char *pattern;
-> +	int lines;
-> +};
-> +
-> +#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-> +
-> +static int show_reference(const char *refname, const unsigned char *sha1,
-> +			  int flag, void *cb_data)
-> +{
-> +	struct tag_filter *filter = cb_data;
-> +
-> +	if (!fnmatch(filter->pattern, refname, 0)) {
-> +		int i;
-> +		unsigned long size;
-> +		enum object_type type;
-> +		char *buf, *sp, *eol;
-> +		size_t len;
-> +
-> +		if (!filter->lines) {
-> +			printf("%s\n", refname);
-> +			return 0;
-> +		}
-> +		printf("%-15s ", refname);
-> +
-> +		sp = buf = read_sha1_file(sha1, &type, &size);
-> +		if (!buf || !size)
-> +			return 0;
-
-Theoretically, I can create millions of lightweight tags, all of
-them pointing at a zero-length blob object (or an empty tree
-object) and kill you with memory leak here ;-).
-
-> +		/* skip header */
-> +		while (sp + 1 < buf + size &&
-> +				!(sp[0] == '\n' && sp[1] == '\n'))
-> +			sp++;
-> +		/* only take up to "lines" lines, and strip the signature */
-> +		for (i = 0, sp += 2; i < filter->lines && sp < buf + size &&
-> +				prefixcmp(sp, PGP_SIGNATURE "\n");
-> +				i++) {
-
-Minor nit; I would have split this to four physical lines, like:
-
-		for (i = 0, sp += 2;
-			i < filter->lines && sp < buf + size &&
-			prefixcmp(sp, PGP_SIGNATURE "\n");
-			i++) {
-
-The places that semicolons appear are more significant gaps when
-reading the code.
-
-> +int cmd_tag(int argc, const char **argv, const char *prefix)
-> +{
-> ...
-> +		if (!strcmp(arg, "-F")) {
-> +			unsigned long len;
-> +			int fd;
-> +
-> +			annotate = 1;
-> +			i++;
-> +			if (i == argc)
-> +				die("option -F needs an argument.");
-> +
-> +			if (!strcmp(argv[i], "-"))
-> +				fd = 0;
-> +			else {
-> +				fd = open(argv[i], O_RDONLY);
-> +				if (fd < 0)
-> +					die("could not open '%s': %s",
-> +						argv[i], strerror(errno));
-> +			}
-> +			len = 1024;
-> +			message = xmalloc(len);
-
-You cannot anticipate how many bytes the user will type (or
-pipe-in), but when you opened the file you could fstat() to see
-how many bytes you would need to hold the contents of that
-file.  Even in stdin case fstat(fd) could tell you the size, but
-I am not sure how to tell if the st_size is reliable.  But for
-the purposes of "git tag", 1k buffer that grows on demand is
-probably cheaper than a fstat() syscall.
-
-> +			if (read_fd(fd, &message, &len)) {
-> +				free(message);
-> +				die("cannot read %s", argv[i]);
-> +			}
-> +			continue;
-
-We seem to leak fd here, but the user is doing something insane
-if he gives more than one -F anyway, so it probably is Ok, as
-long as we have some sanity checks.  Should we barf on "git tag
--m foo -F bar"?  What should we do with "git tag -m one -m two"?
-
-Does the test suite check any of these conditions?
-
-> +	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) >= sizeof(ref))
-> +		die("tag name too long: %.*s...", 50, tag);
-
-Cute and considerate ;-).
-
-> diff --git a/git-tag.sh b/contrib/examples/git-tag.sh
-> similarity index 100%
-> rename from git-tag.sh
-> rename to contrib/examples/git-tag.sh
-
-This actually caught my attention for completely different
-reason.  If this were removal of git-tag.sh, this would have
-conflicted when applied on top of Adam's GIT_EDITOR/core.editor
-patch.  With a rename, however, there is no preimage/context
-shown, so it just cleanly applied.
-
-Also Johannes's final minor nits.
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
+++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
