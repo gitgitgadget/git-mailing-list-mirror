@@ -1,78 +1,72 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: pull-fetch-param.txt
-Date: Fri, 20 Jul 2007 18:09:07 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707201758330.26817@reaper.quantumfyre.co.uk>
-References: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de>
- <7vhcymt07a.fsf@assigned-by-dhcp.cox.net> <452211C2.8020402@s5r6.in-berlin.de>
- <7vven1rfpj.fsf@assigned-by-dhcp.cox.net> <45222B18.1090305@s5r6.in-berlin.de>
- <20070712130631.13667.qmail@594d46613ccd9b.315fe32.mid.smarden.org>
- <7vvecps2rz.fsf@assigned-by-dhcp.cox.net>
- <20070713055346.634.qmail@1e54e4f4e1041d.315fe32.mid.smarden.org>
- <7vejjcpyb5.fsf@assigned-by-dhcp.cox.net>
- <20070713074824.9806.qmail@df2dc1a3890a6b.315fe32.mid.smarden.org>
- <20070720143214.23897.qmail@511f57d39b0a54.315fe32.mid.smarden.org>
- <7vbqe7xbvq.fsf@assigned-by-dhcp.cox.net>
+From: "Chris Larson" <clarson@kergoth.com>
+Subject: [PATCH] git-submodule fixes for call to git config --get-regexp
+Date: Fri, 20 Jul 2007 10:23:05 -0700
+Message-ID: <b6ebd0a50707201023h12ed3c61v31ccb2b356c1ee42@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 19:09:59 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 20 19:23:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBvzK-0005S6-4R
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 19:09:58 +0200
+	id 1IBwCB-0001qB-Fy
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 19:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935150AbXGTRJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 13:09:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934722AbXGTRJL
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 13:09:11 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:51135 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933058AbXGTRJK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jul 2007 13:09:10 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 4BADEB0EBB
-	for <git@vger.kernel.org>; Fri, 20 Jul 2007 18:09:08 +0100 (BST)
-Received: (qmail 16681 invoked by uid 103); 20 Jul 2007 18:09:07 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3701. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.0315 secs); 20 Jul 2007 17:09:07 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 20 Jul 2007 18:09:07 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <7vbqe7xbvq.fsf@assigned-by-dhcp.cox.net>
+	id S1751552AbXGTRXK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 13:23:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXGTRXJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 13:23:09 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:24707 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759873AbXGTRXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 13:23:07 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so834817nze
+        for <git@vger.kernel.org>; Fri, 20 Jul 2007 10:23:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=VCbtCUSejlScgqTRBdwjL9pyuBM23j/1HsAkJezs82a2lW+qMS6nsYNjUInpXJbJkS+pt9QR5tIfhRvFUAz7XvoKv5wdHkHUPIyrh/uVpc0wyfQY+ddL4Ie0a5NLLVhGzrqzLEUw2+ZpHjP+cqwmQxoAnGSwWgftHUshLdrPW0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=qUtDJ5kByC8w+FZkL1C6cxAfc8yC6aIbgM5c6ZtYw/YU25aNmpfyJwOw7dGWrSmcp6PYLrauu7vEsxtr1+xCCG6FYjKtMpYSM32aHyWlLmG6ubioNURqS1glJUFI7JRvltTS3EOsyiFJDQVUDcKXbsDQsA8Urs/e+GvXabzPkz0=
+Received: by 10.142.234.12 with SMTP id g12mr50283wfh.1184952185729;
+        Fri, 20 Jul 2007 10:23:05 -0700 (PDT)
+Received: by 10.142.81.6 with HTTP; Fri, 20 Jul 2007 10:23:05 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 26976880811ae94a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53102>
 
-On Fri, 20 Jul 2007, Junio C Hamano wrote:
+Two minor git-submodule fixes:
+* Escape !'s in the git config --get-regexp, so submodule paths can
+contain them.
+* Be more explicit about the value regex, otherwise things get confused if one
+  submodule name is a prefix of another (since --get-regexp can return
+  multiple values).
 
-> Gerrit Pape <pape@smarden.org> writes:
->
->>> I'll check with the docbook-xsl Debian maintainer.
->>
->> The change in docbook-xsl was by intention, please see
->>  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=420114#22
->
-> Hmph. Where does that leave us poor users who would want to
-> support both 1.71 and 1.72, I wonder...
->
-> Will they have the same revert in 1.73 for that House Sign, too?
+Signed-off-by: Chris Larson <clarson@kergoth.com>
 
-It looks like they do, so perhaps we could just say that you will have 
-issues building the git docs with 1.72 and ignore my last patch?
-
-(comparing http://docbook.xml-doc.org/snapshots/xsl/manpages/utility.xsl 
-which has today's date and uses . and \ against 
-http://docbook.sourceforge.net/release/xsl/1.72.0/manpages/utility.xsl 
-which uses U+2302 and U+2593)
+--- git-submodule.sh.old	2007-07-20 10:13:22.578125000 -0700
++++ git-submodule.sh	2007-07-20 10:14:56.281250000 -0700
+@@ -46,7 +46,8 @@ get_repo_base() {
+ #
+ module_name()
+ {
+-       name=$(GIT_CONFIG=.gitmodules git config --get-regexp
+'^submodule\..*\.path$' "$1" |
++       path=$(echo "$1" | sed -e 's/\!/\\!/g')
++       name=$(GIT_CONFIG=.gitmodules git config --get-regexp
+'^submodule\..*\.path$' "^$path$" |
+        sed -nre 's/^submodule\.(.+)\.path .+$/\1/p')
+        test -z "$name" &&
+        die "No submodule mapping found in .gitmodules for path '$path'"
 
 -- 
-Julian
-
-  ---
-Old MacDonald had an agricultural real estate tax abatement.
+Chris Larson - clarson at kergoth dot com
+Dedicated Engineer - MontaVista - clarson at mvista dot com
+Core Developer/Architect - TSLib, BitBake, OpenEmbedded, OpenZaurus
