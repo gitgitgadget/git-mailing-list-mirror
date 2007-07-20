@@ -1,109 +1,125 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Feedback on native Win32 git from a Perl perspective
-Date: Sat, 21 Jul 2007 01:32:25 +1200
-Message-ID: <46a038f90707200632u1ce762c1i70eb1586e2542256@mail.gmail.com>
-References: <46A06C7F.5010601@phase-n.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Empty directories...
+Date: Fri, 20 Jul 2007 15:33:47 +0200
+Message-ID: <86fy3jurlw.fsf@lola.quinscape.zz>
+References: <85lkdezi08.fsf@lola.goethe.zz> <200707201418.26534.johan@herland.net> <86odi7utdj.fsf@lola.quinscape.zz> <200707201520.55911.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Adam Kennedy" <adam@phase-n.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 15:32:31 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 20 15:36:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBsas-00070M-Oa
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 15:32:31 +0200
+	id 1IBsey-0008Ve-Ec
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 15:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757325AbXGTNc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 09:32:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXGTNc1
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 09:32:27 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:12811 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756729AbXGTNc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 09:32:26 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so837910wxd
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NHm2GDkBeRxNMgLc+Ycv6mFApxLGomwdQjFypqh0Tq8MWlDuMLcTD/qo7jT0hdmfhOjfqvl85xTtxg7WkVrCeS8ZLe/mTQN/TDGzy1WMBK+LMj4WFhixlqVcuRsIH4+8AVvITD9FPM+4EUKMKfU3FCEjG0lFj1Vo+574AILQ9Q0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WrPf4k28HhLiqeJ6a41PpkLNfwEHth830yQ4/xl5o6WlwzrxmekfR9oiat/IHTIzlQIH/oliKZoLTWsRLs/PzZ85AWvpjY75cGXR3lJ2hDoQZlp3P7Fo+FyLtT/Cb996RFD4WcGtVxkyeMueIQUzQ3Z0jLQ6lZ5y7w8ZI94xiO0=
-Received: by 10.90.73.7 with SMTP id v7mr283620aga.1184938345551;
-        Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
-Received: by 10.90.35.4 with HTTP; Fri, 20 Jul 2007 06:32:25 -0700 (PDT)
-In-Reply-To: <46A06C7F.5010601@phase-n.com>
-Content-Disposition: inline
+	id S1756657AbXGTNgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 09:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756048AbXGTNgl
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 09:36:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:55665 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755335AbXGTNgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 09:36:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IBseN-0006Kq-CP
+	for git@vger.kernel.org; Fri, 20 Jul 2007 15:36:07 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Jul 2007 15:36:07 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Jul 2007 15:36:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:pko2g9shvBP/gCvULtqD8hVQTO4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53094>
 
-On 7/20/07, Adam Kennedy <adam@phase-n.com> wrote:
-> A quick review of native Win32 git provoked by the current conversation
-> amoungst the Perl core maintainers about changing version control
-> systems and whether to go with svn or git (the main two candidates).
+Johan Herland <johan@herland.net> writes:
 
-Hi Adam,
+> On Friday 20 July 2007, David Kastrup wrote:
+>> Johan Herland <johan@herland.net> writes:
+>
+>> > 4. Whether or not git should track directories by default. You
+>> > say yes, I say no.
+>> 
+>> Element of least surprise.  But since my proposal allows easy and
+>> intuitive declaration of the preference at user, project, and
+>> directory level without one choice messing with the choice of other
+>> projects and contributors with mixed preferences, this is quite
+>> unimportant.
+>> 
+>> We are in agreement that adding or removing the tracking explicitly
+>> for a single directory might be useful to have.  But it can't be
+>> the only way.
+>
+> As long as you can add/remove tracking recursively for a whole
+> (sub)tree, I don't see what's the problem.
 
-The problem you hit is that you need the MinGW runtime -- I forget its
-name -- and that will have installed an item in your start menu. It's
-for a terminal that has all the MinGW stuff, you get a nice bash
-shell. I opened, added the GIT install directory to the path, and was
-all set.
+Neither do I.  But a --directory option never is recursive.  That is
+the whole point.
 
-I think Sam Vilain (aka mugwump) is going to / at / returning from
-OSCON this week, so he migth take a while to reply. Oh, I see he
-posted in your blog too.
+Probably we are in violent agreement again.
 
-He's been running imports of the Perl dev trees into git, they'll be
-at http://git.catalyst.net.nz/gitweb - fetchable via http at
-http://git.catalyst.net.nz/git/perl.git
+> Of course, if you want to change the default behaviour, you should
+> be able either set a config variable somewhere, or - as a last
+> resort - alias git-add and git-rm to always supply the appropriate
+> command-line option.
 
-My notes above are because I have _just_ been setting up git at
-aclient site on Win32. Took me a bit of fiddling as I hadn't used
-Windows in years, but I got it going...
+Or declare diverging behaviors using a !. or . entry in the gitignore
+mechanisms.  Which work everywhere where we need them.
 
- - needs the mingw runtime - trivial
- - runs pretty well from the commandline - impressed
- - gitk and other Tk-based utilities work great ( _very_ impressed)
-but I had to fixup the wish executable name - minor
- - the http protocol wasn't supported out of the box in the version I
-got, a pain for anon checkouts, and I've seen some discussion about
-that on the list -- unsure here
+>> > 5. How the tracking of directories should be implemented in git's
+>> > object database. I want to keep the index/tree as-is except for
+>> > adding directory entries (w/mode 040000) for the tracked
+>> > directories only. You seem to want to add directory entries for
+>> > _all_ directories and then additional "." entries for directories
+>> > you don't want deleted if/when empty.
+>> 
+>> No.  I don't want to change _anything_ for untracked directories.
+>> They are, as previously, implied by the contents and have a "tree"
+>> entry for efficiency reasons.  Nothing new here.
+>> 
+>> The directory mode entries are named "." and are for tracked
+>> directories only.
+>
+> Ok. So our difference in opinion on implementation is even smaller
+> than I imagined; basically only whether the directory is tracked by
+> a mode "040000" entry, or by a "." entry.
 
-In terms of http support -- IIRC the problem is handling of forked
-processes, but there might be a way to sidestep the problem.  Very
-early versions of git did some odd curl cmdline that Cogito copied.
-Serialised, slow and not one bit as smart as what we do now, but we
-can perhaps reuse some of that.
+Actually, even smaller: I'd track them by a "." entry with mode
+1777755755 or whatever is the natural expression for "this is a
+directory".  The mode would be different from the existing "this is a
+tree".
 
-Some things you point out can be improved once things are more
-polished -- like adding links to gitk and git gui but we'd need to
-sort out how to do this in a directory context. Heh - maybe we need
-one of those explorer.exe extensions...
+_If_ one wants at one time track permissions of files apart from "x",
+the "." entry would be natural for carrying directory permissions.
+Without ".", you basically tell git "I don't care about the existence
+of this directory.  Just do what is necessary for checking out my
+files".
 
->From a "we are very limited Windows users" POV, no, we don't have
-TortoiseSVN unfortunately. But for developers used to mixed cli/gui
-environments, like I'm sure most Perl developers are, it'll be a
-breeze. It does need a bit of a howto though.
+>> > Am I making sense, or have I misunderstood our misunderstandings?
+>> 
+>> The latter.  You are violently arguing for what I outlined.  Which
+>> probably shows that I am not the best at explaining my ideas, and
+>> that it reflects badly upon them.
+>
+> That probably goes for both of us :)
+>
+> Well, as long as we have this clarified, I don't see much point in
+> continuing this part of the thread. I feel confident that the git
+> community as a whole will converge on the best technical solution,
+> once it surfaces.
 
-> For reference, the reviewer (me) has 10 years of experience with Perl
-> development across both Windows, Linux, BSD, Solaris, Mac (old and new).
+I'll probably crank out some insolently primitive proof of concept
+eventually.
 
-I'm guess in general terms I have a somewhat similar bg  -- though I
-don't develop Perl ;-) -- and perhaps it's a bit of luck. I had
-_never_ seen MinGW (I do know CygWin) and perhaps it was a stroke of
-luck that it only took me about 45 minutes to get things going,
-figuring out the stuff noted above.
-
-cheers,
-
-
-
-martin
+-- 
+David Kastrup
