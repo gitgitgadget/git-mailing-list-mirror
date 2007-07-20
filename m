@@ -1,91 +1,76 @@
-From: "David Frech" <david@nimblemachines.com>
-Subject: Re: Another question about importing SVN with fast-import
-Date: Thu, 19 Jul 2007 23:54:30 -0700
-Message-ID: <7154c5c60707192354k7db677a6m4f8cbd474747ca92@mail.gmail.com>
-References: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk>
-	 <7154c5c60707190009r6d460debs71158d4db9a028d4@mail.gmail.com>
-	 <20070720051142.GO32566@spearce.org>
-	 <Pine.LNX.4.64.0707200646400.18125@beast.quantumfyre.co.uk>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Idea for git-fast-import
+Date: Fri, 20 Jul 2007 08:59:23 +0200
+Message-ID: <46A05D4B.1050208@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Julian Phillips" <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 20 08:54:38 2007
+To: git@vger.kernel.org, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Jul 20 08:59:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBmNq-0005HT-7G
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 08:54:38 +0200
+	id 1IBmSe-0006b8-5L
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 08:59:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884AbXGTGyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 02:54:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754540AbXGTGyb
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 02:54:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:46487 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753419AbXGTGyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 02:54:31 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so899694wah
-        for <git@vger.kernel.org>; Thu, 19 Jul 2007 23:54:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=gIMrPTuYlmlb71Lir5U7/QdPi+gR9Taoxoac/w7pTzMiEIKFwVBUy6ah6lahBY4H615/eDp9xhziEaUXspRPrn6oCaMEuR9dZuhrSAwx8h6EtyfRMMyzEJO2kDA4fiPGY4G454WMa7tKamFKKMyagoJivMJV8aA7lL8EhoPDDKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Ajuq9aXAIX+HoBGyxEAy7A2PsDyqDJWnRPfGv6YTUNCJQJHg1MhkdoDCUKKqB4W9EkO0t6S6sTliJiSCNXReVX2AagDPSde0viKtI/R9pqPIdbIk5EvMX2+4mPY4dxZMa6CNzxfeodwYLKdac7tU5EsZWTaySi/Y40FYcMrP5tk=
-Received: by 10.115.93.16 with SMTP id v16mr155577wal.1184914470175;
-        Thu, 19 Jul 2007 23:54:30 -0700 (PDT)
-Received: by 10.115.59.9 with HTTP; Thu, 19 Jul 2007 23:54:30 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707200646400.18125@beast.quantumfyre.co.uk>
-Content-Disposition: inline
-X-Google-Sender-Auth: 93fc3134c6aa4b49
+	id S1756103AbXGTG7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 02:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756666AbXGTG7d
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 02:59:33 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:48304 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755022AbXGTG7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 02:59:33 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.135] (kaiserty.in-dsl.de [217.197.85.174])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l6K6xOVY021543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 20 Jul 2007 08:59:25 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53062>
 
-On 7/19/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
-> On Fri, 20 Jul 2007, Shawn O. Pearce wrote:
->
-> > It is possible.  I'm just not sure what the syntax for it should be.
-> > Suggestions?  I really want to stay backwards compatible with the
-> > current "C" command, so:
-> >
-> >       'C' SP commit SP path SP path
-> >
-> > is out because its ambiguous with the current meaning where the
-> > second (destination) path can contain SP without being quoted by
-> > the frontend.
->
-> You could always make it part of the 'M' command?
->
-> 'M' sp mode sp 'copy' sp path_str lf (ref_str | hexsha1 | sha1exp_str |
-> idnum) SP path_str;
->
-> Or just make it a new command, O (for other) or E (for existing) maybe? :S
+I'm working on a git backend for cvs2svn and had an idea for
+git-fast-import that would make life a tiny bit easier:
 
-Since we'll be referring to past commits via marks (with start with
-":") how about this:
+Currently, git-fast-import marks are positive integers.  But they are
+used for two things: marking single-file blobs, and marking commits.
 
-'C' SP srcpath:mark SP dstpath
+This is a tiny bit awkward, because cvs2svn assigns small integer IDs to
+these things too, but uses distinct (overlapping) integer series for the
+two concepts.  If it would be trivial to split the marks into two
+"namespaces" (one for single-file blobs and one for commits), that would
+make things a little bit more natural.  I don't think commit marks can
+be used interchangeably with blob marks anyway, so it wouldn't be a
+backwards incompatibility.
 
-In the case of making it a new command I can't think of any really
-compelling one letter names. ;-)
+Without this feature, I will have to assign a new "mark" integer series
+that is unrelated to cvs2svn's IDs, which is no big deal at all but will
+make debugging a little bit harder.  So only add this feature if it is
+really easy for you.
 
-- David
+Also, is there a big cost to using "not-quite-consecutive" integers as
+marks?  cvs2svn's CVSRevision IDs are intermingled with IDs for
+CVSBranches and CVSTags, so the CVSRevisions alone probably only pack
+the ID space 5%-50% full.
 
->
-> --
-> Julian
->
->   ---
-> It is easier to change the specification to fit the program than vice versa.
->
+In fact, if there is a big cost to "not-quite-consecutive" integers,
+then I withdraw my request for separate mark namespaces, since I would
+have to reallocate mark numbers anyway :-)
 
--- 
-If I have not seen farther, it is because I have stood in the
-footsteps of giants.
+Another thing that might help with debugging would be a "comment"
+command, which git-fast-import should ignore.  One could put text about
+the source of a chunk of git-fast-import stream to relate it back to the
+front-end concepts when debugging the stream contents by hand.
+
+[I will be out of town until Monday, so don't be surprised that I don't
+respond right away :-) ]
+
+Thanks,
+Michael
