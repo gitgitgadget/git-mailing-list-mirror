@@ -1,58 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: GSoC status report
-Date: Fri, 20 Jul 2007 10:24:34 +0200
-Message-ID: <200707201024.35605.jnareb@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Empty directories...
+Date: Fri, 20 Jul 2007 10:29:10 +0200
+Message-ID: <200707201029.10358.johan@herland.net>
+References: <85lkdezi08.fsf@lola.goethe.zz> <85d4yqz24s.fsf@lola.goethe.zz> <7vhco28aoq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-2"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 20 10:18:05 2007
+X-From: git-owner@vger.kernel.org Fri Jul 20 10:30:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBngZ-0002eU-IQ
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 10:18:03 +0200
+	id 1IBns6-00063b-06
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 10:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761985AbXGTISA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 04:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761882AbXGTIR6
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 04:17:58 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:9877 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760537AbXGTIR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 04:17:57 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so572291ugf
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 01:17:56 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=lEkZRP8AYL4hBNwr9aUBMUoxJanb64sdSipjBaF2ha415tebUmt9GzJU510+fkVT2n7MJEcJFC7205JtV/obuQeIwdgC0bH+J7dVESb0wkJlhteITmF4IsOHXLIm9bTsA4EOmFl3QeALMnbDIxlliaqsZgouTO/yYCeTzUIoiMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ok4EsYCPN3HN6z4hNDPMe99pZC1xPmhwxGxfUivfaPzef3q2m4JbdrrxqDa0zMFxeFT1LNJA3QnUGE6MI84Vp+H6GIs7XontAI+yBJx35LR7xTWYvGXPD1RGJ+gkt0cmGsOSiCgMr7z2MVWpcaJEczDBJSexgqXtmYyuN56bWi8=
-Received: by 10.86.65.11 with SMTP id n11mr169140fga.1184919476278;
-        Fri, 20 Jul 2007 01:17:56 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id g28sm6308492fkg.2007.07.20.01.17.54
-        (version=SSLv3 cipher=OTHER);
-        Fri, 20 Jul 2007 01:17:55 -0700 (PDT)
-User-Agent: KMail/1.9.3
+	id S935395AbXGTI3m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 04:29:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761565AbXGTI3k
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 04:29:40 -0400
+Received: from sam.opera.com ([213.236.208.81]:59828 "EHLO sam.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S937180AbXGTI3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 04:29:34 -0400
+Received: from pc166.lan019.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l6K8TALf023296
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 20 Jul 2007 08:29:15 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vhco28aoq.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.90.1/3701/Fri Jul 20 00:52:18 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53069>
 
-How it goes with Google Summer of Code git projects:
-builtinification, libification and GitTorrent?
+On Wednesday 18 July 2007, Junio C Hamano wrote:
+> Didn't I say I do not have an objection for somebody who wants
+> to track empty directories, already?  I probably would not do
+> that myself but I do not see a reason to forbid it, either.
+> 
+> The right approach to take probably would be to allow entries of
+> mode 040000 in the index.  Traditionally, we allowed only 100644
+> (blobs as regular files) and 120000 (blobs as symlinks).  We
+> recently added 160000 (commit from outer space, aka subproject).
+> 
+> And we do that for all directories, not just empty ones.  So if
+> you have fileA, empty/, sub/fileB tracked, your index would
+> probably have these four entries, immediately after read-tree
+> of an existing tree object:
 
-I can see that builtinification (and perhaps libification) goes quite 
-well; what about GitTorrent project? Does anybody know how Mono SoC 
-project: "Managed C# git implementation" goes?
+Sorry for jumping in late...
+
+Why do you want to add _all_ directories, and not just the ones we want to 
+explicitly track (independent of whether they're empty or not).
+
+Basically, add a "--dir" flag to git-add, git-rm and friends, to tell them 
+you're acting on the directory itself (rather than its (recursive) 
+contents). "git-add --dir foo" will add the "040000 123abc... 0 foo" to the 
+index/tree whether or not foo is an empty directory. "git-rm --dir foo" will 
+remove that entry (or fail if it doesn't exist), but _not_ the contents of 
+foo.
+
+Since we're making directory tracking _explicit_, this should all be trivially 
+backward-compatible.
+
+
+...Johan
 
 -- 
-Jakub Narebski
-Poland
+Johan Herland, <johan@herland.net>
+www.herland.net
