@@ -1,95 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Thu, 19 Jul 2007 17:33:29 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707191726510.27249@woody.linux-foundation.org>
-References: <858x9ez1li.fsf@lola.goethe.zz>
- <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
- <vpq4pk1vf7q.fsf@bauges.imag.fr> <alpine.LFD.0.999.0707181004330.27353@woody.linux-foundation.org>
- <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
- <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
- <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org>
- <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com>
- <863azk78yp.fsf@lola.quinscape.zz> <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com>
- <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Install man3 manpages to $PREFIX/share/man/man3 even for site installs
+Date: Thu, 19 Jul 2007 17:42:52 -0700
+Message-ID: <7vzm1r29df.fsf@assigned-by-dhcp.cox.net>
+References: <11848491502417-git-send-email-madduck@madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	David Kastrup <dak@gnu.org>,
-	"Shawn O.Pearce" <spearce@spearce.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 02:34:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "martin f. krafft" <madduck@madduck.net>
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Fri Jul 20 02:43:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBgRy-0007I9-SP
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:34:31 +0200
+	id 1IBgaG-0000hM-MU
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 02:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762050AbXGTAdz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Jul 2007 20:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760856AbXGTAdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:33:54 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:33178 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755986AbXGTAdx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jul 2007 20:33:53 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6K0XZL2026878
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Jul 2007 17:33:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6K0XTZd030895;
-	Thu, 19 Jul 2007 17:33:30 -0700
-In-Reply-To: <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.193 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932410AbXGTAm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Jul 2007 20:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbXGTAm4
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Jul 2007 20:42:56 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:59477 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765445AbXGTAmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2007 20:42:54 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070720004254.DRLR1358.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Jul 2007 20:42:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rcis1X00V1kojtg0000000; Thu, 19 Jul 2007 20:42:53 -0400
+In-Reply-To: <11848491502417-git-send-email-madduck@madduck.net> (martin
+	f. krafft's message of "Thu, 19 Jul 2007 14:45:50 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53045>
 
+Randal, I cannot decide if this is the right thing to do, or 
+better than what we currently do.  Could you care to enlighten
+us please?
 
+"martin f. krafft" <madduck@madduck.net> writes:
 
-On Thu, 19 Jul 2007, Linus Torvalds wrote:
-> 
-> That's physically impossible with the git data-structures (since there is 
-> no way of saving "this directory was added empty" in the tree structures, 
-> nor any point to it), so I think it's just insane rambling.
-
-Of course, it's physically *possible* to have a tree that contains two 
-entries for the same name: first the "empty tree" and then the "real 
-tree", and yeah, in theory you could track things that way.
-
-So I guess the "physically impossible" was a bit strong. You'd have to 
-have a totally insane format, and you'd have to violate deeply seated 
-rules about what trees look like (and the index too, for that matter: we'd 
-have to do the same for the index, and keep the S_IFDIR entry alive 
-despite having other entries that are children of it), but it's 
-*possible*.
-
-It's just a really bad idea.
-
-So to be sane, when you add files, the empty directory entry has to go 
-away. Otherwise you could have two very different trees that encode the 
-same *content* (just with different ways of getting there - depending on 
-whether you have a history with empty trees or not), and that's very much 
-against the philosophy of git, and breaks some fundamental rules (like the 
-fact that "same content == same SHA1").
-
-In fact, that may be the best way to explain why it's *not* an option to 
-have "empty trees remain empty trees if we remove the last file from 
-them": git fundamnetally tracks "content snapshots", and anything that 
-implies the content containing any history is against the rules.
-
-So the whole notion of "remembering" whether a directory was added 
-explicitly as an empty directory or not is just not a sensible concept in 
-git. 
-
-		Linus
+> MakeMaker supports three installation modes: perl, site, and vendor. The first
+> and third install manpages to $PREFIX/share/man, only site installs to
+> $PREFIX/man. For consistency with the rest of git, which does not make the
+> distinction and writes all manpages to $PREFIX/share/man, this change makes
+> sure that perl does too, even when it's installed in site mode.
+>
+> Signed-off-by: martin f. krafft <madduck@madduck.net>
+> ---
+>  perl/Makefile.PL |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+> index 4375161..6aecd89 100644
+> --- a/perl/Makefile.PL
+> +++ b/perl/Makefile.PL
+> @@ -29,5 +29,6 @@ WriteMakefile(
+>  	VERSION_FROM    => 'Git.pm',
+>  	PM		=> \%pm,
+>  	MAKEFILE	=> 'perl.mak',
+> +	INSTALLSITEMAN3DIR => '$(SITEPREFIX)/share/man/man3',
+>  	%extra
+>  );
+> -- 
+> 1.5.3.rc2.19.gc4fba-dirty
