@@ -1,135 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git tag a builtin.
-Date: Fri, 20 Jul 2007 11:15:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707201110460.14781@racer.site>
-References: <469FF6E4.9010501@gmail.com> <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Fri, 20 Jul 2007 12:19:42 +0200
+Message-ID: <20070720101942.GA77248@dspnet.fr.eu.org>
+References: <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org> <7vbqe93qtv.fsf@assigned-by-dhcp.cox.net> <20070719053858.GE32566@spearce.org> <9436820E-53D1-425D-922E-D4C76578E40A@silverinsanity.com> <863azk78yp.fsf@lola.quinscape.zz> <FA38709A-7C68-4D66-BA26-B5ED49DFA85A@silverinsanity.com> <7vk5sw2ba7.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 12:15:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	David Kastrup <dak@gnu.org>,
+	"Shawn O.Pearce" <spearce@spearce.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 12:22:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBpWV-0003wP-P9
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:15:48 +0200
+	id 1IBpcv-0005uL-Kx
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 12:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbXGTKPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 06:15:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbXGTKPl
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:15:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42955 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752338AbXGTKPl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 06:15:41 -0400
-Received: (qmail invoked by alias); 20 Jul 2007 10:15:39 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp032) with SMTP; 20 Jul 2007 12:15:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19w2Os85rdwAOnt3R9A1uctEdutynw8PbKSil7JhU
-	j4Zjkwhie5TBNq
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v1wf3zbhj.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754639AbXGTKUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 06:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbXGTKUG
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 06:20:06 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:1468 "EHLO dspnet.fr.eu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753209AbXGTKUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 06:20:05 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 56E8EA360B; Fri, 20 Jul 2007 12:19:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707191706120.27249@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53078>
 
-Hi,
+On Thu, Jul 19, 2007 at 05:15:28PM -0700, Linus Torvalds wrote:
+> (*) And, for anybody confused about the issue, the answer to the latter 
+> question is an emphatic: "Yes it should, live with it, and if you want the 
+> directory back, you had better add it back as an empty directory"
 
-On Fri, 20 Jul 2007, Junio C Hamano wrote:
+Wouldn't it be perfectly reasonable for git rm to re-add emptied
+directories as empty transparently if the appropriate
+flag/configuration is set?  rm is porcelain after all.
 
-> Carlos Rica <jasampler@gmail.com> writes:
-> 
-> > This replaces the script "git-tag.sh" with "builtin-tag.c".
-> 
-> Thanks.  Will queue in 'next', and perhaps with a few nit fixups
-> to merge as the first thing after 1.5.3.
-
-Nice!
-
-> launch-editor() would need adjustment for GIT_EDITOR and core.editor 
-> which should be straightforward.
-
-Yes.  As a separate commit?  After a couple of revisions, I lost track of 
-what I looked at, and what not...  So it would make it easier for me to 
-have these changes after the big builtin-tag commit.
-
-> > +		sp = buf = read_sha1_file(sha1, &type, &size);
-> > +		if (!buf || !size)
-> > +			return 0;
-> 
-> Theoretically, I can create millions of lightweight tags, all of
-> them pointing at a zero-length blob object (or an empty tree
-> object) and kill you with memory leak here ;-).
-
-Yes ;-)  Would we really want to say
-
-	if (!buf)
-		return 0;
-	if (!size) {
-		free(buf);
-		return 0;
-	}
-
-here?  IMHO that is overkill.
-
-> > +		/* skip header */
-> > +		while (sp + 1 < buf + size &&
-> > +				!(sp[0] == '\n' && sp[1] == '\n'))
-> > +			sp++;
-> > +		/* only take up to "lines" lines, and strip the signature */
-> > +		for (i = 0, sp += 2; i < filter->lines && sp < buf + size &&
-> > +				prefixcmp(sp, PGP_SIGNATURE "\n");
-> > +				i++) {
-> 
-> Minor nit; I would have split this to four physical lines, like:
-> 
-> 		for (i = 0, sp += 2;
-> 			i < filter->lines && sp < buf + size &&
-> 			prefixcmp(sp, PGP_SIGNATURE "\n");
-> 			i++) {
-> 
-> The places that semicolons appear are more significant gaps when
-> reading the code.
-
-I am to blame for that.  That code was outlined by me.
-
-> > +int cmd_tag(int argc, const char **argv, const char *prefix)
-> > +{
-> > ...
-> > +		if (!strcmp(arg, "-F")) {
-> > +			unsigned long len;
-> > +			int fd;
-> > +
-> > +			annotate = 1;
-> > +			i++;
-> > +			if (i == argc)
-> > +				die("option -F needs an argument.");
-> > +
-> > +			if (!strcmp(argv[i], "-"))
-> > +				fd = 0;
-> > +			else {
-> > +				fd = open(argv[i], O_RDONLY);
-> > +				if (fd < 0)
-> > +					die("could not open '%s': %s",
-> > +						argv[i], strerror(errno));
-> > +			}
-> > +			len = 1024;
-> > +			message = xmalloc(len);
-> 
-> You cannot anticipate how many bytes the user will type (or
-> pipe-in), but when you opened the file you could fstat() to see
-> how many bytes you would need to hold the contents of that
-> file.  Even in stdin case fstat(fd) could tell you the size, but
-> I am not sure how to tell if the st_size is reliable.  But for
-> the purposes of "git tag", 1k buffer that grows on demand is
-> probably cheaper than a fstat() syscall.
-
-For a one-shot program as git-tag, I agree, the current patch is 
-sufficient.
-
-Ciao,
-Dscho
+  OG.
