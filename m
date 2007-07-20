@@ -1,76 +1,67 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: qgit: failed assertion involving unapplied stgit patches
-Date: Fri, 20 Jul 2007 19:45:45 +0200
-Message-ID: <e5bfff550707201045s270e0ae1p206ad62cd02ebea4@mail.gmail.com>
-References: <OF2EB5CD3A.5A6F9DF7-ONC125731E.004BD62A-C125731E.004FCEC9@sagem.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pull-fetch-param.txt
+Date: Fri, 20 Jul 2007 11:01:13 -0700
+Message-ID: <7v1wf3x8d2.fsf@assigned-by-dhcp.cox.net>
+References: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de>
+	<7vhcymt07a.fsf@assigned-by-dhcp.cox.net>
+	<452211C2.8020402@s5r6.in-berlin.de>
+	<7vven1rfpj.fsf@assigned-by-dhcp.cox.net>
+	<45222B18.1090305@s5r6.in-berlin.de>
+	<20070712130631.13667.qmail@594d46613ccd9b.315fe32.mid.smarden.org>
+	<7vvecps2rz.fsf@assigned-by-dhcp.cox.net>
+	<20070713055346.634.qmail@1e54e4f4e1041d.315fe32.mid.smarden.org>
+	<7vejjcpyb5.fsf@assigned-by-dhcp.cox.net>
+	<20070713074824.9806.qmail@df2dc1a3890a6b.315fe32.mid.smarden.org>
+	<20070720143214.23897.qmail@511f57d39b0a54.315fe32.mid.smarden.org>
+	<7vbqe7xbvq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707201758330.26817@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@yahoo.it>, ydirson@altern.org,
-	git@vger.kernel.org
-To: "Yann DIRSON" <yann.dirson@sagem.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 19:45:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 20 20:01:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IBwY3-0001Sg-8h
-	for gcvg-git@gmane.org; Fri, 20 Jul 2007 19:45:51 +0200
+	id 1IBwn6-0006tN-Q8
+	for gcvg-git@gmane.org; Fri, 20 Jul 2007 20:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763649AbXGTRpr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 13:45:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758032AbXGTRpr
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 13:45:47 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:5895 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753595AbXGTRpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 13:45:45 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1071596wah
-        for <git@vger.kernel.org>; Fri, 20 Jul 2007 10:45:45 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sT3oVTH+/WGZRKB7woddGbclljzmMyT2OgJiih2Y5ledSzNb3ZHwdl9qWDc1yew4eV1cs8YTrdHQ0hPVJoB1yu+52FkWRhsVhK0pQKYaoejHfZ8vFF/9AOtFIY2is5CMJ9t/07Xu7dHu7IjJCL6XEAg2mYZJNrOagxHpKoYFrJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P0urjtm0U/VSQrI/QyoPHfs5dtGr9TbzTH++6LI4fZ1pFU/rfQKrauX3RIjgNB/1QVYwXdt2pbOZfxnnutXM85WnfFTURTr8LsbylGBEJDEirJ9Ax3+VuFFmUYDyDbi/n9AqbrjKvcMj/U2CcoZVqZWB7Bot5mf3mwMZp8FnrgQ=
-Received: by 10.114.92.2 with SMTP id p2mr683484wab.1184953545207;
-        Fri, 20 Jul 2007 10:45:45 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Fri, 20 Jul 2007 10:45:45 -0700 (PDT)
-In-Reply-To: <OF2EB5CD3A.5A6F9DF7-ONC125731E.004BD62A-C125731E.004FCEC9@sagem.com>
-Content-Disposition: inline
+	id S932129AbXGTSBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 14:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756865AbXGTSBQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 14:01:16 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62337 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762159AbXGTSBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 14:01:15 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070720180114.OWWM1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 20 Jul 2007 14:01:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Ru1E1X0091kojtg0000000; Fri, 20 Jul 2007 14:01:14 -0400
+In-Reply-To: <Pine.LNX.4.64.0707201758330.26817@reaper.quantumfyre.co.uk>
+	(Julian Phillips's message of "Fri, 20 Jul 2007 18:09:07 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53105>
 
-On 7/20/07, Yann DIRSON <yann.dirson@sagem.com> wrote:
+Julian Phillips <julian@quantumfyre.co.uk> writes:
+
+> On Fri, 20 Jul 2007, Junio C Hamano wrote:
+> ...
+>> Hmph. Where does that leave us poor users who would want to
+>> support both 1.71 and 1.72, I wonder...
+>>
+>> Will they have the same revert in 1.73 for that House Sign, too?
 >
-> qgit 1.5.6 cannot show me the blame window for a given file, it complains
-> with the following errors:
->
+> It looks like they do, so perhaps we could just say that you will have
+> issues building the git docs with 1.72 and ignore my last patch?
 
-Hi Yann,
-
-Yes. I confirm it's a bug.
-
-A patch has been pushed both for qgit 1.5.6 and for new qgit4.
-
-> However, I'm not sure why it walks this part of the tree, since the
-> per-file history view does not show unapplied patches (it would be great to
-> see them, though, as well as showing applied patches as such).
->
-
-Regarding to show unapplied patch it seems a little bit difficult
-because git-log /git-rev-list does not know them, after a quick look
-it would seem easier to me to show applied patches as such...I will
-investigate.
-
-BTW if you use file history viewer I would suggest to switch to new
-qgit4 (git://git.kernel.org/pub/scm/qgit/qgit4.git) it requires Qt4.3
-but annotation is much more powerful, follows file renames (check
-against vastly renamed git repository files) and it's an order of
-magnitude faster.
-
-Marco
+That actually sounds a very tempting thing to do, especially
+considering we are past -rc2.
