@@ -1,115 +1,93 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Sat, 21 Jul 2007 20:08:32 +0200
-Message-ID: <85lkd9sk7z.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
-	<858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	 =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181004330.?= =?ISO-8859-1?Q?=04=0427?=
-	=?ISO-8859-1?Q?353@woody.linux-?= =?ISO-8859-1?Q?foundation.org>?=
-	<85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<851wf2bcqy.fsf@lola.goethe.zz>
-	 =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=0402135450?= =?ISO-8859-1?Q?.27249?=
-	=?ISO-8859-1?Q?@woody.linux-fou?= =?ISO-8859-1?Q?ndation.org>?=
-	<alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
-	<85odi69vgt.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
-	<85tzrxslms.fsf@lola.goethe.zz> <46A247C1.4000902@fs.ei.tum.de>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: Translation process (was: [PATCH 3/5] Internationalization of git-gui)
+Date: Sat, 21 Jul 2007 20:50:48 +0200
+Message-ID: <200707212050.48568.stimming@tuhh.de>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707211437.43524.stimming@tuhh.de> <85ps2l98eq.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 20:08:52 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Jul 21 20:50:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICJNs-0005dR-6l
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 20:08:52 +0200
+	id 1ICK2Y-0006qF-9N
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 20:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664AbXGUSIi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 14:08:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753324AbXGUSIi
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 14:08:38 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:41218 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752563AbXGUSIh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 14:08:37 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id EB61D1838D5;
-	Sat, 21 Jul 2007 20:08:35 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id D32AA2C6A03;
-	Sat, 21 Jul 2007 20:08:35 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-231.pools.arcor-ip.net [84.61.10.231])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id B0BE53425E2;
-	Sat, 21 Jul 2007 20:08:35 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 59EF91CE0427; Sat, 21 Jul 2007 20:08:32 +0200 (CEST)
-In-Reply-To: <46A247C1.4000902@fs.ei.tum.de> (Simon Schubert's message of "Sat\, 21 Jul 2007 19\:52\:01 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3715/Sat Jul 21 14:39:12 2007 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1755069AbXGUSuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 14:50:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754881AbXGUSuk
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 14:50:40 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45683 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753893AbXGUSuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 14:50:39 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6LIoYJU021761
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 21 Jul 2007 20:50:34 +0200
+Received: from [192.168.2.102] (p5490088F.dip0.t-ipconnect.de [84.144.8.143])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6LIoXrW032103
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 20:50:34 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <85ps2l98eq.fsf@lola.goethe.zz>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53179>
 
-Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
-
-> David Kastrup wrote:
->> But I also want to have directories represented within git, because
->> not doing so leads to awkward problems.  And the proper way as I see
->> it is _not_ to mess with trees and stick them with "stay when empty"
->> flags or similar.  This messes up the whole elegance of git's flat
->> name space.  The proper way is to create a distinct object that
->> represents a physical directory.  We don't need to represent the
->> contents of it: those are already tracked in the flat namespace fine,
->> with trees serving as an implementation detail.
->>
->> All we need to represent is ".".
+Am Samstag, 21. Juli 2007 15:46 schrieb David Kastrup:
+> Christian Stimming <stimming@tuhh.de> writes:
+> > And a new German translation, so far 100% but many more strings are to
+> > come.
 >
-> What I still don't get is: How do you carry this information about
-> "this directory should not be removed" from one checkout to the next
-> commit?
+> I have somewhat different proposals which sound less awkward, I
+> think.  Of course, it is always a matter of taste whether a technical
+> term should really be translated always, but assuming that, I'll make
+> some German proposals.  Some may be tongue in cheek.
 
-I don't.  The only information in the file system is whether a
-directory exists or not.  "Should not removed" is not a property that
-is tracked.
+Thanks for the suggestions. However, I don't think it is of much worth to 
+discuss individual message translations *right now*; instead, here's what I 
+would propose instead:
 
-> When creating a .gitignore, this file exists in the workdir.  Of
-> course you add some data to the index to stage it.  But how does
-> this work with your "." "file"?  You can't put that in the
-> filesystem.
+The most difficult issue in a program translation is to find good translation 
+wordings for those key words which are used each and every time throughout 
+the program. Once you've decided on a particular translation for each of 
+these words, the rest is just grunt work. So the important part is to 
+translate these key words. Incidentally, I've added the file po/glossary.cvs 
+for exactly this purpose. In there you find my current collection of key 
+words that occur throughout git-gui (and git, for that matter), including a 
+set of proposed translations to German language. This should be the place 
+where the keyword translations should be discussed first. The discussion of 
+the actual translations should be deferred until after the glossary 
+translations have been discussed and agreed upon.
 
-Either the directory is in the file system or it is not.  Like with
-every other file.  And either git tracks the directory, in which case
-it will notice its addition (when doing git-add) and removal (when
-doing git-rm or git-commit -a) or git doesn't track the directory.
+(I'm unsure whether the translations should be kept in the same glossary file; 
+in the glossary for the gnucash project [1] we've actually added an extra 
+directory and encourage translators to add an extra po file for their 
+glossary translations. However, the glossary of gnucash has more than 150 
+terms and many of them require to be defined clearly as well, as translators 
+would otherwise be unable to translate them concisely. In git-gui, the 
+glossary is 25 terms so far and I think the git documentation already 
+contains enough definitions of all of them. Nevertheless, maybe it would make 
+a better structure if the translations of the glossary are kept in a separate 
+po file for each language. Hm.)
 
-When git tracks the directory (a matter of gitignore settings for
-implicit tracking, and git-add for explicit tracking), and considers
-it existent, it will not touch it.  If it tracks it but considers it
-removed in particular commit, it will attempt to remove it.
+In short: Please discuss the glossary first, and not the actual de.po message 
+file. Once the glossary has been decided upon, the de.po will be adapted, and 
+*after that* a discussion of de.po makes sense. But not before that.
 
-    Fineprint: actually, things are more involved here: git does not
-    actually attempt to remove directories at the time it deletes them
-    from the tree: this is sort of pointless since the sort order
-    means that there might still be files it needs to take out from
-    the physical directory).  Instead, like before, git attempts to
-    remove a physical directory whenever the corresponding tree in git
-    becomes empty, and it is a prerequisite to delete a possibly
-    tracked directory from it.
+Regards,
 
-After it has attempted to remove it, it will leave it alone since it
-is now no longer tracking it.  If you add and remove a contained file,
-it will again try to remove the directory.  If you add _both_
-directory and a contained file, just removing the contained file will
-not make git attempt to delete the directory.
+Christian
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+[1] 
+http://svn.gnucash.org/trac/browser/gnucash/trunk/po/glossary/gnc-glossary.txt
