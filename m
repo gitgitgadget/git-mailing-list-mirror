@@ -1,93 +1,80 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: Translation process (was: [PATCH 3/5] Internationalization of git-gui)
-Date: Sat, 21 Jul 2007 20:50:48 +0200
-Message-ID: <200707212050.48568.stimming@tuhh.de>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707211437.43524.stimming@tuhh.de> <85ps2l98eq.fsf@lola.goethe.zz>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH] Internationalization of git-gui
+Date: Sat, 21 Jul 2007 20:57:18 +0200
+Message-ID: <4d8e3fd30707211157l1be243basfb259082b7aa8160@mail.gmail.com>
+References: <7vodi7vtct.fsf@assigned-by-dhcp.cox.net>
+	 <200707210815.l6L8F2Da032066@mi0.bluebottle.com>
+	 <7vr6n2upwv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Jul 21 20:50:54 2007
+Cc: "=?ISO-2022-JP?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?=" 
+	<nanako3@bluebottle.com>, "Shawn O. Pearce" <spearce@spearce.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Christian Stimming" <stimming@tuhh.de>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 20:57:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICK2Y-0006qF-9N
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 20:50:54 +0200
+	id 1ICK9A-0008Qi-Gn
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 20:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755069AbXGUSuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 14:50:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754881AbXGUSuk
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 14:50:40 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45683 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753893AbXGUSuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 14:50:39 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6LIoYJU021761
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sat, 21 Jul 2007 20:50:34 +0200
-Received: from [192.168.2.102] (p5490088F.dip0.t-ipconnect.de [84.144.8.143])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6LIoXrW032103
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 21 Jul 2007 20:50:34 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <85ps2l98eq.fsf@lola.goethe.zz>
+	id S1756166AbXGUS5X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 14:57:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762198AbXGUS5W
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 14:57:22 -0400
+Received: from nz-out-0506.google.com ([64.233.162.232]:28598 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758364AbXGUS5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 14:57:20 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so975305nze
+        for <git@vger.kernel.org>; Sat, 21 Jul 2007 11:57:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=E96SUb3P0I+icIKtIC6ZVf7td91CnISu/S73QrmB1l4sktpX4MaqCwVzkI/oNnPG43mtYipkZUoDIiatAfgKSEDwapx3NX7gsApYBEyO8XCvucNXz4KNpLAan6Wvy3VuFDSacI8wn6piIcfxLS9tNTJlyhhP96R9TxcX8fccQn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sD0DrgLxTo0M1Z4qU5ZRC9vkfgndBAMTB0/x91F8XFmHQSugQ8QNJfDyuDAjMtajRbG0Q0RqsOjsbQ2yzEP4CIJ0lxlGs3NmRKCA196zfFPXUuEvNtY09nJiPVz1+x/WuA4GbkZ+KlVOCXSzU13+1QOI+oH2KCrG22kMSeVVxRQ=
+Received: by 10.142.79.15 with SMTP id c15mr121018wfb.1185044238965;
+        Sat, 21 Jul 2007 11:57:18 -0700 (PDT)
+Received: by 10.142.86.9 with HTTP; Sat, 21 Jul 2007 11:57:18 -0700 (PDT)
+In-Reply-To: <7vr6n2upwv.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53180>
 
-Am Samstag, 21. Juli 2007 15:46 schrieb David Kastrup:
-> Christian Stimming <stimming@tuhh.de> writes:
-> > And a new German translation, so far 100% but many more strings are to
-> > come.
->
-> I have somewhat different proposals which sound less awkward, I
-> think.  Of course, it is always a matter of taste whether a technical
-> term should really be translated always, but assuming that, I'll make
-> some German proposals.  Some may be tongue in cheek.
+On 7/21/07, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks for the suggestions. However, I don't think it is of much worth to 
-discuss individual message translations *right now*; instead, here's what I 
-would propose instead:
+paolo@paolo-desktop:~/git-gui-i18n$ ls
+git-gui.sh  GIT-VERSION-GEN  lib  Makefile  po
 
-The most difficult issue in a program translation is to find good translation 
-wordings for those key words which are used each and every time throughout 
-the program. Once you've decided on a particular translation for each of 
-these words, the rest is just grunt work. So the important part is to 
-translate these key words. Incidentally, I've added the file po/glossary.cvs 
-for exactly this purpose. In there you find my current collection of key 
-words that occur throughout git-gui (and git, for that matter), including a 
-set of proposed translations to German language. This should be the place 
-where the keyword translations should be discussed first. The discussion of 
-the actual translations should be deferred until after the glossary 
-translations have been discussed and agreed upon.
 
-(I'm unsure whether the translations should be kept in the same glossary file; 
-in the glossary for the gnucash project [1] we've actually added an extra 
-directory and encourage translators to add an extra po file for their 
-glossary translations. However, the glossary of gnucash has more than 150 
-terms and many of them require to be defined clearly as well, as translators 
-would otherwise be unable to translate them concisely. In git-gui, the 
-glossary is 25 terms so far and I think the git documentation already 
-contains enough definitions of all of them. Nevertheless, maybe it would make 
-a better structure if the translations of the glossary are kept in a separate 
-po file for each language. Hm.)
+>  - Run 'make' once, to get po/git-gui.pot generated;
 
-In short: Please discuss the glossary first, and not the actual de.po message 
-file. Once the glossary has been decided upon, the de.po will be adapted, and 
-*after that* a discussion of de.po makes sense. But not before that.
+paolo@paolo-desktop:~/git-gui-i18n$ make
+GITGUI_VERSION = 0.8.GITGUI
+    * new locations or Tcl/Tk interpreter
+    GEN git-gui
+    BUILTIN git-citool
+    INDEX lib/
 
-Regards,
+paolo@paolo-desktop:~/git-gui-i18n$ ls po/
+de.msg  de.po  glossary.csv  ja.msg  ja.po
 
-Christian
+There is "po/git-gui.pot" file in my repository.
 
-[1] 
-http://svn.gnucash.org/trac/browser/gnucash/trunk/po/glossary/gnc-glossary.txt
+Am I doing something wrong?
+
+Thanks!
+
+Ciao,
+-- 
+Paolo
+"Tutto cio' che merita di essere fatto,merita di essere fatto bene"
+Philip Stanhope IV conte di Chesterfield
