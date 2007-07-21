@@ -1,56 +1,83 @@
-From: Carlos Rica <jasampler@gmail.com>
-Subject: Re: [PATCH] builtin-tag.c: Fix two memory leaks and minor notation
- changes.
-Date: Sat, 21 Jul 2007 14:18:18 +0200
-Message-ID: <46A1F98A.5040609@gmail.com>
-References: <46A1F858.7080405@gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH 1/5] Internationalization of git-gui
+Date: Sat, 21 Jul 2007 14:33:28 +0200
+Message-ID: <200707211433.29318.stimming@tuhh.de>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707210951.00210.stimming@tuhh.de> <20070721080338.GT32566@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 14:18:27 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jul 21 14:33:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICDul-00047Q-11
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 14:18:27 +0200
+	id 1ICE9K-0007bH-Rn
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 14:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762420AbXGUMSY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Jul 2007 08:18:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762473AbXGUMSY
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 08:18:24 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:36878 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762347AbXGUMSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 08:18:23 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so1779851mue
-        for <git@vger.kernel.org>; Sat, 21 Jul 2007 05:18:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=VdvhnO4Uy7qrcHAr+bK9tk6m8XPLOMNPMYlhHYZpA/fzZLdsQdIAz6SEHu399IHls7Q4ekVIyN5PiDVoMgZiXYgDEsSVaBxWAveBprbGV0JAiC/xWES1zE8eo9s60tthzFKCpFd3uZGpINiQp2zXFmJmn4GrSVS9b13q+JPDrBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=fO/b3WzxXTbyXmeFmRwjzDetHX/+3uY5jgdl64QdF4Zib3yf1XF8jeGfO0s1UasD71YZlFt/9ZGwB/wadjehjR+I0GyckSeRbucGQ5ZjPyQwxT4DFmE/Tzu4ojWPhrKJDsYsJqCoijAvyvp1PNxCC9764D/+ltVfl7uupualKe8=
-Received: by 10.82.116.15 with SMTP id o15mr1127459buc.1185020301533;
-        Sat, 21 Jul 2007 05:18:21 -0700 (PDT)
-Received: from ?192.168.0.192? ( [212.145.102.186])
-        by mx.google.com with ESMTPS id h6sm10998017nfh.2007.07.21.05.18.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Jul 2007 05:18:21 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
-In-Reply-To: <46A1F858.7080405@gmail.com>
+	id S937279AbXGUMdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 08:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936739AbXGUMdW
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 08:33:22 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:60127 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936309AbXGUMdV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 08:33:21 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6LCXF31030504
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 21 Jul 2007 14:33:15 +0200
+Received: from [192.168.2.102] (p549012DA.dip0.t-ipconnect.de [84.144.18.218])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6LCXDBH005025
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 14:33:14 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <20070721080338.GT32566@spearce.org>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53160>
 
-Carlos Rica escribi=C3=B3:
->   Those were commented in the responses to my previous patch:
->   http://article.gmane.org/gmane.comp.version-control.git/53138
+>From 18d783abd85e074c302c5e7979dfb242b3c6c386 Mon Sep 17 00:00:00 2001
+From: Christian Stimming <chs@ckiste.goetheallee>
+Date: Sat, 21 Jul 2007 13:51:48 +0200
+Subject: [PATCH] Initialize msgcat (gettext).
 
-A little error here when copying the link, the thread is:
-http://thread.gmane.org/gmane.comp.version-control.git/53036
+Use [mc ...] as function name for translating user messages.
+
+Signed-off-by: Christian Stimming <stimming@tuhh.de>
+---
+
+This patch starts over from before the first i18n patch has been applied and 
+takes into account all discussion with Shawn. Currently I don't quite know 
+how to apply these patches to the "mob" branch because one would have
+to first revert those patches from me that have been applied there... Thanks.
+
+ git-gui.sh |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index c5ff7c8..0c5ca46 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -108,6 +108,12 @@ if {$idx ne {}} {
+ }
+ unset -nocomplain oguirel idx fd
+ 
++## Internationalization (i18n) through msgcat and gettext. See
++## http://www.gnu.org/software/gettext/manual/html_node/Tcl.html
++package require msgcat
++::msgcat::mcload [file join $oguilib msgs]
++namespace import ::msgcat::mc
++
+ ######################################################################
+ ##
+ ## read only globals
+-- 
+1.5.2
