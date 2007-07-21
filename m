@@ -1,65 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] Internationalization of git-gui
-Date: Sat, 21 Jul 2007 22:20:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707212219250.14781@racer.site>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com>
- <Pine.LNX.4.64.0707211427190.14781@racer.site> <7vejj1v92b.fsf@assigned-by-dhcp.cox.net>
- <200707212150.49351.stimming@tuhh.de>
+Subject: Re: [PATCH] Internationalization of git-gui
+Date: Sat, 21 Jul 2007 22:25:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707212224480.14781@racer.site>
+References: <7vodi7vtct.fsf@assigned-by-dhcp.cox.net> 
+ <200707210815.l6L8F2Da032066@mi0.bluebottle.com>  <7vr6n2upwv.fsf@assigned-by-dhcp.cox.net>
+ <4d8e3fd30707211157l1be243basfb259082b7aa8160@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 23:21:21 2007
+	=?ISO-2022-JP?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
+	<nanako3@bluebottle.com>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 23:25:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICMO8-0007vj-DQ
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 23:21:20 +0200
+	id 1ICMSN-0000cR-N2
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 23:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760505AbXGUVVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 17:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760669AbXGUVVR
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 17:21:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59211 "HELO mail.gmx.net"
+	id S1761419AbXGUVZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 17:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761128AbXGUVZk
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 17:25:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52017 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760505AbXGUVVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 17:21:16 -0400
-Received: (qmail invoked by alias); 21 Jul 2007 21:21:14 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp035) with SMTP; 21 Jul 2007 23:21:14 +0200
+	id S1760669AbXGUVZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 17:25:40 -0400
+Received: (qmail invoked by alias); 21 Jul 2007 21:25:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 21 Jul 2007 23:25:38 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18593MjseY5428f6Zkg4gkLGFqXGEWXBYaAl9GY7c
-	QbsDno2WnpUjhj
+X-Provags-ID: V01U2FsdGVkX1/ksIJrWYHkZCExK1W7neCUMW845ViJNVwNfFRfiz
+	5O0P5yoXR7+4Tn
 X-X-Sender: gene099@racer.site
-In-Reply-To: <200707212150.49351.stimming@tuhh.de>
+In-Reply-To: <4d8e3fd30707211157l1be243basfb259082b7aa8160@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53188>
 
 Hi,
 
-On Sat, 21 Jul 2007, Christian Stimming wrote:
+On Sat, 21 Jul 2007, Paolo Ciarrocchi wrote:
 
-> Am Samstag, 21. Juli 2007 21:41 schrieb Junio C Hamano:
-> > While I think keeping a reference for consistent translation
-> > (within one language's *.po file) is a useful practice,
-> > the po/glossary.csv file on 'master' seems a way suboptimal
-> > solution.  Currently it is:
-> >
-> >         $ file po/glossary.csv
-> >         po/glossary.csv: ISO-8859 text
+> On 7/21/07, Junio C Hamano <gitster@pobox.com> wrote:
 > 
-> Oops. I created it with utf8 locally. Must have turned into latin1 either in 
-> my mailer or during Johannes' mbox tweaking.
+> paolo@paolo-desktop:~/git-gui-i18n$ ls
+> git-gui.sh  GIT-VERSION-GEN  lib  Makefile  po
+> 
+> 
+> >  - Run 'make' once, to get po/git-gui.pot generated;
+> 
+> paolo@paolo-desktop:~/git-gui-i18n$ make
+> GITGUI_VERSION = 0.8.GITGUI
+>    * new locations or Tcl/Tk interpreter
+>    GEN git-gui
+>    BUILTIN git-citool
+>    INDEX lib/
+> 
+> paolo@paolo-desktop:~/git-gui-i18n$ ls po/
+> de.msg  de.po  glossary.csv  ja.msg  ja.po
+> 
+> There is "po/git-gui.pot" file in my repository.
 
-D'oh.  I think it was my tweaking.  But now, with 'mob' in place, there 
-are less chances for me to fsck up.
+My fault.  I was rebasing Junio's patch on top of Christian's new series.  
+Alas, the PO_TEMPLATE was no longer created by default.
 
-Ciao,
+Should be fixed now.
+
+Thanks,
 Dscho
