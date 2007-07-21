@@ -1,65 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Sat, 21 Jul 2007 17:37:51 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707211737090.3607@woody.linux-foundation.org>
-References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
- <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
- <vpq4pk1vf7q.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181?=
-	=?ISO-8859-1?Q?004330.=04=0427353@w?= =?ISO-8859-1?Q?oody.linux-found?=
-	=?ISO-8859-1?Q?ation.org>?=
- <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
- <851wf2bcqy.fsf@lola.goethe.zz>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=04?=
-	=?ISO-8859-1?Q?02135450.27249@w?= =?ISO-8859-1?Q?oody.linux-found?=
-	=?ISO-8859-1?Q?ation.org>?=
- <alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
- <85odi69vgt.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
- <85tzrxslms.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
- <85644dqoig.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] Documentation/gitignore.txt: Fix the seriously misleading priority explanation
+Date: Sun, 22 Jul 2007 01:53:49 +0200
+Organization: Organization?!?
+Message-ID: <85wswtp8va.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Jul 22 02:38:06 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 22 02:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICPSV-00037p-Hr
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:38:03 +0200
+	id 1ICPWy-0003oX-KR
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbXGVAiB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 20:38:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbXGVAiB
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:38:01 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:42318 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752724AbXGVAiA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 20:38:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M0buwo007766
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 21 Jul 2007 17:37:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M0bpr1009285;
-	Sat, 21 Jul 2007 17:37:51 -0700
-In-Reply-To: <85644dqoig.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-3.212 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754097AbXGVAmI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 20:42:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753328AbXGVAmH
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:42:07 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:46212 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753287AbXGVAmE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 20:42:04 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 3D875336C2A
+	for <git@vger.kernel.org>; Sun, 22 Jul 2007 02:42:03 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 310E928EC28
+	for <git@vger.kernel.org>; Sun, 22 Jul 2007 02:42:03 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-010-231.pools.arcor-ip.net [84.61.10.231])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 0964A3425E2
+	for <git@vger.kernel.org>; Sun, 22 Jul 2007 02:42:02 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 046061D1E182; Sun, 22 Jul 2007 02:42:01 +0200 (CEST)
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3722/Sun Jul 22 01:57:48 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53206>
 
 
 
-On Sun, 22 Jul 2007, David Kastrup wrote:
-> 
-> I must be really bad at explaining things, or I am losing a fight
-> against preconceptions fixed beyond my imagination.
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ Documentation/gitignore.txt |   22 ++++++++++++++--------
+ 1 files changed, 14 insertions(+), 8 deletions(-)
 
-I really dont' see the point. But hey, code talks. 
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index ea79d74..9c83095 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -18,21 +18,26 @@ pattern.
+ 
+ When deciding whether to ignore a path, git normally checks
+ `gitignore` patterns from multiple sources, with the following
+-order of precedence:
++order of precedence, from highest to lowest (within one level of
++precedence, the last matching pattern decides the outcome):
+ 
+- * Patterns read from the file specified by the configuration
+-   variable 'core.excludesfile'.
+-
+- * Patterns read from `$GIT_DIR/info/exclude`.
++ * Patterns read from the command line for those commands that support
++   them.
+ 
+  * Patterns read from a `.gitignore` file in the same directory
+-   as the path, or in any parent directory, ordered from the
+-   deepest such file to a file in the root of the repository.
++   as the path, or in any parent directory, with patterns in the
++   higher level files (up to the root) being overriden by those in
++   lower level files down to the directory containing the file.
+    These patterns match relative to the location of the
+    `.gitignore` file.  A project normally includes such
+    `.gitignore` files in its repository, containing patterns for
+    files generated as part of the project build.
+ 
++ * Patterns read from `$GIT_DIR/info/exclude`.
++
++ * Patterns read from the file specified by the configuration
++   variable 'core.excludesfile'.
++
+ The underlying git plumbing tools, such as
+ gitlink:git-ls-files[1] and gitlink:git-read-tree[1], read
+ `gitignore` patterns specified by command-line options, or from
+@@ -49,7 +54,8 @@ Patterns have the following format:
+ 
+  - An optional prefix '!' which negates the pattern; any
+    matching file excluded by a previous pattern will become
+-   included again.
++   included again.  If a negated pattern matches, this will
++   override lower precedence patterns sources.
+ 
+  - If the pattern does not contain a slash '/', git treats it as
+    a shell glob pattern and checks for a match against the
+-- 
+1.5.2.3
 
-		Linus
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
