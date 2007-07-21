@@ -1,201 +1,113 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: German translations (was: [PATCH 3/5] Internationalization of git-gui)
-Date: Sat, 21 Jul 2007 21:27:51 +0200
-Message-ID: <200707212127.51840.stimming@tuhh.de>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707211437.43524.stimming@tuhh.de> <85ps2l98eq.fsf@lola.goethe.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Internationalization of git-gui
+Date: Sat, 21 Jul 2007 12:41:16 -0700
+Message-ID: <7vejj1v92b.fsf@assigned-by-dhcp.cox.net>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com>
+	<200707210951.00210.stimming@tuhh.de>
+	<20070721080338.GT32566@spearce.org>
+	<200707211433.29318.stimming@tuhh.de>
+	<Pine.LNX.4.64.0707211427190.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Jul 21 21:27:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Stimming <stimming@tuhh.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 21 21:41:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICKcG-0007X0-3P
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 21:27:48 +0200
+	id 1ICKpg-0002CM-AN
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 21:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756508AbXGUT1o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Jul 2007 15:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756720AbXGUT1o
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 15:27:44 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:49814 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754930AbXGUT1n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 15:27:43 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6LJRcVJ028676
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sat, 21 Jul 2007 21:27:39 +0200
-Received: from [192.168.2.102] (p5490088F.dip0.t-ipconnect.de [84.144.8.143])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6LJRaCi017869
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 21 Jul 2007 21:27:38 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <85ps2l98eq.fsf@lola.goethe.zz>
-Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+	id S1759092AbXGUTlY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 15:41:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759158AbXGUTlW
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 15:41:22 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:48240 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760723AbXGUTlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 15:41:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070721194117.BGDM1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Jul 2007 15:41:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SKhH1X0011kojtg0000000; Sat, 21 Jul 2007 15:41:17 -0400
+In-Reply-To: <Pine.LNX.4.64.0707211427190.14781@racer.site> (Johannes
+	Schindelin's message of "Sat, 21 Jul 2007 15:22:16 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53182>
 
-Am Samstag, 21. Juli 2007 15:46 schrieb David Kastrup:
-> Christian Stimming <stimming@tuhh.de> writes:
-> > And a new German translation, so far 100% but many more strings are=
- to
-> > come.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> ...
+> - Make the current revision my new 'master'.  That branch already exists, 
+>   and I am on 'christian-new', though.  No problem:
 >
-> I have somewhat different proposals which sound less awkward, I
-> think.  Of course, it is always a matter of taste whether a technical
-> term should really be translated always, but assuming that, I'll make
-> some German proposals.  Some may be tongue in cheek.
-
-Thanks for additional word proposals. I'll discuss these and the two fo=
-llowups=20
-in German below.
-
-> > +#: git-gui.sh:1627 git-gui.sh:1802 git-gui.sh:2134
-> > +msgid "Commit"
-> > +msgstr "=DCbertragen"
+> 	$ git branch -M christian-new master
 >
-> Einpflegen ist als Verb gebr=E4uchlich, aber dann ist es schwer, ein
-> passendes Substantiv zu finden.  "Sendung"?
-
-Richtig - eine Kombination Substantiv/Verb wird ben=F6tigt. Ich habe im=
-=20
-Glossar "=FCbertragen (senden?, =FCbergeben?)". Ersteres wird bei Torto=
-iseSVN=20
-benutzt. Im Prinzip gehen die anderen auch; bei "Sendung"/"senden" bef=FC=
-rchte=20
-ich aber zu viele Mehrdeutigkeiten, wenn man z.B. davon redet. den comm=
-it=20
-=FCber TCP wohin senden will. Die Sendung wohin senden? Andererseits ha=
-t man=20
-bei =DCbertragung das gleiche Problem.
-
-> > +#: git-gui.sh:1631
-> > +msgid "Fetch"
-> > +msgstr "Holen"
+>   (But if you do that with "-M", which means _force_ rename, make sure 
+>   twice that this is really what you want.)
 >
-> Importieren (haupts=E4chlich, weil es zu Exportieren pa=DFt und Schie=
-ben
-> h=E4=DFlich ist)
-
-Importieren ist bereits f=FCr "git-{cvs,svn}import" reserviert, kann al=
-so hier=20
-nicht verwendet werden. Deswegen wird was anderes ben=F6tigt. F=FCr fet=
-ch und=20
-pull gleicherma=DFen w=FCrden holen/ziehen/=FCbernehmen gehen und man m=
-uss sich=20
-halt auf eine Zuordnung festlegen.
-
-> > +#: git-gui.sh:1632 git-gui.sh:2140
-> > +msgid "Push"
-> > +msgstr "Schieben"
+> - Push it.
 >
-> Exportieren
-
-Dito - bereits reserviert f=FCr git-cvsexport u.=E4., also hier nicht b=
-enutzbar.=20
-Deswegen momentan dieses, ich bin aber auch nicht gl=FCcklich damit. Si=
-ehe=20
-Glossar: "schieben (hochladen? verschicken?)"
-
-> > +#: git-gui.sh:1641
-> > +msgid "Browse Current Branch"
-> > +msgstr "Aktuellen Zweig durchbl=E4ttern"
+> 	$ git push origin +master
+> 	...
+> 	refs/heads/master: da7b699[...] -> cc2b761b[...]
 >
-> Im aktuellen Zweig st=F6bern.
-
-st=F6bern f=FCr "to browse"? Das ist aber definitiv nicht das, was norm=
-alerweise=20
-als =DCbersetzung von "to browse" gew=E4hlt wird. Da ist man eben bei b=
-l=E4ttern.=20
-Au=DFerdem ist "st=F6bern" hart an der Grenze zur Flapsigkeit, die man =
-(im=20
-Gegensatz zum engl. Original) bei deutscher Software unbedingt vermeide=
-n=20
-muss.
-
-> > +#: git-gui.sh:1659
-> > +msgid "Compress Database"
-> > +msgstr "Datenbank komprimieren"
+>   The "+" is necessary, since I rebased it...
 >
-> Ganz Deutsch: verdichten.
-
-Alle E-Mail-Programme reden aber bereits von komprimieren (was in den M=
-otoren=20
-schon immer ein deutscher Begriff war), so dass ich hier auch dabei ble=
-iben=20
-w=FCrde.
-
-> > +#: git-gui.sh:1662
-> > +msgid "Verify Database"
-> > +msgstr "Datenbank pr=FCfen"
+>   If there were more pushers than just me, I'd verify that da7b699 is 
+>   indeed the old state of my master:
 >
-> =FCberpr=FCfen (pr=FCfen w=E4re eher zu "checking")
-
-"to verify" -> =FCberpr=FCfen? Ok.
-
-> > +#: git-gui.sh:1709 git-gui.sh:2217 git-gui.sh:2354
-> > +msgid "Select All"
-> > +msgstr "Alle ausw=E4hlen"
+> 	$ git reflog
+> 	...
+> 	d36cd96... HEAD@{20}: checkout: moving from master to christian-new
+> 	da7b699... HEAD@{21}: commit [...]
 >
-> Alles ausw=E4hlen z=F6ge ich vor.
-
-Kommt auf den Kontext an - was soll denn ausgew=E4hlt werden? "Alle Sen=
-dungen"=20
-oder "Alles, was sichtbar ist"...
-
-> > +#: git-gui.sh:1724
-> > +msgid "Checkout..."
-> > +msgstr "Auschecken..."
+>   Yep.
 >
-> Ausspielung.
+> Good.  Happy.
 
-=C4h... nein. Auschecken ist auch nicht so toll (auch hier =FCbernommen=
- von=20
-TortoiseSVN), aber was besseres hab ich noch nicht gefunden.
+Two questions and a half.
 
-> > +#: git-gui.sh:2057
-> > +msgid "Staged Changes (Will Be Committed)"
-> > +msgstr "Bereitgestellte =C4nderungen (werden =FCbertragen)"
->
-> Einzupflegende =C4nderungen
+ - The above means git-gui-i18n.git's master is rebased.  Is
+   that the intention?  IOW, people are supposed to work on it
+   with fetch+rebase, not fetch+merge (= pull)?
 
-Nein, hier muss irgendwie die "staging area" mit auftauchen, denn so la=
-utet=20
-die Beschriftung der linken Listbox. Da ich die mit "Bereitstellung" ge=
-w=E4hlt=20
-habe, muss das Wort hier wieder auftauchen.=20
+ - It seems that the tip of 'mob' now is out of sync wrt
+   'master'.  What's the plan to update it with framework
+   changes made in 'master' (e.g. addition of po/glossary.csv)?
 
-> > David Kastrup wrote:
-> >>> +#: git-gui.sh:1798 git-gui.sh:2130 git-gui.sh:2228
-> >>> +msgid "Sign Off"
-> >>> +msgstr "Freizeichnen"
-> >>
-> >> Gegenzeichnen?
-> >
-> > Abzeichnen!
->
-> Absegnen. =A0Ich denke mal, in der Form mit "Ab" ist das derma=DFen
-> gebr=E4uchlich, da=DF man damit keine religi=F6sen Befindlichkeiten
-> verletzt.
->
-> Ansonsten: Abnicken oder Guthei=DFen.
+While I think keeping a reference for consistent translation
+(within one language's *.po file) is a useful practice,
+the po/glossary.csv file on 'master' seems a way suboptimal
+solution.  Currently it is:
 
-Absegnen ist zu flapsig, Abnicken und Guthei=DFen erst recht. Gegenzeic=
-hnen=20
-l=E4sst nicht erahnen, dass man seine eigenen commits ja auch "sign off=
-" soll=20
-(wie z.B. in git.git/Documents/SubmittingPatches erkl=E4rt).  Abzeichne=
-n w=E4re=20
-okay, aber das ist Freizeichnen auch.
+        $ file po/glossary.csv
+        po/glossary.csv: ISO-8859 text
 
-Gru=DF
+        $ head -n 1 po/glossary.csv
+        "English Term"  "de translation"
 
-Christian
+which implies that other languages will be added at the end
+separated with <TAB>?
+
+There are two HUGE problems with that.
+
+ * Supporting many languages means looooong lines in that file.
+   Translators for languages later on the line would have hard
+   time updating or looking at that file.
+
+ * Mixed encodings.  What if next language wants its strings in
+   UTF-8?  How would you have that and ISO-8859 on a same line?
+
+I would suggest having one glossary file per language.
