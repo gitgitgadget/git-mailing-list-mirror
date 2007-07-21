@@ -1,93 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
 Subject: Re: [PATCH] Internationalization of git-gui
-Date: Sat, 21 Jul 2007 04:03:38 -0400
-Message-ID: <20070721080338.GT32566@spearce.org>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <20070720105602.7dcm241ts0k0ww88@webmail.tu-harburg.de> <20070721021717.GS32566@spearce.org> <200707210951.00210.stimming@tuhh.de>
+Date: Sat, 21 Jul 2007 17:12:11 +0900
+Message-ID: <200707210815.l6L8F2Da032066@mi0.bluebottle.com>
+References: <7vodi7vtct.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 10:04:07 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Christian Stimming" <stimming@tuhh.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 10:15:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IC9wa-0007zr-VV
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 10:04:05 +0200
+	id 1ICA7L-0001q3-EG
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 10:15:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760338AbXGUIDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 04:03:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760259AbXGUIDs
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 04:03:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37490 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754171AbXGUIDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 04:03:46 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IC9wD-0001Sz-Fh; Sat, 21 Jul 2007 04:03:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9923720FBAE; Sat, 21 Jul 2007 04:03:38 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200707210951.00210.stimming@tuhh.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S932152AbXGUIPH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 04:15:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760644AbXGUIPG
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 04:15:06 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:52356 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760259AbXGUIPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 04:15:04 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6L8F2Da032066
+	for <git@vger.kernel.org>; Sat, 21 Jul 2007 01:15:02 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=2Bb3ru4OgKKZuWsalqFrjH4D+Yy+Nh/iXcUMNuP11BhkeI293uyta8EeNh2LuCotU
+	TqzLtnSXQbMOJU0kKih6Zrdx7na3Rd64FNHpKF8VDm5U3o9aawvWESNooSJEUrI
+Received: from nanako3.mail.bluebottle.com ([218.7.48.22])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6L8EbBY024214
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 01:14:46 -0700
+In-Reply-To: <7vodi7vtct.fsf@assigned-by-dhcp.cox.net>
+X-Trusted-Delivery: <35dab582e609d991b514331092c689eb>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53153>
 
-Christian Stimming <stimming@tuhh.de> wrote:
-> Thanks for the detailed feedback.
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-Thanks for working on this!  Its something I knew we need to do,
-but hadn't brought myself to do, because I speak English, and pretty
-much only English.  Unless Tcl counts.  ;-)
- 
-> Am Samstag, 21. Juli 2007 04:17 schrieb Shawn O. Pearce:
-> >
-> > Please send one patch per email message, inline and not attached.
-> > This way they are easy to review, respond to and comment on.
-> 
-> I'll try to do that, but at the workplace where I work on this issue I'm 
-> forced to use a webmailer and I have to check whether this leaves the patches 
-> intact.
+> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+>
+>> I volunteer to translate all the git-gui messages in Italian.
+>>
+>> Just let me if you are interested and please give me an hint on how to
+>> produce the translation so that you can incorporate it.
+>
+> Ah, am I expected to volunteer for Japanese part?
+>
+> Unless yashi, yoshifuji, or nanako3 volunteer, although I do not
+> mind doing that myself, that is (if there are any Japanese
+> people I forgot, I apologize).  I wonder how many people outside
+> English zone are regularly on the list...
 
-Can you push to the mob branch on repo.or.cz?  Or setup your own
-git-gui fork repository there?  Or someplace?  If so you can still
-copy and paste the message into email for quick review and comment,
-but I can actually pull the Git objects from a repository, and I
-know Git won't corrupt things.
- 
-> > Dscho recently created a fork of git-gui.git here:
-> >
-> >   http://repo.or.cz/w/git-gui/git-gui-i18n.git
-> >
-> > and added your patch series into it.  But I'd like to see some
-> > cleanups before it merges in, and I want to hold off on actually
-> > applying it into git-gui 0.8.0 is released, 
-> 
-> Was this meant to say "hold off until git-gui 0.8.0 is released"? Sure, no 
-> problem.
-
-More or less.  I'm interested in this series, so I'm happy to get the
-patches.  But I won't put them into 0.8.0, as I think it is too late
-in the development period.  Especially for a build system change.
-I've had too many bugs because of changes to the Makefile in prior
-versions of git-gui.  But I am hoping that they will be among the
-very first things applied after I tag 0.8.0 and start the 0.9.0
-development cycle.  :-)
- 
-> I'll submit an updated set of patches by beginning of next week. Thank you 
-> very much for the feedback.
-
-Thanks.
+I can help.  What's involved?
 
 -- 
-Shawn.
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Free pop3 email with a spam filter.
+http://www.bluebottle.com/tag/5
