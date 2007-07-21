@@ -1,68 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 3/5] Internationalization of git-gui
-Date: Sat, 21 Jul 2007 19:41:47 +0200
-Organization: Organization?!?
-Message-ID: <85ps2lslgk.fsf@lola.goethe.zz>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707211434.56622.stimming@tuhh.de> <200707211436.44672.stimming@tuhh.de> <200707211437.43524.stimming@tuhh.de> <85ps2l98eq.fsf@lola.goethe.zz> <46A233DE.6010304@fs.ei.tum.de>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sat, 21 Jul 2007 19:52:01 +0200
+Message-ID: <46A247C1.4000902@fs.ei.tum.de>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site> <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr>    =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0707181004330.=04?=
+	=?ISO-8859-1?Q?=0427353@woody.lin?= =?ISO-8859-1?Q?ux-foundation.or?=
+	=?ISO-8859-1?Q?g>?= <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <851wf2bcqy.fsf@lola.goethe.zz>    =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.07072=0402135450.?=
+	=?ISO-8859-1?Q?27249@woody.linu?= =?ISO-8859-1?Q?x-foundation.org?=
+	=?ISO-8859-1?Q?>?= <alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org> <85odi69vgt.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org> <85tzrxslms.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 21 19:42:14 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Jul 21 19:52:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICIy6-00072w-9d
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 19:42:14 +0200
+	id 1ICJ7m-00013M-7d
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 19:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbXGURmL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Jul 2007 13:42:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbXGURmL
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 13:42:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:34929 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751393AbXGURmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 13:42:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ICIxt-0002az-4u
-	for git@vger.kernel.org; Sat, 21 Jul 2007 19:42:01 +0200
-Received: from dslb-084-061-010-231.pools.arcor-ip.net ([84.61.10.231])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jul 2007 19:42:01 +0200
-Received: from dak by dslb-084-061-010-231.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jul 2007 19:42:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-084-061-010-231.pools.arcor-ip.net
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:zV3lDAetBbqjgcHxVO5YNzd5FnM=
+	id S1753140AbXGURwH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Jul 2007 13:52:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752563AbXGURwG
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 13:52:06 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:45253 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752374AbXGURwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 13:52:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 57B50280DC;
+	Sat, 21 Jul 2007 19:52:02 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id EddQiZ2jR4ca; Sat, 21 Jul 2007 19:52:02 +0200 (CEST)
+Received: from sweatshorts.home.corecode.ath.cx (85-218-11-227.dclient.lsne.ch [85.218.11.227])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id E7731280C7;
+	Sat, 21 Jul 2007 19:52:01 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <85tzrxslms.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53177>
 
-Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
+David Kastrup wrote:
+> But I also want to have directories represented within git, because
+> not doing so leads to awkward problems.  And the proper way as I see
+> it is _not_ to mess with trees and stick them with "stay when empty"
+> flags or similar.  This messes up the whole elegance of git's flat
+> name space.  The proper way is to create a distinct object that
+> represents a physical directory.  We don't need to represent the
+> contents of it: those are already tracked in the flat namespace fine,
+> with trees serving as an implementation detail.
+>=20
+> All we need to represent is ".".
 
-> David Kastrup wrote:
->>> +#: git-gui.sh:1798 git-gui.sh:2130 git-gui.sh:2228
->>> +msgid "Sign Off"
->>> +msgstr "Freizeichnen"
->>
->> Gegenzeichnen?
->
-> Abzeichnen!
+What I still don't get is:  How do you carry this information about "th=
+is directory should not be removed" from one checkout to the next commi=
+t?  When creating a .gitignore, this file exists in the workdir.  Of co=
+urse you add some data to the index to stage it.  But how does this wor=
+k with your "." "file"?  You can't put that in the filesystem.
 
-Absegnen.  Ich denke mal, in der Form mit "Ab" ist das derma=DFen
-gebr=E4uchlich, da=DF man damit keine religi=F6sen Befindlichkeiten
-verletzt.
-
-Ansonsten: Abnicken oder Guthei=DFen.
+cheers
+  simon
 
 --=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
+++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
