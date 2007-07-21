@@ -1,114 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: git-rm semantics (was: The philosophy behind my directory proposal in a nutshell)
-Date: Sun, 22 Jul 2007 01:40:23 +0200
-Message-ID: <85bqe5qqag.fsf@lola.goethe.zz>
-References: <85fy3hqtwl.fsf@lola.goethe.zz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sat, 21 Jul 2007 16:50:42 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+ <vpq4pk1vf7q.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181?=
+	=?ISO-8859-1?Q?004330.=04=0427353@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+ <851wf2bcqy.fsf@lola.goethe.zz>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=04?=
+	=?ISO-8859-1?Q?02135450.27249@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
+ <85odi69vgt.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
+ <85tzrxslms.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 22 01:40:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 01:51:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICOZ6-0002Bd-8W
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 01:40:48 +0200
+	id 1ICOja-0003wZ-D0
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 01:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994AbXGUXke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 19:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbXGUXke
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 19:40:34 -0400
-Received: from mail-in-01.arcor-online.net ([151.189.21.41]:60389 "EHLO
-	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750856AbXGUXkd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 19:40:33 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id AB41415C4A2
-	for <git@vger.kernel.org>; Sun, 22 Jul 2007 01:40:32 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 9DEA45BD63
-	for <git@vger.kernel.org>; Sun, 22 Jul 2007 01:40:32 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-231.pools.arcor-ip.net [84.61.10.231])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 431E41D3161
-	for <git@vger.kernel.org>; Sun, 22 Jul 2007 01:40:32 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id D8E271D1E182; Sun, 22 Jul 2007 01:40:23 +0200 (CEST)
-In-Reply-To: <85fy3hqtwl.fsf@lola.goethe.zz> (David Kastrup's message of "Sun\, 22 Jul 2007 00\:22\:18 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3721/Sun Jul 22 00:17:47 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1752117AbXGUXvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 19:51:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbXGUXvZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 19:51:25 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51916 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751869AbXGUXvY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 19:51:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6LNomUv006128
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 16:50:49 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6LNogtI007743;
+	Sat, 21 Jul 2007 16:50:43 -0700
+In-Reply-To: <85tzrxslms.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.212 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53198>
 
 
-Following up on the git-rm note:
 
->     [As a note aside: working directories get removed when their
->     corresponding tree collapses and disappears from the
->     repository.  I should think it only consistent if the same
->     happened with git-rm: let the file by default disappear at
->     the moment when it gets removed from the repository,
->     implying --cached.  Namely, let
->
->     git-rm some-file
->     git-add some-file
->
->     be a noop, regardless whether the file was registered
->     previously.  This also implies that git-rm will always leave
->     unregistered files alone.]
+On Sat, 21 Jul 2007, David Kastrup wrote:
+> 
+> tree1:
+>      0?0000 .   -> dir1
+>      100644 a.c -> blob1
+>      040000 a   -> tree2
+>      100644 abc -> blob3
 
-Ok, this is somewhat incorrect: if we call git-rm and the file still
-exists, this is strictly speaking the same situation as calling
-git-add when a file does not exist.
+No. Totally broken. That "." entry not only doesn't buy you anything, it 
+is *impossible*. You  cannot make an object point to itself. Not possible.
 
-And that gives:
-fatal: pathspec 'geo' did not match any files
-whether or not the repository has an idea about the file.
+Tell me how to calculate the SHA1 for the result. Also, tell me what the 
+*point*  is. There is none.
 
-So in analogy, git-rm on an existing file could possibly made to barf.
+> Linus, a directory is simply non-existent inside of git. 
 
-Anyway, the following appears inconsistent to me:
+You need to learn git first.
 
-touch geo
-git-add geo
-git-commit -m xxx -a
-git-rm geo
-[Now geo is gone]
-git-add geo
-[geo is complained about as unknown]
-git-checkout geo
-[geo is complained about as unknown!]
+A directory doesn't exist IN THE INDEX (until my patches). But you need to 
+learn about the object database and the SHA1's. That's the real meat of 
+git, and it sure as hell knows about directories.
 
-Now the last complaint clearly is quite a nuisance, because
-git-checkout .
-_will_ resurrect geo.
-
-So for consistency's sake, it would appear that git-rm should really
-only schedule a removal, and pull through only at the moment where the
-file is actually removed from the repository.  There is a slight
-discordance with git-add in that git-add requires the existence of the
-file at the time of the add.  That is inevitable since git records the
-_contents_ of the file at the time of the add.  git-rm does not need
-any such information.
-
-Now what if a file disappears before we commit, namely
-touch woozle
-git add woozle
-rm woozle
-?
-
-Woozle will in that case get committed if and only if the commit is
-done without the -a option.
-
-Makes sense.  So in a nutshell: git-rm should not look at the working
-directory.  That's the business of the commit.  When the repository
-copy gets removed, this is the right time to remove the corresponding
-file, and this is perfectly equivalent with the case for trees.
-
-What _is_ strange is that a git-rmed file can't be restored by naming
-it for a checkout.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+		Linus
