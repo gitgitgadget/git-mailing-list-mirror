@@ -1,70 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] --decorate now decorates ancestors, too
-Date: Sat, 21 Jul 2007 23:26:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707212322260.14781@racer.site>
-References: <Pine.LNX.4.64.0707110220340.4047@racer.site>
- <Pine.LNX.4.64.0707110229320.4047@racer.site> <20070711022714.GI27033@thunk.org>
- <7vmyy1tq96.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Internationalization of git-gui
+Date: Sat, 21 Jul 2007 15:36:37 -0700
+Message-ID: <7vzm1ptmdm.fsf@assigned-by-dhcp.cox.net>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com>
+	<200707210951.00210.stimming@tuhh.de>
+	<20070721080338.GT32566@spearce.org>
+	<200707211433.29318.stimming@tuhh.de>
+	<Pine.LNX.4.64.0707211427190.14781@racer.site>
+	<7vejj1v92b.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707212208110.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 00:27:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Stimming <stimming@tuhh.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 22 00:36:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICNPz-0005HE-Kq
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 00:27:19 +0200
+	id 1ICNZ5-0006zU-N9
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 00:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754937AbXGUW04 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 18:26:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbXGUW0z
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 18:26:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55497 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751855AbXGUW0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 18:26:54 -0400
-Received: (qmail invoked by alias); 21 Jul 2007 22:26:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 22 Jul 2007 00:26:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19qIZlr+75qcc/qTYVYJki0MIqJiIJG2issRTIe85
-	wW9c8XLyFc2lvR
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vmyy1tq96.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750843AbXGUWgj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 18:36:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbXGUWgj
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 18:36:39 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:35768 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750777AbXGUWgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 18:36:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070721223638.XVDS1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Jul 2007 18:36:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SNcd1X0041kojtg0000000; Sat, 21 Jul 2007 18:36:37 -0400
+In-Reply-To: <Pine.LNX.4.64.0707212208110.14781@racer.site> (Johannes
+	Schindelin's message of "Sat, 21 Jul 2007 22:12:40 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53193>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 12 Jul 2007, Junio C Hamano wrote:
+>> Two questions and a half.
+>> 
+>>  - The above means git-gui-i18n.git's master is rebased.  Is
+>>    that the intention?  IOW, people are supposed to work on it
+>>    with fetch+rebase, not fetch+merge (= pull)?
+>
+> Okay, you have me there.  Usually I am the one saying "rebasing is bad".  
+> So I'll refrain from that practice.  From now on, 'master' will _not_ be 
+> rebased.  From time to time I will prepare 'for-shawn' branches, which are 
+> "master rebased onto git-gui".
 
-> But in general I do not see ("I haven't realized" might turn out to be a 
-> better expression) much value in this series yet except for the initial 
-> clean-up patches, while I think this option would be quite expensive in 
-> terms of memory footprints on projects with nontrivial size of history.  
-> I dunno.
+I did not mean to say "rebase is bad".  Quite the contrary.
 
-It would not, since you do not have to say "--decorate" at all.  However, 
-if you do want the functionality this patch provides, you have to jump 
-through hoops right now.  ATM an alias is my work around, since I run 
-'master' as you requested:
+Rebase is bad for a repository meant for public consumption of
+the under-development-snapshot, like git.git's 'master' and
+'next'.  For a repository like git-gui-i18n whose sole point is
+to serve as a public gathering point of narrowly focused area of
+development (only translation of messages), I actually think
+"everybody fetches and rebases" workflow is perfectly fine, as
+long as all participants understand what the expected workflows
+are.  My comment was more about making it clear what the policy
+is to its intended audience.
 
-git config --global alias.decoratelog '!sh -c
-	"(case \"\$0\" in
-		sh) git log --color;;
-		*) git log --color \"\$0\" \"\$@\";;
-	 esac) |
-	 git -p name-rev --tags --stdin"'
+Rebasing git-gui-i18n to keep its history clean would eventually
+allow you to merge it directly into git-gui.  But if you are not
+aiming for that (and you said your plan is to cherry pick the
+result, not to merge, which is fine), then rebasing would no buy
+you anything, so I think it would be a reasonable and manageable
+workflow to:
 
-Ugly, ain't it?
+ - people fork from 'mob', push back to 'mob';
 
-And I still have to look up at which release certain features were 
-introduced every day.
+ - you 
+   - build 'master' by cherry picking good bits from 'mob', and
+   - do your own fixups and framework changes on 'master',
+   - merge 'master' back to 'mob' to allow contributors to
+     adjust their work on the updated 'master' by simply
+     following 'mob',
 
-Ciao,
-Dscho
+ - and eventually clean-up 'master' to make it mergeable and/or
+   applicable to git-gui itself.
