@@ -1,127 +1,177 @@
-From: Brett Schwarz <brett_schwarz@yahoo.com>
-Subject: Re: [PATCH] Internationalization of git-gui
-Date: Sat, 21 Jul 2007 09:29:56 -0700 (PDT)
-Message-ID: <479784.46282.qm@web38908.mail.mud.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase -i: call editor just once for a multi-squash
+Date: Sat, 21 Jul 2007 18:09:41 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707211807430.14781@racer.site>
+References: <m3ps2xu5hc.fsf@pc7.dolda2000.com> <20070712132937.GQ19386@genesis.frugalware.org>
+ <Pine.LNX.4.64.0707121451290.4516@racer.site> <20070713103025.GR1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ascii
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 18:30:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sat Jul 21 19:10:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICHqb-0006gQ-D9
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 18:30:25 +0200
+	id 1ICITA-0007ro-8Z
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 19:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbXGUQaA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 12:30:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbXGUQ37
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 12:29:59 -0400
-Received: from web38908.mail.mud.yahoo.com ([209.191.125.114]:40718 "HELO
-	web38908.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751445AbXGUQ36 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 12:29:58 -0400
-Received: (qmail 46475 invoked by uid 60001); 21 Jul 2007 16:29:57 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
-  b=Y/96cil6HJwB8wZCkjewRkQ95d91fpeT5+dLLCzlJ2aPMhnTDPjB4wOLdcGsv6ME1SI2vO+fPKafD7RZ9gXgae9pdOpwxw89Yer0dHwD7H7mxcalGxJuheoz896P46QLF8Gtr4rGQFfUNmskYVWUsbaYcl+lzo3XpuNCtpQou4U=;
-X-YMail-OSG: Q6S6z68VM1lCPUsVSAdOS8HA1UdhBxcby8_RHZNkuC6qFLJfY.DpRBKXigGX7N05kQ--
-Received: from [24.16.125.24] by web38908.mail.mud.yahoo.com via HTTP; Sat, 21 Jul 2007 09:29:57 PDT
-X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.41.16
+	id S1751813AbXGURJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 13:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393AbXGURJ6
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 13:09:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42343 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751161AbXGURJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 13:09:57 -0400
+Received: (qmail invoked by alias); 21 Jul 2007 17:09:54 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp038) with SMTP; 21 Jul 2007 19:09:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+FlLoLqeCF9O9IL0TPIBIT5/0nnA+OdBkF6QoTCT
+	Z0yreZEjw9E1bj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070713103025.GR1528MdfPADPa@greensroom.kotnet.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53173>
 
 
-> ----- Original Message ----
-> From: Christian Stimming <stimming@tuhh.de>
-> To: Brett Schwarz <brett_schwarz@yahoo.com>
-> Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>; Shawn O. Pearce <spearce@spearce.org>; Johannes Schindelin <Johannes.Schindelin@gmx.de>; git@vger.kernel.org
-> Sent: Friday, July 20, 2007 2:40:27 PM
-> Subject: Re: [PATCH] Internationalization of git-gui
-> 
-> Am Freitag, 20. Juli 2007 20:34 schrieb Brett Schwarz:
-> > After the glossary of terms has been create, it is easy to create the
-> > catalog file (assuming we use Tcl's standard mechanism). Each locale should
-> > have it's own file, named <locale_name>.msg (for example, es.msg for
-> > spanish). Inside that file, you just create entries for each glossary term
-> > (the below assumes that the msgcat namespace was imported):
-> >
-> >   mcset es Hello Hola
-> >   mcset es "Hello %s" "Hola %s"
-> 
-> I beg your pardon, but I think you grossly misunderstood what I meant
-> by "glossary". So before we end up in further confusion, let me clarify how
-> the general translation approach works. I'll use gettext wording because
-> that's what I know (from being the i18n guy in the gnucash project), but you
-> can easily insert any other wording you like here.
-> 
+Sometimes you want to squash more than two commits.  Before this patch,
+the editor was fired up for each squash command.  Now the editor is
+started only with the last squash command.
 
-Ok, perhaps I did misunderstand you. From below, now I do understand...thanks.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
+	On Fri, 13 Jul 2007, Sven Verdoolaege wrote:
+
+	> If I squash a whole series of commits, how do I prevent 
+	> git-rebase -i from firing up an editor after every single commit 
+	> in the series?
+
+	By applying this patch ;-)
+
+ git-rebase--interactive.sh    |   56 +++++++++++++++++++++++++++++++++-------
+ t/t3404-rebase-interactive.sh |    9 ++++++
+ 2 files changed, 55 insertions(+), 10 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a2d4d09..579a45e 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -19,6 +19,8 @@ require_work_tree
+ DOTEST="$GIT_DIR/.dotest-merge"
+ TODO="$DOTEST"/todo
+ DONE="$DOTEST"/done
++MSG="$DOTEST"/message
++SQUASH_MSG="$DOTEST"/message-squash
+ REWRITTEN="$DOTEST"/rewritten
+ PRESERVE_MERGES=
+ STRATEGY=
+@@ -158,6 +160,38 @@ pick_one_preserving_merges () {
+ 	esac
+ }
  
-> #1 For the translation in general, there is the set of all user-visible
-> strings in the source language (here: english). In gettext terms this is
-> called the "PO template file", git-gui.pot, also called the message template
-> file. This set of to-be-translated strings needs to be extracted from the
-> source code, which can be done by the xgettext program.
-> 
-> #2 For each target language, there is a human-readable mapping file that maps
-> each source string (english) into the target language. In gettext terms this
-> is the "PO file", de.po and it.po and ja.po and whatnot, also called the
-> translation file. This is the *only* file translators actually work with.
-> Gettext uses its PO file format here and a plethora of different tools exist
-> to help translators editing these files. (Examples: emacs po-mode,
-> KBabel, ...)
-> 
-> #3 For each target language, the translation files are converted to a
-> (potentially not human-readable) "compiled" mapping file, which is then read
-> at program runtime and used for the actual translation. For the gettext po
-> file format, the msgfmt program can convert this to Tcl's .msg files.
-> 
-> If I understand correctly, your above suggestion implies that for Tcl msgcat,
-> the file in #2 and #3 are one and the same? In my opinion this might make
-> sense if and only if that file format is supported by at least as many
-> translation tools and offers as flexible translation updates as gettext's po
-> file format does. From my experience the po file format indeed offers a bunch
-> of features that other translation file formats are missing but which are of
-> significant help to the translator. That's why I would strongly suggest to do
-> the actual translation inside a po file, and have it converted to the msg
-> file afterwards.
-> 
-
-Yes, for the msgcat files, you create just the mapping files...that's it. No intermediate steps. So, a workflow would look something like this:
-
-1) Somebody creates the initial "template" file. This is usually in the source's language (i.e. english). This too is just a msgcat file. Note that this file is not strictly necessary, but helps other translators.
-
-2) A translator copies the template file, to their target language file, and edits the text:
-    # cp en.msg es.msg
-    # vi es.msg
-    this
-        mcset en Hello Hello
-    get's changed to this
-        mcset es Hello Hola
-    etc
-
-That's it. There is no compilation needed, and no need for a makefile entry.
-
-Now, even though I think this approach is alot more simplier and straight forward, I do recognize that alot of people are probably accustomed to the po format, and since the actual generation of the msgcat files are only done by the maintainer, I don't really have anything against using the po format.
-
-I know it's already been decided to use the po format, but I just wanted to make sure to follow up on this email.
-
-Thanks,
-    --brett
-
-
-
-
-       
-____________________________________________________________________________________
-Boardwalk for $500? In 2007? Ha! Play Monopoly Here and Now (it's updated for today's economy) at Yahoo! Games.
-http://get.games.yahoo.com/proddesc?gamekey=monopolyherenow  
++nth_string () {
++	case "$1" in
++	*1[0-9]|*[04-9]) echo "$1"th;;
++	*1) echo "$1"st;;
++	*2) echo "$1"nd;;
++	*3) echo "$1"rd;;
++	esac
++}
++
++make_squash_message () {
++	if [ -f "$SQUASH_MSG" ]; then
++		COUNT=$(($(sed -n "s/^# This is [^0-9]*\([0-9]\+\).*/\1/p" \
++			< "$SQUASH_MSG" | tail -n 1)+1))
++		echo "# This is a combination of $COUNT commits."
++		sed -n "2,\$p" < "$SQUASH_MSG"
++	else
++		COUNT=2
++		echo "# This is a combination of two commits."
++		echo "# The first commit's message is:"
++		echo
++		git cat-file commit HEAD | sed -e '1,/^$/d'
++		echo
++	fi
++	echo "# This is the $(nth_string $COUNT) commit message:"
++	echo
++	git cat-file commit $1 | sed -e '1,/^$/d'
++}
++
++peek_next_command () {
++	sed -n "1s/ .*$//p" < "$TODO"
++}
++
+ do_next () {
+ 	test -f "$DOTEST"/message && rm "$DOTEST"/message
+ 	test -f "$DOTEST"/author-script && rm "$DOTEST"/author-script
+@@ -194,17 +228,19 @@ do_next () {
+ 			die "Cannot 'squash' without a previous commit"
+ 
+ 		mark_action_done
+-		MSG="$DOTEST"/message
+-		echo "# This is a combination of two commits." > "$MSG"
+-		echo "# The first commit's message is:" >> "$MSG"
+-		echo >> "$MSG"
+-		git cat-file commit HEAD | sed -e '1,/^$/d' >> "$MSG"
+-		echo >> "$MSG"
++		make_squash_message $sha1 > "$MSG"
++		case "$(peek_next_command)" in
++		squash)
++			EDIT_COMMIT=
++			cp "$MSG" "$SQUASH_MSG"
++		;;
++		*)
++			EDIT_COMMIT=-e
++			test -f "$SQUASH_MSG" && rm "$SQUASH_MSG"
++		esac
++
+ 		failed=f
+ 		pick_one -n $sha1 || failed=t
+-		echo "# And this is the 2nd commit message:" >> "$MSG"
+-		echo >> "$MSG"
+-		git cat-file commit $sha1 | sed -e '1,/^$/d' >> "$MSG"
+ 		git reset --soft HEAD^
+ 		author_script=$(get_author_ident_from_commit $sha1)
+ 		echo "$author_script" > "$DOTEST"/author-script
+@@ -213,7 +249,7 @@ do_next () {
+ 			# This is like --amend, but with a different message
+ 			eval "$author_script"
+ 			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
+-			git commit -F "$MSG" -e
++			git commit -F "$MSG" $EDIT_COMMIT
+ 			;;
+ 		t)
+ 			cp "$MSG" "$GIT_DIR"/MERGE_MSG
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 43a6675..8206436 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -65,6 +65,7 @@ cat > fake-editor.sh << EOF
+ #!/bin/sh
+ test "\$1" = .git/COMMIT_EDITMSG && {
+ 	test -z "\$FAKE_COMMIT_MESSAGE" || echo "\$FAKE_COMMIT_MESSAGE" > "\$1"
++	test -z "\$FAKE_COMMIT_AMEND" || echo "\$FAKE_COMMIT_AMEND" >> "\$1"
+ 	exit
+ }
+ test -z "\$FAKE_LINES" && exit
+@@ -212,4 +213,12 @@ test_expect_success 'verbose flag is heeded, even after --continue' '
+ 	grep "^ file1 |    2 +-$" output
+ '
+ 
++test_expect_success 'multi-squash only fires up editor once' '
++	base=$(git rev-parse HEAD~4) &&
++	FAKE_COMMIT_AMEND="ONCE" FAKE_LINES="1 squash 2 squash 3 squash 4" \
++		git rebase -i $base &&
++	test $base = $(git rev-parse HEAD^) &&
++	test 1 = $(git show | grep ONCE | wc -l)
++'
++
+ test_done
+-- 
+1.5.3.rc1.16.g9d6f-dirty
