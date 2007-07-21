@@ -1,139 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Internationalization of git-gui
-Date: Fri, 20 Jul 2007 22:17:17 -0400
-Message-ID: <20070721021717.GS32566@spearce.org>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <20070720050455.GN32566@spearce.org> <20070720105602.7dcm241ts0k0ww88@webmail.tu-harburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: git-gui i18n repo on repo.or.cz
+Date: Sat, 21 Jul 2007 03:12:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707210300490.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Sat Jul 21 04:17:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Xudong Guan <xudong.guan@gmail.com>,
+	Brett Schwarz <brett_schwarz@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 04:23:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IC4XN-0001cV-Fy
-	for gcvg-git@gmane.org; Sat, 21 Jul 2007 04:17:41 +0200
+	id 1IC4dJ-0002aK-4Z
+	for gcvg-git@gmane.org; Sat, 21 Jul 2007 04:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757629AbXGUCR1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Jul 2007 22:17:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756816AbXGUCR1
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 22:17:27 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58519 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756534AbXGUCR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2007 22:17:26 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IC4Ws-00086U-7H; Fri, 20 Jul 2007 22:17:10 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B68BB20FBAE; Fri, 20 Jul 2007 22:17:17 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070720105602.7dcm241ts0k0ww88@webmail.tu-harburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1756023AbXGUCXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Jul 2007 22:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756816AbXGUCXq
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Jul 2007 22:23:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48665 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753032AbXGUCXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2007 22:23:45 -0400
+Received: (qmail invoked by alias); 21 Jul 2007 02:13:03 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 21 Jul 2007 04:13:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+sWkYems6sNuaW/cl/OtMlHcBgcVqRkTqze92q0o
+	mDquLfqBMDQJqO
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53132>
 
-Christian Stimming <stimming@tuhh.de> wrote:
-> I used (and prefer) "_" because that's the standard function name for  
-> i18n'd strings when using gettext (talking about a "standard" way).
+Hi people,
 
-I thought about this today.  I almost want to use _, e.g:
+I proudly present...
 
-  proc _ {args} {
-    return [eval mc $args]
-  }
+	http://repo.or.cz/w/git-gui/git-gui-i18n.git
 
-For the translation, but I don't think its worth the CPU cycles in
-Tcl to eval mc via _ every time we need a string when it only is
-saving us one keystroke on a function name, *and* we are breaking
-tradition with Tcl.
+It is meant to be rebased to git-gui's master pretty often.  It has also a 
+mob branch where you can push your new changes into.
 
-So when in Rome, wear a toga.  Or in this case, use [mc ...].
+For those who do not know what a mob branch is: By using the URL 
+mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git, without password, 
+_everybody_ can push into the branch named "mob" (but _only_ into that).
 
-> Being a newcomer on this list, could you please explain to me how to  
-> proceed with the i18n patches so far?
+This facilitates participation without the need of a password, or commit 
+permissions, since it is mean to be pulled/cherry-picked by the repo 
+maintainer, who can decide what is good and what is bad.  For the moment, 
+the maintainer is yours truly.  If somebody volunteers, I am certainly not 
+sad.
 
-Sure.
+I would like to ask people to not push with "+" into the mob branch, but 
+pull it instead, so that we do not lose any valuable data.  It is probably 
+a good idea to send an email to the repo maintainer, too.
 
-> Do you want to have patches  
-> submitted after some further changes (which ones?)
+For the time being, I will rebase the master branch relatively often, 
+and try to stay on top of the mob branch.
 
-Yes.  Here's a few to get started with and that are really obvious.
-Some I'm just asking for more information on.
+At the moment, the repo contains three branches: master (which I would 
+like to be rebased onto git-gui's master quite frequently), 
+christian-orig, the patch series which Christian sent, and which branched 
+off git-gui's master roughly 8 days ago, and the mob branch.
 
- - Import msgcat::mc and use [mc] instead of [_].
-
- - Please combine the second and third patches into a single change.
- There is no reason to switch to [mc {}] only to switch to [mc ""].
-
- - Please use mc's formatting support, rather than [format].
- Its shorter code.
-
- - Don't bother trying to translate the strings "Tools" (for the
- Tools menu) or "Migrate" (for its only menu option).  This block
- of code doesn't even belong in git-gui.  Its for my day-job and
- is a custom hack that I need to strip out and carry as a local
- patch there, rather than in the public distribution.
-
- - In our Makefile we do the looping in GNU make using its
- $(foreach) operator, rather than using the shell's for builtin.
- In other words, can we have the catalog target look more like the
- install target?
-
- - Can ALL_LINGUAS be automatically built from the directory
- contents of the po/ directory?
-
- - Can we define a dist rule for the maintainer to build the catalog
- files, so the maintainer can convert the .po -> .msg for Tcl and
- the user doesn't need the GNU tools installed to build git-gui?
-
-
-> and/or in different  
-> formats?
-
-Please send one patch per email message, inline and not attached.
-This way they are easy to review, respond to and comment on.
-
-> Do you prefer to have all changes in a smaller number of  
-> commit rather than split the way I did before?
-
-No, this series looks reasonably fine to me structurally.
-
-Did you base the patches on git.git's git-gui/ subdirectory, or
-did you base them on the git-gui.git repository?  Technically all
-patches for git-gui should be against the git-gui repository on
-repo.or.cz, as git-gui is its own project.  Periodic stable snapshots
-are imported into git.git under the git-gui/ subdirectory, for the
-ease of distribution with core git.
-
-Dscho recently created a fork of git-gui.git here:
-
-  http://repo.or.cz/w/git-gui/git-gui-i18n.git
-
-and added your patch series into it.  But I'd like to see some
-cleanups before it merges in, and I want to hold off on actually
-applying it into git-gui 0.8.0 is released, which should be Real
-Soon Now as I'm trying to make it into git 1.5.3, which is coming
-Even Sooner Than I'd Hoped.  ;-)
-
-> Should I wait for some  
-> more days/weeks/whatever until you or particular other developers have  
-> reviewed the patches? Thanks.
-
-I think we're settled on using [mc].  I'm fine with the *.po ->
-*.msg thing, especially if the maintainer can produce them and
-package the *.msg files in the release tarball, so that the enduser
-doesn't need to worry about msgfmt working.
-
--- 
-Shawn.
+Ciao,
+Dscho
