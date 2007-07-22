@@ -1,72 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS
- keyword expansion
-Date: Sun, 22 Jul 2007 20:15:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707222013200.14781@racer.site>
-References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com> 
- <Pine.LNX.4.64.0707221959100.14781@racer.site>
- <9e4733910707221210t2b2896b5ob4ce7bf95d4a707a@mail.gmail.com>
+From: Simon Arlott <simon@fire.lp0.eu>
+Subject: Re: diffutils: C labels misdetected as functions
+Date: Sun, 22 Jul 2007 20:16:23 +0100
+Message-ID: <46A3AD07.1070504@simon.arlott.org.uk>
+References: <1184489571313-git-send-email-crquan@gmail.com>	<4699EEA9.6070709@simon.arlott.org.uk>	<20070720170743.GF14791@parisc-linux.org>	<46A0F282.8070103@simon.arlott.org.uk>	<20070720180019.GJ14791@parisc-linux.org>	<46A1A375.3020900@simon.arlott.org.uk>	<20070721135200.GQ14791@parisc-linux.org>	<46A25BE0.7000104@simon.arlott.org.uk> <87abtogu6u.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 21:15:49 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthew Wilcox <matthew@wil.cx>, Denis Cheng <crquan@gmail.com>,
+	kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+X-From: kernel-janitors-owner@vger.kernel.org Sun Jul 22 21:16:42 2007
+Return-path: <kernel-janitors-owner@vger.kernel.org>
+Envelope-to: glkj-kernel-janitors-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICguA-0002TO-Ap
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 21:15:46 +0200
+	id 1ICguw-0002go-Lt
+	for glkj-kernel-janitors-2@gmane.org; Sun, 22 Jul 2007 21:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbXGVTPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 15:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbXGVTPm
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 15:15:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60200 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751287AbXGVTPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 15:15:42 -0400
-Received: (qmail invoked by alias); 22 Jul 2007 19:15:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 22 Jul 2007 21:15:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ayzgIa+8aMyHkAW63eV7Fo/fLoLeg7Qo9VW7pC9
-	jNsLf4amx7ahdZ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <9e4733910707221210t2b2896b5ob4ce7bf95d4a707a@mail.gmail.com>
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
+	id S1752515AbXGVTQd (ORCPT
+	<rfc822;glkj-kernel-janitors-2@m.gmane.org>);
+	Sun, 22 Jul 2007 15:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbXGVTQd
+	(ORCPT <rfc822;kernel-janitors-outgoing>);
+	Sun, 22 Jul 2007 15:16:33 -0400
+Received: from proxima.lp0.eu ([85.158.45.36]:33394 "EHLO proxima.lp0.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752515AbXGVTQb (ORCPT <rfc822;kernel-janitors@vger.kernel.org>);
+	Sun, 22 Jul 2007 15:16:31 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=exim; d=fire.lp0.eu;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:X-Enigmail-Version:OpenPGP:Content-Type:Content-Transfer-Encoding;
+	b=V0IXeOo4iYR+DVq8bsj9SCR3+9J60Km6pLfqNEAVIya0yEhf6B4QsjUve4iH6rQuJPFKyJ2tRC71vPEMUOdlESHwkF1/6CMYJhurDz5R1PuuyjpfJfh4w1+dLhUVZAOw;
+Received: from redrum.lp0.eu ([2001:4b10:1005:0:204:23ff:fea8:25f0]:41076 ident=byte)
+	by proxima.lp0.eu with esmtps (TLSv1:AES256-SHA:256)
+	id 1ICgum-0006iL-Oh; Sun, 22 Jul 2007 20:16:25 +0100
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <87abtogu6u.fsf@penguin.cs.ucla.edu>
+X-Enigmail-Version: 0.95.2
+OpenPGP: id=89C93563
+Sender: kernel-janitors-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53299>
+X-Mailing-List: kernel-janitors@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53300>
 
-Hi,
-
-On Sun, 22 Jul 2007, Jon Smirl wrote:
-
-> On 7/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Sun, 22 Jul 2007, Jon Smirl wrote:
-> > 
-> > > It would really be useful if git diff had an option for suppressing 
-> > > diffs caused by CVS keyword expansion.
-> > 
-> > Looks to me slightly a bit like an XY problem.
-> > 
-> > How about using git-filter-branch to get rid of the expansions?  Or 
-> > even better, if you have access to the CVS server, use the -k option 
-> > to cvsimport?
+On 22/07/07 19:38, Paul Eggert wrote:
+> Simon Arlott <simon@fire.lp0.eu> writes:
 > 
-> No access to the server the people handing over the diffs and not
-> making things easy.
+>> The patch below stops diffutils treating C labels starting in column 1 as function names.
+> 
+> That patch alone wouldn't suffice, since -p is documented as implying
+> -F '^[[:alpha:]$_]'.  If the behavior changes, we'd also have to
+> change the documentation to match.
 
-Ah yes, that's what I feared.  Darn.
+Ok.
 
-But still, I think that it would be much better not to put this into Git.  
-We do have diff gitattributes now, so that you can roll your own diff for 
-specific files, but I still think that this is more a task for a 
-standalone perl script.  Possibly being called from filter-branch to be 
-done with the conversion once and for all times.
+> I'm not sure the change is a good idea.  It would complicate the
+> documentation and therefore the user interface, without that much
 
-Ciao,
-Dscho
+Complicated documentation means a bug shouldn't be fixed?
+
+> benefit.  And it wouldn't suffice in general, since it would still
+> mishandle labels followed by comments or by white space.
+
+Yes, the regexp needs changing further to ignore comments...
+
+"[[:alpha:]$_][^:]*$" perhaps? Although that ignores functions with
+comments on the same line containing a :.
+
+> Also, for long C functions some people might rather see a top-level
+> (unindented) label highlighted than the function name highlighted, so
+> they might prefer the current behavior.
+
+"-p  --show-c-function  Show which C function each change is in."
+
+It's not "--show-c-function-or-label".
+
+> Anyway, to work around your problem without changing "diff", you can
+> use "diff -u -F '^[[:alpha:]$_](|.*[^:])$'" instead of "diff -u -p".
+
+Perhaps git could do this (or similar) as a workaround? (Cc:ed)
+
+> Or you can put a single space before the labels in question: they'll
+> still stand out plenty.
+
+The code should definitely not need to be modified to work around a
+diff bug.
+
+-- 
+Simon Arlott
