@@ -1,61 +1,115 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS keyword expansion
-Date: Sun, 22 Jul 2007 15:48:53 -0400
-Message-ID: <9e4733910707221248q45fb3aaala9c79afd4b09830e@mail.gmail.com>
-References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>
-	 <Pine.LNX.4.64.0707221959100.14781@racer.site>
-	 <9e4733910707221210t2b2896b5ob4ce7bf95d4a707a@mail.gmail.com>
-	 <Pine.LNX.4.64.0707222013200.14781@racer.site>
+From: Michael <barra_cuda@katamail.com>
+Subject: Re: [PATCH] Initial  Italian translation of git-gui.pot
+Date: Sun, 22 Jul 2007 21:28:05 +0200
+Message-ID: <200707222128.05884.barra_cuda@katamail.com>
+References: <20070722124236.47baacb1@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 22 21:49:00 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 22 22:08:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IChQH-0001nP-KG
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 21:48:58 +0200
+	id 1IChj0-00061A-5J
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758425AbXGVTsy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 15:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759320AbXGVTsy
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 15:48:54 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:14465 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756958AbXGVTsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 15:48:53 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1737468wah
-        for <git@vger.kernel.org>; Sun, 22 Jul 2007 12:48:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dmz1evl9Y/COQhLEawpFPksSrG06XNj9DGZU7sAgMih1TXZ63IR/S5IjmEz6Cq0/e4ZIA4yONxClT9aDmjOlsU8jgxv5NhKNPlJF/o2weveBLeTd/iPBQZQC0HG2S/xfJVv80nccQwbVPdBHQGCMC8deSXEGa8lgR4mR/WzXVp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DdQl7wApDCfbOii6XzV8H1VZl51N4PeSNcP2iRG1V2pakbjLI3Y++I4wpDKNNK2kBLuGgkSz4CEiJeYndp4d1NMBqTMj+myij044dp77kYbUOohI8nevfx0mmXQmBrh8X4/ZUo9Y17+FaXm7S6Ft/yiLPyHcMgcA6FvkYQBaCqI=
-Received: by 10.114.195.19 with SMTP id s19mr2333409waf.1185133733344;
-        Sun, 22 Jul 2007 12:48:53 -0700 (PDT)
-Received: by 10.114.195.5 with HTTP; Sun, 22 Jul 2007 12:48:53 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707222013200.14781@racer.site>
+	id S1762152AbXGVUIO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 16:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762070AbXGVUIN
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:08:13 -0400
+Received: from slim-3c.inet.it ([213.92.5.125]:33306 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761403AbXGVUIL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 16:08:11 -0400
+X-Greylist: delayed 2417 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Jul 2007 16:08:11 EDT
+Received: from host193-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.193]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.57.193+n2aJmXxoaG3; Sun, 22 Jul 2007 21:27:51 +0200
+User-Agent: KMail/1.9.4
+In-Reply-To: <20070722124236.47baacb1@paolo-desktop>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53309>
 
-On 7/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> But still, I think that it would be much better not to put this into Git.
-> We do have diff gitattributes now, so that you can roll your own diff for
-> specific files, but I still think that this is more a task for a
-> standalone perl script.  Possibly being called from filter-branch to be
-> done with the conversion once and for all times.
+On Sunday 22 July 2007 12:42, Paolo Ciarrocchi wrote:
+> Initial Italian translation
+>=20
+> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 
-I can provide sample diffs if you want something to play with.
+io userei queste parole:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+merge	unione, fusione/unire, fondere
+commit	salvataggio/salvare (forse troppo inflazionato)
+amend	correzione/correggere
+hunk	parte
+fetch	prendi da
+
+Per il resto, avrei tradotto pi=F9 o meno come segue. Che ne dici?
+
+> ---
+>  po/it.po |  118 +++++++++++++++++++++++++++++++---------------------=
+----------
+>  1 files changed, 59 insertions(+), 59 deletions(-)
+>=20
+> diff --git a/po/it.po b/po/it.po
+> index e8b8cdb..780519e 100644
+> --- a/po/it.po
+> +++ b/po/it.po
+
+=2E..
+
+>  #: git-gui.sh:1820 git-gui.sh:2176
+>  msgid "Rescan"
+> -msgstr ""
+> +msgstr "Analizza"
+
+"Riesamina database"?
+
+>  #: git-gui.sh:2229
+>  msgid "Amended Commit Message:"
+> -msgstr ""
+> +msgstr "Annulla messaggio del Commit"
+
+"Correzione del messaggio da salvare:"?
+
+>  #: git-gui.sh:2230
+>  msgid "Amended Initial Commit Message:"
+> -msgstr ""
+> +msgstr "Annulla messaggio iniziale del Commit"
+
+"Correzione del messaggio iniziale:"?
+
+>  #: git-gui.sh:2231
+>  msgid "Amended Merge Commit Message:"
+> -msgstr ""
+> +msgstr "Annulla messaggio di incorporamento"
+
+"Correzione messaggio dell'unione"?
+
+>  #: git-gui.sh:2431
+>  msgid "Decrease Font Size"
+> -msgstr ""
+> +msgstr "Diminuisci dimensione Font"
+
+font -> carattere?
+
+>  #: git-gui.sh:2435
+>  msgid "Increase Font Size"
+> -msgstr ""
+> +msgstr "Aumenta dimensione Font"
+> =20
+>  #: git-gui.sh:2440
+>  msgid "Show Less Context"
+> -msgstr ""
+> +msgstr "Mostra meno contenuto"
+
+contenuto -> contesto?
+
+>  #: git-gui.sh:2447
+>  msgid "Show More Context"
+> -msgstr ""
+> +msgstr "Mostra pi=F9 contenuto"
