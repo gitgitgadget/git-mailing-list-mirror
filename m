@@ -1,88 +1,103 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fsck --lost-found: write blob's contents, not their
- SHA-1
-Date: Sun, 22 Jul 2007 22:52:28 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707222246220.14781@racer.site>
-References: <Pine.LNX.4.64.0707222120100.14781@racer.site>
- <7vodi4qfnx.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Sun, 22 Jul 2007 22:59:55 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707222255010.14781@racer.site>
+References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
+ <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk>
+ <Pine.LNX.4.64.0707222223460.14781@racer.site>
+ <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 23:52:49 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 23 00:00:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICjM6-00046b-RY
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 23:52:47 +0200
+	id 1ICjTP-0006hS-AE
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759382AbXGVVwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 17:52:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758640AbXGVVwn
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 17:52:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56696 "HELO mail.gmx.net"
+	id S1765131AbXGVWAM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 18:00:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765141AbXGVWAL
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:00:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39614 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757760AbXGVVwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 17:52:41 -0400
-Received: (qmail invoked by alias); 22 Jul 2007 21:52:39 -0000
+	id S1765131AbXGVWAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 18:00:08 -0400
+Received: (qmail invoked by alias); 22 Jul 2007 22:00:06 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp040) with SMTP; 22 Jul 2007 23:52:39 +0200
+  by mail.gmx.net (mp052) with SMTP; 23 Jul 2007 00:00:06 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZZbs88gZZxWlcPP/eVAY3Js0XSQR2/uvjm68cEh
-	34ZHXGUXY6SACB
+X-Provags-ID: V01U2FsdGVkX1/lFONQ/YblIL5AeSuxaxZ9UPj3CfhPpVKjd8SkB5
+	nHKXlEy+5+gfZw
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vodi4qfnx.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53332>
 
 Hi,
 
-On Sun, 22 Jul 2007, Junio C Hamano wrote:
+On Sun, 22 Jul 2007, Julian Phillips wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Sun, 22 Jul 2007, Johannes Schindelin wrote:
 > 
-> > When looking for a lost blob, it is much nicer to be able to grep
-> > through .git/lost-found/other/* than to write an inefficient loop
-> > over the file names.  So write the contents of the dangling blobs,
-> > not their object names.
+> > On Sun, 22 Jul 2007, Julian Phillips wrote:
+> > 
+> > > On Sun, 22 Jul 2007, Johannes Schindelin wrote:
+> > > 
+> > > > 	IMHO this is a better syntax than what is in contrib/, and "git
+> > > > 	branch" is probably the right place for such a thing, from a
+> > > > 	user's perspective.
+> > > 
+> > > Surely checkout would make more sense than branch?  You are effectively
+> > > checking out into a new directory ... also you may want to get an
+> > > existing branch (certainly most of my usage of new-workdir is checking
+> > > out existing branches, e.g. to look at - as in build and play with - an
+> > > interesting branch that someone else has pushed out).
+> > 
+> > My rationale here was:
+> > 
+> > - to make sure that the user cannot check out the same branch as in the
+> >  current repo, _or some other workdir of it_, and
 > 
-> I think this is an idea to solve a good problem, but if we go
-> this route, the need for us to worry about expiring lost-found
-> entries would become more urgent, I suspect.
+> Since you can checkout any branch you like once you have the workdir, 
+> this is really an artificial limitation - you are protected when you 
+> create the workdir, but not after.
 
-Why?  AFAICT lost+found/ has to be cleaned by people.  So if you look for 
-something, you say "git fsck --lost-found", and once you found it, it's 
-time for "rm -rf .git/lost-found".
+Well, it is not really an artificial limitation.  IMHO it is much more 
+likely that you keep in mind what you should not do, when you have to work 
+around such a limitation if you really want to do.
 
-> And when you think about expiring lost-found entries, another
-> possible solution emerges.  If we teach git-prune to remove the
-> corresponding entry from lost-found/other when it removes a
-> loose blob from the object store, then we can easily and safely
-> do this instead:
+> If you want to have a workdir for an exisiting branch then you have to create
+> a new one, and then switch it over.  That seems like a really big usability
+> wart to me ... certainly it would make the option pretty much useless to me.
+> My original motivation for the new-workdir script was to give me the ability
+> to flatten out branches from a single repo for when I'm working on multiple
+> branches at the same time.
+
+Nowadays, we have separate remotes layout by default.  (Indeed, you cannot 
+even disable it, as I found out recently).  Which means that you already 
+have to branch off your local branch.  So the consequences are lesser.
+
+> > - to have finer grained lock control, as well as respecting has_symlinks.
 > 
-> 	$ cat .git/lost-found/other/* |
-> 	  xargs -r git grep 'the word to look for'
+> Not really sure what this means, since I am too tired to have read the 
+> actual patch - is it referring to the fact that checkout is shell rather 
+> than C?  If so, surely that is not really a good justification for 
+> putting the option in the "wrong" command?
 
-Well, it is not only for grepping.  In my case, I could get away by this:
+Well, I am really not interested in shooting myself in the foot, and 
+having that option in checkout would make that much more likely.  So I 
+really, really want to have this in git-branch.
 
-$ ls -lrt $(grep -l filter_subdir .git/lost-found/other/* |
-	sed "s/^.*other\/\(..\)/.git\/objects\/\1\//") 
-
-IOW I found the loose dangling objects which matched a keyword, and sorted 
-them by time.
-
-In other cases, though, I wanted to see the size.
-
-But what the whole thing boils down to: After finding dangling objects, 
-you are much more likely using git tools on non-blobs than on blobs, and 
-vice versa.
+Once git-checkout is builtin, we can still come back and add this option 
+to git-checkout (with a big fat red warning, to be sure); it is not like 
+we have git-branch and git-checkout functionality well separated...
 
 Ciao,
 Dscho
-
-P.S.: I fully forgot to mention that happily, I did "git add -u" sometime 
-before "git reset --hard", otherwise I would have been lost.
