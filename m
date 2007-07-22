@@ -1,57 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Initial Chinese translation
-Date: Sat, 21 Jul 2007 17:35:15 -0700
-Message-ID: <7vhcnxtgvw.fsf@assigned-by-dhcp.cox.net>
-References: <11850629362012-git-send-email-xudong.guan@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sat, 21 Jul 2007 17:37:51 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707211737090.3607@woody.linux-foundation.org>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+ <vpq4pk1vf7q.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181?=
+	=?ISO-8859-1?Q?004330.=04=0427353@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+ <851wf2bcqy.fsf@lola.goethe.zz>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=04?=
+	=?ISO-8859-1?Q?02135450.27249@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
+ <85odi69vgt.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
+ <85tzrxslms.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
+ <85644dqoig.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Christian Stimming <stimming@tuhh.de>
-To: Xudong Guan <xudong.guan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 02:35:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 02:38:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICPPu-0002fs-HH
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:35:22 +0200
+	id 1ICPSV-00037p-Hr
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbXGVAfT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 20:35:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbXGVAfT
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:35:19 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:63147 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753508AbXGVAfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2007 20:35:18 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070722003517.GDQR1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 21 Jul 2007 20:35:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id SQbF1X00N1kojtg0000000; Sat, 21 Jul 2007 20:35:16 -0400
-In-Reply-To: <11850629362012-git-send-email-xudong.guan@gmail.com> (Xudong
-	Guan's message of "Sun, 22 Jul 2007 01:08:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753287AbXGVAiB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 20:38:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbXGVAiB
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:38:01 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42318 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752724AbXGVAiA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 20:38:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M0buwo007766
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 17:37:57 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M0bpr1009285;
+	Sat, 21 Jul 2007 17:37:51 -0700
+In-Reply-To: <85644dqoig.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.212 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53205>
 
-Xudong Guan <xudong.guan@gmail.com> writes:
 
-> Simplified Chinese, in UTF-8 encoding.
->
-> Signed-off-by: Xudong Guan <xudong.guan@gmail.com>
-> ---
->  po/zh.po |  250 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 250 insertions(+), 0 deletions(-)
 
-This raises another point in the current i18n scheme.  How would
-we allow zh_CN and zh_TW to coexist?
+On Sun, 22 Jul 2007, David Kastrup wrote:
+> 
+> I must be really bad at explaining things, or I am losing a fight
+> against preconceptions fixed beyond my imagination.
+
+I really dont' see the point. But hey, code talks. 
+
+		Linus
