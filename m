@@ -1,133 +1,73 @@
-From: David Kastrup <dak@gnu.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Sun, 22 Jul 2007 03:39:27 +0200
-Message-ID: <85myxpp67k.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
-	<858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr> <85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<851wf2bcqy.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
-	<85odi69vgt.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
-	<85tzrxslms.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
-	<85644dqoig.fsf@lola.goethe.zz> <f7uap7$eo1$1@sea.gmane.org>
+Date: Sat, 21 Jul 2007 18:41:27 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707211840000.3607@woody.linux-foundation.org>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site>
+ <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
+ <vpq4pk1vf7q.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181?=
+	=?ISO-8859-1?Q?004330.=04=0427353@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+ <851wf2bcqy.fsf@lola.goethe.zz>  =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=04?=
+	=?ISO-8859-1?Q?02135450.27249@w?= =?ISO-8859-1?Q?oody.linux-found?=
+	=?ISO-8859-1?Q?ation.org>?=
+ <alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
+ <85odi69vgt.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
+ <85tzrxslms.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
+ <85644dqoig.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707211737090.3607@woody.linux-foundation.org>
+ <85r6n1p7sb.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 03:39:36 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 03:41:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICQQ3-0003Th-Q1
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 03:39:36 +0200
+	id 1ICQS5-0003pF-CS
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 03:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbXGVBjc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 21:39:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXGVBjb
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 21:39:31 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:56936 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750715AbXGVBja (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 21:39:30 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 6CF0C2CB668;
-	Sun, 22 Jul 2007 03:39:29 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 564D0ABCFF;
-	Sun, 22 Jul 2007 03:39:29 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-231.pools.arcor-ip.net [84.61.10.231])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 353F036E868;
-	Sun, 22 Jul 2007 03:39:29 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9B61A1D1E182; Sun, 22 Jul 2007 03:39:27 +0200 (CEST)
-In-Reply-To: <f7uap7$eo1$1@sea.gmane.org> (Jakub Narebski's message of "Sun\, 22 Jul 2007 03\:16\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1750802AbXGVBli (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 21:41:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXGVBli
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 21:41:38 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58933 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750739AbXGVBlh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 21:41:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M1fXEN009847
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Jul 2007 18:41:34 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6M1fRO9011342;
+	Sat, 21 Jul 2007 18:41:27 -0700
+In-Reply-To: <85r6n1p7sb.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.215 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53212>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> David Kastrup wrote:
->
->> I must be really bad at explaining things, or I am losing a fight
->> against preconceptions fixed beyond my imagination.
->
-> I don't understand you, or you don't understand git. "Tree" object
-> in object database (in repository) represents a directory in the
-> working area. There was never any problem with having empty trees in
-> object database, or having links to empty directory in the superdir.
-> We don't have to change anything about object database.
 
-I disagree here.  The object database _can_ represent an _empty_
-directory that has been added explicitly, because up to now no
-operations existed that actually left an empty tree.  But it can't
-distinguish a _non_-empty directory that has been added explicitly
-from non-empty directory that has not been added explicitly.
+On Sun, 22 Jul 2007, David Kastrup wrote:
+>  Make it have an empty reference, and it is unique.
 
-To wit: after the sequence
+I *really* don't see the point.
 
-mkdir a
-touch a/b
-git-add a
-git-commit -m x
-git-rm a/b
-git-commit -m x
+And you seem to have igored totally my treatise on "content" and how the 
+stuff git tracks must be stuff that is visible and detectable in the 
+trees. And if I understand you correctly, you also wouldn't be backwards 
+compatible. 
 
-I expect git to retain an empty directory a.  But the _tree_ now can't
-be different from the tree in the situation
+IOW, there's a lot of "why's" at all levels.
 
-mkdir a
-touch a/b
-git-add a/b
-git-commit -m x
-git-rm a/b
-git-commit -m x
+I don't see the *point*. What's the problem you're trying to solve?
 
-because after step 1, the trees have identical contents, and so there
-is nothing at the _identical_ step 2 that could cause different
-behavior.
-
-But in the second case, git must _not_ retain a.  So we need to record
-the information that in the first case, a was added explicitly.  And
-this can't be done with the current repository layout.  It doesn't buy
-us anything that we _have_ a representation available for an _empty_
-tree added explicitly.  We need this "added explicitly" information
-for _every_ tree, not just empty ones.
-
-And a perfectly consistent way is to make those trees with an
-explicitly added directory _non-empty_, by virtue of putting a file
-"." in them.  This file, of course, exists in every physical
-directory, but we may or may not decide to let it be tracked by git,
-using the gitignore mechanism on the pattern ".".  Perfectly
-expedient.
-
-> The problems with git problems with empty directories stems from the
-> fact that index didn't have directories.
-
-That basically implies that no information about directories could be
-tracked in the repository.  And yes, we need appropriate information
-in the index.  Again, the information whether a directory was added
-explicitly.
-
-> Index is flattened version of root tree, and before subproject
-> support it contained _only_ info about blobs (file contents).
-
-And the repository is a versioned and hierarchically hashed version of
-the index, but its trees contain _no_ information that is not already
-inherently represented by the files alone.  Permitting empty trees
-would change that fundamental property, and it would not buy us the
-ability to actually track directories: see above.  So it is not worth
-the trouble to assign any meaningful concept to persisting empty trees
-rather than make them a case for git-fsck.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+		Linus
