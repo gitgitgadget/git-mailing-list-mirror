@@ -1,80 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Initial Italian translation of git-gui.pot
-Date: Sun, 22 Jul 2007 23:18:42 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707222315360.14781@racer.site>
-References: <20070722124236.47baacb1@paolo-desktop>  <200707222128.05884.barra_cuda@katamail.com>
-  <Pine.LNX.4.64.0707222121500.14781@racer.site>
- <4d8e3fd30707221510t8bfc3ecr2dbec5a817519212@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Test #7 in t9200-git-cvsexportcommit fails
+Date: Sun, 22 Jul 2007 15:19:19 -0700
+Message-ID: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net>
+References: <31e9dd080707221241j5c00aaaaqa79c12d3e2a3345b@mail.gmail.com>
+	<20070722202121.GA3288@steel.home>
+	<31e9dd080707221349g40ff050bue72733f270822603@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael <barra_cuda@katamail.com>, git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 00:19:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jason Sewall" <jasonsewall@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 00:19:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICjlT-0002CE-Tf
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:19:00 +0200
+	id 1ICjlx-0002Ik-7H
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757932AbXGVWS5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 18:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760149AbXGVWS4
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:18:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48256 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757686AbXGVWS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 18:18:56 -0400
-Received: (qmail invoked by alias); 22 Jul 2007 22:18:54 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp050) with SMTP; 23 Jul 2007 00:18:54 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/t9nRthQTtSiWbL6NDN0yyFzy48mhFSUXzz9XXLF
-	CjJ7Puh1n9X08t
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4d8e3fd30707221510t8bfc3ecr2dbec5a817519212@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1761733AbXGVWTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 18:19:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759193AbXGVWTZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:19:25 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:53690 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760931AbXGVWTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 18:19:24 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070722221924.JKJX1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 22 Jul 2007 18:19:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SmKL1X0061kojtg0000000; Sun, 22 Jul 2007 18:19:23 -0400
+In-Reply-To: <31e9dd080707221349g40ff050bue72733f270822603@mail.gmail.com>
+	(Jason Sewall's message of "Sun, 22 Jul 2007 13:49:19 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53348>
 
-Hi,
+"Jason Sewall" <jasonsewall@gmail.com> writes:
 
-On Mon, 23 Jul 2007, Paolo Ciarrocchi wrote:
+>> It'll never work, cvs does not commit changes made during one second,
+>> as they have the same timestamp.
 
-> On 7/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> > 
-> > On Sun, 22 Jul 2007, Michael wrote:
-> > > > On Sunday 22 July 2007 12:42, Paolo Ciarrocchi wrote:
-> > > > Initial Italian translation
-> > > >
-> > > > Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-> > >
-> > > io userei queste parole:
-> > >
-> > > merge unione, fusione/unire, fondere
-> > > commit        salvataggio/salvare (forse troppo inflazionato)
-> > > amend correzione/correggere
-> > > hunk  parte
-> > > fetch prendi da
-> > >
-> > > Per il resto, avrei tradotto pi? o meno come segue. Che ne dici?
-> > 
-> > Mi piace, ma non sono Italiano...
-> 
-> I was wondering what was going on with this thread :-)
-> I'll move the discussion off list with Michael.
-> 
-> Just for your information, it's "Mi dispiace" not "Mi piace" (that
-> means "I like it" :-)
+Heh, racy CVS?
 
-Yes, I wanted to say that I like "it" ("it" not being non-Italian, but 
-the work Michael has done). ;-)
+> Why not add a delay in there, like this:
+>
+> id=$(git rev-list --max-count=1 HEAD) && sleep 2
+>
+> It makes the test work for me.
 
-Forse "parte" e troppo generale per dire "hunk"?
-
-Ciao,
-Dscho
- 
+Sounds like an acceptable workaround.  Care to send in a tested
+signed patch?
