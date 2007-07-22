@@ -1,54 +1,58 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Avoid to duplicate commit message when is not encoded
-Date: Sun, 22 Jul 2007 10:52:25 +0200
-Message-ID: <20070722085225.GB3408@steel.home>
-References: <e5bfff550707220123g5826cbf5n3e2ff7256d9b5366@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Documentation/gitignore.txt: Fix the seriously misleading priority explanation
+Date: Sun, 22 Jul 2007 11:12:03 +0200
+Organization: Organization?!?
+Message-ID: <85wswsol98.fsf@lola.goethe.zz>
+References: <85wswtp8va.fsf@lola.goethe.zz> <7v4pjxt1nk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 11:10:22 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 22 11:12:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICXSH-0003Rv-Un
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 11:10:22 +0200
+	id 1ICXUP-0003qI-Iz
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 11:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764192AbXGVJKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 05:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764083AbXGVJKR
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 05:10:17 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:20289 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763460AbXGVJKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 05:10:15 -0400
-Received: from tigra.home (Faa38.f.strato-dslnet.de [195.4.170.56])
-	by post.webmailer.de (fruni mo58) (RZmta 9.1)
-	with ESMTP id p04833j6M4Vniv ; Sun, 22 Jul 2007 11:10:12 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 6646D277BD;
-	Sun, 22 Jul 2007 10:52:25 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 49C89BDD0; Sun, 22 Jul 2007 10:52:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <e5bfff550707220123g5826cbf5n3e2ff7256d9b5366@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculzxto3qrA==
-X-RZG-CLASS-ID: mo07
+	id S1759366AbXGVJMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 05:12:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760179AbXGVJMa
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 05:12:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:60830 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759124AbXGVJM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 05:12:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ICXUG-000766-2H
+	for git@vger.kernel.org; Sun, 22 Jul 2007 11:12:24 +0200
+Received: from dslb-084-061-022-107.pools.arcor-ip.net ([84.61.22.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 11:12:24 +0200
+Received: from dak by dslb-084-061-022-107.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 11:12:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-022-107.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:mR+oj5F9YDoBblliFx08OG0nvnw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53241>
 
-Marco Costalba, Sun, Jul 22, 2007 10:23:05 +0200:
-> +		if (encoding) // we'll strip encoding header later
+Junio C Hamano <gitster@pobox.com> writes:
 
-You better avoid using C++ comments, not all C compilers support them.
+> Your rewrite makes "patterns found in deeper file overrides the
+> ones in shallower ones" rule much much easier to read.  Thanks.
 
-> +		else
-> +			return NULL; // nothing to do
+Well, it is nice for a change to be able to explain something in a way
+that people understand.
 
-And you better avoid such useless comments too
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
