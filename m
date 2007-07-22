@@ -1,56 +1,66 @@
-From: "Patrick Aljord" <patcito@gmail.com>
-Subject: Re: executing git from a non git directory
-Date: Sun, 22 Jul 2007 14:02:29 -0500
-Message-ID: <6b6419750707221202t7a5cbafcs5d38ee7a10042247@mail.gmail.com>
-References: <6b6419750707212355q48a934e4n3be0d6111694ad01@mail.gmail.com>
-	 <20070722071136.GA346@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS
+ keyword expansion
+Date: Sun, 22 Jul 2007 12:09:01 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707221205080.3607@woody.linux-foundation.org>
+References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 22 21:02:36 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 21:09:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICghO-0007Wh-Mk
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 21:02:35 +0200
+	id 1ICgnq-0000u8-JG
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 21:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759670AbXGVTCb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 15:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759610AbXGVTCb
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 15:02:31 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:1937 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759375AbXGVTCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 15:02:30 -0400
-Received: by py-out-1112.google.com with SMTP id d32so2910401pye
-        for <git@vger.kernel.org>; Sun, 22 Jul 2007 12:02:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=J4vmsjNlLX+dfVfzG/1UZRO/Tt38zADWOzQKkXTIjs1PYGGSY9XGY+3Ng8p3RTvvt9f6DFz48niPuIcsz5HoYkZgaho2fChaNG/Eks9Kk4Yu65OoqIRJCXqVcpSh059+R7DwcGpqUVU+8ot+Y/GZf2x2PR6owrB5W3xrCnCkNnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oFB+oxlRzw6Ahsqg3KGp1YAx7RHt9YKjEvCMrMsNnDFUpO17VynB5c4DN72eZGl6oTY6ZvV89NXChvNgnc1NHOSf/8UuEd3BSncXmsbyH5Zl4Yobiamzrbwq3mN3RIqEx9/8ZFBCietzxdBaAVDGxWnnKpyFom1jkfLtFatXMxk=
-Received: by 10.140.147.5 with SMTP id u5mr710808rvd.1185130949098;
-        Sun, 22 Jul 2007 12:02:29 -0700 (PDT)
-Received: by 10.141.18.11 with HTTP; Sun, 22 Jul 2007 12:02:29 -0700 (PDT)
-In-Reply-To: <20070722071136.GA346@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1761790AbXGVTJL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 15:09:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761527AbXGVTJK
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 15:09:10 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:39857 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759610AbXGVTJJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 15:09:09 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MJ96ZK019758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 22 Jul 2007 12:09:07 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MJ91x8018978;
+	Sun, 22 Jul 2007 12:09:01 -0700
+In-Reply-To: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>
+X-Spam-Status: No, hits=-2.719 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53296>
 
-ok thanx to both of you Jeff and Shawn for the info.
 
-On 7/22/07, Jeff King <peff@peff.net> wrote:
->   git --work-tree=/path/to/my_git_dir --git-dir=/path/to/my_git_dir/.git status
+
+On Sun, 22 Jul 2007, Jon Smirl wrote:
 >
-> which is what you actually want.
+> It would really be useful if git diff had an option for suppressing
+> diffs caused by CVS keyword expansion.
 
-ok, I'm going to try that, thanx.
+I really think it's not a "git diff" issue, but it might be a "import" 
+issue.
 
-Pat
+IOW, I think you'd be a *lot* better off just not importing those things 
+in the first place (which is what CVS does internally), or possibly 
+importing them as two trees (ie you'd have the "non-log" version and the 
+"log expansion" version, so that you can track and compare both).
+
+Doing the thing at "diff" time is certainly possible, but this is simply 
+much better done as a totally independent preprocessing phase. The diff 
+handling is already some of the more complex parts (and very central), it 
+would be much simpler and efficient to not try to make that thing fancier, 
+and instead solve the problem at the front-end.
+
+			Linus
