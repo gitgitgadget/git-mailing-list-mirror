@@ -1,84 +1,77 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH 3/5] Internationalization of git-gui
-Date: Sun, 22 Jul 2007 14:57:52 +0200
-Message-ID: <200707221457.52542.stimming@tuhh.de>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707221416.42908.stimming@tuhh.de> <Pine.LNX.4.64.0707221344200.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: segfault in diff-delta.c on mac os x (commit 8433669)
+Date: Sun, 22 Jul 2007 14:59:10 +0200
+Message-ID: <B19AC964-3398-46AF-934B-BB2F06688F7B@zib.de>
+References: <C10CCDA5-6D65-445E-92F3-2D3E4DCA4F8B@zib.de> <233B9D70-9D91-4527-9801-7E2463ABDDAA@silverinsanity.com> <6A487E9A-27E5-4212-A7C9-EBB6528791FE@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 22 14:57:54 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 14:58:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICb0U-0004Ub-Ch
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 14:57:54 +0200
+	id 1ICb0v-0004a1-SE
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 14:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760778AbXGVM5s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 08:57:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760011AbXGVM5r
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 08:57:47 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45219 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759366AbXGVM5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 08:57:47 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6MCvd0J010257
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sun, 22 Jul 2007 14:57:39 +0200
-Received: from [192.168.2.102] (p5490117A.dip0.t-ipconnect.de [84.144.17.122])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6MCvciY004740
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 Jul 2007 14:57:39 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0707221344200.14781@racer.site>
-Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+	id S1760011AbXGVM6T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 08:58:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754369AbXGVM6T
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 08:58:19 -0400
+Received: from mailer.zib.de ([130.73.108.11]:41720 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754528AbXGVM6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 08:58:18 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6MCwFYV025551;
+	Sun, 22 Jul 2007 14:58:15 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1b753.pool.einsundeins.de [77.177.183.83])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6MCwDKO008534
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 22 Jul 2007 14:58:14 +0200 (MEST)
+In-Reply-To: <6A487E9A-27E5-4212-A7C9-EBB6528791FE@zib.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53265>
 
-Am Sonntag, 22. Juli 2007 14:44 schrieb Johannes Schindelin:
-> > > >> Subject: [PATCH] Initial German translation for testing of i18n.
-> > > >> diff --git a/po/de.po b/po/de.po
-> > > >> new file mode 100644
-> > > >> index 0000000..0592836
-> > > >> --- /dev/null
-> > > >> +++ b/po/de.po
-> > > >> @@ -0,0 +1,265 @@
-> > > >> +# Translation of git-gui to German.
-> > > >> +# Copyright (C) 2007 Linux Torvalds
-> > > >
-> > > > I didn't realize Linus wrote German.  ;-)
-> > > >
-> > > > Or are you assigning the copyright to Linus, much as other chunks
-> > > > of Git are copyrighted by Linus?
-> > >
-> > > The convention for xx.po, judging from the way template pot file
-> > > is written out, is to name the package's copyright holder, not
-> > > translation's, on that line.
-> >
-> > Exactly. That line should say that even though I have been the author of
-> > de.po, I still assign copyright (or the assign-able parts of it) to the
-> > package's copyright owner, which in this case is Linus. As Junio says,
-> > this is a suggestion from gettext, and I'd simply follow it here.
+
+On Jul 22, 2007, at 10:49 AM, Steffen Prohaska wrote:
+
 >
-> How about Junio instead?  Linus created Git, but Junio is the official
-> maintainer (by mutual agreement).
+> On Jul 22, 2007, at 5:35 AM, Brian Gernhardt wrote:
+>
+>>
+>> On Jul 21, 2007, at 11:15 AM, Steffen Prohaska wrote:
+>>
+>>> 843366961cf14aad6490fbeb30f7b98f37f8833a may cause segfaults on
+>>> Mac OS X. See backtrace below. I only observed the segfault with
+>>> -O2 builds.
+>>
+>> I have been using git on my OS X box for quite a while, and that  
+>> commit appears to be nearly two months old.  I have yet to see any  
+>> packing errors in any of my repositories.  (This is with -O2,  
+>> which appears to be the default.)
+>>
+>> My gcc reports itself as build 5367 instead of 5250.  Perhaps  
+>> there is a compiler error in an older copy of the DevTools?
+>
+> This seems to be the case. I upgraded the compiler and
+> tried again. The segfault didn't happen again. Note, this
+> was not exactly the same situation as before because the
+> git repository used for testing changed a bit since the
+> first segfault.
+>
+> I'll do some more repacking over the day and will report
+> my observations.
 
-Then the copyright line should probably better read
+I did a lot more testing and am pretty convinced now that
+the problem is not present with the newer compiler. Using
+build 5367 of gcc seems to creating a working git executable
+while build 5250 creates a broken one.
 
-Copyright (C) 2007 Shawn Pearce, et al.
-
-because that's what the copyright for the other git-gui files say.
-
-Christian
+	Steffen
