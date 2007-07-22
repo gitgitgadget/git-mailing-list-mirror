@@ -1,167 +1,69 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: [PATCH] More cleanup and grammatical fixes to it.po
-Date: Mon, 23 Jul 2007 00:06:28 +0200
-Message-ID: <20070723000628.5bb2538e@paolo-desktop>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH] some feedbacks from the Italian Free Translation Project.
+Date: Mon, 23 Jul 2007 00:06:21 +0200
+Message-ID: <4d8e3fd30707221506t43a9d3e1re2e8e19c13ee2a82@mail.gmail.com>
+References: <20070722201942.609543f1@paolo-desktop>
+	 <Pine.LNX.4.64.0707222034500.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-X-From: git-owner@vger.kernel.org Mon Jul 23 00:05:47 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 00:06:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICjYd-0007q3-7s
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:05:43 +0200
+	id 1ICjZL-00089W-N1
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758634AbXGVWFd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 18:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762678AbXGVWFd
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:05:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:42384 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754419AbXGVWFc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 18:05:32 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1033648ugf
-        for <git@vger.kernel.org>; Sun, 22 Jul 2007 15:05:30 -0700 (PDT)
+	id S1764819AbXGVWGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 18:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762790AbXGVWGX
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:06:23 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:22399 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759551AbXGVWGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 18:06:22 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so994433nze
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 15:06:21 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=JvMrhiaHJZHoLFSgpVpi1cU3lwSdR0sHegKxZUI8H1dgOkQIX8Ox18/MEP4h8LJfac4foPf4tTA5B8Cr0jUIJmXhfy4vSXdW5E7uHvCPM9pDdeBw2OAzdzRkGelu6MzEFFx8VHFNFhlqbyl/Zmo9mhaaSYayLUY9Z2mGNyLm/BU=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kAj3GTrnlDwInjKpPBcgET3+pmi3V5/T3WluRy/5/h7I4gquO5LhpTd9tMr4rEysjT3oQk1htB5gx3LBkHua0Ni4Pw3WPVb8SbNv6uHxv8dZIsMT+l0ng+P3C7cYwvSsoozeF2m8TByXBKhqADZIIWbr+1/QPPpLyqnES5abIps=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=Neez5X9ILXGoahXXBoY/YA+oukyysDbujWzPUbJgl46B1EwER5o1KxnthFBWAP82PmFtV2YOBttaI4G7+CnCsl7TVnzWIJE53AT6KIubf6p8+9IIoV6xupD4gHlENrXucm2ebH/ujL8NzBo/gKEWaj+xuJfiO5NjCg2XH1DMqTk=
-Received: by 10.67.28.9 with SMTP id f9mr3717125ugj.1185141930531;
-        Sun, 22 Jul 2007 15:05:30 -0700 (PDT)
-Received: from paolo-desktop ( [82.56.2.238])
-        by mx.google.com with ESMTPS id d27sm5955751nfh.2007.07.22.15.05.28
-        (version=SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2007 15:05:29 -0700 (PDT)
-X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PoupqcGpMcrZiU2PmTUlzQkiRd9D0PS9YVSOUTr7KUZJ9coLjKuNtcqY2h5TU5E5uCoNNp/DfaQhb0lO0wS+p14Ppn/chFZu5Lsf+2NbnkDt+W+LcyAQTGoj5Yp1qRf9hndxag5nsVIGZffMXG+J5SlcK3jpHor2w02yQk5zJ2c=
+Received: by 10.143.162.8 with SMTP id p8mr183607wfo.1185141981428;
+        Sun, 22 Jul 2007 15:06:21 -0700 (PDT)
+Received: by 10.142.86.9 with HTTP; Sun, 22 Jul 2007 15:06:21 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707222034500.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53336>
 
-Thanks to Daniele Forsi from the Italian translation project for the su=
-ggestions.
-The translation is now in line with other already translated applicatio=
-n.
+On 7/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sun, 22 Jul 2007, Paolo Ciarrocchi wrote:
+>
+> > Many thanks to the Italian Free Translation Project
+> >
+> > More patches in the following days.
+> >
+> > Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+>
+> Thanks.  Both of your patches applied, although I had to fix non-UTF-8
+> encoding.  This could well be a problem on my side.
 
-Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
----
- po/it.po |   32 ++++++++++++++++----------------
- 1 files changed, 16 insertions(+), 16 deletions(-)
+Odd.
+Is there anything I should check in my box?
 
-diff --git a/po/it.po b/po/it.po
-index 80365b4..9899a78 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -97,7 +97,7 @@ msgstr "Incolla"
-=20
- #: git-gui.sh:1756 git-gui.sh:2271
- msgid "Delete"
--msgstr "Cancella"
-+msgstr "Elimina"
-=20
- #: git-gui.sh:1760 git-gui.sh:2275 git-gui.sh:2412
- msgid "Select All"
-@@ -121,7 +121,7 @@ msgstr "Cancella"
-=20
- #: git-gui.sh:1791
- msgid "Reset..."
--msgstr "Resetta..."
-+msgstr "Reimposta..."
-=20
- #: git-gui.sh:1803 git-gui.sh:2209
- msgid "New Commit"
-@@ -161,7 +161,7 @@ msgstr "Incorporazione locale"
-=20
- #: git-gui.sh:1869
- msgid "Abort Merge..."
--msgstr "Annulla incorporazione"
-+msgstr "Interrompi incorporazione"
-=20
- #: git-gui.sh:1881
- msgid "Push..."
-@@ -186,11 +186,11 @@ msgstr "Aiuto"
-=20
- #: git-gui.sh:1978
- msgid "Online Documentation"
--msgstr "Documentazione Online"
-+msgstr "Documentazione in linea"
-=20
- #: git-gui.sh:2094
- msgid "Current Branch:"
--msgstr "Ramo corrente:"
-+msgstr "Ramo attuale:"
-=20
- #: git-gui.sh:2115
- msgid "Staged Changes (Will Be Committed)"
-@@ -206,19 +206,19 @@ msgstr "Aggiungi esistente"
-=20
- #: git-gui.sh:2228
- msgid "Initial Commit Message:"
--msgstr "Messaggio iniziale del Commit"
-+msgstr "Messaggio iniziale del commit:"
-=20
- #: git-gui.sh:2229
- msgid "Amended Commit Message:"
--msgstr "Annulla messaggio del Commit"
-+msgstr "Annulla messaggio del commit:"
-=20
- #: git-gui.sh:2230
- msgid "Amended Initial Commit Message:"
--msgstr "Annulla messaggio iniziale del Commit"
-+msgstr "Annulla messaggio iniziale del commit:"
-=20
- #: git-gui.sh:2231
- msgid "Amended Merge Commit Message:"
--msgstr "Annulla messaggio di incorporamento"
-+msgstr "Annulla messaggio di incorporamento:"
-=20
- #: git-gui.sh:2232
- msgid "Merge Commit Message:"
-@@ -226,7 +226,7 @@ msgstr "Messaggio di incorporamento"
-=20
- #: git-gui.sh:2233
- msgid "Commit Message:"
--msgstr "Messaggio di Commit"
-+msgstr "Messaggio di commit:"
-=20
- #: git-gui.sh:2278 git-gui.sh:2416
- msgid "Copy All"
-@@ -234,24 +234,24 @@ msgstr "Copia tutto"
-=20
- #: git-gui.sh:2404
- msgid "Refresh"
--msgstr "Rinfresca"
-+msgstr "Aggiorna"
-=20
- #: git-gui.sh:2425
- msgid "Apply/Reverse Hunk"
--msgstr "Applica/Inverti Hunk"
-+msgstr "Applica/Inverti sezione"
-=20
- #: git-gui.sh:2431
- msgid "Decrease Font Size"
--msgstr "Diminuisci dimensione Font"
-+msgstr "Diminuisci dimensione font"
-=20
- #: git-gui.sh:2435
- msgid "Increase Font Size"
--msgstr "Aumenta dimensione Font"
-+msgstr "Aumenta dimensione font"
-=20
- #: git-gui.sh:2440
- msgid "Show Less Context"
--msgstr "Mostra meno contenuto"
-+msgstr "Mostra meno contesto"
-=20
- #: git-gui.sh:2447
- msgid "Show More Context"
--msgstr "Mostra pi=F9 contenuto"
-+msgstr "Mostra pi=F9 contesto"
---=20
-1.5.3.rc2.29.gc4640f
+Ciao,
+-- 
+Paolo
+"Tutto cio' che merita di essere fatto,merita di essere fatto bene"
+Philip Stanhope IV conte di Chesterfield
