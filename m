@@ -1,46 +1,50 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: fast-import and core.autocrlf option
-Date: Sun, 22 Jul 2007 15:59:26 -0700
-Message-ID: <a1bbc6950707221559m63fb1295jc26b1327e71687e3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fsck --lost-found: write blob's contents, not their SHA-1
+Date: Sun, 22 Jul 2007 16:00:49 -0700
+Message-ID: <7v4pjwqc0u.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707222120100.14781@racer.site>
+	<7vodi4qfnx.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707222246220.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 23 00:59:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 01:00:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICkOj-0001AF-B2
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 00:59:33 +0200
+	id 1ICkQ2-0001Te-KC
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 01:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765452AbXGVW7a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 18:59:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765421AbXGVW73
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 18:59:29 -0400
-Received: from qb-out-0506.google.com ([72.14.204.231]:30131 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765401AbXGVW72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 18:59:28 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so2093062qbe
-        for <git@vger.kernel.org>; Sun, 22 Jul 2007 15:59:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=l37H7jRZg/3uqnJJMrVcWdsroLy23rB7uOWgs37CqahdvbDQejtvytCnx+otTLLREIfT6La6pJ8KIE2LpqJe67dxe8SiWYq1INk7dWyOqf08uL7p6HkKVfGiJBHEoYMIcGX9VAwwaYs/fmYawBLCTVVYSK/rtLD1MLD2wWQlKjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SX+syNsAexcvEcJ/AdOhPdLU6uZC6EHYIGMFtbuUNEXNb7/dLgNZehUPcbR/MyV6WB6+njaljdreGxSJ15kyeaiIn7EMZpUZoNNt+fQIME3Ts6A6daZfwC9erYI2sXqrDgz8Nc2NRIiXOGEsWYazRmsHFQo4BJzvhP36/6CHM8Y=
-Received: by 10.141.202.12 with SMTP id e12mr758372rvq.1185145166634;
-        Sun, 22 Jul 2007 15:59:26 -0700 (PDT)
-Received: by 10.141.21.17 with HTTP; Sun, 22 Jul 2007 15:59:26 -0700 (PDT)
-Content-Disposition: inline
+	id S1762037AbXGVXAv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 19:00:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762305AbXGVXAv
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 19:00:51 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33323 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761864AbXGVXAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 19:00:51 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070722230051.PSBD1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 22 Jul 2007 19:00:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Sn0p1X00A1kojtg0000000; Sun, 22 Jul 2007 19:00:50 -0400
+In-Reply-To: <Pine.LNX.4.64.0707222246220.14781@racer.site> (Johannes
+	Schindelin's message of "Sun, 22 Jul 2007 22:52:28 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53363>
 
-It looks to me that CR/LF conversion does not happen during
-fast-import even if I have core.autocrlf set to 'input'.
-Is this a bug or is there a reason for that?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> But what the whole thing boils down to: After finding dangling objects, 
+> you are much more likely using git tools on non-blobs than on blobs, and 
+> vice versa.
+
+Ok, color me converted.
