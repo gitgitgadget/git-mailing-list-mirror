@@ -1,58 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Never mind (Re: [KORG] gitweb down?)
-Date: Sun, 22 Jul 2007 13:21:04 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707221320130.3607@woody.linux-foundation.org>
-References: <20070722174915.GI26471@cip.informatik.uni-erlangen.de>
- <46A39CEA.7020703@zytor.com>
- <alpine.LFD.0.999.0707221316050.3607@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Test #7 in t9200-git-cvsexportcommit fails
+Date: Sun, 22 Jul 2007 22:21:21 +0200
+Message-ID: <20070722202121.GA3288@steel.home>
+References: <31e9dd080707221241j5c00aaaaqa79c12d3e2a3345b@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 22:21:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jason Sewall <jasonsewall@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 22:21:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IChve-0000ei-9l
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:21:22 +0200
+	id 1IChvl-0000gO-T2
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762810AbXGVUVT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 16:21:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762780AbXGVUVS
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:21:18 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50695 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762745AbXGVUVR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 16:21:17 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKLAkp022347
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 Jul 2007 13:21:11 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKL4ID021492;
-	Sun, 22 Jul 2007 13:21:04 -0700
-In-Reply-To: <alpine.LFD.0.999.0707221316050.3607@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.725 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1762782AbXGVUVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 16:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762780AbXGVUVZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:21:25 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:53725 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762731AbXGVUVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 16:21:24 -0400
+Received: from tigra.home (Fc8c3.f.strato-dslnet.de [195.4.200.195])
+	by post.webmailer.de (mrclete mo10) (RZmta 9.1)
+	with ESMTP id 900c7bj6MHj9w0 ; Sun, 22 Jul 2007 22:21:22 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 0F5CE277BD;
+	Sun, 22 Jul 2007 22:21:22 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 96B00BDD0; Sun, 22 Jul 2007 22:21:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <31e9dd080707221241j5c00aaaaqa79c12d3e2a3345b@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+WOJg=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53313>
 
+Jason Sewall, Sun, Jul 22, 2007 21:41:53 +0200:
+> This test fails for me on the current head (pulled just now) and where
+> the test was introduced (e86ad71fe).
 
+Aahh, the test where CVS failed to commit sub-second changes...
+It never really succeeded.
 
-On Sun, 22 Jul 2007, Linus Torvalds wrote:
-> 
-> The main git.kernel.org page loads about half-way (without any stated 
-> errors, but it's definitely broken and not complete), but the summary 
-> pages don't seem to load at all (some projects do, but git and kernel 
-> don't - it looks like the *cache* may still be working, but anything new 
-> gets a "500 Internal Server Error").
+> P.S. I don't use this part of git at all, so this is not a priority
+> for me. I am using Fedora 7, which is definitely a mainstream distro,
+> so I imagine others might have this problem too.
 
-Ok, retried immediately after sending the email, and it's ok now. So never 
-mind - I probably tested just when some update was in progress..
+Just disable it:
 
-		Linus
+    $ echo "export GIT_SKIP_TESTS = t9200" >>config.mak
+
+It'll never work, cvs does not commit changes made during one second,
+as they have the same timestamp.
+
+If you feel interested, try investigating the test by running it with
+"-d -v", like this:
+
+    $ cd t
+    $ ./t9200-git-cvsexportcommit.sh -d -v -i
+
+You'll have to run it multiple times, probably: the problem is
+sometimes timing dependent and changed output conditions may make it
+go away for a while. Just continue trying.
