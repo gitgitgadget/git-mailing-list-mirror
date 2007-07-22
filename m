@@ -1,115 +1,58 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: Re: [PATCH] Initial  Italian translation of git-gui.pot
-Date: Sun, 22 Jul 2007 21:28:05 +0200
-Message-ID: <200707222128.05884.barra_cuda@katamail.com>
-References: <20070722124236.47baacb1@paolo-desktop>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [KORG] gitweb down?
+Date: Sun, 22 Jul 2007 13:19:36 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707221316050.3607@woody.linux-foundation.org>
+References: <20070722174915.GI26471@cip.informatik.uni-erlangen.de>
+ <46A39CEA.7020703@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 22 22:08:19 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 22:19:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IChj0-00061A-5J
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:08:18 +0200
+	id 1IChuD-0000Hg-Pg
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:19:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762152AbXGVUIO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 16:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762070AbXGVUIN
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:08:13 -0400
-Received: from slim-3c.inet.it ([213.92.5.125]:33306 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761403AbXGVUIL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 16:08:11 -0400
-X-Greylist: delayed 2417 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Jul 2007 16:08:11 EDT
-Received: from host193-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.193]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.57.193+n2aJmXxoaG3; Sun, 22 Jul 2007 21:27:51 +0200
-User-Agent: KMail/1.9.4
-In-Reply-To: <20070722124236.47baacb1@paolo-desktop>
-Content-Disposition: inline
+	id S1764665AbXGVUTv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 16:19:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764634AbXGVUTv
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:19:51 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59697 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1764665AbXGVUTu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 16:19:50 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKJgYs022273
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 22 Jul 2007 13:19:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKJanb021381;
+	Sun, 22 Jul 2007 13:19:37 -0700
+In-Reply-To: <46A39CEA.7020703@zytor.com>
+X-Spam-Status: No, hits=-3.225 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53310>
 
-On Sunday 22 July 2007 12:42, Paolo Ciarrocchi wrote:
-> Initial Italian translation
->=20
-> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 
-io userei queste parole:
 
-merge	unione, fusione/unire, fondere
-commit	salvataggio/salvare (forse troppo inflazionato)
-amend	correzione/correggere
-hunk	parte
-fetch	prendi da
+Oops, what happened to 
 
-Per il resto, avrei tradotto pi=F9 o meno come segue. Che ne dici?
+	http://git.kernel.org/?p=git/git.git;a=summary
 
-> ---
->  po/it.po |  118 +++++++++++++++++++++++++++++++---------------------=
-----------
->  1 files changed, 59 insertions(+), 59 deletions(-)
->=20
-> diff --git a/po/it.po b/po/it.po
-> index e8b8cdb..780519e 100644
-> --- a/po/it.po
-> +++ b/po/it.po
+(same for the kernel, btw)? 
 
-=2E..
+The main git.kernel.org page loads about half-way (without any stated 
+errors, but it's definitely broken and not complete), but the summary 
+pages don't seem to load at all (some projects do, but git and kernel 
+don't - it looks like the *cache* may still be working, but anything new 
+gets a "500 Internal Server Error").
 
->  #: git-gui.sh:1820 git-gui.sh:2176
->  msgid "Rescan"
-> -msgstr ""
-> +msgstr "Analizza"
-
-"Riesamina database"?
-
->  #: git-gui.sh:2229
->  msgid "Amended Commit Message:"
-> -msgstr ""
-> +msgstr "Annulla messaggio del Commit"
-
-"Correzione del messaggio da salvare:"?
-
->  #: git-gui.sh:2230
->  msgid "Amended Initial Commit Message:"
-> -msgstr ""
-> +msgstr "Annulla messaggio iniziale del Commit"
-
-"Correzione del messaggio iniziale:"?
-
->  #: git-gui.sh:2231
->  msgid "Amended Merge Commit Message:"
-> -msgstr ""
-> +msgstr "Annulla messaggio di incorporamento"
-
-"Correzione messaggio dell'unione"?
-
->  #: git-gui.sh:2431
->  msgid "Decrease Font Size"
-> -msgstr ""
-> +msgstr "Diminuisci dimensione Font"
-
-font -> carattere?
-
->  #: git-gui.sh:2435
->  msgid "Increase Font Size"
-> -msgstr ""
-> +msgstr "Aumenta dimensione Font"
-> =20
->  #: git-gui.sh:2440
->  msgid "Show Less Context"
-> -msgstr ""
-> +msgstr "Mostra meno contenuto"
-
-contenuto -> contesto?
-
->  #: git-gui.sh:2447
->  msgid "Show More Context"
-> -msgstr ""
-> +msgstr "Mostra pi=F9 contenuto"
+		Linus
