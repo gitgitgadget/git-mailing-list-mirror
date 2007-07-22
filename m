@@ -1,58 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [KORG] gitweb down?
-Date: Sun, 22 Jul 2007 13:19:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707221316050.3607@woody.linux-foundation.org>
-References: <20070722174915.GI26471@cip.informatik.uni-erlangen.de>
- <46A39CEA.7020703@zytor.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] fsck --lost-found: write blob's contents, not their SHA-1
+Date: Sun, 22 Jul 2007 21:20:26 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707222120100.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 22:19:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jul 22 22:20:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IChuD-0000Hg-Pg
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:19:54 +0200
+	id 1IChv2-0000W7-JT
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 22:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764665AbXGVUTv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 16:19:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764634AbXGVUTv
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:19:51 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:59697 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764665AbXGVUTu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 16:19:50 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKJgYs022273
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 Jul 2007 13:19:43 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6MKJanb021381;
-	Sun, 22 Jul 2007 13:19:37 -0700
-In-Reply-To: <46A39CEA.7020703@zytor.com>
-X-Spam-Status: No, hits=-3.225 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1762714AbXGVUUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 16:20:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762745AbXGVUUk
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 16:20:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50821 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762502AbXGVUUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 16:20:39 -0400
+Received: (qmail invoked by alias); 22 Jul 2007 20:20:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 22 Jul 2007 22:20:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18oyT1EuI4oLRUNFjgTI7mlPpOAg8d8Yrh1TAf/pj
+	K03tTkwjwW5tmr
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53311>
 
 
+When looking for a lost blob, it is much nicer to be able to grep
+through .git/lost-found/other/* than to write an inefficient loop
+over the file names.  So write the contents of the dangling blobs,
+not their object names.
 
-Oops, what happened to 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-	http://git.kernel.org/?p=git/git.git;a=summary
+	While working on filter-branch, I inadvertently said
+	"git reset --hard" without having committed first.  That's
+	when I was almost happy to have "git fsck --lost-found".
+	But when grepping through the "other" found objects, nothing
+	turned up... because there were only SHA-1s.
 
-(same for the kernel, btw)? 
+ Documentation/git-fsck.txt |    6 ++++--
+ builtin-fsck.c             |   12 +++++++++++-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
-The main git.kernel.org page loads about half-way (without any stated 
-errors, but it's definitely broken and not complete), but the summary 
-pages don't seem to load at all (some projects do, but git and kernel 
-don't - it looks like the *cache* may still be working, but anything new 
-gets a "500 Internal Server Error").
-
-		Linus
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 1a432f2..45c0bee 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -65,8 +65,10 @@ index file and all SHA1 references in .git/refs/* as heads.
+ 	Be chatty.
+ 
+ --lost-found::
+-	Write dangling refs into .git/lost-found/commit/ or
+-	.git/lost-found/other/, depending on type.
++	Write dangling objects into .git/lost-found/commit/ or
++	.git/lost-found/other/, depending on type.  If the object is
++	a blob, the contents are written into the file, rather than
++	its object name.
+ 
+ It tests SHA1 and general object sanity, and it does full tracking of
+ the resulting reachability and everything else. It prints out any
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 350ec5e..8d12287 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -152,7 +152,17 @@ static void check_unreachable_object(struct object *obj)
+ 			}
+ 			if (!(f = fopen(filename, "w")))
+ 				die("Could not open %s", filename);
+-			fprintf(f, "%s\n", sha1_to_hex(obj->sha1));
++			if (obj->type == OBJ_BLOB) {
++				enum object_type type;
++				unsigned long size;
++				char *buf = read_sha1_file(obj->sha1,
++						&type, &size);
++				if (buf) {
++					fwrite(buf, size, 1, f);
++					free(buf);
++				}
++			} else
++				fprintf(f, "%s\n", sha1_to_hex(obj->sha1));
+ 			fclose(f);
+ 		}
+ 		return;
+-- 
+1.5.3.rc2.32.g35c5b
