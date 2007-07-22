@@ -1,193 +1,128 @@
 From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: German translations
-Date: Sun, 22 Jul 2007 15:16:29 +0200
-Message-ID: <200707221516.29634.stimming@tuhh.de>
-References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707212127.51840.stimming@tuhh.de> <85tzrxr0m9.fsf@lola.goethe.zz>
+Subject: Re: [PATCH 1/5] Internationalization of git-gui
+Date: Sun, 22 Jul 2007 15:35:46 +0200
+Message-ID: <200707221535.46422.stimming@tuhh.de>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com> <200707212150.49351.stimming@tuhh.de> <7vabtpv43d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Jul 22 15:16:38 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 15:36:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICbIb-0008Lr-L8
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 15:16:38 +0200
+	id 1ICbbM-0003zy-LA
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 15:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759195AbXGVNQY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 09:16:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759650AbXGVNQY
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 09:16:24 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:44754 "EHLO
+	id S1751265AbXGVNfq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 09:35:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbXGVNfq
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 09:35:46 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:50830 "EHLO
 	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755127AbXGVNQW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 09:16:22 -0400
+	with ESMTP id S1750760AbXGVNfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 09:35:45 -0400
 Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6MDGHTc012621
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6MDZYk2015132
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sun, 22 Jul 2007 15:16:17 +0200
+	Sun, 22 Jul 2007 15:35:34 +0200
 Received: from [192.168.2.102] (p5490117A.dip0.t-ipconnect.de [84.144.17.122])
 	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6MDGFUE012593
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6MDZWae019886
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 Jul 2007 15:16:16 +0200
+	Sun, 22 Jul 2007 15:35:33 +0200
 User-Agent: KMail/1.9.5
-In-Reply-To: <85tzrxr0m9.fsf@lola.goethe.zz>
+In-Reply-To: <7vabtpv43d.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
 X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53269>
 
-Am Samstag, 21. Juli 2007 21:57 schrieb David Kastrup:
-> > Thanks for additional word proposals. I'll discuss these and the tw=
-o
-> > followups in German below.
-> >
-> >> > +#: git-gui.sh:1627 git-gui.sh:1802 git-gui.sh:2134
-> >> > +msgid "Commit"
-> >> > +msgstr "=DCbertragen"
-> >>
-> >> Einpflegen ist als Verb gebr=E4uchlich, aber dann ist es schwer, e=
-in
-> >> passendes Substantiv zu finden.  "Sendung"?
-> >
-> > Ich habe im Glossar "=FCbertragen (senden?, =FCbergeben?)". .
+Am Samstag, 21. Juli 2007 23:28 schrieb Junio C Hamano:
+> > Agreed. I propose to throw away the "add glossary" patch and I'll
+> > resubmit, this time in a separate po/glossary/ directory, where each
+> > language will get a po file for the glossary.
 >
-> Ich habe was: Einspielen, Ausspielen, Einspielung, Ausspielung.
-> Symmetrisch, verst=E4ndlich, als Verb und Substantiv zu gebrauchen.
-
-Einspielen und Einspielung sind auch M=F6glichkeiten, aber bisher finde=
- ich das=20
-noch nicht =FCberzeugender als die =DCbertragung.=20
-
-=46=FCr was ist Ausspielung gemeint? Checkout? F=FCr mich klingt=20
-ausspielen/Ausspielung haupts=E4chlich nach einer Pokerrunde (oder eher=
-=20
-destruktiv, "dieser Mitarbeiter hat im Projekt wirklich ausgespielt") u=
-nd=20
-nicht nach dem Ablegen in Akten oder dem R=FCberschicken zum Archiv-Ser=
-ver.=20
-Aber stimmt, "checkout" braucht noch einen Begriff und bisher habe ich =
-auch=20
-keinen =FCberzeugenden Vorschlag.
-
-> > Deswegen wird was anderes ben=F6tigt. F=FCr fetch und pull gleicher=
-ma=DFen
-> > w=FCrden holen/ziehen/=FCbernehmen gehen und man muss sich halt auf=
- eine
-> > Zuordnung festlegen.
+> Actually, I would even suggest that we should NOT have a
+> separate glossary file at all, if gettext suite allows what I
+> outline below.
 >
-> fetch =3D anfordern, pull =3D =FCbernehmen?
+> How about having it as a part of header comment in each of the
+> xx.po file?
 
-Klingt gut, ok, vielen Dank.
+I don't think this would work well. In particular, you don't get all the nice 
+gettext *merging* features that you only get with a full-blown po file.
 
-> >> > +#: git-gui.sh:1632 git-gui.sh:2140
-> >> > +msgid "Push"
-> >> > +msgstr "Schieben"
-> >
-> > Glossar: "schieben (hochladen? verschicken?)"
+> The division of labor I think would make sense for message l10n
+> process goes like this:
 >
-> Ausliefern?  Durchgeben?
+>  - The software developer (primarily Shawn): responsible for
+>    marking messages subject to i18n;
 
-Ausliefern ist gut, danke.
+Yes, except those developers who don't happen to be translators as well tend 
+to forget the markups. I don't blame anyone for doing so - just keep in mind 
+that translators have to give feedback about missing markups, and they 
+hopefully will do so.
 
-> >> > +#: git-gui.sh:1641
-> >> > +msgid "Browse Current Branch"
-> >> > +msgstr "Aktuellen Zweig durchbl=E4ttern"
-> >>
-> >> Im aktuellen Zweig st=F6bern.
-> >
-> > st=F6bern f=FCr "to browse"? Das ist aber definitiv nicht das, was
-> > normalerweise als =DCbersetzung von "to browse" gew=E4hlt wird. Da =
-ist
-> > man eben bei bl=E4ttern.
+>  - The i18n coordinator (could be Shawn but anybody else can
+>    volunteer; as things stand, I think Christian and Johannes
+>    are doing this): responsible for running "make
+>    po/git-gui.pot; make update-po" from time to time in order to
+>    keep po/*.po in sync with the vocabulary.
+
+Actually, please DO NOT RUN update-po except right before a new tarball is 
+being packaged and distributed! It sucks royally if I have updated my de.po 
+translation, only to discover someone has run update-po on the server and I 
+have to figure out how to get out of the de.po conflicts. There will be 
+conflicts after each and every update-po because the line numbers in the po 
+file will have changed inevitably -- but the actualy content in terms of 
+messages might be completely unchanged.
+
+For that reason, please use the update-po rule AS SELDOM AS POSSIBLE. Thanks a 
+lot.
+
+>    initially, populate "glossary" part in po/git-gui.pot;
 >
-> Aber das w=E4re "leafing through" und ist eben auf B=FCcher beschr=E4=
-nkt.
+>    as needed, add entries "glossary" part in po/git-gui.pot, and
+>    (if possible) add corresponding placeholders to po/*.po;
 
-Von den B=FCchern kommt die Bedeutung her, ja, aber browse und leafing =
-through=20
-sind halt beide ein bl=E4ttern, da sehe ich keinen Widerspruch zur m=F6=
-glichen=20
-Verwendung hier.
+Again, this doesn't work well, and depending on the po file editor that is 
+used by a translator they might not see this comment block anyway. I would 
+instead propose a subdirectory po/glossary; a CSV file that contains the 
+terms itself; a csv-to-po converter script that will turn the terms into a 
+git-gui-glossary.pot; and a po file for each language.
 
-> "w=FChlen" w=E4re flapsig.  Etwas
-> hochsprachlicher w=E4re noch "durchforsten", aber das tr=E4gt uns
-> nat=FCrlich den Zorn der F=F6rster f=FCr den Begriffsmi=DFbrauch zu.
-> "erkunden" w=E4re auch noch m=F6glich.
-
-Beim Erkunden fehlt mir die Bedeutung, dass man da einzelne Schritte ei=
-nen=20
-nach dem anderen durchgehen kann. Das finde ich im Bl=E4ttern weiterhin=
- am=20
-besten wiederzuerkennen. Dann noch eher durchforsten als erkunden.
-
-> >> > David Kastrup wrote:
-> >> >>> +#: git-gui.sh:1798 git-gui.sh:2130 git-gui.sh:2228
-> >> >>> +msgid "Sign Off"
-> >> >>> +msgstr "Freizeichnen"
-> >> >>
-> >> >> Gegenzeichnen?
-> >> >
-> >> > Abzeichnen!
-> >>
-> >> Absegnen. =A0Ich denke mal, in der Form mit "Ab" ist das derma=DFe=
-n
-> >> gebr=E4uchlich, da=DF man damit keine religi=F6sen Befindlichkeite=
-n
-> >> verletzt.
-> >>
-> >> Ansonsten: Abnicken oder Guthei=DFen.
-> >
-> > Absegnen ist zu flapsig, Abnicken und Guthei=DFen erst recht.
+>  - Translators (one for each language): responsible for updating
+>    po/xx.po file;
 >
-> Abnicken ja, aber Guthei=DFen ist nun wirklich ein hochsprachlicher
-> Begriff.
+>    initially, start by copying po/git-gui.pot to create
+>    po/xx.po;
 >
-> >  Abzeichnen w=E4re okay, aber das ist Freizeichnen auch.
+>    maintainance of "glossary" part of po/xx.po could also be
+>    made this person's responsibility instead of i18n
+>    coordinator's.
 >
-> Freizeichnen ist viel zu nischensprachlich.  Mit Abzeichnen k=F6nnte =
-ich
-> leben, obwohl ich Guthei=DFen besser f=E4nde.
+> This way, the translators do not have to be so familiar with the
+> gettext toolchain nor even have to have gettext installed.
 
-Abzeichnen ist ok.
-
-Am Samstag, 21. Juli 2007 22:09 schrieb David Kastrup:
-> After a view of the glossary:
->
-> "amend" "erg=E4nzen"
-> ist nicht ganz korrekt.  "nachbessern" w=E4re da erheblich besser.
-
-Ok.
-
-> "message" w=FCrde ich als "Nachricht" statt "Meldung" =FCbersetzen.
-
-Irgendwie Geschmackssache. Man muss sich das ein bisschen im Kontext=20
-vorstellen: "Die Meldung zur Einspielung/=DCbertragung", "Die Nachricht=
- zur=20
-Einspielung/=DCbertragung", ich w=FCrde da erstmal bei Meldung bleiben.
-
-> "revert" "zur=FCckkehren" w=FCrde ich eher als "revidieren" oder
-> "aufheben" bezeichnen.
-
-"revidieren" ist gut.
-
-> "revision" ist wohl schlicht eine "Version" statt der "Revision", die
-> einem das Finanzamt ins Haus bringt.
-
-Auch das ist gut, allerdings frage ich mich nat=FCrlich auch, warum das=
- Dingens=20
-dann nicht auch gleich auf Englisch "version" hei=DFt :-)
-
-Bisheriger Zwischenstand wird im glossary.csv nachgetragen; zur Anpassu=
-ng von=20
-de.po hab ich noch keine Zeit gehabt, kommt aber sobald neue Strings dr=
-in=20
-sind.
+Translators who are unfamiliar with gettext are a mixed blessing. Anyone is 
+able to contribute a bunch of initial string translations, especially if 
+there hasn't been a translation before. But if someone or a team wants to 
+achieve a really *high-quality*, 100%, consistent, and understandable 
+translation, the translators must be able to test the translation a lot, 
+which implies they must be able to generate the .msg files, which requires 
+the gettext toolchain anyway. For that reason I wouldn't spent too much 
+effort to enable translation work without gettext tools; instead, I'd rather 
+encourage to optimize the setup for those translators that have the full 
+toolchain available.
 
 Christian
