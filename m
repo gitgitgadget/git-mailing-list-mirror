@@ -1,371 +1,166 @@
-From: Irina Riesen <irina.riesen@gmail.com>
-Subject: [PATCH] git-gui: initial version of russian translation
-Date: Sun, 22 Jul 2007 13:57:12 +0200
-Message-ID: <20070722115712.GD3408@steel.home>
-Reply-To: Irina Riesen <irina.riesen@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sun, 22 Jul 2007 14:06:24 +0200
+Message-ID: <200707221406.25541.jnareb@gmail.com>
+References: <85lkdezi08.fsf@lola.goethe.zz> <f7uap7$eo1$1@sea.gmane.org> <85myxpp67k.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	spearce@steel.home
-X-From: git-owner@vger.kernel.org Sun Jul 22 13:57:34 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 13:59:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICa44-0000zu-0o
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 13:57:32 +0200
+	id 1ICa6J-0001Pu-Cr
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 13:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756267AbXGVL5R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 07:57:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbXGVL5R
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 07:57:17 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:59705 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753862AbXGVL5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 07:57:16 -0400
-Received: from tigra.home (Fc8c3.f.strato-dslnet.de [195.4.200.195])
-	by post.webmailer.de (fruni mo32) (RZmta 9.1)
-	with ESMTP id V047a4j6M5WXqL ; Sun, 22 Jul 2007 13:57:14 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 426A7277BD;
-	Sun, 22 Jul 2007 13:57:13 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 90D55BDD0; Sun, 22 Jul 2007 13:57:12 +0200 (CEST)
+	id S1757261AbXGVL7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 07:59:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756393AbXGVL7r
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 07:59:47 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:26350 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755352AbXGVL7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 07:59:45 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so945047ugf
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 04:59:44 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=b+PncvcWNfEaxmWvaH/01x57i7vLA9gTlyHpMDgnSklyI8xbkrHRFFtjtOZECdS+LNlo0a0PKyxdFSirbNG4tTxj+gSat2xqgW6j3xBkE4KHWRPf/3YbHXkgGLQUulzDtwo6T4tuKn9RQrSDHtn0eCIiYTxEr3NwPu28QNP9qMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=V3nEQeOCQCSH3L+hEARwAX/dSfb9V5KbViDA+n8sHIZnKDVGNXB/cxr6pYm23nUB/J64vojA2nA6J+2iVAd4CfSJyuV8vUhPjJkPUXAewpCTrMm6LUnc0h93TbeukzchQV8R46q47Lk+dFJqh+EAOe4h18bMk1Kua01RO5fgBUA=
+Received: by 10.86.23.17 with SMTP id 17mr1692287fgw.1185105583759;
+        Sun, 22 Jul 2007 04:59:43 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id a37sm11467045fkc.2007.07.22.04.59.40
+        (version=SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2007 04:59:41 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <85myxpp67k.fsf@lola.goethe.zz>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+WOJg=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53253>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-Signed-off-by: Irina Riesen <irina.riesen@gmail.com>
----
- po/ru.po |  258 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 258 insertions(+), 0 deletions(-)
- create mode 100644 po/ru.po
+On Sun, 22 July 2007, David Kastrup wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> David Kastrup wrote:
+>>
+>>> I must be really bad at explaining things, or I am losing a fight
+>>> against preconceptions fixed beyond my imagination.
 
-diff --git a/po/ru.po b/po/ru.po
-new file mode 100644
-index 0000000..e73b8d0
---- /dev/null
-+++ b/po/ru.po
-@@ -0,0 +1,258 @@
-+# Translation of git-gui to russian
-+# Copyright (C) 2007 Shawn Pearce
-+# This file is distributed under the same license as the git-gui packa=
-ge.
-+# Irina Riesen <irina.riesen@gmail.com>, 2007.
-+#
-+#, fuzzy
-+msgid ""
-+msgstr ""
-+"Project-Id-Version: git-gui\n"
-+"Report-Msgid-Bugs-To: \n"
-+"POT-Creation-Date: 2007-07-21 20:31+0100\n"
-+"PO-Revision-Date: 2007-07-22 12:00+0200\n"
-+"Last-Translator: Irina Riesen <irina.riesen@gmail.com>\n"
-+"Language-Team: Russian Translation <git@vger.kernel.org>\n"
-+"MIME-Version: 1.0\n"
-+"Content-Type: text/plain; charset=3DUTF-8\n"
-+"Content-Transfer-Encoding: 8bit\n"
-+
-+#: git-gui.sh:1669
-+msgid "Repository"
-+msgstr "=D0=A0=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=
-=B9"
-+
-+#: git-gui.sh:1670
-+msgid "Edit"
-+msgstr "=D0=A0=D0=B5=D0=B4=D0=B0=D0=BA=D1=82=D0=B8=D1=80=D0=BE=D0=B2=D0=
-=B0=D1=82=D1=8C"
-+
-+#: git-gui.sh:1672
-+msgid "Branch"
-+msgstr "=D0=92=D0=B5=D1=82=D0=B2=D1=8C"
-+
-+#: git-gui.sh:1675 git-gui.sh:1853 git-gui.sh:2192
-+msgid "Commit"
-+msgstr "=D0=A1=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1678
-+msgid "Merge"
-+msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1679
-+msgid "Fetch"
-+msgstr "=D0=9F=D0=BE=D0=BB=D1=83=D1=87=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1680 git-gui.sh:2198
-+msgid "Push"
-+msgstr "=D0=9E=D1=82=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1689
-+msgid "Browse Current Branch's Files"
-+msgstr "=D0=9F=D1=80=D0=BE=D0=BB=D0=B8=D1=81=D1=82=D0=B0=D1=82=D1=8C =D1=
-=84=D0=B0=D0=B9=D0=BB=D1=8B =D1=82=D0=B5=D0=BA=D1=83=D1=89=D0=B8=D0=B5=D0=
-=B9 =D0=B2=D0=B5=D1=82=D0=B2=D0=B8"
-+
-+#: git-gui.sh:1698
-+msgid "Visualize Current Branch's History"
-+msgstr "=D0=98=D1=81=D1=82=D0=BE=D1=80=D0=B8=D1=8F =D1=82=D0=B5=D0=BA=D1=
-=83=D1=89=D0=B5=D0=B9 =D0=B2=D0=B5=D1=82=D0=B2=D0=B8 =D0=BD=D0=B0=D0=B3=
-=D0=BB=D1=8F=D0=B4=D0=BD=D0=BE"
-+
-+#: git-gui.sh:1702
-+msgid "Visualize All Branch History"
-+msgstr "=D0=98=D1=81=D1=82=D0=BE=D1=80=D0=B8=D1=8F =D0=B2=D1=81=D0=B5=D1=
-=85 =D0=B2=D0=B5=D1=82=D0=B2=D0=B5=D0=B9 =D0=BD=D0=B0=D0=B3=D0=BB=D1=8F=
-=D0=B4=D0=BD=D0=BE"
-+
-+#: git-gui.sh:1707
-+msgid "Database Statistics"
-+msgstr "=D0=A1=D1=82=D0=B0=D1=82=D0=B8=D1=81=D1=82=D0=B8=D0=BA=D0=B0 =D0=
-=B1=D0=B0=D0=B7=D1=8B =D0=B4=D0=B0=D0=BD=D0=BD=D1=8B=D1=85"
-+
-+#: git-gui.sh:1710
-+msgid "Compress Database"
-+msgstr "=D0=A1=D0=B6=D0=B0=D1=82=D1=8C =D0=B1=D0=B0=D0=B7=D1=83 =D0=B4=
-=D0=B0=D0=BD=D0=BD=D1=8B=D1=85"
-+
-+#: git-gui.sh:1713
-+msgid "Verify Database"
-+msgstr "=D0=9F=D1=80=D0=BE=D0=B2=D0=B5=D1=80=D0=B8=D1=82=D1=8C =D0=B1=D0=
-=B0=D0=B7=D1=83 =D0=B4=D0=B0=D0=BD=D0=BD=D1=8B=D1=85"
-+
-+#: git-gui.sh:1720 git-gui.sh:1724 git-gui.sh:1728
-+msgid "Create Desktop Icon"
-+msgstr "=D0=A1=D0=BE=D0=B7=D0=B4=D0=B0=D1=82=D1=8C =D1=8F=D1=80=D0=BB=D1=
-=8B=D0=BA =D0=BD=D0=B0 =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B5=D0=BC =D1=81=
-=D1=82=D0=BE=D0=BB=D0=B5"
-+
-+#: git-gui.sh:1733
-+msgid "Quit"
-+msgstr "=D0=92=D1=8B=D1=85=D0=BE=D0=B4"
-+
-+#: git-gui.sh:1740
-+msgid "Undo"
-+msgstr "=D0=9E=D1=82=D0=BC=D0=B5=D0=BD=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1743
-+msgid "Redo"
-+msgstr "=D0=9F=D0=BE=D0=B2=D1=82=D0=BE=D1=80=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1747 git-gui.sh:2262
-+msgid "Cut"
-+msgstr "=D0=92=D1=8B=D1=80=D0=B5=D0=B7=D0=B0=D1=82=D1=8C"
-+
-+#: git-gui.sh:1750 git-gui.sh:2265 git-gui.sh:2336 git-gui.sh:2408
-+msgid "Copy"
-+msgstr "=D0=9A=D0=BE=D0=BF=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D1=82=D1=8C"
-+
-+#: git-gui.sh:1753 git-gui.sh:2268
-+msgid "Paste"
-+msgstr "=D0=92=D1=81=D1=82=D0=B0=D0=B2=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1756 git-gui.sh:2271
-+msgid "Delete"
-+msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:1760 git-gui.sh:2275 git-gui.sh:2412
-+msgid "Select All"
-+msgstr "=D0=92=D1=8B=D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C =D0=B2=D1=81=D0=
-=B5"
-+
-+#: git-gui.sh:1769
-+msgid "Create..."
-+msgstr "=D0=A1=D0=BE=D0=B7=D0=B4=D0=B0=D1=82=D1=8C..."
-+
-+#: git-gui.sh:1775
-+msgid "Checkout..."
-+msgstr "=D0=9F=D0=B5=D1=80=D0=B5=D0=B9=D1=82=D0=B8..."
-+
-+#: git-gui.sh:1781
-+msgid "Rename..."
-+msgstr "=D0=9F=D0=B5=D1=80=D0=B5=D0=B8=D0=BC=D0=B5=D0=BD=D0=BE=D0=B2=D0=
-=B0=D1=82=D1=8C..."
-+
-+#: git-gui.sh:1786 git-gui.sh:1884
-+msgid "Delete..."
-+msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B8=D1=82=D1=8C..."
-+
-+#: git-gui.sh:1791
-+msgid "Reset..."
-+msgstr "=D0=A1=D0=B1=D1=80=D0=BE=D1=81=D0=B8=D1=82=D1=8C..."
-+
-+#: git-gui.sh:1803 git-gui.sh:2209
-+msgid "New Commit"
-+msgstr "=D0=9D=D0=BE=D0=B2=D0=BE=D0=B5 =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=
-=8F=D0=BD=D0=B8=D0=B5"
-+
-+#: git-gui.sh:1811 git-gui.sh:2216
-+msgid "Amend Last Commit"
-+msgstr "=D0=98=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=BF=D0=
-=BE=D1=81=D0=BB=D0=B5=D0=B4=D0=BD=D0=B5=D0=B5 =D1=81=D0=BE=D1=81=D1=82=D0=
-=BE=D1=8F=D0=BD=D0=B8=D0=B5"
-+
-+#: git-gui.sh:1820 git-gui.sh:2176
-+msgid "Rescan"
-+msgstr "=D0=9F=D0=B5=D1=80=D0=B5=D1=87=D0=B8=D1=82=D0=B0=D1=82=D1=8C"
-+
-+#: git-gui.sh:1826
-+msgid "Add To Commit"
-+msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=BA =D1=81=
-=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:1831
-+msgid "Add Existing To Commit"
-+msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=B8=D0=BC=D0=
-=B5=D1=8E=D1=89=D0=B5=D0=B5=D1=81=D1=8F =D0=BA =D1=81=D0=BE=D1=81=D1=82=
-=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:1837
-+msgid "Unstage From Commit"
-+msgstr "=D0=98=D1=81=D0=BA=D0=BB=D1=8E=D1=87=D0=B8=D1=82=D1=8C =D0=B8=D0=
-=B7 =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8F"
-+
-+#: git-gui.sh:1842
-+msgid "Revert Changes"
-+msgstr "=D0=9E=D1=82=D0=BC=D0=B5=D0=BD=D0=B8=D1=82=D1=8C =D0=B8=D0=B7=D0=
-=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F"
-+
-+#: git-gui.sh:1849 git-gui.sh:2188 git-gui.sh:2286
-+msgid "Sign Off"
-+msgstr "=D0=9F=D0=BE=D0=B4=D0=BF=D0=B8=D1=81=D0=B0=D1=82=D1=8C"
-+
-+#: git-gui.sh:1864
-+msgid "Local Merge..."
-+msgstr "=D0=9B=D0=BE=D0=BA=D0=B0=D0=BB=D1=8C=D0=BD=D0=BE=D0=B5 =D0=BE=D0=
-=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5..."
-+
-+#: git-gui.sh:1869
-+msgid "Abort Merge..."
-+msgstr "=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=B1=D1=
-=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5..."
-+
-+#: git-gui.sh:1881
-+msgid "Push..."
-+msgstr "=D0=9E=D1=82=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C..."
-+
-+#: git-gui.sh:1891
-+msgid "Apple"
-+msgstr ""
-+
-+#: git-gui.sh:1894 git-gui.sh:1941
-+#, tcl-format
-+msgid "About %s"
-+msgstr "=D0=9E %s"
-+
-+#: git-gui.sh:1896 git-gui.sh:1902 git-gui.sh:2454
-+msgid "Options..."
-+msgstr "=D0=9D=D0=B0=D1=81=D1=82=D1=80=D0=BE=D0=B9=D0=BA=D0=B8..."
-+
-+#: git-gui.sh:1937
-+msgid "Help"
-+msgstr "=D0=9F=D0=BE=D0=BC=D0=BE=D1=89=D1=8C"
-+
-+#: git-gui.sh:1978
-+msgid "Online Documentation"
-+msgstr "=D0=94=D0=BE=D0=BA=D1=83=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=86=D0=
-=B8=D1=8F =D0=B2 =D0=B8=D0=BD=D1=82=D0=B5=D1=80=D0=BD=D0=B5=D1=82=D0=B5=
-"
-+
-+#: git-gui.sh:2094
-+msgid "Current Branch:"
-+msgstr "=D0=A2=D0=B5=D0=BA=D1=83=D1=89=D0=B0=D1=8F =D0=B2=D0=B5=D1=82=D0=
-=B2=D1=8C:"
-+
-+#: git-gui.sh:2115
-+msgid "Staged Changes (Will Be Committed)"
-+msgstr "=D0=92=D0=BA=D0=BB=D1=8E=D1=87=D0=B5=D0=BD=D0=BE (=D0=B1=D1=83=
-=D0=B4=D0=B5=D1=82 =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BE=
-)"
-+
-+#: git-gui.sh:2135
-+msgid "Unstaged Changes (Will Not Be Committed)"
-+msgstr "=D0=98=D1=81=D0=BA=D0=BB=D1=8E=D1=87=D0=B5=D0=BD=D0=BE (=D0=BD=
-=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=
-=BD=D0=B5=D0=BD=D0=BE)"
-+
-+#: git-gui.sh:2182
-+msgid "Add Existing"
-+msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=B8=D0=BC=D0=
-=B5=D1=8E=D1=89=D0=B5=D0=B5=D1=81=D1=8F"
-+
-+#: git-gui.sh:2228
-+msgid "Initial Commit Message:"
-+msgstr "=D0=98=D0=B7=D0=BD=D0=B0=D1=87=D0=B0=D0=BB=D1=8C=D0=BD=D1=8B=D0=
-=B9 =D0=BA=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=B9 =
-=D0=BA =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:2229
-+msgid "Amended Commit Message:"
-+msgstr "=D0=98=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=D1=
-=8B=D0=B9 =D0=BA=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
-=B9 =D0=BA =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:2230
-+msgid "Amended Initial Commit Message:"
-+msgstr "=D0=98=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=D1=
-=8B=D0=B9 =D0=B8=D0=B7=D0=BD=D0=B0=D1=87=D0=B0=D0=BB=D1=8C=D0=BD=D1=8B=D0=
-=B9 =D0=BA=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=B9 =
-=D0=BA =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:2231
-+msgid "Amended Merge Commit Message:"
-+msgstr "=D0=98=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=D1=
-=8B=D0=B9 =D0=BA=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
-=B9 =D0=BA =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=
-=D1=8E"
-+
-+#: git-gui.sh:2232
-+msgid "Merge Commit Message:"
-+msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
-=B9 =D0=BA =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=
-=D1=8E"
-+
-+#: git-gui.sh:2233
-+msgid "Commit Message:"
-+msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
-=B9 =D0=BA =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=8E"
-+
-+#: git-gui.sh:2278 git-gui.sh:2416
-+msgid "Copy All"
-+msgstr "=D0=9A=D0=BE=D0=BF=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D1=82=D1=8C =D0=
-=B2=D1=81=D0=B5"
-+
-+#: git-gui.sh:2404
-+msgid "Refresh"
-+msgstr "=D0=9E=D0=B1=D0=BD=D0=BE=D0=B2=D0=B8=D1=82=D1=8C"
-+
-+#: git-gui.sh:2425
-+msgid "Apply/Reverse Hunk"
-+msgstr "=D0=9F=D1=80=D0=B8=D0=BC=D0=B5=D0=BD=D0=B8=D1=82=D1=8C/=D0=9E=D1=
-=82=D0=BC=D0=B5=D0=BD=D0=B8=D1=82=D1=8C =D1=87=D0=B0=D1=81=D1=82=D1=8C"
-+
-+#: git-gui.sh:2431
-+msgid "Decrease Font Size"
-+msgstr "=D0=A3=D0=BC=D0=B5=D0=BD=D1=8C=D1=88=D0=B8=D1=82=D1=8C =D1=80=D0=
-=B0=D0=B7=D0=BC=D0=B5=D1=80 =D1=88=D1=80=D0=B8=D1=84=D1=82=D0=B0"
-+
-+#: git-gui.sh:2435
-+msgid "Increase Font Size"
-+msgstr "=D0=A3=D0=B2=D0=B5=D0=BB=D0=B8=D1=87=D0=B8=D1=82=D1=8C =D1=80=D0=
-=B0=D0=B7=D0=BC=D0=B5=D1=80 =D1=88=D1=80=D0=B8=D1=84=D1=82=D0=B0"
-+
-+#: git-gui.sh:2440
-+msgid "Show Less Context"
-+msgstr "=D0=9C=D0=B5=D0=BD=D1=8C=D1=88=D0=B5 =D0=BA=D0=BE=D0=BD=D1=82=D0=
-=B5=D0=BA=D1=81=D1=82=D0=B0"
-+
-+#: git-gui.sh:2447
-+msgid "Show More Context"
-+msgstr "=D0=91=D0=BE=D0=BB=D1=8C=D1=88=D0=B5 =D0=BA=D0=BE=D0=BD=D1=82=D0=
-=B5=D0=BA=D1=81=D1=82=D0=B0"
---=20
-1.5.3.rc2.37.g67fa
+Or you are wrong...
+
+>> I don't understand you, or you don't understand git. "Tree" object
+>> in object database (in repository) represents a directory in the
+>> working area. There was never any problem with having empty trees in
+>> object database, or having links to empty directory in the superdir.
+>> We don't have to change anything about object database.
+> 
+> I disagree here.  The object database _can_ represent an _empty_
+> directory that has been added explicitly, because up to now no
+> operations existed that actually left an empty tree.  But it can't
+> distinguish a _non_-empty directory that has been added explicitly
+> from non-empty directory that has not been added explicitly.
+
+True. I forgot about that.
+
+Although I'd rather say that we want distinguish between automatically 
+cleaned up directory (directory which will be deleted if all files in 
+it would be deleted, and would be untracked if all tracked files in it 
+would be deleted), and "sticky" directory, which is explicitely tracked 
+and have to be explicitely deleted.
+
+The fact that it was added explicitely or non explicitely is orthogonal 
+to that.
+
+IMHO it would be best to first provide plumbing infrastructure (as e.g. 
+it was the case of submodule support), then add option to 
+git-update-index to change the "stickiness"/"autoremoval" status of a 
+directory (of a tree), and _last_ think about how to change the 
+porcelain (git-add and git-rm).
+
+[...]
+> But in the second case, git must _not_ retain a.  So we need to record
+> the information that in the first case, a was added explicitly.  And
+> this can't be done with the current repository layout.  It doesn't buy
+> us anything that we _have_ a representation available for an _empty_
+> tree added explicitly.  We need this "added explicitly" information
+> for _every_ tree, not just empty ones.
+> 
+> And a perfectly consistent way is to make those trees with an
+> explicitly added directory _non-empty_, by virtue of putting a file
+> "." in them.  This file, of course, exists in every physical
+> directory, but we may or may not decide to let it be tracked by git,
+> using the gitignore mechanism on the pattern ".".  Perfectly
+> expedient.
+
+Here we disagree. I think putting "." in a tree as marker of having it 
+not be automatically deleted when empty, as opposed to marking tree 
+using filemode in the parent, is not a good idea.
+
+The only advantage to the "." idea is that it can use gitignore 
+mechanism (both in-tree .gitignore, tracked or not, and info/exclude 
+file). But I also think that the fact that gitignore mechanism is 
+recursive is more of disadvantage than advantage.
+
+First, it is _not_ consistent. Working directory trees _always_ have '.' 
+in them, while trees would have or would have not it, depending if they 
+would be "sticky" or "autoremoved".
+
+Second, the "easy implementation" is anything but easy. "git add ." as
+a way to mark directory as "sticky" is not backward compatibile: 
+currently it mean to add _all contents_ of current directory. 
+Implementation is tricky: as we have seen trying to unlink '.' or 
+create '.' can unfortunately succeed on [some Sun OS, and UFS 
+filesystem] (which follows POSIX stupidly to the letter) f**king
+up the filesystem. The alternative proposal of adding "magic mode" to 
+mark directory as "not remove when empty" is largely tested; it is very 
+similar to the subproject support.
+
+Third, is contrary to the git philosophy of tracking contents. 
+"Stickiness" is an attribute; the fact that directory is explicitely 
+tracked or not does not change contents of a directory. Compare to 
+'blob' which contains only contents of a file: not a filename, not a 
+pathname, not [subset of] filemode.
+
+Fourth, is very artificial. What would you put for filemode for '.'?
+040000 (i.e. directory)? What would you put for sha1? Sha1 of an empty 
+directory? Of an empty blob? 0{40} (which is bad idea because 
+git-diff-tree uses 0{40} to represent 'not existance')?
+
+>> The problems with git problems with empty directories stems from the
+>> fact that index didn't have directories.
+> 
+> That basically implies that no information about directories could be
+> tracked in the repository.  And yes, we need appropriate information
+> in the index.  Again, the information whether a directory was added
+> explicitly.
+
+Whether directory is automatically managed by git (automatically removed 
+or untracked). But we need directory entry in index for git-diff, for 
+example to recognize if there is or there is not empty directory, or if 
+a directory is automanaged or not.
+ 
+>> Index is flattened version of root tree, and before subproject
+>> support it contained _only_ info about blobs (file contents).
+> 
+> And the repository is a versioned and hierarchically hashed version of
+> the index, but its trees contain _no_ information that is not already
+> inherently represented by the files alone. [...]
+
+The above sentence is nonsensical. Index is helper for repository,
+and can be derived from repository. Not vice versa.
+
+Trees do contain information which is not inherently present by the 
+blobs.
+-- 
+Jakub Narebski
+Poland
