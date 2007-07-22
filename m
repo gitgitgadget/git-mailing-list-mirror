@@ -1,93 +1,181 @@
-From: Paul Mundt <lethal@linux-sh.org>
-Subject: Re: Git tree for old kernels from before the current tree
-Date: Mon, 23 Jul 2007 06:13:14 +0900
-Message-ID: <20070722211314.GA13850@linux-sh.org>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com> <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sun, 22 Jul 2007 23:08:43 +0200
+Organization: Organization?!?
+Message-ID: <85wswsf8o4.fsf@lola.goethe.zz>
+References: <85lkdezi08.fsf@lola.goethe.zz> <Pine.LNX.4.64.0707180135200.14781@racer.site> <858x9ez1li.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org> <vpq4pk1vf7q.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0707181004330.=04?=
+	=?ISO-8859-1?Q?27353@woody.linu?= =?ISO-8859-1?Q?x-foundation.org?=
+	=?ISO-8859-1?Q?>?= <85644hxujp.fsf@lola.goethe.zz> <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org> <alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org> <85abttwa7m.fsf@lola.goethe.zz>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.070718=041710271.?=
+	=?ISO-8859-1?Q?27353@woody.linu?= =?ISO-8859-1?Q?x-foundation.org?=
+	=?ISO-8859-1?Q?>?=
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Sun Jul 22 23:13:45 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 22 23:14:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICikK-0004LM-B7
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 23:13:44 +0200
+	id 1ICilH-0004XP-NS
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 23:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757361AbXGVVNk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 17:13:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755841AbXGVVNk
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 17:13:40 -0400
-Received: from smtp.ocgnet.org ([64.20.243.3]:37369 "EHLO smtp.ocgnet.org"
+	id S1755070AbXGVVOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 17:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755945AbXGVVOj
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 17:14:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:55457 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751657AbXGVVNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 17:13:39 -0400
-Received: from smtp.ocgnet.org (localhost [127.0.0.1])
-	by smtp.ocgnet.org (Postfix) with ESMTP id CA9165203FB;
-	Sun, 22 Jul 2007 16:13:37 -0500 (CDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.8-gr1 (2007-02-13) on smtp.ocgnet.org
-X-Spam-Level: *
-X-Spam-Status: No, score=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL,
-	SPF_HELO_PASS autolearn=no version=3.1.8-gr1
-Received: from smtp.ocgnet.org (localhost [127.0.0.1])
-	by smtp.ocgnet.org (Postfix) with ESMTP id 5F8D75203FE;
-	Sun, 22 Jul 2007 16:13:37 -0500 (CDT)
-Received: from master.linux-sh.org (124x34x33x190.ap124.ftth.ucom.ne.jp [124.34.33.190])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ocgnet.org (Postfix) with ESMTP id B92535203FB;
-	Sun, 22 Jul 2007 16:13:36 -0500 (CDT)
-Received: from localhost (unknown [127.0.0.1])
-	by master.linux-sh.org (Postfix) with ESMTP id D397064C7C;
-	Sun, 22 Jul 2007 21:13:14 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at linux-sh.org
-Received: from master.linux-sh.org ([127.0.0.1])
-	by localhost (master.linux-sh.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kjZvsLwOBDnn; Mon, 23 Jul 2007 06:13:14 +0900 (JST)
-Received: by master.linux-sh.org (Postfix, from userid 500)
-	id 7547064C80; Mon, 23 Jul 2007 06:13:14 +0900 (JST)
-Mail-Followup-To: Paul Mundt <lethal@linux-sh.org>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751041AbXGVVOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 17:14:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ICiix-0006s3-KS
+	for git@vger.kernel.org; Sun, 22 Jul 2007 23:12:19 +0200
+Received: from dslb-084-061-022-107.pools.arcor-ip.net ([84.61.22.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 23:12:19 +0200
+Received: from dak by dslb-084-061-022-107.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 23:12:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-022-107.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:T2jdVbryLAlcpbIfC7QDK4biVE0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53321>
 
-On Sun, Jul 22, 2007 at 11:00:15PM +0200, Jan Engelhardt wrote:
-> On Jul 22 2007 16:49, Jon Smirl wrote:
-> > Continuing on with kernel archeology for embedded systems, any
-> > interest in making a git tree with all of the kernel versions from the
-> > beginning up to the start of the current git tree?
-> 
-> Well, it would be cool if history was somehow available (I recognize
-> this would be a lot of work). One currently has to go through the
-> bk repo if something is to be searched for in that timeframe.
-> 
-Err, that's crap. Have you even looked at gitweb? There's at least:
 
-git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+Well, coming back to this posting in order to focus on some points
+that were at a level more relevant to the implementation.  And I'll go
+through the questions assuming my permissions-based proposal.
 
-This has trees all the way back to 2.5.0.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-and Linus also has:
+> On Thu, 19 Jul 2007, David Kastrup wrote:
+>> 
+>> Well, kudos.  Together with the analysis from Junio, this seems like a
+>> good start.  Would you have any recommendations about what stuff one
+>> should really read in order to get up to scratch about git internals?
+>
+> Well, you do need to understand the index. That's where all the new 
+> subtlety happens.
+>
+> The data structures themselves are trivial, and we've supported
+> empty trees (at the top level) from the beginning, so that part is
+> not anything new.
+>
+> However, now having a new entry type in the index (S_IFDIR) means
+> that anything that interacts with the index needs to think
+> twice. But a lot of that is just testing what happens, and so the
+> first thing to do is to have a test-suite.
 
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/old-2.6-bkcvs.git
+Yes.
 
-for the BK history.
+> There's also the question about how to show an empty tree in a
+> diff.
 
-That's already more history than most people have any immediate use for,
-going beyond that starts getting in to general completeness before
-practical application territory.
+Well, there are two possibilities involved here, a more and a less
+chatty one.  Assuming that we want to do as little work as possible,
+the transition between a tracked and a non-tracked directory will be
+given in one of the following manners:
 
-Anyone still sending 2.4 patches with the intent of them being moved
-forward and applied to a current kernel needs to be killfiled.
+Either:
+a) xxx: old mode 000000
+   xxx: new mode 040755
+
+when a directory gets tracked and
+
+   xxx: new mode 040755
+   xxx: old mode 000000
+
+when it gets untracked again.
+
+or
+b)
+   xxx: new directory mode 040755
+
+when a directory gets tracked and
+
+   xxx: deleted directory mode 040755
+
+when it gets untracked again.  Note that "new" does not mean that git
+did not previously have had files that absolutely have required a
+directory for placing.  It just means that it has now actively gained
+knowledge about the directory.
+
+In a similar vein, "deleted" means that git is just deleting its
+knowledge about the directory, _scheduling_ it for a single deletion
+attempt at the earliest (and actually also latest) opportunity: when
+git happens to know about no more files that require keeping the
+directory around.  So perhaps the following would be more readable:
+
+   xxx: tracking directory mode 040755
+
+   xxx: forgetting directory mode 040755
+
+Now in order to cut down on the verbiage, it might be an option to
+transmit those strings only when something happens that can't be
+deduced from other data.  Because _if_ it can be deduced from other
+data (like a directory being present when files in it are), then at
+least the working copies are identical as long as both persons don't
+start deleting files from the repository.  If they do so, when a
+directory becomes empty, the other side needs to know whether the
+directory is being tracked or not if it still wants to maintain the
+same state in the working tree.  But if we really want to have not
+just the working tree but also the repositories in SHA1-lockstep, we
+can't delay transmitting this information.
+
+> We've never had that: the only time we had empty trees was when we
+> compared a totally empty "root" tree against another tree, and then
+> it was obvious.  But what if the empty tree is a subdirectory of
+> another tree - how do you express that in a diff? Do you care? Right
+> now, since we always recurse into the tree (and then not find
+> anything), empty trees will simply not show up _at_all_ in any
+> diffs.
+
+One would still recurse.
+
+> And what about usability issues elsewhere? With my patch, doing something 
+> like a
+>
+> 	git add directory/
+>
+> still won't do anything, because the behaviour of "git add" has always 
+> been to recurse into directories.
+
+This will remain the same, but the directory itself will be added if
+and only if the corresponding preference variable is set, regardless
+of whether the directory is empty.
+
+> So to add a new empty directory, you'd have to do
+>
+> 	git update-index --add directory
+>
+> and that's not exactly user-friendly.
+
+Presumably one could, if one really wanted an explicit way, have
+git add --directory directory
+in analogy to the --directory option of the ls command.  But I think
+that in most cases one would not want to treat one directory different
+from the whole tree, so the implicit behavior regulated by a
+project-wide preference should be sufficient in general.
+
+> So do you add a "-n" flag to "git add" to tell it to not recurse? Or
+> do you always recurse, but then if you notice that the end result is
+> empty, you add it as a directory?
+
+I always recurse (unless there is a --directory option and I have some
+strange desire to actually use it).  I add it as a directory,
+regardless of whether it is empty or not, if my preference setting (or
+gitignore or whatever) is set to tracking directories.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
