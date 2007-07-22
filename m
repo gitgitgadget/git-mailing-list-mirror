@@ -1,130 +1,126 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: A simpler approach to tracking directories (was: The philosophy behind my directory proposal in a nutshell)
-Date: Sun, 22 Jul 2007 13:57:31 -0400
-Message-ID: <20070722175731.GA16658@thunk.org>
-References: <85fy3hqtwl.fsf@lola.goethe.zz> <85abtola79.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Sun, 22 Jul 2007 19:59:14 +0200
+Message-ID: <85tzrwiakt.fsf@lola.goethe.zz>
+References: <85lkdezi08.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+	<851wf2bcqy.fsf@lola.goethe.zz>
+	 =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=0402135450?= =?ISO-8859-1?Q?.27249?=
+	=?ISO-8859-1?Q?@woody.linux-fou?= =?ISO-8859-1?Q?ndation.org>?=
+	<alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
+	<85odi69vgt.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
+	<85tzrxslms.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
+	<85644dqoig.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707211737090.3607@woody.linux-foundation.org>
+	<85r6n1p7sb.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707211840000.3607@woody.linux-foundation.org>
+	<85fy3hp3f2.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707212040340.3607@woody.linux-foundation.org>
+	<85abtpoydg.fsf@lola.goethe.zz>
+	<Pine.LNX.4.64.0707212332530.6350@asgard.lang.hm>
+	<851wf0pzyt.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707221029160.3607@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Jul 22 19:57:40 2007
+Cc: david@lang.hm, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jul 22 19:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICfgZ-00006Q-IS
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 19:57:40 +0200
+	id 1ICfiD-0000YK-AS
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 19:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756517AbXGVR5g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 13:57:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755753AbXGVR5f
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 13:57:35 -0400
-Received: from thunk.org ([69.25.196.29]:43511 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753920AbXGVR5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 13:57:35 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1ICfoh-0000Ey-6n; Sun, 22 Jul 2007 14:06:03 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1ICfgR-0004vf-UO; Sun, 22 Jul 2007 13:57:31 -0400
-Content-Disposition: inline
-In-Reply-To: <85abtola79.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1756266AbXGVR7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 13:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755753AbXGVR7S
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 13:59:18 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:40486 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753362AbXGVR7R (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 13:59:17 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 28AA524B41B;
+	Sun, 22 Jul 2007 19:59:16 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 0C25613ED00;
+	Sun, 22 Jul 2007 19:59:16 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-022-107.pools.arcor-ip.net [84.61.22.107])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id B8600212F82;
+	Sun, 22 Jul 2007 19:59:15 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id CCB7C1D1E182; Sun, 22 Jul 2007 19:59:14 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0707221029160.3607@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 22 Jul 2007 10\:30\:06 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3729/Sun Jul 22 18:10:33 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53282>
 
-On Sun, Jul 22, 2007 at 05:39:06PM +0200, David Kastrup wrote:
-> Now my proposal basically boils down to using the u+x bit on
-> directory/tree entries for tracking "keep around when empty".
-> 
-> I think we are on the safe side to assume a directory with access
-> permissions zero (a-rwx) is something we never want to be able to
-> track with git.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Ok, so I think you are still missing the fundamental issue about why
-Linus is upset with your proposals.  One of the fundamental things
-which falls out of the "Git Tracks Contents" mantra is that
-information which you expect to be pushed forward future revisions (as
-opposed to metadata which is specific to a commit, such as the Author
-and Committer of a patch, the Commit log, etc.) *MUST* be information
-which is realized in the working tree.
+> On Sun, 22 Jul 2007, David Kastrup wrote:
+>>
+>> Sigh.  No, I don't want to track every directory.  I want to have
+>> every directory _trackable_.
+>
+> And they already are.
 
-That way, if you diff between working trees, one of which has either
-your "." entry or your "u+x" bit, and of which doesn't, they need to
-be *different* when run "git diff" on the two working trees.
+Their contents are.
 
-Another way of putting is this single bit of information meaning "keep
-this directory around when empty" is something that ***must*** be
-representable in three different places: in a git tree object, in the
-index, *AND* in the working tree.  The problem with "." is that since
-all directories contain the "." entry, you can't represent the bit of
-information you want to record in the working tree in that way.
+> Your point is pointless. You don't understand the git data
+> structures, and you are trying to do something that makes no sense.
 
-There is a same problem with using the u+x permission, for the same
-reason.  Unless you want to make directories you want to keep around
-with access permissions of zero in the working tree, you're *still*
-not able to record presence or absence of the "keep around when empty
-bit" in the working tree.
+That makes no sense to you and apparently quite a few other people,
+after a lot of explaining.  That does not mean that it wouldn't work,
+but it does mean that it is going nowhere: it is irrelevant whether I
+consider the concept easy to understand and explain when nobody else
+does: that makes it unmaintainable.
 
-That's why the ".gitignore" entry is acceptable, where as your
-proposals are not.  The absence or presence of the ".gitignore" entry
-in the working tree is a natural way of representing the "keep around
-when empty".  So would a ".do_not_erase" file in the directory ---
-sort of like the "Do Not Erase" that professors would write on
-whiteboards in order to request janitors to not erase them.  It seems
-that you are objecting to having something tangible written on the
-whiteboard --- or, in the directory, to indicate the "do not erase"
-note.   
+Fortunately, a few other participants, notably Junio and Jakub, have
+focused a bit more on technical details rather than my sanity in their
+somewhat more nuanced feedback, and thus I have (in a separate thread)
+made a new proposal that addresses a few technical shortcomings and
+that does no longer require splitting tree-ness/directory-ness into
+separate concepts and records, something which I considered elegant
+and others gibberish.
 
-But the problem is that Linus very much wants the "do not erase" bit
-to be visible in the working directory, since to do otherwise would
-violate fundamental design assumptions all over the git source files.
-Metadata such as the executable bit is actually stored in the working
-directory.  But we can't store the "do not erase bit" by leaving the
-executable permission off, since that will prevent the directory from
-being useful.
+It boils down to encoding the "don't-evaporate-when-empty" or "I told
+you to keep track of it" property in the directory access permissions:
+if those are zero, git does not track the corresponding directory and
+will attempt a remove-on-empty.  If they are non-zero (probably 755 as
+long as git stores only a sanitized version of the actual state
+there), this means that git has been told to track the directory and
+will not attempt to delete it until it is told to stop tracking it
+again.
 
-So your new proposal suffers from the same fundamental flaw as your
-previous one.  
+The proposal of allowing "." "!." as a gitignore pattern to specify
+the tracking/non-tracking indicator does still stand, but its
+semantics are now so much decoupled from that of
+"don't-evaporate-when-empty" that the code would not actually overlap
+with that of the tracking, and so discussing it is orthogonal to the
+actual proposal and can be postponed separately, and an implementation
+proferred separately once the rest is in place.
 
-Maybe you disagree with Linus's design constraint, but you've never
-addressed his specific concern on-point, which is that since Git
-Tracks Content, if you want something to be tracked across revisions,
-it must be visible in the working tree.  That is, metadata in the
-sense of data which is not visible in the working tree, is not allowed
-to exist inside Git and carried across revisions.  So fundamentally,
-Git does not currently today support "svn propset" in terms of setting
-metadata on a particular file which isn't visible in the working tree.
+So do both of us a favor and skip the rest of the mail queue with
+"Empty directories..." in its title.
 
-With SVN, today you can use svn propset to what you could think of as
-extended attributes.  So one proposal that you *could* try proposing
-is using extended attributes to represent arbitrary properties,
-including the one which you want, which is the "do not erase"
-property.  And one of the arguments might be that this way we could
-better preserve arbitrary properties currently set inside SVN, so that
-such repository could be faithfully translated into a Git repository.  
+Actually, the code (and later comments for it) you produced matches
+the areas of work and what I think needs to be done quite closer now
+than with my original proposal.
 
-The problem with such a proposal is that it now requires that the
-filesystem used to store the working directory MUST support extended
-attributes, and some filesystems, such as FAT filesystems, do not.
-And Git already has been accused of not being Windows friendly enough,
-and this would make things worse.
+So while the discussion with you has not really been much of a help
+except to show without reasonable doubt that my original approach
+would have been unmaintainable by other persons, the code _is_ very
+helpful.
 
-It's also a lot of hair for two very marginal features, namely being
-able to support arbitrary SVN property values, and the "do not erase
-when empty" directory bit.  Personally, I don't htink it's worth it,
-but at least using filesystem xattrs to store that one bit of
-information would at least be faithful to the fundamental git design
-principal.
+Thanks,
 
-Regards,
-
-						- Ted
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
