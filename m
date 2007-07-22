@@ -1,128 +1,54 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Sun, 22 Jul 2007 02:18:47 +0200
-Message-ID: <85644dqoig.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0707180135200.14781@racer.site>
-	<858x9ez1li.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707180912430.27353@woody.linux-foundation.org>
-	<vpq4pk1vf7q.fsf@bauges.imag.fr>
-	 =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.0707181004330.?= =?ISO-8859-1?Q?=04=0427?=
-	=?ISO-8859-1?Q?353@woody.linux-?= =?ISO-8859-1?Q?foundation.org>?=
-	<85644hxujp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<851wf2bcqy.fsf@lola.goethe.zz>
-	 =?ISO-8859-1?Q?=20<alpine.LFD.0.99?= =?ISO-8859-1?Q?9.07072=0402135450?= =?ISO-8859-1?Q?.27249?=
-	=?ISO-8859-1?Q?@woody.linux-fou?= =?ISO-8859-1?Q?ndation.org>?=
-	<alpine.LFD.0.999.0707202154220.27249@woody.linux-foundation.org>
-	<85odi69vgt.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707210832180.27249@woody.linux-foundation.org>
-	<85tzrxslms.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Initial Chinese translation
+Date: Sat, 21 Jul 2007 17:32:38 -0700
+Message-ID: <7vlkd9th09.fsf@assigned-by-dhcp.cox.net>
+References: <11850629362012-git-send-email-xudong.guan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jul 22 02:19:20 2007
+To: Xudong Guan <xudong.guan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 02:32:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICPAN-0000GK-Mz
-	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:19:20 +0200
+	id 1ICPNM-0002GP-4d
+	for gcvg-git@gmane.org; Sun, 22 Jul 2007 02:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328AbXGVATA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Jul 2007 20:19:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbXGVATA
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:19:00 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:42041 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753277AbXGVAS7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2007 20:18:59 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 1E7672CB4BC;
-	Sun, 22 Jul 2007 02:18:58 +0200 (CEST)
-Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 09177114459;
-	Sun, 22 Jul 2007 02:18:58 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-231.pools.arcor-ip.net [84.61.10.231])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id DE85935E5A9;
-	Sun, 22 Jul 2007 02:18:57 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 98B511D1E182; Sun, 22 Jul 2007 02:18:48 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.999.0707211650190.3607@woody.linux-foundation.org> (Linus Torvalds's message of "Sat\, 21 Jul 2007 16\:50\:42 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3722/Sun Jul 22 01:57:48 2007 on mail-in-06.arcor-online.net
-X-Virus-Status: Clean
+	id S1753207AbXGVAcl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Jul 2007 20:32:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbXGVAck
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Jul 2007 20:32:40 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:57306 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751948AbXGVAck (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2007 20:32:40 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070722003239.HTYY1358.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Jul 2007 20:32:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SQYe1X0061kojtg0000000; Sat, 21 Jul 2007 20:32:38 -0400
+In-Reply-To: <11850629362012-git-send-email-xudong.guan@gmail.com> (Xudong
+	Guan's message of "Sun, 22 Jul 2007 01:08:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53201>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Xudong Guan <xudong.guan@gmail.com> writes:
 
-> On Sat, 21 Jul 2007, David Kastrup wrote:
->> 
->> tree1:
->>      0?0000 .   -> dir1
->>      100644 a.c -> blob1
->>      040000 a   -> tree2
->>      100644 abc -> blob3
->
-> No. Totally broken. That "." entry not only doesn't buy you
-> anything, it is *impossible*. You cannot make an object point to
-> itself. Not possible.
+> Simplified Chinese, in UTF-8 encoding.
 
-It does not point to itself.  The name "." points to an entry of type
-"dir", no content is involved.  trees in the repository have content,
-and _only_ content.  directories in the repository imply existence,
-and _only_ existence.
+     From: Xudong Guan <xudong.guan@gmail.com>
+     Subject: [PATCH] Initial Chinese translation
+     To: git@vger.kernel.org
+     Cc: Xudong Guan <xudong.guan@gmail.com>
+     Date: Sun, 22 Jul 2007 01:08:56 +0100
+     Message-ID: <11850629362012-git-send-email-xudong.guan@gmail.com>
+     Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 
-> Tell me how to calculate the SHA1 for the result.
-
-Since "." has no content (as long as we don't decide to track any file
-permissions at one point of time), _all_ entries "." will have the
-same SHA1.
-
-> Also, tell me what the *point* is. There is none.
-
-The point is to have a reflection of the physical existence of a
-directory.  Not just as a manner of accommodating slashes in a flat
-filespace, allowing certain slash-related operations to be carried out
-efficiently.
-
->> Linus, a directory is simply non-existent inside of git.
->
-> You need to learn git first.
->
-> A directory doesn't exist IN THE INDEX (until my patches). But you
-> need to learn about the object database and the SHA1's. That's the
-> real meat of git, and it sure as hell knows about directories.
-
-I have written up a complete explanation about the underlying concept
-in a separate thread, maybe it would make sense reading that before
-investing too much time meddling over details that don't fit the large
-picture.  The point is that the object database and the SHA1 values
-track _trees_, not _directories_.  And a _tree_ is just a hashing
-mechanism in the repository for files.  Its existence is solely
-dependent on the existence of its contents.  The only synchronization
-with directories is that when a tree becomes empty, git attempts to do
-an rmdir on the corresponding directory.  And of course, if git needs
-to check out a file, it creates the necessary parent directories.
-
-Now since the physical _contents_ of a directory are already tracked
-in _trees_ by git, the only missing part is the _existence_ of the
-directory itself: a directory must exist as long as there is a tree
-(and thus content) connected with it, but the reverse does not hold:
-without a tree, the directory can still exist.  Which we can represent
-by a repository entry named "." without content (the content is
-already catered for by the _tree_).  This must _not_ be represented by
-a _tree_ node since there is no content, and a tree without content by
-_definition_ does not exist.
-
-I must be really bad at explaining things, or I am losing a fight
-against preconceptions fixed beyond my imagination.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Your MUA disagrees with you, at least in the copy I see on gmane.
