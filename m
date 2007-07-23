@@ -1,110 +1,96 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: having problems with building the manpages
-Date: Mon, 23 Jul 2007 20:23:19 +0200
-Message-ID: <20070723182319.GQ31655@genesis.frugalware.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: having problems with building the manpages
+Date: Mon, 23 Jul 2007 19:40:04 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707231937210.32580@beast.quantumfyre.co.uk>
+References: <20070723182319.GQ31655@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="i0LFOk513GRb+T2w"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 23 20:23:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: VMiklos <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Jul 23 20:41:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID2ZJ-00054J-3J
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:23:41 +0200
+	id 1ID2qA-0002JA-SB
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760930AbXGWSXf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 14:23:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbXGWSXf
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:23:35 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:48527 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759153AbXGWSXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 14:23:34 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1ID2Z3-0002wh-4J
-	from <vmiklos@frugalware.org>
-	for <git@vger.kernel.org>; Mon, 23 Jul 2007 20:23:33 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 0047B186824B; Mon, 23 Jul 2007 20:23:19 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.5000]
+	id S1764145AbXGWSkM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 14:40:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762430AbXGWSkK
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:40:10 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:58061 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762732AbXGWSkI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 14:40:08 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id DF306C6115
+	for <git@vger.kernel.org>; Mon, 23 Jul 2007 19:40:06 +0100 (BST)
+Received: (qmail 32331 invoked by uid 103); 23 Jul 2007 19:40:05 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3735. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.237166 secs); 23 Jul 2007 18:40:05 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 23 Jul 2007 19:40:05 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <20070723182319.GQ31655@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53458>
 
+On Mon, 23 Jul 2007, VMiklos wrote:
 
---i0LFOk513GRb+T2w
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> hi,
+>
+> the man branch of git.git contains the following lines in git-diff.1:
+>
+> EXAMPLES
+>       Various ways to check your working tree
+>
+>              $ git diff            (1)
+>              $ git diff --cached   (2)
+>              $ git diff HEAD       (3)
+>
+>              1. changes in the working tree not yet staged for the next commit.
+>              2. changes between the index and your last commit; what you would be committing if you run "git
+>              commit" without "-a" option.
+>              3. changes in the working tree since your last commit; what you would be committing if you run
+>              "git commit -a"
+>
+> when building the manpages myself i get the followings:
+>
+> EXAMPLES
+>       Various ways to check your working tree
+>
+>               $ git diff            \fB(1)\fR
+>               $ git diff --cached   \fB(2)\fR
+>               $ git diff HEAD       \fB(3)\fR
+>           .sp \fB1. \fRchanges in the working tree not yet staged for the next commit.
+>
+>           .br \fB2. \fRchanges between the index and your last commit; what you would be committing if you run
+>           "git commit" without "-a" option.
+>
+>           .br \fB3. \fRchanges in the working tree since your last commit; what you would be committing if you
+>           run "git commit -a"
+>
+>           .br
+>
+> what can be the problem?
+>
+> i have asciidoc-8.2.2 and docbook-xml 4.2 installed. i'm building with
+> ASCIIDOC8=YesPlease.
+>
+> if i missed any required info, please mention :)
 
-hi,
+Are you using docbook xsl 1.72?  There are known problems building the 
+manpages with that version.  1.71 works, and 1.73 should work when it get 
+released.
 
-the man branch of git.git contains the following lines in git-diff.1:
+-- 
+Julian
 
-EXAMPLES
-       Various ways to check your working tree
-
-              $ git diff            (1)
-              $ git diff --cached   (2)
-              $ git diff HEAD       (3)
-
-              1. changes in the working tree not yet staged for the next commit.
-              2. changes between the index and your last commit; what you would be committing if you run "git
-              commit" without "-a" option.
-              3. changes in the working tree since your last commit; what you would be committing if you run
-              "git commit -a"
-
-when building the manpages myself i get the followings:
-
-EXAMPLES
-       Various ways to check your working tree
-
-               $ git diff            \fB(1)\fR
-               $ git diff --cached   \fB(2)\fR
-               $ git diff HEAD       \fB(3)\fR
-           .sp \fB1. \fRchanges in the working tree not yet staged for the next commit.
-
-           .br \fB2. \fRchanges between the index and your last commit; what you would be committing if you run
-           "git commit" without "-a" option.
-
-           .br \fB3. \fRchanges in the working tree since your last commit; what you would be committing if you
-           run "git commit -a"
-
-           .br
-
-what can be the problem?
-
-i have asciidoc-8.2.2 and docbook-xml 4.2 installed. i'm building with
-ASCIIDOC8=YesPlease.
-
-if i missed any required info, please mention :)
-
-thanks,
-- VMiklos
-
---i0LFOk513GRb+T2w
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGpPIXe81tAgORUJYRApHaAJ9Njjf1xQr5a94bAXzBJrzvIkm53QCfZ7d1
-EMVrct5r8VeilA8ybimGGQI=
-=eaO5
------END PGP SIGNATURE-----
-
---i0LFOk513GRb+T2w--
+  ---
+Kirkland, Illinois, law forbids bees to fly over the village or through
+any of its streets.
