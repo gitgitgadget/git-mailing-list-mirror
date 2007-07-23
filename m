@@ -1,124 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make verify-tag a builtin.
-Date: Mon, 23 Jul 2007 01:52:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707230141080.14781@racer.site>
-References: <46A3F43C.3030101@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: fast-import and core.autocrlf option
+Date: Sun, 22 Jul 2007 23:45:14 -0400
+Message-ID: <20070723034514.GZ32566@spearce.org>
+References: <a1bbc6950707221559m63fb1295jc26b1327e71687e3@mail.gmail.com> <Pine.LNX.4.64.0707230039560.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 02:53:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 05:45:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICmAU-0004Br-Tv
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 02:52:59 +0200
+	id 1ICorV-0006EM-U3
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 05:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764740AbXGWAwy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 20:52:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763090AbXGWAwy
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 20:52:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47689 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761650AbXGWAwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 20:52:53 -0400
-Received: (qmail invoked by alias); 23 Jul 2007 00:52:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 23 Jul 2007 02:52:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/GKzlyXvPGg40hOZkDVOKCZU+8TYPhLKx/P38+K8
-	bQPnpaa2pUm7v/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46A3F43C.3030101@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1750853AbXGWDpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 23:45:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbXGWDpU
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 23:45:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40927 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761AbXGWDpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 23:45:19 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1ICor1-0006lo-N6; Sun, 22 Jul 2007 23:45:03 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C9A8620FBAE; Sun, 22 Jul 2007 23:45:14 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707230039560.14781@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53380>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 22 Jul 2007, Dmitry Kakurin wrote:
+> 
+> > It looks to me that CR/LF conversion does not happen during
+> > fast-import even if I have core.autocrlf set to 'input'.
+> > Is this a bug or is there a reason for that?
+> 
+> fast-import works on blobs only.  So it is expected.  Besides, it would 
+> slow down fast-import tremendously if you wanted to introduce that 
+> behaviour.  Therefore I suggest just rolling your own dos2unix instead of 
+> trying to play cute games with fast-import.
 
-On Mon, 23 Jul 2007, Carlos Rica wrote:
+Right, in fast-import we only process blobs as raw blobs.
+Its rare that we have a file path associated with the blob data
+at the time that we are actually processing the blob itself.  E.g.
+applications can send us blobs up front, before they even start to
+send us commits and path information.
 
-> +static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
-> +{
-> +	struct child_process gpg;
-> +	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
-> +	char *path, *eol;
-> +	size_t len;
-> +	int fd, ret;
-> +
-> +	path = xstrdup(git_path("VTAG_TMP"));
-> +	fd = open(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-> +	if (fd < 0)
-> +		return error("could not create temporary file '%s': %s",
-> +						path, strerror(errno));
-> +	if (write_in_full(fd, buf, size) < 0)
-> +		return error("failed writing temporary file '%s': %s",
-> +						path, strerror(errno));
-> +	close(fd);
+So if we were to offer the CRLF->LF conversion feature in fast-import
+it would need to be an option supplied at the time the 'data'
+command issued, rather than based upon the gitattributes system
+that is normally used for working tree operations.
 
-I just tested something like "gpg --verify - - < <filename>" and it 
-worked...
+It wouldn't be to difficult to add such an option to the data
+command, but I'm not going to be able to get around to it anytime
+soon.  This might be an easy change for someone else to attempt if
+they were interested in some Git hacking.  Should all be isolated
+to the cmd_data() routine in fast-import.c, and just needs to call
+crlf_to_git() in convert.c, which is uh, static.  :-)
 
-> +	/* find the length without signature */
-> +	len = 0;
-> +	while (len < size && prefixcmp(buf + len, PGP_SIGNATURE "\n")) {
-> +		eol = memchr(buf + len, '\n', size - len);
-> +		len += eol ? eol - (buf + len) + 1 : size - len;
-> +	}
-
-How about this instead:
-
-	const char *sig = strstr(buf, "\n" PGP_SIGNATURE "\n"));
-	if (!sig)
-		sig = buf + len;
-
-Hmm?
-
-But of course only if gpg does not grok "git cat-file tag <signed-tag> |
-gpg --verify - -".
-
-> +	remove(path);
-
-I think we use unlink() consistently, since we are sure it is no 
-directory.
-
-> +	if (type <= OBJ_NONE)
-> +		return error("%s: bad object type.", name);
-> +	if (type != OBJ_TAG)
-> +		return error("%s: cannot verify a non-tag object of type %s.",
-> +				name, typename(type));
-
-These two can be unified into one, right?
-
-> +int cmd_verify_tag(int argc, const char **argv, const char *prefix)
-> +{
-> +	int i, verbose = 0, had_error = 0;
-> +
-> +	git_config(git_default_config);
-> +
-> +	if (argc == 1)
-> +		usage(builtin_verify_tag_usage);
-> +
-> +	i = 1;
-
-You can initialise i above.
-
-> +	if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")) {
-> +		verbose = 1;
-> +		i++;
-> +	}
-> +
-> +	signal(SIGPIPE, SIG_IGN);
-> +	while (i < argc)
-> +		if (verify_tag(argv[i++], verbose))
-
-Heh.  I thought that you only made this a separate function to help 
-building it into builtin-tag...
-
-That was quick!
-
-Ciao,
-Dscho
+-- 
+Shawn.
