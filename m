@@ -1,55 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git-apply versus git-am
-Date: Mon, 23 Jul 2007 10:31:16 +0200
-Message-ID: <81b0412b0707230131y666cff17vdcccb170b6034ca9@mail.gmail.com>
-References: <a2e879e50707230054m60d45293ua1d57887367914c1@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Mon, 23 Jul 2007 09:31:36 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707230930140.20832@reaper.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
+ <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk>
+ <Pine.LNX.4.64.0707222223460.14781@racer.site>
+ <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk>
+ <Pine.LNX.4.64.0707222255010.14781@racer.site>
+ <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk>
+ <Pine.LNX.4.64.0707230000020.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Sean Kelley" <svk.sweng@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 10:31:40 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 10:32:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICtKL-0002Vq-VL
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 10:31:38 +0200
+	id 1ICtL1-0002iZ-98
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 10:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761327AbXGWIb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 04:31:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754429AbXGWIb0
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 04:31:26 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:50732 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761220AbXGWIbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 04:31:18 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1125495ugf
-        for <git@vger.kernel.org>; Mon, 23 Jul 2007 01:31:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uYUfjHyehU7FxP96dxPafhe50kvIeQXrl3DkbpyDIV4J5aXr/O7emt8LBRFINcmDLZ8YoQzbU7VXnjifkvFQO8cQ5Hm/o+O2hqnD8D61VD+B17bN6Q9iKMa29KWLGbTDrFpzw1wDwtW03p6jT2xdvPZ0IHCzDW4yN2zZfmQp18E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SJYJlf/Fl8n2iG0NiS0Zj49+clEm3Ii70E1tzxre9PTyxenS1CV32b2+6g+T4nb10Q48SbrtjbZk3FWWPc59iUZflO9Nfnp7BwAvCcKVuU/MnZpVfnSuL6+1R2hxRpEzMy0JTibRWISIzGlf7MkEijr6ikrhOcViTV6RvmVq8zo=
-Received: by 10.78.37.7 with SMTP id k7mr698111huk.1185179476666;
-        Mon, 23 Jul 2007 01:31:16 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Mon, 23 Jul 2007 01:31:16 -0700 (PDT)
-In-Reply-To: <a2e879e50707230054m60d45293ua1d57887367914c1@mail.gmail.com>
-Content-Disposition: inline
+	id S1754429AbXGWIbn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 04:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755490AbXGWIbm
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 04:31:42 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:60618 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755655AbXGWIbl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 04:31:41 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 74D89C6094
+	for <git@vger.kernel.org>; Mon, 23 Jul 2007 09:31:39 +0100 (BST)
+Received: (qmail 13386 invoked by uid 103); 23 Jul 2007 09:31:36 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3735. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.029951 secs); 23 Jul 2007 08:31:36 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 23 Jul 2007 09:31:36 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <Pine.LNX.4.64.0707230000020.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53411>
 
-On 7/23/07, Sean Kelley <svk.sweng@gmail.com> wrote:
-> Why doesn't git-apply include an option for a signoff line like git-am?
->
-> git-applymbox /tmp/mbox ~/.signoff
->
-> Or am I missing something?  (most likely the case!)
->
+On Mon, 23 Jul 2007, Johannes Schindelin wrote:
 
-git apply is just a safer patch(1). They serve different purpose.
+> Hi,
+>
+> On Sun, 22 Jul 2007, Julian Phillips wrote:
+>
+>> On Sun, 22 Jul 2007, Johannes Schindelin wrote:
+>>
+>>> Well, I am really not interested in shooting myself in the foot, and
+>>> having that option in checkout would make that much more likely.  So I
+>>> really, really want to have this in git-branch.
+>>
+>> Fair enough.  Your patch - so you get to choose.  I don't have any
+>> strong objections (and no power to express any if I did :P) - just
+>> airing my POV ;)
+>
+> ;-)
+>
+> In related news, you got me convinced that my "solution" is not
+> sufficient.  So I guess this patch has to wait until after 1.5.3 _and_
+> after we convinced Junio to put his BASE index extension in again.
+>
+> FWIW once git-checkout is builtin, I'll add "--new-workdir" for it.  Deal?
+
+Sounds good to me.  Even gives me some motivation to see checkout a 
+builtin sooner rather than later ;)
+
+-- 
+Julian
+
+  ---
+Logic is the chastity belt of the mind!
