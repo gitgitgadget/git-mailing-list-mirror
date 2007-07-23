@@ -1,90 +1,110 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Another question about importing SVN with fast-import
-Date: Mon, 23 Jul 2007 20:06:36 +0200
-Message-ID: <20070723180636.GA20174@efreet.light.src>
-References: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk> <7154c5c60707190009r6d460debs71158d4db9a028d4@mail.gmail.com> <20070720051142.GO32566@spearce.org>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: having problems with building the manpages
+Date: Mon, 23 Jul 2007 20:23:19 +0200
+Message-ID: <20070723182319.GQ31655@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
-Cc: David Frech <david@nimblemachines.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 23 20:07:18 2007
+	protocol="application/pgp-signature"; boundary="i0LFOk513GRb+T2w"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 23 20:23:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID2JR-000731-M0
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:07:18 +0200
+	id 1ID2ZJ-00054J-3J
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:23:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934095AbXGWSGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 14:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933938AbXGWSGq
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:06:46 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:39774 "EHLO ns1.bluetone.cz"
+	id S1760930AbXGWSXf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 14:23:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbXGWSXf
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:23:35 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:48527 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765660AbXGWSGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 14:06:44 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 809A7572A9;
-	Mon, 23 Jul 2007 20:06:43 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id yEIZ01jXTtzf; Mon, 23 Jul 2007 20:06:42 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 48C3B5727A;
-	Mon, 23 Jul 2007 20:06:41 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ID2In-0005YC-3p; Mon, 23 Jul 2007 20:06:37 +0200
+	id S1759153AbXGWSXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 14:23:34 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1ID2Z3-0002wh-4J
+	from <vmiklos@frugalware.org>
+	for <git@vger.kernel.org>; Mon, 23 Jul 2007 20:23:33 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 0047B186824B; Mon, 23 Jul 2007 20:23:19 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070720051142.GO32566@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 1.1
+X-ELTE-SpamLevel: s
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
+	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
+	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
+	[score: 0.5000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53457>
 
 
---fUYQa+Pmc3FrFX/N
+--i0LFOk513GRb+T2w
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 20, 2007 at 01:11:42 -0400, Shawn O. Pearce wrote:
-> It is possible.  I'm just not sure what the syntax for it should be.
-> Suggestions?  I really want to stay backwards compatible with the
-> current "C" command, so:
->=20
-> 	'C' SP commit SP path SP path
->=20
-> is out because its ambiguous with the current meaning where the
-> second (destination) path can contain SP without being quoted by
-> the frontend.
+hi,
 
-I'd suggest one of two variants:
- 1) 'M' SP <mode> SP <dataref> SP <path> LF
-    where <dataref> would be extended to understand the
-    {tag-id|commit-id|tree-id}:path notation git-ref-parse understands plus
-    mark:path where mark points to commit.
- 2) 'C' SP <dataref> SP <path> LF
-    where again <dataref> can be {tag-id|commit-id|tree-id|mark}:path -- or
-    just path which implies current head.
+the man branch of git.git contains the following lines in git-diff.1:
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+EXAMPLES
+       Various ways to check your working tree
 
---fUYQa+Pmc3FrFX/N
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+              $ git diff            (1)
+              $ git diff --cached   (2)
+              $ git diff HEAD       (3)
+
+              1. changes in the working tree not yet staged for the next commit.
+              2. changes between the index and your last commit; what you would be committing if you run "git
+              commit" without "-a" option.
+              3. changes in the working tree since your last commit; what you would be committing if you run
+              "git commit -a"
+
+when building the manpages myself i get the followings:
+
+EXAMPLES
+       Various ways to check your working tree
+
+               $ git diff            \fB(1)\fR
+               $ git diff --cached   \fB(2)\fR
+               $ git diff HEAD       \fB(3)\fR
+           .sp \fB1. \fRchanges in the working tree not yet staged for the next commit.
+
+           .br \fB2. \fRchanges between the index and your last commit; what you would be committing if you run
+           "git commit" without "-a" option.
+
+           .br \fB3. \fRchanges in the working tree since your last commit; what you would be committing if you
+           run "git commit -a"
+
+           .br
+
+what can be the problem?
+
+i have asciidoc-8.2.2 and docbook-xml 4.2 installed. i'm building with
+ASCIIDOC8=YesPlease.
+
+if i missed any required info, please mention :)
+
+thanks,
+- VMiklos
+
+--i0LFOk513GRb+T2w
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Version: GnuPG v1.4.7 (GNU/Linux)
 
-iD8DBQFGpO4sRel1vVwhjGURAn3lAKDL2z9KbTig8EihvGshyTcIzRroLACfQiEB
-KkebRaQF/se9gFu785xYZes=
-=E39W
+iD8DBQFGpPIXe81tAgORUJYRApHaAJ9Njjf1xQr5a94bAXzBJrzvIkm53QCfZ7d1
+EMVrct5r8VeilA8ybimGGQI=
+=eaO5
 -----END PGP SIGNATURE-----
 
---fUYQa+Pmc3FrFX/N--
+--i0LFOk513GRb+T2w--
