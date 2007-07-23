@@ -1,78 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: when git-rebase -i fails to cherry-pick
-Date: Tue, 24 Jul 2007 00:08:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707240005240.14781@racer.site>
-References: <20070723225402.GB22513@informatik.uni-freiburg.de>
+From: Arjan van de Ven <arjan@infradead.org>
+Subject: Re: Git tree for old kernels from before the current tree
+Date: Mon, 23 Jul 2007 16:11:31 -0700
+Organization: Intel International BV
+Message-ID: <1185232291.2723.4.camel@laptop.fenrus.org>
+References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
+	 <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
+	 <20070722211314.GA13850@linux-sh.org>
+	 <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
+	 <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
+	 <46A3D5EA.2050600@zytor.com>
+	 <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
+	 <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:09:36 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jan Engelhardt <jengelh@computergmbh.de>,
+	Paul Mundt <lethal@linux-sh.org>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:13:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID71x-0007Mc-E3
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:09:33 +0200
+	id 1ID75p-00086e-Fo
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763830AbXGWXJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 19:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933750AbXGWXJF
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:09:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45056 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759080AbXGWXJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 19:09:03 -0400
-Received: (qmail invoked by alias); 23 Jul 2007 23:09:01 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp049) with SMTP; 24 Jul 2007 01:09:01 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hCP94EDYhVBlp3sDTu9mlyUdaG/aG8VybnzYt6q
-	D+vl0iBhftxA9O
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070723225402.GB22513@informatik.uni-freiburg.de>
-X-Y-GMX-Trusted: 0
+	id S933126AbXGWXNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 19:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbXGWXNX
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:13:23 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:44687 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765828AbXGWXNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 19:13:21 -0400
+Received: from [192.102.209.1] (helo=[10.251.2.28])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1ID75G-0007BP-TC; Tue, 24 Jul 2007 00:12:59 +0100
+In-Reply-To: <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
+X-Mailer: Evolution 2.10.3 (2.10.3-1.fc7) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <arjan@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53501>
 
-Hi,
 
-On Tue, 24 Jul 2007, Uwe Kleine-K?nig wrote:
-
-> even though git-rebase -i is still young, I'm already a big fan of it.
-
-Nice!
-
-> I just want to suggest two minor things:
+> What is missing is:
 > 
-> - If a cherry-pick fails, it tells me to resolve my conflicts, 'git add
->   <paths>' and to do 'git commit -c $sha1id'.
+>  - v0.02 sources
 > 
->   But it doesn't tell me, how I continue to rebase after that.
+>  - v0.10 announcement
 > 
->   'git rebase -i --continue' works.
+>  - v0.96 sources
+> 
+>  - v0.99.12 announcement
+> 
+>  - sources for v0.99.13{abcdefghij} (got k, don't know where the serie 
+>    ends) as well as announcements for all of them
 
-Actually, even "git rebase --continue" works.  And you do not really have 
-to commit, either, just updating your index is fine.  In fact, if you say 
-"git reset --hard", it will skip the commit.
 
-> - If a cherry-pick of a commit to be squashed fails, the instruction to
->   do 'git commit -c $sha1id' is wrong, because then I don't get both
->   message to squash.
-
-Yes, it is a leftover from the bad old days, when this script was called 
-edit-patch-series, and I was a rebase hater.
-
-In the meantime, somebody on IRC explained to me how rebase works, and 
-that rebase lovers were quite annoyed not to be able to just resolve the 
-conflicts and "git rebase --continue".
-
-I'd appreciate if you prepared a patch with better explanations, and also 
-reviewed the man page, if it is in good shape (and does not lie about the 
-current behaviour).
-
-Thanks,
-Dscho
+didn't Tigran at some point get a full history together?
