@@ -1,132 +1,80 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Mon, 23 Jul 2007 08:05:02 +0200
-Message-ID: <85ps2jeju9.fsf@lola.goethe.zz>
-References: <85lkdezi08.fsf@lola.goethe.zz>
-	<200707221406.25541.jnareb@gmail.com> <857iosmto0.fsf@lola.goethe.zz>
-	<200707222226.30788.jnareb@gmail.com> <85644cf3mf.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 08:05:50 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: What is a reasonable mixed workflow for git/git-cvsserver?
+Date: Mon, 23 Jul 2007 08:28:17 +0200
+Message-ID: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 23 08:27:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICr2e-0003vm-2p
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 08:05:35 +0200
+	id 1ICrOD-0000Tn-OI
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 08:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbXGWGFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 02:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbXGWGFH
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 02:05:07 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:56020 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754387AbXGWGFF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 02:05:05 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 150912C866B;
-	Mon, 23 Jul 2007 08:05:04 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id F1B455BD63;
-	Mon, 23 Jul 2007 08:05:03 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-013-065.pools.arcor-ip.net [84.61.13.65])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id C32353425E7;
-	Mon, 23 Jul 2007 08:05:03 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 202DD1D1E182; Mon, 23 Jul 2007 08:05:02 +0200 (CEST)
-In-Reply-To: <85644cf3mf.fsf@lola.goethe.zz> (David Kastrup's message of "Mon\, 23 Jul 2007 00\:57\:44 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3740/Mon Jul 23 05:50:50 2007 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1757389AbXGWG1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 02:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757587AbXGWG1Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 02:27:24 -0400
+Received: from mailer.zib.de ([130.73.108.11]:47418 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757052AbXGWG1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 02:27:23 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6N6RLbK026702
+	for <git@vger.kernel.org>; Mon, 23 Jul 2007 08:27:21 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db11e8b.pool.einsundeins.de [77.177.30.139])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6N6RKSh011832
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 23 Jul 2007 08:27:21 +0200 (MEST)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53395>
 
-David Kastrup <dak@gnu.org> writes:
+I plan to migrate a project from cvs to git and provide
+legacy support for cvs users through git-cvsserver. It's
+not realistic to teach all people at the same time to use
+git. We need some early adopters first. It is also likely
+that we start migrating only parts of the repository and
+keep some other parts in cvs. I plan to start with parts
+for which the benefits of git's support for merging are
+most obvious.
 
-> Jakub Narebski <jnareb@gmail.com> writes:
->
->> I think it would be best implemented by repository config, e.g.
+What's a reasonable workflow when some people use git and
+other people use git-cvsserver simultaneously?
 
-I got sidetracked here: the gitignore stuff has in the dirmod scheme
-actually no code or concept overlap with the actual scheme, so it can
-be considered a distraction for now and its implementation and
-discussion tabled.  It has one disadvantage: in order to get
-_recursive_ behavior in one tree, one needs to use the "." pattern in
-the .gitignore file of the respective directory, and having a
-.gitignore file in that directory sort of defeats the idea of not
-having .gitignore directories around...  Of course, a single
-.gitignore file is better than ones one has to distribute through the
-tree.
+I can imaging that we try the typical git model with
+developers who are using git. Developers would clone to
+private repositories and ask upstream maintainers to merge.
 
->> core.dirManagement or something like that, which could be set to
->>  1. "autoremove" or something like that, which gives old behavior
->>     of untracking directory if it doesn't have any tracked files
->>     in it, and removing directory if it doesn't have any files
->>     in it.
->
-> That's actually not _tracking_ a directory at all, but rather
-> maintaining an independent directory in the parallel repository
-> universe.  No information specific to directories passes the index.
+I'm wondering how to integrate people that will not yet use
+git but checkout and commit through git-cvsserver?
 
-Note: that was merely a comment on semantics, not on the matter.
+We could easily arrange a stable branch for cvs access that
+should be accessed read-only. Work merged using git would
+be published to this branch. I can also think of specific
+topic branches that are created upon request by a git
+expert and accessed from cvs through git-cvsserver. Merging
+could be done by a git expert using git. An inconvenience
+is that people must do a fresh checkout to switch to a
+topic branch but can not use 'cvs up -r'. At least this is
+my understanding of git-cvsserver's documentation.
 
->>  2. "noremove" or something like that, which changes the behaviour
->>     to _never_ untrack directory automatically. This can be done
->>     without any changes to 'tree' object nor index. It could be useful
->>     for git-svn repositories.
->
-> I don't see how this could occur.  Automatic _untracking_ would happen
-> when one untracks (aka removes) a parent directory.  But one would not
-> do this while keeping the child.
+I have no clear idea how to deal with the shared rest. We
+typically share work in an unsorted way on a cvs branch,
+which everyone commits to. I think we'll need a similar
+possibility, at least for a transition period. We could
+create such a shared branch for access from git-cvsserver.
 
-Correction: if there was a --directory option and one used it for
-git-rm (or no -r was given, so just one directory level was effected),
-one _could_ untrack stuff on the git side accidentally.  And for
-something like git-svn, this might be a bad idea.  So there is
-conceivably a market for an option that never untracks a non-empty
-tree.
+What is a reasonable way to handle the unsorted commits
+from a shared branch in a more git-ish way? I googled a bit
+but didn't find a good explanation on the web.
 
->>  3. "marked" or something like that, for which you have to explicitely
->>     mark directories which are not to be removed when empty.
->
-> Equivalent to 1 in my scheme.
+Any ideas, any real-world experiences?
 
-At least if scheme 1 does not forbid some _explicit_ way of saying
-"track this and I really mean it".
-
->>  4. "recursive" or something like that, which would automatically mark
->>     as "sticky" all subdirectories added in a "sticky" repository.
->
-> If they are covered by the add and not just implied by childs.  That is,
-> git-add a/b
-> will not make "a" sticky while
-> git-add a
-> will make a/b sticky.
-
-Addition: I was thinking so much of my implementation and its
-semantics that I did not consider one possibility that you might mean
-here:
-
-When adding a/b, always also add a (and the whole hierarchy above it)
-automatically as sticky.  Namely disallow unsticky directories in the
-repository at all.  That would mean that
-
-  git-add a/b;git-commit -m x;git-rm a/b;git-commit -m x
-
-might not be a noop if a was not in the repository previously: it
-would cause a to stay around sticky until removed.  With all other
-schemes, however, it would cause a to be removed "on behalf of the
-user" even if the user intended it to stay around.
-
-Indeed, this scheme might by far be the easiest to understand.  Having
-no autoremoval at all in levels higher than the deleted level is
-something that people might easily understand: delayed removal just
-does not happen anymore, and git never deletes a directory unless told
-to.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+	Steffen
