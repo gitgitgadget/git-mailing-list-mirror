@@ -1,82 +1,90 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git tree for old kernels from before the current tree
-Date: Mon, 23 Jul 2007 11:02:39 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
- <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
- <20070722211314.GA13850@linux-sh.org> <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
- <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
- <46A3D5EA.2050600@zytor.com> <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Another question about importing SVN with fast-import
+Date: Mon, 23 Jul 2007 20:06:36 +0200
+Message-ID: <20070723180636.GA20174@efreet.light.src>
+References: <Pine.LNX.4.64.0707162204480.14971@reaper.quantumfyre.co.uk> <7154c5c60707190009r6d460debs71158d4db9a028d4@mail.gmail.com> <20070720051142.GO32566@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Paul Mundt <lethal@linux-sh.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Jul 23 20:04:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
+Cc: David Frech <david@nimblemachines.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 23 20:07:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID2GS-0005Qn-91
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:04:12 +0200
+	id 1ID2JR-000731-M0
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765323AbXGWSEB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 14:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764382AbXGWSEA
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:04:00 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:36435 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764336AbXGWSD7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 14:03:59 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6NI2kxl014892
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Jul 2007 11:02:49 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6NI2dOW004388;
-	Mon, 23 Jul 2007 11:02:40 -0700
-In-Reply-To: <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
-X-Spam-Status: No, hits=-2.722 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.14__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S934095AbXGWSGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 14:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933938AbXGWSGq
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:06:46 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:39774 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1765660AbXGWSGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 14:06:44 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 809A7572A9;
+	Mon, 23 Jul 2007 20:06:43 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id yEIZ01jXTtzf; Mon, 23 Jul 2007 20:06:42 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 48C3B5727A;
+	Mon, 23 Jul 2007 20:06:41 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1ID2In-0005YC-3p; Mon, 23 Jul 2007 20:06:37 +0200
+Content-Disposition: inline
+In-Reply-To: <20070720051142.GO32566@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53456>
 
 
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 23 Jul 2007, Nicolas Pitre wrote:
-> 
-> I started this once.
-> 
-> I have (sort of) a GIT tree with all Linux revisions that I could find 
-> from v0.01 up to v1.0.9.  But the most interesting information and also 
-> what is the most time consuming is the retrieval of announcement 
-> messages for those releases in old mailing list or newsgroup archives to 
-> serve as commit log data.  It seems to be even arder to find for post 
-> v1.0 releases.
+On Fri, Jul 20, 2007 at 01:11:42 -0400, Shawn O. Pearce wrote:
+> It is possible.  I'm just not sure what the syntax for it should be.
+> Suggestions?  I really want to stay backwards compatible with the
+> current "C" command, so:
+>=20
+> 	'C' SP commit SP path SP path
+>=20
+> is out because its ambiguous with the current meaning where the
+> second (destination) path can contain SP without being quoted by
+> the frontend.
 
-Yes, I agree. Google finds some of them, but (a) I was never very good 
-about announcements anyway and (b) there's nothing really good to search 
-for, so it's very hit-and-miss.
+I'd suggest one of two variants:
+ 1) 'M' SP <mode> SP <dataref> SP <path> LF
+    where <dataref> would be extended to understand the
+    {tag-id|commit-id|tree-id}:path notation git-ref-parse understands plus
+    mark:path where mark points to commit.
+ 2) 'C' SP <dataref> SP <path> LF
+    where again <dataref> can be {tag-id|commit-id|tree-id|mark}:path -- or
+    just path which implies current head.
 
-Some of the really early release notes are easy to find, just because I 
-made them available with the sources, but mostly I'd just have posten to 
-the newsgroup/mailing lists.
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-If somebody creates a reasonably good tree (ie all the trees, easily 
-diffable, tied together with at least *some* commit history and the most 
-easily found release notes), I'm willing to try to spend some time just 
-writing down recollections from looking at the diffs. Not very reliable, 
-but better than nothing. This is the kind of thing that the "notes" thing 
-could be useful for, since there are others around who might also be 
-interested in adding their commentary.
+--fUYQa+Pmc3FrFX/N
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-		Linus
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGpO4sRel1vVwhjGURAn3lAKDL2z9KbTig8EihvGshyTcIzRroLACfQiEB
+KkebRaQF/se9gFu785xYZes=
+=E39W
+-----END PGP SIGNATURE-----
+
+--fUYQa+Pmc3FrFX/N--
