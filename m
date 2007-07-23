@@ -1,62 +1,91 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: What is a reasonable mixed workflow for git/git-cvsserver?
-Date: Mon, 23 Jul 2007 11:06:01 -0400
-Message-ID: <7D018B3B-CE12-46C4-87EA-9BE14EC415E4@silverinsanity.com>
-References: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de> <46a038f90707230359u5fac77a4i7b6a350d3bb29e3b@mail.gmail.com> <AD8AD244-0B20-44E9-AEE6-9D2A75BC5091@zib.de> <46a038f90707230719i106e0576j2868548ef0cb1739@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS
+ keyword expansion
+Date: Mon, 23 Jul 2007 17:11:25 +0200
+Message-ID: <46A4C51D.2060202@fs.ei.tum.de>
+References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>	 <Pine.LNX.4.64.0707221959100.14781@racer.site>	 <9e4733910707221210t2b2896b5ob4ce7bf95d4a707a@mail.gmail.com>	 <Pine.LNX.4.64.0707222013200.14781@racer.site>	 <9e4733910707221248q45fb3aaala9c79afd4b09830e@mail.gmail.com>	 <Pine.LNX.4.64.0707222238180.14781@racer.site>	 <9e4733910707221645x21d74e70y3c43bc8c02a9d4ca@mail.gmail.com>	 <Pine.LNX.4.64.0707230048570.14781@racer.site>	 <9e4733910707221711u6e965e6cr29e06fa8fb09165@mail.gmail.com>	 <Pine.LNX.4.64.0707230136360.14781@racer.site> <9e4733910707230744u2d3a0a31t9f65d5c9e68c9805@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Steffen Prohaska" <prohaska@zib.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 17:06:16 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 17:11:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICzUB-0006u8-2z
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 17:06:11 +0200
+	id 1ICzZL-0000WP-AY
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 17:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755030AbXGWPGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 11:06:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755082AbXGWPGF
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 11:06:05 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:45249 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754901AbXGWPGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 11:06:04 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 0007C1FFC01F;
-	Mon, 23 Jul 2007 15:06:01 +0000 (UTC)
-In-Reply-To: <46a038f90707230719i106e0576j2868548ef0cb1739@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753379AbXGWPL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 11:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755085AbXGWPL2
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 11:11:28 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:42514 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084AbXGWPL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 11:11:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id A188A28139;
+	Mon, 23 Jul 2007 17:11:26 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id AvxjAKonBG2T; Mon, 23 Jul 2007 17:11:26 +0200 (CEST)
+Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id E6EB12811C;
+	Mon, 23 Jul 2007 17:11:25 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <9e4733910707230744u2d3a0a31t9f65d5c9e68c9805@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53440>
 
+Jon Smirl wrote:
+> On 7/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Okay, I did not really test thoroughly, it seems.  Sorry.  Next try.
+> 
+> It's working a lot better. People deal with $Id two different ways.
+> One way they delete all of the $Id lines, that is the case of the
+> Sonos patch. In the Phytec patch they left all of the $Id lines in
+> place which caused them to get modified. In both cases you just want
+> the lines with $Id to disappear in the patch.
+> 
+> It doesn't catch the $Id case from the Phytec patch.
+> 
+> diff -uarN linux-2.6.10/arch/cris/arch-v10/boot/rescue/head.S
+> linux-2.6.10-lpc3180/arch/cris/arch-v10/boot/rescue/head.S
+> --- linux-2.6.10/arch/cris/arch-v10/boot/rescue/head.S  2004-12-25
+> 05:35:24.000000000 +0800
+> +++ linux-2.6.10-lpc3180/arch/cris/arch-v10/boot/rescue/head.S
+> 2006-11-20 15:49:30.000000000 +0800
+> @@ -1,4 +1,5 @@
+> /* $Id: head.S,v 1.6 2003/04/09 08:12:43 pkj Exp $
+> +/* $Id: head.S,v 1.2 2005/02/18 13:06:31 mike Exp $
+>  *
+>  * Rescue code, made to reside at the beginning of the
+>  * flash-memory. when it starts, it checks a partition
+> 
+> It's not catching all of the $Revision and $Date deltas.
+> 
+> The output diff shouldn't contain any CVS keywords. It is somewhat
+> tricky to catch all of the cases and fix up the diffs. This filter
+> should get written and debugged once and then made part of something
+> like git so that it doesn't get written over and over again. Perl is
+> way better for this I had 1000 lines of C in my program and it was
+> still missing 10% of the cases.
 
-On Jul 23, 2007, at 10:19 AM, Martin Langhoff wrote:
-> On 7/23/07, Steffen Prohaska <prohaska@zib.de> wrote:
->> My question is how to deal with this shared branch on the git
->> side. Should a core developer rebuild a sane history from such
->> a shared/mixed/unsorted branch by cherry picking the commits
->> to one or more topic branches?
->
-> I think that's usually frowned upon. As the committer did his/her work
-> on a particular state of the tree, and tested it. So every commit at
-> least *should* be of a working state. Once you rewrite history as a
-> "normal" practice, that flies out of the window. And it's a big loss.
+Maybe I am missing something, but apart from $Log$, what's so hard about collapsing the CVS keywords?  That's something like
 
-That's only somewhat true.  First, there's never a guarantee that the  
-committer tested it, especially if they had to pull before committing  
-(less likely they tested the resulting merge than tested their  
-original code).  Second, rewriting history isn't a big loss.  It's  
-done all the time here on this list.  The patches I've sent in rarely  
-appear applied on top of the commit I made them from.  The mob branch  
-could just be viewed as a set of patches to use, and it becomes the  
-maintainer's job to test the results after cherry-picking from them.
+s/\$(Id|Date|Header|CVSHeader|Author|Revision):[^$]*\$/$\1$/
 
-~~ Brian
+or not?
+
+I see that people want to modify the patch text to remove the churn, but that seems wrong.  It would be much easier to just collapse the keywords before applying the patch, and then work on a newly created diff (from the git repo).
+
+cheers
+  simon
