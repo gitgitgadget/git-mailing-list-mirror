@@ -1,79 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: index-pack died on pread
-Date: Mon, 23 Jul 2007 10:04:42 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach git-commit about commit message templates.
+Date: Mon, 23 Jul 2007 10:12:59 -0700
+Message-ID: <7vfy3fkpr8.fsf@assigned-by-dhcp.cox.net>
+References: <20070723041741.GA22461@midwinter.com>
+	<Pine.LNX.4.64.0707231059490.14781@racer.site>
+	<46A481B4.7000502@midwinter.com>
+	<Pine.LNX.4.64.0707231136530.14781@racer.site>
+	<46A48949.1020501@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Michal Rokos <michal.rokos@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 19:04:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 19:13:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID1L5-0000fD-3G
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 19:04:55 +0200
+	id 1ID1Sx-0003qC-Q3
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 19:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373AbXGWREw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 13:04:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756850AbXGWREw
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 13:04:52 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44601 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756429AbXGWREv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 13:04:51 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6NH4l7R012351
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Jul 2007 10:04:48 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6NH4gal002099;
-	Mon, 23 Jul 2007 10:04:42 -0700
-In-Reply-To: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
-X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757829AbXGWRNB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 13:13:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756598AbXGWRNB
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 13:13:01 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:40378 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756131AbXGWRNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 13:13:00 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070723171300.JAW1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 23 Jul 2007 13:13:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id T5Cz1X00C1kojtg0000000; Mon, 23 Jul 2007 13:12:59 -0400
+In-Reply-To: <46A48949.1020501@midwinter.com> (Steven Grimm's message of "Mon,
+	23 Jul 2007 18:56:09 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53446>
 
+Steven Grimm <koreth@midwinter.com> writes:
 
-
-On Mon, 23 Jul 2007, Michal Rokos wrote:
+> With the patch, my intent was:
 >
-> fatal: cannot pread pack file: No such file or directory (n=0,
-> errno=2, fd=3, ptr=40452958, len=428, rdy=0, off=123601)
+> * Strip off all comment lines
+> * Strip off all Signed-off-by: lines
+> * Trim whitespace
+> * If the result has no content (! -s file), abort.
+> * If a template file was specified:
+>   * Strip off all comment and Signed-off-by: lines from the template
+>   * Trim whitespace from the template
+>   * If the resulting trimmed template is the same as the trimmed
+> commit message, abort.
+>
+> So I guess before getting to the specifics of the code, I'll ask: does
+> the above make sense as a design? I wanted to preserve the existing
+> behavior in the absence of a template.
 
-Ok, that's bogus. When "n" is zero, the errno (and thus the error string) 
-is not changed by pread, so that's a very misleading error report.
+Offhand, an "interesting" side effect of the above I can see is
+that you will cry "wolf" if the only thing the user did is to
+add his own Signed-off-by: line ;-)  But that is sane in the
+context of coming up with totally new commit log message.
 
-So what seems to have happened is that the pack-file is too short, so we 
-got a return value of 0, and then reported it as if it had an errno.
+I am more worried about how this should interact with cases
+where you usually do not start the log message from scratch.
+For example, are there cases / policies where being able to use
+templates to leave comments on merge commits are needed?
+Squash-commits?  Perhaps "apply this template but only when you
+have hand resolved a conflicting merges"?
 
-The reason for returning zero from pread would be:
-
- - broken pread. I don't think HPUX should be a problem, so that's 
-   probably not it.
-
- - the pack-file got truncated
-
- - the offset is corrupt, and points to beyond the size of the packfile.
-
-In this case, since the offset is just 123601, I suspect it's a truncation 
-issue, and your pack-file is simply corrupt. Either because of some 
-problem with receiving it, or because of problems on the remote side.
-
-> fetch-pack from 'git://git.kernel.org/pub/scm/git/git' failed.
-
-One thing to look out for is that the "git.kernel.org" machines aren't the 
-"primary" ones, and the data gets mirrored from other machines. If the 
-mirroring is incomplete, I could imagine that the remote side simply ended 
-up terminating the connection, and you ended up with a partial pack-file.
-
-Some of the kernel.org machines ran out of disk space the other day, so 
-maybe you happened to hit it in an unlucky window. Does it still happen?
-
-		Linus
+Or even the case of amending a commit made by somebody else,
+without changing the tree contents, in order to make the commit
+log message to conform to the company standard?
