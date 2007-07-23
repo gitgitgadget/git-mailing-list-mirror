@@ -1,54 +1,67 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: If NEEDS_LIBICONV is set for Solaris 8, it does not build git
-	for me
-Date: Mon, 23 Jul 2007 20:51:11 +0200
-Message-ID: <20070723185111.GA16085@cip.informatik.uni-erlangen.de>
-References: <20070722104045.GF4760@cip.informatik.uni-erlangen.de> <7v8x98qc3k.fsf@assigned-by-dhcp.cox.net> <878x97eznf.fsf@sparse.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Git tree for old kernels from before the current tree
+Date: Mon, 23 Jul 2007 14:57:32 -0400
+Message-ID: <20070723185732.GB30165@thunk.org>
+References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com> <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr> <20070722211314.GA13850@linux-sh.org> <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr> <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr> <46A3D5EA.2050600@zytor.com> <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, GIT <git@vger.kernel.org>,
-	Paul Jakma <paul@clubi.ie>
-To: Jason Riedy <ejr@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 23 20:51:19 2007
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Jan Engelhardt <jengelh@computergmbh.de>,
+	Paul Mundt <lethal@linux-sh.org>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 23 20:58:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID301-0005Tj-NW
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:51:18 +0200
+	id 1ID36W-0007hX-Qx
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 20:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762353AbXGWSvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 14:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761686AbXGWSvN
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:51:13 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:46625 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760835AbXGWSvN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2007 14:51:13 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id C28123F41B; Mon, 23 Jul 2007 20:51:11 +0200 (CEST)
+	id S1761197AbXGWS5z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 14:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758767AbXGWS5z
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 14:57:55 -0400
+Received: from thunk.org ([69.25.196.29]:36975 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756983AbXGWS5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 14:57:54 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1ID3EM-0005im-NP; Mon, 23 Jul 2007 15:06:06 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1ID364-0004qb-MN; Mon, 23 Jul 2007 14:57:32 -0400
+Mail-Followup-To: Theodore Tso <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jan Engelhardt <jengelh@computergmbh.de>,
+	Paul Mundt <lethal@linux-sh.org>, Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <878x97eznf.fsf@sparse.dyndns.org>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53461>
 
-Hello,
+On Mon, Jul 23, 2007 at 09:55:24AM -0700, Linus Torvalds wrote:
+> 
+> I actually tried to get something like this together back in the BK days 
+> and early in the SCO saga. It was pretty painful to try to find all the 
+> historic trees and patches - they're all in different format, and some of 
+> them are unreliable (ie CVS imports by people like Ted).
 
-> I didn't even know you could patch 5.8 enough to use that compiler
-> version.  I can't imagine what strange combinations of C89 and C99
-> features are available.
+Um, *I* never had the bad taste to import Linux kernels into CVS.  :-)
 
-I even think that Forte 11 was one of the first who supported C99 in the
-first place.  However my intention is the following: I build git on
-Solaris 5.8 because it works on any system that is 5.8 or higher (5.9,
-5.10 and the upcomming 5.11). Good in theory. But not in practice since
-they bumped the perl version (I did not thought of that before). With
-high probability I could work around that. But at the moment I don't
-care that much because I have a build host for every major release of
-Solaris and I don't use the perl part of git not that much. However
-having git on Solaris is a real pleasure. Together with sudo and vim.
+I'm pretty sure we never had anything like that on tsx-11.mit.edu, either.
 
-        Thomas
+    	   	   	     	      	   - Ted
