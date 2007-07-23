@@ -1,96 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Sun, 22 Jul 2007 23:56:44 -0400
-Message-ID: <20070723035644.GC32566@spearce.org>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site> <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222223460.14781@racer.site> <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222255010.14781@racer.site> <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707230000020.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 23 05:57:05 2007
+From: Jason Sewall <jasonsewall@gmail.com>
+Subject: [PATCH] Add a 1-second sleep to git-cvsexportcommit test
+Date: Sun, 22 Jul 2007 20:59:11 -0700
+Message-ID: <11851631511468-git-send-email-jasonsewall@gmail.com>
+References: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net>
+Cc: gitster@pobox.com, raa.lkml@gmail.com,
+	Jason Sewall <jasonsewall@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 23 05:59:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICp2c-0007u8-Nw
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 05:57:03 +0200
+	id 1ICp4p-0008BA-IT
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 05:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639AbXGWD4v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 23:56:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbXGWD4v
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 23:56:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41085 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753284AbXGWD4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 23:56:50 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1ICp2A-00074t-Kt; Sun, 22 Jul 2007 23:56:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6861220FBAE; Sun, 22 Jul 2007 23:56:45 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707230000020.14781@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754599AbXGWD7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 23:59:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754115AbXGWD7Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 23:59:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:2055 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753173AbXGWD7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 23:59:15 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1025384nze
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 20:59:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=WILmohJhixR7DJhw8108NSXExjg6HU4DpMxY4NKvMRjRC3U09DUgZnIeuBmjXKqeK8ukxSHzfMcVENncDKL8VFbOTKV8y4Lo1AVYHwBqnQO9XueLaOtbY0qaTNkJlmrG5m083xo9mnv2G9MSfXVwhBHG7OufsYkx42dVELzp+00=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Ua2YAD6r7ofEgat7I6ugfTyBssKoYYFeKWKANgoI/5Z6IGEXr71Ds28Tu8Ay2tUXEdRp4gpkoHdHSNYWkmbTaTH4HbcnlSxsrnxvTH0s4KJJgsFXDC3mrWan/9isLuorl6Su56+KhEZyIjtdvsqA1yLZVSV783J6nuPjnuNIVU0=
+Received: by 10.141.210.5 with SMTP id m5mr810048rvq.1185163154467;
+        Sun, 22 Jul 2007 20:59:14 -0700 (PDT)
+Received: from localhost ( [76.102.148.137])
+        by mx.google.com with ESMTPS id c36sm6399407rvf.2007.07.22.20.59.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2007 20:59:14 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.rc2.29.gc4640f-dirty
+In-Reply-To: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53385>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 22 Jul 2007, Julian Phillips wrote:
-> 
-> > On Sun, 22 Jul 2007, Johannes Schindelin wrote:
-> > 
-> > > Well, I am really not interested in shooting myself in the foot, and 
-> > > having that option in checkout would make that much more likely.  So I 
-> > > really, really want to have this in git-branch.
-> > 
-> > Fair enough.  Your patch - so you get to choose.  I don't have any 
-> > strong objections (and no power to express any if I did :P) - just 
-> > airing my POV ;)
-> 
-> In related news, you got me convinced that my "solution" is not 
-> sufficient.  So I guess this patch has to wait until after 1.5.3 _and_ 
-> after we convinced Junio to put his BASE index extension in again.
+Test #7 of t9200 isn't likely to succeed because tests are executed too fast for cvs; add a delay to give it a chance to succeed.
+---
+ I think I didn't send this through the proper server, so here it is finally.
+ t/t9200-git-cvsexportcommit.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-The last time we had that thing in Git it really screwed with git-gui.
-I'm not looking forward to it coming back.
-
-
-But anyway, I think there's something else that needs to be fixed
-before this symlink workdir thing is fully in core git.  Right now we
-delete the .git/config and .git/packed-refs files when we edit them.
-This means it is *very* unsafe to run `git-config` or `git-tag -d`
-in a symlinked workdir, as the workdir will get its own config or
-packed-refs file and the real repository directory won't be affected.
-
-Now .git/config switching from symlink to real file is maybe almost
-a feature.
-
-But .git/packed-refs switching from symlink to real file is *not*
-a feature.  Its a massive bug.
-
-I live by new-workdir.  I do everything with it.  And today I just
-spent over an hour sorting out cases where my many, many workdirs
-have different refs than their base repositories, because their
-packed-refs files are different.  Grrrrrrrrrrrrrrrrrr.
-
-
-So we really need to make anyone that edits packed-refs (and
-maybe also config) resolve the symlink and do the edit in the
-target directory.  Then we can consider adding this workdir thing
-to core git.
-
-Yes, I know, stop whining and submit a patch.  I'll get around to
-it soon if nobody else beats me.  I just want to voice yet another
-reason why this shouldn't be in 1.5.3.
-
--- 
-Shawn.
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 4efa0c9..2096e59 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -164,6 +164,7 @@ test_expect_success \
+       git add "G g/with spaces.png" &&
+       git commit -a -m "Update with spaces" &&
+       id=$(git rev-list --max-count=1 HEAD) &&
++      sleep 1 &&
+       (cd "$CVSWORK" &&
+       git-cvsexportcommit -c $id
+       test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" = "with spaces.png/1.2/-kb with spaces.txt/1.2/"
+--
+1.5.3.rc2.4.g726f9
