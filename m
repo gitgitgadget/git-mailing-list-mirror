@@ -1,36 +1,39 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: fast-import and core.autocrlf option
-Date: Sun, 22 Jul 2007 23:45:14 -0400
-Message-ID: <20070723034514.GZ32566@spearce.org>
-References: <a1bbc6950707221559m63fb1295jc26b1327e71687e3@mail.gmail.com> <Pine.LNX.4.64.0707230039560.14781@racer.site>
+Subject: Re: update-po
+Date: Sun, 22 Jul 2007 23:48:30 -0400
+Message-ID: <20070723034830.GA32566@spearce.org>
+References: <Pine.LNX.4.64.0707221352210.14781@racer.site> <200707222321.l6MNL0pi005112@mi0.bluebottle.com> <7v644cosmu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 23 05:45:34 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Xudong Guan <xudong.guan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 05:48:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICorV-0006EM-U3
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 05:45:34 +0200
+	id 1ICouX-0006fR-7j
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 05:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbXGWDpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 23:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbXGWDpU
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 23:45:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:40927 "EHLO
+	id S1752315AbXGWDsi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Jul 2007 23:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXGWDsi
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 23:48:38 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40968 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbXGWDpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 23:45:19 -0400
+	with ESMTP id S1751403AbXGWDsh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2007 23:48:37 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1ICor1-0006lo-N6; Sun, 22 Jul 2007 23:45:03 -0400
+	id 1ICouC-0006oI-J8; Sun, 22 Jul 2007 23:48:20 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C9A8620FBAE; Sun, 22 Jul 2007 23:45:14 -0400 (EDT)
+	id 7CC3120FBAE; Sun, 22 Jul 2007 23:48:31 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707230039560.14781@racer.site>
+In-Reply-To: <7v644cosmu.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,37 +43,56 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53381>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 22 Jul 2007, Dmitry Kakurin wrote:
-> 
-> > It looks to me that CR/LF conversion does not happen during
-> > fast-import even if I have core.autocrlf set to 'input'.
-> > Is this a bug or is there a reason for that?
-> 
-> fast-import works on blobs only.  So it is expected.  Besides, it would 
-> slow down fast-import tremendously if you wanted to introduce that 
-> behaviour.  Therefore I suggest just rolling your own dos2unix instead of 
-> trying to play cute games with fast-import.
+Junio C Hamano <gitster@pobox.com> wrote:
+> =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nan=
+ako3@bluebottle.com> writes:
+>=20
+> > Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> >> msgid "Add Existing"
+> >> msgstr ""
+> >>
+> >
+> > I had problem when translating this word "Existing" in my old trans=
+lation.
+> > I did not understand what that expression meaned.  My old translati=
+on for
+> > "Add Existing To Commit" said, because I did not understand what it=
+ meant,
+> > "Add Some Existing THING To Commit", and it felt very wrong, but I =
+could
+> > not come up with anything better.
+>=20
+> I did not quite understand the "Existing" either (I do not
+> use git-gui myself---I just launch it from time to time to make
+> sure it does not barf on simple operations as part of the last
+> minite tests before pushing changes to git.git out), and had a
+> discussion on #git channel with a few people.
+>=20
+> My reading of git-gui code suggests that "Add Existing To
+> Commit" is used in an item in "Commit" menu, while "Add
+> Existing" is a label on the button, and they do exactly the same
+> operation.  It updates the index with the current contents of
+> the tracked files.  That is, deleted files are discarded from
+> the index, and modified files are updated.  IOW, "git add -u".
 
-Right, in fast-import we only process blobs as raw blobs.
-Its rare that we have a file path associated with the blob data
-at the time that we are actually processing the blob itself.  E.g.
-applications can send us blobs up front, before they even start to
-send us commits and path information.
+Yes, that's exactly correct.
 
-So if we were to offer the CRLF->LF conversion feature in fast-import
-it would need to be an option supplied at the time the 'data'
-command issued, rather than based upon the gitattributes system
-that is normally used for working tree operations.
+> "Existing" is probably a misnomer even in the original English
+> UI --- it is more about "Tracked".  I think your confusion about
+> "Add unexisting" is justified, because "Add Existing" operation
+> is not about "existing" but "all tracked files without having me
+> pick and select all of them", and the other variant, "Add To
+> Commit", lets you add selected files, be they "tracked" or
+> "untracked".
 
-It wouldn't be to difficult to add such an option to the data
-command, but I'm not going to be able to get around to it anytime
-soon.  This might be an easy change for someone else to attempt if
-they were interested in some Git hacking.  Should all be isolated
-to the cmd_data() routine in fast-import.c, and just needs to call
-crlf_to_git() in convert.c, which is uh, static.  :-)
+I agree.  I'm going to change the base English version to say
+"Tracked" here instead of "Existing".  Its the correct term,
+at least with regards to Git.
 
--- 
+Thanks for the sanity check.
+
+--=20
 Shawn.
