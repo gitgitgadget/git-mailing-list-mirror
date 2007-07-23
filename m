@@ -1,67 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach git-commit about commit message templates.
-Date: Mon, 23 Jul 2007 11:04:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707231059490.14781@racer.site>
-References: <20070723041741.GA22461@midwinter.com>
+Subject: Re: What is a reasonable mixed workflow for git/git-cvsserver?
+Date: Mon, 23 Jul 2007 11:16:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707231106590.14781@racer.site>
+References: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 12:04:29 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 12:17:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICumC-0001g6-SH
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:04:29 +0200
+	id 1ICuyX-0004qL-Mk
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639AbXGWKEW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 06:04:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbXGWKEW
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:04:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55766 "HELO mail.gmx.net"
+	id S1759907AbXGWKRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 06:17:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759799AbXGWKRI
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:17:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50077 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751233AbXGWKEV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 06:04:21 -0400
-Received: (qmail invoked by alias); 23 Jul 2007 10:04:19 -0000
+	id S1759392AbXGWKRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 06:17:06 -0400
+Received: (qmail invoked by alias); 23 Jul 2007 10:17:04 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 23 Jul 2007 12:04:19 +0200
+  by mail.gmx.net (mp026) with SMTP; 23 Jul 2007 12:17:04 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19NA8tjnlVN/zPLbt3/tLpHmzbI3V6HzgI2ZnB/+c
-	eKbYhE6ntWl8rD
+X-Provags-ID: V01U2FsdGVkX18Kn0o9fz4K93MCU+fJSHPpV9MKpBlTWOXucHffCm
+	S9SFC0uvoB7kSv
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070723041741.GA22461@midwinter.com>
+In-Reply-To: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53421>
 
 Hi,
 
-On Sun, 22 Jul 2007, Steven Grimm wrote:
+On Mon, 23 Jul 2007, Steffen Prohaska wrote:
 
-> @@ -572,10 +591,35 @@ else
->  fi |
->  git stripspace >"$GIT_DIR"/COMMIT_MSG
->  
-> -if cnt=`grep -v -i '^Signed-off-by' "$GIT_DIR"/COMMIT_MSG |
-> -	git stripspace |
-> -	wc -l` &&
-> -   test 0 -lt $cnt
-> +# Test whether the commit message has any content we didn't supply.
-> +have_commitmsg=
-> +grep -v -i '^Signed-off-by' "$GIT_DIR"/COMMIT_MSG |
-> +	git stripspace > "$GIT_DIR"/COMMIT_BAREMSG
+> What's a reasonable workflow when some people use git and other people 
+> use git-cvsserver simultaneously?
 
-Up until here, I was with you.  But this feels very wrong.
+This is what we did here:
 
-Why not compare COMMIT_MSG to the templatefile, if there is one?  I.e.
+We cvsimported the whole stuff (but we did not have your problems, since 
+there was only one branch).  Then we initialised a shared repository with 
+that branch, turned on git-cvsserver (and found a few bugs, but that was 
+long ago, and AFAIR all our issues were fixed) and went to work.
 
-test ! -z "$templatefile" && cmp "$GIT_DIR"/COMMIT_MSG "$templatefile" &&
-	die "Unchanged message; will not commit"
+There were a few committing via cvs, and a few others committing via git.  
+One person only tracked via cvs, not contributing code, just reviewing 
+and testing.
 
-Hmm?
+We did not have the need to impose certain restrictions, such as git-shell 
+(to prevent invoking other programs), or hooks refusing a push that 
+touches parts the person pushing has no business changing.
+
+But we had the option to go there, if needed.  So far, all went fine.  And 
+I'm convinced that it is partly because of the trust model.  After all, I 
+still have my local repository.  And that I can trust at all times.
+
+So if a poisonous person (instead of thrashing the mailing list with long 
+mails) would have decided to corrupt the repo, we would have realised that 
+pretty quickly, repaired the damage without much effort, and kicked out 
+that person.
+
+Needless to say that all our devs converted to Git.  And I'm happy to say 
+that they're all happy with it.
 
 Ciao,
 Dscho
