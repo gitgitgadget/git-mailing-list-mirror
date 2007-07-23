@@ -1,75 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What is a reasonable mixed workflow for git/git-cvsserver?
-Date: Mon, 23 Jul 2007 11:16:52 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707231106590.14781@racer.site>
-References: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] Teach git-commit about commit message templates.
+Date: Mon, 23 Jul 2007 18:23:48 +0800
+Message-ID: <46A481B4.7000502@midwinter.com>
+References: <20070723041741.GA22461@midwinter.com> <Pine.LNX.4.64.0707231059490.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jul 23 12:17:16 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 12:24:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICuyX-0004qL-Mk
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:17:14 +0200
+	id 1ICv50-0006Xc-UJ
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759907AbXGWKRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 06:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759799AbXGWKRI
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:17:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50077 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759392AbXGWKRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 06:17:06 -0400
-Received: (qmail invoked by alias); 23 Jul 2007 10:17:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp026) with SMTP; 23 Jul 2007 12:17:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Kn0o9fz4K93MCU+fJSHPpV9MKpBlTWOXucHffCm
-	S9SFC0uvoB7kSv
-X-X-Sender: gene099@racer.site
-In-Reply-To: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1759556AbXGWKXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 06:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759612AbXGWKXv
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:23:51 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:39123
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1759523AbXGWKXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 06:23:50 -0400
+Received: (qmail 12791 invoked from network); 23 Jul 2007 10:23:50 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=guj8W+S1eD32uVHrRo0CAkFa0Svsjh47HU+n+X67oMAyh0Y6a+njE/R+UduFzvy0  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 23 Jul 2007 10:23:49 -0000
+User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+In-Reply-To: <Pine.LNX.4.64.0707231059490.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53422>
 
-Hi,
+Johannes Schindelin wrote:
+> Up until here, I was with you.  But this feels very wrong.
+>
+> Why not compare COMMIT_MSG to the templatefile, if there is one?  I.e.
+>
+> test ! -z "$templatefile" && cmp "$GIT_DIR"/COMMIT_MSG "$templatefile" &&
+> 	die "Unchanged message; will not commit"
+>   
 
-On Mon, 23 Jul 2007, Steffen Prohaska wrote:
+The template can itself have comments -- instructions or explanations of 
+fields to fill in, for example -- and since comments have been stripped 
+from COMMIT_MSG at this point, a comparison against such a template 
+would always fail. And, consistent with the current behavior, simply 
+adding a Signed-off-by: line shouldn't count as supplying a commit message.
 
-> What's a reasonable workflow when some people use git and other people 
-> use git-cvsserver simultaneously?
+I could do this test before stripping comments from COMMIT_MSG, but then 
+I'd still fail the comparison if the user just deleted some comment 
+lines manually, which also seems wrong to me -- the comments should be 
+totally ignored when doing this comparison, IMO. Plus that wouldn't 
+ignore Signed-off-by: lines.
 
-This is what we did here:
+If I'm coming at the design the wrong way, I'm of course happy to adjust 
+it, but insensitivity to both comments and Signed-off-by: lines seemed 
+like the right behavior from the user's POV to me, and I didn't see a 
+cleaner way to do it.
 
-We cvsimported the whole stuff (but we did not have your problems, since 
-there was only one branch).  Then we initialised a shared repository with 
-that branch, turned on git-cvsserver (and found a few bugs, but that was 
-long ago, and AFAIR all our issues were fixed) and went to work.
+Thanks for looking at the patch!
 
-There were a few committing via cvs, and a few others committing via git.  
-One person only tracked via cvs, not contributing code, just reviewing 
-and testing.
-
-We did not have the need to impose certain restrictions, such as git-shell 
-(to prevent invoking other programs), or hooks refusing a push that 
-touches parts the person pushing has no business changing.
-
-But we had the option to go there, if needed.  So far, all went fine.  And 
-I'm convinced that it is partly because of the trust model.  After all, I 
-still have my local repository.  And that I can trust at all times.
-
-So if a poisonous person (instead of thrashing the mailing list with long 
-mails) would have decided to corrupt the repo, we would have realised that 
-pretty quickly, repaired the damage without much effort, and kicked out 
-that person.
-
-Needless to say that all our devs converted to Git.  And I'm happy to say 
-that they're all happy with it.
-
-Ciao,
-Dscho
+-Steve
