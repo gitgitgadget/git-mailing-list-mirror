@@ -1,57 +1,67 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: RFC: git pull or git rebase?
-Date: Mon, 23 Jul 2007 11:07:44 +0200
-Message-ID: <81b0412b0707230207k2fa33eb3hdc23319d1f8dbd80@mail.gmail.com>
-References: <20070723052223.GA20614@mellanox.co.il>
+From: Michael <barra_cuda@katamail.com>
+Subject: Re: [PATCH] Initial Italian translation of git-gui.pot
+Date: Mon, 23 Jul 2007 11:09:14 +0200
+Message-ID: <200707231109.14075.barra_cuda@katamail.com>
+References: <20070722124236.47baacb1@paolo-desktop> <Pine.LNX.4.64.0707222315360.14781@racer.site> <e5bfff550707221525w3234c5edte3c3d58b97d4d970@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Jul 23 11:08:03 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 11:09:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICttV-0003wN-Uo
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:07:58 +0200
+	id 1ICtv1-0004Sk-Nx
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755363AbXGWJHr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 05:07:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755216AbXGWJHr
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:07:47 -0400
-Received: from ik-out-1112.google.com ([66.249.90.179]:9822 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754749AbXGWJHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 05:07:46 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so1070247ika
-        for <git@vger.kernel.org>; Mon, 23 Jul 2007 02:07:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PrUOsr9zZo5LpKFZtAbJp0RtBrynFQndaK2lW3rTKN8X0DseGVbXwVdtsH76fuFyLC+/fK2snf1vqLui+TL9AfNrxFEG7yBiepS66PbmEv6dvjlxFj9Dsmq4xbFQYu467d7IZ0y5x5tzmPdac5B3QPDicbngVfdjGaDW6chqgPg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bZ2CenFP3gpcY+KRHI7z91Q1Zz2yv8XR4mAV+Hq+c04NKSqdptsL41qKSThQL+CbBDKOiwqI1xdUqOHZRcp/B3/5JFOnRky2AALCfQ59QRtzu582RJ0IMuZb+wCKK8ARHwsn5HzhfOSeIN0HPe9sNQTp+jdowaGURCTYHUVFFq4=
-Received: by 10.78.201.10 with SMTP id y10mr717699huf.1185181664483;
-        Mon, 23 Jul 2007 02:07:44 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Mon, 23 Jul 2007 02:07:44 -0700 (PDT)
-In-Reply-To: <20070723052223.GA20614@mellanox.co.il>
+	id S1755943AbXGWJJ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 05:09:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755471AbXGWJJ3
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:09:29 -0400
+Received: from slim-3c.inet.it ([213.92.5.125]:37244 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755216AbXGWJJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 05:09:28 -0400
+Received: from host197-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.197]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.56.197+4hHxGUAMaqO; Mon, 23 Jul 2007 11:09:11 +0200
+User-Agent: KMail/1.9.4
+In-Reply-To: <e5bfff550707221525w3234c5edte3c3d58b97d4d970@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53417>
 
-On 7/23/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
-> However, I wonder whether this happens to others, too.
-> Would it make sense to add a branch attribute that says
-> "do not pull this branch" or "do not rebase this branch"?
-> Maybe even make git do the right thing automatically,
-> so that git would look at this attribute and perform
-> pull or rebase as appropriate?
+On Monday 23 July 2007 00:25, Marco Costalba wrote:
+> There are some words that in my opinion it would be better do not
+> translate but to leave in english, expecially on computer stuff
+> italian people it's already used to the original english word.
 
-If you have a recent enough git, it will refuse to pull into
-a branch for which there is no configured remote branch.
-Exactly for a reason like yours.
+Those who want to use the English version can always do
+	LANG=en_US git gui
+...but since there are going to be very few non-IT people that use
+git, I guess most SCM's vocabulary can be left untranslated. The
+most difficult words to translate (and so probably they should be
+left unchanged) in this context are "merge" and "commit".
+
+Thinking about it, shouldn't we add an help page in git gui with
+a "mini glossary" (a short version of the git glossary) in it? 
+
+Maybe something like this:
+	http://it.wikipedia.org/wiki/Controllo_versione#Glossario
+(but more centered on git, of course).
+
+I wonder what other SCM (or SCM gui) projects do (if they are into
+i18n at all).
+
+> In our example "resettare" it's not italian, it's a italianized (very
+> ugly) form of "to reset" and it would be really better to use "reset".
+
+Yes. I even think that "reset" is kind of common in Italy (at
+least for most people that use some electronic device). But maybe
+I'm wrong.
