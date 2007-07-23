@@ -1,63 +1,71 @@
-From: Michael Tharp <gxti@partiallystapled.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Git tree for old kernels from before the current tree
-Date: Sun, 22 Jul 2007 19:26:50 -0400
-Message-ID: <46A3E7BA.6030609@partiallystapled.com>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com> <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr> <20070722211314.GA13850@linux-sh.org> <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr> <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr> <46A3D5EA.2050600@zytor.com>
+Date: Sun, 22 Jul 2007 20:00:58 -0400
+Message-ID: <9e4733910707221700o16659129ra2daed0833f02cf0@mail.gmail.com>
+References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
+	 <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
+	 <20070722211314.GA13850@linux-sh.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
+To: "Paul Mundt" <lethal@linux-sh.org>,
+	"Jan Engelhardt" <jengelh@computergmbh.de>,
+	"Git Mailing List" <git@vger.kernel.org>,
 	lkml <linux-kernel@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 01:59:54 2007
+X-From: git-owner@vger.kernel.org Mon Jul 23 02:01:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IClL4-0003iu-EN
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 01:59:50 +0200
+	id 1IClMG-00040e-PT
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 02:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764881AbXGVX7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Jul 2007 19:59:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758822AbXGVX7q
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 19:59:46 -0400
-Received: from osiris.atheme.org ([69.60.119.211]:49900 "EHLO
-	osiris.atheme.org" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756192AbXGVX7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2007 19:59:45 -0400
-X-Greylist: delayed 2008 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Jul 2007 19:59:45 EDT
-Received: by osiris.atheme.org (Postfix, from userid 65534)
-	id EAD8090790; Sun, 22 Jul 2007 23:25:43 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on osiris.atheme.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.7 required=5.0 tests=AWL,BAYES_00 autolearn=ham
-	version=3.2.0
-Received: from sidhe.atheme.org (sidhe.atheme.org [204.15.224.234])
-	by osiris.atheme.org (Postfix) with ESMTP id 8FAB38F9FB;
-	Sun, 22 Jul 2007 23:25:41 +0000 (GMT)
-Received: from [192.168.1.64] (cpe-066-057-099-027.nc.res.rr.com [66.57.99.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by sidhe.atheme.org (Postfix) with ESMTP id B3F586FC0EA;
-	Sun, 22 Jul 2007 16:26:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070619)
-In-Reply-To: <46A3D5EA.2050600@zytor.com>
-X-Enigmail-Version: 0.95.2
-OpenPGP: id=94C1C841
+	id S932142AbXGWABA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Jul 2007 20:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759818AbXGWABA
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Jul 2007 20:01:00 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:41293 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760830AbXGWAA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2007 20:00:58 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1793302wah
+        for <git@vger.kernel.org>; Sun, 22 Jul 2007 17:00:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ULk84YAMxP485l88VQvpKzBNUVsk1rU3k3doHz2zF2ToSJ1yPucvaboFvThcLb4O3Kcb9qfQ9EwI0myiNL/w6H+YmpjPChImfPRhGNGJL1mZaSi3oLiPxnxLqlpkghE/+dtD+ilMqodQpFDi4dSN5QslCOhH7DEGgXtjepzfHEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KL7tuxQQF8Q0bkheamH9koIXHGMI9ODl9PRsys+QUDVGHxdoxPO4i2gykt6z+c/U9g4G1FjH1Ohq08r7e7IxWoeqMxY5OBjF4fAb1VNoQUev/DqcaIe935EwyZij4Gtd8peCvzB3qmu8QjfNKe3f2OL2Yu5nVbwqNyf7JKeqS3c=
+Received: by 10.115.89.1 with SMTP id r1mr2469432wal.1185148858278;
+        Sun, 22 Jul 2007 17:00:58 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Sun, 22 Jul 2007 17:00:58 -0700 (PDT)
+In-Reply-To: <20070722211314.GA13850@linux-sh.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53373>
 
-H. Peter Anvin wrote:
-> Wouldn't be hard to make a git tree with all the patches all the way
-> back to 0.01 even...
+On 7/22/07, Paul Mundt <lethal@linux-sh.org> wrote:
+> Anyone still sending 2.4 patches with the intent of them being moved
+> forward and applied to a current kernel needs to be killfiled.
 
-It'd be delightful from a completeness standpoint (and I do love
-completeness), but considering it already takes a good 20 minutes to
-clone the 2.6 tree over a respectable cable connection, I'd have to
-object on the grounds of size. Now, if it was kept off in its own tree
-for people who don't mind ravaging kernel.org resources to satisfy their
-own curiosity, that's fine too.
+These patches are coming from companies that aren't interested in
+participating in the GPL process but are being forced into releasing
+code because of the license. Some of them will go out of their way to
+make the changes difficult to read. All of the patches I am looking at
+come from embedded systems, many of these systems are still shipping
+2.4 kernels.
 
-  -- m. tharp
+Most of the patches contain junk, but there are occasional diamonds.
+One I'm looking at contains code for accessing encryption hardware.
+The goal is to look at the vendor diffs and see if I can spot anything
+useful. Spotting something useful can be hard if there are 100,000
+lines of noise in the diffs, I'm also trying to spot missing drivers
+so that we can ask for more code.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
