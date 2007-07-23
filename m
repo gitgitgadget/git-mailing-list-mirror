@@ -1,70 +1,74 @@
-From: Arjan van de Ven <arjan@infradead.org>
-Subject: Re: Git tree for old kernels from before the current tree
-Date: Mon, 23 Jul 2007 16:11:31 -0700
-Organization: Intel International BV
-Message-ID: <1185232291.2723.4.camel@laptop.fenrus.org>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
-	 <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
-	 <20070722211314.GA13850@linux-sh.org>
-	 <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
-	 <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
-	 <46A3D5EA.2050600@zytor.com>
-	 <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
-	 <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: update-po
+Date: Tue, 24 Jul 2007 08:14:11 +0900
+Message-ID: <200707232314.l6NNEWMh026186@mi1.bluebottle.com>
+References: <7v644cosmu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Paul Mundt <lethal@linux-sh.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:13:33 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Xudong Guan <xudong.guan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:14:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID75p-00086e-Fo
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:13:33 +0200
+	id 1ID774-0008Ow-PT
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933126AbXGWXNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 19:13:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbXGWXNX
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:13:23 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:44687 "EHLO
-	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765828AbXGWXNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 19:13:21 -0400
-Received: from [192.102.209.1] (helo=[10.251.2.28])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1ID75G-0007BP-TC; Tue, 24 Jul 2007 00:12:59 +0100
-In-Reply-To: <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
-X-Mailer: Evolution 2.10.3 (2.10.3-1.fc7) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <arjan@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S934103AbXGWXOg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 19:14:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755889AbXGWXOf
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:14:35 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:41574 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934261AbXGWXOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 19:14:33 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6NNEWMh026186
+	for <git@vger.kernel.org>; Mon, 23 Jul 2007 16:14:32 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=rbXJzsXVKT8vb8r4oErFyunK8zkHeqzDlaz+5U5GFbC1y08zdblSL5C2w5xdl7ADA
+	62xlDVhvBqwrFaHrxKyobMdM/NUqiVjb4OZwB9Q4HUTBwjue1Vbk+c0Xw9PJEVD
+Received: from nanako3.mail.bluebottle.com ([222.82.16.200])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6NNEKvL026698
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 23 Jul 2007 16:14:27 -0700
+In-Reply-To: <7v644cosmu.fsf@assigned-by-dhcp.cox.net>
+X-Trusted-Delivery: <3b81267959667180dca82377ff9ad5e3>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53502>
 
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-> What is missing is:
-> 
->  - v0.02 sources
-> 
->  - v0.10 announcement
-> 
->  - v0.96 sources
-> 
->  - v0.99.12 announcement
-> 
->  - sources for v0.99.13{abcdefghij} (got k, don't know where the serie 
->    ends) as well as announcements for all of them
+> How about this patch?
+>
+> -- >8 --
+> [PATCH] git-gui Japanese messages: translate Add Existing, Staged and Unstaged.
+>
+> Add "Existing" is probably a misnomer, so paraphrase it as "all
+> modifications".  "To Stage" is hard to translate but "Staging"
+> has become Japanese word so use that word to translate "Staged"
+> and "Unstaged" as (roughly) "Have been (Not have been) performed
+> <<Staging>>".
+>
+> Signed-off-by: Junio C Hamano <gitster@cox.net>
+> ---
 
+I think the translation is good.
+Thank you very much.
 
-didn't Tigran at some point get a full history together?
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email account with anti spam protection.
+http://www.bluebottle.com/tag/2
