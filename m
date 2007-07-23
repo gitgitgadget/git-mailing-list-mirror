@@ -1,89 +1,72 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] Teach git-commit about commit message templates.
-Date: Mon, 23 Jul 2007 18:56:09 +0800
-Message-ID: <46A48949.1020501@midwinter.com>
-References: <20070723041741.GA22461@midwinter.com> <Pine.LNX.4.64.0707231059490.14781@racer.site> <46A481B4.7000502@midwinter.com> <Pine.LNX.4.64.0707231136530.14781@racer.site>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: What is a reasonable mixed workflow for git/git-cvsserver?
+Date: Mon, 23 Jul 2007 07:59:26 -0300
+Message-ID: <46a038f90707230359u5fac77a4i7b6a350d3bb29e3b@mail.gmail.com>
+References: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 23 12:56:19 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 12:59:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICvaK-000666-JI
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:56:17 +0200
+	id 1ICvdT-0006rO-GA
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 12:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756972AbXGWK4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 06:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbXGWK4N
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:56:13 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:47582
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752828AbXGWK4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 06:56:12 -0400
-Received: (qmail 14979 invoked from network); 23 Jul 2007 10:56:11 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=wgac7g+93sYXjIHcogA7aicNVjYCjhmnOyE0nyXWcchAQ4d5INmwZI0ezTZx63An  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 23 Jul 2007 10:56:10 -0000
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
-In-Reply-To: <Pine.LNX.4.64.0707231136530.14781@racer.site>
+	id S1756972AbXGWK72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 06:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758100AbXGWK71
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 06:59:27 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:25988 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752390AbXGWK71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 06:59:27 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1453985wxd
+        for <git@vger.kernel.org>; Mon, 23 Jul 2007 03:59:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ne0wdvIyJVTNDIda9rtSUXXPFBbHouKzxuV128RRqREoErLoePUzIAJgr1SqdILuFSMroUJ3lS7YacSfEPJ8gNuiJrln7IuT2UJNiV3pkCvGWrdtkcy93jFugYyyTDj7u5ZUJapjlhgBb/gV1ZkH7wiWod9xpB1h76391IrI/iI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HSuzhC8MlXw8flZFEFc78XJXpx+QdzAfU9jzAz1mcHNvRIZQazhGz5bczV+1Mzu3OPwJpFg6/uGcJlncFTPqlskBfNx4wOYW95SXHIr8fICT/6w9eoBtrW04h5pxkut/lvfDWb5Jy/UTO1uZjfQgmmIhy/FySUx8exFjCUKvoVo=
+Received: by 10.90.119.15 with SMTP id r15mr1636008agc.1185188366271;
+        Mon, 23 Jul 2007 03:59:26 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Mon, 23 Jul 2007 03:59:26 -0700 (PDT)
+In-Reply-To: <E8B0B250-A428-4CDC-A4D2-FFCF45953076@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53428>
 
-Johannes Schindelin wrote:
-> Ah, I missed that.  But IIRC your patch does not wrap that logic behind 
-> test ! -z "$templatefile", right?  So this is my modified suggestion:
->
-> test ! -z "$templatefile" && {
-> 	grep -vie '^Signed-off-by:' < "$GIT_DIR"/COMMIT_MSG" > "$GIT_DIR"/tmp1
-> 	grep -ve '^#' < "$templatefile" > "$GIT_DIR"/tmp1
-> 	trap 'rm "$GIT_DIR"/tmp[12]' 0
-> 	cmp "$GIT_DIR"/tmp[12] &&
-> 	die "Unchanged message; will not commit"
-> }
->   
+On 7/23/07, Steffen Prohaska <prohaska@zib.de> wrote:
+> What's a reasonable workflow when some people use git and
+> other people use git-cvsserver simultaneously?
 
-So you are suggesting I do this in addition to the existing git-commit 
-stripping of Signed-off-by: lines? I can certainly do that, but I didn't 
-want to make two passes over the commit message doing exactly the same 
-stripping.
+It was written on the concept that the core developers would switch to
+git and occassional committers and less sophisticated SCM users like
+translators would be able to continue using cvs.
 
-Hmm, maybe I should outline my understanding of the current (unpatched) 
-behavior and what I want it to do. Currently:
+Basically, cvs users can no longer tag or open new branches. So your
+plan is exactly what we set out to support. Switching branches is not
+possibe -- that's unfortunate, but emulating CVS's branching is a
+bridge too far :-)
 
-* Strip off all comment lines (happens when COMMIT_MSG is created)
-* Strip off all Signed-off-by: lines
-* Trim whitespace
-* If the result has no content (`wc -l` == 0), abort.
+> What is a reasonable way to handle the unsorted commits
+> from a shared branch in a more git-ish way? I googled a bit
+> but didn't find a good explanation on the web.
 
-With the patch, my intent was:
+I am not sure what you mean by unsorted commits... "proposed patches"?
+The git project itself has a proposed-updates branch that might serve
+as an example. And repo.or.cz has the strange concept of the mob
+branch that you might want to have a look at.
 
-* Strip off all comment lines
-* Strip off all Signed-off-by: lines
-* Trim whitespace
-* If the result has no content (! -s file), abort.
-* If a template file was specified:
-   * Strip off all comment and Signed-off-by: lines from the template
-   * Trim whitespace from the template
-   * If the resulting trimmed template is the same as the trimmed commit 
-message, abort.
+cheers,
 
-So I guess before getting to the specifics of the code, I'll ask: does 
-the above make sense as a design? I wanted to preserve the existing 
-behavior in the absence of a template.
 
-Since the existing code is already stripping Signed-off-by: lines to 
-test for a zero-length commit message, I figured I should reuse that 
-work. However, it's no big deal to do it twice if people feel that 
-results in more readable code -- certainly no human will ever notice the 
-time it takes to re-grep the commit message.
-
--Steve
+martin
