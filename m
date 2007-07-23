@@ -1,84 +1,144 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: [RFC PATCH] Re: Empty directories...
-Date: Tue, 24 Jul 2007 00:32:08 +0100
-Message-ID: <873azen1c7.fsf@hades.wkstn.nix>
-References: <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
-	<85abttwa7m.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
-	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
-	<20070719053858.GE32566@spearce.org>
-	<20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr>
-	<20070719105105.GA4929@moonlight.home>
-	<86zm1sbpeh.fsf@lola.quinscape.zz>
-	<20070719123214.GB4929@moonlight.home>
-	<863azka7d4.fsf@lola.quinscape.zz> <87ps2inab5.fsf@hades.wkstn.nix>
-	<85y7h6dewp.fsf@lola.goethe.zz> <87lkd6n62i.fsf@hades.wkstn.nix>
-	<85k5sqdavo.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0707231527050.3607@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Teach revision machinery about --no-walk
+Date: Tue, 24 Jul 2007 00:38:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707240011500.14781@racer.site>
+References: <17929.37382.984339.742025@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703280056140.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17929.44659.574482.637805@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:32:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:39:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID7O4-0003t3-RB
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:32:25 +0200
+	id 1ID7Ud-0005Ms-PX
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755639AbXGWXcU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 19:32:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755238AbXGWXcU
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:32:20 -0400
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:37399 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753251AbXGWXcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 19:32:19 -0400
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id l6NNW98g030444;
-	Tue, 24 Jul 2007 00:32:09 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id l6NNW8Sb014724;
-	Tue, 24 Jul 2007 00:32:08 +0100
-Emacs: if it payed rent for disk space, you'd be rich.
-In-Reply-To: <alpine.LFD.0.999.0707231527050.3607@woody.linux-foundation.org> (Linus Torvalds's message of "Mon, 23 Jul 2007 15:31:46 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
-X-DCC-WEiAPG-Metrics: hades 1072; Body=3 Fuz1=3 Fuz2=3
+	id S1758008AbXGWXjI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 19:39:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757958AbXGWXjH
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:39:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37666 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751132AbXGWXjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 19:39:04 -0400
+Received: (qmail invoked by alias); 23 Jul 2007 23:39:02 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 24 Jul 2007 01:39:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1yNY6bcu1SDDaNwk2JvcD+8IAj9WMM73wq0mTA2
+	5TXlPj8F06+sbG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <17929.44659.574482.637805@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53504>
 
-On 23 Jul 2007, Linus Torvalds spake thusly:
-> So practically speaking, you want to track the *minimal* possible state, 
-> not the maximal one. 
 
-I think it depends on your use case. For source code and indeed anything
-with heavy merges, this is true: but I'm increasingly using git as a
-sort of `merged historical tar' to store images of entire random
-filesystem trees across time, and gaining the benefit of the packer's
-lovely space-efficiency as well (doing this with svn would be a lost
-cause, twice the space usage before you even think about the
-repository). And in that case, preserving everything you can makes
-sense.
+The flag "no_walk" is present in struct rev_info since a long time, but
+so far has been in use exclusively by "git show".
 
-(Perhaps what I should be doing is tarring the directory tree up and
-storing the *tarball* in git. I'll try that and see what it does to pack
-sizes. These are version-controlled backups of my mother's magnum opus
-in progress so you can understand that I don't want to destroy them
-accidentally: I'd never hear the end of it! ;) )
+With this flag, you can see all your refs, ordered by date of the last
+commit:
 
-> So this does mean that if you want to explicitly track certain things 
-> (ownership and more complete file permissions, or ACL's, or "resource 
-> forks", or any number of other things that a file *could* have on various 
-> systems), you end up havign to track them in something else than git, or 
-> you end up having to track them as a separate "metadata file".
+$ git log --abbrev-commit --pretty=oneline --decorate --all --no-walk
 
-Yes indeed: that's why I proposed doing this using a couple of new hooks
-driving entirely optional permissions-preservation stuff. Most use cases
-really won't want to track this, so this sort of stuff shouldn't impose
-upon the git core or upon anyone who doesn't want it. (However, the
-ability to have alternative file merging strategies *may* be useful
-elsewhere, perhaps.)
+which is extremely helpful if you have to juggle with a lot topic
+branches, and do not remember in which one you introduced that uber
+debug option, or simply want to get an overview what is cooking.
+
+(Note that the "git log" invocation above does not output the same as
+
+ $ git show --abbrev-commit --pretty=oneline --decorate --all --quiet
+
+ since "git show" keeps the alphabetic order that "--all" returns the
+ refs in, even if the option "--date-order" was passed.)
+
+For good measure, this also adds the "--do-walk" option which overrides 
+"--no-walk".
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	On Tue, 27 Mar 2007, Bill Lear wrote:
+
+	> On Wednesday, March 28, 2007 at 01:03:57 (+0200) Johannes Schindelin writes:
+	> >...
+	> >	This is only lightly tested, and I will not have time to work any 
+	> >	more on this. So, if this does not what you want, you will have to
+	> >	fix it yourself.
+	> 
+	> Well, thank you kindly for your quick reply.  I will patch this in to my 
+	> git source tree, test it out and see if I can fix anything that comes 
+	> up.
+
+	Actually, I tested this a lot in recent times, especially since I 
+	started to use topic branches a lot more, to keep Junio happy.
+
+	And then I had an idea: Much better to let "git log" do the work, 
+	since it already sorts the commits it shows by date.  There is a 
+	flag in the revision machinery, named "no_walk" which would tell 
+	it to not traverse all ancestors.
+
+	Since I can make this an alias, it does not matter very much that 
+	the command line is so long.  However, since you can use different 
+	pretty formats, this might be much more useful than the 
+	--sort-by-date option for "git branch".
+
+ Documentation/git-rev-list.txt |    9 +++++++++
+ revision.c                     |    8 ++++++++
+ 2 files changed, 17 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 0430139..1c19781 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -37,6 +37,7 @@ SYNOPSIS
+ 	     [ \--merge ]
+ 	     [ \--reverse ]
+ 	     [ \--walk-reflogs ]
++	     [ \--no-walk ] [ \--do-walk ]
+ 	     <commit>... [ \-- <paths>... ]
+ 
+ DESCRIPTION
+@@ -398,6 +399,14 @@ These options are mostly targeted for packing of git repositories.
+ 	Only useful with '--objects'; print the object IDs that are not
+ 	in packs.
+ 
++--no-walk::
++
++	Only show the given revs, but do not traverse their ancestors.
++
++--do-walk::
++
++	Overrides a previous --no-walk.
++
+ 
+ include::pretty-formats.txt[]
+ 
+diff --git a/revision.c b/revision.c
+index 00b75bc..16f35c7 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1191,6 +1191,14 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				revs->reverse ^= 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--no-walk")) {
++				revs->no_walk = 1;
++				continue;
++			}
++			if (!strcmp(arg, "--do-walk")) {
++				revs->no_walk = 0;
++				continue;
++			}
+ 
+ 			opts = diff_opt_parse(&revs->diffopt, argv+i, argc-i);
+ 			if (opts > 0) {
+-- 
+1.5.3.rc2.31.gf7d7-dirty
