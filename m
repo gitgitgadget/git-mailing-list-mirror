@@ -1,61 +1,78 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: git log and --first-parent
-Date: Tue, 24 Jul 2007 01:05:33 +0200
-Message-ID: <200707240105.33729.robin.rosenberg.lists@dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: when git-rebase -i fails to cherry-pick
+Date: Tue, 24 Jul 2007 00:08:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707240005240.14781@racer.site>
+References: <20070723225402.GB22513@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:04:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:09:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID6x1-0006Ef-3a
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:04:27 +0200
+	id 1ID71x-0007Mc-E3
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 01:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123AbXGWXEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 19:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbXGWXEY
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:04:24 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:3404 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751603AbXGWXEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 19:04:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 9949F8026E0
-	for <git@vger.kernel.org>; Tue, 24 Jul 2007 00:57:07 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 20308-01 for <git@vger.kernel.org>; Tue, 24 Jul 2007 00:57:07 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 527B6802670
-	for <git@vger.kernel.org>; Tue, 24 Jul 2007 00:57:07 +0200 (CEST)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1763830AbXGWXJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 19:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933750AbXGWXJF
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 19:09:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45056 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759080AbXGWXJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 19:09:03 -0400
+Received: (qmail invoked by alias); 23 Jul 2007 23:09:01 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 24 Jul 2007 01:09:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18hCP94EDYhVBlp3sDTu9mlyUdaG/aG8VybnzYt6q
+	D+vl0iBhftxA9O
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070723225402.GB22513@informatik.uni-freiburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53500>
 
+Hi,
 
-I'm puzzled over the behavior of --first-parent. The documentations seems to imply
-that only the first parent is followed, but when a filter is applied it seems (just guessing)
-that the "first" parent is selected *after* filtering, a behaviour that I feel does not match
-the documentation.
+On Tue, 24 Jul 2007, Uwe Kleine-K?nig wrote:
 
-Should the first-parent filter be applied first.
+> even though git-rebase -i is still young, I'm already a big fan of it.
 
-Example:
+Nice!
 
-	git log --first-parent --pretty=format: --name-only v1.5.2|grep ^var.c|wc -l
+> I just want to suggest two minor things:
+> 
+> - If a cherry-pick fails, it tells me to resolve my conflicts, 'git add
+>   <paths>' and to do 'git commit -c $sha1id'.
+> 
+>   But it doesn't tell me, how I continue to rebase after that.
+> 
+>   'git rebase -i --continue' works.
 
-counts four commits where var.c was changed, while
+Actually, even "git rebase --continue" works.  And you do not really have 
+to commit, either, just updating your index is fine.  In fact, if you say 
+"git reset --hard", it will skip the commit.
 
-	git log --first-parent --pretty=format: --name-only v1.5.2 -- var.c |wc -l
+> - If a cherry-pick of a commit to be squashed fails, the instruction to
+>   do 'git commit -c $sha1id' is wrong, because then I don't get both
+>   message to squash.
 
-gives me 23. 
+Yes, it is a leftover from the bad old days, when this script was called 
+edit-patch-series, and I was a rebase hater.
 
--- robin
+In the meantime, somebody on IRC explained to me how rebase works, and 
+that rebase lovers were quite annoyed not to be able to just resolve the 
+conflicts and "git rebase --continue".
+
+I'd appreciate if you prepared a patch with better explanations, and also 
+reviewed the man page, if it is in good shape (and does not lie about the 
+current behaviour).
+
+Thanks,
+Dscho
