@@ -1,76 +1,81 @@
-From: "Michal Rokos" <michal.rokos@gmail.com>
-Subject: index-pack died on pread
-Date: Mon, 23 Jul 2007 14:52:48 +0200
-Message-ID: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH] Test case for "git diff" outside a git repo
+Date: Mon, 23 Jul 2007 06:22:48 -0700
+Message-ID: <20070723132248.GA24122@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 23 14:52:57 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 23 15:22:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICxPF-0004Aw-2s
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 14:52:57 +0200
+	id 1ICxsD-0004hE-P8
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 15:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754417AbXGWMwx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 08:52:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754244AbXGWMwx
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 08:52:53 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:19663 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753479AbXGWMww (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 08:52:52 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1979455wah
-        for <git@vger.kernel.org>; Mon, 23 Jul 2007 05:52:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=iZIcCTYRlyiZh18zEEWCu19x7vSfGdimaUkDZsVyElzL+dKzZkF0DFbwrfEEZYtv6mRPkfpYR8r1BEYktY93NDZ9+bD8cx52T2+J1vqNbLKRe+GD0W8tSl3EWswjCCEftHRi/rgb1w2Gnqe8/N7JzVgmosMReqsXwyx/8SqKrF0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=uEhYwrYA/jH+gSg3RGCauxl17chLV5ZUueuE/p2pj+xmflJqHHptZjIoLfFMRRQxB5j1y0f5uy0/KK6dnLZp4oP7qsN05Be/BexXEyYVYSEIqyNMhcOaR/wkohBqUrFrOyidA9W8rezQN3GudrIYkPR8lMRreZcwmJcmms0Jkc4=
-Received: by 10.114.76.1 with SMTP id y1mr2930376waa.1185195168698;
-        Mon, 23 Jul 2007 05:52:48 -0700 (PDT)
-Received: by 10.114.150.6 with HTTP; Mon, 23 Jul 2007 05:52:48 -0700 (PDT)
+	id S1755756AbXGWNWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 09:22:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755451AbXGWNWt
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 09:22:49 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:51118
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754624AbXGWNWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 09:22:49 -0400
+Received: (qmail 24499 invoked by uid 1001); 23 Jul 2007 13:22:48 -0000
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53435>
 
-Hello,
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+	git-diff --quiet is pretty broken right now. If you do
+	"strace git diff --quiet file1 file2" you will see that
+	it never calls open() on either file! And it always
+	returns a zero exit code whether or not the files are
+	different.
 
-it's more and more common that I get an index-pack death for pread
-that returns 0... Did anybody encountered the same?
+	I'm trying to follow the code to figure out what's going on,
+	but meanwhile, here's a test case. Perhaps someone more
+	familiar with the diff code will beat me to a fix.
 
-Some more details:
-# uname -a
-HP-UX aa B.11.11 U 9000/800 1009938148 unlimited-user license
-# git --version
-git version 1.5.2.4
-# git-clone git://git.kernel.org/pub/scm/git/git
-Initialized empty Git repository in /home/tpiiuser/mr/git/.git/
-remote: Generating pack...
-remote: Done counting 55910 objects.
-remote: Deltifying 55910 objects...
-remote:  100% (55910/55910) done
-Indexing 55910 objects...
-remote: Total 55910 (delta 39003), reused 55304 (delta 38552)
- 100% (55910/55910) done
-Resolving 39003 deltas...
-fatal: cannot pread pack file: No such file or directory (n=0,
-errno=2, fd=3, ptr=40452958, len=428, rdy=0, off=123601)
-fatal: index-pack died with error code 128
-fetch-pack from 'git://git.kernel.org/pub/scm/git/git' failed.
+ t/t4021-diff-norepo.sh |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4021-diff-norepo.sh
 
-... please note that I added printing details to die() for pread.
-
-HPUX pread manpage seems to be here:
-http://modman.unixdev.net/?sektion=2&page=pread&manpath=HP-UX-11.11
-
-Michal
-
-PS: Please CC me.
+diff --git a/t/t4021-diff-norepo.sh b/t/t4021-diff-norepo.sh
+new file mode 100755
+index 0000000..dfee3d7
+--- /dev/null
++++ b/t/t4021-diff-norepo.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++test_description='test git diff outside a repo'
++
++. ./test-lib.sh
++
++rm -rf .git
++
++test_expect_success setup '
++
++	echo content1 >file1a &&
++	echo content1 >file1b &&
++	echo content2 >file2
++'
++
++test_expect_success 'zero return value with --quiet for different files' '
++
++	git diff --quiet file1a file2
++'
++
++test_expect_success 'nonzero return value with --quiet for identical files' '
++
++	! git diff --quiet file1a file1b >/dev/null
++'
++
++test_done
+-- 
+1.5.3.rc2.4.g726f9
