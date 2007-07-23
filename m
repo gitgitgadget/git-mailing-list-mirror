@@ -1,64 +1,70 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: Re: RFC: git pull or git rebase?
-Date: Mon, 23 Jul 2007 12:31:42 +0300
-Message-ID: <20070723093142.GE20614@mellanox.co.il>
-References: <20070723052223.GA20614@mellanox.co.il>
-	<81b0412b0707230207k2fa33eb3hdc23319d1f8dbd80@mail.gmail.com>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui-i18n: Fix translation of the context menu
+Date: Mon, 23 Jul 2007 10:58:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707231057550.14781@racer.site>
+References: <Pine.LNX.4.64.0707221719430.14781@racer.site>
+ <20070723035122.GB32566@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 11:31:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 23 11:58:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICuGe-0001Q4-0J
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:31:52 +0200
+	id 1ICugc-0000Ar-2C
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755529AbXGWJbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 05:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbXGWJbl
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:31:41 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:56792 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871AbXGWJbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 05:31:40 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1137120ugf
-        for <git@vger.kernel.org>; Mon, 23 Jul 2007 02:31:38 -0700 (PDT)
-Received: by 10.67.29.12 with SMTP id g12mr4059993ugj.1185183098061;
-        Mon, 23 Jul 2007 02:31:38 -0700 (PDT)
-Received: from ?127.0.0.1? ( [194.90.237.34])
-        by mx.google.com with ESMTPS id p32sm1748523ugc.2007.07.23.02.31.34
-        (version=SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2007 02:31:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0707230207k2fa33eb3hdc23319d1f8dbd80@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+	id S1758802AbXGWJ6h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 05:58:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758796AbXGWJ6h
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:58:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52373 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758650AbXGWJ6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 05:58:36 -0400
+Received: (qmail invoked by alias); 23 Jul 2007 09:58:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp029) with SMTP; 23 Jul 2007 11:58:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/aecYfsQXa1WUN51nqgCdaO1IpK7k9k6Qq0G4dB1
+	BdCFWcrg4CsVBy
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070723035122.GB32566@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53419>
 
-> Quoting Alex Riesen <raa.lkml@gmail.com>:
-> Subject: Re: RFC: git pull or git rebase?
+Hi,
+
+On Sun, 22 Jul 2007, Shawn O. Pearce wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > diff --git a/git-gui.sh b/git-gui.sh
+> > index 075a2b9..52170ee 100755
+> > --- a/git-gui.sh
+> > +++ b/git-gui.sh
+> > @@ -2457,9 +2457,9 @@ bind_button3 $ui_diff "
+> >  	set cursorX %x
+> >  	set cursorY %y
+> >  	if {\$ui_index eq \$current_diff_side} {
+> > -		$ctxm entryconf $ui_diff_applyhunk -label [mc {Unstage Hunk From Commit}]
+> > +		$ctxm entryconf $ui_diff_applyhunk -label \"[mc "Unstage Hunk From Commit"]\"
 > 
-> On 7/23/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
-> >However, I wonder whether this happens to others, too.
-> >Would it make sense to add a branch attribute that says
-> >"do not pull this branch" or "do not rebase this branch"?
-> >Maybe even make git do the right thing automatically,
-> >so that git would look at this attribute and perform
-> >pull or rebase as appropriate?
+> That's the wrong change to do here, as you are going to eval
+> the result of the translation.  If the translation had a Tcl
+> special character (\, $, [) in it then we'd actually execute that.
+> Instead the [ should be escaped:
 > 
-> If you have a recent enough git, it will refuse to pull into
-> a branch for which there is no configured remote branch.
-> Exactly for a reason like yours.
+> > +		$ctxm entryconf $ui_diff_applyhunk -label \[mc "Unstage Hunk From Commit"\]
+> 
+> But you aren't a Tcl programmer, so its OK.  ;-)
 
-Aha. I created the tree by git clone, so my master
-is configured to merge from origin automatically.
+Heh.
 
--- 
-MST
+Thanks,
+Dscho
