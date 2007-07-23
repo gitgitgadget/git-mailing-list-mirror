@@ -1,67 +1,64 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: Re: [PATCH] Initial Italian translation of git-gui.pot
-Date: Mon, 23 Jul 2007 11:09:14 +0200
-Message-ID: <200707231109.14075.barra_cuda@katamail.com>
-References: <20070722124236.47baacb1@paolo-desktop> <Pine.LNX.4.64.0707222315360.14781@racer.site> <e5bfff550707221525w3234c5edte3c3d58b97d4d970@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: Re: RFC: git pull or git rebase?
+Date: Mon, 23 Jul 2007 12:31:42 +0300
+Message-ID: <20070723093142.GE20614@mellanox.co.il>
+References: <20070723052223.GA20614@mellanox.co.il>
+	<81b0412b0707230207k2fa33eb3hdc23319d1f8dbd80@mail.gmail.com>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 11:09:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 11:31:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ICtv1-0004Sk-Nx
-	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:09:32 +0200
+	id 1ICuGe-0001Q4-0J
+	for gcvg-git@gmane.org; Mon, 23 Jul 2007 11:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755943AbXGWJJ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 05:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755471AbXGWJJ3
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:09:29 -0400
-Received: from slim-3c.inet.it ([213.92.5.125]:37244 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755216AbXGWJJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 05:09:28 -0400
-Received: from host197-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.197]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.56.197+4hHxGUAMaqO; Mon, 23 Jul 2007 11:09:11 +0200
-User-Agent: KMail/1.9.4
-In-Reply-To: <e5bfff550707221525w3234c5edte3c3d58b97d4d970@mail.gmail.com>
+	id S1755529AbXGWJbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 05:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbXGWJbl
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 05:31:41 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:56792 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871AbXGWJbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 05:31:40 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1137120ugf
+        for <git@vger.kernel.org>; Mon, 23 Jul 2007 02:31:38 -0700 (PDT)
+Received: by 10.67.29.12 with SMTP id g12mr4059993ugj.1185183098061;
+        Mon, 23 Jul 2007 02:31:38 -0700 (PDT)
+Received: from ?127.0.0.1? ( [194.90.237.34])
+        by mx.google.com with ESMTPS id p32sm1748523ugc.2007.07.23.02.31.34
+        (version=SSLv3 cipher=OTHER);
+        Mon, 23 Jul 2007 02:31:35 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <81b0412b0707230207k2fa33eb3hdc23319d1f8dbd80@mail.gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53418>
 
-On Monday 23 July 2007 00:25, Marco Costalba wrote:
-> There are some words that in my opinion it would be better do not
-> translate but to leave in english, expecially on computer stuff
-> italian people it's already used to the original english word.
+> Quoting Alex Riesen <raa.lkml@gmail.com>:
+> Subject: Re: RFC: git pull or git rebase?
+> 
+> On 7/23/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
+> >However, I wonder whether this happens to others, too.
+> >Would it make sense to add a branch attribute that says
+> >"do not pull this branch" or "do not rebase this branch"?
+> >Maybe even make git do the right thing automatically,
+> >so that git would look at this attribute and perform
+> >pull or rebase as appropriate?
+> 
+> If you have a recent enough git, it will refuse to pull into
+> a branch for which there is no configured remote branch.
+> Exactly for a reason like yours.
 
-Those who want to use the English version can always do
-	LANG=en_US git gui
-...but since there are going to be very few non-IT people that use
-git, I guess most SCM's vocabulary can be left untranslated. The
-most difficult words to translate (and so probably they should be
-left unchanged) in this context are "merge" and "commit".
+Aha. I created the tree by git clone, so my master
+is configured to merge from origin automatically.
 
-Thinking about it, shouldn't we add an help page in git gui with
-a "mini glossary" (a short version of the git glossary) in it? 
-
-Maybe something like this:
-	http://it.wikipedia.org/wiki/Controllo_versione#Glossario
-(but more centered on git, of course).
-
-I wonder what other SCM (or SCM gui) projects do (if they are into
-i18n at all).
-
-> In our example "resettare" it's not italian, it's a italianized (very
-> ugly) form of "to reset" and it would be really better to use "reset".
-
-Yes. I even think that "reset" is kind of common in Italy (at
-least for most people that use some electronic device). But maybe
-I'm wrong.
+-- 
+MST
