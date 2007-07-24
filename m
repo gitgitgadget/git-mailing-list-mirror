@@ -1,64 +1,73 @@
-From: "Benjamin Sergeant" <bsergean@gmail.com>
-Subject: Re: http git clone memory problem.
-Date: Tue, 24 Jul 2007 09:58:42 -0700
-Message-ID: <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
-References: <1621f9fa0707232044j7cec2bes7bc7cd268775ce48@mail.gmail.com>
-	 <Pine.LNX.4.64.0707241025450.14781@racer.site>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: rfe: bisecting with a tristate
+Date: Tue, 24 Jul 2007 19:07:56 +0200
+Message-ID: <200707241907.57857.robin.rosenberg.lists@dewire.com>
+References: <Pine.LNX.4.64.0707241459460.18990@fbirervta.pbzchgretzou.qr> <20070724094017.d14688e5.seanlkml@sympatico.ca> <Pine.LNX.4.64.0707241447200.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 18:58:50 2007
+Cc: Sean <seanlkml@sympatico.ca>,
+	Jan Engelhardt <jengelh@computergmbh.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 19:06:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDNih-0002kS-MH
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 18:58:48 +0200
+	id 1IDNqU-0006Ur-SV
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753161AbXGXQ6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 12:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752759AbXGXQ6o
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 12:58:44 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:1136 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751754AbXGXQ6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 12:58:43 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1448350nze
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 09:58:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j7fqEcXN2aAsMcEpCu24f/CJPkph8v2e9AuolgAEKf7VFLsp592CNaFGH0dzO+1xa7+djbPvkR1fwBHYTj2YgHLiCbI0CKDJ1mJwJ4I3lIZTLZnav6l4x0HsQ02a6uwa41vNuuqUoebqoEerbmxmC+gsrCqkfaECy7kq9AuCb6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Fg9r8ApDXEyV0XXdI+aSbMo3VFn3vbMrYoabS5CCQFJ+tbtQWZko4byfhMCZyqwzNVjiOtNEJu+41O5A136hZmaBrg4DiRBmx5O1oDB1ve/4Xw97lCJACsDorUMa3d1lG2RaAQmBNeMoXfcu1429QPnXNOPke7Z2h0pPrUZv5tI=
-Received: by 10.142.100.1 with SMTP id x1mr346468wfb.1185296322242;
-        Tue, 24 Jul 2007 09:58:42 -0700 (PDT)
-Received: by 10.143.19.17 with HTTP; Tue, 24 Jul 2007 09:58:42 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707241025450.14781@racer.site>
+	id S1753393AbXGXRGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 13:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbXGXRGr
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:06:47 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12167 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751499AbXGXRGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 13:06:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 312538026F9;
+	Tue, 24 Jul 2007 18:59:30 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 29281-08; Tue, 24 Jul 2007 18:59:29 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id C1C5280019B;
+	Tue, 24 Jul 2007 18:59:29 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0707241447200.14781@racer.site>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53614>
 
-With
-
-On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+tisdag 24 juli 2007 skrev Johannes Schindelin:
 > Hi,
->
-> On Mon, 23 Jul 2007, Benjamin Sergeant wrote:
->
-> > - Sorry for the noise if this has already been reported.
-> > - It's on a Mandriva Spring machine with git 1.5.0.4
->
-> That is really old.  Could you try with a newer version?  I do not
-> remember off-hand if we had fixed such a problem.
->
-> Ciao,
-> Dscho
->
->
+> 
+> On Tue, 24 Jul 2007, Sean wrote:
+> 
+> > > git bisect start
+> > > git bisect bad v2.6.23-rc1
+> > > # bad: [f695baf2df9e0413d3521661070103711545207a] Linux 2.6.23-rc1
+> > > git bisect good v2.6.22
+> > > # good: [098fd16f00005f665d3baa7e682d8cb3d7c0fe6f] Linux 2.6.22
+> > > 
+> > > Then 1f1c2881f673671539b25686df463518d69c4649 will be the next commit 
+> > > git bisect hands out. Now let's assume this commit would not compile. 
+> > > What would the user do? git-bisect good or git-bisect bad?
+> > 
+> > Check out the section "Avoiding to test a commit" in the git-bisect
+> > man page; it addresses this issue.  Basically you just use git-reset
+> > to pick a different nearby commit to compile, and then continue with
+> > git bisect good/bad.
+> 
+> But a "git bisect dunno" would be handy.
+
+Why? Not doing anything is enough, just select a new commit. Going back can be done by
+git reset, but forward (towards original HEAD) requires more thinking so a git bisect forward [n]
+would help there.
+
+-- robin
