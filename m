@@ -1,133 +1,160 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: [PATCH] Mark more strings for i18n, including the status message
-	list.
-Date: Tue, 24 Jul 2007 11:29:22 +0200
-Message-ID: <20070724112922.6wiilqqdk4cwk4kc@webmail.tu-harburg.de>
-References: <1282.25717.qm@web38901.mail.mud.yahoo.com>
-	<20070724112701.ndpm5fxaocks804s@webmail.tu-harburg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Add a 1-second sleep to git-cvsexportcommit test
+Date: Tue, 24 Jul 2007 11:34:30 +0200
+Message-ID: <200707241134.31950.robin.rosenberg.lists@dewire.com>
+References: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net> <200707241033.36509.robin.rosenberg.lists@dewire.com> <46A5BA87.50105@fs.ei.tum.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 8BIT
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:29:34 2007
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jason Sewall <jasonsewall@gmail.com>, git@vger.kernel.org,
+	raa.lkml@gmail.com
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:33:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGhv-0002kT-Uv
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:29:32 +0200
+	id 1IDGlh-0003r8-7F
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764783AbXGXJ33 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761713AbXGXJ33
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:29:29 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:49988 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760611AbXGXJ32 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 05:29:28 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6O9TMRc010917
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 24 Jul 2007 11:29:22 +0200
-Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6O9TMsG015487;
-	Tue, 24 Jul 2007 11:29:22 +0200
-Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
-	id 77C9DE50349; Tue, 24 Jul 2007 11:29:22 +0200 (CEST)
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
-	webmail.tu-harburg.de (Horde MIME library) with HTTP; Tue, 24 Jul 2007
-	11:29:22 +0200
-In-Reply-To: <20070724112701.ndpm5fxaocks804s@webmail.tu-harburg.de>
+	id S1758363AbXGXJdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:33:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756985AbXGXJdW
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:33:22 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:8345 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752970AbXGXJdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:33:21 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id F36338026EE;
+	Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 25588-05; Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 514138026C7;
+	Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <46A5BA87.50105@fs.ei.tum.de>
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53547>
 
-Mark more strings for i18n, including the status message list.
+tisdag 24 juli 2007 skrev Simon 'corecode' Schubert:
+> Robin Rosenberg wrote:
+> >>> Since the sleep is per invocation of cvsexportcommit it won't hurt
+> >>> too much since it is rarely invoked on a huge number of git commits.
+> >> The question also is, why does this happen on two sequential invocations 
+> >> of cvsexportcommit, but not on two cvs commits done by cvsexportcommit?  
+> >> This should look the same to cvs, no?  
+> > 
+> > I reread my post here... My last sentence was a comment to the patch
+> > and not the sleep in CVS.
+> 
+> Yes, I realize this.  Still, I wonder the same:  why is this needed *per
+> invocation of cvsexportcommit* and not *per invocation of cvs*?  Seems
+> unintuitive to me, or I didn't read the patch good enough.  
 
-Signed-off-by: Christian Stimming <stimming@tuhh.de>
----
-  git-gui.sh |   49 +++++++++++++++++++++++++------------------------
-  1 files changed, 25 insertions(+), 24 deletions(-)
+Besides the potential update and status commands cvs is only invoked once per
+invocation of cvsexportcommit so there is no difference between a sleep per CVS
+invokation vs a sleep per cvsexportcommit invocation. The sleep is needed to make
+sure file modification times resulting from git-apply are different. 
 
-diff --git a/git-gui.sh b/git-gui.sh
-index fa510b9..6f5533b 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1340,31 +1340,32 @@ set all_icons(O$ui_workdir) file_plain
+The sleep in CVS fixes that on my machine so I do not have a problem (and cannot 
+really verify that the patch I made fixes the problem).
 
-  set max_status_desc 0
-  foreach i {
--		{__ "Unmodified"}
--
--		{_M "Modified, not staged"}
--		{M_ "Staged for commit"}
--		{MM "Portions staged for commit"}
--		{MD "Staged for commit, missing"}
--
--		{_O "Untracked, not staged"}
--		{A_ "Staged for commit"}
--		{AM "Portions staged for commit"}
--		{AD "Staged for commit, missing"}
--
--		{_D "Missing"}
--		{D_ "Staged for removal"}
--		{DO "Staged for removal, still present"}
--
--		{U_ "Requires merge resolution"}
--		{UU "Requires merge resolution"}
--		{UM "Requires merge resolution"}
--		{UD "Requires merge resolution"}
-+		{__ {mc "Unmodified"}}
-+
-+		{_M {mc "Modified, not staged"}}
-+		{M_ {mc "Staged for commit"}}
-+		{MM {mc "Portions staged for commit"}}
-+		{MD {mc "Staged for commit, missing"}}
-+
-+		{_O {mc "Untracked, not staged"}}
-+		{A_ {mc "Staged for commit"}}
-+		{AM {mc "Portions staged for commit"}}
-+		{AD {mc "Staged for commit, missing"}}
-+
-+		{_D {mc "Missing"}}
-+		{D_ {mc "Staged for removal"}}
-+		{DO {mc "Staged for removal, still present"}}
-+
-+		{U_ {mc "Requires merge resolution"}}
-+		{UU {mc "Requires merge resolution"}}
-+		{UM {mc "Requires merge resolution"}}
-+		{UD {mc "Requires merge resolution"}}
-  	} {
--	if {$max_status_desc < [string length [lindex $i 1]]} {
--		set max_status_desc [string length [lindex $i 1]]
-+	set text [eval [lindex $i 1]]
-+	if {$max_status_desc < [string length $text]} {
-+		set max_status_desc [string length $text]
-  	}
--	set all_descs([lindex $i 0]) [lindex $i 1]
-+	set all_descs([lindex $i 0]) $text
-  }
-  unset i
+This debug patch reveals the sleep in CVS. CVS does the sleep differently for different platforms.
 
-@@ -2299,7 +2300,7 @@ proc trace_current_diff_path {varname args} {
-  	} else {
-  		set p $current_diff_path
-  		set s [mapdesc [lindex $file_states($p) 0] $p]
--		set f {File:}
-+		set f [mc "File:"]
-  		set p [escape_path $p]
-  		set o normal
-  	}
--- 
-1.5.3.rc2.12.gbc280
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 4efa0c9..9a1e998 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -153,7 +153,7 @@ test_expect_success \
+       git commit -a -m "With spaces" &&
+       id=$(git rev-list --max-count=1 HEAD) &&
+       (cd "$CVSWORK" &&
+-      git-cvsexportcommit -c $id &&
++      strace -fF -o a git-cvsexportcommit -c $id &&
+       test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" = "with spaces.png/1.1/-kb with spaces.txt/1.1/"
+       )'
+ 
+@@ -165,7 +165,7 @@ test_expect_success \
+       git commit -a -m "Update with spaces" &&
+       id=$(git rev-list --max-count=1 HEAD) &&
+       (cd "$CVSWORK" &&
+-      git-cvsexportcommit -c $id
++      strace -fF -o b git-cvsexportcommit -c $id
+       test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" = "with spaces.png/1.2/-kb with spaces.txt/1.2/"
+       )'
+
+Tail of the first cvsexportcommit invocation (trash/cvswork/a) from the place where it writes the last file
+into the CVS repo.
+ 
+27778 write(7, "/with spaces.png/1.1/Tue Jul 24 "..., 99) = 99
+27778 close(7)                          = 0
+27778 munmap(0xb7f15000, 4096)          = 0
+27778 rename("CVS/Entries.Backup", "CVS/Entries") = 0
+27778 unlink("CVS/Entries.Log")         = 0
+27778 fchdir(6)                         = 0
+27778 close(6)                          = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+27778 time(NULL)                        = 1185268822
+27778 gettimeofday({1185268822, 953340}, NULL) = 0
+
+Here CVS sleeps. The amount varies between invocations since it
+only sleeps enough for the seconds to wrap.
+
+27778 nanosleep({0, 46660000}, NULL)    = 0
+27778 time(NULL)                        = 1185268823
+27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
+27778 close(1 <unfinished ...>
+27766 <... read resumed> "", 4096)      = 0
+27778 <... close resumed> )             = 0
+27766 close(6 <unfinished ...>
+27778 munmap(0xb7f14000, 4096 <unfinished ...>
+27766 <... close resumed> )             = 0
+27778 <... munmap resumed> )            = 0
+
+Back into git-cvsexportcommit
+27766 rt_sigaction(SIGHUP, {SIG_IGN},  <unfinished ...>
+27778 exit_group(0)                     = ?
+27766 <... rt_sigaction resumed> {SIG_DFL}, 8) = 0
+27766 --- SIGCHLD (Child exited) @ 0 (0) ---
+27766 rt_sigaction(SIGINT, {SIG_IGN}, {SIG_DFL}, 8) = 0
+27766 rt_sigaction(SIGQUIT, {SIG_IGN}, {SIG_DFL}, 8) = 0
+27766 waitpid(27778, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0) = 27778
+27766 rt_sigaction(SIGHUP, {SIG_DFL}, NULL, 8) = 0
+27766 rt_sigaction(SIGINT, {SIG_DFL}, NULL, 8) = 0
+27766 rt_sigaction(SIGQUIT, {SIG_DFL}, NULL, 8) = 0
+27766 unlink(".msg")                    = 0
+27766 unlink(".cvsexportcommit.diff")   = 0
+27766 stat64("/home/me/tmp/git-cvsapplycommit-55ADfh", {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
+27766 lstat64("/home/me/tmp/git-cvsapplycommit-55ADfh", {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
+27766 chmod("/home/me/tmp/git-cvsapplycommit-55ADfh", 0700) = 0
+27766 open("/home/me/tmp/git-cvsapplycommit-55ADfh", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY) = 6
+27766 fstat64(6, {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
+27766 fcntl64(6, F_SETFD, FD_CLOEXEC)   = 0
+27766 getdents64(6, /* 2 entries */, 4096) = 48
+27766 getdents64(6, /* 0 entries */, 4096) = 0
+27766 close(6)                          = 0
+27766 rmdir("/home/me/tmp/git-cvsapplycommit-55ADfh") = 0
+27766 write(1, "/home/me/SW/GIT/t/trash/cvsroot/"..., 234) = 234
+27766 exit_group(0)                     = ?
+
+-- robin
