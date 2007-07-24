@@ -1,84 +1,159 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Tue, 24 Jul 2007 15:29:05 +0200
-Message-ID: <46A5FEA1.3030300@trolltech.com>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site> <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222223460.14781@racer.site> <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222255010.14781@racer.site> <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707230000020.14781@racer.site> <20070723035644.GC32566@spearce.org> <7v1wezohi4.fsf@assigned-by-dhcp.cox.net> <46A5B5F5.6000202@trolltech.com> <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net> <46A5DF1F.2030307@trolltech.com> <Pine.LNX.4.64.0707241337470.14781@racer.site> <46A5FDF0.3060801@trolltech.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] filter-branch: rewrite only refs which were not 
+ excludedbythe options
+Date: Tue, 24 Jul 2007 15:32:25 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46A5FF69.F5D75C9E@eudaptics.com>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site> 
+	 <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
+	 <46A5E136.D413D3B7@eudaptics.com> <Pine.LNX.4.64.0707241229170.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig953B791F4301F28DA31C3456"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 15:28:52 2007
+X-From: git-owner@vger.kernel.org Tue Jul 24 15:32:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDKRY-0003Su-Fw
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:28:52 +0200
+	id 1IDKV1-0004xa-8z
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757297AbXGXN2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 09:28:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757274AbXGXN2c
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:28:32 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:49900 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757210AbXGXN2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 09:28:31 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 41A4D74279; Tue, 24 Jul 2007 15:28:30 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 3487174213; Tue, 24 Jul 2007 15:28:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070716 Thunderbird/2.0.0.5 Mnenhy/0.7.5.666
-In-Reply-To: <46A5FDF0.3060801@trolltech.com>
-X-Enigmail-Version: 0.95.2
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1757540AbXGXNcW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 09:32:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXGXNcV
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:32:21 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28352 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755539AbXGXNcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 09:32:20 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <J.Sixt@eudaptics.com>)
+	id 1IDKUq-0000Xl-Gq; Tue, 24 Jul 2007 15:32:16 +0200
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 93C5D55DD; Tue, 24 Jul 2007 15:32:16 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 2.3 (++)
+X-Spam-Report: AWL=-1.346, BAYES_99=3.5, FORGED_RCVD_HELO=0.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53587>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig953B791F4301F28DA31C3456
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin wrote:
+> 
+> Hi,
+> 
+> On Tue, 24 Jul 2007, Johannes Sixt wrote:
+> 
+> > Johannes Schindelin wrote:
+> > > So really exclude excluded refs from being rewritten.  This also allows
+> > > you to safely call
+> > >
+> > >         git filter-branch <some-filter> --all <rev-list options>
+> > >
+> > > to rewrite _all_ branches and tags.
+> >
+> > BTW, '--all' in the argument list of filter-branch works only if it is
+> > preceded by '--':
+> >
+> >       git filter-branch <some-filter> -- --all <rev-list options>
+> 
+> Hmm.  Maybe we should reconsider the logic.  I.e. instead of
+> 
+>         *)
+>                 usage
+> 
+>         *)
+>                 break
 
-Marius Storm-Olsen said the following on 24.07.2007 15:26:
-> So, it's look like this ('yes' mean CRLF EOL):
+That is not enough: This case block comes after a test that checks that
+one additional argument is present, which would not be true anymore.
 
-Bah, ignore "('yes' mean CRLF EOL)". I rewrote the table and forgot to=20
-nuke that part.
+> > > @@ -181,6 +181,7 @@ export GIT_DIR GIT_WORK_TREE=.
+> > >
+> > >  # These refs should be updated if their heads were rewritten
+> > >
+> > > +negatives="$(git rev-parse --revs-only "$@" | grep "^\^")"
+> > >  git rev-parse --revs-only --symbolic "$@" |
+> > >  while read ref
+> > >  do
+> > > @@ -196,7 +197,13 @@ do
+> > >                         grep "refs/\(tags\|heads\)/$ref$")"
+> > >         esac
+> > >
+> > > -       git check-ref-format "$ref" && echo "$ref"
+> > > +       # make sure we have a valid ref
+> > > +       git check-ref-format "$ref" || continue
+> > > +
+> > > +       # if the ref has been excluded by the other options, skip it
+> > > +       test -z "$(git rev-list -1 "$ref" $negatives)" && continue
+> >
+> > Does this catch my use-case with --since? I think not, because:
+> >
+> > $ git rev-parse --revs-only --since=2007.01.01 master topic
+> > --max-age=1167606000
+> > 257061f3323dc0162f731d934f0870e919211fdf
+> > 3405729b94a654df8afbb9a1e13a4cf49a1c351c
+> >
+> > There are no negatives. Does it help to filter the non-positives?
+> >
+> > negatives=$(git rev-parse --revs-only "$@" | egrep -v '^[0-9a-f]{40}$')
+> >
+> > (Except the the '{40}' part is not portable. Hmpf.)
+> 
+> To keep the "--since=..." we have to lose the "--revs-only"...
+> Darn.  I thought that "--since=" was expanded by rev-parse.  FWIW this
+> might work:
+> 
+> negatives="$(git rev-parse "$@" | while read line
+>         do
+>                 case "$line" in
+>                 $_x40) ;;
+>                 *) echo "$line";;
+>                 esac
+>         done)"
+> 
+> Can you please test?  I am off for lunch.
 
---=20
-=2Emarius
+This worked:
 
+negatives=`git rev-parse --revs-only "$@" | while read line
+	do
+		case "$line" in
+		$_x40) ;;
+		*) echo "$line";;
+		esac
+	done`
 
---------------enig953B791F4301F28DA31C3456
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+i.e. the closing parenthesis in the case arms together with the opening
+$( made for a syntax error. The --revs-only did not hurt in my tests,
+but you may have other reasons to remove it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+But there's another problem. Consider this history:
 
-iD8DBQFGpf6iKzzXl/njVP8RAm4rAJ9mTm8j9nD4XEJmPs22lwW+l6/qSwCgr1yI
-bzZmr5S/YBVCmatQ/QeEToA=
-=/PmA
------END PGP SIGNATURE-----
+   ---X--o--M         <- master
+             \
+          ...-o-...-o <- topic
 
---------------enig953B791F4301F28DA31C3456--
+Then this (rather contrieved) command:
+
+   $ git-filter-branch -n $n master topic --not X
+
+If $n is small enough so that M is never rewritten, then
+
+   git rev-list -1 "$ref" $negatives
+
+still expands to non-empty even for 'master' (= M), which then
+incorrectly ends up in "$tempdir"/heads.
+
+I think the decision whether a positive ref should be rewritten should
+be postponed until the rewrite has completed. Because then we know for
+certain which revs were treated and can pick the matching refs. We only
+lose the check for the error "Which ref do you want to rewrite?"
+
+-- Hannes
