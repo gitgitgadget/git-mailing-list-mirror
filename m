@@ -1,89 +1,94 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Tue, 24 Jul 2007 10:02:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241002410.14781@racer.site>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
- <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707222223460.14781@racer.site>
- <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707222255010.14781@racer.site>
- <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707230000020.14781@racer.site> <20070723035644.GC32566@spearce.org>
- <7v1wezohi4.fsf@assigned-by-dhcp.cox.net> <46A5B5F5.6000202@trolltech.com>
+Subject: Re: [PATCH] filter-branch: Big syntax change; support rewriting
+ multiple refs
+Date: Tue, 24 Jul 2007 10:10:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241010060.14781@racer.site>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
+ <7vfy3ejre3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:03:21 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:10:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGIa-0003ca-CD
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:03:20 +0200
+	id 1IDGPa-0005sA-J2
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761155AbXGXJDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760288AbXGXJDR
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:03:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52455 "HELO mail.gmx.net"
+	id S934845AbXGXJKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:10:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934640AbXGXJKa
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:10:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36756 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761155AbXGXJDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 05:03:16 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 09:03:14 -0000
+	id S934043AbXGXJK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:10:29 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 09:10:27 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 24 Jul 2007 11:03:14 +0200
+  by mail.gmx.net (mp004) with SMTP; 24 Jul 2007 11:10:27 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX197t41p2Vl7O+VU2rTVSr0trb8/Lx813A+IjHzgUq
-	RYjO5ADem51JBb
+X-Provags-ID: V01U2FsdGVkX18n0CFw/ocnkFdC0tA5XxdqYILOSIQo7lNPscvvWR
+	QzBow9IPgGRva4
 X-X-Sender: gene099@racer.site
-In-Reply-To: <46A5B5F5.6000202@trolltech.com>
+In-Reply-To: <7vfy3ejre3.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53539>
 
 Hi,
 
-On Tue, 24 Jul 2007, Marius Storm-Olsen wrote:
+On Mon, 23 Jul 2007, Junio C Hamano wrote:
 
-> > > I live by new-workdir.  I do everything with it.  And today I
-> > > just spent over an hour sorting out cases where my many, many
-> > > workdirs have different refs than their base repositories,
-> > > because their packed-refs files are different.
-> > > Grrrrrrrrrrrrrrrrrr.
-> > > 
-> > > So we really need to make anyone that edits packed-refs (and maybe also
-> > > config) resolve the symlink and do the edit in the target directory.  Then
-> > > we can consider adding this workdir thing
-> > >  to core git.
-> > 
-> > This is actually not limited to packed-refs file, but applies to other
-> > things as well.
-> > 
-> > I have been wondering if something like this patch would be sufficient.  The
-> > idea essentially is to take the lock on the link
-> > target when we try to take a lock on something that is a symlink
-> > pointing elsewhere.
-> (..snip..)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> While you guys are discussing this, please please keep in mind that there are
-> Windows users (/me raises his hand) out there that really really want this
-> too. So, please try to keep it light on the symlinks.
+> > 	Junio, I know that this comes quite late in the game, but I really
+> > 	think that the "first arg is new branch name" was a bad syntax.
+> >
+> > 	Could you please consider taking this patch (or whatever version
+> > 	comes out after review ;-) or keeping filter-branch of 1.5.3?  I 
+> > 	do not want people to get used to the borked syntax...
+> 
+> Yeah, "No new features after -rc" should not apply to this one.
+> 
+> I was actually going to ask you about it, since this is a feature we 
+> have already advertised to the public, but still is a new feature, and 
+> we'd be better off getting it right in the first public version.
 
-Easy: use cygwin.
+Thanks.
 
-Okay, a bit more seriously again: in the recent weeks, it seems that more 
-and more Windows users are asking for features.  Since I guess you are a 
-developer (why else would you want to use git), IMHO it is your itch to 
-scratch.
+> > 	BTW I considered "git log -g --all" as an alternative to
+> > 	inspecting refs/original/, but ATM this die()s if just _one_ of 
+> > 	the refs has no logs.  Probably should fix that, too.
+> 
+> I do not think refs/original/ is such a hot feature.  What's wrong with 
+> "gitk mine@{1}...mine"?
+
+If you are saying
+
+	$ git filter-branch <some-filters> --all <rev-list-options>
+
+potentially all refs are rewritten.
+
+To find out which ones actually changed, you can use "git show-ref | grep 
+^refs/original/" ATM.
+
+It is not really easy to do it otherwise.  With the patches I sent out 
+yesterday,
+
+	$ git log -g --no-walk --all --decorate --abbrev-commit 
+	  --pretty=oneline --since=<before-the-last-filter-branch-call>
+
+would be similar, but not as comfortable, would it?
+
+Of course, we could teach filter-branch an option, say --show-changed, 
+which will not actually filter branches, but instead look at the reflogs 
+itself and show the refs which were recently changed by filter-branch.
+
+But note that you can switch off reflogs.
 
 Ciao,
 Dscho
-
-P.S.: Sorry if this came over as rude, but I am growing slightly annoyed 
-by the expectation of so many that since it is Open Source, I should work 
-for free.
