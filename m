@@ -1,43 +1,43 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] filter-branch: Big syntax change; support rewriting
- multiple refs
-Date: Tue, 24 Jul 2007 10:10:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241010060.14781@racer.site>
-References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
- <7vfy3ejre3.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] git log -g: Complain, but do not fail, when no reflogs
+ are there
+Date: Tue, 24 Jul 2007 10:14:31 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241011090.14781@racer.site>
+References: <Pine.LNX.4.64.0707240039300.14781@racer.site>
+ <7vbqe2jr9m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:10:39 2007
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:14:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGPa-0005sA-J2
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:10:34 +0200
+	id 1IDGTk-00073G-Ib
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934845AbXGXJKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:10:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934640AbXGXJKa
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:10:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36756 "HELO mail.gmx.net"
+	id S1758390AbXGXJOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756769AbXGXJOt
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:14:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56390 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934043AbXGXJK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 05:10:29 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 09:10:27 -0000
+	id S1756719AbXGXJOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:14:48 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 09:14:47 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp004) with SMTP; 24 Jul 2007 11:10:27 +0200
+  by mail.gmx.net (mp004) with SMTP; 24 Jul 2007 11:14:47 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18n0CFw/ocnkFdC0tA5XxdqYILOSIQo7lNPscvvWR
-	QzBow9IPgGRva4
+X-Provags-ID: V01U2FsdGVkX1/bZ6ZG0i/bD265CnLrJey0tHLlEBqV8jIJXwtL40
+	sOlXuRC9UV80uO
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vfy3ejre3.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vbqe2jr9m.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53540>
 
 Hi,
 
@@ -45,50 +45,60 @@ On Mon, 23 Jul 2007, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > 	Junio, I know that this comes quite late in the game, but I really
-> > 	think that the "first arg is new branch name" was a bad syntax.
+> > When asking "git log -g --all", clearly you want to see only those refs
+> > that do have reflogs, but you do not want it to fail, either.
 > >
-> > 	Could you please consider taking this patch (or whatever version
-> > 	comes out after review ;-) or keeping filter-branch of 1.5.3?  I 
-> > 	do not want people to get used to the borked syntax...
+> > So instead of die()ing, complain about it, but move on to the other refs.
 > 
-> Yeah, "No new features after -rc" should not apply to this one.
-> 
-> I was actually going to ask you about it, since this is a feature we 
-> have already advertised to the public, but still is a new feature, and 
-> we'd be better off getting it right in the first public version.
+> Hmph, do we even want to error(), I wonder...
 
-Thanks.
+Maybe not.  I thought it was some useful information, though.
 
-> > 	BTW I considered "git log -g --all" as an alternative to
-> > 	inspecting refs/original/, but ATM this die()s if just _one_ of 
-> > 	the refs has no logs.  Probably should fix that, too.
-> 
-> I do not think refs/original/ is such a hot feature.  What's wrong with 
-> "gitk mine@{1}...mine"?
+> Can you tell, at that point, if there were explicit branch names given 
+> originally on the command line, or the refs came
+> from --all?
 
-If you are saying
+No:
 
-	$ git filter-branch <some-filters> --all <rev-list-options>
+                        if (!strcmp(arg, "--all")) {
+                                handle_all(revs, flags);
+                                continue;
+                        }
 
-potentially all refs are rewritten.
+which calls
 
-To find out which ones actually changed, you can use "git show-ref | grep 
-^refs/original/" ATM.
+static void handle_all(struct rev_info *revs, unsigned flags)
+{
+        struct all_refs_cb cb;
+        cb.all_revs = revs;
+        cb.all_flags = flags;
+        for_each_ref(handle_one_ref, &cb);
+}
 
-It is not really easy to do it otherwise.  With the patches I sent out 
-yesterday,
+which in turn calls
 
-	$ git log -g --no-walk --all --decorate --abbrev-commit 
-	  --pretty=oneline --since=<before-the-last-filter-branch-call>
+static int handle_one_ref(const char *path, const unsigned char *sha1, int flag,
+ void *cb_data)
+{
+        struct all_refs_cb *cb = cb_data;
+        struct object *object = get_reference(cb->all_revs, path, sha1,
+                                              cb->all_flags);
+        add_pending_object(cb->all_revs, object, path);
+        return 0;
+}
 
-would be similar, but not as comfortable, would it?
+If you do not say --all, handle_revision_arg() is called, which calls 
+add_pending_object thus:
 
-Of course, we could teach filter-branch an option, say --show-changed, 
-which will not actually filter branches, but instead look at the reflogs 
-itself and show the refs which were recently changed by filter-branch.
+                        add_pending_object(revs, &a->object, this);
+                        add_pending_object(revs, &b->object, next);
 
-But note that you can switch off reflogs.
+or thus
+
+        add_pending_object_with_mode(revs, object, arg, mode);
+
+So no, there is not really a chance to see how the refs were specified at 
+the time add_pending_object() is called.
 
 Ciao,
 Dscho
