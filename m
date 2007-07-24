@@ -1,145 +1,116 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: [PATCH] Fix translation of strings in foreach lists.
-Date: Tue, 24 Jul 2007 11:27:01 +0200
-Message-ID: <20070724112701.ndpm5fxaocks804s@webmail.tu-harburg.de>
-References: <1282.25717.qm@web38901.mail.mud.yahoo.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] filter-branch: Big syntax change; support rewriting 
+ multiplerefs
+Date: Tue, 24 Jul 2007 11:27:49 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46A5C615.24C24F0F@eudaptics.com>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 8BIT
-To: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:27:17 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:28:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGfl-0002CQ-EZ
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:27:17 +0200
+	id 1IDGgT-0002P5-Dp
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762560AbXGXJ1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762374AbXGXJ1N
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:27:13 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:43452 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760621AbXGXJ1M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 05:27:12 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6O9R26b010568
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 24 Jul 2007 11:27:02 +0200
-Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6O9R2NU014186;
-	Tue, 24 Jul 2007 11:27:02 +0200
-Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
-	id 0DB3DE50349; Tue, 24 Jul 2007 11:27:01 +0200 (CEST)
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
-	webmail.tu-harburg.de (Horde MIME library) with HTTP; Tue, 24 Jul 2007
-	11:27:01 +0200
-In-Reply-To: <1282.25717.qm@web38901.mail.mud.yahoo.com>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+	id S1761176AbXGXJ16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:27:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761713AbXGXJ16
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:27:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:56481 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760279AbXGXJ15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:27:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IDGgH-0004jX-N3
+	for git@vger.kernel.org; Tue, 24 Jul 2007 11:27:49 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 11:27:49 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 11:27:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53545>
 
-Fix translation of strings in foreach lists.
+Johannes Schindelin wrote:
+> +# These refs should be updated if their heads were rewritten
+> +
+> +git rev-parse --revs-only --symbolic "$@" |
+> +while read ref
+> +do
+> +       # normalize ref
+> +       case "$ref" in
+> +       HEAD)
+> +               ref="$(git symbolic-ref "$ref")"
+> +       ;;
+> +       refs/*)
+> +       ;;
+> +       *)
+> +               ref="$(git for-each-ref --format='%(refname)' |
+> +                       grep /"$ref")"
+> +       esac
+> +
+> +       git check-ref-format "$ref" && echo "$ref"
+> +done > "$tempdir"/heads
 
-Signed-off-by: Christian Stimming <stimming@tuhh.de>
----
-Quoting Brett Schwarz <brett_schwarz@yahoo.com>:
-> I not sure if it's worth changing, but you don't necessarily need   
-> those [append]'s in there.
+This does not work as I'd expected it: I can't successfully say:
 
-Thanks for the info. It is basically up to Shawn to decide which style  
-he likes more.
+   git-filter-branch master
 
-This patch is already necessary because I accidentally messed up the  
-foreach argument lists. With this patch those will work again and will  
-additionally be translated as well. (Unfortunately, I can't commit to  
-git-gui-i18n ATM due to a http-only-firewall connection. Johannes...?  
-Thanks.)
+It tells me:
 
-  lib/database.tcl |   16 ++++++++--------
-  lib/option.tcl   |   26 +++++++++++++-------------
-  2 files changed, 21 insertions(+), 21 deletions(-)
+   Which ref do you want to rewrite?
 
-diff --git a/lib/database.tcl b/lib/database.tcl
-index 8dda9af..118b1b2 100644
---- a/lib/database.tcl
-+++ b/lib/database.tcl
-@@ -40,16 +40,16 @@ proc do_stats {} {
+> +# NEEDSWORK: we should sort the unmapped refs topologically first
+> +while read ref
+> +do
+> +       sha1=$(git rev-parse "$ref"^0)
+> +       test -f "$workdir"/../map/$sha1 && continue
+> +       # Assign the boundarie(s) in the set of rewritten commits
+> +       # as the replacement commit(s).
+> +       # (This would look a bit nicer if --not --stdin worked.)
+> +       for p in $((cd "$workdir"/../map; ls | sed "s/^/^/") |
+> +               git rev-list $ref --boundary --stdin |
+> +               sed -n "s/^-//p")
+> +       do
+> +               map $p >> "$workdir"/../map/$sha1
+> +       done
+> +done < "$tempdir"/heads
 
-  	frame $w.stat -borderwidth 1 -relief solid
-  	foreach s {
--		{count           [mc "Number of loose objects"]}
--		{size            [mc "Disk space used by loose objects"] { KiB}}
--		{in-pack         [mc "Number of packed objects"]}
--		{packs           [mc "Number of packs"]}
--		{size-pack       [mc "Disk space used by packed objects"] { KiB}}
--		{prune-packable  [mc "Packed objects waiting for pruning"]}
--		{garbage         [mc "Garbage files"]}
-+		{count           {mc "Number of loose objects"}}
-+		{size            {mc "Disk space used by loose objects"} { KiB}}
-+		{in-pack         {mc "Number of packed objects"}}
-+		{packs           {mc "Number of packs"}}
-+		{size-pack       {mc "Disk space used by packed objects"} { KiB}}
-+		{prune-packable  {mc "Packed objects waiting for pruning"}}
-+		{garbage         {mc "Garbage files"}}
-  		} {
-  		set name [lindex $s 0]
--		set label [lindex $s 1]
-+		set label [eval [lindex $s 1]]
-  		if {[catch {set value $stats($name)}]} continue
-  		if {[llength $s] > 2} {
-  			set value "$value[lindex $s 2]"
-diff --git a/lib/option.tcl b/lib/option.tcl
-index 6c4d7ae..8d9e09d 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -183,22 +183,22 @@ proc do_options {} {
+This logic seems to be borked, and I don't grok it. I was trying this:
 
-  	set optid 0
-  	foreach option {
--		{t user.name [mc "User Name"]}
--		{t user.email [mc "Email Address"]}
--
--		{b merge.summary [mc "Summarize Merge Commits"]}
--		{i-1..5 merge.verbosity [mc "Merge Verbosity"]}
--		{b merge.diffstat [mc "Show Diffstat After Merge"]}
--
--		{b gui.trustmtime  [mc "Trust File Modification Timestamps"]}
--		{b gui.pruneduringfetch [mc "Prune Tracking Branches During Fetch"]}
--		{b gui.matchtrackingbranch [mc "Match Tracking Branches"]}
--		{i-0..99 gui.diffcontext [mc "Number of Diff Context Lines"]}
--		{t gui.newbranchtemplate [mc "New Branch Name Template"]}
-+		{t user.name {mc "User Name"}}
-+		{t user.email {mc "Email Address"}}
-+
-+		{b merge.summary {mc "Summarize Merge Commits"}}
-+		{i-1..5 merge.verbosity {mc "Merge Verbosity"}}
-+		{b merge.diffstat {mc "Show Diffstat After Merge"}}
-+
-+		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
-+		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
-+		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
-+		{i-0..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
-+		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
-  		} {
-  		set type [lindex $option 0]
-  		set name [lindex $option 1]
--		set text [lindex $option 2]
-+		set text [eval [lindex $option 2]]
-  		incr optid
-  		foreach f {repo global} {
-  			switch -glob -- $type {
--- 
-1.5.3.rc2.12.gbc280
+   git-filter-branch -- --since=2007.01.10 \
+		refs/heads/topic refs/heads/master
+
+where topic's last change is from before 2007.01.10, i.e. it is not
+among the rewritten commits. And I get this:
+
+WARNING: Ref 'refs/heads/master' is unchanged
+WARNING: 'refs/heads/topic' was rewritten into multiple commits:
+329325526647503382ae7dee41c12fe6b81bbe43
+2bdf3349b76f72ceb71755c75a555d60bc7c73aa
+ce6c9dfeac5ddbd64da2d9360d6552717df81d1f
+
+The first 2 of these 3 sha1s happen to be merge bases of topic and
+master, but none of them appear anywhere in
+
+   git rev-list --parents --boundary --since=2007.07.10 \
+		refs/heads/topic refs/heads/master
+
+What's up?
+
+-- Hannes
