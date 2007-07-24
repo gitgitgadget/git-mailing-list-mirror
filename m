@@ -1,116 +1,152 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] filter-branch: rewrite only refs which were not 
- excludedbythe options
-Date: Tue, 24 Jul 2007 20:52:08 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707242047400.14781@racer.site>
-References: <Pine.LNX.4.64.0707231829210.14781@racer.site>    
- <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
-    <46A5E136.D413D3B7@eudaptics.com> <Pine.LNX.4.64.0707241229170.14781@racer.site>
-   <46A5FF69.F5D75C9E@eudaptics.com> <Pine.LNX.4.64.0707241435290.14781@racer.site>
-  <46A607EB.BA31D7C5@eudaptics.com> <Pine.LNX.4.64.0707241518290.14781@racer.site>
- <46A614CE.597C7130@eudaptics.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: when git-rebase -i fails to cherry-pick
+Date: Tue, 24 Jul 2007 22:05:10 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070724200510.GA27610@informatik.uni-freiburg.de>
+References: <20070723225402.GB22513@informatik.uni-freiburg.de> <Pine.LNX.4.64.0707240005240.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:52:35 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 22:06:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDQQq-0003NR-34
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 21:52:32 +0200
+	id 1IDQdi-0000Ul-JW
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 22:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756822AbXGXTw3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 15:52:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756475AbXGXTw2
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 15:52:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57700 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756136AbXGXTw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 15:52:27 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 19:52:25 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 24 Jul 2007 21:52:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+uhuclbJGudsRCMIp7l0folDojfWgaahUlIszsAL
-	pLw0ok4V1pl6Mg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46A614CE.597C7130@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S1761218AbXGXUFT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Jul 2007 16:05:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760778AbXGXUFS
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 16:05:18 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:65273 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760099AbXGXUFP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 16:05:15 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IDQd7-00035R-3D; Tue, 24 Jul 2007 22:05:13 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l6OK5AFu028001;
+	Tue, 24 Jul 2007 22:05:10 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l6OK5Atq028000;
+	Tue, 24 Jul 2007 22:05:10 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707240005240.14781@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53635>
 
-Hi,
+Hello Johannes,
 
-On Tue, 24 Jul 2007, Johannes Sixt wrote:
+Johannes Schindelin wrote:
+> > - If a cherry-pick fails, it tells me to resolve my conflicts, 'git=
+ add
+> >   <paths>' and to do 'git commit -c $sha1id'.
+> >=20
+> >   But it doesn't tell me, how I continue to rebase after that.
+> >=20
+> >   'git rebase -i --continue' works.
+>=20
+> Actually, even "git rebase --continue" works.  And you do not really =
+have=20
+> to commit, either, just updating your index is fine.  In fact, if you=
+ say=20
+> "git reset --hard", it will skip the commit.
+OK, thanks.
 
-> Johannes Schindelin wrote:
-> 
-> > On Tue, 24 Jul 2007, Johannes Sixt wrote:
-> > 
-> > > Johannes Schindelin wrote:
-> > >
-> > > > On Tue, 24 Jul 2007, Johannes Sixt wrote:
-> > > >
-> > > > > But there's another problem. Consider this history:
-> > > > >
-> > > > >    ---X--o--M         <- master
-> > > > >              \
-> > > > >           ...-o-...-o <- topic
-> > > > >
-> > > > > Then this (rather contrieved) command:
-> > > > >
-> > > > >    $ git-filter-branch -n $n master topic --not X
-> > > > >
-> > > > > If $n is small enough so that M is never rewritten, then
-> > > > >
-> > > > >    git rev-list -1 "$ref" $negatives
-> > > > >
-> > > > > still expands to non-empty even for 'master' (= M), which then
-> > > > > incorrectly ends up in "$tempdir"/heads.
-> > > >
-> > > > Aaargh!  Of course!  Since I have to add --topo-order at the end.
-> > > > Otherwise it makes no sense.
-> > >
-> > > No, that was no my point: In my example above, if n=1, `git rev-list -1
-> > > "$ref" $negatives` evaluates to
-> > >
-> > >     $ git rev-list -1 "master" -n 1 ^X
-> > >
-> > > which returns M, even though M is not going to be rewritten.
-> > > --topo-order changes nothing. The problem is that the -n is a relative
-> > > restriction. --since is turned into --max-age, which is absolute,
-> > > therefore, the test works as expected with --since.
-> > 
-> > So you think we have to say something like
-> > 
-> >         git rev-list "$ref" $negatives | grep "$ref" > /dev/null || continue
-> > 
-> > ?
-> 
-> No, doesn't help either.
-> 
-> We are talking about a case where there is more than one positive ref.
-> We need not consider the -- sub/ case - it makes things just even more
-> complicated. There are two different rev ranges to be considered:
-> 
->   # (1) candidate range to be rewritten
->   $ git rev-list "$@"
-> 
->   # (2) test if positive ref is in candidate range
->   $ git rev-list $ref $negatives
+> > - If a cherry-pick of a commit to be squashed fails, the instructio=
+n to
+> >   do 'git commit -c $sha1id' is wrong, because then I don't get bot=
+h
+> >   message to squash.
+>=20
+> Yes, it is a leftover from the bad old days, when this script was cal=
+led=20
+> edit-patch-series, and I was a rebase hater.
+>=20
+> In the meantime, somebody on IRC explained to me how rebase works, an=
+d=20
+> that rebase lovers were quite annoyed not to be able to just resolve =
+the=20
+> conflicts and "git rebase --continue".
+>=20
+> I'd appreciate if you prepared a patch with better explanations, and =
+also=20
+> reviewed the man page, if it is in good shape (and does not lie about=
+ the=20
+> current behaviour).
+It's on my todo list, but not the top item for git.
 
-Okay, but with out any subdirs,
+In the mean-time I found another nuisance:
 
-	git rev-list "$@" | grep $(git rev-parse "$ref") > /dev/null || continue
+After doing:
 
-should do exactly what we want.  But in that case, we could just use the 
-generated list ../revs to grep for the positive refs.
+	tmpdir=3D/tmp/repo
+	mkdir $tmpdir
+	cd $tmpdir
+	git init
+	for n in one two three four; do echo $n >> file; git add file;
+	git commit -m $n; done
+	git rebase -i HEAD~3 #squash four onto two
 
-Darn, this _is_ getting complicated.
+git rebase stops (as expected) when trying to apply four, at this stage
+two is already commited.
 
-Ciao,
-Dscho
+The conflicting file looks as follows:
+
+	one
+	two
+	<<<<<<< HEAD:file
+	=3D=3D=3D=3D=3D=3D=3D
+	three
+	four
+	>>>>>>> e7fbd8f... four:file
+
+I currently have no idea how to improve this, but I miss the informatio=
+n
+that the commit *adds* "four" and "three" is only context.
+
+Resolving with:
+
+	echo one > file; echo two >> file; echo four >> file;
+	git add file; git rebase --continue
+
+and typing a new log (e.g. two + four) git rebase stops once more (agai=
+n
+as expected) when trying to apply three, OK, resolving the conflict is
+easy (one, two, three, four), git add file, git rebase --continue.
+
+Looking at the resulting log, I have the following:
+
+        zeisberg@cassiopeia:/tmp/repo$ git log --pretty=3Doneline
+	145ce01e1cf3f4cb86cd0065c0d0d5b62b399ad4 three
+	cd082bca636efca17409be4d871d0971237df06c two + four
+	b6b985977db45e314509d94282597c2ff8029d3d two
+	15f8cbbb5a452b075b49f3dedbeaeb66668b8025 one
+
+So the request to squash two + four was lost.
+
+I will look at it when I'm done with git-sendemail ...
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+main(){char*a=3D"main(){char*a=3D%c%s%c;printf(a,34,a,34%c";printf(a,34=
+,a,34
+,10);a=3D",10);a=3D%c%s%c;printf(a,34,a,34,10);}%c";printf(a,34,a,34,10=
+);}
