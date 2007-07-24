@@ -1,66 +1,61 @@
-From: Thierry Parmentelat <thierry.parmentelat@sophia.inria.fr>
-Subject: Re: [PATCH/RFH] Mark user-manual as UTF-8
-Date: Tue, 24 Jul 2007 12:45:05 +0200
-Message-ID: <46A5D831.6090608@sophia.inria.fr>
-References: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net> <4753DAE3-2F1F-49C0-906A-09CBAF240C87@wincent.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] filter-branch: when dwim'ing a ref, only allow heads andtags
+Date: Tue, 24 Jul 2007 13:04:28 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46A5DCBC.E585A69D@eudaptics.com>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
+	 <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241134330.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@citi.umich.edu>,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 12:44:44 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 13:04:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDHsh-00013P-Bz
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 12:44:43 +0200
+	id 1IDIBu-0006Qd-GG
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 13:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933100AbXGXKok convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Jul 2007 06:44:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764268AbXGXKok
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 06:44:40 -0400
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:55854 "EHLO
-	mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760066AbXGXKoj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 06:44:39 -0400
-X-IronPort-AV: E=Sophos;i="4.16,574,1175464800"; 
-   d="scan'208";a="621243"
-Received: from muck.inria.fr ([138.96.250.111])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-SHA; 24 Jul 2007 12:44:38 +0200
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
-In-Reply-To: <4753DAE3-2F1F-49C0-906A-09CBAF240C87@wincent.com>
+	id S932853AbXGXLE0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 07:04:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932865AbXGXLEZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 07:04:25 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:57040 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932667AbXGXLEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 07:04:24 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <J.Sixt@eudaptics.com>)
+	id 1IDIBg-0004nc-0K; Tue, 24 Jul 2007 13:04:20 +0200
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id CF52555DD; Tue, 24 Jul 2007 13:04:19 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 2.3 (++)
+X-Spam-Report: AWL=-1.363, BAYES_99=3.5, FORGED_RCVD_HELO=0.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53563>
 
-Hi there - I'm the wierd guy :-)
+Johannes Schindelin wrote:
+> -                       grep /"$ref")"
+> +                       grep "refs/\(tags\|heads\)/$ref$")"
 
-I've just reloaded the page and the weird stuff has gone.
+Thanks, but I don't think that this is a portable grep pattern:
 
+$ echo "abc" | grep '\(a\|x\)'
+$ echo "abc" | egrep '(a|x)'
+abc
 
-Wincent Colaiuta wrote:
-> El 24/7/2007, a las 9:46, Junio C Hamano escribi=F3:
->
->> There have been several complaints against k.org's user-manual
->> page.  The document is generated in ISO-8859-1 by the xsltproc
->> toolchain (I suspect this is because released docbook.xsl we use
->> has xsl:output element that says the output is ISO-8859-1) but
->> server delivers it with "charset=3DUTF-8", and all h*ll breaks
->> loose.
->>
->> This attempts to force UTF-8 on the generating end.
->
-> Thanks for doing this, Junio. I was one of the people who reported=20
-> this (although never saw my mail get through to the list).
->
-> Funnily, enough, about an hour after you posted your patch another=20
-> email ("git documentation - user manual html version has wierd [sic]=20
-> characters all over the place") was posted to the list...
->
-> Cheers,
-> Wincent
+But then, this is on some AIX 4.3. How about:
+
+   fgrep -e "refs/heads/$ref" -e "refs/tags/$ref"
+or
+   grep -e "^refs/heads/$ref" -e "^refs/tags/$ref"
+
+-- Hannes
