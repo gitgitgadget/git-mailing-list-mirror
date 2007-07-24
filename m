@@ -1,116 +1,106 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Wed, 25 Jul 2007 01:15:29 +0200
-Message-ID: <20070724231529.GA29156@steel.home>
-References: <46A5B5F5.6000202@trolltech.com> <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net> <46A5DF1F.2030307@trolltech.com> <Pine.LNX.4.64.0707241337470.14781@racer.site> <46A5FDF0.3060801@trolltech.com> <Pine.LNX.4.64.0707241431540.14781@racer.site> <46A63EAA.6080203@trolltech.com> <Pine.LNX.4.64.0707241923450.14781@racer.site> <46A654A6.5070802@trolltech.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (amend)] gitweb: More detailed error messages for snapshot format
+Date: Wed, 25 Jul 2007 01:19:58 +0200
+Message-ID: <200707250119.59260.jnareb@gmail.com>
+References: <11853108372532-git-send-email-jnareb@gmail.com> <3bbc18d20707241450y48ef0485i2809c632ac2e643@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 01:16:03 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Matt McCutchen" <hashproduct@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 01:20:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDTbk-0008KO-Uk
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 01:16:01 +0200
+	id 1IDTfi-0000im-Og
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 01:20:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757889AbXGXXPk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 19:15:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757158AbXGXXPj
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 19:15:39 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:16612 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761893AbXGXXPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 19:15:33 -0400
-Received: from tigra.home (Fa855.f.strato-dslnet.de [195.4.168.85])
-	by post.webmailer.de (mrclete mo52) (RZmta 10.1)
-	with ESMTP id B04cf5j6OHjcvd ; Wed, 25 Jul 2007 01:15:30 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 43168277BD;
-	Wed, 25 Jul 2007 01:15:30 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id C9C01BDD0; Wed, 25 Jul 2007 01:15:29 +0200 (CEST)
+	id S1756371AbXGXXUD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 19:20:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755047AbXGXXUD
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 19:20:03 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:59936 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755812AbXGXXUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 19:20:00 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so244945ugf
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 16:19:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fPKLw93yk/BJVkCQYfVN1Cq5XYAYpzicF2+tIzgqyBwLutBCMou/Z5Hep4rWqSzSvhuzm+D+lXMdxkt2HArpZmJC9+osN3Qxfb3PpGtA8kMQA6hfR58Q/VghYd1VOZ6ZA+aNz090oyUpDBPJvgV3Bp8/zrnW8RN8mQqqMILAdKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=KhrAsNOQ85xIUsZcRe2atJq6SKODdd0EZyrmjTnBwf7YBSRFhfJTG2lIt+fiqc44V4w4BegxWrTQ8D+GE4yJfRfgXbwhsYQXAiKB2C1CPEY9LVkCS2Hjye09d5DtXVLM2RGLAfuE0he+lJDesRzYTyuRsK1hNRQx4x/yQdGQOqU=
+Received: by 10.86.81.8 with SMTP id e8mr23531fgb.1185319199261;
+        Tue, 24 Jul 2007 16:19:59 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id o11sm92919fkf.2007.07.24.16.19.57
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2007 16:19:57 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <3bbc18d20707241450y48ef0485i2809c632ac2e643@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <46A654A6.5070802@trolltech.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggT2BuA==
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53658>
 
-Marius Storm-Olsen, Tue, Jul 24, 2007 21:36:06 +0200:
-> IMO Windows user expect files to be DOS style, since all other files
-> are.  Yes, most newer tools 'handle' Unix style files, but creating new
-> ones will mostly be DOS style. Some will actually wreak havoc on your
-> files, and start adding DOS line endings in the middle of your Unix line
-> ending file. I've seen it happen. So, dealing with Unix style text files
-> on Windows can be a problem for some people.
+Improve error messages for snapshot format in git_snapshot:
+distinguish between situation where snapshots are turned off, where
+snapshot format ('sf') parameter is invalid, where given snapshot
+format does not exist in %known_snapshot_formats hash, and where
+gitweb was given unsupported snapshot format.
 
-I have to stay with Windows, but I'd absolute hate having their stupid
-line-ending by default. As will my project supervisor, and he gets
-changes from something like 300 developers. You will definitely get
-their votes against changing the default
+While at it, use first from all supported snapshots format as default,
+if no snapshot format was provided.
 
-> > Git is really slowed down tremendously just by the fact that it runs on 
-> > Windows.  You should not add to that.
-> 
-> The auto crlf conversion is not the slow down here, and the time spent
-> there is negligible. I use autocrlf on all my repos on Windows, and
-> don't notice it. Filestat'ing on the other hand.. :-)
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Matt McCutchen wrote:
+> On 7/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> > Improve error messages for snapshot format in git_snapshot:
+> > distinguish between situation where snapshots are turned off, where
+> > snapshot format ('sf') parameter is invalid,
+[...]
+> I also noticed that the check for an "invalid" format requires that it
+> contain at least one good character, not that it contain no bad
+> characters, which was what I originally meant.  It would be nice to
+> fix the check, or the check could even be removed altogether since
+> gitweb refuses any format that isn't in %known_snapshot_formats .  (I
+> think I was misguidedly paranoid to add it in the first place.)
 
-Of course you wont notice it: you're already on Windows.
+This fixes the check (although perhaps the check should be removed).
 
-> > IMHO in most cases -- even on Windows -- you do not want to set autocrlf 
-> > at all.  Because you do not need to store the file different from the 
-> > version you have in the working tree.
-> 
-> Not true. I believe, especially at the moment, most Git users on Windows
-> are mostly developing code in a cross-platform manner, and therefore
-> care about this problem.
+ gitweb/gitweb.perl |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-Yes. They solve it by working fulltime in \n-lineending. Avoiding that
-stupid Visual Studio and Notepad helps too.
-
-> > The only situation where I think it makes sense, is when you have both 
-> > Windows and Unix developers, _and_ your Windows tools sometimes produce 
-> > CR/LF stupidly.  But then I'd set it to "input".
-> 
-> That's ok _now_, because most of the Git user group is experienced
-> developer that understand the problem. I'm trying to see past that
-> state, and prepare Git for more 'common' usage on Windows. They'd expect
-> text files on Windows to be handled correctly, without any fuzz.
-
-Just make the windows installer to setup templates for CR/LF depending
-on checkbox "[ ] I am Windows idiot, standard issue".
-
-> No tweaking of config options to make it work on Windows. No problems
-> with sharing repositories with Unix developers. Just work. That's not
-> the current state. But it could be.
-
-It is for me. It will not be that with your suggested default.
-
-> Ok, I come from the Perforce world, so here how it works there:
-> 1) Files are stored with Unix line endings in the repository.
-> 2) Conversion is done on Windows (and older Macs) upon checkout, if the
-> file is a text file.
-> 3) It has binary file detection when you add it to the depot, so if you
-> and to add a DOS line ending file to the repo, you have to mark it as a
-> binary file manually
-
-You always setup the lineending conversion in perforce. For each and
-every client. There is no default. I just don't see what to learn from
-them (if there ever was something to learn from).
-
-> ... And Git would probably be adapted on
-> Windows more quickly, which this is all about. :-) IMHO.
-
-It is hardly worth it. Git already has to put up with ugly workarounds
-just because of the stupidities coming from that windows. It has had
-seldom any benefit from supporting this !@#$ing awkward platform.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index fdfce31..0acd0ca 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4317,9 +4317,16 @@ sub git_snapshot {
+ 	@supported_fmts = filter_snapshot_fmts(@supported_fmts);
+ 
+ 	my $format = $cgi->param('sf');
+-	unless ($format =~ m/[a-z0-9]+/
+-	        && exists($known_snapshot_formats{$format})
+-	        && grep($_ eq $format, @supported_fmts)) {
++	if (!@supported_fmts) {
++		die_error('403 Permission denied', "Permission denied");
++	}
++	# default to first supported snapshot format
++	$format ||= $supported_fmts[0];
++	if ($format !~ m/^[a-z0-9]+$/) {
++		die_error(undef, "Invalid snapshot format parameter");
++	} elsif (!exists($known_snapshot_formats{$format})) {
++		die_error(undef, "Unknown snapshot format");
++	} elsif (!grep($_ eq $format, @supported_fmts)) {
+ 		die_error(undef, "Unsupported snapshot format");
+ 	}
+ 
+-- 
+1.5.2.4
