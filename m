@@ -1,65 +1,96 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git log -g: Complain, but do not fail, when no reflogs
- are there
-Date: Tue, 24 Jul 2007 10:16:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241014500.14781@racer.site>
-References: <Pine.LNX.4.64.0707240039300.14781@racer.site>
- <81b0412b0707240026v4321a709wcbbbd7b67a4c506b@mail.gmail.com>
+Subject: Re: [PATCH] Test case for "git diff" outside a git repo
+Date: Tue, 24 Jul 2007 10:24:45 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241024350.14781@racer.site>
+References: <20070723132248.GA24122@midwinter.com> <7vy7h6ib0b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:16:44 2007
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:25:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGVW-0007W4-UG
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:16:43 +0200
+	id 1IDGdh-0001Ys-OI
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:25:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759461AbXGXJQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:16:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759321AbXGXJQk
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:16:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37414 "HELO mail.gmx.net"
+	id S1763628AbXGXJZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762494AbXGXJZE
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:25:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36272 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756769AbXGXJQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 05:16:39 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 09:16:37 -0000
+	id S1758426AbXGXJZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:25:02 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 09:25:00 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp056) with SMTP; 24 Jul 2007 11:16:37 +0200
+  by mail.gmx.net (mp050) with SMTP; 24 Jul 2007 11:25:00 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/i3Q16mEXiRXdulTKPGuNaK5qUYWwtAlPGkJFxEm
-	+fPgimARXmfe39
+X-Provags-ID: V01U2FsdGVkX1/w1ENEOw3wvLFDBOsC/ptBps51LgPEUx8PAvwkj7
+	q1dboUXun/FvdC
 X-X-Sender: gene099@racer.site
-In-Reply-To: <81b0412b0707240026v4321a709wcbbbd7b67a4c506b@mail.gmail.com>
+In-Reply-To: <7vy7h6ib0b.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53542>
 
 Hi,
 
-On Tue, 24 Jul 2007, Alex Riesen wrote:
+On Mon, 23 Jul 2007, Junio C Hamano wrote:
 
-> On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > When asking "git log -g --all", clearly you want to see only those refs
-> > that do have reflogs, but you do not want it to fail, either.
-> > 
-> > So instead of die()ing, complain about it, but move on to the other refs.
-> > 
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> I believe you wont even see these complaints: the pager will start shortly
-> afterwards and fill the screen with commits, completely hiding the errors.
+> > Steven Grimm <koreth@midwinter.com> writes:
+> >
+> >> Signed-off-by: Steven Grimm <koreth@midwinter.com>
+> >> ---
+> >> 	git-diff --quiet is pretty broken right now. If you do
+> >> 	"strace git diff --quiet file1 file2" you will see that
+> >> 	it never calls open() on either file! And it always
+> >> 	returns a zero exit code whether or not the files are
+> >> 	different.
+> >>
+> >> 	I'm trying to follow the code to figure out what's going on,
+> >> 	but meanwhile, here's a test case. Perhaps someone more
+> >> 	familiar with the diff code will beat me to a fix.
+> 
+> The code to do "untracked diff" is an ugly stepchild and not really part 
+> of git-diff proper.  In fact, --quiet also is an afterthought and I 
+> would not be too surprised if the "untracked diff" code does not work 
+> with it.
 
-You can see it briefly, but it is hidden by default.  Which is a good 
-thing.  If you set the pager to "cat" (which is happily not the default!) 
-you can see them clearly.  Until you are swamped by the rest of the 
-output.
+Not that ugly, mind you.  Every third day or so I congratulate myself for 
+having "git diff --color-words" or "git diff -M", without having to suffer 
+initialising a git repository.
 
-Maybe this is a feature?
+But yes, I agree, the --quiet code came after the --no-index code, and 
+thus it is well possible that the latter ignores the former.
+
+> >> diff --git a/t/t4021-diff-norepo.sh b/t/t4021-diff-norepo.sh
+> >> new file mode 100755
+> >> index 0000000..dfee3d7
+> >> --- /dev/null
+> >> +++ b/t/t4021-diff-norepo.sh
+> >> @@ -0,0 +1,26 @@
+> >> +#!/bin/sh
+> >> +
+> >> +test_description='test git diff outside a repo'
+> >> +
+> >> +. ./test-lib.sh
+> >> +
+> >> +rm -rf .git
+> 
+> Unless you are testing the t/ directory and git.git suite from a 
+> tarball, the only effect of this is to make t/trash controlled by its 
+> ../../.git repository (i.e. the git.git repository).  You are still 
+> inside a git repository.
+
+Yes, this is no good.
+
+However, you can force --no-index.  IMHO that is the way to go.
 
 Ciao,
 Dscho
