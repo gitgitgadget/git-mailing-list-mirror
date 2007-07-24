@@ -1,69 +1,84 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Tue, 24 Jul 2007 15:47:15 +0200
-Message-ID: <200707241547.16681.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site> <Pine.LNX.4.64.0707241252040.28577@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707241336090.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: rfe: bisecting with a tristate
+Date: Tue, 24 Jul 2007 14:52:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241447200.14781@racer.site>
+References: <Pine.LNX.4.64.0707241459460.18990@fbirervta.pbzchgretzou.qr>
+ <20070724094017.d14688e5.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 15:47:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Engelhardt <jengelh@computergmbh.de>, git@vger.kernel.org
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Tue Jul 24 15:53:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDKjX-0002AZ-PW
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:47:28 +0200
+	id 1IDKov-0004O4-W8
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755848AbXGXNrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 09:47:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbXGXNrX
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:47:23 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:40228 "EHLO
-	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753212AbXGXNrW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 09:47:22 -0400
-Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de [131.159.35.46])
-	by mail.in.tum.de (Postfix) with ESMTP id D398327BD;
-	Tue, 24 Jul 2007 15:47:20 +0200 (MEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0707241336090.14781@racer.site>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1754848AbXGXNw7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 09:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754663AbXGXNw7
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:52:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59902 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753212AbXGXNw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 09:52:58 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 13:52:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 24 Jul 2007 15:52:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UQfpwLABUFWjJewrkDG7TnY0A/CVOlMOJ93H24F
+	pO2osagwNvm9Hj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070724094017.d14688e5.seanlkml@sympatico.ca>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53595>
 
-On Tuesday 24 July 2007, Johannes Schindelin wrote:
-> Hi,
+Hi,
+
+On Tue, 24 Jul 2007, Sean wrote:
+
+> > git bisect start
+> > git bisect bad v2.6.23-rc1
+> > # bad: [f695baf2df9e0413d3521661070103711545207a] Linux 2.6.23-rc1
+> > git bisect good v2.6.22
+> > # good: [098fd16f00005f665d3baa7e682d8cb3d7c0fe6f] Linux 2.6.22
+> > 
+> > Then 1f1c2881f673671539b25686df463518d69c4649 will be the next commit 
+> > git bisect hands out. Now let's assume this commit would not compile. 
+> > What would the user do? git-bisect good or git-bisect bad?
 > 
-> On Tue, 24 Jul 2007, Julian Phillips wrote:
-> 
-> > If you were going to avoid symlinks, then probably the cleanest way would be
-> > to have an explict way to point at the actual repo - rather than making the
-> > working look like a repo if you squint hard enough.  Which sounds rather like
-> > it would be an extension to GIT_DIR + GIT_WORK_TREE.
-> 
-> Almost.  .git/{config,HEAD} are not shared.
+> Check out the section "Avoiding to test a commit" in the git-bisect
+> man page; it addresses this issue.  Basically you just use git-reset
+> to pick a different nearby commit to compile, and then continue with
+> git bisect good/bad.
 
-.git/index, too. And for .git/config, it would probably be better to merge the
-two config's (the one from "realGitDir" with 2nd priority).
+But a "git bisect dunno" would be handy.
 
-> So it would be some extension  
-> that is triggered by something like
-> 
-> 	[core]
-> 		realGitDir = /bla/bla/.git/
+However, it is a bit involved, since git-bisect.sh assumes that there is 
+only one bad commit, and with that, the outcome would be possibly a commit 
+range.
 
-That is more or less almost exacty the last agreement about how to
-implement the lightweight checkouts, a few months ago.
+Two parts to it I see:
 
-Should this even work recursively?
+- builtin-rev-list.c:find_bisection() has to be told to ignore the dunno 
+  commits when counting, in addition to uninteresting ones (but not stop 
+  traversal). The easiest way I could see would be to add another option 
+  to specify the dunno commits, and set a special flag on these.
 
-Josef
+- git-bisect.sh has to lose the assumption that there is only one bad 
+  commit.  Instead, it has to traverse the parent(s) of "the" bad commit, 
+  until it finds either no parents, or a known good one.  So maybe 
+  something like
+
+	echo $(git rev-list --boundary $bad --not $good |
+		sed -n "s/^-/^/p") $bad
+
+  would be enough.
+
+Hth,
+Dscho
