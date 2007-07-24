@@ -1,115 +1,98 @@
-From: "Benjamin Sergeant" <bsergean@gmail.com>
-Subject: Re: http git clone memory problem.
-Date: Tue, 24 Jul 2007 10:53:39 -0700
-Message-ID: <1621f9fa0707241053i23f0e3d4v4a1d50f5a4c5f9e6@mail.gmail.com>
-References: <1621f9fa0707232044j7cec2bes7bc7cd268775ce48@mail.gmail.com>
-	 <Pine.LNX.4.64.0707241025450.14781@racer.site>
-	 <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
-	 <1621f9fa0707241033l7ac53b97i8c8ea068be0cba2f@mail.gmail.com>
-	 <Pine.LNX.4.64.0707241842270.14781@racer.site>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: [PATCH] Fix translation of strings in foreach lists.
+Date: Tue, 24 Jul 2007 10:54:55 -0700 (PDT)
+Message-ID: <59193.87306.qm@web38905.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 19:53:58 2007
+Content-Type: text/plain; charset=ascii
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Stimming <stimming@tuhh.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 24 19:55:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDOa5-00083o-FK
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:53:57 +0200
+	id 1IDOb6-0008RD-71
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756712AbXGXRxl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 13:53:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754969AbXGXRxl
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:53:41 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:32275 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752397AbXGXRxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 13:53:40 -0400
-Received: by wr-out-0506.google.com with SMTP id i30so1303491wra
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rooHMhdgZFJtuMBK3C6EWx7+MkZUYk5ovmJy6EnF6yJ175Dr04fQQPFwkdIh4bgGJ7FdWBMrFmxfnsYgwRImHiIZ6dD+T32Lz5xgNAwyys4VbbL4FwtMCtdae5S9kLYfwMPn8aL6HmNrXoT6acHQIDtQLjBfFamZ1zO6Tlq+JFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IZ2Vg0aM+uU6r+ocWySRNK0d0/i76V2ausUjHU+tFMRJzSAurMpARQnY60ramoePZTSIUmo7TaHE9vuaBFROlx0LSNdKPnAOvRMHojjhe+n10XHdzteGRmXy9YcopQN6ep+B9YRjZmFQ9vYKwzV4DldEUXyq4jLVxIFUErrEEwA=
-Received: by 10.142.104.9 with SMTP id b9mr343119wfc.1185299619308;
-        Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
-Received: by 10.143.19.17 with HTTP; Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707241842270.14781@racer.site>
-Content-Disposition: inline
+	id S1753432AbXGXRy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 13:54:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbXGXRy4
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:54:56 -0400
+Received: from web38905.mail.mud.yahoo.com ([209.191.125.111]:20596 "HELO
+	web38905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753296AbXGXRyz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 13:54:55 -0400
+Received: (qmail 87818 invoked by uid 60001); 24 Jul 2007 17:54:55 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
+  b=g24ouYfCUh4MmS8++h4rW7TjcCCf1JCKZeU5wzjsZosawStfnNyCYZEZ11kinOLDDz7GSp0lwBvRYOP+M03eU1BGTZMPonR1aNamX/wOii35ZaC9Cy1MkfC2Nig+Q2m56YVG8bkfVvZpe/ESw99ymGXhAwYUi3YEu3f8+A41n1c=;
+X-YMail-OSG: WzCMgBQVM1nJ5n8XOBEok8KFRq3iVo3Rk0ZJKHK.6vj5sQdinhUDwf.KmWVSYh8Hkb6y7K2SWYt.Pd0JU2BG7iyF8aNT58x_EsUT2896bOr7_kSXNuAorbgSsA--
+Received: from [128.251.89.90] by web38905.mail.mud.yahoo.com via HTTP; Tue, 24 Jul 2007 10:54:55 PDT
+X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.41.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53621>
 
-On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 24 Jul 2007, Benjamin Sergeant wrote:
->
-> > I still have the segfault with 1.5.2.4. If I try to gdb it, it abort
-> > before I can do anything. Is there an environment variable that I can
-> > set to disable signal handling or something in git ?
->
-> Did you gdb http-fetch?
->
-> If not, please use "sh -x git-clone..." to find out what command line to
-> use.
->
-> And when you have the command line, please use valgrind to find out where
-> the leak/corruption is.
->
-> There are some flags that are automatically set/unset when compiling the
-> http transport, and it is not easy to know which flags are enabled in your
-> setup.
->
-> But for starters, you might want to recompile http-fetch without -O2.  My
-> gdb always has problems attributing the correct line, which does not
-> exactly make it easier for me to debug things.  I could imagine your gdb
-> is as annoying.
->
-> Ciao,
-> Dscho
 
-I got that, but it's not super-usefull ... I will try valgrind instead.
 
-[bsergean@marge1 sandbox]$ gdb /home/bsergean/git/bin/git-clone
-/tmp/corefiles/core.18531
-GNU gdb 6.6-1mdv2007.1 (Mandriva Linux release 2007.1)
-Copyright (C) 2006 Free Software Foundation, Inc.
-GDB is free software, covered by the GNU General Public License, and you are
-welcome to change it and/or distribute copies of it under certain conditions.
-Type "show copying" to see the conditions.
-There is absolutely no warranty for GDB.  Type "show warranty" for details.
-This GDB was configured as "i586-mandriva-linux-gnu"...
-"/home/bsergean/git/bin/git-clone": not in executable format: File
-format not recognized
-(no debugging symbols found)
-Using host libthread_db library "/lib/i686/libthread_db.so.1".
-Core was generated by `git-http-fetch -v -a -w remotes/origin/html
-cc13f556fc72f6f0670e61599363f6e3277'.
-Program terminated with signal 6, Aborted.
-#0  0xbfffe410 in __kernel_vsyscall ()
-(gdb) where
-#0  0xbfffe410 in __kernel_vsyscall ()
-#1  0xb7c78590 in ?? ()
-#2  0xb7d7aff4 in ?? ()
-#3  0xb7bd7aa0 in ?? ()
-#4  0xbf928f84 in ?? ()
-#5  0xb7c79e21 in ?? ()
-#6  0x00000006 in ?? ()
-#7  0xbf928ef8 in ?? ()
-#8  0x00000000 in ?? ()
+> ----- Original Message ----
+> From: Christian Stimming <stimming@tuhh.de>
+> To: Shawn O. Pearce <spearce@spearce.org>
+> Cc: Brett Schwarz <brett_schwarz@yahoo.com>; git@vger.kernel.org; Paul Mackerras <paulus@samba.org>; Junio C Hamano <gitster@pobox.com>
+> Sent: Tuesday, July 24, 2007 8:20:28 AM
+> Subject: Re: [PATCH] Fix translation of strings in foreach lists.
+> 
+> Quoting "Shawn O. Pearce" <spearce@spearce.org>:
+> >> >I not sure if it's worth changing, but you don't necessarily need
+> >> >those [append]'s in there.
+> >>
+> >> Thanks for the info. It is basically up to Shawn to decide which style
+> >> he likes more.
+> >
+> > "[mc Foo]\n\n$err"
+> >
+> > is much shorter.  So I'd prefer that over [append [mc Foo] "\n\n$err"].
+> 
+> Err, but the usual case is that the argument to [mc] is more than one  
+> word, and (additionally) that argument has to be quoted by  
+> double-quotes (as opposed to braces) because otherwise xgettext  
+> doesn't extract the message correctly. Hence, the only possibility  
+> here were
+> 
+>    "[mc "Some Text"]\n\n$err"
+> 
+> Is this valid Tcl? Being a newcomer to this language I have to says  
+> the quotes here look rather strange :-)
+> 
+
+Yes, that's valid.
+
+bschwarz@bschwarz-desktop:~/gittcl$ tclsh
+% package require msgcat
+1.3.4
+% namespace import msgcat::mc
+% set err "ERROR"
+ERROR
+% msgcat::mcset en "hello there" HOWDY
+HOWDY
+% puts "[mc "hello there"]\n\n$err"
+HOWDY
+
+ERROR
+%
+
+
+HTH,
+    --brett
 
 
 
 
-
->
->
+       
+____________________________________________________________________________________
+Looking for a deal? Find great prices on flights and hotels with Yahoo! FareChase.
+http://farechase.yahoo.com/
