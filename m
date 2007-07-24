@@ -1,79 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Tue, 24 Jul 2007 14:54:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241453350.14781@racer.site>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
- <Pine.LNX.4.64.0707241252040.28577@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707241336090.14781@racer.site> <200707241547.16681.Josef.Weidendorfer@gmx.de>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] filter-branch: rewrite only refs which were not 
+ excludedbythe options
+Date: Tue, 24 Jul 2007 16:08:43 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46A607EB.BA31D7C5@eudaptics.com>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site>  
+	 <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
+	  <46A5E136.D413D3B7@eudaptics.com> <Pine.LNX.4.64.0707241229170.14781@racer.site>
+	 <46A5FF69.F5D75C9E@eudaptics.com> <Pine.LNX.4.64.0707241435290.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 15:55:25 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 16:08:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDKrF-0005HJ-4P
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:55:25 +0200
+	id 1IDL44-0001r6-TI
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 16:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752976AbXGXNzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 09:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754407AbXGXNzV
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:55:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47713 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754377AbXGXNzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 09:55:17 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 13:55:15 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 24 Jul 2007 15:55:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18b3Vg/vrkbWWCgiE2O+DhQaJKP0+/dS/u9BsRGAz
-	D6l9tdUoZoIR1g
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200707241547.16681.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+	id S1757070AbXGXOIi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 10:08:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756639AbXGXOIi
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 10:08:38 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:30269 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756606AbXGXOIh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 10:08:37 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <J.Sixt@eudaptics.com>)
+	id 1IDL3x-0001Wv-NR; Tue, 24 Jul 2007 16:08:34 +0200
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id ACCFD55DD; Tue, 24 Jul 2007 16:08:33 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 2.3 (++)
+X-Spam-Report: AWL=-1.330, BAYES_99=3.5, FORGED_RCVD_HELO=0.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53598>
 
-Hi,
-
-On Tue, 24 Jul 2007, Josef Weidendorfer wrote:
-
-> On Tuesday 24 July 2007, Johannes Schindelin wrote:
+Johannes Schindelin wrote:
+> On Tue, 24 Jul 2007, Johannes Sixt wrote:
+> > This worked:
+> >
+> > negatives=`git rev-parse --revs-only "$@" | while read line
+> >       do
+> >               case "$line" in
+> >               $_x40) ;;
+> >               *) echo "$line";;
+> >               esac
+> >       done`
+> >
+> > i.e. the closing parenthesis in the case arms together with the opening
+> > $( made for a syntax error. The --revs-only did not hurt in my tests,
+> > but you may have other reasons to remove it.
 > 
-> > On Tue, 24 Jul 2007, Julian Phillips wrote:
-> > 
-> > > If you were going to avoid symlinks, then probably the cleanest way would be
-> > > to have an explict way to point at the actual repo - rather than making the
-> > > working look like a repo if you squint hard enough.  Which sounds rather like
-> > > it would be an extension to GIT_DIR + GIT_WORK_TREE.
-> > 
-> > Almost.  .git/{config,HEAD} are not shared.
+> Funny.  AFAIR something similar worked here, all the time.  But I believe
+> you... you're on MinGW, right?
+
+No. filter-branch is a shell script. I don't have time to waste ;)
+It happens in bash 2.05b on Linux.
+
+> > But there's another problem. Consider this history:
+> >
+> >    ---X--o--M         <- master
+> >              \
+> >           ...-o-...-o <- topic
+> >
+> > Then this (rather contrieved) command:
+> >
+> >    $ git-filter-branch -n $n master topic --not X
+> >
+> > If $n is small enough so that M is never rewritten, then
+> >
+> >    git rev-list -1 "$ref" $negatives
+> >
+> > still expands to non-empty even for 'master' (= M), which then
+> > incorrectly ends up in "$tempdir"/heads.
 > 
-> .git/index, too. And for .git/config, it would probably be better to merge the
-> two config's (the one from "realGitDir" with 2nd priority).
+> Aaargh!  Of course!  Since I have to add --topo-order at the end.
+> Otherwise it makes no sense.
 
-I blame it on me being tired.  .git/config _is_ shared, and I meant to 
-write "index" instead of "config" there.  Not really a typo, is it?
+No, that was no my point: In my example above, if n=1, `git rev-list -1
+"$ref" $negatives` evaluates to
 
-> > So it would be some extension  
-> > that is triggered by something like
-> > 
-> > 	[core]
-> > 		realGitDir = /bla/bla/.git/
+    $ git rev-list -1 "master" -n 1 ^X
+
+which returns M, even though M is not going to be rewritten.
+--topo-order changes nothing. The problem is that the -n is a relative
+restriction. --since is turned into --max-age, which is absolute,
+therefore, the test works as expected with --since.
+
+> > I think the decision whether a positive ref should be rewritten should
+> > be postponed until the rewrite has completed. Because then we know for
+> > certain which revs were treated and can pick the matching refs. We only
+> > lose the check for the error "Which ref do you want to rewrite?"
 > 
-> That is more or less almost exacty the last agreement about how to
-> implement the lightweight checkouts, a few months ago.
+> No, that is not enough:
+> 
+>         A - B - C
+> 
+> B touches the subdirectory sub/.
+> 
+>         git filter-branch C -- sub/
+> 
+> will not rewrite C.
 
-Oh?  I saw no code...  To me it is not an agreement, if no code comes out 
-of it.
+Fair enough.
 
-Ciao,
-Dscho
+-- Hannes
