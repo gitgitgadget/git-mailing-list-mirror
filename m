@@ -1,56 +1,97 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git log -g: Complain, but do not fail, when no reflogs are there
-Date: Tue, 24 Jul 2007 09:26:48 +0200
-Message-ID: <81b0412b0707240026v4321a709wcbbbd7b67a4c506b@mail.gmail.com>
-References: <Pine.LNX.4.64.0707240039300.14781@racer.site>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: Re: having problems with building the manpages
+Date: Tue, 24 Jul 2007 09:38:19 +0200
+Message-ID: <20070724073819.GS31655@genesis.frugalware.org>
+References: <20070723182319.GQ31655@genesis.frugalware.org> <Pine.LNX.4.64.0707231937210.32580@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 09:27:08 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7L9kolmstoDTZ4pm"
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jul 24 09:38:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDEnU-0001p5-6n
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 09:27:08 +0200
+	id 1IDEyc-0004ji-Sc
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 09:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521AbXGXH0w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 03:26:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755110AbXGXH0v
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 03:26:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:15998 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753521AbXGXH0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 03:26:50 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so107939ugf
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 00:26:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UfOxm65Sr3P/e9IhcYEYx6ZzkmlzIYK/gpMP/cRk+zNTIUFXvEsxZDebCnu23oIc+1j7Z/34DHnsoC4vmCG2Bo8Z35wrYZN2VoWwRYOkNtB6pVpKj9EOwM5M8CGjJIska20QQ7nKFcdfBEBAnUHRgGIOlj6M5adacPCfqGT59Gw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n86y3/IrN2DOTpo4dAjTiU7+gshVufofa4qDlbPKy9rAXpPWROewNX9qvtUi98Xm/jJtoYmXIoXG28kfGUm4ZLeUdZP043Oc5A9gCodTkIMr/z+U2nju85ve2c9AJWK4nF0DahxyMc68HXp2dyXZu1dCwE7kIOyoz5yagHdwctU=
-Received: by 10.78.123.5 with SMTP id v5mr986382huc.1185262009007;
-        Tue, 24 Jul 2007 00:26:49 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Tue, 24 Jul 2007 00:26:48 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707240039300.14781@racer.site>
+	id S1757376AbXGXHic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 03:38:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757518AbXGXHic
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 03:38:32 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:52148 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755499AbXGXHib (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 03:38:31 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1IDEyR-0000VA-Vw
+	from <vmiklos@frugalware.org>; Tue, 24 Jul 2007 09:38:30 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 5F2F31868272; Tue, 24 Jul 2007 09:38:20 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707231937210.32580@beast.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
+	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53530>
 
-On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> When asking "git log -g --all", clearly you want to see only those refs
-> that do have reflogs, but you do not want it to fail, either.
->
-> So instead of die()ing, complain about it, but move on to the other refs.
->
 
-I believe you wont even see these complaints: the pager will start shortly
-afterwards and fill the screen with commits, completely hiding the errors.
+--7L9kolmstoDTZ4pm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hello,
+
+Na Mon, Jul 23, 2007 at 07:40:04PM +0100, Julian Phillips <julian@quantumfyre.co.uk> pisal(a):
+> Are you using docbook xsl 1.72?  There are known problems building the
+> manpages with that version.  1.71 works, and 1.73 should work when it
+> get released.
+
+yes, i'm was uging 1.72. in the mentime 1.73 has been released, here is
+the error i get when using it:
+
+asciidoc -b docbook -d manpage -f asciidoc.conf \
+                 -a asciidoc7compatible -agit_version=1.5.2.4 -o git-add.xml+ git-add.txt
+mv git-add.xml+ git-add.xml
+xmlto -m callouts.xsl man git-add.xml
+runtime error: file file:///usr/share/xml/docbook/manpages/other.xsl line 129 element call-template
+The called template 'read-character-map' was not found.
+Note: meta date   : no date; using generated date                  git-add
+Note: meta date   : see http://docbook.sf.net/el/date              git-add
+runtime error: file file:///usr/share/xml/docbook/manpages/other.xsl line 537 element call-template
+The called template 'apply-character-map' was not found.
+Note: Writing git-add.1
+error: file /var/tmp/fst/src/git-1.5.2.4/Documentation/git-add.xml
+xsltRunStylesheet : run failed
+make[1]: *** [git-add.1] Error 1
+rm git-add.xml
+make[1]: Leaving directory `/var/tmp/fst/src/git-1.5.2.4/Documentation'
+make: *** [doc] Error 2
+
+thanks,
+- VMiklos
+
+--7L9kolmstoDTZ4pm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFGpaxre81tAgORUJYRApcsAJ0U3RK7hqFdfGM5N37ScOXt8txhtQCfUqgN
+RehYw00RRgdedP7bVlb5ulQ=
+=mzpy
+-----END PGP SIGNATURE-----
+
+--7L9kolmstoDTZ4pm--
