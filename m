@@ -1,65 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] mailinfo: fix 'fatal: cannot convert from utf-8 to utf-8'
-Date: Tue, 24 Jul 2007 01:03:26 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707240102390.14781@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git tree for old kernels from before the current tree
+Date: Mon, 23 Jul 2007 20:10:23 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0707231957450.6355@xanadu.home>
+References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
+ <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
+ <20070722211314.GA13850@linux-sh.org>
+ <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
+ <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
+ <46A3D5EA.2050600@zytor.com>
+ <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
+ <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
+ <20070723234628.GN21668@ftp.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 24 02:03:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jan Engelhardt <jengelh@computergmbh.de>,
+	Paul Mundt <lethal@linux-sh.org>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+To: Al Viro <viro@ftp.linux.org.uk>
+X-From: git-owner@vger.kernel.org Tue Jul 24 02:10:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID7sO-0002F0-7G
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:03:44 +0200
+	id 1ID7yw-0003nN-07
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754646AbXGXADl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 20:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756001AbXGXADl
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:03:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55245 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752971AbXGXADk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 20:03:40 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 00:03:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 24 Jul 2007 02:03:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18nXvcMtosnntJgl3XWq2+Ch0u93Hk1TGnS4Rrk7D
-	EY5qjuxgZm/uza
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1756222AbXGXAK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 20:10:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752563AbXGXAK0
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:10:26 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:38860 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752432AbXGXAKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 20:10:25 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JLN009M8PTBCNA0@VL-MH-MR001.ip.videotron.ca>; Mon,
+ 23 Jul 2007 20:10:23 -0400 (EDT)
+In-reply-to: <20070723234628.GN21668@ftp.linux.org.uk>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53512>
+
+On Tue, 24 Jul 2007, Al Viro wrote:
+
+> On Mon, Jul 23, 2007 at 03:06:09PM -0400, Nicolas Pitre wrote:
+> >  - v0.96 sources
+> > 
+> >  - v0.99.12 announcement
+> > 
+> >  - sources for v0.99.13{abcdefghij} (got k, don't know where the serie 
+> >    ends) as well as announcements for all of them
+> > 
+> >  - all announcements for v0.99.14{a-z} except for pl14r
+> > 
+> >  - announcements for pl15c to pl15j, 1.0-pre1, and ALPHA-1.0.
+> > 
+> > Otherwise the archive appears fairly complete with almost 3 years of 
+> > Linux development history captured in a 3MB pack file.
+> 
+> Umm...  IIRC, tar was unhappy with several tarballs on ftp.kernel.org.
+> Do you have replacements (or instructions re combination of tar(1) options
+> to make it eat them)?
+
+I have sanitized .tgz files that I use to stuff a Git repo with.  I 
+recall that some of them were reconstructed through patching an earlier 
+or later kernel version because the original ones were corrupted. Some 
+patches were retrieved from other archival sites, etc.  Then the result 
+was 
+cross checked with summary lists like this one: 
+
+http://www.uwsg.iu.edu/hypermail/linux/kernel/0110.1/1684.html
+
+This was a while ago so I don't remember the exact steps, but that 
+wasn't always trivial.
 
 
-For some reason, I got this error message.  Maybe it does not make sense,
-but then we should not really try to convert the text when it is not
-necessary.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	This bit me when I tried to apply the most recent Japanese 
-	translation patch to git-gui-i18n.
-
- builtin-mailinfo.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index a37a4ff..b4f6e91 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -529,6 +529,8 @@ static void convert_to_utf8(char *line, const char *charset)
- 			return;
- 	}
- 
-+	if (!strcmp(metainfo_charset, charset))
-+		return;
- 	out = reencode_string(line, metainfo_charset, charset);
- 	if (!out)
- 		die("cannot convert from %s to %s\n",
--- 
-1.5.3.rc2.32.g35c5b-dirty
+Nicolas
