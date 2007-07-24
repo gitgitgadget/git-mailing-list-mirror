@@ -1,91 +1,79 @@
-From: "Patrick Doyle" <wpdster@gmail.com>
-Subject: workflow question
-Date: Tue, 24 Jul 2007 09:53:30 -0400
-Message-ID: <e2a1d0aa0707240653x55dd82b3pf9e3986f5c3bb344@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Tue, 24 Jul 2007 14:54:58 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241453350.14781@racer.site>
+References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
+ <Pine.LNX.4.64.0707241252040.28577@reaper.quantumfyre.co.uk>
+ <Pine.LNX.4.64.0707241336090.14781@racer.site> <200707241547.16681.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 24 15:53:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 15:55:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDKpS-0004cT-HU
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:53:34 +0200
+	id 1IDKrF-0005HJ-4P
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996AbXGXNxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 09:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753521AbXGXNxb
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:53:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:37804 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752651AbXGXNxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 09:53:31 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2386188wah
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 06:53:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=VNY+kjASlZrhWJ0k5yDKfOp4JngboVn2Jlkj76vXBer78eCbzriIC/q4OpmDxWupEBJsctNmMmr9tpagBANBmU/0jLBneWvRrXbtrJu7QARd/mI8cAt2M9xnYOL1lbkeQNMP/bMtcuX5iX2OHpWiOFpvqkRo//+oZnc3BngxKtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=rBmXXJc8B9nMUJqNjTLA+ym8lKjLkU0h7WonzJOZ1BBsi7pUQWpgMNp8dhjmk7nUD5tA1o041ZJF1cA/F4p5IaoJHPEb9SnjGkRvgvs3OvPcVWr4W5w37Tp+xdU1GmqgV2VHhCXJy8lKmgWLIaTxhe5hOIbDy/1i3SYUjKjXnlE=
-Received: by 10.115.23.12 with SMTP id a12mr4066457waj.1185285210154;
-        Tue, 24 Jul 2007 06:53:30 -0700 (PDT)
-Received: by 10.114.15.11 with HTTP; Tue, 24 Jul 2007 06:53:30 -0700 (PDT)
-Content-Disposition: inline
+	id S1752976AbXGXNzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 09:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754407AbXGXNzV
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:55:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47713 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754377AbXGXNzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 09:55:17 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 13:55:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 24 Jul 2007 15:55:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18b3Vg/vrkbWWCgiE2O+DhQaJKP0+/dS/u9BsRGAz
+	D6l9tdUoZoIR1g
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200707241547.16681.Josef.Weidendorfer@gmx.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53597>
 
-I'm still trying to figure out how to adapt my workflow to git or git
-to my workflow, and I've come up with yet another question or two...
+Hi,
 
-I tend to work detached from our central SVN server, and I'm attracted
-to the fact that I can work on my laptop, commit changes as I go
-along, and later synchronize them back to the server.
+On Tue, 24 Jul 2007, Josef Weidendorfer wrote:
 
-On my current project, I am sole developer (at present) and the
-central SVN server serves primarly as an off-site backup and
-historical archive.
+> On Tuesday 24 July 2007, Johannes Schindelin wrote:
+> 
+> > On Tue, 24 Jul 2007, Julian Phillips wrote:
+> > 
+> > > If you were going to avoid symlinks, then probably the cleanest way would be
+> > > to have an explict way to point at the actual repo - rather than making the
+> > > working look like a repo if you squint hard enough.  Which sounds rather like
+> > > it would be an extension to GIT_DIR + GIT_WORK_TREE.
+> > 
+> > Almost.  .git/{config,HEAD} are not shared.
+> 
+> .git/index, too. And for .git/config, it would probably be better to merge the
+> two config's (the one from "realGitDir" with 2nd priority).
 
-Enough of the setup, here are the questions...
+I blame it on me being tired.  .git/config _is_ shared, and I meant to 
+write "index" instead of "config" there.  Not really a typo, is it?
 
-1) I would like to make a (git) branch on which I can commit
-hourly/daily/periodically as I add in a new feature (so that I can
-roll back to the "Gee, I thought it was behaving yesterday -- what
-does that code look like?" commit when I need to), but I don't want to
-send all of the "commit as of 12:32 on Thursday" commits back to the
-SVN server when I'm done.  Do I want to use a "squash" merge to merge
-my changes back to the master branch before I synchronize with the
-subversion server?  Or do I use the "--no-commit" option to merge?  Or
-do I try something else?  The first/last time I tried this, I ended up
-with a fast-forward merge back into master, which included all of my
-stupid little commit messages.  I would rather one commit message that
-read "Added XYZ feature".
+> > So it would be some extension  
+> > that is triggered by something like
+> > 
+> > 	[core]
+> > 		realGitDir = /bla/bla/.git/
+> 
+> That is more or less almost exacty the last agreement about how to
+> implement the lightweight checkouts, a few months ago.
 
-2) When I don't fork a branch, and I don't commit until I've completed
-the particular feature I'm working on, I can get a fairly good idea of
-where I am and what I was doing last (which might be 5-7 days ago,
-given high priority interrupts on other projects, summer vacations,
-etc...) just by running a "git status".  I see that there are 7 new
-files, and 2 modified files.  I know that, when I fork my branch, I
-can use "git diff master" to see what's different between my branch
-and the master, but then I get the diff of all of the changes as well,
-which is too much information.  "git diff --name-only" and "git diff
---summary" are closer, but I can't tell what's been added vs. what's
-been changed.  Any suggestions?
+Oh?  I saw no code...  To me it is not an agreement, if no code comes out 
+of it.
 
-As an aside, is there an undocumented option to "git status" to
-produce a less verbose report of what's been changed and what's not
-checked in?  Perhaps a single line per file with a one or two letter
-indication of the status of the file followed by the name?  If not,
-would there be any violent objections to my submitting a patch to add
-such a feature?
-
-That's enough for now.  Thanks for reading this far :-)
-
---wpd
+Ciao,
+Dscho
