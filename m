@@ -1,91 +1,80 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] filter-branch: rewrite only refs which were not excluded 
- bythe options
-Date: Tue, 24 Jul 2007 13:23:34 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46A5E136.D413D3B7@eudaptics.com>
-References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
-	 <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS
+ keyword expansion
+Date: Tue, 24 Jul 2007 12:26:02 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241223440.14781@racer.site>
+References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>
+ <Pine.LNX.4.64.0707222013200.14781@racer.site>
+ <9e4733910707221248q45fb3aaala9c79afd4b09830e@mail.gmail.com>
+ <Pine.LNX.4.64.0707222238180.14781@racer.site>
+ <9e4733910707221645x21d74e70y3c43bc8c02a9d4ca@mail.gmail.com>
+ <Pine.LNX.4.64.0707230048570.14781@racer.site>
+ <9e4733910707221711u6e965e6cr29e06fa8fb09165@mail.gmail.com>
+ <Pine.LNX.4.64.0707230136360.14781@racer.site>
+ <9e4733910707230744u2d3a0a31t9f65d5c9e68c9805@mail.gmail.com>
+ <Pine.LNX.4.64.0707231933030.14781@racer.site>
+ <9e4733910707231743w759afabfvd43045ad2e2eba5a@mail.gmail.com>
+ <Pine.LNX.4.64.0707240214500.14781@racer.site> <f84jh8$e27$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 13:23:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 13:26:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDIUH-0003Hq-FW
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 13:23:33 +0200
+	id 1IDIX1-000457-T2
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 13:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763559AbXGXLXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 07:23:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757825AbXGXLX3
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 07:23:29 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:22224 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754473AbXGXLX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 07:23:28 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1IDIU9-0005mV-4y; Tue, 24 Jul 2007 13:23:25 +0200
-Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2D7D255DD; Tue, 24 Jul 2007 13:23:25 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 2.3 (++)
-X-Spam-Report: AWL=-1.355, BAYES_99=3.5, FORGED_RCVD_HELO=0.135
+	id S1764078AbXGXL0V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 07:26:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763756AbXGXL0U
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 07:26:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45892 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1763256AbXGXL0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 07:26:20 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 11:26:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp052) with SMTP; 24 Jul 2007 13:26:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+a294AAe+as2yRwDtBgEaVGVbeP+nXMw+MxzhVdW
+	5u1woGSZj5aUH2
+X-X-Sender: gene099@racer.site
+In-Reply-To: <f84jh8$e27$2@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53572>
 
-Johannes Schindelin wrote:
-> So really exclude excluded refs from being rewritten.  This also allows
-> you to safely call
+Hi,
+
+On Tue, 24 Jul 2007, Jakub Narebski wrote:
+
+> [Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org]
+
+Thanks.
+
+> Johannes Schindelin wrote:
 > 
->         git filter-branch <some-filter> --all <rev-list options>
+> > On Mon, 23 Jul 2007, Jon Smirl wrote:
+> > 
+> >> Thanks for working on this. I'd like to see it added to git toolkit. 
+> > 
+> > I plan to submit it to patchutils instead, since this is not really 
+> > dependent on git.
 > 
-> to rewrite _all_ branches and tags.
+> Could you also add it to contrib/ area, please?
 
-BTW, '--all' in the argument list of filter-branch works only if it is
-preceded by '--':
+Sure.  Once it is really all fleshed out.  But I really think that 
+patchutils is a better place.  That way, the script also helps the poor 
+souls stuck with Mercurial or Darcs :-)
 
-	git filter-branch <some-filter> -- --all <rev-list options>
+The really tedious part is the testing, and the verifying.  Fortunately, 
+Jon made up for my incapability in both areas, with an incredible 
+patience.
 
-> @@ -181,6 +181,7 @@ export GIT_DIR GIT_WORK_TREE=.
-> 
->  # These refs should be updated if their heads were rewritten
-> 
-> +negatives="$(git rev-parse --revs-only "$@" | grep "^\^")"
->  git rev-parse --revs-only --symbolic "$@" |
->  while read ref
->  do
-> @@ -196,7 +197,13 @@ do
->                         grep "refs/\(tags\|heads\)/$ref$")"
->         esac
-> 
-> -       git check-ref-format "$ref" && echo "$ref"
-> +       # make sure we have a valid ref
-> +       git check-ref-format "$ref" || continue
-> +
-> +       # if the ref has been excluded by the other options, skip it
-> +       test -z "$(git rev-list -1 "$ref" $negatives)" && continue
-
-Does this catch my use-case with --since? I think not, because:
-
-$ git rev-parse --revs-only --since=2007.01.01 master topic
---max-age=1167606000
-257061f3323dc0162f731d934f0870e919211fdf
-3405729b94a654df8afbb9a1e13a4cf49a1c351c
-
-There are no negatives. Does it help to filter the non-positives?
-
-negatives=$(git rev-parse --revs-only "$@" | egrep -v '^[0-9a-f]{40}$')
-
-(Except the the '{40}' part is not portable. Hmpf.)
-
--- Hannes
+Ciao,
+Dscho
