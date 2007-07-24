@@ -1,78 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git tree for old kernels from before the current tree
-Date: Mon, 23 Jul 2007 20:36:55 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707232035510.6355@xanadu.home>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
- <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
- <20070722211314.GA13850@linux-sh.org>
- <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
- <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
- <46A3D5EA.2050600@zytor.com>
- <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
- <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
- <20070723234628.GN21668@ftp.linux.org.uk>
- <alpine.LFD.0.999.0707231957450.6355@xanadu.home> <46A54406.8020605@zytor.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Git help for kernel archeology, suppress diffs caused by CVS keyword expansion
+Date: Mon, 23 Jul 2007 20:43:31 -0400
+Message-ID: <9e4733910707231743w759afabfvd43045ad2e2eba5a@mail.gmail.com>
+References: <9e4733910707221148g69d7600bk632abb7452ce9c7c@mail.gmail.com>
+	 <Pine.LNX.4.64.0707222013200.14781@racer.site>
+	 <9e4733910707221248q45fb3aaala9c79afd4b09830e@mail.gmail.com>
+	 <Pine.LNX.4.64.0707222238180.14781@racer.site>
+	 <9e4733910707221645x21d74e70y3c43bc8c02a9d4ca@mail.gmail.com>
+	 <Pine.LNX.4.64.0707230048570.14781@racer.site>
+	 <9e4733910707221711u6e965e6cr29e06fa8fb09165@mail.gmail.com>
+	 <Pine.LNX.4.64.0707230136360.14781@racer.site>
+	 <9e4733910707230744u2d3a0a31t9f65d5c9e68c9805@mail.gmail.com>
+	 <Pine.LNX.4.64.0707231933030.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Al Viro <viro@ftp.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Paul Mundt <lethal@linux-sh.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 02:37:01 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 02:43:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID8Oa-0000Ds-Q9
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:37:01 +0200
+	id 1ID8V4-0001Ze-5B
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755412AbXGXAg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Jul 2007 20:36:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbXGXAg5
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:36:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:43902 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753860AbXGXAg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 20:36:56 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JLN0013OR1JZ6K0@VL-MO-MR003.ip.videotron.ca>; Mon,
- 23 Jul 2007 20:36:55 -0400 (EDT)
-In-reply-to: <46A54406.8020605@zytor.com>
-X-X-Sender: nico@xanadu.home
+	id S1755940AbXGXAnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 20:43:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755256AbXGXAnd
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:43:33 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:60745 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755238AbXGXAnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 20:43:33 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1250903nze
+        for <git@vger.kernel.org>; Mon, 23 Jul 2007 17:43:32 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Soe2secQhRQicWXymV3+4+Ih6ZZoH1J41Erbl+u0EPsk9sMNZ5SYGwKpD6uWDjpQKmAbzoaAYNXmDFWCGtJ2LQRJab8HdRY/39dQpl0bOY0Jf5xFLdcxndcTk6sgjAz8s1mAZwd4NrdwvxnBc9AukXM7D4rawYo+T1IQCMCX3yk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Awrc7xIVhE44Jk0FtVBW3bGg4lI+8WzNezWs7gQiomYk1vtCE4UHUtVhPkajYweIfRbQIC+KK6NrZZRU9F7Ww/ySCC3ubHgxSF89Y/8xV4fighVACtr9LXCN99cPntzBwx/JHo0ydXidl0w5P9ehClVmUozmU76Ljld/2wNguLQ=
+Received: by 10.115.79.1 with SMTP id g1mr3527594wal.1185237811350;
+        Mon, 23 Jul 2007 17:43:31 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Mon, 23 Jul 2007 17:43:31 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707231933030.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53516>
 
-On Mon, 23 Jul 2007, H. Peter Anvin wrote:
+Thanks for working on this. I'd like to see it added to git toolkit.
+This diff is way easier to read now. I can see that it has SPI support
+backported from some future version.
 
-> Nicolas Pitre wrote:
-> > 
-> > I have sanitized .tgz files that I use to stuff a Git repo with.  I 
-> > recall that some of them were reconstructed through patching an earlier 
-> > or later kernel version because the original ones were corrupted. Some 
-> > patches were retrieved from other archival sites, etc.  Then the result 
-> > was 
-> > cross checked with summary lists like this one: 
-> > 
-> > http://www.uwsg.iu.edu/hypermail/linux/kernel/0110.1/1684.html
-> > 
-> > This was a while ago so I don't remember the exact steps, but that 
-> > wasn't always trivial.
-> > 
-> 
-> Then there is 0.95a, 0.95c and 0.95c+, which as far as I know only ever
-> existed as 0.95 + patches posted to alt.os.linux.
+But... it still has some problems.
+For the phytec patch it's not getting the $Log changes in the qlogic
+files right.
 
-Indeed, already got those.
+I'm checking the output diff line by line for problems. It's down to
+11,528 lines from 88,787. That's a lot of junk removed, I'll have to
+make sure it isn't removing too much.
 
-
-Nicolas
+-- 
+Jon Smirl
+jonsmirl@gmail.com
