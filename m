@@ -1,81 +1,174 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: rfe: bisecting with a tristate
-Date: Tue, 24 Jul 2007 09:40:17 -0400
-Message-ID: <20070724094017.d14688e5.seanlkml@sympatico.ca>
-References: <Pine.LNX.4.64.0707241459460.18990@fbirervta.pbzchgretzou.qr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch: rewrite only refs which were not 
+ excludedbythe options
+Date: Tue, 24 Jul 2007 14:41:05 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241435290.14781@racer.site>
+References: <Pine.LNX.4.64.0707231829210.14781@racer.site>  
+ <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
+  <46A5E136.D413D3B7@eudaptics.com> <Pine.LNX.4.64.0707241229170.14781@racer.site>
+ <46A5FF69.F5D75C9E@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@computergmbh.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 15:41:13 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 15:41:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDKdU-0008CS-Op
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:41:13 +0200
+	id 1IDKdk-0008Kb-EL
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 15:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568AbXGXNkr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 09:40:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbXGXNkq
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:40:46 -0400
-Received: from bay0-omc2-s9.bay0.hotmail.com ([65.54.246.145]:31383 "EHLO
-	bay0-omc2-s9.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753313AbXGXNkp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 09:40:45 -0400
-Received: from BAYC1-PASMTP13.bayc1.hotmail.com ([65.54.191.186]) by bay0-omc2-s9.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Tue, 24 Jul 2007 06:40:45 -0700
-X-Originating-IP: [69.156.137.240]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.137.240]) by BAYC1-PASMTP13.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Tue, 24 Jul 2007 06:41:26 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IDKd1-0007W0-C2; Tue, 24 Jul 2007 09:40:43 -0400
-In-Reply-To: <Pine.LNX.4.64.0707241459460.18990@fbirervta.pbzchgretzou.qr>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 24 Jul 2007 13:41:27.0094 (UTC) FILETIME=[555AB560:01C7CDF8]
+	id S1752653AbXGXNlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 09:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbXGXNlZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 09:41:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35516 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751211AbXGXNlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 09:41:24 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 13:41:22 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 24 Jul 2007 15:41:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4ewxbybD4PwmdYMHG9Aof2aQ9/W8Jyc8sRufQRK
+	covhvJ1ni32joM
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46A5FF69.F5D75C9E@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53591>
 
-On Tue, 24 Jul 2007 15:21:19 +0200 (CEST)
-Jan Engelhardt <jengelh@computergmbh.de> wrote:
+Hi,
 
+On Tue, 24 Jul 2007, Johannes Sixt wrote:
 
-Hi Jan,
-
-> I have an idea about handling commits that do not compile at 
-> all in git-bisect.
-> For example:
+> Johannes Schindelin wrote:
+> > 
+> > On Tue, 24 Jul 2007, Johannes Sixt wrote:
+> > 
+> > > BTW, '--all' in the argument list of filter-branch works only if it 
+> > > is preceded by '--':
+> > >
+> > >       git filter-branch <some-filter> -- --all <rev-list options>
+> > 
+> > Hmm.  Maybe we should reconsider the logic.  I.e. instead of
+> > 
+> >         *)
+> >                 usage
+> > 
+> >         *)
+> >                 break
 > 
-> git bisect start
-> git bisect bad v2.6.23-rc1
-> # bad: [f695baf2df9e0413d3521661070103711545207a] Linux 2.6.23-rc1
-> git bisect good v2.6.22
-> # good: [098fd16f00005f665d3baa7e682d8cb3d7c0fe6f] Linux 2.6.22
-> 
-> Then 1f1c2881f673671539b25686df463518d69c4649 will be the next commit 
-> git bisect hands out. Now let's assume this commit would not compile. 
-> What would the user do? git-bisect good or git-bisect bad?
+> That is not enough: This case block comes after a test that checks that
+> one additional argument is present, which would not be true anymore.
 
-Check out the section "Avoiding to test a commit" in the git-bisect
-man page; it addresses this issue.  Basically you just use git-reset
-to pick a different nearby commit to compile, and then continue with
-git bisect good/bad.
+Right.
 
+> > > > @@ -181,6 +181,7 @@ export GIT_DIR GIT_WORK_TREE=.
+> > > >
+> > > >  # These refs should be updated if their heads were rewritten
+> > > >
+> > > > +negatives="$(git rev-parse --revs-only "$@" | grep "^\^")"
+> > > >  git rev-parse --revs-only --symbolic "$@" |
+> > > >  while read ref
+> > > >  do
+> > > > @@ -196,7 +197,13 @@ do
+> > > >                         grep "refs/\(tags\|heads\)/$ref$")"
+> > > >         esac
+> > > >
+> > > > -       git check-ref-format "$ref" && echo "$ref"
+> > > > +       # make sure we have a valid ref
+> > > > +       git check-ref-format "$ref" || continue
+> > > > +
+> > > > +       # if the ref has been excluded by the other options, skip it
+> > > > +       test -z "$(git rev-list -1 "$ref" $negatives)" && continue
+> > >
+> > > Does this catch my use-case with --since? I think not, because:
+> > >
+> > > $ git rev-parse --revs-only --since=2007.01.01 master topic
+> > > --max-age=1167606000
+> > > 257061f3323dc0162f731d934f0870e919211fdf
+> > > 3405729b94a654df8afbb9a1e13a4cf49a1c351c
+> > >
+> > > There are no negatives. Does it help to filter the non-positives?
+> > >
+> > > negatives=$(git rev-parse --revs-only "$@" | egrep -v '^[0-9a-f]{40}$')
+> > >
+> > > (Except the the '{40}' part is not portable. Hmpf.)
+> > 
+> > To keep the "--since=..." we have to lose the "--revs-only"...
+> > Darn.  I thought that "--since=" was expanded by rev-parse.  FWIW this
+> > might work:
+> > 
+> > negatives="$(git rev-parse "$@" | while read line
+> >         do
+> >                 case "$line" in
+> >                 $_x40) ;;
+> >                 *) echo "$line";;
+> >                 esac
+> >         done)"
+> > 
+> > Can you please test?  I am off for lunch.
 > 
-> Assume a commit previous to 1f..49 caused an oops (but the user does not 
-> know yet), and the user said 'good' on 1f..49 because he did not know 
-> what to say (since it did not compile). Then bisect would go the wrong 
-> way, marking all left to 1f..49 as good.
+> This worked:
 > 
-> Ideally, there should be like "git bisect dunno-try-left" and "git 
-> bisect dunno-try-right", which allow the user to skip checking 1f..49 
-> and instead try the next commit left or right of 1f..49 (to either go to 
-> a commit before the compile failure, or after it).
+> negatives=`git rev-parse --revs-only "$@" | while read line
+> 	do
+> 		case "$line" in
+> 		$_x40) ;;
+> 		*) echo "$line";;
+> 		esac
+> 	done`
 >
+> i.e. the closing parenthesis in the case arms together with the opening
+> $( made for a syntax error. The --revs-only did not hurt in my tests,
+> but you may have other reasons to remove it.
 
-Sean
+Funny.  AFAIR something similar worked here, all the time.  But I believe 
+you... you're on MinGW, right?
+
+> But there's another problem. Consider this history:
+> 
+>    ---X--o--M         <- master
+>              \
+>           ...-o-...-o <- topic
+> 
+> Then this (rather contrieved) command:
+> 
+>    $ git-filter-branch -n $n master topic --not X
+> 
+> If $n is small enough so that M is never rewritten, then
+> 
+>    git rev-list -1 "$ref" $negatives
+> 
+> still expands to non-empty even for 'master' (= M), which then
+> incorrectly ends up in "$tempdir"/heads.
+
+Aaargh!  Of course!  Since I have to add --topo-order at the end.  
+Otherwise it makes no sense.
+
+> I think the decision whether a positive ref should be rewritten should 
+> be postponed until the rewrite has completed. Because then we know for 
+> certain which revs were treated and can pick the matching refs. We only 
+> lose the check for the error "Which ref do you want to rewrite?"
+
+No, that is not enough:
+
+	A - B - C
+
+B touches the subdirectory sub/.
+
+	git filter-branch C -- sub/
+
+will not rewrite C.
+
+Besides, I really like the check for the error "Which ref do you want to 
+rewrite today?" early, instead of working for a long time, only to say 
+"there was nothing to rewrite, you idiot, you should have chosen the 
+arguments more carefully".
+
+Ciao,
+Dscho
