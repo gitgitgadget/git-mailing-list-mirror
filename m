@@ -1,69 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Benjamin Sergeant" <bsergean@gmail.com>
 Subject: Re: http git clone memory problem.
-Date: Tue, 24 Jul 2007 18:45:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241842270.14781@racer.site>
-References: <1621f9fa0707232044j7cec2bes7bc7cd268775ce48@mail.gmail.com> 
- <Pine.LNX.4.64.0707241025450.14781@racer.site> 
- <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
- <1621f9fa0707241033l7ac53b97i8c8ea068be0cba2f@mail.gmail.com>
+Date: Tue, 24 Jul 2007 10:53:39 -0700
+Message-ID: <1621f9fa0707241053i23f0e3d4v4a1d50f5a4c5f9e6@mail.gmail.com>
+References: <1621f9fa0707232044j7cec2bes7bc7cd268775ce48@mail.gmail.com>
+	 <Pine.LNX.4.64.0707241025450.14781@racer.site>
+	 <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
+	 <1621f9fa0707241033l7ac53b97i8c8ea068be0cba2f@mail.gmail.com>
+	 <Pine.LNX.4.64.0707241842270.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Benjamin Sergeant <bsergean@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 19:46:11 2007
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 19:53:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDOSW-0005Gc-5f
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:46:08 +0200
+	id 1IDOa5-00083o-FK
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755490AbXGXRqE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 13:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754538AbXGXRqD
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:46:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52705 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753747AbXGXRqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 13:46:01 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 17:46:00 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 24 Jul 2007 19:46:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX186gVhcl2I6aZyeB5j5e8egyITXONew4eA7oacdP4
-	OBys5mw3B2+M8Y
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1621f9fa0707241033l7ac53b97i8c8ea068be0cba2f@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1756712AbXGXRxl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 13:53:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754969AbXGXRxl
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:53:41 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:32275 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752397AbXGXRxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 13:53:40 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so1303491wra
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rooHMhdgZFJtuMBK3C6EWx7+MkZUYk5ovmJy6EnF6yJ175Dr04fQQPFwkdIh4bgGJ7FdWBMrFmxfnsYgwRImHiIZ6dD+T32Lz5xgNAwyys4VbbL4FwtMCtdae5S9kLYfwMPn8aL6HmNrXoT6acHQIDtQLjBfFamZ1zO6Tlq+JFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IZ2Vg0aM+uU6r+ocWySRNK0d0/i76V2ausUjHU+tFMRJzSAurMpARQnY60ramoePZTSIUmo7TaHE9vuaBFROlx0LSNdKPnAOvRMHojjhe+n10XHdzteGRmXy9YcopQN6ep+B9YRjZmFQ9vYKwzV4DldEUXyq4jLVxIFUErrEEwA=
+Received: by 10.142.104.9 with SMTP id b9mr343119wfc.1185299619308;
+        Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
+Received: by 10.143.19.17 with HTTP; Tue, 24 Jul 2007 10:53:39 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707241842270.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53620>
 
-Hi,
+On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 24 Jul 2007, Benjamin Sergeant wrote:
+>
+> > I still have the segfault with 1.5.2.4. If I try to gdb it, it abort
+> > before I can do anything. Is there an environment variable that I can
+> > set to disable signal handling or something in git ?
+>
+> Did you gdb http-fetch?
+>
+> If not, please use "sh -x git-clone..." to find out what command line to
+> use.
+>
+> And when you have the command line, please use valgrind to find out where
+> the leak/corruption is.
+>
+> There are some flags that are automatically set/unset when compiling the
+> http transport, and it is not easy to know which flags are enabled in your
+> setup.
+>
+> But for starters, you might want to recompile http-fetch without -O2.  My
+> gdb always has problems attributing the correct line, which does not
+> exactly make it easier for me to debug things.  I could imagine your gdb
+> is as annoying.
+>
+> Ciao,
+> Dscho
 
-On Tue, 24 Jul 2007, Benjamin Sergeant wrote:
+I got that, but it's not super-usefull ... I will try valgrind instead.
 
-> I still have the segfault with 1.5.2.4. If I try to gdb it, it abort 
-> before I can do anything. Is there an environment variable that I can 
-> set to disable signal handling or something in git ?
+[bsergean@marge1 sandbox]$ gdb /home/bsergean/git/bin/git-clone
+/tmp/corefiles/core.18531
+GNU gdb 6.6-1mdv2007.1 (Mandriva Linux release 2007.1)
+Copyright (C) 2006 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i586-mandriva-linux-gnu"...
+"/home/bsergean/git/bin/git-clone": not in executable format: File
+format not recognized
+(no debugging symbols found)
+Using host libthread_db library "/lib/i686/libthread_db.so.1".
+Core was generated by `git-http-fetch -v -a -w remotes/origin/html
+cc13f556fc72f6f0670e61599363f6e3277'.
+Program terminated with signal 6, Aborted.
+#0  0xbfffe410 in __kernel_vsyscall ()
+(gdb) where
+#0  0xbfffe410 in __kernel_vsyscall ()
+#1  0xb7c78590 in ?? ()
+#2  0xb7d7aff4 in ?? ()
+#3  0xb7bd7aa0 in ?? ()
+#4  0xbf928f84 in ?? ()
+#5  0xb7c79e21 in ?? ()
+#6  0x00000006 in ?? ()
+#7  0xbf928ef8 in ?? ()
+#8  0x00000000 in ?? ()
 
-Did you gdb http-fetch?
 
-If not, please use "sh -x git-clone..." to find out what command line to 
-use.
 
-And when you have the command line, please use valgrind to find out where 
-the leak/corruption is.
 
-There are some flags that are automatically set/unset when compiling the 
-http transport, and it is not easy to know which flags are enabled in your 
-setup.
 
-But for starters, you might want to recompile http-fetch without -O2.  My 
-gdb always has problems attributing the correct line, which does not 
-exactly make it easier for me to debug things.  I could imagine your gdb 
-is as annoying.
-
-Ciao,
-Dscho
+>
+>
