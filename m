@@ -1,104 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git log -g: Complain, but do not fail, when no reflogs
  are there
-Date: Tue, 24 Jul 2007 10:14:31 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241011090.14781@racer.site>
+Date: Tue, 24 Jul 2007 10:16:21 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241014500.14781@racer.site>
 References: <Pine.LNX.4.64.0707240039300.14781@racer.site>
- <7vbqe2jr9m.fsf@assigned-by-dhcp.cox.net>
+ <81b0412b0707240026v4321a709wcbbbd7b67a4c506b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:14:55 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:16:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGTk-00073G-Ib
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:14:52 +0200
+	id 1IDGVW-0007W4-UG
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758390AbXGXJOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756769AbXGXJOt
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:14:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56390 "HELO mail.gmx.net"
+	id S1759461AbXGXJQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:16:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759321AbXGXJQk
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:16:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37414 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756719AbXGXJOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 05:14:48 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 09:14:47 -0000
+	id S1756769AbXGXJQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 05:16:39 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 09:16:37 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp004) with SMTP; 24 Jul 2007 11:14:47 +0200
+  by mail.gmx.net (mp056) with SMTP; 24 Jul 2007 11:16:37 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bZ6ZG0i/bD265CnLrJey0tHLlEBqV8jIJXwtL40
-	sOlXuRC9UV80uO
+X-Provags-ID: V01U2FsdGVkX1/i3Q16mEXiRXdulTKPGuNaK5qUYWwtAlPGkJFxEm
+	+fPgimARXmfe39
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqe2jr9m.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <81b0412b0707240026v4321a709wcbbbd7b67a4c506b@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53541>
 
 Hi,
 
-On Mon, 23 Jul 2007, Junio C Hamano wrote:
+On Tue, 24 Jul 2007, Alex Riesen wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
+> On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
 > > When asking "git log -g --all", clearly you want to see only those refs
 > > that do have reflogs, but you do not want it to fail, either.
-> >
+> > 
 > > So instead of die()ing, complain about it, but move on to the other refs.
+> > 
 > 
-> Hmph, do we even want to error(), I wonder...
+> I believe you wont even see these complaints: the pager will start shortly
+> afterwards and fill the screen with commits, completely hiding the errors.
 
-Maybe not.  I thought it was some useful information, though.
+You can see it briefly, but it is hidden by default.  Which is a good 
+thing.  If you set the pager to "cat" (which is happily not the default!) 
+you can see them clearly.  Until you are swamped by the rest of the 
+output.
 
-> Can you tell, at that point, if there were explicit branch names given 
-> originally on the command line, or the refs came
-> from --all?
-
-No:
-
-                        if (!strcmp(arg, "--all")) {
-                                handle_all(revs, flags);
-                                continue;
-                        }
-
-which calls
-
-static void handle_all(struct rev_info *revs, unsigned flags)
-{
-        struct all_refs_cb cb;
-        cb.all_revs = revs;
-        cb.all_flags = flags;
-        for_each_ref(handle_one_ref, &cb);
-}
-
-which in turn calls
-
-static int handle_one_ref(const char *path, const unsigned char *sha1, int flag,
- void *cb_data)
-{
-        struct all_refs_cb *cb = cb_data;
-        struct object *object = get_reference(cb->all_revs, path, sha1,
-                                              cb->all_flags);
-        add_pending_object(cb->all_revs, object, path);
-        return 0;
-}
-
-If you do not say --all, handle_revision_arg() is called, which calls 
-add_pending_object thus:
-
-                        add_pending_object(revs, &a->object, this);
-                        add_pending_object(revs, &b->object, next);
-
-or thus
-
-        add_pending_object_with_mode(revs, object, arg, mode);
-
-So no, there is not really a chance to see how the refs were specified at 
-the time add_pending_object() is called.
+Maybe this is a feature?
 
 Ciao,
 Dscho
