@@ -1,97 +1,64 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Tue, 24 Jul 2007 13:06:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241252040.28577@reaper.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0707221956210.14781@racer.site>
- <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707222223460.14781@racer.site>
- <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707222255010.14781@racer.site>
- <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk>
- <Pine.LNX.4.64.0707230000020.14781@racer.site> <20070723035644.GC32566@spearce.org>
- <7v1wezohi4.fsf@assigned-by-dhcp.cox.net> <46A5B5F5.6000202@trolltech.com>
- <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net>
- <46A5DF1F.2030307@trolltech.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: StGIT (or guilt) + git-svn?
+Date: Tue, 24 Jul 2007 20:19:23 +0800
+Message-ID: <46A5EE4B.7020905@midwinter.com>
+References: <46A5D279.7060601@midwinter.com> <20070724112706.GA9540@dervierte>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 14:06:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: 'git' <git@vger.kernel.org>
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 14:19:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDJ9z-00089S-AX
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 14:06:39 +0200
+	id 1IDJMQ-00044V-DM
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 14:19:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075AbXGXMGg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 08:06:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756488AbXGXMGg
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 08:06:36 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:43133 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754255AbXGXMGf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 08:06:35 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 3E171B9A23
-	for <git@vger.kernel.org>; Tue, 24 Jul 2007 13:06:33 +0100 (BST)
-Received: (qmail 1367 invoked by uid 103); 24 Jul 2007 13:06:29 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3747. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.03121 secs); 24 Jul 2007 12:06:29 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 24 Jul 2007 13:06:29 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <46A5DF1F.2030307@trolltech.com>
+	id S1752554AbXGXMT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 08:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbXGXMT1
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 08:19:27 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:53186
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751821AbXGXMT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 08:19:26 -0400
+Received: (qmail 20189 invoked from network); 24 Jul 2007 12:19:26 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=wjTy1oHY5C0yaQa8vkCOVdi77C30A3xyRIZBo2BIFbIb12eXIafGHQ58U8s+MXLp  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 24 Jul 2007 12:19:26 -0000
+User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+In-Reply-To: <20070724112706.GA9540@dervierte>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53578>
 
-On Tue, 24 Jul 2007, Marius Storm-Olsen wrote:
+Steven Walter wrote:
+> That said, I'm not sure that stgit will help you with "local versioning"
+> of files (I'm not even sure what you mean).  Perhaps you can elaborate
+> on this point.
+>   
 
->>  I do not know this is an appropriate itch to scratch for a Windows
->>  developer to begin with.  The new-workdir setting *is* about
->>  symlinked .git/ metainfo space.  If somebody wants to work on a
->>  filesystem without symlink, he should not be using new-workdir but
->>  something else.  E.g. GIT_DIR + GIT_WORK_TREE, or perhaps GIT_DIR +
->>  core.worktree comes to mind.
->
-> That's is definitely an option, though it seems to me that its more like 
-> giving up than a finding a proper solution. In any case, it would result in 
-> two completely different workflows on systems with and without symlink 
-> support. I work on both, and would like my workflow to be consistent. Of 
-> course I could easily add my own scripts on top to achieve this, but then 
-> we're going back into h4x0r land and not making Git more 'available'.
->
-> The new-workdir feature doesn't *have* to be about symlinked .git/ metainfo 
-> space, but could also be about symref'ed .git/ metainfo.
-> (A discussion was done in 2005s "Getting rid of symlinks in .git?", but the 
-> conclusion was that it would slow it down too much? *ponder*)
+He wants to create some files in his git-svn clone and use git to manage 
+them -- checkpointing his work in progress, backing out changes, etc., 
+without publishing those files to the svn repository. The files in 
+question are not already in svn. But he does want to work on other files 
+that *are* in the svn repository, and wants those changes to be 
+committed back.
 
-Symref'ed isn't really the right term ... we're not talking about refs 
-here.  You would have to basically implement symlinks _inside_ git ...
+So my assumption was that he would do something like maintain his 
+local-only changes as StGIT patches that never get committed to git. His 
+other changes would get committed from StGIT to git, and from there he'd 
+do his normal git-svn dcommit. Or maybe git-svn dcommit followed by stg 
+rebase since git-svn dcommit creates new revision IDs.
 
-New-workdir really _is_ all about symlinks.  It already exists as a 
-contrib feature - and moving it into core is (as I understand it) really 
-just moving it, not redesigning.
+In any event, now that I know it's working successfully for at least one 
+person, I'll point him to stg and he can play with it a bit. Didn't want 
+to lead him into a dead end. Thanks!
 
-If you were going to avoid symlinks, then probably the cleanest way would 
-be to have an explict way to point at the actual repo - rather than making 
-the working look like a repo if you squint hard enough.  Which sounds 
-rather like it would be an extension to GIT_DIR + GIT_WORK_TREE.  I 
-haven't looked at it, but it shouldn't be too hard to have a mechanism 
-that automatically does GIT_DIR=<there> GIT_WORK_TREE==<here> when the 
-appropriate setup is in place?  Though you would have to get it into all 
-the appropriate places ...
-
--- 
-Julian
-
-  ---
-<aav> coffee on an empty stomach is pretty nasy
-<knghtbrd> aav: time to run to the vending machine for cheetos
-<aav> cheetos? :)
+-Steve
