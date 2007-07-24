@@ -1,98 +1,78 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add a 1-second sleep to git-cvsexportcommit test
-Date: Tue, 24 Jul 2007 02:23:53 +0200
-Message-ID: <200707240223.54228.robin.rosenberg.lists@dewire.com>
-References: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net> <7vd4yjoi2w.fsf@assigned-by-dhcp.cox.net> <46A45EF4.9090305@fs.ei.tum.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git tree for old kernels from before the current tree
+Date: Mon, 23 Jul 2007 20:36:55 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0707232035510.6355@xanadu.home>
+References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
+ <Pine.LNX.4.64.0707222257540.32367@fbirervta.pbzchgretzou.qr>
+ <20070722211314.GA13850@linux-sh.org>
+ <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
+ <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
+ <46A3D5EA.2050600@zytor.com>
+ <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
+ <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
+ <20070723234628.GN21668@ftp.linux.org.uk>
+ <alpine.LFD.0.999.0707231957450.6355@xanadu.home> <46A54406.8020605@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jason Sewall <jasonsewall@gmail.com>, git@vger.kernel.org,
-	raa.lkml@gmail.com
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 02:22:59 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Al Viro <viro@ftp.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jan Engelhardt <jengelh@computergmbh.de>,
+	Paul Mundt <lethal@linux-sh.org>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 02:37:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ID8Ay-000611-5F
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:22:56 +0200
+	id 1ID8Oa-0000Ds-Q9
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 02:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275AbXGXAWq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 23 Jul 2007 20:22:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755178AbXGXAWq
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:22:46 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:4034 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752893AbXGXAWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2007 20:22:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 0A9AD802669;
-	Tue, 24 Jul 2007 02:15:27 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 20924-01; Tue, 24 Jul 2007 02:15:26 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 6798D80264F;
-	Tue, 24 Jul 2007 02:15:26 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <46A45EF4.9090305@fs.ei.tum.de>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1755412AbXGXAg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Jul 2007 20:36:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbXGXAg5
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Jul 2007 20:36:57 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:43902 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753860AbXGXAg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2007 20:36:56 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JLN0013OR1JZ6K0@VL-MO-MR003.ip.videotron.ca>; Mon,
+ 23 Jul 2007 20:36:55 -0400 (EDT)
+In-reply-to: <46A54406.8020605@zytor.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53515>
 
-m=C3=A5ndag 23 juli 2007 skrev Simon 'corecode' Schubert:
-> Junio C Hamano wrote:
-> > It may be that we may want to fix this inside cvsexportcommit
-> > itself, instead of working it around in the tests.  If somebody
-> > tries to push more than one commit from git using two
-> > cvsexportcommit in a row, he would need to make sure that the
-> > second run happens one or more seconds after the first run,
-> > otherwise he will see the exact corruption in real life.
->=20
-> Ah, now I see the problem.  The timestamp in the CVS/Entries is the s=
-ame (because it only has second granularity),=20
-> so cvs commit won't consider it as changed.=20
->=20
-> That's the reason why CVS usually waits until the second turns after =
-a "update" (obviously not after a "commit").=20
-> So we could either turn back the timestamp in the Entries file (ugly)=
- or simply wait until the second turns.  Given=20
-> the overall cvs performance, this won't be a big issue, I guess.=20
->=20
-> cheers
->   simon
->=20
+On Mon, 23 Jul 2007, H. Peter Anvin wrote:
 
-CVS sleeps after commit here. Can we bisect it? I have 1.12.3 (mandriva=
-). The patch below I think
-would work around the problem, rather than trying to fix the test. but =
-I'd like to have the last CVS=20
-revision where it does not work for the patch comment=20
+> Nicolas Pitre wrote:
+> > 
+> > I have sanitized .tgz files that I use to stuff a Git repo with.  I 
+> > recall that some of them were reconstructed through patching an earlier 
+> > or later kernel version because the original ones were corrupted. Some 
+> > patches were retrieved from other archival sites, etc.  Then the result 
+> > was 
+> > cross checked with summary lists like this one: 
+> > 
+> > http://www.uwsg.iu.edu/hypermail/linux/kernel/0110.1/1684.html
+> > 
+> > This was a while ago so I don't remember the exact steps, but that 
+> > wasn't always trivial.
+> > 
+> 
+> Then there is 0.95a, 0.95c and 0.95c+, which as far as I know only ever
+> existed as 0.95 + patches posted to alt.os.linux.
 
-Since the sleep is per invocation of cvsexportcommit it won't hurt too =
-much since it is rarely invoked
-on a huge number of git commits.
+Indeed, already got those.
 
--- robin
 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index d6ae99b..6377408 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -277,6 +277,10 @@ if ($opt_c) {
- # clean up
- unlink(".cvsexportcommit.diff");
-
-+# timestamp problems. Invoking this command on a machine that is too f=
-ast may result in
-+# CVS not recognizing changed because the timestamp is unchanged
-+sleep(1);
-+
- sub usage {
-        print STDERR <<END;
- Usage: GIT_DIR=3D/path/to/.git ${\basename $0} [-h] [-p] [-v] [-c] [-f=
-] [-m msgprefix] [ parent ] commit
+Nicolas
