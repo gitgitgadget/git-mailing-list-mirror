@@ -1,64 +1,51 @@
-From: Thierry Parmentelat <thierry.parmentelat@sophia.inria.fr>
-Subject: git documentation - user manual html version has wierd characters
- all over the place
-Date: Tue, 24 Jul 2007 10:37:47 +0200
-Message-ID: <46A5BA5B.3020006@sophia.inria.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFH] Mark user-manual as UTF-8
+Date: Tue, 24 Jul 2007 04:53:41 -0400
+Message-ID: <20070724085340.GA10729@coredump.intra.peff.net>
+References: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 24 10:47:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 10:53:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDG38-0007Lq-58
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 10:47:22 +0200
+	id 1IDG9M-0000Zp-BT
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 10:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756130AbXGXIrS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Jul 2007 04:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbXGXIrS
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 04:47:18 -0400
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:3363 "EHLO
-	mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752933AbXGXIrR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 04:47:17 -0400
-X-Greylist: delayed 596 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jul 2007 04:47:17 EDT
-X-IronPort-AV: E=Sophos;i="4.16,573,1175464800"; 
-   d="scan'208";a="527211"
-Received: from muck.inria.fr ([138.96.250.111])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-SHA; 24 Jul 2007 10:37:19 +0200
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+	id S1757167AbXGXIxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 04:53:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757255AbXGXIxp
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 04:53:45 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1542 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757136AbXGXIxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 04:53:44 -0400
+Received: (qmail 25955 invoked from network); 24 Jul 2007 08:53:41 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 24 Jul 2007 08:53:41 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2007 04:53:41 -0400
+Content-Disposition: inline
+In-Reply-To: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53537>
 
-Hi there
+On Tue, Jul 24, 2007 at 12:46:35AM -0700, Junio C Hamano wrote:
 
-just so you know: the html page here
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+> This attempts to force UTF-8 on the generating end.
+> [...]
+>  * I have to warn that I do not really think I know what I am
+>    doing, but this seems to "work for me".
 
-has all its examples -- the ones in a <div class=3Dliterallayout> -- wi=
-th=20
-wierd character inserted
-e.g. in the Preface
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#id2647=
-04
-What I see as the first example displays like this
-$=EF=BF=BDman=EF=BF=BDgit-clone
+I'm by no means a docbook expert, but I think what you've done is sane.
+Supposedly there is an xsl:param "chunker.output.encoding" which would
+let you do the same thing from the xsltproc command line, but I can't
+seem to get it to work (and I don't know enough about xsl to even begin
+figuring out why).
 
-the same symptom appears in chapter titles
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#reposi=
-tories-and-branches
-displays
-
-
-    Chapter=EF=BF=BD1.=EF=BF=BDRepositories and Branches
-
-=3D=3D=3D
-I am using the latest firefox 2.0.0.5 on macos 10.4.10 US version
-
-
--- thanks
+-Peff
