@@ -1,97 +1,83 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: having problems with building the manpages
-Date: Tue, 24 Jul 2007 09:38:19 +0200
-Message-ID: <20070724073819.GS31655@genesis.frugalware.org>
-References: <20070723182319.GQ31655@genesis.frugalware.org> <Pine.LNX.4.64.0707231937210.32580@beast.quantumfyre.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/RFH] Mark user-manual as UTF-8
+Date: Tue, 24 Jul 2007 00:46:35 -0700
+Message-ID: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7L9kolmstoDTZ4pm"
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jul 24 09:38:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "J. Bruce Fields" <bfields@citi.umich.edu>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 24 09:46:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDEyc-0004ji-Sc
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 09:38:39 +0200
+	id 1IDF6V-0006t5-8K
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 09:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757376AbXGXHic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 03:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757518AbXGXHic
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 03:38:32 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:52148 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755499AbXGXHib (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 03:38:31 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1IDEyR-0000VA-Vw
-	from <vmiklos@frugalware.org>; Tue, 24 Jul 2007 09:38:30 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5F2F31868272; Tue, 24 Jul 2007 09:38:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707231937210.32580@beast.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
-	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1751435AbXGXHqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 03:46:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750944AbXGXHqh
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 03:46:37 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:64150 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbXGXHqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 03:46:36 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070724074635.PPZS1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 24 Jul 2007 03:46:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id TKmb1X0081kojtg0000000; Tue, 24 Jul 2007 03:46:36 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53531>
 
+There have been several complaints against k.org's user-manual
+page.  The document is generated in ISO-8859-1 by the xsltproc
+toolchain (I suspect this is because released docbook.xsl we use
+has xsl:output element that says the output is ISO-8859-1) but
+server delivers it with "charset=UTF-8", and all h*ll breaks
+loose.
 
---7L9kolmstoDTZ4pm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This attempts to force UTF-8 on the generating end.
 
-Hello,
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Na Mon, Jul 23, 2007 at 07:40:04PM +0100, Julian Phillips <julian@quantumfyre.co.uk> pisal(a):
-> Are you using docbook xsl 1.72?  There are known problems building the
-> manpages with that version.  1.71 works, and 1.73 should work when it
-> get released.
+ * I have to warn that I do not really think I know what I am
+   doing, but this seems to "work for me".
 
-yes, i'm was uging 1.72. in the mentime 1.73 has been released, here is
-the error i get when using it:
+ Documentation/Makefile    |    2 +-
+ Documentation/docbook.xsl |    5 +++++
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+ create mode 100644 Documentation/docbook.xsl
 
-asciidoc -b docbook -d manpage -f asciidoc.conf \
-                 -a asciidoc7compatible -agit_version=1.5.2.4 -o git-add.xml+ git-add.txt
-mv git-add.xml+ git-add.xml
-xmlto -m callouts.xsl man git-add.xml
-runtime error: file file:///usr/share/xml/docbook/manpages/other.xsl line 129 element call-template
-The called template 'read-character-map' was not found.
-Note: meta date   : no date; using generated date                  git-add
-Note: meta date   : see http://docbook.sf.net/el/date              git-add
-runtime error: file file:///usr/share/xml/docbook/manpages/other.xsl line 537 element call-template
-The called template 'apply-character-map' was not found.
-Note: Writing git-add.1
-error: file /var/tmp/fst/src/git-1.5.2.4/Documentation/git-add.xml
-xsltRunStylesheet : run failed
-make[1]: *** [git-add.1] Error 1
-rm git-add.xml
-make[1]: Leaving directory `/var/tmp/fst/src/git-1.5.2.4/Documentation'
-make: *** [doc] Error 2
-
-thanks,
-- VMiklos
-
---7L9kolmstoDTZ4pm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGpaxre81tAgORUJYRApcsAJ0U3RK7hqFdfGM5N37ScOXt8txhtQCfUqgN
-RehYw00RRgdedP7bVlb5ulQ=
-=mzpy
------END PGP SIGNATURE-----
-
---7L9kolmstoDTZ4pm--
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b062757..3bc5357 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -131,7 +131,7 @@ clean:
+ user-manual.xml: user-manual.txt user-manual.conf
+ 	$(ASCIIDOC) -b docbook -d book $<
+ 
+-XSLT = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
++XSLT = docbook.xsl
+ XSLTOPTS = --xinclude --stringparam html.stylesheet docbook-xsl.css
+ 
+ user-manual.html: user-manual.xml
+diff --git a/Documentation/docbook.xsl b/Documentation/docbook.xsl
+new file mode 100644
+index 0000000..9a6912c
+--- /dev/null
++++ b/Documentation/docbook.xsl
+@@ -0,0 +1,5 @@
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++		version='1.0'>
++ <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"/>
++ <xsl:output method="html" encoding="UTF-8" indent="no" />
++</xsl:stylesheet>
