@@ -1,160 +1,95 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add a 1-second sleep to git-cvsexportcommit test
-Date: Tue, 24 Jul 2007 11:34:30 +0200
-Message-ID: <200707241134.31950.robin.rosenberg.lists@dewire.com>
-References: <7vk5ssqdy0.fsf@assigned-by-dhcp.cox.net> <200707241033.36509.robin.rosenberg.lists@dewire.com> <46A5BA87.50105@fs.ei.tum.de>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH] Add glossary that can be converted into a po file for
+	each language.
+Date: Tue, 24 Jul 2007 11:34:35 +0200
+Message-ID: <20070724113435.gd8xunvbk8o4wsss@webmail.tu-harburg.de>
+References: <622391.43998.qm@web38909.mail.mud.yahoo.com>
+	<200707212150.49351.stimming@tuhh.de>
+	<7vabtpv43d.fsf@assigned-by-dhcp.cox.net>
+	<200707232216.40300.stimming@tuhh.de>
+	<7vk5sqi91m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jason Sewall <jasonsewall@gmail.com>, git@vger.kernel.org,
-	raa.lkml@gmail.com
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Tue Jul 24 11:33:26 2007
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 11:34:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDGlh-0003r8-7F
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:33:25 +0200
+	id 1IDGn2-0004Ku-Ta
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 11:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758363AbXGXJdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 05:33:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756985AbXGXJdW
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:33:22 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:8345 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752970AbXGXJdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 05:33:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id F36338026EE;
-	Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 25588-05; Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 514138026C7;
-	Tue, 24 Jul 2007 11:26:04 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <46A5BA87.50105@fs.ei.tum.de>
+	id S1760066AbXGXJeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 05:34:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760024AbXGXJeq
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 05:34:46 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:42644 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756985AbXGXJep convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 05:34:45 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6O9YZhM011582
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 24 Jul 2007 11:34:36 +0200
+Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6O9YZVT018454;
+	Tue, 24 Jul 2007 11:34:35 +0200
+Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
+	id A2D19E50349; Tue, 24 Jul 2007 11:34:35 +0200 (CEST)
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
+	webmail.tu-harburg.de (Horde MIME library) with HTTP; Tue, 24 Jul 2007
+	11:34:35 +0200
+In-Reply-To: <7vk5sqi91m.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53548>
 
-tisdag 24 juli 2007 skrev Simon 'corecode' Schubert:
-> Robin Rosenberg wrote:
-> >>> Since the sleep is per invocation of cvsexportcommit it won't hurt
-> >>> too much since it is rarely invoked on a huge number of git commits.
-> >> The question also is, why does this happen on two sequential invocations 
-> >> of cvsexportcommit, but not on two cvs commits done by cvsexportcommit?  
-> >> This should look the same to cvs, no?  
-> > 
-> > I reread my post here... My last sentence was a comment to the patch
-> > and not the sleep in CVS.
-> 
-> Yes, I realize this.  Still, I wonder the same:  why is this needed *per
-> invocation of cvsexportcommit* and not *per invocation of cvs*?  Seems
-> unintuitive to me, or I didn't read the patch good enough.  
+Quoting Junio C Hamano <gitster@pobox.com>:
+>> +++ b/po/glossary/git-gui-glossary.txt
+>> @@ -0,0 +1,34 @@
+>> +"English Term (Dear translator: This file will never be visible to  
+>>  the user!)"	"English Definition (Dear translator: This file will   
+>> never be visible to the user! It should only serve as a tool for   
+>> you, the translator. Nothing more.)"
+>> +"amend"	""
+>> +"annotate"	""
+>> +"branch [noun]"	"A 'branch' is an active line of development."
+>> +"branch [verb]"	""
+>> +"checkout [noun]"	""
+>> +"checkout [verb]"	"The action of updating the working tree to a   
+>> revision which was stored in the object database."
+>> +"commit [noun]"	"A single point in the git history."
+>
+> I wonder.... couldn't this be written as a Tcl array that maps
+> word to its definition, marked with [mc] 'gettext'ese, perhaps,
+> glossary.tcl?  Then perhaps git-gui can include it and have a
+> user-visible glossary as part of its help system.
 
-Besides the potential update and status commands cvs is only invoked once per
-invocation of cvsexportcommit so there is no difference between a sleep per CVS
-invokation vs a sleep per cvsexportcommit invocation. The sleep is needed to make
-sure file modification times resulting from git-apply are different. 
+I'm not so sure about this idea. I'd expect the glossary definitions  
+for the translators to emphasize other issues than what a user-visible  
+glossary would explain. For the user, the glossary should explain what  
+each term means and what the user can *do* with this. For the  
+translator, the glossary should explain what each term means and where  
+it appears in the project (and which other terms it should be  
+distinguished from). Also, the translator glossary IMHO should collect  
+warnings about potential ambiguities as well (including the very clear  
+distinction between noun and verb). Whereas the user glossary is  
+probably much more verbose in what it explains, but doesn't emphasize  
+as much the clear differences between verb and noun and so on.
 
-The sleep in CVS fixes that on my machine so I do not have a problem (and cannot 
-really verify that the patch I made fixes the problem).
+> Am I dreaming, or too drunk?
 
-This debug patch reveals the sleep in CVS. CVS does the sleep differently for different platforms.
+You tell me :-)
 
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index 4efa0c9..9a1e998 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -153,7 +153,7 @@ test_expect_success \
-       git commit -a -m "With spaces" &&
-       id=$(git rev-list --max-count=1 HEAD) &&
-       (cd "$CVSWORK" &&
--      git-cvsexportcommit -c $id &&
-+      strace -fF -o a git-cvsexportcommit -c $id &&
-       test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" = "with spaces.png/1.1/-kb with spaces.txt/1.1/"
-       )'
- 
-@@ -165,7 +165,7 @@ test_expect_success \
-       git commit -a -m "Update with spaces" &&
-       id=$(git rev-list --max-count=1 HEAD) &&
-       (cd "$CVSWORK" &&
--      git-cvsexportcommit -c $id
-+      strace -fF -o b git-cvsexportcommit -c $id
-       test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" = "with spaces.png/1.2/-kb with spaces.txt/1.2/"
-       )'
-
-Tail of the first cvsexportcommit invocation (trash/cvswork/a) from the place where it writes the last file
-into the CVS repo.
- 
-27778 write(7, "/with spaces.png/1.1/Tue Jul 24 "..., 99) = 99
-27778 close(7)                          = 0
-27778 munmap(0xb7f15000, 4096)          = 0
-27778 rename("CVS/Entries.Backup", "CVS/Entries") = 0
-27778 unlink("CVS/Entries.Log")         = 0
-27778 fchdir(6)                         = 0
-27778 close(6)                          = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-27778 time(NULL)                        = 1185268822
-27778 gettimeofday({1185268822, 953340}, NULL) = 0
-
-Here CVS sleeps. The amount varies between invocations since it
-only sleeps enough for the seconds to wrap.
-
-27778 nanosleep({0, 46660000}, NULL)    = 0
-27778 time(NULL)                        = 1185268823
-27778 rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-27778 close(1 <unfinished ...>
-27766 <... read resumed> "", 4096)      = 0
-27778 <... close resumed> )             = 0
-27766 close(6 <unfinished ...>
-27778 munmap(0xb7f14000, 4096 <unfinished ...>
-27766 <... close resumed> )             = 0
-27778 <... munmap resumed> )            = 0
-
-Back into git-cvsexportcommit
-27766 rt_sigaction(SIGHUP, {SIG_IGN},  <unfinished ...>
-27778 exit_group(0)                     = ?
-27766 <... rt_sigaction resumed> {SIG_DFL}, 8) = 0
-27766 --- SIGCHLD (Child exited) @ 0 (0) ---
-27766 rt_sigaction(SIGINT, {SIG_IGN}, {SIG_DFL}, 8) = 0
-27766 rt_sigaction(SIGQUIT, {SIG_IGN}, {SIG_DFL}, 8) = 0
-27766 waitpid(27778, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0) = 27778
-27766 rt_sigaction(SIGHUP, {SIG_DFL}, NULL, 8) = 0
-27766 rt_sigaction(SIGINT, {SIG_DFL}, NULL, 8) = 0
-27766 rt_sigaction(SIGQUIT, {SIG_DFL}, NULL, 8) = 0
-27766 unlink(".msg")                    = 0
-27766 unlink(".cvsexportcommit.diff")   = 0
-27766 stat64("/home/me/tmp/git-cvsapplycommit-55ADfh", {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
-27766 lstat64("/home/me/tmp/git-cvsapplycommit-55ADfh", {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
-27766 chmod("/home/me/tmp/git-cvsapplycommit-55ADfh", 0700) = 0
-27766 open("/home/me/tmp/git-cvsapplycommit-55ADfh", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY) = 6
-27766 fstat64(6, {st_mode=S_IFDIR|0700, st_size=6, ...}) = 0
-27766 fcntl64(6, F_SETFD, FD_CLOEXEC)   = 0
-27766 getdents64(6, /* 2 entries */, 4096) = 48
-27766 getdents64(6, /* 0 entries */, 4096) = 0
-27766 close(6)                          = 0
-27766 rmdir("/home/me/tmp/git-cvsapplycommit-55ADfh") = 0
-27766 write(1, "/home/me/SW/GIT/t/trash/cvsroot/"..., 234) = 234
-27766 exit_group(0)                     = ?
-
--- robin
+Christian
