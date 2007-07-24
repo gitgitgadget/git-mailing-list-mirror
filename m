@@ -1,88 +1,171 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Re: [QGIT4 PATCH 0/6] Some UI Improvements
-Date: Tue, 24 Jul 2007 19:29:36 +0200
-Message-ID: <200707241929.36782.kumbayo84@arcor.de>
-References: <200707232232.39546.kumbayo84@arcor.de> <e5bfff550707231513u8568e48hb280151b8f40681c@mail.gmail.com>
+From: "Benjamin Sergeant" <bsergean@gmail.com>
+Subject: Re: http git clone memory problem.
+Date: Tue, 24 Jul 2007 10:33:04 -0700
+Message-ID: <1621f9fa0707241033l7ac53b97i8c8ea068be0cba2f@mail.gmail.com>
+References: <1621f9fa0707232044j7cec2bes7bc7cd268775ce48@mail.gmail.com>
+	 <Pine.LNX.4.64.0707241025450.14781@racer.site>
+	 <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 19:32:51 2007
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 24 19:33:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDOFf-0000f0-85
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:32:51 +0200
+	id 1IDOGL-0000vh-Kf
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 19:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763097AbXGXRcp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 13:32:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763039AbXGXRcp
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:32:45 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:42362 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762620AbXGXRco (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 13:32:44 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id B78E131EAD1;
-	Tue, 24 Jul 2007 19:32:42 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id A50CC2D29B9;
-	Tue, 24 Jul 2007 19:32:42 +0200 (CEST)
-Received: from fnoheim223.netpark.at (fnoheim223.netpark.at [83.68.151.223])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 6C30130A91F;
-	Tue, 24 Jul 2007 19:32:42 +0200 (CEST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <e5bfff550707231513u8568e48hb280151b8f40681c@mail.gmail.com>
+	id S1756259AbXGXRdI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 13:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758223AbXGXRdH
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 13:33:07 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:22354 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754387AbXGXRdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 13:33:06 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so1298361wra
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 10:33:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GC9L5osOh7brWFwnqAyXlsExOyH8oXjH23th/iQTs9Af7jSzpyeBUjOQHIx3vdd4b8P1IcU8u+96dJo5tZnpvnwLvPrfVYYBVfz0LJ11jrGaRSsKAw79TxFFqaGZpF3RIrK3ubyMLac8SPyGjYPjFLo4UsuLCCy5Uod9BX95L9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jLVKThSvGo175qfIzC/iBrpYjQ6q3M/vNWJBIGAlTgfElJX+iwp/ofbnpI8er8LlyeSpEuyvAWNMuSCQIYkpaRRMj4rHK9VVA/FJrZ5LEEQOV/JDSLwuZ6hJLwzw477LyN88EBanhHsnhlGRsH3v3QrFi4oI4baLukJyfL0F30E=
+Received: by 10.142.110.3 with SMTP id i3mr343594wfc.1185298384361;
+        Tue, 24 Jul 2007 10:33:04 -0700 (PDT)
+Received: by 10.143.19.17 with HTTP; Tue, 24 Jul 2007 10:33:04 -0700 (PDT)
+In-Reply-To: <1621f9fa0707240958y7c5f1b66lbfa940d60c082067@mail.gmail.com>
 Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.91.1/3754/Tue Jul 24 15:41:21 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53617>
 
-On Tuesday 24 July 2007 00:13, Marco Costalba wrote:
-> On 7/23/07, Peter Oberndorfer <kumbayo84@arcor.de> wrote:
+Sorry, the mail went all alone by itself :)
+
+I still have the segfault with 1.5.2.4. If I try to gdb it, it abort
+before I can do anything. Is there an environment variable that I can
+set to disable signal handling or something in git ?
+
+*** glibc detected *** git-http-fetch: corrupted double-linked list:
+0x080a4628 ***
+
+[bsergean@marge1 sandbox]$ git --version
+git version 1.5.2.4
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$
+[bsergean@marge1 sandbox]$ git clone http://www.kernel.org/pub/scm/git/git.git
+Initialized empty Git repository in /home/bsergean/sandbox/git/.git/
+got cc13f556fc72f6f0670e61599363f6e327736ffb
+walk cc13f556fc72f6f0670e61599363f6e327736ffb
+got d33dfef836519e288b1f561a608020c10d01f8da
+got a196f6d93a21ebac9befc4b52a2b0586471b5fa4
+Getting alternates list for http://www.kernel.org/pub/scm/git/git.git
+walk a196f6d93a21ebac9befc4b52a2b0586471b5fa4
+Getting pack list for http://www.kernel.org/pub/scm/git/git.git
+Getting index for pack 6ce718d496eba4857e76cc9b8f7a1a82f5dfb416
+got 896ff1d95a2a307fd764b66de4fbd882e64dd9c6
+got dd98d95d9748cdcb4fd0926a049b4a68dad47a73
+Getting index for pack ffecdbabefeb7d684650f6c920c53c384bc65b5e
+*** glibc detected *** git-http-fetch: corrupted double-linked list:
+0x080a4628 ***
+======= Backtrace: =========
+/lib/i686/libc.so.6[0xb7c8a516]
+/lib/i686/libc.so.6[0xb7c8c728]
+/lib/i686/libc.so.6(__libc_calloc+0x94)[0xb7c8dd74]
+/usr/lib/libcurl.so.4[0xb7d98013]
+git-http-fetch[0x804adbb]
+git-http-fetch[0x804d9b4]
+git-http-fetch[0x804a642]
+git-http-fetch[0x804c150]
+/lib/i686/libc.so.6(__libc_start_main+0xdc)[0xb7c3cd8c]
+git-http-fetch[0x8049f81]
+======= Memory map: ========
+08048000-08070000 r-xp 00000000 03:06 841397
+/home/bsergean/git/bin/git-http-fetch
+08070000-08071000 rwxp 00028000 03:06 841397
+/home/bsergean/git/bin/git-http-fetch
+08071000-08494000 rwxp 08071000 00:00 0          [heap]
+b7800000-b7821000 rwxp b7800000 00:00 0
+b7821000-b7900000 ---p b7821000 00:00 0
+b79e9000-b79f3000 r-xp 00000000 03:02 678969     /lib/libgcc_s-4.1.2.so.1
+b79f3000-b79f4000 rwxp 0000a000 03:02 678969     /lib/libgcc_s-4.1.2.so.1
+b7a09000-b7a29000 rwxp b7a09000 00:00 0
+b7a29000-b7b6e000 r-xp 00000000 03:06 841551
+/home/bsergean/sandbox/git/.git/objects/pack/pack-6ce718d496eba4857e76cc9b8f7a1a82f5dfb416.idx
+b7b6e000-b7b7c000 r-xp 00000000 03:02 678959     /lib/libresolv-2.4.so
+b7b7c000-b7b7e000 rwxp 0000e000 03:02 678959     /lib/libresolv-2.4.so
+b7b7e000-b7b80000 rwxp b7b7e000 00:00 0
+b7b80000-b7b84000 r-xp 00000000 03:02 678947     /lib/libnss_dns-2.4.so
+b7b84000-b7b86000 rwxp 00003000 03:02 678947     /lib/libnss_dns-2.4.so
+b7b86000-b7b96000 r-xp 00000000 03:02 678943     /lib/libnsl-2.4.so
+b7b96000-b7b98000 rwxp 00010000 03:02 678943     /lib/libnsl-2.4.so
+b7b98000-b7b9a000 rwxp b7b98000 00:00 0
+b7b9a000-b7ba2000 r-xp 00000000 03:02 678953     /lib/libnss_nis-2.4.so
+b7ba2000-b7ba4000 rwxp 00007000 03:02 678953     /lib/libnss_nis-2.4.so
+b7ba4000-b7bac000 r-xp 00000000 03:02 678949     /lib/libnss_files-2.4.so
+b7bac000-b7bae000 rwxp 00007000 03:02 678949     /lib/libnss_files-2.4.so
+b7bae000-b7baf000 rwxp b7bae000 00:00 0
+b7baf000-b7bee000 r-xp 00000000 03:02 36383      /usr/lib/libssl.so.0.9.8
+b7bee000-b7bf2000 rwxp 0003e000 03:02 36383      /usr/lib/libssl.so.0.9.8
+b7bf2000-b7c22000 r-xp 00000000 03:02 215594     /usr/lib/libidn.so.11.5.23
+b7c22000-b7c23000 rwxp 0002f000 03:02 215594     /usr/lib/libidn.so.11.5.23
+b7c23000-b7c25000 r-xp 00000000 03:02 678939     /lib/libdl-2.4.so
+b7c25000-b7c27000 rwxp 00001000 03:02 678939     /lib/libdl-2.4.so
+b7c27000-b7d50000 r-xp 00000000 03:02 678918     /lib/i686/libc-2.4.so
+b7d50000-b7d51000 r-xp 00129000 03:02 678918     /lib/i686/libc-2.4.so
+b7d51000-b7d53000 rwxp 0012a000 03:02 678918     /lib/i686/libc-2.4.so
+b7d53000-b7d57000 rwxp b7d53000 00:00 0
+b7d57000-b7d75000 r-xp 00000000 03:02 215102     /usr/lib/libexpat.so.0.5.0
+b7d75000-b7d77000 rwxp 0001e000 03:02 215102     /usr/lib/libexpat.so.0.5.0
+b7d77000-b7dc5000 r-xp 00000000 03:02 215628     /usr/lib/libcurl.so.4.0.0
+b7dc5000-b7dc6000 rwxp 0004d000 03:02 215628     /usr/lib/libcurl.so.4.0.0
+b7dc6000-b7f11000 r-xp 00000000 03:02 36382      /usr/lib/libcrypto.so.0.9.8
+b7f11000-b7f26000 rwxp 0014b000 03:02 36382      /usr/lib/libcrypto.so.0.9.8
+b7f26000-b7f29000 rwxp b7f26000 00:00 0
+b7f29000-b7f3b000 r-xp 00000000 03:02 678968     /lib/libz.so.1.2.3
+b7f3b000-b7f3c000 rwxp 00011000 03:02 678968     /lib/libz.so.1.2.3
+b7f51000-b7f52000 rwxp b7f51000 00:00 0
+b7f52000-b7f6a000 r-xp 00000000 03:02 678928     /lib/ld-2.4.so
+b7f6a000-b7f6b000 r-xp 00017000 03:02 678928     /lib/ld-2.4.so
+b7f6b000-b7f6c000 rwxp 00018000 03:02 678928     /lib/ld-2.4.so
+bfafc000-bfb11000 rw-p bfafc000 00:00 0          [stack]
+bfffe000-bffff000 r-xp bfffe000 00:00 0
+/home/bsergean/git/bin/git-clone: line 40: 17529 Aborted
+  git-http-fetch $v -a -w "$tname" "$sha1" "$1"
+
+
+
+On 7/24/07, Benjamin Sergeant <bsergean@gmail.com> wrote:
+> With
+>
+> On 7/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > > Hi,
-> > the initial reason for this patches is that here on my system qgit4 looks like this
-> > http://img77.imageshack.us/my.php?image=qgit4strangewindowgi0.png
-> 
-> Hi Peter,
-> 
-> OMG that's horrific! I can't understand how it is possible, on my box
-> (Mandriva with QT4.3) everything is fine.
-> 
-> Anyway thanks a lot for the patches. Already applied and pushed.
-Thanks for applying.
-> 
->  > If anyone wants me to remove that too, i would be happy to send more patches
-> 
-> Please feel free to send me any patch that could improve the GUI,
-> unfortunately on my box I'm unable to see all these defects, so any
-> patch from you is more then welcome.
-Will send them when they are cleaned up properly.
-> 
 > >
-> > If you want i can provide more screenshots of how patches change appearance.
+> > On Mon, 23 Jul 2007, Benjamin Sergeant wrote:
 > >
-> 
-> Patchview has not changed for me with your patches, fileview yes, I
-> can see the difference and also customaction. I would say nice job!
-> thanks.
-Without patch 5 (remove empty space below "diff to" header in patch view)
-qgit4 looks like this on my machine
-http://img409.imageshack.us/img409/5174/qgitwithoutpatch5zp9.png
-
-Greetings Peter
-> 
->  Marco
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+> > > - Sorry for the noise if this has already been reported.
+> > > - It's on a Mandriva Spring machine with git 1.5.0.4
+> >
+> > That is really old.  Could you try with a newer version?  I do not
+> > remember off-hand if we had fixed such a problem.
+> >
+> > Ciao,
+> > Dscho
+> >
+> >
+>
