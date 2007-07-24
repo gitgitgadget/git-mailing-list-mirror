@@ -1,123 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] filter-branch: when dwim'ing a ref, only allow heads and
- tags
-Date: Tue, 24 Jul 2007 11:36:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241134330.14781@racer.site>
-References: <Pine.LNX.4.64.0707231829210.14781@racer.site>
- <46A5C615.24C24F0F@eudaptics.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 12:36:39 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH/RFH] Mark user-manual as UTF-8
+Date: Tue, 24 Jul 2007 12:36:31 +0200
+Message-ID: <4753DAE3-2F1F-49C0-906A-09CBAF240C87@wincent.com>
+References: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>,
+	Thierry Parmentelat <thierry.parmentelat@sophia.inria.fr>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 12:37:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDHks-0007O7-72
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 12:36:38 +0200
+	id 1IDHlX-0007bJ-0r
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 12:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935152AbXGXKgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 06:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935076AbXGXKge
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 06:36:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53501 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934860AbXGXKgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 06:36:33 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 10:36:31 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp049) with SMTP; 24 Jul 2007 12:36:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+C3IEzGhuCeOT+R9TMwR8cRo38zQy51m54BKUswf
-	uTshPkCwdqbSFc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46A5C615.24C24F0F@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S932442AbXGXKgw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Jul 2007 06:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762560AbXGXKgw
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 06:36:52 -0400
+Received: from wincent.com ([72.3.236.74]:43166 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757376AbXGXKgv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 06:36:51 -0400
+Received: from [192.168.1.99] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l6OAaZNQ023858;
+	Tue, 24 Jul 2007 05:36:37 -0500
+In-Reply-To: <7vwswqgs6c.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53561>
 
+El 24/7/2007, a las 9:46, Junio C Hamano escribi=F3:
 
-Previously, we matched all refs that had /$ref in them.  And tried to
-verify the result as a ref.  If more than one match was found, the result
-was not a ref, though.
+> There have been several complaints against k.org's user-manual
+> page.  The document is generated in ISO-8859-1 by the xsltproc
+> toolchain (I suspect this is because released docbook.xsl we use
+> has xsl:output element that says the output is ISO-8859-1) but
+> server delivers it with "charset=3DUTF-8", and all h*ll breaks
+> loose.
+>
+> This attempts to force UTF-8 on the generating end.
 
-So only allow tags and heads to be dwim'ed.  If both a tag and a head with
-that name exist, it will be ignored again.
+Thanks for doing this, Junio. I was one of the people who reported =20
+this (although never saw my mail get through to the list).
 
-Caught by Johannes Sixt.
+=46unnily, enough, about an hour after you posted your patch another =20
+email ("git documentation - user manual html version has wierd [sic] =20
+characters all over the place") was posted to the list...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Tue, 24 Jul 2007, Johannes Sixt wrote:
-
-	> Johannes Schindelin wrote:
-	> > +# These refs should be updated if their heads were rewritten
-	> > +
-	> > +git rev-parse --revs-only --symbolic "$@" |
-	> > +while read ref
-	> > +do
-	> > +       # normalize ref
-	> > +       case "$ref" in
-	> > +       HEAD)
-	> > +               ref="$(git symbolic-ref "$ref")"
-	> > +       ;;
-	> > +       refs/*)
-	> > +       ;;
-	> > +       *)
-	> > +               ref="$(git for-each-ref --format='%(refname)' |
-	> > +                       grep /"$ref")"
-	> > +       esac
-	> > +
-	> > +       git check-ref-format "$ref" && echo "$ref"
-	> > +done > "$tempdir"/heads
-	> 
-	> This does not work as I'd expected it: I can't successfully say:
-	> 
-	>    git-filter-branch master
-	> 
-	> It tells me:
-	> 
-	>    Which ref do you want to rewrite?
-
-	I tried that, and happily got the same.  The explanation: more 
-	than one ref matched "/master".  My pattern was extremely borked.
-
-	Thanks.
-
- git-filter-branch.sh     |    2 +-
- t/t7003-filter-branch.sh |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 0ff3475..019a302 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -193,7 +193,7 @@ do
- 	;;
- 	*)
- 		ref="$(git for-each-ref --format='%(refname)' |
--			grep /"$ref")"
-+			grep "refs/\(tags\|heads\)/$ref$")"
- 	esac
- 
- 	git check-ref-format "$ref" && echo "$ref"
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index bc6e2dd..c9a820d 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -159,4 +159,9 @@ test_expect_success 'barf on invalid name' '
- 	! git filter-branch -f HEAD^
- '
- 
-+test_expect_success 'only dwim refs/heads/$ref or refs/tags/$ref' '
-+	git update-ref refs/remotes/origin/master HEAD &&
-+	git filter-branch -f master
-+'
-+
- test_done
--- 
-1.5.3.rc2.32.g35c5b-dirty
+Cheers,
+Wincent
