@@ -1,70 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: workflow question
-Date: Tue, 24 Jul 2007 14:38:50 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707241433360.3607@woody.linux-foundation.org>
-References: <e2a1d0aa0707240653x55dd82b3pf9e3986f5c3bb344@mail.gmail.com>
- <81b0412b0707240837l16844dbct52ffa426d8b8547b@mail.gmail.com>
- <e2a1d0aa0707240930gb99cb0csd1ce9946d33982d@mail.gmail.com>
- <20070724205702.GD6004@steel.home> <20070724210024.GC5040@fieldses.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach git-commit about commit message templates.
+Date: Tue, 24 Jul 2007 14:43:27 -0700
+Message-ID: <7v3azdh400.fsf@assigned-by-dhcp.cox.net>
+References: <20070723041741.GA22461@midwinter.com>
+	<Pine.LNX.4.64.0707231059490.14781@racer.site>
+	<46A481B4.7000502@midwinter.com>
+	<Pine.LNX.4.64.0707231136530.14781@racer.site>
+	<46A48949.1020501@midwinter.com>
+	<7vfy3fkpr8.fsf@assigned-by-dhcp.cox.net>
+	<46A5EA2D.1030707@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Patrick Doyle <wpdster@gmail.com>, git <git@vger.kernel.org>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Jul 24 23:39:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 23:43:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDS6E-0007mc-4t
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 23:39:22 +0200
+	id 1IDSAG-0000SA-Vi
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 23:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734AbXGXVjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 17:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753531AbXGXVjT
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 17:39:19 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:39449 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753167AbXGXVjS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jul 2007 17:39:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6OLcuxg022795
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 24 Jul 2007 14:38:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6OLcoIn002217;
-	Tue, 24 Jul 2007 14:38:50 -0700
-In-Reply-To: <20070724210024.GC5040@fieldses.org>
-X-Spam-Status: No, hits=-2.728 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.14__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752901AbXGXVn3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 17:43:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753388AbXGXVn3
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 17:43:29 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:60446 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752900AbXGXVn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 17:43:28 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070724214326.UHSF1358.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 24 Jul 2007 17:43:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id TZjT1X00M1kojtg0000000; Tue, 24 Jul 2007 17:43:28 -0400
+In-Reply-To: <46A5EA2D.1030707@midwinter.com> (Steven Grimm's message of "Tue,
+	24 Jul 2007 20:01:49 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53651>
 
+Steven Grimm <koreth@midwinter.com> writes:
 
+> Junio C Hamano wrote:
+> ...
+>> I am more worried about how this should interact with cases
+>> where you usually do not start the log message from scratch.
+>> For example, are there cases / policies where being able to use
+>> templates to leave comments on merge commits are needed?
+>> Squash-commits?  Perhaps "apply this template but only when you
+>> have hand resolved a conflicting merges"?
+>>
+>
+> Those are all valid cases. They also happen to be ones that are not
+> personally useful to me; none of the stuff in my company's commit
+> template would really apply to merges. I'm happy to do it if you think
+> those cases need to be handled before this can go in, but given
+> there's at least one user out there who doesn't need those things, I
+> wonder if this makes more sense to hold off on until someone actually
+> asks for it.
+> ...
+> Is your hunch about the common case different than mine? Again, I can
+> go address this if it'll actually be useful.
 
-On Tue, 24 Jul 2007, J. Bruce Fields wrote:
-> 
-> (Also, as a quick fix, note that ctrl-- and ctrl-= will adjust the font
-> size down or up (respectively).)
-
-Side note: this can be *really* confusing on non-US keyboards.
-
-The "=" makes sense on a US keyboard, because it's really "ctrl-+" without 
-the added need to press "shift".
-
-On many non-US keyboards, there is no such arrangement of +/= on the 
-keyboard.
-
-So on a Finnish keyboard, for example, the sequence to make the fonts 
-smaller is "ctrl--", but the sequence to make them larger is 
-"contr-shift-0". Which makes *no* sense what-so-ever, but the "=" sign is 
-"shift-0".
-
-Oh, well. On a Finnish keyboard, "ctrl-+" would make tons of sense. I 
-always try it, and am frustrated when it doesn't work.
-
-			Linus
+No, I am way more cunning and lazy than that.  I did not have
+hunch about the common case, so I just had you (and anybody else
+who would join the thread) do necessary thinking and guessing
+for me ;-)
