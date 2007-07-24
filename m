@@ -1,67 +1,64 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: broken link - what is it?
-Date: Tue, 24 Jul 2007 13:24:57 +0300
-Message-ID: <20070724102457.GB18701@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] git.el: Pass an explicit argument to enable smerge-mode.
+Date: Tue, 24 Jul 2007 12:02:28 +0200
+Message-ID: <87wswqktl7.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Tue Jul 24 12:25:09 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 24 12:31:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDHZk-0003Yr-7o
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 12:25:08 +0200
+	id 1IDHfW-0005ly-5V
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 12:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbXGXKZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 06:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbXGXKZE
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 06:25:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:12995 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbXGXKZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 06:25:02 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so127960ugf
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 03:25:00 -0700 (PDT)
-Received: by 10.66.221.17 with SMTP id t17mr512676ugg.1185272700665;
-        Tue, 24 Jul 2007 03:25:00 -0700 (PDT)
-Received: from ?127.0.0.1? ( [217.132.35.163])
-        by mx.google.com with ESMTPS id x33sm160246ugc.2007.07.24.03.24.59
-        (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2007 03:25:00 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1758468AbXGXKa6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 06:30:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758363AbXGXKa6
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 06:30:58 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:42037 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756708AbXGXKa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 06:30:57 -0400
+Received: from adsl-62-167-26-204.adslplus.ch ([62.167.26.204] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1IDHDr-0005Lb-D5
+	for git@vger.kernel.org; Tue, 24 Jul 2007 05:02:31 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 054D51E7182; Tue, 24 Jul 2007 12:02:29 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53558>
 
-I seem to have a corrupted repo:
+Without argument the mode is toggled, which would do the wrong thing
+if the file was already open.
 
->git-fsck --full
-broken link from    tree c907c09fee3e14adbc17c3e9d54c060b520303ba
-              to    blob dfaa7049e9ebe227cfcffc49d3de16716764bcbd
-broken link from    tree 00c8e1ed2de45bb57bd5482bf258efdfc28d5192
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-broken link from    tree ee2144e186e78ce1ebbecfe10a6551ebc407f025
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-missing blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-broken link from    tree 79f14c41a69bf43069a6828769d8ee3ce86f6daf
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-missing blob dfaa7049e9ebe227cfcffc49d3de16716764bcbd
-broken link from    tree 5c3bb6f86743ced765fbcabe0ade6fc0a7e0f01a
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-broken link from    tree 5f553908b5e2dfb6d53964c5e01ff596b91a61ba
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-broken link from    tree 6f48bab6e09ae3d92cfdec8b6dec77b65a0968a7
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
-broken link from    tree 21fade55d91e78863920ecfe58767e007dcd4e74
-              to    blob 5909ec5314cebf884c03b2d85c7919eb40b5b424
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-man git-fsck does not document what "broken link" is.
-Can someone enlighten me please?
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 457f95f..d7f4316 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -1038,7 +1038,7 @@ and returns the process output as a string."
+   (let ((info (ewoc-data (ewoc-locate git-status))))
+     (find-file (git-fileinfo->name info))
+     (when (eq 'unmerged (git-fileinfo->state info))
+-      (smerge-mode))))
++      (smerge-mode 1))))
+ 
+ (defun git-find-file-other-window ()
+   "Visit the current file in its own buffer in another window."
+-- 
+1.5.3.rc2.39.g82303f
 
 -- 
-MST
+Alexandre Julliard
+julliard@winehq.org
