@@ -1,91 +1,115 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] filter-branch: when dwim'ing a ref, only allow heads and
- tags
-Date: Tue, 24 Jul 2007 12:27:59 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707241227140.14781@racer.site>
+Subject: Re: [PATCH] filter-branch: rewrite only refs which were not excluded
+  bythe options
+Date: Tue, 24 Jul 2007 12:33:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707241229170.14781@racer.site>
 References: <Pine.LNX.4.64.0707231829210.14781@racer.site> 
- <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241134330.14781@racer.site>
- <46A5DCBC.E585A69D@eudaptics.com> <Pine.LNX.4.64.0707241218270.14781@racer.site>
+ <46A5C615.24C24F0F@eudaptics.com> <Pine.LNX.4.64.0707241205480.14781@racer.site>
+ <46A5E136.D413D3B7@eudaptics.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: gitster@pobox.com, git@vger.kernel.org
 To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 13:28:21 2007
+X-From: git-owner@vger.kernel.org Tue Jul 24 13:34:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDIYv-0004f7-EU
-	for gcvg-git@gmane.org; Tue, 24 Jul 2007 13:28:21 +0200
+	id 1IDIee-0006KH-J9
+	for gcvg-git@gmane.org; Tue, 24 Jul 2007 13:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764128AbXGXL2S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 07:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762583AbXGXL2S
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 07:28:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50385 "HELO mail.gmx.net"
+	id S1765899AbXGXLeO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 07:34:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932078AbXGXLeN
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 07:34:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34214 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1764128AbXGXL2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 07:28:17 -0400
-Received: (qmail invoked by alias); 24 Jul 2007 11:28:16 -0000
+	id S1760102AbXGXLeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 07:34:11 -0400
+Received: (qmail invoked by alias); 24 Jul 2007 11:34:09 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 24 Jul 2007 13:28:16 +0200
+  by mail.gmx.net (mp055) with SMTP; 24 Jul 2007 13:34:09 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+PqVoXb+qP7Uh/badRYRFatPsp7Uzg6VLqPTY8Gw
-	FMyPzDvOyv4Zlg
+X-Provags-ID: V01U2FsdGVkX1/xgoM+BCDxGslI8ki1s1/Z6Jij+cvgiXCTLCMKAk
+	WC/mbU3ST5ufh7
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0707241218270.14781@racer.site>
+In-Reply-To: <46A5E136.D413D3B7@eudaptics.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53575>
 
+Hi,
 
-Previously, we matched all refs that had /$ref in them.  And tried to
-verify the result as a ref.  If more than one match was found, the result
-was not a ref, though.
+On Tue, 24 Jul 2007, Johannes Sixt wrote:
 
-So only allow tags and heads to be dwim'ed.  If both a tag and a head with
-that name exist, it will be ignored again.
+> Johannes Schindelin wrote:
+> > So really exclude excluded refs from being rewritten.  This also allows
+> > you to safely call
+> > 
+> >         git filter-branch <some-filter> --all <rev-list options>
+> > 
+> > to rewrite _all_ branches and tags.
+> 
+> BTW, '--all' in the argument list of filter-branch works only if it is
+> preceded by '--':
+> 
+> 	git filter-branch <some-filter> -- --all <rev-list options>
 
-Caught by Johannes Sixt.
+Hmm.  Maybe we should reconsider the logic.  I.e. instead of
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+        *)
+                usage
 
-	Heh.  I just realised that I managed to fsck up a one-line patch.  
-	D'oh!  Thanks for fixing it, Hannes.
+        *)
+                break
 
- git-filter-branch.sh     |    2 +-
- t/t7003-filter-branch.sh |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletions(-)
+> > @@ -181,6 +181,7 @@ export GIT_DIR GIT_WORK_TREE=.
+> > 
+> >  # These refs should be updated if their heads were rewritten
+> > 
+> > +negatives="$(git rev-parse --revs-only "$@" | grep "^\^")"
+> >  git rev-parse --revs-only --symbolic "$@" |
+> >  while read ref
+> >  do
+> > @@ -196,7 +197,13 @@ do
+> >                         grep "refs/\(tags\|heads\)/$ref$")"
+> >         esac
+> > 
+> > -       git check-ref-format "$ref" && echo "$ref"
+> > +       # make sure we have a valid ref
+> > +       git check-ref-format "$ref" || continue
+> > +
+> > +       # if the ref has been excluded by the other options, skip it
+> > +       test -z "$(git rev-list -1 "$ref" $negatives)" && continue
+> 
+> Does this catch my use-case with --since? I think not, because:
+> 
+> $ git rev-parse --revs-only --since=2007.01.01 master topic
+> --max-age=1167606000
+> 257061f3323dc0162f731d934f0870e919211fdf
+> 3405729b94a654df8afbb9a1e13a4cf49a1c351c
+> 
+> There are no negatives. Does it help to filter the non-positives?
+> 
+> negatives=$(git rev-parse --revs-only "$@" | egrep -v '^[0-9a-f]{40}$')
+> 
+> (Except the the '{40}' part is not portable. Hmpf.)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 0ff3475..4fb3abe 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -193,7 +193,7 @@ do
- 	;;
- 	*)
- 		ref="$(git for-each-ref --format='%(refname)' |
--			grep /"$ref")"
-+			grep -e "^refs/heads/$ref$" -e "^refs/tags/$ref$")"
- 	esac
- 
- 	git check-ref-format "$ref" && echo "$ref"
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index bc6e2dd..c9a820d 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -159,4 +159,9 @@ test_expect_success 'barf on invalid name' '
- 	! git filter-branch -f HEAD^
- '
- 
-+test_expect_success 'only dwim refs/heads/$ref or refs/tags/$ref' '
-+	git update-ref refs/remotes/origin/master HEAD &&
-+	git filter-branch -f master
-+'
-+
- test_done
--- 
-1.5.3.rc2.32.g35c5b-dirty
+To keep the "--since=..." we have to lose the "--revs-only"...
+Darn.  I thought that "--since=" was expanded by rev-parse.  FWIW this 
+might work:
+
+negatives="$(git rev-parse "$@" | while read line
+	do
+		case "$line" in
+		$_x40) ;;
+		*) echo "$line";;
+		esac
+	done)"
+
+Can you please test?  I am off for lunch.
+
+Ciao,
+Dscho
