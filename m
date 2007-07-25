@@ -1,80 +1,114 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: StGIT (or guilt) + git-svn?
-Date: Tue, 24 Jul 2007 19:48:17 -0400
-Message-ID: <20070724234817.GA29700@dervierte>
-References: <46A5D279.7060601@midwinter.com> <20070724112706.GA9540@dervierte> <46A5EE4B.7020905@midwinter.com>
+From: "Ricky Nite" <ricky.nite@gmail.com>
+Subject: submodule init problem
+Date: Wed, 25 Jul 2007 08:09:25 +0800
+Message-ID: <d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Walter <stevenrwalter@gmail.com>,
-	'git' <git@vger.kernel.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 01:48:33 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 02:09:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDU78-0007HH-Dk
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 01:48:26 +0200
+	id 1IDURX-0003fX-8g
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 02:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756375AbXGXXsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 19:48:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756724AbXGXXsX
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 19:48:23 -0400
-Received: from wx-out-0506.google.com ([66.249.82.236]:27201 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756371AbXGXXsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 19:48:22 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so15802wxd
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 16:48:21 -0700 (PDT)
+	id S1755813AbXGYAJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 20:09:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757064AbXGYAJ1
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 20:09:27 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:46091 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755786AbXGYAJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 20:09:26 -0400
+Received: by py-out-1112.google.com with SMTP id d32so37160pye
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 17:09:26 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from;
-        b=quIbMG98a0QaHGikEKekcuc0NNEtR1kVJ3iG3cIki0SzmDuGMsPArStPu9zClINJkH/B5OSYVaSHCSGqIGq2LuG3c9MQTbxLOD4oG0v+rDWj2hVi/FK/ThY5Ufhgu/RdS5QeTU91YtDZvLXs30TUGKW3cZ87nufHr8/60FighQ4=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hsIk/5xMr4X99JqD+bSJsJ66+WBooeeS64v927N5eXH0v0weqvRtfWf0eA/A6dtTFeaQw9cORtqrfK/vAfGKfPj/VWuNpgvEG5axg2dbd5kGJe16usVTr1TXkrxAszMRlZsWuPsk81R9ljrl0lGsahFiH4MSrxsDBAPN08uZvmo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from;
-        b=LBq744zDfv4B2iVyWYH4jTqHkCjf6hdigOz9i8E+g/JKmR1GayUP5ZQ0XDDz4rifNMQCpfmvj+aYORmLaOQpl2BrGuJLFWKRQHLQaWU3CQFk8BkBNr5WTBRZ7yl2KK+JD1Aj1eLrkGGk+7mug74Pv+0eaExkqKkNVS2Sd8ZtxpA=
-Received: by 10.70.67.2 with SMTP id p2mr119340wxa.1185320901147;
-        Tue, 24 Jul 2007 16:48:21 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [74.131.192.220])
-        by mx.google.com with ESMTPS id t26sm136001ele.2007.07.24.16.48.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2007 16:48:19 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id 6A736CA285D; Tue, 24 Jul 2007 19:48:17 -0400 (EDT)
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=bIrmuq5LsR9hD5z4ENuK2dEizhPyXUUsoa1VOadxhV5Y65vRo0Q/iIoAQa0IXtUsFUPukXk/uXzPbOxum3W5A8fk6G9Qt5m5QyI4Wy17WDZgY1TOqHa9CTT30iXhINoU3eWxBim9bhhA780f+g8QS9r0XxHxEvcnlhTFwQRj2es=
+Received: by 10.65.126.16 with SMTP id d16mr72558qbn.1185322165945;
+        Tue, 24 Jul 2007 17:09:25 -0700 (PDT)
+Received: by 10.65.96.19 with HTTP; Tue, 24 Jul 2007 17:09:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <46A5EE4B.7020905@midwinter.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53661>
 
-On Tue, Jul 24, 2007 at 08:19:23PM +0800, Steven Grimm wrote:
-> He wants to create some files in his git-svn clone and use git to manage 
-> them -- checkpointing his work in progress, backing out changes, etc., 
-> without publishing those files to the svn repository. The files in 
-> question are not already in svn. But he does want to work on other files 
-> that *are* in the svn repository, and wants those changes to be 
-> committed back.
-> 
-> So my assumption was that he would do something like maintain his 
-> local-only changes as StGIT patches that never get committed to git. His 
-> other changes would get committed from StGIT to git, and from there he'd 
-> do his normal git-svn dcommit. Or maybe git-svn dcommit followed by stg 
-> rebase since git-svn dcommit creates new revision IDs.
+Hello,
 
-You certainly could do local versioning this way, but it isn't how I
-accomplish the same thing.  I keep another branch on top of my "public"
-svn commits for local stuff.  If I always run git-svn dcommit from the
-public branch, the local changes will stay local.  After committing, I
-just have to rebase the local branch on onto git-svn.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
-   -Robert Heinlein
+I encountered this message in "git submodule init":
+"No url found for submodule path '<submodule>' in .gitmodules"
+
+But when I look at .gitmodules, the <submodule> url is there.
+Subsequently, I cannot do "git submodule update"
+
+Here's the full log:
+rnite@linuskarl:~/git_dev/myproj$ ~/bin/git --version
+git version 1.5.3.rc2.g11308
+rnite@linuskarl:~/git_dev$ mkdir flash
+rnite@linuskarl:~/git_dev$ mkdir flashboard
+rnite@linuskarl :~/git_dev$ cd flash
+rnite@linuskarl:~/git_dev/flash$ echo "foo" > flash.v
+rnite@linuskarl:~/git_dev/flash$ ~/bin/git init
+Initialized empty Git repository in .git/
+rnite@linuskarl:~/git_dev/flash$ ~/bin/git add flash.v
+rnite@linuskarl:~/git_dev/flash$ ~/bin/git commit -a -m "initial
+commit of flash module"
+Created initial commit c19874e: initial commit of flash module
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 flash.v
+rnite@linuskarl:~/git_dev/flash$ cd ../flashboard
+rnite@linuskarl:~/git_dev/flashboard$ echo "foo" > flashboard.v
+rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git init
+Initialized empty Git repository in .git/
+rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git add flashboard.v
+rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git commit -a -m "initial
+commit of flashboard module"
+Created initial commit 45dff87: initial commit of flashboard module
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 flashboard.v
+rnite@linuskarl:~/git_dev/flashboard$ cd ..
+rnite@linuskarl :~/git_dev$ mkdir myproj
+rnite@linuskarl:~/git_dev$ cd myproj
+rnite@linuskarl:~/git_dev/myproj$ ~/bin/git init
+Initialized empty Git repository in .git/
+rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule add ~/git_dev/flash
+Initialized empty Git repository in /home/rnite/git_dev/myproj/flash/.git/
+remote: Generating pack...
+remote: Done counting 3 objects.
+Deltifying 3 objects...
+ 100% (3/3) done
+Total 3 (delta 0), reused 0remote:  (delta 0)
+Indexing 3 objects...
+ 100% (3/3) done
+rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule add ~/git_dev/flashboard
+Initialized empty Git repository in /home/rnite/git_dev/myproj/flashboard/.git/
+remote: Generating pack...
+remote: Done counting 3 objects.
+Deltifying 3 objects...
+ 100% (3/3) done
+Total 3 (delta 0), reused 0remote:  (delta 0)
+Indexing 3 objects...
+ 100% (3/3) done
+rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule init
+No url found for submodule path 'flash' in .gitmodules
+rnite@linuskarl:~/git_dev/myproj$ cat .gitmodules
+[submodule "flash"]
+        path = flash
+        url = /home/rnite/git_dev/flash/.git
+[submodule "flashboard"]
+        path = flashboard
+        url = /home/rnite/git_dev/flashboard/.git
+
+I can add more submodules, but the message stays the same after "git
+submodule init" and I cannot do "git submodule update"
+
+help,
+RickyN
