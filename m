@@ -1,114 +1,94 @@
-From: "Ricky Nite" <ricky.nite@gmail.com>
-Subject: submodule init problem
-Date: Wed, 25 Jul 2007 08:09:25 +0800
-Message-ID: <d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Wed, 25 Jul 2007 02:09:46 +0200
+Organization: At home
+Message-ID: <f864c6$bg5$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0707221956210.14781@racer.site> <Pine.LNX.4.64.0707222205050.23426@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222223460.14781@racer.site> <Pine.LNX.4.64.0707222234020.5382@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707222255010.14781@racer.site> <Pine.LNX.4.64.0707222302170.19212@reaper.quantumfyre.co.uk> <Pine.LNX.4.64.0707230000020.14781@racer.site> <20070723035644.GC32566@spearce.org> <7v1wezohi4.fsf@assigned-by-dhcp.cox.net> <46A5B5F5.6000202@trolltech.com> <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net> <46A5DF1F.2030307@trolltech.com> <Pine.LNX.4.64.0707241252040.28577@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 25 02:09:31 2007
+X-From: git-owner@vger.kernel.org Wed Jul 25 02:10:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDURX-0003fX-8g
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 02:09:31 +0200
+	id 1IDUS1-0003mM-17
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 02:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755813AbXGYAJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 20:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757064AbXGYAJ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 20:09:27 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:46091 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755786AbXGYAJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 20:09:26 -0400
-Received: by py-out-1112.google.com with SMTP id d32so37160pye
-        for <git@vger.kernel.org>; Tue, 24 Jul 2007 17:09:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hsIk/5xMr4X99JqD+bSJsJ66+WBooeeS64v927N5eXH0v0weqvRtfWf0eA/A6dtTFeaQw9cORtqrfK/vAfGKfPj/VWuNpgvEG5axg2dbd5kGJe16usVTr1TXkrxAszMRlZsWuPsk81R9ljrl0lGsahFiH4MSrxsDBAPN08uZvmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=bIrmuq5LsR9hD5z4ENuK2dEizhPyXUUsoa1VOadxhV5Y65vRo0Q/iIoAQa0IXtUsFUPukXk/uXzPbOxum3W5A8fk6G9Qt5m5QyI4Wy17WDZgY1TOqHa9CTT30iXhINoU3eWxBim9bhhA780f+g8QS9r0XxHxEvcnlhTFwQRj2es=
-Received: by 10.65.126.16 with SMTP id d16mr72558qbn.1185322165945;
-        Tue, 24 Jul 2007 17:09:25 -0700 (PDT)
-Received: by 10.65.96.19 with HTTP; Tue, 24 Jul 2007 17:09:25 -0700 (PDT)
-Content-Disposition: inline
+	id S1757889AbXGYAJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 20:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757467AbXGYAJ6
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 20:09:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:43822 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757837AbXGYAJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 20:09:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IDURq-0006zv-I2
+	for git@vger.kernel.org; Wed, 25 Jul 2007 02:09:50 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 02:09:50 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 02:09:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53662>
 
-Hello,
+Julian Phillips wrote:
 
-I encountered this message in "git submodule init":
-"No url found for submodule path '<submodule>' in .gitmodules"
+> On Tue, 24 Jul 2007, Marius Storm-Olsen wrote:
+> 
+>>>  I do not know this is an appropriate itch to scratch for a Windows
+>>>  developer to begin with.  The new-workdir setting *is* about
+>>>  symlinked .git/ metainfo space.  If somebody wants to work on a
+>>>  filesystem without symlink, he should not be using new-workdir but
+>>>  something else.  E.g. GIT_DIR + GIT_WORK_TREE, or perhaps GIT_DIR +
+>>>  core.worktree comes to mind.
+>>
+>> That's is definitely an option, though it seems to me that its more like 
+>> giving up than a finding a proper solution. In any case, it would result in 
+>> two completely different workflows on systems with and without symlink 
+>> support. I work on both, and would like my workflow to be consistent. Of 
+>> course I could easily add my own scripts on top to achieve this, but then 
+>> we're going back into h4x0r land and not making Git more 'available'.
+>>
+>> The new-workdir feature doesn't *have* to be about symlinked .git/ metainfo 
+>> space, but could also be about symref'ed .git/ metainfo.
+>> (A discussion was done in 2005s "Getting rid of symlinks in .git?", but the 
+>> conclusion was that it would slow it down too much? *ponder*)
+> 
+> Symref'ed isn't really the right term ... we're not talking about refs 
+> here.  You would have to basically implement symlinks _inside_ git ...
+> 
+> New-workdir really _is_ all about symlinks.  It already exists as a 
+> contrib feature - and moving it into core is (as I understand it) really 
+> just moving it, not redesigning.
+> 
+> If you were going to avoid symlinks, then probably the cleanest way would 
+> be to have an explict way to point at the actual repo - rather than making 
+> the working look like a repo if you squint hard enough.  Which sounds 
+> rather like it would be an extension to GIT_DIR + GIT_WORK_TREE.  I 
+> haven't looked at it, but it shouldn't be too hard to have a mechanism 
+> that automatically does GIT_DIR=<there> GIT_WORK_TREE==<here> when the 
+> appropriate setup is in place?  Though you would have to get it into all 
+> the appropriate places ...
 
-But when I look at .gitmodules, the <submodule> url is there.
-Subsequently, I cannot do "git submodule update"
+I think it could be best solved by having in "worktree" .git/config with
+core.gitdir which functions like lower layer in UnionFS like manner. It
+means that if git cannot find a file or directory in .git, then it tries
+to find it in core.gitdir.
 
-Here's the full log:
-rnite@linuskarl:~/git_dev/myproj$ ~/bin/git --version
-git version 1.5.3.rc2.g11308
-rnite@linuskarl:~/git_dev$ mkdir flash
-rnite@linuskarl:~/git_dev$ mkdir flashboard
-rnite@linuskarl :~/git_dev$ cd flash
-rnite@linuskarl:~/git_dev/flash$ echo "foo" > flash.v
-rnite@linuskarl:~/git_dev/flash$ ~/bin/git init
-Initialized empty Git repository in .git/
-rnite@linuskarl:~/git_dev/flash$ ~/bin/git add flash.v
-rnite@linuskarl:~/git_dev/flash$ ~/bin/git commit -a -m "initial
-commit of flash module"
-Created initial commit c19874e: initial commit of flash module
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 flash.v
-rnite@linuskarl:~/git_dev/flash$ cd ../flashboard
-rnite@linuskarl:~/git_dev/flashboard$ echo "foo" > flashboard.v
-rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git init
-Initialized empty Git repository in .git/
-rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git add flashboard.v
-rnite@linuskarl:~/git_dev/flashboard$ ~/bin/git commit -a -m "initial
-commit of flashboard module"
-Created initial commit 45dff87: initial commit of flashboard module
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 flashboard.v
-rnite@linuskarl:~/git_dev/flashboard$ cd ..
-rnite@linuskarl :~/git_dev$ mkdir myproj
-rnite@linuskarl:~/git_dev$ cd myproj
-rnite@linuskarl:~/git_dev/myproj$ ~/bin/git init
-Initialized empty Git repository in .git/
-rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule add ~/git_dev/flash
-Initialized empty Git repository in /home/rnite/git_dev/myproj/flash/.git/
-remote: Generating pack...
-remote: Done counting 3 objects.
-Deltifying 3 objects...
- 100% (3/3) done
-Total 3 (delta 0), reused 0remote:  (delta 0)
-Indexing 3 objects...
- 100% (3/3) done
-rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule add ~/git_dev/flashboard
-Initialized empty Git repository in /home/rnite/git_dev/myproj/flashboard/.git/
-remote: Generating pack...
-remote: Done counting 3 objects.
-Deltifying 3 objects...
- 100% (3/3) done
-Total 3 (delta 0), reused 0remote:  (delta 0)
-Indexing 3 objects...
- 100% (3/3) done
-rnite@linuskarl:~/git_dev/myproj$ ~/bin/git submodule init
-No url found for submodule path 'flash' in .gitmodules
-rnite@linuskarl:~/git_dev/myproj$ cat .gitmodules
-[submodule "flash"]
-        path = flash
-        url = /home/rnite/git_dev/flash/.git
-[submodule "flashboard"]
-        path = flashboard
-        url = /home/rnite/git_dev/flashboard/.git
-
-I can add more submodules, but the message stays the same after "git
-submodule init" and I cannot do "git submodule update"
-
-help,
-RickyN
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
