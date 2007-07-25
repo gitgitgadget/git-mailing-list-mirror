@@ -1,82 +1,78 @@
-From: "Ricky Nite" <ricky.nite@gmail.com>
-Subject: Re: submodule init problem
-Date: Thu, 26 Jul 2007 07:43:42 +0800
-Message-ID: <d4b731510707251643m4c1b416qabf8a01205581c9d@mail.gmail.com>
-References: <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
-	 <20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
-	 <b6ebd0a50707201023h12ed3c61v31ccb2b356c1ee42@mail.gmail.com>
-	 <7vsl7jvthk.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0707201933360.14781@racer.site>
-	 <d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
-	 <d4b731510707241730u45755c0dwfde5e0b14b14f1da@mail.gmail.com>
-	 <7vir89fe1l.fsf@assigned-by-dhcp.cox.net>
-	 <20070725081508.GN1591MdfPADPa@greensroom.kotnet.org>
-	 <7v8x94dt2b.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: index-pack died on pread
+Date: Wed, 25 Jul 2007 16:44:05 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org>
+References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
+ <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
+ <200707260115.13234.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: skimo@liacs.nl, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Lars Hjemli" <hjemli@gmail.com>, git@vger.kernel.org,
-	"Chris Larson" <clarson@kergoth.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 01:43:49 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Michal Rokos <michal.rokos@gmail.com>, GIT <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 01:45:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDqWB-00065n-R5
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 01:43:48 +0200
+	id 1IDqXQ-0006JH-4L
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 01:45:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751732AbXGYXno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 19:43:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751709AbXGYXno
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 19:43:44 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:36747 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614AbXGYXnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 19:43:43 -0400
-Received: by py-out-1112.google.com with SMTP id d32so662759pye
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 16:43:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HSnFekkyjoFLCXEXmR+4tGyodUKTOkry95nJIuCoAGPfobaEFVONVyjOxyArNEzUm2VAYgLG1Dr/CjGt9j4zljmLVqq/GtujUzchmTZESrOFgpT+kmgVWPOIFwSWHKM8wNpXwI33AEXT60/cU+1LPjcsXN1o4Rhi0vWDWqHF7HQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Vk8xce6tlvBB6s8fwREQ/NJ7iFdOO5qva7JGlfifljy8aLwFjL5gVdiFp9MBX+uROB09N+ciQz/OqPdGdCiqzPlhQLwj8e4TouR9+cbn9p76ckWDCxxl+TWo3b36Q80yorzA9GGnV6xUkqBUypOAdyy1OR1D1Ry8ImhBKYoH0DA=
-Received: by 10.65.72.7 with SMTP id z7mr2109486qbk.1185407022612;
-        Wed, 25 Jul 2007 16:43:42 -0700 (PDT)
-Received: by 10.65.96.19 with HTTP; Wed, 25 Jul 2007 16:43:42 -0700 (PDT)
-In-Reply-To: <7v8x94dt2b.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751732AbXGYXpB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 19:45:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751523AbXGYXpA
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 19:45:00 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:33500 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750840AbXGYXpA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 19:45:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6PNiDQc008395
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 25 Jul 2007 16:44:14 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6PNi58O001981;
+	Wed, 25 Jul 2007 16:44:06 -0700
+In-Reply-To: <200707260115.13234.robin.rosenberg.lists@dewire.com>
+X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53741>
 
-works for me :)
 
-backgrounder:
-I'm currently importing a large cvs repo (multiple projects, shared
-modules, shared environment) into cvs-tracking git "superprojects".
-Incremental import of the cvs modules using periodic invocations of
-"git cvsimport" seems to be working, although there were some messages
-(I suspect cvsps - will post later).  I was adding modules into the
-superprojects when I hit this submodule init issue.
 
-It will also be nice to have some kind of "superproject browser" in gitk..
+On Thu, 26 Jul 2007, Robin Rosenberg wrote:
+> 
+> Does cygwin have the same pread problem then.. ? after make NO_PREAD=1 with 1.5.2.4
+> clone works.
 
-On 7/26/07, Junio C Hamano <gitster@pobox.com> wrote:
-> Sven Verdoolaege <skimo@kotnet.org> writes:
->
-> > On Tue, Jul 24, 2007 at 06:49:26PM -0700, Junio C Hamano wrote:
-> >> Ok, this appears it most likely to be related to the fact that
-> >> one is a prefix of the other in problematic case.
-> >
-> > Yes, this has been noted before and Chris Larson sent in a patch,
-> > but he didn't follow up on it.
->
-> Ok, I re-read the thread and came up with a different solution.
-> How does this look?
->
+Interesting.
+
+It's true that pread() is used much less than normal reads, and maybe the 
+cygwin pread() is indeed broken. But it's intriguing how apparently both 
+HP-UX and Cygwin are showing the same breakage.
+
+But if git was doing something odd with pread(), then NO_PREAD shouldn't 
+work either, because that just enables the exact same code, except we now 
+supply a pread emulation library function (which does it using "lseek()": 
+not a *good* emulation, but good enough for the very limited use that git 
+puts it to).
+
+So yeah, it looks like pread() is broken under cygwin and hpux-11.11.
+
+Googling for "pread" "cygwin" does seem to show that it's been buggy at 
+times.  Eg:
+
+	Fixes since 1.5.21-1:
+
+	...
+
+	- Fix pread in case current file offset is non-zero. (Hideki Iwamoto)
+
+but I'm a bit surprised that hp-ux has the bug. pread isn't *that* 
+complex.
+
+		Linus
