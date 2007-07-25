@@ -1,84 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rc3 gitweb is broken, won't deliver snapshots
-Date: Wed, 25 Jul 2007 15:48:31 -0700
-Message-ID: <7vsl7ccd6o.fsf@assigned-by-dhcp.cox.net>
-References: <30e4a070707250627l29ce4794x97d03b8232352cae@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Mark Levedahl" <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 00:48:37 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 00:52:26 +0200
+Message-ID: <45446C9F-F33E-4D47-9484-E92D36BB803E@wincent.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>  <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de> <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com> <alpine.LFD.0.999.0707251131540.3607@woody.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Cuppett <cuppett@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 00:52:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDpem-0001SM-QN
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:48:37 +0200
+	id 1IDpil-0002ZL-LJ
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757533AbXGYWsd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 18:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758333AbXGYWsd
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:48:33 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60151 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756276AbXGYWsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 18:48:32 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070725224832.VMVG1393.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 25 Jul 2007 18:48:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TyoX1X00U1kojtg0000000; Wed, 25 Jul 2007 18:48:32 -0400
-In-Reply-To: <30e4a070707250627l29ce4794x97d03b8232352cae@mail.gmail.com>
-	(Mark Levedahl's message of "Wed, 25 Jul 2007 09:27:55 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757751AbXGYWwk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 25 Jul 2007 18:52:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756987AbXGYWwk
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:52:40 -0400
+Received: from wincent.com ([72.3.236.74]:47396 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756635AbXGYWwj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 18:52:39 -0400
+Received: from [192.168.1.99] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l6PMqVOA010749;
+	Wed, 25 Jul 2007 17:52:33 -0500
+In-Reply-To: <alpine.LFD.0.999.0707251131540.3607@woody.linux-foundation.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53732>
 
-"Mark Levedahl" <mlevedahl@gmail.com> writes:
+El 25/7/2007, a las 20:43, Linus Torvalds escribi=F3:
 
-> gitweb in 1.5.3-rc3 fails to deliver snapshots in any useable format
-> (bzip2, gz, or zip). Clicking on a link seems to work, but the
-> delivered file as stored on my system is empty. No error messages
-> appear anywhere I can find. I am hosting gitweb on FC7 using lighttpd,
-> if that matters.
+> I think cygwin may add some overhead, but people should really realiz=
+e
+> that Linux is quite often an order of magnitude faster (or more) than
+> other systems on some very basic operations.
 >
-> The snapshot service at git.kernel.org also seems broken, I don't know
-> what gitweb is running there so don't know if the issue is related.
+> That's especially true for filesystem operations. We really are =20
+> just that
+> good.
 >
-> I have fixed this for my use by reverting the following commits
+> Really simple things like stat/open/read/write/close are just damn =20
+> fast on
+> Linux. To the point where you really do notice it when you compare to
+> other systems. If something takes hours on Linux, and it's very
+> filesystem-intensive, I'm not at all surprised that it might take =20
+> days on
+> Windows.
 >
-> 3473e7df5f8c7f8dc3e2c3f2fdc99a1d1a719c16 gitweb: More detailed error
-> messages for snapshot format
-> a781785d8f1eb7adf05a24b121104716a086a67a gitweb: Fix support for
-> legacy gitweb config for snapshots
-> a3c8ab30a54c30a6a434760bedf04548425416ef gitweb: snapshot cleanups &
-> support for offering multiple formats
->
-> The snapshot problem first appears when a3c8ab30a54 is applied.
+> (OS X is probably better than Windows when it comes to filesystem =20
+> ops, but
+> their memory management absolutely sucks, and I can pretty much =20
+> guarantee
+> that their filesystem operation latency doesn't hold a candle to =20
+> Linux,
+> so while I'd expect git to perform "pretty well" on OS X, it's still
+> going to be slower than on Linux)
 
-True.  I wonder if people who submitted patches even tested
-these things... Sigh.
+Would be very interesting to see some "scientific" benchmarks of Git =20
+performance on the different platforms.
 
----
+Anyone got an Intel Mac with Windows and Linux installed on it as well?
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0acd0ca..b381692 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4343,7 +4343,7 @@ sub git_snapshot {
- 	my $cmd;
- 	$filename .= "-$hash$known_snapshot_formats{$format}{'suffix'}";
- 	$cmd = "$git_command archive " .
--		"--format=$known_snapshot_formats{$format}{'format'}" .
-+		"--format=$known_snapshot_formats{$format}{'format'} " .
- 		"--prefix=\'$name\'/ $hash";
- 	if (exists $known_snapshot_formats{$format}{'compressor'}) {
- 		$cmd .= ' | ' . join ' ', @{$known_snapshot_formats{$format}{'compressor'}};
+Cheers,
+Wincent
