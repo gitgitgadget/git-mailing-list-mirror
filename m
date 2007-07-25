@@ -1,72 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule: Error messages from 'git describe' shouldn't end up on the terminal
-Date: Wed, 25 Jul 2007 16:09:57 -0700
-Message-ID: <7vfy3ccc6y.fsf@assigned-by-dhcp.cox.net>
-References: <11853733111502-git-send-email-Emilian.Medve@Freescale.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: index-pack died on pread
+Date: Thu, 26 Jul 2007 01:15:12 +0200
+Message-ID: <200707260115.13234.robin.rosenberg.lists@dewire.com>
+References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com> <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Emil Medve <Emilian.Medve@Freescale.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 01:10:04 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michal Rokos <michal.rokos@gmail.com>, GIT <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 01:14:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDpzX-00077f-7t
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 01:10:03 +0200
+	id 1IDq3V-00083q-DD
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 01:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760246AbXGYXJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 19:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760174AbXGYXJ7
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 19:09:59 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:51249 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760067AbXGYXJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 19:09:58 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070725230959.YCCT1399.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 25 Jul 2007 19:09:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Tz9y1X0071kojtg0000000; Wed, 25 Jul 2007 19:09:58 -0400
-In-Reply-To: <11853733111502-git-send-email-Emilian.Medve@Freescale.com> (Emil
-	Medve's message of "Wed, 25 Jul 2007 09:21:51 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760002AbXGYXOG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 25 Jul 2007 19:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759308AbXGYXOF
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 19:14:05 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:26088 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1759614AbXGYXOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 19:14:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 0EDC18026F9;
+	Thu, 26 Jul 2007 01:06:46 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 13524-01; Thu, 26 Jul 2007 01:06:45 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 9A80180266C;
+	Thu, 26 Jul 2007 01:06:45 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53737>
 
-Emil Medve <Emilian.Medve@Freescale.com> writes:
+m=E5ndag 23 juli 2007 skrev Linus Torvalds:
+>=20
+> On Mon, 23 Jul 2007, Michal Rokos wrote:
+> >
+> > fatal: cannot pread pack file: No such file or directory (n=3D0,
+> > errno=3D2, fd=3D3, ptr=3D40452958, len=3D428, rdy=3D0, off=3D123601=
+)
+>=20
+> Ok, that's bogus. When "n" is zero, the errno (and thus the error str=
+ing)=20
+> is not changed by pread, so that's a very misleading error report.
+>=20
+> So what seems to have happened is that the pack-file is too short, so=
+ we=20
+> got a return value of 0, and then reported it as if it had an errno.
+>=20
+> The reason for returning zero from pread would be:
+>=20
+>  - broken pread. I don't think HPUX should be a problem, so that's=20
+>    probably not it.
+>=20
+>  - the pack-file got truncated
+>=20
+>  - the offset is corrupt, and points to beyond the size of the packfi=
+le.
+>=20
+> In this case, since the offset is just 123601, I suspect it's a trunc=
+ation=20
+> issue, and your pack-file is simply corrupt. Either because of some=20
+> problem with receiving it, or because of problems on the remote side.
+>=20
+> > fetch-pack from 'git://git.kernel.org/pub/scm/git/git' failed.
+>=20
+> One thing to look out for is that the "git.kernel.org" machines aren'=
+t the=20
+> "primary" ones, and the data gets mirrored from other machines. If th=
+e=20
+> mirroring is incomplete, I could imagine that the remote side simply =
+ended=20
+> up terminating the connection, and you ended up with a partial pack-f=
+ile.
+>=20
+> Some of the kernel.org machines ran out of disk space the other day, =
+so=20
+> maybe you happened to hit it in an unlucky window. Does it still happ=
+en?
 
-> As of now a failure to locate the closest tag to a commit (e.g because there is
-> no tag in the repository) is handled explicitly by displaying an 'undefined' tag
-> error message. However when git describe fails it will still display an
-> undesirable  "fatal: cannot describe SHA1" message. This patch hides that
-> message as git-submodule has an alternative and explicit error handling method
-> in place for this situation
->
-> Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
-> ---
->  git-submodule.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 1f0cb99..3804f18 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -233,7 +233,7 @@ modules_list()
->  			say "-$sha1 $path"
->  			continue;
->  		fi
-> -		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1)
-> +		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1 2>/dev/null)
->  		set_name_rev "$path" "$sha1"
->  		if git diff-files --quiet -- "$path"
->  		then
+Does cygwin have the same pread problem then.. ? after make NO_PREAD=3D=
+1 with 1.5.2.4
+clone works.
 
-It appears that set_name_rev does the moral equivalent of that
-line you touched but more elaborately, to set the same
-variable.  Shouldn't we be simply removing that line instead?
+Here is my output with pread. Note that I'm cloning from or.cz, not ker=
+nel.org .
+
+$ git clone git://repo.or.cz/git.git GIT=20
+Initialized empty Git repository in /roro/GIT/.git/=20
+remote: Generating pack...=20
+remote: Done counting 56038 objects.=20
+remote: Deltifying 56038 objects...=20
+remote:  100% (56038/56038) done=20
+Indexing 56038 objects...=20
+remote: Total 56038 (delta 39190), reused 52555 (delta 36164)=20
+ 100% (56038/56038) done=20
+Resolving 39190 deltas...=20
+fatal: cannot pread pack file: No such file or directory=20
+fatal: index-pack died with error code 128=20
+fetch-pack from 'git://repo.or.cz/git.git' failed.
+
+-- robin
