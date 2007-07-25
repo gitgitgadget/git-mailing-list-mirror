@@ -1,58 +1,65 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 14:30:02 +0200
-Message-ID: <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: rc3 gitweb is broken, won't deliver snapshots
+Date: Wed, 25 Jul 2007 09:27:55 -0400
+Message-ID: <30e4a070707250627l29ce4794x97d03b8232352cae@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 14:29:18 2007
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jul 25 15:28:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDfzP-0008Ov-6M
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 14:29:15 +0200
+	id 1IDguI-000548-SD
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 15:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312AbXGYM3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 08:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXGYM3L
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 08:29:11 -0400
-Received: from mailer.zib.de ([130.73.108.11]:65042 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752312AbXGYM3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 08:29:10 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6PCT7gE024969;
-	Wed, 25 Jul 2007 14:29:07 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6PCT7VY025396
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 25 Jul 2007 14:29:07 +0200 (MEST)
-In-Reply-To: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753939AbXGYN16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 09:27:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754537AbXGYN16
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 09:27:58 -0400
+Received: from ik-out-1112.google.com ([66.249.90.180]:9910 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753348AbXGYN15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 09:27:57 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so138181ika
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=p8FgGtmDy5byQXhPu8aJD3Je8SI2UKSDMmOTw0euCdXI/4hXU9DwZ+0cjtPb/F5nu1GOi+fKZNbqa4cbTAB3OjiX8Hpdc7+W3QbNxkHnW/NPFpiB+wTB8rxSWu+M9nQJyK73n7SZ7drmc/aqVKY/YnvceNkngw5YPzrVsV5B8d0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SVUhIF3kcSwvzWk8umR7c9g+DrIIv4xOmGX3+HYmYiXFLSONai77qIZCMwrwdYJda1tOZus719AEUU17aqOoRS08DHdg9TlRbowzO47lC8kn7Jle7HZGv4HjBLo83P4foEbh6UeW1RYk79rLMH5CIJ16zdz9lgqleyKeH4N65WU=
+Received: by 10.78.138.6 with SMTP id l6mr172809hud.1185370075508;
+        Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
+Received: by 10.78.190.5 with HTTP; Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53689>
 
+gitweb in 1.5.3-rc3 fails to deliver snapshots in any useable format
+(bzip2, gz, or zip). Clicking on a link seems to work, but the
+delivered file as stored on my system is empty. No error messages
+appear anywhere I can find. I am hosting gitweb on FC7 using lighttpd,
+if that matters.
 
-On Jul 25, 2007, at 12:35 PM, Dmitry Kakurin wrote:
+The snapshot service at git.kernel.org also seems broken, I don't know
+what gitweb is running there so don't know if the issue is related.
 
-> How serious are you guys about Windows support?
-> I'm talking fully-functional port, not Cygwin.
+I have fixed this for my use by reverting the following commits
 
-What's wrong with the Cygwin port?
+3473e7df5f8c7f8dc3e2c3f2fdc99a1d1a719c16 gitweb: More detailed error
+messages for snapshot format
+a781785d8f1eb7adf05a24b121104716a086a67a gitweb: Fix support for
+legacy gitweb config for snapshots
+a3c8ab30a54c30a6a434760bedf04548425416ef gitweb: snapshot cleanups &
+support for offering multiple formats
 
-Is it just that windows developer hate cygwin because it's to
-complex to install or is there any severe limitation?
-functionality? stability? performance?
+The snapshot problem first appears when a3c8ab30a54 is applied.
 
-I'm personally only working on Windows if force to, but people
-are asking me the same question that you have. Does git
-seriously and fully support Windows?
-
-	Steffen
+Mark Levedahl
