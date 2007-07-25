@@ -1,65 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: index-pack died on pread
-Date: Wed, 25 Jul 2007 22:48:17 +0200
-Message-ID: <20070725204817.GA3645@steel.home>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com> <81b0412b0707230832w438613d0rdaa8dc97013962a6@mail.gmail.com> <333e1ca10707251307k21b5f58bjb8e5803173e3d9b3@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: submodule init problem
+Date: Wed, 25 Jul 2007 21:50:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707252150090.14781@racer.site>
+References: <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
+  <7vsl7jvthk.fsf@assigned-by-dhcp.cox.net>  <d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
+  <d4b731510707241730u45755c0dwfde5e0b14b14f1da@mail.gmail.com> 
+ <20070602074410.GA955MdfPADPa@greensroom.kotnet.org> 
+ <Pine.LNX.4.64.0707201933360.14781@racer.site>  <7vir89fe1l.fsf@assigned-by-dhcp.cox.net>
+  <20070725081508.GN1591MdfPADPa@greensroom.kotnet.org> 
+ <8c5c35580707251325i2633777pdd7604b541506533@mail.gmail.com> 
+ <Pine.LNX.4.64.0707252129150.14781@racer.site>
+ <8c5c35580707251340n2f1a9fd2j5fdf322277d68d26@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Michal Rokos <michal.rokos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 22:49:06 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: skimo@liacs.nl, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Ricky Nite <ricky.nite@gmail.com>,
+	Chris Larson <clarson@kergoth.com>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 22:50:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDnn4-000780-4l
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:49:02 +0200
+	id 1IDnon-0007rb-No
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758824AbXGYUsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 16:48:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762693AbXGYUsW
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:48:22 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:62840 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763329AbXGYUsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 16:48:20 -0400
-Received: from tigra.home (Fcabf.f.strato-dslnet.de [195.4.202.191])
-	by post.webmailer.de (mrclete mo15) (RZmta 10.3)
-	with ESMTP id U07219j6PJRNkl ; Wed, 25 Jul 2007 22:48:18 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id DF600277BD;
-	Wed, 25 Jul 2007 22:48:17 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 6807EBDD0; Wed, 25 Jul 2007 22:48:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <333e1ca10707251307k21b5f58bjb8e5803173e3d9b3@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTv/vsc=
-X-RZG-CLASS-ID: mo07
+	id S1760500AbXGYUuh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 16:50:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760081AbXGYUug
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:50:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48210 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756927AbXGYUuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 16:50:35 -0400
+Received: (qmail invoked by alias); 25 Jul 2007 20:50:33 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 25 Jul 2007 22:50:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18iqP8KDFMi7PeqBA5rtap44E6ARJkdBWLfl8lCvC
+	YHV7nXvSTU0hFD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8c5c35580707251340n2f1a9fd2j5fdf322277d68d26@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53719>
 
-Michal Rokos, Wed, Jul 25, 2007 22:07:50 +0200:
-> On 7/23/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> >On 7/23/07, Michal Rokos <michal.rokos@gmail.com> wrote:
-> >> fatal: cannot pread pack file: No such file or directory (n=0,
-> >> errno=2, fd=3, ptr=40452958, len=428, rdy=0, off=123601)
-> >> fatal: index-pack died with error code 128
-> >
-> >strange. pread(2) should not return ENOENT. Not in HP-UX
-> >not anywhere.
-> >
-> >Could you recompile with NO_PREAD=1 and try again?
-> >Maybe HP-UX pread(2) implementation is just broken.
+Hi,
+
+On Wed, 25 Jul 2007, Lars Hjemli wrote:
+
+> On 7/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Wed, 25 Jul 2007, Lars Hjemli wrote:
+> > >  eol='$'
+> > >  git config --get-regexp '^submodule\..*\.path$' "^$1$eol"
+> > 
+> > Ah, now I get it.  You are looking for the _key_ whose value is "$1".
 > 
-> When I tried to recompile with NO_PREAD=1 the problem disappeared.
+> Yes
+> 
+> > And you do not need the eol hack.
+> 
+> Hmm, I tried misc. quoting/escaping without success, care to educate me?
 
-I think that's a fair indication for HP-UX has a broken pread(2).
+I already did ;-I  "^$1$"
 
-> Do you want me to try something more with it?
-
-No. Put NO_PREAD=1 in your config.mak on HP-UX.
+Ciao,
+Dscho
