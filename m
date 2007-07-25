@@ -1,86 +1,74 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Add --show-size to git log to print message size
-Date: Wed, 25 Jul 2007 11:38:01 +0200
-Message-ID: <e5bfff550707250238i4fd7926en4c924a0debbb9a3c@mail.gmail.com>
-References: <e5bfff550707140952hb60735bi95a4f03636c4aa99@mail.gmail.com>
-	 <7vabtlf7tf.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Document --unified/-U option
+Date: Wed, 25 Jul 2007 12:08:17 +0200
+Message-ID: <20070725100817.21185.91337.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Paul Mackerras" <paulus@samba.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 12:03:34 2007
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Jul 25 12:07:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDdiL-0004Hm-AI
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:03:29 +0200
+	id 1IDdmS-0005X0-Ni
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757719AbXGYKD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 06:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757657AbXGYKD0
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:03:26 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:19427 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757456AbXGYKDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 06:03:25 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so149775wah
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 03:03:24 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OCL6D9dlwcpG6pTJcH/m5KZC4sJz0JJoeH4/8YKhZR8+RPLwB1jsmYzZmOpcw6Dy0i1Vr6INLW9l7zBhlg12fxDS3zmwOr8fmoii0Fz2kMywK6hOWENnx88xY4ix+/K/MX5bE7dbQh1UhCM8b2qZBBAQHAJ+OeuCwTnrAMknj6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BkZhfRrmK6rUeXLMjNSleBukK5PpTKgGEY0D79PBfwe2WuDaPuHhTlwkPieSj0YD5+kiAGl4VjkflGXE2Yt8KerRqAl8nA4rapOFX2cwkqJjlyemo7FaeEj64cuK21bkjHqZeBAg+34T1rgQ7btr15QzSaBzNdUcyIJ7BBU7wTI=
-Received: by 10.114.144.1 with SMTP id r1mr470297wad.1185356281368;
-        Wed, 25 Jul 2007 02:38:01 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Wed, 25 Jul 2007 02:38:01 -0700 (PDT)
-In-Reply-To: <7vabtlf7tf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1755178AbXGYKHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 06:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbXGYKHm
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:07:42 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:19534 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754333AbXGYKHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 06:07:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 40E4380266C;
+	Wed, 25 Jul 2007 12:00:24 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 05837-07; Wed, 25 Jul 2007 12:00:24 +0200 (CEST)
+Received: from lathund.dewire.com (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 018E080019B;
+	Wed, 25 Jul 2007 12:00:23 +0200 (CEST)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 79EA2284A6;
+	Wed, 25 Jul 2007 12:08:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id Lb1aTe2m8Jrs; Wed, 25 Jul 2007 12:08:20 +0200 (CEST)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 291AA28391;
+	Wed, 25 Jul 2007 12:08:18 +0200 (CEST)
+User-Agent: StGIT/0.12
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53677>
 
-On 7/25/07, Junio C Hamano <gitster@pobox.com> wrote:
-> I've been re-reviewing recent patches, and this is one of them.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-Thanks for pushing to pu. Please tell me if you want me to send you a
-patch to update to what we have discussed, specifically using "length
-unknown" and changing the name to --show-lengths.
+ Documentation/diff-options.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-> However, I am wondering if this is an intended behaviour...
->
-> : git.git master; ./git-log --log-size --abbrev-commit --pretty=oneline \
->   ko/master..master
-> 9d468ac... log size 47
-> Add --log-size to git log to print message size
-> ca193cf... log size 40
-
-Well, the patch should be used to speedup the parsing by tools because
-you can skip big part of the record and jump directly to the beginning
-of the next one. So IMHO I don't see a lot of sense in using it
-together with --pretty=oneline.
-
-Anyway only default options should be guaranteed to behave correctly
-with all the other options. In general, responsibility for what you
-see on the screen it's on the tips of user's fingers. IMHO
-responsibility of git is of not crashing and do not show incorrect
-info, not that the info should be useful.
-
-Paul, I don't know gitk and Tcl to being able to answer myself, but I
-would like to know if this new option could be useful also for gitk.
-
-This option, after the first line, gives the size of the following
-part of the record. Does this allow you to delay the parsing of the
-biggest part of the commit record?
-
-Author name, date, log title, log message could be read only when it's
-needed, so that after reading the first couple lines of a commit you
-can point directly to the beginning of the next one skipping the rest.
-
-Marco
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 1689c74..050e5fd 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -4,6 +4,13 @@
+ -u::
+ 	Synonym for "-p".
+ 
++-U<n>::
++	Shorthand for "--unified=<n>".
++
++--unified=<n>::
++	Generate diffs with <n> lines of context instead of
++	the usual three. Implies "-p".
++
+ --raw::
+ 	Generate the raw format.
+ 
