@@ -1,56 +1,82 @@
-From: Russ Dill <Russ.Dill@gmail.com>
-Subject: Re:  Re: Windows support
-Date: Wed, 25 Jul 2007 19:13:17 +0000 (UTC)
-Message-ID: <loom.20070725T211142-163@post.gmane.org>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>  <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de> <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com> A<loom.20070725T195200-46@post.gmane.org> <598D5675D34BE349929AF5EDE9B03E27012EDD12@az33exm24.fsl.freescale.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [ANNOUNCE]: PyGit and libgit-thin
+Date: Wed, 25 Jul 2007 21:50:10 +0200
+Message-ID: <20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <e28f90730707230535q33658efevf665d795cf1df87c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 25 21:14:17 2007
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Luiz Fernando N. Capitulino" <lcapitulino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 21:51:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDmJH-0005Ya-24
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 21:14:11 +0200
+	id 1IDmt6-0002xd-Jc
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 21:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760487AbXGYTNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 15:13:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758929AbXGYTNb
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 15:13:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:38547 "EHLO ciao.gmane.org"
+	id S1751633AbXGYTvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 15:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbXGYTvI
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 15:51:08 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:36305 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760610AbXGYTNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 15:13:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IDmIa-0003jg-7d
-	for git@vger.kernel.org; Wed, 25 Jul 2007 21:13:28 +0200
-Received: from 64-42-117-11.atgi.net ([64.42.117.11])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 21:13:28 +0200
-Received: from Russ.Dill by 64-42-117-11.atgi.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 21:13:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 64.42.117.11 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070713 Firefox/2.0.0.5)
+	id S1751019AbXGYTvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 15:51:06 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 8BD615A210;
+	Wed, 25 Jul 2007 21:51:03 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 508965A19D;
+	Wed, 25 Jul 2007 21:51:03 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 2C1631F084; Wed, 25 Jul 2007 21:50:11 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <e28f90730707230535q33658efevf665d795cf1df87c@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53708>
 
-Medve Emilian-EMMEDVE1 <Emilian.Medve <at> freescale.com> writes:
+On Mon, Jul 23, 2007 at 09:35:47AM -0300, Luiz Fernando N. Capitulino wrote:
+> Now I need to know whether this' really useful to other people and
+> if so, what would be missing for you to start using it.
 
-> 
-> Hi Russ,
-> 
-> Try playing with the core.autocrlf config option.
-> 
+The python module would really be useful to StGIT.  Currently, an
+stgit commands typically has to fork several git commands at least,
+and using library calls instead would surely help with the
+performance.
 
-It seems to do the exact opposite of what I would like. My repository is
-imported from SVN with git-svn and all the text files have dos line endings. I
-would like to checkout with unix line endings, and checkin with dos line endings.
+I had a quick look at the current pygit API (as described in the
+README), and I find the current revlist one somewhat confusing.  Why
+using post-contructor methods, and not using named args in the
+constructor itself ?
+
+That is, the example reading:
+
+>>> rv = repo.revlist()
+>>> rv.include('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9')
+>>> rv.count = 10
+>>> rv.show_merges()
+>>> for commit in rv:
+...  print commit.id()
+... 
+
+
+would be IMHO much nicer to use as:
+
+>>> rv = repo.revlist(include=('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9'),
+...                   count = 10,
+...                   show_merges = true)
+...
+>>> for commit in rv:
+...  print commit.id()
+... 
+
+
+What do you think ?
+
+Best regards,
+-- 
+Yann
