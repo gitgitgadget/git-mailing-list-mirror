@@ -1,64 +1,61 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 10:15:03 -0400
-Message-ID: <fcaeb9bf0707250715p7c183a81vc78f641eef493777@mail.gmail.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-	 <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
-	 <Pine.LNX.4.64.0707251510130.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 25 16:15:18 2007
+From: Emil Medve <Emilian.Medve@Freescale.com>
+Subject: [PATCH] git-submodule: Error messages from 'git describe' shouldn't end up on the terminal
+Date: Wed, 25 Jul 2007 09:21:51 -0500
+Message-ID: <11853733111502-git-send-email-Emilian.Medve@Freescale.com>
+Cc: Emil Medve <Emilian.Medve@Freescale.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 16:27:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDhdx-0006b5-D7
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 16:15:13 +0200
+	id 1IDhpz-0003HV-5D
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 16:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976AbXGYOPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 10:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbXGYOPI
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 10:15:08 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:41435 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753481AbXGYOPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 10:15:07 -0400
-Received: by wr-out-0506.google.com with SMTP id i30so132805wra
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 07:15:04 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BHZ68z9RbTVTgCaDyCZuPs/dG+aiyqSE8xsA3YzxKbeiCprFTR7wDycP6t8won9dRPVIpXl7YAiySRH2enAqEw4qtoyJrXArLqMmflLXX7eEJWe27OpXxAp/Mo084Ir9+gDwVSSHw4VphEJMf+SqQKY9j0/kXMQhrLg45vT/vKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VReq2/eHAtrJZzxZ2l1f1JgtCz9IX3oE3qPg6TTmC7IY8UcFwt2xdy4cCaCjarMBAFFORE2He+ahDtFYPGByFzil8fxCccK9AswurKzAQMvzB9AQJ2vY/0UDDYtZ4mGhMUdzEBu23v8u+JKRKez2i/HqnhhYMc2R+mpZ3mUhERA=
-Received: by 10.100.174.16 with SMTP id w16mr375977ane.1185372903919;
-        Wed, 25 Jul 2007 07:15:03 -0700 (PDT)
-Received: by 10.100.127.17 with HTTP; Wed, 25 Jul 2007 07:15:03 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707251510130.14781@racer.site>
-Content-Disposition: inline
+	id S1763500AbXGYO1c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 10:27:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762975AbXGYO1b
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 10:27:31 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:49543 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762303AbXGYO1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 10:27:30 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id l6PERS89012066
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 07:27:28 -0700 (MST)
+Received: from localhost.localdomain ([10.82.124.180])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l6PERRfY008214;
+	Wed, 25 Jul 2007 09:27:27 -0500 (CDT)
+X-Mailer: git-send-email 1.5.3.rc2.38.g11308-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53695>
 
-On 7/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Wed, 25 Jul 2007, Nguyen Thai Ngoc Duy wrote:
->
-> > FYI, I'm working on getting rid of msys requirement from mingw port. I
-> > can't tell you how long it would take though. Could be one month or two.
->
-> Is there a repo out there?
+As of now a failure to locate the closest tag to a commit (e.g because there is
+no tag in the repository) is handled explicitly by displaying an 'undefined' tag
+error message. However when git describe fails it will still display an
+undesirable  "fatal: cannot describe SHA1" message. This patch hides that
+message as git-submodule has an alternative and explicit error handling method
+in place for this situation
 
-http://repo.or.cz/w/git/pclouds.git?a=shortlog;h=gitbox
+Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
+---
+ git-submodule.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-There are some patches on mob I have not merged to gitbox branch yet.
-
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 1f0cb99..3804f18 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -233,7 +233,7 @@ modules_list()
+ 			say "-$sha1 $path"
+ 			continue;
+ 		fi
+-		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1)
++		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1 2>/dev/null)
+ 		set_name_rev "$path" "$sha1"
+ 		if git diff-files --quiet -- "$path"
+ 		then
 -- 
-Duy
+1.5.3.rc2.38.g11308-dirty
