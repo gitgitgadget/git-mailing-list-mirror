@@ -1,94 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 11:43:23 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707251131540.3607@woody.linux-foundation.org>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> 
- <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
- <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: RE:  Re: Windows support
+Date: Wed, 25 Jul 2007 12:04:56 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E27012EDD12@az33exm24.fsl.freescale.net>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>  <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de> <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com> A<loom.20070725T195200-46@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-To: Stephen Cuppett <cuppett@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 20:43:38 2007
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 25 21:05:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDlph-0000Jx-S9
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 20:43:38 +0200
+	id 1IDmAY-0001Us-1i
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 21:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933956AbXGYSnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 14:43:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934816AbXGYSnc
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 14:43:32 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:35518 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934659AbXGYSnb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 14:43:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6PIhSU8012587
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 25 Jul 2007 11:43:29 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6PIhNOf016205;
-	Wed, 25 Jul 2007 11:43:23 -0700
-In-Reply-To: <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com>
-X-Spam-Status: No, hits=-2.735 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.14__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753763AbXGYTFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 15:05:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbXGYTFE
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 15:05:04 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:54861 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753117AbXGYTFB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 15:05:01 -0400
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l6PJ4wCm021004
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 12:04:58 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l6PJ4vbn027797
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 14:04:57 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: A<loom.20070725T195200-46@post.gmane.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Re: Windows support
+Thread-Index: AcfO5fOPYX2EsgVcRkOQaheO+8hY4QACGGQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53706>
+
+Hi Russ,
+
+
+Try playing with the core.autocrlf config option.
+
+
+Cheers,
+Emil.
+
+
+This e-mail, and any associated attachments have been classified as:
+--------------------------------------------------------------------
+[x] Public
+[ ] Freescale Semiconductor Internal Use Only
+[ ] Freescale Semiconductor Confidential Proprietary
+
+
+-----Original Message-----
+From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+Behalf Of Russ Dill
+Sent: Wednesday, July 25, 2007 12:56 PM
+To: git@vger.kernel.org
+Subject: Re: Windows support
+
+Stephen Cuppett <cuppett <at> gmail.com> writes:
+
+> I actually have no problems with cygwin and find it works pretty well
+> with git repositories.  Starting the xserver to run git-gui is pretty
+> annoying though.  Windows-based development teams are going to expect
+> easy access to those kinds of tooling.  Otherwise, the champion will
+> be pushing a type of workflow change that would hinder adoption anyway
+> and leave a sour taste for a long time.
+
+I have the version of git that came with cygwin, and I never have to run
+an X
+server to run git-gui or gitk.
+
+Personally, I can't imagine running git without cygwin. Course, I want
+my
+desktop to feel as much like unix as possible. My experience with git
+under
+cygwin has been excellent. My only gripe has to do with CRLF. The
+repository has
+everything checked in with dos line endings, I'd like to check
+everything out
+with unix line endings, and then check it back in with dos line endings.
+I hate
+seeing the ^M's everywhere.
+
+> In addition, performance is atrocious.  In my particular case I have
+> an older P4 running F7 and a newer machine running Windows and cygwin.
+>  On a pserver based cvsimport of a large, enterprise project, Linux
+> was able to generate the full history in 4 hours, cygwin took 3 and a
+> half days.  When I sync up every now and then, typical times for
+> windows are 25 minutes and Linux is around 4.  That should give you an
+> idea of what kind of multiplier we are talking about.
+
+Granted, the performance isn't equal to git running on a real unix, but
+compared
+to working with SVN under win32, I would say it performs quite well.
 
 
 
-On Wed, 25 Jul 2007, Stephen Cuppett wrote:
-> 
-> I don't know if the performance problems are cygwin or not.  More
-> knowledgeable people might be able to answer, it's just what I'm
-> observing right now.  It could be more fundamental to the types of
-> access being performed en masse on inode-based versus NTFS systems.
-
-I think cygwin may add some overhead, but people should really realize 
-that Linux is quite often an order of magnitude faster (or more) than 
-other systems on some very basic operations.
-
-That's especially true for filesystem operations. We really are just that 
-good.
-
-Really simple things like stat/open/read/write/close are just damn fast on 
-Linux. To the point where you really do notice it when you compare to 
-other systems. If something takes hours on Linux, and it's very 
-filesystem-intensive, I'm not at all surprised that it might take days on 
-Windows.
-
-(OS X is probably better than Windows when it comes to filesystem ops, but 
-their memory management absolutely sucks, and I can pretty much guarantee 
-that their filesystem operation latency doesn't hold a candle to Linux, 
-so while I'd expect git to perform "pretty well" on OS X, it's still 
-going to be slower than on Linux)
-
-Linux really *can* be that much faster. You may not see it as much on some 
-other loads, where most of the load is about normal user code, and system 
-call performance is likely to be just a small fraction, but for git, most 
-of what it does is filesystem interactions (I used to think that SHA1's 
-would be noticeable - they're not, and while zlib overhead *can* be 
-noticeable, it usually isn't a big deal except for some very specific 
-cases).
-
-But I bet that git ends up being faster on Windows than many other SCM's 
-are (on Windows). Going native will help, and avoiding things like shell 
-scripting will help a *lot*, but it's still always going to be slower on 
-Windows than it is on Linux. And that is not about anything else than the 
-fact that Linux simply kicks *ss on filesystem ops.
-
-So for doing things like big imports, you might well want to do them on 
-Linux. But that doesn't mean that git will suck on Windows for normal 
-operations.
-
-(It will just not be so *blazingly* fast, ie things like "git status" will 
-generally not be instantaneous).
-
-			Linus
