@@ -1,65 +1,60 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
-Subject: rc3 gitweb is broken, won't deliver snapshots
-Date: Wed, 25 Jul 2007 09:27:55 -0400
-Message-ID: <30e4a070707250627l29ce4794x97d03b8232352cae@mail.gmail.com>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: gitk and the first commit
+Date: Wed, 25 Jul 2007 06:51:16 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E27012EDBD4@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jul 25 15:28:03 2007
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 25 15:51:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDguI-000548-SD
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 15:28:03 +0200
+	id 1IDhH4-0005zr-Kv
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 15:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939AbXGYN16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 09:27:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754537AbXGYN16
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 09:27:58 -0400
-Received: from ik-out-1112.google.com ([66.249.90.180]:9910 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753348AbXGYN15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 09:27:57 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so138181ika
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=p8FgGtmDy5byQXhPu8aJD3Je8SI2UKSDMmOTw0euCdXI/4hXU9DwZ+0cjtPb/F5nu1GOi+fKZNbqa4cbTAB3OjiX8Hpdc7+W3QbNxkHnW/NPFpiB+wTB8rxSWu+M9nQJyK73n7SZ7drmc/aqVKY/YnvceNkngw5YPzrVsV5B8d0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SVUhIF3kcSwvzWk8umR7c9g+DrIIv4xOmGX3+HYmYiXFLSONai77qIZCMwrwdYJda1tOZus719AEUU17aqOoRS08DHdg9TlRbowzO47lC8kn7Jle7HZGv4HjBLo83P4foEbh6UeW1RYk79rLMH5CIJ16zdz9lgqleyKeH4N65WU=
-Received: by 10.78.138.6 with SMTP id l6mr172809hud.1185370075508;
-        Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
-Received: by 10.78.190.5 with HTTP; Wed, 25 Jul 2007 06:27:55 -0700 (PDT)
-Content-Disposition: inline
+	id S1753182AbXGYNvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 09:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbXGYNvW
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 09:51:22 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:33759 "EHLO
+	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbXGYNvV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 09:51:21 -0400
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id l6PDpIFc018960
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 06:51:18 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l6PDpHgM018284
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 08:51:17 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: gitk and the first commit
+Thread-Index: AcfOwt9cylSsEpCcRZu26OSRxS5PKA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53690>
 
-gitweb in 1.5.3-rc3 fails to deliver snapshots in any useable format
-(bzip2, gz, or zip). Clicking on a link seems to work, but the
-delivered file as stored on my system is empty. No error messages
-appear anywhere I can find. I am hosting gitweb on FC7 using lighttpd,
-if that matters.
+Hello,
 
-The snapshot service at git.kernel.org also seems broken, I don't know
-what gitweb is running there so don't know if the issue is related.
 
-I have fixed this for my use by reverting the following commits
+I noticed that in a repo with a single commit gitk will show no commits
+and the message displayed is: "No commits selected". After the second
+commit it starts to work as expected. I'm not sure if this is intended
+behavior or not.
 
-3473e7df5f8c7f8dc3e2c3f2fdc99a1d1a719c16 gitweb: More detailed error
-messages for snapshot format
-a781785d8f1eb7adf05a24b121104716a086a67a gitweb: Fix support for
-legacy gitweb config for snapshots
-a3c8ab30a54c30a6a434760bedf04548425416ef gitweb: snapshot cleanups &
-support for offering multiple formats
 
-The snapshot problem first appears when a3c8ab30a54 is applied.
+Cheers,
+Emil.
 
-Mark Levedahl
+
+This e-mail, and any associated attachments have been classified as:
+--------------------------------------------------------------------
+[x] Public
+[ ] Freescale Semiconductor Internal Use Only
+[ ] Freescale Semiconductor Confidential Proprietary
