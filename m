@@ -1,105 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: submodule init problem
-Date: Wed, 25 Jul 2007 15:20:12 -0700
-Message-ID: <7v8x94dt2b.fsf@assigned-by-dhcp.cox.net>
-References: <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
-	<7vfy5bzby1.fsf@assigned-by-dhcp.cox.net>
-	<8c5c35580706020013g2a4039fcsdf8974da8cd4c2c2@mail.gmail.com>
-	<20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
-	<b6ebd0a50707201023h12ed3c61v31ccb2b356c1ee42@mail.gmail.com>
-	<7vsl7jvthk.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707201933360.14781@racer.site>
-	<d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
-	<d4b731510707241730u45755c0dwfde5e0b14b14f1da@mail.gmail.com>
-	<7vir89fe1l.fsf@assigned-by-dhcp.cox.net>
-	<20070725081508.GN1591MdfPADPa@greensroom.kotnet.org>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: StGIT (or guilt) + git-svn?
+Date: Wed, 25 Jul 2007 18:25:09 -0400
+Message-ID: <20070725222509.GA21274@dervierte>
+References: <46A5D279.7060601@midwinter.com> <20070724112706.GA9540@dervierte> <46A5EE4B.7020905@midwinter.com> <20070724234817.GA29700@dervierte> <46A6EF24.4040606@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org,
-	Ricky Nite <ricky.nite@gmail.com>,
-	Chris Larson <clarson@kergoth.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Thu Jul 26 00:20:20 2007
+Cc: Steven Walter <stevenrwalter@gmail.com>,
+	'git' <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 00:25:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDpDP-00028Y-0w
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:20:19 +0200
+	id 1IDpIG-0003ZS-P6
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:25:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756237AbXGYWUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 18:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755571AbXGYWUQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:20:16 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:43791 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253AbXGYWUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 18:20:13 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070725222013.TLZV1349.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 25 Jul 2007 18:20:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TyLC1X00P1kojtg0000000; Wed, 25 Jul 2007 18:20:13 -0400
-In-Reply-To: <20070725081508.GN1591MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Wed, 25 Jul 2007 10:15:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758658AbXGYWZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 18:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756767AbXGYWZP
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:25:15 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:23224 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752551AbXGYWZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 18:25:13 -0400
+Received: by py-out-1112.google.com with SMTP id d32so634030pye
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 15:25:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from;
+        b=dvU5ko9e/3OPy78hnLyK1zOfovAcpqWlGd3I84YWBMF4cnIlM7sSBtMx8YtpppzEvVTEn+1c9hL4hUPgL9aa0/v7zGDrZqpzVHvwn9FiVUmRRh6GHEX8sxYxDWsXffpp7EdnZnG25c6oN2Yt59XL69I1LqSkw+Ie2eQbpykE28o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from;
+        b=Jqt4Ks4LzysjM/yQxghIZlAgYfGqo2A2QqletaOBjRN7wPhdiKSX9JoucR9H7eACcyhHwC+386fXCeW432zDsQCYmyB9q4vztF7aZ8Q959avC5Ssm2IOvm8a+ns6eIaQVeFKAKH6OK0psgUnGowV7hkNtqxpjZyHHxOMz4DJ8DQ=
+Received: by 10.35.69.11 with SMTP id w11mr10212921pyk.1185402312149;
+        Wed, 25 Jul 2007 15:25:12 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [74.131.192.220])
+        by mx.google.com with ESMTPS id f10sm1595269pyh.2007.07.25.15.25.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 25 Jul 2007 15:25:11 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 01EF7CFF09F; Wed, 25 Jul 2007 18:25:09 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <46A6EF24.4040606@midwinter.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53726>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
+On Wed, Jul 25, 2007 at 02:35:16PM +0800, Steven Grimm wrote:
+> Do you mix your public and private commits on the private branch, then 
+> cherry-pick some of them over to the public branch before running 
+> dcommit? Or do you have some other workflow?
 
-> On Tue, Jul 24, 2007 at 06:49:26PM -0700, Junio C Hamano wrote:
->> Ok, this appears it most likely to be related to the fact that
->> one is a prefix of the other in problematic case.
->
-> Yes, this has been noted before and Chris Larson sent in a patch,
-> but he didn't follow up on it.
+Yes, what you describe is what I usually do.
 
-Ok, I re-read the thread and came up with a different solution.
-How does this look?
+> That was actually my first suggestion to him, but he pointed out (and I 
+> had to agree) that that would mean he's always just one mistake away 
+> from publishing his local changes. All it takes is getting interrupted 
+> for a moment and mistakenly thinking he already switched to the public 
+> branch. He wants some less human-error-prone way to tell the system that 
+> a particular change and/or a particular file is not intended for 
+> publication, and for the system to just honor that without further human 
+> intervention.
 
--- >8 --
-git-submodule module_name: avoid using unwieldy "value_regexp" feature.
+If I wanted to be argumentative, you're still only one step from
+disaster with stgit.  In order to build, you'd have to keep your local
+changes applied.  If you forgot to pop them before a dcommit, they would
+be published.
 
-"module_name $path" function wants to look up a configuration
-variable "submodule.<modulename>.path" whose value is $path, and
-return the <modulename> found.  "git-config --get-regexp" is the
-natural thing to use for this, but (1) its value matching has an
-unfortunate "feature" that takes leading '!' specially, and (2)
-its output needs to be parsed with sed to extract <modulename>
-part anyway.
+> Actually, one could argue that the above isn't a git-svn issue at all. 
+> You could reasonably want the same thing from git-push too (and even 
+> from pull, though that'd be trickier.) I guess it'd take the form of 
+> marking a commit as local-only, and having the system automatically 
+> rebase all the local-only commits on top of the public ones.
+> 
+> Maybe a wrapper than maintains a pair of underlying git branches for 
+> each user-visible branch would work. If you have a branch "foo" with 
+> some public and some private changes (private ones in lower case here):
+> 
+> A---B---C---D---e---f---g   foo
+>            ^ foo-public
+> 
+> Now if you commit a new private revision, it's like normal:
+> 
+> A---B---C---D---e---f---g---h   foo
+>            ^ foo-public
+> 
+> But if you commit a new public revision, we do something like
+> 
+> git commit
+> git checkout foo-public
+> git cherry-pick foo
+> git checkout foo
+> git rebase foo-public
+> 
+> to get
+> 
+> A---B---C---D---H---e---f---g   foo
+>                ^ foo-public
+> 
+> Then, when it comes time to do the push / dcommit, we always switch to 
+> the foo-public branch first. We push / dcommit, then checkout foo and 
+> rebase it on foo-public again (since svn dcommit will leave foo-public 
+> pointing at a different revision.)
+> 
+> This seems like it should work in the context of git-svn with its 
+> mostly-linear history. Not sure if it'd fall flat on its face in the 
+> presence of lots of branching and merging.
+> 
+> I also suspect I've more or less just described StGIT and this would be 
+> a big waste of time to reinvent from scratch.
 
-This changes the call to "git-config --get-regexp" not to use
-the value-regexp part, and moves the "pick the one whose value
-is $path" part to the downstream sed.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- git-submodule.sh |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1f0cb99..afbaec7 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -46,8 +46,11 @@ get_repo_base() {
- #
- module_name()
- {
--       name=$(GIT_CONFIG=.gitmodules git config --get-regexp '^submodule\..*\.path$' "$1" |
--       sed -nre 's/^submodule\.(.+)\.path .+$/\1/p')
-+	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
-+	re=$(printf '%s' "$1" | sed -e 's/\([^a-zA-Z0-9_]\)/\\\1/g')
-+	name=$( GIT_CONFIG=.gitmodules \
-+		git config --get-regexp '^submodule\..*\.path$' |
-+		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
-        test -z "$name" &&
-        die "No submodule mapping found in .gitmodules for path '$path'"
-        echo "$name"
+This actually sounds fairly useful, as it's mostly the automation of my
+existing workflow.  Let me know if you follow up on this.
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+"A human being should be able to change a diaper, plan an invasion,
+butcher a hog, conn a ship, design a building, write a sonnet, balance
+accounts, build a wall, set a bone, comfort the dying, take orders,
+give orders, cooperate, act alone, solve equations, analyze a new
+problem, pitch manure, program a computer, cook a tasty meal, fight
+efficiently, die gallantly. Specialization is for insects."
+   -Robert Heinlein
