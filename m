@@ -1,115 +1,81 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: [ANNOUNCE]: PyGit and libgit-thin
-Date: Wed, 25 Jul 2007 17:55:51 -0300
-Message-ID: <e28f90730707251355vc1fc47ftc7851324ddfad771@mail.gmail.com>
-References: <e28f90730707230535q33658efevf665d795cf1df87c@mail.gmail.com>
-	 <20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net>
+Date: Wed, 25 Jul 2007 23:21:43 +0200
+Message-ID: <20070725212143.GB3808@efreet.light.src>
+References: <e28f90730707230535q33658efevf665d795cf1df87c@mail.gmail.com> <20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net> <85odi08ddk.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 22:56:12 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
+Cc: Yann Dirson <ydirson@altern.org>,
+	"Luiz Fernando N. Capitulino" <lcapitulino@gmail.com>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jul 25 23:21:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDntv-0001GJ-8K
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:56:07 +0200
+	id 1IDoIu-0000td-7l
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 23:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758333AbXGYUzy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 16:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759580AbXGYUzy
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:55:54 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:31618 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758333AbXGYUzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 16:55:53 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so285202nze
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 13:55:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BtIS2qn1b3J7Mle2AWMRkJwbL7Y37Uax0eGP/qs2Rv3X/1lORqAlyn4pNF5MSH4XYNz9/yr33Su7ONxvD6UZrt2zoQjiF4wPPDlnXv8tLDbhztdM++XUwnlG95FLTumQ5NL1NtFUzWmBBKQKepSjAa8uaxQ4xqM9I8vQidbB9KY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=okrGETpVaHIXzKIomV+fmC0PIKPCaKF6HfO/gbbMQzQtHdniWVoeoVkaszWHeKIfNhLXCVBpX+/LXyBAbZPhR+tYlwBWUuA3Lpp8pi5HZtjmLB3h1sH5dQ+yUF8pRtc5saG4ZBbRgT+lN9Pfyn6mhTm+H5iXptYbaD6fTrpxunI=
-Received: by 10.114.177.1 with SMTP id z1mr1039074wae.1185396951534;
-        Wed, 25 Jul 2007 13:55:51 -0700 (PDT)
-Received: by 10.114.103.17 with HTTP; Wed, 25 Jul 2007 13:55:51 -0700 (PDT)
-In-Reply-To: <20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S1762419AbXGYVVw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 17:21:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761776AbXGYVVv
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 17:21:51 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:52367 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760285AbXGYVVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 17:21:51 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 0F168573AE;
+	Wed, 25 Jul 2007 23:21:49 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id vjRf1Jay6F2a; Wed, 25 Jul 2007 23:21:48 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id D332F57382;
+	Wed, 25 Jul 2007 23:21:46 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IDoIh-0000EJ-G4; Wed, 25 Jul 2007 23:21:43 +0200
 Content-Disposition: inline
+In-Reply-To: <85odi08ddk.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53721>
 
-Hi Yann,
 
-On 7/25/07, Yann Dirson <ydirson@altern.org> wrote:
-> On Mon, Jul 23, 2007 at 09:35:47AM -0300, Luiz Fernando N. Capitulino wrote:
-> > Now I need to know whether this' really useful to other people and
-> > if so, what would be missing for you to start using it.
->
-> The python module would really be useful to StGIT.  Currently, an
-> stgit commands typically has to fork several git commands at least,
-> and using library calls instead would surely help with the
-> performance.
+--rS8CxjVDS/+yyDmU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- Cool.
+On Wed, Jul 25, 2007 at 21:57:59 +0200, David Kastrup wrote:
+> Nicer to use if the commands and their options originate from withing
+> Python.  But if Python parses arguments from somewhere else and passes
+> them on, the former interface leads to much cleaner code AFAICS.
+> Pasting together a named argument call piecemeal is not going to be
+> pretty, I should think.
 
-> I had a quick look at the current pygit API (as described in the
-> README), and I find the current revlist one somewhat confusing.  Why
-> using post-contructor methods, and not using named args in the
-> constructor itself ?
->
-> That is, the example reading:
->
-> >>> rv = repo.revlist()
-> >>> rv.include('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9')
-> >>> rv.count = 10
-> >>> rv.show_merges()
-> >>> for commit in rv:
-> ...  print commit.id()
-> ...
->
->
-> would be IMHO much nicer to use as:
->
-> >>> rv = repo.revlist(include=('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9'),
-> ...                   count = 10,
-> ...                   show_merges = true)
-> ...
-> >>> for commit in rv:
-> ...  print commit.id()
-> ...
->
->
-> What do you think ?
+You just put all the arguments in a dict and use the ** syntax. And if you
+already get the arguments in a dict from the parser, it's even nicer.
 
- I think you're right, that'd be nicer.
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
- The problem is that the revlist operation accepts a lot of options,
-and to change
-all (or a big amount of them) would force one to build a very length list of
-arguments.
+--rS8CxjVDS/+yyDmU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
- Currently we have just a few, but we'll add more in the future.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
- Also, I think that it won't be that nice to play with include() and exclude(),
-since you can call them more than once.
+iD8DBQFGp77nRel1vVwhjGURAns+AJoCdqxxk6MzhOYXaaNVmx8R5+XMCwCgv7qy
+GY76wQlaoFNcAihQf9zjraE=
+=aYem
+-----END PGP SIGNATURE-----
 
- I'm not sure whether in its current state the module (plus the library) is
-useful for stgit.
-
- Please, feel to make questions and to ask for what'd be missing for you
-to adopt it.
-
- I'm a quilt user and completely forgot that stgit is written in python. I'll
-take a look.
-
- Thanks for your comments,
-
--- 
-Luiz Fernando N. Capitulino
+--rS8CxjVDS/+yyDmU--
