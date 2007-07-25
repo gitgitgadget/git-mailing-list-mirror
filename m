@@ -1,78 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: submodule init problem
-Date: Tue, 24 Jul 2007 18:49:26 -0700
-Message-ID: <7vir89fe1l.fsf@assigned-by-dhcp.cox.net>
-References: <d4b731510707241709pcad0a4bj85b71892cd2de84c@mail.gmail.com>
-	<d4b731510707241730u45755c0dwfde5e0b14b14f1da@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Git User's Survey 2007
+Date: Wed, 25 Jul 2007 03:58:57 +0200
+Message-ID: <200707250358.58637.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Ricky Nite" <ricky.nite@gmail.com>
-To: Lars Hjemli <hjemli@gmail.com>, Sven Verdoolaege <skimo@kotnet.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 03:49:34 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 03:59:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDW0J-0006YU-6z
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 03:49:31 +0200
+	id 1IDW9g-0008NV-Bn
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 03:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932084AbXGYBt2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Jul 2007 21:49:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758897AbXGYBt2
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 21:49:28 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:38524 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757377AbXGYBt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2007 21:49:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070725014928.DOUF1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 24 Jul 2007 21:49:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id TdpR1X00k1kojtg0000000; Tue, 24 Jul 2007 21:49:26 -0400
-In-Reply-To: <d4b731510707241730u45755c0dwfde5e0b14b14f1da@mail.gmail.com>
-	(Ricky Nite's message of "Wed, 25 Jul 2007 08:30:22 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760684AbXGYB7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Jul 2007 21:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760497AbXGYB7A
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jul 2007 21:59:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:41552 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759065AbXGYB67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2007 21:58:59 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so263600ugf
+        for <git@vger.kernel.org>; Tue, 24 Jul 2007 18:58:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nSSfhytdJQs6ojtUErLvap+qJplmTvjJmTA+oRA0NCIecDxW/LqiT3m1iQPUVXYUaNsDVoZZfRTmdW9uxIcerM4jTAOPQj1UtrD7ZNxTNQw70ZDLebpZy+Lfah/bNgoCs9FYj29UDt/g+JUW7lHwg5EXuvZ92KUsd1G+Zx3k/9Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sQpv9Km0m9uSmyEXTL5tUBDLBVocNkxsyC4/ge9b26hj8Sa68kw++eFW9FYzXg2LutV/2IWkweiSg6sePGYhyC8iHkfExZsuJ1LVXSgpJPH/yEg4PYiIREdNlJR3AR9F7nfBnH1G9HL5/G+EF+cDtLeEEIBb6zg5AJKBwkP2GLg=
+Received: by 10.86.93.17 with SMTP id q17mr80944fgb.1185328737930;
+        Tue, 24 Jul 2007 18:58:57 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id m1sm288819fke.2007.07.24.18.58.55
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2007 18:58:56 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53665>
 
-"Ricky Nite" <ricky.nite@gmail.com> writes:
+It was little more than year ago since Git User's Survey
+  http://marc.info/?l=git&m=115116592330648&w=2
+  http://git.or.cz/gitwiki/GitSurvey
 
-> This problem doesn't seem to occur if I rename my submodules (but I
-> really don't want to):
->
-> rnite@linuskarl:~/git_dev$ mkdir moduleA
-> rnite@linuskarl:~/git_dev$ mkdir moduleB
-> ...
-> rnite@linuskarl:~/git_dev/myproj2$ ~/bin/git submodule init
-> Submodule 'moduleA' (/home/rnite/git_dev/moduleA/.git) registered for
-> path 'moduleA'
-> Submodule 'moduleB' (/home/rnite/git_dev/moduleB/.git) registered for
-> path 'moduleB'
->
-> help,
-> RickyN
->
-> On 7/25/07, Ricky Nite <ricky.nite@gmail.com> wrote:
->> Hello,
->>
->> I encountered this message in "git submodule init":
->> "No url found for submodule path '<submodule>' in .gitmodules"
->>
->> But when I look at .gitmodules, the <submodule> url is there.
->> Subsequently, I cannot do "git submodule update"
->>
->> Here's the full log:
->> rnite@linuskarl:~/git_dev/myproj$ ~/bin/git --version
->> git version 1.5.3.rc2.g11308
->> rnite@linuskarl:~/git_dev$ mkdir flash
->> rnite@linuskarl:~/git_dev$ mkdir flashboard
+I do wonder what has changed since then... ?
 
-Ok, this appears it most likely to be related to the fact that
-one is a prefix of the other in problematic case.
-
-Lars, Sven?
+-- 
+Jakub Narebski
+Poland
