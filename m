@@ -1,135 +1,71 @@
-From: "Bradford C. Smith" <bradford.carl.smith@gmail.com>
-Subject: [PATCH 2/2] use lockfile.c routines in git_commit_set_multivar()
-Date: Wed, 25 Jul 2007 12:49:53 -0400
-Message-ID: <11853821962210-git-send-email-bradford.carl.smith@gmail.com>
-References: <7vps2s2chy.fsf@assigned-by-dhcp.cox.net>
- <11853821932079-git-send-email-bradford.carl.smith@gmail.com>
- <11853821951367-git-send-email-bradford.carl.smith@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Bradford C. Smith" <bradford.carl.smith@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 25 18:50:12 2007
+From: "Stephen Cuppett" <cuppett@gmail.com>
+Subject: Re: Windows support
+Date: Wed, 25 Jul 2007 12:58:47 -0400
+Message-ID: <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+	 <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Steffen Prohaska" <prohaska@zib.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 18:58:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDk3t-0004AA-73
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 18:50:09 +0200
+	id 1IDkCM-0008Fq-Fv
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 18:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758745AbXGYQuB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 12:50:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754965AbXGYQuA
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 12:50:00 -0400
-Received: from ag-out-0708.google.com ([72.14.246.246]:34716 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757656AbXGYQt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 12:49:58 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so2199451aga
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 09:49:58 -0700 (PDT)
+	id S1755682AbXGYQ6u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 12:58:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759822AbXGYQ6u
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 12:58:50 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:32950 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754780AbXGYQ6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 12:58:49 -0400
+Received: by py-out-1112.google.com with SMTP id d32so470480pye
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 09:58:48 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=iKub8tk6zlmQmSZQlOR42voM0dPOt3RbPSNilEMqnBRbfR4HdKbrtug+AbYpQuOqwdUdS3Oju95q1t8PXrtR7EZY3h4+WFbklfDEwRDHlvoJPjMYDtcaN9+djmkooT399cZ5A8yaBxnm2S0YZ8Z8cBRO6jB11VZ2JLm6rvc7dhY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ve9m4J6cxgvGQZvzIz1CdZ434eJyGJzcrzPLvsmrpsnZ5I+fEWirlV7Bz/AOp9e5ViujJ6EV22qOWsiQEifyteKxDnTyXwhnVZJ097ZOBnl8htCvr/Tkmh/5912cp1Ff0oFhmJoXZxmYRSMtOdesWNDJ+ek+ffeZ0YjGG2duISc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=S+LKNV8rq/VvFWBo10GS4ke4WMGEX64kIehVwqUSw/bIKYmNZcq9Sew3ixrHQVI/Tdvjk38tIJfJYGyJzE7xqg/gMXLL9Omk4ifWtceF/ds6DytiQRxO7w4XODkw1R8NcFCQFHAvQWhGRKPRyePj1rxvI7ax2aPQ3TFarkgY+pE=
-Received: by 10.100.47.9 with SMTP id u9mr491410anu.1185382198019;
-        Wed, 25 Jul 2007 09:49:58 -0700 (PDT)
-Received: from localhost ( [160.36.232.47])
-        by mx.google.com with ESMTPS id b18sm1207088ana.2007.07.25.09.49.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2007 09:49:57 -0700 (PDT)
-X-Mailer: git-send-email 1.5.3.rc2.30.g1c06-dirty
-In-Reply-To: <11853821951367-git-send-email-bradford.carl.smith@gmail.com>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hdn2/bDXVLdCNiQXSJbu7E8gG/dipX1MfOKMeiL47kyY2l+qjC8bLUzCWQQlfblMa0FIdw4VPzXGl4qI6u6yBzN4zXYYmV4jFnkhHmFiYIPX73jHZiK0kGUErXpTb/CKFhNDvDAS3FlqIKdt8QcjDp3mrWo1APUreJ0odcjeBPs=
+Received: by 10.64.179.12 with SMTP id b12mr1482339qbf.1185382727887;
+        Wed, 25 Jul 2007 09:58:47 -0700 (PDT)
+Received: by 10.64.47.16 with HTTP; Wed, 25 Jul 2007 09:58:47 -0700 (PDT)
+In-Reply-To: <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53701>
 
-From: Bradford C. Smith <bradford.carl.smith@gmail.com>
+On 7/25/07, Steffen Prohaska <prohaska@zib.de> wrote:
 
-Changed git_commit_set_multivar() to use the routines provided by
-lockfile.c to reduce code duplication and ensure consistent behavior.
+> Is it just that windows developer hate cygwin because it's to
+> complex to install or is there any severe limitation?
+> functionality? stability? performance?
 
-Signed-off-by: "Bradford C. Smith" <bradford.carl.smith@gmail.com>
----
- config.c |   28 ++++++++++++++++------------
- 1 files changed, 16 insertions(+), 12 deletions(-)
+I actually have no problems with cygwin and find it works pretty well
+with git repositories.  Starting the xserver to run git-gui is pretty
+annoying though.  Windows-based development teams are going to expect
+easy access to those kinds of tooling.  Otherwise, the champion will
+be pushing a type of workflow change that would hinder adoption anyway
+and leave a sour taste for a long time.
 
-diff --git a/config.c b/config.c
-index f89a611..9101de9 100644
---- a/config.c
-+++ b/config.c
-@@ -715,7 +715,7 @@ int git_config_set_multivar(const char* key, const char* value,
- 	int fd = -1, in_fd;
- 	int ret;
- 	char* config_filename;
--	char* lock_file;
-+	struct lock_file *lock = NULL;
- 	const char* last_dot = strrchr(key, '.');
- 
- 	config_filename = getenv(CONFIG_ENVIRONMENT);
-@@ -725,7 +725,6 @@ int git_config_set_multivar(const char* key, const char* value,
- 			config_filename  = git_path("config");
- 	}
- 	config_filename = xstrdup(config_filename);
--	lock_file = xstrdup(mkpath("%s.lock", config_filename));
- 
- 	/*
- 	 * Since "key" actually contains the section name and the real
-@@ -770,11 +769,12 @@ int git_config_set_multivar(const char* key, const char* value,
- 	store.key[i] = 0;
- 
- 	/*
--	 * The lock_file serves a purpose in addition to locking: the new
-+	 * The lock serves a purpose in addition to locking: the new
- 	 * contents of .git/config will be written into it.
- 	 */
--	fd = open(lock_file, O_WRONLY | O_CREAT | O_EXCL, 0666);
--	if (fd < 0 || adjust_shared_perm(lock_file)) {
-+	lock = xcalloc(sizeof(struct lock_file), 1);
-+	fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	if (fd < 0) {
- 		fprintf(stderr, "could not lock config file\n");
- 		free(store.key);
- 		ret = -1;
-@@ -914,25 +914,29 @@ int git_config_set_multivar(const char* key, const char* value,
- 				goto write_err_out;
- 
- 		munmap(contents, contents_sz);
--		unlink(config_filename);
- 	}
- 
--	if (rename(lock_file, config_filename) < 0) {
--		fprintf(stderr, "Could not rename the lock file?\n");
-+	if (close(fd) || commit_lock_file(lock) < 0) {
-+		fprintf(stderr, "Cannot commit config file!\n");
- 		ret = 4;
- 		goto out_free;
- 	}
- 
-+	/* fd is closed, so don't try to close it below. */
-+	fd = -1;
-+	/* lock is committed, so don't try to roll it back below.
-+	 * NOTE: Since lockfile.c keeps a linked list of all created
-+	 * lock files, it isn't safe to free(lock).  It's better to just
-+	 * leave it hanging around. */
-+	lock = NULL;
- 	ret = 0;
- 
- out_free:
- 	if (0 <= fd)
- 		close(fd);
-+	if (lock)
-+		rollback_lock_file(lock);
- 	free(config_filename);
--	if (lock_file) {
--		unlink(lock_file);
--		free(lock_file);
--	}
- 	return ret;
- 
- write_err_out:
--- 
-1.5.3.rc2.30.g1c06-dirty
+In addition, performance is atrocious.  In my particular case I have
+an older P4 running F7 and a newer machine running Windows and cygwin.
+ On a pserver based cvsimport of a large, enterprise project, Linux
+was able to generate the full history in 4 hours, cygwin took 3 and a
+half days.  When I sync up every now and then, typical times for
+windows are 25 minutes and Linux is around 4.  That should give you an
+idea of what kind of multiplier we are talking about.
+
+I don't know if the performance problems are cygwin or not.  More
+knowledgeable people might be able to answer, it's just what I'm
+observing right now.  It could be more fundamental to the types of
+access being performed en masse on inode-based versus NTFS systems.
