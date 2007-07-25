@@ -1,86 +1,106 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE]: PyGit and libgit-thin
-Date: Wed, 25 Jul 2007 21:57:59 +0200
-Message-ID: <85odi08ddk.fsf@lola.goethe.zz>
-References: <e28f90730707230535q33658efevf665d795cf1df87c@mail.gmail.com>
-	<20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Wrong time in git-log when using right/ timezone
+Date: Wed, 25 Jul 2007 22:03:44 +0200
+Message-ID: <20070725200344.GA3808@efreet.light.src>
+References: <20070718153614.GA28815@hartlich.com> <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org> <7vk5sx77me.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Luiz Fernando N. Capitulino" <lcapitulino@gmail.com>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 21:58:13 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Hartlich <wwsgj@hartlich.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 22:04:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDmzs-0005fl-Gx
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 21:58:12 +0200
+	id 1IDn5Q-0007oH-8R
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbXGYT6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 15:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbXGYT6I
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 15:58:08 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:47294 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750722AbXGYT6F (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2007 15:58:05 -0400
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 6351A31EA48;
-	Wed, 25 Jul 2007 21:58:04 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 4F00C345C1B;
-	Wed, 25 Jul 2007 21:58:04 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-000-004.pools.arcor-ip.net [84.61.0.4])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 201DD30A959;
-	Wed, 25 Jul 2007 21:58:04 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id DC1FE1C452FD; Wed, 25 Jul 2007 21:57:59 +0200 (CEST)
-In-Reply-To: <20070725195010.GA30277@nan92-1-81-57-214-146.fbx.proxad.net> (Yann Dirson's message of "Wed\, 25 Jul 2007 21\:50\:10 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3763/Wed Jul 25 17:37:41 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1750982AbXGYUDw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 16:03:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbXGYUDw
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:03:52 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:38169 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750982AbXGYUDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 16:03:51 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 4A9875725A;
+	Wed, 25 Jul 2007 22:03:50 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id YAHKaTsyi85Y; Wed, 25 Jul 2007 22:03:48 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 94BDA57355;
+	Wed, 25 Jul 2007 22:03:46 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IDn5E-0008Vx-Da; Wed, 25 Jul 2007 22:03:44 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk5sx77me.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53710>
 
-Yann Dirson <ydirson@altern.org> writes:
 
-> I had a quick look at the current pygit API (as described in the
-> README), and I find the current revlist one somewhat confusing.  Why
-> using post-contructor methods, and not using named args in the
-> constructor itself ?
->
-> That is, the example reading:
->
->>>> rv = repo.revlist()
->>>> rv.include('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9')
->>>> rv.count = 10
->>>> rv.show_merges()
->>>> for commit in rv:
-> ...  print commit.id()
-> ... 
->
->
-> would be IMHO much nicer to use as:
->
->>>> rv = repo.revlist(include=('8d9107e8c50e1c4ff43c91c8841805833f3ecfb9'),
-> ...                   count = 10,
-> ...                   show_merges = true)
-> ...
->>>> for commit in rv:
-> ...  print commit.id()
-> ... 
->
->
-> What do you think ?
+--1yeeQ81UyVL57Vl7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Nicer to use if the commands and their options originate from withing
-Python.  But if Python parses arguments from somewhere else and passes
-them on, the former interface leads to much cleaner code AFAICS.
-Pasting together a named argument call piecemeal is not going to be
-pretty, I should think.
+On Wed, Jul 18, 2007 at 13:57:13 -0700, Junio C Hamano wrote:
+> No, I do not think the wackiness is from Germans.
+>=20
+> Using right/ perhaps without realizing the differences between
+> TZ=3Dright/Europe/Berlin and TZ=3DEurope/Berlin is probably the
+> source of confusion.
+>=20
+> I do not offhand know what role "leap second adjustment" should
+> play in the context of converting from Unix time we store in git
+> commit objects to human readable role.  As far as I understand,
+> the returned timestamp from time(2), which we record in commit
+> objects, is already "leap second adjusted".
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+I can attempt a brief explanation if anyone is (still) interested.
+
+Leap seconds are added iregularly, because Earth rotation is slightly
+irregular. Therefore some time calculations require lookup into a table of
+leap seconds:
+ - If you include leap seconds in the timer, converting to date+time does,
+   while time difference does not. This is what the right/ timezones use.
+ - If you exclude leap seconds from the timer, time difference does, but
+   converting to date+time does not. This is what the normal timezones use.
+
+Obviously, the two approaches don't play well together. POSIX chose the
+later, likely because it's much more common to want to know date+time for
+some moment, than to calculate several year long time interval with second
+precision (because so far there have been at most 2 seconds difference per
+year).
+
+Note, that the former approach allows you to talk about time 65936023 secon=
+ds
+=66rom now, but not what date and time it will be, while the later allows y=
+ou
+to talk about 2437-11-05 16:12:05, but not how many seconds are left until
+than.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--1yeeQ81UyVL57Vl7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGp6ygRel1vVwhjGURAs/aAJ0bcuy0HjifM16KDfFighvGh7CnJQCfeRAe
+c39NDthBUUU4wvb96MJOO7w=
+=ZTa8
+-----END PGP SIGNATURE-----
+
+--1yeeQ81UyVL57Vl7--
