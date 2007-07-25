@@ -1,70 +1,64 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: git stash apply segfaulting when called in subdir
-Date: Wed, 25 Jul 2007 18:32:44 -0400
-Message-ID: <20070725223244.GB21274@dervierte>
-References: <20070725212311.GA13325@cassiopeia>
+From: Nix <nix@esperi.org.uk>
+Subject: Re: [RFC PATCH] Re: Empty directories...
+Date: Wed, 25 Jul 2007 23:43:44 +0100
+Message-ID: <877iooxfxb.fsf@hades.wkstn.nix>
+References: <alpine.LFD.0.999.0707181444070.27353@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0707181557270.27353@woody.linux-foundation.org>
+	<85abttwa7m.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0707181710271.27353@woody.linux-foundation.org>
+	<7vbqe93qtv.fsf@assigned-by-dhcp.cox.net>
+	<20070719053858.GE32566@spearce.org>
+	<20070719060922.GF32566@spearce.org> <vpqvecgvmjh.fsf@bauges.imag.fr>
+	<20070719105105.GA4929@moonlight.home>
+	<86zm1sbpeh.fsf@lola.quinscape.zz>
+	<20070719123214.GB4929@moonlight.home>
+	<863azka7d4.fsf@lola.quinscape.zz> <87ps2inab5.fsf@hades.wkstn.nix>
+	<85y7h6dewp.fsf@lola.goethe.zz> <87lkd6n62i.fsf@hades.wkstn.nix>
+	<87hcnun5dc.fsf@hades.wkstn.nix> <f83bfv$95g$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 00:32:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 00:44:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDpPW-0005fM-MY
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:32:51 +0200
+	id 1IDpaG-00009r-3l
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 00:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756237AbXGYWcs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 25 Jul 2007 18:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755561AbXGYWcs
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:32:48 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:31382 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754783AbXGYWcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 18:32:47 -0400
-Received: by py-out-1112.google.com with SMTP id d32so636896pye
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 15:32:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent:from;
-        b=eW2wPT+eftjLRgO/rghYGB0b9ErNqvgoQH6P/nGfR+2JXeSFqMiHZ1j/LeF3EzglMIToNY/wPLnO2g+PwlV8KofQhIa8FuFPQGDYUcO2pK8GFpbaadSTmROCR1KzzqEzKCk09MxgD9GijfgggYBsdtQx/Pylam/8X+FXKmdAdRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent:from;
-        b=TLqRHp5JCyWLvdkYnYkcF+e/85zecr08pQ7iglG/laG2dhuwWi3B4GnF48osatgQz1k6vFpI7clxpsC1yz/CF76wMsHdgtAAgvjYGtSQzNgkeMbN0qz2Smv0eEJLwB38bYVfoQ09N8fiREGWEYPWq72srobCk0Gp5e2ns8G/1D4=
-Received: by 10.35.115.18 with SMTP id s18mr10225467pym.1185402766674;
-        Wed, 25 Jul 2007 15:32:46 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [74.131.192.220])
-        by mx.google.com with ESMTPS id n80sm1004845pyh.2007.07.25.15.32.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2007 15:32:46 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id C546DCFF866; Wed, 25 Jul 2007 18:32:44 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070725212311.GA13325@cassiopeia>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758378AbXGYWnw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 18:43:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757040AbXGYWnw
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 18:43:52 -0400
+Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:60019 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757275AbXGYWnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 18:43:51 -0400
+Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
+	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id l6PMhjho023817;
+	Wed, 25 Jul 2007 23:43:46 +0100
+Received: (from nix@localhost)
+	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id l6PMhivJ031165;
+	Wed, 25 Jul 2007 23:43:44 +0100
+Emacs: it's like swatting a fly with a supernova.
+In-Reply-To: <f83bfv$95g$1@sea.gmane.org> (Jakub Narebski's message of "Tue, 24 Jul 2007 00:52:47 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
+X-DCC--Metrics: hades 102; Body=2 Fuz1=2 Fuz2=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53729>
 
-On Wed, Jul 25, 2007 at 11:23:11PM +0200, Uwe Kleine-K=F6nig wrote:
-> zeisberg@cassiopeia:/tmp/repo$ cd dir; git stash apply
-> error: missing object referenced by '696146c2a44d7fc4d5ae4a71589c4c0d=
-84f59789'
-> /home/zeisberg/usr/bin/git-stash: line 111: 13618 Segmentation fault =
-     git-merge-recursive $b_tree -- $c_tree $w_tree
+On 23 Jul 2007, Jakub Narebski spake thusly:
 
-I've been seeing this, as well.
---=20
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
-   -Robert Heinlein
+> Nix wrote:
+>
+>> And the problem is that while git has a lot of strategies for merging
+>> *trees*, its file merge system is totally unpluggable: it just falls
+>> back to xdiff's merging system. I guess I'll have to add that feature :)
+>
+> Not true. You can add custom diff driver for files using gitattributes
+> system.
+
+Oo. Excellent, I didn't notice that. Thank you.
