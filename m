@@ -1,89 +1,134 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: bug: update hook failure doesn't prevent local deletion of a branch
-Date: Wed, 25 Jul 2007 12:50:06 +0100
-Message-ID: <200707251250.08166.andyparkins@gmail.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Wed, 25 Jul 2007 14:10:30 +0200
+Message-ID: <46A73DB6.4090007@trolltech.com>
+References: <46A5B5F5.6000202@trolltech.com> <46A6F21D.2010306@trolltech.com> <Pine.LNX.4.64.0707251024390.14781@racer.site> <200707251205.48235.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 13:50:32 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig40C67A7956A2CB180822C4FD"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 14:10:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDfNv-00024i-QQ
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 13:50:32 +0200
+	id 1IDfhK-0000aU-V0
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 14:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbXGYLuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 07:50:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbXGYLuP
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 07:50:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:61115 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115AbXGYLuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 07:50:13 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so330859ugf
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 04:50:12 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=h36qJT9H0SMot9XbGA3Frk9Trve0OE38txD8/qUTkVwr9PvAh7v+5gzxzi9xj2DxO7W9UvaewHLPRJ8t5N3kaLHbsKx1U2R8CMcH2Wz6+X+EH6+sSL7oDw0DrsYtUVOrN2M1znTy0si/DrcuEj1Bt98+piZLvy6m/u3ORYvh3rs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Rjc8lUn6DJb3U83QsaDWMamL5O0owkiWz5qrfxe/2xU+5MF1A+9Taju2GAlSTGvaYeJ3TaIct2fGH4uXh8L7BRnCveGREm+RcLiYlHRNFSFfwIwse/yaunl+iZTX/hcMOghJ8V2Zm+j/V/arWnVa8VnKCZS6epE6WAzrLzvS0DM=
-Received: by 10.66.248.5 with SMTP id v5mr1347729ugh.1185364212031;
-        Wed, 25 Jul 2007 04:50:12 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id c25sm1231780ika.2007.07.25.04.50.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2007 04:50:10 -0700 (PDT)
-User-Agent: KMail/1.9.7
-Content-Disposition: inline
+	id S1764911AbXGYMJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 08:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755622AbXGYMJ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 08:09:57 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:55310 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759920AbXGYMJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 08:09:55 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id CE1CA74280; Wed, 25 Jul 2007 14:09:53 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id B3E047419D; Wed, 25 Jul 2007 14:09:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070716 Thunderbird/2.0.0.5 Mnenhy/0.7.5.666
+In-Reply-To: <200707251205.48235.andyparkins@gmail.com>
+X-Enigmail-Version: 0.95.2
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53686>
 
-Hello,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig40C67A7956A2CB180822C4FD
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I wanted to delete a branch (let's call it "deleted-branch") from my public 
-repository.  I ran this:
+Andy Parkins said the following on 25.07.2007 13:05:
+> On Wednesday 2007 July 25, Johannes Schindelin wrote:
+>=20
+>> So this leaves me with the question: do Windows users really want
+>> a proper native Windows support for Git?  If the answer is yes,
+>> why don't they _do_ (as in "not talk") something about it?
+>=20
+> I don't disagree with you at all - it is completely ridiculous for
+> Windows users to moan about lack of Windows support without
+> contributing any help. However, I think there is a good reason.
+>=20
+> I think it's a chicken and egg problem.  The only reason I started
+> making (small) contributions to git was because I was using it
+> already.  I didn't set out with the goal "to improve git"; I set
+> out looking for a DVCS. Luckily for me, I use Linux so git worked
+> pretty well for me straight away.
+>=20
+> The same is not true for Windows users.  Even if we ignore the fact
+> that Windows users are notoriously less open-source savvy; it's
+> unlikely that we'll get any Windows contributions until there are
+> some threshold number of developers using git on Windows.
+>=20
+> Open-source is all about scratching an itch, I can't see how
+> Windows developers can get a gitch to scratch without being users
+> of git first.  On the positive side though, there surely must come
+> a point when the Windows port is "good enough" that it will start
+> to gather users and hence developers.  Until then, I suppose it's
+> just a matter of shouting "patch" every time a windows user asks
+> for a feature :-)
 
-$ git push origin :deleted-branch
-deleting 'refs/heads/deleted-branch'
- Also local refs/remotes/up/deleted-branch
-*** Update hook: aborting
-error: hooks/update exited with error code 1
-error: hook declined to update refs/heads/deleted-branch
-ng refs/heads/deleted-branch hook declined
-error: failed to push to '/path/to/git/repo.git'
+Hi Andy,
 
-Coincidentally, my update hook happened to have a bug in it that prevented me 
-from running the operation.
+Your mail is refreshingly spot on. I agree fully with what you say.
+I will try to do my part to get Git to this 'threshold', so we can get=20
+a proper Windows community behind it too. (It's just a matter of time=20
+and resources, which I hope we clear up soon)
+My first roadmap item will be to get a fully native compile of the=20
+built-in code. If we at least have a Git built with native tools, I=20
+think we'll have a lot more people wanting(/able?) to contribute.
 
-However, when I run the operation again...
+AFAIK the MinGW port is cross-compiled on Linux, and can be hard to=20
+set up on Windows. The required MinGW packages are scattered all over=20
+the place. So, it's not impossible at the moment, but I guess most=20
+Windows users feel a bit unmotivated to work on the code mostly since=20
+they'll have to develop using Cygwin. (I don't know if that's the=20
+reason, just a hunch)
 
-$ git push origin :deleted-branch
-deleting 'refs/heads/deleted-branch'
- Also local refs/remotes/up/deleted-branch
-error: unlink(.git/refs/remotes/up/deleted-branch) failed: No such file or 
-directory
-error: Failed to delete
+So, IMO its not that Windows users don't _want_ to contribute. I think=20
+they feel they can't. Let's see if we can fix that. I'll let the list=20
+know as soon as I get native builds going.
 
-If the remote didn't get deleted, then it seems wrong that the local copy does 
-get deleted.
+Later!
 
-Summary: when using git-push to delete a remote branch, and that deletion is 
-disallowed by the update hook, the local tracking branch _is_ deleted.
-
-Obviously, this isn't _that_ serious because it could be recovered again with 
-a git-fetch; but it does make some scary looking errors.
+--
+=2Emarius
 
 
+--------------enig40C67A7956A2CB180822C4FD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFGpz23KzzXl/njVP8RAmlcAJ9nQchEAubqcz0y0/QZE81UhvQxdwCg7AcK
+rq/xu1wdVo6yMxCKhu6/xBw=
+=yOXZ
+-----END PGP SIGNATURE-----
+
+--------------enig40C67A7956A2CB180822C4FD--
