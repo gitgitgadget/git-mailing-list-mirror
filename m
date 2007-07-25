@@ -1,69 +1,60 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Wed, 25 Jul 2007 18:22:16 +0800
-Message-ID: <46A72458.1000004@midwinter.com>
-References: <46A5B5F5.6000202@trolltech.com> <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net> <46A5DF1F.2030307@trolltech.com> <Pine.LNX.4.64.0707241337470.14781@racer.site> <46A5FDF0.3060801@trolltech.com> <Pine.LNX.4.64.0707241431540.14781@racer.site> <46A63EAA.6080203@trolltech.com> <Pine.LNX.4.64.0707241923450.14781@racer.site> <46A654A6.5070802@trolltech.com> <20070724231529.GA29156@steel.home> <46A6F21D.2010306@trolltech.com> <Pine.LNX.4.64.0707251024390.14781@racer.site>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Windows support
+Date: Wed, 25 Jul 2007 03:35:26 -0700
+Message-ID: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 25 12:22:37 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 12:35:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDe0r-0001Dr-4i
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:22:37 +0200
+	id 1IDeDM-0004jH-4M
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756473AbXGYKWX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 06:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756338AbXGYKWX
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:22:23 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:45537
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1755698AbXGYKWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 06:22:22 -0400
-Received: (qmail 11689 invoked from network); 25 Jul 2007 10:22:22 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=qFWE+AjZZVNbjcqd6e+Dj4O4/hzCvCj7CFwchxYSZ9dflNrqhvu3g9fm4yUAAM11  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 25 Jul 2007 10:22:21 -0000
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
-In-Reply-To: <Pine.LNX.4.64.0707251024390.14781@racer.site>
+	id S1755929AbXGYKf2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 06:35:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752681AbXGYKf2
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:35:28 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:38753 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbXGYKf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 06:35:27 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so132506nze
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 03:35:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=VhSLDoQMKK8hQtxpEGqX+p/Z39zGSHBLBGvHT8z9lq/jn2Me4YspZ3YWNfiBIpZxYWFZtRTRqabJ24xcxwsG/XYs0rNPwKpq76ftvjeFVIBGgQDX79T1kaNA28rThmYsNxNDDfM3Wcx6ZVssmEUxuwp0sglTNy+xFk8Ez1TDNUM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=U51Ys0kAFxgQY5mavkphhU2IpeGkN2Tsa2O+oLP6YpS9Xdz94equdKZ5g3oT+9BNoOcLCI+DI0h1l9kxw3za610lkyGRUx/RdUAjnoehJZAPH3YzhipBj5F6xnEYqf68+ENEtdpFlheh00RrXmv6LX4o82UUt8k5lRed7IqES+4=
+Received: by 10.141.19.16 with SMTP id w16mr149367rvi.1185359726606;
+        Wed, 25 Jul 2007 03:35:26 -0700 (PDT)
+Received: by 10.141.21.17 with HTTP; Wed, 25 Jul 2007 03:35:26 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53680>
 
-Johannes Schindelin wrote:
-> So this leaves me with the question: do Windows users really want a proper 
-> native Windows support for Git?  If the answer is yes, why don't they _do_ 
-> (as in "not talk") something about it?
->   
+How serious are you guys about Windows support?
+I'm talking fully-functional port, not Cygwin.
+I did a lot of searching for a new SCM to switch to (from Perforce).
+And Git is my #1 choice. I love it's internals design and it's
+expressive power. I've also tested git-p4 and it has worked like a
+charm with my depot (with few tweaks that I may contribute later).
+But I do all my work on Windows so I need Git-For-Windows-Done-Right :-).
+The current mingw port is not there yet.
 
-I'm not a Windows user, but I know some, so I can maybe answer this: 
-They do want that, but what they primarily want is a good DVCS they can 
-use without trouble. I know at least two Windows people who took a look 
-at the Win32 git, had trouble with it, then looked at Mercurial (which, 
-whatever opinions you might have about it, does work better on Windows) 
-and just stuck with that since it met their needs.
+Transition to the new SCM must happen now, so basically I have 2 choices:
+1. Survive for a few months with the current CygWin port of Git
+knowing that Windows support is coming
+2. Use another SCM (#2 is Mercurial, #3 is Monotone)
 
-The fact that Mercurial exists is a big disincentive for Windows people 
-to work on git; unless they specifically want to interoperate with an 
-existing git repository, hg gives them a lot of the same features that 
-we enjoy in git land. And they don't have to fiddle with MinGW or Cygwin 
-or anything like that. The distance between git and hg is small enough 
-in their minds that it's not worth the unknown amount of effort to work 
-on making git run better.
+I'd realy love to do #1, but I need to know how long do I have to wait.
 
-At least, that's my take on it. Maybe an actual Windows git user will 
-tell me I'm full of it...
-
--Steve
+- Dmitry
