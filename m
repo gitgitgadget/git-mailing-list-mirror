@@ -1,67 +1,58 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
 Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 08:13:14 -0400
-Message-ID: <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
+Date: Wed, 25 Jul 2007 14:30:02 +0200
+Message-ID: <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
 References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 14:13:28 2007
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 14:29:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDfk5-0002Lm-2l
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 14:13:25 +0200
+	id 1IDfzP-0008Ov-6M
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 14:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758852AbXGYMNR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 08:13:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757785AbXGYMNQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 08:13:16 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:15540 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059AbXGYMNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 08:13:15 -0400
-Received: by an-out-0708.google.com with SMTP id d31so30777and
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 05:13:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XGcwT1X5YzR/svQf+03+1BCAGzhV4HmGcqZejZyRD1AhmGeBmHS227mivz3iW+XBd7TeMro9gForTEQ31psQUfOF9+4gLwQhqIv1xEa+ZwtPE3w9xdCSAB61KYvcjEDCnUNfgysYDVoiGhFFHYn0s6Z8OVjA62Vb3scD0y5aaiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b+Y1pQg4GIooVABXCAXAFjqNVWySgIKPif5LVqM4dD4+kD/2+7QkE6fIJ/nIO9rQAGtIyZufqJcR6DMprmXyR8pRFKcPd9MWZ4B1+TXlANeXNw0MAMHU9fUs7P/1Jw7kPkBN+5HfN7OJMQD8HL7XFIPu3L+6Tzjtrnzc6BdiRTE=
-Received: by 10.100.178.7 with SMTP id a7mr323008anf.1185365594836;
-        Wed, 25 Jul 2007 05:13:14 -0700 (PDT)
-Received: by 10.100.127.17 with HTTP; Wed, 25 Jul 2007 05:13:11 -0700 (PDT)
+	id S1752312AbXGYM3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 08:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXGYM3L
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 08:29:11 -0400
+Received: from mailer.zib.de ([130.73.108.11]:65042 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752312AbXGYM3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 08:29:10 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6PCT7gE024969;
+	Wed, 25 Jul 2007 14:29:07 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6PCT7VY025396
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 25 Jul 2007 14:29:07 +0200 (MEST)
 In-Reply-To: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-Content-Disposition: inline
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53688>
 
-On 7/25/07, Dmitry Kakurin <dmitry.kakurin@gmail.com> wrote:
+
+On Jul 25, 2007, at 12:35 PM, Dmitry Kakurin wrote:
+
 > How serious are you guys about Windows support?
 > I'm talking fully-functional port, not Cygwin.
-> I did a lot of searching for a new SCM to switch to (from Perforce).
-> And Git is my #1 choice. I love it's internals design and it's
-> expressive power. I've also tested git-p4 and it has worked like a
-> charm with my depot (with few tweaks that I may contribute later).
-> But I do all my work on Windows so I need Git-For-Windows-Done-Right :-).
-> The current mingw port is not there yet.
 
-What features is mingw port missing?
+What's wrong with the Cygwin port?
 
-> Transition to the new SCM must happen now, so basically I have 2 choices:
-> 1. Survive for a few months with the current CygWin port of Git
-> knowing that Windows support is coming
+Is it just that windows developer hate cygwin because it's to
+complex to install or is there any severe limitation?
+functionality? stability? performance?
 
-FYI, I'm working on getting rid of msys requirement from mingw port. I
-can't tell you how long it would take though. Could be one month or
-two.
--- 
-Duy
+I'm personally only working on Windows if force to, but people
+are asking me the same question that you have. Does git
+seriously and fully support Windows?
+
+	Steffen
