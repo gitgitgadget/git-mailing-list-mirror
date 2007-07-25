@@ -1,88 +1,62 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Wed, 25 Jul 2007 12:05:43 +0100
-Message-ID: <200707251205.48235.andyparkins@gmail.com>
-References: <46A5B5F5.6000202@trolltech.com> <46A6F21D.2010306@trolltech.com> <Pine.LNX.4.64.0707251024390.14781@racer.site>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Windows support
+Date: Wed, 25 Jul 2007 19:12:21 +0800
+Message-ID: <46A73015.7020306@midwinter.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 25 13:06:04 2007
+Cc: git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 13:12:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDegq-0005Qa-PW
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 13:06:01 +0200
+	id 1IDen7-0007Oj-7G
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 13:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759413AbXGYLFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 07:05:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758838AbXGYLFy
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 07:05:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:12224 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758739AbXGYLFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 07:05:53 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so325436ugf
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 04:05:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=F1ngnbpVdqugvk55GdJ2l8ascKZ1ObJEfr7o38LGnvaXfMcYoXowaYfuoV/44AlvxNWRUkoPjZFZHyebwdprnpa/yAD1JQ45fSDEOaT/Qgyp3rHEwixoDWwLtLq+T+HtWSz/3R4l4PXQOGjKu8meoyoGPpDOuY0sbSbdisZ5asM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=R9Q6V05iirfqk4SHybtZR+EKR+S+vlPIVS5UdfyOD5g0PqWSH0yBgeq9P3I3NcRV++J2a6FQJ0d7RqtZZvhjqonyCaAYupPy/WGpjFYbR0LqYpzOO0cBIjoN4HPPpNdgOabuV0rSA2TYfC/yTr9NCY/e83i8RDyI62DoZLMUA9c=
-Received: by 10.66.224.3 with SMTP id w3mr1315656ugg.1185361552407;
-        Wed, 25 Jul 2007 04:05:52 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id b33sm1154975ika.2007.07.25.04.05.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2007 04:05:51 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0707251024390.14781@racer.site>
-Content-Disposition: inline
+	id S1756314AbXGYLM0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 07:12:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757748AbXGYLM0
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 07:12:26 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:50374
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754969AbXGYLMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 07:12:25 -0400
+Received: (qmail 15365 invoked from network); 25 Jul 2007 11:12:25 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Vfe37ItY8iIu6/onRNoA/f2plYvSgkMwkBiwWQacXAsysuODU60jJtn1INc0Svw1  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 25 Jul 2007 11:12:25 -0000
+User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+In-Reply-To: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53683>
 
-On Wednesday 2007 July 25, Johannes Schindelin wrote:
+Dmitry Kakurin wrote:
+> How serious are you guys about Windows support?
 
-> So this leaves me with the question: do Windows users really want a proper
-> native Windows support for Git?  If the answer is yes, why don't they _do_
-> (as in "not talk") something about it?
+Well, it's really a matter of someone stepping up and doing the work. 
+Much (nearly all?) of the core git team never touches Windows, so they 
+both have no selfish motivation to get it working well and no way to 
+test their changes even if they decide to take it up for the greater good.
 
-I don't disagree with you at all - it is completely ridiculous for Windows 
-users to moan about lack of Windows support without contributing any help.  
-However, I think there is a good reason.
+As has been pointed out, there are a lot of people coming to the list 
+and asking for Windows support, but precious few actually contributing 
+any code. If everyone who asked for Windows support had been willing to 
+fix one Windows-related issue, git's Windows support would be stellar by 
+now. I'm as guilty as anyone of asking for stuff without doing it 
+myself, so I say this as an observation, not an accusation!
 
-I think it's a chicken and egg problem.  The only reason I started making 
-(small) contributions to git was because I was using it already.  I didn't 
-set out with the goal "to improve git"; I set out looking for a DVCS.  
-Luckily for me, I use Linux so git worked pretty well for me straight away.
+> I'm talking fully-functional port, not Cygwin.
 
-The same is not true for Windows users.  Even if we ignore the fact that 
-Windows users are notoriously less open-source savvy; it's unlikely that 
-we'll get any Windows contributions until there are some threshold number of 
-developers using git on Windows.
+There is a port that uses MinGW instead of Cygwin, FYI. It is still 
+perhaps not as native-Windows-like as one might prefer, but it should be 
+less alien than Cygwin, anyway.
 
-Open-source is all about scratching an itch, I can't see how Windows 
-developers can get a gitch to scratch without being users of git first.  On 
-the positive side though, there surely must come a point when the Windows 
-port is "good enough" that it will start to gather users and hence 
-developers.  Until then, I suppose it's just a matter of shouting "patch" 
-every time a windows user asks for a feature :-)
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-Steve
