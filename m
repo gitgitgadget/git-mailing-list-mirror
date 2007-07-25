@@ -1,74 +1,69 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Document --unified/-U option
-Date: Wed, 25 Jul 2007 12:08:17 +0200
-Message-ID: <20070725100817.21185.91337.stgit@lathund.dewire.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
+Date: Wed, 25 Jul 2007 18:22:16 +0800
+Message-ID: <46A72458.1000004@midwinter.com>
+References: <46A5B5F5.6000202@trolltech.com> <Pine.LNX.4.64.0707241002410.14781@racer.site> <7vd4yigmla.fsf@assigned-by-dhcp.cox.net> <46A5DF1F.2030307@trolltech.com> <Pine.LNX.4.64.0707241337470.14781@racer.site> <46A5FDF0.3060801@trolltech.com> <Pine.LNX.4.64.0707241431540.14781@racer.site> <46A63EAA.6080203@trolltech.com> <Pine.LNX.4.64.0707241923450.14781@racer.site> <46A654A6.5070802@trolltech.com> <20070724231529.GA29156@steel.home> <46A6F21D.2010306@trolltech.com> <Pine.LNX.4.64.0707251024390.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Jul 25 12:07:45 2007
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 25 12:22:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDdmS-0005X0-Ni
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:07:45 +0200
+	id 1IDe0r-0001Dr-4i
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 12:22:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178AbXGYKHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 06:07:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbXGYKHm
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:07:42 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:19534 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754333AbXGYKHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 06:07:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 40E4380266C;
-	Wed, 25 Jul 2007 12:00:24 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 05837-07; Wed, 25 Jul 2007 12:00:24 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 018E080019B;
-	Wed, 25 Jul 2007 12:00:23 +0200 (CEST)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 79EA2284A6;
-	Wed, 25 Jul 2007 12:08:52 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id Lb1aTe2m8Jrs; Wed, 25 Jul 2007 12:08:20 +0200 (CEST)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 291AA28391;
-	Wed, 25 Jul 2007 12:08:18 +0200 (CEST)
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1756473AbXGYKWX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 06:22:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756338AbXGYKWX
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 06:22:23 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:45537
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1755698AbXGYKWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 06:22:22 -0400
+Received: (qmail 11689 invoked from network); 25 Jul 2007 10:22:22 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=qFWE+AjZZVNbjcqd6e+Dj4O4/hzCvCj7CFwchxYSZ9dflNrqhvu3g9fm4yUAAM11  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 25 Jul 2007 10:22:21 -0000
+User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+In-Reply-To: <Pine.LNX.4.64.0707251024390.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53679>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+Johannes Schindelin wrote:
+> So this leaves me with the question: do Windows users really want a proper 
+> native Windows support for Git?  If the answer is yes, why don't they _do_ 
+> (as in "not talk") something about it?
+>   
 
- Documentation/diff-options.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+I'm not a Windows user, but I know some, so I can maybe answer this: 
+They do want that, but what they primarily want is a good DVCS they can 
+use without trouble. I know at least two Windows people who took a look 
+at the Win32 git, had trouble with it, then looked at Mercurial (which, 
+whatever opinions you might have about it, does work better on Windows) 
+and just stuck with that since it met their needs.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 1689c74..050e5fd 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -4,6 +4,13 @@
- -u::
- 	Synonym for "-p".
- 
-+-U<n>::
-+	Shorthand for "--unified=<n>".
-+
-+--unified=<n>::
-+	Generate diffs with <n> lines of context instead of
-+	the usual three. Implies "-p".
-+
- --raw::
- 	Generate the raw format.
- 
+The fact that Mercurial exists is a big disincentive for Windows people 
+to work on git; unless they specifically want to interoperate with an 
+existing git repository, hg gives them a lot of the same features that 
+we enjoy in git land. And they don't have to fiddle with MinGW or Cygwin 
+or anything like that. The distance between git and hg is small enough 
+in their minds that it's not worth the unknown amount of effort to work 
+on making git run better.
+
+At least, that's my take on it. Maybe an actual Windows git user will 
+tell me I'm full of it...
+
+-Steve
