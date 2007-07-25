@@ -1,106 +1,104 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Wrong time in git-log when using right/ timezone
-Date: Wed, 25 Jul 2007 22:03:44 +0200
-Message-ID: <20070725200344.GA3808@efreet.light.src>
-References: <20070718153614.GA28815@hartlich.com> <alpine.LFD.0.999.0707180948080.27353@woody.linux-foundation.org> <7vk5sx77me.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Hartlich <wwsgj@hartlich.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 22:04:01 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: easy repository initialization that turned out not to be that easy
+Date: Wed, 25 Jul 2007 22:05:10 +0200
+Message-ID: <0EAD32C5-11DA-4B99-919D-87C0006A389C@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 25 22:04:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDn5Q-0007oH-8R
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:03:56 +0200
+	id 1IDn5o-0007xV-Dx
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 22:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982AbXGYUDw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 16:03:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbXGYUDw
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:03:52 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:38169 "EHLO ns1.bluetone.cz"
+	id S1751319AbXGYUES (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 16:04:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbXGYUES
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 16:04:18 -0400
+Received: from mailer.zib.de ([130.73.108.11]:36799 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750982AbXGYUDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 16:03:51 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 4A9875725A;
-	Wed, 25 Jul 2007 22:03:50 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id YAHKaTsyi85Y; Wed, 25 Jul 2007 22:03:48 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 94BDA57355;
-	Wed, 25 Jul 2007 22:03:46 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IDn5E-0008Vx-Da; Wed, 25 Jul 2007 22:03:44 +0200
-Content-Disposition: inline
-In-Reply-To: <7vk5sx77me.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1751091AbXGYUER (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 16:04:17 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6PK4FtW029164
+	for <git@vger.kernel.org>; Wed, 25 Jul 2007 22:04:15 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1b655.pool.einsundeins.de [77.177.182.85])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6PK4Epl004070
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 25 Jul 2007 22:04:15 +0200 (MEST)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53711>
+
+I stumbled about some tasks that I expected to be easy but
+turned out not to be that easy ...
+
+(with git version 1.5.3.rc2.29.gc4640f)
 
 
---1yeeQ81UyVL57Vl7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+1) How can I switch a private repository to shared as if it
+was created by 'git-init --shared' in the first place?
 
-On Wed, Jul 18, 2007 at 13:57:13 -0700, Junio C Hamano wrote:
-> No, I do not think the wackiness is from Germans.
->=20
-> Using right/ perhaps without realizing the differences between
-> TZ=3Dright/Europe/Berlin and TZ=3DEurope/Berlin is probably the
-> source of confusion.
->=20
-> I do not offhand know what role "leap second adjustment" should
-> play in the context of converting from Unix time we store in git
-> commit objects to human readable role.  As far as I understand,
-> the returned timestamp from time(2), which we record in commit
-> objects, is already "leap second adjusted".
+Just executing 'git-init --shared' in the repo doesn't
+adjust permissions as needed.
 
-I can attempt a brief explanation if anyone is (still) interested.
+Cloning it to shared doesn't work either because the meaning
+of 'git-clone --bare --shared' is different from
+'git-init --shared'.
 
-Leap seconds are added iregularly, because Earth rotation is slightly
-irregular. Therefore some time calculations require lookup into a table of
-leap seconds:
- - If you include leap seconds in the timer, converting to date+time does,
-   while time difference does not. This is what the right/ timezones use.
- - If you exclude leap seconds from the timer, time difference does, but
-   converting to date+time does not. This is what the normal timezones use.
+So I created a fresh repository
 
-Obviously, the two approaches don't play well together. POSIX chose the
-later, likely because it's much more common to want to know date+time for
-some moment, than to calculate several year long time interval with second
-precision (because so far there have been at most 2 seconds difference per
-year).
+    mkdir shared.git
+    cd shared.git
+    git --bare init --shared
 
-Note, that the former approach allows you to talk about time 65936023 secon=
-ds
-=66rom now, but not what date and time it will be, while the later allows y=
-ou
-to talk about 2437-11-05 16:12:05, but not how many seconds are left until
-than.
+and tried to naively fetch all by executing
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+    git fetch ../private.git
 
---1yeeQ81UyVL57Vl7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Hmm... it does a lot of things, but I ended without branches.
+fetch apparently has nothing like '--all'.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+... but push has, so I finally did
 
-iD8DBQFGp6ygRel1vVwhjGURAs/aAJ0bcuy0HjifM16KDfFighvGh7CnJQCfeRAe
-c39NDthBUUU4wvb96MJOO7w=
-=ZTa8
------END PGP SIGNATURE-----
+    cd ../private.git
+    git push --all ../shared.git
+    git push --tags ../shared.git
 
---1yeeQ81UyVL57Vl7--
+Note, 'git push --all --tags' refused to work, so I needed
+to push branches and tags separately.
+
+Is it really that hard, or did I miss something?
+
+
+2) How can I set up an empty bare repository that shares
+objects with an existing repository? I'd like to do that
+to save space and bandwidth.
+
+I started to search for something like 'git init --reference'
+or 'git init -l', similar to what 'git clone' provides.
+
+I don't remember all approaches I tried, but finally I used
+
+    git clone --bare -l existing.git new.git
+    cd new.git
+    mv refs/head/master .
+    rm -rf refs/heads/* refs/tags/*
+    mv master refs/heads
+
+I remember that I needed to leave the master in place because
+otherwise a 'git push' didn't recognize that objects are already
+present and transferred everything, which is quite annoying over
+a slower network connection. With master in place the first push
+to new.git worked as expected. Only the additional objects were
+sent.
+
+Did I miss something?
+
+	Steffen
