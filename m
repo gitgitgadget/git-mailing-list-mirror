@@ -1,61 +1,57 @@
-From: Emil Medve <Emilian.Medve@Freescale.com>
-Subject: [PATCH] git-submodule: Error messages from 'git describe' shouldn't end up on the terminal
-Date: Wed, 25 Jul 2007 09:21:51 -0500
-Message-ID: <11853733111502-git-send-email-Emilian.Medve@Freescale.com>
-Cc: Emil Medve <Emilian.Medve@Freescale.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 25 16:27:40 2007
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Further changes to it.po
+Date: Wed, 25 Jul 2007 18:10:26 +0200
+Message-ID: <e5bfff550707250910p6ecac05bt290d0882cc74bb73@mail.gmail.com>
+References: <20070724223854.35715c77@paolo-desktop>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 18:10:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDhpz-0003HV-5D
-	for gcvg-git@gmane.org; Wed, 25 Jul 2007 16:27:39 +0200
+	id 1IDjRY-0005B7-Eq
+	for gcvg-git@gmane.org; Wed, 25 Jul 2007 18:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763500AbXGYO1c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 10:27:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762975AbXGYO1b
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 10:27:31 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:49543 "EHLO
-	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762303AbXGYO1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 10:27:30 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id l6PERS89012066
-	for <git@vger.kernel.org>; Wed, 25 Jul 2007 07:27:28 -0700 (MST)
-Received: from localhost.localdomain ([10.82.124.180])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l6PERRfY008214;
-	Wed, 25 Jul 2007 09:27:27 -0500 (CDT)
-X-Mailer: git-send-email 1.5.3.rc2.38.g11308-dirty
+	id S1763058AbXGYQK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 12:10:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761940AbXGYQK2
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 12:10:28 -0400
+Received: from nz-out-0506.google.com ([64.233.162.232]:47206 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760871AbXGYQK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 12:10:28 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so212039nze
+        for <git@vger.kernel.org>; Wed, 25 Jul 2007 09:10:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OoAV0FrqIR73uGXiu/3F2rqomFhBt2/W0FyKiUR0mzyEiTGdSOno8eoc3KawvdFocwZpcAztrNPK01TCIv1m5jsfuOJNGtPdRGhCsFk39cIsKZM03T1ttlFCHrPpO0DL1xSlBMKHbYTVnyiWo1kRaxtCxKv4Tlc+aZGFEcyxJFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NHVtFVJb7xk/dMr0t+Ab1IuD2cnJ4H2bS4kHTHLm8bvUzZF9Q4jZlGslOSciClwAHzHoCfnHCQJwAbVbaimfqdy7zP7BHYdfe4WnYATTTedPguJIHnexSp3TkSeD4nKYYklHmnvGERBnv50nHJaXYuP24mSbaQ/frcoCUwDghhU=
+Received: by 10.114.92.2 with SMTP id p2mr780168wab.1185379826675;
+        Wed, 25 Jul 2007 09:10:26 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Wed, 25 Jul 2007 09:10:26 -0700 (PDT)
+In-Reply-To: <20070724223854.35715c77@paolo-desktop>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53695>
 
-As of now a failure to locate the closest tag to a commit (e.g because there is
-no tag in the repository) is handled explicitly by displaying an 'undefined' tag
-error message. However when git describe fails it will still display an
-undesirable  "fatal: cannot describe SHA1" message. This patch hides that
-message as git-submodule has an alternative and explicit error handling method
-in place for this situation
+On 7/24/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+> +msgstr "Fondi (Merge)"
+>
+> +msgstr "Prendi (Fetch)"
+>
+> +msgstr "Propaga (Push)"
+>
 
-Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
----
- git-submodule.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Grande! (Great)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1f0cb99..3804f18 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -233,7 +233,7 @@ modules_list()
- 			say "-$sha1 $path"
- 			continue;
- 		fi
--		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1)
-+		revname=$(unset GIT_DIR && cd "$path" && git describe --tags $sha1 2>/dev/null)
- 		set_name_rev "$path" "$sha1"
- 		if git diff-files --quiet -- "$path"
- 		then
--- 
-1.5.3.rc2.38.g11308-dirty
+
+Marco
