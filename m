@@ -1,66 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: index-pack died on pread
-Date: Thu, 26 Jul 2007 11:02:52 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707261101580.3442@woody.linux-foundation.org>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com> 
- <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org> 
- <200707260115.13234.robin.rosenberg.lists@dewire.com> 
- <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org> 
- <81b0412b0707260542o58fcb73bu81ae09aa1df84c81@mail.gmail.com> 
- <alpine.LFD.0.999.0707260911040.3442@woody.linux-foundation.org>
- <81b0412b0707260951h57fc91dbsd5a0a126f0e16fee@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 20:13:32 +0200
+Message-ID: <8564478243.fsf@lola.goethe.zz>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+	<46A8378A.6050201@xs4all.nl>
+	<Pine.LNX.4.64.0707260737170.14781@racer.site>
+	<f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
+	<fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com>
+	<46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com>
+	<fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com>
+	<Pine.LNX.4.64.0707261534550.14781@racer.site>
+	<fcaeb9bf0707260807u476719e3rec2dcf5f780013c0@mail.gmail.com>
+	<Pine.LNX.4.64.0707261638100.14781@racer.site>
+	<fcaeb9bf0707260911y4091b525kc6b89beb82ec7dc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Michal Rokos <michal.rokos@gmail.com>,
-	GIT <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 20:03:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 20:13:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE7gY-0006u9-0N
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:03:38 +0200
+	id 1IE7qQ-0002Zp-Tn
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934576AbXGZSDd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 14:03:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934631AbXGZSDd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:03:33 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:57913 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934473AbXGZSDc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 14:03:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6QI2vto004029
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jul 2007 11:02:58 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6QI2q6u013074;
-	Thu, 26 Jul 2007 11:02:52 -0700
-In-Reply-To: <81b0412b0707260951h57fc91dbsd5a0a126f0e16fee@mail.gmail.com>
-X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932832AbXGZSNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 14:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbXGZSNq
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:13:46 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:54244 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762004AbXGZSNo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 14:13:44 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 03FEF32EF4D;
+	Thu, 26 Jul 2007 20:13:38 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id D8EBC279437;
+	Thu, 26 Jul 2007 20:13:37 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-079-089.pools.arcor-ip.net [84.61.79.89])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id ADC1A3425E3;
+	Thu, 26 Jul 2007 20:13:37 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 128441C39595; Thu, 26 Jul 2007 20:13:32 +0200 (CEST)
+In-Reply-To: <fcaeb9bf0707260911y4091b525kc6b89beb82ec7dc7@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Thu\, 26 Jul 2007 12\:11\:20 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3776/Thu Jul 26 17:41:16 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53851>
 
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
+> On 7/26/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
+>>
+>> On Thu, 26 Jul 2007, Nguyen Thai Ngoc Duy wrote:
+>>
+>> > I make MinGW busybox part of git for some reasons:
+>> >
+>> > - Making a full MinGW busybox would take lots of time. I don't need
+>> > busybox for Windows. What I need is a shell and enough POSIX utilities
+>> > to run git shell scripts without any dependencies. Windows users
+>> > (including myself when I have to use Windows) hate dependencies.
+>>
+>> I think that if you succeed to compile ash on MinGW, the rest is easy.
+>
+> No it's not. With a couple of ifdefs you can compile it fine. Then
+> there goes fork(), fcntl(F_DUPFD), /dev/*, job/signal handling...
+> Fortunately Git does not use lots of features. It only needs
+> /dev/null (and /dev/zero for tests), SIGEXIT and no job usage.. That
+> cuts down the effort porting ash.
 
-On Thu, 26 Jul 2007, Alex Riesen wrote:
-> > 
-> > HP-UX? No pread()? It wouldn't link if it didn't have pread(). So it
-> > clearly has pread(), it's just somehow broken.
-> 
-> I remember it didn't and was emulated with lseek.
+And here I was tempted to multithread builtin-update-index.c: it is
+actually quite natural to let one process scan directories
+non-recursively, stat the files, sort them on a per-directory grain
+and feed a sorted pseudo-index into a pipeline (recursing to scanning
+whenever hitting a directory), then let another process/thread do a
+merge-pass of pseudo-index and real index, immediately writing the
+output to a new index-to-be.  When this is finished and another
+process invalidated the old index already, reuse the index-to-be as
+pseudo-index and merge it with the new-index-which-got-in-ahead-of-me.
 
-So? The point is, that *works*. We do it ourselves.
+Would be a fun exercise in particular when merely using
+(block-buffered!) pipes, and could presumably make a difference on
+multiprocessor-capable machines.
 
-"emulated with lseek" is trivial, and should work. It worries me that two 
-totally independent systems are showing problems. There's something else 
-going on here.
+Anyway, just something that had been spinning in my head.  The
+"streaming merge" idea has the advantage of keeping memory usage low
+pretty much independently of project size: project memory is pretty
+much determined by the reader pass since it has to read in a complete
+directory level before it can sort it and output the next element, and
+it has to retain the not-yet-output elements of the ancestry.
 
-		Linus
+And it is nice to have some potential for parallel processing.  But if
+it is a lethal stumbling block for Windows...  It is conceivable to do
+the same job instead of with pipes and files with buffers and just
+switch manually between the directory scanning and merging phases.
+But it would be less fun.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
