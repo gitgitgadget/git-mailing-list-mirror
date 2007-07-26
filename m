@@ -1,84 +1,79 @@
-From: Steven Grimm <koreth@midwinter.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 13:11:48 +0800
-Message-ID: <46A82D14.6090404@midwinter.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>	 <46A73015.7020306@midwinter.com> <a1bbc6950707251956h3db847c9v8db438f4c665b2cf@mail.gmail.com>
+Date: Thu, 26 Jul 2007 06:28:35 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260614500.14781@racer.site>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+ <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
+ <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
+ <7vps2fc196.fsf@assigned-by-dhcp.cox.net> <20070726031838.GO32566@spearce.org>
+ <7v6447bxc1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 07:11:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 07:28:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDvdk-0002H0-FR
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:11:56 +0200
+	id 1IDvu0-0005oD-V9
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:28:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbXGZFLy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 01:11:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbXGZFLx
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:11:53 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:58458
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751988AbXGZFLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 01:11:52 -0400
-Received: (qmail 25355 invoked from network); 26 Jul 2007 05:11:52 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=gis9opNDI0aVMOpdt/J6TYz4ueE8aZU9gB03eevhdZT+rh4dOSVc02CRA6ANI2nI  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 26 Jul 2007 05:11:51 -0000
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
-In-Reply-To: <a1bbc6950707251956h3db847c9v8db438f4c665b2cf@mail.gmail.com>
+	id S1751916AbXGZF2m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 01:28:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751723AbXGZF2m
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:28:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54749 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751163AbXGZF2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 01:28:40 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 05:28:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp052) with SMTP; 26 Jul 2007 07:28:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19aEHNv0vVakAq9shEMjOnh2XJ3p/WPpzkLAANk+9
+	a4eZs+yxt03Ln7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v6447bxc1.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53767>
 
-Wrote this reply privately earlier; forwarding to the list at Dmitry's 
-suggestion (though it's rendered slightly less relevant by his 
-clarifications)...
+Hi,
 
-Dmitry Kakurin wrote:
-> This actually answers my question (if it's true).
-> If core team is not interested in supporting Windows then I cannot
-> trust this system with my source code :-(.
->   
+On Wed, 25 Jul 2007, Junio C Hamano wrote:
 
-I certainly understand the conclusion, but I'm not sure I would share 
-it. Unless you have reason to believe there's something in particular 
-about the Windows environment that would cause git to lose data in 
-circumstances where it wouldn't do so under UNIX-ish systems, it seems 
-like your data should be perfectly safe.
+> If that is the case, "Git for Windows" probably should package MSYS as 
+> part of it, I would think, to match the expectation of the users there.  
+> I know two Johannes'es and Han-Wen spent quite a lot of effort on 
+> Windows port and packaging, but perhaps that little (well, I should not 
+> be judging if that is a little or huge, as I do not do Windows) 
+> finishing touch would make Windows users much happier?
 
-In the year-and-a-bit I've been lurking on the git mailing list and 
-making occasional contributions to the code, git has never lost any data 
-for anyone to my knowledge. Its design is extremely paranoid in that 
-regard, and the paranoia is not really anything platform-dependent. It's 
-stuff like, never overwrite files in place (always write a new file 
-then, once it's written successfully, get rid of the old one if needed). 
-Or, as importantly, keep SHA1 hashes of *everything* and double-check 
-them often. Those approaches are just as valid on Windows as on any 
-other OS. The SHA1 hashes in particular are pretty unimpeachable, IMO; 
-the times people have thought their git repositories have gotten 
-corrupted, it has always turned out to be underlying filesystem or disk 
-corruption that git's SHA1 checking has caught.
+Windows users are only happy when they can bug developers.
 
-If there are data loss bugs in git (and of course it's possible, even if 
-none have been reported to my knowledge) IMO they're vastly more likely 
-to be generic than platform-specific.
+Seriously again, the biggest problem with Han-Wen's installer was that it 
+insists on cross-compiling _all_ the packages.  This makes it easy for 
+Han-Wen to upgrade packages and compile the thing on Linux in one go.  
+However, it never worked with bash, and I could not fix it: I can read 
+Python, but not _that_ Python.
 
-One nice thing about git is you don't have to take its word for your 
-data integrity. You can, without a whole lot of effort, dump out every 
-file in the repository and verify that it is what git says it is.
+So my plan was to wrap everything needed from an existing MinGW/MSYS 
+installation, with a minimal installer (NullSoft or whatever) to setup the 
+exec dir, perl lib path etc...
 
-Anyway, I guess my feeling would be, if I were going to choose to not 
-use git on Windows it would be because of smoothness of the experience, 
-lack of integration with Windows tools, difficult installation process, 
-or stuff like that. Data integrity would not even cross my mind as a 
-downside of git.
+However, my time is scarce, and it does not exactly help that all I can 
+expect from those who should be thankful is even more complaining.
 
--Steve
+I mean, I understand Linus' point.  I don't even expect a Windows user to 
+compile C.  It's long time since I was silly enough to believe that.  But 
+just wrapping it up in an installer, and a little testing, seems to be too 
+much to ask.  When I don't need the darned thing to begin with.
+
+Ciao,
+Dscho
