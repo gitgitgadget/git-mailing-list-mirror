@@ -1,62 +1,73 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Teach git-gui to split hunks
-Date: Thu, 26 Jul 2007 07:48:40 +0200
-Message-ID: <85ir8790lj.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0707260630570.14781@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug in gitk search box
+Date: Wed, 25 Jul 2007 22:49:35 -0700
+Message-ID: <7v1wevbtow.fsf@assigned-by-dhcp.cox.net>
+References: <20070725135621.GC21692@lavos.net>
+	<18087.60033.676105.538784@cargo.ozlabs.ibm.com>
+	<7vtzrrc1sb.fsf@assigned-by-dhcp.cox.net>
+	<18088.10039.780711.708582@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 07:48:53 2007
+Cc: bdowning@lavos.net (Brian Downing), git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 07:49:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwDV-0001X0-1G
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:48:53 +0200
+	id 1IDwEG-0001hO-Nv
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414AbXGZFsu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 01:48:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbXGZFsu
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:48:50 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:57566 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753279AbXGZFst (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 01:48:49 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 4095517F544;
-	Thu, 26 Jul 2007 07:48:46 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id EAE4813ED57;
-	Thu, 26 Jul 2007 07:48:45 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-022-173.pools.arcor-ip.net [84.61.22.173])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id B87FE36E867;
-	Thu, 26 Jul 2007 07:48:45 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id ADAC51C452FD; Thu, 26 Jul 2007 07:48:40 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0707260630570.14781@racer.site> (Johannes Schindelin's message of "Thu\, 26 Jul 2007 06\:32\:07 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1753487AbXGZFti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 01:49:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbXGZFti
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:49:38 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63505 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753469AbXGZFth (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 01:49:37 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070726054936.CKPD1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 26 Jul 2007 01:49:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U5pc1X0031kojtg0000000; Thu, 26 Jul 2007 01:49:36 -0400
+In-Reply-To: <18088.10039.780711.708582@cargo.ozlabs.ibm.com> (Paul
+	Mackerras's message of "Thu, 26 Jul 2007 14:46:47 +1000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53773>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Paul Mackerras <paulus@samba.org> writes:
 
-> When you select the context menu item "Split Hunk" in the diff area,
-> git-gui will now split the current hunk so that a new hunk starts at
-> the current position.
+> Junio C Hamano writes:
 >
-> For this to work, apply has to be called with --unidiff-zero, since
-> the new hunks can start or stop with a "-" or "+" line.
+>> There was a recent message from Linus on the list, stating that
+>> NUL in -z format is inter-record separator, not after-record
+>> terminator.
+>
+> OK, I'll have to change gitk then.  It looks like both Marco and I got
+> tricked by this.  I suggest it's worth a mention in the documentation.
 
-Unless one splits right at the beginning or end of an existing hunk,
-wouldn't there be context which one could use?  Or does it confuse
-patch when adjacent hunks have overlapping contexts?  At least if the
-first hunk patches what is to be used as context in the second hunk, I
-could imagine this.  And there is really no danger of losing synch in
-this situation, anyhow.  So it would be more of a convenience thing
-than anything else to be able to omit --unidiff-zero.
+I think that is indeed necessary.  How about this?
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+---
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 8216576..228ccaf 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -43,7 +43,9 @@
+ 	Synonym for "-p --stat".
+ 
+ -z::
+-	\0 line termination on output
++	NUL-line termination on output.  This affects the --raw
++	output field terminator.  Also output from commands such
++	as "git-log" will be delimited with NUL between commits.
+ 
+ --name-only::
+ 	Show only names of changed files.
