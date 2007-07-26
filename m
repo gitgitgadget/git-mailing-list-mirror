@@ -1,74 +1,93 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 22:02:35 +0200
-Message-ID: <46d6db660707261302u26f5df3bwfdf6319b37087ce2@mail.gmail.com>
+Date: Thu, 26 Jul 2007 22:04:51 +0200
+Message-ID: <85sl7b6ie4.fsf@lola.goethe.zz>
 References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-	 <Pine.LNX.4.64.0707260737170.14781@racer.site>
-	 <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
-	 <fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com>
-	 <46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com>
-	 <fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com>
-	 <Pine.LNX.4.64.0707261534550.14781@racer.site>
-	 <fcaeb9bf0707260807u476719e3rec2dcf5f780013c0@mail.gmail.com>
-	 <46A8D2BE.7070309@trolltech.com>
-	 <fcaeb9bf0707261243v65f6e9deof8e266590e05d49f@mail.gmail.com>
+	<f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
+	<fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com>
+	<46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com>
+	<fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com>
+	<Pine.LNX.4.64.0707261534550.14781@racer.site>
+	<fcaeb9bf0707260807u476719e3rec2dcf5f780013c0@mail.gmail.com>
+	<Pine.LNX.4.64.0707261638100.14781@racer.site>
+	<fcaeb9bf0707260911y4091b525kc6b89beb82ec7dc7@mail.gmail.com>
+	<8564478243.fsf@lola.goethe.zz>
+	<fcaeb9bf0707261239t6479a4f4j6dedfbaef7206535@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Marius Storm-Olsen" <marius@trolltech.com>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 22:02:47 2007
+X-From: git-owner@vger.kernel.org Thu Jul 26 22:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE9Xn-0003ir-Ci
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 22:02:43 +0200
+	id 1IE9a9-0004Zh-3F
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 22:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933698AbXGZUCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 16:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758971AbXGZUCi
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 16:02:38 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:39438 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933302AbXGZUCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 16:02:37 -0400
-Received: by py-out-1112.google.com with SMTP id d32so1189571pye
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 13:02:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R8SiIkrFDmLlzQGoTPwuFZxKeGeOgIXYRTCy1YBa/dYlCSVY+bSPy3zHY2rHs7QRwvbezgN0XLcPypByg5Jeyc3lXaktCezum08gPycS2vSx2SwQSkJAFh9QEiO786qeJfrmUUdm0q0XHM8GR2rRkWGkkscazdErt/8vTSFhEo0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A93nnoUJoAi1go6Tvqp/4y71rNruCTEo2oBC4yutpSBae6kCdZGmgymzP2TZumUPdYQxTRx9hwp4Ke8EH5ZiafYwj2YwYgW80PjJEMyhVRptiruWxKvjmaNpzgHhAIvmKi7SHCh7R/cQInnxojGuSpWG+tWfhk9jy2/dzY/ZNm8=
-Received: by 10.114.177.1 with SMTP id z1mr2180539wae.1185480155412;
-        Thu, 26 Jul 2007 13:02:35 -0700 (PDT)
-Received: by 10.115.78.15 with HTTP; Thu, 26 Jul 2007 13:02:35 -0700 (PDT)
-In-Reply-To: <fcaeb9bf0707261243v65f6e9deof8e266590e05d49f@mail.gmail.com>
-Content-Disposition: inline
+	id S936163AbXGZUFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 16:05:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936127AbXGZUFD
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 16:05:03 -0400
+Received: from mail-in-15.arcor-online.net ([151.189.21.55]:42064 "EHLO
+	mail-in-15.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935793AbXGZUFB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 16:05:01 -0400
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 8147044F1F;
+	Thu, 26 Jul 2007 22:04:59 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 69E822D3B2C;
+	Thu, 26 Jul 2007 22:04:59 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-079-089.pools.arcor-ip.net [84.61.79.89])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 40F5B30AA26;
+	Thu, 26 Jul 2007 22:04:59 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 06CBC1C39595; Thu, 26 Jul 2007 22:04:52 +0200 (CEST)
+In-Reply-To: <fcaeb9bf0707261239t6479a4f4j6dedfbaef7206535@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Thu\, 26 Jul 2007 15\:39\:21 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3778/Thu Jul 26 19:57:13 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53865>
 
-On 7/26/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> I cross-compile all the time (and test it on Windows when I have one,
-> on the buggy Wine when not). I'd absolutely appreciate bug reports
-> regarding building it on Windows ;-)
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
-earlier on, when I reported a successful compilation and few problems
-while committing, it was on XP. I'll be offline for the next 2 weeks,
-but I can dedicate some time to your porting.
+> On 7/26/07, David Kastrup <dak@gnu.org> wrote:
+>> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+>
+>> > No it's not. With a couple of ifdefs you can compile it fine. Then
+>> > there goes fork(), fcntl(F_DUPFD), /dev/*, job/signal handling...
+>> > Fortunately Git does not use lots of features. It only needs
+>> > /dev/null (and /dev/zero for tests), SIGEXIT and no job usage.. That
+>> > cuts down the effort porting ash.
+>>
+>> And here I was tempted to multithread builtin-update-index.c: it is
+>> actually quite natural to let one process scan directories
+>> non-recursively, stat the files, sort them on a per-directory grain
+>> and feed a sorted pseudo-index into a pipeline (recursing to scanning
+>> whenever hitting a directory), then let another process/thread do a
+>> merge-pass of pseudo-index and real index, immediately writing the
+>> output to a new index-to-be.  When this is finished and another
+>> process invalidated the old index already, reuse the index-to-be as
+>> pseudo-index and merge it with the new-index-which-got-in-ahead-of-me.
+>>
+> (snip)
+>
+> If you are going to do it. I suggest to base on official mingw
+> branch.
 
-I second also what Dscho said. You'd be my hero too if porting
-bbox over XP. Imagine "bbox + tcc + make + git"...
+Why would I do that?  I am not using Windows.  Since Windows NT was
+flaunting threads big style years before Linux, I should not think
+this implementation approach really to be a major porting hurdle, at
+least if one indeed uses pipes for the IPC.
 
-:)
+It should actually be doable with a clone system call or
+pthread_create, whatever is easier to translate into Windows
+semantics.  The latter probably is more portable nowadays.
 
 -- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
