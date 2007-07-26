@@ -1,233 +1,126 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/5] Add test for sanitized work-tree behaviour
-Date: Thu, 26 Jul 2007 07:32:27 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707260732130.14781@racer.site>
+Subject: [PATCH 5/5] With work-trees possibly inside git-dir, be more generous
+Date: Thu, 26 Jul 2007 07:32:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260732360.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:32:40 2007
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:33:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwto-0006Zv-2m
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:32:36 +0200
+	id 1IDwu9-0006l1-If
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754841AbXGZGcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbXGZGcc
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:32:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52852 "HELO mail.gmx.net"
+	id S1755126AbXGZGcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXGZGcy
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:32:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59069 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754645AbXGZGcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:32:32 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 06:32:29 -0000
+	id S1754896AbXGZGcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:32:53 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 06:32:52 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 26 Jul 2007 08:32:29 +0200
+  by mail.gmx.net (mp050) with SMTP; 26 Jul 2007 08:32:52 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+A2QU9wDGA6YISSqMI1C34Hde2IpOJSQyrO4d5Wo
-	XiLkPvUZ+kwna/
+X-Provags-ID: V01U2FsdGVkX1/MSBhKAybMdC9MjYO9Lw4Y1UulwuRDbMMDVljrQo
+	uArAUQY5GfudBD
 X-X-Sender: gene099@racer.site
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53782>
 
+
+The earlier work-tree behaviour was seriously bogus.  For regular working
+tree operations, it checked if inside git dir.  That makes no sense, of
+course, since the check should be for a work tree, and nothing else.
+
+Fix that.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-	This test was also something that I almost got eye cancer from.
+	Please consider giving this a real hard beating.  I think the
+	old series was so bad only because nobody cared (including me).
 
-	I am very willing to extend this script with many more test
-	cases.  Just give me a recipe what you would like to have tested.
+ builtin-ls-files.c  |    8 +++++---
+ builtin-rev-parse.c |    6 ++++++
+ git-sh-setup.sh     |    3 +--
+ git.c               |    7 +++++--
+ 4 files changed, 17 insertions(+), 7 deletions(-)
 
- t/t1501-worktree.sh |  157 ++++++++++++++++++++++++++++----------------------
- 1 files changed, 88 insertions(+), 69 deletions(-)
-
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index aadeeab..145c28e 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -3,90 +3,109 @@
- test_description='test separate work tree'
- . ./test-lib.sh
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 61577ea..d36181a 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -469,9 +469,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	}
  
-+i=1
-+
- test_rev_parse() {
--	name=$1
--	shift
--
--	test_expect_success "$name: is-bare-repository" \
--	"test '$1' = \"\$(git rev-parse --is-bare-repository)\""
--	shift
--	[ $# -eq 0 ] && return
--
--	test_expect_success "$name: is-inside-git-dir" \
--	"test '$1' = \"\$(git rev-parse --is-inside-git-dir)\""
--	shift
--	[ $# -eq 0 ] && return
--
--	test_expect_success "$name: is-inside-work-tree" \
--	"test '$1' = \"\$(git rev-parse --is-inside-work-tree)\""
--	shift
--	[ $# -eq 0 ] && return
--
--	test_expect_success "$name: prefix" \
--	"test '$1' = \"\$(git rev-parse --show-prefix)\""
--	shift
--	[ $# -eq 0 ] && return
-+	name="$1"
-+	for option in --is-bare-repository --is-inside-git-dir \
-+		--is-inside-work-tree --show-prefix
-+	do
-+		shift
-+		test_expect_success "$name: $option" \
-+			"test '$1' = \"\$(git rev-parse $option)\""
-+i=$(($i+1))
-+test $i = $STOPI && gdb --args git rev-parse $option
-+		test $# -eq 1 && return
-+	done
-+}
-+
-+# usage: set_repo <working directory> [<git dir> [<work tree> [env]]]
-+set_repo () {
-+	cd "$1"
-+	say "switching to $(pwd) with GIT_DIR $2"
-+
-+	test -z "$2" || {
-+		GIT_DIR="$2"
-+		GIT_CONFIG="$2"/config
-+		export GIT_DIR GIT_CONFIG
+-	if (require_work_tree &&
+-			(!is_inside_work_tree() || is_inside_git_dir()))
+-		die("This operation must be run in a work tree");
++	if (require_work_tree && !is_inside_work_tree()) {
++		const char *work_tree = get_git_work_tree();
++		if (!work_tree || chdir(work_tree))
++			die("This operation must be run in a work tree");
 +	}
+ 
+ 	pathspec = get_pathspec(prefix, argv + i);
+ 
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 497903a..3804541 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -320,7 +320,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-cdup")) {
++				const char *work_tree = get_git_work_tree();
+ 				const char *pfx = prefix;
 +
-+	test -z "$3" ||
-+	case "$4" in
-+	env)
-+		GIT_WORK_TREE="$3"
-+		export GIT_WORK_TREE
-+		git config core.workTree non-existent
-+	;;
-+	*)
-+		git config core.workTree "$3"
-+	esac
++				if (work_tree) {
++					printf("%s\n", work_tree);
++					continue;
++				}
+ 				while (pfx) {
+ 					pfx = strchr(pfx, '/');
+ 					if (pfx) {
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c51985e..7bef43f 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -59,8 +59,7 @@ cd_to_toplevel () {
  }
  
--mkdir -p work/sub/dir || exit 1
--mv .git repo.git || exit 1
-+test_expect_success 'setup' '
-+	mkdir -p work/sub/dir &&
-+	mv .git repo.git
-+'
+ require_work_tree () {
+-	test $(git rev-parse --is-inside-work-tree) = true &&
+-	test $(git rev-parse --is-inside-git-dir) = false ||
++	test $(git rev-parse --is-inside-work-tree) = true ||
+ 	die "fatal: $0 cannot be used without a working tree."
+ }
  
- say "core.worktree = relative path"
--export GIT_DIR=repo.git
--export GIT_CONFIG=$GIT_DIR/config
--unset GIT_WORK_TREE
--git config core.worktree ../work
--test_rev_parse 'outside'      false false false
--cd work || exit 1
--export GIT_DIR=../repo.git
--export GIT_CONFIG=$GIT_DIR/config
--test_rev_parse 'inside'       false false true ''
--cd sub/dir || exit 1
--export GIT_DIR=../../../repo.git
--export GIT_CONFIG=$GIT_DIR/config
-+
-+set_repo . repo.git ../work
-+test_rev_parse 'outside git dir' false false false
-+
-+set_repo work ../repo.git
-+test_rev_parse 'inside git dir' false false true ''
-+
-+set_repo sub/dir ../../../repo.git
- test_rev_parse 'subdirectory' false false true sub/dir/
--cd ../../.. || exit 1
-+cd ../../..
+diff --git a/git.c b/git.c
+index 5df10d3..03ce3bb 100644
+--- a/git.c
++++ b/git.c
+@@ -273,8 +273,11 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ 	if (p->option & USE_PAGER)
+ 		setup_pager();
+ 	if ((p->option & NEED_WORK_TREE) &&
+-	    (!is_inside_work_tree() || is_inside_git_dir()))
+-		die("%s must be run in a work tree", p->cmd);
++	    !is_inside_work_tree()) {
++		const char *work_tree = get_git_work_tree();
++		if (!work_tree || chdir(work_tree))
++			die("%s must be run in a work tree", p->cmd);
++	}
+ 	trace_argv_printf(argv, argc, "trace: built-in: git");
  
- say "core.worktree = absolute path"
--export GIT_DIR=$(pwd)/repo.git
--export GIT_CONFIG=$GIT_DIR/config
--git config core.worktree "$(pwd)/work"
--test_rev_parse 'outside'      false false false
--cd work || exit 1
--test_rev_parse 'inside'       false false true ''
--cd sub/dir || exit 1
-+set_repo . $(pwd)/repo.git $(pwd)/work
-+test_rev_parse 'outside git dir' false false false
-+
-+set_repo work
-+test_rev_parse 'inside git dir' false false true ''
-+
-+set_repo sub/dir
- test_rev_parse 'subdirectory' false false true sub/dir/
--cd ../../.. || exit 1
-+cd ../../..
- 
- say "GIT_WORK_TREE=relative path (override core.worktree)"
--export GIT_DIR=$(pwd)/repo.git
--export GIT_CONFIG=$GIT_DIR/config
--git config core.worktree non-existent
--export GIT_WORK_TREE=work
--test_rev_parse 'outside'      false false false
--cd work || exit 1
--export GIT_WORK_TREE=.
--test_rev_parse 'inside'       false false true ''
--cd sub/dir || exit 1
--export GIT_WORK_TREE=../..
-+
-+set_repo . $(pwd)/repo.git work env
-+test_rev_parse 'outside git dir' false false false
-+
-+set_repo work "" . env
-+test_rev_parse 'inside git dir' false false true ''
-+
-+set_repo sub/dir "" ../../ env
- test_rev_parse 'subdirectory' false false true sub/dir/
- cd ../../.. || exit 1
- 
-+say "GIT_WORK_TREE=absolute path, work tree below git dir"
-+
- mv work repo.git/work
- 
--say "GIT_WORK_TREE=absolute path, work tree below git dir"
--export GIT_DIR=$(pwd)/repo.git
--export GIT_CONFIG=$GIT_DIR/config
--export GIT_WORK_TREE=$(pwd)/repo.git/work
--test_rev_parse 'outside'              false false false
--cd repo.git || exit 1
--test_rev_parse 'in repo.git'              false true  false
--cd objects || exit 1
--test_rev_parse 'in repo.git/objects'      false true  false
--cd ../work || exit 1
--test_rev_parse 'in repo.git/work'         false false true ''
--cd sub/dir || exit 1
--test_rev_parse 'in repo.git/sub/dir' false false true sub/dir/
--cd ../../../.. || exit 1
-+set_repo . $(pwd)/repo.git $(pwd)/repo.git/work env
-+test_rev_parse 'outside git dir' false false false
-+
-+set_repo repo.git
-+test_rev_parse 'in repo.git' false true false
-+
-+set_repo objects
-+test_rev_parse 'in repo.git/objects' false true  false
-+
-+set_repo ../work
-+test_rev_parse 'in repo.git/work' false true true ''
-+
-+set_repo sub/dir
-+test_rev_parse 'in repo.git/sub/dir' false true true sub/dir/
-+cd ../../../..
-+
-+test_expect_success 'repo finds its work tree' '
-+	(cd repo.git &&
-+	 : > work/sub/dir/untracked &&
-+	 test sub/dir/untracked = "$(git ls-files --others)")
-+'
- 
- test_done
+ 	status = p->fn(argc, argv, prefix);
 -- 
 1.5.3.rc2.42.gda8d-dirty
