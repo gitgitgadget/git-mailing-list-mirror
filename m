@@ -1,102 +1,93 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: [PATCH 3/3] Teach "git branch" about --new-workdir
-Date: Thu, 26 Jul 2007 13:51:12 +0200
-Message-ID: <46d6db660707260451l7dd6b54o3b4d434e0468cf55@mail.gmail.com>
-References: <46A5B5F5.6000202@trolltech.com> <46A6F21D.2010306@trolltech.com>
-	 <Pine.LNX.4.64.0707251024390.14781@racer.site>
-	 <200707251205.48235.andyparkins@gmail.com>
-	 <alpine.LFD.0.999.0707251327390.3607@woody.linux-foundation.org>
+From: Robert Ewald <robert.ewald@nov.com>
+Subject: Re: [PATCH] translate bad characters in refnames during git-svn fetch
+Date: Thu, 26 Jul 2007 12:59:42 +0200
+Organization: Nobody is responsible but me
+Message-ID: <f89uqv$tf2$1@sea.gmane.org>
+References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716111509.GC18293@efreet.light.src> <20070716033050.GA29521@muzzle> <20070716174731.GA4792@lapse.madduck.net> <20070717122852.GA21372@mayonaise> <20070717131719.GB19724@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Marius Storm-Olsen" <marius@trolltech.com>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Julian Phillips" <julian@quantumfyre.co.uk>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 13:51:39 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 26 14:20:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE1sY-0003VI-3Q
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 13:51:38 +0200
+	id 1IE2K8-000433-Sa
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 14:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752488AbXGZLvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 07:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbXGZLvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 07:51:15 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:4677 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752488AbXGZLvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 07:51:13 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so553300wah
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 04:51:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LRcJ5h9m78iJZHp/QY5NecsAWvrKW/rB85f0J+Ia41XhS/UlSbihJReu2tvn6WRmn0WbWGs3umZgmTTR9qsEBI6iiv5cuEz6VfenqgHajcfEsE4Ycz/4R/DB2xiFFre0F1zcd6uTXyIXwbYdLk8JznRssSI3ZKLJ+4px2pOsU0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fqKBPyPNfgucdp0keDUz4mgIv9rIYCBhP5r3+iwuoHvhBgRNeP9X2VSEUWOgkyHkgO9fv4IEGOuB/jheRj1e4ZdnsEh/jaePX1Jjl08wDmThY+In6LwuMkx/6xjQ+k2SIw7Z2tY2SuhuDcKeMkugu1LWtTQIYxIuLBJORHoMHtc=
-Received: by 10.114.190.6 with SMTP id n6mr1647746waf.1185450672161;
-        Thu, 26 Jul 2007 04:51:12 -0700 (PDT)
-Received: by 10.115.78.15 with HTTP; Thu, 26 Jul 2007 04:51:12 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.999.0707251327390.3607@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753801AbXGZMUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 08:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbXGZMUF
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 08:20:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:41009 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752650AbXGZMUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 08:20:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IE2K2-0005GM-EE
+	for git@vger.kernel.org; Thu, 26 Jul 2007 14:20:02 +0200
+Received: from static-213.88.188.4.addr.tdcsong.se ([213.88.188.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 14:20:02 +0200
+Received: from robert.ewald by static-213.88.188.4.addr.tdcsong.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 14:20:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: static-213.88.188.4.addr.tdcsong.se
+User-Agent: KNode/0.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53821>
 
-On 7/25/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> Now, admittedly, I think one issue with Windows is that the "hump" is
-> simply much bigger. The initial cost (not necessarily in money, but in
-> effort) of getting involved in a development process is just a *lot*
-> higher for Windows users than it is for just about any UNIX.
->
-> If you're on some unix platform, the cost of getting involved is basically
-> that the project should already work to some degree, and then there may be
-> some relatively *trivial* issues with making sure that you've got a
-> compiler installed and the basic libraries. But that's really quite easy
-> on just about any UNIX, to the point that most people don't even have to
-> think about it.
+Hello,
 
-http://www.openlina.org could closing this gap, as a temp fix.
+I am very interested in a functionality like this.
 
-It's supposed to help running linux native binaries on windows through
-some virtualization layer. Speed is supposed to be good, the host filesystem
-is supposed to be accessible. Many suppositions, I haven't evaluated
-this beast yet.
+martin f krafft wrote:
+>> sub desanitize_ref_name {
+>> my ($refname) = @_;
+>> $refname =~ s{%(?:([0-9A-F]{2})}{chr hex($1)}g;
+>> 
+>> $refname;
+>> }
+> 
+> We could make it escape to %25; instead of %25. That's ugly but it
+> would make desanitation a little safer.
 
-If this is truly usable, it would mean an easy migration for unix users,
-using the command line.
+In my limited knowledge I wonder if that would confuse shell scripts.
 
-For true windows users, git-gui, gitk and ultimately a windows explorer
-plugin/addon will be needed still, as mentionned earlier in this thread.
+>> > On the other hand, we could make the translation regexps
+>> > configurable...
+>> 
+>> Hopefully not needed.  I fear it would just add to confusion.
+> 
+> I was thinking about something like.
+> 
+>   git-svn clone ...
+>   ...
+>   error: remote branch/tagn name includes ~, which git does not
+>   allow. please specify a replacement character in .git/config
+> 
+> and then have config.svn-remote.svn.translations simply be a list of
+> pairs in vim pairlist syntax:
+> 
+>   ~:!,^:#,.:\,
+> 
 
-It is to be noted though that C conversion and shell replacement
-will not be all that is needed.
+Having the user specify replacements leads to diversion which would not be
+desired. Consider the case where two git users clone a svn repo and later
+pull from each other. Different replacements would cause confusion in this
+case. That can of course be remedied by having the same replacements but
+then configuration is not needed.
 
-Today, I've a colinux environment containing git-1.5.2.3 and all needed
-tools for development (shell, compiler, editor). When I perform some git
-operations in any linux controlled filesystem (ramfs, ext2 over cobd), no
-problem, git works as advertised.
+Is there anybody working on this feature at the moment? Can I pull from
+somewhere? I am hard pressed for that feature but my ability to contribute
+is only in testing and reporting bugs.
 
-When I used shared windows folder in the ntfs filesystem, there are
-issues. Fsync fails when writing files (could be colinux related), but
-git-init produces different .git/config file and git-commit does not work
-(fatal: index file smaller than expected). The last 2 problems should be
-windows related I believe and should hit as soon as the shell over C
-portage will be done.
-
-Unless the current patches in mingw.git can fix these of course.
-
+Greetings
 -- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu
+Robert Ewald
