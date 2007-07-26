@@ -1,53 +1,63 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: let you easily specify lines of context in diff view
-Date: Thu, 26 Jul 2007 22:34:21 +1000
-Message-ID: <18088.38093.876993.410483@cargo.ozlabs.ibm.com>
-References: <11854367692095-git-send-email-prohaska@zib.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] Clean up work-tree handling
+Date: Thu, 26 Jul 2007 15:31:46 -0700
+Message-ID: <7vfy3a7q5p.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707260729150.14781@racer.site>
+	<20070726220949.GA4420@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Jul 27 00:22:35 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jul 27 00:32:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEBj8-0006OD-Uy
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 00:22:35 +0200
+	id 1IEBse-0000Tv-Va
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 00:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934352AbXGZWWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 18:22:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934179AbXGZWWS
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 18:22:18 -0400
-Received: from ozlabs.org ([203.10.76.45]:55168 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934258AbXGZWWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 18:22:17 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 833C2DDE30; Fri, 27 Jul 2007 08:22:16 +1000 (EST)
-In-Reply-To: <11854367692095-git-send-email-prohaska@zib.de>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S934204AbXGZWbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 18:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934179AbXGZWbs
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 18:31:48 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39680 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933310AbXGZWbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 18:31:47 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070726223147.STHK1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 26 Jul 2007 18:31:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UNXm1X00g1kojtg0000000; Thu, 26 Jul 2007 18:31:47 -0400
+In-Reply-To: <20070726220949.GA4420@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Fri, 27 Jul 2007 00:09:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53873>
 
-Steffen Prohaska writes:
+Matthias Lederhofer <matled@gmx.net> writes:
 
-> More lines of context sometimes help to better understand a diff.
-> This patch introduces a text field above the box displaying the
-> blobdiffs. You can type in the number of lines of context that
-> you wish to view.
+> I try to take a closer look at your changes tomorrow evening.  Here
+> are just two short things I saw while taking a short look at the
+> patch.
+>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> +const char *get_git_work_tree(void)
+>> +{
+>> +	static int initialized = 0;
+>> +	if (!initialized) {
+>> +		work_tree = getenv(GIT_WORK_TREE_ENVIRONMENT);
+>> +		if (!work_tree) {
+>> +			work_tree = git_work_tree_cfg;
+>> +			if (work_tree && !is_absolute_path(work_tree))
+>> +			work_tree = git_path(work_tree);
+>
+> A tab is missing here.
 
-Nice idea!  I suggest you use a spinbox instead of an entry though,
-since that has up and down buttons, and allows you to restrict the
-value to an integer.
-
->    * I don't know how to update the view after entering a new value. 
-
-You can put a trace on the associated variable and specify a function
-to be called when the variable's value changes.  Grep for "trace add
-variable" in gitk to see how it's done.
-
-Paul.
+I think xstrdup() is missing here, too.
