@@ -1,90 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] Add is_absolute_path(), make_absolute_path() and
- normalize_path()
-Date: Thu, 26 Jul 2007 20:02:37 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707261955540.14781@racer.site>
-References: <Pine.LNX.4.64.0707260724010.14781@racer.site>
- <7v1wevac63.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707261456040.14781@racer.site>
- <7v4pjr80lr.fsf@assigned-by-dhcp.cox.net>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH] fully resolve symlinks when creating lockfiles
+Date: Thu, 26 Jul 2007 15:34:50 -0400
+Message-ID: <118833cc0707261234u59e30bchc274ae29569d8500@mail.gmail.com>
+References: <7vbqe0cazy.fsf@assigned-by-dhcp.cox.net>
+	 <11854712542350-git-send-email-bradford.carl.smith@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 21:02:55 2007
+To: "Bradford C. Smith" <bradford.carl.smith@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 21:35:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE8bo-0005x4-1V
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 21:02:48 +0200
+	id 1IE96x-00024B-0z
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 21:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761481AbXGZTCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 15:02:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761056AbXGZTCo
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 15:02:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55231 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761271AbXGZTCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 15:02:43 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 19:02:42 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp050) with SMTP; 26 Jul 2007 21:02:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18dOslWWe8dxrFAHZPZNQLZnH3lUkEAphSvBYarrQ
-	BIoUeO5kN16JoS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4pjr80lr.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1763972AbXGZTez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 15:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763585AbXGZTez
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 15:34:55 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:59388 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763404AbXGZTey (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 15:34:54 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so395472wra
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 12:34:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ev6bfZ9l/IHR/jnpAI/lL/tHrhwbR3NcZx/1PNNB6P3mhWvADFrWv756Fkl9FKnXkuM0CJND4B2VXxLq6GCqrbX3ZxeAfymQIyqOrExNuamUlDJpThK78kki4QTp62pHhS2SMUC9c/ijXOZsAwDljTMym8WbAliIbmST1NssR5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LuVbJOQkfyX57H8Z1OtLbeMXL/1vxo6dsBHWX0pgBQvRhyhuEfrB5KAeHlsrwnBhQuGL2Wx9Z6fxRwAOpweJHOiLDu+6QkbpDNEVpd5+b1KCr6XRcKuhjYFu9u9dWOBCPjRpRmerM/pgEDmaVCrQAmQ99k8fUa6vk9UbbySyLlM=
+Received: by 10.78.157.19 with SMTP id f19mr521649hue.1185478490678;
+        Thu, 26 Jul 2007 12:34:50 -0700 (PDT)
+Received: by 10.78.141.20 with HTTP; Thu, 26 Jul 2007 12:34:50 -0700 (PDT)
+In-Reply-To: <11854712542350-git-send-email-bradford.carl.smith@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53860>
 
-Hi,
+Why the lstat and that stat in the beginning?  That's just asking for race
+condition.  readlink will tell you if it wasn't a link, for example.
 
-On Thu, 26 Jul 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Agree.  Maybe a comment above the function, like
-> >
-> > 	/*
-> > 	 * The function normalize_path() converts ".." and "." names in 
-> > 	 * the given path so that "foo/../bar/./" will come out as "bar".
-> > 	 *
-> > 	 * Note: normalize_path() does not follow symlinks, so if "foo" is
-> > 	 * a symlink in the example above, the result will not work as 
-> > 	 * expected.
-> > 	 */
-> >
-> > Hmm?
-> 
-> That comment only states the obvious and does not give a clue to
-> the callers when it should not be used, I am afraid.
-
-I am afraid, that it was unobvious enough to yours truly to forget about 
-that when writing the patch.
-
-> For example, paths taken out of index or recursively reading trees are 
-> Ok because there will not be ".." and "." in them.  Making a path given 
-> by the user relative to the cwd by prepending what is returned by 
-> setup_git_directory() may or may not be safe, depending on how 
-> setup_git_directory() does things (I think the original one is safe; I 
-> am reasonably sure with the current one when GIT_WORK_TREE is not in 
-> use; I do not know when that environment variable is there with the 
-> current code with or without your patch series).
-
-I am afraid that already GIT_DIR can contain symlinks, and is not checked 
-by setup_git_env().
-
-So I think some concrete comment is needed in _addition_:
-
-	get_git_dir() is not safe, and therefore git_path(), too.
-
-Hmm.
-
-Maybe the easiest way _is_ to getcwd(); chdir() getcwd(); chdir(back); 
-Ugly.
-
-Ciao,
-Dscho
+Morten
