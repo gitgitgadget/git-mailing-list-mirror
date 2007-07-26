@@ -1,99 +1,110 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/5] Add functions get_relative_cwd() and is_inside_dir()
-Date: Thu, 26 Jul 2007 07:24:55 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707260724450.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:25:05 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 08:25:51 +0200
+Message-ID: <08588116-8E66-4F40-BC77-E0B272BE7776@zib.de>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <46A73015.7020306@midwinter.com> <a1bbc6950707251956h3db847c9v8db438f4c665b2cf@mail.gmail.com> <20070726031546.GN32566@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:25:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwmW-0003Hl-DP
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:25:04 +0200
+	id 1IDwme-0003M5-CE
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753373AbXGZGZA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:25:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbXGZGZA
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:25:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52507 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753300AbXGZGY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:24:59 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 06:24:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 26 Jul 2007 08:24:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19/d+kaLAJ/C0LTV5nVBs8d1yUg+q3PXHItT/Miog
-	7qvZn4TJjOgwZ1
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1753313AbXGZGZG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbXGZGZG
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:25:06 -0400
+Received: from mailer.zib.de ([130.73.108.11]:48057 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753487AbXGZGZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:25:04 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6Q6OvEa009288;
+	Thu, 26 Jul 2007 08:24:57 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1a95f.pool.einsundeins.de [77.177.169.95])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6Q6Otgb023154
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 26 Jul 2007 08:24:56 +0200 (MEST)
+In-Reply-To: <20070726031546.GN32566@spearce.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53778>
 
 
-The function get_relative_cwd() works just as getcwd(), only that it
-takes an absolute path as additional parameter, returning the prefix
-of the current working directory relative to the given path.  If the
-cwd is no subdirectory of the given path, it returns NULL.
+On Jul 26, 2007, at 5:15 AM, Shawn O. Pearce wrote:
 
-is_inside_dir() is just a trivial wrapper over get_relative_cwd().
+> Why Cygwin?  Because I have to use Windows, but I'd rather use Linux.
+> No, Linux isn't permitted.  And Solaris/x86 is only allowed on
+> "servers".  I have yet to find a way to classify my desktop as
+> a server.  :-|
+>
+> git-gui is fairly well supported under Cygwin, as I use it a lot
+> in my day-job.  As do a lot of my coworkers.  Which actually gives
+> me a pretty good testing ground; ~20 people all beating on git-gui
+> all day long is a pretty sizable testing group.  I actually wonder
+> some days if git-gui is better tested on Cygwin than it is on Linux.
+>
+> But as has been stated on this thread, Cygwin isn't native Windows.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- dir.c |   27 +++++++++++++++++++++++++++
- dir.h |    3 +++
- 2 files changed, 30 insertions(+), 0 deletions(-)
+So apparently you're working in a reasonably sized group of people all
+testing git on cygwin. I'd be completely satisfied if git ran rock solid
+on cygwin.
 
-diff --git a/dir.c b/dir.c
-index 8d8faf5..cb95538 100644
---- a/dir.c
-+++ b/dir.c
-@@ -642,3 +642,30 @@ file_exists(const char *f)
-   struct stat sb;
-   return stat(f, &sb) == 0;
- }
-+
-+char *get_relative_cwd(char *buffer, int size, const char *dir)
-+{
-+	char *cwd = buffer;
-+
-+	if (!dir)
-+		return 0;
-+
-+	if (!getcwd(buffer, PATH_MAX))
-+		return 0;
-+
-+	while (*dir && *dir == *cwd) {
-+		dir++;
-+		cwd++;
-+	}
-+	if (*dir)
-+		return NULL;
-+	if (*cwd == '/')
-+		return cwd + 1;
-+	return cwd;
-+}
-+
-+int is_inside_dir(const char *dir)
-+{
-+	char buffer[PATH_MAX];
-+	return get_relative_cwd(buffer, sizeof(buffer), dir) != NULL;
-+}
-diff --git a/dir.h b/dir.h
-index ec0e8ab..f55a87b 100644
---- a/dir.h
-+++ b/dir.h
-@@ -61,4 +61,7 @@ extern void add_exclude(const char *string, const char *base,
- extern int file_exists(const char *);
- extern struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len);
- 
-+extern char *get_relative_cwd(char *buffer, int size, const char *dir);
-+extern int is_inside_dir(const char *dir);
-+
- #endif
--- 
-1.5.3.rc2.42.gda8d-dirty
+I found the following list of warnings about cygwin in the wiki
+entry WindowsInstall [1]. Some points look quite scary to me.
+
+What is your real-world experience? Are the warning still valid?
+Must I really fear to break cygwin if I press Ctrl-C?
+
+Do I really need to reboot regularly? I don't think this is an
+option. Nowadays our Windows boxes run for months, too. I can't
+seriously tell people that they need to regularly reboot if they
+want to use git.
+
+Here's the list, copied from http://git.or.cz/gitwiki/WindowsInstall
+
+    * Use git on local NTFS disks -- Network drives disks don't  
+support the filesystem semantics GIT needs; for interoperability  
+purposes you can store bare repositories on FAT32 disks.
+    * Be careful with the case in filenames. Similarly, avoid special  
+chars in filenames.
+    * Run git gc early and often. There are slowdowns with many  
+unpacked objects. Be careful to not create very big packfiles (bigger  
+than 2 Gb).
+    * Avoid using ActiveState Perl if possible. Ask in the  
+MailingLists if you must.
+    * Try to avoid interrupting (Ctrl-C) processes - it breaks cygwin.
+    * Consider setting core.fileMode to false (git repo-config  
+core.fileMode false) if file modes are frequently the only  
+differences detected by Git. Many Windows applications make the  
+execute bit be set in Cygwin when they save a file. Besides Cygwin  
+detects file mode by stupid combination of content analysis, file  
+name extension and moon phase.
+    * Insert "set CYGWIN=tty binmode" after the first line of C: 
+\cygwin\cygwin.bat, so you can use Ctrl-z in cygwin's bash to suspend  
+a program.
+    * Windows usually writes end-of-line as CRLF, while Unix/POSIX  
+writes LF. This can cause a variety of problems. There are current  
+efforts to address this.
+    * Setup binary mode for cygwin (there is an option in cygwin's  
+setup program), otherwise Cygwin mangles everything read and written  
+(Git repos have binary files in control structures).
+    * Avoid big repos.
+    * Avoid big blobs (very big files. Basically anything larger than  
+10Mb is too big).
+    * Avoid big trees (directories with many files in them).
+    * Avoid deep hierarchies.
+    * Reboot regularly (memory fragmentation)
+    * Defragment often (filesystems fragmentation)
+
+	Steffen
