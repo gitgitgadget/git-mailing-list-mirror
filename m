@@ -1,69 +1,76 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: index-pack died on pread
-Date: Thu, 26 Jul 2007 14:42:30 +0200
-Message-ID: <81b0412b0707260542o58fcb73bu81ae09aa1df84c81@mail.gmail.com>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
-	 <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
-	 <200707260115.13234.robin.rosenberg.lists@dewire.com>
-	 <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 15:00:52 +0200
+Message-ID: <46d6db660707260600w6c3ca5d2ve6aaf06c7684789d@mail.gmail.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+	 <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
+	 <Pine.LNX.4.64.0707251510130.14781@racer.site>
+	 <fcaeb9bf0707250715p7c183a81vc78f641eef493777@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
-	"Michal Rokos" <michal.rokos@gmail.com>, GIT <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 14:42:40 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 15:01:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE2fv-0003Hc-UO
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 14:42:40 +0200
+	id 1IE2xg-0002Gq-9S
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 15:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759018AbXGZMmd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 08:42:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758446AbXGZMmd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 08:42:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:14357 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758558AbXGZMmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 08:42:32 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so525542ugf
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 05:42:31 -0700 (PDT)
+	id S1762235AbXGZNAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 09:00:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762190AbXGZNAy
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 09:00:54 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:62219 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761447AbXGZNAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 09:00:53 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so460126nze
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 06:00:53 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eM9X5bX6KRQzFB7pe+uXKUaQyPC8sDIZYSm6a+4jAP3amq+a4D+TXgwSb8EwBWgzbRzoHXto4peEdPMYBTCceZ5u9z2Qh5I8desHkTUvt7Ln6exBmMcP9J+hUGP9zrypKQna3Pmpe6xZNi2RNjmACCwdMRAiHi1j5h1IJD2utWs=
+        b=GmlIH9r/Splz5tAM1m6VICtPxzzU0Fn7j521MHWndcnrYbrl6wcGUQPwko2HSFazw35RNN2RGrTeNYW2eKtf2mfq3i5lQca5ME45pcDMafjY4VnOmv78L8A6YNFc/UliNbtt1+owjvdhpHb71w3NJhiXA8W9UIlKGaYm2NtZ9x4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IvCg3TSL4nvcVucjDTS9HDI/+7G850a5VTnallpDo7RxRuJnSKCxphNlJIIWqlMB0cFt6I8IZwsGyLEddixYiIph+kJmw06aNif3Xp0/SAi6CF49t8WXPRg9TtMqRaifmSIxng43n/WoDmEqT6FF5NybhsHohtPF8xbIHDyg41s=
-Received: by 10.78.140.17 with SMTP id n17mr423732hud.1185453750898;
-        Thu, 26 Jul 2007 05:42:30 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Thu, 26 Jul 2007 05:42:30 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org>
+        b=lMhCG4hX03j+b4LghjlEbdHeiMh1Kyec44jHlko5l4Z5hC5J1gbktIYMR9yTdOVl+pJvDedtR1wbADkcwC8niTJ7UgEgK5e79ZTjIEd27MbjLDz0bSPqFVzKWJYapbu9KZBB5pVTh7Q1OvhzpwK3nt9tCTLiG8ayBGlNmcTAoy0=
+Received: by 10.114.53.1 with SMTP id b1mr1682309waa.1185454852481;
+        Thu, 26 Jul 2007 06:00:52 -0700 (PDT)
+Received: by 10.115.78.15 with HTTP; Thu, 26 Jul 2007 06:00:52 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0707250715p7c183a81vc78f641eef493777@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53827>
 
-On 7/26/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Thu, 26 Jul 2007, Robin Rosenberg wrote:
+On 7/25/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On 7/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
 > >
-> > Does cygwin have the same pread problem then.. ? after make NO_PREAD=1 with 1.5.2.4
-> > clone works.
+> > On Wed, 25 Jul 2007, Nguyen Thai Ngoc Duy wrote:
+> >
+> > > FYI, I'm working on getting rid of msys requirement from mingw port. I
+> > > can't tell you how long it would take though. Could be one month or two.
+> >
+> > Is there a repo out there?
 >
-> Interesting.
+> http://repo.or.cz/w/git/pclouds.git?a=shortlog;h=gitbox
 >
-> It's true that pread() is used much less than normal reads, and maybe the
-> cygwin pread() is indeed broken. But it's intriguing how apparently both
-> HP-UX and Cygwin are showing the same breakage.
+> There are some patches on mob I have not merged to gitbox branch yet.
+>
 
-Maybe because neither _has_ POSIX pread? This is cygwin's pread, I believe:
+beautiful piece of work, IMHO. I really like the fact you managed some
+busybox applets to actually work without msys. Really cool idea!
 
-http://cygwin.com/cgi-bin/cvsweb.cgi/src/winsup/cygwin/fhandler_disk_file.cc?rev=1.225&content-type=text/x-cvsweb-markup&cvsroot=src
+it seems you're not very far off. I believe you intend to replace in git-commit
+"#!c:/msys/bin/sh" with something like "#!c:/gitbox/bin/gitbox ash", right ?
 
-Windows has means to implement it natively, but the interface is so ugly
-(see OVERLAPPED, if interested), that it is no wonder Cygwin chose to
-just use lseek.
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu
