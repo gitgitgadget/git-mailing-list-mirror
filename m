@@ -1,78 +1,233 @@
-From: Noel Grandin <noel@peralex.com>
-Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 17:34:27 +0200
-Message-ID: <46A76D83.6020005@peralex.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 4/5] Add test for sanitized work-tree behaviour
+Date: Thu, 26 Jul 2007 07:32:27 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260732130.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:32:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:32:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwtb-0006Vx-KK
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:32:23 +0200
+	id 1IDwto-0006Zv-2m
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753916AbXGZGcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753782AbXGZGcU
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:32:20 -0400
-Received: from [41.207.227.243] ([41.207.227.243]:59516 "EHLO mail.peralex.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753356AbXGZGcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:32:20 -0400
-X-Greylist: delayed 53812 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jul 2007 02:32:18 EDT
-Received: from [192.168.1.75] (noel.ct [192.168.1.75])
-	by mail.peralex.com (8.14.1/8.14.1) with ESMTP id l6PFYR2e004183;
-	Wed, 25 Jul 2007 17:34:27 +0200 (SAST)
-	(envelope-from noel@peralex.com)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de>
-X-Enigmail-Version: 0.95.2
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.61 on 192.168.1.7
-X-Synonym: Copied by Synonym (http://www.modulo.ro/synonym) to: mailbackup2@peralex.com, mailbackup2@peralex.com
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (mail.peralex.com [192.168.1.7]); Wed, 25 Jul 2007 17:34:28 +0200 (SAST)
+	id S1754841AbXGZGcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbXGZGcc
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:32:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52852 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754645AbXGZGcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:32:32 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 06:32:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 26 Jul 2007 08:32:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+A2QU9wDGA6YISSqMI1C34Hde2IpOJSQyrO4d5Wo
+	XiLkPvUZ+kwna/
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53781>
 
 
-Cygwin tries to make Windows look like unix (from a command-line POV),
-so it very much runs against the grain of "real" windows programs.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Plus, it's a pain to install and invoke,
-and doesn't deal nicely with real windows paths (it maps the windows
-filesystem to a unix-y style single root path structure),
+	This test was also something that I almost got eye cancer from.
 
+	I am very willing to extend this script with many more test
+	cases.  Just give me a recipe what you would like to have tested.
 
-Steffen Prohaska wrote:
->
-> On Jul 25, 2007, at 12:35 PM, Dmitry Kakurin wrote:
->
->> How serious are you guys about Windows support?
->> I'm talking fully-functional port, not Cygwin.
->
-> What's wrong with the Cygwin port?
->
-> Is it just that windows developer hate cygwin because it's to
-> complex to install or is there any severe limitation?
-> functionality? stability? performance?
->
-> I'm personally only working on Windows if force to, but people
-> are asking me the same question that you have. Does git
-> seriously and fully support Windows?
->
->     Steffen
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+ t/t1501-worktree.sh |  157 ++++++++++++++++++++++++++++----------------------
+ 1 files changed, 88 insertions(+), 69 deletions(-)
 
-
-Disclaimer: http://www.peralex.com/disclaimer.html
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index aadeeab..145c28e 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -3,90 +3,109 @@
+ test_description='test separate work tree'
+ . ./test-lib.sh
+ 
++i=1
++
+ test_rev_parse() {
+-	name=$1
+-	shift
+-
+-	test_expect_success "$name: is-bare-repository" \
+-	"test '$1' = \"\$(git rev-parse --is-bare-repository)\""
+-	shift
+-	[ $# -eq 0 ] && return
+-
+-	test_expect_success "$name: is-inside-git-dir" \
+-	"test '$1' = \"\$(git rev-parse --is-inside-git-dir)\""
+-	shift
+-	[ $# -eq 0 ] && return
+-
+-	test_expect_success "$name: is-inside-work-tree" \
+-	"test '$1' = \"\$(git rev-parse --is-inside-work-tree)\""
+-	shift
+-	[ $# -eq 0 ] && return
+-
+-	test_expect_success "$name: prefix" \
+-	"test '$1' = \"\$(git rev-parse --show-prefix)\""
+-	shift
+-	[ $# -eq 0 ] && return
++	name="$1"
++	for option in --is-bare-repository --is-inside-git-dir \
++		--is-inside-work-tree --show-prefix
++	do
++		shift
++		test_expect_success "$name: $option" \
++			"test '$1' = \"\$(git rev-parse $option)\""
++i=$(($i+1))
++test $i = $STOPI && gdb --args git rev-parse $option
++		test $# -eq 1 && return
++	done
++}
++
++# usage: set_repo <working directory> [<git dir> [<work tree> [env]]]
++set_repo () {
++	cd "$1"
++	say "switching to $(pwd) with GIT_DIR $2"
++
++	test -z "$2" || {
++		GIT_DIR="$2"
++		GIT_CONFIG="$2"/config
++		export GIT_DIR GIT_CONFIG
++	}
++
++	test -z "$3" ||
++	case "$4" in
++	env)
++		GIT_WORK_TREE="$3"
++		export GIT_WORK_TREE
++		git config core.workTree non-existent
++	;;
++	*)
++		git config core.workTree "$3"
++	esac
+ }
+ 
+-mkdir -p work/sub/dir || exit 1
+-mv .git repo.git || exit 1
++test_expect_success 'setup' '
++	mkdir -p work/sub/dir &&
++	mv .git repo.git
++'
+ 
+ say "core.worktree = relative path"
+-export GIT_DIR=repo.git
+-export GIT_CONFIG=$GIT_DIR/config
+-unset GIT_WORK_TREE
+-git config core.worktree ../work
+-test_rev_parse 'outside'      false false false
+-cd work || exit 1
+-export GIT_DIR=../repo.git
+-export GIT_CONFIG=$GIT_DIR/config
+-test_rev_parse 'inside'       false false true ''
+-cd sub/dir || exit 1
+-export GIT_DIR=../../../repo.git
+-export GIT_CONFIG=$GIT_DIR/config
++
++set_repo . repo.git ../work
++test_rev_parse 'outside git dir' false false false
++
++set_repo work ../repo.git
++test_rev_parse 'inside git dir' false false true ''
++
++set_repo sub/dir ../../../repo.git
+ test_rev_parse 'subdirectory' false false true sub/dir/
+-cd ../../.. || exit 1
++cd ../../..
+ 
+ say "core.worktree = absolute path"
+-export GIT_DIR=$(pwd)/repo.git
+-export GIT_CONFIG=$GIT_DIR/config
+-git config core.worktree "$(pwd)/work"
+-test_rev_parse 'outside'      false false false
+-cd work || exit 1
+-test_rev_parse 'inside'       false false true ''
+-cd sub/dir || exit 1
++set_repo . $(pwd)/repo.git $(pwd)/work
++test_rev_parse 'outside git dir' false false false
++
++set_repo work
++test_rev_parse 'inside git dir' false false true ''
++
++set_repo sub/dir
+ test_rev_parse 'subdirectory' false false true sub/dir/
+-cd ../../.. || exit 1
++cd ../../..
+ 
+ say "GIT_WORK_TREE=relative path (override core.worktree)"
+-export GIT_DIR=$(pwd)/repo.git
+-export GIT_CONFIG=$GIT_DIR/config
+-git config core.worktree non-existent
+-export GIT_WORK_TREE=work
+-test_rev_parse 'outside'      false false false
+-cd work || exit 1
+-export GIT_WORK_TREE=.
+-test_rev_parse 'inside'       false false true ''
+-cd sub/dir || exit 1
+-export GIT_WORK_TREE=../..
++
++set_repo . $(pwd)/repo.git work env
++test_rev_parse 'outside git dir' false false false
++
++set_repo work "" . env
++test_rev_parse 'inside git dir' false false true ''
++
++set_repo sub/dir "" ../../ env
+ test_rev_parse 'subdirectory' false false true sub/dir/
+ cd ../../.. || exit 1
+ 
++say "GIT_WORK_TREE=absolute path, work tree below git dir"
++
+ mv work repo.git/work
+ 
+-say "GIT_WORK_TREE=absolute path, work tree below git dir"
+-export GIT_DIR=$(pwd)/repo.git
+-export GIT_CONFIG=$GIT_DIR/config
+-export GIT_WORK_TREE=$(pwd)/repo.git/work
+-test_rev_parse 'outside'              false false false
+-cd repo.git || exit 1
+-test_rev_parse 'in repo.git'              false true  false
+-cd objects || exit 1
+-test_rev_parse 'in repo.git/objects'      false true  false
+-cd ../work || exit 1
+-test_rev_parse 'in repo.git/work'         false false true ''
+-cd sub/dir || exit 1
+-test_rev_parse 'in repo.git/sub/dir' false false true sub/dir/
+-cd ../../../.. || exit 1
++set_repo . $(pwd)/repo.git $(pwd)/repo.git/work env
++test_rev_parse 'outside git dir' false false false
++
++set_repo repo.git
++test_rev_parse 'in repo.git' false true false
++
++set_repo objects
++test_rev_parse 'in repo.git/objects' false true  false
++
++set_repo ../work
++test_rev_parse 'in repo.git/work' false true true ''
++
++set_repo sub/dir
++test_rev_parse 'in repo.git/sub/dir' false true true sub/dir/
++cd ../../../..
++
++test_expect_success 'repo finds its work tree' '
++	(cd repo.git &&
++	 : > work/sub/dir/untracked &&
++	 test sub/dir/untracked = "$(git ls-files --others)")
++'
+ 
+ test_done
+-- 
+1.5.3.rc2.42.gda8d-dirty
