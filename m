@@ -1,119 +1,69 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] gitk: let you easily specify lines of context in diff view
-Date: Thu, 26 Jul 2007 09:59:29 +0200
-Message-ID: <11854367692095-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org, paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 10:00:02 2007
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 09:14:46 +0100
+Message-ID: <200707260914.48042.andyparkins@gmail.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <Pine.LNX.4.64.0707260629260.14781@racer.site> <87eacd830707252308t32c98108w39b52cdb9c61cd1e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Henning Rogge" <hrogge@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 26 10:15:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDyGN-0000wI-LH
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 10:00:00 +0200
+	id 1IDyUt-0005Yo-SO
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 10:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932641AbXGZH7x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 03:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756829AbXGZH7x
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:59:53 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55815 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932641AbXGZH7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 03:59:52 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6Q7xTn9015543;
-	Thu, 26 Jul 2007 09:59:29 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6Q7xTBB011086;
-	Thu, 26 Jul 2007 09:59:29 +0200 (MEST)
-X-Mailer: git-send-email 1.5.1.3
+	id S1757029AbXGZIO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 04:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbXGZIOz
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 04:14:55 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:1113 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752196AbXGZIOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 04:14:53 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so493918ugf
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 01:14:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dAjTVp8WdMUoxozXU7E53/OwjqEiDPbM17gaNLtQAkfUethPxhtivkvZ1Pr82nTSoyt183CB+RrkRJPWDFott7kMye3dxq1DZS7yZO/x3ivu7W80rQKbwnRiPlcuRhLjYtTHZVxt8poXO2SIoN1OsUplIkhOUU9MBzS8a1lstqk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sWiUQeujA1NWRjW5YSssiS/8tjV28m5lqgvuE/ltKUyO1SCWs9nMGZTpAYGJm9nCI+ojkNurXAmVAUUbR1vFNRlCl3IaRv3TeTRVVBvBW+UXWHUpxd/DcUCre2i29pO1h8WSKbuf3lU8ueck7SO2rprZrKfPA0qLm3Knj8ig/XE=
+Received: by 10.67.10.12 with SMTP id n12mr1993299ugi.1185437692135;
+        Thu, 26 Jul 2007 01:14:52 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id b36sm3151372ika.2007.07.26.01.14.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 Jul 2007 01:14:51 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <87eacd830707252308t32c98108w39b52cdb9c61cd1e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53805>
 
-More lines of context sometimes help to better understand a diff.
-This patch introduces a text field above the box displaying the
-blobdiffs. You can type in the number of lines of context that
-you wish to view.
+On Thursday 2007 July 26, Henning Rogge wrote:
 
-Minor improvements are needed:
-   * The value you type in is only used on the next update.
-   * lines of context is initially always 3.
+> QGit might be a good alternative too, especially because QT4 is
+> available for Windows.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- gitk |   25 +++++++++++++++++++++++--
- 1 files changed, 23 insertions(+), 2 deletions(-)
+I have a colleague using qgit4 on Windows with git on cygwin.  Works very 
+well; and qgit being native rather than tcl/tk+cygwin makes it a lot faster.
 
-The patch may need some polishing. I know some tcl but this is the 
-first time I tried tk:
-   * I initialized diffcontext globally, ok?
-   * I don't know how to update the view after entering a new value. 
-  
-    Steffen
+I've also seen him using gitweb for browsing around my repository.
 
-diff --git a/gitk b/gitk
-index 39e452a..4e9acff 100755
---- a/gitk
-+++ b/gitk
-@@ -500,6 +500,7 @@ proc makewindow {} {
-     global textfont mainfont uifont tabstop
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-+    global diffcontextstring
-     global maincursor textcursor curtextcursor
-     global rowctxmenu fakerowmenu mergemax wrapcomment
-     global highlight_files gdttype
-@@ -714,7 +715,12 @@ proc makewindow {} {
- 	-command changediffdisp -variable diffelide -value {0 1}
-     radiobutton .bleft.mid.new -text "New version" \
- 	-command changediffdisp -variable diffelide -value {1 0}
--    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
-+    label .bleft.mid.labeldiffcontext -text "      Lines of context: " \
-+    -font $uifont
-+    entry .bleft.mid.diffcontext -width 5 -font $textfont -textvariable diffcontextstring
-+    trace add variable diffcontextstring write diffcontextchange
-+    lappend entries .bleft.mid.diffcontext
-+    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
-     set ctext .bleft.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-tabs "[expr {$tabstop * $charspc}]" \
-@@ -4872,12 +4878,25 @@ proc gettreediffline {gdtf ids} {
-     return 0
- }
- 
-+proc diffcontextchange {n1 n2 op} {
-+    global diffcontextstring diffcontext
-+
-+    if {[string is integer $diffcontextstring]} {
-+        if {$diffcontextstring > 0} {
-+            set diffcontext $diffcontextstring
-+# TODO: need to trigger update of diff display
-+# tried dodiffindex but that corrupted the history view
-+        }
-+    }
-+}
-+
- proc getblobdiffs {ids} {
-     global diffopts blobdifffd diffids env
-     global diffinhdr treediffs
-+    global diffcontext
- 
-     set env(GIT_DIFF_OPTS) $diffopts
--    if {[catch {set bdf [open [diffcmd $ids {-p -C}] r]} err]} {
-+    if {[catch {set bdf [open [diffcmd $ids "-p -C -U$diffcontext"] r]} err]} {
- 	puts "error getting diffs: $err"
- 	return
-     }
-@@ -7537,6 +7556,8 @@ set markingmatches 0
- 
- set optim_delay 16
- 
-+set diffcontext 3 
-+
- set nextviewnum 1
- set curview 0
- set selectedview 0
+We've never lost data, and have had significantly more success using git 
+itself rather than git-cvsserver, which was a constant struggle.
+
+
+Andy
 -- 
-1.5.3.rc3.20.g06b4
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
