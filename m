@@ -1,121 +1,119 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 08:52:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707260841490.27738@beast.quantumfyre.co.uk>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
- <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
- <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
- <7vps2fc196.fsf@assigned-by-dhcp.cox.net> <20070726031838.GO32566@spearce.org>
- <7v6447bxc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707260614500.14781@racer.site>
- <46A8378A.6050201@xs4all.nl> <Pine.LNX.4.64.0707260737170.14781@racer.site>
- <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
- <20070726071316.GE18114@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: hanwen@xs4all.nl, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 09:52:32 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] gitk: let you easily specify lines of context in diff view
+Date: Thu, 26 Jul 2007 09:59:29 +0200
+Message-ID: <11854367692095-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org, paulus@samba.org
+X-From: git-owner@vger.kernel.org Thu Jul 26 10:00:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDy99-000737-3K
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 09:52:31 +0200
+	id 1IDyGN-0000wI-LH
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 10:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757545AbXGZHwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 03:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757503AbXGZHwQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:52:16 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:51656 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756667AbXGZHwP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 03:52:15 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B6EBDC6153
-	for <git@vger.kernel.org>; Thu, 26 Jul 2007 08:52:12 +0100 (BST)
-Received: (qmail 20176 invoked by uid 103); 26 Jul 2007 08:52:12 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3770. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.032338 secs); 26 Jul 2007 07:52:12 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 26 Jul 2007 08:52:12 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <20070726071316.GE18114@spearce.org>
+	id S932641AbXGZH7x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 03:59:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756829AbXGZH7x
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:59:53 -0400
+Received: from mailer.zib.de ([130.73.108.11]:55815 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932641AbXGZH7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 03:59:52 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6Q7xTn9015543;
+	Thu, 26 Jul 2007 09:59:29 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6Q7xTBB011086;
+	Thu, 26 Jul 2007 09:59:29 +0200 (MEST)
+X-Mailer: git-send-email 1.5.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53804>
 
-On Thu, 26 Jul 2007, Shawn O. Pearce wrote:
+More lines of context sometimes help to better understand a diff.
+This patch introduces a text field above the box displaying the
+blobdiffs. You can type in the number of lines of context that
+you wish to view.
 
-> Han-Wen Nienhuys <hanwenn@gmail.com> wrote:
->> 2007/7/25, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->>> Did you succeed in adding perl?
->>
->>> It is not that important, because I plan
->>> to make git-gui the main user interface with this installer.  But Junio
->>> keeps adding Perl scripts (ATM add -i and remote) that I have to convert
->>> later...
->>
->> I don't see what this is good for.
->
-> What git-gui is good for?  Its a GUI.  For people who perfer to use
-> mice and push buttons over keys and a command prompt.  A large number
-> of people in this world (many of them on Windows) like these things.
-> Me, I'm more command line than I am GUI, yet I develop git-gui.
-> So I find myself using it a lot, just so I can eat my own dogfood.
->
-> Or do you mean Dscho's other point about rewriting tools into C?
->
->> I would suggest to making a clear
->> decision of what are recommended languages, and move everything else
->> to contrib/ .. Currently, C and bash seem the most reasonable choice,
->> but you could decide for perl, but then the consequence should be that
->> the bash scripts are translated into perl. Having both bash and perl
->> serves no purpose, and will lead to duplication of library code to
->> interact with the git binary.
+Minor improvements are needed:
+   * The value you type in is only used on the next update.
+   * lines of context is initially always 3.
 
-Well, that really doesn't make much sense from the Linux POV.  Bash, perl 
-and C are all well supported languages, each with its own set of 
-strengths.  The tools that are being written are true parts of git - not 
-optional contributed bolt-ons.
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ gitk |   25 +++++++++++++++++++++++--
+ 1 files changed, 23 insertions(+), 2 deletions(-)
 
-Admittedly it would probably increase the motivation to make everything 
-built in if only C programs were allowed outside of contrib - but git 
-would probably have not got where it is in that case.
+The patch may need some polishing. I know some tcl but this is the 
+first time I tried tk:
+   * I initialized diffcontext globally, ok?
+   * I don't know how to update the view after entering a new value. 
+  
+    Steffen
 
-> Sure, but there's some stuff that shell is good at, and other stuff
-> that Perl is good at.  Forcing everything into one mold while we
-> prototype new features is really limiting.
->
-> But both are slower on fork challenged systems than using native C.
-> Look at git-fetch for example; my ~400+ branch repository is taking
-> upwards of 5 minutes to run a no-argument, no-changes git-fetch in.
-> All sh and fork overhead.
-
-I have a repo with ~9000 refs - it's what motivated me to start rewriting 
-fetch in C ...
-
-times for fetch to decide there were no changes (on Linux, local XFS 
-disk):
-
-pure-shell: ~45 mins
-shell + C (fetch--tool): ~30 secs
-pure C: ~0.5 secs
-
-(the C version isn't the current version that Daniel has, but rather an 
-older incomplete version that I had got far enough to do that much - so 
-it may actually be slightly slower now ...)
-
+diff --git a/gitk b/gitk
+index 39e452a..4e9acff 100755
+--- a/gitk
++++ b/gitk
+@@ -500,6 +500,7 @@ proc makewindow {} {
+     global textfont mainfont uifont tabstop
+     global findtype findtypemenu findloc findstring fstring geometry
+     global entries sha1entry sha1string sha1but
++    global diffcontextstring
+     global maincursor textcursor curtextcursor
+     global rowctxmenu fakerowmenu mergemax wrapcomment
+     global highlight_files gdttype
+@@ -714,7 +715,12 @@ proc makewindow {} {
+ 	-command changediffdisp -variable diffelide -value {0 1}
+     radiobutton .bleft.mid.new -text "New version" \
+ 	-command changediffdisp -variable diffelide -value {1 0}
+-    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
++    label .bleft.mid.labeldiffcontext -text "      Lines of context: " \
++    -font $uifont
++    entry .bleft.mid.diffcontext -width 5 -font $textfont -textvariable diffcontextstring
++    trace add variable diffcontextstring write diffcontextchange
++    lappend entries .bleft.mid.diffcontext
++    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
+     set ctext .bleft.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-tabs "[expr {$tabstop * $charspc}]" \
+@@ -4872,12 +4878,25 @@ proc gettreediffline {gdtf ids} {
+     return 0
+ }
+ 
++proc diffcontextchange {n1 n2 op} {
++    global diffcontextstring diffcontext
++
++    if {[string is integer $diffcontextstring]} {
++        if {$diffcontextstring > 0} {
++            set diffcontext $diffcontextstring
++# TODO: need to trigger update of diff display
++# tried dodiffindex but that corrupted the history view
++        }
++    }
++}
++
+ proc getblobdiffs {ids} {
+     global diffopts blobdifffd diffids env
+     global diffinhdr treediffs
++    global diffcontext
+ 
+     set env(GIT_DIFF_OPTS) $diffopts
+-    if {[catch {set bdf [open [diffcmd $ids {-p -C}] r]} err]} {
++    if {[catch {set bdf [open [diffcmd $ids "-p -C -U$diffcontext"] r]} err]} {
+ 	puts "error getting diffs: $err"
+ 	return
+     }
+@@ -7537,6 +7556,8 @@ set markingmatches 0
+ 
+ set optim_delay 16
+ 
++set diffcontext 3 
++
+ set nextviewnum 1
+ set curview 0
+ set selectedview 0
 -- 
-Julian
-
-  ---
-If you want to travel around the world and be invited to speak at a lot of
-different places, just write a Unix operating system.
-
-    -- Linus Torvalds
+1.5.3.rc3.20.g06b4
