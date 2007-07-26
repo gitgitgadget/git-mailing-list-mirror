@@ -1,66 +1,64 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Windows support
-Date: Wed, 25 Jul 2007 20:54:12 -0700
-Message-ID: <a1bbc6950707252054p21c48458j5e285604ff8884a5@mail.gmail.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-	 <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
-	 <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
-	 <Pine.LNX.4.64.0707260438210.14781@racer.site>
+Date: Thu, 26 Jul 2007 00:00:03 -0400
+Message-ID: <20070726040003.GR32566@spearce.org>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com> <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com> <Pine.LNX.4.64.0707260438210.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 05:54:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 26 06:00:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDuQl-0004QS-Su
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 05:54:28 +0200
+	id 1IDuWe-0005iB-Ac
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 06:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756970AbXGZDyN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Jul 2007 23:54:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757032AbXGZDyN
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 23:54:13 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:64597 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755772AbXGZDyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 23:54:12 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so17016rvb
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 20:54:12 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EoD9elRPOs0fOYyUhEufrGOTs+EGB8z1MA8URTIqw3jkULzuTH8/oQf9q9kfFS2imGbiKUKi+yNJcA3HnNDEa1J3g2TxlRf06IEKGanrp7dckLSWdRg5Gac+/UcpuL6dpDzjbugQBASH3EdECEZWfX/wBjlP5uHPu2TKpWUqE4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LPIrcm2StYcsUsEg/hLnvOrOP57ClHnDbGNJzw5lFutyb+X6jhHQRqsl+SbZQNUB3eClwyLR+2+sBkkZEMh22ABfLR2iLquEEnUsXeOWokPIJZVO5gryBg1imcq9ODTkoWzkWT7cA1mlChYJnhwEKg2r9+sthQ+uql/9GaGc1sw=
-Received: by 10.141.167.5 with SMTP id u5mr426963rvo.1185422052274;
-        Wed, 25 Jul 2007 20:54:12 -0700 (PDT)
-Received: by 10.141.2.18 with HTTP; Wed, 25 Jul 2007 20:54:12 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707260438210.14781@racer.site>
+	id S1750757AbXGZEAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 00:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750726AbXGZEAJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 00:00:09 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39305 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750700AbXGZEAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 00:00:07 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IDuW0-0008Nu-Ry; Wed, 25 Jul 2007 23:59:52 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 89E5420FBAE; Thu, 26 Jul 2007 00:00:03 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707260438210.14781@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53760>
 
-On 7/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 25 Jul 2007, Dmitry Kakurin wrote:
+> 
 > > On 7/25/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
 > > > What features is mingw port missing?
 > > Well, 'git commit' from a regular cmd prompt does not work.
 > > IMHO, That's a pretty serious omission  :-).
+> 
 > Not true.
 
-Well, repro is very simple:
-* Follow instructions on Git Wiki and install Git from
-http://lilypond.org/git/binaries/mingw/
-* run git commit:
-E:\Git\usr\bin>git commit
-git: 'commit' is not a git-command
+Use git-gui.  ;-)  It doesn't need a shell to make commits.
 
-I've tried on both Win XP and Vista machines.
+It currently uses the shell for fetch and for merge.  I'm fixing
+merge this week.  I'm hoping Daniel's native C fetch will fix
+the fetch.
 
-- Dmitry
+-- 
+Shawn.
