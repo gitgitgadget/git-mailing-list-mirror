@@ -1,85 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 03:13:16 -0400
-Message-ID: <20070726071316.GE18114@spearce.org>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com> <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com> <7vps2fc196.fsf@assigned-by-dhcp.cox.net> <20070726031838.GO32566@spearce.org> <7v6447bxc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707260614500.14781@racer.site> <46A8378A.6050201@xs4all.nl> <Pine.LNX.4.64.0707260737170.14781@racer.site> <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] Add test for sanitized work-tree behaviour
+Date: Thu, 26 Jul 2007 00:15:34 -0700
+Message-ID: <7vfy3b8wkp.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707260732130.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Thu Jul 26 09:13:49 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 26 09:15:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDxXf-00057s-UR
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 09:13:48 +0200
+	id 1IDxZV-0005d4-37
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 09:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762681AbXGZHNZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 03:13:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757250AbXGZHNY
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:13:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:42874 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762669AbXGZHNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 03:13:23 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IDxXB-0000GP-EI; Thu, 26 Jul 2007 03:13:17 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 80A4120FBAE; Thu, 26 Jul 2007 03:13:16 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1759799AbXGZHPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 03:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762643AbXGZHPh
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:15:37 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60431 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759799AbXGZHPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 03:15:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070726071534.FGPQ1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 26 Jul 2007 03:15:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U7Fa1X00J1kojtg0000000; Thu, 26 Jul 2007 03:15:35 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53798>
 
-Han-Wen Nienhuys <hanwenn@gmail.com> wrote:
-> 2007/7/25, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >Did you succeed in adding perl?
-> 
-> >It is not that important, because I plan
-> >to make git-gui the main user interface with this installer.  But Junio
-> >keeps adding Perl scripts (ATM add -i and remote) that I have to convert
-> >later...
-> 
-> I don't see what this is good for.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-What git-gui is good for?  Its a GUI.  For people who perfer to use
-mice and push buttons over keys and a command prompt.  A large number
-of people in this world (many of them on Windows) like these things.
-Me, I'm more command line than I am GUI, yet I develop git-gui.
-So I find myself using it a lot, just so I can eat my own dogfood.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> ...
+> @@ -3,90 +3,109 @@
+>  test_description='test separate work tree'
+>  . ./test-lib.sh
+>  
+> +i=1
+> +
+>  test_rev_parse() {
+> - ...
+> +	name="$1"
+> +	for option in --is-bare-repository --is-inside-git-dir \
+> +		--is-inside-work-tree --show-prefix
+> +	do
+> +		shift
+> +		test_expect_success "$name: $option" \
+> +			"test '$1' = \"\$(git rev-parse $option)\""
 
-Or do you mean Dscho's other point about rewriting tools into C?
+> +i=$(($i+1))
+> +test $i = $STOPI && gdb --args git rev-parse $option
 
-> I would suggest to making a clear
-> decision of what are recommended languages, and move everything else
-> to contrib/ .. Currently, C and bash seem the most reasonable choice,
-> but you could decide for perl, but then the consequence should be that
-> the bash scripts are translated into perl. Having both bash and perl
-> serves no purpose, and will lead to duplication of library code to
-> interact with the git binary.
-
-Sure, but there's some stuff that shell is good at, and other stuff
-that Perl is good at.  Forcing everything into one mold while we
-prototype new features is really limiting.
-
-But both are slower on fork challenged systems than using native C.
-Look at git-fetch for example; my ~400+ branch repository is taking
-upwards of 5 minutes to run a no-argument, no-changes git-fetch in.
-All sh and fork overhead.
-
--- 
-Shawn.
+Eh?
