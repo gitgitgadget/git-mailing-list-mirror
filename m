@@ -1,56 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [Bradford C. Smith] [PATCH 2/2] use lockfile.c routines in
- git_commit_set_multivar()
-Date: Thu, 26 Jul 2007 19:26:51 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707261926340.14781@racer.site>
-References: <7v7ioocatt.fsf@assigned-by-dhcp.cox.net> 
- <Pine.LNX.4.64.0707260431240.14781@racer.site>
- <f158199e0707261040u70ee31d3le2eaf21ab1302909@mail.gmail.com>
+Subject: Re: [PATCH] use lockfile.c routines in git_commit_set_multivar()
+Date: Thu, 26 Jul 2007 19:31:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707261926590.14781@racer.site>
+References: 7vbqe0cazy.fsf@assigned-by-dhcp.cox.net
+ <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Bradford Smith <bradford.carl.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 20:27:05 2007
+To: "Bradford C. Smith" <bradford.carl.smith@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 20:31:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE83E-00082I-Lc
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:27:05 +0200
+	id 1IE87N-0001N5-In
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765544AbXGZS05 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 14:26:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763929AbXGZS05
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:26:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49735 "HELO mail.gmx.net"
+	id S933711AbXGZSbU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 14:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933874AbXGZSbT
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:31:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46482 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751791AbXGZS05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 14:26:57 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 18:26:55 -0000
+	id S933692AbXGZSbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 14:31:19 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 18:31:17 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp031) with SMTP; 26 Jul 2007 20:26:55 +0200
+  by mail.gmx.net (mp004) with SMTP; 26 Jul 2007 20:31:17 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+YZ4I0Wk2YJ4LROkc8oyGwxUE3b297EtLlJeuw/g
-	fYRxK8YFfU9U1G
+X-Provags-ID: V01U2FsdGVkX19HDMxDmG5HqGVc8tejVNeEcfxvM2KIhGKVE5fIid
+	LQdYQ8+pY1wL2m
 X-X-Sender: gene099@racer.site
-In-Reply-To: <f158199e0707261040u70ee31d3le2eaf21ab1302909@mail.gmail.com>
+In-Reply-To: <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53854>
 
 Hi,
 
-On Thu, 26 Jul 2007, Bradford Smith wrote:
+I like the general idea.  Thanks.
 
-> Dear Dscho,
-> 
-> I've submitted a slightly modified version of the same patch to the list.
-> It fixes a comment format to match the approved style for git code.  Please
-> review that one instead.
 
-I saw it and am reviewing it!
+On Thu, 26 Jul 2007, Bradford C. Smith wrote:
+
+> +	/* fd is closed, so don't try to close it below. */
+> +	fd = -1;
+> +	/*
+> +	 * lock is committed, so don't try to roll it back below.
+> +	 * NOTE: Since lockfile.c keeps a linked list of all created
+> +	 * lock_file structures, it isn't safe to free(lock).  It's
+> +	 * better to just leave it hanging around.
+> +	 */
+> +	lock = NULL;
+>  	ret = 0;
+>  
+>  out_free:
+>  	if (0 <= fd)
+>  		close(fd);
+> +	if (lock)
+> +		rollback_lock_file(lock);
+
+Wouldn't it be better to put the rollback_lock_file() into the if clause 
+when commit failed?
+
+Besides, I think you can safely call rollback_lock_file(lock) on a 
+committed lock_file, since the name will be set to "" by the latter, which 
+is checked by the former.
+
+But I am fine with the patch as is (have not tested it, though).
 
 Ciao,
 Dscho
