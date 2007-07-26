@@ -1,59 +1,134 @@
-From: "Henning Rogge" <hrogge@googlemail.com>
-Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 08:08:06 +0200
-Message-ID: <87eacd830707252308t32c98108w39b52cdb9c61cd1e@mail.gmail.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-	 <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
-	 <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
-	 <Pine.LNX.4.64.0707260438210.14781@racer.site>
-	 <20070726040003.GR32566@spearce.org>
-	 <Pine.LNX.4.64.0707260629260.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/5] Add is_absolute_path(), make_absolute_path() and
+ normalize_path()
+Date: Thu, 26 Jul 2007 07:24:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260724010.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:08:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:24:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwWR-0005qU-Lm
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:08:28 +0200
+	id 1IDwm5-000364-Mo
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756875AbXGZGIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756141AbXGZGII
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:08:08 -0400
-Received: from wx-out-0506.google.com ([66.249.82.230]:11419 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756500AbXGZGIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:08:07 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so390572wxd
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 23:08:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k7t/3ynhtZXVTTKbM1GaHpTwiEP3a6zCdQQpDcA7m4+2Fd6nW9bmk93Z50Uiz/ZcEfAWl132vDgAGPMPTJ9rbjRLdqvV3i4XA5FPkTC07Y06dUxJFCojA0yC3JDy897zDJvptvrEnpdMBTaHpuEyx1FNzYNMQwJpuP84jjLbfVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FgauERWDM0dxfB7XCCkmgZqiB/eKPv2CtQZrfIaNRfpyrMGxWs7G7dy4yVKYGLVjQ4qFngwjnOrFevYJpqxVHG8vxW5OtiTDb7SinbrrLy0egiil/xigYuCBWcKlfZIQSbHmVo5bPRDuOzcynI+OvNXJ5gIlZt/gz5/pmEEshM0=
-Received: by 10.70.80.14 with SMTP id d14mr2462833wxb.1185430086107;
-        Wed, 25 Jul 2007 23:08:06 -0700 (PDT)
-Received: by 10.90.96.4 with HTTP; Wed, 25 Jul 2007 23:08:06 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707260629260.14781@racer.site>
-Content-Disposition: inline
+	id S1751724AbXGZGYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbXGZGYd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:24:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33683 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751584AbXGZGYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:24:32 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 06:24:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 26 Jul 2007 08:24:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1883jwcFRs8flFjC21lG0MgrXqABBVJmXeDwN5ilJ
+	xUNqpD33q2TPPS
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53776>
 
-On 7/26/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Use git-gui.  ;-)  It doesn't need a shell to make commits.
->
-> Of course.  Ever since I saw git-gui, I was convinced that _this_ is the
-> tool Windows users should use.
-QGit might be a good alternative too, especially because QT4 is
-available for Windows.
 
-Henning
+This patch adds convenience functions to work with absolute paths.
+The function is_absolute_path() should help the efforts to integrate
+the MinGW fork.
+
+Note that make_absolute_path() returns a pointer to a static buffer.
+
+Given a path which possibly contains "/../" and "/./", or which end
+in "/", normalize_path() returns a normalized path.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ cache.h |    6 ++++++
+ path.c  |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 0 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 53801b8..b242147 100644
+--- a/cache.h
++++ b/cache.h
+@@ -358,6 +358,12 @@ int git_config_perm(const char *var, const char *value);
+ int adjust_shared_perm(const char *path);
+ int safe_create_leading_directories(char *path);
+ char *enter_repo(char *path, int strict);
++static inline int is_absolute_path(const char *path)
++{
++	return path[0] == '/';
++}
++const char *make_absolute_path(const char *path);
++char *normalize_path(char *path);
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+diff --git a/path.c b/path.c
+index c4ce962..92ce688 100644
+--- a/path.c
++++ b/path.c
+@@ -292,3 +292,57 @@ int adjust_shared_perm(const char *path)
+ 		return -2;
+ 	return 0;
+ }
++
++const char *make_absolute_path(const char *path)
++{
++	static char buf[PATH_MAX];
++	const int size = sizeof(buf);
++	int len;
++
++	if (is_absolute_path(path))
++		return path;
++
++	if (!getcwd(buf, size))
++		die ("Could not get current working directory");
++	if (!strcmp(path, "."))
++		return buf;
++
++	len = strlen(buf);
++	if (snprintf(buf + len, size - len, "/%s", path) > size - 1)
++		die ("Could not make absolute path from '%s'", path);
++	return normalize_path(buf);
++}
++
++/* strip out .. and . */
++char *normalize_path(char *path)
++{
++	int i, j;
++
++	for (i = 0, j = 0; path[i]; i++, j++) {
++		if (path[i] == '.') {
++			if (path[i + 1] == '/') {
++				i++; j--;
++				continue;
++			}
++			if (path[i + 1] == '.' && (path[i + 2] == '/' ||
++						!path[i + 2])) {
++				i += 1 + !!path[i + 2];
++				j--;
++				while (j > 0 && path[--j] != '/')
++					; /* do nothing */
++				continue;
++			}
++		}
++		for (; path[i + 1]; i++, j++) {
++			path[j] = path[i];
++			if (path[i] == '/')
++				break;
++		}
++		path[j] = path[i];
++	}
++	if (j > 0 && path[j - 1] == '/')
++		j--;
++	path[j] = '\0';
++
++	return path;
++}
+-- 
+1.5.3.rc2.42.gda8d-dirty
