@@ -1,93 +1,74 @@
-From: Robert Ewald <robert.ewald@nov.com>
-Subject: Re: [PATCH] translate bad characters in refnames during git-svn fetch
-Date: Thu, 26 Jul 2007 12:59:42 +0200
-Organization: Nobody is responsible but me
-Message-ID: <f89uqv$tf2$1@sea.gmane.org>
-References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716111509.GC18293@efreet.light.src> <20070716033050.GA29521@muzzle> <20070716174731.GA4792@lapse.madduck.net> <20070717122852.GA21372@mayonaise> <20070717131719.GB19724@piper.oerlikon.madduck.net>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 14:21:56 +0200
+Message-ID: <46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+	 <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
+	 <7vps2fc196.fsf@assigned-by-dhcp.cox.net>
+	 <20070726031838.GO32566@spearce.org>
+	 <7v6447bxc1.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0707260614500.14781@racer.site>
+	 <46A8378A.6050201@xs4all.nl>
+	 <Pine.LNX.4.64.0707260737170.14781@racer.site>
+	 <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com>
+	 <fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 14:20:10 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: hanwen@xs4all.nl,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 14:22:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE2K8-000433-Sa
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 14:20:09 +0200
+	id 1IE2Lx-0004hr-FH
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 14:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbXGZMUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 08:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbXGZMUF
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 08:20:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:41009 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752650AbXGZMUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 08:20:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IE2K2-0005GM-EE
-	for git@vger.kernel.org; Thu, 26 Jul 2007 14:20:02 +0200
-Received: from static-213.88.188.4.addr.tdcsong.se ([213.88.188.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 14:20:02 +0200
-Received: from robert.ewald by static-213.88.188.4.addr.tdcsong.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 14:20:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: static-213.88.188.4.addr.tdcsong.se
-User-Agent: KNode/0.10.4
+	id S1754380AbXGZMV7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 08:21:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754393AbXGZMV6
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 08:21:58 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:40732 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754380AbXGZMV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 08:21:58 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so451577nze
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 05:21:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tiUKyV7uKrH4m7M6fUYO8HFrqX3DJxrr2Hi9ZvJAcMiKzYkS7rB+CUY4i3HzzhQXOwMlih0Yhr3DIHNsJOUMQewxtupDS0CC3WHfoa+wcZBOH9PJULGHrYnlb7zq6ufoo/kh1h0GheIsvXsM273R+FVHY3b6qT0XUv+MobhxiTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=V8K+uOq3N7uh4iQtIxNsaOWSFfVy0FghbeaM+iPtRdDiaHzQ06CCbd/3qBTwwi6VSBgUnUGruTqKt6uwJ6focMQA1HIEyz7iIpr1Jn1fj3r5TrZ1AbBx1eJOqU0yXIyO7tsTofNYEUuRz0RYIlliDuKhsHFRXYPB7RtuN7NIEYs=
+Received: by 10.114.78.1 with SMTP id a1mr1661574wab.1185452516712;
+        Thu, 26 Jul 2007 05:21:56 -0700 (PDT)
+Received: by 10.115.78.15 with HTTP; Thu, 26 Jul 2007 05:21:56 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53822>
 
-Hello,
+On 7/26/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> microperl [1] maybe? I haven't tried it yet.
+>
 
-I am very interested in a functionality like this.
+it won't work. I tried that few months back.
 
-martin f krafft wrote:
->> sub desanitize_ref_name {
->> my ($refname) = @_;
->> $refname =~ s{%(?:([0-9A-F]{2})}{chr hex($1)}g;
->> 
->> $refname;
->> }
-> 
-> We could make it escape to %25; instead of %25. That's ugly but it
-> would make desanitation a little safer.
+plus the fact you'll still need perl modules.
 
-In my limited knowledge I wonder if that would confuse shell scripts.
+I just had a look at your gitbox gitweb. Did you really manage
+to get busybox-1.6.1 to work with mingw ?
 
->> > On the other hand, we could make the translation regexps
->> > configurable...
->> 
->> Hopefully not needed.  I fear it would just add to confusion.
-> 
-> I was thinking about something like.
-> 
->   git-svn clone ...
->   ...
->   error: remote branch/tagn name includes ~, which git does not
->   allow. please specify a replacement character in .git/config
-> 
-> and then have config.svn-remote.svn.translations simply be a list of
-> pairs in vim pairlist syntax:
-> 
->   ~:!,^:#,.:\,
-> 
-
-Having the user specify replacements leads to diversion which would not be
-desired. Consider the case where two git users clone a svn repo and later
-pull from each other. Different replacements would cause confusion in this
-case. That can of course be remedied by having the same replacements but
-then configuration is not needed.
-
-Is there anybody working on this feature at the moment? Can I pull from
-somewhere? I am hard pressed for that feature but my ability to contribute
-is only in testing and reporting bugs.
-
-Greetings
 -- 
-Robert Ewald
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu
