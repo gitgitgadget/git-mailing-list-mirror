@@ -1,69 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] Add is_absolute_path(), make_absolute_path() and normalize_path()
-Date: Thu, 26 Jul 2007 11:46:08 -0700
-Message-ID: <7v4pjr80lr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707260724010.14781@racer.site>
-	<7v1wevac63.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707261456040.14781@racer.site>
+From: "Bradford Smith" <bradford.carl.smith@gmail.com>
+Subject: Re: [PATCH] use lockfile.c routines in git_commit_set_multivar()
+Date: Thu, 26 Jul 2007 14:48:49 -0400
+Message-ID: <f158199e0707261148r29419a39h7d83fc7bd0ea7df1@mail.gmail.com>
+References: <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
+	 <Pine.LNX.4.64.0707261926590.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 20:46:16 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 26 20:48:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE8Ln-0007QT-C1
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:46:15 +0200
+	id 1IE8OM-000099-RJ
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 20:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933938AbXGZSqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 14:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765799AbXGZSqL
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:46:11 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:62479 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753236AbXGZSqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 14:46:10 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070726184609.KSOV1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 26 Jul 2007 14:46:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UJm81X00J1kojtg0000000; Thu, 26 Jul 2007 14:46:09 -0400
-In-Reply-To: <Pine.LNX.4.64.0707261456040.14781@racer.site> (Johannes
-	Schindelin's message of "Thu, 26 Jul 2007 14:58:59 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753279AbXGZSsw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 14:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761236AbXGZSsw
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 14:48:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:51943 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759835AbXGZSsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 14:48:51 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so581851ugf
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 11:48:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jkj29kksTGJmLeM63EDrXCa41TsWJzLMmt3TklM7++LKVCZlO7YEv9c0McO8xJXAQOp8LpdCQWo+PVE/Xfa8k0XcEYDDxF9QaO1fSyTBL5jF1AxpZdfCYdCqCWy7DblDzx1w/0T8yQBBvKj91dhirdcDPFrasP4jHmahAkp20CA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N7+lCvo4nKSCkpulLGF37N1rL0J49I6gf+BkUCyGVfsnEBpOd1kOgXRMWb6icjdpPUobHgTF66zb6JrQ5mHmGQSqy1h1fkOvgEJc6RBM36s3d+xDS6+TwzvQpizvXDIAJjYX0/2MvsexwPAIVtUQ51mEaMqNt0k2TFg+/Np5uwY=
+Received: by 10.82.175.17 with SMTP id x17mr1836798bue.1185475729819;
+        Thu, 26 Jul 2007 11:48:49 -0700 (PDT)
+Received: by 10.82.191.19 with HTTP; Thu, 26 Jul 2007 11:48:49 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707261926590.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53857>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Agree.  Maybe a comment above the function, like
+On 7/26/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 26 Jul 2007, Bradford C. Smith wrote:
 >
-> 	/*
-> 	 * The function normalize_path() converts ".." and "." names in 
-> 	 * the given path so that "foo/../bar/./" will come out as "bar".
-> 	 *
-> 	 * Note: normalize_path() does not follow symlinks, so if "foo" is
-> 	 * a symlink in the example above, the result will not work as 
-> 	 * expected.
-> 	 */
+> > +     /* fd is closed, so don't try to close it below. */
+> > +     fd = -1;
+> > +     /*
+> > +      * lock is committed, so don't try to roll it back below.
+> > +      * NOTE: Since lockfile.c keeps a linked list of all created
+> > +      * lock_file structures, it isn't safe to free(lock).  It's
+> > +      * better to just leave it hanging around.
+> > +      */
+> > +     lock = NULL;
+> >       ret = 0;
+> >
+> >  out_free:
+> >       if (0 <= fd)
+> >               close(fd);
+> > +     if (lock)
+> > +             rollback_lock_file(lock);
 >
-> Hmm?
+> Wouldn't it be better to put the rollback_lock_file() into the if clause
+> when commit failed?
 
-That comment only states the obvious and does not give a clue to
-the callers when it should not be used, I am afraid.  For
-example, paths taken out of index or recursively reading trees
-are Ok because there will not be ".." and "." in them.  Making a
-path given by the user relative to the cwd by prepending what is
-returned by setup_git_directory() may or may not be safe,
-depending on how setup_git_directory() does things (I think the
-original one is safe; I am reasonably sure with the current one
-when GIT_WORK_TREE is not in use; I do not know when that
-environment variable is there with the current code with or
-without your patch series).
+Actually no.  There are multiple goto statements that lead to
+out_free.  It isn't even needed at the point that the commit failed,
+because commit_lock_file() sets the lock file name to "" even when it
+fails.
+
+> Besides, I think you can safely call rollback_lock_file(lock) on a
+> committed lock_file, since the name will be set to "" by the latter, which
+> is checked by the former.
+
+Quite right.  I really just put in the comment and 'lock= NULL' line
+to increase readability.  I wanted to make it very clear to the reader
+that the commit wouldn't be undone by the rollback.
+
+> But I am fine with the patch as is (have not tested it, though).
+
+Thanks!
+
+FWIW, I have successfully run 'make test' and also verified that it
+behaves as I expect with my ~/.gitconfig symlink (in conjunction with
+the my other patch for resolving symlinks).
+
+Best Regards,
+
+Bradford
