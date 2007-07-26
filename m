@@ -1,170 +1,128 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: [PATCH] git-gui wording suggestions
-Date: Thu, 26 Jul 2007 11:19:02 +0200
-Message-ID: <20070726111902.xqkxcdlsbo8w4c8k@webmail.tu-harburg.de>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 11:30:11 +0200
+Message-ID: <46A869A3.6050707@trolltech.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>  <693D0FFF-B271-4781-BCE2-3BF00C8BF426@zib.de> <316a20a40707250958w1fe9f6fdn41d75ca704aeb9cd@mail.gmail.com> <alpine.LFD.0.999.0707251131540.3607@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 11:19:16 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig71A523CE0C82BDA5D6733C76"
+Cc: Stephen Cuppett <cuppett@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 11:29:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDzV5-000057-PM
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 11:19:16 +0200
+	id 1IDzfA-00037C-SJ
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 11:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758164AbXGZJTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 05:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757566AbXGZJTL
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 05:19:11 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:57573 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754649AbXGZJTJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 05:19:09 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6Q9J2l4006144
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 26 Jul 2007 11:19:03 +0200
-Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6Q9J2qr009035;
-	Thu, 26 Jul 2007 11:19:02 +0200
-Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
-	id A2879E50349; Thu, 26 Jul 2007 11:19:02 +0200 (CEST)
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
-	webmail.tu-harburg.de (Horde MIME library) with HTTP; Thu, 26 Jul 2007
-	11:19:02 +0200
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+	id S1754090AbXGZJ3h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 05:29:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbXGZJ3h
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 05:29:37 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:55811 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151AbXGZJ3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 05:29:36 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 457EE7424E; Thu, 26 Jul 2007 11:29:34 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 10E48741EE; Thu, 26 Jul 2007 11:29:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070716 Thunderbird/2.0.0.5 Mnenhy/0.7.5.666
+In-Reply-To: <alpine.LFD.0.999.0707251131540.3607@woody.linux-foundation.org>
+X-Enigmail-Version: 0.95.2
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53813>
 
-Unifiy wording to say "to stage" instead of "to add" always.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig71A523CE0C82BDA5D6733C76
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Currently, there is a mixup of saying "staged changes" vs. "added  
-changes" in the git-gui program. You obviously decided to say "staging  
-area" instead of "index", hence "add to staging area"/"stage" instead  
-of "add to index".  I think this change is very good. Talking about  
-the "staging area" explains the nature of this thingy much better and  
-much more unambiguous than "index".  Actually only after reading the  
-wording "staging area" I eventually understood what this "index" thing  
-is about... (Also, your chosen wording helps for creating a nice and  
-consistent translation of that, but that's only an added bonus.)
+Linus Torvalds said the following on 25.07.2007 20:43:
+> On Wed, 25 Jul 2007, Stephen Cuppett wrote:
+>> I don't know if the performance problems are cygwin or not.  More
+>>  knowledgeable people might be able to answer, it's just what I'm
+>>  observing right now.  It could be more fundamental to the types
+>> of access being performed en masse on inode-based versus NTFS
+>> systems.
+>=20
+> I think cygwin may add some overhead, but people should really
+> realize that Linux is quite often an order of magnitude faster (or
+> more) than other systems on some very basic operations.
+>=20
+(..snip..)
+>=20
+> (It will just not be so *blazingly* fast, ie things like "git
+> status" will generally not be instantaneous).
 
-With this patch I'd propose to talk every only about "stage" instead  
-of "add". IMHO that's just the logical conclusion of the above wording  
-decision. What do you think?
+Let me present some numbers:
+My repository is ~680MB, and 19323 tracked files, in 2264 directories.
+When in a compiled state the total is 27540 files, in 4885 directories.
 
----
-  git-gui.sh          |    6 +++---
-  lib/checkout_op.tcl |    2 +-
-  lib/commit.tcl      |    4 ++--
-  lib/index.tcl       |    2 +-
-  lib/merge.tcl       |    2 +-
-  5 files changed, 8 insertions(+), 8 deletions(-)
+When file system cache is warm, I get the following times:
+ Native: dir /B /S               1.077s
+         dir /S                  1.707s (shows time, size/type)
+ MSys:   ls -f1AUR              34.608s
+         find . -type f          6.718s
+         git diff (empty diff)   1.18s
+         git status              5.5s
+and when the system cach is cold:
+         git status             54.55s
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 3536d38..fd8b4b4 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1824,12 +1824,12 @@ if {[is_enabled multicommit] || [is_enabled  
-singlecommit]} {
-  	lappend disable_on_lock \
-  		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+Maybe you guys have other git commands which are also/more interesting
+to look at/benchmark?
 
--	.mbar.commit add command -label [mc "Add To Commit"] \
-+	.mbar.commit add command -label [mc "Stage To Commit"] \
-  		-command do_add_selection
-  	lappend disable_on_lock \
-  		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+Windows people should also be aware that it's possible to tweak the
+amount of memory which the OS uses for the file cache. On XP you can
+change it _roughly_ in System Properties panel (Right-click on My
+Computer), then Advanced - Performance Settings - Advanced -
+Memory Usage:
+Normal setting is "Programs" for non-servers Windows systems, while
+you can select "System cache" make the OS allocate more memory for
+the system caches. I've tried both, and the setting doesn't really
+affect the file operations much when the cache is warm, but it
+probably affects how long the cache stays warm.
 
--	.mbar.commit add command -label [mc "Add Existing To Commit"] \
-+	.mbar.commit add command -label [mc "Stage Changed Files To Commit"] \
-  		-command do_add_all \
-  		-accelerator $M1T-I
-  	lappend disable_on_lock \
-@@ -2180,7 +2180,7 @@ pack .vpane.lower.commarea.buttons.rescan -side  
-top -fill x
-  lappend disable_on_lock \
-  	{.vpane.lower.commarea.buttons.rescan conf -state}
+Also note that you can use Sysinternal's CacheSet (free), to
+manipulate the working-set parameters of the system file cache.
+You'll find that here:
+    http://www.microsoft.com/technet/sysinternals/FileAndDisk/CacheSet.ms=
+px
 
--button .vpane.lower.commarea.buttons.incall -text [mc "Add Existing"] \
-+button .vpane.lower.commarea.buttons.incall -text [mc "Stage Changed"] \
-  	-command do_add_all
-  pack .vpane.lower.commarea.buttons.incall -side top -fill x
-  lappend disable_on_lock \
-diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
-index 25bf9cf..a2f2509 100644
---- a/lib/checkout_op.tcl
-+++ b/lib/checkout_op.tcl
-@@ -247,7 +247,7 @@ method _checkout {} {
-  	if {[lock_index checkout_op]} {
-  		after idle [cb _start_checkout]
-  	} else {
--		_error $this [mc "Index is already locked."]
-+		_error $this [mc "Staging area (index) is already locked."]
-  		delete_this
-  	}
-  }
-diff --git a/lib/commit.tcl b/lib/commit.tcl
-index f60b11e..aa9110d 100644
---- a/lib/commit.tcl
-+++ b/lib/commit.tcl
-@@ -153,7 +153,7 @@ The rescan will be automatically started now.
-  		U? {
-  			error_popup [mc "Unmerged files cannot be committed.
+--=20
+=2Emarius
 
--File %s has merge conflicts.  You must resolve them and add the file  
-before committing.
-+File %s has merge conflicts.  You must resolve them and stage the  
-file before committing.
-  " [short_path $path]]
-  			unlock_index
-  			return
-@@ -169,7 +169,7 @@ File %s cannot be committed by this program.
-  	if {!$files_ready && ![string match *merge $curType]} {
-  		info_popup [mc "No changes to commit.
 
--You must add at least 1 file before you can commit.
-+You must stage at least 1 file before you can commit.
-  "]
-  		unlock_index
-  		return
-diff --git a/lib/index.tcl b/lib/index.tcl
-index 38aa6ee..e91b864 100644
---- a/lib/index.tcl
-+++ b/lib/index.tcl
-@@ -367,7 +367,7 @@ proc revert_helper {txt paths} {
-  		"[appname] ([reponame])" \
-  		[mc "%s
+--------------enig71A523CE0C82BDA5D6733C76
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--Any unadded changes will be permanently lost by the revert." $query] \
-+Any unstaged changes will be permanently lost by the revert." $query] \
-  		question \
-  		1 \
-  		[mc "Do Nothing"] \
-diff --git a/lib/merge.tcl b/lib/merge.tcl
-index 40e82a9..a6e8cc9 100644
---- a/lib/merge.tcl
-+++ b/lib/merge.tcl
-@@ -46,7 +46,7 @@ The rescan will be automatically started now.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-  File %s has merge conflicts.
+iD8DBQFGqGmkKzzXl/njVP8RAs4RAKDRov5kVaeCaf/UlI/l4WMEzLwiFACeOr14
+o56+qHDjLdl7mliJTQxjiv8=
+=QBgP
+-----END PGP SIGNATURE-----
 
--You must resolve them, add the file, and commit to complete the  
-current merge.  Only then can you begin another merge.
-+You must resolve them, stage the file, and commit to complete the  
-current merge.  Only then can you begin another merge.
-  " [short_path $path]]
-  			unlock_index
-  			return 0
--- 
-1.5.3.rc2.12.gbc280
+--------------enig71A523CE0C82BDA5D6733C76--
