@@ -1,78 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 15:37:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707261534550.14781@racer.site>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> 
- <7vps2fc196.fsf@assigned-by-dhcp.cox.net>  <20070726031838.GO32566@spearce.org>
-  <7v6447bxc1.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0707260614500.14781@racer.site>
-  <46A8378A.6050201@xs4all.nl>  <Pine.LNX.4.64.0707260737170.14781@racer.site>
-  <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com> 
- <fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com> 
- <46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com>
- <fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: git-gui-i18n: Make "Revert changes in these $n files"
+	translatable.
+Date: Thu, 26 Jul 2007 16:53:34 +0200
+Message-ID: <20070726165334.72vekk2ry80kk40c@webmail.tu-harburg.de>
+References: <20070726104723.ugsfnbj1ogw8gg4k@webmail.tu-harburg.de>
+	<20070726115301.GA27821@cc.hut.fi>
+	<20070726143449.iklqfh5c6c48844k@webmail.tu-harburg.de>
+	<20070726142152.GA5335@cc.hut.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 16:37:33 2007
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>
+X-From: git-owner@vger.kernel.org Thu Jul 26 16:53:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE4T5-0007RR-5C
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 16:37:31 +0200
+	id 1IE4ip-0005eC-Rh
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 16:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbXGZOh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 10:37:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbXGZOh1
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 10:37:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58677 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753702AbXGZOh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 10:37:26 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 14:37:24 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 26 Jul 2007 16:37:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Sx75M0zDSO+COWeyDD8JUUXahgwNFdxD0dmBKTI
-	jokR0HWG9QZvXa
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1755861AbXGZOxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 10:53:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755844AbXGZOxo
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 10:53:44 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:43583 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753787AbXGZOxn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 10:53:43 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6QErYKQ007528
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 26 Jul 2007 16:53:34 +0200
+Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6QErYEu006597;
+	Thu, 26 Jul 2007 16:53:34 +0200
+Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
+	id 33FF7E50349; Thu, 26 Jul 2007 16:53:34 +0200 (CEST)
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
+	webmail.tu-harburg.de (Horde MIME library) with HTTP; Thu, 26 Jul 2007
+	16:53:34 +0200
+In-Reply-To: <20070726142152.GA5335@cc.hut.fi>
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53837>
 
-Hi,
+Quoting Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>:
+>> >BTW: Here is list of some missed translations:
+>>
+>> >- Font setting names in options window.
+>>
+>> You mean the names of the fonts? But those are names. I thought by
+>> definition they cannot be translated.
+>
+> Nope. The texts are "Main Font:" and "Diff/Console Font:". They are
+> specified in somewhat bizarre manner (Search for "Main Font") from
+> git-gui.sh.
 
-On Thu, 26 Jul 2007, Nguyen Thai Ngoc Duy wrote:
+Ok, thanks for the pointer. Patch attached (will be push on the weekend).
 
-> On 7/26/07, Christian MICHON <christian.michon@gmail.com> wrote:
-> > On 7/26/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> > > microperl [1] maybe? I haven't tried it yet.
-> > >
-> > 
-> > it won't work. I tried that few months back.
-> > 
-> > plus the fact you'll still need perl modules.
-> > 
-> > I just had a look at your gitbox gitweb. Did you really manage
-> > to get busybox-1.6.1 to work with mingw ?
-> 
-> Most of tools (that are included) work fine. Ash almost works. It can 
-> run git status, git commit, git clone.. and most of test cases. There 
-> are still some missing pieces and bugs to hunt down though.
+>> >- Buttons in hard reset confirmation (branch->revert or merge->abort,
+>> >  and it is yes/no dialog).
+>>
+>> I see this in translated form (German Ja/Nein), and also the button
+>> text (translated or not) doesn't appear in the git-gui source code.
+>> Maybe those need to be translated in the tcl/tk system libraries?
+>
+> I think that they might come from system libraries. But I'd rather
+> use better labels. AFAIK, HCI guidelines say that yes/no dialogs
+> are to be avoided, especally for confirming potentially destructive
+> actions.
 
-Thank you for working on this!
+True for now. This would concern basically all question dialogs that  
+appear in git-gui.
 
-However, I am not completely convinced that having a builtin shell is all 
-that useful.  I for one would like to have MinGW busybox _separate_ from 
-git...
+Christian
 
-Yes, you could not use the nice "ln -s busybox ash" idiom, since Windows 
-lacks symlinks, but you could still say "busybox ash" with a relatively 
-small, single executable.
 
-Ciao,
-Dscho
+---
+  git-gui.sh     |    4 ++--
+  lib/option.tcl |    2 +-
+  2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 9f903ba..463ec32 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1652,8 +1652,8 @@ set default_config(gui.newbranchtemplate) {}
+  set default_config(gui.fontui) [font configure font_ui]
+  set default_config(gui.fontdiff) [font configure font_diff]
+  set font_descs {
+-	{fontui   font_ui   {Main Font}}
+-	{fontdiff font_diff {Diff/Console Font}}
++	{fontui   font_ui   {mc "Main Font"}}
++	{fontdiff font_diff {mc "Diff/Console Font"}}
+  }
+  load_config 0
+  apply_config
+diff --git a/lib/option.tcl b/lib/option.tcl
+index 20f1e8e..31c7d47 100644
+--- a/lib/option.tcl
++++ b/lib/option.tcl
+@@ -245,7 +245,7 @@ proc do_options {} {
+  	foreach option $font_descs {
+  		set name [lindex $option 0]
+  		set font [lindex $option 1]
+-		set text [lindex $option 2]
++		set text [eval [lindex $option 2]]
+
+  		set global_config_new(gui.$font^^family) \
+  			[font configure $font -family]
+-- 
+1.5.3.rc2.12.gbc280
