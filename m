@@ -1,264 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: git-gui: i18n introductory document (2nd draft)
-Date: Thu, 26 Jul 2007 16:31:06 -0700
-Message-ID: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
-References: <7vir87adzo.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Empty directories...
+Date: Fri, 27 Jul 2007 01:33:24 +0200
+Message-ID: <200707270133.25221.robin.rosenberg.lists@dewire.com>
+References: <85lkdezi08.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Christian Stimming <christian.stimming@ibeo-as.com>,
-	Irina Riesen <irina.riesen@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Xudong Guan <xudong.guan@gmail.com>,
-	Nanako Shiraishi <nanako3@bluebottle.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 27 01:31:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 01:32:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IECnp-0007gw-A2
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 01:31:29 +0200
+	id 1IECoh-0007sC-E6
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 01:32:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753431AbXGZXbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 19:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756161AbXGZXbK
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 19:31:10 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:53476 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431AbXGZXbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 19:31:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070726233108.PUGS1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 26 Jul 2007 19:31:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UPX61X00F1kojtg0000000; Thu, 26 Jul 2007 19:31:07 -0400
-In-Reply-To: <7vir87adzo.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 25 Jul 2007 23:14:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1765977AbXGZXcQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 19:32:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762173AbXGZXcQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 19:32:16 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:8430 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1757428AbXGZXcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 19:32:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 25ABC80266C;
+	Fri, 27 Jul 2007 01:24:56 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 26187-02; Fri, 27 Jul 2007 01:24:55 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id B8D1080264B;
+	Fri, 27 Jul 2007 01:24:55 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <85lkdezi08.fsf@lola.goethe.zz>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53875>
 
-This short note is to help a translation contributor to help us
-localizing git-gui message files by covering the basics.
 
-I have tried to address issues raised in Christian's comments on
-the first draft that was circulated privately.  There are a few
-remaining issues I could not decide myself, which are marked
-with NEEDSWORK in the text.
+(
+	I don't know which mail is the best to reply to and I probably missed 
+	something in the thread, so bear with me if I'm repeating anything.
+)
 
----
-diff --git a/po/README b/po/README
-new file mode 100644
-index 0000000..974cce4
---- /dev/null
-+++ b/po/README
-@@ -0,0 +1,203 @@
-+Localizing git-gui for your language
-+====================================
-+
-+This short note is to help you, who reads and writes English and your
-+own language, help us getting git-gui localized for more languages.  It
-+does not try to be a comprehensive manual of GNU gettext, which is the
-+i18n framework we use, but tries to help you get started by covering the
-+basics and how it is used in this project.
-+
-+1. Getting started.
-+
-+You would first need to have a working "git".  Your distribution may
-+have it as "git-core" package (do not get "GNU Interactive Tools" --
-+that is a different "git").  You would also need GNU gettext toolchain
-+to test the resulting translation out.  It also is a good idea to have
-+specialized so-called "po file editors" (e.g. emacs po-mode, KBabel,
-+poedit, GTranslator).  Please install them.
-+
-+You would then need to clone the git-gui internationalization project
-+repository, so that you can work on it:
-+
-+	$ git clone mob@repo.or.cz:/srv/git/git-gui/git-gui-i18n.git/
-+	$ cd git-gui-i18n.git
-+	$ git checkout --track -b mob origin/mob
-+	$ git config remote.origin.push mob
-+
-+The "git checkout" command creates a 'mob' branch from upstream's
-+corresponding branch and makes it your current branch.  You will be
-+working on this branch.
-+
-+The "git config" command records in your repository configuration file
-+that you would push "mob" branch to the upstream when you say "git
-+push".
-+
-+
-+2. Starting a new language.
-+
-+In the git-gui-i18n.git directory is a po/ subdirectory.  It has a
-+handful files whose names end with ".po".  Is there a file that has
-+messages in your language?
-+
-+If you do not know what your language should be named, you need to find
-+it.  This currently follows ISO 639-1 two letter codes:
-+
-+	http://www.loc.gov/standards/iso639-2/php/code_list.php
-+
-+For example, if you are preparing a translation for Afrikaans, the
-+language code is "af".  If there already is a translation for your
-+language, you do not have to perform any step in this section, but keep
-+reading, because we are covering the basics.
-+
-+If you did not find your language, you would need to start one yourself.
-+Copy po/git-gui.pot file to po/af.po (replace "af" with the code for
-+your language).  Edit the first several lines to match existing *.po
-+files to make it clear this is a translation table for git-gui project,
-+and you are the primary translator.  The result of your editing would
-+look something like this:
-+
-+    # Translation of git-gui to Afrikaans
-+    # Copyright (C) 2007 Shawn Pearce
-+    # This file is distributed under the same license as the git-gui package.
-+    # YOUR NAME <YOUR@E-MAIL.ADDRESS>, 2007.
-+    #
-+    #, fuzzy
-+    msgid ""
-+    msgstr ""
-+    "Project-Id-Version: git-gui\n"
-+    "Report-Msgid-Bugs-To: \n"
-+    "POT-Creation-Date: 2007-07-24 22:19+0300\n"
-+    "PO-Revision-Date: 2007-07-25 18:00+0900\n"
-+    "Last-Translator: YOUR NAME <YOUR@E-MAIL.ADDRESS>\n"
-+    "Language-Team: Afrikaans\n"
-+    "MIME-Version: 1.0\n"
-+    "Content-Type: text/plain; charset=UTF-8\n"
-+    "Content-Transfer-Encoding: 8bit\n"
-+
-+You will find many pairs of a "msgid" line followed by a "msgstr" line.
-+These pairs define how messages in git-gui application are translated to
-+your language.  Your primarily job is to fill in the empty double quote
-+pairs on msgstr lines with the translation of the strings on their
-+matching msgid lines.  A few tips:
-+
-+ - Control characters, such as newlines, are written in backslash
-+   sequence similar to string literals in the C programming language.
-+   When the string given on a msgid line has such a backslash sequence,
-+   you would typically want to have corresponding ones in the string on
-+   your msgstr line.
-+
-+ - Often the messages being translated are format strings given to
-+   "printf()"-like functions.  Make sure "%s", "%d", and "%%" in your
-+   translated messages match the original.
-+
-+   When you have to change the order of words, you can add "<number>$"
-+   between '%' and the conversion ('s', 'd', etc.) to say "<number>-th
-+   parameter to the format string is used at this point".  For example,
-+   if the original message is like this:
-+
-+	"Length is %d, Weight is %d"
-+	
-+   and if for whatever reason your translation needs to say weight first
-+   and then length, you can say something like:
-+
-+	"WEIGHT IS %2$d, LENGTH IS %1$d"
-+
-+   [NEEDSWORK: this whole "parameter permutation" part needs to be
-+   verified if it works with Tcl at all]
-+
-+ - A long message can be split across multiple lines by ending the
-+   string with a double quote, and starting another string on the next
-+   line with another double quote.  They will be concatenated in the
-+   result.  For example:
-+
-+   #: lib/remote_branch_delete.tcl:189
-+   #, tcl-format
-+   msgid ""
-+   "One or more of the merge tests failed because you have not fetched the "
-+   "necessary commits.  Try fetching from %s first."
-+   msgstr ""
-+   "HERE YOU WILL WRITE YOUR TRANSLATION OF THE ABOVE LONG "
-+   "MESSAGE IN YOUR LANGUAGE."
-+
-+You can test your translation by running "make install", which would
-+create po/af.msg file and installs the result, and then running the
-+resulting git-gui under your locale:
-+
-+	$ make install
-+	$ LANG=af git-gui
-+
-+There is a trick to test your translation without first installing, if
-+you prefer.  First, create this symbolic link in the source tree:
-+
-+	$ ln -s ../po lib/msgs
-+
-+After setting up such a symbolic link, you can:
-+
-+	$ make
-+	$ LANG=af ./git-gui
-+
-+[NEEDSWORK: this symlink trick needs to be verified if it works.]
-+
-+When you are satisfied with your translation, commit your changes, and
-+push it back to the 'mob' branch:
-+
-+	$ edit po/af.po
-+	... be sure to update Last-Translator: and
-+	... PO-Revision-Date: lines.
-+	$ git add po/af.po
-+	$ git commit -m 'Started Afrikaans translation.'
-+	$ git push
-+
-+
-+3. Updating your translation.
-+
-+There may already be a translation for your language, and you may want
-+to contribute an update.  This may be because you would want to improve
-+the translation of existing messages, or because the git-gui software
-+itself was updated and there are new messages that need translation.
-+
-+In any case, make sure you are up-to-date before starting your work:
-+
-+	$ git pull
-+
-+In the former case, you will edit po/af.po (again, replace "af" with
-+your language code), and after testing and updating the Last-Translator:
-+and PO-Revision-Date: lines, "add/commit/push" as in the previous
-+section.
-+
-+By comparing "POT-Creation-Date:" line in po/git-gui.pot file and
-+po/af.po file, you can tell if there are new messages that need to be
-+translated.  You would need the GNU gettext package to perform this
-+step.
-+
-+	$ msgmerge -U po/af.po po/git-gui.pot
-+
-+[NEEDSWORK: who is responsible for updating po/git-gui.pot file by
-+running xgettext?  IIRC, Christian recommended against running it
-+nilly-willy because it can become a source of unnecessary merge
-+conflicts.  Perhaps we should mention something like "
-+
-+The po/git-gui.pot file is updated by the internationalization
-+coordinator from time to time.  You _could_ update it yourself, but
-+translators are discouraged from doing so because we would want all
-+language teams to be working off of the same version of git-gui.pot.
-+
-+" here?]
-+
-+This updates po/af.po (again, replace "af" with your language
-+code) so that it contains msgid lines (i.e. the original) that
-+your translation did not have before.  There are a few things to
-+watch out for:
-+
-+ - The original text in English of an older message you already
-+   translated might have been changed.  You will notice a comment line
-+   that begins with "#, fuzzy" in front of such a message.  msgmerge
-+   tool made its best effort to match your old translation with the
-+   message from the updated software, but you may find cases that it
-+   matched your old translated message to a new msgid and the pairing
-+   does not make any sense -- you would need to fix them, and then
-+   remove the "#, fuzzy" line from the message.
-+
-+ - New messages added to the software will have msgstr lines
-+   with empty strings.  You would need to translate them.
-+
+David. Reconsider "tracking" all directories and what that would give, 
+compared to explicitly tracking specific ones and the requires magic entries.
+
+Say we have a config setting that tells git never to remove empty trees. Linus 
+patches could be a start for representing trees in the index. As an 
+optimization the index could prune trees from the index if they contain 
+things as long as the index *effectively* remembers all trees.
+
+Using the patches again we could add empty directories to the index and remove 
+them. No directory would be removed automatically, except maybe by a merge.
+
+We would probably have only a few empty directories and new unexpected ones
+would only pop up when we remove all blobs from one. Git status could tell us
+about them so we will not forget them. It could even tell us about "new" empty
+directories, which is probably the most important thing you'd want to know. 
+
+Forgetting to untrack an empty directory would not be a big deal.
+
+Whether to retain empty trees or not should be a repository policy, but an all 
+or nothing setting.
+
+-- robin
