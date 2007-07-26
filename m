@@ -1,75 +1,112 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] git-write-tree should not crash if prefix does not exist
-Date: Wed, 25 Jul 2007 23:14:54 -0400
-Message-ID: <20070726031454.GA2026@localhost.hsd1.ma.comcast.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Windows support
+Date: Wed, 25 Jul 2007 23:15:46 -0400
+Message-ID: <20070726031546.GN32566@spearce.org>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <46A73015.7020306@midwinter.com> <a1bbc6950707251956h3db847c9v8db438f4c665b2cf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 05:14:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 05:15:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDtoM-0004zO-1J
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 05:14:46 +0200
+	id 1IDtpU-0005FJ-GO
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 05:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755772AbXGZDOn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 25 Jul 2007 23:14:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756811AbXGZDOn
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 23:14:43 -0400
-Received: from qb-out-0506.google.com ([72.14.204.225]:48810 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755670AbXGZDOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2007 23:14:42 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so86121qbe
-        for <git@vger.kernel.org>; Wed, 25 Jul 2007 20:14:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        b=pnzNmiTU0uc5xIyq3uP3VN8oudA8ROzCEIQNE5uGEGqPeL46OwIGse0gWovzhjWNBpxp+hji1yXG8vO0nqrHlAKrbSXSb/TatNH04vSsT572LvBNIZuaOepq/u7sNxRwKa25j/zGqVUJaG+varNApJqdOpboEEW8Lk7bk5+hskY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        b=UMO/BKbKJH5+cO1N3vqRh+LrYMzD+dW5v6Y/EMJGjHrGaSSmtcfbxfiq9loVUYLlO2f7cyPX+NE5IsKxCQn7Q41E0RYgaFQiuvjwl/yOloW6eTPJY7CtR0SIXPFJLAJFLv4vpdUws91cSyuChjz7K3ISpiyvP+GNwbszCtoH2gg=
-Received: by 10.70.67.4 with SMTP id p4mr2289976wxa.1185419680922;
-        Wed, 25 Jul 2007 20:14:40 -0700 (PDT)
-Received: from pclouds@gmail.com ( [76.118.142.131])
-        by mx.google.com with ESMTPS id q57sm2070253wrq.2007.07.25.20.14.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2007 20:14:40 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 25 Jul 2007 23:14:54 -0400
+	id S1756073AbXGZDPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Jul 2007 23:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755772AbXGZDPy
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Jul 2007 23:15:54 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38466 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755832AbXGZDPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2007 23:15:53 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IDtpA-0005kQ-Vj; Wed, 25 Jul 2007 23:15:37 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DDE87230807; Wed, 25 Jul 2007 23:15:46 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+In-Reply-To: <a1bbc6950707251956h3db847c9v8db438f4c665b2cf@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53753>
 
+Dmitry Kakurin <dmitry.kakurin@gmail.com> wrote:
+> On 7/25/07, Steven Grimm <koreth@midwinter.com> wrote:
+> > > How serious are you guys about Windows support?
+> > Much (nearly all?) of the core git team never touches Windows, so they
+> > both have no selfish motivation to get it working well and no way to
+> > test their changes even if they decide to take it up for the greater good.
+> 
+> This actually answers my question (if it's true).
+> If core team is not interested in supporting Windows then I cannot
+> trust this system with my source code :-(.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Resend as it seems git-send-email and vger.kernel.org don't like me
- much
+It more or less is.  Those of us that are most active as Git
+developers don't really use Windows as our core development platform.
+Well, that is not entirely true.  Day-job forces Windows on me,
+because its the Most Secure Operating System Evar!.  :-) I run Cygwin
+there so I have a sane user interface, and build Git under Cygwin
+rather than MSYS because I just expect the UNIX-like environment
+that Cygwin gives me.
 
- builtin-write-tree.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Why Cygwin?  Because I have to use Windows, but I'd rather use Linux.
+No, Linux isn't permitted.  And Solaris/x86 is only allowed on
+"servers".  I have yet to find a way to classify my desktop as
+a server.  :-|
 
-diff --git a/builtin-write-tree.c b/builtin-write-tree.c
-index 391de53..88f34ba 100644
---- a/builtin-write-tree.c
-+++ b/builtin-write-tree.c
-@@ -52,6 +52,8 @@ int write_tree(unsigned char *sha1, int missing_ok, c=
-onst char *prefix)
- 	if (prefix) {
- 		struct cache_tree *subtree =3D
- 			cache_tree_find(active_cache_tree, prefix);
-+		if (!subtree)
-+			die("git-write-tree: prefix %s not found", prefix);
- 		hashcpy(sha1, subtree->sha1);
- 	}
- 	else
---=20
-1.5.2
+git-gui is fairly well supported under Cygwin, as I use it a lot
+in my day-job.  As do a lot of my coworkers.  Which actually gives
+me a pretty good testing ground; ~20 people all beating on git-gui
+all day long is a pretty sizable testing group.  I actually wonder
+some days if git-gui is better tested on Cygwin than it is on Linux.
+
+But as has been stated on this thread, Cygwin isn't native Windows.
+ 
+> My concerns are (mostly):
+> * lack of (or insufficient) testing for Windows platform
+> * possibly lower code quality of Windows port, since core devs don't
+> touch it and don't care
+
+We do care.  Its just not our primary focus.  Dscho, Junio, Daniel
+Barkalow, Johannes Sixt, myself, even Linus have all contributed
+patches to git that help make it run better on Windows, or make
+it easier to port there.  But none of us are running out and
+dedicating our lives to making Git the best software to ever run
+on that platform.  There's other things more important to us.
+
+> * possible troubles with support if issues arise
+> * Windows port could become abandoned if those few brave people, who
+> work on it right now will leave
+
+That's always a concern.  Heck, day-job invested untold fortunes in
+a product we purchased from a large commerical vendor.  Runs only on
+Windows.  Vendor just up and decided to no longer support the product
+anymore and has left us hanging out to dry.  Did I mention that the
+product is also closed source and less stable than Git is on Windows?
+
+So no matter what you use, if the developers leave, you are stuck.
+But one thing I *really* love about Git is how simple the data
+structures are and how easy it is to read the repository.  Its under
+500 lines of C code to unpack a working directory.  More if you
+want something that's blazing fast and always reliable, but if you
+just want to get the data out its quite simple.
+
+Its also fully open source.  GPL'd even.  So there's never the
+issue that your vendor runs away and prevents you from taking on
+development yourself, or just fixing those minor issues that you
+really need to have fixed.
+ 
+-- 
+Shawn.
