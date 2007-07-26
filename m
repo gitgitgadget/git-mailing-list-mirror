@@ -1,58 +1,74 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: rename directory weirdness
-Date: Thu, 26 Jul 2007 16:54:31 +0800
-Message-ID: <46A86147.4010403@midwinter.com>
-References: <46A8519D.5050801@tplogic.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 11:11:53 +0200
+Message-ID: <200707261111.54439.robin.rosenberg.lists@dewire.com>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <7v6447bxc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707260614500.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bert Douglas <bertd@tplogic.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 10:54:49 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 26 11:10:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDz7R-0000mj-BT
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 10:54:49 +0200
+	id 1IDzMv-00063u-Jv
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 11:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbXGZIyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 04:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbXGZIyh
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 04:54:37 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:57267
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753606AbXGZIyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 04:54:36 -0400
-Received: (qmail 8585 invoked from network); 26 Jul 2007 08:54:36 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=h7p/Vvf4EComipvEZU/YlGThe9FIN8R8VzzueNEYvqXuPL1texykn691H7hDHtK8  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 26 Jul 2007 08:54:36 -0000
-User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
-In-Reply-To: <46A8519D.5050801@tplogic.com>
+	id S1759324AbXGZJKq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 05:10:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759186AbXGZJKq
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 05:10:46 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:1111 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1758539AbXGZJKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 05:10:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E0E1880266C;
+	Thu, 26 Jul 2007 11:03:26 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18229-04; Thu, 26 Jul 2007 11:03:26 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 5614B80264B;
+	Thu, 26 Jul 2007 11:03:26 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0707260614500.14781@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53810>
 
-Bert Douglas wrote:
-> $ mv dir1 dir2
-> $ git add dir2
-> $ git commit -a
->
-> It popped up my editor with long list of files that it recognized as 
-> 'renamed'.
-> But one file it listed as 'copied' and further down as 'deleted'.
->
-> Why this one file out of thousands not recognized as 'renamed' ?
-> Is this a sign of a problem ?
+torsdag 26 juli 2007 skrev Johannes Schindelin:
+> Hi,
+> 
+> On Wed, 25 Jul 2007, Junio C Hamano wrote:
+> 
+> > If that is the case, "Git for Windows" probably should package MSYS as 
+> > part of it, I would think, to match the expectation of the users there.  
+> > I know two Johannes'es and Han-Wen spent quite a lot of effort on 
+> > Windows port and packaging, but perhaps that little (well, I should not 
+> > be judging if that is a little or huge, as I do not do Windows) 
+> > finishing touch would make Windows users much happier?
+> 
+> Windows users are only happy when they can bug developers.
+> 
+> Seriously again, the biggest problem with Han-Wen's installer was that it 
+> insists on cross-compiling _all_ the packages.  This makes it easy for 
+> Han-Wen to upgrade packages and compile the thing on Linux in one go.  
+> However, it never worked with bash, and I could not fix it: I can read 
+> Python, but not _that_ Python.
 
-Are the contents of the file in question identical to those of some 
-other file in your directory tree? I've seen that happen too. There were 
-some proposed improvements to address this last time it came up on the 
-list, but I'm not sure if any of them actually made it into the code base.
+Will windows developers need to get Linux just in order to do a two line fix,
+or will the build process work on Windows too (provided the developer gets
+a number of extra packages).
 
--Steve
+-- robin
