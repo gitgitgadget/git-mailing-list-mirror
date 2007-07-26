@@ -1,73 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in gitk search box
-Date: Wed, 25 Jul 2007 22:49:35 -0700
-Message-ID: <7v1wevbtow.fsf@assigned-by-dhcp.cox.net>
-References: <20070725135621.GC21692@lavos.net>
-	<18087.60033.676105.538784@cargo.ozlabs.ibm.com>
-	<7vtzrrc1sb.fsf@assigned-by-dhcp.cox.net>
-	<18088.10039.780711.708582@cargo.ozlabs.ibm.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Windows support
+Date: Wed, 25 Jul 2007 22:56:26 -0700
+Message-ID: <46A8378A.6050201@xs4all.nl>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com> <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com> <7vps2fc196.fsf@assigned-by-dhcp.cox.net> <20070726031838.GO32566@spearce.org> <7v6447bxc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707260614500.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bdowning@lavos.net (Brian Downing), git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jul 26 07:49:41 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 26 07:56:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwEG-0001hO-Nv
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:49:41 +0200
+	id 1IDwL2-00039u-Gp
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 07:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753487AbXGZFti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 01:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbXGZFti
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:49:38 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63505 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753469AbXGZFth (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 01:49:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070726054936.CKPD1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 26 Jul 2007 01:49:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U5pc1X0031kojtg0000000; Thu, 26 Jul 2007 01:49:36 -0400
-In-Reply-To: <18088.10039.780711.708582@cargo.ozlabs.ibm.com> (Paul
-	Mackerras's message of "Thu, 26 Jul 2007 14:46:47 +1000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753782AbXGZF4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 01:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbXGZF4h
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 01:56:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:54493 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752706AbXGZF4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 01:56:36 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IDwKw-00051a-Sp
+	for git@vger.kernel.org; Thu, 26 Jul 2007 07:56:34 +0200
+Received: from c-24-6-173-165.hsd1.ca.comcast.net ([24.6.173.165])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 07:56:34 +0200
+Received: from hanwen by c-24-6-173-165.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 07:56:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-6-173-165.hsd1.ca.comcast.net
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <Pine.LNX.4.64.0707260614500.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53774>
 
-Paul Mackerras <paulus@samba.org> writes:
+Johannes Schindelin wrote:
+>> If that is the case, "Git for Windows" probably should package MSYS as 
+>> part of it, I would think, to match the expectation of the users there.  
+>> I know two Johannes'es and Han-Wen spent quite a lot of effort on 
+>> Windows port and packaging, but perhaps that little (well, I should not 
+>> be judging if that is a little or huge, as I do not do Windows) 
+>> finishing touch would make Windows users much happier?
+> 
+> Windows users are only happy when they can bug developers.
+> 
+> Seriously again, the biggest problem with Han-Wen's installer was that it 
+> insists on cross-compiling _all_ the packages.  This makes it easy for 
+> Han-Wen to upgrade packages and compile the thing on Linux in one go.  
+> However, it never worked with bash, and I could not fix it: I can read 
+> Python, but not _that_ Python.
+> 
 
-> Junio C Hamano writes:
->
->> There was a recent message from Linus on the list, stating that
->> NUL in -z format is inter-record separator, not after-record
->> terminator.
->
-> OK, I'll have to change gitk then.  It looks like both Marco and I got
-> tricked by this.  I suggest it's worth a mention in the documentation.
+The problem is not really the python. If you supply me with a shell
+script that will x-compile bash, I'll hapily code the python spec. IMO
+the real problem is that bash is a unix shell (tied to unix internals)
+and therefore, compiling it for something as horrid as windows is far
+from trivial.
 
-I think that is indeed necessary.  How about this?
+fwiw, I briefly tried compiling msys, but I couldn't even find its
+sources, so I quickly gave up.
 
----
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 8216576..228ccaf 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -43,7 +43,9 @@
- 	Synonym for "-p --stat".
- 
- -z::
--	\0 line termination on output
-+	NUL-line termination on output.  This affects the --raw
-+	output field terminator.  Also output from commands such
-+	as "git-log" will be delimited with NUL between commits.
- 
- --name-only::
- 	Show only names of changed files.
+A second option is that someone supplies me with an unpacked, installed
+tree of msys' bash shell. I can easily package that up along with the
+rest of the installer, if it doesnt' require further trickery (setting
+registry entries, etc.)
