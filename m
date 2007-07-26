@@ -1,56 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: fix overzealous output redirection
-Date: Wed, 25 Jul 2007 23:38:40 -0700
-Message-ID: <7vejivacun.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707260735150.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Windows support
+Date: Thu, 26 Jul 2007 07:40:08 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260737170.14781@racer.site>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+ <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
+ <a1bbc6950707251926t11e1d0f7p8e8cd8c936f7ff72@mail.gmail.com>
+ <7vps2fc196.fsf@assigned-by-dhcp.cox.net> <20070726031838.GO32566@spearce.org>
+ <7v6447bxc1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707260614500.14781@racer.site>
+ <46A8378A.6050201@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:38:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwzl-0000hz-7s
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:38:45 +0200
+	id 1IDx1E-0001Ng-Vg
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756674AbXGZGim (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:38:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756499AbXGZGim
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:38:42 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:35069 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754671AbXGZGim (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:38:42 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070726063841.WSCS1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 26 Jul 2007 02:38:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U6eg1X00L1kojtg0000000; Thu, 26 Jul 2007 02:38:41 -0400
-In-Reply-To: <Pine.LNX.4.64.0707260735150.14781@racer.site> (Johannes
-	Schindelin's message of "Thu, 26 Jul 2007 07:35:51 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755257AbXGZGkO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:40:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbXGZGkO
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:40:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42028 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754712AbXGZGkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:40:13 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 06:40:11 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 26 Jul 2007 08:40:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qpCt7ZsBqzCrneaGLSi04EHDe2WYP9SabNgPHbZ
+	rDvJGf53NQPouO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46A8378A.6050201@xs4all.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53785>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> When squashing, you no longer saw what the editor had to say to you
-> after commit 'Shut "git rebase -i" up when no --verbose was given'
-> (if you used a console based editor, at least).
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> 	This bit me real hard when cleaning up the work-tree patch
-> 	series.
+[Funny, you quoted me, but culled _me_ from the Cc: list]
 
-Heh, good catch.
+On Wed, 25 Jul 2007, Han-Wen Nienhuys wrote:
 
-At least you are eating your own dog food, which is a very
-assuring thing before the feature release.  Thanks.
+> Johannes Schindelin wrote:
+> >> If that is the case, "Git for Windows" probably should package MSYS as 
+> >> part of it, I would think, to match the expectation of the users there.  
+> >> I know two Johannes'es and Han-Wen spent quite a lot of effort on 
+> >> Windows port and packaging, but perhaps that little (well, I should not 
+> >> be judging if that is a little or huge, as I do not do Windows) 
+> >> finishing touch would make Windows users much happier?
+> > 
+> > Windows users are only happy when they can bug developers.
+> > 
+> > Seriously again, the biggest problem with Han-Wen's installer was that it 
+> > insists on cross-compiling _all_ the packages.  This makes it easy for 
+> > Han-Wen to upgrade packages and compile the thing on Linux in one go.  
+> > However, it never worked with bash, and I could not fix it: I can read 
+> > Python, but not _that_ Python.
+> > 
+> 
+> The problem is not really the python.
+
+For me, it is.  Probably you know by now that I am not really a fan of 
+Python, mainly because people can write unelegant code which looks 
+elegant.
+
+> If you supply me with a shell script that will x-compile bash, I'll 
+> hapily code the python spec. IMO the real problem is that bash is a unix 
+> shell (tied to unix internals) and therefore, compiling it for something 
+> as horrid as windows is far from trivial.
+
+Will do.
+
+Did you succeed in adding perl?  It is not that important, because I plan 
+to make git-gui the main user interface with this installer.  But Junio 
+keeps adding Perl scripts (ATM add -i and remote) that I have to convert 
+later...
+
+Ciao,
+Dscho
