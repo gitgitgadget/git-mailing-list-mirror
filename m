@@ -1,77 +1,79 @@
 From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] Document commit.template configuration variable.
-Date: Thu, 26 Jul 2007 16:34:59 -0400
-Message-ID: <20070726203459.GA10283@Hermes.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 22:35:10 2007
+Subject: t9400-git-cvsserver-server (9, 11, 13)
+Date: Thu, 26 Jul 2007 16:43:40 -0400
+Message-ID: <166D8F2E-52B7-479F-B3E2-010691B87B9B@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 26 22:43:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEA35-0007Sa-J1
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 22:35:03 +0200
+	id 1IEABW-0001jJ-2L
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 22:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933939AbXGZUfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 16:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760140AbXGZUfA
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 16:35:00 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:47835 "EHLO
+	id S932961AbXGZUnm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 16:43:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757143AbXGZUnm
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 16:43:42 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:38197 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756499AbXGZUe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 16:34:59 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by silverinsanity.com (Postfix) with ESMTP id 127131FFC243
-	for <git@vger.kernel.org>; Thu, 26 Jul 2007 20:34:59 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	with ESMTP id S1751168AbXGZUnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 16:43:41 -0400
+Received: from [192.168.1.6] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 5351F1FFC243
+	for <git@vger.kernel.org>; Thu, 26 Jul 2007 20:43:41 +0000 (UTC)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53868>
 
-Add it to the list in config.txt and explicitly say that the
---template option to git-commit overrides the configuration variable.
----
+I'm still getting failures on t9400-git-cvsserver-server.  This  
+appears to still be due to the fact that git-cvsserver is exiting  
+with -1, which test_expect_failure doesn't like.  I have to assume  
+this isn't happening on other people's machines.  If I can help  
+someone with tracking down this error, I would be happy to.
 
- d1cc130a5eb50d5bfe1e8b76cab3d8970fd70ad1 added a config var, but
- didn't add it to the full list.
+~~ Brian Gernhardt
 
- Documentation/config.txt     |    3 +++
- Documentation/git-commit.txt |    5 ++---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+output of ./t9400-git-cvsserver-server.sh -v -d
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dd98d95..3135cb7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -393,6 +393,9 @@ color.status.<slot>::
- 	or `untracked` (files which are not tracked by git). The values of
- 	these variables may be specified as in color.branch.<slot>.
- 
-+commit.template::
-+	Specify a file to use as the template for new commit messages.
-+
- diff.renameLimit::
- 	The number of files to consider when performing the copy/rename
- 	detection; equivalent to the git diff option '-l'.
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 3f36c67..627994e 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -78,9 +78,8 @@ OPTIONS
- 	Use the contents of the given file as the initial version
- 	of the commit message. The editor is invoked and you can
- 	make subsequent changes. If a message is specified using
--	the `-m` or `-F` options, this option has no effect. The
--	template file may also be specified using the `commit.template`
--	configuration variable.
-+	the `-m` or `-F` options, this option has no effect. This
-+	overrides the `commit.template` configuration variable.
- 
- -s|--signoff::
- 	Add Signed-off-by line at the end of the commit message.
--- 
-1.5.3.rc2.38.g11308
+*   ok 8: req_Root (strict paths)
+
+* expecting failure: cat request-anonymous | git-cvsserver --strict- 
+paths pserver $WORKDIR >log 2>&1
+* FAIL 9: req_Root failure (strict-paths)
+         cat request-anonymous | git-cvsserver --strict-paths pserver  
+$WORKDIR >log 2>&1
+
+* expecting success: cat request-anonymous | git-cvsserver pserver  
+$WORKDIR/ >log 2>&1 &&
+    tail -n1 log | grep -q "^I LOVE YOU$"
+*   ok 10: req_Root (w/o strict-paths)
+
+* expecting failure: cat request-anonymous | git-cvsserver pserver  
+$WORKDIR/gitcvs >log 2>&1
+* FAIL 11: req_Root failure (w/o strict-paths)
+         cat request-anonymous | git-cvsserver pserver $WORKDIR/ 
+gitcvs >log 2>&1
+
+* expecting success: cat request-base | git-cvsserver --strict-paths  
+--base-path $WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
+    tail -n1 log | grep -q "^I LOVE YOU$"
+*   ok 12: req_Root (base-path)
+
+* expecting failure: cat request-anonymous | git-cvsserver --strict- 
+paths --base-path $WORKDIR pserver $SERVERDIR >log 2>&1
+* FAIL 13: req_Root failure (base-path)
+         cat request-anonymous | git-cvsserver --strict-paths --base- 
+path $WORKDIR pserver $SERVERDIR >log 2>&1
+
+* expecting success: cat request-anonymous | git-cvsserver --export- 
+all pserver $WORKDIR >log 2>&1 &&
+    tail -n1 log | grep -q "^I LOVE YOU$"
+*   ok 14: req_Root (export-all)
