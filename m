@@ -1,69 +1,53 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Teach git-gui to split hunks
-Date: Thu, 26 Jul 2007 09:32:22 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46A84E06.2ED4CFBC@eudaptics.com>
-References: <Pine.LNX.4.64.0707260630570.14781@racer.site>
+From: Bert Douglas <bertd@tplogic.com>
+Subject: rename directory weirdness
+Date: Thu, 26 Jul 2007 02:47:41 -0500
+Message-ID: <46A8519D.5050801@tplogic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 09:32:30 2007
+X-From: git-owner@vger.kernel.org Thu Jul 26 09:48:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDxpk-0001b8-Ch
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 09:32:28 +0200
+	id 1IDy4y-0005rR-52
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 09:48:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755677AbXGZHcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 03:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755289AbXGZHcY
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:32:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:56004 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755508AbXGZHcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 03:32:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IDxpY-0007cr-7Q
-	for git@vger.kernel.org; Thu, 26 Jul 2007 09:32:16 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 09:32:16 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 09:32:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1756663AbXGZHsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 03:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757218AbXGZHsF
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 03:48:05 -0400
+Received: from imf22aec.mail.bellsouth.net ([205.152.59.70]:34496 "EHLO
+	imf22aec.mail.bellsouth.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753826AbXGZHsE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2007 03:48:04 -0400
+Received: from ibm65aec.bellsouth.net ([68.220.183.197])
+          by imf22aec.mail.bellsouth.net with ESMTP
+          id <20070726074803.QJSS13480.imf22aec.mail.bellsouth.net@ibm65aec.bellsouth.net>
+          for <git@vger.kernel.org>; Thu, 26 Jul 2007 03:48:03 -0400
+Received: from [192.168.1.96] (really [68.220.183.197])
+          by ibm65aec.bellsouth.net with ESMTP
+          id <20070726074803.GQOK275.ibm65aec.bellsouth.net@[192.168.1.96]>
+          for <git@vger.kernel.org>; Thu, 26 Jul 2007 03:48:03 -0400
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53802>
 
-Johannes Schindelin wrote:
-> 
-> When you select the context menu item "Split Hunk" in the diff area,
-> git-gui will now split the current hunk so that a new hunk starts at
-> the current position.
-> 
-> For this to work, apply has to be called with --unidiff-zero, since
-> the new hunks can start or stop with a "-" or "+" line.
+I am new user.  Trying to understand git.
 
-For chrissake, NO!
+I renamed a directory.
+$ mv dir1 dir2
+$ git add dir2
+$ git commit -a
 
-I tried this already, and it immediately corrupted my data.
+It popped up my editor with long list of files that it recognized as 
+'renamed'.
+But one file it listed as 'copied' and further down as 'deleted'.
 
-The problem case is when the hunk you want to apply is not the first one
-and the first one does not add and remove the same number of lines. In
-this case, all that git-apply can do is to rely on line numbers. But
-they are WRONG and apply the patch at the WRONG spot.
+Why this one file out of thousands not recognized as 'renamed' ?
+Is this a sign of a problem ?
 
-First, I didn't believe Linus when he preached that --unidiff-zero is
-bad; it took only a day to become a follower. ;)
-
--- Hannes
+Thanks again for all help.
