@@ -1,134 +1,99 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/5] Add is_absolute_path(), make_absolute_path() and
- normalize_path()
-Date: Thu, 26 Jul 2007 07:24:28 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707260724010.14781@racer.site>
+Subject: [PATCH 2/5] Add functions get_relative_cwd() and is_inside_dir()
+Date: Thu, 26 Jul 2007 07:24:55 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707260724450.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:24:42 2007
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:25:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IDwm5-000364-Mo
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:24:38 +0200
+	id 1IDwmW-0003Hl-DP
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 08:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724AbXGZGYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 02:24:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbXGZGYd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:24:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33683 "HELO mail.gmx.net"
+	id S1753373AbXGZGZA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 02:25:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbXGZGZA
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 02:25:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52507 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751584AbXGZGYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 02:24:32 -0400
-Received: (qmail invoked by alias); 26 Jul 2007 06:24:30 -0000
+	id S1753300AbXGZGY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 02:24:59 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 06:24:57 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 26 Jul 2007 08:24:30 +0200
+  by mail.gmx.net (mp045) with SMTP; 26 Jul 2007 08:24:57 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1883jwcFRs8flFjC21lG0MgrXqABBVJmXeDwN5ilJ
-	xUNqpD33q2TPPS
+X-Provags-ID: V01U2FsdGVkX19/d+kaLAJ/C0LTV5nVBs8d1yUg+q3PXHItT/Miog
+	7qvZn4TJjOgwZ1
 X-X-Sender: gene099@racer.site
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53777>
 
 
-This patch adds convenience functions to work with absolute paths.
-The function is_absolute_path() should help the efforts to integrate
-the MinGW fork.
+The function get_relative_cwd() works just as getcwd(), only that it
+takes an absolute path as additional parameter, returning the prefix
+of the current working directory relative to the given path.  If the
+cwd is no subdirectory of the given path, it returns NULL.
 
-Note that make_absolute_path() returns a pointer to a static buffer.
-
-Given a path which possibly contains "/../" and "/./", or which end
-in "/", normalize_path() returns a normalized path.
+is_inside_dir() is just a trivial wrapper over get_relative_cwd().
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- cache.h |    6 ++++++
- path.c  |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 0 deletions(-)
+ dir.c |   27 +++++++++++++++++++++++++++
+ dir.h |    3 +++
+ 2 files changed, 30 insertions(+), 0 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 53801b8..b242147 100644
---- a/cache.h
-+++ b/cache.h
-@@ -358,6 +358,12 @@ int git_config_perm(const char *var, const char *value);
- int adjust_shared_perm(const char *path);
- int safe_create_leading_directories(char *path);
- char *enter_repo(char *path, int strict);
-+static inline int is_absolute_path(const char *path)
-+{
-+	return path[0] == '/';
-+}
-+const char *make_absolute_path(const char *path);
-+char *normalize_path(char *path);
- 
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern int sha1_object_info(const unsigned char *, unsigned long *);
-diff --git a/path.c b/path.c
-index c4ce962..92ce688 100644
---- a/path.c
-+++ b/path.c
-@@ -292,3 +292,57 @@ int adjust_shared_perm(const char *path)
- 		return -2;
- 	return 0;
+diff --git a/dir.c b/dir.c
+index 8d8faf5..cb95538 100644
+--- a/dir.c
++++ b/dir.c
+@@ -642,3 +642,30 @@ file_exists(const char *f)
+   struct stat sb;
+   return stat(f, &sb) == 0;
  }
 +
-+const char *make_absolute_path(const char *path)
++char *get_relative_cwd(char *buffer, int size, const char *dir)
 +{
-+	static char buf[PATH_MAX];
-+	const int size = sizeof(buf);
-+	int len;
++	char *cwd = buffer;
 +
-+	if (is_absolute_path(path))
-+		return path;
++	if (!dir)
++		return 0;
 +
-+	if (!getcwd(buf, size))
-+		die ("Could not get current working directory");
-+	if (!strcmp(path, "."))
-+		return buf;
++	if (!getcwd(buffer, PATH_MAX))
++		return 0;
 +
-+	len = strlen(buf);
-+	if (snprintf(buf + len, size - len, "/%s", path) > size - 1)
-+		die ("Could not make absolute path from '%s'", path);
-+	return normalize_path(buf);
-+}
-+
-+/* strip out .. and . */
-+char *normalize_path(char *path)
-+{
-+	int i, j;
-+
-+	for (i = 0, j = 0; path[i]; i++, j++) {
-+		if (path[i] == '.') {
-+			if (path[i + 1] == '/') {
-+				i++; j--;
-+				continue;
-+			}
-+			if (path[i + 1] == '.' && (path[i + 2] == '/' ||
-+						!path[i + 2])) {
-+				i += 1 + !!path[i + 2];
-+				j--;
-+				while (j > 0 && path[--j] != '/')
-+					; /* do nothing */
-+				continue;
-+			}
-+		}
-+		for (; path[i + 1]; i++, j++) {
-+			path[j] = path[i];
-+			if (path[i] == '/')
-+				break;
-+		}
-+		path[j] = path[i];
++	while (*dir && *dir == *cwd) {
++		dir++;
++		cwd++;
 +	}
-+	if (j > 0 && path[j - 1] == '/')
-+		j--;
-+	path[j] = '\0';
-+
-+	return path;
++	if (*dir)
++		return NULL;
++	if (*cwd == '/')
++		return cwd + 1;
++	return cwd;
 +}
++
++int is_inside_dir(const char *dir)
++{
++	char buffer[PATH_MAX];
++	return get_relative_cwd(buffer, sizeof(buffer), dir) != NULL;
++}
+diff --git a/dir.h b/dir.h
+index ec0e8ab..f55a87b 100644
+--- a/dir.h
++++ b/dir.h
+@@ -61,4 +61,7 @@ extern void add_exclude(const char *string, const char *base,
+ extern int file_exists(const char *);
+ extern struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len);
+ 
++extern char *get_relative_cwd(char *buffer, int size, const char *dir);
++extern int is_inside_dir(const char *dir);
++
+ #endif
 -- 
 1.5.3.rc2.42.gda8d-dirty
