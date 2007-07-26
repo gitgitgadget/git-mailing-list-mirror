@@ -1,72 +1,100 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Windows support
-Date: Thu, 26 Jul 2007 17:25:12 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46A8BCD8.B925922@eudaptics.com>
-References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
-		 <fcaeb9bf0707250513v587d7a92lb688b52da3c28bb7@mail.gmail.com>
-		 <Pine.LNX.4.64.0707251510130.14781@racer.site>
-		 <fcaeb9bf0707250715p7c183a81vc78f641eef493777@mail.gmail.com>
-		 <46d6db660707260600w6c3ca5d2ve6aaf06c7684789d@mail.gmail.com>
-		 <fcaeb9bf0707260620i2ec1ab36ka470758edfd570d2@mail.gmail.com>
-		 <46d6db660707260632q16f927a2r64f6b4588dd3cb48@mail.gmail.com> <fcaeb9bf0707260655v1dbbacfbta23e670713683963@mail.gmail.com>
+Date: Thu, 26 Jul 2007 16:43:01 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707261638100.14781@racer.site>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> 
+ <7v6447bxc1.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.64.0707260614500.14781@racer.site>
+  <46A8378A.6050201@xs4all.nl>  <Pine.LNX.4.64.0707260737170.14781@racer.site>
+  <f329bf540707260002p117937tc9bc70050ef87838@mail.gmail.com> 
+ <fcaeb9bf0707260429l327f446bq73a8a0a13cd77cf1@mail.gmail.com> 
+ <46d6db660707260521u15c2bd85j806d48e0f51a3b9@mail.gmail.com> 
+ <fcaeb9bf0707260537y4233abaamadf4cb6190ea0eeb@mail.gmail.com> 
+ <Pine.LNX.4.64.0707261534550.14781@racer.site>
+ <fcaeb9bf0707260807u476719e3rec2dcf5f780013c0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian MICHON <christian.michon@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 17:25:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 17:43:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IE5Da-00022l-33
-	for gcvg-git@gmane.org; Thu, 26 Jul 2007 17:25:34 +0200
+	id 1IE5Um-0001SZ-L4
+	for gcvg-git@gmane.org; Thu, 26 Jul 2007 17:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759514AbXGZPZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 11:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756483AbXGZPZS
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 11:25:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:40893 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759039AbXGZPZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 11:25:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IE5D8-0000hd-On
-	for git@vger.kernel.org; Thu, 26 Jul 2007 17:25:06 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 17:25:06 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 17:25:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1757329AbXGZPnK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 11:43:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756955AbXGZPnJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 11:43:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56627 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756259AbXGZPnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 11:43:08 -0400
+Received: (qmail invoked by alias); 26 Jul 2007 15:43:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp051) with SMTP; 26 Jul 2007 17:43:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/+CqlNh4L+ym4QQ/NL/cEte9IzJgvpTT0wEVShqo
+	LF+qV+JTkOKcVC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fcaeb9bf0707260807u476719e3rec2dcf5f780013c0@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53840>
 
-Nguyen Thai Ngoc Duy wrote:
+Hi,
+
+On Thu, 26 Jul 2007, Nguyen Thai Ngoc Duy wrote:
+
+> I make MinGW busybox part of git for some reasons:
 > 
-> On 7/26/07, Christian MICHON <christian.michon@gmail.com> wrote:
-> > I can commit using "git commit -a -m ok", but then I get this kind of
-> > error message (and ash dies, I go back to xp/cmd prompt)
-> >
-> > mv: cannot rename '.git/next-index4540': File exists
-> 
-> Baah.. something goes wrong again.
+> - Making a full MinGW busybox would take lots of time. I don't need
+> busybox for Windows. What I need is a shell and enough POSIX utilities
+> to run git shell scripts without any dependencies. Windows users
+> (including myself when I have to use Windows) hate dependencies.
 
-The problem is likely that rename() of MSCVRT.DLL is implemented in
-terms of MoveFile(), which can't move over an existing file. A wrapper
-is needed that uses MoveFileEx() instead.
+I think that if you succeed to compile ash on MinGW, the rest is easy.
 
-We have the same problem also in git-apply: One of the tests fails for
-this reason.
+> - I don't want MinGW busybox to be used outside of git (if it is
+> installed separated from git), there are cygwin and msys already. I
+> don't want to compete them. And I don't like conflicts (not sure
+> though) because you have multiple UNIX emulations on the same system.
 
--- Hannes
+But you'd be my hero.
+
+Installing Cygwin is often overkill if all I need is just a tiny shell 
+with just enough POSIX tools to run my scripts.
+
+Installing MinGW is painful.  Not because of MinGW, but because there is 
+no single installer for all I want.  You need to install MinGW, MSYS, MSYS 
+DTK, iconv, bash (because the default is to old), etc. etc.
+
+With busybox it would be busybox.exe.
+
+> - Making ash part of git has an advantage that you could tune the
+> shell to fit git. Earlier you had to replace find/sort with
+> /usr/bin/find and /usr/bin/sort in git scripts to avoid Windows
+> alternatives. I don't like that. If you have control over the shell,
+> you could make it ignore whatever program out there and use your own
+> ones. This one is not a strong point though.
+
+I doubt that this is useful.  We do want to support the other systems as 
+well, so we have to kinda stick with the available workarounds.
+
+> - MinGW busybox (or gitbox as I call it now) utilizes compat/mingw.c
+> and other stuff like run-command.c... Making it separate (as source
+> code) duplicates code for nothing.
+
+It is not duplication.  It is forking.  Which is a good thing.
+
+> - If you meant separating from git.exe binary, not from source code,
+> then it's ok.
+
+Yes.  Although I see your point in making it a builtin "git-ash" that can 
+be called without an extra fork(), using beginthread instead.
+
+Ciao,
+Dscho
