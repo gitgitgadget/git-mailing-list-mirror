@@ -1,74 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make verify-tag a builtin.
-Date: Fri, 27 Jul 2007 14:08:59 -0700
-Message-ID: <7vtzrpwo44.fsf@assigned-by-dhcp.cox.net>
-References: <46A96F86.2030704@gmail.com>
-	<7vr6mu2uo0.fsf@assigned-by-dhcp.cox.net>
-	<1b46aba20707271251g7cf968a6o3840739dec548408@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: git diff with add/modified codes
+Date: Fri, 27 Jul 2007 18:05:42 -0400
+Message-ID: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Carlos Rica" <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 23:09:14 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 28 00:06:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEX3a-0006lz-Os
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 23:09:07 +0200
+	id 1IEXwb-0006jm-Pi
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 00:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933678AbXG0VJD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 17:09:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762425AbXG0VJD
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 17:09:03 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:52186 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761271AbXG0VJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 17:09:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727210901.GOBX1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 27 Jul 2007 17:09:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Ul901X0041kojtg0000000; Fri, 27 Jul 2007 17:09:00 -0400
-In-Reply-To: <1b46aba20707271251g7cf968a6o3840739dec548408@mail.gmail.com>
-	(Carlos Rica's message of "Fri, 27 Jul 2007 21:51:41 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761697AbXG0WFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 18:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762711AbXG0WFo
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 18:05:44 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:62211 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761154AbXG0WFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 18:05:43 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1068723wah
+        for <git@vger.kernel.org>; Fri, 27 Jul 2007 15:05:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ez0mdlf+M1msvX1QUhZq1hmcwZeC2rWQu75+g6epykUv+xrwiR8L62RK4wVahDAyP9XvNFuM4Hju6o1GGCd/NK6mNFQZHBACwNWSlZbcyaeG3jLr+0+Kbi5GhSOt2ZpbPBYo3J2HRvPf4VisWyWEE8M7X6UuDmKw40FWtitjeuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=EzP2QwR4TsibRztQGS3v2loA9yi78Xln7SYYJGSxfs8riAcBfJXBhcWt7cIYB9JDayDLpxBVzaj8oFNbaaZJYFP0PcADgwq8IcpJYEjSVxkw/RPDpraZ9eo0E8G2Imth+YnuyrMR993vIMGPHp2K3NsjKO9C2J1WteKf6SjWqZw=
+Received: by 10.114.148.1 with SMTP id v1mr3372376wad.1185573942599;
+        Fri, 27 Jul 2007 15:05:42 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Fri, 27 Jul 2007 15:05:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53971>
 
-"Carlos Rica" <jasampler@gmail.com> writes:
+Is there a magic git diff incantation that will add file status codes
+(Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R)) to the
+--stat output? I can't see how to get this info on any diff output
+without doing multiple diffs with --diff-filter.
 
-> In my system, some of the tests give 141 and others give 1 as exit code.
-> Dscho said that it could depend on the CPU current load of the computer,
-> since he got always 141 as you said, so perhaps it's me.
-
-This is expected.  It depends on how processess are scheduled.
-
-What is happening is:
-
- 1. Your process prepares the whole thing in vtag-tmp, to hand
-    to gpg;
-
- 2. You make a pipe and start gpg with the above file telling it
-    "here is a detached signature file, the payload will be fed
-    through your stdin";
-
- 3-a. You feed the payload to the pipe, expecting gpg to read it.
-
- 3-b. gpg reads the detached signature file, finds no signature in
-    the vtag-tmp file because the tag in question is not signed,
-    and exits without reading a single byte from the pipe;
-
-Now, 3-a and 3-b run in parallel.  If 3-a is scheduled before
-3-b happens, because payload is very often much smaller than the
-in-kernel pipe buffer, your write(2) succeeds before gpg gives up
-and exits without reading from the pipe.  If 3-b is scheduled
-before 3-a, then gpg exits and when 3-a gets around to write(2)
-to the pipe, write notices that there is nobody on the other end
-of the pipe, and you get SIGPIPE.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
