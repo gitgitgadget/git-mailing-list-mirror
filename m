@@ -1,88 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] Clean up work-tree handling
-Date: Fri, 27 Jul 2007 11:50:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707271146290.14781@racer.site>
-References: <Pine.LNX.4.64.0707260729150.14781@racer.site>
- <20070726220949.GA4420@moooo.ath.cx>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: Re: git-gui: i18n introductory document (2nd draft)
+Date: Fri, 27 Jul 2007 13:13:45 +0200
+Message-ID: <20070727111345.GY31655@genesis.frugalware.org>
+References: <7vir87adzo.fsf@assigned-by-dhcp.cox.net> <7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jul 27 12:51:26 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rNtUoUA3Tn0/N1iC"
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Christian Stimming <christian.stimming@ibeo-as.com>,
+	Irina Riesen <irina.riesen@gmail.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Xudong Guan <xudong.guan@gmail.com>,
+	Nanako Shiraishi <nanako3@bluebottle.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 13:14:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IENPn-0000xo-M4
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 12:51:24 +0200
+	id 1IENlv-0007jA-Rx
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 13:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764518AbXG0KvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 06:51:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762368AbXG0KvJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 06:51:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41377 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760376AbXG0KvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 06:51:07 -0400
-Received: (qmail invoked by alias); 27 Jul 2007 10:51:04 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp035) with SMTP; 27 Jul 2007 12:51:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ksoIa134k8kZ4Pbm0hXkJEIDIxAcmJUcrB6qih1
-	uDOtk1I2lL5pRQ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070726220949.GA4420@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1757485AbXG0LOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 07:14:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbXG0LOK
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 07:14:10 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:44131 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752464AbXG0LOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 07:14:09 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1IENlX-0000Uz-Bo
+	from <vmiklos@frugalware.org>; Fri, 27 Jul 2007 13:13:59 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 56D4F18682FF; Fri, 27 Jul 2007 13:13:45 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 1.1
+X-ELTE-SpamLevel: s
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
+	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
+	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
+	[score: 0.5000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53915>
 
-Hi,
 
-On Fri, 27 Jul 2007, Matthias Lederhofer wrote:
+--rNtUoUA3Tn0/N1iC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > +const char *get_git_work_tree(void)
-> > +{
-> > +	static int initialized = 0;
-> > +	if (!initialized) {
-> > +		work_tree = getenv(GIT_WORK_TREE_ENVIRONMENT);
-> > +		if (!work_tree) {
-> > +			work_tree = git_work_tree_cfg;
-> > +			if (work_tree && !is_absolute_path(work_tree))
-> > +			work_tree = git_path(work_tree);
-> 
-> A tab is missing here.
+Hello,
 
-Right.  And as Junio pointed out, an xstrdup().
+Na Thu, Jul 26, 2007 at 04:31:06PM -0700, Junio C Hamano <gitster@pobox.com> pisal(a):
+> +	$ cd git-gui-i18n.git
 
-> > -				fprintf(stderr, "No directory given for --work-tree.\n" );
-> > +				error("No directory given for --work-tree.\n");
-> 
-> There should probably be no '\n' at the end when the 'error' function
-> is used.  There are two other calls to fprintf(stderr, <error message>)
-> next to the one you changed, why did you change this one but not the
-> other ones?
+this should be git-gui-i18n (no .git), if i'm not wrong :)
 
-Well, that is a left over of some unrelated editing.
+- VMiklos
 
-The patch series that I sent out was deficient in many ways, but I was 
-tired, and wanted to show where I am heading.
+--rNtUoUA3Tn0/N1iC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-ATM I am trying to finish up this series, with quite a few changes to the 
-code I sent out.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
 
-But there is a fundamental question I have to ask: Is there any reason why 
+iD8DBQFGqdNpe81tAgORUJYRAoQCAJ9dG9JhkSyZ8kuUUO+9UOAeACs9jACcDHKI
+lRzV35Evqk1+IkLxrhj1G44=
+=FWLK
+-----END PGP SIGNATURE-----
 
-	$ git --git-dir=/some/where/else.git bla
-
-should pretend that the repo is bare if core.bare == 1?  I mean, we are 
-implicitely setting the work tree to the cwd, no?
-
-IOW I see the merits of "core.bare = false" (to prevent harm when calling 
-git inside the git directory), but I cannot see the merits of "core.bare = 
-true".  Someone enlighten me?
-
-Ciao,
-Dscho
+--rNtUoUA3Tn0/N1iC--
