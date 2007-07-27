@@ -1,163 +1,97 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] zlib in custom location
-Date: Fri, 27 Jul 2007 08:14:56 +0200
-Message-ID: <20070727061456.GD30038@schiele.dyndns.org>
-References: <20070727054251.GC30038@schiele.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: git-gui-i18n: Make "Revert changes in these $n files" translatable.
+Date: Thu, 26 Jul 2007 23:41:10 -0700 (PDT)
+Message-ID: <53264.26898.qm@web38901.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Km1U/tdNT/EmXiR1"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 08:15:31 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Stimming <stimming@tuhh.de>,
+	Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>
+X-From: git-owner@vger.kernel.org Fri Jul 27 08:41:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEJ6m-0004u3-5g
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 08:15:28 +0200
+	id 1IEJVn-00038B-7u
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 08:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753155AbXG0GPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 02:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbXG0GPE
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 02:15:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:4049 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752876AbXG0GPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 02:15:01 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so658372ugf
-        for <git@vger.kernel.org>; Thu, 26 Jul 2007 23:15:00 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=RrTaEMvC3wqSgAdQPGF+QLsj8mJeZbyXcriDtGjQQINjggqR9K2E56ytDrAMVqK/l39iIqoEHS1ZTQN06+tjeY4NkFi3NasHpaoOn+527cB3mZi0kycdnkZF0RCCDdVARfsYoVfc219VhicpBe2a7690mMdKmpfoW0fUMZjGaQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=YcSIjkUoVDocBx1Zs5fZZtn5SgXIK1vgjBpBHXCBAco+s5vdMs0K8GYQ5jTcdfqUNF5q8Lf741fMShx3QwuRTpaV4rF3eJjdgbSZlIoU35+NqJLEX9wkyrwWuVUD2eVSNDOw/r3BnehRCXY3Z1iRg1XYYTYG0T6Ljn9oEGr8+qE=
-Received: by 10.86.60.7 with SMTP id i7mr1700383fga.1185516900044;
-        Thu, 26 Jul 2007 23:15:00 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.92.138])
-        by mx.google.com with ESMTPS id 34sm10336024nfu.2007.07.26.23.14.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 Jul 2007 23:14:59 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 98182B973C9; Fri, 27 Jul 2007 08:14:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070727054251.GC30038@schiele.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1761891AbXG0GlM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 02:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760840AbXG0GlM
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 02:41:12 -0400
+Received: from web38901.mail.mud.yahoo.com ([209.191.125.107]:46521 "HELO
+	web38901.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755373AbXG0GlL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 02:41:11 -0400
+Received: (qmail 26902 invoked by uid 60001); 27 Jul 2007 06:41:11 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=q7OTfOyzCut3ZE9bb/9G7q6rdHbR9Strdc2Iau6qWZq51CxN6buHJvnSH1aULIFiXxeSAZD72yKXLeJTQUgzbSTs2HsvjsPVnXJSS+ouH7zbBKf/6vk8gNeeN7JqCG1nC+jOhgn4n0XLyqUOHj23CepmloIfm+sQC7fmZPBneV8=;
+X-YMail-OSG: h8i4I2oVM1kaIdo0hDehlLnJ0QA8euWftwkdGB6CYELk2uaOh3AC2E79j9n9VvQWD_u38tnJX4D2QiwjAYbQEz2zzlj7VlYXSgngPMVXLrGOkqU-
+Received: from [128.251.88.135] by web38901.mail.mud.yahoo.com via HTTP; Thu, 26 Jul 2007 23:41:10 PDT
+X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53901>
+
+> 
+> 
+> ----- Original Message ----
+> From: Christian Stimming <stimming@tuhh.de>
+> To: Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>
+> Cc: Shawn O. Pearce <spearce@spearce.org>; Brett Schwarz <brett_schwarz@yahoo.com>; git@vger.kernel.org; Paul Mackerras <paulus@samba.org>; Junio C Hamano <gitster@pobox.com>
+> Sent: Thursday, July 26, 2007 5:34:49 AM
+> Subject: Re: git-gui-i18n: Make "Revert changes in these $n files" translatable.
+> 
+> Quoting Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>:
+> > On Thu, Jul 26, 2007 at 10:47:23AM +0200, Christian Stimming wrote:
+> >> The issue with plural forms is even more complicated than that.
+> >
 
 
---Km1U/tdNT/EmXiR1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+<snip>
 
-On Fri, Jul 27, 2007 at 07:42:51AM +0200, Robert Schiele wrote:
-> Hi,
->=20
-> I have some systems with zlib in a custom location and thus did the follo=
-wing
-> change to support a variable ZLIBDIR like it does already exist for
-> OPENSSLDIR.  Would be great to see this in the main tree.
+> > - Buttons in hard reset confirmation (branch->revert or merge->abort,
+> >   and it is yes/no dialog).
+> 
+> I see this in translated form (German Ja/Nein), and also the button  
+> text (translated or not) doesn't appear in the git-gui source code.  
+> Maybe those need to be translated in the tcl/tk system libraries?
+> 
 
-Just to follow up this change I have another one:
+These are indeed in the Tk libs. Unfortunately, there is no straight forward way to change the button text for tk_messageBox. I'll probably submit a patch to Tcl core for this.
 
-Since some Linux archs use different names for the library directory than
-"lib" (like "lib64") I made this a config variable as well.  Currently this=
- is
-only an issue if you use custom directories for libraries used by git.
+In the mean time, if this is important, there are 2 ways around this:
 
-commit a1cffe56cc9092443cd8bd03b18eb7e222528e35
-Author: Robert Schiele <rschiele@gmail.com>
-Date:   Thu Jul 26 23:08:47 2007 -0700
+1) override the button text in the msgcat. Tk does it's own msgcat internally (under the Tk namespace), and that's what prevents msgcat from changing these. You can see these under msgs directory where Tk is installed (/usr/local/tk8.4/msgs on my system). So, you would have to override for each language specified in that directory (if it warrants overriding). So, somewhere in the git-gui, you would have to do something like:
+    namespace eval ::Tk {
+      ::msgcat::mcset en_us &OK <new_term>
+      ::msgcat::mcset en_us &Cancel <new_term>
+      ::msgcat::mcset en_us &Yes <new_term>
+      ::msgcat::mcset en_us &No <new_term>
+      <continue for each language, if needed>
+    }
 
-    - make the name of the library directory a config option
+2) Re-write the tk_messageBox, to include an option to specify the button text. This wouldn't be too hard actually, but this would live with git-gui.
 
-diff --git a/Makefile b/Makefile
-index 0179339..64c0a59 100644
---- a/Makefile
-+++ b/Makefile
-@@ -151,6 +151,7 @@ sysconfdir =3D /etc
- else
- sysconfdir =3D $(prefix)/etc
- endif
-+lib =3D lib
- ETC_GITCONFIG =3D $(sysconfdir)/gitconfig
- # DESTDIR=3D
-=20
-@@ -170,7 +171,7 @@ GITWEB_FAVICON =3D git-favicon.png
- GITWEB_SITE_HEADER =3D
- GITWEB_SITE_FOOTER =3D
-=20
--export prefix bindir gitexecdir sharedir template_dir sysconfdir
-+export prefix bindir gitexecdir sharedir template_dir sysconfdir lib
-=20
- CC =3D gcc
- AR =3D ar
-@@ -499,9 +500,9 @@ endif
-=20
- ifndef NO_CURL
- 	ifdef CURLDIR
--		# Try "-Wl,-rpath=3D$(CURLDIR)/lib" in such a case.
-+		# Try "-Wl,-rpath=3D$(CURLDIR)/$(lib)" in such a case.
- 		BASIC_CFLAGS +=3D -I$(CURLDIR)/include
--		CURL_LIBCURL =3D -L$(CURLDIR)/lib $(CC_LD_DYNPATH)$(CURLDIR)/lib -lcurl
-+		CURL_LIBCURL =3D -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -=
-lcurl
- 	else
- 		CURL_LIBCURL =3D -lcurl
- 	endif
-@@ -519,7 +520,7 @@ endif
-=20
- ifdef ZLIBDIR
- 	BASIC_CFLAGS +=3D -I$(ZLIBDIR)/include
--	EXTLIBS +=3D -L$(ZLIBDIR)/lib $(CC_LD_DYNPATH)$(ZLIBDIR)/lib
-+	EXTLIBS +=3D -L$(ZLIBDIR)/$(lib) $(CC_LD_DYNPATH)$(ZLIBDIR)/$(lib)
- endif
- EXTLIBS +=3D -lz
-=20
-@@ -527,7 +528,7 @@ ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL =3D -lssl
- 	ifdef OPENSSLDIR
- 		BASIC_CFLAGS +=3D -I$(OPENSSLDIR)/include
--		OPENSSL_LINK =3D -L$(OPENSSLDIR)/lib $(CC_LD_DYNPATH)$(OPENSSLDIR)/lib
-+		OPENSSL_LINK =3D -L$(OPENSSLDIR)/$(lib) $(CC_LD_DYNPATH)$(OPENSSLDIR)/$(=
-lib)
- 	else
- 		OPENSSL_LINK =3D
- 	endif
-@@ -544,7 +545,7 @@ endif
- ifdef NEEDS_LIBICONV
- 	ifdef ICONVDIR
- 		BASIC_CFLAGS +=3D -I$(ICONVDIR)/include
--		ICONV_LINK =3D -L$(ICONVDIR)/lib $(CC_LD_DYNPATH)$(ICONVDIR)/lib
-+		ICONV_LINK =3D -L$(ICONVDIR)/$(lib) $(CC_LD_DYNPATH)$(ICONVDIR)/$(lib)
- 	else
- 		ICONV_LINK =3D
- 	endif
+I don't think option #1 is robust enough, but would be the easiest approach. Note also that this would only be for unix platforms, since for windows and Mac, it calls the platform's equivalent.
 
-Robert
+HTH,
 
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+    --brett
 
-"Quidquid latine dictum sit, altum sonatur."
 
---Km1U/tdNT/EmXiR1
-Content-Type: application/pgp-signature
-Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
 
-iD8DBQFGqY1gxcDFxyGNGNcRAgydAKCMTUaXslHwGeY1ofh8YJjN6iX9BgCdHEHo
-Xfke2Iaxbm8oGd7VosiZ7Ts=
-=j0+D
------END PGP SIGNATURE-----
 
---Km1U/tdNT/EmXiR1--
+
+       
+____________________________________________________________________________________
+Building a website is a piece of cake. Yahoo! Small Business gives you all the tools to get online.
+http://smallbusiness.yahoo.com/webhosting 
