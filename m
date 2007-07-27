@@ -1,85 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui problem with version number.
-Date: Fri, 27 Jul 2007 01:36:27 -0400
-Message-ID: <20070727053627.GI20052@spearce.org>
-References: <86odhzpg2l.fsf@lola.quinscape.zz> <20070727044634.GG20052@spearce.org> <85y7h25sg6.fsf@lola.goethe.zz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: index-pack died on pread
+Date: Thu, 26 Jul 2007 22:36:16 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707262231280.3442@woody.linux-foundation.org>
+References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
+ <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
+ <200707260115.13234.robin.rosenberg.lists@dewire.com>
+ <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org>
+ <81b0412b0707260542o58fcb73bu81ae09aa1df84c81@mail.gmail.com>
+ <alpine.LFD.0.999.0707260911040.3442@woody.linux-foundation.org>
+ <7vps2e5x4y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:36:36 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Michal Rokos <michal.rokos@gmail.com>,
+	GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:37:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEIV9-0003iI-O6
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:36:36 +0200
+	id 1IEIVm-0003sY-Bk
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:37:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757219AbXG0Fgc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 01:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757146AbXG0Fgc
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:36:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53376 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756894AbXG0Fgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 01:36:31 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IEIV2-00074r-Ur; Fri, 27 Jul 2007 01:36:29 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 30BE920FBAE; Fri, 27 Jul 2007 01:36:28 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <85y7h25sg6.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1757146AbXG0FhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:37:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756276AbXG0FhL
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:37:11 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:53767 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755419AbXG0FhJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:37:09 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5aMFP004705
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Jul 2007 22:36:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5aG4f007655;
+	Thu, 26 Jul 2007 22:36:17 -0700
+In-Reply-To: <7vps2e5x4y.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.73 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53893>
 
-David Kastrup <dak@gnu.org> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+
+
+On Thu, 26 Jul 2007, Junio C Hamano wrote:
 > 
-> > David Kastrup <dak@gnu.org> wrote:
-> >> Hi, git-gui does not get along with the creativeness in git
-> >> versioning:
-> >
-> > What version of git-gui?  gitgui-0.7.5-67-g91464df and later have
-> > fixes to handle all of the fun cases in git versioning.  Like the
-> > one you have here.
-> >  
-> >> git-gui
-> >> Error in startup script: expected version number but got "1.5.3.rc2.4.g726f9-dirty"
-> >>     while executing
-> >> "package vcompare $_git_version $vr"
-> 
-> The one coming with the mentioned version number.  I suspect that this
-> may be a matter of the Perl libraries being used: I experience this on
-> an Ubuntu Dapper, but not on other (newer) systems compiled from the
-> same source.
+> If you mean the offset associated with fd, we actually do.
 
-Ah.  Junio hasn't pulled those version numbering fixes from me yet.
-Because I haven't asked him to pull in a while.  That explains that.
+Ahh, for some reason I thought we didn't (probably because the user likely 
+doesn't care at all), but right you are..
 
-There's no Perl involved in git-gui, except for the Perl in an
-underlying Git command it might invoke.  So perhaps you were
-talking about Tcl above?
+> The original HP-UX error is confusing, as we ask pread() to
+> transfer 428 bytes and it returns 0 (not returning -1 with
+> EINTR).  Return value of zero is understandable, if the starting
+> position is at or after the EOF, but the offset is 123601 and
+> 56k objects packed from git.git repository should be longer than
+> that, so that also sounds implausible.
 
-Anyway, you can setup a build with the most recent 'stable
-development' version of git-gui:
+Yeah. It is suspicious.
 
-  git checkout -b with-new-gitgui
-  git pull -s subtree git://repo.or.cz/git-gui.git
+If somebody could run git under gdb on HP-UX (preferably compiled 
+statically), and just disassemble the pread() thing, it would be 
+interesting.
 
-That's really all Junio does.  Although I think he does actually try
-to test it briefly before pushing a final release out to the public.
-Just to make sure Git hasn't broken anything really obvious in
-git-gui.  ;-)
+PA-RISC assembly is *almost* entirely unreadable, but it might show 
+whether hpux-11.11 actually has a pread() system call or whether it is 
+doing the "emulate with lseek" and maybe obviously buggily at that..
 
--- 
-Shawn.
+It really isn't that complex a system call. So I'm surprised at bugs 
+there, and that makes me worry that there is something in git that 
+triggers this.
+
+		Linus
