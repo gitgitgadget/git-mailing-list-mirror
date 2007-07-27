@@ -1,68 +1,147 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Gitweb and submodules
-Date: Fri, 27 Jul 2007 16:31:42 +0200
-Message-ID: <8c5c35580707270731l1fa5bd1dw94c9955d314b4ce6@mail.gmail.com>
-References: <200707271322.50114.jnareb@gmail.com>
+From: Robert Ewald <robert.ewald@nov.com>
+Subject: [PATCH] git-svn: Translate invalid characters in refname
+Date: Fri, 27 Jul 2007 16:40:07 +0200
+Organization: Nobody is responsible but me
+Message-ID: <f8d04a$gvf$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 16:31:50 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 27 16:40:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEQr7-00023z-VS
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 16:31:50 +0200
+	id 1IEQzk-0005HD-BL
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 16:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932749AbXG0Obq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 10:31:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbXG0Obq
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 10:31:46 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:56176 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932184AbXG0Obp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 10:31:45 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so749334nze
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 07:31:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AxtbqZm8VWZ32CH0rpe9M9EDTHQPcbTADxrxFJphhMG0ybpsyDQluAMaD6hbKhh3RCuqrwPSA/Y0Maug0wFSgGaUUd1DZb06KSU5An6uP7Xlnn9myKzkBIYh2b2yIQpMPOZ+hvFreGyLX3qqGagZnc+wrxUt8bD455Sjiy4Vltg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JYtegm0llN2CLGWL6K/S7An1smQ65OP+75WaDvLS362F/34kCDGgLky+XOzdcnDIeik3RZ9OuCRlPsRXPyQlzp5/lraELjX8LVvakSnEDNKmFHM6b2LZPjxxDRzk2L+P16bPNd0kgtgoz/CWVOdVOk1kNQ1n+m2e3BE5+3rFKz0=
-Received: by 10.114.144.1 with SMTP id r1mr2979964wad.1185546702495;
-        Fri, 27 Jul 2007 07:31:42 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Fri, 27 Jul 2007 07:31:42 -0700 (PDT)
-In-Reply-To: <200707271322.50114.jnareb@gmail.com>
-Content-Disposition: inline
+	id S937231AbXG0Okh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 10:40:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937219AbXG0Okf
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 10:40:35 -0400
+Received: from main.gmane.org ([80.91.229.2]:33205 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936484AbXG0Okc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 10:40:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IEQzM-0000mx-OY
+	for git@vger.kernel.org; Fri, 27 Jul 2007 16:40:20 +0200
+Received: from static-213.88.188.4.addr.tdcsong.se ([213.88.188.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Jul 2007 16:40:20 +0200
+Received: from robert.ewald by static-213.88.188.4.addr.tdcsong.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Jul 2007 16:40:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: static-213.88.188.4.addr.tdcsong.se
+User-Agent: KNode/0.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53929>
 
-On 7/27/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> I'd like to add submodule support to gitweb, among others marking
-> submodules as such in the 'tree' view and adding 'log' view link to
-> them.
+Hello,
 
-A bit of advertising:
-  http://hjemli.net/git/cgit/tree
+My first patch, please be gentle.
 
-The implementation can be found here:
-  http://hjemli.net/git/cgit/tree/ui-tree.c#81
+This is a first attempt to get the escaping behavior into git-svn.
+I hope I have not screwed up too badly since this I have been looking
+at Perl for more or less the first time.
 
-> But for that I need a question answered: how to find GIT_DIR of
-> repository which contains submodule objects?
+So I would appreciate if any mistakes would be pointed out to me.
 
-Generally, you can't. But if you just want to show the log of the
-submodule path, you probably don't need to do anything at all (except
-the special handling in 'tree' view). If you do want to show the log
-of the referenced repository, I guess a new entry  in .gitmodules
-could be helpful.
+The patch works for me during clone, fetch and dcommit. I haven't
+tried anything else yet.
 
---
-larsh
+Robert
+
+PS: There is a testing script I have used. I suppose it should be put into
+the testing infrastructure, something I am not yet familiar with. If
+someone is interested I can send it as is.
+
+---
+
+In git some characters are invalid as documented
+in git-check-ref-format. In subversion these characters might
+be valid, so a translation is required.
+
+This patch does this translation by url escaping characters, that
+are not allowed.
+
+Credit for ideas and code snippets goes to Eric Wong, martin f. krafft and
+Jan Hudec
+
+Signed-off-by: Robert Ewald <robewald@gmx.net>
+---
+ git-svn.perl |   43 ++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 40 insertions(+), 3 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 6c692a7..68e62ab 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -938,8 +938,8 @@ sub resolve_local_globs {
+        foreach (command(qw#for-each-ref --format=%(refname) refs/remotes#)) {
+                next unless m#^refs/remotes/$ref->{regex}$#;
+                my $p = $1;
+-               my $pathname = $path->full_path($p);
+-               my $refname = $ref->full_path($p);
++               my $pathname = desanitize_refname($path->full_path($p));
++               my $refname = desanitize_refname($ref->full_path($p));
+                if (my $existing = $fetch->{$pathname}) {
+                        if ($existing ne $refname) {
+                                die "Refspec conflict:\n",
+@@ -1239,7 +1239,44 @@ sub new {
+        $self;
+ }
+ 
+-sub refname { "refs/remotes/$_[0]->{ref_id}" }
++sub refname { 
++        my ($refname) = "refs/remotes/$_[0]->{ref_id}" ;
++
++        # It cannot end with a slash /, we'll throw up on this because
++        # SVN can't have directories with a slash in their name, either:
++        if ($refname =~ m{/$}) {
++                die "ref: '$refname' ends with a trailing slash, this is ",
++                    "not permitted by git nor Subversion\n";
++        }
++
++        # It cannot have ASCII control character space, tilde ~, caret ^,
++        # colon :, question-mark ?, asterisk *, space, or open bracket[
+anywhere
++       #
++        # Additionally, % must be escaped because it is used for escaping
++        # and we want our escaped refname to be reversible
++        $refname =~ s{([ \%~\^:\?\*\[\t])}{uc sprintf('%%%02x',ord($1))}eg;
++
++        # no slash-separated component can begin with a dot .
++        # /.* becomes /%2E*
++        $refname =~ s{/\.}{/%2E}g;
++        # It cannot have two consecutive dots .. anywhere
++        # .. becomes %2E%2E
++        $refname =~ s{\.\.}{%2E%2E}g;
++
++        $refname;
++}
++
++sub desanitize_refname {
++    my ($refname) = @_;
++
++    print "bob: desanitized from $refname ";
++
++    $refname =~ s{%(?:([0-9A-F]{2}))}{chr hex($1)}eg;
++
++    print " to $refname \n";
++
++    $refname;
++}
+ 
+ sub svm_uuid {
+        my ($self) = @_;
+-- 
+1.5.3.rc3-dirty
+
+-- 
+Robert Ewald
