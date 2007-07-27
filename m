@@ -1,77 +1,70 @@
 From: David Kastrup <dak@gnu.org>
-Subject: Re: gitk screenshots of complex history
-Date: Fri, 27 Jul 2007 07:49:23 +0200
-Message-ID: <85k5sm5rbw.fsf@lola.goethe.zz>
-References: <20070727041300.GD20052@spearce.org>
-	<alpine.LFD.0.999.0707262219210.3442@woody.linux-foundation.org>
-	<20070727052934.GH20052@spearce.org>
+Subject: Re: git-gui problem with version number.
+Date: Fri, 27 Jul 2007 07:50:40 +0200
+Message-ID: <85ejiu5r9r.fsf@lola.goethe.zz>
+References: <86odhzpg2l.fsf@lola.quinscape.zz>
+	<20070727044634.GG20052@spearce.org> <85y7h25sg6.fsf@lola.goethe.zz>
+	<20070727053627.GI20052@spearce.org> <85odhy5rm6.fsf@lola.goethe.zz>
+	<20070727054815.GJ20052@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:49:40 2007
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:51:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEIhm-0006qm-Io
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:49:38 +0200
+	id 1IEIjK-0007J3-Bu
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759942AbXG0Ftg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 01:49:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759809AbXG0Ftf
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:49:35 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:59622 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751863AbXG0Ftf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:49:35 -0400
+	id S1760697AbXG0Fux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752501AbXG0Fux
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:50:53 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:46486 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759477AbXG0Fuw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:50:52 -0400
 Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 2BC4033696D;
-	Fri, 27 Jul 2007 07:49:34 +0200 (CEST)
-Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 1BBAC2DAB40;
-	Fri, 27 Jul 2007 07:49:34 +0200 (CEST)
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 8130017FCFC;
+	Fri, 27 Jul 2007 07:50:51 +0200 (CEST)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 6FEB32DA967;
+	Fri, 27 Jul 2007 07:50:51 +0200 (CEST)
 Received: from lola.goethe.zz (dslb-084-061-061-025.pools.arcor-ip.net [84.61.61.25])
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id A249145475;
-	Fri, 27 Jul 2007 07:49:33 +0200 (CEST)
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 41EEB1329A;
+	Fri, 27 Jul 2007 07:50:51 +0200 (CEST)
 Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 511091C39595; Fri, 27 Jul 2007 07:49:23 +0200 (CEST)
-In-Reply-To: <20070727052934.GH20052@spearce.org> (Shawn O. Pearce's message of "Fri\, 27 Jul 2007 01\:29\:34 -0400")
+	id E6DA41C39595; Fri, 27 Jul 2007 07:50:40 +0200 (CEST)
+In-Reply-To: <20070727054815.GJ20052@spearce.org> (Shawn O. Pearce's message of "Fri\, 27 Jul 2007 01\:48\:15 -0400")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3779/Thu Jul 26 21:33:22 2007 on mail-in-11.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53898>
 
 "Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> wrote:
->> On Fri, 27 Jul 2007, Shawn O. Pearce wrote:
->> > 
->> > I just compared my own history to Linus' linux-2.6 history.
->> > The kernel team can't hold a candle to this mess.
+> David Kastrup <dak@gnu.org> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> > Anyway, you can setup a build with the most recent 'stable
+>> > development' version of git-gui:
+>> >
+>> >   git checkout -b with-new-gitgui
+>> >   git pull -s subtree git://repo.or.cz/git-gui.git
 >> 
->> Rather on purpose, I might add. I've actually been fairly anal about 
->> having people maintain clean histories, to the point where I refuse to 
->> pull from trees that don't do a good enough job.
+>> Ok.  Would the necessity for this depend on the Tcl version?
 >
-> For 4 of our internal repositories I've taken that policy up now
-> myself, and nobody is allowed to create releases from them except me.
-> This has helped.  A lot.  So does sensible use of `git rebase -i`.
-> You and Junio have really sold me on the value of having someone
-> play a very strict gatekeeper role.  I get better work product from
-> my coworkers this way too.  They know someone else is looking at
-> what they are doing and try harder.
->
-> But it doesn't help the really old history, nor does it help
-> the repository these images came from.  I don't own/control that
-> development.  I just provide git help as much as I can.
+> I thought all versions of Tcl did not understand the 'creative'
+> git version strings.  So I'm surprised to hear it works on one
+> system but not on another, even though you have the same version
+> of git and git-gui.
 
-One idea I have not yet put into any code is using graphviz for
-creating a nice (possibly clickable) layout of a commit history.  It
-might be able to rearrange things such that the long parallel lines
-get avoided.  Could be an interesting feature for the HTML
-visualizers.
+I'll check once I am at work, but I am pretty sure that the versions
+are pretty much in synch.
 
 -- 
 David Kastrup, Kriemhildstr. 15, 44793 Bochum
