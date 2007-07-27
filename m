@@ -1,68 +1,68 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-gui problem with version number.
-Date: Fri, 27 Jul 2007 07:25:13 +0200
-Message-ID: <85y7h25sg6.fsf@lola.goethe.zz>
-References: <86odhzpg2l.fsf@lola.quinscape.zz>
-	<20070727044634.GG20052@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: gitk screenshots of complex history
+Date: Fri, 27 Jul 2007 01:29:34 -0400
+Message-ID: <20070727052934.GH20052@spearce.org>
+References: <20070727041300.GD20052@spearce.org> <alpine.LFD.0.999.0707262219210.3442@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:25:29 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:29:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEIKO-0000QJ-QS
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:25:29 +0200
+	id 1IEIOU-0001VG-QZ
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755207AbXG0FZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 01:25:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754986AbXG0FZZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:25:25 -0400
-Received: from mail-in-15.arcor-online.net ([151.189.21.55]:44964 "EHLO
-	mail-in-15.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754908AbXG0FZY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:25:24 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id B7AC24543A;
-	Fri, 27 Jul 2007 07:25:23 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 9FA77212FB7;
-	Fri, 27 Jul 2007 07:25:23 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-061-025.pools.arcor-ip.net [84.61.61.25])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 4706C1CB778;
-	Fri, 27 Jul 2007 07:25:23 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 3E7801C39595; Fri, 27 Jul 2007 07:25:13 +0200 (CEST)
-In-Reply-To: <20070727044634.GG20052@spearce.org> (Shawn O. Pearce's message of "Fri\, 27 Jul 2007 00\:46\:34 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3779/Thu Jul 26 21:33:22 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1753217AbXG0F3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:29:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbXG0F3j
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:29:39 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53252 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751523AbXG0F3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 01:29:39 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IEIOO-0006dr-D0; Fri, 27 Jul 2007 01:29:36 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 60E7F20FBAE; Fri, 27 Jul 2007 01:29:35 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0707262219210.3442@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53891>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Fri, 27 Jul 2007, Shawn O. Pearce wrote:
+> > 
+> > I just compared my own history to Linus' linux-2.6 history.
+> > The kernel team can't hold a candle to this mess.
+> 
+> Rather on purpose, I might add. I've actually been fairly anal about 
+> having people maintain clean histories, to the point where I refuse to 
+> pull from trees that don't do a good enough job.
 
-> David Kastrup <dak@gnu.org> wrote:
->> Hi, git-gui does not get along with the creativeness in git
->> versioning:
->
-> What version of git-gui?  gitgui-0.7.5-67-g91464df and later have
-> fixes to handle all of the fun cases in git versioning.  Like the
-> one you have here.
->  
->> git-gui
->> Error in startup script: expected version number but got "1.5.3.rc2.4.g726f9-dirty"
->>     while executing
->> "package vcompare $_git_version $vr"
+For 4 of our internal repositories I've taken that policy up now
+myself, and nobody is allowed to create releases from them except me.
+This has helped.  A lot.  So does sensible use of `git rebase -i`.
+You and Junio have really sold me on the value of having someone
+play a very strict gatekeeper role.  I get better work product from
+my coworkers this way too.  They know someone else is looking at
+what they are doing and try harder.
 
-The one coming with the mentioned version number.  I suspect that this
-may be a matter of the Perl libraries being used: I experience this on
-an Ubuntu Dapper, but not on other (newer) systems compiled from the
-same source.
+But it doesn't help the really old history, nor does it help
+the repository these images came from.  I don't own/control that
+development.  I just provide git help as much as I can.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Shawn.
