@@ -1,71 +1,88 @@
-From: Tomash Brechko <tomash.brechko@gmail.com>
-Subject: Re: index-pack died on pread
-Date: Fri, 27 Jul 2007 14:33:15 +0400
-Message-ID: <20070727103315.GB5047@moonlight.home>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com> <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org> <200707260115.13234.robin.rosenberg.lists@dewire.com> <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org> <81b0412b0707260542o58fcb73bu81ae09aa1df84c81@mail.gmail.com> <alpine.LFD.0.999.0707260911040.3442@woody.linux-foundation.org> <7vps2e5x4y.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0707262231280.3442@woody.linux-foundation.org> <20070727095013.GA5047@moonlight.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] Clean up work-tree handling
+Date: Fri, 27 Jul 2007 11:50:57 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707271146290.14781@racer.site>
+References: <Pine.LNX.4.64.0707260729150.14781@racer.site>
+ <20070726220949.GA4420@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Michal Rokos <michal.rokos@gmail.com>
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 12:33:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jul 27 12:51:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEN8P-00040q-Ei
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 12:33:25 +0200
+	id 1IENPn-0000xo-M4
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 12:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759263AbXG0KdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 06:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757475AbXG0KdX
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 06:33:23 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:1916 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752641AbXG0KdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 06:33:21 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so686992ugf
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 03:33:20 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=OsvOzaRGQ5UKUrNk/r7tCt4GsJQzzjKP8jzsSpQ7QCBk3BWnfZ7gFJwZO939lwrI9zPszN1QcltSiyL/e2UZQXBV24wwJK0FWLUyKBlcbG82Kpxh+LZWBJUJxK7yx+2W2Mj/5BhFXlXEjqlYtmVrgMw7wzrONcDv05OPUmQ3ngg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=IoCNTFRapwrCZeMAy8tRtz0a1WXG64+dnZB4CZZKT9H/4q2Ta6FN8SG1y4wlxd2gnZ1f/5cJyncgGz82TQzaRe860SQHpxMS6flxumMA+fS1LfWL7ALxkjEmNHRUX3FRYp+r2NbDcEv9nITWypmgeFQIqwIBRyYOCcEYn9HdEeY=
-Received: by 10.86.57.9 with SMTP id f9mr1863417fga.1185532399922;
-        Fri, 27 Jul 2007 03:33:19 -0700 (PDT)
-Received: from moonlight.home ( [80.246.71.156])
-        by mx.google.com with ESMTPS id c14sm3317405nfi.2007.07.27.03.33.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 27 Jul 2007 03:33:19 -0700 (PDT)
-Received: from moonlight.home (localhost.localdomain [127.0.0.1])
-	by moonlight.home (Postfix) with ESMTP id D88323A8BC;
-	Fri, 27 Jul 2007 14:33:16 +0400 (MSD)
-Received: (from tomash@localhost)
-	by moonlight.home (8.13.1/8.13.1/Submit) id l6RAXFfL016380;
-	Fri, 27 Jul 2007 14:33:15 +0400
-Content-Disposition: inline
-In-Reply-To: <20070727095013.GA5047@moonlight.home>
-User-Agent: Mutt/1.4.1i
+	id S1764518AbXG0KvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 06:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762368AbXG0KvJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 06:51:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41377 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760376AbXG0KvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 06:51:07 -0400
+Received: (qmail invoked by alias); 27 Jul 2007 10:51:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp035) with SMTP; 27 Jul 2007 12:51:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ksoIa134k8kZ4Pbm0hXkJEIDIxAcmJUcrB6qih1
+	uDOtk1I2lL5pRQ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070726220949.GA4420@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53914>
 
-On Fri, Jul 27, 2007 at 13:50:13 +0400, Tomash Brechko wrote:
-> There's no dup() call, so when we mess pack_fd (that is used in
-> pread() only), we also mess one more file descriptor that is used
-> sequentially (output_fd in my case), and so may corrupt the pack.
+Hi,
 
-I was wrong on the dup() part, since dup()'ed descriptors share the
-same file position.  Anyway, if my guess is right, the fix would
-probably be not to use broken pread() that messes file position,
-rather than to be ready and workaround that.
+On Fri, 27 Jul 2007, Matthias Lederhofer wrote:
 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > +const char *get_git_work_tree(void)
+> > +{
+> > +	static int initialized = 0;
+> > +	if (!initialized) {
+> > +		work_tree = getenv(GIT_WORK_TREE_ENVIRONMENT);
+> > +		if (!work_tree) {
+> > +			work_tree = git_work_tree_cfg;
+> > +			if (work_tree && !is_absolute_path(work_tree))
+> > +			work_tree = git_path(work_tree);
+> 
+> A tab is missing here.
 
--- 
-   Tomash Brechko
+Right.  And as Junio pointed out, an xstrdup().
+
+> > -				fprintf(stderr, "No directory given for --work-tree.\n" );
+> > +				error("No directory given for --work-tree.\n");
+> 
+> There should probably be no '\n' at the end when the 'error' function
+> is used.  There are two other calls to fprintf(stderr, <error message>)
+> next to the one you changed, why did you change this one but not the
+> other ones?
+
+Well, that is a left over of some unrelated editing.
+
+The patch series that I sent out was deficient in many ways, but I was 
+tired, and wanted to show where I am heading.
+
+ATM I am trying to finish up this series, with quite a few changes to the 
+code I sent out.
+
+But there is a fundamental question I have to ask: Is there any reason why 
+
+	$ git --git-dir=/some/where/else.git bla
+
+should pretend that the repo is bare if core.bare == 1?  I mean, we are 
+implicitely setting the work tree to the cwd, no?
+
+IOW I see the merits of "core.bare = false" (to prevent harm when calling 
+git inside the git directory), but I cannot see the merits of "core.bare = 
+true".  Someone enlighten me?
+
+Ciao,
+Dscho
