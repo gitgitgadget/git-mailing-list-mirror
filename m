@@ -1,89 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use lockfile.c routines in git_commit_set_multivar()
-Date: Thu, 26 Jul 2007 21:53:54 -0700
-Message-ID: <7v7iom5twd.fsf@assigned-by-dhcp.cox.net>
-References: <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
-	<Pine.LNX.4.64.0707261926590.14781@racer.site>
-	<f158199e0707261148r29419a39h7d83fc7bd0ea7df1@mail.gmail.com>
-	<7vfy3a5uzv.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: bug: update hook failure doesn't prevent local deletion of a branch
+Date: Thu, 26 Jul 2007 22:00:41 -0700
+Message-ID: <7v3aza5tl2.fsf@assigned-by-dhcp.cox.net>
+References: <200707251250.08166.andyparkins@gmail.com>
+	<7vk5sm5vrd.fsf@assigned-by-dhcp.cox.net>
+	<20070727042606.GE20052@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Bradford Smith" <bradford.carl.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 06:54:05 2007
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:00:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEHq1-00020o-HU
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 06:54:05 +0200
+	id 1IEHwU-0003FH-Qs
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737AbXG0Ex4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 00:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752544AbXG0Ex4
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 00:53:56 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:50312 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700AbXG0Exz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 00:53:55 -0400
+	id S1752719AbXG0FAo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbXG0FAo
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:00:44 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:47655 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbXG0FAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 01:00:43 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727045353.YVLI1358.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 27 Jul 2007 00:53:53 -0400
+          id <20070727050043.PGKV1358.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 27 Jul 2007 01:00:43 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id UUtt1X00e1kojtg0000000; Fri, 27 Jul 2007 00:53:54 -0400
-In-Reply-To: <7vfy3a5uzv.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 26 Jul 2007 21:30:12 -0700")
+	id UV0h1X00C1kojtg0000000; Fri, 27 Jul 2007 01:00:42 -0400
+In-Reply-To: <20070727042606.GE20052@spearce.org> (Shawn O. Pearce's message
+	of "Fri, 27 Jul 2007 00:26:06 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53886>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> "Bradford Smith" <bradford.carl.smith@gmail.com> writes:
->
->> FWIW, I have successfully run 'make test' and also verified that it
->> behaves as I expect with my ~/.gitconfig symlink (in conjunction with
->> the my other patch for resolving symlinks).
->
-> Existing "make test" testsuite is not an appropriate thing to
-> say this patch is safe, as we do not have much symlinking in the
-> test git repository there.  Care to add a new test or two?
+> We should make our repository state reflect the user's internal
+> mental view of what just happened, especially here, because the
+> user's mental view is probably correct.
 
-How about this?  On top of your "lockfile to keep symlink" and
-"set-multivar to use lockfile protocol" patches.
-
----
-
- t/t1300-repo-config.sh |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 1c43cc3..187ca2d 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -595,4 +595,19 @@ echo >>result
- 
- test_expect_success '--null --get-regexp' 'cmp result expect'
- 
-+test_expect_success 'symlinked configuration' '
-+
-+	ln -s notyet myconfig &&
-+	GIT_CONFIG=myconfig git config test.frotz nitfol &&
-+	test -h myconfig &&
-+	test -f notyet &&
-+	test "z$(GIT_CONFIG=notyet git config test.frotz)" = znitfol &&
-+	GIT_CONFIG=myconfig git config test.xyzzy rezrov &&
-+	test -h myconfig &&
-+	test -f notyet &&
-+	test "z$(GIT_CONFIG=notyet git config test.frotz)" = znitfol &&
-+	test "z$(GIT_CONFIG=notyet git config test.xyzzy)" = zrezrov
-+
-+'
-+
- test_done
+Fair enough.  At least if we correct git-push so that when it
+exits with failure it would not touch the local refs, I would
+think that would make what happens to match user's mental model
+much better.  The user would be _told_ that it failed, and then
+can fetch back if he cares where the remote heads are too
+deeply.
