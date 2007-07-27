@@ -1,89 +1,96 @@
-From: Ray Lehtiniemi <rayl@mail.com>
-Subject: Re: Can you do this with GIT?
-Date: Fri, 27 Jul 2007 14:08:06 -0600
-Message-ID: <200707271408.07108.rayl@mail.com>
-References: <11834063.post@talk.nabble.com> <200707271345.03300.rayl@mail.com> <Pine.LNX.4.64.0707272048280.14781@racer.site>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: [PATCH 2/2] gitk: Markup many strings for translation.
+Date: Fri, 27 Jul 2007 13:19:08 -0700 (PDT)
+Message-ID: <959247.27950.qm@web38905.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: CPD <cdavidson@altsoftware.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 27 22:08:59 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>,
+	Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 22:19:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEW7N-000507-Ku
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 22:08:57 +0200
+	id 1IEWHX-0008DU-Fy
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 22:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933820AbXG0UIw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 16:08:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934142AbXG0UIw
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 16:08:52 -0400
-Received: from static-68-179-52-57.ptr.terago.ca ([68.179.52.57]:41218 "EHLO
-	mail.headplay.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933644AbXG0UIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 16:08:51 -0400
-Received: from linux.local ([192.168.1.201])
-	by mail.headplay.com with ESMTP; Fri, 27 Jul 2007 14:08:38 -0600
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0707272048280.14781@racer.site>
-Content-Disposition: inline
+	id S936127AbXG0UTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 16:19:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936130AbXG0UTL
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 16:19:11 -0400
+Received: from web38905.mail.mud.yahoo.com ([209.191.125.111]:47709 "HELO
+	web38905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S936127AbXG0UTK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 16:19:10 -0400
+Received: (qmail 28170 invoked by uid 60001); 27 Jul 2007 20:19:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=XyRPmdkZUFver3tkeco0dXcemgAvxyd9i92PntFPuxgs4udkIO0UFRKiJViy3CKWSceBgzVA7/N84nhNS8vMlWO41kLTykbM56jj+jbDN/h5iq4v91IqU7KbE18iMhzxr5sDMFLw7wUpIKi4DkDCkGkexwaADKPHtwHQXw58h0Q=;
+X-YMail-OSG: su56iTIVM1kksAf59Z2v7VxciBRRRBQVBbzfNmwhtOPb_1CCL9k0OKYTkv5y05RFpemH3un1rektyTgJv96aSRHLyBCjjOUbgwkVrHmvYtfzs0ukVW.FE79wmw--
+Received: from [128.251.88.135] by web38905.mail.mud.yahoo.com via HTTP; Fri, 27 Jul 2007 13:19:08 PDT
+X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53963>
 
-On Friday 27 July 2007 13:49, Johannes Schindelin wrote:
-> Hi,
->
-> On Fri, 27 Jul 2007, Ray Lehtiniemi wrote:
-> > On Friday 27 July 2007 13:05, Johannes Schindelin wrote:
-> > > On Fri, 27 Jul 2007, CPD wrote:
-> > > > We produce variations based on a (mostly) common codebase. In CVS I
-> > > > set up "environment" modules for each platform, then when you are
-> > > > working on that platform, you simply check out the correct
-> > > > environment and build. Only the needed code and tools are exposed in
-> > > > that environment (this is important as clients must NOT see each
-> > > > other's code and most customers have some customization). I do this
-> > > > by defining and renaming modules in the CVSROOT modules file.
-> > >
-> > > I would use branches for that.  A base branch with the common code, and
-> > > the customisations in all the branches, which merge from the base
-> > > branch.
-> >
-> > this would break down if there were client-specific modules in the base
-> > branch, though... how could those be hidden from the other clients?
->
-> Umm.  Don't put the client-specific modules in the base branch, then?  The
-> base branch is the common code, the code that every client may look at.
-> Nothing else.
+> 
+> ----- Original Message ----
+> From: Christian Stimming <stimming@tuhh.de>
+> To: Paul Mackerras <paulus@samba.org>
+> Cc: git@vger.kernel.org
+> Sent: Friday, July 27, 2007 8:03:00 AM
+> Subject: [PATCH 2/2] gitk: Markup many strings for translation.
+> 
+> Similar to the discussion in git-gui, all user-visible strings are  
+> passed through the [mc ...] procedure to have them translated by msgcat.
+> 
+> Signed-off-by: Christian Stimming <stimming@tuhh.de>
+> ---
 
-yes, i don;t think there's any other way to do it with branches (and just be 
-careful not to merge the private branches back! :-)
+<snip>
+
+>   proc getcommitlines {fd view}  {
+> @@ -273,7 +273,7 @@ proc chewcommits {view} {
+>           #set ms [expr {[clock clicks -milliseconds] - $startmsecs}]
+>           #puts "overall $ms ms for $numcommits commits"
+>           } else {
+> -        show_status "No commits selected"
+> +        show_status [mc "No commits selected"]
+>           }
+>           notbusy layout
+>           set phase {}
+> @@ -378,7 +378,7 @@ proc getcommit {id} {
+>       } else {
+>       readcommit $id
+>       if {![info exists commitinfo($id)]} {
+> -        set commitinfo($id) {"No commit information available"}
+> +        set commitinfo($id) {[mc "No commit information available"]}
+
+I think this is probably a typo (on the original), and carrying that forward will probably result in what was not intended.
+
+The original has the {} and "". I don't know if this was intended (it will keep the quotes).
+
+The translated version, will result in a literal string [mc "No commit information available"], and unless it is explicitly eval'ed later, it will not result in the translated string.
+
+So, if the quotes need to stay in the string, then the translation will have to be:
+
+  set commitinfo($id) \"[mc "No commit information available"]\"
+
+Or, if the quotes are not needed:
+
+  set commitinfo($id) [mc "No commit information available"]
 
 
-> Maybe I did not get the whole picture...  do you want your _clients_ to
-> access your main repo with Git?
-
-not in my case, anyway... although if you define "client" to 
-include "subcontractor", then yes, i'd be interested in going down that 
-road... sometimes there are pieces which they aren't licensed to see, but if 
-we could somehow track their work in a separate repo and then easily merge it 
-back into the fully licensed tree, that would have great value.
-
-from the original message, i also keyed on "Only the needed code and tools are 
-exposed in that environment".  this is something i'd like to see too... i'm 
-working in a software eco-system with hundreds of standalone components, and 
-would like the ability to pick and choose a small handful of those for any 
-given project, without pulling in reams of history on the stuff i'm not 
-using...
-
-thanks
-ray
+Regards,
+    --brett
 
 
->
-> Ciao,
-> Dscho
+       
+____________________________________________________________________________________
+Pinpoint customers who are looking for what you sell. 
+http://searchmarketing.yahoo.com/
