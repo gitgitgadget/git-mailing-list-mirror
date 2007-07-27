@@ -1,96 +1,75 @@
-From: Brett Schwarz <brett_schwarz@yahoo.com>
-Subject: Re: [PATCH 2/2] gitk: Markup many strings for translation.
-Date: Fri, 27 Jul 2007 13:19:08 -0700 (PDT)
-Message-ID: <959247.27950.qm@web38905.mail.mud.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/8] Add is_absolute_path() and make_absolute_path()
+Date: Fri, 27 Jul 2007 13:51:19 -0700
+Message-ID: <7vvec5y3i0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707271851370.14781@racer.site>
+	<Pine.LNX.4.64.0707271955450.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 22:19:34 2007
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 27 22:51:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEWHX-0008DU-Fy
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 22:19:27 +0200
+	id 1IEWmS-0001X5-FZ
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 22:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936127AbXG0UTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 16:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936130AbXG0UTL
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 16:19:11 -0400
-Received: from web38905.mail.mud.yahoo.com ([209.191.125.111]:47709 "HELO
-	web38905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S936127AbXG0UTK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 16:19:10 -0400
-Received: (qmail 28170 invoked by uid 60001); 27 Jul 2007 20:19:09 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=XyRPmdkZUFver3tkeco0dXcemgAvxyd9i92PntFPuxgs4udkIO0UFRKiJViy3CKWSceBgzVA7/N84nhNS8vMlWO41kLTykbM56jj+jbDN/h5iq4v91IqU7KbE18iMhzxr5sDMFLw7wUpIKi4DkDCkGkexwaADKPHtwHQXw58h0Q=;
-X-YMail-OSG: su56iTIVM1kksAf59Z2v7VxciBRRRBQVBbzfNmwhtOPb_1CCL9k0OKYTkv5y05RFpemH3un1rektyTgJv96aSRHLyBCjjOUbgwkVrHmvYtfzs0ukVW.FE79wmw--
-Received: from [128.251.88.135] by web38905.mail.mud.yahoo.com via HTTP; Fri, 27 Jul 2007 13:19:08 PDT
-X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.119
+	id S1765713AbXG0UvX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 16:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765681AbXG0UvW
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 16:51:22 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63743 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765624AbXG0UvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 16:51:21 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070727205120.HMQC1393.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 27 Jul 2007 16:51:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UkrL1X0081kojtg0000000; Fri, 27 Jul 2007 16:51:20 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53964>
 
-> 
-> ----- Original Message ----
-> From: Christian Stimming <stimming@tuhh.de>
-> To: Paul Mackerras <paulus@samba.org>
-> Cc: git@vger.kernel.org
-> Sent: Friday, July 27, 2007 8:03:00 AM
-> Subject: [PATCH 2/2] gitk: Markup many strings for translation.
-> 
-> Similar to the discussion in git-gui, all user-visible strings are  
-> passed through the [mc ...] procedure to have them translated by msgcat.
-> 
-> Signed-off-by: Christian Stimming <stimming@tuhh.de>
-> ---
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-<snip>
+> diff --git a/path.c b/path.c
+> index c4ce962..0f7012f 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -292,3 +292,65 @@ int adjust_shared_perm(const char *path)
+>  		return -2;
+>  	return 0;
+>  }
+> +
+> +/* We allow "recursive" symbolic links. Only within reason, though. */
+> +#define MAXDEPTH 5
+> +
+> +const char *make_absolute_path(const char *path)
+> +{
+> +	static char bufs[2][PATH_MAX + 1], *buf = bufs[0], *next_buf = bufs[1];
+> +	char cwd[1024] = "";
+> +	int buf_index = 1, len;
+> +
+> +	int depth = MAXDEPTH;
+> +	char *last_elem = NULL;
+> +	struct stat st;
+> +
+> +	if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
+> +		die ("Too long path: %.*s", 60, path);
+> +
+> +	while (depth--) {
+> +		if (stat(buf, &st) || !S_ISDIR(st.st_mode)) {
+> +			char *last_slash = strrchr(buf, '/');
+> +			*last_slash = '\0';
+> +			last_elem = xstrdup(last_slash + 1);
 
->   proc getcommitlines {fd view}  {
-> @@ -273,7 +273,7 @@ proc chewcommits {view} {
->           #set ms [expr {[clock clicks -milliseconds] - $startmsecs}]
->           #puts "overall $ms ms for $numcommits commits"
->           } else {
-> -        show_status "No commits selected"
-> +        show_status [mc "No commits selected"]
->           }
->           notbusy layout
->           set phase {}
-> @@ -378,7 +378,7 @@ proc getcommit {id} {
->       } else {
->       readcommit $id
->       if {![info exists commitinfo($id)]} {
-> -        set commitinfo($id) {"No commit information available"}
-> +        set commitinfo($id) {[mc "No commit information available"]}
-
-I think this is probably a typo (on the original), and carrying that forward will probably result in what was not intended.
-
-The original has the {} and "". I don't know if this was intended (it will keep the quotes).
-
-The translated version, will result in a literal string [mc "No commit information available"], and unless it is explicitly eval'ed later, it will not result in the translated string.
-
-So, if the quotes need to stay in the string, then the translation will have to be:
-
-  set commitinfo($id) \"[mc "No commit information available"]\"
-
-Or, if the quotes are not needed:
-
-  set commitinfo($id) [mc "No commit information available"]
-
-
-Regards,
-    --brett
-
-
-       
-____________________________________________________________________________________
-Pinpoint customers who are looking for what you sell. 
-http://searchmarketing.yahoo.com/
+What happens when incoming path is just "abc"?  Does your test
+script checks that case?
