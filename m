@@ -1,73 +1,52 @@
-From: "Bradford Smith" <bradford.carl.smith@gmail.com>
-Subject: Re: [PATCH] fully resolve symlinks when creating lockfiles
-Date: Fri, 27 Jul 2007 12:50:23 -0400
-Message-ID: <f158199e0707270950m638f6863t8272ca50430c304c@mail.gmail.com>
-References: <7vbqe0cazy.fsf@assigned-by-dhcp.cox.net>
-	 <11854712542350-git-send-email-bradford.carl.smith@gmail.com>
-	 <118833cc0707261234u59e30bchc274ae29569d8500@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Teach git-gui about merging around modified files?
+Date: Fri, 27 Jul 2007 12:03:47 -0500
+Message-ID: <20070727170347.GX21692@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Morten Welinder" <mwelinder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 18:50:38 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 19:04:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IET1R-0004WA-F8
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 18:50:37 +0200
+	id 1IETER-0000mR-49
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 19:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbXG0Qu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 12:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753322AbXG0Qu0
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 12:50:26 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:23834 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753126AbXG0QuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 12:50:25 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so739121ugf
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 09:50:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ugx63OZxitPhyNWpNqaoeuGiqAQfNQe6VqgCAh4aBtBBJv/+f17XKjfshf0ckrDOi1JnBAjYUwKET/Tsw2RFZ5Z7lNR3GDn+ATlVcZiGrEstywDzuIxaAcHQb2oQMuro/uyb19y8268+pN8ohjH6ArcP9tdldb7bjjI1xPUrsNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NxlXsbaFm/qTDHfqNvgCPDb7hapEwqu2oypNg39Hzyjdyo3GL5lQtcwFthMCvE+Vt5ndSPvFjscRP/pmsml1SGJLk67puFA4zUsaqJsTCPlfPrPusqwkIlcHj4VQj2UJZAoZAk41WCvoVdipF3AgCfO6ijY/njzHUfS2F2668Ns=
-Received: by 10.82.152.16 with SMTP id z16mr2876836bud.1185555023064;
-        Fri, 27 Jul 2007 09:50:23 -0700 (PDT)
-Received: by 10.82.191.19 with HTTP; Fri, 27 Jul 2007 09:50:23 -0700 (PDT)
-In-Reply-To: <118833cc0707261234u59e30bchc274ae29569d8500@mail.gmail.com>
+	id S1758860AbXG0REA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 13:04:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758595AbXG0RD7
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 13:03:59 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:2614 "EHLO
+	asav00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756815AbXG0RD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 13:03:59 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AnA9ACLCqUZKhvbzRmdsb2JhbACBTYVqiCgBAQE1AQ
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav00.insightbb.com with ESMTP; 27 Jul 2007 13:03:56 -0400
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 0355B309F31; Fri, 27 Jul 2007 12:03:47 -0500 (CDT)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53934>
 
-On 7/26/07, Morten Welinder <mwelinder@gmail.com> wrote:
-> Why the lstat and that stat in the beginning?  That's just asking for race
-> condition.  readlink will tell you if it wasn't a link, for example.
+"git merge" will happily merge a change with modified files in the tree
+as long as the merge doesn't touch any of them.  However, it appears
+"git gui" won't even try if there are modified files at all.
 
-Here's an example of the sort of thing I'm trying to avoid:
+How hard would it be to fix this, or is this an intentional choice?
+I realize that commiting even untouched files before a merge is safer,
+but I'm tasked with migrating some CVS users to Git, and I'd prefer
+to be able to introduce the new Git workflow slowly.
 
-foo is a symlink to bar
-bar is a symlink back to foo
+(I'm happy enough with disallowing merges that actually touch modified
+files, so I'm not looking for any kind of in-working-directory merge
+like some others were.  I'd just like the "git merge" behavior to work
+in git-gui.)
 
-readlink() on either one will succeed, but I'll end up with infinite
-recursion because I'll resolve foo to bar, then bar to foo, then foo
-back to bar, etc.
-
-To avoid craziness like this the OS refuses to follow a chain of more
-than a very small number of symlinks.  By experimentation, I found the
-limit to be 8 on my Linux box.
-
-I am trying to avoid resolving symlinks manually that the OS would
-refuse to resolve anyway.
-
-However, I'm quite open to suggestions for a better way to do it.
-
-Thanks,
-
-Bradford
+-bcd
