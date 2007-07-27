@@ -1,87 +1,42 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-gui: i18n introductory document (2nd draft)
-Date: Fri, 27 Jul 2007 16:18:37 -0700
-Message-ID: <7vmyxhwi42.fsf@assigned-by-dhcp.cox.net>
-References: <7vir87adzo.fsf@assigned-by-dhcp.cox.net>
-	<7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: git diff with add/modified codes
+Date: Fri, 27 Jul 2007 16:22:17 -0700
+Message-ID: <7vir85whxy.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Christian Stimming <christian.stimming@ibeo-as.com>,
-	Irina Riesen <irina.riesen@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Xudong Guan <xudong.guan@gmail.com>,
-	Nanako Shiraishi <nanako3@bluebottle.com>, git@vger.kernel.org,
-	Brett Schwarz <brett_schwarz@yahoo.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 28 01:18:43 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 01:22:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEZ51-0007AD-2S
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 01:18:43 +0200
+	id 1IEZ8X-0007yl-P7
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 01:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760904AbXG0XSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 19:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764667AbXG0XSk
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 19:18:40 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63520 "EHLO
+	id S1764667AbXG0XWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 19:22:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761020AbXG0XWT
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 19:22:19 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:64796 "EHLO
 	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760035AbXG0XSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 19:18:39 -0400
+	with ESMTP id S1760904AbXG0XWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 19:22:18 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727231839.JJAX14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 27 Jul 2007 19:18:39 -0400
+          id <20070727232217.JKHP14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 27 Jul 2007 19:22:17 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id UnJd1X00X1kojtg0000000; Fri, 27 Jul 2007 19:18:38 -0400
-In-Reply-To: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 26 Jul 2007 16:31:06 -0700")
+	id UnNH1X00i1kojtg0000000; Fri, 27 Jul 2007 19:22:18 -0400
+In-Reply-To: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com>
+	(Jon Smirl's message of "Fri, 27 Jul 2007 18:05:42 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53975>
 
-My thanks go to Nana, VMiklos, Christian and Brett for their
-feedbacks to the draft.
-
-It quickly gets cumbersome, both for myself and reviewers, to go
-back and forth sending the whole of Nth draft every time on the
-mailing list.  At the same time, I can not really afford to be
-in the translation business myself, so I'd like to let this
-document go in the best shape I could make, and have people more
-competent around gettext than me to take it over.
-
-I've updated the document somewhat and pushed it out to the mob
-branch.  The issues I addressed:
-
- * "Running without installing does not work with ./git-gui, but
-   with ./git-gui.sh" (Nana).
-
- * After the initial cloning, resulting local directory is
-   git-gui-i18n, not git-gui-i18n.git (VMiklos).
-
- * "Please install them" (Christian).  I meant by "them", git,
-   gettext and any one of po editors.  I reworded the example
-   enumeration of available po editors to make it clear the
-   translator needs only one.
-
- * "Parameter permutation needs $ sign quoted" (Brett).
-
- * "Message marked with '# ,fuzzy' are not used -- remove the
-   fuzzy marker when you are done" (Christian).
-
-I did not address the following issues, not because I did not
-agree with the comments, but because I felt Christian is more
-qualified to do these kinds of things.
-
- * "Parameter permutation" should be in a separate "Advanced
-   translation" section (Christian). 
-
- * "po/git-gui.pot" should be generated by translators any time,
-   and other workflow improvements regarding merging of the po
-   files (Christian).
+Would --stat --summary be satisfactory?
