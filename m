@@ -1,88 +1,88 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: git-gui: i18n introductory document (2nd draft)
-Date: Fri, 27 Jul 2007 17:02:07 +0900
-Message-ID: <200707270802.l6R82YpC013213@mi1.bluebottle.com>
-References: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: gitweb chokes on recursive symlink
+Date: Fri, 27 Jul 2007 01:23:03 -0700
+Message-ID: <7v8x922r2w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Christian Stimming <christian.stimming@ibeo-as.com>,
-	Irina Riesen <irina.riesen@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Xudong Guan <xudong.guan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 10:02:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 10:23:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEKmZ-0007NJ-Oe
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 10:02:44 +0200
+	id 1IEL6N-0005TA-2l
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 10:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765395AbXG0ICi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 04:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757205AbXG0ICh
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 04:02:37 -0400
-Received: from mi1.bluebottle.com ([206.188.25.14]:54535 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765380AbXG0ICf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 04:02:35 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6R82YpC013213
-	for <git@vger.kernel.org>; Fri, 27 Jul 2007 01:02:34 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:in-reply-to:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=oaCuTgmnQrHAkBtlCT4MGJguppDW6bbb+WQgw6s/nMvpRKawqKMNtrKLIKTxkh22O
-	GTCn83GLdXF6iSqe6F+Dys3jbaZG/PXLKn/ChCSNeFRwTxUkwX2ZCeADQTECjsz
-Received: from nanako3.mail.bluebottle.com (67.245.104.77.line.cz [77.104.245.67] (may be forged))
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6R82KFv020127
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 Jul 2007 01:02:24 -0700
-In-Reply-To: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
-X-Trusted-Delivery: <ca48b941470d41f6550632531ce8ebe6>
+	id S1753217AbXG0IXG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 04:23:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753154AbXG0IXG
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 04:23:06 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39256 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753066AbXG0IXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 04:23:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070727082304.XWZ1358.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 27 Jul 2007 04:23:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id UYP31X00L1kojtg0000000; Fri, 27 Jul 2007 04:23:04 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53908>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+If somebody used to advertise his repository that physically
+resides at /pub/lic.git/ as:
 
-> This short note is to help a translation contributor to help us
-> localizing git-gui message files by covering the basics.
+	git://git.example.com/pub/lic.git/
 
-Thank you for this document, and thank you for helping me the
-other day with my translations.
+but now wants to use --base-path to allow:
 
-I tried to follow your message and updated my Japanese
-translation.  Almost everything worked as described, but this
-part.
+	git://git.example.com/lic.git/
 
-> +After setting up such a symbolic link, you can:
-> +
-> +	$ make
-> +	$ LANG=af ./git-gui
-> +
-> +[NEEDSWORK: this symlink trick needs to be verified if it works.]
+she can start git-daemon with --base-path option, like this:
 
-I used LANG=ja instead; this did not work.  A "fatal error"
-dialog said:
+	git-daemon --base-path=/pub --export-all
 
-	couldn't open "/home/nanako/git/share/git-gui/lib/tclIndex":
-	no such file or directory
+During the transition, however, she would also want to allow
+older URL as well.  One natural way to achieve that is to create
+a symlink:
 
-But this worked:
+	ln -s /pub /pub/pub
 
-	$ LANG=ja ./git-gui.sh
+so that a request to git://git.example.com/pub/lic.git/ is first
+translated by --base-path to a request to /pub/pub/lic.git/
+which goes to /pub/lic.git, thanks to the symlink.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+So far so good.
 
-----------------------------------------------------------------------
-Get a free email address with REAL anti-spam protection.
-http://www.bluebottle.com/tag/1
+However, gitweb chokes if there is such a symlink (File::Find
+barfs with "/pub/pub is a recursive symbolic link" --- I think
+this is because you use "follow_fast => 1").
+
+As I happen to think using a symlink that goes up for backward
+compatible URL support is a rather common practice, I think we
+should do something about it.  My gut feeling is that we could
+simply ignore such symlinks.
+
+What do you think about this issue?
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b381692..c8ad84e 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1492,6 +1492,7 @@ sub git_get_projects_list {
+ 
+ 		File::Find::find({
+ 			follow_fast => 1, # follow symbolic links
++			follow_skip => 2, # ignore duplicates
+ 			dangling_symlinks => 0, # ignore dangling symlinks, silently
+ 			wanted => sub {
+ 				# skip project-list toplevel, if we get it.
+
+	
