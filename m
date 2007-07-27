@@ -1,82 +1,117 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: index-pack died on pread
-Date: Thu, 26 Jul 2007 22:36:16 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707262231280.3442@woody.linux-foundation.org>
-References: <333e1ca10707230552i34c2a1cfq9fae94f20023e9d7@mail.gmail.com>
- <alpine.LFD.0.999.0707230956390.3607@woody.linux-foundation.org>
- <200707260115.13234.robin.rosenberg.lists@dewire.com>
- <alpine.LFD.0.999.0707251636490.3607@woody.linux-foundation.org>
- <81b0412b0707260542o58fcb73bu81ae09aa1df84c81@mail.gmail.com>
- <alpine.LFD.0.999.0707260911040.3442@woody.linux-foundation.org>
- <7vps2e5x4y.fsf@assigned-by-dhcp.cox.net>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: [PATCH] zlib in custom location
+Date: Fri, 27 Jul 2007 07:42:51 +0200
+Message-ID: <20070727054251.GC30038@schiele.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Michal Rokos <michal.rokos@gmail.com>,
-	GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:37:15 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qjNfmADvan18RZcF"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:43:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEIVm-0003sY-Bk
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:37:14 +0200
+	id 1IEIba-0005NX-Qq
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146AbXG0FhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 01:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756276AbXG0FhL
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:37:11 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53767 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755419AbXG0FhJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:37:09 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5aMFP004705
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jul 2007 22:36:23 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5aG4f007655;
-	Thu, 26 Jul 2007 22:36:17 -0700
-In-Reply-To: <7vps2e5x4y.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.73 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757309AbXG0Fm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757235AbXG0Fm6
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:42:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:39102 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756232AbXG0Fm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 01:42:57 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so655415ugf
+        for <git@vger.kernel.org>; Thu, 26 Jul 2007 22:42:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
+        b=Eh+/lJjOf+bihpkH4TWlwNOoJ3LmlQOiIs3vrZN5y4Iy/m38Hnc5yUVyCiG6Dx8Dr6MUTAPhS0WHsTvo8Gmlezlnu8QFNhYeVpfjAv7mObKbEIOD/19lUQMKDvowtNmcalUQgM8zczBe/OrRFSESa0hUabJnCbcQMzyslDxdprw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
+        b=HvYHgH+cxAnZkYAPiFV/UtRLcm+/Gx0u3Ag8RIsb+XudA8UI0NJ04+b1+LSlBXaDmRjTp2PClS4imPN+zyzR9FQM3IiBX9F/ZNq5zFpRLXikb9JR/oNVMTsqfU5OM//IwW8eBHc0OQ6EIaMA/u1DxM3sB7Ez4OXM8ZkY56CVsDo=
+Received: by 10.66.222.19 with SMTP id u19mr2675670ugg.1185514976246;
+        Thu, 26 Jul 2007 22:42:56 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.92.138])
+        by mx.google.com with ESMTPS id k27sm908024ugd.2007.07.26.22.42.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 Jul 2007 22:42:54 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id DBBEAB917DE; Fri, 27 Jul 2007 07:42:52 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53894>
 
 
+--qjNfmADvan18RZcF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 26 Jul 2007, Junio C Hamano wrote:
-> 
-> If you mean the offset associated with fd, we actually do.
+Hi,
 
-Ahh, for some reason I thought we didn't (probably because the user likely 
-doesn't care at all), but right you are..
+I have some systems with zlib in a custom location and thus did the followi=
+ng
+change to support a variable ZLIBDIR like it does already exist for
+OPENSSLDIR.  Would be great to see this in the main tree.
 
-> The original HP-UX error is confusing, as we ask pread() to
-> transfer 428 bytes and it returns 0 (not returning -1 with
-> EINTR).  Return value of zero is understandable, if the starting
-> position is at or after the EOF, but the offset is 123601 and
-> 56k objects packed from git.git repository should be longer than
-> that, so that also sounds implausible.
+commit d61424558cda558b0c7893f545d548c6d6f211ff
+Author: Robert Schiele <rschiele@gmail.com>
+Date:   Thu Jul 26 22:34:16 2007 -0700
 
-Yeah. It is suspicious.
+    - add option to find zlib in custom path
 
-If somebody could run git under gdb on HP-UX (preferably compiled 
-statically), and just disassemble the pread() thing, it would be 
-interesting.
+diff --git a/Makefile b/Makefile
+index 73b487f..0179339 100644
+--- a/Makefile
++++ b/Makefile
+@@ -372,7 +372,7 @@ BUILTIN_OBJS =3D \
+ 	builtin-pack-refs.o
+=20
+ GITLIBS =3D $(LIB_FILE) $(XDIFF_LIB)
+-EXTLIBS =3D -lz
++EXTLIBS =3D
+=20
+ #
+ # Platform specific tweaks
+@@ -517,6 +517,12 @@ ifndef NO_CURL
+ 	endif
+ endif
+=20
++ifdef ZLIBDIR
++	BASIC_CFLAGS +=3D -I$(ZLIBDIR)/include
++	EXTLIBS +=3D -L$(ZLIBDIR)/lib $(CC_LD_DYNPATH)$(ZLIBDIR)/lib
++endif
++EXTLIBS +=3D -lz
++
+ ifndef NO_OPENSSL
+ 	OPENSSL_LIBSSL =3D -lssl
+ 	ifdef OPENSSLDIR
 
-PA-RISC assembly is *almost* entirely unreadable, but it might show 
-whether hpux-11.11 actually has a pread() system call or whether it is 
-doing the "emulate with lseek" and maybe obviously buggily at that..
+Robert
 
-It really isn't that complex a system call. So I'm surprised at bugs 
-there, and that makes me worry that there is something in git that 
-triggers this.
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
-		Linus
+"Quidquid latine dictum sit, altum sonatur."
+
+--qjNfmADvan18RZcF
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGqYXbxcDFxyGNGNcRApZSAJ4iEpAqJliAXLW+XPGd5JTdZ1ZV7ACfSVA8
+jmv8JEehPSrVU4ik1wBgMxQ=
+=LVto
+-----END PGP SIGNATURE-----
+
+--qjNfmADvan18RZcF--
