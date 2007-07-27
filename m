@@ -1,167 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] --base-path-relaxed option
-Date: Fri, 27 Jul 2007 14:00:29 -0700
-Message-ID: <7vy7h1woia.fsf@assigned-by-dhcp.cox.net>
-References: <20070727083814.GE32258@kernel.dk>
+Subject: Re: [PATCH] Make verify-tag a builtin.
+Date: Fri, 27 Jul 2007 14:08:59 -0700
+Message-ID: <7vtzrpwo44.fsf@assigned-by-dhcp.cox.net>
+References: <46A96F86.2030704@gmail.com>
+	<7vr6mu2uo0.fsf@assigned-by-dhcp.cox.net>
+	<1b46aba20707271251g7cf968a6o3840739dec548408@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Axboe <jens.axboe@oracle.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 23:00:41 2007
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Carlos Rica" <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 23:09:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEWvR-0004Fg-74
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 23:00:41 +0200
+	id 1IEX3a-0006lz-Os
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 23:09:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937893AbXG0VAd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 17:00:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937874AbXG0VAc
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 17:00:32 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34487 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933270AbXG0VAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 17:00:30 -0400
+	id S933678AbXG0VJD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 17:09:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762425AbXG0VJD
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 17:09:03 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:52186 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761271AbXG0VJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 17:09:01 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727210030.KZVT1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 27 Jul 2007 17:00:30 -0400
+          id <20070727210901.GOBX1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 27 Jul 2007 17:09:01 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Ul0V1X00q1kojtg0000000; Fri, 27 Jul 2007 17:00:30 -0400
-In-Reply-To: <20070727083814.GE32258@kernel.dk> (Jens Axboe's message of "Fri,
-	27 Jul 2007 10:38:27 +0200")
+	id Ul901X0041kojtg0000000; Fri, 27 Jul 2007 17:09:00 -0400
+In-Reply-To: <1b46aba20707271251g7cf968a6o3840739dec548408@mail.gmail.com>
+	(Carlos Rica's message of "Fri, 27 Jul 2007 21:51:41 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53970>
 
-From: Jens Axboe <jens.axboe@oracle.com>
+"Carlos Rica" <jasampler@gmail.com> writes:
 
-I switched git.kernel.dk to --base-path a few minutes ago, to get rid of
-a /data/git postfix in the posted urls. But transitioning is tricky,
-since now all old paths will fail miserably.
+> In my system, some of the tests give 141 and others give 1 as exit code.
+> Dscho said that it could depend on the CPU current load of the computer,
+> since he got always 141 as you said, so perhaps it's me.
 
-So I added this --base-path-relaxed option, that will make git-daemon
-try the absolute path without prefixing --base-path before giving up.
-With this in place and --base-path-relaxed added, both my new url of
+This is expected.  It depends on how processess are scheduled.
 
-    git://git.kernel.dk/linux-2.6-block.git
+What is happening is:
 
-and the old
+ 1. Your process prepares the whole thing in vtag-tmp, to hand
+    to gpg;
 
-    git://git.kernel.dk/data/git/linux-2.6-block.git
+ 2. You make a pipe and start gpg with the above file telling it
+    "here is a detached signature file, the payload will be fed
+    through your stdin";
 
-work fine.
+ 3-a. You feed the payload to the pipe, expecting gpg to read it.
 
-Signed-off-by: Jens Axboe <jens.axboe@oracle.com>
+ 3-b. gpg reads the detached signature file, finds no signature in
+    the vtag-tmp file because the tag in question is not signed,
+    and exits without reading a single byte from the pipe;
 
----
-
- * I think this patch is a right step; we would need to help
-   people transitioning their repository URL, not necessarily
-   limited to --base-path usage.  This patch only deals with
-   "with this base path or without" case, and does not help
-   people who used to use base-path A and now wants to use
-   different base-path B, so in that sense there *might* still
-   be a room for improvement.  It could be as simple as allowing
-   more than than one base-path and taking the first match.
-
-   If you set one of them to an empty string, it would cover the
-   case this patch addresses, I think.
-
-   I personally do not think we would want to try 47 different
-   base-paths, though.  List?
-
- Documentation/git-daemon.txt |    6 ++++++
- daemon.c                     |   26 ++++++++++++++++++++++++--
- 2 files changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index 4b30b18..f902161 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -54,6 +54,12 @@ OPTIONS
- 	'git://example.com/hello.git', `git-daemon` will interpret the path
- 	as '/srv/git/hello.git'.
- 
-+--base-path-relaxed::
-+	If --base-path is enabled and repo lookup fails, with this option
-+	`git-daemon` will attempt to lookup without prefixing the base path.
-+	This is useful for switching to --base-path usage, while still
-+	allowing the old paths.
-+
- --interpolated-path=pathtemplate::
- 	To support virtual hosting, an interpolated path template can be
- 	used to dynamically construct alternate paths.  The template
-diff --git a/daemon.c b/daemon.c
-index a3f2ac1..9cf22fe 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -16,7 +16,8 @@ static int reuseaddr;
- static const char daemon_usage[] =
- "git-daemon [--verbose] [--syslog] [--export-all]\n"
- "           [--timeout=n] [--init-timeout=n] [--strict-paths]\n"
--"           [--base-path=path] [--user-path | --user-path=path]\n"
-+"           [--base-path=path] [--base-path-relaxed]\n"
-+"           [--user-path | --user-path=path]\n"
- "           [--interpolated-path=path]\n"
- "           [--reuseaddr] [--detach] [--pid-file=file]\n"
- "           [--[enable|disable|allow-override|forbid-override]=service]\n"
-@@ -34,6 +35,7 @@ static int export_all_trees;
- /* Take all paths relative to this one if non-NULL */
- static char *base_path;
- static char *interpolated_path;
-+static int base_path_relaxed;
- 
- /* Flag indicating client sent extra args. */
- static int saw_extended_args;
-@@ -180,6 +182,7 @@ static char *path_ok(struct interp *itable)
- {
- 	static char rpath[PATH_MAX];
- 	static char interp_path[PATH_MAX];
-+	int retried_path = 0;
- 	char *path;
- 	char *dir;
- 
-@@ -235,7 +238,22 @@ static char *path_ok(struct interp *itable)
- 		dir = rpath;
- 	}
- 
--	path = enter_repo(dir, strict_paths);
-+	do {
-+		path = enter_repo(dir, strict_paths);
-+		if (path)
-+			break;
-+
-+		/*
-+		 * if we fail and base_path_relaxed is enabled, try without
-+		 * prefixing the base path
-+		 */
-+		if (base_path && base_path_relaxed && !retried_path) {
-+			dir = itable[INTERP_SLOT_DIR].value;
-+			retried_path = 1;
-+			continue;
-+		}
-+		break;
-+	} while (1);
- 
- 	if (!path) {
- 		logerror("'%s': unable to chdir or not a git archive", dir);
-@@ -1061,6 +1079,10 @@ int main(int argc, char **argv)
- 			base_path = arg+12;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--base-path-relaxed")) {
-+			base_path_relaxed = 1;
-+			continue;
-+		}
- 		if (!prefixcmp(arg, "--interpolated-path=")) {
- 			interpolated_path = arg+20;
- 			continue;
-
--- 
-Jens Axboe
+Now, 3-a and 3-b run in parallel.  If 3-a is scheduled before
+3-b happens, because payload is very often much smaller than the
+in-kernel pipe buffer, your write(2) succeeds before gpg gives up
+and exits without reading from the pipe.  If 3-b is scheduled
+before 3-a, then gpg exits and when 3-a gets around to write(2)
+to the pipe, write notices that there is nobody on the other end
+of the pipe, and you get SIGPIPE.
