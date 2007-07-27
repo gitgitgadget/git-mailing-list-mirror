@@ -1,73 +1,89 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Empty directories...
-Date: Fri, 27 Jul 2007 01:33:24 +0200
-Message-ID: <200707270133.25221.robin.rosenberg.lists@dewire.com>
-References: <85lkdezi08.fsf@lola.goethe.zz>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: incremental fast-import
+Date: Thu, 26 Jul 2007 20:51:03 -0400
+Message-ID: <20070727005103.GC20052@spearce.org>
+References: <Pine.LNX.4.64.0707262242460.14017@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 01:32:28 2007
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 27 02:51:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IECoh-0007sC-E6
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 01:32:23 +0200
+	id 1IEE2z-0007GY-Pf
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 02:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765977AbXGZXcQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Jul 2007 19:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762173AbXGZXcQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 19:32:16 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:8430 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757428AbXGZXcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2007 19:32:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 25ABC80266C;
-	Fri, 27 Jul 2007 01:24:56 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 26187-02; Fri, 27 Jul 2007 01:24:55 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id B8D1080264B;
-	Fri, 27 Jul 2007 01:24:55 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <85lkdezi08.fsf@lola.goethe.zz>
+	id S1757734AbXG0AvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Jul 2007 20:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756658AbXG0AvI
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Jul 2007 20:51:08 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46289 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756534AbXG0AvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2007 20:51:07 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IEE2h-0005ur-3E; Thu, 26 Jul 2007 20:50:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C2EF520FBAE; Thu, 26 Jul 2007 20:51:03 -0400 (EDT)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <Pine.LNX.4.64.0707262242460.14017@beast.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53876>
+
+Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> I seem to be missing something though.  I can't seem to get it to work 
+> when run in an incremental manner.
+> 
+> I have a saved stream of fast-import commands.  Every time I run this 
+> through fast import I get the exact same marks file out.  This is good.
+> 
+> However if I feed it in in two chunks, then nearly all of the SHA1s 
+> generated in the second run are different to those produced in a single 
+> pass.  In addition I get a pair of "warning: Not updating 
+> refs/heads/BUG_101_BRANCH (new tip <some sha1> does not contain <other 
+> sha1>)" messages.  This is not so good.
+> 
+> I'm using the --import-marks and --export-marks options.  Is there 
+> something else I need to do to be able to run fast-import in an 
+> incremental manner?
+
+I'm guessing you didn't restart the branches at the start of the
+second import.  You need to do something like this to get the import
+going again:
+
+  commit refs/heads/BUG_101_BRANCH
+  from refs/heads/BUG_101_BRANCH^0
+  ...
+
+or because you imported the marks you can use a mark:
+
+  commit refs/heads/BUG_101_BRANCH
+  from :18981
+  ...
+
+where 18981 was the last revision on BUG_101_BRANCH that the frontend
+had imported during the last run.
 
 
-(
-	I don't know which mail is the best to reply to and I probably missed 
-	something in the thread, so bear with me if I'm repeating anything.
-)
+fast-import doesn't assume the local branches already exist.
+It actually assumes its importing from scratch every time.  The
+frontend tool needs to restart the branch if that is what it wants.
 
-David. Reconsider "tracking" all directories and what that would give, 
-compared to explicitly tracking specific ones and the requires magic entries.
+In other words, by splitting the file in half you actually also
+split the history in half, and got two root commits, one of which
+was in the middle of your history.  :-(
 
-Say we have a config setting that tells git never to remove empty trees. Linus 
-patches could be a start for representing trees in the index. As an 
-optimization the index could prune trees from the index if they contain 
-things as long as the index *effectively* remembers all trees.
-
-Using the patches again we could add empty directories to the index and remove 
-them. No directory would be removed automatically, except maybe by a merge.
-
-We would probably have only a few empty directories and new unexpected ones
-would only pop up when we remove all blobs from one. Git status could tell us
-about them so we will not forget them. It could even tell us about "new" empty
-directories, which is probably the most important thing you'd want to know. 
-
-Forgetting to untrack an empty directory would not be a big deal.
-
-Whether to retain empty trees or not should be a repository policy, but an all 
-or nothing setting.
-
--- robin
+-- 
+Shawn.
