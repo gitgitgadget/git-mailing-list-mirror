@@ -1,59 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Gitweb and submodules
-Date: Fri, 27 Jul 2007 13:22:49 +0200
-Message-ID: <200707271322.50114.jnareb@gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH] git-gui wording suggestions
+Date: Fri, 27 Jul 2007 13:42:19 +0200
+Message-ID: <20070727134219.wjkkfyg0g888ooss@webmail.tu-harburg.de>
+References: <20070726111902.xqkxcdlsbo8w4c8k@webmail.tu-harburg.de>
+	<20070727044009.GF20052@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 13:30:01 2007
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 13:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEO19-0004TP-B5
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 13:29:59 +0200
+	id 1IEODR-0000DZ-8O
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 13:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756259AbXG0L36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 07:29:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbXG0L3y
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 07:29:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:57818 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756259AbXG0L3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 07:29:52 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so693329ugf
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 04:29:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MRoKDTCOHNgHLfXhUQoRbEJiIiKeC4a1TyElnamgZYrJc+nZKatDW8Nw8bdHc88rZcPouHU/CnfN0PSchB5nw1BKW674MN7XL0jZqCL4O6o65Uavo1zQ4FmwW1yy/4WiwPJ4KLuEKWUaz+gCnOx+rrDqiRn8qmFcE+WkhLa+Lr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PLuV41/qhQ2/Zpgm8fh08EP42KrfH1TlvLi+9LTfpyfIzIGFXudXtt9mDAQjRQrodXOyUpyFDWuSn4GgRSOm6p3grnlhpmFdrJ/P/JPEEqOidG7NW6veDl23s8hpIIeGFYHeiA6X7Jmh6zxbREDko6zV22z/njsUYHj//1yo/iE=
-Received: by 10.86.77.5 with SMTP id z5mr1912986fga.1185535791342;
-        Fri, 27 Jul 2007 04:29:51 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id g1sm9788561muf.2007.07.27.04.29.49
-        (version=SSLv3 cipher=OTHER);
-        Fri, 27 Jul 2007 04:29:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
+	id S934465AbXG0Lmh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 07:42:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765629AbXG0Lmh
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 07:42:37 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:34254 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759553AbXG0Lmg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 07:42:36 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6RBgKDS013758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 27 Jul 2007 13:42:20 +0200
+Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6RBgKQC012257;
+	Fri, 27 Jul 2007 13:42:20 +0200
+Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
+	id E5B25E50349; Fri, 27 Jul 2007 13:42:19 +0200 (CEST)
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
+	webmail.tu-harburg.de (Horde MIME library) with HTTP; Fri, 27 Jul 2007
+	13:42:19 +0200
+In-Reply-To: <20070727044009.GF20052@spearce.org>
 Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53918>
 
-I'd like to add submodule support to gitweb, among others marking 
-submodules as such in the 'tree' view and adding 'log' view link to 
-them.
+Quoting "Shawn O. Pearce" <spearce@spearce.org>:
+>> Unifiy wording to say "to stage" instead of "to add" always.
+> ...
+>> With this patch I'd propose to talk every only about "stage" instead
+>> of "add". IMHO that's just the logical conclusion of the above wording
+>> decision. What do you think?
+>
+> Yes, I agree.  This is a necessary change, the current wording is
+> very confusing.  I would apply this earlier than the other i18n
+> stuff, but this patch is written based upon the current i18n work.
+> :-|
 
-But for that I need a question answered: how to find GIT_DIR of 
-repository which contains submodule objects? We have to assume in 
-gitweb that repositories are bare...
+Well, of course I have supplied this patch on top of the current i18n  
+markup work... on the other hand, back-porting the string changes to  
+the non-i18n code means that the i18n changes themselves won't merge  
+anymore. For that reason I wouldn't suggest to apply this separately  
+from the i18n commits, unless you would want to adapt the i18n patches  
+as well.
 
--- 
-Jakub Narebski
-Poland
+I'd rather suggest to consider the i18n changes rather soon by now,  
+even if the actual translations will be merged later. The [mc...]  
+calls itself don't change the behaviour of the application, so I don't  
+think it would be very risky do merge them sooner than later.  
+Eventually, that's of course up to you.
+
+Christian
