@@ -1,65 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui wording suggestions
-Date: Thu, 26 Jul 2007 22:09:37 -0700
-Message-ID: <7vvec64elq.fsf@assigned-by-dhcp.cox.net>
-References: <20070726111902.xqkxcdlsbo8w4c8k@webmail.tu-harburg.de>
-	<20070727044009.GF20052@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: gitk screenshots of complex history
+Date: Thu, 26 Jul 2007 22:20:25 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707262219210.3442@woody.linux-foundation.org>
+References: <20070727041300.GD20052@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Stimming <stimming@tuhh.de>,
-	Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:09:47 2007
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:21:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEI5A-0005AJ-DB
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:09:44 +0200
+	id 1IEIGG-0007mx-7N
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 07:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752955AbXG0FJk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 01:09:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbXG0FJj
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:09:39 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:38954 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719AbXG0FJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 01:09:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727050939.WEWO1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 27 Jul 2007 01:09:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id UV9d1X00M1kojtg0000000; Fri, 27 Jul 2007 01:09:38 -0400
-In-Reply-To: <20070727044009.GF20052@spearce.org> (Shawn O. Pearce's message
-	of "Fri, 27 Jul 2007 00:40:09 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753746AbXG0FVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 01:21:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbXG0FVG
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 01:21:06 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47662 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753600AbXG0FVG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 01:21:06 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5KVM5004074
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Jul 2007 22:20:32 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6R5KPOx007120;
+	Thu, 26 Jul 2007 22:20:25 -0700
+In-Reply-To: <20070727041300.GD20052@spearce.org>
+X-Spam-Status: No, hits=-2.73 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53888>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Christian Stimming <stimming@tuhh.de> wrote:
->> Unifiy wording to say "to stage" instead of "to add" always.
-> ...
->> With this patch I'd propose to talk every only about "stage" instead  
->> of "add". IMHO that's just the logical conclusion of the above wording  
->> decision. What do you think?
->
-> Yes, I agree.  This is a necessary change, the current wording is
-> very confusing.
 
-Looking at the expressions used in the application from the
-point of view of translating the words to (or expressing the
-concept in) another language helps finding more appropriate
-wording even in the original language.
+On Fri, 27 Jul 2007, Shawn O. Pearce wrote:
+> 
+> I just compared my own history to Linus' linux-2.6 history.
+> The kernel team can't hold a candle to this mess.
 
-"Add" is a simple and nice word, but it is too broad, so "to
-stage" is an improvement.  The translated message for "to stage"
-for Japanese we will probably end up choosing would translate
-back to English as "Schedule for commit".
+Rather on purpose, I might add. I've actually been fairly anal about 
+having people maintain clean histories, to the point where I refuse to 
+pull from trees that don't do a good enough job.
+
+			Linus
