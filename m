@@ -1,147 +1,84 @@
-From: Robert Ewald <robert.ewald@nov.com>
-Subject: [PATCH] git-svn: Translate invalid characters in refname
-Date: Fri, 27 Jul 2007 16:40:07 +0200
-Organization: Nobody is responsible but me
-Message-ID: <f8d04a$gvf$1@sea.gmane.org>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: [PATCH 1/2] gitk: Import msgcat for translation support
+Date: Fri, 27 Jul 2007 16:53:18 +0200
+Message-ID: <20070727165318.e96b1yxxwsooo884@webmail.tu-harburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 16:40:47 2007
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 16:54:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEQzk-0005HD-BL
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 16:40:44 +0200
+	id 1IERCV-00022F-Fp
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 16:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937231AbXG0Okh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 10:40:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937219AbXG0Okf
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 10:40:35 -0400
-Received: from main.gmane.org ([80.91.229.2]:33205 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936484AbXG0Okc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 10:40:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IEQzM-0000mx-OY
-	for git@vger.kernel.org; Fri, 27 Jul 2007 16:40:20 +0200
-Received: from static-213.88.188.4.addr.tdcsong.se ([213.88.188.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 16:40:20 +0200
-Received: from robert.ewald by static-213.88.188.4.addr.tdcsong.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 16:40:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: static-213.88.188.4.addr.tdcsong.se
-User-Agent: KNode/0.10.4
+	id S933350AbXG0Ox0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 10:53:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761302AbXG0OxZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 10:53:25 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:58881 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933350AbXG0OxX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2007 10:53:23 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6RErIdA011955
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 27 Jul 2007 16:53:19 +0200
+Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6RErI15029547;
+	Fri, 27 Jul 2007 16:53:18 +0200
+Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
+	id AB17DE50349; Fri, 27 Jul 2007 16:53:18 +0200 (CEST)
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
+	webmail.tu-harburg.de (Horde MIME library) with HTTP; Fri, 27 Jul 2007
+	16:53:18 +0200
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53930>
 
-Hello,
+Import tcl's msgcat package to have the [mc...] procedure for  
+translation available.
 
-My first patch, please be gentle.
+However, in the current form gitk doesn't load any data a data  
+directory or from anywhere; if it should load any translation  
+catalogs, of course it needs to load them from a designated data  
+directory. For testing, it uses the ./msgs/ subdirectory (marked as  
+FIXME), but eventually a full-blown data directory needs to be added  
+there instead.
 
-This is a first attempt to get the escaping behavior into git-svn.
-I hope I have not screwed up too badly since this I have been looking
-at Perl for more or less the first time.
-
-So I would appreciate if any mistakes would be pointed out to me.
-
-The patch works for me during clone, fetch and dcommit. I haven't
-tried anything else yet.
-
-Robert
-
-PS: There is a testing script I have used. I suppose it should be put into
-the testing infrastructure, something I am not yet familiar with. If
-someone is interested I can send it as is.
-
+Signed-off-by: Christian Stimming <stimming@tuhh.de>
 ---
+Actual translation markup will follow.
 
-In git some characters are invalid as documented
-in git-check-ref-format. In subversion these characters might
-be valid, so a translation is required.
+  gitk |    7 +++++++
+  1 files changed, 7 insertions(+), 0 deletions(-)
 
-This patch does this translation by url escaping characters, that
-are not allowed.
+diff --git a/gitk b/gitk
+index 39e452a..c01acfb 100755
+--- a/gitk
++++ b/gitk
+@@ -7463,6 +7463,13 @@ set fgcolor black
+  set diffcolors {red "#00a000" blue}
+  set selectbgcolor gray85
 
-Credit for ideas and code snippets goes to Eric Wong, martin f. krafft and
-Jan Hudec
++## Internationalization (i18n) through msgcat and gettext. See
++## http://www.gnu.org/software/gettext/manual/html_node/Tcl.html
++package require msgcat
++namespace import ::msgcat::mc
++## FIXME: Need to define a suitable msgs/ directory here.
++::msgcat::mcload [file join . msgs]
++
+  catch {source ~/.gitk}
 
-Signed-off-by: Robert Ewald <robewald@gmx.net>
----
- git-svn.perl |   43 ++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 40 insertions(+), 3 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 6c692a7..68e62ab 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -938,8 +938,8 @@ sub resolve_local_globs {
-        foreach (command(qw#for-each-ref --format=%(refname) refs/remotes#)) {
-                next unless m#^refs/remotes/$ref->{regex}$#;
-                my $p = $1;
--               my $pathname = $path->full_path($p);
--               my $refname = $ref->full_path($p);
-+               my $pathname = desanitize_refname($path->full_path($p));
-+               my $refname = desanitize_refname($ref->full_path($p));
-                if (my $existing = $fetch->{$pathname}) {
-                        if ($existing ne $refname) {
-                                die "Refspec conflict:\n",
-@@ -1239,7 +1239,44 @@ sub new {
-        $self;
- }
- 
--sub refname { "refs/remotes/$_[0]->{ref_id}" }
-+sub refname { 
-+        my ($refname) = "refs/remotes/$_[0]->{ref_id}" ;
-+
-+        # It cannot end with a slash /, we'll throw up on this because
-+        # SVN can't have directories with a slash in their name, either:
-+        if ($refname =~ m{/$}) {
-+                die "ref: '$refname' ends with a trailing slash, this is ",
-+                    "not permitted by git nor Subversion\n";
-+        }
-+
-+        # It cannot have ASCII control character space, tilde ~, caret ^,
-+        # colon :, question-mark ?, asterisk *, space, or open bracket[
-anywhere
-+       #
-+        # Additionally, % must be escaped because it is used for escaping
-+        # and we want our escaped refname to be reversible
-+        $refname =~ s{([ \%~\^:\?\*\[\t])}{uc sprintf('%%%02x',ord($1))}eg;
-+
-+        # no slash-separated component can begin with a dot .
-+        # /.* becomes /%2E*
-+        $refname =~ s{/\.}{/%2E}g;
-+        # It cannot have two consecutive dots .. anywhere
-+        # .. becomes %2E%2E
-+        $refname =~ s{\.\.}{%2E%2E}g;
-+
-+        $refname;
-+}
-+
-+sub desanitize_refname {
-+    my ($refname) = @_;
-+
-+    print "bob: desanitized from $refname ";
-+
-+    $refname =~ s{%(?:([0-9A-F]{2}))}{chr hex($1)}eg;
-+
-+    print " to $refname \n";
-+
-+    $refname;
-+}
- 
- sub svm_uuid {
-        my ($self) = @_;
+  font create optionfont -family sans-serif -size -12
 -- 
-1.5.3.rc3-dirty
-
--- 
-Robert Ewald
+1.5.3.rc2.12.gbc280
