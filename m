@@ -1,111 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 8/8] Fix t1500 for sane work-tree behavior
-Date: Fri, 27 Jul 2007 19:59:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707271958590.14781@racer.site>
-References: <Pine.LNX.4.64.0707271851370.14781@racer.site>
+Subject: Re: Can you do this with GIT?
+Date: Fri, 27 Jul 2007 20:05:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707272002250.14781@racer.site>
+References: <11834063.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: gitster@pobox.com, git@vger.kernel.org, matled@gmx.net
-X-From: git-owner@vger.kernel.org Fri Jul 27 20:59:25 2007
+Cc: git@vger.kernel.org
+To: CPD <cdavidson@altsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 21:06:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEV25-0007qn-5U
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 20:59:25 +0200
+	id 1IEV8T-0001Wb-8L
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 21:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761139AbXG0S7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 14:59:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760975AbXG0S7V
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 14:59:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47863 "HELO mail.gmx.net"
+	id S1760956AbXG0TF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 15:05:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757418AbXG0TF6
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 15:05:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42673 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756707AbXG0S7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 14:59:21 -0400
-Received: (qmail invoked by alias); 27 Jul 2007 18:59:19 -0000
+	id S1760088AbXG0TF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 15:05:57 -0400
+Received: (qmail invoked by alias); 27 Jul 2007 19:05:55 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp017) with SMTP; 27 Jul 2007 20:59:19 +0200
+  by mail.gmx.net (mp006) with SMTP; 27 Jul 2007 21:05:55 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+xvgdZUuuxphnD/TLeXWPWdElGkhytXcYv+ozEP5
-	484mf3/P6jfm5m
+X-Provags-ID: V01U2FsdGVkX18x2SVFTtMxadHWGTJRK4ORqvgWZi3kEDLqvksTDA
+	X9Y0CxVXgnbChG
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0707271851370.14781@racer.site>
+In-Reply-To: <11834063.post@talk.nabble.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53948>
 
+Hi,
 
-When GIT_DIR=../.git, and no worktree is specified, it is reasonable
-to assume that the repository is not bare, that the work tree is ".."
-and that the prefix is the basename of the current directory.
+On Fri, 27 Jul 2007, CPD wrote:
 
-This is the sane behavior.
+> I hope this is the right forum, it's all I could find. Sincere apologies 
+> in advance if I in the wrong place.
 
-t1500 tested for the old behavior, which was plain wrong.  And this
-patch fixes it minimally.
+You might be interested in http://git.or.cz: there is a lot of useful 
+information to find; amongst others what is the right forum...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-	Yeah, I broke down.  But fixing t1501's style was painful enough.
+So yes, this is the right forum.
 
- t/t1500-rev-parse.sh |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
+> I set up a source control system for the company around CVS, but GIT has
+> some very attractive features and I'd like to migrate if it can do some
+> other things that we need.
+> 
+> We produce variations based on a (mostly) common codebase. In CVS I set 
+> up "environment" modules for each platform, then when you are working on 
+> that platform, you simply check out the correct environment and build. 
+> Only the needed code and tools are exposed in that environment (this is 
+> important as clients must NOT see each other's code and most customers 
+> have some customization). I do this by defining and renaming modules in 
+> the CVSROOT modules file.
 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index ec49966..6e792b6 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -31,9 +31,9 @@ test_rev_parse() {
- test_rev_parse toplevel false false true ''
- 
- cd .git || exit 1
--test_rev_parse .git/ false true true .git/
-+test_rev_parse .git/ true true false ''
- cd objects || exit 1
--test_rev_parse .git/objects/ false true true .git/objects/
-+test_rev_parse .git/objects/ true true false ''
- cd ../.. || exit 1
- 
- mkdir -p sub/dir || exit 1
-@@ -42,7 +42,7 @@ test_rev_parse subdirectory false false true sub/dir/
- cd ../.. || exit 1
- 
- git config core.bare true
--test_rev_parse 'core.bare = true' true false true
-+test_rev_parse 'core.bare = true' false false true
- 
- git config --unset core.bare
- test_rev_parse 'core.bare undefined' false false true
-@@ -53,13 +53,13 @@ export GIT_DIR=../.git
- export GIT_CONFIG="$GIT_DIR"/config
- 
- git config core.bare false
--test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true ''
-+test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true work/
- 
- git config core.bare true
--test_rev_parse 'GIT_DIR=../.git, core.bare = true' true false true ''
-+test_rev_parse 'GIT_DIR=../.git, core.bare = true' false false true work/
- 
- git config --unset core.bare
--test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true ''
-+test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true work/
- 
- mv ../.git ../repo.git || exit 1
- export GIT_DIR=../repo.git
-@@ -69,9 +69,9 @@ git config core.bare false
- test_rev_parse 'GIT_DIR=../repo.git, core.bare = false' false false true ''
- 
- git config core.bare true
--test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' true false true ''
-+test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' false false true ''
- 
- git config --unset core.bare
--test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' true false true ''
-+test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
- 
- test_done
--- 
-1.5.3.rc3.18.g49a1
+I would use branches for that.  A base branch with the common code, and 
+the customisations in all the branches, which merge from the base branch.
+
+If you have an interesting change in a custom branch, you can percolate 
+that back into the base branch, by checking out that base branch and 
+cherry-picking the commit you want to have.
+
+Of course, you can automate this merging (or even rebasing, if you are 
+interested in keeping your customisations nice and tidy) with a script.  
+With a git alias even.
+
+Hth,
+Dscho
