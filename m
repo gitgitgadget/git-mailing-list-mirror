@@ -1,66 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: gitk screenshots of complex history
-Date: Fri, 27 Jul 2007 00:13:01 -0400
-Message-ID: <20070727041300.GD20052@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: bug: update hook failure doesn't prevent local deletion of a branch
+Date: Thu, 26 Jul 2007 21:13:42 -0700
+Message-ID: <7vk5sm5vrd.fsf@assigned-by-dhcp.cox.net>
+References: <200707251250.08166.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 06:13:15 2007
+Cc: Andy Parkins <andyparkins@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Jul 27 06:13:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEHCR-0002QD-BB
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 06:13:11 +0200
+	id 1IEHD1-0002XG-Hz
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 06:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750818AbXG0ENI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 00:13:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbXG0ENH
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 00:13:07 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50116 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800AbXG0ENF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 00:13:05 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IEHCI-0008HL-RW
-	for git@vger.kernel.org; Fri, 27 Jul 2007 00:13:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2395720FBAE; Fri, 27 Jul 2007 00:13:01 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750849AbXG0ENp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 00:13:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXG0ENo
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 00:13:44 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:49956 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750788AbXG0ENn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 00:13:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070727041343.XAAY1399.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 27 Jul 2007 00:13:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id UUDi1X00K1kojtg0000000; Fri, 27 Jul 2007 00:13:43 -0400
+In-Reply-To: <200707251250.08166.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 25 Jul 2007 12:50:06 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53880>
 
-I've mentioned both on list and on #git that one of my production
-repositories has a few weird points in time.  Some folks have asked
-to see at least screenshots of the line part of the gitk output,
-as apparently they've never seen ugly history in Git.  Lucky them.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-The images are rather large so I have posted them on my website
-with a bit longer explanation of each:
+> I wanted to delete a branch (let's call it "deleted-branch") from my public 
+> repository.  I ran this:
+>
+> $ git push origin :deleted-branch
+> deleting 'refs/heads/deleted-branch'
+>  Also local refs/remotes/up/deleted-branch
+> *** Update hook: aborting
+> error: hooks/update exited with error code 1
+> error: hook declined to update refs/heads/deleted-branch
+> ng refs/heads/deleted-branch hook declined
+> error: failed to push to '/path/to/git/repo.git'
+> ...
+> Summary: when using git-push to delete a remote branch, and that deletion is 
+> disallowed by the update hook, the local tracking branch _is_ deleted.
 
-  http://www.spearce.org/2007/07/difficult-gitk-graphs.html
+Yes, a few months ago with b516968f, "send-pack" started to
+pretend that it turned around and fetched immediately after it
+attempted to push.
 
+There are two problems with it.  One is this exact problem Andy
+reported.  Newer receive-pack reports the status (if an update
+of the ref was successful), and the sender _could_ try to detect
+a failure and refrain from making the local side update (but if
+the receive-pack running on the other end is old enough there is
+no indication of an error); the code does not bother to do this
+correctly.  I think this is correctable without major changes.
+If the remote end refused to update only one of the refs, and
+send-pack as a whole fails, we could refrain from updating
+anything local.
 
-I just compared my own history to Linus' linux-2.6 history.
-The kernel team can't hold a candle to this mess.  Remember,
-this is *with* me involved in the project on a daily basis.  Me.
-Someone who knows Git fairly well...
-
-OK, no more screenshots from *that* repository!  I don't ever want
-to run `gitk --all` there again.  Ever.
-
-PS: The really interesting data (subject lines, authors, dates)
-has all been redacted from the images.  I can't publish that stuff.
-
--- 
-Shawn.
+But another more fundamental issue is that post-update hook on
+the receiving end could do anything it pleases (for example, it
+could try to rebase what was pushed), and at the protocol level
+there is no way to say "you tried to push this SHA-1 but we
+replaced it with this other SHA-1 instead".
