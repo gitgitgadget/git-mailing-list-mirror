@@ -1,53 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] use lockfile.c routines in git_commit_set_multivar()
-Date: Fri, 27 Jul 2007 10:05:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707271004580.14781@racer.site>
-References: <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
- <Pine.LNX.4.64.0707261926590.14781@racer.site>
- <f158199e0707261148r29419a39h7d83fc7bd0ea7df1@mail.gmail.com>
- <7vfy3a5uzv.fsf@assigned-by-dhcp.cox.net> <7v7iom5twd.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-gui problem with version number.
+Date: Fri, 27 Jul 2007 11:11:13 +0200
+Message-ID: <86lkd2mcsu.fsf@lola.quinscape.zz>
+References: <86odhzpg2l.fsf@lola.quinscape.zz> <20070727044634.GG20052@spearce.org> <85y7h25sg6.fsf@lola.goethe.zz> <20070727053627.GI20052@spearce.org> <85odhy5rm6.fsf@lola.goethe.zz> <20070727054815.GJ20052@spearce.org> <85ejiu5r9r.fsf@lola.goethe.zz> <86k5smnvhw.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bradford Smith <bradford.carl.smith@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 11:05:47 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 27 11:11:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IELlQ-0001d3-VV
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 11:05:45 +0200
+	id 1IELrM-0003aF-DL
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 11:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762037AbXG0JFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 05:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757241AbXG0JFd
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 05:05:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39083 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756004AbXG0JFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 05:05:32 -0400
-Received: (qmail invoked by alias); 27 Jul 2007 09:05:30 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 27 Jul 2007 11:05:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hD/YRgXghy4KSubyx+4kc4/gqYGd2bqyzjHZY3n
-	x1jyxstippPiRe
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v7iom5twd.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1761081AbXG0JLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 05:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759211AbXG0JLg
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 05:11:36 -0400
+Received: from main.gmane.org ([80.91.229.2]:47418 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760851AbXG0JLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 05:11:35 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IELr6-0001FC-G0
+	for git@vger.kernel.org; Fri, 27 Jul 2007 11:11:28 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Jul 2007 11:11:28 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Jul 2007 11:11:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:tzCzWuLQig3hePgZC+ANfWsJOuk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53910>
 
-Hi,
+David Kastrup <dak@gnu.org> writes:
 
-On Thu, 26 Jul 2007, Junio C Hamano wrote:
+> Now that is funny.  I am pretty sure (or rather _have_ been pretty
+> sure) that I cloned the respective repositories with the same command.
+> Yet now both are up-to-date according to git-pull (and have identical
+> .config contents), and the first compiles version git version
+> 1.5.3.rc2.41.gb47b1 while the second compiles version
+> 1.5.3.rc3.7.gd58e-dirty.  Both have been cloned from git.git, the
 
-> How about this?  On top of your "lockfile to keep symlink" and
-> "set-multivar to use lockfile protocol" patches.
+A combination of rebasing and pushing made the difference go away and
+made git-gui work again.  Nevertheless, it would be a good idea not to
+balk at the dirty version strings.
 
-Looks very good to me!
-
-Ciao,
-Dscho
+-- 
+David Kastrup
