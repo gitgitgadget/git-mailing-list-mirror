@@ -1,87 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb chokes on recursive symlink
-Date: Sat, 28 Jul 2007 00:57:21 +0200
-Message-ID: <200707280057.22311.jnareb@gmail.com>
-References: <7v8x922r2w.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-gui: i18n introductory document (2nd draft)
+Date: Fri, 27 Jul 2007 16:18:37 -0700
+Message-ID: <7vmyxhwi42.fsf@assigned-by-dhcp.cox.net>
+References: <7vir87adzo.fsf@assigned-by-dhcp.cox.net>
+	<7v4pjq7net.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 00:57:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Christian Stimming <christian.stimming@ibeo-as.com>,
+	Irina Riesen <irina.riesen@gmail.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Xudong Guan <xudong.guan@gmail.com>,
+	Nanako Shiraishi <nanako3@bluebottle.com>, git@vger.kernel.org,
+	Brett Schwarz <brett_schwarz@yahoo.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 28 01:18:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEYkT-0002XG-ET
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 00:57:29 +0200
+	id 1IEZ51-0007AD-2S
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 01:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937432AbXG0W50 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 18:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763560AbXG0W50
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 18:57:26 -0400
-Received: from ik-out-1112.google.com ([66.249.90.179]:43778 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937342AbXG0W5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 18:57:25 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so767496ika
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 15:57:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dsT51/T4yk1BGmcENJ06aB7m1Hx3EnJwfoIbshBkPjGiwnOuvxlbMwzkJxl7zCt+ZB9z9dy91xiANA30sXNQSZ3u1G2wdneMJz2zl1y68z+mam4X85U//+k2u9c0Cnw1hqvlXRtnov/7BkCTzqMpPkYbncdPz3jOiNSX8PRKxQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gYjDMPygXchgeErDv4for8Ys1W3RVrpCA1M5obpHlGQBcptGIYFivXnYCnvZIoLztu8TJn6IuStzWVnVXM/0U2WtTOSs5NwPr8DyOM9v4CmuoyHopIS3weBERKoM1N/lJWo+cunjy+EL7pnjM2tHiqIMrMVPSrUtTP9zpwMKfjs=
-Received: by 10.86.4.2 with SMTP id 2mr2314515fgd.1185577043764;
-        Fri, 27 Jul 2007 15:57:23 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id g8sm945870muf.2007.07.27.15.57.21
-        (version=SSLv3 cipher=OTHER);
-        Fri, 27 Jul 2007 15:57:22 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v8x922r2w.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1760904AbXG0XSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 19:18:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764667AbXG0XSk
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 19:18:40 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63520 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760035AbXG0XSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 19:18:39 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070727231839.JJAX14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 27 Jul 2007 19:18:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UnJd1X00X1kojtg0000000; Fri, 27 Jul 2007 19:18:38 -0400
+In-Reply-To: <7v4pjq7net.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 26 Jul 2007 16:31:06 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53974>
 
-Junio C Hamano wrote:
+My thanks go to Nana, VMiklos, Christian and Brett for their
+feedbacks to the draft.
 
-[cut explanation about why one would want something like below]
- 
-> 	ln -s /pub /pub/pub
-[...]
-> However, gitweb chokes if there is such a symlink (File::Find
-> barfs with "/pub/pub is a recursive symbolic link" --- I think
-> this is because you use "follow_fast => 1").
-> 
-> As I happen to think using a symlink that goes up for backward
-> compatible URL support is a rather common practice, I think we
-> should do something about it.  My gut feeling is that we could
-> simply ignore such symlinks.
-> 
-> What do you think about this issue?
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index b381692..c8ad84e 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1492,6 +1492,7 @@ sub git_get_projects_list {
->  
->  		File::Find::find({
->  			follow_fast => 1, # follow symbolic links
-> +			follow_skip => 2, # ignore duplicates
->  			dangling_symlinks => 0, # ignore dangling symlinks, silently
->  			wanted => sub {
->  				# skip project-list toplevel, if we get it.
-> 
+It quickly gets cumbersome, both for myself and reviewers, to go
+back and forth sending the whole of Nth draft every time on the
+mailing list.  At the same time, I can not really afford to be
+in the translation business myself, so I'd like to let this
+document go in the best shape I could make, and have people more
+competent around gettext than me to take it over.
 
-I guess that is a good solution, but I'm not Perl expert...
+I've updated the document somewhat and pushed it out to the mob
+branch.  The issues I addressed:
 
--- 
-Jakub Narebski
-Poland
+ * "Running without installing does not work with ./git-gui, but
+   with ./git-gui.sh" (Nana).
+
+ * After the initial cloning, resulting local directory is
+   git-gui-i18n, not git-gui-i18n.git (VMiklos).
+
+ * "Please install them" (Christian).  I meant by "them", git,
+   gettext and any one of po editors.  I reworded the example
+   enumeration of available po editors to make it clear the
+   translator needs only one.
+
+ * "Parameter permutation needs $ sign quoted" (Brett).
+
+ * "Message marked with '# ,fuzzy' are not used -- remove the
+   fuzzy marker when you are done" (Christian).
+
+I did not address the following issues, not because I did not
+agree with the comments, but because I felt Christian is more
+qualified to do these kinds of things.
+
+ * "Parameter permutation" should be in a separate "Advanced
+   translation" section (Christian). 
+
+ * "po/git-gui.pot" should be generated by translators any time,
+   and other workflow improvements regarding merging of the po
+   files (Christian).
