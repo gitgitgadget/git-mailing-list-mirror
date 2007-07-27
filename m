@@ -1,53 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use lockfile.c routines in git_commit_set_multivar()
-Date: Thu, 26 Jul 2007 21:30:12 -0700
-Message-ID: <7vfy3a5uzv.fsf@assigned-by-dhcp.cox.net>
-References: <11854689283208-git-send-email-bradford.carl.smith@gmail.com>
-	<Pine.LNX.4.64.0707261926590.14781@racer.site>
-	<f158199e0707261148r29419a39h7d83fc7bd0ea7df1@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui wording suggestions
+Date: Fri, 27 Jul 2007 00:40:09 -0400
+Message-ID: <20070727044009.GF20052@spearce.org>
+References: <20070726111902.xqkxcdlsbo8w4c8k@webmail.tu-harburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Bradford Smith" <bradford.carl.smith@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 06:30:18 2007
+Cc: Brett Schwarz <brett_schwarz@yahoo.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Fri Jul 27 06:40:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEHSz-0005Dm-KL
-	for gcvg-git@gmane.org; Fri, 27 Jul 2007 06:30:17 +0200
+	id 1IEHci-0007gl-NZ
+	for gcvg-git@gmane.org; Fri, 27 Jul 2007 06:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbXG0EaQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 00:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbXG0EaQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 00:30:16 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:53987 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090AbXG0EaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 00:30:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070727043014.VLYF1393.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 27 Jul 2007 00:30:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id UUWC1X00M1kojtg0000000; Fri, 27 Jul 2007 00:30:13 -0400
-In-Reply-To: <f158199e0707261148r29419a39h7d83fc7bd0ea7df1@mail.gmail.com>
-	(Bradford Smith's message of "Thu, 26 Jul 2007 14:48:49 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751659AbXG0EkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 00:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbXG0EkQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 00:40:16 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50665 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751536AbXG0EkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 00:40:14 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IEHcY-0002Eg-8s; Fri, 27 Jul 2007 00:40:10 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2710B20FBAE; Fri, 27 Jul 2007 00:40:09 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070726111902.xqkxcdlsbo8w4c8k@webmail.tu-harburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53883>
 
-"Bradford Smith" <bradford.carl.smith@gmail.com> writes:
+Christian Stimming <stimming@tuhh.de> wrote:
+> Unifiy wording to say "to stage" instead of "to add" always.
+...
+> With this patch I'd propose to talk every only about "stage" instead  
+> of "add". IMHO that's just the logical conclusion of the above wording  
+> decision. What do you think?
 
-> FWIW, I have successfully run 'make test' and also verified that it
-> behaves as I expect with my ~/.gitconfig symlink (in conjunction with
-> the my other patch for resolving symlinks).
+Yes, I agree.  This is a necessary change, the current wording is
+very confusing.  I would apply this earlier than the other i18n
+stuff, but this patch is written based upon the current i18n work.
+:-|
 
-Existing "make test" testsuite is not an appropriate thing to
-say this patch is safe, as we do not have much symlinking in the
-test git repository there.  Care to add a new test or two?
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 3536d38..fd8b4b4 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -1824,12 +1824,12 @@ if {[is_enabled multicommit] || [is_enabled  
+> singlecommit]} {
+>   	lappend disable_on_lock \
+>   		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+> 
+> -	.mbar.commit add command -label [mc "Add To Commit"] \
+> +	.mbar.commit add command -label [mc "Stage To Commit"] \
+>   		-command do_add_selection
+>   	lappend disable_on_lock \
+>   		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+...
+
+-- 
+Shawn.
