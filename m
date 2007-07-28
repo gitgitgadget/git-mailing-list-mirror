@@ -1,103 +1,226 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: git-svn rebase screwing up commit messages
-Date: Sat, 28 Jul 2007 19:33:40 +0200
-Message-ID: <9B05AC3D-F791-4489-B523-C1392E480191@lrde.epita.fr>
-References: <724DFB31-0471-4A5E-95DF-F5F74876AC77@lrde.epita.fr> <7v8x90sp25.fsf@assigned-by-dhcp.cox.net> <20070728083536.540e471d.seanlkml@sympatico.ca> <7vodhwptba.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-5--969093318"
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] Add a --user option to git-config
+Date: Sat, 28 Jul 2007 17:35:13 +0100
+Message-ID: <46AB7041.8070605@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 19:34:21 2007
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jul 28 19:38:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEqBI-0005gi-7u
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 19:34:20 +0200
+	id 1IEqF5-0006kU-2j
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 19:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754129AbXG1Rdz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 13:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbXG1Rdz
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 13:33:55 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:36772 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756792AbXG1Rdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 13:33:54 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.50)
-	id 1IEqAo-00067r-Fg; Sat, 28 Jul 2007 19:33:50 +0200
-In-Reply-To: <7vodhwptba.fsf@assigned-by-dhcp.cox.net>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1754448AbXG1RiL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 13:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754451AbXG1RiK
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 13:38:10 -0400
+Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:2646 "EHLO
+	anchor-post-36.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754410AbXG1RiJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2007 13:38:09 -0400
+X-Greylist: delayed 1286 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jul 2007 13:38:09 EDT
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-36.mail.demon.net with esmtp (Exim 4.42)
+	id 1IEpuC-000Hk7-Jt; Sat, 28 Jul 2007 17:16:41 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54043>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-5--969093318
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Jul 28, 2007, at 3:10 PM, Junio C Hamano wrote:
+At present, the --global option is something of a misnomer, so
+we introduce the --user option as a synonym, with the intention
+of removing the old option in the future.
 
-> Sean <seanlkml@sympatico.ca> writes:
->
->>> Do you mean by "my commits in Git" a commit you created with git
->>> in your git repository?
->>
->> Tested this here (rc3.24.g83b3d) and can confirm the reported  
->> problem.
->> After making a commit in git and then running "git svn rebase" to
->> receive updates from the svn repo, the rebased commit has a borked
->> description (multi-lined commit message appears all on one line).
->
-> In short, your original commit log message is broken.
->
-> The recommended convention for commit messages is to start it
-> with a single line that describes what it does, followed by a
-> blank line (i.e. the first paragraph consists of a single line),
-> followed by a longer explanation of why the change brought by
-> the commit is a good thing.
->
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Hi people,
-thanks for the quick and complete replies.  As a user, I do not  
-expect git-rebase to change my commit message.  I was aware of this  
-convention in Git, but it looks like it's more than just a  
-convention.  This trap should either be fixed (your patch works for  
-me) or it should be clearly stated in the documentation that commit  
-messages must really be formatted according to the convention.
+I have recently had the need to create a ~/.gitconfig file for the
+first time and I was reminded of this patch. Maybe it's just me who
+thinks that --global is odd ... ;-)  Particularly since the system
+config file was added.
 
-Personally I expected Git to keep the 1st line of my commit message  
-as the "short version" (which is what git log and the like do ATM)  
-and although I don't leave a blank line between the 1st line and the  
-rest of the message, the 1st line is always the sentence that can be  
-used as a short version of the commit message.
+Actually my config editor of choice is vim, so this is not a high
+priority for me.
 
-Cheers,
+[This is against 1.5.2, but will hopefully not be too difficult to
+forward to current git]
 
+ATB,
+
+Ramsay Jones
+
+ Documentation/git-config.txt           |   30 +++++++++++++++---------------
+ Documentation/git-repo-config.txt      |    2 +-
+ Documentation/tutorial.txt             |    4 ++--
+ Documentation/user-manual.txt          |    2 +-
+ builtin-config.c                       |    5 +++--
+ contrib/completion/git-completion.bash |    2 +-
+ ident.c                                |    2 +-
+ 7 files changed, 24 insertions(+), 23 deletions(-)
+
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 280ef20..26138c4 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -3,22 +3,22 @@ git-config(1)
+ 
+ NAME
+ ----
+-git-config - Get and set repository or global options
++git-config - Get and set repository, user or system-wide options
+ 
+ 
+ SYNOPSIS
+ --------
+ [verse]
+-'git-config' [--system | --global] [type] name [value [value_regex]]
+-'git-config' [--system | --global] [type] --add name value
+-'git-config' [--system | --global] [type] --replace-all name [value [value_regex]]
+-'git-config' [--system | --global] [type] --get name [value_regex]
+-'git-config' [--system | --global] [type] --get-all name [value_regex]
+-'git-config' [--system | --global] [type] --unset name [value_regex]
+-'git-config' [--system | --global] [type] --unset-all name [value_regex]
+-'git-config' [--system | --global] [type] --rename-section old_name new_name
+-'git-config' [--system | --global] [type] --remove-section name
+-'git-config' [--system | --global] -l | --list
++'git-config' [--system | --user] [type] name [value [value_regex]]
++'git-config' [--system | --user] [type] --add name value
++'git-config' [--system | --user] [type] --replace-all name [value [value_regex]]
++'git-config' [--system | --user] [type] --get name [value_regex]
++'git-config' [--system | --user] [type] --get-all name [value_regex]
++'git-config' [--system | --user] [type] --unset name [value_regex]
++'git-config' [--system | --user] [type] --unset-all name [value_regex]
++'git-config' [--system | --user] [type] --rename-section old_name new_name
++'git-config' [--system | --user] [type] --remove-section name
++'git-config' [--system | --user] -l | --list
+ 
+ DESCRIPTION
+ -----------
+@@ -47,7 +47,7 @@ This command will fail if:
+ . the section or key is invalid,
+ . you try to unset an option which does not exist,
+ . you try to unset/set an option for which multiple lines match, or
+-. you use --global option without $HOME being properly set.
++. you use --user option without $HOME being properly set.
+ 
+ 
+ OPTIONS
+@@ -73,8 +73,8 @@ OPTIONS
+ --get-regexp::
+ 	Like --get-all, but interprets the name as a regular expression.
+ 
+---global::
+-	Use global ~/.gitconfig file rather than the repository .git/config.
++--user::
++	Use per user ~/.gitconfig file rather than the repository .git/config.
+ 
+ --system::
+ 	Use system-wide $(prefix)/etc/gitconfig rather than the repository
+@@ -110,7 +110,7 @@ ENVIRONMENT
+ 
+ GIT_CONFIG::
+ 	Take the configuration from the given file instead of .git/config.
+-	Using the "--global" option forces this to ~/.gitconfig.
++	Using the "--user" option forces this to ~/.gitconfig.
+ 
+ GIT_CONFIG_LOCAL::
+ 	Currently the same as $GIT_CONFIG; when Git will support global
+diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
+index 2deba31..8eec3cd 100644
+--- a/Documentation/git-repo-config.txt
++++ b/Documentation/git-repo-config.txt
+@@ -3,7 +3,7 @@ git-repo-config(1)
+ 
+ NAME
+ ----
+-git-repo-config - Get and set repository or global options
++git-repo-config - Get and set repository, user or system-wide options
+ 
+ 
+ SYNOPSIS
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index f55d408..a401638 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -20,8 +20,8 @@ public email address before doing any operation.  The easiest
+ way to do so is:
+ 
+ ------------------------------------------------
+-$ git config --global user.name "Your Name Comes Here"
+-$ git config --global user.email you@yourdomain.example.com
++$ git config --user user.name "Your Name Comes Here"
++$ git config --user user.email you@yourdomain.example.com
+ ------------------------------------------------
+ 
+ 
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 52247aa..105e362 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1147,7 +1147,7 @@ The file specified by the `core.excludesfile` config directive:::
+ 	   more information on configuration options). This config directive
+ 	   can be set in the per-repo `.git/config` file, in which case the
+ 	   exclude patterns will apply to that repo only. Alternatively, you
+-	   can set the directive in the global `~/.gitconfig` file to apply
++	   can set the directive in the per-user `~/.gitconfig` file to apply
+ 	   the exclude pattern to all your git repos. As with the above
+ 	   `.git/info/exclude` (and, indeed, with git config directives in
+ 	   general), this directive does not follow push/pull/clone, but remain
+diff --git a/builtin-config.c b/builtin-config.c
+index b2515f7..1850d9d 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -2,7 +2,7 @@
+ #include "cache.h"
+ 
+ static const char git_config_set_usage[] =
+-"git-config [ --global | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
++"git-config [ --user | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
+ 
+ static char *key;
+ static regex_t *key_regexp;
+@@ -143,7 +143,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			type = T_BOOL;
+ 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
+ 			return git_config(show_all_config);
+-		else if (!strcmp(argv[1], "--global")) {
++		else if (!strcmp(argv[1], "--user") ||
++				!strcmp(argv[1], "--global")) {
+ 			char *home = getenv("HOME");
+ 			if (home) {
+ 				char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 46356e8..cb5a457 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -745,7 +745,7 @@ _git_config ()
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "
+-			--global --list --replace-all
++			--user --list --replace-all
+ 			--get --get-all --get-regexp
+ 			--add --unset --unset-all
+ 			"
+diff --git a/ident.c b/ident.c
+index 69a04b8..21dca3a 100644
+--- a/ident.c
++++ b/ident.c
+@@ -182,7 +182,7 @@ static const char *env_hint =
+ "  git config user.name \"Your Name\"\n"
+ "\n"
+ "To set the identity in this repository.\n"
+-"Add --global to set your account\'s default\n"
++"Add --user to set your account\'s default\n"
+ "\n";
+ 
+ const char *fmt_ident(const char *name, const char *email,
 -- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-5--969093318
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFGq330wwE67wC8PUkRAn+NAKDYvvAIo9TeJOhuJBCpe5NoMWvvtgCfTZc8
-JdR/Q3HHanwR7wWAv1Qjui0=
-=bhC/
------END PGP SIGNATURE-----
-
---Apple-Mail-5--969093318--
+1.5.2
