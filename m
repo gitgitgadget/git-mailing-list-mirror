@@ -1,57 +1,68 @@
-From: Seth Falcon <sfalcon@fhcrc.org>
-Subject: suggestion for git rebase -i
-Date: Fri, 27 Jul 2007 21:58:20 -0700
-Message-ID: <m26445t98z.fsf@ziti.fhcrc.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 2/2] gitk: Markup many strings for translation.
+Date: Sat, 28 Jul 2007 16:21:33 +1000
+Message-ID: <18090.57453.466507.354727@cargo.ozlabs.ibm.com>
+References: <20070727165318.e96b1yxxwsooo884@webmail.tu-harburg.de>
+	<20070727170300.t01ku4u2sg04sgsk@webmail.tu-harburg.de>
+	<18090.44123.905869.974967@cargo.ozlabs.ibm.com>
+	<7vvec5uo01.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 28 07:31:28 2007
+Content-Transfer-Encoding: 7bit
+Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 08:21:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEetj-0004t7-4P
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 07:31:27 +0200
+	id 1IEfgQ-0005kd-Db
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 08:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbXG1FbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 01:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751589AbXG1FbN
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 01:31:13 -0400
-Received: from MAZZITE.FHCRC.ORG ([140.107.152.11]:51908 "EHLO
-	mazzite.fhcrc.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751391AbXG1FbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 01:31:12 -0400
-X-Greylist: delayed 1888 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jul 2007 01:31:12 EDT
-Received: from jarlite.fhcrc.org (JARLITE.FHCRC.ORG [140.107.42.11])
-	by mazzite.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l6S4xhNS028919
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 27 Jul 2007 21:59:43 -0700
-Received: from jade.fhcrc.org (JADE.FHCRC.ORG [140.107.42.223])
-	by jarlite.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l6S4wM64030819
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 27 Jul 2007 21:58:22 -0700
-Received: from ziti.fhcrc.org (DORMOUSE.FHCRC.ORG [140.107.170.158])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jade.fhcrc.org (Postfix) with ESMTP id E08A5B3DD
-	for <git@vger.kernel.org>; Fri, 27 Jul 2007 21:58:21 -0700 (PDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (darwin)
-X-PMX-Version: 5.3.2.304607, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.7.27.213535
-X-PMX-Version: 5.3.2.304607, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.7.27.213535
-X-FHCRC-SCANNED: Fri Jul 27 21:58:22 2007
+	id S1753546AbXG1GVn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 02:21:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbXG1GVn
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 02:21:43 -0400
+Received: from ozlabs.org ([203.10.76.45]:54172 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753403AbXG1GVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 02:21:42 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 12D18DDE27; Sat, 28 Jul 2007 16:21:41 +1000 (EST)
+In-Reply-To: <7vvec5uo01.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53995>
 
-The tempfile used by git rebase -i is called "todo".  For those using
-something like emacsclient, this is a bit too generic for the name of
-a file in a pre-existing editor session.  I realize this is a small
-nit, but how about renaming the file to "git-rebase-todo"?
+Junio C Hamano writes:
 
-+ seth
+> My preference is 1.b, as the longer term plan (when everybody
+> has git 1.5.2 or newer) is to eject git-gui.git project from
+> git.git proper, and use the subproject feature to have
+> git-gui.git in git.git; it would be good if gitk.git can be
+> handled the same way, and the layout 1.b would make it the
+> easiest, as it matches how we treat git-gui.git project now.
 
--- 
-Seth Falcon | Computational Biology | Fred Hutchinson Cancer Research Center
-BioC: http://bioconductor.org/
-Blog: http://userprimary.net/user/
+1.b sounds fine to me too.
+
+> You also expressed in a separate message about "catching package
+> require msgcat to avoid breakage".  I think msgcat package is
+> part of the standard Tcl distribution since 8.1; how old a
+> tcl/tk do you support?
+
+Gitk requires 8.4, so that sounds OK then.  I didn't realize it had
+been part of the standard distribution for so long.
+
+> In any case, I would very much appreciate if any of these will
+> *NOT* happen before 1.5.3.  git-gui 0.8.0 which is scheduled to
+> be in 1.5.3 will not have i18n.
+
+No problem. :)
+
+By the way, could you do a pull from gitk.git?  There are some
+bug-fixes plus the change to show the index and working directory as
+separate fake commits, as requested by Linus.
+
+Paul.
