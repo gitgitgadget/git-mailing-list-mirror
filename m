@@ -1,122 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Newbie problem
-Date: Sat, 28 Jul 2007 01:01:49 -0700
-Message-ID: <7vmyxht0r6.fsf@assigned-by-dhcp.cox.net>
-References: <87vec5vvt5.fsf@osquare.oqube.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2007
+Date: Sat, 28 Jul 2007 09:02:39 +0100
+Message-ID: <200707280902.40893.andyparkins@gmail.com>
+References: <200707250358.58637.jnareb@gmail.com> <200707271401.57833.andyparkins@gmail.com> <200707272107.16602.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Insitu <abailly@oqube.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 10:01:55 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 10:02:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEhFL-0000FL-6K
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 10:01:55 +0200
+	id 1IEhGH-0000VS-QZ
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 10:02:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764994AbXG1IBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 04:01:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764967AbXG1IBv
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 04:01:51 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:53424 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764859AbXG1IBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 04:01:50 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070728080151.PHQS7349.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 28 Jul 2007 04:01:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Uw1p1X00A1kojtg0000000; Sat, 28 Jul 2007 04:01:49 -0400
-In-Reply-To: <87vec5vvt5.fsf@osquare.oqube.com> (abailly@oqube.com's message
-	of "Sat, 28 Jul 2007 09:20:22 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1765361AbXG1ICu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 04:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765191AbXG1ICu
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 04:02:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:58858 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764967AbXG1ICr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 04:02:47 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so808810ugf
+        for <git@vger.kernel.org>; Sat, 28 Jul 2007 01:02:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=k5BupIZzvPFWGsk1cE3MDy0yCA3qk2+4SSdHQ1nR7zGtEFP3NQwROjnXkgWQcr5SWuIJskNnqUyl9BLN383QevibZEkW5GcfSvTi/SJ8p66B5AACBd2xsMlVfKUAAHbNsyO/06+R7s+uotsuZx8Qyjk77v/PtNIJVbO4A4vshp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fy5zB0+HrwxDNpHkG2OkcbUCTcJacshzaxD7SLuoIoZAyvrOYpeAOU22+K8zxx5b4yDR3japPwOddo3thk99+WvgIYVFmhu1m/Gkfy8yHdcb7MR6j1HGwbpqpRQWp2RxiVlvWHX1/Np+L4fwBthwq2Rm4/B5iR7NupGdwE9btJE=
+Received: by 10.66.219.11 with SMTP id r11mr3535310ugg.1185609765529;
+        Sat, 28 Jul 2007 01:02:45 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTPS id f4sm2383840nfh.2007.07.28.01.02.44
+        (version=SSLv3 cipher=OTHER);
+        Sat, 28 Jul 2007 01:02:44 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <200707272107.16602.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54006>
 
-Insitu <abailly@oqube.com> writes:
+On Friday 2007, July 27, Jakub Narebski wrote:
 
-> Now, I want to be able to do:
-> lap> git push
-> or
-> lap> git pull
->
-> instead of 
-> lap> git push ssh://pc/~/.git
->
-> I think I need to reconfigure my remote branches/origin on laptop but
-> don't want ot break everything.
+> > Not using GIT
+> Well, it is meant to be Git _USER'S_ Survey.  The rest of questions
+> wouldn't have much sense if responder is not familiar with Git.
 
-The necessary syntax and configuration files are all documented
-fairly detailed in the manual pages, but it is a tad hard to
-know where to look:
-
-    http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html
-    http://www.kernel.org/pub/software/scm/git/docs/git-push.html
-    http://www.kernel.org/pub/software/scm/git/docs/git-config.html
-
-If you use recent enough git (post 1.5.0), the recommended way
-to keep two boxes in sync is:
-
-On mothership box, in .git/config:
-
- [remote "origin"]
-     url = satellite:.git/
-     fetch = +refs/heads/*:refs/remotes/origin/*
-     push = refs/heads/*:refs/remotes/origin/*
- [branch "master"]
-     remote = origin
-     merge = refs/heads/master
-
-On satellite laptop, in .git/config:
-
- [remote "origin"]
-     url = mothership:.git/
-     fetch = +refs/heads/*:refs/remotes/origin/*
-     push = refs/heads/*:refs/remotes/origin/*
- [branch "master"]
-     remote = origin
-     merge = refs/heads/master
-
-Then, whenever you start working on the satellite:
-
-	$ git pull
-
-which, while you are on "master" branch, would use 'origin' as
-the default remote (thanks to branch.master.remote configuration),
-store the copy of mothership's branches in refs/remotes/origin/,
-and merges the "master" branch obtained from the mothership to
-your "master" branch on the satellite [*1*].  
-
-When you are done working on the satellite:
-
-	$ git push
-
-will push to "origin" by default, which would push all your
-branches (thanks to remote.origin.push configuration) to
-mothership's refs/remotes/origin/.
-
-When you go back to the mothership, your work done on the
-satellite are already pushed into the refs/remote/origin/
-tracking branches, so you can merge them in (you can do this
-after shutting down your satellite laptop, which is the beauty
-of this setup):
-
-	$ git merge origin/master
-
-to merge in the changes you did on the satellite.
+Of course; the rest of the question would be left unanswered in that case.  
+I suggested it because if you are going to go to the effort of spreading a 
+survey as far and wide as you suggest (and you included some places that 
+aren't known users of git - like mozilla) it seems wasteful not to get some 
+information about the non-users of git - and more importantly what git 
+doesn't do and why they aren't using it (madness presumably).
 
 
-[Footnote]
+Andy
 
-*1* If you prefer to keep a straight history, you may want to
-    fetch+rebase instead of pull which is a fetch+merge, in
-    which case this step will be:
-
-	$ git fetch
-        $ git rebase origin/master
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
