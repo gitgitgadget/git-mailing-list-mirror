@@ -1,71 +1,80 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: git diff with add/modified codes
-Date: Fri, 27 Jul 2007 20:54:57 -0400
-Message-ID: <9e4733910707271754u3f18f2fdrf508068879acb778@mail.gmail.com>
-References: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com>
-	 <7vir85whxy.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0707280148340.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/8] Clean up work-tree handling
+Date: Sat, 28 Jul 2007 01:56:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707280152120.14781@racer.site>
+References: <Pine.LNX.4.64.0707271851370.14781@racer.site>
+ <Pine.LNX.4.64.0707271956420.14781@racer.site> <7vk5sly3h9.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0707280115370.14781@racer.site> <7vejitwe8m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 28 02:55:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 02:56:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEaaE-0000dL-Os
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 02:55:03 +0200
+	id 1IEabm-0000vj-Px
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 02:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965098AbXG1AzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 20:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938464AbXG1Ay7
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 20:54:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:31163 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S938425AbXG1Ay6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 20:54:58 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1098519wah
-        for <git@vger.kernel.org>; Fri, 27 Jul 2007 17:54:58 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VcN3Bw5I7Vz6gEc7lSPwZH2U+w/nY6fTgxxaaY+PYnHyy0QCC+e04d16ghvovS9PusmQbnw6IluD5VlW7h97QM3vWK6mxo3Zhl9FXYpMiXUTIg+VMU1SbKNq2gvvz4JpLic5+54zsmNZ7DhCSHb/hFmyMZUDRdTtr+bOLN6+5Dk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ELQJpc/8OTqFijzvNGEsIpllBCGvsnINrUhmCpFW7N/VaNa2hEXEj2rTAv9qhwAR9Rxr6Ieyx+lBBbv8WD+8UzdFGYAnsKRS+EyzhQyLphJe+8/DXmS5d9RJhiDr93ZbELi6Qoo/b7U6RAXXXSEt1jJMpBNfhtwIo1WoyKvRh/E=
-Received: by 10.114.94.1 with SMTP id r1mr3464797wab.1185584097993;
-        Fri, 27 Jul 2007 17:54:57 -0700 (PDT)
-Received: by 10.114.195.5 with HTTP; Fri, 27 Jul 2007 17:54:57 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707280148340.14781@racer.site>
-Content-Disposition: inline
+	id S965126AbXG1A4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 20:56:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965048AbXG1A4g
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 20:56:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59925 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965020AbXG1A4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 20:56:35 -0400
+Received: (qmail invoked by alias); 28 Jul 2007 00:56:33 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp032) with SMTP; 28 Jul 2007 02:56:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX187jjAx1LU7xmJIxbq419qGw48EUWUY6yp+x8d45M
+	tf08OGi/wSyPzO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vejitwe8m.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53984>
 
-On 7/27/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Fri, 27 Jul 2007, Junio C Hamano wrote:
->
-> > Would --stat --summary be satisfactory?
->
-> Or does "--raw" do the job?
+Hi,
 
-Raw is much closer. Combine the file stats from --raw with --stat and
-it would be perfect.
+On Fri, 27 Jul 2007, Junio C Hamano wrote:
 
->
-> Ciao,
-> Dscho
->
->
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> This changes semantics, I think.
+> >> 
+> >> It used to be relative "up" path when no funny work-tree stuff
+> >> is used, but get_git_work_tree() now seems to return absolute,
+> >> hence this option as well.  If it introduces regression to
+> >> existing callers is up to what the caller does to the resulting
+> >> path, though.  If it only is used to prefix other things
+> >> (i.e. path="$(git rev-parse --show-cdup)$1"), the caller would
+> >> be safe, but if the caller counted number of ../ in the return
+> >> value to see how deep it is, or if the caller expected to see
+> >> empty string in order to see if the process is at the toplevel,
+> >> this change would become a regression.
+> >
+> > I am somewhat negative on keeping _that_ much backwards compatibility.  
+> > Scripts which depend on show-cdup being a relative path _will_ be broken 
+> > by work-tree.  Is it worth it to detect those errors late?
+> 
+> Well, one of the conditions to accept the worktree stuff was not
+> to break anybody who never ever uses worktree.  So if we can
+> keep the UP-ness of cdup, it would be much better.
 
+One could record if the work tree was changed from the default one, and 
+do the old thing in that case.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+But I really have to wonder what other use people concocted for 
+"--show-cdup"?  Potentially some directory-counting?  But --show-prefix 
+would be much better at that.
+
+I'll try to flange something into the code to detect unchanged working 
+tree, but that is rather ugly, so I'd prefer not to.
+
+Ciao,
+Dscho
