@@ -1,72 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Gitweb and submodules
-Date: Sat, 28 Jul 2007 12:29:16 +0200
-Message-ID: <200707281229.17351.jnareb@gmail.com>
-References: <200707271322.50114.jnareb@gmail.com> <20070727123229.GB31114MdfPADPa@greensroom.kotnet.org>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH 1/2] gitk: Import msgcat for translation support
+Date: Sat, 28 Jul 2007 12:40:17 +0200
+Message-ID: <200707281240.17915.stimming@tuhh.de>
+References: <157938.79347.qm@web38908.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sven Verdoolaege <skimo@liacs.nl>
-X-From: git-owner@vger.kernel.org Sat Jul 28 12:22:44 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Brett Schwarz <brett_schwarz@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 12:40:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEjRb-0004mM-TH
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 12:22:44 +0200
+	id 1IEjix-00009H-Qu
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 12:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753411AbXG1KWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 06:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbXG1KWa
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 06:22:30 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:37280 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008AbXG1KW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 06:22:29 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so78048nfb
-        for <git@vger.kernel.org>; Sat, 28 Jul 2007 03:22:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=afo8z8TclT8kBQwxHc5hIEIhAuhGRIWDHsjwTeSG5SLvnIr3tvUqEwoGfIJnw61/jfSHZ8idLGU+rrPiblxr9aPYE1P+mRsGXuyh6DVMxOwVdZbnbSN3VekRCqWSyZPiUfQJV6kWiAEgcJuQAWIU4krPADwoSvSehz37unKfknU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PhVhb4L8JwIywSi2Nb4aot6BY5rbQJ96j7xPQmjKIDXuYS1S/NBApJP7hCcd5Uy/iVaWfg8FkJOIYgQce0EobI9L03T+dCL3288ElF80++VHZvXpup6qvZpOM3bxepop0lscwrznOpQONkvUjJ/O0T5rDzKQTezn1gDu2N34HrA=
-Received: by 10.86.26.11 with SMTP id 11mr2531805fgz.1185618147306;
-        Sat, 28 Jul 2007 03:22:27 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id j2sm3130978mue.2007.07.28.03.22.22
-        (version=SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2007 03:22:23 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070727123229.GB31114MdfPADPa@greensroom.kotnet.org>
+	id S1754047AbXG1Kke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 06:40:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753973AbXG1Kke
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 06:40:34 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:57517 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753878AbXG1Kkd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2007 06:40:33 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l6SAePpe013592
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 28 Jul 2007 12:40:25 +0200
+Received: from [192.168.2.102] (p549024E3.dip0.t-ipconnect.de [84.144.36.227])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l6SAeN6P031421
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 28 Jul 2007 12:40:24 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <157938.79347.qm@web38908.mail.mud.yahoo.com>
 Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54022>
 
-On Fri, 27 July 2007, Sven Verdoolaege wrote
-> On Fri, Jul 27, 2007 at 01:22:49PM +0200, Jakub Narebski wrote:
+Am Samstag, 28. Juli 2007 09:28 schrieb Brett Schwarz:
+> > > Import tcl's msgcat package to have the [mc...] procedure for
+> > > translation available.
+> >
+> > if {[catch {
+> >     package require msgcat
+> >     # rest of your new stuff
+> > }]} {
+> >     proc mc {str} {
+> >     return $str
+> >     }
+> > }
+> >
+> > so that everything still works if msgcat isn't available.  
+>
+> Junio already replied to this, and he was correct. 
 
-> > But for that I need a question answered: how to find GIT_DIR of 
-> > repository which contains submodule objects? We have to assume in 
-> > gitweb that repositories are bare...
-> 
-> You'll have to add a configuration variable for that.
-> The submodule may not even be on the same server.
+The conclusion is that tcl8.1 is old enough so that you can safely assume 
+msgcat exists? Or rather: Gitk probably requires tcl8.1 anyway (is there a 
+known required tcl version for gitk?), and hence this can be relied upon here 
+as well.
 
-What do you think about using "submodule.$name.gitdir" configuration 
-variable for that? It has to be configuration variable because the 
-location of repository which has submodule objects doesn't change when 
-checking out (or rewinding) to different commit in supermodule.
+> However, this made me 
+> think of something (that probably should be in git-gui as well) to make it
+> a little more robust. We should check that the msg directory is where we
+> think it is, and either give a warning, or exit the app (I would vote for
+> the former).
 
-As a special case I'd use 'no value' to note that submodule objects are 
-contained in the supermodule repository.
+>From what I've seen during testing, if the directory passed to msgload doesn't 
+exists, the function simply does nothing. Its documentation doesn't say what 
+is going to happen on a non-existing directory, though:
+http://www.tcl.tk/man/tcl8.4/TclCmd/msgcat.htm#M10
 
--- 
-Jakub Narebski
-Poland
+> set msgdir [file join . msgs]      ;# or whatever this turns out to be
+> if {[file exists $msgdir]} {
+>     ::msgcat::mcload $msgdir
+> } else {
+>     puts stderr "WTF: can't find message catalog directory"
+> }
+>
+> Or you could just use [catch] around the ::msgcat::mcload too.
+
+I don't think [catch] changes anything, as the function rather seems to be 
+no-op on nonexisting directory. So I think this wouldn't 
+improve "robustness". I think this would only help in order to point out to 
+the user that no translation has been found; however, it can't be known at 
+this point whether this happens only because no translation exists, or 
+whether there was some error in the installation. Probably only the latter is 
+actually interesting to the user. 
+
+Well, in conclusion I think the msgcat function is already robust enough and 
+neither [catch] nor the directory checking buys us anything here.
+
+Christian
