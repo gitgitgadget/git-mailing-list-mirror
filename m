@@ -1,85 +1,67 @@
-From: Thomas Schwinge <tschwinge@gnu.org>
-Subject: Re: [PATCH] Don't rely on unspecified behavior
-Date: Sat, 28 Jul 2007 21:43:06 +0200
-Message-ID: <20070728194306.GA32203@fencepost.gnu.org>
-References: <20070728173948.GD23337@cip.informatik.uni-erlangen.de> <11856471952272-git-send-email-tschwinge@gnu.org> <Pine.LNX.4.64.0707282028130.14781@racer.site>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git-svn rebase screwing up commit messages
+Date: Sat, 28 Jul 2007 21:48:12 +0200
+Message-ID: <200707282148.13751.robin.rosenberg.lists@dewire.com>
+References: <724DFB31-0471-4A5E-95DF-F5F74876AC77@lrde.epita.fr> <20070728092914.48f6305c.seanlkml@sympatico.ca> <7vk5skps1g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="M9NhX3UHpAaciwkO"
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 28 21:41:16 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean <seanlkml@sympatico.ca>, Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 21:47:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEsA6-0002v5-Lp
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 21:41:15 +0200
+	id 1IEsG2-0004Qx-5K
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 21:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbXG1TlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 15:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752953AbXG1TlJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 15:41:09 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:48937 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752679AbXG1TlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 15:41:08 -0400
-Received: from tschwinge by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <tschwinge@gnu.org>)
-	id 1IEsBu-0001Ag-PX; Sat, 28 Jul 2007 15:43:06 -0400
+	id S1753242AbXG1TrG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 28 Jul 2007 15:47:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753328AbXG1TrF
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 15:47:05 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:28369 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752953AbXG1TrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 15:47:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 2A57F8026E8;
+	Sat, 28 Jul 2007 21:39:42 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 16201-08; Sat, 28 Jul 2007 21:39:41 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id CA6CB8026DD;
+	Sat, 28 Jul 2007 21:39:41 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vk5skps1g.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707282028130.14781@racer.site>
-X-Homepage: http://nic-nac-project.de/~schwinge/
-User-Agent: Mutt/1.5.11
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54055>
 
-
---M9NhX3UHpAaciwkO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello!
-
-On Sat, Jul 28, 2007 at 08:30:07PM +0100, Johannes Schindelin wrote:
-> On Sat, 28 Jul 2007, Thomas Schwinge wrote:
-> > Calling access(p, m) with p =3D=3D NULL is not specified, so don't do t=
-hat.  On
-> > GNU/Hurd systems doing so will result in a SIGSEGV.
-> >=20
-> > Signed-off-by: Thomas Schwinge <tschwinge@gnu.org>
-> > ---
+l=F6rdag 28 juli 2007 skrev Junio C Hamano:
+> Sean <seanlkml@sympatico.ca> writes:
 >=20
-> Isn't this the same patch as you sent before?
-
-As I wrote in <20070728182542.GA22651@fencepost.gnu.org>: ``I noticed
-that the patch I sent was prepared for an old version of the file.  I'll
-send an updated patch that applies to the current revision.''
-
-> > +		if (excludes_file !=3D NULL && !access(excludes_file, R_OK))
+> >> Having said all that, so that the readers understand the
+> >> background, here is a not-so-heavily-tested patch, which might
+> >> help.  It passes all the test suite as before, but that tells
+> >> how existing git-svn tests do not test many things.
+> >>=20
+> >> I am not considering this for inclusion right now, by the way.
+> >
+> > FWIW your patch fixed my test case here.
 >=20
-> We usually omit the "!=3D NULL"; see the other source code in git.git.
+> Actually the patched behaviour actively encourages a bad (not in
+> the sense that those oneline tools will not work well, but in
+> the sense that these messages are reader unfriendly) practice; I
+> do not think what the patch did deserves to be called "fixed".
 
-Okay, so I should sent a thusly modified version to get it applied?
+git-svn should not enforce git conventions when managing commits
+intended for svn. Those commits should obviously follow the conventions
+for the target (svn) repo.=20
 
-
-Regards,
- Thomas
-
---M9NhX3UHpAaciwkO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQFGq5xKgfzh735dTTURAsUGAKCAFYj5o4q1iygSmQbwlA/TGECefgCeP1ze
-IZUcz6ta7wx5v2iDV/oWLCQ=
-=JrZp
------END PGP SIGNATURE-----
-
---M9NhX3UHpAaciwkO--
+-- robin
