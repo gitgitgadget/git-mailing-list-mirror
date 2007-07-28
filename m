@@ -1,80 +1,151 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git-svn rebase screwing up commit messages
-Date: Sat, 28 Jul 2007 10:11:56 -0400
-Message-ID: <20070728101156.20304d11.seanlkml@sympatico.ca>
-References: <724DFB31-0471-4A5E-95DF-F5F74876AC77@lrde.epita.fr>
-	<7v8x90sp25.fsf@assigned-by-dhcp.cox.net>
-	<20070728083536.540e471d.seanlkml@sympatico.ca>
-	<7vodhwptba.fsf@assigned-by-dhcp.cox.net>
-	<20070728092914.48f6305c.seanlkml@sympatico.ca>
-	<7vk5skps1g.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 16:13:26 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Show submodule entries in the 'tree' view
+Date: Sat, 28 Jul 2007 16:27:31 +0200
+Message-ID: <11856328523162-git-send-email-jnareb@gmail.com>
+Cc: Luben Tuikov <ltuikov@yahoo.com>, Petr Baudis <pasky@suse.cz>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 16:28:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEn2p-0003BQ-Rx
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 16:13:24 +0200
+	id 1IEnGz-00071f-HE
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 16:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751766AbXG1ONI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 10:13:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbXG1ONH
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 10:13:07 -0400
-Received: from bay0-omc3-s13.bay0.hotmail.com ([65.54.246.213]:41794 "EHLO
-	bay0-omc3-s13.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751674AbXG1ONF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2007 10:13:05 -0400
-Received: from BAYC1-PASMTP07.bayc1.hotmail.com ([65.54.191.167]) by bay0-omc3-s13.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 28 Jul 2007 07:13:03 -0700
-X-Originating-IP: [69.156.137.240]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([69.156.137.240]) by BAYC1-PASMTP07.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 28 Jul 2007 07:14:13 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IEn2U-0001rW-6Q; Sat, 28 Jul 2007 10:13:02 -0400
-In-Reply-To: <7vk5skps1g.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 28 Jul 2007 14:14:13.0937 (UTC) FILETIME=[93562210:01C7D121]
+	id S1751902AbXG1O1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 10:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbXG1O1o
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 10:27:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:42523 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591AbXG1O1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 10:27:43 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so836245ugf
+        for <git@vger.kernel.org>; Sat, 28 Jul 2007 07:27:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=BSW3knuw9TMN2c0gYQTf1oyEJvBYOKuAZK5Q5Xc7VnWUBYlecgKrVmluAhLmEBR1CmWhWyuGziUPMPZgO6sE/aDQrGjCR+1dyUIvydlApPdTcrFU4aq59azxBvoX/RnC4hvM48uE2ppQZ6qXEu//v2s8s0kNk3j9jx699vPscbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=cyrKfGzBiwCKJd0Gh/NYea8ckr/rHiQi7JlojYVw1g9dU6AF9a+QlC0dzvqevBhQKoqobHmbYGQa8tp3xyEg+9Uk1mUMw8Moq4ELh0i8XwYar/3IbBMgDIqclq8yeO1lzCL4Ri+5hYotifWs5LEiDLdBu5A4lEhzVbs8JQbEuoA=
+Received: by 10.67.101.10 with SMTP id d10mr3748490ugm.1185632861686;
+        Sat, 28 Jul 2007 07:27:41 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.8.65])
+        by mx.google.com with ESMTPS id z37sm1664562ikz.2007.07.28.07.27.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 28 Jul 2007 07:27:40 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l6SERaK9023421;
+	Sat, 28 Jul 2007 16:27:37 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l6SERWew023420;
+	Sat, 28 Jul 2007 16:27:32 +0200
+X-Mailer: git-send-email 1.5.3.rc3.14.g0bd7-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54035>
 
-On Sat, 28 Jul 2007 06:38:19 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Add S_ISGITLINK subroutine and S_IFGITLINK, S_IFINVALID constants.
+Add support for "commit" (submodule) entries in the tree object to
+mode_str ('m---------', following cgit), file_type and file_type_long
+('submodule') subroutines.
 
+There is only link to the history of submodule entry in the
+supermodule (current repository) for now, because gitweb doesn't know
+where to search for submodule repository objects.
 
-> Actually the patched behaviour actively encourages a bad (not in
-> the sense that those oneline tools will not work well, but in
-> the sense that these messages are reader unfriendly) practice; I
-> do not think what the patch did deserves to be called "fixed".
-> And that is one of the reasons, other than that we are in -rc
-> freeze that we do not add anything but unarguable fixes, that I
-> am not considering the patch for inclusion right now.
-> 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Tested on repositories from t/t3040-subprojects-basic.sh and
+t/t7400-submodule-basic.sh tests.
 
-First, i didn't read the patch and i have no stake at all in
-non-conforming commit messages; i always follow the convention.
-Having said that, the current behavior of Git crosses the line
-from advocating the common commit message format into the realm
-of not-working properly with non-conforming commit messages.
+The 'm---------' symbolic mode is taken from cgit, C CGI web interface
+for git; see:
+  http://hjemli.net/git/cgit/tree
 
-I would argue that you shouldn't try to have it both ways.  Either
-Git supports non-conforming message formats, in which case the
-current behavior seems buggy.  Or Git does not support commit
-messages that deviate from the standard, in which case the
-documentation should be updated to state so bluntly.
+The S_ISGITLINK subroutine and S_IFGITLINK, S_IFINVALID constants
+are taken from cache.h
 
-If handling email-mangled commit messages means that non-conforming
-formats can no longer be fully supported (while discouraged) then
-perhaps the time has come to explicitly state that people should
-not expect Git to handle anything but the 1+empty+description
-commit message format.
+ gitweb/gitweb.perl |   38 +++++++++++++++++++++++++++++++++++---
+ 1 files changed, 35 insertions(+), 3 deletions(-)
 
-Sean
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b381692..1aceede 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -890,11 +890,25 @@ sub age_string {
+ 	return $age_str;
+ }
+ 
++use constant {
++	S_IFINVALID => 0030000,
++	S_IFGITLINK => 0160000,
++};
++
++# submodule/subproject, a commit object reference
++sub S_ISGITLINK($) {
++	my $mode = shift;
++
++	return (($mode & S_IFMT) == S_IFGITLINK)
++}
++
+ # convert file mode in octal to symbolic file mode string
+ sub mode_str {
+ 	my $mode = oct shift;
+ 
+-	if (S_ISDIR($mode & S_IFMT)) {
++	if (S_ISGITLINK($mode)) {
++		return 'm---------';
++	} elsif (S_ISDIR($mode & S_IFMT)) {
+ 		return 'drwxr-xr-x';
+ 	} elsif (S_ISLNK($mode)) {
+ 		return 'lrwxrwxrwx';
+@@ -920,7 +934,9 @@ sub file_type {
+ 		$mode = oct $mode;
+ 	}
+ 
+-	if (S_ISDIR($mode & S_IFMT)) {
++	if (S_ISGITLINK($mode)) {
++		return "submodule";
++	} elsif (S_ISDIR($mode & S_IFMT)) {
+ 		return "directory";
+ 	} elsif (S_ISLNK($mode)) {
+ 		return "symlink";
+@@ -941,7 +957,9 @@ sub file_type_long {
+ 		$mode = oct $mode;
+ 	}
+ 
+-	if (S_ISDIR($mode & S_IFMT)) {
++	if (S_ISGITLINK($mode)) {
++		return "submodule";
++	} elsif (S_ISDIR($mode & S_IFMT)) {
+ 		return "directory";
+ 	} elsif (S_ISLNK($mode)) {
+ 		return "symlink";
+@@ -2707,6 +2725,20 @@ sub git_print_tree_entry {
+ 			              "history");
+ 		}
+ 		print "</td>\n";
++	} else {
++		# unknown object: we can only present history for it
++		# (this includes 'commit' object, i.e. submodule support)
++		print "<td class=\"list\">" .
++		      esc_path($t->{'name'}) .
++		      "</td>\n";
++		print "<td class=\"link\">";
++		if (defined $hash_base) {
++			print $cgi->a({-href => href(action=>"history",
++			                             hash_base=>$hash_base,
++			                             file_name=>"$basedir$t->{'name'}")},
++			              "history");
++		}
++		print "</td>\n";
+ 	}
+ }
+ 
+-- 
+1.5.2.4
