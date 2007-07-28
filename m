@@ -1,77 +1,83 @@
-From: Brett Schwarz <brett_schwarz@yahoo.com>
-Subject: Re: [PATCH 2/2] gitk: Markup many strings for translation.
-Date: Sat, 28 Jul 2007 00:19:19 -0700 (PDT)
-Message-ID: <828559.60536.qm@web38904.mail.mud.yahoo.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] translate bad characters in refnames during git-svn fetch
+Date: Sat, 28 Jul 2007 07:23:11 +0000 (UTC)
+Message-ID: <loom.20070728T091909-416@post.gmane.org>
+References: <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716111509.GC18293@efreet.light.src> <20070715130548.GA6144@piper.oerlikon.madduck.net> <20070716033050.GA29521@muzzle> <20070716174731.GA4792@lapse.madduck.net> <20070717122852.GA21372@mayonaise>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Jul 28 09:19:37 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 09:25:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEgaN-0007wX-BA
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 09:19:35 +0200
+	id 1IEgfo-0000cU-Uv
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 09:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758271AbXG1HTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 03:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758242AbXG1HTV
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 03:19:21 -0400
-Received: from web38904.mail.mud.yahoo.com ([209.191.125.110]:31595 "HELO
-	web38904.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1758183AbXG1HTU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 03:19:20 -0400
-Received: (qmail 60765 invoked by uid 60001); 28 Jul 2007 07:19:19 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Z5v1iOZ5xqPgxScAYaERSNWIFXRqywPZxefqHRwVHdw6GcVF5xY4NMzXwhnVOO0lBOP5ZSwt7xOpuBFCK7PExVpYvwaqd/BK4lsQ9OKkEI0Zx/lgcFWDHkGEEPvMwNXtbmW8QqOfbRwydThjuQ7zbJ0A1wLrM82GRl0I4vm6JR8=;
-X-YMail-OSG: snFnUGkVM1mbrkZwsc94WcLiciYDHNaNXnyUnU6DRDee2OKH5v0CCwB3MS3Gd5NHoCMdc3oymKFYmN3eyNjxFMG7Epyw3JQwoXVwQ6O4bC5HtDrcgvGf7Qa6Gw--
-Received: from [128.251.88.135] by web38904.mail.mud.yahoo.com via HTTP; Sat, 28 Jul 2007 00:19:19 PDT
-X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.119
+	id S1759943AbXG1HZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 03:25:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759927AbXG1HZJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 03:25:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:45087 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752158AbXG1HZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 03:25:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IEgfe-0000S7-8K
+	for git@vger.kernel.org; Sat, 28 Jul 2007 09:25:04 +0200
+Received: from APuteaux-153-1-62-229.w82-124.abo.wanadoo.fr ([82.124.140.229])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Jul 2007 09:25:02 +0200
+Received: from mh by APuteaux-153-1-62-229.w82-124.abo.wanadoo.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Jul 2007 09:25:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 82.124.140.229 (Epiphany/2.18.3-1 (Debian) Gecko/1.8.1.5-1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54001>
 
+Eric Wong <normalperson <at> yhbt.net> writes:
+> martin f krafft <madduck <at> madduck.net> wrote:
+> > also sprach Eric Wong <normalperson <at> yhbt.net> [2007.07.16.0530 +0200]:
+> > > The major issue with this is that it doesn't handle odd cases
+> > > where a refname is sanitized into something (say "1234~2"
+> > > sanitizes to "1234=2"), and then another branch is created named
+> > > "1234=2".
+> > 
+> > Well, we can't please everyone, can we? :)
+> > 
+> > I like Jan's proposal about using the % escape, even though it
+> > doesn't make pretty branch names.
 > 
+> I like it, too.  How about something like the two functions below?  This
+> will break things a bit for people currently using % in refnames,
+> however.
 > 
-> ----- Original Message ----
-> From: Paul Mackerras <paulus@samba.org>
-> To: Brett Schwarz <brett_schwarz@yahoo.com>
-> Cc: Christian Stimming <stimming@tuhh.de>; git@vger.kernel.org
-> Sent: Friday, July 27, 2007 7:40:20 PM
-> Subject: Re: [PATCH 2/2] gitk: Markup many strings for translation.
+> I think this will work rather nicely once I've figured out how the path
+> globbing code works[1] and where to sanitize/desanitize the refnames
+> properly.
 > 
-> Brett Schwarz writes:
+> It would be far easier to take your approach and sanitize them only
+> for the command-line, but storing unsanitized git refnames into the
+> .git/config is something I want to avoid:
 > 
-> > > -        set commitinfo($id) {"No commit information available"}
-> > > +        set commitinfo($id) {[mc "No commit information available"]}
-> >
-> > I think this is probably a typo (on the original), and carrying that
-> > forward will probably result in what was not intended.
-> >
-> > The original has the {} and "". I don't know if this was intended
-> > (it will keep the quotes).
-> 
-> Yes it is what was intended - it is a list with one element, which is
-> a string.
+>   Somebody naming directories on the SVN side with the path component
+>   ":refs/remotes" in them could screw things up for us.
 
-Ah, ok. Then the patch probably should look like this then:
+Why not "simply" allow some form of escaping in refs, such that special
+characters CAN be used anywhere. Then git-svn would just have to escape these
+characters.
 
-  set commitinfo($id) [list [mc "No commit information available"]]
+Something like:
+git update-ref "refs/remotes/tags/sometag\~1" $sha1
 
+I'm pretty sure that could help fix a lot of other similar issues.
 
-Regards,
-    --brett
-
-
-
-
-       
-____________________________________________________________________________________
-Moody friends. Drama queens. Your life? Nope! - their life, your story. Play Sims Stories at Yahoo! Games.
-http://sims.yahoo.com/  
+Mike
