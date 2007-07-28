@@ -1,65 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git diff with add/modified codes
-Date: Sat, 28 Jul 2007 17:26:27 +0200
-Organization: At home
-Message-ID: <f8fn72$l30$1@sea.gmane.org>
-References: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com> <7vir85whxy.fsf@assigned-by-dhcp.cox.net> <9e4733910707271717q5ea33b55r227d8dbb1023de47@mail.gmail.com> <20070728043901.GB11916@coredump.intra.peff.net>
+From: Seth Falcon <sfalcon@fhcrc.org>
+Subject: Re: suggestion for git rebase -i
+Date: Sat, 28 Jul 2007 08:52:40 -0700
+Message-ID: <m2vec4seyf.fsf@ziti.fhcrc.org>
+References: <m26445t98z.fsf@ziti.fhcrc.org>
+	<Pine.LNX.4.64.0707280941380.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 28 17:26:53 2007
+Cc: Seth Falcon <sfalcon@fhcrc.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 28 17:52:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEoBw-0005pu-QW
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 17:26:53 +0200
+	id 1IEob4-0004YA-9J
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 17:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240AbXG1P0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 11:26:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752123AbXG1P0u
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 11:26:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:39510 "EHLO ciao.gmane.org"
+	id S1750856AbXG1Pwr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 11:52:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750784AbXG1Pwr
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 11:52:47 -0400
+Received: from MICA.FHCRC.ORG ([140.107.152.12]:36355 "EHLO mica.fhcrc.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751765AbXG1P0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 11:26:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IEoBi-0007Ew-Dm
-	for git@vger.kernel.org; Sat, 28 Jul 2007 17:26:38 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Jul 2007 17:26:38 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Jul 2007 17:26:38 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1750774AbXG1Pwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 11:52:46 -0400
+Received: from jade.fhcrc.org (JADE.FHCRC.ORG [140.107.42.223])
+	by mica.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l6SFqgYH028203
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 28 Jul 2007 08:52:43 -0700
+Received: from ziti.fhcrc.org (DORMOUSE.FHCRC.ORG [140.107.170.158])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jade.fhcrc.org (Postfix) with ESMTP id C708BE7E5;
+	Sat, 28 Jul 2007 08:52:42 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0707280941380.14781@racer.site> (Johannes Schindelin's message of "Sat\, 28 Jul 2007 09\:43\:15 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (darwin)
+X-PMX-Version: 5.3.2.304607, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.7.28.83054
+X-FHCRC-SCANNED: Sat Jul 28 08:52:43 2007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54039>
 
-Jeff King wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Why?  This is an implementation detail, and should not concern the
+> user.
 
-> On Fri, Jul 27, 2007 at 08:17:54PM -0400, Jon Smirl wrote:
-> 
->> That's not what I want. I'm looking a report that indicates new files
->> vs modified ones in a single list. These old patches I am working with
->> often create 100 files and modify another 200.
->> 
->> Adding a code like (Added (A), Copied (C), Deleted (D), Modified (M),
->> Renamed (R))  to --stat would be perfect.
-> 
-> How about --name-status?
+In the context of an existing editing session, the name of the
+tempfile is visible and relevant to the user (not just an
+implementation detail).  For example, the tempfile name is useful when
+multi-tasking and one needs to get back to the buffer.  As another
+reply pointed out, the name could also be used for editor mode
+customization.
 
-Or -r --name-status?
+So.  When editing a commit message, the buffer is named
+COMMIT_EDITMSG.  When editing a rebase -i buffer it is named todo.  Is
+this a real problem?  Of course not.  But I think a slightly more
+descriptive name makes sense -- especially if other commands gain
+interactive modes and a user might have a number of them going at once
+(in different repos, e.g.).
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
++ seth
