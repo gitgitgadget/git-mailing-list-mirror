@@ -1,68 +1,131 @@
-From: Thomas Schwinge <tschwinge@gnu.org>
-Subject: [PATCH] Don't rely on unspecified behavior
-Date: Sat, 28 Jul 2007 20:26:35 +0200
-Message-ID: <11856471952272-git-send-email-tschwinge@gnu.org>
-References: <20070728173948.GD23337@cip.informatik.uni-erlangen.de>
-Cc: Thomas Schwinge <tschwinge@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 28 20:27:03 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH v3] gitk: let you easily specify lines of context in diff view
+Date: Sat, 28 Jul 2007 21:18:38 +0200
+Message-ID: <11856503182381-git-send-email-prohaska@zib.de>
+References: <11855366703782-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 21:18:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEr0J-0002Cx-0F
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 20:27:03 +0200
+	id 1IEroN-0005sL-0b
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 21:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbXG1S1A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 14:27:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752338AbXG1S1A
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 14:27:00 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:58301 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752413AbXG1S1A (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2007 14:27:00 -0400
-Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id B2B762CB083
-	for <git@vger.kernel.org>; Sat, 28 Jul 2007 20:26:58 +0200 (CEST)
-Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
-	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 9FFAF23D342
-	for <git@vger.kernel.org>; Sat, 28 Jul 2007 20:26:58 +0200 (CEST)
-Received: from server.schwinge.homeip.net (stgt-d9beacf6.pool.mediaWays.net [217.190.172.246])
-	(Authenticated sender: tschwinge@arcor.de)
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 5B52B45598
-	for <git@vger.kernel.org>; Sat, 28 Jul 2007 20:26:58 +0200 (CEST)
-Received: (qmail 25613 invoked from network); 28 Jul 2007 18:26:33 -0000
-Received: from leibniz.schwinge.homeip.net (192.168.111.120)
-  by server.schwinge.homeip.net with SMTP; 28 Jul 2007 18:26:33 -0000
-Received: (nullmailer pid 4310 invoked by uid 500);
-	Sat, 28 Jul 2007 18:26:35 -0000
-X-Mailer: git-send-email 1.5.3.rc3.26.g6c58-dirty
-In-Reply-To: <20070728173948.GD23337@cip.informatik.uni-erlangen.de>
+	id S1752450AbXG1TSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 15:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbXG1TSn
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 15:18:43 -0400
+Received: from mailer.zib.de ([130.73.108.11]:44955 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752117AbXG1TSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 15:18:43 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6SJIdwl002129;
+	Sat, 28 Jul 2007 21:18:39 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6SJIcTX029514;
+	Sat, 28 Jul 2007 21:18:38 +0200 (MEST)
+X-Mailer: git-send-email 1.5.1.3
+In-Reply-To: <11855366703782-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54049>
 
-Calling access(p, m) with p == NULL is not specified, so don't do that.  On
-GNU/Hurd systems doing so will result in a SIGSEGV.
+More lines of context sometimes help to better understand a diff.
+This patch introduces a text field above the box displaying the
+blobdiffs. You can type in the number of lines of context that
+you wish to view. The number of lines of context is initially
+always set to 3.
 
-Signed-off-by: Thomas Schwinge <tschwinge@gnu.org>
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- builtin-add.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ gitk |   41 +++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 7345479..de5c108 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -60,7 +60,7 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec,
- 		path = git_path("info/exclude");
- 		if (!access(path, R_OK))
- 			add_excludes_from_file(dir, path);
--		if (!access(excludes_file, R_OK))
-+		if (excludes_file != NULL && !access(excludes_file, R_OK))
- 			add_excludes_from_file(dir, excludes_file);
- 	}
+rebased to the current master.
+
+    Steffen
+
+diff --git a/gitk b/gitk
+index f74ce51..670a162 100755
+--- a/gitk
++++ b/gitk
+@@ -517,6 +517,7 @@ proc makewindow {} {
+     global textfont mainfont uifont tabstop
+     global findtype findtypemenu findloc findstring fstring geometry
+     global entries sha1entry sha1string sha1but
++    global diffcontextstring diffcontext
+     global maincursor textcursor curtextcursor
+     global rowctxmenu fakerowmenu mergemax wrapcomment
+     global highlight_files gdttype
+@@ -731,7 +732,16 @@ proc makewindow {} {
+ 	-command changediffdisp -variable diffelide -value {0 1}
+     radiobutton .bleft.mid.new -text "New version" \
+ 	-command changediffdisp -variable diffelide -value {1 0}
+-    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
++    label .bleft.mid.labeldiffcontext -text "      Lines of context: " \
++    -font $uifont
++    spinbox .bleft.mid.diffcontext -width 5 -font $textfont \
++    -from 1 -increment 1 -to 10000000 \
++    -validate all -validatecommand "diffcontextvalidate %P" \
++    -textvariable diffcontextstring
++    .bleft.mid.diffcontext set $diffcontext
++    trace add variable diffcontextstring write diffcontextchange
++    lappend entries .bleft.mid.diffcontext
++    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
+     set ctext .bleft.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-tabs "[expr {$tabstop * $charspc}]" \
+@@ -4985,12 +4995,37 @@ proc gettreediffline {gdtf ids} {
+     return 0
+ }
  
++# empty strings or integers accepted
++proc diffcontextvalidate {v} {
++    if {[string length $v] == 0} {
++	return 1
++    }
++    if {[string is integer $v]} {
++	if {$v > 0} {
++	    return 1
++	}
++    }
++    return 0
++}
++
++proc diffcontextchange {n1 n2 op} {
++    global diffcontextstring diffcontext
++
++    if {[string is integer $diffcontextstring]} {
++        if {$diffcontextstring > 0} {
++            set diffcontext $diffcontextstring
++		    reselectline
++        }
++    }
++}
++
+ proc getblobdiffs {ids} {
+     global diffopts blobdifffd diffids env
+     global diffinhdr treediffs
++    global diffcontext
+ 
+     set env(GIT_DIFF_OPTS) $diffopts
+-    if {[catch {set bdf [open [diffcmd $ids {-p -C --no-commit-id}] r]} err]} {
++    if {[catch {set bdf [open [diffcmd $ids "-p -C --no-commit-id -U$diffcontext"] r]} err]} {
+ 	puts "error getting diffs: $err"
+ 	return
+     }
+@@ -7646,6 +7681,8 @@ set markingmatches 0
+ 
+ set optim_delay 16
+ 
++set diffcontext 3 
++
+ set nextviewnum 1
+ set curview 0
+ set selectedview 0
 -- 
-1.5.3.rc3.26.g6c58-dirty
+1.5.3.rc3.45.g4c741
