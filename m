@@ -1,90 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 8/8] Fix t1500 for sane work-tree behavior
-Date: Sat, 28 Jul 2007 01:46:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707280140161.14781@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/8] work-trees are allowed inside a git-dir
+Date: Fri, 27 Jul 2007 17:48:23 -0700
+Message-ID: <7vabthwdyg.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0707271851370.14781@racer.site>
- <Pine.LNX.4.64.0707271958590.14781@racer.site> <7v8x91y3h7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707271957250.14781@racer.site>
+	<7vejity3h8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707280122160.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, matled@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 02:46:32 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 28 02:48:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEaRw-0007bU-RX
-	for gcvg-git@gmane.org; Sat, 28 Jul 2007 02:46:29 +0200
+	id 1IEaTs-0007yJ-97
+	for gcvg-git@gmane.org; Sat, 28 Jul 2007 02:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938237AbXG1Aq0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Jul 2007 20:46:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938070AbXG1Aq0
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 20:46:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54153 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1764266AbXG1AqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2007 20:46:25 -0400
-Received: (qmail invoked by alias); 28 Jul 2007 00:46:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 28 Jul 2007 02:46:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18dSy0lP8sdG8iClKn38G7xsbbdLHhjF/6K9Zs2b/
-	9dZCjSyQHd3t5N
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v8x91y3h7.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S938341AbXG1AsZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Jul 2007 20:48:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938335AbXG1AsY
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jul 2007 20:48:24 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:61250 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S938332AbXG1AsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2007 20:48:24 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070728004824.OWAL1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 27 Jul 2007 20:48:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UooP1X00Q1kojtg0000000; Fri, 27 Jul 2007 20:48:24 -0400
+In-Reply-To: <Pine.LNX.4.64.0707280122160.14781@racer.site> (Johannes
+	Schindelin's message of "Sat, 28 Jul 2007 01:38:25 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/53981>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 27 Jul 2007, Junio C Hamano wrote:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > It is allowed to call
+>> >
+>> > 	$ git --git-dir=../ --work-tree=. bla
+>> >
+>> > when you really want to.  In this case, you are both in the git directory
+>> > and in the working tree.
+> ...
+> There are files in that directory (and all of its subdirectories) of a 
+> certain type, which are the only ones which are human generated, and 
+> therefore precious.  I like to add them, and inspect them, with
+>
+> 	git --git-dir=$HOME/x.git add
+>
+> and
+>
+> 	git --git-dir=$HOME/x.git diff
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > When GIT_DIR=../.git, and no worktree is specified, it is reasonable
-> > to assume that the repository is not bare, that the work tree is ".."
-> > and that the prefix is the basename of the current directory.
-> >
-> > This is the sane behavior.
-> 
-> That is a bit too strong blanket statement, while being weak on
-> exact conditions, giving only one example.
+I understand the --git-dir=$HOME/x.git to keep track of
+something in $HOME/foo/bar example.
 
-Okay, let me defend it.
+But that is not the issue you described in the original message.
+I was asking about this (which is the way I read your original
+message):
 
-> It makes me wonder...
-> 
->   * When GIT_DIR=../../.git, and no worktree is specified, the
->     same holds true, with worktree is "../.."? (probably yes)
+    $ GIT_DIR=$HOME/x.git git init
+    $ mkdir $HOME/x.git/workroot
+    $ cd $HOME/x.git/workroot
+    $ git --git-dir=../ --work-tree=. 
 
-You meant with "GIT_DIR=../.."? No.  In that case, I'd assume a bare 
-repository, and we're inside the git directory, and unless the user 
-specified a working tree, assume that we have none.
-
->   * "GIT_DIR=../../foo/.git"? (I dunno)
-
-Unless ../../foo == .. no.  When we're outside, we're outside.
-
->   * "GIT_DIR=../foo.git"? (probably not)
-
-Unless "$(basename "$(pwd)")" == foo.git, no.
-
-> I am assuming that you meant something like this:
-> 
->     When no worktree is specified, and GIT_DIR (or --git-dir=) is
->     zero or more "../" followed by ".git" after stripping trailing
->     and/or redundant slashes, it is reasonable to assume that the
->     repository is not bare, and the work tree is the parent
->     directory of the GIT_DIR directory.
-> 
-> but that requires guesswork if you give only one example and let
-> the readers to guess.
-
-Your explanation is really much more coherent than mine.  Please replace 
-mine.
-
-Ciao,
-Dscho
+That is, $HOME/x.git/ is the GIT_DIR that has HEAD, index and
+refs/, and you are keeping track of contents whose rootlevel is
+at $HOME/x.git/workroot
