@@ -1,160 +1,73 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: [GUILT PATCH 3/4] guilt-select: Select guards to apply when pushing patches
-Date: Sun, 29 Jul 2007 00:50:17 -0700
-Message-ID: <11856954182318-git-send-email-eclesh@ucla.edu>
-References: <118569541814-git-send-email-eclesh@ucla.edu>
-Cc: git@vger.kernel.org, Eric Lesh <eclesh@ucla.edu>
-To: jsipek@cs.sunysb.edu
-X-From: git-owner@vger.kernel.org Sun Jul 29 09:50:39 2007
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Documentation/git-diff: remove -r from --name-status example
+Date: Sun, 29 Jul 2007 10:23:08 +0200
+Message-ID: <85r6mrzkib.fsf@lola.goethe.zz>
+References: <20070729002427.GA1566@coredump.intra.peff.net>
+	<alpine.LFD.0.999.0707281905050.3442@woody.linux-foundation.org>
+	<20070729041159.GA5544@coredump.intra.peff.net>
+	<alpine.LFD.0.999.0707282119010.3442@woody.linux-foundation.org>
+	<7vbqdvolww.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 29 10:23:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IF3Xy-000795-HF
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 09:50:38 +0200
+	id 1IF43u-00050n-Gl
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 10:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760078AbXG2Huh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 03:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760079AbXG2Hug
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 03:50:36 -0400
-Received: from smtp-1.smtp.ucla.edu ([169.232.46.136]:60934 "EHLO
-	smtp-1.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760063AbXG2Hub (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 03:50:31 -0400
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.46.157])
-	by smtp-1.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6T7oNSe004762;
-	Sun, 29 Jul 2007 00:50:23 -0700
-Received: from localhost (adsl-75-26-192-134.dsl.scrm01.sbcglobal.net [75.26.192.134])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6T7oMTR019049
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 29 Jul 2007 00:50:23 -0700
-Received: by localhost (Postfix, from userid 1000)
-	id A9A711E80AA; Sun, 29 Jul 2007 00:50:18 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2
-In-Reply-To: <118569541814-git-send-email-eclesh@ucla.edu>
-X-Probable-Spam: no
-X-Spam-Report: none
-X-Scanned-By: smtp.ucla.edu on 169.232.46.136
+	id S1760302AbXG2IXe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 04:23:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760269AbXG2IXe
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 04:23:34 -0400
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:60017 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752018AbXG2IXc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 04:23:32 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 5425A303029;
+	Sun, 29 Jul 2007 10:23:31 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 3684B23D2D9;
+	Sun, 29 Jul 2007 10:23:31 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-017-015.pools.arcor-ip.net [84.61.17.15])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id B9C232A2AE2;
+	Sun, 29 Jul 2007 10:23:29 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 5DEC41CFF95E; Sun, 29 Jul 2007 10:23:09 +0200 (CEST)
+In-Reply-To: <7vbqdvolww.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 28 Jul 2007 21\:48\:15 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3804/Sun Jul 29 06:09:31 2007 on mail-in-07.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54093>
 
-guilt-select chooses guards that alter which patches will be applied
-with a guilt-push.  The selected guards are stored in
-.git/patches/$branch/guards.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Eric Lesh <eclesh@ucla.edu>
----
- Documentation/guilt-select.txt |   42 ++++++++++++++++++++++++++++++++++++++++
- guilt                          |    1 +
- guilt-select                   |   36 ++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/guilt-select.txt
- create mode 100755 guilt-select
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+> One minor objection I do have is that, just as a matter of
+> principle, in order to avoid setting precedence of making a
+> fundamental semantics change in late -rc stage in the game, we
+> should not swallow it.  I do not mind if this were clearly a
+> good change.
+>
+> However, I think Jeff's patch always makes it recursive even
+> when the user asks for --raw, which makes it inappropriate for
+> inclusion whether before or after 1.5.3.
 
-diff --git a/Documentation/guilt-select.txt b/Documentation/guilt-select.txt
-new file mode 100644
-index 0000000..8e18f26
---- /dev/null
-+++ b/Documentation/guilt-select.txt
-@@ -0,0 +1,42 @@
-+guilt-select(1)
-+===============
-+
-+NAME
-+----
-+guilt-select - Select guards to apply when pushing patches
-+
-+SYNOPSIS
-+--------
-+include::usage-guilt-select.txt[]
-+
-+DESCRIPTION
-+-----------
-+Select guards to apply when pushing patches.
-+
-+Guards are selected without the + or - prefix.  Patches are applied in
-+the following way:
-+
-+An unguarded patch is always applied.
-+
-+A patch with a positive guard is applied *only* if the guard is
-+selected with guilt-select.
-+
-+A patch with a negative guard is applied *unless* the guard is
-+selected with guilt-select.
-+
-+OPTIONS
-+-------
-+-n|--none::
-+        Remove all selected guards
-+-s|--series::
-+        List all guards listed in the series file
-+
-+Author
-+------
-+Written by Eric Lesh <eclesh@ucla.edu>
-+
-+Documentation
-+-------------
-+Documentation by Eric Lesh <eclesh@ucla.edu>
-+
-+include::footer.txt[]
-diff --git a/guilt b/guilt
-index b2767ea..3882962 100755
---- a/guilt
-+++ b/guilt
-@@ -641,6 +641,7 @@ fi
- # very useful files
- series="$GUILT_DIR/$branch/series"
- applied="$GUILT_DIR/$branch/status"
-+guards_file="$GUILT_DIR/$branch/guards"
- 
- # determine an editor to use for anything interactive (fall back to vi)
- editor="vi"
-diff --git a/guilt-select b/guilt-select
-new file mode 100755
-index 0000000..f237ef0
---- /dev/null
-+++ b/guilt-select
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+#
-+# Copyright (c) Eric Lesh, 2007
-+#
-+
-+USAGE="[-n|--none] [-s|--series] [<guard>]"
-+ . `dirname $0`/guilt
-+
-+if [ $# == 0 ]; then
-+	if [ -s "$guards_file" ]; then
-+		cat "$guards_file"
-+	else
-+		echo "No guards applied"
-+	fi
-+	exit 0
-+fi
-+
-+case $1 in
-+	-n|--none)
-+		rm -f "$guards_file"
-+		touch "$guards_file"
-+		;;
-+	-s|--series)
-+		(get_series | while read patch; do
-+			get_guards "$patch"
-+		done) | sed -e 's/ /\n/g' | sort | uniq
-+		;;
-+	*)
-+		for x in "$@"; do
-+			if [ $(echo $x | grep -e "^[+-]") ]; then
-+				die "'$x' is not a valid guard name"
-+			fi
-+		done
-+		echo "$@" | sed -e 's/ /\n/g' | sort | uniq > "$guards_file"
-+		;;
-+esac
+Personally, I think -r should be the default while one can use
+--directory to switch it off.
+
+Whether --raw should imply --directory might be a different question.
+
 -- 
-1.5.2
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
