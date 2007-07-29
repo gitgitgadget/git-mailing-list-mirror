@@ -1,107 +1,76 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: [PATCH] add option to find zlib in custom path
-Date: Sun, 29 Jul 2007 20:35:45 +0200
-Message-ID: <20070729183545.GC29424@schiele.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] log_ref_write() -- do not chomp reflog message at the first LF
+Date: Sun, 29 Jul 2007 11:47:18 -0700
+Message-ID: <7vsl77m4i1.fsf@assigned-by-dhcp.cox.net>
+References: <724DFB31-0471-4A5E-95DF-F5F74876AC77@lrde.epita.fr>
+	<7v8x90sp25.fsf@assigned-by-dhcp.cox.net>
+	<20070728083536.540e471d.seanlkml@sympatico.ca>
+	<7vodhwptba.fsf@assigned-by-dhcp.cox.net>
+	<20070728092914.48f6305c.seanlkml@sympatico.ca>
+	<7vk5skps1g.fsf@assigned-by-dhcp.cox.net>
+	<20070728101156.20304d11.seanlkml@sympatico.ca>
+	<7vd4ycp8ff.fsf@assigned-by-dhcp.cox.net>
+	<7vzm1gnhin.fsf@assigned-by-dhcp.cox.net>
+	<7vvec4nhfk.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707291248560.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 29 20:35:55 2007
+Cc: Sean <seanlkml@sympatico.ca>, Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 29 20:47:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFDcR-0003wQ-21
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 20:35:55 +0200
+	id 1IFDnZ-0006md-Po
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 20:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765107AbXG2Sfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 14:35:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765041AbXG2Sfw
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 14:35:52 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:20571 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761718AbXG2Sfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 14:35:51 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so948119ugf
-        for <git@vger.kernel.org>; Sun, 29 Jul 2007 11:35:50 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=kmK0dDoENOv/O2ArfHaynB8tSjMLVF+26cKhnV9BccS9P5sTTHHd0ZGk4mOwnRCtJmCtJO8+DMqnMab4OH0Vj06HS5PsFV4dsyVyHfI98/jfN5RQ/kDuLE2RfcnHMSwkCmxlmfwockspbbZ08y+3+EhI/uXphGexmMSDmclcJLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=jR/N13JfSUPwTh7s+s0aq4FxFk9/oFZmvfq3VBbN8lb+fs4Uo6+nq92w4i9E3JR+gnEWLHuZKHjTn4CGUzUTAdxO74BC6TJSXD+ylCNj9plx3TOLrZJfv4FFcYAlQoRV51Q/KWB1ig5uV7GGESXsmFEAbFEkW8/n5Ns5xVNZ8bY=
-Received: by 10.67.98.9 with SMTP id a9mr4618888ugm.1185734150156;
-        Sun, 29 Jul 2007 11:35:50 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.103.54])
-        by mx.google.com with ESMTPS id k5sm9041910nfh.2007.07.29.11.35.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 Jul 2007 11:35:49 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 62BBC2A6E01; Sun, 29 Jul 2007 20:35:46 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1765723AbXG2SrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 14:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765122AbXG2SrV
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 14:47:21 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:41592 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756457AbXG2SrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 14:47:20 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070729184718.HNUM1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 29 Jul 2007 14:47:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id VWnJ1X00Q1kojtg0000000; Sun, 29 Jul 2007 14:47:19 -0400
+In-Reply-To: <Pine.LNX.4.64.0707291248560.14781@racer.site> (Johannes
+	Schindelin's message of "Sun, 29 Jul 2007 12:57:09 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54132>
 
-Some systems do not provide zlib development headers and libraries in
-default search path of the compiler.  For these systems we should allow
-specifying the location by --with-zlib=PATH or by setting ZLIB_PATH in
-the makefile.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Robert Schiele <rschiele@gmail.com>
----
+> It is not like the reflog messages have to be very verbose; they only have 
+> to give a hint what the commit was about, and the commit name is the 
+> important information.
 
-You can also fetch this patch as d669d5f17feb3b406862fd83b42998b2353da44f from
-git://schiele.dyndns.org/git
+I've considered it, but decided against it because:
 
- Makefile     |    8 +++++++-
- configure.ac |    3 +++
- 2 files changed, 10 insertions(+), 1 deletions(-)
+ (1) I did not like the information lossage;
 
-diff --git a/Makefile b/Makefile
-index 73b487f..21bf5c7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -372,7 +372,7 @@ BUILTIN_OBJS = \
- 	builtin-pack-refs.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
--EXTLIBS = -lz
-+EXTLIBS =
- 
- #
- # Platform specific tweaks
-@@ -517,6 +517,12 @@ ifndef NO_CURL
- 	endif
- endif
- 
-+ifdef ZLIB_PATH
-+	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
-+	EXTLIBS += -L$(ZLIB_PATH)/lib $(CC_LD_DYNPATH)$(ZLIB_PATH)/lib
-+endif
-+EXTLIBS += -lz
-+
- ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
- 	ifdef OPENSSLDIR
-diff --git a/configure.ac b/configure.ac
-index 50d2b85..b2f1965 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -75,6 +75,9 @@ GIT_ARG_SET_PATH(shell)
- # Define PERL_PATH to provide path to Perl.
- GIT_ARG_SET_PATH(perl)
- #
-+# Define ZLIB_PATH to provide path to zlib.
-+GIT_ARG_SET_PATH(zlib)
-+#
- # Declare the with-tcltk/without-tcltk options.
- AC_ARG_WITH(tcltk,
- AS_HELP_STRING([--with-tcltk],[use Tcl/Tk GUI (default is YES)])
--- 
-1.5.2.3
+ (2) this is solely to help log messages coming from outside the
+     recommended convention, and having excess will not hurt the
+     normal usage;
+
+ (3) it is not known if messages from outside the recommended
+     convention have enough information on its first line of the
+     first paragraph; the result of s/\n.*/.../ may not be
+     sufficient "hint";
+
+ (4) log output are by default piped to "less -S" so extra
+     output gives the user chance to inspect more if he chosses
+     to, without hurting the end user display; and
+
+ (5) the code was simpler and less error prone to go wrong.
