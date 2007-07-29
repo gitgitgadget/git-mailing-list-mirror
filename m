@@ -1,45 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Simplify 'opt' parameter validation, add "no merges" feeds
-Date: Sat, 28 Jul 2007 18:48:19 -0700
-Message-ID: <7vhcnonfoc.fsf@assigned-by-dhcp.cox.net>
-References: <11856328582066-git-send-email-jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Documentation/git-diff: remove -r from --name-status
+ example
+Date: Sat, 28 Jul 2007 19:06:38 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707281905050.3442@woody.linux-foundation.org>
+References: <20070729002427.GA1566@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
-	Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 03:48:25 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 29 04:06:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IExtQ-0006wy-UG
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 03:48:25 +0200
+	id 1IEyBJ-0001Wv-Kg
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 04:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708AbXG2BsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 21:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbXG2BsV
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 21:48:21 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39066 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753830AbXG2BsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 21:48:20 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070729014819.ZOJC1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 28 Jul 2007 21:48:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id VDoK1X00E1kojtg0000000; Sat, 28 Jul 2007 21:48:20 -0400
-In-Reply-To: <11856328582066-git-send-email-jnareb@gmail.com> (Jakub
-	Narebski's message of "Sat, 28 Jul 2007 16:27:32 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755002AbXG2CGv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 22:06:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755211AbXG2CGu
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 22:06:50 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49085 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754708AbXG2CGu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2007 22:06:50 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6T26ifN030162
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 28 Jul 2007 19:06:45 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6T26c2N003109;
+	Sat, 28 Jul 2007 19:06:39 -0700
+In-Reply-To: <20070729002427.GA1566@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-4.725 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54075>
 
-This and the submodule stuff look good.  Thanks.
 
-Applied.
+
+On Sat, 28 Jul 2007, Jeff King wrote:
+> 
+> The '-r' now seems to be superfluous.
+
+For diffing against (or using) the index, the "-r" is superfluous.
+
+Why? Because the index is always the *full* list of files. It's "flat".
+
+However, when you diff two trees, the -r makes a difference.
+
+So I think you'd find a difference if you actually diffed two commits 
+with "git diff tree2..tree2".
+
+		Linus
