@@ -1,68 +1,130 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Show an error and exit if started in a directory where no .git could be found
-Date: Sun, 29 Jul 2007 22:29:45 +0200
-Message-ID: <20070729202945.GB9362@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] Makefile: create an install-symlinks target
+Date: Sun, 29 Jul 2007 23:26:08 +0200
+Organization: Organization?!?
+Message-ID: <85lkcyvr4f.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Jul 29 22:29:51 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 29 23:26:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFFOg-00076U-D9
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 22:29:50 +0200
+	id 1IFGHk-00039V-NF
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 23:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934837AbXG2U3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 16:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934811AbXG2U3r
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 16:29:47 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:64865 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934510AbXG2U3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 16:29:47 -0400
-Received: from tigra.home (Facac.f.strato-dslnet.de [195.4.172.172])
-	by post.webmailer.de (mrclete mo27) (RZmta 10.3)
-	with ESMTP id k0725cj6TJPmCS ; Sun, 29 Jul 2007 22:29:45 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 8AAE3277BD;
-	Sun, 29 Jul 2007 22:29:45 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 84720C21D; Sun, 29 Jul 2007 22:29:45 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFz2KC8=
-X-RZG-CLASS-ID: mo07
+	id S935906AbXG2V0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 17:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935872AbXG2V0m
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 17:26:42 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:57022 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935777AbXG2V0l (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 17:26:41 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 95C271E57BB
+	for <git@vger.kernel.org>; Sun, 29 Jul 2007 23:26:39 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 75C18212FB6
+	for <git@vger.kernel.org>; Sun, 29 Jul 2007 23:26:39 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-017-015.pools.arcor-ip.net [84.61.17.15])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 454A98C466
+	for <git@vger.kernel.org>; Sun, 29 Jul 2007 23:26:39 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 801411C39595; Sun, 29 Jul 2007 23:26:08 +0200 (CEST)
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3808/Sun Jul 29 22:05:04 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54138>
 
-This is to help people starting gitk from graphical file managers where
-the stderr output is hidden.
+[commit text mostly pinched from INSTALL]
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+An alternative global installation method making it much easier to
+uninstall is to use a package-specific prefix like /opt/git, then
+create symlinks from /usr/local into that hierarchy.  Uninstalling can
+then be achieved by
+
+	# rm -rf /opt/git; find /usr/local -xtype l -delete
+
+You can create a setup like that after having used one of the above
+install recipes with prefix=/opt/git by writing
+
+	# make prefix=/opt/git symlinkprefix=/usr/local install-symlinks
+
+This works by copying the directory hierarchy of $prefix to
+$symlinkprefix (not copying or descending to any directories of the
+name git* matched case-insensitively), then linking all the rest.
+
+Signed-off-by: David Kastrup <dak@gnu.org>
 ---
- gitk |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ INSTALL  |   12 ++++++++++++
+ Makefile |   10 +++++++++-
+ 2 files changed, 21 insertions(+), 1 deletions(-)
 
-diff --git a/gitk b/gitk
-index fc7cc8c..f5949a2 100755
---- a/gitk
-+++ b/gitk
-@@ -7575,7 +7575,10 @@ catch {source ~/.gitk}
- font create optionfont -family sans-serif -size -12
+diff --git a/INSTALL b/INSTALL
+index 79e71b6..22df145 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -21,6 +21,18 @@ set up install paths (via config.mak.autogen), so you can write instead
+ 	$ make all doc ;# as yourself
+ 	# make install install-doc ;# as root
  
- # check that we can find a .git directory somewhere...
--set gitdir [gitdir]
-+if {[ catch { set gitdir [gitdir] } ]} {
-+    show_error {} . "Cannot find a git repository here."
-+    exit 1
-+}
- if {![file isdirectory $gitdir]} {
-     show_error {} . "Cannot find the git directory \"$gitdir\"."
-     exit 1
++An alternative global installation method making it much easier to
++uninstall is to use a package-specific prefix like /opt/git, then
++create symlinks from /usr/local into that hierarchy.  Uninstalling can
++then be achieved by
++
++	# rm -rf /opt/git; find /usr/local -xtype l -delete
++
++You can create a setup like that after having used one of the above
++install recipes with prefix=/opt/git by writing
++
++	# make prefix=/opt/git symlinkprefix=/usr/local install-symlinks
++
+ 
+ Issues of note:
+ 
+diff --git a/Makefile b/Makefile
+index 73b487f..87b317f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -142,6 +142,7 @@ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+ prefix = $(HOME)
++symlinkprefix = /usr/local
+ bindir = $(prefix)/bin
+ gitexecdir = $(bindir)
+ sharedir = $(prefix)/share
+@@ -692,6 +693,7 @@ bindir_SQ = $(subst ','\'',$(bindir))
+ gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+ template_dir_SQ = $(subst ','\'',$(template_dir))
+ prefix_SQ = $(subst ','\'',$(prefix))
++symlinkprefix_SQ = $(subst ','\'',$(symlinkprefix))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+@@ -996,7 +998,13 @@ install-doc:
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
+-
++# The somewhat strange looking lines start with an ignored $(MAKE) in
++# order to be executed also in make -n calls.
++install-symlinks:
++	@: $(MAKE) && echo cd '$(prefix_SQ)' && cd '$(prefix_SQ)' && find . -type d ! \( -iname 'git*' -prune \) -exec echo $(INSTALL) -m 755 -d '$(symlinkprefix_SQ)/{}' \;
++	@cd '$(prefix_SQ)' && find . -type d ! \( -iname 'git*' -prune \) -exec $(INSTALL) -m 755 -d '$(symlinkprefix_SQ)/{}' \;
++	@: $(MAKE) && echo cd '$(prefix_SQ)' && cd '$(prefix_SQ)' && find . \( -type d -iname 'git*' -prune -o ! -type d \) -exec echo $(RM) -r '$(symlinkprefix_SQ)/{}' \; -exec echo ln -s '$(prefix_SQ)/{}' '$(symlinkprefix_SQ)/{}' \;
++	@cd '$(prefix_SQ)' && find . \( -type d -iname 'git*' -prune -o ! -type d \) -exec $(RM) -r '$(symlinkprefix_SQ)/{}' \; -exec ln -s '$(prefix_SQ)/{}' '$(symlinkprefix_SQ)/{}' \;
+ 
+ ### Maintainer's dist rules
+ 
 -- 
-1.5.3.rc3.48.g5b618
+1.5.3.rc2.84.g6497
