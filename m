@@ -1,116 +1,82 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] log_ref_write() -- do not chomp reflog message at
- the first LF
-Date: Sun, 29 Jul 2007 12:57:09 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707291248560.14781@racer.site>
-References: <724DFB31-0471-4A5E-95DF-F5F74876AC77@lrde.epita.fr>
- <7v8x90sp25.fsf@assigned-by-dhcp.cox.net> <20070728083536.540e471d.seanlkml@sympatico.ca>
- <7vodhwptba.fsf@assigned-by-dhcp.cox.net> <20070728092914.48f6305c.seanlkml@sympatico.ca>
- <7vk5skps1g.fsf@assigned-by-dhcp.cox.net> <20070728101156.20304d11.seanlkml@sympatico.ca>
- <7vd4ycp8ff.fsf@assigned-by-dhcp.cox.net> <7vzm1gnhin.fsf@assigned-by-dhcp.cox.net>
- <7vvec4nhfk.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Documentation/git-diff: remove -r from --name-status
+ example
+Date: Sun, 29 Jul 2007 13:04:13 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707291258410.14781@racer.site>
+References: <20070729002427.GA1566@coredump.intra.peff.net>
+ <alpine.LFD.0.999.0707281905050.3442@woody.linux-foundation.org>
+ <20070729041159.GA5544@coredump.intra.peff.net>
+ <alpine.LFD.0.999.0707282119010.3442@woody.linux-foundation.org>
+ <7vbqdvolww.fsf@assigned-by-dhcp.cox.net> <7vwswjmu08.fsf@assigned-by-dhcp.cox.net>
+ <20070729094955.GA14915@coredump.intra.peff.net> <Pine.LNX.4.64.0707291214060.14781@racer.site>
+ <20070729113850.GA17796@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sean <seanlkml@sympatico.ca>, Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 13:57:36 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 29 14:04:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IF7Oy-0008BT-15
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 13:57:36 +0200
+	id 1IF7Vj-0001Ag-6y
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 14:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757845AbXG2L5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 07:57:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757219AbXG2L5a
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 07:57:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39497 "HELO mail.gmx.net"
+	id S1758313AbXG2MEc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 08:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758604AbXG2MEc
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 08:04:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42924 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752160AbXG2L5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 07:57:30 -0400
-Received: (qmail invoked by alias); 29 Jul 2007 11:57:27 -0000
+	id S1758298AbXG2MEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 08:04:31 -0400
+Received: (qmail invoked by alias); 29 Jul 2007 12:04:29 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 29 Jul 2007 13:57:27 +0200
+  by mail.gmx.net (mp032) with SMTP; 29 Jul 2007 14:04:29 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Av/Zs8sEAnyA+J3vD4YJ2hsz6J0AwEeS1j+kvYc
-	a3PSZtEtQme6SP
+X-Provags-ID: V01U2FsdGVkX19F5lY7UNRFbmCKMP1JQY5JZYPqF7proF8CHki2pw
+	kOlOeNCzib6H8G
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vvec4nhfk.fsf_-_@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070729113850.GA17796@coredump.intra.peff.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54109>
 
 Hi,
 
-On Sat, 28 Jul 2007, Junio C Hamano wrote:
+On Sun, 29 Jul 2007, Jeff King wrote:
 
-> A reflog file is organized as one-line-per-entry records, and we
-> enforced the file format integrity by chomping the given message
-> at the first LF.  This changes it to convert them to SP, which
-> is more in line with the --pretty=oneline format.
+> On Sun, Jul 29, 2007 at 12:14:49PM +0100, Johannes Schindelin wrote:
+> 
+> > How about
+> > 
+> > 	if (!rev.diffopt.quiet)
+> > 		rev.diffopt.recursive = 1;
+> > 
+> > instead?
+> 
+> Can you explain?
 
-Would it not be better to chop off before the first "\n", and just append 
-"..."?  IOW something like
+The idea is this: when "--quiet" was given, we do not output anything, and 
+therefore do not have to recurse into the directories, because we already 
+know that there are differences when a _tree_ is different.  I do not 
+remember all details of the "--quiet" implementation, but I think that it
 
--- snip --
- refs.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+- exits early (as you said)
 
-diff --git a/refs.c b/refs.c
-index 2694e70..554436b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1043,7 +1043,7 @@ static int log_ref_write(const char *ref_name, const unsigned char *old_sha1,
- 	unsigned maxlen, len;
- 	int msglen;
- 	char *log_file, *logrec;
--	const char *committer;
-+	const char *committer, *postmsg;
- 
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
-@@ -1088,15 +1088,16 @@ static int log_ref_write(const char *ref_name, const unsigned char *old_sha1,
- 				break;
- 		if (*msg) {
- 			const char *ep = strchr(msg, '\n');
--			if (ep)
-+			if (ep) {
- 				msglen = ep - msg;
--			else
-+				postmsg = (ep[1] && !isspace(ep[1])) ? "..." : NULL;
-+			} else
- 				msglen = strlen(msg);
- 		}
- 	}
- 
- 	committer = git_committer_info(-1);
--	maxlen = strlen(committer) + msglen + 100;
-+	maxlen = strlen(committer) + msglen + 100 + 3;
- 	logrec = xmalloc(maxlen);
- 	len = sprintf(logrec, "%s %s %s\n",
- 		      sha1_to_hex(old_sha1),
-@@ -1104,6 +1105,10 @@ static int log_ref_write(const char *ref_name, const unsigned char *old_sha1,
- 		      committer);
- 	if (msglen)
- 		len += sprintf(logrec + len - 1, "\t%.*s\n", msglen, msg) - 1;
-+	if (postmsg) {
-+		len += strlen(postmsg);
-+		strcat(logrec + len - 1, postmsg);
-+	}
- 	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
- 	free(logrec);
- 	if (close(logfd) != 0 || written != len)
--- snap --
+- does not turn on "recursive" to avoid unnecessary work.
 
-It is not like the reflog messages have to be very verbose; they only have 
-to give a hint what the commit was about, and the commit name is the 
-important information.
+Imagine something like this: tree "a" and "b" contain 100,000 elements 
+each, which are identical except for the last entry.  "--quiet" does not 
+need to check the 99,999 elements before that one, since the tree hashes 
+are already different.
 
-What do you think?
+Of course, this reasoning breaks down fatally when you specify something 
+like "--ignore-whitespace", but those cases should turn on recursive 
+explicitely, so that the performance penalty of "recursive = 1" does not 
+percolate back to the (much more common) trivial cases.
 
 Ciao,
 Dscho
