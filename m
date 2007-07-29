@@ -1,57 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation/git-diff: remove -r from --name-status
-	example
-Date: Sun, 29 Jul 2007 00:56:46 -0400
-Message-ID: <20070729045646.GB6858@coredump.intra.peff.net>
-References: <20070729002427.GA1566@coredump.intra.peff.net> <alpine.LFD.0.999.0707281905050.3442@woody.linux-foundation.org> <20070729041159.GA5544@coredump.intra.peff.net> <alpine.LFD.0.999.0707282119010.3442@woody.linux-foundation.org> <7vbqdvolww.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jon Smirl <jonsmirl@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 06:56:55 2007
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: [PATCH] gitk: Added support for OS X mouse wheel
+Date: Sun, 29 Jul 2007 09:38:34 +0300
+Message-ID: <35284D1E-B5B6-435B-91C3-539395882B95@pp.inet.fi>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 29 08:50:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IF0pn-0004N3-NB
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 06:56:52 +0200
+	id 1IF2bQ-0004kb-AZ
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 08:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbXG2E4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 00:56:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbXG2E4t
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 00:56:49 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4997 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751481AbXG2E4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 00:56:48 -0400
-Received: (qmail 23829 invoked from network); 29 Jul 2007 04:56:48 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 29 Jul 2007 04:56:48 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Jul 2007 00:56:46 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbqdvolww.fsf@assigned-by-dhcp.cox.net>
+	id S1759700AbXG2GuF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 29 Jul 2007 02:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759705AbXG2GuE
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 02:50:04 -0400
+Received: from gw02.mail.saunalahti.fi ([195.197.172.116]:54856 "EHLO
+	gw02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759672AbXG2GuD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 02:50:03 -0400
+X-Greylist: delayed 650 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Jul 2007 02:50:03 EDT
+Received: from [10.0.1.3] (GYKMMMCCXVII.dsl.saunalahti.fi [85.77.38.118])
+	by gw02.mail.saunalahti.fi (Postfix) with ESMTP id 9DE7F13951B
+	for <git@vger.kernel.org>; Sun, 29 Jul 2007 09:39:09 +0300 (EEST)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54083>
 
-On Sat, Jul 28, 2007 at 09:48:15PM -0700, Junio C Hamano wrote:
+MacBook doesn't seem to recognize MouseRelease-4 and -5 events, at all.
+So i added a support for the MouseWheel event, which i limited to Tcl/t=
+k
+aqua, as i couldn't test it neither on Linux or Windows. Tcl/tk needs t=
+o
+be updated from the version that is shipped with OS X 10.4 Tiger, for
+this patch to work.
 
-> However, I think Jeff's patch always makes it recursive even
-> when the user asks for --raw, which makes it inappropriate for
-> inclusion whether before or after 1.5.3.
+Signed-off-by: V=E4in=F6 J=E4rvel=E4 <v@pp.inet.fi>
+---
+gitk |    6 ++++++
+1 files changed, 6 insertions(+), 0 deletions(-)
 
-Right, that's the point. git-diff is currently inconsistent (unless you
-understand that index comparisons are always recursed, and tree
-comparisons need it explicitly -- but part of the point of git-diff is
-to abstract those sorts of details), so this attempts to harmonize the
-behavior no matter what you're diffing (whether it be --name-status or
---raw).
-
-If you really want not to recurse, then you have to know you are
-comparing trees anyway, at which point it makes sense to use the
-git-diff-tree plumbing.
-
--Peff
+diff --git a/gitk b/gitk
+index f74ce51..985c30a 100755
+--- a/gitk
++++ b/gitk
+@@ -825,6 +825,12 @@ proc makewindow {} {
+      #bindall <B1-Motion> {selcanvline %W %x %y}
+      bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
+      bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
++    if {[tk windowingsystem] eq "aqua"} {
++        bindall <MouseWheel> {
++                set delta [expr {- (%D)}]
++                allcanvs yview scroll $delta units
++        }
++    }
+      bindall <2> "canvscan mark %W %x %y"
+      bindall <B2-Motion> "canvscan dragto %W %x %y"
+      bindkey <Home> selfirstline
+--
+1.5.2
