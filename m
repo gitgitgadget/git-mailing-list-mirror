@@ -1,131 +1,99 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [Untested! proposal] git-mergetool.sh: introduce ediff option
-Date: Sun, 29 Jul 2007 16:52:32 -0400
-Message-ID: <20070729205232.GA10148@thunk.org>
-References: <7vy7idydqa.fsf@assigned-by-dhcp.pobox.com> <7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com> <7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net> <7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net> <7vvec4synj.fsf_-_@assigned-by-dhcp.cox.net> <85zm1g3nze.fsf@lola.goethe.zz> <85bqdw27mb.fsf@lola.goethe.zz> <20070729031612.GB17204@thunk.org> <Pine.LNX.4.64.0707291224460.14781@racer.site> <85hcnnwblu.fsf@lola.goethe.zz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git diff with add/modified codes
+Date: Sun, 29 Jul 2007 23:36:13 +0200
+Message-ID: <200707292336.14473.jnareb@gmail.com>
+References: <9e4733910707271505x4eac928axe639308afed20cb3@mail.gmail.com> <f8fn72$l30$1@sea.gmane.org> <9e4733910707281107w6aff86f5sf746ca3f2c74d098@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 00:49:52 2007
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 00:51:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFHaC-0003aX-4o
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 00:49:52 +0200
+	id 1IFHbP-0003w5-5x
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 00:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964908AbXG2Wtt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 18:49:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbXG2Wtt
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 18:49:49 -0400
-Received: from thunk.org ([69.25.196.29]:55240 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763478AbXG2Wts (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 18:49:48 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IFHiQ-0003Lf-Lv; Sun, 29 Jul 2007 18:58:22 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IFFkf-0007Xc-2Q; Sun, 29 Jul 2007 16:52:33 -0400
+	id S964974AbXG2WvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 18:51:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964966AbXG2WvD
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 18:51:03 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:47141 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750854AbXG2WvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 18:51:01 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so131144nfb
+        for <git@vger.kernel.org>; Sun, 29 Jul 2007 15:50:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rU9WMbIpljj2Cimrt9StFA395orbyq7fT9pn11epRcnMBMfeBGdEJWYJXd0ny5GJAIIlUQcqZV9Sni346T15V0uA+9Ycl1kF0ANU56Xwj700V62SwjE4ZXz4WD7ttpEJ3Hj45h7QNOe2fRP+c3OQaY/LX7byKLYFPFwzfu/NcNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dYHn4j7xgq5N6Dg41w7I9pVpaEoyBp2wi2fALJfDIvRBxDKe3EDJuLK/1fHpVFV31Ij6c8wGV6Dkoa+RfTZvihOjBCNUshP8I5oFBsqy4Azc0h0D1C8dmm2t4GOwdhbmQEmtRoIX2DszQhJC1Xmg26jEyEg9ZOve86k7ZJOwkPE=
+Received: by 10.86.60.7 with SMTP id i7mr3483220fga.1185749459847;
+        Sun, 29 Jul 2007 15:50:59 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id y2sm11106532mug.2007.07.29.15.50.53
+        (version=SSLv3 cipher=OTHER);
+        Sun, 29 Jul 2007 15:50:54 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <9e4733910707281107w6aff86f5sf746ca3f2c74d098@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <85hcnnwblu.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54145>
 
-On Sun, Jul 29, 2007 at 03:51:34PM +0200, David Kastrup wrote:
+On Sat, 28 July 2007, Jon Smirl wrote:
+> On 7/28/07, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Jeff King wrote:
+>>
+>>> On Fri, Jul 27, 2007 at 08:17:54PM -0400, Jon Smirl wrote:
+>>>
+>>>> That's not what I want. I'm looking a report that indicates new files
+>>>> vs modified ones in a single list. These old patches I am working with
+>>>> often create 100 files and modify another 200.
+>>>>
+>>>> Adding a code like (Added (A), Copied (C), Deleted (D), Modified (M),
+>>>> Renamed (R))  to --stat would be perfect.
+>>>
+>>> How about --name-status?
+>>
+>> Or -r --name-status?
 > 
-> Most actual Emacs users prefer ediff to emerge concerning the
-> consolidation of versions.  In general, people habitually using Emacs
-> will have this preference reflected in the EDITOR/VISUAL environment
-> variables.
+> -r is not in the git diff doc but it is used in the examples.
+> http://www.kernel.org/pub/software/scm/git/docs/git-diff.html
 
-Proof, please?  Do you have any polls?  What evidence do you have?
-For the past two decades, I have EDITOR set to emacs, but I am not an
-ediff fan.  Yes, that's anecdotal evidence, but so are your assertions.
+<quote>
+  <2> show only names and the nature of change, but not actual
+  diff output.  --name-status disables usual patch generation
+  which in turn also disables recursive behavior, so without -r
+  you would only see the directory name if there is a change in a
+  file in a subdirectory.
+</quote>
 
-> If such a preference can be found there, ediff will be used/offered in
-> preference of emerge (which retains its previous behavior).
+"Of course" one knows that "git diff <tree-ish> <tree-ish>" is
+git-diff-tree in disguise, and accepts git-diff-tree options.
 
-Ediff is currently far more confusing for someone who just uses emacs
-as an editor.  There are plenty of users who never learned the vi
-commands, but who use emacs as a reasonably easy-to-use text editor.
-Not everyone who uses emacs is a power-user.....
+By the way, I was thinking about extending --numstat output to include
+also status. Current --numstat output is ill fitted to deal with renames
+and copies, at least ill fitted for machine consumption of renames
+output; it uses "old_name => new_name" as a filename for renames. While
+it would be fairly easy to put pre- and after-rename names separated
+by TAB, and quoted if needed (including embedded TAB character in
+the filename, which would be quoted as \t instead) without breaking
+anu current --numstat output parsers (although I don't think any of
+them uses -M/-C), it would be hard to do the same for --numstat -z output.
+A solution (not best, I admit) would be to use NUL NUL to separate pre-
+and post-image filename, but I think it would be best to add new
+--numstat-extended format to git-diff.
 
-> In ediff mode, success or failure of the merge will be discerned by
-> Emacs either having written or not written the merge buffer; no
-> attempt of interpreting the exit code is made.
-
-Sometimes resolving the merge file results in no changes.  So the fact
-that ediff is buggy in that it doesn't return an exit code is a real
-problem.  We could possibly work around the problem saving and then
-checking the modtime --- but only if ediff actually ends up rewriting
-the file.
-
-> In order to bypass things like desktop files being loaded, emerge mode
-> now passes the "-q" option to Emacs.  This will make it work in more
-> situations likely to occur, at the price of excluding possibly
-> harmless user customizations with the rest.
-
-But that screws over users who want their customizations, but who
-don't use the desktop package.  (And I have a news flash for you; the
-desktop package is *not* include as part of emacs21.  It's not part of
-Debian's emacs21 package, version 21.4.)  So do not believe your claim
-that emacs's desktop package is commonly used.   
-
-Probably a better choice is a config parameter which allows users to
-specify a set of options to be passed to emacs when git fires up an
-emacs program.  That would allow some people to specfy --no-desktop if
-they are using a new enough emacs program that supports it.  It would
-also allow users to use other emacs command-line options that they
-might like, i.e., -nw, or --title, etc.
-
-> +	ediff)
-> +	    case "${EDITOR:-${VISUAL:-emacs}}" in
-> +		*/emacs*|*/gnuclient*|*/xemacs*)
-> +		    emacs_candidate="${EDITOR:-${VISUAL:-emacs}}";;
-> +		*)
-> +		    emacs_candidate=emacs;;
-> +	    esac
-> +	    if base_present ; then
-> +		${emacs_candidate} --eval "(ediff-merge-files-with-ancestor (pop command-line-args-left) (pop command-line-args-left) (pop command-line-args-left) nil (pop-command-line-args-left))" "$LOCAL" "$REMOTE" "$BASE" "$path"
-
-... and this will blow up if EMACS is set to emacsclient, and emacs
-version is 21.  (And BTW, Debian stable and the current Ubuntu, Edgy
-Eft, are still shipping emacs21.  So are a number of current major
-distro's.  So if you think the vast majority of users are using
-emacs22, you are either on drugs, and have a very skewed view of what
-are "normal" emacs users.)
-
-There is a reason why git-mergetool currently hardcodes the use of
-"emacs", instead of just blindly using the value of $EDITOR or
-$VISUAL.  So what you're doing here in your patch is completely
-busted.  If you insist on using emacs_candidate, we need to run emacs
---version and parse the output, and only using the value of EMACS or
-VISUAL if the major version number of emacs is at least 22.
-
-(It would probably be a good idea to do this once and cache the
-result, so we don't have to repeatedly for each file that git
-mergetool needs to process.)
-
-> -    if echo "${VISUAL:-$EDITOR}" | grep 'emacs' > /dev/null 2>&1; then
-> -        merge_tool_candidates="$merge_tool_candidates emerge"
-> -    fi
-> +    case "${EDITOR:-${VISUAL}}" in
-> +	*/emacs*|*/gnuclient*|*/xemacs*)
-> +            merge_tool_candidates="$merge_tool_candidates ediff"
-> +    esac
-
-Changing the default from emerge to ediff is a non-starter, sorry.  If
-you really want to use ediff, you can set a config parameter to
-explicitly request it.
-
-						- Ted
+P.S. Is binary diff output described somewhere?
+-- 
+Jakub Narebski
+Poland
