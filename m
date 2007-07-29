@@ -1,65 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Submit/Workflow question
-Date: Sun, 29 Jul 2007 18:06:54 +0200
-Message-ID: <851werw5wh.fsf@lola.goethe.zz>
-References: <85abtfw6d5.fsf@lola.goethe.zz>
-	<20070729160347.GA26637@fieldses.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Gitweb and submodules
+Date: Sun, 29 Jul 2007 18:37:47 +0200
+Message-ID: <20070729163747.GJ31114MdfPADPa@greensroom.kotnet.org>
+References: <200707271322.50114.jnareb@gmail.com>
+ <200707281229.17351.jnareb@gmail.com>
+ <20070728104054.GI31114MdfPADPa@greensroom.kotnet.org>
+ <200707282239.29340.jnareb@gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sun Jul 29 18:07:27 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 29 18:37:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFBIl-0001c1-B3
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 18:07:27 +0200
+	id 1IFBmF-0000im-5t
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 18:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762550AbXG2QHY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 12:07:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761410AbXG2QHY
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 12:07:24 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:35918 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762250AbXG2QHX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 12:07:23 -0400
-Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 3BA941F5973;
-	Sun, 29 Jul 2007 18:07:22 +0200 (CEST)
-Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
-	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 1F63E100C4;
-	Sun, 29 Jul 2007 18:07:22 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-017-015.pools.arcor-ip.net [84.61.17.15])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 491FD1BF39D;
-	Sun, 29 Jul 2007 18:07:20 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id BCE771C39595; Sun, 29 Jul 2007 18:06:54 +0200 (CEST)
-In-Reply-To: <20070729160347.GA26637@fieldses.org> (J. Bruce Fields's message of "Sun\, 29 Jul 2007 12\:03\:47 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3804/Sun Jul 29 06:09:31 2007 on mail-in-04.arcor-online.net
-X-Virus-Status: Clean
+	id S1763122AbXG2Qht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 12:37:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763385AbXG2Qht
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 12:37:49 -0400
+Received: from psmtp12.wxs.nl ([195.121.247.24]:34990 "EHLO psmtp12.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762561AbXG2Qhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 12:37:48 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp12.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JLY00LTM8UZAO@psmtp12.wxs.nl> for git@vger.kernel.org; Sun,
+ 29 Jul 2007 18:37:47 +0200 (MEST)
+Received: (qmail 9477 invoked by uid 500); Sun, 29 Jul 2007 16:37:47 +0000
+In-reply-to: <200707282239.29340.jnareb@gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54122>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+On Sat, Jul 28, 2007 at 10:39:28PM +0200, Jakub Narebski wrote:
+> On Sat, 28 July 2007, Sven Verdoolaege wrote:
+> > On Sat, Jul 28, 2007 at 12:29:16PM +0200, Jakub Narebski wrote:
+> >> It has to be configuration variable because the 
+> >> location of repository which has submodule objects doesn't change when 
+> >> checking out (or rewinding) to different commit in supermodule.
+> > 
+> > Let's hope Pasky provides a way to set this information...
+> 
+> Why Pasky?
 
-> On Sun, Jul 29, 2007 at 05:56:54PM +0200, David Kastrup wrote:
->> 
->> Suppose that I have created a half-baked patch A suiting my personal
->> needs and went on from there, having something like
->
-> I'm not completely sure I follow that sequence, but something like that
-> should work.  A similar approach:
->
-> 	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#modifying-one-commit
->
-> I do something pretty close to what's described there, except I
-> generally just cut and paste SHA1's instead of making the temporary tag.
+I was thinking about projects on repo.or.cz.
+We'd want to have a way to specify the locations of submodules.
 
-Thanks.
+> I am thinking about the following sequence to search for submodule
+> objects:
+> 
+> From $GIT_DIR/config:
+>   submodule.$name.objects (absolute or relative to gitdir of superproject)
+>   submodule.$name.gitdir  (absolute or relative to gitdir of superproject)
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Do we really need both of these?
+
+>   submodule.$name.url     (to find GIT_DIR, if it is local filesystem URL)
+> 
+> If there is working directory, from .gitmodules file in top level
+> of working directory:
+>   submodule.$name.path/.git (relative to toplevel of working directory)
+
+Having a relative path for the URL in .gitmodules in a public repo
+doesn't seem very useful to me.  I know it's only meant as a default
+value, but if it is a relative path, then it won't work for
+anyone cloning the superproject.
+
+skimo
