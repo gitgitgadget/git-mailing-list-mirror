@@ -1,65 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Sun, 29 Jul 2007 12:27:03 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707291224460.14781@racer.site>
-References: <7v4plqoyg5.fsf@assigned-by-dhcp.cox.net> <7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
- <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com> <7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
- <7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com> <7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net>
- <7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net> <7vvec4synj.fsf_-_@assigned-by-dhcp.cox.net>
- <85zm1g3nze.fsf@lola.goethe.zz> <85bqdw27mb.fsf@lola.goethe.zz>
- <20070729031612.GB17204@thunk.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Documentation/git-diff: remove -r from --name-status example
+Date: Sun, 29 Jul 2007 13:33:27 +0200
+Message-ID: <85bqdvxx4o.fsf@lola.goethe.zz>
+References: <20070729002427.GA1566@coredump.intra.peff.net>
+	<alpine.LFD.0.999.0707281905050.3442@woody.linux-foundation.org>
+	<20070729041159.GA5544@coredump.intra.peff.net>
+	<alpine.LFD.0.999.0707282119010.3442@woody.linux-foundation.org>
+	<7vbqdvolww.fsf@assigned-by-dhcp.cox.net>
+	<7vwswjmu08.fsf@assigned-by-dhcp.cox.net>
+	<20070729094955.GA14915@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0707291214060.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 29 13:28:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 29 13:34:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IF6x3-0001W0-Mw
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 13:28:46 +0200
+	id 1IF72A-0002gv-0h
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 13:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761478AbXG2L1j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 07:27:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761488AbXG2L1i
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 07:27:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34544 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762148AbXG2L1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 07:27:25 -0400
-Received: (qmail invoked by alias); 29 Jul 2007 11:27:23 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp022) with SMTP; 29 Jul 2007 13:27:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yXP9VdvbyKJKPQbtU0D4sLePak/y90yIwEkMw3x
-	PI7kZBGy8hzY7S
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070729031612.GB17204@thunk.org>
-X-Y-GMX-Trusted: 0
+	id S1761544AbXG2Ld7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 07:33:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761543AbXG2Ld7
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 07:33:59 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:55725 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761491AbXG2Ld6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 07:33:58 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 71F9E31F23F;
+	Sun, 29 Jul 2007 13:33:57 +0200 (CEST)
+Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 4E728ABCE2;
+	Sun, 29 Jul 2007 13:33:52 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-017-015.pools.arcor-ip.net [84.61.17.15])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id F2BF245939;
+	Sun, 29 Jul 2007 13:33:49 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 3D9821CFF95E; Sun, 29 Jul 2007 13:33:27 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0707291214060.14781@racer.site> (Johannes Schindelin's message of "Sun\, 29 Jul 2007 12\:14\:49 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54105>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sat, 28 Jul 2007, Theodore Tso wrote:
 
-> So I really am beginning to think the right answer is to give up on 
-> using git-mergetool to support anything other than basic emacs users 
-> (who just use emacs as an editor, what a concept), and for the H4rd C0re 
-> emacs l33t, they can use a contrib/git-mergetool.el that does everything 
-> inside emacs.  Since these are the people who want emacs to be their 
-> desktop, their shell, *and* their window manager, they will probably be 
-> happier that way....
+>>  	}
+>>  	rev.diffopt.allow_external = 1;
+>> +	rev.diffopt.recursive = 1;
+>
+> How about
+>
+> 	if (!rev.diffopt.quiet)
+> 		rev.diffopt.recursive = 1;
+>
+> instead?
 
-Well, maybe not happier.  But at least they will be forced to write a 
-patch (if they really want to use git _their_ way, and they'll have to 
-defend their patch if they break all other people's work flow), instead of 
-writing a lot of long and useless emails.
+I think that the optimization "don't descend if we can figure this out
+at the top level" should be rather implemented at the program flow
+level than in the option processing, and quietness does not actually
+play into this: _any_ diff operation can skip trees with identical
+top-level SHA1.
 
-IOW I do not think "we" have to do something about it.
+So the above optimization should not cause a performance difference
+(if it does, this is better fixed elsewhere), and makes it obscure to
+guess the "-q" behavior which should be more or less equivalent to
+--exit-status >/dev/null
 
-Ciao,
-Dscho
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
