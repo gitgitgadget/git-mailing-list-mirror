@@ -1,100 +1,68 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
-Subject: Re: Submit/Workflow question
-Date: Sun, 29 Jul 2007 10:21:27 -0700
-Message-ID: <31e9dd080707291021y5fd258ccobc4fa30e23a9880a@mail.gmail.com>
-References: <85abtfw6d5.fsf@lola.goethe.zz>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: merge time
+Date: Sun, 29 Jul 2007 10:33:56 -0700 (PDT)
+Message-ID: <630183.45851.qm@web51001.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, bfields@fieldses.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Jul 29 19:21:33 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: mfoster167@yahoo.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 29 19:40:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFCST-0002ns-1B
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 19:21:33 +0200
+	id 1IFCl3-0007Wn-7g
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 19:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763953AbXG2RV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 13:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764653AbXG2RV3
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 13:21:29 -0400
-Received: from wx-out-0506.google.com ([66.249.82.239]:62715 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763849AbXG2RV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 13:21:28 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1171464wxd
-        for <git@vger.kernel.org>; Sun, 29 Jul 2007 10:21:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DpMeetvMWzkduEBXvgQLJBJH70K907p6D66xtPRgfG9ycReuKf0AIYWhIIwmLoLDLRclPlYA0oMAmMxM6Nj1Jb230fEEoToYcg7IO0VzgRazQl4FTH3eY1bnCpf+nWcfnfeomOTfkoMBBTpdDT6J0iO5JPabYTjygHzXuuR/yaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B+HqMI2LjgOgy3OoheCgJMl2hLcCIYGsA3mH2EKDl4XCBDEjQQPtSTcAwXYXnO8U2qXi/VnvjJDUUsFG4ySz0wlvX64JlBo0I54TkFfsOnnioaptqQrgunGNLE44L3r7ZtdSY3vppLi18rp/2vKaNjFDVfWk2DHYgXzkE66UN2k=
-Received: by 10.90.113.20 with SMTP id l20mr1325833agc.1185729687263;
-        Sun, 29 Jul 2007 10:21:27 -0700 (PDT)
-Received: by 10.90.54.18 with HTTP; Sun, 29 Jul 2007 10:21:27 -0700 (PDT)
-In-Reply-To: <85abtfw6d5.fsf@lola.goethe.zz>
-Content-Disposition: inline
+	id S1764476AbXG2Rkk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 13:40:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764505AbXG2Rkk
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 13:40:40 -0400
+Received: from web51001.mail.re2.yahoo.com ([206.190.38.132]:34113 "HELO
+	web51001.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1763929AbXG2Rki (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 13:40:38 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Jul 2007 13:40:38 EDT
+Received: (qmail 45875 invoked by uid 60001); 29 Jul 2007 17:33:56 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=ZfafXLQ7VZXHMPLgS/SmIk0Fk8JiPgMIjzkj4/smMR5bvYtjWBdbey3UA9btDIcuT1lC2t0xeuDBvnx3gTUWm1J0I7IonWEUhwHA6gjLnoW96VFaB8dM/AIIpNG0KFN26XzmHoX0I42MWXy6fW5vBZUZdXTAgGkbQ2LBq1nuK4o=;
+X-YMail-OSG: o0qRHOcVM1ltXmQfOv7fxjibMw8GgtKwUnldYmVON4evqM1U8dm9t4Xe_Eb..JHrUQdJIsI.hqqh0vO9d04Z6Lfx2b9XF_1ZIwJ94lNOmOwosPX6V2mAvIo_ET8HF.rzkrtyAa6Bu7mbIOPw_2hLtA--
+Received: from [208.58.8.179] by web51001.mail.re2.yahoo.com via HTTP; Sun, 29 Jul 2007 10:33:56 PDT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54128>
 
-On 7/29/07, David Kastrup <dak@gnu.org> wrote:
->
-> Suppose that I have created a half-baked patch A suiting my personal
-> needs and went on from there, having something like
->
-> ...->A->B->...
->
-> Now at some point of time I decide that really A should be made fit
-> for submission.
 
-What I do in this sort of situation varies on how good I was about
-keeping A and B "independent"; first of all, let's assume you're not
-on 'master', you're on 'some-feature' (and if you weren't, it's easy
-to make it a branch, tho you might have to rebase the branch to the
-point on master where the patch is meaningful to others, and
-optionally rewind master to keep it clean)
+Sorry to bring up the time issue again [that I am perhaps still confused about] but I have been
+playing around with git more and I think I can phrase my question/observation better.
 
-some-feature:         A->B->...
-                     /
-master:  ->W->X->Y->Z
+>From viewing gitweb.cgi I have observed a situation where Linus creates a tag, say rc1, and then
+he later merges changes but some subset of those changes/commits show up in the list in time order
+as taking place _before_ the rc1 tag was made even though they were merged after. Do I describe a
+real or possible phenomenon? And does this happen because the developer that made the subset of
+changes in question commit them to his/her local repository in time order before the rc1 tag was
+made? So an external repository had the change before the rc1 tag was made but Linus' repository
+didn't? But internally git on Linus' machine knows that the gitweb.cgi displayed time order is
+wrong as far as the state is concerned because each repository's index file keeps local track of
+the true local state [just time isn't reconcilable], or am I missing something(s)?
 
-If I really want to edit *just* A and not use any of B at all, then
-the excellent rebase -i would do the job - you may want to rebase to
-Z, or if A weren't the first commit exclusive to your branch, you
-could rebase to whatever that is...
+Is it possible for gitweb.cgi to have a new view mode that sorts/displays the list based on merge
+time for commits (the time merged into Linus' or whatever repository) so the above situation
+doesn't happen? The actual time of a local commit should be the time it was merged locally not the
+time it was created externally/originally, right? Where can I find the gitweb.cgi source/package?
+I could maybe hack gitweb.cgi myself.
 
-The point is that rebase -i will let you say "edit just A, just apply
-B afterwards" and it will rewrite history for you after you fix A, and
-then it will try to apply B on top of A, and so on until you're done.
+Please CC me on any replies since I am not subscribed to the list.
 
-Sometimes, rebase -i doesn't cut it for me, (because I didn't make my
-commits cleanly separated, or perhaps because I haven't totally
-explored rebase) - then I do it the "old-fashioned way" which it the
-way this was usually done before rebase -i. I make a temporary branch
-off of master called (apply-some-feature) and I start generating diffs
-between this new branch and some-feature. A apply them, sometimes
-reaching across commits and so forth, and commit the changes in nice,
-clean format. When I'm done, *I* usually merge these onto master (if
-its my own project) but if you were going to make it into a patch, I
-would probably just replace some-feature with apply-some-feature.
+-Matt
 
-It's probably pretty self-evident, but (git) diff (and some sort of
-visual patch-applier) is pretty powerful and you can generate very
-"narrow" diffs to look at just the parts you want to for a given step
-in this process. And of course, you can use to to make sure that at
-the end, apply-some-feature and some-feature's HEADS have the same
-tree (or not, if you chose to omit some debugging stuff as I often
-do).
 
-By the way, the way Bruce suggested was fine too, I just though I'd
-share what I do in this sort of situation (and I do it often because I
-always forget to make my commits clean the first time)
 
-Jason
+       
+____________________________________________________________________________________
+Get the Yahoo! toolbar and be alerted to new email wherever you're surfing.
+http://new.toolbar.yahoo.com/toolbar/features/mail/index.php
