@@ -1,68 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/8] Clean up work-tree handling
-Date: Sun, 29 Jul 2007 21:02:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707292100500.14781@racer.site>
-References: <Pine.LNX.4.64.0707271851370.14781@racer.site>
- <Pine.LNX.4.64.0707271956420.14781@racer.site> <7vk5sly3h9.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707280115370.14781@racer.site> <7vejitwe8m.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707280152120.14781@racer.site> <7vlkd1umwf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0707291645580.14781@racer.site> <7vodhvm1dg.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Allow gitk to continue and show error message in new repos
+Date: Sun, 29 Jul 2007 22:28:40 +0200
+Message-ID: <20070729202840.GA9362@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, matled@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 22:03:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Jul 29 22:28:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFEz3-0000sG-Jl
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 22:03:21 +0200
+	id 1IFFNf-0006so-5O
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 22:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933433AbXG2UDP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 16:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933354AbXG2UDP
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 16:03:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42653 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763354AbXG2UDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 16:03:13 -0400
-Received: (qmail invoked by alias); 29 Jul 2007 20:03:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 29 Jul 2007 22:03:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jJQRsqt9jiVNMUQjGXnI8jQh0qau4Upmmxzyipr
-	O7S7XrKQy26MTV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vodhvm1dg.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S935015AbXG2U2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 16:28:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935219AbXG2U2o
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 16:28:44 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:63794 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935015AbXG2U2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 16:28:43 -0400
+Received: from tigra.home (Facac.f.strato-dslnet.de [195.4.172.172])
+	by post.webmailer.de (mrclete mo29) (RZmta 10.3)
+	with ESMTP id u07268j6TFlghq ; Sun, 29 Jul 2007 22:28:41 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D1F84277BD;
+	Sun, 29 Jul 2007 22:28:40 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 67E92C21D; Sun, 29 Jul 2007 22:28:40 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFz2KC8=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54136>
 
-Hi,
+If there is no commit made yet, gitk just dumps a Tcl error on stderr,
+which sometimes is hard to see. Noticed when gitk was run from Xfce
+file manager (thunar's custom action).
 
-On Sun, 29 Jul 2007, Junio C Hamano wrote:
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I still have a problem with what should happen if both "core.bare == true" 
-> > and "core.worktree = /some/where/over/the/rainbow".  Should it be bare, or 
-> > should it have a working tree?
-> 
-> They sound contradicting with each other to me.  Isn't that a
-> clear configuration error?
-
-Yes.  But why not play nice?
-
-Okay, the real reason I do not want to catch this error is because it 
-complicates my code.
-
-But really, why not say "worktree takes precedence"?
-
-BTW I realised that callers of setup_git_directory_gently() might forget 
-the check for the repository format version...
-
-Ciao,
-Dscho
+diff --git a/gitk b/gitk
+index f74ce51..fc7cc8c 100755
+--- a/gitk
++++ b/gitk
+@@ -427,7 +427,7 @@ proc readrefs {} {
+ 	    lappend idotherrefs($id) $name
+ 	}
+     }
+-    close $refd
++    catch { close $refd }
+     set mainhead {}
+     set mainheadid {}
+     catch {
+-- 
+1.5.3.rc3.48.g5b618
