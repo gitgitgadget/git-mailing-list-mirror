@@ -1,59 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-gui blame: show previous commit
-Date: Mon, 30 Jul 2007 00:53:00 +0200
-Organization: At home
-Message-ID: <f8j5oa$mmo$1@sea.gmane.org>
-References: <87myxfzhk6.fsf@mid.deneb.enyo.de>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: MinGW build environment for Git
+Date: Sun, 29 Jul 2007 16:14:00 -0700
+Message-ID: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 00:53:21 2007
+X-From: git-owner@vger.kernel.org Mon Jul 30 01:14:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFHdX-0004Mw-HU
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 00:53:19 +0200
+	id 1IFHxu-0000Fm-AH
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 01:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964999AbXG2WxR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 18:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964974AbXG2WxQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 18:53:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:48982 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964997AbXG2WxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 18:53:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IFHdJ-0000Ho-IJ
-	for git@vger.kernel.org; Mon, 30 Jul 2007 00:53:05 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 00:53:05 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 00:53:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751135AbXG2XOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 19:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764015AbXG2XOB
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 19:14:01 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:16073 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754083AbXG2XOB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 19:14:01 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so311154rvb
+        for <git@vger.kernel.org>; Sun, 29 Jul 2007 16:14:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=sXOXu5qOPi10hr/sHa0ko9GTFhricIwf4nu/3U8Qt6ho9l+QlgfaXqvs0VWLb0aDMpPKodUOZqZmbhpdCjpJ1CUvkfSwjdB6zjMBHBNtHlZ/YjatSVz93s/e2rnELeBvdOmLVsCj3BSzdbj00k65XHbpD6xFb5gJhgOhUhz4Lf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=H/O6bPqMCpY2JWU3wvA1CUhb1MaqqMV1XkJxDZ0vAJgCW9UM7jfuVPPxnGYjFOaIuajcCgbBmnbKh4xK4Ho6fC7CKX3/htaPgmm+/YDflgZX3blB/VZd6mSS9VhnNuVVJhgh2ePq3KLJMlqCLnc/dflrYJjMMUG+eUwE3U0jBtA=
+Received: by 10.141.68.10 with SMTP id v10mr1636980rvk.1185750840600;
+        Sun, 29 Jul 2007 16:14:00 -0700 (PDT)
+Received: by 10.141.2.18 with HTTP; Sun, 29 Jul 2007 16:14:00 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54147>
 
-Florian Weimer wrote:
+    I want to be able to build MinGW port of Git on Windows.
+I've tried to follow steps in README.MinGW to setup this environment
+myself (install MinGW, MSys, ZLib etc.) but after wasting a lot of
+time with no result I give up.
+   So, could somebody please just pkzip their environment (everything
+required) and share the zip file with me (privately or publicly)?
+   I also think that an even better idea is to create a new Git
+repository with MinGW build environment. This will make contributing
+to MinGW port of Git MUCH easier.
 
-> How can I view the previous commit touching a specific line, so that I
-> can see what was there before?  For instance, the change could be
-> whitespace-only, so that I want to dig deeper.
-
-You can always use "git blame -L<lineno>,+1 <revision> -- <file>". Or use
-pickaxe search, i.e. "git log -S'<fragment>' <revision> -- <file>".
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+- Dmitry
