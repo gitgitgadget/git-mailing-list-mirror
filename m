@@ -1,66 +1,96 @@
-From: Seth Falcon <sfalcon@fhcrc.org>
-Subject: [PATCH] Rename git-rebase interactive buffer: todo => git-rebase-todo
-Date: Sat, 28 Jul 2007 16:44:40 -0700
-Message-ID: <m2zm1gqejb.fsf@ziti.fhcrc.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] Documentation/git-diff: remove -r from --name-status
+	example
+Date: Sat, 28 Jul 2007 20:24:27 -0400
+Message-ID: <20070729002427.GA1566@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 29 01:44:55 2007
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 29 02:24:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IEvxu-0004Km-D2
-	for gcvg-git@gmane.org; Sun, 29 Jul 2007 01:44:54 +0200
+	id 1IEwaS-0002B2-DW
+	for gcvg-git@gmane.org; Sun, 29 Jul 2007 02:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758155AbXG1Xou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Jul 2007 19:44:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758179AbXG1Xot
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 19:44:49 -0400
-Received: from MICA.FHCRC.ORG ([140.107.152.12]:55145 "EHLO mica.fhcrc.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758136AbXG1Xos (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2007 19:44:48 -0400
-Received: from jade.fhcrc.org (JADE.FHCRC.ORG [140.107.42.223])
-	by mica.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l6SNig9i028690
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 28 Jul 2007 16:44:42 -0700
-Received: from ziti.fhcrc.org (DORMOUSE.FHCRC.ORG [140.107.170.158])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jade.fhcrc.org (Postfix) with ESMTP id 85B0CF269;
-	Sat, 28 Jul 2007 16:44:42 -0700 (PDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (darwin)
-X-PMX-Version: 5.3.2.304607, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.7.28.162245
-X-FHCRC-SCANNED: Sat Jul 28 16:44:43 2007
+	id S1758155AbXG2AYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Jul 2007 20:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758143AbXG2AYa
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Jul 2007 20:24:30 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2881 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754436AbXG2AYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2007 20:24:30 -0400
+Received: (qmail 21567 invoked from network); 29 Jul 2007 00:24:30 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 29 Jul 2007 00:24:30 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Jul 2007 20:24:27 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54069>
 
+Calling 'git-diff --name-status' will recursively show any
+changes already, and it has for quite some time (at least as
+far back as v1.4.1).
 
-When using emacsclient or similar, a temporary buffer (file) named
-'todo' could cause confusion with a pre-existing buffer of the same
-name.
-
-Signed-off-by: Seth Falcon <sethfalcon@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Sat, Jul 28, 2007 at 05:26:27PM +0200, Jakub Narebski wrote:
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c987311..061cd0a 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -17,7 +17,7 @@ USAGE='(--continue | --abort | --skip | [--preserve-merges] [--verbose]
- require_work_tree
+> > How about --name-status?
+> 
+> Or -r --name-status?
+
+The '-r' now seems to be superfluous. I checked using the following
+script:
+
+  mkdir repo && cd repo && git-init &&
+    touch root && git-add root && git-commit -m root &&
+    mkdir sub && touch sub/file && git-add sub/file &&
+    git-diff --cached --name-status
+
+And it correctly reports
+
+  A sub/file
+
+at least since v1.4.1. I didn't look further, but the example is from
+the 0.99 era, so I suspect this behavior was changed with the
+libification of the revision machinery and the reworking of git-diff.
+
+Or maybe I just totally don't understand what '-r' is supposed to be
+doing.
+
+ Documentation/git-diff.txt |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 639b969..b1f5e7f 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -102,17 +102,14 @@ Limiting the diff output::
+ +
+ ------------
+ $ git diff --diff-filter=MRC            <1>
+-$ git diff --name-status -r             <2>
++$ git diff --name-status                <2>
+ $ git diff arch/i386 include/asm-i386   <3>
+ ------------
+ +
+ <1> show only modification, rename and copy, but not addition
+ nor deletion.
+ <2> show only names and the nature of change, but not actual
+-diff output.  --name-status disables usual patch generation
+-which in turn also disables recursive behavior, so without -r
+-you would only see the directory name if there is a change in a
+-file in a subdirectory.
++diff output.
+ <3> limit diff output to named subtrees.
  
- DOTEST="$GIT_DIR/.dotest-merge"
--TODO="$DOTEST"/todo
-+TODO="$DOTEST"/git-rebase-todo
- DONE="$DOTEST"/done
- MSG="$DOTEST"/message
- SQUASH_MSG="$DOTEST"/message-squash
+ Munging the diff output::
 -- 
-1.5.3.rc3.24.g83b3d
+1.5.3.rc3.845.g88e3-dirty
