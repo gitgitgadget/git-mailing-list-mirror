@@ -1,61 +1,103 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2007
-Date: Mon, 30 Jul 2007 17:25:01 -0400
-Message-ID: <fcaeb9bf0707301425y58b423f6x6141949845483e01@mail.gmail.com>
-References: <200707250358.58637.jnareb@gmail.com>
-	 <200707271320.06313.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Efficient way to import snapshots?
+Date: Mon, 30 Jul 2007 14:29:02 -0700
+Message-ID: <7vabtdk2ch.fsf@assigned-by-dhcp.cox.net>
+References: <20070730180710.GA64467@nowhere>
+	<alpine.LFD.0.999.0707301144180.4161@woody.linux-foundation.org>
+	<20070730192922.GB64467@nowhere>
+	<alpine.LFD.0.999.0707301240330.4161@woody.linux-foundation.org>
+	<20070730201023.GC64467@nowhere>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 23:25:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Craig Boston <craig@olyun.gank.org>
+X-From: git-owner@vger.kernel.org Mon Jul 30 23:29:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFck8-0000VZ-7H
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:25:32 +0200
+	id 1IFcni-0001qt-Vt
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968656AbXG3VZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 17:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968645AbXG3VZE
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:25:04 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:30796 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967754AbXG3VZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 17:25:02 -0400
-Received: by an-out-0708.google.com with SMTP id d31so301112and
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 14:25:02 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r5cN7q/JFwCDnmjd2Rh5dk22En7znQP2PxVEhYk+7WmXLExentfAdjmKO7WvrpD7niAKjzeppr3ByNJ23ZM78m6nK6lALN/30uLJeA6ozZUyIafcNhLxjvO3/qW0zE0lqR2tHg9Ypd9Tzk4zcwdgOUyM4lxdojKxOvk3KQJIH4c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OVl8EGP2WoQlBUV22MDzEA6m1uC2vtiCvX61wPWaaBNJUBdAOK4EAaobHOlcIMH0yOPvB5tHG/LYz6QtpAN5U5pHpttzkgkT46jsdGoVeA7E/cjri1lcA7NR9mK+N4SsqVevI/rcKaRTO7+T5vNpFJLKfJi17ONg81YJ1+88fuY=
-Received: by 10.100.109.13 with SMTP id h13mr4909438anc.1185830702091;
-        Mon, 30 Jul 2007 14:25:02 -0700 (PDT)
-Received: by 10.100.127.17 with HTTP; Mon, 30 Jul 2007 14:25:01 -0700 (PDT)
-In-Reply-To: <200707271320.06313.jnareb@gmail.com>
-Content-Disposition: inline
+	id S967682AbXG3V3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 17:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967438AbXG3V3I
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:29:08 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:38128 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765616AbXG3V3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 17:29:06 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070730212905.GSEG1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 30 Jul 2007 17:29:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id VxV31X00J1kojtg0000000; Mon, 30 Jul 2007 17:29:04 -0400
+In-Reply-To: <20070730201023.GC64467@nowhere> (Craig Boston's message of "Mon,
+	30 Jul 2007 15:10:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54271>
 
-On 7/27/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> It's been more than a year since last Git User's Survey. It would be
-> interesting to find what changed since then. Therefore the idea to
-> have another survey.
+Craig Boston <craig@olyun.gank.org> writes:
 
-I am probably going a little far here. I think we should include
-briefly in the survey announcement what git has achieved since the
-last survey. We want to know what changed from users. Maybe users also
-want to know what changed from git since then. Also it would be good
-advertisement if it gets posted on online magazines and popular sites.
+> 1) Have a separate repository clone for each branch that I want to
+> import to and leave that branch permanently checked out.  I lose the
+> disk space for N working copies, but on the server I'm doing the import
+> on, it's not a huge issue, especially with ZFS compression ;-)
+>
+>  * This might not actually be so bad if I put the .git directory inside
+>    of the CVS checkout directory and used it as my "working copy".  I
+>    just need to insure that git doesn't create any additional files in
+>    there, as cvsup is really picky about not deleting files that it
+>    didn't create, even if they were removed from CVS.
 
--- 
-Duy
+With one of the projects hosted on CVS I have to interoperate
+with, that is what I do.  For historical reasons I do not use
+git-cvsimport/exportcommit for this one, but basically:
+
+ - "cvs co" to prime the working tree;
+ - "echo CVS >.gitignore";
+ - "git init && git add . && git commit";
+ - "git checkout -b mine";
+
+then I work in "mine" branch.  When other people have something
+to say, I do:
+
+ - "git checkout master";
+ - "cvs up";
+ - "git add <whatever was added with the above cvs up>";
+ - "git commit -a";
+ - "git rebase master mine";
+
+When feeding my own changes back to CVS, I would:
+
+ - "git checkout master";
+ - "cvs up" to make sure other people do not have any stuff;
+ - "git show-branch master mine" to see what I have; 
+
+ - "git cherry-pick <whatever the change I want to feed back>";
+ - "cvs commit";
+ - repeat the last two steps for all the changes I want;
+
+ - "git rebase master mine";
+
+I only need to make sure not to commit on "master", and not to
+run "cvs up" while on "mine".
+
+This can be extended to more than one CVS branches by using
+different branches than "master".
+
+> 2) Have one repository clone that gets re-used for each import, with the
+>    "checked out" branch getting changed before the import.  As far as I can
+>    tell this means suffering the "git checkout" overhead for 30,000 files,
+>    which is conceptually inefficient but in real time only a minute or so.
+
+That should only be "conceptually" in fact, as switching between
+branches should not touch paths that are the same between
+branches.
