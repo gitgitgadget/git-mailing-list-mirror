@@ -1,92 +1,74 @@
-From: Robert Ewald <robert.ewald@nov.com>
-Subject: Re: (Resend)[PATCH] git-svn: Translate invalid characters in refname
-Date: Mon, 30 Jul 2007 15:33:11 +0200
-Organization: Nobody is responsible but me
-Message-ID: <f8kpan$t6c$1@sea.gmane.org>
-References: <f8k9q5$927$1@sea.gmane.org> <7v6442kxvu.fsf@assigned-by-dhcp.cox.net>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [git gui] Update to it.po pushed to the mob branch
+Date: Mon, 30 Jul 2007 15:51:45 +0200
+Message-ID: <4d8e3fd30707300651l9d95bfdvb03b5992d58f206f@mail.gmail.com>
+References: <4d8e3fd30707291126g5638fea3pc8186c188d49fe5e@mail.gmail.com>
+	 <200707301057.08078.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 15:33:34 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 15:51:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFVNO-0007S0-57
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 15:33:34 +0200
+	id 1IFVf5-0005bS-EA
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 15:51:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760450AbXG3Ndd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 09:33:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759060AbXG3Ndc
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 09:33:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:33868 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756359AbXG3Ndb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 09:33:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IFVNE-0007aQ-LU
-	for git@vger.kernel.org; Mon, 30 Jul 2007 15:33:24 +0200
-Received: from static-213.88.188.4.addr.tdcsong.se ([213.88.188.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 15:33:24 +0200
-Received: from robert.ewald by static-213.88.188.4.addr.tdcsong.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 15:33:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: static-213.88.188.4.addr.tdcsong.se
-User-Agent: KNode/0.10.4
+	id S1760324AbXG3Nvs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 09:51:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759219AbXG3Nvr
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 09:51:47 -0400
+Received: from el-out-1112.google.com ([209.85.162.178]:61544 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752478AbXG3Nvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 09:51:47 -0400
+Received: by el-out-1112.google.com with SMTP id j27so168968elf
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 06:51:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lGNbRqs//duxmFuD3+JuhxmKZZOKWn2h9djhOGbCbjaqwA5G5o3PxYP6AryG4XLirCMbOXAXAJG+ql6mhJVtaOxyr+QborWnW9CS/k5G3wPWHpDoKvr3iyty7PFxDls8hmafy7xm4sWepUXgVOb2GDKkGvpspUW0tv7v5ATMf5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LVuX/escFCOpgmon2IbU5k6+jX+JEOOE5Q76Cwi2gDxHk/U2sEXQkghAGY/TgQQWFG/p5IdqHVpG4MyqKFPtnPxMyPAmaJFdlnHNl0G36IrsSNRhpAwcvtQ/e4wbotWb3XBEK5FpkXTPH2E6v4jHlqFEHsgF7Ugqb7TiSey73+4=
+Received: by 10.142.179.12 with SMTP id b12mr298083wff.1185803505590;
+        Mon, 30 Jul 2007 06:51:45 -0700 (PDT)
+Received: by 10.143.163.10 with HTTP; Mon, 30 Jul 2007 06:51:45 -0700 (PDT)
+In-Reply-To: <200707301057.08078.barra_cuda@katamail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54232>
 
-Junio C Hamano wrote:
+On 7/30/07, Michael <barra_cuda@katamail.com> wrote:
+> On Sunday 29 July 2007 20:26, Paolo Ciarrocchi wrote:
+> > I've just updated the Italian translation of git-gui
+> > and pushed it into mob branch.
+>
+> I've just updated your update :). The translation is mostly
+> complete (although quite rough). The only things left
+> are related to "fast forward merge" and "tracking branch":
+> I don't know how to translate these...
 
-> Robert Ewald <robert.ewald@nov.com> writes:
-> 
->> +sub refname {
->> +        my ($refname) = "refs/remotes/$_[0]->{ref_id}" ;
->> +
->> +        # It cannot end with a slash /, we'll throw up on this because
->> +        # SVN can't have directories with a slash in their name, either:
->> +        if ($refname =~ m{/$}) {
->> +                die "ref: '$refname' ends with a trailing slash, this is ",
->> +                    "not permitted by git nor Subversion\n";
->> +        }
->> +
->> +        # It cannot have ASCII control character space, tilde ~, caret ^,
->> +        # colon :, question-mark ?, asterisk *, space, or open bracket [
->> +        # anywhere.
->> +        #
->> +        # Additionally, % must be escaped because it is used for escaping
->> +        # and we want our escaped refname to be reversible
->> +        $refname =~ s{([ \%~\^:\?\*\[\t])}{uc sprintf('%%%02x',ord($1))}eg;
-> 
-> uc of sprintf()?  You meant "%%%02X"?
+Thank you Michael, very appreciated!
 
-You are right. Being a total Perl noob I just took Eric's suggestion from an
-earlier post without really understanding everything.
+I'll pull and check your work.
+As you noticed there are some sentences that probably should remain in
+english, I'll polish the translation using git gui in Italian ;-)
 
-> Other than that, looks sane to me.  I presume that SVN branches
-> whose name would be mangled with this patch would not have been
-> successfully imported with older git-svn anyway, so this won't
-> introduce any regressions?
+> I hope I didn't mess up some of your translations... :)
 
-Now that you mention it, I am not entirely sure. We introduce the % which is
-mangled as well. It wasn't mangled before.
+I don't think so ;-)
 
-I now could think of a case that someone has a git-svn branch with a % in the
-name checked out.
+Again, thank you!
 
-When updates are fetched a new branch head would be created. It wouldn't 
-destroy anything, but a script might break. On the other hand, the script needs
-to be updated anyway. So I am not sure if % should be handled separately.
-
-> Eric?
-Yes, Eric, please comment.
-
+Ciao,
 -- 
-Robert Ewald
+Paolo
+"Tutto cio' che merita di essere fatto,merita di essere fatto bene"
+Philip Stanhope IV conte di Chesterfield
