@@ -1,81 +1,61 @@
-From: Dmitry Monakhov <dmonakhov@openvz.org>
-Subject: [PATCH] add series editor support.
-Date: Mon, 30 Jul 2007 14:05:12 +0400
-Organization: SWsoft
-Message-ID: <20070730100512.GA14637@dnb.sw.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git stash" is not known to git
+Date: Mon, 30 Jul 2007 06:06:09 -0400
+Message-ID: <20070730100609.GB8829@coredump.intra.peff.net>
+References: <86bqduutz4.fsf@lola.quinscape.zz> <vpqwswi2pkw.fsf@bauges.imag.fr> <863az6uscz.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Josef Jeff Sipek <jsipek@cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 30 12:04:50 2007
+Cc: David Kastrup <dak@gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 30 12:06:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFS7N-0004zj-QQ
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 12:04:50 +0200
+	id 1IFS8l-0005M3-JV
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 12:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbXG3KEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 06:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbXG3KEr
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 06:04:47 -0400
-Received: from mailhub.sw.ru ([195.214.233.200]:3675 "EHLO relay.sw.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751621AbXG3KEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 06:04:46 -0400
-Received: from sw.ru ([192.168.3.106])
-	by relay.sw.ru (8.13.4/8.13.4) with SMTP id l6UA4ZRP020008;
-	Mon, 30 Jul 2007 14:04:36 +0400 (MSD)
-Received: by sw.ru (nbSMTP-1.00) for uid 1008
-	dmonakhov@sw.ru; Mon, 30 Jul 2007 14:05:14 +0400 (MSD)
+	id S1752337AbXG3KGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 06:06:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbXG3KGM
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 06:06:12 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1424 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752114AbXG3KGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 06:06:11 -0400
+Received: (qmail 12241 invoked from network); 30 Jul 2007 10:06:12 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 30 Jul 2007 10:06:12 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Jul 2007 06:06:09 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+In-Reply-To: <863az6uscz.fsf@lola.quinscape.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54218>
 
-Usually we have to edit series file directly (via editor).
-I think it is not bad idea to let guilt export this service.
-IMHO "guilt-series -e" it the best way to do it.
+On Mon, Jul 30, 2007 at 11:57:00AM +0200, David Kastrup wrote:
 
-Signed-off-by: Dmitry Monakhov <dmonakhov@openvz.org>
----
- guilt-series |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+> > This looks like an incorrect installation, with git-stash in your
+> > $PATH, but not in the place git looks for its commands (I don't
+> > remember the exact mechanism).
+> 
+> I don't think so: in git.c we have at lines 362ff
+> 
+>                 { "show-branch", cmd_show_branch, RUN_SETUP },
+>                 { "show", cmd_show, RUN_SETUP | USE_PAGER },
+>                 { "stripspace", cmd_stripspace },
+>                 { "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+> 
+> So it really seems like stash is not known to git.c.  Of course, I
+> have no real clue about git.c's operation (or I'd have proferred a
+> patch) and not right now the time to look further.
 
-diff --git a/guilt-series b/guilt-series
-index 62c3bb1..7594b2e 100755
---- a/guilt-series
-+++ b/guilt-series
-@@ -3,7 +3,7 @@
- # Copyright (c) Josef "Jeff" Sipek, 2006, 2007
- #
- 
--USAGE="[-v | -g]"
-+USAGE="[-v | -g | -e]"
- . `dirname $0`/guilt
- 
- while case "$#" in 0) break ;; esac
-@@ -13,13 +13,18 @@ do
- 		verbose=t ;;
- 	-g)
- 		gui=t ;;
-+	-e)
-+		edit=t ;;
- 	*)
- 		usage ;;
- 	esac
- 	shift
- done
- 
--if [ ! -z "$gui" ]; then
-+# edit -e ?
-+if [ "$edit" = "t" ]; then 
-+	$editor "$GUILT_DIR/$branch/series"
-+elif [ ! -z "$gui" ]; then
- 	[ -z "`get_top`" ] && die "No patches applied."
- 	bottom=`head -1 $applied | cut -d: -f1`
- 	top=`tail -1 $applied | cut -d: -f1`
--- 
-1.5.2.2
+That list is for builtins; git-stash is an external shell script. See
+execv_git_cmd for the list of places where it is looking for git-stash.
+
+Since I seem to recall you working some symlink magic with your
+installation in a recent message, that might be related. Is it just
+git-stash, or are other scripts failing (try "git status")?
+
+-Peff
