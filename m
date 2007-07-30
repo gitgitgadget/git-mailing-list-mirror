@@ -1,61 +1,73 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Arbitrary long file lists?
-Date: Mon, 30 Jul 2007 14:43:08 +0200
-Message-ID: <81b0412b0707300543p48964b73o5f972405645e70e9@mail.gmail.com>
-References: <866442t6j5.fsf@lola.quinscape.zz>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: merge time
+Date: Mon, 30 Jul 2007 14:44:43 +0200
+Message-ID: <46ADDD3B.3000806@dawes.za.net>
+References: <630183.45851.qm@web51001.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 14:43:22 2007
+To: Matthew L Foster <mfoster167@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 14:45:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFUal-00080T-8l
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 14:43:19 +0200
+	id 1IFUcq-0000D4-I3
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 14:45:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbXG3MnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 08:43:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbXG3MnL
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 08:43:11 -0400
-Received: from ik-out-1112.google.com ([66.249.90.181]:22135 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750891AbXG3MnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 08:43:09 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so898366ika
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 05:43:08 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BzzL6JyUbx325QoOTWBEsLqCG577Np9Uzbn80rUq44cFIYNeHmvcxUFI/xOPrBCXA5OWu9b4XJF4nB/LdyhbHDAoVizvPooFvngBqaE9HUUee+svFU30SYgdGjMHPlpz1Q75TaJlSSVwylfJBUEUH4drGGPVOUIOeo7R1ub9Z+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k2VkyVAIExQKAbvyy0GAHFXMwXBfDYC/PUPptypQYI9aOJR9NAo0lNbPRi+wqQstDNKlPIDJUwY8wLUdeuSJG0iewgb2i3yGu7VwSpDoRNblGf+5tAljWtVg8EXx+iMOH+hU00TLmrcZ0DpIPJ2ZqWmhGWxaxP7oL0UsqjmIFcQ=
-Received: by 10.78.181.13 with SMTP id d13mr1481114huf.1185799388479;
-        Mon, 30 Jul 2007 05:43:08 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Mon, 30 Jul 2007 05:43:08 -0700 (PDT)
-In-Reply-To: <866442t6j5.fsf@lola.quinscape.zz>
-Content-Disposition: inline
+	id S1754207AbXG3Mp0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 08:45:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754069AbXG3MpZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 08:45:25 -0400
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:45607
+	"EHLO spunkymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754005AbXG3MpZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 08:45:25 -0400
+Received: from [192.168.201.100] (dsl-146-24-241.telkomadsl.co.za [165.146.24.241])
+	by spunkymail-a2.g.dreamhost.com (Postfix) with ESMTP id CA59687D41;
+	Mon, 30 Jul 2007 05:45:23 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.5 (Windows/20070716)
+In-Reply-To: <630183.45851.qm@web51001.mail.re2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54229>
 
-On 7/30/07, David Kastrup <dak@gnu.org> wrote:
-> commands like git-archive take a file list on the command line.  If
-> the number of files does no longer fit the argv limitations, this
-> causes a problem.
->
-> So it might be nice to be able to treat some "filenames" in a file
-> list special:
->
-> -@=filename (read LF-lines with filenames from filename)
-> -@=- (read lines with filenames from stdin)
-> -@z=filename (read NUL-terminated list with filenames from filename)
-> -@z=- (same from stdin)
+Matthew L Foster wrote:
+> Sorry to bring up the time issue again [that I am perhaps still confused about] but I have been
+> playing around with git more and I think I can phrase my question/observation better.
+> 
+> From viewing gitweb.cgi I have observed a situation where Linus creates a tag, say rc1, and then
+> he later merges changes but some subset of those changes/commits show up in the list in time order
+> as taking place _before_ the rc1 tag was made even though they were merged after. Do I describe a
+> real or possible phenomenon? And does this happen because the developer that made the subset of
+> changes in question commit them to his/her local repository in time order before the rc1 tag was
+> made? So an external repository had the change before the rc1 tag was made but Linus' repository
+> didn't? But internally git on Linus' machine knows that the gitweb.cgi displayed time order is
+> wrong as far as the state is concerned because each repository's index file keeps local track of
+> the true local state [just time isn't reconcilable], or am I missing something(s)?
+> 
+> Is it possible for gitweb.cgi to have a new view mode that sorts/displays the list based on merge
+> time for commits (the time merged into Linus' or whatever repository) so the above situation
+> doesn't happen? The actual time of a local commit should be the time it was merged locally not the
+> time it was created externally/originally, right? Where can I find the gitweb.cgi source/package?
+> I could maybe hack gitweb.cgi myself.
+> 
+> Please CC me on any replies since I am not subscribed to the list.
+> 
+> -Matt
 
-git-update-index and the like use --stdin and -z.
-What do you need the one with filename for?
+The last time this topic came up, folks either created (or pointed to) 
+reflogs as a way to determine the changes to the local state of a repo.
+
+i.e. by checking the reflog for a ref, you could say that that ref was 
+changed from v2.6.20 to v2.6.21 at such and such date and time.
+
+That would allow you to determine what commits were available via that 
+ref at a particular time, regardless of the actual commit dates.
+
+To the best of my knowledge, though, reflogs are not enabled by default 
+on bare repos, and gitweb makes no use of the reflogs anyway.
+
+Rogan
