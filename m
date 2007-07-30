@@ -1,69 +1,70 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Efficient way to import snapshots?
-Date: Mon, 30 Jul 2007 23:54:36 +0200
-Message-ID: <854pjltv4z.fsf@lola.goethe.zz>
-References: <20070730180710.GA64467@nowhere>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: merge time
+Date: Mon, 30 Jul 2007 23:57:56 +0200
+Organization: At home
+Message-ID: <f8lmt4$h1t$1@sea.gmane.org>
+References: <28948.8052.qm@web51002.mail.re2.yahoo.com> <Pine.LNX.4.64.0707301007020.11330@asgard.lang.hm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Craig Boston <craig@olyun.gank.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 23:55:32 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 30 23:58:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFdD9-0002A4-Ij
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:55:31 +0200
+	id 1IFdFt-0002zl-5W
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968127AbXG3VzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 17:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938298AbXG3VzV
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:55:21 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:33595 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932308AbXG3VzU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 17:55:20 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id EF06F303854;
-	Mon, 30 Jul 2007 23:55:18 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id E09F75BD63;
-	Mon, 30 Jul 2007 23:55:18 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-066-191.pools.arcor-ip.net [84.61.66.191])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id BA3A42351A4;
-	Mon, 30 Jul 2007 23:55:18 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 917FD1D58B8F; Mon, 30 Jul 2007 23:54:39 +0200 (CEST)
-In-Reply-To: <20070730180710.GA64467@nowhere> (Craig Boston's message of "Mon\, 30 Jul 2007 13\:07\:11 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3821/Mon Jul 30 21:48:09 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S968299AbXG3V6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 17:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968282AbXG3V6R
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:58:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:33773 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S968273AbXG3V6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 17:58:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IFdFl-0004Md-C4
+	for git@vger.kernel.org; Mon, 30 Jul 2007 23:58:13 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 23:58:13 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 23:58:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54284>
 
-Craig Boston <craig@olyun.gank.org> writes:
+david@lang.hm wrote:
 
-> So far the main snag I've found is that AFAIK there's no equivalent to
-> "svk import" to load a big tree (~37000 files) into a branch and commit
-> the changes.  Here's the procedure I've come up with:
->
-> cd /path/to/git/repo
-> git checkout vendor_branch_X
-> git rm -r .
-> cp -R /path/to/cvs/checkout_X/* ./
-> git add .
-> git commit -m"Import yyyymmdd snapshot"
+> if someone really wanted to do this, the right answer may be to take the 
+> concept of gitk and webify it (think SVG for the graphics and AJAX 
+> interfaces to retreive the info as needed). I think this would be a very 
+> useful tool, but it would be a lot of work to implement.
+> 
+> but without the graph showing the commits and how they are related to each 
+> other, you really are crippled in your ability to figure out how things 
+> are related to each other. Date order just doesn't cut it.
 
+By the way, gitweb at repo.or.cz has graphical log (a la gitk) using
+git-browser by Arteem Khodush, which uses JavaScript library for graphics
+(creating lines box by box) and a bit of AJAX-ism.
 
-I have not tried it, but shouldn't something like the following work?
+I was thinking about using "template" PNG with transparency and colored
+boxes to have lighter than git-browser graphical history in gitweb, but...
 
-cd /path/to/cvs/checkout_X
-git --git-dir=/path/to/git/repo/.git reset vendor_branch_X
-git --git-dir=/path/to/git/repo/.git add .
-git --git-dir=/path/to/git/repo/.git commit -a -m "Import yyyymmdd snapshot"
-
-
+By the way, you can try to add --topo-order support to gitweb, although I'm
+not sure if it would do what you want.
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
