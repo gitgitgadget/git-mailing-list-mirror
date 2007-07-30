@@ -1,100 +1,69 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: Re: [GUILT PATCH 0/4] Add guards to guilt
-Date: Mon, 30 Jul 2007 15:20:27 -0400
-Message-ID: <20070730192027.GB17253@filer.fsl.cs.sunysb.edu>
-References: <118569541814-git-send-email-eclesh@ucla.edu> <20070730035443.GC22017@filer.fsl.cs.sunysb.edu> <873az6cmve.fsf@hubert.paunchy.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] Git User's Survey 2007
+Date: Mon, 30 Jul 2007 21:26:17 +0200
+Message-ID: <85myxdu206.fsf@lola.goethe.zz>
+References: <200707250358.58637.jnareb@gmail.com>
+	<200707271320.06313.jnareb@gmail.com>
+	<4d8e3fd30707290950lce19ef4g103cbb7ad1abbe23@mail.gmail.com>
+	<200707300221.23511.jnareb@gmail.com>
+	<4d8e3fd30707300044l79133442of45b37a8192f7bca@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
-To: Eric Lesh <eclesh@ucla.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 30 21:20:51 2007
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 21:27:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFanL-0007HW-7b
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 21:20:43 +0200
+	id 1IFatT-0001pc-OE
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 21:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968042AbXG3TUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 15:20:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967472AbXG3TUl
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 15:20:41 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:53695 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968298AbXG3TUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 15:20:40 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6UJKRqV018449;
-	Mon, 30 Jul 2007 15:20:27 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6UJKRSO018447;
-	Mon, 30 Jul 2007 15:20:27 -0400
-X-Authentication-Warning: filer.fsl.cs.sunysb.edu: jsipek set sender to jsipek@fsl.cs.sunysb.edu using -f
-Content-Disposition: inline
-In-Reply-To: <873az6cmve.fsf@hubert.paunchy.net>
-User-Agent: Mutt/1.4.1i
+	id S1758869AbXG3T04 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 15:26:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758448AbXG3T04
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 15:26:56 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:38519 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757088AbXG3T0z (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 15:26:55 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 69B273028BA;
+	Mon, 30 Jul 2007 21:26:53 +0200 (CEST)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 5746E2793F9;
+	Mon, 30 Jul 2007 21:26:53 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-066-191.pools.arcor-ip.net [84.61.66.191])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 1B03F35E5B7;
+	Mon, 30 Jul 2007 21:26:53 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id A93B31C39595; Mon, 30 Jul 2007 21:26:17 +0200 (CEST)
+In-Reply-To: <4d8e3fd30707300044l79133442of45b37a8192f7bca@mail.gmail.com> (Paolo Ciarrocchi's message of "Mon\, 30 Jul 2007 09\:44\:05 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3820/Mon Jul 30 14:13:24 2007 on mail-in-06.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54252>
 
-On Mon, Jul 30, 2007 at 01:32:53AM -0700, Eric Lesh wrote:
-> Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
-> 
-> >
-> > I know I've been bad about forcing even myself to write new regression
-> > tests. Your patches modify things significantly enough, that I'd like to see
-> > some regression tests cases to make sure that user's data is not eaten
-> > (e.g., a bug in the guard setting code could blow away the series file =>
-> > very bad).
-> >
-> 
-> Yeah, I'll try and make one.  070-guards.sh to test guilt-guard and
-> guilt-select plus pushing and popping?
+"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
 
-Sounds good.
+> Fine with me. Thanks for you work Jakub.
+>
+> Just a general comment, let's try to avoid as much as possible
+> multiple questions in a single question. It tends to confuse people
+> when they are answering to the survey.
 
-> There's also sed -i in a few places. For integrity purposes, are a cp
-> and sed better?
+I find that the survey lacking in community questions, like
 
-I like the fact that sed -i makes the code cleaner, BUT I don't want the
-users to come after me if they patches disappear. Perhaps having a wrapper
-(a function) for sed that's nicely paranoid and handles errors as well as
-possible would be in order:
+Do you frequently read the mailing list?
+Frequently post?
+Other sources of information?
+How helpful are the answers you get there?
+How pleasant is the atmosphere?
 
-safe_sed [<sed options...>]
-
-> > Is this a problem with other projects' implementations of guards as well?
-> > Perhaps printing a warning if a new guard is set when there are applied
-> > patches would be in order?
-> >
-> 
-> Yeah, they have this problem too,
-
-Good :)
-
-> but tell you so when you select, so guilt should too.
-
-Agreed.
-
-> Mercurial also has two options which do the popping and reapplying for
-> you, which I'll try and implement also.
-
-As in:
-
-t=`guilt-top`
-guilt-pop -a
-guilt-push "$t"
-
-? Beware that "$t" might not be in the new guarded series.
-
-> Thanks a lot for the review.  Things were pretty ugly, but with your
-> help it should look much better.
-
-Nah...just a few nit-picks, that's all :)
-
-Josef 'Jeff' Sipek.
+And so on.
 
 -- 
-I think there is a world market for maybe five computers.
-		- Thomas Watson, chairman of IBM, 1943.
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
