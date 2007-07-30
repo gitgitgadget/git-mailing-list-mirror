@@ -1,76 +1,60 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: Re: [GUILT PATCH 3/4] guilt-select: Select guards to apply when pushing patches
-Date: Mon, 30 Jul 2007 00:02:26 -0700
-Message-ID: <87fy36cr25.fsf@hubert.paunchy.net>
-References: <118569541814-git-send-email-eclesh@ucla.edu>
-	<11856954182318-git-send-email-eclesh@ucla.edu>
-	<20070730041231.GE22017@filer.fsl.cs.sunysb.edu>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Gitweb and submodules
+Date: Mon, 30 Jul 2007 09:06:00 +0200
+Message-ID: <20070730070600.GK31114MdfPADPa@greensroom.kotnet.org>
+References: <200707271322.50114.jnareb@gmail.com>
+ <200707282239.29340.jnareb@gmail.com>
+ <20070729163747.GJ31114MdfPADPa@greensroom.kotnet.org>
+ <200707300209.03531.jnareb@gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
-To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 30 09:02:57 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 09:06:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFPHM-0000Zl-L6
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 09:02:57 +0200
+	id 1IFPKR-0001Nr-41
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 09:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938005AbXG3HCl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 03:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937845AbXG3HCl
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 03:02:41 -0400
-Received: from smtp-7.smtp.ucla.edu ([169.232.46.138]:46903 "EHLO
-	smtp-7.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763869AbXG3HCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 03:02:40 -0400
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
-	by smtp-7.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U72XuE024731;
-	Mon, 30 Jul 2007 00:02:33 -0700
-Received: from localhost (adsl-75-26-169-114.dsl.scrm01.sbcglobal.net [75.26.169.114])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U72WDC026507
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 30 Jul 2007 00:02:32 -0700
-Received: by localhost (Postfix, from userid 1000)
-	id 989401E80A8; Mon, 30 Jul 2007 00:02:26 -0700 (PDT)
-In-Reply-To: <20070730041231.GE22017@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Mon\, 30 Jul 2007 00\:12\:31 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
-X-Probable-Spam: no
-X-Spam-Report: none
-X-Scanned-By: smtp.ucla.edu on 169.232.46.138
+	id S937966AbXG3HGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 03:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937845AbXG3HGE
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 03:06:04 -0400
+Received: from psmtp12.wxs.nl ([195.121.247.24]:47157 "EHLO psmtp12.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764242AbXG3HGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 03:06:01 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp12.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JLZ00IZDD20GV@psmtp12.wxs.nl> for git@vger.kernel.org; Mon,
+ 30 Jul 2007 09:06:00 +0200 (MEST)
+Received: (qmail 28429 invoked by uid 500); Mon, 30 Jul 2007 07:06:00 +0000
+In-reply-to: <200707300209.03531.jnareb@gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54195>
 
-Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
+On Mon, Jul 30, 2007 at 02:09:03AM +0200, Jakub Narebski wrote:
+> On Sun,29 July 2007, Sven Verdoolaege wrote:
+> > On Sat, Jul 28, 2007 at 10:39:28PM +0200, Jakub Narebski wrote:
+> >>   submodule.$name.path/.git (relative to toplevel of working directory)
+> > 
+> > Having a relative path for the URL in .gitmodules in a public repo
+> > doesn't seem very useful to me.  I know it's only meant as a default
+> > value, but if it is a relative path, then it won't work for
+> > anyone cloning the superproject.
+> 
+> Erm, it should be relative path in .git/config (as in example in the
+> t/t7400-submodule-basic.sh IIRC). And this is purely local matter.
 
-[...]
+My mistake.  I misread that as submodule.$name.url.
 
->> +if [ $# == 0 ]; then
->> +	if [ -s "$guards_file" ]; then
->> +		cat "$guards_file"
->
-> Later on, for the -s option processing, you sort (presumably to have uniq do
-> the right thing), should we sort here too to be consitent?
->
-
-The $guards_file isn't really meant to be handed edited, and
-guilt-select itself sorts before it stores them in the guards file.  I could
-sort it again on printing, but don't think it's necessary.
-
->> +
->> +case $1 in
->> +	-n|--none)
->> +		rm -f "$guards_file"
->> +		touch "$guards_file"
->
-> Since guilt-init doesn't create the guards file, I'm thinking that this
-> should be just a rm -f ...
-
-Should guilt-init create it?  I added $guards_file to guilt(7), so not
-seeing it might freak Documentation-conscious readers out?
-
-	Eric
+skimo
