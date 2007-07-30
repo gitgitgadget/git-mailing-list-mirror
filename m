@@ -1,70 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: merge time
-Date: Mon, 30 Jul 2007 23:57:56 +0200
-Organization: At home
-Message-ID: <f8lmt4$h1t$1@sea.gmane.org>
-References: <28948.8052.qm@web51002.mail.re2.yahoo.com> <Pine.LNX.4.64.0707301007020.11330@asgard.lang.hm>
+Date: Tue, 31 Jul 2007 00:11:09 +0200
+Message-ID: <200707310011.10935.robin.rosenberg.lists@dewire.com>
+References: <104942.93033.qm@web51008.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 23:58:22 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: david@lang.hm, Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Matthew L Foster <mfoster167@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 00:18:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFdFt-0002zl-5W
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:58:21 +0200
+	id 1IFdZ9-00011U-SY
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 00:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968299AbXG3V6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 17:58:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968282AbXG3V6R
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:58:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:33773 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S968273AbXG3V6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 17:58:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IFdFl-0004Md-C4
-	for git@vger.kernel.org; Mon, 30 Jul 2007 23:58:13 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 23:58:13 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 23:58:13 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S967657AbXG3WSM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 30 Jul 2007 18:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967474AbXG3WSL
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 18:18:11 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:29507 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S967451AbXG3WSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 18:18:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 507CF802840;
+	Tue, 31 Jul 2007 00:10:47 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 10175-06; Tue, 31 Jul 2007 00:10:46 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id D78EB8026FD;
+	Tue, 31 Jul 2007 00:10:46 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <104942.93033.qm@web51008.mail.re2.yahoo.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54285>
 
-david@lang.hm wrote:
+m=E5ndag 30 juli 2007 skrev Matthew L Foster:
+>=20
+> --- david@lang.hm wrote:
+>=20
+> > On Mon, 30 Jul 2007, Matthew L Foster wrote:
+> > > Local commit order is stored locally right?
+> >=20
+> > not normally. you could enable reflogs and then mine through the re=
+flogs=20
+> > to find the info, but it's not stored in any easy to access fashion=
+=2E
+>=20
+> Local merge order can be extracted from git?=20
 
-> if someone really wanted to do this, the right answer may be to take the 
-> concept of gitk and webify it (think SVG for the graphics and AJAX 
-> interfaces to retreive the info as needed). I think this would be a very 
-> useful tool, but it would be a lot of work to implement.
-> 
-> but without the graph showing the commits and how they are related to each 
-> other, you really are crippled in your ability to figure out how things 
-> are related to each other. Date order just doesn't cut it.
+Well.. depending on what your definition of merge. Yes, probably.
 
-By the way, gitweb at repo.or.cz has graphical log (a la gitk) using
-git-browser by Arteem Khodush, which uses JavaScript library for graphics
-(creating lines box by box) and a bit of AJAX-ism.
+I dislike the term "merge" here, since no merges has to be involved, un=
+less you
+include any pulled commit into the terms. Normally a merge is a commit =
+with
+two or more parents. Fast forward merges are indistinguishable from nor=
+mal=20
+commits.
 
-I was thinking about using "template" PNG with transparency and colored
-boxes to have lighter than git-browser graphical history in gitweb, but...
+That aside, you *can* (usually) figure the time when a commit entered t=
+he repository by examining the
+reflog if the set of branches are reasonably stable The reflog gives th=
+e local time when a head
+was modified (old and new commit) so from there you can usually go back=
+wards. *But* that road is
+full of pot holes. The reflog cannot per se tell when a commit entered =
+the local repo, it can
+tell when it came into view as seen from a particular head. Looking fro=
+m different heads may
+(will) give you different times. If the head that was used to pull the =
+commit into the repo is
+deleted you will not be able to tell when the commit entered the repo, =
+nor will you be able to
+tell whether you can tell that or not, since the reflog for that head i=
+s gone.=20
 
-By the way, you can try to add --topo-order support to gitweb, although I'm
-not sure if it would do what you want.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The reflog doesn't list all commits, just changes to the head and it is=
+n't necessarily linear either, ie.
+it may change backward in "time" forward or even to a completely separa=
+te set of commits.
+
+The reflog is text-only: .git/logs/<ref-name>, e.g. .git/logs/refs/head=
+s/master so you can see for
+yourself.
+
+-- robin
