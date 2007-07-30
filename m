@@ -1,54 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: "git stash" is not known to git
-Date: Mon, 30 Jul 2007 03:12:39 -0700
-Message-ID: <7vy7gyjj3c.fsf@assigned-by-dhcp.cox.net>
-References: <86bqduutz4.fsf@lola.quinscape.zz>
+Date: Mon, 30 Jul 2007 12:24:51 +0200
+Message-ID: <86lkcytci4.fsf@lola.quinscape.zz>
+References: <86bqduutz4.fsf@lola.quinscape.zz> <vpqwswi2pkw.fsf@bauges.imag.fr> <863az6uscz.fsf@lola.quinscape.zz> <20070730100609.GB8829@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 12:12:46 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 30 12:25:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFSF2-000779-S3
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 12:12:45 +0200
+	id 1IFSR9-00028J-3t
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 12:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbXG3KMm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 06:12:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752484AbXG3KMl
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 06:12:41 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:53320 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456AbXG3KMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 06:12:41 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070730101240.RLVP1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 30 Jul 2007 06:12:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VmCf1X00F1kojtg0000000; Mon, 30 Jul 2007 06:12:40 -0400
-In-Reply-To: <86bqduutz4.fsf@lola.quinscape.zz> (David Kastrup's message of
-	"Mon, 30 Jul 2007 11:22:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753195AbXG3KZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 06:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbXG3KZL
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 06:25:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:49952 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752438AbXG3KZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 06:25:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IFSQv-0004WF-5t
+	for git@vger.kernel.org; Mon, 30 Jul 2007 12:25:01 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 12:25:01 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 12:25:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:Ru7LZ+mII7Y9ChV2OeiRDQe6OXY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54221>
 
-David Kastrup <dak@gnu.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> One has to use git-stash rather than "git stash".  Oversight?
+> Since I seem to recall you working some symlink magic with your
+> installation in a recent message, that might be related. Is it just
+> git-stash, or are other scripts failing (try "git status")?
 
-Does any of the other shell-scripts work without dashes?
-E.g. commit, merge, am, checkout?
+Hmpf.  On another system (git version 1.5.3.rc3.48.g0d59d) this works.
+I don't have the system at hand right now where it doesn't.  So it
+would be my guess that either I have not called the install-symlinks
+target recently enough, or its implementation on that system has been
+broken for some time.
 
-If they do, then probably you are invoking older versions of
-these scripts than what you think you are.  "git" itself looks
-at GIT_EXEC_PATH and then the $(gitexecdir) from the Makefile
-when it was built for its subcommands.
+I'll have to check this evening.
 
-Perhaps this is your "symlinked install" gone awry?  I dunno.
+On the other hand, I am quite sure that while "git stash" did not
+work, "git-stash" had no problem.
+
+So something bogus in git's PATH lookup would definitely appear to be
+going on: it should be hard to get the symlinks messed up badly enough
+to have one work and not the other.
+
+More this evening.
+
+-- 
+David Kastrup
