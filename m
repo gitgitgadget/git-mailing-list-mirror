@@ -1,62 +1,86 @@
-From: Matthew L Foster <mfoster167@yahoo.com>
+From: david@lang.hm
 Subject: Re: merge time
-Date: Sun, 29 Jul 2007 18:11:07 -0700 (PDT)
-Message-ID: <241612.78983.qm@web51007.mail.re2.yahoo.com>
-References: <alpine.LFD.0.999.0707291623160.3442@woody.linux-foundation.org>
+Date: Sun, 29 Jul 2007 18:27:56 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0707291823370.6331@asgard.lang.hm>
+References: <241612.78983.qm@web51007.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, mfoster167@yahoo.com
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 03:11:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Matthew L Foster <mfoster167@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 03:29:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFJn1-0004Ka-K0
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 03:11:15 +0200
+	id 1IFK4W-0007V7-Fx
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 03:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965508AbXG3BLM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 21:11:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965504AbXG3BLM
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 21:11:12 -0400
-Received: from web51007.mail.re2.yahoo.com ([206.190.38.138]:20689 "HELO
-	web51007.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S965452AbXG3BLL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2007 21:11:11 -0400
-Received: (qmail 79613 invoked by uid 60001); 30 Jul 2007 01:11:08 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=ne6kg10bpg5MmrJ3EubUAW46HH5TyrR2FSlwRk29j5GTf28tOi+r8y6ydqD3GuYi1NgM6BRRua2+yYK3Qq2Jv2iTXrtASnNffNcwspEpqNKgwCQDW41vv4R/o1bRmMkfYHsgahVEpe/LPRvbRZXeg9hZQkco3YSCC9qQlfKoZf0=;
-X-YMail-OSG: gkCdz_0VM1m8D_1RhWaY5R0KOMYFKGjY6K3hSKqrFdajFWCU5RKgt1mHJpmvB0.2vyO650IuF1Xe0rhn9w7tNKFp0Hl5zQ6Tjbv3Oax82HYteO_Pyv3G3o8w1A--
-Received: from [208.58.8.179] by web51007.mail.re2.yahoo.com via HTTP; Sun, 29 Jul 2007 18:11:07 PDT
-In-Reply-To: <alpine.LFD.0.999.0707291623160.3442@woody.linux-foundation.org>
+	id S965519AbXG3B3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 21:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935972AbXG3B3J
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 21:29:09 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:35524
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935950AbXG3B3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 21:29:08 -0400
+Received: from asgard (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l6U1Sagd006898;
+	Sun, 29 Jul 2007 18:28:36 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <241612.78983.qm@web51007.mail.re2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54167>
 
---- Linus Torvalds <torvalds@linux-foundation.org> wrote:
+On Sun, 29 Jul 2007, Matthew L Foster wrote:
 
-> Well, there i sno "wrong" time. There are just "different" times. The only 
-> thing git really tracks is not actually the time (that's purely for human 
-> consumption), but the *relationship* between commits. So git really very 
-> fundmanetally just tracks things like "commit X was the parent of commit 
-> Y", and the time is really immaterial.
+> --- Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>> Well, there i sno "wrong" time. There are just "different" times. The only
+>> thing git really tracks is not actually the time (that's purely for human
+>> consumption), but the *relationship* between commits. So git really very
+>> fundmanetally just tracks things like "commit X was the parent of commit
+>> Y", and the time is really immaterial.
+>
+> Is it possible for git and/or gitweb to know that commits X and Y are descendents of merge C and
+> use the time merge C happened locally for both instead of using the time commits X and Y were
+> created?
 
-Is it possible for git and/or gitweb to know that commits X and Y are descendents of merge C and
-use the time merge C happened locally for both instead of using the time commits X and Y were
-created? It seems to me changes showing up as being made long before they really were merged is a
-very serious problem verification wise but if everyone is using git then perhaps it's not as bad
-as I think. What happens when security bug fix Z errantly seems to be in v2.6.22 but in reality
-its not?
+git knows what's a decendent of what, but gitweb doesn't show it well. 
+that's why Linus suggested you look at gitk or qgit.
 
-Thanks for the responses,
--Matt
+by the way, you probably mean that commits X and Y are parents of merge C, 
+not decendants.
 
+but if git did what you wanted it would show every commit with the time of 
+the merge, and that wouldn't help you anyway.
 
+> It seems to me changes showing up as being made long before they really were merged is a
+> very serious problem verification wise but if everyone is using git then perhaps it's not as bad
+> as I think. What happens when security bug fix Z errantly seems to be in v2.6.22 but in reality
+> its not?
 
-      ____________________________________________________________________________________
-Park yourself in front of a world of choices in alternative vehicles. Visit the Yahoo! Auto Green Center.
-http://autos.yahoo.com/green_center/ 
+you don't look at the dates to see if the bugfix is in 2.6.22 you look at 
+the graph or ask git to tell you
+
+remember that in git you don't have one-true-trunk of the project, you 
+have a mesh of interconnected points, some of which are pointed to by tags 
+that tell you that other people thought that they are particularly 
+interesting.
+
+David Lang
+
+> Thanks for the responses,
+> -Matt
+>
+>
+>
+>      ____________________________________________________________________________________
+> Park yourself in front of a world of choices in alternative vehicles. Visit the Yahoo! Auto Green Center.
+> http://autos.yahoo.com/green_center/
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
