@@ -1,70 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: merge time
-Date: Mon, 30 Jul 2007 10:42:29 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707301038380.4161@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0707291914451.3442@woody.linux-foundation.org>
- <6FE9FFD6-B5D7-4E1D-A4E8-B6D0E9517503@zib.de> <7vbqdumlo1.fsf@assigned-by-dhcp.cox.net>
- <E49A2B0B-DAA3-4A03-925D-D3D113F907F1@zib.de> <20070730074937.GT20052@spearce.org>
- <577C7529-4C3C-40D4-B86A-8B3CE888C997@zib.de> <20070730081439.GA907@coredump.intra.peff.net>
- <E1575DD6-AC8C-49FD-A765-801A19E1FA73@zib.de> <20070730083223.GB3150@coredump.intra.peff.net>
- <Pine.LNX.4.64.0707300133210.6478@asgard.lang.hm>
- <20070730084138.GA4100@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git stash" is not known to git
+Date: Mon, 30 Jul 2007 10:52:54 -0700
+Message-ID: <7vtzrlkccp.fsf@assigned-by-dhcp.cox.net>
+References: <86bqduutz4.fsf@lola.quinscape.zz>
+	<vpqwswi2pkw.fsf@bauges.imag.fr>
+	<20070730100408.GA8829@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: david@lang.hm, Steffen Prohaska <prohaska@zib.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthew L Foster <mfoster167@yahoo.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Kastrup <dak@gnu.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 30 19:42:59 2007
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:54:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFZGk-0007gG-MW
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 19:42:59 +0200
+	id 1IFZRY-0004cQ-FL
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 19:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763894AbXG3Rmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 13:42:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763805AbXG3Rmz
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 13:42:55 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:59164 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761163AbXG3Rmy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 13:42:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6UHgZYj014183
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 30 Jul 2007 10:42:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6UHgTTs022033;
-	Mon, 30 Jul 2007 10:42:29 -0700
-In-Reply-To: <20070730084138.GA4100@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.73 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S966175AbXG3RxG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 13:53:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966130AbXG3RxF
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 13:53:05 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56100 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967298AbXG3RxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 13:53:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070730175254.XDHM1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 30 Jul 2007 13:52:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Vtsu1X0061kojtg0000000; Mon, 30 Jul 2007 13:52:55 -0400
+In-Reply-To: <20070730100408.GA8829@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 30 Jul 2007 06:04:08 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54246>
 
+Jeff King <peff@peff.net> writes:
 
+> On a related note, is it just me, or is the following comment and related code
+> in git.c (introduced by Linus in 231af832) totally bogus:
+>
+>   /*
+>    * We search for git commands in the following order:
+>    *  - git_exec_path()
+>    *  - the path of the "git" command if we could find it
+>    *    in $0
+>    *  - the regular PATH.
+>    */
+>
+> We never actually look in the regular PATH since we call execv_git_cmd
+> (although we do still munge the PATH, apparently so shell scripts can
+> use git-foo syntax; see 77cb17e9). This means you can't drop "git-foo"
+> into your PATH and have it work as "git foo".
+>
+> What is the desired behavior?
 
-On Mon, 30 Jul 2007, Jeff King wrote:
-> 
-> If you followed a strict policy of always merging topics to a "base"
-> branch as your first parent, then never allowing fast forwards should
-> allow a very easy-to-read history in gitk.
-
-Only if only *one* person ever does any merges.
-
-Immediately when you have other people merging code, you're now back in 
-the same boat.
-
-This is why I personally think the whole policy of "no fast forward" is 
-totally broken. It's only usable in a non-distributed environment, where 
-there is one central person who does everythng (a so-called "star 
-topology").
-
-			Linus
+I failed to spot patches to the area without updating the
+comment.  What the code does is fine, the comment is stale.
