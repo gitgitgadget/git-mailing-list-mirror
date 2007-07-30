@@ -1,79 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui blame: show previous commit
-Date: Sun, 29 Jul 2007 23:43:14 -0400
-Message-ID: <20070730034314.GQ20052@spearce.org>
-References: <87myxfzhk6.fsf@mid.deneb.enyo.de> <Pine.LNX.4.64.0707291238230.14781@racer.site>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: [GUILT PATCH 1/4] get_series: Remove comments from end of series lines
+Date: Sun, 29 Jul 2007 23:54:22 -0400
+Message-ID: <20070730035422.GB22017@filer.fsl.cs.sunysb.edu>
+References: <118569541814-git-send-email-eclesh@ucla.edu> <11856954183111-git-send-email-eclesh@ucla.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Mon Jul 30 05:43:27 2007
+Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
+To: Eric Lesh <eclesh@ucla.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 30 05:54:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFMAG-0005l3-Q0
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 05:43:25 +0200
+	id 1IFMLG-0007er-Hj
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 05:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937253AbXG3DnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Jul 2007 23:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937206AbXG3DnW
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 23:43:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60058 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936908AbXG3DnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2007 23:43:21 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IFM9w-0008QQ-A6; Sun, 29 Jul 2007 23:43:04 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 373AC20FBAE; Sun, 29 Jul 2007 23:43:15 -0400 (EDT)
+	id S933593AbXG3Dyk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Jul 2007 23:54:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933509AbXG3Dyj
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Jul 2007 23:54:39 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:45517 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752413AbXG3Dyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2007 23:54:39 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6U3sMfh026016;
+	Sun, 29 Jul 2007 23:54:23 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6U3sMrR026014;
+	Sun, 29 Jul 2007 23:54:22 -0400
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707291238230.14781@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <11856954183111-git-send-email-eclesh@ucla.edu>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54177>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 29 Jul 2007, Florian Weimer wrote:
-> 
-> > How can I view the previous commit touching a specific line, so that I
-> > can see what was there before?  For instance, the change could be
-> > whitespace-only, so that I want to dig deeper.
-> 
-> If you want to ignore whitespace changes, try the option "-w" to "git 
-> blame".  I have no idea if "git-gui blame" can use that option, but it 
-> should not be hard for you to find out, and provide a patch if it does 
-> not yet.
+On Sun, Jul 29, 2007 at 12:50:15AM -0700, Eric Lesh wrote:
+... 
+> diff --git a/guilt b/guilt
+> index f67bfb5..774909e 100755
+> --- a/guilt
+> +++ b/guilt
+> @@ -178,7 +178,8 @@ get_series()
+>  	#	- whitespace only
+>  	#	- optional whitespace followed by '#' followed by more
+>  	#	  optional whitespace
+> -	grep -ve '^[[:space:]]*\(#.*\)*$' "$series"
+> +	# also remove comments from end of lines
+> +	grep -ve '^[[:space:]]*\(#.*\)*$' < "$series" | sed -e 's/[[:space:]]*#.*$//'
 
-gitgui-0.7.4-35-ga840566 is a change from Junio to enable the
--w flag to git-blame if the underlying git is 1.5.3 or later.
-So you'd need a pretty recent git-gui and a 1.5.3-rc0 or later
-git binary underneath of it to get -w enabled in blame.  But it is
-there for the original line annotation pass (the second blame pass
-but first column displayed).
+I'd be tempted to replace the whole thing with one sed script...something
+like (not tested):
 
-I keep meaning to add a "Show parent commit" in the context menu
-of the blame viewer, but I haven't gotten around to it yet.
-It has been requested a few times, just hasn't been done yet.
-Maybe someone who wants it will submit a patch.  ;-)
+"
+/^[[:space:]]*#/ ! {
+	s/[[:space:]]*#.*$//
 
-In really recent git-gui (gitgui-0.7.5-76-g8e891fa and later) you
-can browse any revision you want, so you could copy the commit SHA-1
-from the lower pane and paste it in as "$sha1^" into the revision
-expression field of the browse dialog, navigate to the file and
-open the blame viewer.  That is really annoying, and doesn't jump
-you to the correct lines automatically.  But it is possible to view
-the parent.
+	p
+}
+"
+
+Regardless of the other 3 patches, this one makes sense to include.
+
+Josef 'Jeff' Sipek.
 
 -- 
-Shawn.
+Once you have their hardware. Never give it back.
+(The First Rule of Hardware Acquisition)
