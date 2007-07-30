@@ -1,66 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git stash" is not known to git
-Date: Mon, 30 Jul 2007 10:52:54 -0700
-Message-ID: <7vtzrlkccp.fsf@assigned-by-dhcp.cox.net>
-References: <86bqduutz4.fsf@lola.quinscape.zz>
-	<vpqwswi2pkw.fsf@bauges.imag.fr>
-	<20070730100408.GA8829@coredump.intra.peff.net>
+From: Craig Boston <craig@olyun.gank.org>
+Subject: Efficient way to import snapshots?
+Date: Mon, 30 Jul 2007 13:07:11 -0500
+Message-ID: <20070730180710.GA64467@nowhere>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Kastrup <dak@gnu.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 30 19:54:09 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 30 20:17:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFZRY-0004cQ-FL
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 19:54:08 +0200
+	id 1IFZoC-0006cR-9q
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 20:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966175AbXG3RxG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 13:53:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966130AbXG3RxF
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 13:53:05 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56100 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967298AbXG3RxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 13:53:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070730175254.XDHM1349.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 30 Jul 2007 13:52:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Vtsu1X0061kojtg0000000; Mon, 30 Jul 2007 13:52:55 -0400
-In-Reply-To: <20070730100408.GA8829@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 30 Jul 2007 06:04:08 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S967048AbXG3SR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 14:17:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967036AbXG3SR2
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 14:17:28 -0400
+Received: from ion.gank.org ([69.55.238.164]:4267 "EHLO ion.gank.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762124AbXG3SR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 14:17:27 -0400
+X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Jul 2007 14:17:25 EDT
+Received: by ion.gank.org (Postfix, from userid 1001)
+	id 64761115D7; Mon, 30 Jul 2007 13:07:11 -0500 (CDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54247>
 
-Jeff King <peff@peff.net> writes:
+Hello, I'm seeking some input from git users/developers to try and solve
+a problem I'm encountering.  I'm new with git, having used quite a bit
+of Subversion and SVK in the past, but have heard good things and
+decided to give it a try.
 
-> On a related note, is it just me, or is the following comment and related code
-> in git.c (introduced by Linus in 231af832) totally bogus:
->
->   /*
->    * We search for git commands in the following order:
->    *  - git_exec_path()
->    *  - the path of the "git" command if we could find it
->    *    in $0
->    *  - the regular PATH.
->    */
->
-> We never actually look in the regular PATH since we call execv_git_cmd
-> (although we do still munge the PATH, apparently so shell scripts can
-> use git-foo syntax; see 77cb17e9). This means you can't drop "git-foo"
-> into your PATH and have it work as "git foo".
->
-> What is the desired behavior?
+First, a little bit about what I'm trying to accomplish.  There is a
+large source tree -- FreeBSD to be specific -- which is maintained in
+CVS.  I want to have several local branches where I can develop specific
+projects.  Each of these branches should derive from either the HEAD of
+the CVS tree, or from one of the release branches (known as the -STABLE
+branch for a particular version of the OS).
 
-I failed to spot patches to the area without updating the
-comment.  What the code does is fine, the comment is stale.
+That said, I really don't want to have to import the entire CVS
+repository.  It has many, many branches and tags that I'm not interested
+in, and I really don't need the entire history of the project.  I don't
+even really need individual commit history.  I can see that easily enough
+on cvsweb.  Repo size is a big factor as I need to replicate it between
+several different work machines, some of which don't have unlimited disk
+space.
+
+What I'm currently doing (using SVK) is nightly, taking a snapshot using
+cvsup of each of the 3 branches that I care about, then using "svk
+import" to pull the snapshot into a local branch that I treat as a
+vendor branch.  My projects are branched off those and I regularly
+smerge changes over.  It works pretty well for me, the only downside is
+that svk isn't exactly fast, having to load lots of perl modules for
+every command.
+
+I'd like to do something similar with git -- I like the idea of it
+having many less dependencies that must be installed, and it's supposed
+to be quite a bit faster when dealing with working copies.  From reading
+about it I think it may also be easier to generate diffs of my branches
+from their origins.
+
+So far the main snag I've found is that AFAIK there's no equivalent to
+"svk import" to load a big tree (~37000 files) into a branch and commit
+the changes.  Here's the procedure I've come up with:
+
+cd /path/to/git/repo
+git checkout vendor_branch_X
+git rm -r .
+cp -R /path/to/cvs/checkout_X/* ./
+git add .
+git commit -m"Import yyyymmdd snapshot"
+
+However this has quite a few disadvantages when compared to svk.  The
+first is that I have to checkout into a working directory and then copy
+the files from the cvs checkout.  It is also considerably slower than
+svk import, about 7-8 times on average.  When there are a lot of
+changes I've seen the git process use upwards of 1GB of memory; it
+actually died the first time I tried it because I didn't have any swap
+configured.
+
+Now, I don't have very much experience with git, so for my question: Is
+there a better way to do this?  Either importing a lot of files into
+git, or a better solution for that I'm trying to do.
+
+Any pointers would be much appreciated.
+
+Thanks!
+
+Craig
