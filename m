@@ -1,73 +1,94 @@
-From: david@lang.hm
-Subject: Re: merge time
-Date: Sun, 29 Jul 2007 21:17:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0707292114120.6510@asgard.lang.hm>
-References: <994493.95349.qm@web51001.mail.re2.yahoo.com>
+From: Eric Lesh <eclesh@ucla.edu>
+Subject: Re: [GUILT PATCH 1/4] get_series: Remove comments from end of series lines
+Date: Sun, 29 Jul 2007 22:15:54 -0700
+Message-ID: <87r6mqcvzp.fsf@hubert.paunchy.net>
+References: <118569541814-git-send-email-eclesh@ucla.edu>
+	<11856954183111-git-send-email-eclesh@ucla.edu>
+	<20070730035422.GB22017@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Matthew L Foster <mfoster167@yahoo.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 06:18:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 30 07:16:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFMiR-00030S-7Z
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 06:18:43 +0200
+	id 1IFNc6-0004XO-JC
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 07:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbXG3ESk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 00:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751596AbXG3ESk
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 00:18:40 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:44646
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751557AbXG3ESj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 00:18:39 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l6U4Ia3I007429;
-	Sun, 29 Jul 2007 21:18:37 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <994493.95349.qm@web51001.mail.re2.yahoo.com>
+	id S1756221AbXG3FQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 01:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756505AbXG3FQK
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 01:16:10 -0400
+Received: from smtp-7.smtp.ucla.edu ([169.232.46.138]:41861 "EHLO
+	smtp-7.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753794AbXG3FQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 01:16:09 -0400
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.48.150])
+	by smtp-7.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U5G0ci007815;
+	Sun, 29 Jul 2007 22:16:00 -0700
+Received: from localhost (adsl-75-26-170-90.dsl.scrm01.sbcglobal.net [75.26.170.90])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U5Fx1q000674
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 29 Jul 2007 22:16:00 -0700
+Received: by localhost (Postfix, from userid 1000)
+	id 371A01E80A8; Sun, 29 Jul 2007 22:15:54 -0700 (PDT)
+In-Reply-To: <20070730035422.GB22017@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Sun\, 29 Jul 2007 23\:54\:22 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
+X-Probable-Spam: no
+X-Spam-Report: none
+X-Scanned-By: smtp.ucla.edu on 169.232.46.138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54186>
 
-On Sun, 29 Jul 2007, Matthew L Foster wrote:
 
-> --- Linus Torvalds <torvalds@linux-foundation.org> wrote:
+[ Do you mind if these messages go to both your email addresses, or
+should I remove one or the other? ]
+
+Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
+
+> On Sun, Jul 29, 2007 at 12:50:15AM -0700, Eric Lesh wrote:
+> ... 
+>> diff --git a/guilt b/guilt
+>> index f67bfb5..774909e 100755
+>> --- a/guilt
+>> +++ b/guilt
+>> @@ -178,7 +178,8 @@ get_series()
+>>  	#	- whitespace only
+>>  	#	- optional whitespace followed by '#' followed by more
+>>  	#	  optional whitespace
+>> -	grep -ve '^[[:space:]]*\(#.*\)*$' "$series"
+>> +	# also remove comments from end of lines
+>> +	grep -ve '^[[:space:]]*\(#.*\)*$' < "$series" | sed -e 's/[[:space:]]*#.*$//'
 >
->> You misunderstand. It would do so both for the newly merged commits *and*
->> for the old commits. Because _you_ think the "new" commits got merged, but
->> it's logically exactly equivalent to saying that the *old* commits got
->> merged.
->>
->> So now *every* single commit would get the timestamp of the merge.
->>
->> See? It would be pointless.
+> I'd be tempted to replace the whole thing with one sed script...something
+> like (not tested):
 >
-> Ok maybe I am still confused. If a repository is in state A and a merge happens changing it to
-> state B we can give the changes that got us to B the timestamp of the merge? Since the changes
-> that got us from A to B were all merged locally at the same time they should be given the same
-> timestamp, right? Please explain more about how changes/commits in state A would also be given the
-> timestamp of the merge?
+> "
+> /^[[:space:]]*#/ ! {
+> 	s/[[:space:]]*#.*$//
 >
-> When I say local time I also really mean local commit order as both should be interchangeable
-> unless you widly misset/change your local clock. Git/gitweb could have an option to sort/display
-> based on local commit order and maybe have check for if local time order is out of sync with local
-> commit order.
+> 	p
+> }
+> "
+>
 
-one feature of git (and I think of truely distributed change management 
-systems)
+sed -e "/^[[:space:]]*\(#.*\)*$/d
+	/^[[:space:]]*\(#.*\)*$/!{
+	s/[[:space:]]*#.*$//
+	}
+	" $series
 
-say you have tree A and I have tree B
+is the best I can do.
 
-if you clone your tree and merge from mine, and I clone my tree and merge 
-from yours, the result of both merges _must_ be the same there will be 
-trouble when we both try and merge with tree C later on.
+sed -e "/^[[:space:]]*\(#.*\)*$/d" -e "s/[[:space:]]*#.*$//" $series
 
-another thing is that a given commit cannot be changed once it's created 
-(if it was changed it wouldn't have the same sha1 value) so you can't just 
-go around changeing dates on commits that took place elsewhere.
+works too, and is maybe more readable.
 
-David Lang
+My sed-foo is weak, though.
+
+	Eric
