@@ -1,368 +1,91 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH 2/5] Enable wt-status output to a given FILE pointer.
-Date: Mon, 30 Jul 2007 17:28:43 -0400
-Message-ID: <11858309311728-git-send-email-krh@redhat.com>
-References: <11858309261111-git-send-email-krh@redhat.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2007
+Date: Mon, 30 Jul 2007 23:35:39 +0200
+Message-ID: <200707302335.39688.jnareb@gmail.com>
+References: <200707250358.58637.jnareb@gmail.com> <200707271320.06313.jnareb@gmail.com> <fcaeb9bf0707301425y58b423f6x6141949845483e01@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 23:34:43 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 23:36:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFcsq-0003em-RV
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:34:33 +0200
+	id 1IFcuO-0004Hx-9r
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968044AbXG3VeD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 30 Jul 2007 17:34:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968003AbXG3Vd7
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:33:59 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:51420 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765979AbXG3Vd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 17:33:56 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l6ULXt6v015542
-	for <git@vger.kernel.org>; Mon, 30 Jul 2007 17:33:55 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6ULXtj0026639;
-	Mon, 30 Jul 2007 17:33:55 -0400
-Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6ULXs9w018718;
-	Mon, 30 Jul 2007 17:33:55 -0400
-X-Mailer: git-send-email 1.5.3.rc3.848.g198b7-dirty
-In-Reply-To: <11858309261111-git-send-email-krh@redhat.com>
+	id S966935AbXG3Vfr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 17:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966865AbXG3Vfr
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:35:47 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:20459 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965999AbXG3Vfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 17:35:45 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so172106nfb
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 14:35:44 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=k5bkS//MJiGvZB1kQRLYIx8HNgRRB/JrjfdPKmujes2+0r7yxajNVG38H77888sQd1T3RyggqmmMSr23dm92L2GCH4J1FHQQQZDAv07jVgx2IW8WJPG1T/mt9hThQ7m+hFqLL9ro5XZE7wt9J212lKl4q3g7iZnpWVbt+Zl8x2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=e9rSywxdndXN9/YPpa1tLjXv0xcfeaKo7R+ZmQ8RHba29BD7MjhbULUnzhftgPYxD/yzn7v9zcByxhMROkaU5ZT5gwLrAqt3/U2JTkmYRnUkYUgpmuQsZmcEJjY69fQQPTvtqQwIgLiUKI3qj+okSLbvE9pGCnIuTsPw8EcXTOc=
+Received: by 10.86.79.19 with SMTP id c19mr4214299fgb.1185831344356;
+        Mon, 30 Jul 2007 14:35:44 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id k29sm1371524fkk.2007.07.30.14.35.42
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jul 2007 14:35:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <fcaeb9bf0707301425y58b423f6x6141949845483e01@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54277>
 
-=46rom: Kristian H=C3=B8gsberg <krh@redhat.com>
+On Mon, 30 July 2007, Nguyen Thai Ngoc Duy wrote:
+> On 7/27/07, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Still defaults to stdout, but you can now override wt_status.fp after
-calling wt_status_prepare().
+>> It's been more than a year since last Git User's Survey. It would be
+>> interesting to find what changed since then. Therefore the idea to
+>> have another survey.
+> 
+> I am probably going a little far here. I think we should include
+> briefly in the survey announcement what git has achieved since the
+> last survey. We want to know what changed from users. Maybe users also
+> want to know what changed from git since then. Also it would be good
+> advertisement if it gets posted on online magazines and popular sites.
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
- color.c     |   18 ++++++------
- color.h     |    4 +-
- wt-status.c |   85 ++++++++++++++++++++++++++++++---------------------=
--------
- wt-status.h |    3 ++
- 4 files changed, 58 insertions(+), 52 deletions(-)
+Well, there are in the survey questions about changes in GIT:
+----
+Changes in GIT (since year ago, or since you started using it)
 
-diff --git a/color.c b/color.c
-index 09d82ee..124ba33 100644
---- a/color.c
-+++ b/color.c
-@@ -135,39 +135,39 @@ int git_config_colorbool(const char *var, const c=
-har *value)
- 	return git_config_bool(var, value);
- }
-=20
--static int color_vprintf(const char *color, const char *fmt,
-+static int color_vfprintf(FILE *fp, const char *color, const char *fmt=
-,
- 		va_list args, const char *trail)
- {
- 	int r =3D 0;
-=20
- 	if (*color)
--		r +=3D printf("%s", color);
--	r +=3D vprintf(fmt, args);
-+		r +=3D fprintf(fp, "%s", color);
-+	r +=3D vfprintf(fp, fmt, args);
- 	if (*color)
--		r +=3D printf("%s", COLOR_RESET);
-+		r +=3D fprintf(fp, "%s", COLOR_RESET);
- 	if (trail)
--		r +=3D printf("%s", trail);
-+		r +=3D fprintf(fp, "%s", trail);
- 	return r;
- }
-=20
-=20
-=20
--int color_printf(const char *color, const char *fmt, ...)
-+int color_fprintf(FILE *fp, const char *color, const char *fmt, ...)
- {
- 	va_list args;
- 	int r;
- 	va_start(args, fmt);
--	r =3D color_vprintf(color, fmt, args, NULL);
-+	r =3D color_vfprintf(fp, color, fmt, args, NULL);
- 	va_end(args);
- 	return r;
- }
-=20
--int color_printf_ln(const char *color, const char *fmt, ...)
-+int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...=
-)
- {
- 	va_list args;
- 	int r;
- 	va_start(args, fmt);
--	r =3D color_vprintf(color, fmt, args, "\n");
-+	r =3D color_vfprintf(fp, color, fmt, args, "\n");
- 	va_end(args);
- 	return r;
- }
-diff --git a/color.h b/color.h
-index 88bb8ff..6809800 100644
---- a/color.h
-+++ b/color.h
-@@ -6,7 +6,7 @@
-=20
- int git_config_colorbool(const char *var, const char *value);
- void color_parse(const char *var, const char *value, char *dst);
--int color_printf(const char *color, const char *fmt, ...);
--int color_printf_ln(const char *color, const char *fmt, ...);
-+int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
-+int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...=
-);
-=20
- #endif /* COLOR_H */
-diff --git a/wt-status.c b/wt-status.c
-index 5205420..65a7259 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -52,31 +52,33 @@ void wt_status_prepare(struct wt_status *s)
- 	head =3D resolve_ref("HEAD", sha1, 0, NULL);
- 	s->branch =3D head ? xstrdup(head) : NULL;
- 	s->reference =3D "HEAD";
-+	s->fp =3D stdout;
- }
-=20
--static void wt_status_print_cached_header(const char *reference)
-+static void wt_status_print_cached_header(struct wt_status *s)
- {
- 	const char *c =3D color(WT_STATUS_HEADER);
--	color_printf_ln(c, "# Changes to be committed:");
--	if (reference) {
--		color_printf_ln(c, "#   (use \"git reset %s <file>...\" to unstage)"=
-, reference);
-+	color_fprintf_ln(s->fp, c, "# Changes to be committed:");
-+	if (s->reference) {
-+		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to u=
-nstage)", s->reference);
- 	} else {
--		color_printf_ln(c, "#   (use \"git rm --cached <file>...\" to unstag=
-e)");
-+		color_fprintf_ln(s->fp, c, "#   (use \"git rm --cached <file>...\" t=
-o unstage)");
- 	}
--	color_printf_ln(c, "#");
-+	color_fprintf_ln(s->fp, c, "#");
- }
-=20
--static void wt_status_print_header(const char *main, const char *sub)
-+static void wt_status_print_header(struct wt_status *s,
-+				   const char *main, const char *sub)
- {
- 	const char *c =3D color(WT_STATUS_HEADER);
--	color_printf_ln(c, "# %s:", main);
--	color_printf_ln(c, "#   (%s)", sub);
--	color_printf_ln(c, "#");
-+	color_fprintf_ln(s->fp, c, "# %s:", main);
-+	color_fprintf_ln(s->fp, c, "#   (%s)", sub);
-+	color_fprintf_ln(s->fp, c, "#");
- }
-=20
--static void wt_status_print_trailer(void)
-+static void wt_status_print_trailer(struct wt_status *s)
- {
--	color_printf_ln(color(WT_STATUS_HEADER), "#");
-+	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
- }
-=20
- static const char *quote_crlf(const char *in, char *buf, size_t sz)
-@@ -108,7 +110,8 @@ static const char *quote_crlf(const char *in, char =
-*buf, size_t sz)
- 	return ret;
- }
-=20
--static void wt_status_print_filepair(int t, struct diff_filepair *p)
-+static void wt_status_print_filepair(struct wt_status *s,
-+				     int t, struct diff_filepair *p)
- {
- 	const char *c =3D color(t);
- 	const char *one, *two;
-@@ -117,36 +120,36 @@ static void wt_status_print_filepair(int t, struc=
-t diff_filepair *p)
- 	one =3D quote_crlf(p->one->path, onebuf, sizeof(onebuf));
- 	two =3D quote_crlf(p->two->path, twobuf, sizeof(twobuf));
-=20
--	color_printf(color(WT_STATUS_HEADER), "#\t");
-+	color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
- 	switch (p->status) {
- 	case DIFF_STATUS_ADDED:
--		color_printf(c, "new file:   %s", one);
-+		color_fprintf(s->fp, c, "new file:   %s", one);
- 		break;
- 	case DIFF_STATUS_COPIED:
--		color_printf(c, "copied:     %s -> %s", one, two);
-+		color_fprintf(s->fp, c, "copied:     %s -> %s", one, two);
- 		break;
- 	case DIFF_STATUS_DELETED:
--		color_printf(c, "deleted:    %s", one);
-+		color_fprintf(s->fp, c, "deleted:    %s", one);
- 		break;
- 	case DIFF_STATUS_MODIFIED:
--		color_printf(c, "modified:   %s", one);
-+		color_fprintf(s->fp, c, "modified:   %s", one);
- 		break;
- 	case DIFF_STATUS_RENAMED:
--		color_printf(c, "renamed:    %s -> %s", one, two);
-+		color_fprintf(s->fp, c, "renamed:    %s -> %s", one, two);
- 		break;
- 	case DIFF_STATUS_TYPE_CHANGED:
--		color_printf(c, "typechange: %s", one);
-+		color_fprintf(s->fp, c, "typechange: %s", one);
- 		break;
- 	case DIFF_STATUS_UNKNOWN:
--		color_printf(c, "unknown:    %s", one);
-+		color_fprintf(s->fp, c, "unknown:    %s", one);
- 		break;
- 	case DIFF_STATUS_UNMERGED:
--		color_printf(c, "unmerged:   %s", one);
-+		color_fprintf(s->fp, c, "unmerged:   %s", one);
- 		break;
- 	default:
- 		die("bug: unhandled diff status %c", p->status);
- 	}
--	printf("\n");
-+	fprintf(s->fp, "\n");
- }
-=20
- static void wt_status_print_updated_cb(struct diff_queue_struct *q,
-@@ -160,14 +163,14 @@ static void wt_status_print_updated_cb(struct dif=
-f_queue_struct *q,
- 		if (q->queue[i]->status =3D=3D 'U')
- 			continue;
- 		if (!shown_header) {
--			wt_status_print_cached_header(s->reference);
-+			wt_status_print_cached_header(s);
- 			s->commitable =3D 1;
- 			shown_header =3D 1;
- 		}
--		wt_status_print_filepair(WT_STATUS_UPDATED, q->queue[i]);
-+		wt_status_print_filepair(s, WT_STATUS_UPDATED, q->queue[i]);
- 	}
- 	if (shown_header)
--		wt_status_print_trailer();
-+		wt_status_print_trailer(s);
- }
-=20
- static void wt_status_print_changed_cb(struct diff_queue_struct *q,
-@@ -184,12 +187,12 @@ static void wt_status_print_changed_cb(struct dif=
-f_queue_struct *q,
- 				msg =3D use_add_rm_msg;
- 				break;
- 			}
--		wt_status_print_header("Changed but not updated", msg);
-+		wt_status_print_header(s, "Changed but not updated", msg);
- 	}
- 	for (i =3D 0; i < q->nr; i++)
--		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
-+		wt_status_print_filepair(s, WT_STATUS_CHANGED, q->queue[i]);
- 	if (q->nr)
--		wt_status_print_trailer();
-+		wt_status_print_trailer(s);
- }
-=20
- static void wt_read_cache(struct wt_status *s)
-@@ -206,16 +209,16 @@ static void wt_status_print_initial(struct wt_sta=
-tus *s)
- 	wt_read_cache(s);
- 	if (active_nr) {
- 		s->commitable =3D 1;
--		wt_status_print_cached_header(NULL);
-+		wt_status_print_cached_header(s);
- 	}
- 	for (i =3D 0; i < active_nr; i++) {
--		color_printf(color(WT_STATUS_HEADER), "#\t");
--		color_printf_ln(color(WT_STATUS_UPDATED), "new file: %s",
-+		color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
-+		color_fprintf_ln(s->fp, color(WT_STATUS_UPDATED), "new file: %s",
- 				quote_crlf(active_cache[i]->name,
- 					   buf, sizeof(buf)));
- 	}
- 	if (active_nr)
--		wt_status_print_trailer();
-+		wt_status_print_trailer(s);
- }
-=20
- static void wt_status_print_updated(struct wt_status *s)
-@@ -281,12 +284,12 @@ static void wt_status_print_untracked(struct wt_s=
-tatus *s)
- 		}
- 		if (!shown_header) {
- 			s->workdir_untracked =3D 1;
--			wt_status_print_header("Untracked files",
-+			wt_status_print_header(s, "Untracked files",
- 					       use_add_to_include_msg);
- 			shown_header =3D 1;
- 		}
--		color_printf(color(WT_STATUS_HEADER), "#\t");
--		color_printf_ln(color(WT_STATUS_UNTRACKED), "%.*s",
-+		color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
-+		color_fprintf_ln(s->fp, color(WT_STATUS_UNTRACKED), "%.*s",
- 				ent->len, ent->name);
- 	}
- }
-@@ -316,14 +319,14 @@ void wt_status_print(struct wt_status *s)
- 			branch_name =3D "";
- 			on_what =3D "Not currently on any branch.";
- 		}
--		color_printf_ln(color(WT_STATUS_HEADER),
-+		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER),
- 			"# %s%s", on_what, branch_name);
- 	}
-=20
- 	if (s->is_initial) {
--		color_printf_ln(color(WT_STATUS_HEADER), "#");
--		color_printf_ln(color(WT_STATUS_HEADER), "# Initial commit");
--		color_printf_ln(color(WT_STATUS_HEADER), "#");
-+		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
-+		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "# Initial commit")=
-;
-+		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
- 		wt_status_print_initial(s);
- 	}
- 	else {
-@@ -337,7 +340,7 @@ void wt_status_print(struct wt_status *s)
- 		wt_status_print_verbose(s);
- 	if (!s->commitable) {
- 		if (s->amend)
--			printf("# No changes\n");
-+			fprintf(s->fp, "# No changes\n");
- 		else if (s->workdir_dirty)
- 			printf("no changes added to commit (use \"git add\" and/or \"git co=
-mmit -a\")\n");
- 		else if (s->workdir_untracked)
-diff --git a/wt-status.h b/wt-status.h
-index cfea4ae..4f3a615 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -1,6 +1,8 @@
- #ifndef STATUS_H
- #define STATUS_H
-=20
-+#include <stdio.h>
-+
- enum color_wt_status {
- 	WT_STATUS_HEADER,
- 	WT_STATUS_UPDATED,
-@@ -19,6 +21,7 @@ struct wt_status {
- 	int commitable;
- 	int workdir_dirty;
- 	int workdir_untracked;
-+	FILE *fp;
- };
-=20
- int git_status_config(const char *var, const char *value);
---=20
-1.5.2.GIT
+    0. Did you participate in previous Git User's Survey?
+    -  yes/no
+    1. What improvements you wanted got implemented?
+    2. What improvements you wanted didn't get implemented?
+    3. How do you compare current version iwth version from year ago?
+    -  current version is: better/worse/no changes
+    4. Which of the new features do you use?
+       (zero or more: multiple choice)
+    -  git-gui, bundle, eol conversion, gitattributes,
+       submodules, worktree, release notes, user's manual,
+       reflog, stash, shallow clone, detached HEAD, fast-import,
+       mergetool, other (not mentioned here)
+    5. If you selected "other", what are those features?
+----
+
+Regarding announcement of what git has achieved since last survey:
+I'm not sure what is the full list. RelNotes are fairly recent,
+unfortunately...
+
+-- 
+Jakub Narebski
+Poland
