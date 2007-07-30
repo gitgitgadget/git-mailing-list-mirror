@@ -1,66 +1,62 @@
-From: Rogan Dawes <lists@dawes.za.net>
+From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: merge time
-Date: Mon, 30 Jul 2007 18:25:36 +0200
-Message-ID: <46AE1100.2020005@dawes.za.net>
-References: <46ADDD3B.3000806@dawes.za.net> <78813.86273.qm@web51002.mail.re2.yahoo.com>
+Date: Mon, 30 Jul 2007 10:06:59 -0700 (PDT)
+Message-ID: <28948.8052.qm@web51002.mail.re2.yahoo.com>
+References: <46AE1100.2020005@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Matthew L Foster <mfoster167@yahoo.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 18:27:51 2007
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:07:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFY62-0004HS-CY
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 18:27:50 +0200
+	id 1IFYi3-0002aM-Kq
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 19:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966554AbXG3Q0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 12:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966608AbXG3Q0J
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 12:26:09 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:35898 "EHLO
-	spunkymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S966613AbXG3Q0H (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 12:26:07 -0400
-Received: from [192.168.201.100] (dsl-146-24-241.telkomadsl.co.za [165.146.24.241])
-	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 1740721025;
-	Mon, 30 Jul 2007 09:25:57 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.5 (Windows/20070716)
-In-Reply-To: <78813.86273.qm@web51002.mail.re2.yahoo.com>
+	id S965628AbXG3RHD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 13:07:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbXG3RHC
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 13:07:02 -0400
+Received: from web51002.mail.re2.yahoo.com ([206.190.38.133]:42928 "HELO
+	web51002.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1761559AbXG3RHB (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 13:07:01 -0400
+Received: (qmail 9657 invoked by uid 60001); 30 Jul 2007 17:07:00 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=D+ozj1ze79IlZaSXqSnn0RC6mVejx8PvL0GGdIFlLVejIlXWP7Iw9jUpMohJ2uaU6plsYGNZ+z/Z+V9vE8bhNqwunyDUjTN5jzjAMnPbLnZ5Ro8wJlG6CfsUtPhTrKEtxVVLu2MSWhn82W2SdZfivF2fXfzaR67BS5XCgMZoRtA=;
+X-YMail-OSG: x9gmg6cVM1ndHArXGd7zuVSVznlO_f8jWI7cCAhf
+Received: from [208.58.8.179] by web51002.mail.re2.yahoo.com via HTTP; Mon, 30 Jul 2007 10:06:59 PDT
+In-Reply-To: <46AE1100.2020005@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54241>
 
-Matthew L Foster wrote:
-> Maybe I am the only one that thinks the web interface should be just as feature rich as the
-> command line interface? 
-> 
-> -Matt
-> 
 
-Well, having said that "Use reflogs" was the general response, I don't 
-think that anyone ever really followed through and made it a readily 
-accessible feature, even on the command line.
+--- Rogan Dawes <lists@dawes.za.net> wrote:
 
-That is, the reflogs are readily accessible, but noone made it possible 
-to link them to the commits in such a way that the dates/times change as 
-you seem to desire.
+> And also keep in mind that on the command line you can invoke a lot of 
+> "plumbing commands" that you certainly wouldn't expect to be exposed in 
+> a web interface.
 
-Of course, you can do things like:
+If the web interface requires logins over https why can't plumbing commands be exposed to the web?
+Though I agree not everything needs to be webified. What I envision is a wikipedia style interface
+front end with git remaining the backend so you can more easily browse the file system and see
+history and diff the way you can on Wikipedia. But that idea is very separate from my concern that
+right now gitweb.cgi effectively has a bug in it because it sorts using external/superset commit
+order/time rather than local commit order which causes changes to appear as if they were made 
+before they were really merged locally.
 
-$ git show HEAD@{2.days.ago}
+-Matt
 
-to see what HEAD looked like 2 days ago, but you can't do things like 
-get gitk to show you that this tag only appeared in your repo 2 days ago.
 
-(Keep in mind, of course, that reflogs are referring to YOUR local copy 
-of the git repo, not what HEAD was on the server that you cloned from.)
 
-And also keep in mind that on the command line you can invoke a lot of 
-"plumbing commands" that you certainly wouldn't expect to be exposed in 
-a web interface.
-
-Rogan
+       
+____________________________________________________________________________________
+Pinpoint customers who are looking for what you sell. 
+http://searchmarketing.yahoo.com/
