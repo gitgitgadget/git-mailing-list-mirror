@@ -1,87 +1,84 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: Re: [GUILT PATCH 3/4] guilt-select: Select guards to apply when pushing patches
-Date: Mon, 30 Jul 2007 15:34:18 -0400
-Message-ID: <20070730193418.GD17253@filer.fsl.cs.sunysb.edu>
-References: <118569541814-git-send-email-eclesh@ucla.edu> <11856954182318-git-send-email-eclesh@ucla.edu> <20070730041231.GE22017@filer.fsl.cs.sunysb.edu> <87fy36cr25.fsf@hubert.paunchy.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Efficient way to import snapshots?
+Date: Mon, 30 Jul 2007 12:52:52 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707301240330.4161@woody.linux-foundation.org>
+References: <20070730180710.GA64467@nowhere>
+ <alpine.LFD.0.999.0707301144180.4161@woody.linux-foundation.org>
+ <20070730192922.GB64467@nowhere>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
-To: Eric Lesh <eclesh@ucla.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 30 21:35:15 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Craig Boston <craig@olyun.gank.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jul 30 21:53:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFb1L-00053O-UG
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 21:35:12 +0200
+	id 1IFbIx-0005hX-9k
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 21:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S939230AbXG3Ted (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 15:34:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939243AbXG3Tec
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 15:34:32 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:54259 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S939230AbXG3Teb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 15:34:31 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6UJYI16019267;
-	Mon, 30 Jul 2007 15:34:18 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6UJYIGh019265;
-	Mon, 30 Jul 2007 15:34:18 -0400
-X-Authentication-Warning: filer.fsl.cs.sunysb.edu: jsipek set sender to jsipek@fsl.cs.sunysb.edu using -f
-Content-Disposition: inline
-In-Reply-To: <87fy36cr25.fsf@hubert.paunchy.net>
-User-Agent: Mutt/1.4.1i
+	id S936932AbXG3TxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 15:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935643AbXG3TxF
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 15:53:05 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:56627 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761004AbXG3TxE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 15:53:04 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6UJqw6d022439
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 Jul 2007 12:52:59 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6UJqrS4027556;
+	Mon, 30 Jul 2007 12:52:53 -0700
+In-Reply-To: <20070730192922.GB64467@nowhere>
+X-Spam-Status: No, hits=-2.729 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.15__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54258>
 
-On Mon, Jul 30, 2007 at 12:02:26AM -0700, Eric Lesh wrote:
-> Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
+
+[ Junio added, because I think I noticed a performance bug ]
+
+On Mon, 30 Jul 2007, Craig Boston wrote:
 > 
-> [...]
+> A couple questions on that:
 > 
-> >> +if [ $# == 0 ]; then
-> >> +	if [ -s "$guards_file" ]; then
-> >> +		cat "$guards_file"
-> >
-> > Later on, for the -s option processing, you sort (presumably to have uniq do
-> > the right thing), should we sort here too to be consitent?
-> >
-> 
-> The $guards_file isn't really meant to be handed edited, and
-> guilt-select itself sorts before it stores them in the guards file.  I could
-> sort it again on printing, but don't think it's necessary.
- 
-Duh. No need to re-sort.
+> 1. Will it notice deleted files?
 
-> >> +
-> >> +case $1 in
-> >> +	-n|--none)
-> >> +		rm -f "$guards_file"
-> >> +		touch "$guards_file"
-> >
-> > Since guilt-init doesn't create the guards file, I'm thinking that this
-> > should be just a rm -f ...
-> 
-> Should guilt-init create it?  I added $guards_file to guilt(7), so not
-> seeing it might freak Documentation-conscious readers out?
+Yes, although I think you need to do "git commit -a" for that. 
 
-I'm thinking that it would be nice to have the file created when the first
-guard is set, and removed when the last guard is removed. This way, if you
-don't care about guards, you don't have to ignore the file (if you have your
-patches dir under version control). This also happens to be the nicer way to
-transition from pre-guard patch dirs to ones with guards - in a way it's
-cheating around "upgrading" the repo :)
+"git add ." could (and perhaps _should_) notice them and remove them from 
+the cache, but doesn't. Whether that's the right behaviour or not (it does 
+seem a bit strange that "git add" would actually remove files from the 
+index too) is up for debate.
 
-I'd like this lazy creation to be documented, of course to not confuse the
-handful that actually read the docs :)
+But with "git commit -a", it will be noticed at commit time, at least.
 
-Jeff.
+That said, I just noticed something nasty: "git add ." is *horrible*. It 
+does the full SHA1 re-computation even though the index is up-to-date. 
+That's really nasty.
 
--- 
-Linux, n.:
-  Generous programmers from around the world all join forces to help
-  you shoot yourself in the foot for free. 
+So right now, due to this performance bug, it's actually much better to do 
+something more complex, namely something like
+
+	git ls-files -o | git update-index --add --stdin
+	git commit -a
+
+which is a lot more efficient than just doing "git add .".
+
+Junio? I _thought_ we already took the index into account with "git add", 
+but we obviously don't. 
+
+> 2. How can I tell it what branch to commit to?
+
+Whatever branch is checked out in the GIT_DIR will be the one that it 
+commits to.
+
+			Linus
