@@ -1,275 +1,69 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: Re: [GUILT PATCH 2/4] guilt-guard: Assign guards to patches in series
-Date: Mon, 30 Jul 2007 00:06:10 -0400
-Message-ID: <20070730040610.GD22017@filer.fsl.cs.sunysb.edu>
-References: <118569541814-git-send-email-eclesh@ucla.edu> <11856954181497-git-send-email-eclesh@ucla.edu>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: merge time
+Date: Sun, 29 Jul 2007 21:10:25 -0700 (PDT)
+Message-ID: <994493.95349.qm@web51001.mail.re2.yahoo.com>
+References: <alpine.LFD.0.999.0707292007440.4161@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
-To: Eric Lesh <eclesh@ucla.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 30 06:06:35 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, david@lang.hm
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 30 06:10:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFMWh-00014v-0C
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 06:06:35 +0200
+	id 1IFMaU-0001hW-4I
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 06:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbXG3EGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 00:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbXG3EGX
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 00:06:23 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:45879 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803AbXG3EGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 00:06:22 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l6U46AwS026536;
-	Mon, 30 Jul 2007 00:06:10 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l6U46AXB026534;
-	Mon, 30 Jul 2007 00:06:10 -0400
-Content-Disposition: inline
-In-Reply-To: <11856954181497-git-send-email-eclesh@ucla.edu>
-User-Agent: Mutt/1.4.1i
+	id S1751423AbXG3EK1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 00:10:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbXG3EK1
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 00:10:27 -0400
+Received: from web51001.mail.re2.yahoo.com ([206.190.38.132]:44585 "HELO
+	web51001.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751299AbXG3EK1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 00:10:27 -0400
+Received: (qmail 95942 invoked by uid 60001); 30 Jul 2007 04:10:26 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=WXLYPwknW0Cq3Yrok1GkPIOwYCiOo8QP1QgcPJakSktI424Ff7nAvBPAkvAQ3AjNwJZWkqHmJAKrn67cbi6wzJn5hCdLpYnbqCM1TqycgJEsDo0hv9fnW2Hi40r5dQnVKhr299oa6j21nCSq02bLeypx0Z7qO16V9CD1EFQHBlY=;
+X-YMail-OSG: Se7sDY0VM1lgRAFLvf9CIod7A8hSFM6mPKeKq.COHpFNy47v4OdxqtqxslQaDptGbvB0Y9a819bP22pKUwuQsNJPs6617t0w7sU1f3jXkrBcL9F8qUJJKum.bzdMiA--
+Received: from [208.58.8.179] by web51001.mail.re2.yahoo.com via HTTP; Sun, 29 Jul 2007 21:10:25 PDT
+In-Reply-To: <alpine.LFD.0.999.0707292007440.4161@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54181>
 
-On Sun, Jul 29, 2007 at 12:50:16AM -0700, Eric Lesh wrote:
-> guilt-guard will assign guards to a patch.  They work so that:
+--- Linus Torvalds <torvalds@linux-foundation.org> wrote:
+
+> You misunderstand. It would do so both for the newly merged commits *and* 
+> for the old commits. Because _you_ think the "new" commits got merged, but 
+> it's logically exactly equivalent to saying that the *old* commits got 
+> merged.
 > 
->     * Patches with no guards are always pushed.
+> So now *every* single commit would get the timestamp of the merge.
 > 
->     * Patches with positive guards (i.e. +foo) are pushed *only if* the
->       guard is selected.
-> 
->     * Patches with negative guards (i.e. -foo) are pushed *unless* the
->       guard is selected.
-> 
-> Signed-off-by: Eric Lesh <eclesh@ucla.edu>
-> ---
->  Documentation/guilt-guards.txt |   40 +++++++++++++++++++++++++
->  guilt                          |   58 ++++++++++++++++++++++++++++++++++++
->  guilt-guards                   |   63 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 161 insertions(+), 0 deletions(-)
->  create mode 100644 Documentation/guilt-guards.txt
->  create mode 100755 guilt-guards
-> 
-> diff --git a/Documentation/guilt-guards.txt b/Documentation/guilt-guards.txt
-> new file mode 100644
-> index 0000000..f5ac537
-> --- /dev/null
-> +++ b/Documentation/guilt-guards.txt
-> @@ -0,0 +1,40 @@
-> +guilt-guards(1)
-> +===============
-> +
-> +NAME
-> +----
-> +guilt-guards - Assign guards to patches
-> +
-> +SYNOPSIS
-> +--------
-> +include::usage-guilt-guards.txt[]
-> +
-> +DESCRIPTION
-> +-----------
-> +Assign guards to the specified patch, or to the patch on top of the
-> +stack if no patch is given on the command line.
-> +
-> +An unguarded patch is always pushed.
-> +
-> +A positive guard begins with a +. A patch with a positive guard is
-> +pushed *only if* the guard is selected.
-> +
-> +A negative guard begins with a -. A patch with a negative guard is
-> +always pushed, *unless* the guard is selected.
-> +
-> +OPTIONS
-> +-------
-> +-l|--list::
-> +        List all patches and their guards
-> +-n|--none::
-> +        Remove all guards from a patch
-> +
-> +Author
-> +------
-> +Written by Eric Lesh <eclesh@ucla.edu>
-> +
-> +Documentation
-> +-------------
-> +Documentation by Eric Lesh <eclesh@ucla.edu>
-> +
-> +include::footer.txt[]
-> diff --git a/guilt b/guilt
-> index 774909e..b2767ea 100755
-> --- a/guilt
-> +++ b/guilt
-> @@ -182,6 +182,64 @@ get_series()
->  	grep -ve '^[[:space:]]*\(#.*\)*$' < "$series" | sed -e 's/[[:space:]]*#.*$//'
->  }
->  
-> +get_guarded_series()
-> +{
-> +	get_series | while read p
-> +	do
-> +		[ -z `check_guards $p` ] && echo "$p"
+> See? It would be pointless.
 
-Having check_guards return 0 or 1 makes things cleaner:
+Ok maybe I am still confused. If a repository is in state A and a merge happens changing it to
+state B we can give the changes that got us to B the timestamp of the merge? Since the changes
+that got us from A to B were all merged locally at the same time they should be given the same
+timestamp, right? Please explain more about how changes/commits in state A would also be given the
+timestamp of the merge?
 
-check_guards "$p" && echo "$p"
+When I say local time I also really mean local commit order as both should be interchangeable
+unless you widly misset/change your local clock. Git/gitweb could have an option to sort/display
+based on local commit order and maybe have check for if local time order is out of sync with local
+commit order.
 
-> +	done
-> +}
-> +
-> +# usage: check_guards <patch>
-> +# Returns t if the patch should be skipped
-> +check_guards()
-> +{
-> +        get_guards "$1" | while read guard
-> +        do
-> +                pos=`echo $guard | grep -e "^+"`
-> +                guard=`echo $guard | sed -e 's/[+-]//'`
-> +                if [ $pos ]; then
-> +                        # Push +guard *only if* guard selected
-> +                        push=`grep -e "^$guard\$" "$guards_file" > /dev/null; echo $?`
-> +                        [ $push -ne 0 ] && echo t
+-Matt
 
-			   [ $push -ne 0 ] && return 1
 
-> +                else
-> +                        # Push -guard *unless* guard selected
-> +                        push=`grep -e "^$guard\$" "$guards_file" > /dev/null; echo $?`
-> +                        [ $push -eq 0 ] && echo t
-
-ditto
-
-> +                fi
-> +        done
-
-	return 0
-> +}
-> +
-> +# usage: get_guards <patch>
-> +get_guards()
-> +{
-> +	grep -e "^$1[[:space:]]*#" < "$series" | sed -e "s/^$1 //" -e 's/#[^+-]*//g'
-> +}
-> +
-> +# usage: set_guards <patch> <guards>
-
-I'd try to make it clearer that multiple guards can be specified.
-
-> +set_guards()
-> +{
-> +	p="$1"
-> +	shift
-> +	for x in "$@"; do
-> +		if [ -z $(echo "$x" | grep -e "^[+-]") ]; then
-
-Is that the only restriction on the guard name?
-
-> +			echo "'$x' is not a valid guard name"
-> +		else
-> +			sed -i -e "s/^\($p[[:space:]]*.*\)$/\1 #$x/" "$series"
-> +		fi
-> +	done
-> +}
-> +
-> +# usage: unset_guards <patch> <guards>
-
-ditto.
-
-> +unset_guards()
-> +{
-> +        p="$1"
-> +        shift
-> +        for x in "$@"; do
-> +            sed -i -e "/^$p[[:space:]]/s/ #$x//" "$series"
-> +        done
-> +}
-> +
->  # usage: do_make_header <hash>
->  do_make_header()
->  {
-> diff --git a/guilt-guards b/guilt-guards
-> new file mode 100755
-> index 0000000..71df4f8
-> --- /dev/null
-> +++ b/guilt-guards
-> @@ -0,0 +1,63 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) Eric Lesh, 2007
-> +#
-> +
-> +USAGE="[-l|--list] [-n|--none] [<patchname>] [+<guard>] [-<guard>]"
-
-Since -l and -n are mutually exclusive, shouldn't it be something like:
-
-[-l|--list|-n|--none|[<patchname>] [(+|-)guard...]]
-
-> +. guilt
-> +
-> +print_guards()
-> +{
-> +	guards=`get_guards "$1"`
-> +	echo "$1: $guards"
-> +}
-> +
-> +if [ "$1" == "-l" ] || [ "$1" == "--list" ]; then
-> +	get_series | while read patch; do
-> +		print_guards "$patch"
-> +	done
-> +	exit 0
-> +elif [ "$1" == "-n" ] || [ "$1" == "--none" ]; then
-> +	patch="$2"
-> +	if [ -z "$patch" ]; then
-> +		patch=`get_top`
-> +	fi
-> +	unset_guards "$patch" `get_guards "$patch"`
-> +	exit 0
-> +fi
-> +
-> +case $# in
-> +	0)
-> +		if [ ! -s "$applied" ]; then
-> +			die "No patches applied."
-> +		fi
-> +		print_guards `get_top`
-> +		;;
-> +	1)
-> +		if [ -z $(echo $1 | grep -e '^[+-]') ]; then
-> +			if [ -z $(get_series | grep -e "^$1\$") ]; then
-> +				die "Patch $1 does not exist"
-> +			else
-> +				print_guards "$1"
-> +			fi
-> +		else
-> +			p=`get_top`
-> +			unset_guards "$p" `get_guards "$p"`
-> +			set_guards "$p" "$1"
-> +		fi
-> +		;;
-> +	*)
-> +		if [ -z $(echo $1 | grep -e '^[+-]') ]; then
-> +			if [ -z $(get_series | grep -e "^$1\$") ]; then
-> +				die "Patch $1 does not exist"
-> +			else
-> +				patch="$1"
-> +			fi
-> +			shift
-> +		else
-> +			patch=`get_top`
-> +		fi
-> +		unset_guards "$patch" `get_guards "$patch"`
-> +		set_guards "$patch" "$@"
-> +		;;
-> +esac
-> -- 
-> 1.5.2
-
--- 
-Note 96.3% of all statistics are fiction.
+       
+____________________________________________________________________________________
+Sick sense of humor? Visit Yahoo! TV's 
+Comedy with an Edge to see what's on, when. 
+http://tv.yahoo.com/collections/222
