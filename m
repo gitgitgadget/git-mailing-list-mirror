@@ -1,105 +1,81 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH] Introduce entry point for launching add--interactive.
-Date: Mon, 30 Jul 2007 18:21:23 -0400
-Message-ID: <11858340832222-git-send-email-krh@redhat.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] Git User's Survey 2007
+Date: Tue, 31 Jul 2007 00:38:01 +0200
+Message-ID: <85y7gxsek6.fsf@lola.goethe.zz>
+References: <200707250358.58637.jnareb@gmail.com>
+	<4d8e3fd30707300044l79133442of45b37a8192f7bca@mail.gmail.com>
+	<85myxdu206.fsf@lola.goethe.zz> <200707302337.07957.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 00:26:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 00:38:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFdhH-0003cB-FG
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 00:26:39 +0200
+	id 1IFdt6-0007Fx-9P
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 00:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968705AbXG3W0g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 30 Jul 2007 18:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939545AbXG3W0g
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 18:26:36 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:40813 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S937563AbXG3W0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 18:26:35 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l6UMQYLf017445
-	for <git@vger.kernel.org>; Mon, 30 Jul 2007 18:26:34 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6UMQXJ7012171;
-	Mon, 30 Jul 2007 18:26:33 -0400
-Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6UMQWeM031888;
-	Mon, 30 Jul 2007 18:26:32 -0400
-X-Mailer: git-send-email 1.5.3.rc3.848.g5ef3b-dirty
+	id S940231AbXG3Wip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 18:38:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755530AbXG3Wip
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 18:38:45 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:39265 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S940230AbXG3Wio (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2007 18:38:44 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id C4FBDA7BC6;
+	Tue, 31 Jul 2007 00:38:40 +0200 (CEST)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id B7F852C6C57;
+	Tue, 31 Jul 2007 00:38:40 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-066-191.pools.arcor-ip.net [84.61.66.191])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 839B01CB772;
+	Tue, 31 Jul 2007 00:38:40 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id A26411D58B8F; Tue, 31 Jul 2007 00:38:02 +0200 (CEST)
+In-Reply-To: <200707302337.07957.jnareb@gmail.com> (Jakub Narebski's message of "Mon\, 30 Jul 2007 23\:37\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3821/Mon Jul 30 21:48:09 2007 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54288>
 
-This refactors builtin-add.c a little to provide a unique entry point
-for launching git add --interactive, which will be used by
-builtin-commit too.  If we later want to make add --interactive a
-builtin or change how it is launched, we just start from this function.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
+> David Kastrup wrote:
+>> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+>> 
+>> > Fine with me. Thanks for you work Jakub.
+>> >
+>> > Just a general comment, let's try to avoid as much as possible
+>> > multiple questions in a single question. It tends to confuse people
+>> > when they are answering to the survey.
+>> 
+>> I find that the survey lacking in community questions, like
+>> 
+>> Do you frequently read the mailing list?
+>> Frequently post?
+>> Other sources of information?
+>> How helpful are the answers you get there?
+>> How pleasant is the atmosphere?
+>
+> I think the most important ones are there:
+> ----
+> Getting help, staying in touch
+>
+>     1. Have you tried to get GIT help from other people?
+>     -  yes/no
 
-Oh, oops, just one more change outside builtin-commit.c.  This is mostl=
-y
-stylistic, but it seems reasonable to reasonable to have a well-defined
-entry point for launcing git add --interactive.
+[...]
 
- builtin-add.c |   14 +++++++++-----
- commit.h      |    2 ++
- 2 files changed, 11 insertions(+), 5 deletions(-)
+Well, I have a winning streak of stupid oversights right now.  You are
+quite right.
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 7345479..7044d43 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -135,6 +135,13 @@ static int git_add_config(const char *var, const c=
-har *value)
- 	return git_default_config(var, value);
- }
-=20
-+int interactive_add(void)
-+{
-+	const char *argv[2] =3D { "add--interactive", NULL };
-+
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
- static struct lock_file lock_file;
-=20
- static const char ignore_warning[] =3D
-@@ -154,12 +161,9 @@ int cmd_add(int argc, const char **argv, const cha=
-r *prefix)
- 			add_interactive++;
- 	}
- 	if (add_interactive) {
--		const char *args[] =3D { "add--interactive", NULL };
--
--		if (add_interactive !=3D 1 || argc !=3D 2)
-+		if (argc !=3D 2)
- 			die("add --interactive does not take any parameters");
--		execv_git_cmd(args);
--		exit(1);
-+		exit(interactive_add());
- 	}
-=20
- 	git_config(git_add_config);
-diff --git a/commit.h b/commit.h
-index 9f640ba..64e1d4b 100644
---- a/commit.h
-+++ b/commit.h
-@@ -129,4 +129,6 @@ create_commit(const unsigned char *tree_sha1,
- 	      const char *author_info, const char *committer_info,
- 	      const char *message, int length);
-=20
-+extern int interactive_add(void);
-+
- #endif /* COMMIT_H */
---=20
-1.5.2.GIT
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
