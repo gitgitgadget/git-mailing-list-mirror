@@ -1,60 +1,68 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: Gitweb and submodules
-Date: Mon, 30 Jul 2007 09:06:00 +0200
-Message-ID: <20070730070600.GK31114MdfPADPa@greensroom.kotnet.org>
-References: <200707271322.50114.jnareb@gmail.com>
- <200707282239.29340.jnareb@gmail.com>
- <20070729163747.GJ31114MdfPADPa@greensroom.kotnet.org>
- <200707300209.03531.jnareb@gmail.com>
-Reply-To: skimo@liacs.nl
+From: Eric Lesh <eclesh@ucla.edu>
+Subject: Re: [GUILT PATCH 4/4] Use guards information and functions
+Date: Mon, 30 Jul 2007 00:06:08 -0700
+Message-ID: <87bqducqvz.fsf@hubert.paunchy.net>
+References: <118569541814-git-send-email-eclesh@ucla.edu>
+	<1185695418227-git-send-email-eclesh@ucla.edu>
+	<20070730041549.GF22017@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 09:06:18 2007
+Cc: jsipek@cs.sunysb.edu, git@vger.kernel.org
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 30 09:06:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFPKR-0001Nr-41
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 09:06:07 +0200
+	id 1IFPL1-0001Zb-9d
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 09:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937966AbXG3HGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 03:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937845AbXG3HGE
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 03:06:04 -0400
-Received: from psmtp12.wxs.nl ([195.121.247.24]:47157 "EHLO psmtp12.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764242AbXG3HGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 03:06:01 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp12.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JLZ00IZDD20GV@psmtp12.wxs.nl> for git@vger.kernel.org; Mon,
- 30 Jul 2007 09:06:00 +0200 (MEST)
-Received: (qmail 28429 invoked by uid 500); Mon, 30 Jul 2007 07:06:00 +0000
-In-reply-to: <200707300209.03531.jnareb@gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S938982AbXG3HGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 03:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938972AbXG3HGZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 03:06:25 -0400
+Received: from smtp-7.smtp.ucla.edu ([169.232.46.138]:32854 "EHLO
+	smtp-7.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S938901AbXG3HGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 03:06:22 -0400
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.48.151])
+	by smtp-7.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U76EFQ028930;
+	Mon, 30 Jul 2007 00:06:14 -0700
+Received: from localhost (adsl-75-26-169-114.dsl.scrm01.sbcglobal.net [75.26.169.114])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6U76EbU004903
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Jul 2007 00:06:14 -0700
+Received: by localhost (Postfix, from userid 1000)
+	id 436AD1E80A8; Mon, 30 Jul 2007 00:06:08 -0700 (PDT)
+In-Reply-To: <20070730041549.GF22017@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Mon\, 30 Jul 2007 00\:15\:49 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
+X-Probable-Spam: no
+X-Spam-Report: none
+X-Scanned-By: smtp.ucla.edu on 169.232.46.138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54196>
 
-On Mon, Jul 30, 2007 at 02:09:03AM +0200, Jakub Narebski wrote:
-> On Sun,29 July 2007, Sven Verdoolaege wrote:
-> > On Sat, Jul 28, 2007 at 10:39:28PM +0200, Jakub Narebski wrote:
-> >>   submodule.$name.path/.git (relative to toplevel of working directory)
-> > 
-> > Having a relative path for the URL in .gitmodules in a public repo
-> > doesn't seem very useful to me.  I know it's only meant as a default
-> > value, but if it is a relative path, then it won't work for
-> > anyone cloning the superproject.
-> 
-> Erm, it should be relative path in .git/config (as in example in the
-> t/t7400-submodule-basic.sh IIRC). And this is purely local matter.
+Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
 
-My mistake.  I misread that as submodule.$name.url.
+>> -get_series | awk "{ if (NR == $n) print \$0}"
+>> +get_guarded_series | awk "{ if (NR == $n) print \$0}"
+>
+> Seeing this almost makes me thing that get_series should give you the
+> guarded series unless you poke it the right way...something like:
+>
+> get_series --full
+>
+> or
+>
+> get_full_series
+>
+>
+> The guarded series is what most commands care about, right?
+>
 
-skimo
+You're right.  I'll do it with get_full_series.
+
+	Eric
