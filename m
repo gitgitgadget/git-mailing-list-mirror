@@ -1,122 +1,246 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2007
-Date: Mon, 30 Jul 2007 15:40:55 +0200
-Message-ID: <200707301540.56401.jnareb@gmail.com>
-References: <200707250358.58637.jnareb@gmail.com> <200707300221.23511.jnareb@gmail.com> <20070730033543.GP20052@spearce.org>
+Subject: [RFC (take 2) Git User's Survey 2007
+Date: Mon, 30 Jul 2007 22:56:37 +0200
+Message-ID: <200707302256.38251.jnareb@gmail.com>
+References: <200707250358.58637.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 23:18:07 2007
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 30 23:18:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFccx-0006Iy-9X
-	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:18:07 +0200
+	id 1IFccx-0006Iy-Qi
+	for gcvg-git@gmane.org; Mon, 30 Jul 2007 23:18:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964936AbXG3VRr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 17:17:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbXG3VRr
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:17:47 -0400
+	id S964976AbXG3VRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 17:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964959AbXG3VRv
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 17:17:51 -0400
 Received: from mu-out-0910.google.com ([209.85.134.189]:1776 "EHLO
 	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964893AbXG3VRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 17:17:46 -0400
+	with ESMTP id S964931AbXG3VRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 17:17:50 -0400
 Received: by mu-out-0910.google.com with SMTP id i10so2452605mue
-        for <git@vger.kernel.org>; Mon, 30 Jul 2007 14:17:43 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 30 Jul 2007 14:17:49 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=spoZPFqc+S37mxAhjHgwVBkeIzh4Mfd8F1SQ3zm3yZbhg3ssWJ2St5VV5EqS4rPEXccvZZB1VJFFYMVgk9EAst2mydoeLrfgHrV98jljmHoyxpDCuZRQUgPGnceESc+g4fLudEB7shX/F1MrFKW5vaHv6MDIu8LHdsrlOPtsqww=
+        b=t8LMHJHguEfNZQ26wtvYO9PQwcIhWtwhzIeXhGQW9wGFAI35BsWlgQFB9mfylJzt+I/Usrvg1DPueaJrgnWqgJh8GMYUo/8Ph5ZOXzxMzm7DzjjJrhT8Ge88g6kTooo6WgvTA1DVFPK6j1OQrWssWPxYfejWa6wcxK92axCf2O0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=CfN8YUOyuJsqdZqcje8lqGSuaIkrJtSwAmBf7pVW07eo/V5TW9h8xMnggxgVxBTX7b9w+1KIVKV4TZBJbiLxpUP70D5VCjKm1z4pHHGkLJ8/MwcZNsZK4kmDW1d75RIMM851nJMtdrsvsrztJ2MgTzHrbY+HH7xU7BVyAO36VOU=
-Received: by 10.86.86.12 with SMTP id j12mr4209407fgb.1185830263644;
-        Mon, 30 Jul 2007 14:17:43 -0700 (PDT)
+        b=qHRaGBb1WOKx22f+t3t0sLalqVfFKrsf/7CgF9Tvda6S2Bhuu5nFHpCENnIeqrX/ZY676k1wxB0EIwfm2NgkKGXH6989gc3Fcj/iUj4OPilVHog2z6bj4/gg/A55mRcwy2w6rH08s0WjgE8S/5/+IwNhpVCXUDAjE019OzBVVCk=
+Received: by 10.86.100.7 with SMTP id x7mr4180226fgb.1185830268687;
+        Mon, 30 Jul 2007 14:17:48 -0700 (PDT)
 Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id b17sm1358113fka.2007.07.30.14.17.41
+        by mx.google.com with ESMTPS id b17sm1358113fka.2007.07.30.14.17.44
         (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2007 14:17:42 -0700 (PDT)
+        Mon, 30 Jul 2007 14:17:47 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20070730033543.GP20052@spearce.org>
+In-Reply-To: <200707250358.58637.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54268>
 
-Shawn O. Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
->> Paolo Ciarrocchi wrote:
+It's been more than a year since last Git User's Survey. It would be
+interesting to find what changed since then. Therefore the idea to
+have another survey.
 
->>> git-gui ?
->>> 
->>>>     9. Which git GUI do you use
->>>>        (zero or more: multiple choice)
->>>>     -  gitk, git-gui, qgit, gitview, giggle, other
->>           tig, instaweb, (h)gct, qct, KGit
->> 
->> I consider git-gui an UI (like qgit or tig), not a porcelain. To be
->> a porcelains tool need to add some SCM functionality not present in
->> git-core.
-> 
-> Odd.  I consider git-gui to be a porcelain, just as I consider
-> tig and qgit to also be porcelain.  Though I think git-gui is more
-> of a porcelain than the others, as it tries to rely *less* on the
-> core porcelain and just on the plumbing.  I don't always succeed,
-> but I'm heading in that direction.
-> 
-> To me a porcelain is any tool that layers over the plumbing and makes
-> it easier for the end-user to operate it.  Early git only had things
-> like read-tree/write-tree/commit-tree.  Tying that all up into a neat
-> "Commit" command for the end-user is the job of porcelain.
-> 
-> Anyway.  Just so long as git-gui is included in the survey.  I'm
-> interested in seeing how many people use it, because I know it has
-> a pretty decently sized userbase.  Which is probably going to grow
-> in the future with the i18n work going on.
+First there is a question about the form of survey. Should we use web
+based survey, as the survey before (http://www.survey.net.nz), sending
+emails with link to this survey, or perhaps do email based survey,
+with email Reply-To: address put for this survey alone?
 
-Well, if we use the notion that porcelain are tools which provide
-high level access to core git, making SCM from git plumbing, then
-being porcelain and being git UI are not mutually exclusive.
+Second, what questions should be put in the survey, and in the case of
+single choice and multiple choice questions what possible answers
+should be? Below are slightly extended questions from the last
+survey. Please comment on it.
 
-Nevertheless I'd rather keep them separate, and put git-gui in UI
-camp, while egit (which I have forgot about) in the porcelain camp.
+Third, where to send survey to? I was thinking about git mailing list,
+LKML, and mailing list for git projects found on GitProjects page on
+GIT wiki. Do you want to add some address? Or should info about GIT
+User's Survey 2007 be sent also to one of on-line magazines like
+LinuxToday, or asked to put on some blog?
 
-Or should I use "version control interface layers" instead of 
-"porcelains"?
+Those lists include:
+  wine-users, xmms2-devel, xcb (freedesktop), cairo, u-boot-users,
+  git mailing list, lklm (thanks to Paolo Ciarrocchi)
+  LWN, NewsForge, Slashdot, OSNews,
 
-> Do we have any questions in the survey about the user's native
-> language?  About their desire to have git translated into their
-> native language?  Folks are now working on translating git-gui,
-> and that work will be in git-gui 0.9.x, if not 0.8.1/2.  So it may
-> be nice to know what languages our users are interested in.
+Those lists might include:
+  CRUX Linux, Source Mage Linux, DirectFB, GNU LilyPond, OLPC,
+  Thousands Parsec, X.Org, Mesa3D,
+
+Other possibilities:
+  OpenOffice.org, Mozilla, SeaMonkey, KDE, GNOME
+
+References:
+  http://marc.info/?l=git&m=115116592330648&w=2
+  http://marc.info/?l=git&m=115364303813936&w=2
+  http://git.or.cz/gitwiki/GitSurvey
 
 ----
 About you
 
     1. What country are you in?
     2. What is your preferred non-programming language?
+    3. Which programming languages you are proficient with?
+       (The choices include programming languages used by git)
+       (zero or more: multiple choice)
+    -  C, shell, Perl, Python, Tcl/Tk
+    4. How old are you?
 
-[...]
+Getting started with GIT
+
+    1. How did you hear about GIT?
+    2. Did you find GIT easy to learn?
+    -  very easy/easy/reasonably/hard/very hard
+    3. What helped you most in learning to use it?
+    4. What did you find hardest?
+    5. When did you start using git? From which version?
+    *  (date, or version, or both)
+
+Other SCMs
+
+    1. What other SCM did you use?
+    2. What other SCM do you use currently?
+    3. What other SCM do you use as a main SCM for your project
+       instead of git, if any? 
+    4. Why did you choose this SCM?
+    *  example: better MS Windows support
+    5. What would you require from git to enable you to change,
+       if you use other SCM for your project?
+    6. Did you import your repository from foreign SCM?
+    7. What toold did you use for import?
+    8. Do your git repository interact with other SCM?
+    9. What tool did/do you use?
+
+How you use GIT
+
+    1. Do you use GIT for work, unpaid projects, or both?
+       work/unpaid projects/both/none(*)
+       (*)I use git to interact with some project I'm interested in
+    2. How do you obtain GIT?  Source tarball, binary package, or
+       pull the main repository?
+    -  binary package/source tarball/pull from main repository
+    3. What hardware platforms do you use GIT on?
+    *  examples: i386, x86_64, ARM, PowerPC, Alpha, g5, ...
+    4. What OS (please include the version) do you use GIT on?
+    *  examples: Linux, MS Windows (Cygwin/MinGW/gitbox), 
+       IRIX, HP-UX, Solaris, FreeBSD, ...
+       (please give kernel version and distribution for Linux)
+    5. How many people do you collaborate with using GIT?
+    6. How big are the repositories that you work on? (e.g. how many
+       files, how much disk space, how deep is the history?)
+    *  number of files in repository: "git ls-tree -r HEAD | wc -l"
+    *  largest file under version control
+    *  pack size of freshly cloned fully packed repository
+    *  number of commits in straight line, number of commits in branch
+       ("git rev-list --first-parent HEAD | wc -l", 
+        "git rev-list HEAD | wc -l")
+    7. How many different projects do you manage using GIT?
+    8. Which porcelains do you use?
+       (zero or more: multiple choice)
+    -  core-git, cogito, StGIT, pg, guilt, egit (Eclipse), other
+    9. Which git GUI do you use
+       (zero or more: multiple choice)
+    -  gitk, git-gui, qgit, gitview, giggle, tig, instaweb,
+       (h)gct, qct, KGit, other
+   10. Which (main) git web interface do you use for your projects?
+    -  gitweb/cgit/wit (Ruby)/git-php/other
+   11. How do you publish/propagate your changes?
+       (zero or more: multiple choice)
+    -  push, pull request, format-patch + email, bundle, other
+   12. Does git.git repository include code produced by you?
+    -  yes/no
 
 Internationalization
 
     1. Is translating GIT required for wider adoption?
     -  yes/no/somewhat
     2. What do you need translated?
-       (zero or more: multiple choice)
-    -  GUI (git-gui, gitk, qgit, ...), git-core messages,
-       manpages, other documentation
+    *  examples: git-gui, qgit, messages, manpages, user's manual
     3. For what language do you need translation for?
-----
 
-Do you want other questions about internationalization and translating
-git into one's native language?
+What you think of GIT
+
+    1. Overall, how happy are you with GIT?
+    -  unhappy/not so happy/happy/very happy/completely ecstatic
+    2. How does GIT compare to other SCM tools you have used?
+    -  worse/equal (or comparable)/better
+    3. What do you like about using GIT?
+    4. What would you most like to see improved about GIT?
+       (features, bugs, plug-ins, documentation, ...)
+    5. If you want to see GIT more widely used, what do you
+       think we could do to make this happen?
+
+Changes in GIT (since year ago, or since you started using it)
+
+    0. Did you participate in previous Git User's Survey?
+    -  yes/no
+    1. What improvements you wanted got implemented?
+    2. What improvements you wanted didn't get implemented?
+    3. How do you compare current version iwth version from year ago?
+    -  current version is: better/worse/no changes
+    4. Which of the new features do you use?
+       (zero or more: multiple choice)
+    -  git-gui, bundle, eol conversion, gitattributes,
+       submodules, worktree, release notes, user's manual,
+       reflog, stash, shallow clone, detached HEAD, fast-import,
+       mergetool, other (not mentioned here)
+    5. If you selected "other", what are those features?
+
+Documentation
+
+    1. Do you use the GIT wiki?
+    -  yes/no
+    2. Do you find GIT wiki useful?
+    -  yes/no/somewhat
+    3. Do you contribute to GIT wiki?
+    -  yes/no/only corrections or spam removal
+    4. Do you find GIT's on-line help (homepage, documentation) useful?
+    -  yes/no/somewhat
+    5. Do you find help distributed with GIT useful
+       (manpages, manual, tutorial, HOWTO, release notes)?
+    -  yes/no/somewhat
+    6. Do you contribute to GIT documentation?
+    -  yes/no
+    7. What could be improved on the GIT homepage?
+    8. What topics would you like to have on GIT wiki?
+
+Getting help, staying in touch
+
+    1. Have you tried to get GIT help from other people?
+    -  yes/no
+    2. If yes, did you get these problems resolved quickly
+       and to your liking?
+    -  yes/no
+    3. Do you subscribe to the mailing list?
+    -  yes/no
+    4. Do you read the mailing list? What method do you use?
+    -  subscribed/news interface/RSS interface/archives/
+       /post + reply-to request/digests/I don't read it
+    5. If yes, do you find it useful?
+    -  yes/no (optional)
+    6. Do you find traffic levels on GIT mailing list OK.
+    -  yes/no? (optional)
+    7. Do you use the IRC channel (#git on irc.freenode.net)?
+    -  yes/no
+    8. If yes, do you find IRC channel useful?
+    -  yes/no (optional)
+
+Open forum
+
+    1. What other comments or suggestions do you have that are not
+       covered by the questions above?
+
 
 -- 
 Jakub Narebski
