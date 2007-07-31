@@ -1,82 +1,129 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git User's Survey 2007 - web survey site
-Date: Tue, 31 Jul 2007 18:35:02 +0200
-Message-ID: <200707311835.03197.jnareb@gmail.com>
-References: <200707250358.58637.jnareb@gmail.com> <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com> <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Allow git_author|committer_info be called in the same expression
+Date: Tue, 31 Jul 2007 18:57:05 +0200
+Message-ID: <81b0412b0707310957x62ac9d28j60104bffb46a80b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 18:35:19 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_39395_10820853.1185901025785"
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 18:57:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFugj-00073B-BT
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 18:35:13 +0200
+	id 1IFv2K-0005CV-PN
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 18:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762846AbXGaQfK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 12:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759520AbXGaQfK
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 12:35:10 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:30565 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762846AbXGaQfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 12:35:08 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so235430nfb
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 09:35:06 -0700 (PDT)
+	id S1765429AbXGaQ5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 12:57:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765646AbXGaQ5J
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 12:57:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:11424 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765429AbXGaQ5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 12:57:08 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so108358ugf
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 09:57:06 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PiYtHkUff5l0vMj1yb/azX9Rwp5UZPUeELT+Y9JJehXcbgZDVpaoh+yjPV9J3fyQI1tOAMxg72/wgUAlRTeeLccniThaS8M2gsx8IU25PA+Zts5YQX7PRML81sfO+ihzyJJVdNDpvvXbOb0TSIY4IfnCCMj2x2t+/DrK3PXrz+4=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=p/SYERaHmaYXpvDERL73OUReNTY+sl7GA/3YSEoZk/9hb+oY0yLCN+V1Atd32w0iXFqNA0RRyTWDRMnX8yoYo0EDxX9/Za5Ua7f+ntodo8P4ovrXBsLyBSPi7IAXULuYR3qXqgZbs2ZzkUAY8PJD8hL1gHxS5kbfdCpJKmAwuiU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IBffrwhErGEv4twwKrgi3+o7+etfs9FtM0Qlhv+1+2ahN6OlWvE8woU/k8WPm1yK29JRwJoSfeewcLkeUUkwwo6EQ0zlngEIYGR8/uzCek3CM/5U5UQ/OlFzRPJjefqB0oyyrUWHOYu2ZtXJRO8Go/RfUd2Q8X9LAOZtuCmc+vo=
-Received: by 10.86.71.1 with SMTP id t1mr4804014fga.1185899705273;
-        Tue, 31 Jul 2007 09:35:05 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id 31sm3200474fkt.2007.07.31.09.35.03
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2007 09:35:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
-Content-Disposition: inline
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=mw0LRFiKXlxl6i79ibqUHCfOJmwFth++47ChSUClAfxNZ9kVlfgu+szmGbrP/KY29EAUe+Oe1N66cd8K/SfoVvTlxrzQn6GZ2Vufm/EDn0r+CMAl4UrGdYy3vUjRa0j2SEIlDJL+Ir+/WTuAcgZbiSNPNeYTHU8nS33wTG3BPdU=
+Received: by 10.78.145.5 with SMTP id s5mr1860629hud.1185901025821;
+        Tue, 31 Jul 2007 09:57:05 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Tue, 31 Jul 2007 09:57:05 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54364>
 
-Jakub Narebski wrote:
-> On 7/31/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
->> On 7/31/07, Jakub Narebski <jnareb@gmail.com> wrote:
+------=_Part_39395_10820853.1185901025785
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Content-Disposition: inline
 
->>> I might have no access ti Internet for a while, so the survey start
->>> might get delayed. Unless of course somebody want's to do the honors...
+U2lnbmVkLW9mZi1ieTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KLS0tCiBpZGVu
+dC5jIHwgICA0OSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0t
+LS0tCiAxIGZpbGVzIGNoYW5nZWQsIDMyIGluc2VydGlvbnMoKyksIDE3IGRlbGV0aW9ucygtKQoK
+T24gNy8zMS8wNywgS3Jpc3RpYW4gSMO4Z3NiZXJnIDxrcmhAcmVkaGF0LmNvbT4gd3JvdGU6Cj4g
+VGhlcmUncyBudW1iZXIgb2YgYnVmZmVycyB0aGF0IGRvbid0IGdldCBmcmVlZDogdGhlIHN0cmJ1
+ZiwgdGhlIGNvbW1pdAo+IG1lc3NhZ2UgYnVmZmVyLCBhbmQgdGhlIHN0cmR1cCdlZCBhdXRob3Ig
+YW5kIGNvbW1pdHRlciBpbmZvLiAgQWxsIHRoZQo+IGxlYWtzIGFyZSBub3QgY3JpdGljYWwgc2lu
+Y2UgdGhlIHByb2Nlc3MgZXhpdHMgaW1tZWRpYXRlbHkuICBBcyBmb3IgdGhlCj4gc3RyYnVmIGxl
+YWssIEkgd2FzIHRoaW5raW5nIGFib3V0IHJlbmFtaW5nIHN0cmJ1Zl9iZWdpbiB0byBzdHJidWZf
+cmVzZXQKPiBhbmQgbWFraW5nIGl0IHB1YmxpY1sxXSwgd2hpY2ggd2lsbCB0aGVuIGJlIHVzZWQg
+Zm9yIGZyZWVpbmcgdXAgc3RyYnVmCj4gbWVtb3J5LiAgVGhlIG1lc3NhZ2UgYnVmZmVyIGxlYWsg
+c2hvdWxkIGJlIGZpeGVkIGJ5IGFkZGluZyBhCj4gc3RyYnVmX3JlYWRfZmQoKSB0aGF0IGp1c3Qg
+cmVhZHMgaXQgc3RyYWlnaHQgaW50byB0aGUgc3RyYnVmLiAgVGhlCj4geHN0cmR1cCdzIGFyZSBu
+ZWNlc3NhcnkgYmVjYXVzZSBmbXRfaWRlbnQgdXNlcyBhIHN0YXRpYyBidWZmZXIgKHRoYW5rcywK
+PiB0ZXN0IGNhc2UgOikuICBXZSBjb3VsZCBhZGQgcm90YXRpbmcgc3RhdGljIGJ1ZmZlcnMgZm9y
+IGZtdF9pZGVudCBsaWtlCj4gZ2l0X3BhdGggYW5kIGF2b2lkIHRoZSBzdHJkdXBzLCBidXQgYWdh
+aW4sIHRoZSBsZWFrcyBhcmUgbm90IGNyaXRpY2FsLgoKQWNoLCB0aGF0J3Mgd2h5Li4uIEp1bmlv
+LCBob3cgYWJvdXQgdGhpcyB0aGVuPyBJJ2QgZXZlbiBzdWdnZXN0IGFkZGluZwp0aGUgYnVmZmVy
+IGFyZ3VtZW50IHRvIGZtdF9pZGVudCBhbmQgdXNlIGl0IGV2ZXJ5d2hlcmUgKEFUTSB0aGVyZSBp
+cwpvbmx5IG9uZSB1c2VyIG91dHNpZGUgb2YgaWRlbnQuYzogYnVpbHRpbi1ibGFtZS5jKS4KVGhp
+cyBvbmUgaXMgYXBwbGljYWJsZSBpbW1lZGlhdGVseSwgdGhvdWdoCg==
+------=_Part_39395_10820853.1185901025785
+Content-Type: text/plain; 
+	name=0001-Allow-git_author-committer_info-be-called-in-the-same.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f4smq3n5
+Content-Disposition: attachment; filename="0001-Allow-git_author-committer_info-be-called-in-the-same.txt"
 
-False alarm. Of course, if you want to help... for example some of those
-magazines, journals, blogs, news sites use form submission, and not via
-email.
-
->> I might help.
->> Did you already choose the web survey service?
-> 
-> No. I was thinking about using the same as in previous survey.
-
-http://www.survey.net.nz
-
-Requirements for survey site: single answer and multiple answer
-questions, single line and textarea answers. It would be nice
-to have select form for the state, and for the language but it
-is not required. I'd rather it not be heavyweight.
-
-I'd like for it to have place for comment to question (which will
-not be present in the summary), like example answers or explanation
-of question. It would be nice to have questions divided into sections.
-
-Any other proposals?
--- 
-Jakub Narebski
-Poland
+RnJvbSAwYzg2NzM5YWE5ZjVkYjE5ZWJjZDJiYzA0MTYyMmMzMTc2MTFjODdmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBUdWUsIDMxIEp1bCAyMDA3IDE4OjQ4OjIzICswMjAwClN1YmplY3Q6IFtQQVRDSF0gQWxsb3cg
+Z2l0X2F1dGhvcnxjb21taXR0ZXJfaW5mbyBiZSBjYWxsZWQgaW4gdGhlIHNhbWUgZXhwcmVzc2lv
+bgoKClNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFpbC5jb20+Ci0tLQog
+aWRlbnQuYyB8ICAgNDkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0t
+LS0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAzMiBpbnNlcnRpb25zKCspLCAxNyBkZWxldGlvbnMo
+LSkKCmRpZmYgLS1naXQgYS9pZGVudC5jIGIvaWRlbnQuYwppbmRleCA2NjEyZDE3Li4wZDU5MDkw
+IDEwMDY0NAotLS0gYS9pZGVudC5jCisrKyBiL2lkZW50LmMKQEAgLTE5MiwxMCArMTkyLDEwIEBA
+IHN0YXRpYyBjb25zdCBjaGFyICplbnZfaGludCA9CiAiQWRkIC0tZ2xvYmFsIHRvIHNldCB5b3Vy
+IGFjY291bnRcJ3MgZGVmYXVsdFxuIgogIlxuIjsKIAotY29uc3QgY2hhciAqZm10X2lkZW50KGNv
+bnN0IGNoYXIgKm5hbWUsIGNvbnN0IGNoYXIgKmVtYWlsLAotCQkgICAgICBjb25zdCBjaGFyICpk
+YXRlX3N0ciwgaW50IGVycm9yX29uX25vX25hbWUpCisjZGVmaW5lIEZNVF9JREVOVF9CVUZTSVpF
+IDEwMDAKK3N0YXRpYyBjaGFyICpmbXRfaWRlbnRfYnVmKGNoYXIgKmJ1ZmZlciwgY29uc3QgY2hh
+ciAqbmFtZSwgY29uc3QgY2hhciAqZW1haWwsCisJCQkgICBjb25zdCBjaGFyICpkYXRlX3N0ciwg
+aW50IGVycm9yX29uX25vX25hbWUpCiB7Ci0Jc3RhdGljIGNoYXIgYnVmZmVyWzEwMDBdOwogCWNo
+YXIgZGF0ZVs1MF07CiAJaW50IGk7CiAKQEAgLTIyNywyOSArMjI3LDQ0IEBAIGNvbnN0IGNoYXIg
+KmZtdF9pZGVudChjb25zdCBjaGFyICpuYW1lLCBjb25zdCBjaGFyICplbWFpbCwKIAlpZiAoZGF0
+ZV9zdHIpCiAJCXBhcnNlX2RhdGUoZGF0ZV9zdHIsIGRhdGUsIHNpemVvZihkYXRlKSk7CiAKLQlp
+ID0gY29weShidWZmZXIsIHNpemVvZihidWZmZXIpLCAwLCBuYW1lKTsKLQlpID0gYWRkX3Jhdyhi
+dWZmZXIsIHNpemVvZihidWZmZXIpLCBpLCAiIDwiKTsKLQlpID0gY29weShidWZmZXIsIHNpemVv
+ZihidWZmZXIpLCBpLCBlbWFpbCk7Ci0JaSA9IGFkZF9yYXcoYnVmZmVyLCBzaXplb2YoYnVmZmVy
+KSwgaSwgIj4gIik7Ci0JaSA9IGNvcHkoYnVmZmVyLCBzaXplb2YoYnVmZmVyKSwgaSwgZGF0ZSk7
+Ci0JaWYgKGkgPj0gc2l6ZW9mKGJ1ZmZlcikpCisJaSA9IGNvcHkoYnVmZmVyLCBGTVRfSURFTlRf
+QlVGU0laRSwgMCwgbmFtZSk7CisJaSA9IGFkZF9yYXcoYnVmZmVyLCBGTVRfSURFTlRfQlVGU0la
+RSwgaSwgIiA8Iik7CisJaSA9IGNvcHkoYnVmZmVyLCBGTVRfSURFTlRfQlVGU0laRSwgaSwgZW1h
+aWwpOworCWkgPSBhZGRfcmF3KGJ1ZmZlciwgRk1UX0lERU5UX0JVRlNJWkUsIGksICI+ICIpOwor
+CWkgPSBjb3B5KGJ1ZmZlciwgRk1UX0lERU5UX0JVRlNJWkUsIGksIGRhdGUpOworCWlmIChpID49
+IEZNVF9JREVOVF9CVUZTSVpFKQogCQlkaWUoIkltcG9zc2libHkgbG9uZyBwZXJzb25hbCBpZGVu
+dGlmaWVyIik7CiAJYnVmZmVyW2ldID0gMDsKIAlyZXR1cm4gYnVmZmVyOwogfQogCitjb25zdCBj
+aGFyICpmbXRfaWRlbnQoY29uc3QgY2hhciAqbmFtZSwgY29uc3QgY2hhciAqZW1haWwsCisJCSAg
+ICAgIGNvbnN0IGNoYXIgKmRhdGVfc3RyLCBpbnQgZXJyb3Jfb25fbm9fbmFtZSkKK3sKKwlzdGF0
+aWMgY2hhciBidWZmZXJbRk1UX0lERU5UX0JVRlNJWkVdOworCXJldHVybiBmbXRfaWRlbnRfYnVm
+KGJ1ZmZlciwgbmFtZSwgZW1haWwsIGRhdGVfc3RyLCBlcnJvcl9vbl9ub19uYW1lKTsKK30KKwog
+Y29uc3QgY2hhciAqZ2l0X2F1dGhvcl9pbmZvKGludCBlcnJvcl9vbl9ub19uYW1lKQogewotCXJl
+dHVybiBmbXRfaWRlbnQoZ2V0ZW52KCJHSVRfQVVUSE9SX05BTUUiKSwKLQkJCSBnZXRlbnYoIkdJ
+VF9BVVRIT1JfRU1BSUwiKSwKLQkJCSBnZXRlbnYoIkdJVF9BVVRIT1JfREFURSIpLAotCQkJIGVy
+cm9yX29uX25vX25hbWUpOworCXN0YXRpYyBjaGFyICpidWZmZXI7CisJaWYgKCFidWZmZXIpCisJ
+CWJ1ZmZlciA9IHhtYWxsb2MoRk1UX0lERU5UX0JVRlNJWkUpOworCXJldHVybiBmbXRfaWRlbnRf
+YnVmKGJ1ZmZlciwKKwkJCSAgICAgZ2V0ZW52KCJHSVRfQVVUSE9SX05BTUUiKSwKKwkJCSAgICAg
+Z2V0ZW52KCJHSVRfQVVUSE9SX0VNQUlMIiksCisJCQkgICAgIGdldGVudigiR0lUX0FVVEhPUl9E
+QVRFIiksCisJCQkgICAgIGVycm9yX29uX25vX25hbWUpOwogfQogCiBjb25zdCBjaGFyICpnaXRf
+Y29tbWl0dGVyX2luZm8oaW50IGVycm9yX29uX25vX25hbWUpCiB7Ci0JcmV0dXJuIGZtdF9pZGVu
+dChnZXRlbnYoIkdJVF9DT01NSVRURVJfTkFNRSIpLAotCQkJIGdldGVudigiR0lUX0NPTU1JVFRF
+Ul9FTUFJTCIpLAotCQkJIGdldGVudigiR0lUX0NPTU1JVFRFUl9EQVRFIiksCi0JCQkgZXJyb3Jf
+b25fbm9fbmFtZSk7CisJc3RhdGljIGNoYXIgKmJ1ZmZlcjsKKwlpZiAoIWJ1ZmZlcikKKwkJYnVm
+ZmVyID0geG1hbGxvYyhGTVRfSURFTlRfQlVGU0laRSk7CisJcmV0dXJuIGZtdF9pZGVudF9idWYo
+YnVmZmVyLAorCQkJICAgICBnZXRlbnYoIkdJVF9DT01NSVRURVJfTkFNRSIpLAorCQkJICAgICBn
+ZXRlbnYoIkdJVF9DT01NSVRURVJfRU1BSUwiKSwKKwkJCSAgICAgZ2V0ZW52KCJHSVRfQ09NTUlU
+VEVSX0RBVEUiKSwKKwkJCSAgICAgZXJyb3Jfb25fbm9fbmFtZSk7CiB9Ci0tIAoxLjUuMy5yYzMu
+MTMyLmczOTE3OQoK
+------=_Part_39395_10820853.1185901025785--
