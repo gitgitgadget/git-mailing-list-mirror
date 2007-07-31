@@ -1,75 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] Add strbuf_printf() to do formatted printing to a
- strbuf.
-Date: Tue, 31 Jul 2007 15:57:34 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707311556150.14781@racer.site>
-References: <11858309261111-git-send-email-krh@redhat.com> 
- <11858309311728-git-send-email-krh@redhat.com>  <11858309322006-git-send-email-krh@redhat.com>
-  <7vhcnlgpeo.fsf@assigned-by-dhcp.cox.net> <1185891786.11086.40.camel@hinata.boston.redhat.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: [PATCH] Mention libiconv as a requirement for git-am
+Date: Tue, 31 Jul 2007 11:09:48 -0400
+Message-ID: <20070731150948.GA9947@localhost>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1823182068-1185893854=:14781"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 16:58:05 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Johannes Sixt <J.Sixt@eudaptics.com>,
+	Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Jul 31 17:10:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFtAf-0003eI-HS
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 16:58:01 +0200
+	id 1IFtMh-0007bT-PH
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 17:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760870AbXGaO6A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 10:58:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760765AbXGaO57
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 10:57:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49882 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759279AbXGaO56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 10:57:58 -0400
-Received: (qmail invoked by alias); 31 Jul 2007 14:57:56 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 31 Jul 2007 16:57:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZPswRY3VZbg9+nz3Iezzft8IuVbYVDHpAUWX2P9
-	q7hAg6DrZD5j3F
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1185891786.11086.40.camel@hinata.boston.redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1763404AbXGaPKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 11:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762160AbXGaPKS
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 11:10:18 -0400
+Received: from ag-out-0708.google.com ([72.14.246.241]:1990 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762279AbXGaPKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 11:10:16 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so786822aga
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 08:10:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=ebD02AirF8KCm8Ej5UQUXM6dRvwVW7+oAcDnvALevgADfK8JmVdsEBcXI9Uj4sDsCmtBjt4Nqij3eovytKYB7TtvgJn8D4TRXQPM6D1hkSZXry3tSUvSvtIbeY+qgev/8GiB3d/hddbPLo887e5PEJ9v9qPX1e3J1U5kKEuU5uU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=hTkd5oXm45vPUHBWpZZKtOMMrZtGl1EuoKXPO+N6VC20NFRj01TOv5Ii9PXsOvLqU7DMU7UvtU25n0JxiTQud8/ZjqqlJsQ27+KaoBelRu7hidYf7Gai8WrVyu74bnWBQCuI4y2GYjRvydRyzaK3/WvPMJ4wk+42hd86EJMECmQ=
+Received: by 10.100.13.12 with SMTP id 12mr5312512anm.1185894610798;
+        Tue, 31 Jul 2007 08:10:10 -0700 (PDT)
+Received: from pclouds@gmail.com ( [66.129.232.2])
+        by mx.google.com with ESMTPS id c16sm3993857anc.2007.07.31.08.10.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 31 Jul 2007 08:10:09 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 31 Jul 2007 11:09:48 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54358>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+---
+ Han-Wen, any chance to include libiconv to the installer? You may need
+ to set NEEDS_ICONV, ICONVDIR and NO_ICONV properly to make git-am work.
 
---8323584-1823182068-1185893854=:14781
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+ README.MinGW |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Hi,
-
-On Tue, 31 Jul 2007, Kristian H?gsberg wrote:
-
-> On Mon, 2007-07-30 at 21:36 -0700, Junio C Hamano wrote:
-> > Kristian Høgsberg <krh@redhat.com> writes:
-> > 
-> > > +void strbuf_printf(struct strbuf *sb, const char *fmt, ...)
-> > > +{
-> > > +	char one_line[2048];
-> > > +	va_list args;
-> > > +	int len;
-> > 
-> > Such a nice abstraction so far, and then at the highest level of
-> > callchain we have this hardcoded limit?
-> 
-> Yeah, I know, it sucks.  I'd like to just run vsnprintf with a 0-sized
-> buffer to get the length, and then grow the buffer by that much, but
-> that's not very portable as far as I know.
-
-We do have nfvasprintf()...
-
-Ciao,
-Dscho
-
---8323584-1823182068-1185893854=:14781--
+diff --git a/README.MinGW b/README.MinGW
+index 89b7065..c0b8f66 100644
+--- a/README.MinGW
++++ b/README.MinGW
+@@ -28,6 +28,7 @@ In order to compile this code you need:
+ 	zlib-1.2.3-mingwPORT-1.tar
+ 	w32api-3.6.tar.gz
+ 	tcltk-8.4.1-1.exe (for gitk, git-gui)
++	libiconv-1.9.2-1-{lib,bin}.zip (for git-am, from http://gnuwin32.sourceforge.net/packages/libiconv.htm)
+ 
+ 
+ STATUS
+-- 
+1.5.0.7
