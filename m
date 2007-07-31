@@ -1,63 +1,90 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Support for incremental status updates.
-Date: Tue, 31 Jul 2007 11:19:56 +0200
-Message-ID: <87k5shudz7.fsf@morpheus.local>
-References: <87sl7ekt40.fsf@wine.dyndns.org> <20070730232226.GA2413@diana.vm.bytemark.co.uk>
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: git-svn and distributed git
+Date: Tue, 31 Jul 2007 12:42:06 +0300
+Message-ID: <65B05BC3-2BC2-4451-87C2-940113C55287@pp.inet.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 11:20:27 2007
+X-From: git-owner@vger.kernel.org Tue Jul 31 12:22:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFntu-0007mI-25
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 11:20:22 +0200
+	id 1IForc-0005zX-Q0
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 12:22:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052AbXGaJUT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 05:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbXGaJUS
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 05:20:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:36542 "EHLO ciao.gmane.org"
+	id S1754920AbXGaKWA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 06:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756552AbXGaKWA
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 06:22:00 -0400
+Received: from hyatt.suomi.net ([82.128.152.22]:38098 "EHLO hyatt.suomi.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752409AbXGaJUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 05:20:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IFntd-0002ap-AE
-	for git@vger.kernel.org; Tue, 31 Jul 2007 11:20:05 +0200
-Received: from vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 11:20:05 +0200
-Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 11:20:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:OOB1TcV18kl6Sulj+C5wfCUdEsU=
+	id S1754920AbXGaKV7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2007 06:21:59 -0400
+X-Greylist: delayed 1813 seconds by postgrey-1.27 at vger.kernel.org; Tue, 31 Jul 2007 06:21:58 EDT
+Received: from tiku.suomi.net ([82.128.154.67])
+ by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JM100I6IFB2S700@hyatt.suomi.net> for
+ git@vger.kernel.org; Tue, 31 Jul 2007 12:49:50 +0300 (EEST)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
+ with ESMTP id <0JM100E5CFDZXZ40@mailstore.suomi.net> for git@vger.kernel.org;
+ Tue, 31 Jul 2007 12:51:36 +0300 (EEST)
+Received: from [192.168.0.138]
+ (addr-213-139-166-27.baananet.fi [213.139.166.27])
+	by spam2.suomi.net (Postfix) with ESMTP id 0CCBA19D10E	for
+ <git@vger.kernel.org>; Tue, 31 Jul 2007 12:42:42 +0300 (EEST)
+X-Mailer: Apple Mail (2.752.3)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.793,
+ required 5, autolearn=not spam, AWL 0.21,	BAYES_00 -1.00)
+X-OPOY-MailScanner-From: v@pp.inet.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54330>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Hello,
 
-> On 2007-07-24 12:12:47 +0200, Alexandre Julliard wrote:
->
->> +    (if node (ewoc-set-data node info) (ewoc-enter-last status info=
-))))
->
-> My emacs doesn't like this. When i do "a" or "U" (and quite possibly
-> others that I haven't tried yet) I get
->
->   git-insert-fileinfo: Symbol's function definition is void: ewoc-set=
--data
 
-You probably need to add a (require 'ewoc).  Try loading ewoc and run
-the command again.
+I have just started using git, so I don't have a lot of experience on =20
+it, and I also haven't used it in a distributed environment, just as =20
+a single developer on one of my personal projects.
 
---=20
-David K=C3=A5gedal
+Now I'm trying to use git at work through git-svn. git-svn cloned the =20
+Subversion repository okay, and using git and dcommitting to =20
+Subversion also works fine. The problems started when i tried to use =20
+the git-svn repository in a distributed fashion.
+
+
+Here's the thing: I'm developing a server software, locally and on a =20
+pre-production server. The pre-production test server (just called =20
+the server for now on) is on a DMZ network, which cannot access our =20
+Subversion server. So I thought I could push the git repository to =20
+the server to update the code, which works fine too. But sometimes =20
+when there is a problem, I'll just develop the fix on the server =20
+itself, instead of on my laptop (local development). I would like to =20
+be able to pull the changes made on the server, back to my laptop, =20
+and dcommit it to the Subversion server from there.
+
+The problem is, that git-svn changes all the commits, and pushing to =20
+the server repository won't work anymore. I can force a push, but =20
+then there will be two commits per every commit pulled from the server.
+
+I have thought about using two branches on the server, master, which =20
+will only include commits already processed through git-svn, and dev, =20
+which is used to pull the "local" changes to be committed to =20
+Subversion. But my inexperience with git got me here, and I can't =20
+seem to be able to get any updates from the other branch. And I'm not =20
+even sure if this is the right approach to this problem.
+
+
+What kind of approach/workflow would you use in a similar situation?
+
+
+Regards,
+V=E4in=F6 J=E4rvel=E4
