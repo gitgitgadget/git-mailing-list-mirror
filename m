@@ -1,89 +1,99 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: git-gui i18n / 0.9.x plans
-Date: Mon, 30 Jul 2007 21:28:04 -0400
-Message-ID: <20070731012804.GZ20052@spearce.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [RFH PATCH] Teach the emacs git mode about core.excludesfile
+Date: Tue, 31 Jul 2007 03:30:56 +0200
+Message-ID: <20070731012825.24170.68899.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 31 03:28:24 2007
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Tue Jul 31 03:31:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFgX7-0005Ge-Jr
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 03:28:21 +0200
+	id 1IFgZs-0005uG-Ca
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 03:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756611AbXGaB2S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 21:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756166AbXGaB2S
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 21:28:18 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38791 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756116AbXGaB2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 21:28:17 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IFgWn-0000bv-TL; Mon, 30 Jul 2007 21:28:02 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B9FDA20FBAE; Mon, 30 Jul 2007 21:28:04 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1761588AbXGaBbJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 30 Jul 2007 21:31:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753737AbXGaBbJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 21:31:09 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4742 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752502AbXGaBbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 21:31:07 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1IFgZd-00016C-00; Tue, 31 Jul 2007 02:30:57 +0100
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54304>
 
-Now that git-gui 0.8.0 has been released I have updated both the
-maint and master branches to 0.8.0.  maint will carry the 0.8.0
-development forward, and is strictly for bug fixes to the current
-non-i18n codebase.  I'm unlikely to make changes here except to
-address current critical issues.
+If there is a core.excludesfile option specified, let the emacs git
+mode take exclude patterns from that file, since that's what the docs
+say, and what everyone else is already doing.
 
-Regarding future development for the off-in-the-future 0.9.0 release
-I'd like to see the i18n work merge in before we do anything else
-major to git-gui.  I'm likely to shift my focus to fast-import this
-week, which means git-gui will probably see no major activity from
-me for about the next two weeks.  As soon as the i18n team has
-something rebased onto current master that is ready for merging,
-I'll bring it over.  Yes, that's a promise on my part to try and
-keep my tree frozen for a little while.  :)
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
 
-Other things I'd like to do in 0.9.0, but may or may not actually
-do myself:
+The patch works, but the code is anything but pretty. I need help from
+someone who actually knows elisp!
 
- - Automatically refetch tracking branches in merge
- - Text mode log viewer:
-   `git-log`, `git-log -g`
- - File monitor on WinNT (to avoid costly Rescan on large projects)
- - Remove more porcelain shell dependencies:
-   `git-merge`, `git-repack`, `git-remote prune`
- - UI for cherry-pick/revert
- - Generational GC for 'Compress Database'
- - Integration with git-stash
- - Hunk splitting/selection
- - UI for git-tag
- - Push specific tags by name (rather than by --tags)
- - Pull from arbitrary URL/branch pair
+(Apologies if this patch reaches the list twice; the first copy I sent
+was seemingly lost, so I tried another route.)
 
-Those are roughly ordered by how much I think myself and my fellow
-day-job coworkers want these features, so that's probably roughly
-the order I'll try to work through them after the i18n current
-changes are merged in.  Of course patches are also welcome.  :)
+ contrib/emacs/git.el |   19 ++++++++++++++++---
+ 1 files changed, 16 insertions(+), 3 deletions(-)
 
-I haven't yet settled on whether the first i18n enabled version would
-be 0.9.0 or a 0.8.1/2.  That's one reason why I want to get the i18n
-changes merged early.  If we have a few high quality translations
-ready to go I'd rather ship them in a 0.8.x maint release than hang
-onto them for another 1-2 months while the major features of the
-0.9.0 release get worked on and stablized.
-
--- 
-Shawn.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 53dd703..357e6d2 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -589,6 +589,13 @@ Return the list of files that haven't been handled=
+=2E"
+           (when node (push (ewoc-data node) unmerged-files))))
+       (git-set-files-state unmerged-files 'unmerged))))
+=20
++(defun git-core-excludesfile ()
++  "The file core.excludesfile, or nil if it isn't specified."
++  (let ((fn (git-config "core.excludesfile")))
++    (if (and fn (file-readable-p fn))
++        fn
++      nil)))
++
+ (defun git-update-status-files (files &optional default-state)
+   "Update the status of FILES from the index."
+   (unless git-status (error "Not in git-status buffer."))
+@@ -600,9 +607,15 @@ Return the list of files that haven't been handled=
+=2E"
+     (git-run-ls-unmerged status files)
+     (when (and (or (not files) remaining-files)
+                (file-readable-p ".git/info/exclude"))
+-      (setq remaining-files (git-run-ls-files status remaining-files
+-                                              'unknown "-o" "--exclude=
+-from=3D.git/info/exclude"
+-                                              (concat "--exclude-per-d=
+irectory=3D" git-per-dir-ignore-file))))
++      (let ((ce (git-core-excludesfile)))
++        (if ce
++            (setq remaining-files (git-run-ls-files status remaining-f=
+iles
++                                                    'unknown "-o" "--e=
+xclude-from=3D.git/info/exclude"
++                                                    (concat "--exclude=
+-per-directory=3D" git-per-dir-ignore-file)
++                                                    (concat "--exclude=
+-from=3D" ce)))
++          (setq remaining-files (git-run-ls-files status remaining-fil=
+es
++                                                  'unknown "-o" "--exc=
+lude-from=3D.git/info/exclude"
++                                                  (concat "--exclude-p=
+er-directory=3D" git-per-dir-ignore-file))))))
+     ; mark remaining files with the default state (or remove them if n=
+il)
+     (when remaining-files
+       (if default-state
