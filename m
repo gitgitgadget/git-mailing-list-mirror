@@ -1,82 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui i18n / 0.9.x plans
-Date: Tue, 31 Jul 2007 10:32:28 -0400
-Message-ID: <20070731143228.GC20052@spearce.org>
-References: <20070731012804.GZ20052@spearce.org> <1E593130-7BBC-488D-88A5-2E16D68614A6@yahoo.ca>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] Add strbuf_printf() to do formatted printing to a
+ strbuf.
+Date: Tue, 31 Jul 2007 15:55:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707311554220.14781@racer.site>
+References: <11858309261111-git-send-email-krh@redhat.com> 
+ <11858309311728-git-send-email-krh@redhat.com>  <11858309322006-git-send-email-krh@redhat.com>
+  <7vhcnlgpeo.fsf@assigned-by-dhcp.cox.net> <1185891786.11086.40.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Jean-Fran=E7ois?= Veillette 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Tue Jul 31 16:32:39 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-622390028-1185893725=:14781"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 16:56:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFsm5-00041P-VU
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 16:32:38 +0200
+	id 1IFt9H-0003Bh-6j
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 16:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760515AbXGaOcf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 10:32:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760259AbXGaOce
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 10:32:34 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57820 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759391AbXGaOce convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2007 10:32:34 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IFsls-0004lG-Rl; Tue, 31 Jul 2007 10:32:25 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4567A20FBAE; Tue, 31 Jul 2007 10:32:28 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1E593130-7BBC-488D-88A5-2E16D68614A6@yahoo.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1760915AbXGaOzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 10:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761146AbXGaOzu
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 10:55:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43030 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762095AbXGaOzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 10:55:49 -0400
+Received: (qmail invoked by alias); 31 Jul 2007 14:55:47 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp024) with SMTP; 31 Jul 2007 16:55:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9gvxCLl79rqPd+Pih55VTSpt842kIUuv4E5huAs
+	HwUo6Se+1QNu4T
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1185891786.11086.40.camel@hinata.boston.redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54356>
 
-Jean-Fran??ois Veillette <jean_francois_veillette@yahoo.ca> wrote:
-> Le 07-07-30 =E0 21:28, Shawn O. Pearce a =E9crit :
-> > - UI for cherry-pick/revert
-> > - Hunk splitting/selection
->=20
-> It would be nice to use the configured external merge tool (git =20
-> mergetool) to help here (in my case os-x:opendiff/FileMerge).
-> Having a visual diff between
-> - the repository and the index
-> - the index and the workarea
-> - the repository and the workarea
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hmm.  According to the manual[1]:
+--8323584-622390028-1185893725=:14781
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-   opendiff file1 file2 [-ancestor ancestorFile] [-merge mergeFile]
+Hi,
 
-what should be the file1/file2/ancesorFile here?
+On Tue, 31 Jul 2007, Kristian H?gsberg wrote:
 
-Another problem is this paragraph:
+> On Mon, 2007-07-30 at 21:36 -0700, Junio C Hamano wrote:
+> > Kristian Høgsberg <krh@redhat.com> writes:
+> > 
+> > > +static void inline strbuf_grow(struct strbuf *sb, size_t extra)
+> > > +{
+> > > +	while (sb->alloc < sb->len + extra)
+> > >  		sb->alloc = sb->alloc * 3 / 2 + 16;
+> > > +	sb->buf = xrealloc(sb->buf, sb->alloc);
+> > > +}
+> > 
+> > Somehow this while () loop to compute the growth factor bothers
+> > me but that is probably a minor detail.
+> 
+> Think of it as a more efficient way of adding one character at a time :)
+> And it's logarithmic in the number of extra bytes.  By the way, I
+> normally just double the size in these cases, which gives you amortized
+> linear performance for adding to the buffer.  What's behind the * 3 / 2
+> idea?
 
-  opendiff exits immediately after the comparison request has been
-  sent to FileMerge.
+But why not
 
-Uhhhh...  how does git-gui know the user is done and the mergeFile
-should be staged?
+	sb->alloc = alloc_nr(sb->len + extra);
 
-I'm also on OS X (its my primary development system for git-gui)
-so I might consider working on this, but after looking at the
-manpage I'm not so sure...
+Hmm?
 
+Ciao,
+Dscho
 
-[1] http://developer.apple.com/documentation/Darwin/Reference/ManPages/=
-man1/opendiff.1.html
-
---=20
-Shawn.
+--8323584-622390028-1185893725=:14781--
