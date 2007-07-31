@@ -1,66 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-gui i18n / 0.9.x plans
-Date: Tue, 31 Jul 2007 11:47:30 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707311136540.14781@racer.site>
-References: <20070731012804.GZ20052@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] git.el: Support for incremental status updates.
+Date: Tue, 31 Jul 2007 13:14:38 +0200
+Message-ID: <20070731111438.GA17903@diana.vm.bytemark.co.uk>
+References: <87sl7ekt40.fsf@wine.dyndns.org> <20070730232226.GA2413@diana.vm.bytemark.co.uk> <87k5shudz7.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 12:47:56 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue Jul 31 13:15:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFpGd-0003BY-U5
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 12:47:56 +0200
+	id 1IFpgy-0000X3-Qh
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 13:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755535AbXGaKrx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 06:47:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755074AbXGaKrw
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 06:47:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34623 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754875AbXGaKrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 06:47:52 -0400
-Received: (qmail invoked by alias); 31 Jul 2007 10:47:50 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp038) with SMTP; 31 Jul 2007 12:47:50 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/94z4vrfv9o3I4fNTWa9kVO1lEGJtpN6q0vL8s1D
-	yNET9yB+6n3U40
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070731012804.GZ20052@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1751385AbXGaLOw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 07:14:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbXGaLOw
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 07:14:52 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2765 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbXGaLOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 07:14:51 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IFpgU-0004gR-00; Tue, 31 Jul 2007 12:14:38 +0100
+Content-Disposition: inline
+In-Reply-To: <87k5shudz7.fsf@morpheus.local>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54333>
 
-Hi,
+On 2007-07-31 11:19:56 +0200, David K=E5gedal wrote:
 
-On Mon, 30 Jul 2007, Shawn O. Pearce wrote:
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
+>
+> > On 2007-07-24 12:12:47 +0200, Alexandre Julliard wrote:
+> >
+> > > +    (if node (ewoc-set-data node info) (ewoc-enter-last status i=
+nfo))))
+> >
+> > My emacs doesn't like this. When i do "a" or "U" (and quite
+> > possibly others that I haven't tried yet) I get
+> >
+> >   git-insert-fileinfo: Symbol's function definition is void: ewoc-s=
+et-data
+>
+> You probably need to add a (require 'ewoc). Try loading ewoc and run
+> the command again.
 
-> Regarding future development for the off-in-the-future 0.9.0 release I'd 
-> like to see the i18n work merge in before we do anything else major to 
-> git-gui.
+git.el already requires ewoc. And it uses a number of ewoc functions
+(and has done so since its creation); this newly introduced call is
+the only one that fails.
 
-Very good!  As it happens, I pushed an update this morning.  
-temp-rebase-to-shawns-master is the branch which forward-ported all 
-patches to the current master of git-gui.git.
+Also, I've just discovered that with Emacs 22.1, I don't see this
+problem. So my guess is that ewoc-set-data is newer than Emacs 21.4.
 
-As I understand, Christian will find and mark all strings lacking [mc ...] 
-and update the .pot file.  Then we'll kindly ask the good translators 
-(thanks everyone!) to review the changes, and after that I'll prepare some 
-submittable patch series (no need to have several patches per language).
-
->  - Hunk splitting/selection
-
-Yeah, I am personally interested in this, so time permitting I will 
-continue on that part.  Regarding your idea from another post of yours: 
-IMHO selections are only meaningful if they take whole lines.  But that's 
-almost like hunk splitting, so it should be easy to support with the code 
-I wrote and will have written.
-
-Ciao,
-Dscho
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
