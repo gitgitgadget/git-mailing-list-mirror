@@ -1,63 +1,82 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Efficient way to import snapshots?
-Date: Tue, 31 Jul 2007 12:15:24 -0400
-Message-ID: <20070731161524.GA28645@thunk.org>
-References: <alpine.LFD.0.999.0707301144180.4161@woody.linux-foundation.org> <20070730192922.GB64467@nowhere> <alpine.LFD.0.999.0707301240330.4161@woody.linux-foundation.org> <20070730222028.GE64467@nowhere> <alpine.LFD.0.999.0707301629230.4161@woody.linux-foundation.org> <20070731011707.GA91930@nowhere> <alpine.LFD.0.999.0707301825130.4161@woody.linux-foundation.org> <20070731042347.GG25876@thunk.org> <20070731135332.GA58867@nowhere> <alpine.LFD.0.999.0707310845490.4161@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Git User's Survey 2007 - web survey site
+Date: Tue, 31 Jul 2007 18:35:02 +0200
+Message-ID: <200707311835.03197.jnareb@gmail.com>
+References: <200707250358.58637.jnareb@gmail.com> <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com> <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Craig Boston <craig@olyun.gank.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 18:16:22 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 31 18:35:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFuOO-0001r9-JI
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 18:16:17 +0200
+	id 1IFugj-00073B-BT
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 18:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765573AbXGaQPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 12:15:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765557AbXGaQPo
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 12:15:44 -0400
-Received: from THUNK.ORG ([69.25.196.29]:55726 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765537AbXGaQPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 12:15:43 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IFuW3-0004an-QQ; Tue, 31 Jul 2007 12:24:12 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IFuNY-0001yo-Eu; Tue, 31 Jul 2007 12:15:24 -0400
+	id S1762846AbXGaQfK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 12:35:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759520AbXGaQfK
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 12:35:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:30565 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762846AbXGaQfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 12:35:08 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so235430nfb
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 09:35:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PiYtHkUff5l0vMj1yb/azX9Rwp5UZPUeELT+Y9JJehXcbgZDVpaoh+yjPV9J3fyQI1tOAMxg72/wgUAlRTeeLccniThaS8M2gsx8IU25PA+Zts5YQX7PRML81sfO+ihzyJJVdNDpvvXbOb0TSIY4IfnCCMj2x2t+/DrK3PXrz+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IBffrwhErGEv4twwKrgi3+o7+etfs9FtM0Qlhv+1+2ahN6OlWvE8woU/k8WPm1yK29JRwJoSfeewcLkeUUkwwo6EQ0zlngEIYGR8/uzCek3CM/5U5UQ/OlFzRPJjefqB0oyyrUWHOYu2ZtXJRO8Go/RfUd2Q8X9LAOZtuCmc+vo=
+Received: by 10.86.71.1 with SMTP id t1mr4804014fga.1185899705273;
+        Tue, 31 Jul 2007 09:35:05 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id 31sm3200474fkt.2007.07.31.09.35.03
+        (version=SSLv3 cipher=OTHER);
+        Tue, 31 Jul 2007 09:35:04 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0707310845490.4161@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54363>
 
-On Tue, Jul 31, 2007 at 08:50:19AM -0700, Linus Torvalds wrote:
-> Very interesting. And thanks. The whole "ZFS is great" internet meme seems 
-> to be partly due to not a lot of people having used or compared it in real 
-> life. I'm sure it's wonderful for some things, but it clearly does have a 
-> lot of downsides too. 
+Jakub Narebski wrote:
+> On 7/31/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+>> On 7/31/07, Jakub Narebski <jnareb@gmail.com> wrote:
 
-I'm pretty sure Sun's marketing machine is also very much part of it;
-I'm not convinced all of the blogs pitching ZFS as the most wonderful
-thing since sliced bread were all, shall we say, unbiased or
-uninfluenced by Sun.  Add to that the fact that the Solaris 10 License
-Agreement prohibits you from publishing benchmark numbers without
-Sun's permisison, and it's not at all surprising that most of what
-people have heard of ZFS has all been the positive stuff.  But with
-more people playing with ZFS in the FreeBSD and OpenSolaris camps, I'm
-sure a more balanced view that shows its advantages *and*
-disadvantages will start showing up.
+>>> I might have no access ti Internet for a while, so the survey start
+>>> might get delayed. Unless of course somebody want's to do the honors...
 
-            	    	     	       - Ted
+False alarm. Of course, if you want to help... for example some of those
+magazines, journals, blogs, news sites use form submission, and not via
+email.
+
+>> I might help.
+>> Did you already choose the web survey service?
+> 
+> No. I was thinking about using the same as in previous survey.
+
+http://www.survey.net.nz
+
+Requirements for survey site: single answer and multiple answer
+questions, single line and textarea answers. It would be nice
+to have select form for the state, and for the language but it
+is not required. I'd rather it not be heavyweight.
+
+I'd like for it to have place for comment to question (which will
+not be present in the summary), like example answers or explanation
+of question. It would be nice to have questions divided into sections.
+
+Any other proposals?
+-- 
+Jakub Narebski
+Poland
