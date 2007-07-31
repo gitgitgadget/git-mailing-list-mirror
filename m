@@ -1,60 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/2] gitweb: Add an option to show size of blobs in the tree view
-Date: Tue, 31 Jul 2007 15:12:03 -0700
-Message-ID: <7vd4y8fcjw.fsf@assigned-by-dhcp.cox.net>
-References: <1185880790812-git-send-email-jnareb@gmail.com>
-	<11858807944170-git-send-email-jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make verse of git-config manpage more readable
+Date: Tue, 31 Jul 2007 23:36:13 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707312335200.14781@racer.site>
+References: <81b0412b0707310453pc6b11d2r90ca0f22b5ed601e@mail.gmail.com>
+ <Pine.LNX.4.64.0707311258340.14781@racer.site>
+ <81b0412b0707310502x588c9c6dh7d9290360b27647a@mail.gmail.com>
+ <20070731220117.GA3196@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 00:12:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 00:36:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFzwr-0004L0-KF
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 00:12:13 +0200
+	id 1IG0Kb-0002C8-L1
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 00:36:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754950AbXGaWMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 18:12:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757513AbXGaWMH
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 18:12:07 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:54273 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755217AbXGaWMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 18:12:05 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070731221205.MNGI26965.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 31 Jul 2007 18:12:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WNC31X00U1kojtg0000000; Tue, 31 Jul 2007 18:12:04 -0400
-In-Reply-To: <11858807944170-git-send-email-jnareb@gmail.com> (Jakub
-	Narebski's message of "Tue, 31 Jul 2007 13:19:50 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758421AbXGaWgj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 18:36:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757509AbXGaWgj
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 18:36:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48368 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755217AbXGaWgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 18:36:38 -0400
+Received: (qmail invoked by alias); 31 Jul 2007 22:36:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 01 Aug 2007 00:36:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Xm7tw43YXO23y3zH5L/niAyFKg5A2A3YQdkQ3Wz
+	fulRs0cZaBPU+P
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070731220117.GA3196@steel.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54378>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> It allows to play with 'tree' view with blob size. Currently you
-> have to start browsing by adding ";opt=-l" to the gitweb URL by
-> hand.  There is not link which will change view from ordinary 'tree'
-> view to 'tree' view with blob sizes.
->
-> The 'tree' with blob size view is slightly more costly than the
-> ordinary, old 'tree' view, but not much more (0.018s vs 0.012s
-> in the hot cache case), so I don't think we need to control it
-> as a enabled (or disabled) feature, overrideable or not.  It
-> probably should not be default.
+On Wed, 1 Aug 2007, Alex Riesen wrote:
 
-I do not think there is any reason to forbid its use, as the
-"-l" to ls-tree was introduced for exactly this purpose,
-However, it might make sense to make the use of -l optional via
-the %feature mechanism.  50% increase even on hot cache case is
-not a price people who run busy sites would want to pay.
+> Also mention '--file' in FILES.
+> 
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+> 
+> Alex Riesen, Tue, Jul 31, 2007 14:02:13 +0200:
+> > On 7/31/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > You could use this chance to make the verse nicer, i.e. split it into a
+> > > [<file-option>] and an [<action>] part.
+> 
+> Did only the long one, file-option. I don't think the [<action>] part
+> is essential, though. It is quite understandable...
+
+It is too long.  That's my gripe with it.  But then, I do not really care; 
+I know pretty well what "git config" can do...
+
+Ciao,
+Dscho
