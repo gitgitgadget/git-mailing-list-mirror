@@ -1,64 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC (take 2) Git User's Survey 2007
-Date: Mon, 30 Jul 2007 18:24:34 -0700
-Message-ID: <7v7iohicvh.fsf@assigned-by-dhcp.cox.net>
-References: <200707250358.58637.jnareb@gmail.com>
-	<200707302256.38251.jnareb@gmail.com>
-	<20070731003251.GW20052@spearce.org>
-	<200707310245.56077.jnareb@gmail.com>
-	<20070731010921.GY20052@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: git-gui i18n / 0.9.x plans
+Date: Mon, 30 Jul 2007 21:28:04 -0400
+Message-ID: <20070731012804.GZ20052@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 03:24:41 2007
+Cc: git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 31 03:28:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFgTX-0004WG-MZ
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 03:24:40 +0200
+	id 1IFgX7-0005Ge-Jr
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 03:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755970AbXGaBYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 21:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755947AbXGaBYg
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 21:24:36 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55372 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755072AbXGaBYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 21:24:35 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070731012436.LSBO1393.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 30 Jul 2007 21:24:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id W1Qa1X00g1kojtg0000000; Mon, 30 Jul 2007 21:24:35 -0400
-In-Reply-To: <20070731010921.GY20052@spearce.org> (Shawn O. Pearce's message
-	of "Mon, 30 Jul 2007 21:09:21 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756611AbXGaB2S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 21:28:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756166AbXGaB2S
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 21:28:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38791 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756116AbXGaB2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 21:28:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IFgWn-0000bv-TL; Mon, 30 Jul 2007 21:28:02 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B9FDA20FBAE; Mon, 30 Jul 2007 21:28:04 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54303>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Now that git-gui 0.8.0 has been released I have updated both the
+maint and master branches to 0.8.0.  maint will carry the 0.8.0
+development forward, and is strictly for bug fixes to the current
+non-i18n codebase.  I'm unlikely to make changes here except to
+address current critical issues.
 
-> Might be nice to know how many people are interested in the
-> Eclipse plugin.  But aside from that, I don't think its worth
-> including much about it.  Maybe just have a checkbox under
-> some heading like:
->
->   What features is Git currently missing for your needs?
->   [ ] Eclipse plugin
->   [ ] wizhbang foo thing
->   [ ] Other:  ________________________
+Regarding future development for the off-in-the-future 0.9.0 release
+I'd like to see the i18n work merge in before we do anything else
+major to git-gui.  I'm likely to shift my focus to fast-import this
+week, which means git-gui will probably see no major activity from
+me for about the next two weeks.  As soon as the i18n team has
+something rebased onto current master that is ready for merging,
+I'll bring it over.  Yes, that's a promise on my part to try and
+keep my tree frozen for a little while.  :)
 
-Intresting.
+Other things I'd like to do in 0.9.0, but may or may not actually
+do myself:
 
-If we make this a Web based survey (and I think that is the
-sensible thing to do --- many people do not want to send ballot
-over mail), I wonder if we can randomize these multi-selection
-answers to get unskewed results...
+ - Automatically refetch tracking branches in merge
+ - Text mode log viewer:
+   `git-log`, `git-log -g`
+ - File monitor on WinNT (to avoid costly Rescan on large projects)
+ - Remove more porcelain shell dependencies:
+   `git-merge`, `git-repack`, `git-remote prune`
+ - UI for cherry-pick/revert
+ - Generational GC for 'Compress Database'
+ - Integration with git-stash
+ - Hunk splitting/selection
+ - UI for git-tag
+ - Push specific tags by name (rather than by --tags)
+ - Pull from arbitrary URL/branch pair
+
+Those are roughly ordered by how much I think myself and my fellow
+day-job coworkers want these features, so that's probably roughly
+the order I'll try to work through them after the i18n current
+changes are merged in.  Of course patches are also welcome.  :)
+
+I haven't yet settled on whether the first i18n enabled version would
+be 0.9.0 or a 0.8.1/2.  That's one reason why I want to get the i18n
+changes merged early.  If we have a few high quality translations
+ready to go I'd rather ship them in a 0.8.x maint release than hang
+onto them for another 1-2 months while the major features of the
+0.9.0 release get worked on and stablized.
+
+-- 
+Shawn.
