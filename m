@@ -1,148 +1,91 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: merge time
-Date: Tue, 31 Jul 2007 20:06:24 +0200
-Message-ID: <9DCA19D8-EDAE-4D04-A8C1-E0FF0A71DC93@zib.de>
-References: <alpine.LFD.0.999.0707291914451.3442@woody.linux-foundation.org> <6FE9FFD6-B5D7-4E1D-A4E8-B6D0E9517503@zib.de> <7vbqdumlo1.fsf@assigned-by-dhcp.cox.net> <E49A2B0B-DAA3-4A03-925D-D3D113F907F1@zib.de> <20070730074937.GT20052@spearce.org> <577C7529-4C3C-40D4-B86A-8B3CE888C997@zib.de> <20070730081439.GA907@coredump.intra.peff.net> <E1575DD6-AC8C-49FD-A765-801A19E1FA73@zib.de> <20070730083223.GB3150@coredump.intra.peff.net> <Pine.LNX.4.64.0707300133210.6478@asgard.lang.hm> <20070730084138.GA4100@coredump.intra.peff.net> <alpine.LFD.0.999.0707301038380.4161@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, david@lang.hm,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthew L Foster <mfoster167@yahoo.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 20:12:17 2007
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] git.el: Support for incremental status updates.
+Date: Tue, 31 Jul 2007 20:48:01 +0200
+Message-ID: <874pjktnoe.fsf@wine.dyndns.org>
+References: <87sl7ekt40.fsf@wine.dyndns.org>
+	<20070730232226.GA2413@diana.vm.bytemark.co.uk>
+	<87k5shudz7.fsf@morpheus.local>
+	<20070731111438.GA17903@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 20:48:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFwCb-0001Ib-Q9
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 20:12:14 +0200
+	id 1IFwlT-0005NS-Ot
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 20:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753881AbXGaSMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 14:12:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761750AbXGaSMI
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 14:12:08 -0400
-Received: from mailer.zib.de ([130.73.108.11]:50939 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753794AbXGaSMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 14:12:07 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l6VI5Wqj017511;
-	Tue, 31 Jul 2007 20:05:33 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l6VI5US1009552
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 31 Jul 2007 20:05:30 +0200 (MEST)
-In-Reply-To: <alpine.LFD.0.999.0707301038380.4161@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S932476AbXGaSsJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 14:48:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757844AbXGaSsI
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 14:48:08 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:47323 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757329AbXGaSsG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2007 14:48:06 -0400
+Received: from adsl-84-227-18-170.adslplus.ch ([84.227.18.170] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1IFwlH-0004KP-4l; Tue, 31 Jul 2007 13:48:03 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 140DA1E70D2; Tue, 31 Jul 2007 20:48:01 +0200 (CEST)
+In-Reply-To: <20070731111438.GA17903@diana.vm.bytemark.co.uk> ("Karl
+ =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Tue\, 31 Jul 2007 13\:14\:38
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54367>
 
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-On Jul 30, 2007, at 7:42 PM, Linus Torvalds wrote:
-
-> On Mon, 30 Jul 2007, Jeff King wrote:
->>
->> If you followed a strict policy of always merging topics to a "base"
->> branch as your first parent, then never allowing fast forwards should
->> allow a very easy-to-read history in gitk.
+> git.el already requires ewoc. And it uses a number of ewoc functions
+> (and has done so since its creation); this newly introduced call is
+> the only one that fails.
 >
-> Only if only *one* person ever does any merges.
->
-> Immediately when you have other people merging code, you're now  
-> back in
-> the same boat.
->
-> This is why I personally think the whole policy of "no fast  
-> forward" is
-> totally broken. It's only usable in a non-distributed environment,  
-> where
-> there is one central person who does everything (a so-called "star
-> topology").
+> Also, I've just discovered that with Emacs 22.1, I don't see this
+> problem. So my guess is that ewoc-set-data is newer than Emacs 21.4.
 
-I think no fast forward merges can always provide useful information.
+Yes, it's a new function. Something like this should work:
 
-Public releases are often created from a public, linear branch that
-is not arbitrarily jumping around. Even if more than one person creates
-such releases there must be some agreement upon the responsibility for
-the release and thus for the branch the releases are created from.
+=46rom 8da6b3257fe785484c5683fc97edccf75ac5588d Mon Sep 17 00:00:00 200=
+1
+=46rom: Alexandre Julliard <julliard@winehq.org>
+Date: Tue, 31 Jul 2007 20:45:53 +0200
+Subject: [PATCH] git.el: Avoid using ewoc-set-data for compatibility wi=
+th Emacs 21.
 
-If all agreed to merge topics following the "no fast forward" policy and
-to use the release branch as a first parent, the commits along the first
-parents would document how commits came into the release branch. Non  
-fast
-forward merges would always document that a series of commits was added
-to the release branch at once at the (local time) of the merge commit.
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-If fast forwards are allowed it depends on whether the release branch  
-can
-be fast-forwarded over a series of commits on a topic branch or not.
-In case of fast-forward, the history makes you believe each of the  
-commits
-of the topic branch entered the release branch separately. It hides that
-they were all merged at once.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 9bcd7c4..f6102fc 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -530,7 +530,7 @@ and returns the process output as a string."
+     (setf (git-fileinfo->needs-refresh info) t)
+     (when node   ;preserve the marked flag
+       (setf (git-fileinfo->marked info) (git-fileinfo->marked (ewoc-da=
+ta node))))
+-    (if node (ewoc-set-data node info) (ewoc-enter-last status info)))=
+)
++    (if node (setf (ewoc-data node) info) (ewoc-enter-last status info=
+))))
+=20
+ (defun git-run-diff-index (status files)
+   "Run git-diff-index on FILES and parse the results into STATUS.
+--=20
+1.5.3.rc3.97.gcb90c
 
-I think, avoiding fast forwards may also be used to document a different
-level of quality required from commits to a topic branch and from  
-commits
-to the release branch. A the time of the merge the tip of a topic branch
-must fulfill all quality requirements, for example compile on all  
-platforms
-and pass all tests. But this need not be the case for every single  
-commit
-on the topic branch. If you avoid fast forwards you still get a chain of
-commits along the first parent that would fulfill your quality  
-requirements.
-If you allowed a fast forward over a low quality topic branch your chain
-might be broken and you can't be sure, which commits will have high  
-quality
-and which one have a lower quality.
-
-You may argue that this is all crap because every single commit  
-should be
-of highest quality, but I think this is unrealistic. Especially if  
-more than
-one person is jointly working on a topic branch and less experienced and
-more experienced developers work together. It may also be rational to  
-first
-get the basic functionality right and later polish work for several  
-platforms
-and usage scenarios.
-
-Obviously other techniques, like rewriting a topic branch to a  
-perfect commit
-series may be used as well. But from my understanding this may be  
-hard if more
-than a single person is involved. You could also squash the complete  
-topic
-branch into a single commit but then valuable history might get lost.
-
-I don't see why what I have in mind would break if other people are  
-merging
-code, too. They may or may not follow my local rules. But at the time of
-merging their changes, I can enforce my local quality policy and  
-document
-this by create a merge commit.
-
-This could even be applied recursively. You could start to do a  
-couple of
-merges but only thoroughly test the final result of the last merge.  
-You could
-then enforce a link between the last very stable commit before you  
-did all the
-merges and the very well tested result after the final merge by  
-enforcing a
-"no fast forward" merge.
-
-I'm not quite sure if such a history would be useful in the long term or
-may just become to complex. I'm also not sure if the artificial links  
-would
-cause any trouble. I'm wondering, for example, if there are any cases  
-in which
-the additional links would make branching and merging harder.
-
-	Steffen
+--=20
+Alexandre Julliard
+julliard@winehq.org
