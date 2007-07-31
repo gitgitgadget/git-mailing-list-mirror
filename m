@@ -1,64 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Efficient way to import snapshots?
-Date: Mon, 30 Jul 2007 17:47:54 -0700
-Message-ID: <7vfy35iekl.fsf@assigned-by-dhcp.cox.net>
-References: <20070730180710.GA64467@nowhere>
-	<alpine.LFD.0.999.0707301144180.4161@woody.linux-foundation.org>
-	<20070730192922.GB64467@nowhere>
-	<alpine.LFD.0.999.0707301240330.4161@woody.linux-foundation.org>
-	<7vy7gximkc.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0707301624050.4161@woody.linux-foundation.org>
-	<7vsl75igtt.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0707301744050.4161@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC (take 2) Git User's Survey 2007
+Date: Mon, 30 Jul 2007 21:09:21 -0400
+Message-ID: <20070731010921.GY20052@spearce.org>
+References: <200707250358.58637.jnareb@gmail.com> <200707302256.38251.jnareb@gmail.com> <20070731003251.GW20052@spearce.org> <200707310245.56077.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Craig Boston <craig@olyun.gank.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 02:48:02 2007
+Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 03:09:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFfu3-0004Vz-VT
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 02:48:00 +0200
+	id 1IFgEr-0001Je-4r
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 03:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934505AbXGaAr5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 20:47:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933886AbXGaAr5
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 20:47:57 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:32857 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756806AbXGaAr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 20:47:56 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070731004756.HQMA7349.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 30 Jul 2007 20:47:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id W0nv1X0031kojtg0000000; Mon, 30 Jul 2007 20:47:56 -0400
-In-Reply-To: <alpine.LFD.0.999.0707301744050.4161@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 30 Jul 2007 17:45:26 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S938963AbXGaBJ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 21:09:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937828AbXGaBJZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 21:09:25 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38267 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762250AbXGaBJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 21:09:25 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IFgEa-0008Gi-2g; Mon, 30 Jul 2007 21:09:12 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BA07B20FBAE; Mon, 30 Jul 2007 21:09:21 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200707310245.56077.jnareb@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54300>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Shawn O. Pearce wrote:
+> > But I *seriously* object to calling egit a porcelain.  egit is a
+> > complete reimplementation of git in Java.
+> 
+> O.K. I was not sure where to put egit (if put it at all). 
+> Implementations? Currently we have core-git in C, egit in Java (what is 
+> the progress report on this front?), and there was GSoC project of 
+> Git.NET (but it didn't start I think).
 
-> On Mon, 30 Jul 2007, Junio C Hamano wrote:
->> 
->> I guess so, but can higher stage entries have cached stat
->> information that are valid and match the working tree?
->
-> Probably unlikely, but I could imagine that it's the case for things that 
-> failed to merge entirely (ie binaries), where you end up just saying "pick 
-> the old/base binary", and it ends up matching in stage1.
+Right, that's an accurate state of affairs.  Today egit can make
+commits on the current branch.  Yay, progress.  :)
+ 
+> Do you want question about egit in the survey?
 
-Probably.  In any case, what I'll commit will have the stage#0
-check, just to be safe anyway.
+Might be nice to know how many people are interested in the
+Eclipse plugin.  But aside from that, I don't think its worth
+including much about it.  Maybe just have a checkbox under
+some heading like:
 
-Thanks for the sanity.  Really appreciate it.
+  What features is Git currently missing for your needs?
+  [ ] Eclipse plugin
+  [ ] wizhbang foo thing
+  [ ] Other:  ________________________
+
+?
+
+-- 
+Shawn.
