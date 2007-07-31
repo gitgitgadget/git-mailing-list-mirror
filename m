@@ -1,76 +1,90 @@
-From: Craig Boston <craig@olyun.gank.org>
-Subject: Re: Efficient way to import snapshots?
-Date: Tue, 31 Jul 2007 08:53:32 -0500
-Message-ID: <20070731135332.GA58867@nowhere>
-References: <20070730180710.GA64467@nowhere> <alpine.LFD.0.999.0707301144180.4161@woody.linux-foundation.org> <20070730192922.GB64467@nowhere> <alpine.LFD.0.999.0707301240330.4161@woody.linux-foundation.org> <20070730222028.GE64467@nowhere> <alpine.LFD.0.999.0707301629230.4161@woody.linux-foundation.org> <20070731011707.GA91930@nowhere> <alpine.LFD.0.999.0707301825130.4161@woody.linux-foundation.org> <20070731042347.GG25876@thunk.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH 5/5] Split out the actual commit creation from the
+	option parsing etc.
+Date: Tue, 31 Jul 2007 10:11:49 -0400
+Message-ID: <1185891109.11086.28.camel@hinata.boston.redhat.com>
+References: <11858309261111-git-send-email-krh@redhat.com>
+	 <11858309311728-git-send-email-krh@redhat.com>
+	 <11858309322006-git-send-email-krh@redhat.com>
+	 <11858309322915-git-send-email-krh@redhat.com>
+	 <11858309332705-git-send-email-krh@redhat.com>
+	 <7v8x8xgp3s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jul 31 15:53:41 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 16:12:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFsAO-00009u-Ph
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 15:53:41 +0200
+	id 1IFsST-0006Id-Ky
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 16:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755758AbXGaNxh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 09:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755343AbXGaNxh
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 09:53:37 -0400
-Received: from ion.gank.org ([69.55.238.164]:1135 "EHLO ion.gank.org"
+	id S1759743AbXGaOMS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 10:12:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759775AbXGaOMS
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 10:12:18 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:55771 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755739AbXGaNxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 09:53:35 -0400
-Received: by ion.gank.org (Postfix, from userid 1001)
-	id 472FC11246; Tue, 31 Jul 2007 08:53:33 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20070731042347.GG25876@thunk.org>
-User-Agent: Mutt/1.4.2.2i
+	id S1759743AbXGaOMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 10:12:17 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l6VEC16x021371;
+	Tue, 31 Jul 2007 10:12:01 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6VEBwF3005564;
+	Tue, 31 Jul 2007 10:11:58 -0400
+Received: from [192.168.1.102] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l6VEBtWS028842;
+	Tue, 31 Jul 2007 10:11:55 -0400
+In-Reply-To: <7v8x8xgp3s.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.11.4 (2.11.4-1.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54352>
 
-On Tue, Jul 31, 2007 at 12:23:47AM -0400, Theodore Tso wrote:
-> On Mon, Jul 30, 2007 at 06:44:13PM -0700, Linus Torvalds wrote:
-> > 
-> > Oh, ok. Solaris.
+On Mon, 2007-07-30 at 21:43 -0700, Junio C Hamano wrote:
+> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+>=20
+> > @@ -85,40 +129,20 @@ int cmd_commit_tree(int argc, const char **arg=
+v, const char *prefix)
+> >  			parents++;
+> >  	}
+> > =20
+> > -	/* Not having i18n.commitencoding is the same as having utf-8 */
+> > -	encoding_is_utf8 =3D is_encoding_utf8(git_commit_encoding);
+> > +	buffer =3D NULL;
+> > +	if (read_fd(0, &buffer, &len))
+> > +		die("Could not read commit message from standard input");
+> > =20
+> > -	strbuf_init(&sb);
+> > -	strbuf_printf(&sb, "tree %s\n", sha1_to_hex(tree_sha1));
+> > +	commit_sha1 =3D create_commit(tree_sha1,
+> > +				    parent_sha1, parents,
+> > +				    xstrdup(git_author_info(1)),
+> > +				    xstrdup(git_committer_info(1)),
+> > +				    buffer, len);
+>=20
+> Hmph, the series was so nice so far, but here we have a few new
+> leak, presumably so small per process invocation that we do not
+> care about?
 
-For reference, as I mentioned to Linus & Junio in an excessively
-verbose, and probably uninteresting to most of the git-list members,
-message about the performance characteristics of ZFS, I'm actually
-running FreeBSD-current with the experimental port of ZFS.
+There's number of buffers that don't get freed: the strbuf, the commit
+message buffer, and the strdup'ed author and committer info.  All the
+leaks are not critical since the process exits immediately.  As for the
+strbuf leak, I was thinking about renaming strbuf_begin to strbuf_reset
+and making it public[1], which will then be used for freeing up strbuf
+memory.  The message buffer leak should be fixed by adding a
+strbuf_read_fd() that just reads it straight into the strbuf.  The
+xstrdup's are necessary because fmt_ident uses a static buffer (thanks,
+test case :).  We could add rotating static buffers for fmt_ident like
+git_path and avoid the strdups, but again, the leaks are not critical.
 
-So, even less tested & tuned than it is on Solaris.  Part of what I'm
-doing is stress testing the filesystem on machines with less than the
-recommended memory.  Even if performance is suboptimal, it should at
-least not break anything.
+Kristian
 
-> Craig, it might be interesting to see what sort of results you get if
-> you use UFS instead of ZFS in your low-memory constrained
-> environment...
-
-I just so happen to be rebuilding the zfs pool on that server this
-morning in order to add more swap, so your wish(1tcl) is my rcmd(3).
-
-Same machine, on a UFS filesystem (single disk, since zfs was doing the
-RAID), with the cache tuning parameters reset back to defaults:
-
-First 'git status' after a reboot:
-git status  2.23s user 2.23s system 17% cpu 24.987 total
-
-Second:
-git status  1.81s user 1.34s system 98% cpu 3.188 total
-
-Third:
-git status  1.76s user 1.45s system 98% cpu 3.252 total
-
-So I definitely think the problem is just that with its increased
-overhead, ZFS simply can't keep all the metadata in the cache with the
-available memory.
-
-Craig
+[1] strbuf_begin() is a good name the way it's used in strbuf.c where
+it's balanced by strbuf_end(), but as a general purpose reset function
+it's better name strbuf_reset(), I think
