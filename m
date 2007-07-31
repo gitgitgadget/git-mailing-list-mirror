@@ -1,91 +1,93 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] git.el: Support for incremental status updates.
-Date: Tue, 31 Jul 2007 20:48:01 +0200
-Message-ID: <874pjktnoe.fsf@wine.dyndns.org>
-References: <87sl7ekt40.fsf@wine.dyndns.org>
-	<20070730232226.GA2413@diana.vm.bytemark.co.uk>
-	<87k5shudz7.fsf@morpheus.local>
-	<20070731111438.GA17903@diana.vm.bytemark.co.uk>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Git User's Survey 2007 - web survey site
+Date: Tue, 31 Jul 2007 21:07:12 +0200
+Message-ID: <4d8e3fd30707311207q7ec48559n3ff091253085cb47@mail.gmail.com>
+References: <200707250358.58637.jnareb@gmail.com>
+	 <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
+	 <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
+	 <200707311835.03197.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 20:48:18 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 21:07:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFwlT-0005NS-Ot
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 20:48:16 +0200
+	id 1IFx3x-0003Fn-8S
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 21:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932476AbXGaSsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 14:48:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757844AbXGaSsI
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 14:48:08 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:47323 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757329AbXGaSsG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2007 14:48:06 -0400
-Received: from adsl-84-227-18-170.adslplus.ch ([84.227.18.170] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1IFwlH-0004KP-4l; Tue, 31 Jul 2007 13:48:03 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 140DA1E70D2; Tue, 31 Jul 2007 20:48:01 +0200 (CEST)
-In-Reply-To: <20070731111438.GA17903@diana.vm.bytemark.co.uk> ("Karl
- =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Tue\, 31 Jul 2007 13\:14\:38
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1764637AbXGaTHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 15:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763690AbXGaTHQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 15:07:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.231]:3319 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758802AbXGaTHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 15:07:14 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1176576nze
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 12:07:13 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ca2nFPYMgFWp1bFJsQ3wMp85BVUtggBU97LvtVSEFu5kOsBDyUB06yJcvntA1jZG2hISJbC8UW2l3SpB+9gftpwcWCbOVWl2ecGReiWkBmXO2fWrNJLPODX8EaTiMTSOUWC1RbFvf+CmOPtxAc013ogjBeareE8pe7vZdVVasYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dItSGozmS546WsayL/hmsiBUthgyeF+v8RRMyhB2LaAgWMUijz8vK/RAKFEiMdJdojYvig0CYb5bx5lUf3zxzlySZXndINPZ4Pdg36fdb5iTgtAsUKU9DdGIwhMartoaJN5R3fEivcinDpP/rmcg5hU0/iggAqNyb8aLSjopap0=
+Received: by 10.142.115.10 with SMTP id n10mr365380wfc.1185908833081;
+        Tue, 31 Jul 2007 12:07:13 -0700 (PDT)
+Received: by 10.143.163.10 with HTTP; Tue, 31 Jul 2007 12:07:12 -0700 (PDT)
+In-Reply-To: <200707311835.03197.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54368>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
-
-> git.el already requires ewoc. And it uses a number of ewoc functions
-> (and has done so since its creation); this newly introduced call is
-> the only one that fails.
+On 7/31/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> Jakub Narebski wrote:
+> > On 7/31/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+> >> On 7/31/07, Jakub Narebski <jnareb@gmail.com> wrote:
 >
-> Also, I've just discovered that with Emacs 22.1, I don't see this
-> problem. So my guess is that ewoc-set-data is newer than Emacs 21.4.
+> >>> I might have no access ti Internet for a while, so the survey start
+> >>> might get delayed. Unless of course somebody want's to do the honors...
+>
+> False alarm. Of course, if you want to help... for example some of those
+> magazines, journals, blogs, news sites use form submission, and not via
+> email.
 
-Yes, it's a new function. Something like this should work:
+Jakub Narebski
+> Sure, I'll help as much as I can.
 
-=46rom 8da6b3257fe785484c5683fc97edccf75ac5588d Mon Sep 17 00:00:00 200=
-1
-=46rom: Alexandre Julliard <julliard@winehq.org>
-Date: Tue, 31 Jul 2007 20:45:53 +0200
-Subject: [PATCH] git.el: Avoid using ewoc-set-data for compatibility wi=
-th Emacs 21.
+> >> I might help.
+> >> Did you already choose the web survey service?
+> >
+> > No. I was thinking about using the same as in previous survey.
+>
+> http://www.survey.net.nz
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+When I wrote the first survey Martin Langhoff help me in getting the
+data into the site.
+Maybe he can help us this time too (Martin CC'ed ;-)
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 9bcd7c4..f6102fc 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -530,7 +530,7 @@ and returns the process output as a string."
-     (setf (git-fileinfo->needs-refresh info) t)
-     (when node   ;preserve the marked flag
-       (setf (git-fileinfo->marked info) (git-fileinfo->marked (ewoc-da=
-ta node))))
--    (if node (ewoc-set-data node info) (ewoc-enter-last status info)))=
-)
-+    (if node (setf (ewoc-data node) info) (ewoc-enter-last status info=
-))))
-=20
- (defun git-run-diff-index (status files)
-   "Run git-diff-index on FILES and parse the results into STATUS.
---=20
-1.5.3.rc3.97.gcb90c
+> Requirements for survey site: single answer and multiple answer
+> questions, single line and textarea answers. It would be nice
+> to have select form for the state, and for the language but it
+> is not required. I'd rather it not be heavyweight.
+>
+> I'd like for it to have place for comment to question (which will
+> not be present in the summary), like example answers or explanation
+> of question. It would be nice to have questions divided into sections.
+>
+> Any other proposals?
 
---=20
-Alexandre Julliard
-julliard@winehq.org
+I'll google a  bit but I think we should proceed as you suggested.
+
+
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
+Philip Stanhope IV conte di Chesterfield
