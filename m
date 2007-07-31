@@ -1,103 +1,106 @@
 From: Eric Lesh <eclesh@ucla.edu>
-Subject: [GUILT PATCH 3/5] guilt-select: Select guards to apply when pushing patches
-Date: Mon, 30 Jul 2007 20:11:19 -0700
-Message-ID: <11858514811245-git-send-email-eclesh@ucla.edu>
+Subject: [GUILT PATCH 2/5] guilt-guard: Assign guards to patches in series
+Date: Mon, 30 Jul 2007 20:11:18 -0700
+Message-ID: <1185851481271-git-send-email-eclesh@ucla.edu>
 References: <1185851481190-git-send-email-eclesh@ucla.edu>
 Cc: git@vger.kernel.org, Eric Lesh <eclesh@ucla.edu>
 To: jsipek@cs.sunysb.edu
-X-From: git-owner@vger.kernel.org Tue Jul 31 05:12:00 2007
+X-From: git-owner@vger.kernel.org Tue Jul 31 05:12:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFi9Q-0001t4-0i
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 05:12:00 +0200
+	id 1IFi9R-0001t4-K4
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 05:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966311AbXGaDLm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Jul 2007 23:11:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965575AbXGaDLl
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 23:11:41 -0400
-Received: from smtp-1.smtp.ucla.edu ([169.232.46.136]:41234 "EHLO
-	smtp-1.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762032AbXGaDLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2007 23:11:36 -0400
+	id S965575AbXGaDLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Jul 2007 23:11:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966453AbXGaDLq
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Jul 2007 23:11:46 -0400
+Received: from smtp-6.smtp.ucla.edu ([169.232.48.137]:56255 "EHLO
+	smtp-6.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966010AbXGaDLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2007 23:11:38 -0400
 Received: from mail.ucla.edu (mail.ucla.edu [169.232.46.158])
-	by smtp-1.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6V3BT0l007064;
-	Mon, 30 Jul 2007 20:11:29 -0700
+	by smtp-6.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l6V3BTDR008992;
+	Mon, 30 Jul 2007 20:11:30 -0700
 Received: from localhost (adsl-75-26-197-236.dsl.scrm01.sbcglobal.net [75.26.197.236])
 	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6V3BSkW029090
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l6V3BSIt029091
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
 	Mon, 30 Jul 2007 20:11:29 -0700
 Received: by localhost (Postfix, from userid 1000)
-	id A4B6D1E80AC; Mon, 30 Jul 2007 20:11:21 -0700 (PDT)
+	id A0DB01E80AB; Mon, 30 Jul 2007 20:11:21 -0700 (PDT)
 X-Mailer: git-send-email 1.5.2
 In-Reply-To: <1185851481190-git-send-email-eclesh@ucla.edu>
 X-Probable-Spam: no
 X-Spam-Report: none
-X-Scanned-By: smtp.ucla.edu on 169.232.46.136
+X-Scanned-By: smtp.ucla.edu on 169.232.48.137
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54312>
 
-guilt-select chooses guards that alter which patches will be applied
-with a guilt-push.  The selected guards are stored in
-.git/patches/$branch/guards.
+guilt-guard will assign guards to a patch.  They work so that:
+
+    * Patches with no guards are always pushed.
+
+    * Patches with positive guards (i.e. +foo) are pushed *only if* the
+      guard is selected.
+
+    * Patches with negative guards (i.e. -foo) are pushed *unless* the
+      guard is selected.
+
+This also introduces a number of guard-related utility functions into
+guilt.  get_guarded_series is used to get the list of patches that are
+applicable given the current guard status.  It replaces get_series in
+a later patch.
 
 Signed-off-by: Eric Lesh <eclesh@ucla.edu>
 ---
- Documentation/guilt-select.txt |   47 ++++++++++++++++++++++++++++++++++++
- Documentation/guilt.txt        |    5 +++-
- guilt                          |    1 +
- guilt-select                   |   52 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 104 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/guilt-select.txt
- create mode 100755 guilt-select
+ Documentation/guilt-guard.txt |   40 +++++++++++++++++++++++
+ guilt                         |   66 +++++++++++++++++++++++++++++++++++++++
+ guilt-guard                   |   69 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 175 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/guilt-guard.txt
+ create mode 100755 guilt-guard
 
-diff --git a/Documentation/guilt-select.txt b/Documentation/guilt-select.txt
+diff --git a/Documentation/guilt-guard.txt b/Documentation/guilt-guard.txt
 new file mode 100644
-index 0000000..12f19b4
+index 0000000..6290bf7
 --- /dev/null
-+++ b/Documentation/guilt-select.txt
-@@ -0,0 +1,47 @@
-+guilt-select(1)
++++ b/Documentation/guilt-guard.txt
+@@ -0,0 +1,40 @@
++guilt-guard(1)
 +===============
 +
 +NAME
 +----
-+guilt-select - Select guards to apply when pushing patches
++guilt-guard - Assign guards to patches
 +
 +SYNOPSIS
 +--------
-+include::usage-guilt-select.txt[]
++include::usage-guilt-guard.txt[]
 +
 +DESCRIPTION
 +-----------
-+Select guards to apply when pushing patches.
++Assign guards to the specified patch, or to the patch on top of the
++stack if no patch is given on the command line.
 +
-+Guards are selected without the + or - prefix.  Patches are applied in
-+the following way:
++An unguarded patch is always pushed.
 +
-+* An unguarded patch is always applied.
++A positive guard begins with a +. A patch with a positive guard is
++pushed *only if* the guard is selected.
 +
-+* A patch with a positive guard is applied *only* if the guard is
-+selected with guilt-select.
-+
-+* A patch with a negative guard is applied *unless* the guard is
-+selected with guilt-select.
++A negative guard begins with a -. A patch with a negative guard is
++always pushed, *unless* the guard is selected.
 +
 +OPTIONS
 +-------
++-l|--list::
++        List all patches and their guards
 +-n|--none::
-+        Remove all selected guards
-+--pop::
-+        Pop back to the first guarded patch
-+--reapply::
-+        Pop back to first guarded patch, select a new guard, and
-+        push
-+-s|--series::
-+        List all guards listed in the series file
++        Remove all guards from a patch
 +
 +Author
 +------
@@ -108,90 +111,156 @@ index 0000000..12f19b4
 +Documentation by Eric Lesh <eclesh@ucla.edu>
 +
 +include::footer.txt[]
-diff --git a/Documentation/guilt.txt b/Documentation/guilt.txt
-index 31dbc0e..11c2ca9 100644
---- a/Documentation/guilt.txt
-+++ b/Documentation/guilt.txt
-@@ -33,7 +33,10 @@ PATCHES DIRECTORY
- In Guilt, all the patches are stored in .git/patches/$branch/, where $branch
- is the name of the branch being worked on. This means that one can have a
- independent series of patches for each branch present in the repository.
--Each of these per-branch directories contains 2 special files:
-+Each of these per-branch directories contains 3 special files:
-+
-+guards: This file contains any guards that should be applied to the
-+series when pushing. It is only present when guards are selected.
- 
- series: This file contains a list of all the patch filenames relative to the
- per-branch patch directory. Empty and commented out lines are ignored.
 diff --git a/guilt b/guilt
-index 6af590c..b289026 100755
+index 700c167..6af590c 100755
 --- a/guilt
 +++ b/guilt
-@@ -666,6 +666,7 @@ fi
- # very useful files
- series="$GUILT_DIR/$branch/series"
- applied="$GUILT_DIR/$branch/status"
-+guards_file="$GUILT_DIR/$branch/guards"
+@@ -187,6 +187,72 @@ get_series()
+ 		" $series
+ }
  
- # determine an editor to use for anything interactive (fall back to vi)
- editor="vi"
-diff --git a/guilt-select b/guilt-select
++get_guarded_series()
++{
++	get_series | while read p
++	do
++		check_guards "$p" && echo "$p"
++	done
++}
++
++# usage: check_guards <patch>
++# Returns 0 if the patch should be pushed
++check_guards()
++{
++	get_guards "$1" | while read guard
++	do
++		pos=`printf %s $guard | grep -e "^+"`
++		guard=`printf %s $guard | sed -e 's/^[+-]//'`
++		if [ "$pos" ]; then
++			# Push +guard *only if* guard selected
++			push=`grep -e "^$guard\$" "$guards_file" >/dev/null 2>/dev/null; echo $?`
++			[ $push -ne 0 ] && return 1
++		else
++			# Push -guard *unless* guard selected
++			push=`grep -e "^$guard\$" "$guards_file" >/dev/null 2>/dev/null; echo $?`
++			[ $push -eq 0 ] && return 1
++		fi
++		return 0
++	done
++	return $?
++}
++
++# usage: get_guards <patch>
++get_guards()
++{
++	sed -n -e "\,^$1[[:space:]]*#, {
++		s,^$1[[:space:]]*,,
++		s,#[^+-]*,,g
++
++		p
++		}
++		" $series
++}
++
++# usage: set_guards <patch> <guards...>
++set_guards()
++{
++	p="$1"
++	shift
++	for x in "$@"; do
++		if [ -z $(printf %s "$x" | grep -e "^[+-]") ]; then
++			echo "'$x' is not a valid guard name"
++		else
++			sed -i -e "s,^\($p[[:space:]]*.*\)$,\1 #$x," "$series"
++		fi
++	done
++}
++
++# usage: unset_guards <patch> <guards...>
++unset_guards()
++{
++	p="$1"
++	shift
++	for x in "$@"; do
++		sed -i -e "/^$p[[:space:]]/s/ #$x//" "$series"
++	done
++}
++
+ # usage: do_make_header <hash>
+ do_make_header()
+ {
+diff --git a/guilt-guard b/guilt-guard
 new file mode 100755
-index 0000000..378ca98
+index 0000000..a0cac2e
 --- /dev/null
-+++ b/guilt-select
-@@ -0,0 +1,52 @@
++++ b/guilt-guard
+@@ -0,0 +1,69 @@
 +#!/bin/sh
 +#
 +# Copyright (c) Eric Lesh, 2007
 +#
 +
-+USAGE="[-n|--none|-s|--series|[--pop|--reapply] <guards...>]"
++USAGE="[-l|--list|-n|--none|[<patchname>] [(+|-)<guard>...]]"
 +. `dirname $0`/guilt
 +
-+select_guards()
++print_guards()
 +{
-+	for x in "$@"; do
-+		if [ $(printf %s "$x" | grep -e "^[+-]") ]; then
-+			die "'$x' cannot begin with + or -."
-+		fi
-+	done
-+	echo "$@" | sed -e 's/ /\n/g' | sort | uniq > "$guards_file"
++	guards=`get_guards "$1"`
++	echo "$1: $guards"
 +}
 +
-+if [ $# == 0 ]; then
-+	if [ -s "$guards_file" ]; then
-+		cat "$guards_file"
-+	else
-+		echo >&2 "No guards applied"
++if [ "$1" == "-l" ] || [ "$1" == "--list" ]; then
++	get_series | while read patch; do
++		print_guards "$patch"
++	done
++	exit 0
++elif [ "$1" == "-n" ] || [ "$1" == "--none" ]; then
++	patch="$2"
++	if [ -z "$patch" ]; then
++		patch=`get_top`
 +	fi
++	unset_guards "$patch" `get_guards "$patch"`
 +	exit 0
 +fi
 +
-+case $1 in
-+	-n|--none)
-+		rm -f "$guards_file"
++case $# in
++	0)
++		if [ ! -s "$applied" ]; then
++			die "No patches applied."
++		fi
++		print_guards `get_top`
 +		;;
-+	--pop)
-+		guilt-pop -a
-+		shift
-+		select_guards "$@"
-+		;;
-+	--reapply)
-+		top=`get_top`
-+		guilt-pop -a
-+		shift
-+		select_guards "$@"
-+		guilt-push "$top"
-+		;;
-+	-s|--series)
-+		(get_series | while read patch; do
-+			get_guards "$patch"
-+		done) | sed -e 's/ /\n/g' | sort | uniq
++	1)
++		if [ -z $(printf %s "$1" | grep -e '^[+-]') ]; then
++			if [ -z $(get_series | grep -e "^$1\$") ]; then
++				die "Patch $1 does not exist."
++			else
++				print_guards "$1"
++			fi
++		else
++			patch=`get_top`
++			if [ -z "$patch" ]; then
++				die "You must specify a patch."
++			fi
++			unset_guards "$patch" `get_guards "$patch"`
++			set_guards "$patch" "$1"
++		fi
 +		;;
 +	*)
-+		select_guards "$@"
++		if [ -z $(printf %s "$1" | grep -e '^[+-]') ]; then
++			if [ -z $(get_series | grep -e "^$1\$") ]; then
++				die "Patch $1 does not exist."
++			else
++				patch="$1"
++			fi
++			shift
++		else
++			patch=`get_top`
++			if [ -z "$patch" ]; then
++				die "You must specify a patch."
++			fi
++		fi
++		unset_guards "$patch" `get_guards "$patch"`
++		set_guards "$patch" "$@"
 +		;;
 +esac
 -- 
