@@ -1,65 +1,102 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: [RFC (take 2) Git User's Survey 2007
-Date: Tue, 31 Jul 2007 14:30:06 +0200
-Message-ID: <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
-References: <200707250358.58637.jnareb@gmail.com>
-	 <200707302256.38251.jnareb@gmail.com>
-	 <200707311322.43088.jnareb@gmail.com>
-	 <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 3/4] Move some bisection code into best_bisection.
+Date: Tue, 31 Jul 2007 14:48:37 +0200
+Message-ID: <20070731144837.3bb2c9eb.chriscool@tuxfamily.org>
+References: <20070731143602.a5ed0a04.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 14:30:21 2007
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Jul 31 14:42:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFqre-0001h3-O5
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 14:30:15 +0200
+	id 1IFr37-0004jJ-Au
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 14:42:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478AbXGaMaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 08:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755285AbXGaMaI
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 08:30:08 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:38352 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751598AbXGaMaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 08:30:06 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so584189rvb
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 05:30:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jUuxn74p44gvku8TOQGuIVpqSXzDUfjfbOt0jEJ/cLdB9yqAOGNp3+sqLKzNV6dBIDG/OEuagllYBuvyFlLN+uNTMSxnzct9Jpbmbpf2ZQyBPVROkmIHL7rSw3qpLmdThGS7Ff9jCjjwk9dqSBqGKc3ZOk1Mzr4e2O35DpIbHYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=URBRIplqHXBVKbBfak0ZYsGm/Vw1SZ00am+bRwNrvhliyLfP6v8AqdjERWbMwrOVV45x5C3NTnzPFoUMB/ob5l8aUg1SZjFNlB/7uHAhCbzO6sv2DJQqD2R+aVdQJehyuU+EjezhUBM9mpwvOlSePO2TMmYDoRHsp+bjrTmBJk4=
-Received: by 10.114.58.1 with SMTP id g1mr126917waa.1185885006413;
-        Tue, 31 Jul 2007 05:30:06 -0700 (PDT)
-Received: by 10.114.202.19 with HTTP; Tue, 31 Jul 2007 05:30:06 -0700 (PDT)
-In-Reply-To: <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
-Content-Disposition: inline
+	id S1757171AbXGaMmD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 08:42:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757033AbXGaMmD
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 08:42:03 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:32964 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756792AbXGaMl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 08:41:58 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 912CC1AB2FA;
+	Tue, 31 Jul 2007 14:41:57 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 608101AB2F4;
+	Tue, 31 Jul 2007 14:41:57 +0200 (CEST)
+In-Reply-To: <20070731143602.a5ed0a04.chriscool@tuxfamily.org>
+X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54344>
 
-On 7/31/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
-> On 7/31/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> > I might have no access ti Internet for a while, so the survey start
-> > might get delayed. Unless of course somebody want's to do the honors...
-> >
->
-> I might help.
-> Did you already choose the web survey service?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-list.c |   19 +++++++++++++++----
+ 1 files changed, 15 insertions(+), 4 deletions(-)
 
-No. I was thinking about using the same as in previous survey.
-
-P.S. One thing that remains is removing egit from the list
-of answers for porcelains.
-
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 4e2524a..e5e8011 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -258,6 +258,8 @@ static void show_list(const char *debug, int counted, int nr,
+ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 					     int nr, int *weights);
+ 
++static struct commit_list *best_bisection(struct commit_list *list, int nr);
++
+ /*
+  * zero or positive weight is the number of interesting commits it can
+  * reach, including itself.  Especially, weight = 0 means it does not
+@@ -321,7 +323,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 					     int nr, int *weights)
+ {
+ 	int n, counted, distance;
+-	struct commit_list *p, *best;
++	struct commit_list *p;
+ 
+ 	counted = 0;
+ 
+@@ -426,9 +428,17 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 	show_list("bisection 2 counted all", counted, nr, list);
+ 
+ 	/* Then find the best one */
+-	counted = -1;
++	return best_bisection(list, nr);
++}
++
++static struct commit_list *best_bisection(struct commit_list *list, int nr)
++{
++	struct commit_list *p, *best;
++	int best_distance = -1;
++
+ 	best = list;
+ 	for (p = list; p; p = p->next) {
++		int distance;
+ 		unsigned flags = p->item->object.flags;
+ 
+ 		if (revs.prune_fn && !(flags & TREECHANGE))
+@@ -436,11 +446,12 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		distance = weight(p);
+ 		if (nr - distance < distance)
+ 			distance = nr - distance;
+-		if (distance > counted) {
++		if (distance > best_distance) {
+ 			best = p;
+-			counted = distance;
++			best_distance = distance;
+ 		}
+ 	}
++
+ 	return best;
+ }
+ 
 -- 
-Jakub Narebski
+1.5.2.1.144.gabc40
