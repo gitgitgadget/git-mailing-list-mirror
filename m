@@ -1,150 +1,87 @@
 From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Add an option to specify a file to config builtin
-Date: Tue, 31 Jul 2007 13:53:04 +0200
-Message-ID: <81b0412b0707310453pc6b11d2r90ca0f22b5ed601e@mail.gmail.com>
+Subject: [PATCH] Add a test for git-config --file
+Date: Tue, 31 Jul 2007 13:53:49 +0200
+Message-ID: <81b0412b0707310453n5077a018ybbbfcf690fb82467@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_36574_10381707.1185882784482"
+	boundary="----=_Part_36590_2059235.1185882829791"
 Cc: "Junio C Hamano" <gitster@pobox.com>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 31 13:53:15 2007
+X-From: git-owner@vger.kernel.org Tue Jul 31 13:53:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IFqHo-0001BB-LL
-	for gcvg-git@gmane.org; Tue, 31 Jul 2007 13:53:13 +0200
+	id 1IFqIV-0001N2-9b
+	for gcvg-git@gmane.org; Tue, 31 Jul 2007 13:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbXGaLxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 07:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbXGaLxH
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 07:53:07 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:57923 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbXGaLxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 07:53:06 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so216808nfb
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 04:53:04 -0700 (PDT)
+	id S1751795AbXGaLxw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 07:53:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754755AbXGaLxw
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 07:53:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:2628 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864AbXGaLxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 07:53:51 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so65407ugf
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 04:53:50 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=IRXKxBqo2XvABiDtBVuRJbSujsNCp012mEvUh9psY8h2lGdABzcA283rp/adFG04ltzz7Q0vPVaL1QirlVA294Jp6RL53/VIGYsiarHydrsWy4VGGhbPm3bKzHxQpqGkRMqQgBMobKVxpIpoAiOAPSJnCvwPfKPdH6XuCbMV/II=
+        b=Cn/u8m+9wsB5o8xipe5EKTwWdoVnXONPGJ7DfkvSkkIsdrJBwigaracW2H2cS/fCRXMatmWgSRGYdw1M309iqFb0XW/himjtcQEjuv5NpmiP7J4IVUlM17qvzP3akMIJ3RBLlAMjvko/hD77F8FNJpl8kt2RCW0LMYFW+q1RZ4E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=oDmLhYOIJ8XqOiuSbDxnJy3HE1Y6o1xFV6KX8NXKeEa/IVGNC/TnIMzgQa86+tB5L9ZPmsvaawPTNY3TZ/WNNZlANufAtJhtXJz7eDhEG45/X1mR1RqQJuy8bhzy51a0GyuCOythxxP+GIj+LGPNnaMBW5uWhoseCotskVyZiFM=
-Received: by 10.78.160.4 with SMTP id i4mr1776620hue.1185882784516;
-        Tue, 31 Jul 2007 04:53:04 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Tue, 31 Jul 2007 04:53:04 -0700 (PDT)
+        b=EEdhb/9TIBXAD8De9ZlJBPnNOH9HURzrwnv5EhV/ZvNdiTX7kPCGsUwTnB+c3E0Y32PHXf2u7RR7VbKjWBKACXbXHeZ5aTiDvTW6ojs0+gdrQZ9jVo1r2UwcdJnHLQO03aMQUGYfUlvDtBY2RHf0mmMYt+cxeMckeHVtL1pPps8=
+Received: by 10.78.170.6 with SMTP id s6mr1768438hue.1185882830036;
+        Tue, 31 Jul 2007 04:53:50 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Tue, 31 Jul 2007 04:53:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54339>
 
-------=_Part_36574_10381707.1185882784482
+------=_Part_36590_2059235.1185882829791
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
-There are (really!) systems where using environment variables is very
-cumbersome (yes, Windows, it has problems unsetting them). Besides this
-form is shorter.
+Check for non-0 exit code if the confiog file does not exist and
+if it works exactly like when setting GIT_CONFIG.
 
 Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- Documentation/git-config.txt |   29 ++++++++++++++++-------------
- builtin-config.c             |    9 ++++++++-
- 2 files changed, 24 insertions(+), 14 deletions(-)
+ t/t1300-repo-config.sh |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-------=_Part_36574_10381707.1185882784482
-Content-Type: text/plain; 
-	name=0001-Add-an-option-to-specify-a-file-to-config-builtin.txt; 
+------=_Part_36590_2059235.1185882829791
+Content-Type: text/plain; name=0002-Add-a-test-for-git-config-file.txt; 
 	charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f4sc1lea
-Content-Disposition: attachment; filename="0001-Add-an-option-to-specify-a-file-to-config-builtin.txt"
+X-Attachment-Id: f_f4sc2qa5
+Content-Disposition: attachment; filename="0002-Add-a-test-for-git-config-file.txt"
 
-RnJvbSA3ODdhYmU0YjBhNzE4NTZiODY3MWE0MWM5YjgzNTYxZmRlODRlNTU4IE1vbiBTZXAgMTcg
+RnJvbSBhNWFlMThmMjk5ZDQzMTA1MzA3NGMwZWJkY2YyZDk2YTNhYzlkZmY2IE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDMxIEp1bCAyMDA3IDExOjU4OjQzICswMjAwClN1YmplY3Q6IFtQQVRDSF0gQWRkIGFu
-IG9wdGlvbiB0byBzcGVjaWZ5IGEgZmlsZSB0byBjb25maWcgYnVpbHRpbgoKVGhlcmUgYXJlIChy
-ZWFsbHkhKSBzeXN0ZW1zIHdoZXJlIHVzaW5nIGVudmlyb25tZW50IHZhcmlhYmxlcyBpcyB2ZXJ5
-CmN1bWJlcnNvbWUgKHllcywgV2luZG93cywgaXQgaGFzIHByb2JsZW1zIHVuc2V0dGluZyB0aGVt
-KS4gQmVzaWRlcyB0aGlzCmZvcm0gaXMgc2hvcnRlci4KClNpZ25lZC1vZmYtYnk6IEFsZXggUmll
-c2VuIDxyYWEubGttbEBnbWFpbC5jb20+Ci0tLQogRG9jdW1lbnRhdGlvbi9naXQtY29uZmlnLnR4
-dCB8ICAgMjkgKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0KIGJ1aWx0aW4tY29uZmlnLmMg
-ICAgICAgICAgICAgfCAgICA5ICsrKysrKysrLQogMiBmaWxlcyBjaGFuZ2VkLCAyNCBpbnNlcnRp
-b25zKCspLCAxNCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1j
-b25maWcudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtY29uZmlnLnR4dAppbmRleCA1ZjY2YTdmLi44
-OGFjZjZjIDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1jb25maWcudHh0CisrKyBiL0Rv
-Y3VtZW50YXRpb24vZ2l0LWNvbmZpZy50eHQKQEAgLTksMTcgKzksMTcgQEAgZ2l0LWNvbmZpZyAt
-IEdldCBhbmQgc2V0IHJlcG9zaXRvcnkgb3IgZ2xvYmFsIG9wdGlvbnMKIFNZTk9QU0lTCiAtLS0t
-LS0tLQogW3ZlcnNlXQotJ2dpdC1jb25maWcnIFstLXN5c3RlbSB8IC0tZ2xvYmFsXSBbdHlwZV0g
-Wy16fC0tbnVsbF0gbmFtZSBbdmFsdWUgW3ZhbHVlX3JlZ2V4XV0KLSdnaXQtY29uZmlnJyBbLS1z
-eXN0ZW0gfCAtLWdsb2JhbF0gW3R5cGVdIC0tYWRkIG5hbWUgdmFsdWUKLSdnaXQtY29uZmlnJyBb
-LS1zeXN0ZW0gfCAtLWdsb2JhbF0gW3R5cGVdIC0tcmVwbGFjZS1hbGwgbmFtZSBbdmFsdWUgW3Zh
-bHVlX3JlZ2V4XV0KLSdnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbF0gW3R5cGVdIFst
-enwtLW51bGxdIC0tZ2V0IG5hbWUgW3ZhbHVlX3JlZ2V4XQotJ2dpdC1jb25maWcnIFstLXN5c3Rl
-bSB8IC0tZ2xvYmFsXSBbdHlwZV0gWy16fC0tbnVsbF0gLS1nZXQtYWxsIG5hbWUgW3ZhbHVlX3Jl
-Z2V4XQotJ2dpdC1jb25maWcnIFstLXN5c3RlbSB8IC0tZ2xvYmFsXSBbdHlwZV0gWy16fC0tbnVs
-bF0gLS1nZXQtcmVnZXhwIG5hbWVfcmVnZXggW3ZhbHVlX3JlZ2V4XQotJ2dpdC1jb25maWcnIFst
-LXN5c3RlbSB8IC0tZ2xvYmFsXSAtLXVuc2V0IG5hbWUgW3ZhbHVlX3JlZ2V4XQotJ2dpdC1jb25m
-aWcnIFstLXN5c3RlbSB8IC0tZ2xvYmFsXSAtLXVuc2V0LWFsbCBuYW1lIFt2YWx1ZV9yZWdleF0K
-LSdnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbF0gLS1yZW5hbWUtc2VjdGlvbiBvbGRf
-bmFtZSBuZXdfbmFtZQotJ2dpdC1jb25maWcnIFstLXN5c3RlbSB8IC0tZ2xvYmFsXSAtLXJlbW92
-ZS1zZWN0aW9uIG5hbWUKLSdnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbF0gWy16fC0t
-bnVsbF0gLWwgfCAtLWxpc3QKKydnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbCB8IFst
-ZnwtLWZpbGVdIGNvbmZpZy1maWxlXSBbdHlwZV0gWy16fC0tbnVsbF0gbmFtZSBbdmFsdWUgW3Zh
-bHVlX3JlZ2V4XV0KKydnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbCB8IFstZnwtLWZp
-bGVdIGNvbmZpZy1maWxlXSBbdHlwZV0gLS1hZGQgbmFtZSB2YWx1ZQorJ2dpdC1jb25maWcnIFst
-LXN5c3RlbSB8IC0tZ2xvYmFsIHwgWy1mfC0tZmlsZV0gY29uZmlnLWZpbGVdIFt0eXBlXSAtLXJl
-cGxhY2UtYWxsIG5hbWUgW3ZhbHVlIFt2YWx1ZV9yZWdleF1dCisnZ2l0LWNvbmZpZycgWy0tc3lz
-dGVtIHwgLS1nbG9iYWwgfCBbLWZ8LS1maWxlXSBjb25maWctZmlsZV0gW3R5cGVdIFstenwtLW51
-bGxdIC0tZ2V0IG5hbWUgW3ZhbHVlX3JlZ2V4XQorJ2dpdC1jb25maWcnIFstLXN5c3RlbSB8IC0t
-Z2xvYmFsIHwgWy1mfC0tZmlsZV0gY29uZmlnLWZpbGVdIFt0eXBlXSBbLXp8LS1udWxsXSAtLWdl
-dC1hbGwgbmFtZSBbdmFsdWVfcmVnZXhdCisnZ2l0LWNvbmZpZycgWy0tc3lzdGVtIHwgLS1nbG9i
-YWwgfCBbLWZ8LS1maWxlXSBjb25maWctZmlsZV0gW3R5cGVdIFstenwtLW51bGxdIC0tZ2V0LXJl
-Z2V4cCBuYW1lX3JlZ2V4IFt2YWx1ZV9yZWdleF0KKydnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAt
-LWdsb2JhbCB8IFstZnwtLWZpbGVdIGNvbmZpZy1maWxlXSAtLXVuc2V0IG5hbWUgW3ZhbHVlX3Jl
-Z2V4XQorJ2dpdC1jb25maWcnIFstLXN5c3RlbSB8IC0tZ2xvYmFsIHwgWy1mfC0tZmlsZV0gY29u
-ZmlnLWZpbGVdIC0tdW5zZXQtYWxsIG5hbWUgW3ZhbHVlX3JlZ2V4XQorJ2dpdC1jb25maWcnIFst
-LXN5c3RlbSB8IC0tZ2xvYmFsIHwgWy1mfC0tZmlsZV0gY29uZmlnLWZpbGVdIC0tcmVuYW1lLXNl
-Y3Rpb24gb2xkX25hbWUgbmV3X25hbWUKKydnaXQtY29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2Jh
-bCB8IFstZnwtLWZpbGVdIGNvbmZpZy1maWxlXSAtLXJlbW92ZS1zZWN0aW9uIG5hbWUKKydnaXQt
-Y29uZmlnJyBbLS1zeXN0ZW0gfCAtLWdsb2JhbCB8IFstZnwtLWZpbGVdIGNvbmZpZy1maWxlXSBb
-LXp8LS1udWxsXSAtbCB8IC0tbGlzdAogCiBERVNDUklQVElPTgogLS0tLS0tLS0tLS0KQEAgLTQy
-LDggKzQyLDggQEAgbm8gY2hlY2tzIG9yIHRyYW5zZm9ybWF0aW9ucyBhcmUgcGVyZm9ybWVkIG9u
-IHRoZSB2YWx1ZS4KIAogVGhpcyBjb21tYW5kIHdpbGwgZmFpbCBpZjoKIAotLiBUaGUgLmdpdC9j
-b25maWcgZmlsZSBpcyBpbnZhbGlkLAotLiBDYW4gbm90IHdyaXRlIHRvIC5naXQvY29uZmlnLAor
-LiBUaGUgY29uZmlnIGZpbGUgaXMgaW52YWxpZCwKKy4gQ2FuIG5vdCB3cml0ZSB0byB0aGUgY29u
-ZmlnIGZpbGUsCiAuIG5vIHNlY3Rpb24gd2FzIHByb3ZpZGVkLAogLiB0aGUgc2VjdGlvbiBvciBr
-ZXkgaXMgaW52YWxpZCwKIC4geW91IHRyeSB0byB1bnNldCBhbiBvcHRpb24gd2hpY2ggZG9lcyBu
-b3QgZXhpc3QsCkBAIC05Myw2ICs5Myw5IEBAIHJhdGhlciB0aGFuIGZyb20gYWxsIGF2YWlsYWJs
-ZSBmaWxlcy4KICsKIFNlZSBhbHNvIDw8RklMRVM+Pi4KIAorLWYgY29uZmlnLWZpbGUsIC0tZmls
-ZSBjb25maWctZmlsZTo6CisJVXNlIHRoZSBnaXZlbiBjb25maWcgZmlsZSBpbnN0ZWFkIG9mIHRo
-ZSBvbmUgc3BlY2lmaWVkIGJ5IEdJVF9DT05GSUcuCisKIC0tcmVtb3ZlLXNlY3Rpb246OgogCVJl
-bW92ZSB0aGUgZ2l2ZW4gc2VjdGlvbiBmcm9tIHRoZSBjb25maWd1cmF0aW9uIGZpbGUuCiAKZGlm
-ZiAtLWdpdCBhL2J1aWx0aW4tY29uZmlnLmMgYi9idWlsdGluLWNvbmZpZy5jCmluZGV4IDdkMjA2
-M2MuLjBhNjA1ZTAgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tY29uZmlnLmMKKysrIGIvYnVpbHRpbi1j
-b25maWcuYwpAQCAtMiw3ICsyLDcgQEAKICNpbmNsdWRlICJjYWNoZS5oIgogCiBzdGF0aWMgY29u
-c3QgY2hhciBnaXRfY29uZmlnX3NldF91c2FnZVtdID0KLSJnaXQtY29uZmlnIFsgLS1nbG9iYWwg
-fCAtLXN5c3RlbSBdIFsgLS1ib29sIHwgLS1pbnQgXSBbIC16IHwgLS1udWxsIF0gWy0tZ2V0IHwg
-LS1nZXQtYWxsIHwgLS1nZXQtcmVnZXhwIHwgLS1yZXBsYWNlLWFsbCB8IC0tYWRkIHwgLS11bnNl
-dCB8IC0tdW5zZXQtYWxsXSBuYW1lIFt2YWx1ZSBbdmFsdWVfcmVnZXhdXSB8IC0tcmVuYW1lLXNl
-Y3Rpb24gb2xkX25hbWUgbmV3X25hbWUgfCAtLXJlbW92ZS1zZWN0aW9uIG5hbWUgfCAtLWxpc3Qi
-OworImdpdC1jb25maWcgWyAtLWdsb2JhbCB8IC0tc3lzdGVtIHwgWyAtZiB8IC0tZmlsZSBdIGNv
-bmZpZy1maWxlIF0gWyAtLWJvb2wgfCAtLWludCBdIFsgLXogfCAtLW51bGwgXSBbLS1nZXQgfCAt
-LWdldC1hbGwgfCAtLWdldC1yZWdleHAgfCAtLXJlcGxhY2UtYWxsIHwgLS1hZGQgfCAtLXVuc2V0
-IHwgLS11bnNldC1hbGxdIG5hbWUgW3ZhbHVlIFt2YWx1ZV9yZWdleF1dIHwgLS1yZW5hbWUtc2Vj
-dGlvbiBvbGRfbmFtZSBuZXdfbmFtZSB8IC0tcmVtb3ZlLXNlY3Rpb24gbmFtZSB8IC0tbGlzdCI7
-CiAKIHN0YXRpYyBjaGFyICprZXk7CiBzdGF0aWMgcmVnZXhfdCAqa2V5X3JlZ2V4cDsKQEAgLTE4
-Niw2ICsxODYsMTMgQEAgaW50IGNtZF9jb25maWcoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2
-LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJCX0KIAkJZWxzZSBpZiAoIXN0cmNtcChhcmd2WzFdLCAi
-LS1zeXN0ZW0iKSkKIAkJCXNldGVudihDT05GSUdfRU5WSVJPTk1FTlQsIEVUQ19HSVRDT05GSUcs
-IDEpOworCQllbHNlIGlmICghc3RyY21wKGFyZ3ZbMV0sICItLWZpbGUiKSB8fCAhc3RyY21wKGFy
-Z3ZbMV0sICItZiIpKSB7CisJCQlpZiAoYXJnYyA8IDMpCisJCQkJdXNhZ2UoZ2l0X2NvbmZpZ19z
-ZXRfdXNhZ2UpOworCQkJc2V0ZW52KENPTkZJR19FTlZJUk9OTUVOVCwgYXJndlsyXSwgMSk7CisJ
-CQlhcmdjLS07CisJCQlhcmd2Kys7CisJCX0KIAkJZWxzZSBpZiAoIXN0cmNtcChhcmd2WzFdLCAi
-LS1udWxsIikgfHwgIXN0cmNtcChhcmd2WzFdLCAiLXoiKSkgewogCQkJdGVybSA9ICdcMCc7CiAJ
-CQlkZWxpbSA9ICdcbic7Ci0tIAoxLjUuMy5yYzMuMTMyLmczOTE3OQoK
-------=_Part_36574_10381707.1185882784482--
+OiBUdWUsIDMxIEp1bCAyMDA3IDEyOjMwOjUyICswMjAwClN1YmplY3Q6IFtQQVRDSF0gQWRkIGEg
+dGVzdCBmb3IgZ2l0LWNvbmZpZyAtLWZpbGUKCkNoZWNrIGZvciBub24tMCBleGl0IGNvZGUgaWYg
+dGhlIGNvbmZpb2cgZmlsZSBkb2VzIG5vdCBleGlzdCBhbmQKaWYgaXQgd29ya3MgZXhhY3RseSBs
+aWtlIHdoZW4gc2V0dGluZyBHSVRfQ09ORklHLgoKU2lnbmVkLW9mZi1ieTogQWxleCBSaWVzZW4g
+PHJhYS5sa21sQGdtYWlsLmNvbT4KLS0tCiB0L3QxMzAwLXJlcG8tY29uZmlnLnNoIHwgICAgNiAr
+KysrKysKIDEgZmlsZXMgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAwIGRlbGV0aW9ucygtKQoK
+ZGlmZiAtLWdpdCBhL3QvdDEzMDAtcmVwby1jb25maWcuc2ggYi90L3QxMzAwLXJlcG8tY29uZmln
+LnNoCmluZGV4IDE4N2NhMmQuLjFkMmJmMmMgMTAwNzU1Ci0tLSBhL3QvdDEzMDAtcmVwby1jb25m
+aWcuc2gKKysrIGIvdC90MTMwMC1yZXBvLWNvbmZpZy5zaApAQCAtMzI1LDYgKzMyNSw5IEBAIEVP
+RgogCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICduZXcgdmFyaWFibGUgaW5zZXJ0cyBpbnRvIHByb3Bl
+ciBzZWN0aW9uJyAnY21wIC5naXQvY29uZmlnIGV4cGVjdCcKIAordGVzdF9leHBlY3Rfc3VjY2Vz
+cyAnYWx0ZXJuYXRpdmUgR0lUX0NPTkZJRyAobm9uLWV4aXN0aW5nIGZpbGUgc2hvdWxkIGZhaWwp
+JyBcCisJJ2dpdCBjb25maWcgLS1maWxlIG5vbi1leGlzdGluZy1jb25maWcgLWw7IHRlc3QgJD8g
+IT0gMCcKKwogY2F0ID4gb3RoZXItY29uZmlnIDw8IEVPRgogW2Vpbl0KIAliYWhuID0gc3RyYXNz
+ZQpAQCAtMzM4LDYgKzM0MSw5IEBAIEdJVF9DT05GSUc9b3RoZXItY29uZmlnIGdpdCBjb25maWcg
+LWwgPiBvdXRwdXQKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyAnYWx0ZXJuYXRpdmUgR0lUX0NPTkZJ
+RycgJ2NtcCBvdXRwdXQgZXhwZWN0JwogCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdhbHRlcm5hdGl2
+ZSBHSVRfQ09ORklHICgtLWZpbGUpJyBcCisJJ2dpdCBjb25maWcgLS1maWxlIG90aGVyLWNvbmZp
+ZyAtbCA+IG91dHB1dCAmJiBjbXAgb3V0cHV0IGV4cGVjdCcKKwogR0lUX0NPTkZJRz1vdGhlci1j
+b25maWcgZ2l0IGNvbmZpZyBhbndvaG5lci5wYXJrIGF1c3dlaXMKIAogY2F0ID4gZXhwZWN0IDw8
+IEVPRgotLSAKMS41LjMucmMzLjEzMi5nMzkxNzkKCg==
+------=_Part_36590_2059235.1185882829791--
