@@ -1,113 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] work-tree clean ups
-Date: Tue, 31 Jul 2007 17:55:18 -0700
-Message-ID: <7vbqdsdqfd.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
-	<Pine.LNX.4.64.0708010058130.14781@racer.site>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] add option to find zlib in custom path
+Date: Wed, 1 Aug 2007 03:01:56 +0200
+Message-ID: <20070801010156.GF29424@schiele.dyndns.org>
+References: <20070729183545.GC29424@schiele.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, matled@gmx.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 01 02:55:26 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7LkOrbQMr4cezO2T"
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 01 03:02:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG2Un-0002Fh-FT
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 02:55:25 +0200
+	id 1IG2bL-0003dZ-RP
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755880AbXHAAzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 20:55:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755152AbXHAAzV
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 20:55:21 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:39511 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752145AbXHAAzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 20:55:19 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070801005519.QCWN26965.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 31 Jul 2007 20:55:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WQvJ1X00V1kojtg0000000; Tue, 31 Jul 2007 20:55:19 -0400
-In-Reply-To: <Pine.LNX.4.64.0708010058130.14781@racer.site> (Johannes
-	Schindelin's message of "Wed, 1 Aug 2007 01:28:30 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756422AbXHABCH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 21:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756378AbXHABCG
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:02:06 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:36874 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754138AbXHABCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 21:02:03 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so14793nfb
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 18:02:02 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=umWSXhOtKYj4vV0Fg+u6zLr7hfOdvlYysvP84cFeb7rWnUTs0ECL9NInj0PVRx8M4moHfssY2PGCeAp+M+KOJ5Sk8h+PKMvjwOMFgrAs1vyBTU/E0qhUr5yKa+14ooJrRWupnB1VmVyk85nSLD4O8cJWxz7oVzGy868Y0eakkKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=q2B/P6aPDXxOYhNYHPXsowqIHPhU6Rav2unfYo9pFzsHcH0NfatVuL71ciCnmtKiye1GBtK/mwyv5Ji/+T//Pb/r4WCSELxcB90M9X3VdIlNtarfmruhEqg4rBKRu0SrQbMQ5hXEMQpa9IKiMpL2aPn9ap4v6s9fiGVHkkcD0kg=
+Received: by 10.86.54.3 with SMTP id c3mr149401fga.1185930122278;
+        Tue, 31 Jul 2007 18:02:02 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.90.149])
+        by mx.google.com with ESMTPS id o11sm298871fkf.2007.07.31.18.01.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 31 Jul 2007 18:01:59 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 34DE2C0DB70; Wed,  1 Aug 2007 03:01:57 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070729183545.GC29424@schiele.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54391>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> There is not really much that can be done about step 6/9: if we are in a 
-> work tree: that does not mean that we are _not_ in the git_dir.  (And no, 
-> this does not break git-clean, as a work tree is a work tree is a work 
-> tree.  If the user was stupid enough to specify the same directory as 
-> GIT_DIR and GIT_WORK_TREE, then that is _her_ problem.  Git is a powerful 
-> tool, and you can harm yourself with it.  Tough.)
+--7LkOrbQMr4cezO2T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think we might have a slight misunderstanding.  The "clean"
-issue that was raised in an ancient thread was this sequence:
+On Sun, Jul 29, 2007 at 08:35:45PM +0200, Robert Schiele wrote:
+> Some systems do not provide zlib development headers and libraries in
+> default search path of the compiler.  For these systems we should allow
+> specifying the location by --with-zlib=3DPATH or by setting ZLIB_PATH in
+> the makefile.
 
-	$ git init
-        $ cd .git
-        $ git clean
+Just wanted to ping about that patch I sent.  After I did not get any respo=
+nse
+on earlier patches I sent I found that they did not comply to the patch
+submission policy.  Thus I did this one according to the policy (as far as I
+understand it but still don't get any reply.
 
-It did not involve GIT_DIR (nor GIT_WORK_TREE as it was not even
-there).  The point was that not all subdirectories of the
-toplevel (i.e. the directory on the filesystem that corresponds
-to the root level of your index entries and trees contained in
-your commits) were safe to answer yes when asked "are we safe to
-perform this worktree oriented command here".  Because no trees
-nor index would have .git/ subdirectory tracked, "git clean"
-will happily remove everything under .git/ (which is $cwd in the
-above sequence).
+So I just wanted to ask what's the cause of that?
 
-I personally feel that the above sequence is a pilot error and
-not worth worrying about, but as people wanted to have that
-extra safety, and as we added that (arguably stupid) safety way
-before the WORK_TREE stuff, we should mention it if we are
-changing the behaviour and lifting it with this patch series.
+Didn't you just have time to look at it?
 
-> Note: if you are in a bare repository (a repository which either says 
-> "core.bare = false" in the config, or which is a direct ancestor 
-> directory, i.e. ../[...]/.. of the current working directory) there will 
-> _not_ be an automatic working directory assignment.  You will be operating 
-> _without_ any work tree, unless you specify one.
+Did I do something wrong?  In that case it would be useful if I knew what it
+is.
 
-Sorry, I cannot interpret the condition part of the sentence,
-nor "There will _not_ be an automatic assignment" part.
+Any other reason?
 
-By the latter, do you mean to say your $cwd is assumed to be the
-top of the working tree unless GIT_WORK_TREE or core.worktree,
-if you are in a bare repository?  Or it is assumed that you do
-not have a worktree and worktree oriented operations that
-require a worktree such as "git diff-files" and "git status"
-will fail?
+I mean if it is a timing issue it is not a big issue.  Just wanted to know
+whether it does make sense to submit more patches or if they all get lost f=
+or
+some reason I am currently not aware of.
 
-> I somehow feel that core.bare = true weighs more than core.worktree = 
-> /some/thing, and therefore I implemented it that way, but hey, if enough 
-> people disagree, then I'll change it.
+Robert
 
-Personally, I think
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
- [core]
-     bare = true
-     worktree = /some/where
+"Quidquid latine dictum sit, altum sonatur."
 
-is a configuration error, but probably I am missing a useful use
-case for such a configuration?
+--7LkOrbQMr4cezO2T
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> IMHO we should (probably after 1.5.3) change setup_git_directory_gently() 
-> to call check_repository_format() in every return path, so that we 
-> ascertain that the current repository is recent enough.  Because that 
-> function now checks also if the repo is bare, and if it has a worktree 
-> set, in addition to ensuring a valid repository.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-Agreed; gently() is there primarily because some commands do not
-mind not having a git repository at all and if we do have a
-repository to work against we probably should do the same checks
-as setup_git_directory() would.
+iD8DBQFGr9uExcDFxyGNGNcRAnAzAJ0VRg1s+5qT3XV2iQc+HcJrun4JWwCg2nUl
+LIKiTX1QX6ApDI9mei73JYU=
+=ODXB
+-----END PGP SIGNATURE-----
+
+--7LkOrbQMr4cezO2T--
