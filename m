@@ -1,46 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add option to find zlib in custom path
-Date: Tue, 31 Jul 2007 18:06:50 -0700
-Message-ID: <7v7iogdpw5.fsf@assigned-by-dhcp.cox.net>
-References: <20070729183545.GC29424@schiele.dyndns.org>
-	<20070801010156.GF29424@schiele.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/9] work-tree clean ups
+Date: Wed, 1 Aug 2007 02:13:59 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708010211071.14781@racer.site>
+References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+ <Pine.LNX.4.64.0708010058130.14781@racer.site> <7vbqdsdqfd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robert Schiele <rschiele@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 03:07:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 03:14:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG2gX-0004db-72
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:07:33 +0200
+	id 1IG2nD-0005vi-CC
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762952AbXHABGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 21:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762697AbXHABGx
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:06:53 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:51138 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761754AbXHABGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 21:06:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070801010652.FBND11888.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 31 Jul 2007 21:06:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WR6q1X00Y1kojtg0000000; Tue, 31 Jul 2007 21:06:51 -0400
-In-Reply-To: <20070801010156.GF29424@schiele.dyndns.org> (Robert Schiele's
-	message of "Wed, 1 Aug 2007 03:01:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751742AbXHABOY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 21:14:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbXHABOY
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:14:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44925 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751688AbXHABOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 21:14:23 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 01:14:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp053) with SMTP; 01 Aug 2007 03:14:21 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/tF1M/8Hbt4x0kUFxmQLmlqXtfEmGxgXe0vIuIrH
+	4WgGB8USwFQBli
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vbqdsdqfd.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54393>
 
-Queued already, integration tested last night, been too busy to
-push it out.
+Hi,
 
-Patience, Ok?
+On Tue, 31 Jul 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > There is not really much that can be done about step 6/9: if we are in a 
+> > work tree: that does not mean that we are _not_ in the git_dir.  (And no, 
+> > this does not break git-clean, as a work tree is a work tree is a work 
+> > tree.  If the user was stupid enough to specify the same directory as 
+> > GIT_DIR and GIT_WORK_TREE, then that is _her_ problem.  Git is a powerful 
+> > tool, and you can harm yourself with it.  Tough.)
+> 
+> I think we might have a slight misunderstanding.  The "clean"
+> issue that was raised in an ancient thread was this sequence:
+> 
+> 	$ git init
+>         $ cd .git
+>         $ git clean
+> 
+> It did not involve GIT_DIR (nor GIT_WORK_TREE as it was not even
+> there).
+
+I very much _did_ mean that case.  When "git clean" is run in ".git/", it 
+should not say that it is in the working tree.  But I guess that my patch 
+series is not really looking out for that;  I'll make that an add-on 
+patch.  (But that _will_ have to wait until tomorrow afternoon.)
+
+Ciao,
+Dscho
