@@ -1,74 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 01 Aug 2007 03:15:25 -0700
-Message-ID: <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
-References: <200708010216.59750.jnareb@gmail.com>
-	<alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
-	<7vodhrby6f.fsf@assigned-by-dhcp.cox.net>
-	<20070801092428.GB28106@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MinGW build environment for Git
+Date: Wed, 1 Aug 2007 11:44:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708011143180.14781@racer.site>
+References: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com> 
+ <46B016FC.4050005@trolltech.com> <a1bbc6950708010208v15071005w3bcc471bef172fcc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 01 12:15:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 12:45:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGBEp-0007kh-CN
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 12:15:31 +0200
+	id 1IGBhS-0008Ju-3V
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 12:45:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932068AbXHAKP2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 06:15:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763220AbXHAKP1
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 06:15:27 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:61868 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763563AbXHAKP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 06:15:26 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070801101526.NJCZ1428.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 1 Aug 2007 06:15:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id WaFR1X0091kojtg0000000; Wed, 01 Aug 2007 06:15:26 -0400
-In-Reply-To: <20070801092428.GB28106@thunk.org> (Theodore Tso's message of
-	"Wed, 1 Aug 2007 05:24:29 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756152AbXHAKop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 06:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753531AbXHAKop
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 06:44:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58035 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756016AbXHAKoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 06:44:44 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 10:44:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp031) with SMTP; 01 Aug 2007 12:44:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/wg2tbQQbwC1pElovC76uoi94Im6UD69unkL9JVS
+	i3ocYfg+kU5oTV
+X-X-Sender: gene099@racer.site
+In-Reply-To: <a1bbc6950708010208v15071005w3bcc471bef172fcc@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54426>
 
-Theodore Tso <tytso@mit.edu> writes:
+Hi,
 
-> On Tue, Jul 31, 2007 at 10:50:48PM -0700, Junio C Hamano wrote:
->> I would call aversion to -l a superstition, while aversion to -s
->> has a sound technical reasons.  The latter means you need to know
->> what you are doing --- namely, you are making the clone still
->> dependent on the original.
->
-> So would you accept a patch which adds a git-config variable which
-> specifies whether or not local clones should use hard links by default
-> (defaulting to yes), and which adds a --no-hard-links option to
-> git-clone to override the config option?
+On Wed, 1 Aug 2007, Dmitry Kakurin wrote:
 
-Are you suggesting to make -l the default for local, in other
-words?  I personally do not make local clone often enough that I
-am not disturbed having to type extra " -l" on the command line.
+> On 7/31/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> > Dmitry Kakurin said the following on 30.07.2007 01:14:
+> > > I want to be able to build MinGW port of Git on Windows. I've tried
+> > > to follow steps in README.MinGW to setup this environment myself
+> > > (install MinGW, MSys, ZLib etc.) but after wasting a lot of time
+> > > with no result I give up. So, could somebody please just pkzip
+> > > their environment (everything required) and share the zip file with
+> > > me (privately or publicly)? I also think that an even better idea
+> > > is to create a new Git repository with MinGW build environment.
+> > > This will make contributing to MinGW port of Git MUCH easier.
+> >
+> > Aaron has done this, and you can find the link on his blog, here:
+> >     http://www.ekips.org/cgi-bin/aaron.cgi/2007/02/27
+> 
+> I've downloaded and installed it. But I could not make it work :-(.
+> First I had this problem:
+> $ make
+> GIT_VERSION = 1.5.3.GIT
+>     * new build flags or prefix
+>     CC convert-objects.o
+> gcc.exe: installation problem, cannot exec `cc1': No such file or directory
+> make: *** [convert-objects.o] Error 1
+> 
+> Then I've copied cc1.exe and some others from
+> C:\mingw4git\libexec\gcc\mingw32 into /bin.
+> 
+> $ make
+>     CC convert-objects.o
+> In file included from cache.h:4,
+>                  from convert-objects.c:1:
+> git-compat-util.h:51:22: sys/wait.h: No such file or directory
+> 
+> Searching entire (downloaded) tree for wait.h gives nothing.
+> 
+> 'make configure' does not work:
+> $ make configure
+>     GEN configure
+> configure.ac+:4: error: Autoconf version 2.59 or higher is required
+> configure.ac+:4: the top level
+> autom4te: /bin/m4 failed with exit status: 1
+> make: *** [configure] Error 1
+> 
+> What do I do now?
 
-But giving a way to force "copy not hardlink" while still
-avoiding "the same as the networked case by doing pack transfer"
-overhead may be a good thing to do.
+This looks like you downloaded git.git.  Official releases do not have 
+MinGW support yet!  You have to get the MinGW port from repo.or.cz:
 
-Perhaps if the destination is local,
+	http://repo.or.cz/w/git/mingw.git
 
-         - if -s is given, just set up alternates, do nothing else;
-         - by default, do "always copy never hardlink";
-         - with -l, do "hardlink if possible";
-
-Hmmmm...
+Hth,
+Dscho
