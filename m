@@ -1,74 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 1 Aug 2007 02:16:59 +0200
-Message-ID: <200708010216.59750.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git clone error
+Date: Tue, 31 Jul 2007 17:22:35 -0700
+Message-ID: <7vlkcwdrxw.fsf@assigned-by-dhcp.cox.net>
+References: <C2D525CB.2A81%denbuen@sandia.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 02:18:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Denis Bueno" <denbuen@sandia.gov>
+X-From: git-owner@vger.kernel.org Wed Aug 01 02:22:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG1ug-0002TP-6w
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 02:18:06 +0200
+	id 1IG1z7-0003dh-K9
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 02:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761830AbXHAARm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 Jul 2007 20:17:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761288AbXHAARi
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 20:17:38 -0400
-Received: from mu-out-0910.google.com ([209.85.134.191]:31040 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760932AbXHAARF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 20:17:05 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so57783mue
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 17:17:03 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=XHRdJzDgRPugAMgoku2Syc3GMuH/tTyMPWuaaj2agWeWayPZHuy0XetdDNZznjoepBVV8ALONGD4W84RZK28IK2q+Zuv59neSqBNxA2MaE5KWf6nmn9X+CSfRQR3+ucwI7Anvveyq+b4E81bcmMNAvGw2T8XdyRdS1MYMNRrj0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=A64lj9P53VnQvV9nXNJOjnoJTeyQsJk9DO65h0NAoQR2MxeQ6I3g3yKA9qGxxJ+gAEh8y12yKTUGd3jJh4KrokPFPeP0I8wHTTMlF7ToZJGJAFrbV59A4yfEzlfB/8KjVelGtXTmmvRv5c5beBAvyvjtN6+vTxkwjKeH1PHAhmg=
-Received: by 10.86.71.1 with SMTP id t1mr101998fga.1185927422794;
-        Tue, 31 Jul 2007 17:17:02 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id a37sm249286fkc.2007.07.31.17.17.01
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2007 17:17:02 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1759326AbXHAAWh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 20:22:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759492AbXHAAWh
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 20:22:37 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:54865 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759326AbXHAAWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 20:22:37 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801002236.DWMS1428.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 31 Jul 2007 20:22:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WQNb1X00e1kojtg0000000; Tue, 31 Jul 2007 20:22:36 -0400
+In-Reply-To: <C2D525CB.2A81%denbuen@sandia.gov> (Denis Bueno's message of
+	"Tue, 31 Jul 2007 17:45:47 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54383>
 
-I have lately added new Git speed benchmark, from Bryan Murdock blog.=20
-The repository is bit untypical:
+"Denis Bueno" <denbuen@sandia.gov> writes:
 
-<quote> =20
-  By performance, I mean that I used the UNIX time command to see how
-  long various basic operations took. Performing the various basic
-  operations gave me some insight into the usability of each as well.
-  For this test I used a directory with 266 MB of files, 258 KB of whic=
-h
-  were text files, with the rest being image files. I know, kind of
-  weird to version all those binary files, but that was the project I
-  was interested in testing this out on. Your mileage may vary and all
-  that. Here=E2=80=99s a table summarizing the real times reported by t=
-ime(1):
-</quote>
+> ...  The error I see is:
+>
+>     git[14] > git clone /Volumes/work/scripts/
+>     Initialized empty Git repository in /tmp/git/scripts/.git/
+>     remote: Generating pack...
+>     Done counting 80 objects.
+>     remote: error: unable to unpack b28b949a1a3c8eb37ca6eefd024508fa8b253429
+> header
+>     fatal: unable to get type of object b28b949a1a3c8eb37ca6error:
+> git-upload-pack: git-pack-objects died with error.
+>     fatal: git-upload-pack: aborting due to possible repository corruption
+> on the remote side.
+>     remote: aborting due to possible repository corruption on the remote
+> side.
 
-If I remember correctly there were some patches to git which tried to=20
-better deal with large blobs. In this simple benchmark git was=20
-outperformed by Mercurial and even Bazaar-NG a bit.
+First thing to check would be...
 
-http://git.or.cz/gitwiki/GitBenchmarks#head-5657b8361895b5a02c0de39337c=
-410e4d8dcdbce
-http://bryan-murdock.blogspot.com/2007/03/cutting-edge-revision-control=
-=2Ehtml
---=20
-Jakub Narebski
-Poland
+>     fatal: early EOF
+>     fatal: index-pack died with error code 128
+>     fetch-pack from '/Volumes/work/scripts/.git' failed.
+
+        $ cd /Volumes/work/scripts
+        $ git fsck --full
