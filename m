@@ -1,92 +1,98 @@
-From: "Denis Bueno" <denbuen@sandia.gov>
-Subject: Re: Git clone error
-Date: Wed, 01 Aug 2007 14:22:56 -0600
-Message-ID: <C2D647C0.2B60%denbuen@sandia.gov>
-References: <Pine.LNX.4.64.0708011802020.14781@racer.site>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-commit --amend -m "..." complains?!?
+Date: Wed, 01 Aug 2007 22:45:32 +0200
+Message-ID: <857iofrnkj.fsf@lola.goethe.zz>
+References: <86643znxgz.fsf@lola.quinscape.zz>
+	<7v8x8v5g2z.fsf@assigned-by-dhcp.cox.net>
+	<85myxbrrdl.fsf@lola.goethe.zz>
+	<7vk5sf3uct.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 01 22:23:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 22:46:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGKj0-0002If-L3
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 22:23:19 +0200
+	id 1IGL5q-0002Eu-TZ
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 22:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbXHAUXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 16:23:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbXHAUXO
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 16:23:14 -0400
-Received: from mm04snlnto.sandia.gov ([132.175.109.21]:3116 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbXHAUXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 16:23:13 -0400
-Received: from [134.253.164.148] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Wed, 01 Aug 2007 14:22:56 -0600
-X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
-Received: from ES21SNLNT.srn.sandia.gov ([134.253.164.104]) by
- ES24SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Wed, 1
- Aug 2007 14:22:56 -0600
-Received: from 134.253.202.158 ([134.253.202.158]) by
- ES21SNLNT.srn.sandia.gov ([134.253.164.116]) with Microsoft Exchange
- Server HTTP-DAV ; Wed, 1 Aug 2007 20:22:56 +0000
-User-Agent: Microsoft-Entourage/11.3.3.061214
-Thread-Topic: Git clone error
-Thread-Index: AcfUeb7E/Wxt/EBsEdy7fwAX8tQlcQ==
-In-Reply-To: <Pine.LNX.4.64.0708011802020.14781@racer.site>
-X-OriginalArrivalTime: 01 Aug 2007 20:22:56.0695 (UTC)
- FILETIME=[BF2E1C70:01C7D479]
-X-TMWD-Spam-Summary: TS=20070801202257; SEV=2.2.2; DFV=B2007080114;
- IFV=2.0.4,4.0-9; AIF=B2007080114; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230332E34364230454241302E303038302C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007080114_5.02.0125_4.0-9
-X-WSS-ID: 6AAE342A1V82532297-01-01
+	id S1751874AbXHAUqZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 16:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbXHAUqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 16:46:24 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:48059 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751837AbXHAUqX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 16:46:23 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 072074C864;
+	Wed,  1 Aug 2007 22:46:22 +0200 (CEST)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id E4F70213031;
+	Wed,  1 Aug 2007 22:46:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-017-017.pools.arcor-ip.net [84.61.17.17])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 1D2FB12379;
+	Wed,  1 Aug 2007 22:46:21 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 7AA3F1C3E076; Wed,  1 Aug 2007 22:45:32 +0200 (CEST)
+In-Reply-To: <7vk5sf3uct.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 01 Aug 2007 12\:52\:50 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV version 0.91.1, clamav-milter version 0.91.1 on mail-in-11.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54475>
 
-On 08/01/2007 11:17, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-wrote:
-> But this is what I would do if I had the problem: I would try to create
-> a state which is as close to the corrupt revision as possible,
-> use a graft to replace the initial commit with that revision, and
-> rewrite the branch. I'd probably start by doing something like this:
-> 
-> $ git symbolic-ref HEAD refs/heads/recreate-first && rm .git/index
-> $ git ls-tree -r --name-only <initial-commit> |
-> grep -v "^condor/condor-uninstall.sh$" |
-> xargs git checkout <initial-commit>
-> $ git checkout <second-commit> condor/condor-uninstall.sh
-> [possibly some minor hacking on the latter file to make it work]
-> $ git commit -c <initial-commit>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Wow.  `commit' and `checkout' are the only two commands that I have ever
-heard of in that sequence.
+> David Kastrup <dak@gnu.org> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> ...
+>>> You can do:
+>>>
+>>> 	$ git reset HEAD^
+>>>         $ git commit -m "blah"
+>>>
+>>> if you do not want to reuse the commit message.
+>>
+>> You can pretty much _always_ avoid --amend in a similar manner, but
+>> why would you?  It is convenient.
+>
+> No need to be upset about what I said.  I really do not want to
+> change the minor detail this late in the 1.5.3 release cycle, and
+> wanted to unblock you by giving an workaround in case you were
+> stuck.
 
-How difficult would it be to create a new git repo which is exactly the same
-minus the initial condor-uninstall.sh commit?  That is, just to pretend the
-initial import of condor-uninstall.sh never existed, and use the second
-commit of the old repo the first commit of the new, and preserve the rest of
-the history of the entire repo?  Or, to remove both condor-uninstall.sh
-commits from the history -- deleting that history altogether -- and add it
-back as a completely new file?
+Well, there is always
+VISUAL='echo "mycommit" >"$1"' git commit --amend 
+Uh, no wait, it isn't.  Different thread.
 
-If I get enough courage, I'll attempt to understand exactly what it is
-you're doing in the commands above and try it out on (a copy of) the repo.
-My willingness to part with the current history and just reinitialise the
-repo with its current contents increases with time, though.
+> It should be a straightforward change to git-commit.sh.  Instead of
+> "Oops, -m and --amend are incompatible so we will whine" around line
+> 300, you can treat --amend somewhat specially by (1) making it first
+> not set log_given, which would still keep the combination of
+> -m/-c/-C/-F incompatible, (2) when $log_given is false and we are
+> amending, honor $use_commit to prime the message.
 
-The real problem is that I'm sure I have no idea exactly what the first
-version of the file looked like, and how it differed from the next one.
+I actually can't find anything about (2) to be done in the code.
 
-                      Denis
---
-"If we wish to count lines of code, we should not regard them as lines
-produced but as lines spent." -- Edsger Dijkstra
+> Then you can keep the current bahaviour for amending starting from
+> the existing message, while allowing -m/-c/-C/-F to supply different
+> message for the replacing commit.
+
+In a somewhat different vein: it appears strange that -m is treated
+completely different from the other commit message specifiers: you can
+specify -m multiple times.
+
+I have not changed this in the slightly tested patch posted
+separately: while the --amend fix was quite straightforward and
+confined (and indeed, not even the documentation appears to warrant
+any modification), the m/t mess is something I really don't want to
+mess with right now.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
