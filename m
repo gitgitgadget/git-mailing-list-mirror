@@ -1,64 +1,61 @@
-From: "Steve Hoelzer" <shoelzer@gmail.com>
-Subject: Re: [PATCH] Try to be consistent with capitalization in the documentation
-Date: Wed, 1 Aug 2007 12:17:52 -0500
-Message-ID: <588192970708011017q12c7a6d9s532c8aed086d3032@mail.gmail.com>
-References: <514D28CB-25F8-49B2-921E-8EFA60BE864C@gmail.com>
-	 <7vir7z5gx7.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-commit --amend -m "..." complains?!?
+Date: Wed, 01 Aug 2007 10:18:12 -0700
+Message-ID: <7v8x8v5g2z.fsf@assigned-by-dhcp.cox.net>
+References: <86643znxgz.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 19:18:08 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 01 19:18:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGHpm-0003Ch-Ga
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 19:18:06 +0200
+	id 1IGHpx-0003HD-OY
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 19:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756262AbXHARRy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 13:17:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756724AbXHARRy
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 13:17:54 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:8705 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754265AbXHARRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 13:17:54 -0400
-Received: by an-out-0708.google.com with SMTP id d31so49439and
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 10:17:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QfRdNCoxdjjoy/s7wIjgeO2pOmiLAt4Oril24TtQxZJ7P2+YJxj9cx4oGkzVx7vofdXcuxaBKAroyzGTI2Swn7ADWiavZayQ98BNTM0FP/ACu5hP96VhMmX2sW5tZemB7FIom6bp4Gw/cbpP58JlDjyFFDqnh9nsncmLymfgRPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MY2PDHTpgHwyK8S1dZ3hEjf5OEOp4OipvNNwkGc55e2K++xXKqtotNzsWLGNBMo+bF+FuP5rtLNjAHfLd+eQDWiy5vbcU45wpoBzLzl8+d+ptN9jHrszMLLtbzRC41GNfVytnjXSf1RZ920cJWIVH2RkuFAK8206zN/Gp+cK+xg=
-Received: by 10.100.13.12 with SMTP id 12mr557434anm.1185988672628;
-        Wed, 01 Aug 2007 10:17:52 -0700 (PDT)
-Received: by 10.100.105.9 with HTTP; Wed, 1 Aug 2007 10:17:52 -0700 (PDT)
-In-Reply-To: <7vir7z5gx7.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1757640AbXHARSQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 13:18:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756816AbXHARSP
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 13:18:15 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:58452 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756019AbXHARSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 13:18:15 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801171814.IDA23215.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 1 Aug 2007 13:18:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WhJC1X00d1kojtg0000000; Wed, 01 Aug 2007 13:18:13 -0400
+In-Reply-To: <86643znxgz.fsf@lola.quinscape.zz> (David Kastrup's message of
+	"Wed, 01 Aug 2007 16:25:16 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54456>
 
-On 8/1/07, Junio C Hamano <gitster@pobox.com> wrote:
-> Steve Hoelzer <shoelzer@gmail.com> writes:
+David Kastrup <dak@gnu.org> writes:
+
+> I get
 >
-> > Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
-> > ---
-> >
-> > Try to be consistent with capitalization in the documentation.
+> Option -m cannot be combined with -c/-C/-F/--amend.
 >
-> It looks like that all the originals are trying to consistently
-> start with lowercase in an explanatory list.  Is this really
-> needed?
+> but that makes no sense: of course there is ample reason for providing
+> an amended commit message on the command line.  -c, -C and -F indeed
+> all provide an alternative commit message, but --amend doesn't.
 
-The lists I changed were indeed all lowercase, but other lists in
-those files are all uppercase. I was aiming for consistency across all
-list items and all lists.
+The option --amend is about "reusing the original commit message
+and make amending edit on top".  If you are restarting the
+message from scratch, --amend does not make much sense.
 
-Steve
+You can do:
+
+	$ git reset HEAD^
+        $ git commit -m "blah"
+
+if you do not want to reuse the commit message.
