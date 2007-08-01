@@ -1,91 +1,97 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] add option to find zlib in custom path
-Date: Wed, 1 Aug 2007 03:21:38 +0200
-Message-ID: <20070801012137.GG29424@schiele.dyndns.org>
-References: <20070729183545.GC29424@schiele.dyndns.org> <20070801010156.GF29424@schiele.dyndns.org> <7v7iogdpw5.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Domenico Andreoli <cavokz@gmail.com>
+Subject: dangling blob which is not dangling at all
+Date: Wed, 1 Aug 2007 03:34:50 +0200
+Message-ID: <20070801013450.GA16498@raptus.dandreoli.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+jhVVhN62yS6hEJ8"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 03:21:47 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 01 03:35:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG2uJ-0007Gc-Dm
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:21:47 +0200
+	id 1IG37W-0001Bc-TV
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759000AbXHABVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 21:21:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758825AbXHABVo
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:21:44 -0400
-Received: from mu-out-0910.google.com ([209.85.134.191]:54702 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757930AbXHABVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 21:21:43 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so73179mue
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 18:21:42 -0700 (PDT)
+	id S932184AbXHABe6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 21:34:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761185AbXHABex
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:34:53 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:54894 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761402AbXHABev (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 21:34:51 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so48902fkz
+        for <git@vger.kernel.org>; Tue, 31 Jul 2007 18:34:50 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=AE0uUDjWrdCHsb8gGDNVpM1BiwX1yI394ZcNydjwcJf15eQSQ/+q+PJ3oPJ1OasaNCy88KI8eDYRSvsIr7/QlPP+DKItmw6DNWsxW2CgZtZS+SY2+/bkQZA8KKfrApZMctunpxwygHtpQDW4aTpqIgv2WPVx9hHlXHZN45Hb4d4=
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=bwH2YoebKmaP3Zg2tzHrxhWVKu8tARSa23GKzmn7iTpplww8PoG9O3olDShjKrKG66zQJK/LGyoxVq8fqHdSkKq0GKUCiIBxDQqKcJ7zV1wUmcNXsM6g6gJFoPLhPn2CTjKSUX5JYkZ3FV7qS2MStrkUQ5FPBquTPG6bhCRqLok=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=GcWtUfWyEiTRvx9yyYdFa3wAYgfseXRlr9L5QTD6LeLrNweBWmoNbzVG0jtHC+NGxT9Z3t2AQYRSOSGDiPIWLKfHS6EDplmogzlQXtUqhaOn14JEBWR57T0M0xdb4ML05FBIMaQ4Puh1WWuMlg1vxP1/RfSW160Oe0j/JY6wVMA=
-Received: by 10.86.51.2 with SMTP id y2mr159629fgy.1185931301842;
-        Tue, 31 Jul 2007 18:21:41 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.90.149])
-        by mx.google.com with ESMTPS id y2sm482123mug.2007.07.31.18.21.40
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=Z1Ksek5UxCfNppLZhCvF6dPH0a0yACsDEyzL3HqjxEiunb/BO3MgCXPqgn0sAaLmhruySufQq9gilEvreZxvbrPjWggBmcVoHkk2bIamIu28TMpzzL32qlbaDiOygMSIN7tnfzivMHsBsVtg/KyYQbrlujTo8skmDGjj15dGMG8=
+Received: by 10.86.93.17 with SMTP id q17mr169241fgb.1185932089979;
+        Tue, 31 Jul 2007 18:34:49 -0700 (PDT)
+Received: from raptus.dandreoli.com ( [159.149.71.27])
+        by mx.google.com with ESMTPS id b17sm341044fka.2007.07.31.18.34.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2007 18:21:41 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 0CC79C0DB68; Wed,  1 Aug 2007 03:21:38 +0200 (CEST)
+        Tue, 31 Jul 2007 18:34:49 -0700 (PDT)
+Received: by raptus.dandreoli.com (Postfix, from userid 1000)
+	id E02193E48C0; Wed,  1 Aug 2007 03:34:50 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7v7iogdpw5.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54395>
 
+Hi,
 
---+jhVVhN62yS6hEJ8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  first of all, I want to thank Linus and you all for git, it is
+revolutionizing my every-day work flow. Exceptional.
 
-On Tue, Jul 31, 2007 at 06:06:50PM -0700, Junio C Hamano wrote:
-> Queued already, integration tested last night, been too busy to
-> push it out.
->=20
-> Patience, Ok?
+Playing with my central bare git repository (yes, I am a former
+CVS/SVN user) and trying to lose data I discovered something I am not
+understanding well.
 
-Sure, that's perferctly ok.  Take the time you need.  Just wanted to know t=
-hat
-there is nothing wrong in principle with the patches so that I could do more
-without wasting time.
+Running git fsck --no-reflogs I found some dangling objects (I have
+to say I enjoyed a lot in navigating commits, trees and blobs with
+plumbing... really!), two were commits and one was a blob.
 
-Robert
+One of the commits was there because I pushed (forcing) from a working
+repository after a git reset HEAD^. I checked it and removed it and
+all the other dependant objects until the blob which contained the new
+version of that file. It seems I even understood what I was doing! ;)
+Until here, everything had been smooth.
 
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+Second commit was something pushed from another repository but at the
+right head was strangely recorded with a different hash. Removing it,
+its tree and another sub-tree, no blob was pending. So the final blob
+containing the change was still used elsewhere, indeed by the "right
+head" of above. While I would expect this in a working repository where
+merging is happening all the day, it is not clear how it happened to
+my central repository, where nobody does any work. Any idea?
 
-"Quidquid latine dictum sit, altum sonatur."
+And now, what I think is a bug, the dangling blob. It is signaled as
+dangling but it is not. Hunting for a commit/tree/blob to compare it to
+in order to understand which modification it was hiding, I found a tree
+object which referred to it, which by definition of "dangling object"
+should not exist. So fsck looks f*cked... and I am well available to
+understand what is going wrong here, but please help me.
 
---+jhVVhN62yS6hEJ8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+$ git fsck --no-reflogs
+dangling blob e5d444e61b834c34710ce8fb5cb176e20e5894e1
+$ git-ls-tree 70b58535361eb633d44d4f1275af3421ca6a5ed7
+...
+100644 blob e5d444e61b834c34710ce8fb5cb176e20e5894e1    link_stream.c
+...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+If you read me until here, good night! ;)
 
-iD8DBQFGr+AhxcDFxyGNGNcRAnTUAJ9NwyjbL4W0gVPE5/JpV7bJ5OVHjgCgw/rz
-CyzMArWssi9GN/v5G3RFJjc=
-=CCny
------END PGP SIGNATURE-----
+Cheers,
+Domenico
 
---+jhVVhN62yS6hEJ8--
+-----[ Domenico Andreoli, aka cavok
+ --[ http://www.dandreoli.com/gpgkey.asc
+   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
