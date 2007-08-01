@@ -1,124 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] Clean up work-tree handling
-Date: Wed, 1 Aug 2007 12:53:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708011250020.14781@racer.site>
-References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
- <Pine.LNX.4.64.0708010058130.14781@racer.site> <Pine.LNX.4.64.0708010129530.14781@racer.site>
- <7vvebz7hpw.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Hack git-add--interactive to make it work with ActiveState Perl
+Date: Wed, 1 Aug 2007 15:09:14 +0200
+Message-ID: <81b0412b0708010609h3346704bg4f708100bb5d6b93@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, matled@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 13:54:30 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_46998_19185652.1185973754235"
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 01 15:09:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGCmb-0003i5-Am
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 13:54:29 +0200
+	id 1IGDx7-0004As-GO
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 15:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759933AbXHALyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 07:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbXHALyW
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 07:54:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42635 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758213AbXHALyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 07:54:21 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 11:54:20 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp039) with SMTP; 01 Aug 2007 13:54:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18BcCJCO8gBELxCZrKSVbR6B8xOAfQ6cDtIRVP2W4
-	iw20BLdvw2aYkE
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vvebz7hpw.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1762407AbXHANJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 09:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762508AbXHANJR
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 09:09:17 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:46246 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762309AbXHANJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 09:09:15 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so202828ugf
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 06:09:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=axoKKcewgyrtpq5l4LpiNcRcKg04b1TOVVOE2FabFE5bkt1PiY2HnQB6c98aME5fPy2R0KKJjqyqoc65g/RdPEaJnFpBAiJsZD8MuAEVcShfs1kMxlmDZ2POM/LX3jshjNJ+EN6jDmXI52N/y+npcCdToIeU032u+Vt/UWWXoBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=QZUOVGCb8rcFDMj1Umc9dDJ+6dDGKqj6mdIFjd6LJuYOASavL5ovcSeytyLxhGxRVqAzYXBOHTUu8kCkT+dvXlouYHCD+Ax0O2qpQe7O79GzE8QqydoPlGKOTMk3DE8FaGD0bgZ8ejsOBd3iQYdqiUeEEr+LOc+nnL/MWzj2GOI=
+Received: by 10.78.140.16 with SMTP id n16mr177961hud.1185973754269;
+        Wed, 01 Aug 2007 06:09:14 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 1 Aug 2007 06:09:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54432>
 
-Hi,
+------=_Part_46998_19185652.1185973754235
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On Wed, 1 Aug 2007, Junio C Hamano wrote:
+It wont work for arguments with special characters (like ", : or *).
+It is generally not possible on Windows, so I didn't even try.
+---
+ git-add--interactive.perl |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-> > index 61577ea..d36181a 100644
-> > --- a/builtin-ls-files.c
-> > +++ b/builtin-ls-files.c
-> > @@ -469,9 +469,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
-> >  		break;
-> >  	}
-> >  
-> > -	if (require_work_tree &&
-> > -			(!is_inside_work_tree() || is_inside_git_dir()))
-> > -		die("This operation must be run in a work tree");
-> > +	if (require_work_tree && !is_inside_work_tree()) {
-> > +		const char *work_tree = get_git_work_tree();
-> > +		if (!work_tree || chdir(work_tree))
-> > +			die("This operation must be run in a work tree");
-> > +	}
-> >  
-> >  	pathspec = get_pathspec(prefix, argv + i);
-> >  
-> 
-> Similarly to this change, I am wondering if we would want to fix
-> verify_non_filename() in setup.c, which does this:
-> 
-> /*
->  * Verify a filename that we got as an argument for a pathspec
->  * entry. Note that a filename that begins with "-" never verifies
->  * as true, because even if such a filename were to exist, we want
->  * it to be preceded by the "--" marker (or we want the user to
->  * use a format like "./-filename")
->  */
-> void verify_filename(const char *prefix, const char *arg)
-> {
-> ...
-> }
-> 
-> /*
->  * Opposite of the above: the command line did not have -- marker
->  * and we parsed the arg as a refname.  It should not be interpretable
->  * as a filename.
->  */
-> void verify_non_filename(const char *prefix, const char *arg)
-> {
->         const char *name;
->         struct stat st;
-> 
->         if (!is_inside_work_tree() || is_inside_git_dir())
->                 return;
->         if (*arg == '-')
->                 return; /* flag */
->         name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
->         if (!lstat(name, &st))
->                 die("ambiguous argument '%s': both revision and filename\n"
->                     "Use '--' to separate filenames from revisions", arg);
->         if (errno != ENOENT)
->                 die("'%s': %s", arg, strerror(errno));
-> }
-> 
-> At this point, we are given an ambiguous parameter, that could
-> be naming a path in the work tree.  If we are not in the work
-> tree, then it is understandable that we do not have to barf.
-> The other check (i.e. "|| is_inside_git_dir()") does not hurt
-> (iow, it is not an incorrect check per-se), because if you did
-> "cd .git && git log HEAD" then the HEAD parameter cannot be
-> naming the path ".git/HEAD" in the work tree, but (1) that is
-> already covered by .git/ being "outside of work tree", and (2)
-> it is not something this function wants to check anyway
-> (i.e. "can the parameter be naming a file in the work tree?").
-> 
-> Am I mistaken and/or confused?
+------=_Part_46998_19185652.1185973754235
+Content-Type: text/plain; name="0001-Hack-git-add-interactive-to-make-it-work-with-ActiveS.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-Hack-git-add-interactive-to-make-it-work-with-ActiveS.txt"
+X-Attachment-Id: f_f4tu7m4j
 
-I think you are completely right.  Inside a bare repository, "git log 
-FETCH_HEAD" should not need to complain.  And I think that the 
-"is_inside_git_dir()" could be _replaced_ by "!is_inside_work_tree()", 
-since that is the intent of that call.
+RnJvbSAwMjA2YjE2NWRhYjcxYjBkYzYzOTZmODhjZmI4ZjcwZjY3Mjc3ZGRmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDEgQXVnIDIwMDcgMTQ6NTc6NDMgKzAyMDAKU3ViamVjdDogW1BBVENIXSBIYWNrIGdp
+dC1hZGQtLWludGVyYWN0aXZlIHRvIG1ha2UgaXQgd29yayB3aXRoIEFjdGl2ZVN0YXRlIFBlcmwK
+Ckl0IHdvbnQgd29yayBmb3IgYXJndW1lbnRzIHdpdGggc3BlY2lhbCBjaGFyYWN0ZXJzIChsaWtl
+ICIsIDogb3IgKikuCkl0IGlzIGdlbmVyYWxseSBub3QgcG9zc2libGUgb24gV2luZG93cywgc28g
+SSBkaWRuJ3QgZXZlbiB0cnkuCi0tLQogZ2l0LWFkZC0taW50ZXJhY3RpdmUucGVybCB8ICAgMTkg
+KysrKysrKysrKysrKy0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspLCA2
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1hZGQtLWludGVyYWN0aXZlLnBlcmwgYi9n
+aXQtYWRkLS1pbnRlcmFjdGl2ZS5wZXJsCmluZGV4IGRjMzAzODAuLjc5MjFjZGUgMTAwNzU1Ci0t
+LSBhL2dpdC1hZGQtLWludGVyYWN0aXZlLnBlcmwKKysrIGIvZ2l0LWFkZC0taW50ZXJhY3RpdmUu
+cGVybApAQCAtMyw5ICszLDE2IEBACiB1c2Ugc3RyaWN0OwogCiBzdWIgcnVuX2NtZF9waXBlIHsK
+LQlteSAkZmggPSB1bmRlZjsKLQlvcGVuKCRmaCwgJy18JywgQF8pIG9yIGRpZTsKLQlyZXR1cm4g
+PCRmaD47CisJaWYgKCReTyBlcSAnTVNXaW4zMicpIHsKKwkJbXkgQGludmFsaWQgPSBncmVwIHtt
+L1siOipdL30gQF87CisJCWRpZSAiJF5PIGRvZXMgbm90IHN1cHBvcnQ6IEBpbnZhbGlkXG4iIGlm
+IEBpbnZhbGlkOworCQlteSBAYXJncyA9IG1hcCB7IG0vIC9vID8gIlwiJF9cIiI6ICRfIH0gQF87
+CisJCXJldHVybiBxeHtAYXJnc307CisJfSBlbHNlIHsKKwkJbXkgJGZoID0gdW5kZWY7CisJCW9w
+ZW4oJGZoLCAnLXwnLCBAXykgb3IgZGllOworCQlyZXR1cm4gPCRmaD47CisJfQogfQogCiBteSAo
+JEdJVF9ESVIpID0gcnVuX2NtZF9waXBlKHF3KGdpdCByZXYtcGFyc2UgLS1naXQtZGlyKSk7CkBA
+IC0xNyw3ICsyNCw3IEBAIGNob21wKCRHSVRfRElSKTsKIAogc3ViIHJlZnJlc2ggewogCW15ICRm
+aDsKLQlvcGVuICRmaCwgJy18JywgcXcoZ2l0IHVwZGF0ZS1pbmRleCAtLXJlZnJlc2gpCisJb3Bl
+biAkZmgsICdnaXQgdXBkYXRlLWluZGV4IC0tcmVmcmVzaCB8JwogCSAgICBvciBkaWU7CiAJd2hp
+bGUgKDwkZmg+KSB7CiAJCTsjIGlnbm9yZSAnbmVlZHMgdXBkYXRlJwpAQCAtMjk2LDcgKzMwMyw3
+IEBAIHN1YiByZXZlcnRfY21kIHsKIAkJbXkgQGxpbmVzID0gcnVuX2NtZF9waXBlKHF3KGdpdCBs
+cy10cmVlIEhFQUQgLS0pLAogCQkJCQkgbWFwIHsgJF8tPntWQUxVRX0gfSBAdXBkYXRlKTsKIAkJ
+bXkgJGZoOwotCQlvcGVuICRmaCwgJ3wtJywgcXcoZ2l0IHVwZGF0ZS1pbmRleCAtLWluZGV4LWlu
+Zm8pCisJCW9wZW4gJGZoLCAnfCBnaXQgdXBkYXRlLWluZGV4IC0taW5kZXgtaW5mbycKIAkJICAg
+IG9yIGRpZTsKIAkJZm9yIChAbGluZXMpIHsKIAkJCXByaW50ICRmaCAkXzsKQEAgLTcyNSw3ICs3
+MzIsNyBAQCBzdWIgcGF0Y2hfdXBkYXRlX2NtZCB7CiAJaWYgKEByZXN1bHQpIHsKIAkJbXkgJGZo
+OwogCi0JCW9wZW4gJGZoLCAnfC0nLCBxdyhnaXQgYXBwbHkgLS1jYWNoZWQpOworCQlvcGVuICRm
+aCwgJ3wgZ2l0IGFwcGx5IC0tY2FjaGVkJzsKIAkJZm9yIChAeyRoZWFkLT57VEVYVH19LCBAcmVz
+dWx0KSB7CiAJCQlwcmludCAkZmggJF87CiAJCX0KLS0gCjEuNS4zLnJjMy4xNDUuZzRkOWNkYgoK
 
-Ciao,
-Dscho
+------=_Part_46998_19185652.1185973754235--
