@@ -1,83 +1,62 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Fix rebase interactive to allow specifying branch to rebase along with the base
-Date: Thu, 2 Aug 2007 00:32:41 +0200
-Message-ID: <20070801223241.GB2911@steel.home>
-References: <Pine.LNX.4.64.0707080300440.4093@racer.site> <20070712222640.GA30532@steel.home> <Pine.LNX.4.64.0708011654510.14781@racer.site> <20070801214556.GA2911@steel.home>
+Subject: Re: multiple checked out branches
+Date: Thu, 2 Aug 2007 00:34:30 +0200
+Message-ID: <20070801223430.GC2911@steel.home>
+References: <20070801220435.GA19226@raptus.dandreoli.com>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 00:32:56 2007
+Cc: git@vger.kernel.org
+To: Domenico Andreoli <cavokz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 00:34:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGMkO-0006uk-1E
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:32:52 +0200
+	id 1IGMm3-0007Qf-1x
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753346AbXHAWcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 18:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753326AbXHAWcs
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:32:48 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:39491 "EHLO
+	id S1753507AbXHAWec (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 18:34:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753434AbXHAWec
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:34:32 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:39048 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753212AbXHAWcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 18:32:47 -0400
+	with ESMTP id S1753352AbXHAWec (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 18:34:32 -0400
 Received: from tigra.home (Fae16.f.strato-dslnet.de [195.4.174.22])
-	by post.webmailer.de (fruni mo12) (RZmta 10.3)
-	with ESMTP id N01b00j71LsD3I ; Thu, 2 Aug 2007 00:32:41 +0200 (MEST)
+	by post.webmailer.de (mrclete mo44) (RZmta 10.3)
+	with ESMTP id j072b9j71MQtWf ; Thu, 2 Aug 2007 00:34:30 +0200 (MEST)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 72EF3277BD;
-	Thu,  2 Aug 2007 00:32:41 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id 4AE46277BD;
+	Thu,  2 Aug 2007 00:34:30 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id 5849CC21D; Thu,  2 Aug 2007 00:32:41 +0200 (CEST)
+	id 3049AC21D; Thu,  2 Aug 2007 00:34:30 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070801214556.GA2911@steel.home>
+In-Reply-To: <20070801220435.GA19226@raptus.dandreoli.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3urCQ==
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54491>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Domenico Andreoli, Thu, Aug 02, 2007 00:04:35 +0200:
+> Hi again,
+> 
+>   I would like to contemporaneously work with multiple branches out of
+> the same git repository. This does not work out of the box.
+> 
+> So I prepare multiple copies of the same repository, every one will have
+> its own checked out branch but I want to share most of their .git subdir.
+> 
+> I surely want to share the object db, the local and remote refs.
+> This way it is enough to make a round of fetches/merges/pushes to have
+> all the shared-repositories up to date.
+> 
+> I expect to do the trick with some symlinks but I am not an expert of
+> git internals. Which traps are waiting me? Any hint? Thank you.
+> 
 
-Alex Riesen, Wed, Aug 01, 2007 23:45:56 +0200:
->     $ git rebase -i base branch
->     /usr/local/bin/git-rebase--interactive: 482: cannot create /home/user/projects/tmp/.git/.dotest-merge/output: Directory nonexistent
->     cat: /home/user/projects/tmp/.git/.dotest-merge/output: No such file or directory
->     Invalid branchname: branch
-
-Oh... Sometimes I can *very* slow. I believe it is as simple as that
-
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 061cd0a..b42dee8 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -404,6 +404,7 @@ do
- 		esac
- 
- 		require_clean_work_tree
-+		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
- 
- 		if test ! -z "$2"
- 		then
-@@ -418,7 +419,6 @@ do
- 
- 		test -z "$ONTO" && ONTO=$UPSTREAM
- 
--		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
- 		: > "$DOTEST"/interactive || die "Could not mark as interactive"
- 		git symbolic-ref HEAD > "$DOTEST"/head-name ||
- 			die "Could not get HEAD"
--- 
-1.5.3.rc3.123.ge9877
+No traps. Supported. See for "git clone -s" and "git clone -l"
