@@ -1,100 +1,124 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 4/4] Clean up work-tree handling
-Date: Wed, 1 Aug 2007 12:46:50 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708011239090.14781@racer.site>
+Date: Wed, 1 Aug 2007 12:53:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708011250020.14781@racer.site>
 References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
  <Pine.LNX.4.64.0708010058130.14781@racer.site> <Pine.LNX.4.64.0708010129530.14781@racer.site>
- <7v3az3deac.fsf@assigned-by-dhcp.cox.net>
+ <7vvebz7hpw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, matled@gmx.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 13:47:32 2007
+X-From: git-owner@vger.kernel.org Wed Aug 01 13:54:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGCfq-0001e8-Ir
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 13:47:30 +0200
+	id 1IGCmb-0003i5-Am
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 13:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760746AbXHALrQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 07:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760565AbXHALrP
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 07:47:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54874 "HELO mail.gmx.net"
+	id S1759933AbXHALyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 07:54:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbXHALyW
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 07:54:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42635 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760280AbXHALrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 07:47:14 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 11:47:13 -0000
+	id S1758213AbXHALyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 07:54:21 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 11:54:20 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp029) with SMTP; 01 Aug 2007 13:47:13 +0200
+  by mail.gmx.net (mp039) with SMTP; 01 Aug 2007 13:54:20 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Ilt1lVAZIvtxaV5ElWN2D6p3e+T7taMCvMR7lbj
-	6zExo+S7sR/T3p
+X-Provags-ID: V01U2FsdGVkX18BcCJCO8gBELxCZrKSVbR6B8xOAfQ6cDtIRVP2W4
+	iw20BLdvw2aYkE
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v3az3deac.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vvebz7hpw.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54431>
 
 Hi,
 
-On Tue, 31 Jul 2007, Junio C Hamano wrote:
+On Wed, 1 Aug 2007, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > The old version of work-tree support was an unholy mess, barely readable,
-> > and not to the point.
-> >
-> > For example, why do you have to provide a worktree, when it is not used?
-> > As in "git status".  Now it works.
-> > ...
+> > diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+> > index 61577ea..d36181a 100644
+> > --- a/builtin-ls-files.c
+> > +++ b/builtin-ls-files.c
+> > @@ -469,9 +469,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+> >  		break;
+> >  	}
+> >  
+> > -	if (require_work_tree &&
+> > -			(!is_inside_work_tree() || is_inside_git_dir()))
+> > -		die("This operation must be run in a work tree");
+> > +	if (require_work_tree && !is_inside_work_tree()) {
+> > +		const char *work_tree = get_git_work_tree();
+> > +		if (!work_tree || chdir(work_tree))
+> > +			die("This operation must be run in a work tree");
+> > +	}
+> >  
+> >  	pathspec = get_pathspec(prefix, argv + i);
+> >  
 > 
-> Without continuing with negatives, let's try to define the new,
-> corrected world order.
+> Similarly to this change, I am wondering if we would want to fix
+> verify_non_filename() in setup.c, which does this:
 > 
-> I do not think the following is exactly what your cleaned-up
-> version tries to perform, but I am writing this down primarily
-> to demonstrate the style and the level of detail I expect to
-> accompany a clean-up patch like this.
+> /*
+>  * Verify a filename that we got as an argument for a pathspec
+>  * entry. Note that a filename that begins with "-" never verifies
+>  * as true, because even if such a filename were to exist, we want
+>  * it to be preceded by the "--" marker (or we want the user to
+>  * use a format like "./-filename")
+>  */
+> void verify_filename(const char *prefix, const char *arg)
+> {
+> ...
+> }
+> 
+> /*
+>  * Opposite of the above: the command line did not have -- marker
+>  * and we parsed the arg as a refname.  It should not be interpretable
+>  * as a filename.
+>  */
+> void verify_non_filename(const char *prefix, const char *arg)
+> {
+>         const char *name;
+>         struct stat st;
+> 
+>         if (!is_inside_work_tree() || is_inside_git_dir())
+>                 return;
+>         if (*arg == '-')
+>                 return; /* flag */
+>         name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
+>         if (!lstat(name, &st))
+>                 die("ambiguous argument '%s': both revision and filename\n"
+>                     "Use '--' to separate filenames from revisions", arg);
+>         if (errno != ENOENT)
+>                 die("'%s': %s", arg, strerror(errno));
+> }
+> 
+> At this point, we are given an ambiguous parameter, that could
+> be naming a path in the work tree.  If we are not in the work
+> tree, then it is understandable that we do not have to barf.
+> The other check (i.e. "|| is_inside_git_dir()") does not hurt
+> (iow, it is not an incorrect check per-se), because if you did
+> "cd .git && git log HEAD" then the HEAD parameter cannot be
+> naming the path ".git/HEAD" in the work tree, but (1) that is
+> already covered by .git/ being "outside of work tree", and (2)
+> it is not something this function wants to check anyway
+> (i.e. "can the parameter be naming a file in the work tree?").
+> 
+> Am I mistaken and/or confused?
 
-After reading your description I sink into the ground in shame.  I really 
-like the style this has, and agree that something as nice as this should 
-have been there.
-
->  - is_inside_git_dir(): this returns true if the $cwd is the git
->    directory or its subdirectory. [IS THIS STILL NEEDED???]
-
-Hmmm.
-
->  - is_inside_work_tree(): this returns true if the $cwd is
->    inside work tree (i.e. either at the toplevel of the work
->    tree or its subdirectory).  [NEEDSHELP: is .git in the usual
->    layout considered "is_inside_work_tree()"?  Should it?]
-
-.git/ is not considered part of the work tree, even if it is _physically_ 
-there.
-
-> After writing the above down, it strikes me odd that we do not
-> have a predicate that says "we know the work tree is there".
->
-> If a command wants a work tree, and if you are outside the work
-> tree, then is_inside_work_tree() returns false and
-> get_git_work_tree() returns non NULL, so that is a good pair of
-> interface that can be mixed and matched (e.g. you can chdir to
-> the former to perform the whole tree operation, or refuse to
-> perform, based on is_inside_work_tree being false, cwd relative
-> operations).
-
-Yes.  Builtins which need a working tree expect to start at the toplevel 
-of the work tree (which I like to call "working directory", because it is 
-described as such in the glossary AFAIR), and therefore they chdir() to 
-the toplevel in any case.
-
-I'll be running "master"+worktree+branch-newdir for the remainder of the 
-1.5.3-rc period, to be sure that all works as intended.
+I think you are completely right.  Inside a bare repository, "git log 
+FETCH_HEAD" should not need to complain.  And I think that the 
+"is_inside_git_dir()" could be _replaced_ by "!is_inside_work_tree()", 
+since that is the intent of that call.
 
 Ciao,
 Dscho
