@@ -1,97 +1,125 @@
-From: Domenico Andreoli <cavokz@gmail.com>
-Subject: dangling blob which is not dangling at all
-Date: Wed, 1 Aug 2007 03:34:50 +0200
-Message-ID: <20070801013450.GA16498@raptus.dandreoli.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and
+ Mercurial
+Date: Tue, 31 Jul 2007 19:14:23 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
+References: <200708010216.59750.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 03:35:27 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 04:14:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG37W-0001Bc-TV
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 03:35:27 +0200
+	id 1IG3jQ-0000a1-0A
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 04:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbXHABe6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 21:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761185AbXHABex
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 21:34:53 -0400
-Received: from fk-out-0910.google.com ([209.85.128.184]:54894 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761402AbXHABev (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 21:34:51 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so48902fkz
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 18:34:50 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
-        b=bwH2YoebKmaP3Zg2tzHrxhWVKu8tARSa23GKzmn7iTpplww8PoG9O3olDShjKrKG66zQJK/LGyoxVq8fqHdSkKq0GKUCiIBxDQqKcJ7zV1wUmcNXsM6g6gJFoPLhPn2CTjKSUX5JYkZ3FV7qS2MStrkUQ5FPBquTPG6bhCRqLok=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
-        b=Z1Ksek5UxCfNppLZhCvF6dPH0a0yACsDEyzL3HqjxEiunb/BO3MgCXPqgn0sAaLmhruySufQq9gilEvreZxvbrPjWggBmcVoHkk2bIamIu28TMpzzL32qlbaDiOygMSIN7tnfzivMHsBsVtg/KyYQbrlujTo8skmDGjj15dGMG8=
-Received: by 10.86.93.17 with SMTP id q17mr169241fgb.1185932089979;
-        Tue, 31 Jul 2007 18:34:49 -0700 (PDT)
-Received: from raptus.dandreoli.com ( [159.149.71.27])
-        by mx.google.com with ESMTPS id b17sm341044fka.2007.07.31.18.34.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2007 18:34:49 -0700 (PDT)
-Received: by raptus.dandreoli.com (Postfix, from userid 1000)
-	id E02193E48C0; Wed,  1 Aug 2007 03:34:50 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1754445AbXHACOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 22:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753056AbXHACOc
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 22:14:32 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:60119 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752563AbXHACOb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2007 22:14:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l712ESqc016373
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 31 Jul 2007 19:14:29 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l712ENMV002170;
+	Tue, 31 Jul 2007 19:14:23 -0700
+In-Reply-To: <200708010216.59750.jnareb@gmail.com>
+X-Spam-Status: No, hits=-2.724 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.18__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54396>
 
-Hi,
 
-  first of all, I want to thank Linus and you all for git, it is
-revolutionizing my every-day work flow. Exceptional.
 
-Playing with my central bare git repository (yes, I am a former
-CVS/SVN user) and trying to lose data I discovered something I am not
-understanding well.
+On Wed, 1 Aug 2007, Jakub Narebski wrote:
+> 
+> If I remember correctly there were some patches to git which tried to 
+> better deal with large blobs. In this simple benchmark git was 
+> outperformed by Mercurial and even Bazaar-NG a bit.
 
-Running git fsck --no-reflogs I found some dangling objects (I have
-to say I enjoyed a lot in navigating commits, trees and blobs with
-plumbing... really!), two were commits and one was a blob.
+It's almost certainly not the binary blobs.
 
-One of the commits was there because I pushed (forcing) from a working
-repository after a git reset HEAD^. I checked it and removed it and
-all the other dependant objects until the blob which contained the new
-version of that file. It seems I even understood what I was doing! ;)
-Until here, everything had been smooth.
+I think almost all the difference is from the cloning, without repacking 
+the souce or using a local clone.
 
-Second commit was something pushed from another repository but at the
-right head was strangely recorded with a different hash. Removing it,
-its tree and another sub-tree, no blob was pending. So the final blob
-containing the change was still used elsewhere, indeed by the "right
-head" of above. While I would expect this in a working repository where
-merging is happening all the day, it is not clear how it happened to
-my central repository, where nobody does any work. Any idea?
+The default action for a git clone is to create a pack-file, and do a 
+local clone as if you did it over the network. That is obviously much 
+slower than using the "-l" flag for the _clone_ action, but it tends to be 
+better for the end result - since you get a nice packed starting point, 
+and none of the confusion with hardlinks etc.
 
-And now, what I think is a bug, the dangling blob. It is signaled as
-dangling but it is not. Hunting for a commit/tree/blob to compare it to
-in order to understand which modification it was hiding, I found a tree
-object which referred to it, which by definition of "dangling object"
-should not exist. So fsck looks f*cked... and I am well available to
-understand what is going wrong here, but please help me.
+[ Maybe I'm just a worry-wart, but hardlinking two repos still makes me 
+  worried. Even though we never modify the object files. 
 
-$ git fsck --no-reflogs
-dangling blob e5d444e61b834c34710ce8fb5cb176e20e5894e1
-$ git-ls-tree 70b58535361eb633d44d4f1275af3421ca6a5ed7
-...
-100644 blob e5d444e61b834c34710ce8fb5cb176e20e5894e1    link_stream.c
-...
+  Quite frankly, I almost wish we hadn't ever done "-l" at all, and I 
+  cannot really suggest using it. Either use "-s" for the truly shared 
+  repository, or use the default pack-generating one. The hardlinking one 
+  was simple and made sense, but it's really not very nice.
 
-If you read me until here, good night! ;)
+  But that aversion to "git clone -l" is really totally illogical. The way 
+  we do the object handling, hardlinking object files in git is just about 
+  the most safe operation you can think of - and I *still* shudder at it ]
 
-Cheers,
-Domenico
+Now, I think the "always act as if you were network transparent" by 
+default is great, but especially if you have never run "git gc" to 
+generate a pack to begin with, it's going to be a very costly thing. And I 
+think that's what the numbers show. That's the only op we do a *lot* worse 
+on than we should.
 
------[ Domenico Andreoli, aka cavok
- --[ http://www.dandreoli.com/gpgkey.asc
-   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
+(The "nonconflicting merge" is probably - once more - the diffstat 
+generation that bites us. That's generally the most costly thing of the 
+whole merge, but I *love* the diffstat).
+
+That said, even if he had done a "git gc", to be fair he would have had to 
+include the cost of that first garbage collect in the "initial import", so 
+the end result would have been exactly the same. Git _does_ end up having 
+a very odd performance profile, and while it's optimized for certain 
+thing, the "initial import" is not one of them.
+
+(Which admittedly is a bit odd. The reason I didn't ever seriously even 
+consider monotone was that the initial import was so *incredibly* sucky, 
+and took hours for the kernel. So use "-l" for benchmarks, and damn my 
+"I hate hardlinking repos" idiocy).
+
+So the only way to truly do a fast initial import *and* get a reasonably 
+good initial clone is likely one of:
+
+ - take full advantage of git, and use local branches, instead of 
+   bothering with lots of clones.
+
+   I think that this is often the right thing to do, but it's obviously 
+   not fair for comparisons, since it's really something different from 
+   what's likely available in the other SCM's. But it's the "git way".
+
+ - use "git clone -s" (or "-l").
+
+   I think the hg numbers are the result of hg defaulting to "-l" 
+   behaviour.  Which makes sense for hg, since people need to clone more 
+   (in git, you'd generally work with local branches instead).
+
+ - or the initial import would be done with some "git fast-import" thing, 
+   rather than "git add ." We don't do it now, and the resulting pack-file 
+   wouldn't be optimal, but it would be reasonable. It would at least cut 
+   down a _bit_ on the clone cost.
+
+The other reaction I took away from that (quite reasonable, I think) 
+comparison is that I think Murdock would have been much happier if git 
+diff defaulted to "-C". We don't do that (for the best of reasons: 
+interoperability), but maybe we should document the "-M/-C" options more. 
+
+The options do show up in the man-page, but apparently not 
+obviously enough, since he hadn't noticed.
+
+			Linus
