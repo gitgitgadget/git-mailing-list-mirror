@@ -1,77 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git clone error
-Date: Wed, 1 Aug 2007 09:36:47 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708010929070.3582@woody.linux-foundation.org>
-References: <C2D5F3B2.2B00%denbuen@sandia.gov>
- <alpine.LFD.0.999.0708010846360.3582@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [NOT-SERIOUS PATCH] Make get_relative_cwd() not accept NULL for a directory
+Date: Wed, 01 Aug 2007 09:58:07 -0700
+Message-ID: <7vmyxb5h0g.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+	<Pine.LNX.4.64.0708010058130.14781@racer.site>
+	<Pine.LNX.4.64.0708010129090.14781@racer.site>
+	<7vy7gvdgtn.fsf@assigned-by-dhcp.cox.net>
+	<7vwswfbywq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708011624260.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Denis Bueno <denbuen@sandia.gov>
-X-From: git-owner@vger.kernel.org Wed Aug 01 18:37:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 01 18:58:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGHCG-0005Xv-Cx
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 18:37:17 +0200
+	id 1IGHWb-0004TR-1P
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 18:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755907AbXHAQhB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 12:37:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757816AbXHAQhB
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 12:37:01 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41783 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757756AbXHAQhA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 12:37:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l71GaqTV020550
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 1 Aug 2007 09:36:54 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l71GalNQ005284;
-	Wed, 1 Aug 2007 09:36:47 -0700
-In-Reply-To: <alpine.LFD.0.999.0708010846360.3582@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.423 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_23
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755912AbXHAQ6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 12:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbXHAQ6K
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 12:58:10 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61684 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755426AbXHAQ6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 12:58:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801165809.SJDJ1349.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 1 Aug 2007 12:58:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Wgy71X00m1kojtg0000000; Wed, 01 Aug 2007 12:58:08 -0400
+In-Reply-To: <Pine.LNX.4.64.0708011624260.14781@racer.site> (Johannes
+	Schindelin's message of "Wed, 1 Aug 2007 16:26:04 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54451>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> 	Okay, I made up my mind.  Allowing "dir == NULL" is not
+> 	only a matter of convenience.  It is the most natural
+> 	way to say that "dir" is an invalid or non-existing
+> 	directory.
 
-On Wed, 1 Aug 2007, Linus Torvalds wrote:
-> 
-> > If I just recreate a version I'm happy with, can I add that to the repo and
-> > go from there?
-> 
-> Well, it's not so much a version _you_ are happy with: you'd have to be 
-> able to re-create the exact old version (with the exact same SHA1), in 
-> order for git to be happy.
-
-Btw, if you really cannot re-generate it, you'd basically need to create a 
-whole new git archive without that blob (or basically with that blob 
-replaced by another version).
-
-We don't have wonderfully good support for that, because, quite frankly, 
-we've not had this happen before. I think every time before, people have 
-had the blob in some other copy of their git archive.
-
-But the thing to use is "git filter-branch", which can take a git history 
-and munge it arbitrarily. It would be the "tree-filter" that you'd use to 
-replace that one blob that you cannot regenerate with another (ie you 
-might decide to just replace the original version of the file with that 
-*second* version, and regenerate the tree that way).
-
-I'm cc'ing Dscho explicitly to see if he can help you with the exact 
-syntax, and maybe we could even make this into a user-manual entry about 
-how to handle corruption. I don't think we have anything in the 
-documentation about this - we only cover the trivial cases where the 
-objects are all good, but you've lost the pointers into it because you 
-removed a branch by mistake or something.
-
-		Linus
+That is also fine; it only needs to be clarified somehow to
+people who might wonder what get_relative_cwd() function is used
+for and how to use it in their programs.  The comment that says
+"As a convenience" may need to become a bit more elaborate to
+say why it is convenient for the callers to do so (e.g. "The
+caller may have called another function that returns a directory
+to obtain the 'dir', which may have returned NULL as a way to
+say 'there is nothing applicable in your case', and in such a
+case, your $(cwd) relative to that 'dir' is also something that
+cannot be used, hence a NULL is returned").
