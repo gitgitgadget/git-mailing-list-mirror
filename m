@@ -1,118 +1,194 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [NOT-SERIOUS PATCH] Make get_relative_cwd() not accept NULL for a
- directory
-Date: Wed, 1 Aug 2007 16:26:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708011624260.14781@racer.site>
-References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
- <Pine.LNX.4.64.0708010058130.14781@racer.site> <Pine.LNX.4.64.0708010129090.14781@racer.site>
- <7vy7gvdgtn.fsf@assigned-by-dhcp.cox.net> <7vwswfbywq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, matled@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 17:26:37 2007
+From: Steve Hoelzer <shoelzer@gmail.com>
+Subject: [PATCH] Try to be consistent with capitalization in the documentation
+Date: Wed, 1 Aug 2007 10:43:06 -0500
+Message-ID: <514D28CB-25F8-49B2-921E-8EFA60BE864C@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 01 17:42:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGG5s-0004w5-2E
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 17:26:36 +0200
+	id 1IGGLG-0002fm-BR
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 17:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763319AbXHAP0b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 11:26:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759604AbXHAP0b
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 11:26:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47436 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752900AbXHAP0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 11:26:30 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 15:26:27 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp009) with SMTP; 01 Aug 2007 17:26:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Cn3lenlIC+7Q03Tvv5QqKMM+LC0r3HcEes/uqyP
-	8GurXEQnKF/v/0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vwswfbywq.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1758689AbXHAPls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 11:41:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758076AbXHAPls
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 11:41:48 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:60652 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758689AbXHAPlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 11:41:46 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so207577wxd
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 08:41:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer;
+        b=W8kHUgMdFq+89Gcv6o/6xsR6mtJSlZFjCqx46dkCOqX2eitxwKPQ9EjK7A+kAUnOI/MBUhWx9q6vvILJvJ3EuGRiVtwId7hYRdQZNV1pnX+CwNiu5Begbhcsxo+Ko3V9Ls11md/wXC4bhUrLS+Ocf80mgcFc+nnK3BNg6LPnYR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer;
+        b=M36R9BhJlg8DsYAikRMzfhg2PzJZDzBdIAwbZEpgtHZ/3rbaRwxDG+3FaQeJqr+dUrYv42iw7ff2vntv1JO5rO2VImhJDZv/dcYE6PQaJqQdOcSd8xy2zk8qA9KLRSQ9ZF7FAzT8pYFY2ezyW80FSYGImEjBNGL1paD7ovH+o4Q=
+Received: by 10.70.122.11 with SMTP id u11mr1463999wxc.1185982905078;
+        Wed, 01 Aug 2007 08:41:45 -0700 (PDT)
+Received: from ?192.168.0.200? ( [67.162.25.86])
+        by mx.google.com with ESMTPS id h20sm1446684wxd.2007.08.01.08.41.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Aug 2007 08:41:44 -0700 (PDT)
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54444>
 
-
-Earlier, get_relative_cwd() interpreted "dir == NULL" as "outside of the dir",
-and therefore returned NULL.  Be more strict now.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
 ---
 
-	As promised.
+Try to be consistent with capitalization in the documentation.
 
-	Okay, I made up my mind.  Allowing "dir == NULL" is not only a matter of
-	convenience.  It is the most natural way to say that "dir" is an invalid
-	or non-existing directory.
-
-	Besides, this patch adds 14.286% more lines than it removes ;-)
-
-	But ultimately, it is your decision, Junio, and I am d'accord with 
-	what you choose.
-
- dir.c   |    3 ---
- setup.c |   10 +++++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index b3329f4..cfcde13 100644
---- a/dir.c
-+++ b/dir.c
-@@ -646,7 +646,6 @@ file_exists(const char *f)
- /*
-  * get_relative_cwd() gets the prefix of the current working directory
-  * relative to 'dir'.  If we are not inside 'dir', it returns NULL.
-- * As a convenience, it also returns NULL if 'dir' is already NULL.
-  */
- char *get_relative_cwd(char *buffer, int size, const char *dir)
- {
-@@ -656,8 +655,6 @@ char *get_relative_cwd(char *buffer, int size, const char *dir)
- 	 * a lazy caller can pass a NULL returned from get_git_work_tree()
- 	 * and rely on this function to return NULL.
- 	 */
--	if (!dir)
--		return NULL;
- 	if (!getcwd(buffer, size))
- 		die("can't find the current directory: %s", strerror(errno));
- 
-diff --git a/setup.c b/setup.c
-index 3653092..2f720f8 100644
---- a/setup.c
-+++ b/setup.c
-@@ -183,8 +183,10 @@ int is_inside_git_dir(void)
- 
- int is_inside_work_tree(void)
- {
--	if (inside_work_tree < 0)
--		inside_work_tree = is_inside_dir(get_git_work_tree());
-+	if (inside_work_tree < 0) {
-+		const char *work_tree = get_git_work_tree();
-+		inside_work_tree = work_tree ? is_inside_dir(work_tree) : 0;
-+	}
- 	return inside_work_tree;
- }
- 
-@@ -370,10 +372,12 @@ const char *setup_git_directory(void)
- 	/* If the work tree is not the default one, recompute prefix */
- 	if (inside_work_tree < 0) {
- 		static char buffer[PATH_MAX + 1];
-+		const char *work_tree;
- 		char *rel;
- 		if (retval && chdir(retval))
- 			die ("Could not jump back into original cwd");
--		rel = get_relative_cwd(buffer, PATH_MAX, get_git_work_tree());
-+		work_tree = get_git_work_tree();
-+		rel = work_tree ? get_relative_cwd(buffer, PATH_MAX, work_tree) : NULL;
- 		return rel && *rel ? strcat(rel, "/") : NULL;
- 	}
- 
--- 
-1.5.3.rc3.112.gf60b6
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index bc6aa88..198ab47 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -134,8 +134,8 @@ $ git branch -d -r origin/todo origin/html origin/ 
+man   <1>
+$ git branch -D test                                    <2>
+------------
++
+-<1> delete remote-tracking branches "todo", "html", "man"
+-<2> delete "test" branch even if the "master" branch does not have all
++<1> Delete remote-tracking branches "todo", "html", "man".
++<2> Delete "test" branch even if the "master" branch does not have all
+commits from test branch.
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index b1f5e7f..b36e705 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -76,10 +76,10 @@ $ git diff --cached   <2>
+$ git diff HEAD       <3>
+------------
++
+-<1> changes in the working tree not yet staged for the next commit.
+-<2> changes between the index and your last commit; what you
++<1> Changes in the working tree not yet staged for the next commit.
++<2> Changes between the index and your last commit; what you
+would be committing if you run "git commit" without "-a" option.
+-<3> changes in the working tree since your last commit; what you
++<3> Changes in the working tree since your last commit; what you
+would be committing if you run "git commit -a"
+Comparing with arbitrary commits::
+@@ -90,12 +90,12 @@ $ git diff HEAD -- ./test  <2>
+$ git diff HEAD^ HEAD      <3>
+------------
++
+-<1> instead of using the tip of the current branch, compare with the
++<1> Instead of using the tip of the current branch, compare with the
+tip of "test" branch.
+-<2> instead of comparing with the tip of "test" branch, compare with
++<2> Instead of comparing with the tip of "test" branch, compare with
+the tip of the current branch, but limit the comparison to the
+file "test".
+-<3> compare the version before the last commit and the last commit.
++<3> Compare the version before the last commit and the last commit.
+Limiting the diff output::
+@@ -106,11 +106,11 @@ $ git diff --name-status                <2>
+$ git diff arch/i386 include/asm-i386   <3>
+------------
++
+-<1> show only modification, rename and copy, but not addition
++<1> Show only modification, rename and copy, but not addition
+nor deletion.
+-<2> show only names and the nature of change, but not actual
++<2> Show only names and the nature of change, but not actual
+diff output.
+-<3> limit diff output to named subtrees.
++<3> Limit diff output to named subtrees.
+Munging the diff output::
++
+@@ -119,9 +119,9 @@ $ git diff --find-copies-harder -B -C  <1>
+$ git diff -R                          <2>
+------------
++
+-<1> spend extra cycles to find renames, copies and complete
++<1> Spend extra cycles to find renames, copies and complete
+rewrites (very expensive).
+-<2> output diff in reverse.
++<2> Output diff in reverse.
+Author
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 2c9db98..2e1b7b6 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -107,11 +107,11 @@ pull after you are done and ready.
+When things cleanly merge, these things happen:
+-1. the results are updated both in the index file and in your
+-   working tree,
+-2. index file is written out as a tree,
+-3. the tree gets committed, and
+-4. the `HEAD` pointer gets advanced.
++1. The results are updated both in the index file and in your
++   working tree.
++2. Index file is written out as a tree.
++3. The tree gets committed.
++4. The `HEAD` pointer gets advanced.
+Because of 2., we require that the original state of the index
+file to match exactly the current `HEAD` commit; otherwise we
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 19c5b9b..15e3aca 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -63,7 +63,7 @@ $ git commit -a -c ORIG_HEAD  <3>
+<1> This is most often done when you remembered what you
+just committed is incomplete, or you misspelled your commit
+message, or both.  Leaves working tree as it was before "reset".
+-<2> make corrections to working tree files.
++<2> Make corrections to working tree files.
+<3> "reset" copies the old head to .git/ORIG_HEAD; redo the
+commit by starting with its log message.  If you do not need to
+edit the message further, you can give -C option instead.
+@@ -106,17 +106,17 @@ $ git reset                                <3>
+$ git pull git://info.example.com/ nitfol  <4>
+------------
++
+-<1> you are happily working on something, and find the changes
++<1> You are happily working on something, and find the changes
+in these files are in good order.  You do not want to see them
+when you run "git diff", because you plan to work on other files
+and changes with these files are distracting.
+-<2> somebody asks you to pull, and the changes sounds worthy of  
+merging.
+-<3> however, you already dirtied the index (i.e. your index does
++<2> Somebody asks you to pull, and the changes sounds worthy of  
+merging.
++<3> However, you already dirtied the index (i.e. your index does
+not match the HEAD commit).  But you know the pull you are going
+to make does not affect frotz.c nor filfre.c, so you revert the
+index changes for these two files.  Your changes in working tree
+remain there.
+-<4> then you can pull and merge, leaving frotz.c and filfre.c
++<4> Then you can pull and merge, leaving frotz.c and filfre.c
+changes still in the working tree.
+Undo a merge or pull::
+@@ -133,15 +133,15 @@ Fast forward
+$ git reset --hard ORIG_HEAD       <4>
+------------
++
+-<1> try to update from the upstream resulted in a lot of
++<1> Try to update from the upstream resulted in a lot of
+conflicts; you were not ready to spend a lot of time merging
+right now, so you decide to do that later.
+<2> "pull" has not made merge commit, so "git reset --hard"
+which is a synonym for "git reset --hard HEAD" clears the mess
+from the index file and the working tree.
+-<3> merge a topic branch into the current branch, which resulted
++<3> Merge a topic branch into the current branch, which resulted
+in a fast forward.
+-<4> but you decided that the topic branch is not ready for public
++<4> But you decided that the topic branch is not ready for public
+consumption yet.  "pull" or "merge" always leaves the original
+tip of the current branch in ORIG_HEAD, so resetting hard to it
+brings your index file and the working tree back to that state,
