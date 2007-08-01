@@ -1,56 +1,55 @@
-From: Alexandre Julliard <julliard@winehq.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-diff on touched files: bug or feature?
-Date: Wed, 01 Aug 2007 21:02:18 +0200
-Message-ID: <87vebzkrid.fsf@wine.dyndns.org>
+Date: Wed, 01 Aug 2007 12:07:04 -0700
+Message-ID: <7vvebz3wh3.fsf@assigned-by-dhcp.cox.net>
 References: <vpqwswf8c1i.fsf@bauges.imag.fr>
 	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<87vebzkrid.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 21:02:36 2007
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Wed Aug 01 21:08:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGJSm-0006oH-1e
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 21:02:28 +0200
+	id 1IGJYK-0000PQ-MQ
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 21:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757091AbXHATCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 15:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756465AbXHATCX
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 15:02:23 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:44287 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819AbXHATCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 15:02:22 -0400
-Received: from adsl-84-227-23-240.adslplus.ch ([84.227.23.240] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1IGJSe-0003QU-8o; Wed, 01 Aug 2007 14:02:20 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 4560D1E7170; Wed,  1 Aug 2007 21:02:18 +0200 (CEST)
-In-Reply-To: <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 01 Aug 2007 10\:26\:29 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1759738AbXHATHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 15:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758699AbXHATHI
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 15:07:08 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:45953 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754803AbXHATHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 15:07:06 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801190706.COTU23215.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 1 Aug 2007 15:07:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Wj751X0021kojtg0000000; Wed, 01 Aug 2007 15:07:05 -0400
+In-Reply-To: <87vebzkrid.fsf@wine.dyndns.org> (Alexandre Julliard's message of
+	"Wed, 01 Aug 2007 21:02:18 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54466>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Alexandre Julliard <julliard@winehq.org> writes:
 
-> Yes.  Very much so, intentionally, from very early days of git.
-> This serves as a reminder to the user that he started editing
-> but changed his mind to end up with the same contents as the
-> original, until the next "update-index --refresh" (which is
-> internally invoked from "status").
+> .... For
+> instance in vc-git.el the workfile-unchanged-p function currently has
+> to rehash the file every time to see if it really changed, because we
+> can't afford to refresh the whole project at that point.
 
-It would be nice to have a way to refresh a single file though. For
-instance in vc-git.el the workfile-unchanged-p function currently has
-to rehash the file every time to see if it really changed, because we
-can't afford to refresh the whole project at that point.
+Maybe I am missing something.  Why can't you "afford to"?
 
--- 
-Alexandre Julliard
-julliard@winehq.org
+"update-index --refresh" looks at only the files whose cached
+stat information does indicate there might be chanegs.  It does
+not rehash already up-to-date ones.
