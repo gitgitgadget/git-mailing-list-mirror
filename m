@@ -1,83 +1,78 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] git-commit.sh: Permit the --amend message to be given with -m/-c/-C/-F.
-Date: Wed, 1 Aug 2007 22:33:47 +0200
-Organization: Organization?!?
-Message-ID: <85zm1bq8um.fsf@lola.goethe.zz>
-References: <86643znxgz.fsf@lola.quinscape.zz>
-	<7v8x8v5g2z.fsf@assigned-by-dhcp.cox.net>
-	<85myxbrrdl.fsf@lola.goethe.zz>
-	<7vk5sf3uct.fsf@assigned-by-dhcp.cox.net>
-	<857iofrnkj.fsf@lola.goethe.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git clone error
+Date: Wed, 1 Aug 2007 22:12:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708012211040.14781@racer.site>
+References: <C2D647C0.2B60%denbuen@sandia.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 22:49:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Denis Bueno <denbuen@sandia.gov>
+X-From: git-owner@vger.kernel.org Wed Aug 01 23:13:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGL8Y-0003DS-Vc
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 22:49:43 +0200
+	id 1IGLVJ-0004SO-02
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 23:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbXHAUtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 16:49:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbXHAUtk
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 16:49:40 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:49162 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751323AbXHAUtj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 16:49:39 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 295754C887
-	for <git@vger.kernel.org>; Wed,  1 Aug 2007 22:49:38 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 15AC1ABF65
-	for <git@vger.kernel.org>; Wed,  1 Aug 2007 22:49:38 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-017-017.pools.arcor-ip.net [84.61.17.17])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id E19BE3425E2
-	for <git@vger.kernel.org>; Wed,  1 Aug 2007 22:49:37 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id CAB491C3E076; Wed,  1 Aug 2007 22:48:49 +0200 (CEST)
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV version 0.91.1, clamav-milter version 0.91.1 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1752107AbXHAVNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 17:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbXHAVNI
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 17:13:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35654 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751265AbXHAVNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 17:13:06 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 21:13:03 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp044) with SMTP; 01 Aug 2007 23:13:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18veS1zCtIv4QMoZgms1EcqUWGUgMQuHPTBQ6V64C
+	n6VZRbo103zdsI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <C2D647C0.2B60%denbuen@sandia.gov>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54477>
 
+Hi,
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- git-commit.sh |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+On Wed, 1 Aug 2007, Denis Bueno wrote:
 
-diff --git a/git-commit.sh b/git-commit.sh
-index 4290ae2..d7e7028 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -190,7 +190,6 @@ $1"
- 		;;
- 	--a|--am|--ame|--amen|--amend)
- 		amend=t
--		log_given=t$log_given
- 		use_commit=HEAD
- 		shift
- 		;;
-@@ -298,9 +297,9 @@ esac
- 
- case "$log_given" in
- tt*)
--	die "Only one of -c/-C/-F/--amend can be used." ;;
-+	die "Only one of -c/-C/-F can be used." ;;
- *tm*|*mt*)
--	die "Option -m cannot be combined with -c/-C/-F/--amend." ;;
-+	die "Option -m cannot be combined with -c/-C/-F." ;;
- esac
- 
- case "$#,$also,$only,$amend" in
--- 
-1.5.3.rc2.84.gd0bef-dirty
+> On 08/01/2007 11:17, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> wrote:
+> > But this is what I would do if I had the problem: I would try to create
+> > a state which is as close to the corrupt revision as possible,
+> > use a graft to replace the initial commit with that revision, and
+> > rewrite the branch. I'd probably start by doing something like this:
+> > 
+> > $ git symbolic-ref HEAD refs/heads/recreate-first && rm .git/index
+> > $ git ls-tree -r --name-only <initial-commit> |
+> > grep -v "^condor/condor-uninstall.sh$" |
+> > xargs git checkout <initial-commit>
+> > $ git checkout <second-commit> condor/condor-uninstall.sh
+> > [possibly some minor hacking on the latter file to make it work]
+> > $ git commit -c <initial-commit>
+> 
+> Wow.  `commit' and `checkout' are the only two commands that I have ever
+> heard of in that sequence.
+> 
+> How difficult would it be to create a new git repo which is exactly the same
+> minus the initial condor-uninstall.sh commit?  That is, just to pretend the
+> initial import of condor-uninstall.sh never existed, and use the second
+> commit of the old repo the first commit of the new, and preserve the rest of
+> the history of the entire repo?
+
+That would be even easier.  Just graft "nothingness" as parent of the 
+second commit:
+
+	$ git rev-parse <second-commit> >> .git/info/grafts
+
+But of course, you should use filter-branch nevertheless, since you would 
+have to do the same hack in _every_ repository.
+
+Ciao,
+Dscho
