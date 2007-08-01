@@ -1,108 +1,202 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] work-tree clean ups
-Date: Wed, 1 Aug 2007 01:28:30 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708010058130.14781@racer.site>
+Subject: [PATCH 1/4] Add is_absolute_path() and make_absolute_path()
+Date: Wed, 1 Aug 2007 01:28:59 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708010128430.14781@racer.site>
 References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+ <Pine.LNX.4.64.0708010058130.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: gitster@pobox.com, git@vger.kernel.org, matled@gmx.net
-X-From: git-owner@vger.kernel.org Wed Aug 01 02:28:58 2007
+X-From: git-owner@vger.kernel.org Wed Aug 01 02:29:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG25B-0004xk-Uw
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 02:28:58 +0200
+	id 1IG25f-00053c-4I
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 02:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754103AbXHAA2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 Jul 2007 20:28:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbXHAA2z
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 20:28:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39656 "HELO mail.gmx.net"
+	id S1750912AbXHAA3Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 Jul 2007 20:29:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbXHAA3Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Jul 2007 20:29:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46607 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753815AbXHAA2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2007 20:28:54 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 00:28:52 -0000
+	id S1750896AbXHAA3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2007 20:29:23 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 00:29:21 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 01 Aug 2007 02:28:52 +0200
+  by mail.gmx.net (mp021) with SMTP; 01 Aug 2007 02:29:21 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Ml7UPc9GMJwuQCSJ9hE20c1ptLCSv27X4P/+Oks
-	V4kl8h7zk7sGQi
+X-Provags-ID: V01U2FsdGVkX1/LRRdH9DHLtQJEf/3oX0LKW8tv1A46DY8+VDUbNJ
+	7xlwgm77W9a2YP
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+In-Reply-To: <Pine.LNX.4.64.0708010058130.14781@racer.site>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54385>
 
-Hi,
 
-so this is yet another revision of the work-tree clean ups (sorry to all 
-those who grow tired of it; I feel with you: I am tired of it, too).
+This patch adds convenience functions to work with absolute paths.
+The function is_absolute_path() should help the efforts to integrate
+the MinGW fork.
 
-Junio rightfully pointed out that the tests do not succeed after each 
-single step of the series.
+Note that make_absolute_path() returns a pointer to a static buffer.
 
-Alas, after thinking about it for quite some time, I do not think there is 
-any way around squashing all the earlier steps 4,6--9 into one step.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Makefile             |    2 +-
+ cache.h              |    5 ++++
+ path.c               |   65 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t0000-basic.sh     |   16 ++++++++++++
+ test-absolute-path.c |   11 ++++++++
+ 5 files changed, 98 insertions(+), 1 deletions(-)
+ create mode 100644 test-absolute-path.c
 
-There is not really much that can be done about step 6/9: if we are in a 
-work tree: that does not mean that we are _not_ in the git_dir.  (And no, 
-this does not break git-clean, as a work tree is a work tree is a work 
-tree.  If the user was stupid enough to specify the same directory as 
-GIT_DIR and GIT_WORK_TREE, then that is _her_ problem.  Git is a powerful 
-tool, and you can harm yourself with it.  Tough.)
-
-Patch 7/9 is needed, because the old logic in git-init was wrong, and only 
-hidden by the fact that the work-tree logic was implemented wrongly to 
-begin with.
-
-Patches 8 and 9/9 only updated the tests to ensure a sane logic, instead 
-of an unsane one.  So they are needed, too.
-
-Note: if you are in a bare repository (a repository which either says 
-"core.bare = false" in the config, or which is a direct ancestor 
-directory, i.e. ../[...]/.. of the current working directory) there will 
-_not_ be an automatic working directory assignment.  You will be operating 
-_without_ any work tree, unless you specify one.
-
-I somehow feel that core.bare = true weighs more than core.worktree = 
-/some/thing, and therefore I implemented it that way, but hey, if enough 
-people disagree, then I'll change it.
-
-Maybe I should add two comments?
-
-Namely that setup_git_directory_gently() does _not_ check the config if 
-the repository version is right, and where the working directory is, and 
-if the repository is bare.  setup_git_directory() does...
-
-And that setup_git_directory_gently() _does_ try to be smart about 
-get_git_work_tree(), is_inside_git_dir() and is_inside_work_tree() by 
-assigning their return values, and only if core.bare or core.worktree (or 
---work-tree=<something> or GIT_WORK_TREE) are set, get_git_work_tree() and 
-is_inside_work_tree() are reset to recalculate what is happening...  
-(actually, that is not completely true: if we _know_ that GIT_WORK_TREE is 
-set, or --work-tree=<something> which is almost the same, we will defer 
-the calculation until one of the functions get_git_work_tree() and 
-is_inside_work_tree() is called.)
-
-IMHO we should (probably after 1.5.3) change setup_git_directory_gently() 
-to call check_repository_format() in every return path, so that we 
-ascertain that the current repository is recent enough.  Because that 
-function now checks also if the repo is bare, and if it has a worktree 
-set, in addition to ensuring a valid repository.
-
-In hindsight, I should have separated the "check .git/, then ./, and if no 
-git_dir was found, continue with the parent directory" into a separate 
-patch, but frankly, I am sick and tired of the work-tree series.  It was 
-not done right in the first place, and it used hard-to-understand code to 
-hide the fact.
-
-Ciao,
-Dscho
-
-P.S.: After reading my patch to the tests, I have to disagree strongly 
-with my notion that _not_ cleaning up the tests to use some sane syntax 
-would make them clearer.  Nevertheless, I think I'll let them stand as an 
-example how _not_ to write tests.
+diff --git a/Makefile b/Makefile
+index 149df1b..41c4de0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -937,7 +937,7 @@ endif
+ 
+ ### Testing rules
+ 
+-TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X
++TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X test-absolute-path$X
+ 
+ all:: $(TEST_PROGRAMS)
+ 
+diff --git a/cache.h b/cache.h
+index 53801b8..98af530 100644
+--- a/cache.h
++++ b/cache.h
+@@ -358,6 +358,11 @@ int git_config_perm(const char *var, const char *value);
+ int adjust_shared_perm(const char *path);
+ int safe_create_leading_directories(char *path);
+ char *enter_repo(char *path, int strict);
++static inline int is_absolute_path(const char *path)
++{
++	return path[0] == '/';
++}
++const char *make_absolute_path(const char *path);
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+diff --git a/path.c b/path.c
+index dfff41f..27b4ac9 100644
+--- a/path.c
++++ b/path.c
+@@ -288,3 +288,68 @@ int adjust_shared_perm(const char *path)
+ 		return -2;
+ 	return 0;
+ }
++
++/* We allow "recursive" symbolic links. Only within reason, though. */
++#define MAXDEPTH 5
++
++const char *make_absolute_path(const char *path)
++{
++	static char bufs[2][PATH_MAX + 1], *buf = bufs[0], *next_buf = bufs[1];
++	char cwd[1024] = "";
++	int buf_index = 1, len;
++
++	int depth = MAXDEPTH;
++	char *last_elem = NULL;
++	struct stat st;
++
++	if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
++		die ("Too long path: %.*s", 60, path);
++
++	while (depth--) {
++		if (stat(buf, &st) || !S_ISDIR(st.st_mode)) {
++			char *last_slash = strrchr(buf, '/');
++			if (last_slash) {
++				*last_slash = '\0';
++				last_elem = xstrdup(last_slash + 1);
++			} else
++				last_elem = xstrdup(buf);
++		}
++
++		if (*buf) {
++			if (!*cwd && !getcwd(cwd, sizeof(cwd)))
++				die ("Could not get current working directory");
++
++			if (chdir(buf))
++				die ("Could not switch to '%s'", buf);
++		}
++		if (getcwd(buf, PATH_MAX) < 0)
++			die ("Could not get current working directory");
++
++		if (last_elem) {
++			int len = strlen(buf);
++			if (len + strlen(last_elem) + 2 > PATH_MAX)
++				die ("Too long path name: '%s/%s'",
++						buf, last_elem);
++			buf[len] = '/';
++			strcpy(buf + len + 1, last_elem);
++			free(last_elem);
++			last_elem = NULL;
++		}
++
++		if (!lstat(buf, &st) && S_ISLNK(st.st_mode)) {
++			len = readlink(buf, next_buf, PATH_MAX);
++			if (len < 0)
++				die ("Invalid symlink: %s", buf);
++			next_buf[len] = '\0';
++			buf = next_buf;
++			buf_index = 1 - buf_index;
++			next_buf = bufs[buf_index];
++		} else
++			break;
++	}
++
++	if (*cwd && chdir(cwd))
++		die ("Could not change back to '%s'", cwd);
++
++	return buf;
++}
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 4bba9c0..4e49d59 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -281,4 +281,20 @@ test_expect_success 'update-index D/F conflict' '
+ 	test $numpath0 = 1
+ '
+ 
++test_expect_success 'absolute path works as expected' '
++	mkdir first &&
++	ln -s ../.git first/.git &&
++	mkdir second &&
++	ln -s ../first second/other &&
++	mkdir third &&
++	dir="$(cd .git; pwd -P)" &&
++	dir2=third/../second/other/.git &&
++	test "$dir" = "$(test-absolute-path $dir2)" &&
++	file="$dir"/index &&
++	test "$file" = "$(test-absolute-path $dir2/index)" &&
++	ln -s ../first/file .git/syml &&
++	sym="$(cd first; pwd -P)"/file &&
++	test "$sym" = "$(test-absolute-path $dir2/syml)"
++'
++
+ test_done
+diff --git a/test-absolute-path.c b/test-absolute-path.c
+new file mode 100644
+index 0000000..c959ea2
+--- /dev/null
++++ b/test-absolute-path.c
+@@ -0,0 +1,11 @@
++#include "cache.h"
++
++int main(int argc, char **argv)
++{
++	while (argc > 1) {
++		puts(make_absolute_path(argv[1]));
++		argc--;
++		argv++;
++	}
++	return 0;
++}
+-- 
+1.5.3.rc3.94.g3024
