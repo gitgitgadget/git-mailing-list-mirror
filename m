@@ -1,72 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 1 Aug 2007 10:33:00 +0200
-Message-ID: <200708011033.00873.jnareb@gmail.com>
-References: <200708010216.59750.jnareb@gmail.com> <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: dangling blob which is not dangling at all
+Date: Wed, 01 Aug 2007 16:35:31 +0800
+Message-ID: <46B045D3.4070208@midwinter.com>
+References: <20070801013450.GA16498@raptus.dandreoli.com> <alpine.LFD.0.999.0707311914570.4161@woody.linux-foundation.org> <20070801063209.GA13511@raptus.dandreoli.com> <7vhcnjbtpt.fsf@assigned-by-dhcp.cox.net> <20070801074237.GA14790@raptus.dandreoli.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 01 10:35:24 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Domenico Andreoli <cavokz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 10:42:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG9fv-0002CD-TN
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 10:35:24 +0200
+	id 1IG9md-00047o-Pt
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 10:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757695AbXHAIfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 04:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756680AbXHAIfS
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 04:35:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:45235 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757237AbXHAIfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 04:35:17 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so39017nfb
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 01:35:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=aGQ5XZgkr+1lq39XoTrKxtqBoRTlv28ngDkaDWWD4AXr93SsfO/KBa+vvhU2F9WgbOUdE6fVaSAR9xOJPyl/0IgCsQwYHXFtKxFN8hEmEK0eHxwVvXUpKODoqRPqi/Py4hsbTgtANUu8DsjI49XXiGj9R4hTQf6t9YH8m1NhinA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WCWjFajC7FJOgxhvDoDXHg6O88mL0WT4QYkBUV1M6A9RS5ikw4vBv4l5I9HX/Pa9jl5M1h9yDRalKlQRgwQkwMtZtr1L3DKt8NWoL5XrMloiuERWuPboHXTdtLjjsuA1IC7rTUTWrTR+LqwmUZF55Nyih4unRP21WjKLXg87vc4=
-Received: by 10.86.100.7 with SMTP id x7mr362453fgb.1185957315446;
-        Wed, 01 Aug 2007 01:35:15 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id 28sm948662fkx.2007.08.01.01.35.06
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Aug 2007 01:35:07 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1754825AbXHAImR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 04:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754643AbXHAImR
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 04:42:17 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:34186 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753490AbXHAImQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 04:42:16 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Aug 2007 04:42:15 EDT
+Received: (qmail 10939 invoked from network); 1 Aug 2007 08:35:34 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=h0/sW4MyGGjEfG7/hV0I8CBp9jEH4s+qt/kiajYY+ruG1X52x21mg+zVDZuSuUqZ  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 1 Aug 2007 08:35:33 -0000
+User-Agent: Thunderbird 2.0.0.5 (Macintosh/20070716)
+In-Reply-To: <20070801074237.GA14790@raptus.dandreoli.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54416>
 
-Linus Torvalds wrote:
+Domenico Andreoli wrote:
+> What is this reflog thing and why is required?
+>   
 
-> (The "nonconflicting merge" is probably - once more - the diffstat 
-> generation that bites us. That's generally the most costly thing of the 
-> whole merge, but I *love* the diffstat).
+It is a log of where each ref pointed at any given time. Or rather, a 
+log of changes to refs, with timestamps. It is not *required* per se 
+(you can turn it off and almost all of git will continue to work as 
+before) but it's handy in that you can say stuff like
 
-http://bryan-murdock.blogspot.com/2007/03/cutting-edge-revision-control.html
-doesn't tell what is the directory structure of imported files.
-If it is flat, then git does not use advantage of hierarchical tree
-structure.
+git checkout -b newbranch master@"{4 days ago}"
 
-By the way, I guess that "nonconflicting merge" is trivial tree-level
-merge, as "no changes" merge should be faster (or fast-forward).
+and git will give you a new branch pointing at the rev that master 
+pointed to 4 days ago, even if it's a rev that is no longer reachable 
+from any of the existing heads (e.g., because you did a "git rebase" and 
+the rev in question was replaced by a new one.) Obviously as soon as you 
+do a "git gc" you will lose the ability to go back to unreachable revs 
+using the reflog.
 
-About clone: there was "pack loose, copy existing packs" idea. I don't
-remember what happened with it. At least for local clone it would be
-nice.
+I primarily use the reflog to undo rebase operations. Not that I need to 
+do that very often, but it's occasionally handy, e.g., if there was a 
+conflict and I made a mistake while resolving it.
 
--- 
-Jakub Narebski
-Poland
+-Steve
