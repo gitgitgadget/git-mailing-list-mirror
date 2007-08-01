@@ -1,75 +1,100 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 01 Aug 2007 17:49:06 -0500
-Message-ID: <46B10DE2.5060702@nrlssc.navy.mil>
-References: <200708010216.59750.jnareb@gmail.com> <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org> <7vodhrby6f.fsf@assigned-by-dhcp.cox.net> <20070801092428.GB28106@thunk.org> <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net> <20070801220350.GD28106@thunk.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 02 00:49:38 2007
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR accept commands
+Date: Wed, 1 Aug 2007 23:47:20 +0200
+Organization: Organization?!?
+Message-ID: <S1752099AbXHAXHc/20070801230732Z+342@vger.kernel.org>
+References: <85ejimrjb2.fsf@lola.goethe.zz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 01:07:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGN0c-0003do-1U
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:49:38 +0200
+	id 1IGNHz-0000OK-2f
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 01:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783AbXHAWtf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 18:49:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753899AbXHAWte
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:49:34 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56212 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753779AbXHAWte (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 18:49:34 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l71Mj2AK003590;
-	Wed, 1 Aug 2007 17:45:05 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 1 Aug 2007 17:49:07 -0500
-User-Agent: Thunderbird 2.0.0.5 (X11/20070716)
-In-Reply-To: <20070801220350.GD28106@thunk.org>
-X-OriginalArrivalTime: 01 Aug 2007 22:49:07.0321 (UTC) FILETIME=[2AE16E90:01C7D48E]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15334001
-X-TM-AS-Result: : Yes--6.360000-0-2-1
-X-TM-AS-Category-Info: : 2:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAyMDA1LTcwMTA2Ni03MDkxMzctNzExNDMyLTcwNDg1Mi03?=
-	=?us-ascii?B?MDI2MDktNzA2NzM3LTcwMTQ1NS03MTE5NTMtNzA0OTI3LTcwMDA1?=
-	=?us-ascii?B?Ny03MDA3NzEtNzAyMzU4LTcwNDQzMC03MDA5MzYtNzAyNzI2LTM5?=
-	=?us-ascii?B?MDExMy03MDA4MTUtNzA5MDY1LTcwMTgzNy0xODgwMTktMTA2NDIw?=
-	=?us-ascii?B?LTcwNzIyNS03MDI2MjYtNzAzOTY4LTcwMDc1Ni03MDMyMzgtNzAx?=
-	=?us-ascii?B?NTc2LTcwMzc4OC0xNDgwMzktMTQ4MDUxLTIwMDQw?=
+	id S1751815AbXHAXHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 19:07:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbXHAXHc
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 19:07:32 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:38480 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751699AbXHAXHb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 19:07:31 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 06DA51F577C
+	for <git@vger.kernel.org>; Thu,  2 Aug 2007 01:07:30 +0200 (CEST)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id E6B712C6A1A
+	for <git@vger.kernel.org>; Thu,  2 Aug 2007 01:07:29 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-058-172.pools.arcor-ip.net [84.61.58.172])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id C913F11CD8
+	for <git@vger.kernel.org>; Thu,  2 Aug 2007 01:07:29 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id C3D101C3E076; Thu,  2 Aug 2007 01:06:39 +0200 (CEST)
+In-Reply-To: <85ejimrjb2.fsf@lola.goethe.zz>
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+X-Virus-Scanned: ClamAV version 0.91.1, clamav-milter version 0.91.1 on mail-in-11.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54496>
 
-Theodore Tso wrote:
-> On Wed, Aug 01, 2007 at 03:15:25AM -0700, Junio C Hamano wrote:
+The previous code only allowed specifying a single executable rather
+than a complete command like "emacsclient --alternate-editor vi" in
+those variables.  Since VISUAL/EDITOR appear to be traditionally
+passed to a shell for interpretation (as corroborated with "less",
+"mail" and "mailx", while the really ancient "more" indeed allows only
+an executable name), the shell function git_editor has been amended
+appropriately.
 
->> Perhaps if the destination is local,
->>
->>          - if -s is given, just set up alternates, do nothing else;
-> 
-> As I understand it, the main objection with making -s the default is
-> surprising result that could happen if you do a git-prune in the base
-> repository which causes objects which are borrowed from the base
-> repository via .git/objects/info/alternates, right?
+"eval" is employed to have quotes and similar interpreted _after_
+expansion, so that specifying
+EDITOR='"/home/dak/My Commands/notepad.exe"'
+can be used for actually using commands with blanks.
 
--s would be a lot safer to use if repack -a -d (as used by git-gc) was smarter.
--a -d has the nasty side effect of doing what it seems only prune is intended
-to do... that is to remove unreferenced objects.
+Instead of passing just the first argument of git_editor on, we pass
+all of them (so that +lineno might be employed at a later point of
+time, or so that multiple files may be edited when appropriate).
 
--s usage currently has to be very well thought out, unless you're just using it
-for a short-lived temporary branch. If this unintended pruning could be avoided
-then an average user could go about their merry business repacking and git-gc'ing
-without a care, and only when doing a git-gc --prune would they need to do
-something special.
+Strictly speaking, there is a change in behavior: when
+git config core.editor
+returns a valid but empty string, the fallbacks are still searched.
+This is more consistent, and the old code was problematic with regard
+to multiple blanks.  Putting in additional quotes might have worked,
+but quotes inside of command substitution inside of quotes is nasty
+enough to not reliably work the same across "Bourne shells".
 
--brandon
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ git-sh-setup.sh |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c51985e..3c50bc1 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -29,7 +29,8 @@ set_reflog_action() {
+ }
+ 
+ git_editor() {
+-	GIT_EDITOR=${GIT_EDITOR:-$(git config core.editor || echo ${VISUAL:-${EDITOR}})}
++	: "${GIT_EDITOR:=$(git config core.editor)}"
++	: "${GIT_EDITOR:=${VISUAL:-${EDITOR}}}"
+ 	case "$GIT_EDITOR,$TERM" in
+ 	,dumb)
+ 		echo >&2 "No editor specified in GIT_EDITOR, core.editor, VISUAL,"
+@@ -40,7 +41,7 @@ git_editor() {
+ 		exit 1
+ 		;;
+ 	esac
+-	"${GIT_EDITOR:-vi}" "$1"
++	eval "${GIT_EDITOR:=vi}" '"$@"'
+ }
+ 
+ is_bare_repository () {
+-- 
+1.5.3.rc2.86.gdc7ba
