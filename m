@@ -1,67 +1,114 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 01 Aug 2007 10:48:56 +0200
-Message-ID: <86myxbod1j.fsf@lola.quinscape.zz>
-References: <200708010216.59750.jnareb@gmail.com>
-	<alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
-	<7vodhrby6f.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Clean up work-tree handling
+Date: Wed, 01 Aug 2007 01:59:55 -0700
+Message-ID: <7vvebz7hpw.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+	<Pine.LNX.4.64.0708010058130.14781@racer.site>
+	<Pine.LNX.4.64.0708010129530.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 10:49:22 2007
+Cc: gitster@pobox.com, git@vger.kernel.org, matled@gmx.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 01 11:00:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG9tR-0005tC-GQ
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 10:49:21 +0200
+	id 1IGA47-0000Vp-P5
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 11:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643AbXHAItT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 04:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754447AbXHAItT
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 04:49:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:39731 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754177AbXHAItS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 04:49:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IG9tF-00063L-Ta
-	for git@vger.kernel.org; Wed, 01 Aug 2007 10:49:09 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 10:49:09 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 10:49:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:wklHvBkHJVCWwbu6PXyB2omYgJo=
+	id S1756419AbXHAI76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 04:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756176AbXHAI76
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 04:59:58 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:61635 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755896AbXHAI75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 04:59:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801085957.NVCA11888.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 1 Aug 2007 04:59:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id WYzw1X0021kojtg0000000; Wed, 01 Aug 2007 04:59:56 -0400
+In-Reply-To: <Pine.LNX.4.64.0708010129530.14781@racer.site> (Johannes
+	Schindelin's message of "Wed, 1 Aug 2007 01:30:14 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54419>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+> index 61577ea..d36181a 100644
+> --- a/builtin-ls-files.c
+> +++ b/builtin-ls-files.c
+> @@ -469,9 +469,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+>  		break;
+>  	}
+>  
+> -	if (require_work_tree &&
+> -			(!is_inside_work_tree() || is_inside_git_dir()))
+> -		die("This operation must be run in a work tree");
+> +	if (require_work_tree && !is_inside_work_tree()) {
+> +		const char *work_tree = get_git_work_tree();
+> +		if (!work_tree || chdir(work_tree))
+> +			die("This operation must be run in a work tree");
+> +	}
+>  
+>  	pathspec = get_pathspec(prefix, argv + i);
+>  
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> (Which admittedly is a bit odd. The reason I didn't ever seriously even 
->> consider monotone was that the initial import was so *incredibly* sucky, 
->> and took hours for the kernel. So use "-l" for benchmarks, and damn my 
->> "I hate hardlinking repos" idiocy).
->
-> I would call aversion to -l a superstition, while aversion to -s
-> has a sound technical reasons.  The latter means you need to know
-> what you are doing --- namely, you are making the clone still
-> dependent on the original.
+Similarly to this change, I am wondering if we would want to fix
+verify_non_filename() in setup.c, which does this:
 
-Well, I'd not call the -l aversy a complete superstition: it means
-that cloning a repository won't provide any redundancy worth noting
-against file system corruption.
+/*
+ * Verify a filename that we got as an argument for a pathspec
+ * entry. Note that a filename that begins with "-" never verifies
+ * as true, because even if such a filename were to exist, we want
+ * it to be preceded by the "--" marker (or we want the user to
+ * use a format like "./-filename")
+ */
+void verify_filename(const char *prefix, const char *arg)
+{
+...
+}
 
--- 
-David Kastrup
+/*
+ * Opposite of the above: the command line did not have -- marker
+ * and we parsed the arg as a refname.  It should not be interpretable
+ * as a filename.
+ */
+void verify_non_filename(const char *prefix, const char *arg)
+{
+        const char *name;
+        struct stat st;
+
+        if (!is_inside_work_tree() || is_inside_git_dir())
+                return;
+        if (*arg == '-')
+                return; /* flag */
+        name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
+        if (!lstat(name, &st))
+                die("ambiguous argument '%s': both revision and filename\n"
+                    "Use '--' to separate filenames from revisions", arg);
+        if (errno != ENOENT)
+                die("'%s': %s", arg, strerror(errno));
+}
+
+At this point, we are given an ambiguous parameter, that could
+be naming a path in the work tree.  If we are not in the work
+tree, then it is understandable that we do not have to barf.
+The other check (i.e. "|| is_inside_git_dir()") does not hurt
+(iow, it is not an incorrect check per-se), because if you did
+"cd .git && git log HEAD" then the HEAD parameter cannot be
+naming the path ".git/HEAD" in the work tree, but (1) that is
+already covered by .git/ being "outside of work tree", and (2)
+it is not something this function wants to check anyway
+(i.e. "can the parameter be naming a file in the work tree?").
+
+Am I mistaken and/or confused?
