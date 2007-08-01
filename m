@@ -1,59 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a --user option to git-config
-Date: Wed, 01 Aug 2007 11:31:47 -0700
-Message-ID: <7vzm1b3y3w.fsf@assigned-by-dhcp.cox.net>
-References: <46AB7041.8070605@ramsay1.demon.co.uk>
-	<Pine.LNX.4.64.0707282103150.14781@racer.site>
-	<46AFAF7D.7010306@ramsay1.demon.co.uk>
-	<Pine.LNX.4.64.0708011913070.14781@racer.site>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Interpreting EDITOR/VISUAL environment variables.
+Date: Wed, 1 Aug 2007 20:50:42 +0200
+Message-ID: <20070801185042.GB30277@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <86abtbnzpr.fsf@lola.quinscape.zz> <7vd4y75gcy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 01 20:32:36 2007
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 20:51:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGIzm-0003oq-9H
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 20:32:30 +0200
+	id 1IGJIS-0002hJ-FI
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 20:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765493AbXHASbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 14:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761592AbXHASbt
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 14:31:49 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:57117 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761636AbXHASbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 14:31:48 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070801183147.VRUO7349.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 1 Aug 2007 14:31:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WiXn1X0061kojtg0000000; Wed, 01 Aug 2007 14:31:47 -0400
-In-Reply-To: <Pine.LNX.4.64.0708011913070.14781@racer.site> (Johannes
-	Schindelin's message of "Wed, 1 Aug 2007 19:13:35 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762214AbXHASvr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 14:51:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761597AbXHASvr
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 14:51:47 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:38071 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755312AbXHASvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 14:51:46 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 87EE07922;
+	Wed,  1 Aug 2007 20:51:44 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 5969A5A231;
+	Wed,  1 Aug 2007 20:51:44 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 9A1101F070; Wed,  1 Aug 2007 20:50:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vd4y75gcy.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54464>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Aug 01, 2007 at 10:12:13AM -0700, Junio C Hamano wrote:
+> We recently normalized the script callers not to splice at all
+> (the scripts were hand-rolling "the VISUAL or EDITOR or vi" and
+> slightly differently).  It obviously has negative (i.e. setting
+> EDITOR to "emacsclient --alternate-editor vi" does not work) as
+> well as positive side (i.e. "/home/dak/My Programs/editor" would
+> work).
 
->> Yep, which is why I made it a synonym; git-gui uses the
->> --global option, for example, and I'm confident that other
->> (user) scripts use it too. The "future" I had in mind was
->> something like 1 year down the road, but it could be longer
->> (or forever) if necessary.
->
-> Please read my reply as "I vote against ever removing the --global 
-> option".
+And, indeed, --alternate-editor could be supplemented by another
+envvar to be able to work in our situation.  Maybe the various emacsen
+vendors would be willing to integrate such a patch ?
 
-I would say with --system present, I do not see much point
-having the new alias --user either.  Get used to it.  It is
-global across the repositories you have control over.
+Best regards,
+-- 
+Yann
