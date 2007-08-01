@@ -1,106 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] work-tree clean ups
-Date: Wed, 1 Aug 2007 11:56:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708011147500.14781@racer.site>
-References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
- <Pine.LNX.4.64.0708010058130.14781@racer.site> <7vbqdsdqfd.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0708010211071.14781@racer.site>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: git rebase--interactive, doesn't ignore commits already in upstream
+Date: Wed, 01 Aug 2007 07:28:22 -0400
+Message-ID: <46B06E56.2040206@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, matled@gmx.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 12:56:39 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 01 13:28:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGBsc-00037A-Ji
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 12:56:38 +0200
+	id 1IGCNd-0004IO-23
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 13:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757681AbXHAK4b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 06:56:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbXHAK4b
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 06:56:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46817 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756235AbXHAK4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 06:56:30 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 10:56:28 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 01 Aug 2007 12:56:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+yOr0pa3GyZh8C96jCxAMogVq02B+48ubcVMITuN
-	N2ishPin9CZXh1
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0708010211071.14781@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1757288AbXHAL22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 07:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbXHAL22
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 07:28:28 -0400
+Received: from wx-out-0506.google.com ([66.249.82.224]:52936 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbXHAL21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 07:28:27 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so156323wxd
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 04:28:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=MiPrAkKkfUQhRMl1tnq6+XbkpSmAhaKGoFyMfbFF0Wz2zB5KTWovq0quEsR5wKjI1Ig0aKxIREfxaZFrYcZY3e4JXWuQFszrTizIZQEQ699IuKlY8YMhSdwdJ5c02fIK3lrA6Iw3ut6m5hzs+8zFwMFunIrwehh77RCmFQQtQZ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=LwpqrgSI7WswKBew8iN2ut+/XWVBEFE9cJlP1NgbTVbTig17hkdFHPrDUwzv5Z4108cAShURqVjhKDjdeHntSs/umWRA3POfr4ugj0wBxtq5MlZLyJgkipIR0WvAEd+pjQ2rcIzCO33SpO5+yMhAKd4vrnJXiYNa4dlT7QszWOo=
+Received: by 10.90.113.18 with SMTP id l18mr275615agc.1185967706972;
+        Wed, 01 Aug 2007 04:28:26 -0700 (PDT)
+Received: from ?10.71.0.114? ( [208.51.193.66])
+        by mx.google.com with ESMTPS id 6sm566801agd.2007.08.01.04.28.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Aug 2007 04:28:25 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54428>
 
-Hi,
+git rebase -i does not correctly ignore commits in the local branch that 
+are also in upstream. For example, create a branch that is two commits 
+back from upstream, add one of those on to the local branch
 
-On Wed, 1 Aug 2007, Johannes Schindelin wrote:
+upstream=83b3df7d58
+git checkout -f $upstream
+git checkout -b foo $upstream~2
+git cherry-pick $upstream~1
+git rebase -i  $upstream
 
-> On Tue, 31 Jul 2007, Junio C Hamano wrote:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > There is not really much that can be done about step 6/9: if we are in a 
-> > > work tree: that does not mean that we are _not_ in the git_dir.  (And no, 
-> > > this does not break git-clean, as a work tree is a work tree is a work 
-> > > tree.  If the user was stupid enough to specify the same directory as 
-> > > GIT_DIR and GIT_WORK_TREE, then that is _her_ problem.  Git is a powerful 
-> > > tool, and you can harm yourself with it.  Tough.)
-> > 
-> > I think we might have a slight misunderstanding.  The "clean"
-> > issue that was raised in an ancient thread was this sequence:
-> > 
-> > 	$ git init
-> >         $ cd .git
-> >         $ git clean
-> > 
-> > It did not involve GIT_DIR (nor GIT_WORK_TREE as it was not even
-> > there).
-> 
-> I very much _did_ mean that case.  When "git clean" is run in ".git/", it 
-> should not say that it is in the working tree.  But I guess that my patch 
-> series is not really looking out for that;  I'll make that an add-on 
-> patch.  (But that _will_ have to wait until tomorrow afternoon.)
+"git rebase -i" happily presents commit "$upstream~1" in the list to be 
+applied to upstream. This of course results in a conflict. Should the 
+user simply delete the offending commit from the presented list, git 
+rebase -i then refuses to do anything, saying "Nothing to do."
 
-I should not have answered so early.
+Bare "git rebase" handles this case correctly (essentially fast forwards 
+the branch to upstream.
 
-In setup.c, I put in a comment that explains clearly where (in the absence 
-of GIT_DIR) setup_git_directory_gently() looks for the git directory:
-
-        /*
-         * Test in the following order (relative to the cwd):
-         * - .git/
-         * - ./ (bare)
-         * - ../.git/
-         * - ../ (bare)
-         * - ../../.git/
-         *   etc.
-         */
-
-At least I hope that this explanation is clear.
-
-So what happens in this case:
-
-	$ git init
-	$ cd .git
-	$ git clean
-
-In setup_git_directory_gently(), it is tested first if there is a 
-subdirectory .git/.  No, none.  Then it is tested if "." is a git 
-directory.  Yes!  So, work_tree is set to NULL tentatively (to be 
-overridden by either core.worktree or GIT_WORK_TREE), and it is assumed to 
-be bare (also subject to overriding).  So all is well!
-
-You might have noticed that I left out --work-tree= handling; when 
---work-tree=<something> is specified, GIT_WORK_TREE is _forced_ to the new 
-value, so it is literally handled by the same code as GIT_WORK_TREE.
-
-Ciao,
-Dscho
+Mark
