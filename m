@@ -1,74 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Thu, 2 Aug 2007 01:51:16 +0200
-Message-ID: <200708020151.17301.jnareb@gmail.com>
-References: <200708010216.59750.jnareb@gmail.com> <200708011033.00873.jnareb@gmail.com> <7vzm1b7i8v.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR accept commands
+Date: Thu, 02 Aug 2007 01:55:38 +0200
+Message-ID: <85wswex11h.fsf@lola.goethe.zz>
+References: <7v7iof3uc5.fsf@assigned-by-dhcp.cox.net>
+	<S1752294AbXHAWCj/20070801220239Z+281@vger.kernel.org>
+	<85ejimrjb2.fsf@lola.goethe.zz>
+	<7vy7gu3kuh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 01:51:25 2007
+X-From: git-owner@vger.kernel.org Thu Aug 02 01:56:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGNyN-00035c-7k
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 01:51:23 +0200
+	id 1IGO3R-0004Bu-JV
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 01:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbXHAXvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 19:51:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753558AbXHAXvU
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 19:51:20 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:43468 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432AbXHAXvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 19:51:19 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so444596mue
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 16:51:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=i6z29rZl0kNrD7Bs7kt+TdzlbYFmLKYwi4C53NNFRGt9gNtfPrBDlC5q6okUc2otKMVLcO8pBc55LC07rrPz8r7VneDqrHdLHuJsyP6H6jpJAjAu5MtFMXyjnIxUctdfCyUJVAtxRjxltUnPx5NJsx9faII7yQxnB4pxnvXSyoA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IJqwZ22MbbAV6x1I52BKi56QYa20E3VTpTrdayFYWspbf5CtLG37C+FbEuNHX13G42t0SO+Mc94QatKki4snkqXIH5h9lAGYvjIaALr3ycekCCz+EO91AI/SS++Ktc2N8GVNqDZ2lsRhv9/vXOCuPH7of0AvZFklnyDkBbphmHI=
-Received: by 10.86.3.2 with SMTP id 2mr945232fgc.1186012277425;
-        Wed, 01 Aug 2007 16:51:17 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id 22sm2619294fkr.2007.08.01.16.51.15
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Aug 2007 16:51:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vzm1b7i8v.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751570AbXHAX4b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 19:56:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbXHAX4b
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 19:56:31 -0400
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:35398 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751570AbXHAX4a (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 19:56:30 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 59B932CB347;
+	Thu,  2 Aug 2007 01:56:29 +0200 (CEST)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 47B8C12DE74;
+	Thu,  2 Aug 2007 01:56:29 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-017-069.pools.arcor-ip.net [84.61.17.69])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 228BA36E86A;
+	Thu,  2 Aug 2007 01:56:29 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 6CDDC1C3E076; Thu,  2 Aug 2007 01:55:38 +0200 (CEST)
+In-Reply-To: <7vy7gu3kuh.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 01 Aug 2007 16\:18\:14 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54501>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > About clone: there was "pack loose, copy existing packs" idea.
-> 
-> Can you give more details --- I do not recall such an "idea"
-> discussed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The idea was to avoid repacking, and just pack loose, unpacked objects 
-(and save this pack if possible), then concatenate all packs and send 
-this concatenated pack as the result. This saves a bit (quite a bit) of 
-CPU at the cost of additional bandwidth usage if packfiles are not 
-optimized.
+> David Kastrup <dak@gnu.org> writes:
+>
+>> David Kastrup <dak@gnu.org> writes:
+>>
+>>> The previous code only allowed specifying a single executable rather
+>>> than a complete command like "emacsclient --alternate-editor vi" in
+>>
+>> Oops, won't apply cleanly.  I found that I had already made a
+>> different (trivial) patch previously.  Let me try again and fold that
+>> patch in manually.
+>
+> It is not just "won't apply".  What if GIT_DIR had spaces (which
+> is fine) and single-quotes in it?  Wouldn't it percolate down to
+> $@ because it becomes the leading directory of the temporary
+> file name?  And you quote '"$@"' and eval it, now what happens?
 
-The only result of the discussion was that it would be fairly easy to 
-send multiple packs concatenated into one pack, without need to add 
-some multi-pack extension, as there would be required minor changes to 
-split "concatenated" packfiles.
+The eval removes the outer single quotes and then evaluates the
+remaining "$@" which leaves the original argument structure completely
+intact: What got passed into git_editor as 3 arguments will remain as
+3 arguments, and even multiple embedded spaces in one argument will
+get preserved perfectly.
+
+If you don't believe me, throw whatever you want at it.
 
 -- 
-Jakub Narebski
-Poland
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
