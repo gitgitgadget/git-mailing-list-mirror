@@ -1,65 +1,84 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
- check-out
-Date: Wed, 01 Aug 2007 16:05:32 +0200
-Message-ID: <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
- <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Domenico Andreoli <cavokz@gmail.com>
+Subject: Re: dangling blob which is not dangling at all
+Date: Wed, 1 Aug 2007 16:21:39 +0200
+Message-ID: <20070801142139.GA16607@raptus.dandreoli.com>
+References: <20070801013450.GA16498@raptus.dandreoli.com> <alpine.LFD.0.999.0707311914570.4161@woody.linux-foundation.org> <20070801063209.GA13511@raptus.dandreoli.com> <7vhcnjbtpt.fsf@assigned-by-dhcp.cox.net> <20070801074237.GA14790@raptus.dandreoli.com> <46B045D3.4070208@midwinter.com> <46B04EB7.80006@dawes.za.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 16:05:56 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 01 16:22:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGEpm-0007P5-9C
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 16:05:55 +0200
+	id 1IGF5C-0005QJ-Iu
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 16:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932589AbXHAOFf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 10:05:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbXHAOFf
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 10:05:35 -0400
-Received: from psmtp08.wxs.nl ([195.121.247.22]:49941 "EHLO psmtp08.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932590AbXHAOFe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 10:05:34 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp08.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JM3004WPLT8PB@psmtp08.wxs.nl> for git@vger.kernel.org; Wed,
- 01 Aug 2007 16:05:32 +0200 (MEST)
-Received: (qmail 678 invoked by uid 500); Wed, 01 Aug 2007 14:05:32 +0000
-In-reply-to: <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1764348AbXHAOVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 10:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764315AbXHAOVl
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 10:21:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:51906 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764236AbXHAOVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 10:21:40 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so58973nfb
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 07:21:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=MeR0uemYjTyNZt/h036qGhWggoQLOdNKa7a3rExveAcMZ+U8c5CRL+OL8/oHMoWJ1O7bQw0zAPBVW9RI1R8y4/mVHnmdaKZUyn4jMLorD02c5pWwAw7XMzVjmv/B8fWuf/bDMBnGKewV2ZzaqWdg61ywGZ4X4zOsIYz2Bae0IdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=eg5sPJniVKfjLLS8lDBkksQx4YsZmH5BSNYbtzB72DiUkHcZsb/n2WyhtPAg/8sg9rjmjP+uBh/BE3yJ8/jhpsXS+Nm/MUVOMxaZ531Fw3VsAcpuIR1GIcnmREmCKDMIkxTUI/xEyaStqrfDJUKUHTuCAVj7hgML63lvLS58CMk=
+Received: by 10.86.100.7 with SMTP id x7mr592199fgb.1185978098321;
+        Wed, 01 Aug 2007 07:21:38 -0700 (PDT)
+Received: from raptus.dandreoli.com ( [159.149.71.27])
+        by mx.google.com with ESMTPS id 22sm1580231fkr.2007.08.01.07.21.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Aug 2007 07:21:37 -0700 (PDT)
+Received: by raptus.dandreoli.com (Postfix, from userid 1000)
+	id B543484563A; Wed,  1 Aug 2007 16:21:39 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46B04EB7.80006@dawes.za.net>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54439>
 
-On Wed, Jul 18, 2007 at 12:29:52AM -0700, Junio C Hamano wrote:
-> Passing of ce instead of path in the unpack-trees callchain
-> looks like the right thing to do.  Good job.
+On Wed, Aug 01, 2007 at 11:13:27AM +0200, Rogan Dawes wrote:
+> Steven Grimm wrote:
+>> Domenico Andreoli wrote:
+>>> What is this reflog thing and why is required?
+>>>   
+>> It is a log of where each ref pointed at any given time. Or rather, a log 
+>> of changes to refs, with timestamps. It is not *required* per se (you can 
+>> turn it off and almost all of git will continue to work as before) but 
+>> it's handy in that you can say stuff like
+>> git checkout -b newbranch master@"{4 days ago}"
+>> and git will give you a new branch pointing at the rev that master pointed 
+>> to 4 days ago, even if it's a rev that is no longer reachable from any of 
+>> the existing heads (e.g., because you did a "git rebase" and the rev in 
+>> question was replaced by a new one.) Obviously as soon as you do a "git 
+>> gc" you will lose the ability to go back to unreachable revs using the 
+>> reflog.
+>
+> Not strictly true. "git gc" does take the reflogs into account when 
+> determining reachability, but it also prunes the reflogs periodically to 
+> prevent them from growing without bound (and preventing pruning of 
+> otherwise unreachable objects).
 
-Actually, my patch only fixes the tip of the iceberg.
-If you have a submodule checked out and you go back (or forward)
-to a revision of the supermodule that contains a different
-revision of the submodule and then switch to another revision,
-it will complain that the submodule is not uptodate, because
-git simply didn't update the submodule in the first move.
+so, besides playing with head refs by hand and forcing pushing to
+"not strict subset" heads, having dangling commits may be physiologic?
 
-Now, you may say that I simply need to run 'git submodule update'
-after every such move, but this is very inconvenient, especially
-if you're doing a bisect or a rebase.
+and the only way to leak commits is from heads? on the countary, has
+one a severely broken repository?
 
-How do other people deal with this problem?
+many thanks,
+Domenico
 
-How about just replacing the body of ce_compare_gitlink
-with "return 0" until git actually (optionally) updates
-the submodules during an update of the supermodule?
-
-skimo
+-----[ Domenico Andreoli, aka cavok
+ --[ http://www.dandreoli.com/gpgkey.asc
+   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
