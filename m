@@ -1,142 +1,98 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: [PATCH] make the name of the library directory a config option
-Date: Wed, 1 Aug 2007 06:30:35 +0200
-Message-ID: <20070801043035.GH29424@schiele.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: MinGW build environment for Git
+Date: Wed, 01 Aug 2007 07:15:40 +0200
+Message-ID: <46B016FC.4050005@trolltech.com>
+References: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 06:30:57 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig281D76EE6BFA2E1F1587259B"
+Cc: git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 07:14:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG5rL-0003z5-Cv
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 06:30:55 +0200
+	id 1IG6Xz-0004bO-67
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 07:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456AbXHAEal (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 00:30:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbXHAEal
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 00:30:41 -0400
-Received: from mu-out-0910.google.com ([209.85.134.185]:62207 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbXHAEaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 00:30:39 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so123328mue
-        for <git@vger.kernel.org>; Tue, 31 Jul 2007 21:30:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=FZ8/MWUudMYpgIcOWeo+d8Q2cCyaWIUT3sG6SSQFu2SGIvgrbyLS2Ci4hSLxHG6MpmDMjVDKRbhwIUjmfzHn2r+lFWI5SMiO0y3WhVyg5q7i6KulQT6970eEgCms/fJvhaTHMaarKLGRFGKe7484MKgxFHmJYsYbY7LoyD8a0/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=o83pHB4Do8ZaBAUnwRPx3YeWBlMiMDbQBAcjlgXYlx7F56WcaNpiztB105/8LYYV+bIx1VBN8EM+1ZDJstdDu5lLSweGVg9YPzFoP/1ZMljZ+DWtSFIAgBMaXRhDVj7062pkb4/jjUiwguqvD/Q1F3F0CFRYJK1gXGjPKhPlVjA=
-Received: by 10.86.54.3 with SMTP id c3mr236572fga.1185942638091;
-        Tue, 31 Jul 2007 21:30:38 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.100.172])
-        by mx.google.com with ESMTPS id w5sm856811mue.2007.07.31.21.30.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2007 21:30:37 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id CA3FBC0DB70; Wed,  1 Aug 2007 06:30:35 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751906AbXHAFO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 01:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbXHAFO4
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 01:14:56 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:43245 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651AbXHAFOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 01:14:55 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 7EBC274596; Wed,  1 Aug 2007 07:14:53 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 5664D74593; Wed,  1 Aug 2007 07:14:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070716 Thunderbird/2.0.0.5 Mnenhy/0.7.5.666
+In-Reply-To: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
+X-Enigmail-Version: 0.95.2
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54407>
 
-Introduce new makefile variable lib to hold the name of the lib
-directory ("lib" by default).  Also introduce a switch for configure
-to specify this name with --with-lib=ARG.  This is useful for systems
-that use a different name than "lib" (like "lib64" on some 64 bit
-Linux architectures).
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig281D76EE6BFA2E1F1587259B
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Robert Schiele <rschiele@gmail.com>
----
-You can also fetch this patch as e58a07b30a879228b9090a0c8ac6c690d77fcde8 from
-git://schiele.dyndns.org/git
+Dmitry Kakurin said the following on 30.07.2007 01:14:
+> I want to be able to build MinGW port of Git on Windows. I've tried
+> to follow steps in README.MinGW to setup this environment myself
+> (install MinGW, MSys, ZLib etc.) but after wasting a lot of time
+> with no result I give up. So, could somebody please just pkzip
+> their environment (everything required) and share the zip file with
+> me (privately or publicly)? I also think that an even better idea
+> is to create a new Git repository with MinGW build environment.
+> This will make contributing to MinGW port of Git MUCH easier.
 
-It requires that my zlib patch was applied before.
+Hi Dmitry,
 
- Makefile     |   11 ++++++-----
- configure.ac |   11 +++++++++++
- 2 files changed, 17 insertions(+), 5 deletions(-)
+Aaron has done this, and you can find the link on his blog, here:
+     http://www.ekips.org/cgi-bin/aaron.cgi/2007/02/27
 
-diff --git a/Makefile b/Makefile
-index ca1247d..ff5fc5f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -151,6 +151,7 @@ sysconfdir = /etc
- else
- sysconfdir = $(prefix)/etc
- endif
-+lib = lib
- ETC_GITCONFIG = $(sysconfdir)/gitconfig
- # DESTDIR=
- 
-@@ -500,9 +501,9 @@ endif
- 
- ifndef NO_CURL
- 	ifdef CURLDIR
--		# Try "-Wl,-rpath=$(CURLDIR)/lib" in such a case.
-+		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
- 		BASIC_CFLAGS += -I$(CURLDIR)/include
--		CURL_LIBCURL = -L$(CURLDIR)/lib $(CC_LD_DYNPATH)$(CURLDIR)/lib -lcurl
-+		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -lcurl
- 	else
- 		CURL_LIBCURL = -lcurl
- 	endif
-@@ -520,7 +521,7 @@ endif
- 
- ifdef ZLIB_PATH
- 	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
--	EXTLIBS += -L$(ZLIB_PATH)/lib $(CC_LD_DYNPATH)$(ZLIB_PATH)/lib
-+	EXTLIBS += -L$(ZLIB_PATH)/$(lib) $(CC_LD_DYNPATH)$(ZLIB_PATH)/$(lib)
- endif
- EXTLIBS += -lz
- 
-@@ -528,7 +529,7 @@ ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
- 	ifdef OPENSSLDIR
- 		BASIC_CFLAGS += -I$(OPENSSLDIR)/include
--		OPENSSL_LINK = -L$(OPENSSLDIR)/lib $(CC_LD_DYNPATH)$(OPENSSLDIR)/lib
-+		OPENSSL_LINK = -L$(OPENSSLDIR)/$(lib) $(CC_LD_DYNPATH)$(OPENSSLDIR)/$(lib)
- 	else
- 		OPENSSL_LINK =
- 	endif
-@@ -545,7 +546,7 @@ endif
- ifdef NEEDS_LIBICONV
- 	ifdef ICONVDIR
- 		BASIC_CFLAGS += -I$(ICONVDIR)/include
--		ICONV_LINK = -L$(ICONVDIR)/lib $(CC_LD_DYNPATH)$(ICONVDIR)/lib
-+		ICONV_LINK = -L$(ICONVDIR)/$(lib) $(CC_LD_DYNPATH)$(ICONVDIR)/$(lib)
- 	else
- 		ICONV_LINK =
- 	endif
-diff --git a/configure.ac b/configure.ac
-index b2f1965..84fd7f1 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -69,6 +69,17 @@ fi \
- ## Site configuration related to programs (before tests)
- ## --with-PACKAGE[=ARG] and --without-PACKAGE
- #
-+# Set lib to alternative name of lib directory (e.g. lib64)
-+AC_ARG_WITH([lib],
-+ [AS_HELP_STRING([--with-lib=ARG],
-+                 [ARG specifies alternative name for lib directory])],
-+ [if test "$withval" = "no" -o "$withval" = "yes"; then \
-+	AC_MSG_WARN([You should provide name for --with-lib=ARG]); \
-+else \
-+	GIT_CONF_APPEND_LINE(lib=$withval); \
-+fi; \
-+],[])
-+#
- # Define SHELL_PATH to provide path to shell.
- GIT_ARG_SET_PATH(shell)
- #
--- 
-1.5.2.3
+The archive's compressed with 7zip, so you'll need that to decompress=20
+it. (http://www.7-zip.org/)
+
+Direct link to the archive:
+     http://inkscape.modevia.com/git/mingw4git.7z
+
+Good luck!
+--=20
+=2Emarius
+
+
+--------------enig281D76EE6BFA2E1F1587259B
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFGsBb8KzzXl/njVP8RAguTAJ9MqB1dENqdbUDOkUXjicWPmSu3dQCfXDhu
+p4slT0EcrckT1+i3+MI0ByQ=
+=6Wu+
+-----END PGP SIGNATURE-----
+
+--------------enig281D76EE6BFA2E1F1587259B--
