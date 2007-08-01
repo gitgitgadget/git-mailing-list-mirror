@@ -1,92 +1,73 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: Re: MinGW build environment for Git
-Date: Wed, 1 Aug 2007 02:08:22 -0700
-Message-ID: <a1bbc6950708010208v15071005w3bcc471bef172fcc@mail.gmail.com>
-References: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
-	 <46B016FC.4050005@trolltech.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: dangling blob which is not dangling at all
+Date: Wed, 01 Aug 2007 11:13:27 +0200
+Message-ID: <46B04EB7.80006@dawes.za.net>
+References: <20070801013450.GA16498@raptus.dandreoli.com> <alpine.LFD.0.999.0707311914570.4161@woody.linux-foundation.org> <20070801063209.GA13511@raptus.dandreoli.com> <7vhcnjbtpt.fsf@assigned-by-dhcp.cox.net> <20070801074237.GA14790@raptus.dandreoli.com> <46B045D3.4070208@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Marius Storm-Olsen" <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 11:08:32 2007
+Cc: Domenico Andreoli <cavokz@gmail.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 11:14:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGABv-0003Pc-AZ
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 11:08:27 +0200
+	id 1IGAHo-0005KF-Ud
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 11:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759023AbXHAJIY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 05:08:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758856AbXHAJIY
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 05:08:24 -0400
-Received: from rv-out-0910.google.com ([209.85.198.185]:35958 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757899AbXHAJIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 05:08:23 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so114665rvb
-        for <git@vger.kernel.org>; Wed, 01 Aug 2007 02:08:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X81nsL6+AMX/FYLaTROw4XdyV9T7MNJv2Z7iO0DWAuaO8F+LemY6/qgCWPqXuDBwYpdRLlH71ERnu3wLW0Aj8zETYHnyElq6TFisbY7FHUlF/frWYyDLnhPpfy5gXo+lUZ2NJ7ZwC/GX5DPEWZ6PIhfdLZ41netuPI1vs1zYhBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Gq+WCvapIam9PhRaavrOhmoXLKy+StBLKZJVtjxx34oYv68MO6wRVGX9I54x09J6KqHu26zfQMtz5e9oEz1YAi4UZrHh89GNqTPOTi+Jn5GrV8oMvri27z/VSeTBY0oIpC5kDooRHvVwhaqgVQDDNkNW5Lhm+HZCdEKEk2ssMG8=
-Received: by 10.140.186.18 with SMTP id j18mr196745rvf.1185959302102;
-        Wed, 01 Aug 2007 02:08:22 -0700 (PDT)
-Received: by 10.141.2.18 with HTTP; Wed, 1 Aug 2007 02:08:22 -0700 (PDT)
-In-Reply-To: <46B016FC.4050005@trolltech.com>
-Content-Disposition: inline
+	id S1759329AbXHAJOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 05:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758831AbXHAJOE
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 05:14:04 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:59616 "EHLO
+	spunkymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753193AbXHAJOB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 05:14:01 -0400
+Received: from [192.168.201.102] (dsl-146-24-241.telkomadsl.co.za [165.146.24.241])
+	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 4565520874;
+	Wed,  1 Aug 2007 02:13:58 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.5 (Windows/20070716)
+In-Reply-To: <46B045D3.4070208@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54421>
 
-On 7/31/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> Dmitry Kakurin said the following on 30.07.2007 01:14:
-> > I want to be able to build MinGW port of Git on Windows. I've tried
-> > to follow steps in README.MinGW to setup this environment myself
-> > (install MinGW, MSys, ZLib etc.) but after wasting a lot of time
-> > with no result I give up. So, could somebody please just pkzip
-> > their environment (everything required) and share the zip file with
-> > me (privately or publicly)? I also think that an even better idea
-> > is to create a new Git repository with MinGW build environment.
-> > This will make contributing to MinGW port of Git MUCH easier.
->
-> Aaron has done this, and you can find the link on his blog, here:
->     http://www.ekips.org/cgi-bin/aaron.cgi/2007/02/27
+Steven Grimm wrote:
+> Domenico Andreoli wrote:
+>> What is this reflog thing and why is required?
+>>   
+> 
+> It is a log of where each ref pointed at any given time. Or rather, a 
+> log of changes to refs, with timestamps. It is not *required* per se 
+> (you can turn it off and almost all of git will continue to work as 
+> before) but it's handy in that you can say stuff like
+> 
+> git checkout -b newbranch master@"{4 days ago}"
+> 
+> and git will give you a new branch pointing at the rev that master 
+> pointed to 4 days ago, even if it's a rev that is no longer reachable 
+> from any of the existing heads (e.g., because you did a "git rebase" and 
+> the rev in question was replaced by a new one.) Obviously as soon as you 
+> do a "git gc" you will lose the ability to go back to unreachable revs 
+> using the reflog.
+> 
 
-I've downloaded and installed it. But I could not make it work :-(.
-First I had this problem:
-$ make
-GIT_VERSION = 1.5.3.GIT
-    * new build flags or prefix
-    CC convert-objects.o
-gcc.exe: installation problem, cannot exec `cc1': No such file or directory
-make: *** [convert-objects.o] Error 1
+Not strictly true. "git gc" does take the reflogs into account when 
+determining reachability, but it also prunes the reflogs periodically to 
+prevent them from growing without bound (and preventing pruning of 
+otherwise unreachable objects).
 
-Then I've copied cc1.exe and some others from
-C:\mingw4git\libexec\gcc\mingw32 into /bin.
+ From the git-gc manpage:
 
-$ make
-    CC convert-objects.o
-In file included from cache.h:4,
-                 from convert-objects.c:1:
-git-compat-util.h:51:22: sys/wait.h: No such file or directory
+CONFIGURATION
+  The optional configuration variable gc.reflogExpire can be set to
+  indicate how long historical entries within each branch's reflog should
+  remain available in this repository. The setting is expressed as a
+  length of time, for example 90 days or 3 months. It defaults to 90
+  days.
 
-Searching entire (downloaded) tree for wait.h gives nothing.
+Regards,
 
-'make configure' does not work:
-$ make configure
-    GEN configure
-configure.ac+:4: error: Autoconf version 2.59 or higher is required
-configure.ac+:4: the top level
-autom4te: /bin/m4 failed with exit status: 1
-make: *** [configure] Error 1
-
-What do I do now?
-
--Dmitry
+Rogan
