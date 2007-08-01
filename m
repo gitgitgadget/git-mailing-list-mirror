@@ -1,98 +1,136 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: MinGW build environment for Git
-Date: Wed, 01 Aug 2007 07:15:40 +0200
-Message-ID: <46B016FC.4050005@trolltech.com>
-References: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Clean up work-tree handling
+Date: Tue, 31 Jul 2007 22:17:31 -0700
+Message-ID: <7v3az3deac.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+	<Pine.LNX.4.64.0708010058130.14781@racer.site>
+	<Pine.LNX.4.64.0708010129530.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig281D76EE6BFA2E1F1587259B"
-Cc: git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 07:14:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 01 07:17:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IG6Xz-0004bO-67
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 07:14:59 +0200
+	id 1IG6aV-00058k-Ls
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 07:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbXHAFO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 01:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbXHAFO4
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 01:14:56 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:43245 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651AbXHAFOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 01:14:55 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 7EBC274596; Wed,  1 Aug 2007 07:14:53 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 5664D74593; Wed,  1 Aug 2007 07:14:53 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.5) Gecko/20070716 Thunderbird/2.0.0.5 Mnenhy/0.7.5.666
-In-Reply-To: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
-X-Enigmail-Version: 0.95.2
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1753882AbXHAFRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 01:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbXHAFRd
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 01:17:33 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50039 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365AbXHAFRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 01:17:32 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070801051733.VYOX26965.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 1 Aug 2007 01:17:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id WVHX1X00A1kojtg0000000; Wed, 01 Aug 2007 01:17:31 -0400
+In-Reply-To: <Pine.LNX.4.64.0708010129530.14781@racer.site> (Johannes
+	Schindelin's message of "Wed, 1 Aug 2007 01:30:14 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54408>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig281D76EE6BFA2E1F1587259B
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Dmitry Kakurin said the following on 30.07.2007 01:14:
-> I want to be able to build MinGW port of Git on Windows. I've tried
-> to follow steps in README.MinGW to setup this environment myself
-> (install MinGW, MSys, ZLib etc.) but after wasting a lot of time
-> with no result I give up. So, could somebody please just pkzip
-> their environment (everything required) and share the zip file with
-> me (privately or publicly)? I also think that an even better idea
-> is to create a new Git repository with MinGW build environment.
-> This will make contributing to MinGW port of Git MUCH easier.
+> The old version of work-tree support was an unholy mess, barely readable,
+> and not to the point.
+>
+> For example, why do you have to provide a worktree, when it is not used?
+> As in "git status".  Now it works.
+> ...
 
-Hi Dmitry,
+Without continuing with negatives, let's try to define the new,
+corrected world order.
 
-Aaron has done this, and you can find the link on his blog, here:
-     http://www.ekips.org/cgi-bin/aaron.cgi/2007/02/27
+I do not think the following is exactly what your cleaned-up
+version tries to perform, but I am writing this down primarily
+to demonstrate the style and the level of detail I expect to
+accompany a clean-up patch like this.
 
-The archive's compressed with 7zip, so you'll need that to decompress=20
-it. (http://www.7-zip.org/)
+----------------------------------------------------------------
 
-Direct link to the archive:
-     http://inkscape.modevia.com/git/mingw4git.7z
+Definitions:
 
-Good luck!
---=20
-=2Emarius
+ - You can have "checked out" files on the filesystem, and such
+   files are said to be in your "work tree".  The directory
+   on the filesystem that corresponds to the toplevel entries of
+   the index and the tree objects directly contained in the
+   commit objects is called "the toplevel of the work tree",
+   or simply "work tree" if it is not ambiguous from the
+   context.
 
+ - The directory that holds git repository information is called
+   "git directory".  This is typically .git directory at the
+   toplevel of your work tree, but not necessarily so.
 
---------------enig281D76EE6BFA2E1F1587259B
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+ - You can perform many git operations without a work tree, but
+   some operations fundamentally require you to have one
+   (e.g. checkout and diff, unless two tree-ishes are given, do
+   not make sense without a work tree).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+There are four predicates, two interrogators, and two
+manipulators:
 
-iD8DBQFGsBb8KzzXl/njVP8RAguTAJ9MqB1dENqdbUDOkUXjicWPmSu3dQCfXDhu
-p4slT0EcrckT1+i3+MI0ByQ=
-=6Wu+
------END PGP SIGNATURE-----
+ - is_inside_git_dir(): this returns true if the $cwd is the git
+   directory or its subdirectory. [IS THIS STILL NEEDED???]
 
---------------enig281D76EE6BFA2E1F1587259B--
+ - is_inside_work_tree(): this returns true if the $cwd is
+   inside work tree (i.e. either at the toplevel of the work
+   tree or its subdirectory).  [NEEDSHELP: is .git in the usual
+   layout considered "is_inside_work_tree()"?  Should it?]
+
+ - is_bare_repository(): this returns true if no work tree is
+   found.  There is a corresponding function usable from the
+   scripts.
+
+ - require_work_tree (shell): this is called by scripts that
+   needs to have a work tree to operate, and barfs otherwise.
+
+ - get_git_dir(): this returns the location of the git
+   directory.  With GIT_DIR environment variable, or --git-dir
+   command line option, you can tell git to use a specific
+   directory as the git directory.  Otherwise a directory that
+   looks like a git directory and whose name is .git is looked
+   for, in the $cwd or its parent directory.  If there is no
+   such directory, and if the $cwd looks like a git directory,
+   $cwd is the git directory.
+
+ - get_git_work_tree(): this returns the location of the work
+   tree; it returns NULL if there is none.  The command line
+   option --work-tree, or the environment variable GIT_WORK_TREE
+   can specify the location; otherwise, git directory is looked
+   for so that its configuration file can be read.  If
+   core.worktree is there, that specifies the location.
+   Otherwise, if the basename of the git directory is .git, it
+   is the parent directory of the git directory.  Otherwise, you
+   do not have work tree.
+
+ - set_git_dir(): used to set the git directory, internally to
+   handle --git-dir option;
+
+ - set_work_tree(): used to set the git directory, internally to
+   handle --work-tree option;
+
+----------------------------------------------------------------
+
+After writing the above down, it strikes me odd that we do not
+have a predicate that says "we know the work tree is there".
+
+If a command wants a work tree, and if you are outside the work
+tree, then is_inside_work_tree() returns false and
+get_git_work_tree() returns non NULL, so that is a good pair of
+interface that can be mixed and matched (e.g. you can chdir to
+the former to perform the whole tree operation, or refuse to
+perform, based on is_inside_work_tree being false, cwd relative
+operations).
