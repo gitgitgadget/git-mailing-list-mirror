@@ -1,100 +1,101 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR accept commands
-Date: Wed, 1 Aug 2007 23:47:20 +0200
-Organization: Organization?!?
-Message-ID: <S1752294AbXHAWCj/20070801220239Z+281@vger.kernel.org>
-References: <7v7iof3uc5.fsf@assigned-by-dhcp.cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 00:02:45 2007
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
+Date: Wed, 1 Aug 2007 18:03:50 -0400
+Message-ID: <20070801220350.GD28106@thunk.org>
+References: <200708010216.59750.jnareb@gmail.com> <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org> <7vodhrby6f.fsf@assigned-by-dhcp.cox.net> <20070801092428.GB28106@thunk.org> <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 00:04:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGMHE-0005nw-8O
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:02:44 +0200
+	id 1IGMIg-0006HG-I6
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbXHAWCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 18:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbXHAWCj
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:02:39 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:40912 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751924AbXHAWCi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 18:02:38 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 3A29636652D
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:02:37 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 2CDC5114336
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:02:37 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-017-017.pools.arcor-ip.net [84.61.17.17])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 0D51F2BAA28
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:02:36 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id D8F651C3E076; Thu,  2 Aug 2007 00:01:47 +0200 (CEST)
-In-Reply-To: <7v7iof3uc5.fsf@assigned-by-dhcp.cox.net>
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-X-Virus-Scanned: ClamAV 0.91.1/3846/Wed Aug  1 09:27:07 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1752801AbXHAWEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 18:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbXHAWEL
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:04:11 -0400
+Received: from THUNK.ORG ([69.25.196.29]:58155 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752567AbXHAWEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 18:04:09 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1IGMQp-00043M-Jm; Wed, 01 Aug 2007 18:12:40 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1IGMII-0003vD-UH; Wed, 01 Aug 2007 18:03:50 -0400
+Content-Disposition: inline
+In-Reply-To: <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54481>
 
-The previous code only allowed specifying a single executable rather
-than a complete command like "emacsclient --alternate-editor vi" in
-those variables.  Since VISUAL/EDITOR appear to be traditionally
-passed to a shell for interpretation (as corroborated with "less",
-"mail" and "mailx", while the really ancient "more" indeed allows only
-an executable name), the shell function git_editor has been amended
-appropriately.
+On Wed, Aug 01, 2007 at 03:15:25AM -0700, Junio C Hamano wrote:
+> > So would you accept a patch which adds a git-config variable which
+> > specifies whether or not local clones should use hard links by default
+> > (defaulting to yes), and which adds a --no-hard-links option to
+> > git-clone to override the config option?
+> 
+> Are you suggesting to make -l the default for local, in other
+> words?  I personally do not make local clone often enough that I
+> am not disturbed having to type extra " -l" on the command line.
 
-"eval" is employed to have quotes and similar interpreted _after_
-expansion, so that specifying
-EDITOR='"/home/dak/My Commands/notepad.exe"'
-can be used for actually using commands with blanks.
+Yeah, essentially, with a git-config option (and comand-line option)
+to override the default for those people who are "squeamish" about git
+clone -l.  Linus's suggestion of using file:// as a way to indicate
+non-local also makes a lot of sense to me.
 
-Instead of passing just the first argument of git_editor on, we pass
-all of them (so that +lineno might be employed at a later point of
-time, or so that multiple files may be edited when appropriate).
+> Perhaps if the destination is local,
+> 
+>          - if -s is given, just set up alternates, do nothing else;
 
-Strictly speaking, there is a change in behavior: when
-git config core.editor
-returns a valid but empty string, the fallbacks are still searched.
-This is more consistent, and the old code was problematic with regard
-to multiple blanks.  Putting in additional quotes might have worked,
-but quotes inside of command substitution inside of quotes is nasty
-enough to not reliably work the same across "Bourne shells".
+As I understand it, the main objection with making -s the default is
+surprising result that could happen if you do a git-prune in the base
+repository which causes objects which are borrowed from the base
+repository via .git/objects/info/alternates, right?
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- git-sh-setup.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+What if git clone -s appended the repository which is borrowing
+objects via alternates to a file located in the base repository,
+.git/objects/info/shared-repos?
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 3c0367d..3c50bc1 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -29,7 +29,8 @@ set_reflog_action() {
- }
- 
- git_editor() {
--	GIT_EDITOR=${GIT_EDITOR:-$(git config core.editor || echo ${VISUAL:-${EDITOR}})}
-+	: "${GIT_EDITOR:=$(git config core.editor)}"
-+	: "${GIT_EDITOR:=${VISUAL:-${EDITOR}}}"
- 	case "$GIT_EDITOR,$TERM" in
- 	,dumb)
- 		echo >&2 "No editor specified in GIT_EDITOR, core.editor, VISUAL,"
-@@ -40,7 +41,7 @@ git_editor() {
- 		exit 1
- 		;;
- 	esac
--	${GIT_EDITOR:-vi} "$1"
-+	eval "${GIT_EDITOR:=vi}" '"$@"'
- }
- 
- is_bare_repository () {
--- 
-1.5.3.rc2.86.gdc7ba
+Then git-prune could also use the refs marked in each of the
+downstream repositories that are sharing objects with base repository
+and not make those objects go away.  That way, git-gc --prune won't do
+anything surprising to any shared repositories, since it will scan
+those shared repositories automatically.  Would that be considered
+acceptable?  That way you can get instant clones even on filesystems
+that don't support hard links, such as Windows systems.
+
+The way I would suggest doing it is once we implement support for
+.git/objects/info/shared-repos is to do the following with git-clone
+by default:
+
+   	* If the source repo is specified via a file:// URL, per Linus's
+          suggestion, do the clone via copying.
+
+	* If the source repo is specified via a local pathname, and
+          .git/objects/info/shared-repos in the source repository is
+          writeable by the user who is doing the clone, then do a
+          clone -s.
+
+	* If the above fails, try clone -l
+
+	* If the above fails, do a clone via copying over a new pack
+
+Would this be acceptable?  Patches to do the following should be
+fairly easy to whip up.  Obviously this wouldn't be for 1.5.3.  :-)
+
+       	       	    	 	   	- Ted
