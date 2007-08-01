@@ -1,56 +1,109 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR accept commands
-Date: Thu, 02 Aug 2007 00:17:37 +0200
-Message-ID: <85ejimrjb2.fsf@lola.goethe.zz>
-References: <7v7iof3uc5.fsf@assigned-by-dhcp.cox.net>
-	<S1752294AbXHAWCj/20070801220239Z+281@vger.kernel.org>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: MinGW build environment for Git
+Date: Wed, 1 Aug 2007 15:18:41 -0700
+Message-ID: <a1bbc6950708011518n63968dc0see8a022d2934cba8@mail.gmail.com>
+References: <a1bbc6950707291614w392bf3a9t5d0d9e50bfcb0f36@mail.gmail.com>
+	 <46B016FC.4050005@trolltech.com>
+	 <a1bbc6950708010208v15071005w3bcc471bef172fcc@mail.gmail.com>
+	 <Pine.LNX.4.64.0708011143180.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 00:18:44 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Marius Storm-Olsen" <marius@trolltech.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 00:18:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGMWe-0002WY-Ho
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:18:40 +0200
+	id 1IGMWl-0002Z5-3z
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861AbXHAWS3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 18:18:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbXHAWS3
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:18:29 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:59463 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752236AbXHAWS2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 18:18:28 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id ACDC818B422
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:18:27 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 9EDA62C6B72
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:18:27 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-034-066.pools.arcor-ip.net [84.61.34.66])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 8A1DA3425E2
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 00:18:27 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id DD0651C3E076; Thu,  2 Aug 2007 00:17:37 +0200 (CEST)
-In-Reply-To: <S1752294AbXHAWCj/20070801220239Z+281@vger.kernel.org> (David Kastrup's message of "Wed\, 1 Aug 2007 23\:47\:20 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV version 0.91.1, clamav-milter version 0.91.1 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1753402AbXHAWSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 18:18:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbXHAWSn
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:18:43 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:28919 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753307AbXHAWSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 18:18:42 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so258254rvb
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 15:18:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QPhmJVWXa1XOEOPm5pd13iy+4BWvKQXtFvfSPrcYKbssKEjZYRQCTi1b6CTipmZrEJi4On5DLZoelqvoOUO4NE52GzQpwgrccpCBE0/iqR0GrtaE0ZRm7zoHxAIYHlMGUcnNKo2veRyBEJE4YsD7k7ZIV5yRe0EC2UZmL7XffHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OLP0mj9/+eSt70JS89eM1D0LzVaYXzyO3hp8xW84lofHAdZRVCP0Fzjgb6pyHeLinEQHRw1Si5B8/kU470U+91t+tul81UTGHAzznGaxlcsbczQLfswSrOJPJrQwqKKXJVjlGgR2z8LaAg64vwKFKbdoSV0jjEZf0YJdGBiXWPU=
+Received: by 10.141.108.21 with SMTP id k21mr418835rvm.1186006721488;
+        Wed, 01 Aug 2007 15:18:41 -0700 (PDT)
+Received: by 10.141.2.18 with HTTP; Wed, 1 Aug 2007 15:18:41 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708011143180.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54487>
 
-David Kastrup <dak@gnu.org> writes:
+On 8/1/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 1 Aug 2007, Dmitry Kakurin wrote:
+>
+> > On 7/31/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> > > Dmitry Kakurin said the following on 30.07.2007 01:14:
+> > > > I want to be able to build MinGW port of Git on Windows. I've tried
+> > > > to follow steps in README.MinGW to setup this environment myself
+> > > > (install MinGW, MSys, ZLib etc.) but after wasting a lot of time
+> > > > with no result I give up. So, could somebody please just pkzip
+> > > > their environment (everything required) and share the zip file with
+> > > > me (privately or publicly)? I also think that an even better idea
+> > > > is to create a new Git repository with MinGW build environment.
+> > > > This will make contributing to MinGW port of Git MUCH easier.
+> > >
+> > > Aaron has done this, and you can find the link on his blog, here:
+> > >     http://www.ekips.org/cgi-bin/aaron.cgi/2007/02/27
+> >
+> > I've downloaded and installed it. But I could not make it work :-(.
+> > First I had this problem:
+> > $ make
+> > GIT_VERSION = 1.5.3.GIT
+> >     * new build flags or prefix
+> >     CC convert-objects.o
+> > gcc.exe: installation problem, cannot exec `cc1': No such file or directory
+> > make: *** [convert-objects.o] Error 1
+> >
+> > Then I've copied cc1.exe and some others from
+> > C:\mingw4git\libexec\gcc\mingw32 into /bin.
+> >
+> > $ make
+> >     CC convert-objects.o
+> > In file included from cache.h:4,
+> >                  from convert-objects.c:1:
+> > git-compat-util.h:51:22: sys/wait.h: No such file or directory
+> >
+> > Searching entire (downloaded) tree for wait.h gives nothing.
+> >
+> > 'make configure' does not work:
+> > $ make configure
+> >     GEN configure
+> > configure.ac+:4: error: Autoconf version 2.59 or higher is required
+> > configure.ac+:4: the top level
+> > autom4te: /bin/m4 failed with exit status: 1
+> > make: *** [configure] Error 1
+> >
+> > What do I do now?
+>
+> This looks like you downloaded git.git.  Official releases do not have
+> MinGW support yet!  You have to get the MinGW port from repo.or.cz:
+>
+>        http://repo.or.cz/w/git/mingw.git
+You were right. I was downloading Git under Cygwin and then copied it
+to MSys. Somewhere along the way I got confused and copied the wrong
+directory.
+It works now!
+Thank you!
 
-> The previous code only allowed specifying a single executable rather
-> than a complete command like "emacsclient --alternate-editor vi" in
-
-Oops, won't apply cleanly.  I found that I had already made a
-different (trivial) patch previously.  Let me try again and fold that
-patch in manually.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+- Dmitry
