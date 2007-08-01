@@ -1,56 +1,56 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Interpreting EDITOR/VISUAL environment variables.
-Date: Wed, 1 Aug 2007 20:50:42 +0200
-Message-ID: <20070801185042.GB30277@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <86abtbnzpr.fsf@lola.quinscape.zz> <7vd4y75gcy.fsf@assigned-by-dhcp.cox.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: git-diff on touched files: bug or feature?
+Date: Wed, 01 Aug 2007 21:02:18 +0200
+Message-ID: <87vebzkrid.fsf@wine.dyndns.org>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 20:51:54 2007
+X-From: git-owner@vger.kernel.org Wed Aug 01 21:02:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGJIS-0002hJ-FI
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 20:51:48 +0200
+	id 1IGJSm-0006oH-1e
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 21:02:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762214AbXHASvr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 14:51:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761597AbXHASvr
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 14:51:47 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:38071 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755312AbXHASvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 14:51:46 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 87EE07922;
-	Wed,  1 Aug 2007 20:51:44 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 5969A5A231;
-	Wed,  1 Aug 2007 20:51:44 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 9A1101F070; Wed,  1 Aug 2007 20:50:42 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vd4y75gcy.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1757091AbXHATCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 15:02:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756465AbXHATCX
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 15:02:23 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:44287 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754819AbXHATCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 15:02:22 -0400
+Received: from adsl-84-227-23-240.adslplus.ch ([84.227.23.240] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1IGJSe-0003QU-8o; Wed, 01 Aug 2007 14:02:20 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 4560D1E7170; Wed,  1 Aug 2007 21:02:18 +0200 (CEST)
+In-Reply-To: <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 01 Aug 2007 10\:26\:29 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54465>
 
-On Wed, Aug 01, 2007 at 10:12:13AM -0700, Junio C Hamano wrote:
-> We recently normalized the script callers not to splice at all
-> (the scripts were hand-rolling "the VISUAL or EDITOR or vi" and
-> slightly differently).  It obviously has negative (i.e. setting
-> EDITOR to "emacsclient --alternate-editor vi" does not work) as
-> well as positive side (i.e. "/home/dak/My Programs/editor" would
-> work).
+Junio C Hamano <gitster@pobox.com> writes:
 
-And, indeed, --alternate-editor could be supplemented by another
-envvar to be able to work in our situation.  Maybe the various emacsen
-vendors would be willing to integrate such a patch ?
+> Yes.  Very much so, intentionally, from very early days of git.
+> This serves as a reminder to the user that he started editing
+> but changed his mind to end up with the same contents as the
+> original, until the next "update-index --refresh" (which is
+> internally invoked from "status").
 
-Best regards,
+It would be nice to have a way to refresh a single file though. For
+instance in vc-git.el the workfile-unchanged-p function currently has
+to rehash the file every time to see if it really changed, because we
+can't afford to refresh the whole project at that point.
+
 -- 
-Yann
+Alexandre Julliard
+julliard@winehq.org
