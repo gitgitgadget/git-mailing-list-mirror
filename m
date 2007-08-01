@@ -1,124 +1,118 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] rebase -i: ignore patches that are in upstream already
-Date: Wed, 1 Aug 2007 15:59:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708011505010.14781@racer.site>
-References: <46B06E56.2040206@gmail.com>
+Subject: [NOT-SERIOUS PATCH] Make get_relative_cwd() not accept NULL for a
+ directory
+Date: Wed, 1 Aug 2007 16:26:04 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708011624260.14781@racer.site>
+References: <Pine.LNX.4.64.0707300016470.14781@racer.site>
+ <Pine.LNX.4.64.0708010058130.14781@racer.site> <Pine.LNX.4.64.0708010129090.14781@racer.site>
+ <7vy7gvdgtn.fsf@assigned-by-dhcp.cox.net> <7vwswfbywq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 17:00:28 2007
+Cc: git@vger.kernel.org, matled@gmx.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 17:26:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGFgS-0003YY-2y
-	for gcvg-git@gmane.org; Wed, 01 Aug 2007 17:00:20 +0200
+	id 1IGG5s-0004w5-2E
+	for gcvg-git@gmane.org; Wed, 01 Aug 2007 17:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932368AbXHAPAB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 11:00:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbXHAPAB
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 11:00:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52752 "HELO mail.gmx.net"
+	id S1763319AbXHAP0b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 11:26:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759604AbXHAP0b
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 11:26:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47436 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932232AbXHAPAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 11:00:00 -0400
-Received: (qmail invoked by alias); 01 Aug 2007 14:59:58 -0000
+	id S1752900AbXHAP0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 11:26:30 -0400
+Received: (qmail invoked by alias); 01 Aug 2007 15:26:27 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp018) with SMTP; 01 Aug 2007 16:59:58 +0200
+  by mail.gmx.net (mp009) with SMTP; 01 Aug 2007 17:26:27 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+OeiwgJQOObhDY7XxXWjKt4yQ98NARgA59TSFj60
-	ymW68f7o16oFg9
+X-Provags-ID: V01U2FsdGVkX18Cn3lenlIC+7Q03Tvv5QqKMM+LC0r3HcEes/uqyP
+	8GurXEQnKF/v/0
 X-X-Sender: gene099@racer.site
-In-Reply-To: <46B06E56.2040206@gmail.com>
+In-Reply-To: <7vwswfbywq.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54443>
 
 
-Non-interactive rebase had this already, exploiting format-patch's option
---ignore-if-in-upstream.  We replicate the same behaviour here with
---cherry-pick.
+Earlier, get_relative_cwd() interpreted "dir == NULL" as "outside of the dir",
+and therefore returned NULL.  Be more strict now.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-	On Wed, 1 Aug 2007, Mark Levedahl wrote:
+	As promised.
 
-	> git rebase -i does not correctly ignore commits in the local 
-	> branch that are also in upstream. For example, create a branch 
-	> that is two commits back from upstream, add one of those on to 
-	> the local branch
-	> 
-	> upstream=83b3df7d58
-	> git checkout -f $upstream
-	> git checkout -b foo $upstream~2
-	> git cherry-pick $upstream~1
-	> git rebase -i  $upstream
-	> 
-	> "git rebase -i" happily presents commit "$upstream~1" in the 
-	> list to be applied to upstream. This of course results in a 
-	> conflict. Should the user simply delete the offending commit 
-	> from the presented list, git rebase -i then refuses to do 
-	> anything, saying "Nothing to do."
-	> 
-	> Bare "git rebase" handles this case correctly (essentially fast 
-	> forwards the branch to upstream.
+	Okay, I made up my mind.  Allowing "dir == NULL" is not only a matter of
+	convenience.  It is the most natural way to say that "dir" is an invalid
+	or non-existing directory.
 
-	Right.
+	Besides, this patch adds 14.286% more lines than it removes ;-)
 
- git-rebase--interactive.sh    |    5 +++--
- t/t3404-rebase-interactive.sh |   15 +++++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+	But ultimately, it is your decision, Junio, and I am d'accord with 
+	what you choose.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 061cd0a..d3addd4 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -463,8 +463,9 @@ do
- #
- EOF
- 		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
--			--abbrev=7 --reverse $UPSTREAM..$HEAD | \
--			sed "s/^/pick /" >> "$TODO"
-+			--abbrev=7 --reverse --left-right --cherry-pick \
-+			$UPSTREAM...$HEAD | \
-+			sed -n "s/^>/pick /p" >> "$TODO"
+ dir.c   |    3 ---
+ setup.c |   10 +++++++---
+ 2 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index b3329f4..cfcde13 100644
+--- a/dir.c
++++ b/dir.c
+@@ -646,7 +646,6 @@ file_exists(const char *f)
+ /*
+  * get_relative_cwd() gets the prefix of the current working directory
+  * relative to 'dir'.  If we are not inside 'dir', it returns NULL.
+- * As a convenience, it also returns NULL if 'dir' is already NULL.
+  */
+ char *get_relative_cwd(char *buffer, int size, const char *dir)
+ {
+@@ -656,8 +655,6 @@ char *get_relative_cwd(char *buffer, int size, const char *dir)
+ 	 * a lazy caller can pass a NULL returned from get_git_work_tree()
+ 	 * and rely on this function to return NULL.
+ 	 */
+-	if (!dir)
+-		return NULL;
+ 	if (!getcwd(buffer, size))
+ 		die("can't find the current directory: %s", strerror(errno));
  
- 		test -z "$(grep -ve '^$' -e '^#' < $TODO)" &&
- 			die_abort "Nothing to do"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 817f614..dc436d7 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -68,6 +68,9 @@ test "\$1" = .git/COMMIT_EDITMSG && {
- 	test -z "\$FAKE_COMMIT_AMEND" || echo "\$FAKE_COMMIT_AMEND" >> "\$1"
- 	exit
+diff --git a/setup.c b/setup.c
+index 3653092..2f720f8 100644
+--- a/setup.c
++++ b/setup.c
+@@ -183,8 +183,10 @@ int is_inside_git_dir(void)
+ 
+ int is_inside_work_tree(void)
+ {
+-	if (inside_work_tree < 0)
+-		inside_work_tree = is_inside_dir(get_git_work_tree());
++	if (inside_work_tree < 0) {
++		const char *work_tree = get_git_work_tree();
++		inside_work_tree = work_tree ? is_inside_dir(work_tree) : 0;
++	}
+ 	return inside_work_tree;
  }
-+test -z "\$EXPECT_COUNT" ||
-+	test "\$EXPECT_COUNT" = \$(grep -ve "^#" -e "^$" < "\$1" | wc -l) ||
-+	exit
- test -z "\$FAKE_LINES" && exit
- grep -v "^#" < "\$1" > "\$1".tmp
- rm "\$1"
-@@ -251,4 +254,16 @@ test_expect_success 'interrupted squash works as expected' '
- 	test $one = $(git rev-parse HEAD~2)
- '
  
-+test_expect_success 'ignore patch if in upstream' '
-+	HEAD=$(git rev-parse HEAD) &&
-+	git checkout -b has-cherry-picked HEAD^ &&
-+	echo unrelated > file7 &&
-+	git add file7 &&
-+	test_tick &&
-+	git commit -m "unrelated change" &&
-+	git cherry-pick $HEAD &&
-+	EXPECT_COUNT=1 git rebase -i $HEAD &&
-+	test $HEAD = $(git rev-parse HEAD^)
-+'
-+
- test_done
+@@ -370,10 +372,12 @@ const char *setup_git_directory(void)
+ 	/* If the work tree is not the default one, recompute prefix */
+ 	if (inside_work_tree < 0) {
+ 		static char buffer[PATH_MAX + 1];
++		const char *work_tree;
+ 		char *rel;
+ 		if (retval && chdir(retval))
+ 			die ("Could not jump back into original cwd");
+-		rel = get_relative_cwd(buffer, PATH_MAX, get_git_work_tree());
++		work_tree = get_git_work_tree();
++		rel = work_tree ? get_relative_cwd(buffer, PATH_MAX, work_tree) : NULL;
+ 		return rel && *rel ? strcat(rel, "/") : NULL;
+ 	}
+ 
 -- 
 1.5.3.rc3.112.gf60b6
