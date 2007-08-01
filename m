@@ -1,101 +1,69 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Wed, 1 Aug 2007 18:03:50 -0400
-Message-ID: <20070801220350.GD28106@thunk.org>
-References: <200708010216.59750.jnareb@gmail.com> <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org> <7vodhrby6f.fsf@assigned-by-dhcp.cox.net> <20070801092428.GB28106@thunk.org> <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
+From: Domenico Andreoli <cavokz@gmail.com>
+Subject: multiple checked out branches
+Date: Thu, 2 Aug 2007 00:04:35 +0200
+Message-ID: <20070801220435.GA19226@raptus.dandreoli.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 00:04:16 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 00:04:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGMIg-0006HG-I6
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:04:14 +0200
+	id 1IGMJ6-0006Na-DH
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 00:04:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbXHAWEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 18:04:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbXHAWEL
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:04:11 -0400
-Received: from THUNK.ORG ([69.25.196.29]:58155 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567AbXHAWEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2007 18:04:09 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IGMQp-00043M-Jm; Wed, 01 Aug 2007 18:12:40 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IGMII-0003vD-UH; Wed, 01 Aug 2007 18:03:50 -0400
+	id S1752914AbXHAWEh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 18:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbXHAWEh
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 18:04:37 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:40361 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbXHAWEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 18:04:36 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so87676nfb
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 15:04:35 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=meGfgA7S5rKlovXPPXdeAQrzw4I5UjHIVgH1JAklXAHOfgH61CoVx47hePfzQAwVhdK3E7RGXxQzdHI6PWwhyEftt4rEUE0gaBYITVv39EDXwvOCwXD6FAg6JtO8Hr8caCJ2YskRyf9fj74okIaXf2EJXwLzWkCRMsMGDPs0At0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=Xczptuzgi/zOwOHGqDxSN16Lk00UAkhLraxwvAgRn11aaI6pXx9zKKJfqE1q0WQwZkKjMJbVITRolIGtXTY6aC1O+VfuuhOUb8n2DNU5wTRKt6u1q+DFP0Nkh9zq7HDnwQoNdLRd4qiX4+hEGHKs77MHUQMF7qh1+LY/nTG3urE=
+Received: by 10.86.57.9 with SMTP id f9mr884371fga.1186005875033;
+        Wed, 01 Aug 2007 15:04:35 -0700 (PDT)
+Received: from raptus.dandreoli.com ( [159.149.71.27])
+        by mx.google.com with ESMTPS id p9sm2444155fkb.2007.08.01.15.04.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Aug 2007 15:04:32 -0700 (PDT)
+Received: by raptus.dandreoli.com (Postfix, from userid 1000)
+	id 89AF76E359; Thu,  2 Aug 2007 00:04:35 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54482>
 
-On Wed, Aug 01, 2007 at 03:15:25AM -0700, Junio C Hamano wrote:
-> > So would you accept a patch which adds a git-config variable which
-> > specifies whether or not local clones should use hard links by default
-> > (defaulting to yes), and which adds a --no-hard-links option to
-> > git-clone to override the config option?
-> 
-> Are you suggesting to make -l the default for local, in other
-> words?  I personally do not make local clone often enough that I
-> am not disturbed having to type extra " -l" on the command line.
+Hi again,
 
-Yeah, essentially, with a git-config option (and comand-line option)
-to override the default for those people who are "squeamish" about git
-clone -l.  Linus's suggestion of using file:// as a way to indicate
-non-local also makes a lot of sense to me.
+  I would like to contemporaneously work with multiple branches out of
+the same git repository. This does not work out of the box.
 
-> Perhaps if the destination is local,
-> 
->          - if -s is given, just set up alternates, do nothing else;
+So I prepare multiple copies of the same repository, every one will have
+its own checked out branch but I want to share most of their .git subdir.
 
-As I understand it, the main objection with making -s the default is
-surprising result that could happen if you do a git-prune in the base
-repository which causes objects which are borrowed from the base
-repository via .git/objects/info/alternates, right?
+I surely want to share the object db, the local and remote refs.
+This way it is enough to make a round of fetches/merges/pushes to have
+all the shared-repositories up to date.
 
-What if git clone -s appended the repository which is borrowing
-objects via alternates to a file located in the base repository,
-.git/objects/info/shared-repos?
+I expect to do the trick with some symlinks but I am not an expert of
+git internals. Which traps are waiting me? Any hint? Thank you.
 
-Then git-prune could also use the refs marked in each of the
-downstream repositories that are sharing objects with base repository
-and not make those objects go away.  That way, git-gc --prune won't do
-anything surprising to any shared repositories, since it will scan
-those shared repositories automatically.  Would that be considered
-acceptable?  That way you can get instant clones even on filesystems
-that don't support hard links, such as Windows systems.
+Regards,
+Domenico
 
-The way I would suggest doing it is once we implement support for
-.git/objects/info/shared-repos is to do the following with git-clone
-by default:
-
-   	* If the source repo is specified via a file:// URL, per Linus's
-          suggestion, do the clone via copying.
-
-	* If the source repo is specified via a local pathname, and
-          .git/objects/info/shared-repos in the source repository is
-          writeable by the user who is doing the clone, then do a
-          clone -s.
-
-	* If the above fails, try clone -l
-
-	* If the above fails, do a clone via copying over a new pack
-
-Would this be acceptable?  Patches to do the following should be
-fairly easy to whip up.  Obviously this wouldn't be for 1.5.3.  :-)
-
-       	       	    	 	   	- Ted
+-----[ Domenico Andreoli, aka cavok
+ --[ http://www.dandreoli.com/gpgkey.asc
+   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
