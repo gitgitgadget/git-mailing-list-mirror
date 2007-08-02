@@ -1,92 +1,72 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: minor makefile issues
-Date: Thu, 02 Aug 2007 21:00:55 +0200
-Message-ID: <853az1223c.fsf@lola.goethe.zz>
-References: <46B21CB9.9050303@nuovasystems.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joe Eykholt <joe@nuovasystems.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 21:01:15 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Thu, 2 Aug 2007 21:13:40 +0200
+Message-ID: <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de>
+References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <46B215E2.8010307@fs.ei.tum.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	users@cvs2svn.tigris.org
+To: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 21:20:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGfv7-0004Il-AB
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 21:01:13 +0200
+	id 1IGgDq-0002ik-Is
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 21:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752263AbXHBTBG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 15:01:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbXHBTBE
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 15:01:04 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:57520 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752263AbXHBTBC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 15:01:02 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 0DA5812FF2;
-	Thu,  2 Aug 2007 21:01:00 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id EC3372C6A1A;
-	Thu,  2 Aug 2007 21:00:59 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-024-023.pools.arcor-ip.net [84.61.24.23])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id BDA0930A940;
-	Thu,  2 Aug 2007 21:00:59 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 6CC6B1D0344E; Thu,  2 Aug 2007 21:00:56 +0200 (CEST)
-In-Reply-To: <46B21CB9.9050303@nuovasystems.com> (Joe Eykholt's message of "Thu\, 02 Aug 2007 11\:04\:41 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3847/Thu Aug  2 13:26:26 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1757240AbXHBTUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 15:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757190AbXHBTUb
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 15:20:31 -0400
+Received: from mailer.zib.de ([130.73.108.11]:38153 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755704AbXHBTUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 15:20:30 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l72JCm2O022548;
+	Thu, 2 Aug 2007 21:12:49 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l72JCmxK018276
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 2 Aug 2007 21:12:48 +0200 (MEST)
+In-Reply-To: <46B215E2.8010307@fs.ei.tum.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54587>
 
-Joe Eykholt <joe@nuovasystems.com> writes:
+Simon,
 
-> Hi All,
+On Aug 2, 2007, at 7:35 PM, Simon 'corecode' Schubert wrote:
+
+> Steffen Prohaska wrote:
+>>   fromcvs's togit surrendered during the import.
+>>   fromcvs's tohg accepted more of the history, but finally
+>>     surrendered as well.
 >
-> Due to my unusual environment, I ran into two issues when installing
-> git 1.5.2.4 from source.
-> Although these are unusual, they might not be unique and the fixes are easy:
->
->    1.  The make install failed because of line 49 in templates/Makefile:
->           (cd blt && $(TAR) cf - .) | \
->           (cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
->    because I have CDPATH set, the 'cd blt' actually outputs the new
-> directory on stdout
->    which confuses the second tar.  Changing this to 'cd ./blt' fixes
-> it.  Perhaps this could
->    be considered a bash bug.
+> Which repo is it you are converting?  Is this available somewhere?
 
-No, it is a user bug.  You don't want a script to _ever_ walk around
-on its own volition, so you must _not_ export CDPATH.  Instead, set it
-in .bashrc without exporting it.  That way, it will be available with
-every interactive shell, and not interfering with scripts.
+Unfortunately not, the content is a proprietary software package.
 
->    2.  My home directory containing my build tree is NFS-mounted, and
-> root doesn't have any
->    permission to write it.  So, when doing 'make prefix=/usr/local
-> install-doc' as root, I got these errors:
->
->    # make prefix=/usr/local install-doc
->    make -C Documentation install
->    make[1]: Entering directory
-> /net/da01/home/jre/build/git-1.5.2.4/Documentation'
->    rm -f doc.dep+ doc.dep
->    rm: cannot remove `doc.dep': Permission denied
->    make[1]: *** [doc.dep] Error 1
->    make[1]: Leaving directory
-> /net/da01/home/jre/build/git-1.5.2.4/Documentation'
->    make: *** [install-doc] Error 2
->
-> I'm not sure what the best fix is for the second problem.  rm -f
-> ignores non-existent files but not permission errors.
-> I guess you could do 'rm -f doc.dep || true'.
 
-First do "make doc" for your normal user, then make doc-install as
-root.
+> I'd appreciate any reports concerning "surrenders" of fromcvs.   
+> Additionally, it seems strange that tohg should have worked  
+> "better" than togit, as these are basically just different backends.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Some time passed since I did the tests. I had no time to do a
+detailed investigation then. I'll have more time now and will
+prepare a bug report, which is not easy because I can't sent you
+the cvs repo, sorry. Any hints what would be most helpful for you?
+
+I remember that togit reported a broken pipe. My feeling was
+that git-fastimport aborted, which may be reason why tohg
+worked better. I didn't try to understand more details. I never
+read ruby code before and it was already a challenge for me to
+get everything up and running (rcs, rbtree).
+
+	Steffen
