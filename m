@@ -1,102 +1,134 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: Shell script cleanups/style changes?
-Date: Thu, 2 Aug 2007 19:22:25 +0200
-Message-ID: <20070802172225.GR29424@schiele.dyndns.org>
-References: <86bqdqkygp.fsf@lola.quinscape.zz> <20070802140011.GN29424@schiele.dyndns.org> <86sl72j9vn.fsf@lola.quinscape.zz> <20070802161902.GP29424@schiele.dyndns.org> <Pine.LNX.4.64.0708021804090.14781@racer.site>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Thu, 02 Aug 2007 19:23:57 +0200
+Message-ID: <46B2132D.7090304@alum.mit.edu>
+References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="v9g2r9e2kvGs7M7R"
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 19:22:37 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGeNe-0000NM-A2
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:22:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968AbXHBRWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 13:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXHBRWa
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:22:30 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:22178 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752968AbXHBRW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 13:22:29 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so154809nfb
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 10:22:28 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=ioKuSdkx5yLmuEciapJ3ZZQm0zb1nY+M4PVgvVdn+PymEijzeUokegkRZmyVz/ObJn7nR5FcHrAzh1zHjRSa1LPLIj6cm++uYj1RhgQtecaEiUlKsBe8I7CTDW5ot2+NDWTD/iQranvkFd19LKfbFuNPyTX79DuTidaF6nWptes=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=aprVcidLhZF9/ZOvswl7/lHJdNxbufN8Z2cQOUUb7yTq7NdESb3F/ZDxoO1++SzNleOo3xnQsgSZLSkhWjBpFR0wZ5GLBGW/wK40MA4WLPu1wpitWGNftMvuEUZoLgosHxssE+MUsvpJEjZ7kAkLNiz+dKot8R/NIcQYfYF/ZKo=
-Received: by 10.86.60.7 with SMTP id i7mr1531701fga.1186075348414;
-        Thu, 02 Aug 2007 10:22:28 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
-        by mx.google.com with ESMTPS id i5sm6860079mue.2007.08.02.10.22.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 10:22:27 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 33EF1C0D900; Thu,  2 Aug 2007 19:22:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708021804090.14781@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, users@cvs2svn.tigris.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: users-return-1607-gcvscu-users=m.gmane.org@cvs2svn.tigris.org Thu Aug 02 19:24:06 2007
+Return-path: <users-return-1607-gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscu-users@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IGeP6-0000wB-45
+	for gcvscu-users@gmane.org; Thu, 02 Aug 2007 19:24:04 +0200
+Received: (qmail 27445 invoked by uid 5000); 2 Aug 2007 17:24:02 -0000
+Mailing-List: contact users-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54574>
+list-help: <mailto:users-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:users-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:users@cvs2svn.tigris.org>
+Delivered-To: mailing list users@cvs2svn.tigris.org
+Received: (qmail 27415 invoked from network); 2 Aug 2007 17:24:02 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAA+wsUbAbSoIh2dsb2JhbACOEwEBCQoH
+X-IronPort-AV: i="4.19,214,1183359600"; 
+   d="scan'208"; a="78852225:sNHT40532975"
+X-IRONPORT: SCANNED
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54575>
 
+Steffen Prohaska wrote:
+> On Aug 1, 2007, at 2:09 AM, Michael Haggerty wrote:
+>> I am looking forward to your feedback.  Even better would be if somebody
+>> wants to join forces on this project.  I would be happy to supply the
+>> cvs2svn knowledge if you can bring the git experience.
+> 
+> I tried it with revision trunk@3930 of cvs2svn. The results are as follows.
 
---v9g2r9e2kvGs7M7R
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the feedback!
 
-On Thu, Aug 02, 2007 at 06:05:00PM +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Thu, 2 Aug 2007, Robert Schiele wrote:
->=20
-> > On Thu, Aug 02, 2007 at 04:20:44PM +0200, David Kastrup wrote:
-> > > Sigh.  It's in Posix.
-> >=20
-> > It is in latest POSIX but latest POSIX is not in Solaris.
->=20
-> It has been a really long standing tradition in git development to not=20
-> care about POSIX if it disagrees with reality.  A good tradition.
+> cvs2svn created a lot of branches that are not present in CVS,
+> with names identical to CVS tags. Apparently these branches are
+> used to create a commit matching a certain CVS tag.
 
-Sure.  I mean if Solaris was really a system nobody uses nowadays there wou=
-ld
-be no reason to care about it but it actually still is one of the mayor
-platforms availlable and thus not supporting it would be quite stupid.
+That is correct.  This is something that I plan to work on, at least for
+tags that can be created from a single source commit.
 
-It would actually draw away my interest (and most likely the one of many
-others) from git since I need a system that works on _all_ systems we suppo=
-rt.
+> The branching structure looks, ... hmm ..., interesting. cvs2svn
+> manufactured commits to get the branching points right.
+> Apparently our CVS has some weired commits like 'unlabeled-1.1.1'
+> and two other named tags (maybe vendor branches?) that cause
+> these manufactured commits. In gitk I see long lines running
+> parallel to the cvs trunk all down to these weired CVS tags. They
+> are not very useful, altough they might be correct. Note,
+> parsecvs imports our repository without such basically useless
+> links.  However, I can't verify if parsecvs gets something wrong.
 
-Robert
+Branches with names like "unlabeled-1.1.1" come from CVS branches for
+which the revisions are still contained in the RCS files but for which
+the branch name has been deleted.  These wreak havoc on cvs2svn's
+attempt to find simple branch sources and cause a proliferation of
+basically useless branches.  The main problem is that cvs2svn does not
+attempt to figure out that "unlabeled-1.2.4" in one file might be the
+same as "unlabeled-1.2.6" in another etc.
 
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+An "unlabeled-1.1.1", in particular, means that the branch whose name
+was deleted was a vendor branch.  The deletion of a vendor branch name
+can cause even more mayhem.
 
-"Quidquid latine dictum sit, altum sonatur."
+In most cases it makes sense to exclude the unlabeled branches.  After
+all, somebody tried to delete them, so they can't be that important,
+right?  Use --exclude='unlabeled-.*', or add a line like this to your
+options file:
 
---v9g2r9e2kvGs7M7R
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+ctx.symbol_strategy.add_rule(ExcludeRegexpStrategyRule(r'unlabeled-.*'))
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+.  This can of course cause problems if other branches or tags were
+created that branched off of the unlabeled branch.  In such cases the
+dependent branches/tags might have to be excluded too.
 
-iD8DBQFGshLRxcDFxyGNGNcRAhYTAJ9Kpa7MhG7d0GwuzAoanVj63rJlBQCgnY3e
-1n+/yjuv3bncXpriHmw1U3s=
-=1IJ6
------END PGP SIGNATURE-----
+> Other branches are created over a couple of commits mixing in
+> several branches (maybe again our weired commits already
+> mentioned). See branching1.png, branching2.png, branching3.png.
+> [ I have to apologize, our cvs repository contains proprietary
+>   information, so I can't publish it's history freely. ]
 
---v9g2r9e2kvGs7M7R--
+This can definitely be caused by unlabeled branches.  It can also be
+caused by branches rooted in a vendor branch.  In many cases, such
+branches can actually be grafted onto trunk, but cvs2svn does not (yet)
+attempt this.
+
+> cvs2svn is the first tool besided parsecvs that worked for me,
+> that is imported the whole repository, passed the basic test of
+> matching checkouts from cvs and git, and got the one suspicious
+> commit right that I'm using for verifying the branching points.
+> 
+> [ I have no time to go into the details of all these tests.
+>   Therefore only a very short summary:
+>   All tools needed basic cleanup of a few corrupted ,v files and
+>      ,v files that were duplicated in Attic.
+>   git-cvsimport fails to create branches at the right commit.
+>   fromcvs's togit surrendered during the import.
+>   fromcvs's tohg accepted more of the history, but finally
+>     surrendered as well.
+>   parsecvs works for me (crashes on corrupted ,v files).
+>   cvs2svn followed by git-svnimport create wrong state at the
+>     tips of branches.
+>   cvs2svn direct git import works for me (reports corrupted ,v files).
+>   ]
+
+Thanks very much for this interesting summary.
+
+> Right now, I'd prefer the import by parsecvs because of the
+> simpler history. However, I don't know if I loose history
+> information by doing so. I'd start by a run of cvs2svn to validate
+> the overall structure of the CVS repository. Dealing with corruption
+> in the CVS repository seems to be superior in cvs2svn. It reports
+> errors when parsecvs just crashes.
+
+If excluding the unlabeled branches does not fix things for you, I
+suggest checking out the first revision on such a branch, and comparing
+the results from CVS, from parsecvs, and from cvs2svn.  It *should* be
+that the version of the file from the vendor branch is included in the
+working copy.  cvs2svn should handle this correctly.  I am curious
+whether parsecvs does.
+
+Michael
