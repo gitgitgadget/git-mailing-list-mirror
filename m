@@ -1,63 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [MinGW PATCH] Fixed error 'fatal: Not a git repository' on Vista
-Date: Thu, 2 Aug 2007 11:33:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708021107470.14781@racer.site>
-References: <DE6EEF3D318C4051827B95DF26D97BE7@ntdev.corp.microsoft.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Interpreting EDITOR/VISUAL environment variables.
+Date: Thu, 02 Aug 2007 12:31:25 +0200
+Message-ID: <86fy32kz2a.fsf@lola.quinscape.zz>
+References: <86abtbnzpr.fsf@lola.quinscape.zz>
+	<7vd4y75gcy.fsf@assigned-by-dhcp.cox.net>
+	<85r6mnrs1z.fsf@lola.goethe.zz> <20070802101056.GA31182@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Johannes Sixt <J.Sixt@eudaptics.com>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 12:34:30 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 12:35:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGY0i-000475-9f
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 12:34:28 +0200
+	id 1IGY1V-0004NQ-Q5
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 12:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbXHBKeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 06:34:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbXHBKeY
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 06:34:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57121 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751992AbXHBKeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 06:34:24 -0400
-Received: (qmail invoked by alias); 02 Aug 2007 10:34:21 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 02 Aug 2007 12:34:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX181B/QAsOI1H2/G8oWKTTcpGXBAr8WcdtIb2SGO+A
-	VPx6w79dxgCmo9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <DE6EEF3D318C4051827B95DF26D97BE7@ntdev.corp.microsoft.com>
-X-Y-GMX-Trusted: 0
+	id S1753084AbXHBKfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 06:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbXHBKfO
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 06:35:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:45930 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752641AbXHBKfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 06:35:12 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IGY1G-0007nz-Ez
+	for git@vger.kernel.org; Thu, 02 Aug 2007 12:35:02 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 12:35:02 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 12:35:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:O81A7bknVniR1qfsqYv2KGwFYD8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54538>
 
-Hi,
+Matthias Lederhofer <matled@gmx.net> writes:
 
-[please consider reading Documentation/SubmittingPatches; you did not Cc: 
-the maintainer, Johannes Sixt]
+> David Kastrup <dak@gnu.org> wrote:
+>> a) Using system and shell-quoting the filename.  Advantage: one can
+>> set EDITOR='"/home/dak/My Programs/editor"' and have it work.
+>> Disadvantage: shell-quoting a file name seems shell- and
+>> system-dependent.
 
-On Wed, 1 Aug 2007, Dmitry Kakurin wrote:
+Actually I was talking C here, and the editor is never called from C
+in git but rather from the shell.  So this problem is a non-problem
+for us.
 
-> Any git command was immediately failing on Vista under MinGW with
-> fatal: Not a git repository
+> What about this instead of quoting the argument?
+>
+>     sh -c '$EDITOR "$1" "$2"' editor +5 /path/to/file
+>
+> (i.e. for C execvp("/bin/sh", "-c", "$EDITOR \"$1\" \"$2\"", "editor",
+>     "+5", "/path/to/file"))
 
-Thanks for submitting this patch.  I cannot test personally, because 
-nobody I know has Vista.
+It suffers from the fault that it does not work as far as I can see.
+-c does not set the positional parameters.
 
-I guess that Hannes will apply your patch when he comes back from his 
-well-deserved holiday.
-
-You might want to consider pushing your changes to the mob branch on 
-repo.or.cz/git/mingw.git.
-
->From your mail, I take it that the .zip file I sent you is working 
-properly?
-
-Ciao,
-Dscho
+-- 
+David Kastrup
