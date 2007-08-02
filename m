@@ -1,63 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Try to be consistent with capitalization in the documentation
-Date: Wed, 01 Aug 2007 23:11:20 -0700
-Message-ID: <7v7ioe1n5j.fsf@assigned-by-dhcp.cox.net>
-References: <514D28CB-25F8-49B2-921E-8EFA60BE864C@gmail.com>
-	<7vir7z5gx7.fsf@assigned-by-dhcp.cox.net>
-	<588192970708011017q12c7a6d9s532c8aed086d3032@mail.gmail.com>
+From: Asger Ottar Alstrup <asger@ottaralstrup.dk>
+Subject: Re: Windows support
+Date: Thu, 02 Aug 2007 08:57:08 +0200
+Message-ID: <f8rv65$1b3$1@sea.gmane.org>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com> <Pine.LNX.4.64.0707251139580.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Steve Hoelzer" <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 08:11:29 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 08:56:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGTu9-0000u0-NI
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 08:11:26 +0200
+	id 1IGUbq-0003id-Kl
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 08:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbXHBGLX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 02:11:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbXHBGLX
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 02:11:23 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63968 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558AbXHBGLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 02:11:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070802061121.OPHG23215.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 2 Aug 2007 02:11:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id WuBM1X0021kojtg0000000; Thu, 02 Aug 2007 02:11:21 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752178AbXHBG4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 02:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbXHBG4a
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 02:56:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:38126 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752158AbXHBG43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 02:56:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IGUbe-00075K-DQ
+	for git@vger.kernel.org; Thu, 02 Aug 2007 08:56:22 +0200
+Received: from x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk ([80.162.62.94])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 08:56:22 +0200
+Received: from asger by x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 08:56:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk
+User-Agent: Thunderbird 2.0.0.5 (Windows/20070716)
+In-Reply-To: <Pine.LNX.4.64.0707251139580.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54520>
 
-"Steve Hoelzer" <shoelzer@gmail.com> writes:
+Johannes Schindelin wrote:
+> On Wed, 25 Jul 2007, Dmitry Kakurin wrote:
+> 
+>> How serious are you guys about Windows support?
+> 
+> Okay, let's talk business:
+> 
+> Pay me decently, and you will have to wait for a few weeks.
 
-> On 8/1/07, Junio C Hamano <gitster@pobox.com> wrote:
->> Steve Hoelzer <shoelzer@gmail.com> writes:
->>
->> > Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
->> > ---
->> >
->> > Try to be consistent with capitalization in the documentation.
->>
->> It looks like that all the originals are trying to consistently
->> start with lowercase in an explanatory list.  Is this really
->> needed?
->
-> The lists I changed were indeed all lowercase, but other lists in
-> those files are all uppercase. I was aiming for consistency across all
-> list items and all lists.
+I propose that you set up a fundable:
 
-Fair enough.  However, your patch was seriously whitespace
-mangled so I made matching edits by hand and committed the
-result.  After I push out the result sometime tonight, please
-double check the result.
+http://fundable.com/
+
+This is a system where anyone can contribute money to the project, but 
+not have to pay unless the required amount of money has been contributed 
+in total.
+
+Figure out your price, describe what you will deliver, and announce it.
+
+Regards,
+Asger Ottar Alstrup
