@@ -1,79 +1,66 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Fri, 3 Aug 2007 11:08:25 +1200
-Message-ID: <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
-References: <46AFCF3E.5010805@alum.mit.edu>
-	 <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com>
-	 <46B1F96B.7050107@alum.mit.edu>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Shell script cleanups/style changes?
+Date: Fri, 03 Aug 2007 01:17:15 +0200
+Message-ID: <85ps25y1ac.fsf@lola.goethe.zz>
+References: <86bqdqkygp.fsf@lola.quinscape.zz>
+	<7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
+	<85odhpzmbo.fsf@lola.goethe.zz>
+	<7vsl71tyyq.fsf@assigned-by-dhcp.cox.net>
+	<86bqdqkygp.fsf@lola.quinscape.zz>
+	<7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
+	<85odhpzmbo.fsf@lola.goethe.zz>
+	<20070802214103.GT29424@schiele.dyndns.org>
+	<85vebxy47e.fsf@lola.goethe.zz>
+	<7vwswdsfjp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>,
-	git@vger.kernel.org, users@cvs2svn.tigris.org
-To: "Michael Haggerty" <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 03 01:08:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Schiele <rschiele@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 01:17:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGjmQ-0002qa-KH
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:08:31 +0200
+	id 1IGjv6-0004tq-CW
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756327AbXHBXI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 19:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756262AbXHBXI1
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:08:27 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:52277 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755551AbXHBXI0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 19:08:26 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so269234wra
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:08:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R8Sqy0oqtkl01GzZQAfAgseU4AFzb39rPM8VKVFyScYx9quN8POIQ/JadOdDlm4vaS9C8itM3LZy8J7QIZysidKK5UZyeK9hIDqFuVyFatVQMEIyoVPLgMTJ7yqbSAx9L6nM3H3BhpBu7J6CXUO4xzB0/1w9qYWvp9YpAwpGu44=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IDDFXORZwfG3VvcOo2NBLJsQ0iizAhYrv2o2UDxYQBfAG7nrfxHERNpw6mgOBnlNN+gQMh4kfGwBRUfVuf95JoVXOvOI/1CLS/TEZhNcDkGBMAR4PJVUGJRLd+JZQG7EZNPWwODA2rtaQWNlDjCDvMN1N5zZI/HpL2TBGSmzM/E=
-Received: by 10.90.103.2 with SMTP id a2mr2596355agc.1186096105805;
-        Thu, 02 Aug 2007 16:08:25 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Thu, 2 Aug 2007 16:08:25 -0700 (PDT)
-In-Reply-To: <46B1F96B.7050107@alum.mit.edu>
-Content-Disposition: inline
+	id S1755622AbXHBXRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 19:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755551AbXHBXRZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:17:25 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:38330 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755425AbXHBXRY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 19:17:24 -0400
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 0A4421F5520;
+	Fri,  3 Aug 2007 01:17:23 +0200 (CEST)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id E822B345C03;
+	Fri,  3 Aug 2007 01:17:22 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-049-245.pools.arcor-ip.net [84.61.49.245])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id BEED636E867;
+	Fri,  3 Aug 2007 01:17:22 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 107F21D0344E; Fri,  3 Aug 2007 01:17:15 +0200 (CEST)
+In-Reply-To: <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 02 Aug 2007 16\:05\:46 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54639>
 
-On 8/3/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> cvsps is not a conversion tool at all, though it is used by other
-> conversion tools to generate the changesets.  It appears (I hope I am
-> not misinterpreting things) to emphasize speed and incremental
-> operation, for example attempting to make changesets consistent from one
-> run to the next, even if the CVS repository has been changed prudently
-> between runs.  cvsps does not appear to attempt to create atomic branch
-> and tag creation commits or handle CVS's special vendorbranch behavior.
->  cvsps operates via the CVS protocol; you don't need filesystem access
-> to the CVS repository.
+Junio C Hamano <gitster@pobox.com> writes:
 
-100% in agreement. And though I can't claim to be happy with cvsps, in
-many scenarios it is mighty useful, in spite of its significant warts.
- The "does incrementals" is hugely important these days, as lots of
-people use git to run "vendor branches" of upstream projects that use
-CVS.
+> However, there is a line we need to draw when bending bacwards for
+> compatibility, and I think a system that does not have a working
+> command substitution $( ... )  is on the other side of that line.
 
-To me, that's *the* killer-app feature of git. Of course, others see
-different aspects of git as their deal-maker. But I'm sure I'm not
-alone on this. Surely enough, others have written git-svn which
-accomplishes this and more for those tracking SVN upstreams.
+Not an issue.  But apparently, ${parameter#word} is for Solaris.  I'd
+still like to get confirmation that it is indeed /bin/sh, but if it
+is, the current code is not good for Solaris.
 
-Is there any way we can run tweak cvs2svn to run incrementals, even if
-not as fast as cvsps/git-cvsimport? The "do it remotely" part can be
-worked around in most cases.
+So the line of compatibility is much more interesting for this one.
 
-cheers,
-
-
-martin
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
