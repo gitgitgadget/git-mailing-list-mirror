@@ -1,73 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 2 Aug 2007 16:05:36 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708021605170.14781@racer.site>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
- <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net>
- <vpq4pji3zwm.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021315510.14781@racer.site>
- <20070802132541.GA9247@localdomain>
+From: "Denis Bueno" <denbuen@sandia.gov>
+Subject: Re: Git clone error
+Date: Thu, 02 Aug 2007 09:08:56 -0600
+Message-ID: <C2D74FA8.2C06%denbuen@sandia.gov>
+References: <Pine.LNX.4.64.0708012211040.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Joel Reed <joelwreed@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 17:06:15 2007
+Content-Type: text/plain;
+ charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 17:09:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGcFh-0003yO-PN
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:06:14 +0200
+	id 1IGcIk-0005LO-4e
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbXHBPGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 11:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbXHBPGH
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:06:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59095 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752353AbXHBPGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 11:06:05 -0400
-Received: (qmail invoked by alias); 02 Aug 2007 15:06:03 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp040) with SMTP; 02 Aug 2007 17:06:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18cGl4itrAcZo8d8d3ubHQRjnnCr/CWuxttbAcUw1
-	DYLWJABk6Em1tP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070802132541.GA9247@localdomain>
-X-Y-GMX-Trusted: 0
+	id S1755980AbXHBPJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 11:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755889AbXHBPJQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:09:16 -0400
+Received: from mm03snlnto.sandia.gov ([132.175.109.20]:3623 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755583AbXHBPJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 11:09:15 -0400
+Received: from [134.253.164.156] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Thu, 02 Aug 2007 09:08:57 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from ES21SNLNT.srn.sandia.gov ([134.253.164.104]) by
+ ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Thu, 2
+ Aug 2007 09:08:57 -0600
+Received: from 134.253.202.158 ([134.253.202.158]) by
+ ES21SNLNT.srn.sandia.gov ([134.253.164.116]) with Microsoft Exchange
+ Server HTTP-DAV ; Thu, 2 Aug 2007 15:08:57 +0000
+User-Agent: Microsoft-Entourage/11.3.3.061214
+Thread-Topic: Git clone error
+Thread-Index: AcfVFwupSlgFhEEKEdyUkAAX8tQlcQ==
+In-Reply-To: <Pine.LNX.4.64.0708012211040.14781@racer.site>
+X-OriginalArrivalTime: 02 Aug 2007 15:08:57.0536 (UTC)
+ FILETIME=[0C945400:01C7D517]
+X-TMWD-Spam-Summary: TS=20070802150858; SEV=2.2.2; DFV=B2007080213;
+ IFV=2.0.4,4.0-9; AIF=B2007080213; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230312E34364231463338412E303030432C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007080213_5.02.0125_4.0-9
+X-WSS-ID: 6AAF2C034Q42574004-02-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54558>
 
-Hi,
-
-On Thu, 2 Aug 2007, Joel Reed wrote:
-
-> On Thu, Aug 02, 2007 at 01:19:55PM +0100, Johannes Schindelin wrote:
+On 08/01/2007 15:12, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+wrote:
+>> How difficult would it be to create a new git repo which is exactly the same
+>> minus the initial condor-uninstall.sh commit?  That is, just to pretend the
+>> initial import of condor-uninstall.sh never existed, and use the second
+>> commit of the old repo the first commit of the new, and preserve the rest of
+>> the history of the entire repo?
 > 
-> <snip>
+> That would be even easier.  Just graft "nothingness" as parent of the
+> second commit:
 > 
-> > For performance reasons, git always compares the files' stat information 
-> > with that stored in the index.
-> > 
-> > By updating the file, you make that check fail always.
-> > 
-> > Without updating the index (which is not a read-only operation, and 
-> > therefore must not be done when doing a read-only operation like diff), 
-> > you will therefore _destroy_ the main reason of git's kick-ass 
-> > performance.
-> 
-> The idea that read-only operation like diff shouldn't update the
-> index makes a lot of sense.
-> 
-> But, as a user of git and not a git developer, I certainly _thought_
-> that git-status was a read-only operation as well. Now I know it
-> isn't, but this doesn't seem very consistent.
+> $ git rev-parse <second-commit> >> .git/info/grafts
 
-I'll not go into details again.  See 
-http://thread.gmane.org/gmane.comp.version-control.git/40205/focus=40339
+I must be misunderstanding:
 
-Ciao,
-Dscho
+    scripts[] > git fsck --full
+    error: b28b949a1a3c8eb37ca6eefd024508fa8b253429: object corrupt or
+missing
+    missing blob b28b949a1a3c8eb37ca6eefd024508fa8b253429
+
+    # b2... should fill in your <second-commit>?
+
+    scripts[30] > git rev-parse b28b949a1a3c8eb37ca6eefd024508fa8b253429 >>
+.git/info/grafts
+
+    scripts[31] > git fsck --full
+    error: b28b949a1a3c8eb37ca6eefd024508fa8b253429: object corrupt or
+missing
+    missing blob b28b949a1a3c8eb37ca6eefd024508fa8b253429
+
+If I try to clone the repo, I get the same error.
+
+                      Denis
+--
+"Program testing can be used to show the presence of bugs, but never to show
+their absence." -- Edsger Dijkstra
