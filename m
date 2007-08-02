@@ -1,108 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 2 Aug 2007 16:23:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708021614420.14781@racer.site>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
- <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site>
- <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>
- <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site>
- <46B1F3F4.5030504@midwinter.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Fix set_work_tree on cygwin
+Date: Thu, 2 Aug 2007 17:25:58 +0200
+Message-ID: <81b0412b0708020825q4b64c47r3fa1d67858271b1e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 17:24:19 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_58642_19991554.1186068358650"
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 02 17:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGcXA-0003IZ-U7
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:24:17 +0200
+	id 1IGcYy-0003xf-8H
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:26:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbXHBPYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 11:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbXHBPYK
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:24:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59764 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751124AbXHBPYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 11:24:07 -0400
-Received: (qmail invoked by alias); 02 Aug 2007 15:24:05 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 02 Aug 2007 17:24:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+MHcskuEWMecApxkFdjOO3oNzSFf/aKdOGsgEiIz
-	EaKxkqatttSSZu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46B1F3F4.5030504@midwinter.com>
-X-Y-GMX-Trusted: 0
+	id S1755880AbXHBP0E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 11:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751038AbXHBP0D
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:26:03 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:61800 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756142AbXHBP0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 11:26:00 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so356846ugf
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 08:25:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=He9qDrWq/9PkJtxRLE6AZukpdgG+Rn8X64kNcv/saV01GMJt5Cqo3U9yNCbdm9/HVBi50Wj5JlrAxc4GL/83z4qtC+eelxJe2GA2NgU5L4uBgppOTGLqJgRlBfNY9/sAy2MSxf2G7ckiyvSmZ4OAw54RSIY3/UxMOpv6Gz3bK9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=E0/BFPLW5Zd32JmD7Pt0BjNFrNVoIs1mi5bwQTC2lKTcoxggvac8YDr0MsZzGmUps0HHAOc4Yi+evHkIaINXEa6XUGsiM1mq4Se9MMYV6vWaVV1NuaykslJewW6jq/mivvFien+egweOW3MCtl6/nGJxl+TTI7Co/KNDKQZwjPU=
+Received: by 10.78.132.2 with SMTP id f2mr585957hud.1186068358693;
+        Thu, 02 Aug 2007 08:25:58 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Thu, 2 Aug 2007 08:25:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54562>
 
-Hi,
+------=_Part_58642_19991554.1186068358650
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On Thu, 2 Aug 2007, Steven Grimm wrote:
+I don't know why, but for some unknown reason the buffer did not
+contain zeros. This broke t1500-rev-parse.sh (the test for
+GIT_DIR=../.git git rev-parse --show-prefix).
 
-> Johannes Schindelin wrote:
-> > This use case has not much to do with new users.  A new user _has_ to know
-> > that updating all files, even if their content does not change, is not
-> > right.
-> >   
-> 
-> Someone who has used, say, Subversion might have a perfectly reasonable
-> expectation that "git diff" will show differences in content, and when there
-> are no differences in content, will not mention a file at all. Other version
-> control systems have "diff" commands that ignore touched files.
-> 
-> I admit I also thought the empty diffs were a bug (albeit a minor one not
-> worth making noise about) until this thread. Now I understand why it happens,
-> though I still think we'd be better off just not displaying the filename in
-> git-diff until we know there's an actual diff to display.
-> 
-> I certainly don't think the "it's a feature: it reminds you when you've edited
-> a file without changing it" argument holds any water at all. If that were
-> truly the intent, if we truly considered that to be useful information a
-> developer would want to get at after the fact, then why would git-status throw
-> away that information?
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Okay, I'll answer just this one, instead of pointing you to the thread 
-that I've been pointing to twice now (because your ideas about how 
-git should work are usually similar to mine, and by way of saying thanks 
-for your contributions):
+It could be a memory corruption somewhere, but I really was
+unable to find what could that, nor could I reproduce the problem
+on a handy linux box.
 
-When is the time to say "git status"?
+ setup.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-It is just before committing.  I.e when you really think that you're done 
-editing, and want to have the end picture.  "git status" only gives you 
-names, and therefore it _has_ to update the index if it got out of sync, 
-to show meaningful results.
+------=_Part_58642_19991554.1186068358650
+Content-Type: text/plain; name=0001-Fix-set_work_tree-on-cygwin.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f4vei20y
+Content-Disposition: attachment; filename="0001-Fix-set_work_tree-on-cygwin.txt"
 
-When is the time to say "git diff"?
-
-Much more often.  In the middle of your work.  And there it would be 
-_disruptive_ if it updated the index all the time, especially if you have 
-a quite large working tree.
-
-But then, normal users do not touch all the files.  They don't.
-
-So I doubt that in the common case the subject we are discussing matters 
-at all.
-
-Yes, "perl -pi" is something I used myself.  Yes, I think it is a bug that 
-it writes new files when it does not really change anything.  And yes, I 
-had a script lying somewhere on my backup hard disk which uses some evil 
-"git diff --name-only | xargs bla" mantra (it does not even use the 
---quiet option, since that was not invented back then) to actually _undo_ 
-the effects by setting the timestamps back, since the full compilation 
-time in that project _hurt_.
-
-But it is hardly an operation that I use daily.  Hardly even twice a 
-year.
-
-Ciao,
-Dscho
+RnJvbSBlNWU3YWRiN2RiMGQ5YzAwYTkzOGYzMjI4MTc3NGY2YTc1MzJiNDRhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBUaHUsIDIgQXVnIDIwMDcgMTY6MzM6MDIgKzAyMDAKU3ViamVjdDogW1BBVENIXSBGaXggc2V0
+X3dvcmtfdHJlZSBvbiBjeWd3aW4KCkkgZG9uJ3Qga25vdyB3aHksIGJ1dCBmb3Igc29tZSB1bmtu
+b3duIHJlYXNvbiB0aGUgYnVmZmVyIGRpZCBub3QKY29udGFpbiB6ZXJvcy4gVGhpcyBicm9rZSB0
+MTUwMC1yZXYtcGFyc2Uuc2ggKHRoZSB0ZXN0IGZvcgpHSVRfRElSPS4uLy5naXQgZ2l0IHJldi1w
+YXJzZSAtLXNob3ctcHJlZml4KS4KClNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGtt
+bEBnbWFpbC5jb20+Ci0tLQogc2V0dXAuYyB8ICAgIDMgKystCiAxIGZpbGVzIGNoYW5nZWQsIDIg
+aW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zZXR1cC5jIGIvc2V0
+dXAuYwppbmRleCAzNjUzMDkyLi4xYmViYTdlIDEwMDY0NAotLS0gYS9zZXR1cC5jCisrKyBiL3Nl
+dHVwLmMKQEAgLTIwOSw3ICsyMDksOCBAQCBjb25zdCBjaGFyICpzZXRfd29ya190cmVlKGNvbnN0
+IGNoYXIgKmRpcikKIAlsZW4gPSBzdHJsZW4oZGlyKTsKIAlpZiAobGVuID4gcG9zdGZpeF9sZW4g
+JiYgIXN0cmNtcChkaXIgKyBsZW4gLSBwb3N0Zml4X2xlbiwKIAkJCQkiLyIgREVGQVVMVF9HSVRf
+RElSX0VOVklST05NRU5UKSkgewotCQkJc3RybmNweShkaXJfYnVmZmVyLCBkaXIsIGxlbiAtIHBv
+c3RmaXhfbGVuKTsKKwkJc3RybmNweShkaXJfYnVmZmVyLCBkaXIsIGxlbiAtIHBvc3RmaXhfbGVu
+KTsKKwkJZGlyX2J1ZmZlcltsZW4gLSBwb3N0Zml4X2xlbl0gPSAnXDAnOwogCiAJCS8qIGFyZSB3
+ZSBpbnNpZGUgdGhlIGRlZmF1bHQgd29yayB0cmVlPyAqLwogCQlyZWwgPSBnZXRfcmVsYXRpdmVf
+Y3dkKGJ1ZmZlciwgc2l6ZW9mKGJ1ZmZlciksIGRpcl9idWZmZXIpOwotLSAKMS41LjMucmMzLjE0
+NS5nNGQ5Y2RiCgo=
+------=_Part_58642_19991554.1186068358650--
