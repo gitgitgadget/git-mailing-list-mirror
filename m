@@ -1,61 +1,67 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH 6/6] Fixed completion function hardcoding .git/.
-Date: Thu, 02 Aug 2007 22:18:41 +0200
-Message-ID: <20070802201841.16614.85746.stgit@gandelf.nowhere.earth>
-References: <20070802200704.16614.57993.stgit@gandelf.nowhere.earth>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Thu, 2 Aug 2007 22:21:12 +0200
+Message-ID: <200708022221.13129.robin.rosenberg.lists@dewire.com>
+References: <46AFCF3E.5010805@alum.mit.edu> <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de> <46B2309E.3060804@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 22:20:07 2007
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	users@cvs2svn.tigris.org
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 22:23:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGh9P-0007HH-EX
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 22:20:03 +0200
+	id 1IGhCj-00008T-GF
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 22:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760047AbXHBUTq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 16:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760041AbXHBUTq
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:19:46 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55185 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760019AbXHBUTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 16:19:45 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 0D4F45A16D;
-	Thu,  2 Aug 2007 22:19:45 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id EADBF5A0EC;
-	Thu,  2 Aug 2007 22:19:44 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id A53C11F06F;
-	Thu,  2 Aug 2007 22:18:41 +0200 (CEST)
-In-Reply-To: <20070802200704.16614.57993.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.13
+	id S1758683AbXHBUXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 16:23:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758680AbXHBUXX
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:23:23 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12387 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1758272AbXHBUXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 16:23:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 52617802E0B;
+	Thu,  2 Aug 2007 22:15:55 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18442-05; Thu,  2 Aug 2007 22:15:55 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id A2583802ABF;
+	Thu,  2 Aug 2007 22:15:54 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <46B2309E.3060804@fs.ei.tum.de>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54599>
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+torsdag 02 augusti 2007 skrev Simon 'corecode' Schubert:
+> Steffen Prohaska wrote:
+> > I remember that togit reported a broken pipe. My feeling was
+> > that git-fastimport aborted, which may be reason why tohg
+> > worked better. I didn't try to understand more details. I never
+> > read ruby code before and it was already a challenge for me to
+> > get everything up and running (rcs, rbtree).
+> 
+> yah, that pretty much tells me it is shawn's bug :)  but without more 
+details, it is very hard to diagnose.  tohg should tell you which rcs revs 
+are the offenders.  be sure to use a recent fromcvs however.
 
- contrib/stgit-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+If the bug is still unfixed and you haven't been able to diagnose for lack of 
+repos, you could try the Eclipse CVS repo.
 
-diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
-index 2d0d5f2..7ae9e6a 100644
---- a/contrib/stgit-completion.bash
-+++ b/contrib/stgit-completion.bash
-@@ -108,7 +108,7 @@ _all_other_patches ()
- _all_branches ()
- {
-     local g=$(_gitdir)
--    [ "$g" ] && (cd .git/patches/ && echo *)
-+    [ "$g" ] && (cd $g/patches/ && echo *)
- }
- 
- _conflicting_files ()
+When I converted the Eclipse source to git I had a problem converting the 
+whole repo, i.e. fastimport died. The conversion died so I excluded some 
+large parts that were effectively forks and some websites. 
+
+-- robin
