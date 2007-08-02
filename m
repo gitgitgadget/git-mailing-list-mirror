@@ -1,72 +1,86 @@
-From: Joel Reed <joelwreed@gmail.com>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 2 Aug 2007 09:25:41 -0400
-Message-ID: <20070802132541.GA9247@localdomain>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net> <vpq4pji3zwm.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021315510.14781@racer.site>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Thu, 2 Aug 2007 16:00:11 +0200
+Message-ID: <20070802140011.GN29424@schiele.dyndns.org>
+References: <86bqdqkygp.fsf@lola.quinscape.zz>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 15:17:42 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Qgof7w7UksPF5inF"
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 02 16:00:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGaYg-0001Yk-5w
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 15:17:42 +0200
+	id 1IGbDz-00024x-BH
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 16:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754393AbXHBNRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 09:17:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbXHBNRh
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 09:17:37 -0400
-Received: from wx-out-0506.google.com ([66.249.82.236]:11176 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754393AbXHBNRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 09:17:36 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so449738wxd
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 06:17:35 -0700 (PDT)
+	id S1752111AbXHBOAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 10:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbXHBOAS
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 10:00:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:45328 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751576AbXHBOAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 10:00:16 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so142216nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 07:00:15 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=d9XGmZ0NIcSZiGVWngxJBmYglHxhbdGl6IygBN/CER94pqdRzZdaz3LksPkYWS7KKh8ys1qA5dD9x01FBo6Dk/LrLSyIonE47lTh885ekK+8tpZceOLnWp0Xl48eFQ0qd9Yz4jNTbPGS7dJTgZ7d7SfOxx77GqA6sY0CvvTCj1Y=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=Yq0Nv8CN1I/8C7gPCBP9YkAz1aGqZgr3mBAROUa6dGClYGOAWZy1Qoc1OKRS/bBRKlc/AYieDtixEaSHRnI1UFT4PlnfYgoOGAesDjP+Xo0kJLFQ1SAVUCBTWg06EPmt5zlMgO5usfmddeXU4ZEoLyEBXSfeMxWkja2eWc0eeTE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=Wub9hXqEgurxiX48wPVI0eOATThJXcFEz258zf/Wf6aDgBhHXgpOHOvFvDgN2IcglrH2S3Fy2EPiI6TTNR4kR5Qj79K32PSWUKVJgKx6YpOE2nssqycLJSpZewXIt8KHGxaetUyjj74NZryv81CLruQZY+skxDMimdJb+qxCS/Y=
-Received: by 10.90.63.16 with SMTP id l16mr1763670aga.1186060655847;
-        Thu, 02 Aug 2007 06:17:35 -0700 (PDT)
-Received: from localhost ( [12.108.121.5])
-        by mx.google.com with ESMTPS id 62sm2190783wri.2007.08.02.06.17.34
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=GxJNmqePA5P9tmHX4pcGe87biu+EfV25HM7Juzhc9U3e6xM8KhSY3uxX0rq3UyDgsFFARngMkYaN8xJsX4TxVpYS7e5EbnLaLooaEDFjSkMo3GIi5w57zvgjydqX8E6nwnjnE+eZ09941uK9Uc2otztezOqtG4m/iUPEaCITkl8=
+Received: by 10.86.57.9 with SMTP id f9mr1421055fga.1186063214909;
+        Thu, 02 Aug 2007 07:00:14 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id a37sm4081069fkc.2007.08.02.07.00.13
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 06:17:34 -0700 (PDT)
+        Thu, 02 Aug 2007 07:00:13 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 9AF6FC11240; Thu,  2 Aug 2007 16:00:12 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708021315510.14781@racer.site>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+In-Reply-To: <86bqdqkygp.fsf@lola.quinscape.zz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54550>
 
-On Thu, Aug 02, 2007 at 01:19:55PM +0100, Johannes Schindelin wrote:
 
-<snip>
+--Qgof7w7UksPF5inF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> For performance reasons, git always compares the files' stat information 
-> with that stored in the index.
-> 
-> By updating the file, you make that check fail always.
-> 
-> Without updating the index (which is not a read-only operation, and 
-> therefore must not be done when doing a read-only operation like diff), 
-> you will therefore _destroy_ the main reason of git's kick-ass 
-> performance.
+On Thu, Aug 02, 2007 at 12:44:22PM +0200, David Kastrup wrote:
+> ! 		logfile=3D"${1#-?}"
 
-The idea that read-only operation like diff shouldn't update the
-index makes a lot of sense.
+You can't do something like that on /bin/sh on many systems (for instance
+Solaris).
 
-But, as a user of git and not a git developer, I certainly _thought_
-that git-status was a read-only operation as well. Now I know it
-isn't, but this doesn't seem very consistent.
+Robert
 
-jr
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--Qgof7w7UksPF5inF
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGseNrxcDFxyGNGNcRAgNJAKDRtLCW+ScvmB6ePGeeY49KfkqeTgCgwXLe
+H/3nxMyA28MAv4R2xqnIh+4=
+=WlhE
+-----END PGP SIGNATURE-----
+
+--Qgof7w7UksPF5inF--
