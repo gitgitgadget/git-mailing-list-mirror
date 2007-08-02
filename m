@@ -1,65 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] When generating manpages, delete outdated targets first.
-Date: Thu, 2 Aug 2007 01:48:44 +0200
-Organization: Organization?!?
-Message-ID: <S1753674AbXHBABb/20070802000131Z+363@vger.kernel.org>
+From: Domenico Andreoli <cavokz@gmail.com>
+Subject: Re: multiple checked out branches
+Date: Thu, 2 Aug 2007 02:02:17 +0200
+Message-ID: <20070802000217.GA20018@raptus.dandreoli.com>
+References: <20070801220435.GA19226@raptus.dandreoli.com> <Pine.LNX.4.64.0708012309010.28202@beast.quantumfyre.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 02:01:38 2007
+X-From: git-owner@vger.kernel.org Thu Aug 02 02:02:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGO8H-0005SJ-HH
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 02:01:37 +0200
+	id 1IGO90-0005cq-1j
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 02:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871AbXHBABb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Aug 2007 20:01:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753674AbXHBABb
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 20:01:31 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:43374 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753592AbXHBABa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2007 20:01:30 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 9120E1A73AB
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 02:01:29 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 80AF528EC4D
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 02:01:29 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-017-069.pools.arcor-ip.net [84.61.17.69])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 60820225122
-	for <git@vger.kernel.org>; Thu,  2 Aug 2007 02:01:29 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 8E6571C3E076; Thu,  2 Aug 2007 02:00:38 +0200 (CEST)
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-X-Virus-Scanned: ClamAV 0.91.1/3845/Wed Aug  1 08:33:15 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S1753936AbXHBACS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Aug 2007 20:02:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbXHBACS
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Aug 2007 20:02:18 -0400
+Received: from mu-out-0910.google.com ([209.85.134.189]:47292 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753835AbXHBACR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2007 20:02:17 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so446629mue
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 17:02:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=cUQ+Up3jNH+ptipJlX8q8m8p5RB5Xr+J7nBzm2rEsqKBdurIa9rckJ7cQG/Up2uBl+Z1nmZo53WpTIi/VhT6re/0aU0WUwc536+EkbPTP87RQXsvtxI3CcxLlOwkWO786CXK4SlFYLvSizEWzh0PpIAP2mi/LsDqFx9X69mWNDM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=BnHm22mLS7ntRaB1pwGRm76POkPXOZlxzDKl0NEnVW07I1poJHnPsW0X/6LScd+ZDVmpaMfWI/lMIByVDEsXLTy02qyWp6H/+/id+Hu8AVMyYmTrWYxk/rkvyYQvS7Uk9XrL4ER7UzJyjD5AYjK2NLDKzuRCA16ED/622z5FMIo=
+Received: by 10.86.73.17 with SMTP id v17mr962950fga.1186012935156;
+        Wed, 01 Aug 2007 17:02:15 -0700 (PDT)
+Received: from raptus.dandreoli.com ( [159.149.71.27])
+        by mx.google.com with ESMTPS id m1sm2642009fke.2007.08.01.17.02.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Aug 2007 17:02:13 -0700 (PDT)
+Received: by raptus.dandreoli.com (Postfix, from userid 1000)
+	id 5A5FE68C7C; Thu,  2 Aug 2007 02:02:16 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708012309010.28202@beast.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54505>
 
-This makes "make doc" work even if you made "sudo make doc" previously
-by mistake.  Apparently an oversight: the other targets did this already.
+On Wed, Aug 01, 2007 at 11:19:25PM +0100, Julian Phillips wrote:
+>
+> The biggest issue with doing this is that you have no protection against 
+> making changes on the same branch in more than one place - something you 
+> really don't want to be dealing with.  Basically you need to be careful 
+> about updating refs that you have checkedout in workdirs.
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- Documentation/Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Yes, I figured out this would have been a problem after thinking at it
+a bit more. I surely do not want to be careful about acting on the same
+branch in two working repositories at the same place.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3bc5357..a186843 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -120,6 +120,7 @@ clean:
- 	mv $@+ $@
- 
- %.1 %.5 %.7 : %.xml
-+	$(RM) $@+ $@
- 	xmlto -m callouts.xsl man $<
- 
- %.xml : %.txt
--- 
-1.5.3.rc2.167.gbef44-dirty
+The actual problem is that switching form a branch to another makes
+my autotools fuck and I have to rebuild stuff all the time. My box is
+still a faint-hearted single core...
+
+cheers,
+Domenico
+
+-----[ Domenico Andreoli, aka cavok
+ --[ http://www.dandreoli.com/gpgkey.asc
+   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
