@@ -1,75 +1,74 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Thu, 2 Aug 2007 14:18:53 -0400
-Message-ID: <20070802181853.GB31885@fieldses.org>
-References: <11858118802945-git-send-email-prohaska@zib.de>
+From: Joe Eykholt <joe@nuovasystems.com>
+Subject: minor makefile issues
+Date: Thu, 02 Aug 2007 11:04:41 -0700
+Message-ID: <46B21CB9.9050303@nuovasystems.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 20:19:07 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 20:20:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGfGG-0004oL-Am
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 20:19:00 +0200
+	id 1IGfI7-0005U3-Fb
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 20:20:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814AbXHBSS5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 14:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbXHBSS5
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 14:18:57 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:42637 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752097AbXHBSS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 14:18:56 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IGfG9-0000Tn-P6; Thu, 02 Aug 2007 14:18:53 -0400
-Content-Disposition: inline
-In-Reply-To: <11858118802945-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1756189AbXHBSUu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 14:20:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755982AbXHBSUu
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 14:20:50 -0400
+Received: from nuova-ex1.nuovasystems.com ([67.91.200.196]:35308 "EHLO
+	nuova-ex1.nuovasystems.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753227AbXHBSUt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 14:20:49 -0400
+X-Greylist: delayed 973 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Aug 2007 14:20:49 EDT
+Received: from [172.16.12.94] ([172.16.12.94] RDNS failed) by nuova-ex1.nuovasystems.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 2 Aug 2007 11:04:35 -0700
+User-Agent: Thunderbird 1.5.0.12 (X11/20070509)
+X-OriginalArrivalTime: 02 Aug 2007 18:04:35.0980 (UTC) FILETIME=[95FB44C0:01C7D52F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54583>
 
-On Mon, Jul 30, 2007 at 06:11:20PM +0200, Steffen Prohaska wrote:
-> git gui is especially useful because it allows to select diff hunks.
-> Now it is at least mentioned in the user-manual.
+Hi All,
 
-Hm, OK.  I think the user manual's only departures from the commandline
-right now are a few mentions of gitk (which don't actually explain how
-to use it; I assume that's self-explanatory).
+Due to my unusual environment, I ran into two issues when installing git 
+1.5.2.4 from source.
+Although these are unusual, they might not be unique and the fixes are easy:
 
-But this seems interesting enough to be worth a mention, thanks.
+    1.  The make install failed because of line 49 in templates/Makefile:
+           (cd blt && $(TAR) cf - .) | \
+           (cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
+    because I have CDPATH set, the 'cd blt' actually outputs the new 
+directory on stdout
+    which confuses the second tar.  Changing this to 'cd ./blt' fixes 
+it.  Perhaps this could
+    be considered a bash bug.
 
-> +Another approach for creating commits is git gui:
-> +
-> +-------------------------------------------------
-> +$ git gui citool
-> +-------------------------------------------------
-> +
-> +starts the commit tool (Note, "`git gui`" starts the full gui, which
-> +provides more options).
-> +
-> +Beyond the basic operation of staging and unstaging complete files,
-> +git gui can also selectively stage diff hunks.  You can do so by
-> +selecting a modified or staged file and right-click on the diff view
-> +in the lower part of the gui. A pop-up will appear that lets you
-> +select a specific hunk and stage or unstage it for the next commit.
-> +This is particular useful for slicing large, ugly commits into smaller
-> +pieces, for example when cherry-picking (see
-> +<<reordering-patch-series>>).
+    2.  My home directory containing my build tree is NFS-mounted, and 
+root doesn't have any
+    permission to write it.  So, when doing 'make prefix=/usr/local 
+install-doc' as root, I got these errors:
 
-I wonder whether we could get away with just the brief list of features
-("lets you view changes in the index and the working file, lets you
-individually select diff hunks for inclusion in the index"), and leave
-the how-to stuff to online guit-gui help, if it's necessary?
+    # make prefix=/usr/local install-doc
+    make -C Documentation install
+    make[1]: Entering directory 
+`/net/da01/home/jre/build/git-1.5.2.4/Documentation'
+    rm -f doc.dep+ doc.dep
+    rm: cannot remove `doc.dep': Permission denied
+    make[1]: *** [doc.dep] Error 1
+    make[1]: Leaving directory 
+`/net/da01/home/jre/build/git-1.5.2.4/Documentation'
+    make: *** [install-doc] Error 2
 
-Also, I like the verb "stage" as a way to explain the part of the index
-file in creating commits, but I've been consistently using the word
-"index" throughout the user manual, and I think that's consistent with
-the rest of the documentation--so don't avoid it here.
+I'm not sure what the best fix is for the second problem.  rm -f ignores 
+non-existent files but not permission errors.
+I guess you could do 'rm -f doc.dep || true'.
 
---b.
+No response necessary.  Just thought you might like to know about 
+these.  Otherwise, git seems nice!
+
+    Thanks,
+    Joe Eykholt
