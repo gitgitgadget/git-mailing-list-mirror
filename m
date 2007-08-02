@@ -1,57 +1,56 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Thu, 02 Aug 2007 19:35:30 +0200
-Message-ID: <46B215E2.8010307@fs.ei.tum.de>
-References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git clone error
+Date: Thu, 2 Aug 2007 10:40:45 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708021039450.8109@woody.linux-foundation.org>
+References: <C2D74FA8.2C06%denbuen@sandia.gov>
+ <Pine.LNX.4.64.0708021806510.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	users@cvs2svn.tigris.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 19:35:42 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Denis Bueno <denbuen@sandia.gov>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 19:41:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGeaK-0005YS-GO
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:35:40 +0200
+	id 1IGefk-0007rN-QA
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588AbXHBRff (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 13:35:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758132AbXHBRff
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:35:35 -0400
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:40743 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752398AbXHBRfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 13:35:34 -0400
+	id S1758209AbXHBRk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 13:40:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758220AbXHBRk6
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:40:58 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43065 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752358AbXHBRk5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 13:40:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l72HeoGM017643
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Aug 2007 10:40:51 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 49666280E3;
-	Thu,  2 Aug 2007 19:35:30 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id SxjGv5z9U8+2; Thu,  2 Aug 2007 19:35:30 +0200 (CEST)
-Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 05B50280DE;
-	Thu,  2 Aug 2007 19:35:30 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l72Hejo4001281;
+	Thu, 2 Aug 2007 10:40:45 -0700
+In-Reply-To: <Pine.LNX.4.64.0708021806510.14781@racer.site>
+X-Spam-Status: No, hits=-2.719 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54577>
 
-Steffen Prohaska wrote:
->   fromcvs's togit surrendered during the import.
->   fromcvs's tohg accepted more of the history, but finally
->     surrendered as well.
 
-Which repo is it you are converting?  Is this available somewhere?
 
-I'd appreciate any reports concerning "surrenders" of fromcvs.  Additionally, it seems strange that tohg should have worked "better" than togit, as these are basically just different backends.
+On Thu, 2 Aug 2007, Johannes Schindelin wrote:
+> 
+> Ah no.  Linus diagnosed that this blob is your condor-uninstall script in 
+> your initial commit.
 
-cheers
-  simon
+Well, I'm not sure the commit was the initial one, but it was the one that 
+*introduced* that file. It *may* be the initial one, of course (and quite 
+likely is, for an import), but..
+
+		Linus
