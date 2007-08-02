@@ -1,80 +1,64 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Shell script cleanups/style changes?
-Date: Fri, 03 Aug 2007 01:52:32 +0200
-Message-ID: <85d4y5xznj.fsf@lola.goethe.zz>
-References: <85odhpzmbo.fsf@lola.goethe.zz>
-	<7vsl71tyyq.fsf@assigned-by-dhcp.cox.net>
-	<86bqdqkygp.fsf@lola.quinscape.zz>
-	<7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
-	<85odhpzmbo.fsf@lola.goethe.zz>
-	<20070802214103.GT29424@schiele.dyndns.org>
-	<85vebxy47e.fsf@lola.goethe.zz>
-	<7vwswdsfjp.fsf@assigned-by-dhcp.cox.net>
-	<20070802232126.GU29424@schiele.dyndns.org>
-	<85k5sdy0lk.fsf@lola.goethe.zz>
-	<20070802234515.GW29424@schiele.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Thu, 2 Aug 2007 19:55:28 -0400
+Message-ID: <9e4733910708021655p34a72428gd0bd33a830faf127@mail.gmail.com>
+References: <46AFCF3E.5010805@alum.mit.edu>
+	 <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Robert Schiele <rschiele@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 01:52:44 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Michael Haggerty" <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	users@cvs2svn.tigris.org
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 01:55:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGkTD-0004d6-RO
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:52:44 +0200
+	id 1IGkVw-00058u-Fb
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757301AbXHBXwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 19:52:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756856AbXHBXwl
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:52:41 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:58155 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756833AbXHBXwk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 19:52:40 -0400
-Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 6B27B183D9B;
-	Fri,  3 Aug 2007 01:52:39 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 59F0623D2D9;
-	Fri,  3 Aug 2007 01:52:39 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-049-245.pools.arcor-ip.net [84.61.49.245])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 27E542351A8;
-	Fri,  3 Aug 2007 01:52:39 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 74C481D0344E; Fri,  3 Aug 2007 01:52:32 +0200 (CEST)
-In-Reply-To: <20070802234515.GW29424@schiele.dyndns.org> (Robert Schiele's message of "Fri\, 3 Aug 2007 01\:45\:15 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3848/Thu Aug  2 22:22:06 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S1756856AbXHBXz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 19:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbXHBXz3
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:55:29 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:27708 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751598AbXHBXz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 19:55:28 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so537319rvb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:55:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R1CIVRew9iKeCWKnaDEPf544sbZOsRtkxrd1gB1GWKglQfiLTCwb9FVLq63NEA9XJ/wSN9J9jBuz96TYoe4zG9hrzgsmrX7aHljHaTOGEACa7HW79aPtnRT8aCNbsKdhuWwfkApFUA30IR/VtgK/u2dxV8Xb4K1RTkvR1phEX+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=c6VLUX8pGqbgzjC99LSEWKSG+ynPPwuG6qRO9L5yuIywaOX+uysvZwBr2+gA5i45mOQkOA9uusoQKFt3MlRXQrAsvVBqICjSzMhN7riMdbdlhuolB4kzKMGzEUQTbBGR8s37VWaGhtkJcaEPBdztxFcmyxpYjg/xoIKKRgA8UsM=
+Received: by 10.115.89.1 with SMTP id r1mr2381125wal.1186098928437;
+        Thu, 02 Aug 2007 16:55:28 -0700 (PDT)
+Received: by 10.114.195.11 with HTTP; Thu, 2 Aug 2007 16:55:28 -0700 (PDT)
+In-Reply-To: <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54649>
 
-Robert Schiele <rschiele@gmail.com> writes:
+On 8/2/07, Steffen Prohaska <prohaska@zib.de> wrote:
+> Right now, I'd prefer the import by parsecvs because of the
+> simpler history. However, I don't know if I loose history
+> information by doing so. I'd start by a run of cvs2svn to validate
+> the overall structure of the CVS repository. Dealing with corruption
+> in the CVS repository seems to be superior in cvs2svn. It reports
+> errors when parsecvs just crashes.
 
-> On Fri, Aug 03, 2007 at 01:32:07AM +0200, David Kastrup wrote:
->> Robert Schiele <rschiele@gmail.com> writes:
->> > Well, I have now a patch ready for submission that would replace all
->> > occurences of ${PARAMETER#WORD}, ${PARAMETER%WORD}, and $((
->> > EXPRESSION )).  But if you say that you won't accept replacement of
->> > $( ... ) then this is not worth the effort since this one isn't
->> > accepted as well.
->> 
->> I absolutely can't understand your claim that most things work for
->> you, then.  Are you _really_, _really_ sure you are talking about
->> /bin/sh here?
->
-> I started wondering myself and it turned out that we just didn't
-> look in the right place.  Actually we _have_ an infrastructure in
-> place to replace the shell.  (SHELL_PATH in the Makefile) In that
-> case I would not consider this an issue and you might go on with the
-> cleanup from my point of view.
-
-I was starting to doubt my sanity here.  Sorry that this thread
-resulted in wasted work for you.
+Parsecvs silently throws away things that confuse it. cvs2svn is much
+more careful about not losing track of anything. For example parsecvs
+is unable to process Mozilla CVS and cvs2svn can. The branching in
+Mozilla CVS is too complex for parsecvs to handle.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Jon Smirl
+jonsmirl@gmail.com
