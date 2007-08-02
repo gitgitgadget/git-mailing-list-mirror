@@ -1,74 +1,72 @@
-From: Joe Eykholt <joe@nuovasystems.com>
-Subject: minor makefile issues
-Date: Thu, 02 Aug 2007 11:04:41 -0700
-Message-ID: <46B21CB9.9050303@nuovasystems.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/2] gitweb: Add an option to show size of blobs in the tree view
+Date: Thu, 2 Aug 2007 12:47:07 +0200
+Message-ID: <200708021247.08612.jnareb@gmail.com>
+References: <1185880790812-git-send-email-jnareb@gmail.com> <200708020158.50343.jnareb@gmail.com> <7vtzri1pfi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 20:20:56 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 20:23:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGfI7-0005U3-Fb
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 20:20:56 +0200
+	id 1IGfL0-0006a5-Rn
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 20:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756189AbXHBSUu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 14:20:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755982AbXHBSUu
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 14:20:50 -0400
-Received: from nuova-ex1.nuovasystems.com ([67.91.200.196]:35308 "EHLO
-	nuova-ex1.nuovasystems.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753227AbXHBSUt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 14:20:49 -0400
-X-Greylist: delayed 973 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Aug 2007 14:20:49 EDT
-Received: from [172.16.12.94] ([172.16.12.94] RDNS failed) by nuova-ex1.nuovasystems.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 2 Aug 2007 11:04:35 -0700
-User-Agent: Thunderbird 1.5.0.12 (X11/20070509)
-X-OriginalArrivalTime: 02 Aug 2007 18:04:35.0980 (UTC) FILETIME=[95FB44C0:01C7D52F]
+	id S1754878AbXHBSXs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 14:23:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756084AbXHBSXs
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 14:23:48 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:7321 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753771AbXHBSXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 14:23:47 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so158485nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 11:23:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CKVKUwAT668NdygfqrXFFxdfvxnjVfCwLBNr1mDEaLqMcfJXVGoiTxll59gNyIEz2GSl/C6rrk/aKKw6isiFiGfArhOeDL6G6yMLfV6EuwopnZ+gPkunvewX1+7Qul+2m3Y01Aj2b6JUhSv5H6GtE/+IBvsKe/cOv6u7574u5UI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qYuIsMFqqY47GbSEy4s2LwkelcLtM8qPRmNfhf7ERwuieXdvgYiV6//xN37hW4AdfHpcr5LIsqo6NGAwN71cqLwKJFuNkHfHsb7KTfClvuXx9qYUpAYNs9+AshAIIauDROlyIra6tM73vYyMS3Z9+sXpJTJ9CljwvAcRiyyNanM=
+Received: by 10.86.71.1 with SMTP id t1mr1581740fga.1186079026043;
+        Thu, 02 Aug 2007 11:23:46 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id o11sm4546704fkf.2007.08.02.11.23.42
+        (version=SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 11:23:44 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vtzri1pfi.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54584>
 
-Hi All,
+Junio C Hamano wrote:
 
-Due to my unusual environment, I ran into two issues when installing git 
-1.5.2.4 from source.
-Although these are unusual, they might not be unique and the fixes are easy:
+> Personally, this late in the game, I would be more interested in
+> resolving the File::Find() stuff, which has been a real issue in
+> the field, than the compressed transfer one.
 
-    1.  The make install failed because of line 49 in templates/Makefile:
-           (cd blt && $(TAR) cf - .) | \
-           (cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
-    because I have CDPATH set, the 'cd blt' actually outputs the new 
-directory on stdout
-    which confuses the second tar.  Changing this to 'cd ./blt' fixes 
-it.  Perhaps this could
-    be considered a bash bug.
+I posted my tentative Ack, haven't I?
 
-    2.  My home directory containing my build tree is NFS-mounted, and 
-root doesn't have any
-    permission to write it.  So, when doing 'make prefix=/usr/local 
-install-doc' as root, I got these errors:
+I guess that your solution is good, and doesn't have any drawbacks,
+besides perhaps a tiny little bit of lost performance. So I think
+that you should just commit this...
 
-    # make prefix=/usr/local install-doc
-    make -C Documentation install
-    make[1]: Entering directory 
-`/net/da01/home/jre/build/git-1.5.2.4/Documentation'
-    rm -f doc.dep+ doc.dep
-    rm: cannot remove `doc.dep': Permission denied
-    make[1]: *** [doc.dep] Error 1
-    make[1]: Leaving directory 
-`/net/da01/home/jre/build/git-1.5.2.4/Documentation'
-    make: *** [install-doc] Error 2
 
-I'm not sure what the best fix is for the second problem.  rm -f ignores 
-non-existent files but not permission errors.
-I guess you could do 'rm -f doc.dep || true'.
+As to the new stuff: I think I postpone large changes, like blob
+size in tree view, or links to no merges and first parent 
+log/shortlog/history view, or list form of two pipelines we have in 
+gitweb, or HTML cleanup, etc. after the v1.5.3 release.
 
-No response necessary.  Just thought you might like to know about 
-these.  Otherwise, git seems nice!
-
-    Thanks,
-    Joe Eykholt
+-- 
+Jakub Narebski
+Poland
