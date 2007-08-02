@@ -1,101 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 02 Aug 2007 17:45:20 +0200
-Message-ID: <vpqtzrivt2n.fsf@bauges.imag.fr>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
-	<Pine.LNX.4.64.0708021541520.14781@racer.site>
-	<46B1F3F4.5030504@midwinter.com>
-	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: [PATCH] the ar tool is called gar on some systems
+Date: Thu, 2 Aug 2007 18:15:01 +0200
+Message-ID: <20070802161501.GO29424@schiele.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	=?iso-8859-1?Q?Jean-Fran=E7ois?= Veillette 
-	<jean_francois_veillette@yahoo.ca>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 17:46:09 2007
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 02 18:15:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGcsK-0003TW-2N
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:46:08 +0200
+	id 1IGdKt-0006po-T8
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 18:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436AbXHBPpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 11:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbXHBPpq
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:45:46 -0400
-Received: from imag.imag.fr ([129.88.30.1]:55514 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753339AbXHBPpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 11:45:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l72FjK6V001915
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 2 Aug 2007 17:45:21 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IGcrY-0007Zz-RV; Thu, 02 Aug 2007 17:45:20 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IGcrY-0003cx-PA; Thu, 02 Aug 2007 17:45:20 +0200
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Steven
- Grimm <koreth@midwinter.com>, =?iso-8859-1?Q?Jean-Fran=E7ois?= Veillette
- <jean_francois_veillette@yahoo.ca>, Junio C Hamano <gitster@pobox.com>,
-  git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0708021614420.14781@racer.site> (Johannes Schindelin's message of "Thu\, 2 Aug 2007 16\:23\:38 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 02 Aug 2007 17:45:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757371AbXHBQPI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 12:15:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757191AbXHBQPH
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 12:15:07 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:30007 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755305AbXHBQPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 12:15:05 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so150599nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 09:15:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
+        b=Ngm35vCmfripRlJIgI7XVwBB/hIwXw8e7YViTxgMhwZk1rOevXd/e0Eo6ouYPEIoB498OfbcYi4vSjdeo4sI5tutqQv8mFs7r8IJhzzilN5fAHa8AVwHDFVCFcM94IXac5/MntJEKOdOKjq2AZSdtXcxFpZUPQLLgvy0oUjjuYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
+        b=tc5jnyqtPv3BGF3/geCyOe7MqICJQzrLX072FQDt7lWBZPwFtljaYW/mLmzqbRjmUjpVM0q6CLvsmztuR9gN0SAWrPILvH8P0hThg2Xlv3HaXaJg9IBWXXsobzxB/l58yjDNLZRwkRbwDbR4VDLEJH8Db+y9P+ZMHJTFKdKI3L4=
+Received: by 10.86.28.5 with SMTP id b5mr1510153fgb.1186071303983;
+        Thu, 02 Aug 2007 09:15:03 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id 28sm4315743fkx.2007.08.02.09.15.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 09:15:03 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 16309C1124B; Thu,  2 Aug 2007 18:15:01 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54568>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Some systems that have only installed the GNU toolchain (prefixed with "g")
+do not provide "ar" but only "gar".  Make configure find this tool as well.
 
-> Okay, I'll answer just this one, instead of pointing you to the thread 
-> that I've been pointing to twice now
+Signed-off-by: Robert Schiele <rschiele@gmail.com>
+---
+This is another trivial configure patch.  If you don't want to include it in
+the upcomming release it is fine for me to delay it.  If you expect me to
+resubmit after the release, drop me a note.
 
-The link was probably not the right one since I saw only two [PATCH]
-message, but yes, I remember a thread pointing out why git-status had
-to update the index. I'm not arguing against that, I'm happy with the
-current git-status behavior, but I find the git-diff one inconsistant
-with git-status, and still don't understand any reason why a normal
-user would want a difference.
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> When is the time to say "git status"?
->
-> It is just before committing.  I.e when you really think that you're done 
-> editing, and want to have the end picture.  "git status" only gives you 
-> names, and therefore it _has_ to update the index if it got out of sync, 
-> to show meaningful results.
->
-> When is the time to say "git diff"?
->
-> Much more often.  In the middle of your work.  And there it would be 
-> _disruptive_ if it updated the index all the time, especially if you have 
-> a quite large working tree.
-
-That's your point of view, but I do not share it. Depending on the
-kind of things I'm doing, I usually run status regularly, because it's
-short to read, and it shows me both staged and unstaged changes.
-git-status tells me if I did something obviously totally wrong
-(changing a file on which I was not working, deleting something
-important ...), and after that, git-diff gives me a finer-grained
-vision of what I did.
-
-Does this really sound so much irreasonable to you?
-
+diff --git a/configure.ac b/configure.ac
+index 84fd7f1..ed7cc89 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -104,7 +104,7 @@ AC_MSG_NOTICE([CHECKS for programs])
+ #
+ AC_PROG_CC([cc gcc])
+ #AC_PROG_INSTALL		# needs install-sh or install.sh in sources
+-AC_CHECK_TOOL(AR, ar, :)
++AC_CHECK_TOOLS(AR, [gar ar], :)
+ AC_CHECK_PROGS(TAR, [gtar tar])
+ # TCLTK_PATH will be set to some value if we want Tcl/Tk
+ # or will be empty otherwise.
 -- 
-Matthieu
+1.5.2.3
