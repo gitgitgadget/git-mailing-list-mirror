@@ -1,103 +1,92 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Fri, 03 Aug 2007 01:19:34 +0200
-Message-ID: <46B26686.3010002@alum.mit.edu>
-References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <alpine.LFD.0.999.0708021340450.8184@woody.linux-foundation.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Fri, 3 Aug 2007 01:21:27 +0200
+Message-ID: <20070802232126.GU29424@schiele.dyndns.org>
+References: <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <7vsl71tyyq.fsf@assigned-by-dhcp.cox.net> <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <20070802214103.GT29424@schiele.dyndns.org> <85vebxy47e.fsf@lola.goethe.zz> <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-        users@cvs2svn.tigris.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: users-return-1610-gcvscu-users=m.gmane.org@cvs2svn.tigris.org Fri Aug 03 01:19:46 2007
-Return-path: <users-return-1610-gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscu-users@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IGjxG-0005eF-IB
-	for gcvscu-users@gmane.org; Fri, 03 Aug 2007 01:19:42 +0200
-Received: (qmail 24930 invoked by uid 5000); 2 Aug 2007 23:19:40 -0000
-Mailing-List: contact users-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="QHhm1I6mwQR20oIa"
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 01:21:35 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IGjz4-00066d-Ne
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:21:35 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759053AbXHBXVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 19:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759038AbXHBXVb
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:21:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:41558 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757035AbXHBXVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 19:21:31 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so174523nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:21:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=gJMJOFE6KSGBQB7yvNtjff8m2aeQo2qAnDUeDK0GllERsRhozD3vdUwX8Un1ebneVq22SrqayMRZ19fTo+jnFxny4dY7XZmnhVeTFF5TAJ3UtWYfFRWyY/ry5lzp3ZbRcprbQgsDpvl2Zp2S8MholBIBxoMotqFMpq+tP5I0nJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=NFwwMaipab0auh8l6JxomWmwhE8ysi/Pu/TQZBhlNf3ouucDdNjBm2iK8sqxUIxkblaqVK2r9obwxVC06VOyNLAkeAhh/XAlcJQC2XMpZlapIIUHvzfvMQnrTAsfGj+pzdC7BnDfEZygimb9rkJiN643tIBbqRAqKcCw6vcVKaE=
+Received: by 10.86.80.5 with SMTP id d5mr1756909fgb.1186096889694;
+        Thu, 02 Aug 2007 16:21:29 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id g1sm7783631muf.2007.08.02.16.21.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 16:21:28 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 5D57BC112CF; Fri,  3 Aug 2007 01:21:27 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:users-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:users-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:users@cvs2svn.tigris.org>
-Delivered-To: mailing list users@cvs2svn.tigris.org
-Received: (qmail 24918 invoked from network); 2 Aug 2007 23:19:40 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAEIDskbAbSoIemdsb2JhbACOEgEBCQo
-X-IronPort-AV: i="4.19,215,1183359600"; 
-   d="scan'208"; a="63480206:sNHT66338790"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <alpine.LFD.0.999.0708021340450.8184@woody.linux-foundation.org>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54640>
-
-Linus Torvalds wrote:
-> On Thu, 2 Aug 2007, Steffen Prohaska wrote:
->> Right now, I'd prefer the import by parsecvs because of the
->> simpler history. However, I don't know if I loose history
->> information by doing so. I'd start by a run of cvs2svn to validate
->> the overall structure of the CVS repository.
-> 
-> Well, once imported, you could just go through the branches and tags, and 
-> just delete the ones you consider uninteresting, and then do a "git gc".
-> 
-> You'd want to re-pack after a fast-import anyway (regardless of the source 
-> of the fast-import input), so maybe cvs2svn ends up giving you a bit 
-> unnecessary info, but it should be easy enough to get rid of 
-> after-the-fact.
-
-The real goal is to get cvs2svn to include the useful information and
-exclude the rest. :-)
-
-I definitely want to address the problem of the helper branches used to
-create tags.  This problem has has two aspects:
-
-1. The helper branches should be deleted after the tag has been defined.
- I simply couldn't figure out how to do this using git-fast-import, and
-git-fast-import complained when I tried to use a branch called
-"TAG_FIXUP" without the "refs/head/" prefix.
-
-2. The helper branch is not needed at all if an existing revision has
-exactly the same contents as needed on the tag.  This requires cvs2svn
-to keep a record of which files exist in the complete file tree on every
-branch at every revision (which it can already do, though it is
-expensive), and also to give it the smarts to choose the optimal tag
-point (which it already does, except that it currently doesn't penalize
-sources that require files to be deleted before making the tag).
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54641>
 
 
-If the problem is lots of seemingly-unnecessary merges involving a
-vendor branch, then it is time for me or some other volunteer to add the
-optimization of allowing branches to be grafted from the vendor branch
-to trunk.  I know of the problem and have a good idea how to implement
-it; it is just a matter of finding the time to get it done.
+--QHhm1I6mwQR20oIa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Aug 02, 2007 at 04:05:46PM -0700, Junio C Hamano wrote:
+> However, there is a line we need to draw when bending bacwards
+> for compatibility, and I think a system that does not have a
+> working command substitution $( ... )  is on the other side of
+> that line.
 
-If the problem is unlabeled branches that can't be excluded (because
-other branches or tags depend on them), then the real problem is that it
-is not known which unlabeled branches in individual files correspond to
-the same project-wide conceptual branch.  I have considered two
-possibilities to improve this situation:
+Well, I have now a patch ready for submission that would replace all
+occurences of ${PARAMETER#WORD}, ${PARAMETER%WORD}, and $(( EXPRESSION )).
+But if you say that you won't accept replacement of $( ... ) then this is n=
+ot
+worth the effort since this one isn't accepted as well.
 
-1. Allow unlabeled -- indeed any -- branches to be discarded even if
-other branches or tags depend on them.  This could be done by
-incorporating the content of the source revision (i.e., the revision on
-the unlabeled branch that is going to be discarded) into the zeroth
-revision of the daughter branch, then grafting the daughter onto the
-branch from which the unlabeled branch sprouted.
+Robert
 
-2. Rename the unlabeled branches by figuring out which unlabeled branch
-in fileA corresponds to which unlabeled branch in fileB, fileC, etc.
-This would involve a tricky bit of matching file-wise dependency trees
-onto one another to unify unlabeled branch labels, keeping in mind that:
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
-  - The trees have other differences as well.
-  - The unlabeled branch does not necessarily occur in every file.
-  - There may be multiple unlabeled branches per file.
+"Quidquid latine dictum sit, altum sonatur."
 
-Michael
+--QHhm1I6mwQR20oIa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGsmb2xcDFxyGNGNcRAgiRAKDn0tP5+cLpgo93pum8r/LwHPMrbQCg4Biq
+1JdqPLGBg0v3Nh67l7SMWgc=
+=HOaV
+-----END PGP SIGNATURE-----
+
+--QHhm1I6mwQR20oIa--
