@@ -1,388 +1,97 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Shell script cleanups/style changes?
-Date: Thu, 02 Aug 2007 12:44:22 +0200
-Message-ID: <86bqdqkygp.fsf@lola.quinscape.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Windows support
+Date: Thu, 2 Aug 2007 11:45:50 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708021134070.14781@racer.site>
+References: <a1bbc6950707250335m3d37d4farceffc50945e31f6c@mail.gmail.com>
+ <Pine.LNX.4.64.0707251139580.14781@racer.site> <f8rv65$1b3$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 12:45:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Asger Ottar Alstrup <asger@ottaralstrup.dk>
+X-From: git-owner@vger.kernel.org Thu Aug 02 12:46:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGYBF-0007Wd-D7
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 12:45:21 +0200
+	id 1IGYCD-0007s4-8f
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 12:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753698AbXHBKov (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 06:44:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753562AbXHBKou
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 06:44:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:47736 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594AbXHBKot (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 06:44:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IGYAb-0000Lm-CQ
-	for git@vger.kernel.org; Thu, 02 Aug 2007 12:44:41 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 12:44:41 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 12:44:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:4UzY46GtJov9KYe0eV8Ib05rKTc=
+	id S1753702AbXHBKqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 06:46:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753558AbXHBKqR
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 06:46:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56733 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753335AbXHBKqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 06:46:17 -0400
+Received: (qmail invoked by alias); 02 Aug 2007 10:46:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp039) with SMTP; 02 Aug 2007 12:46:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/mEVoygjPmfemj63oIJzdeHb9DS43JdDsIiSHkG8
+	HnIKMJXE+xTd/k
+X-X-Sender: gene099@racer.site
+In-Reply-To: <f8rv65$1b3$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54540>
 
---=-=-=
+Hi,
 
+On Thu, 2 Aug 2007, Asger Ottar Alstrup wrote:
 
-Hi, I wanted to ask what the general stance towards shell script
-cleanups and simplifications would be.  For example, I find the expr
-usage quite inscrutable in commit, and there is no necessity of
-putting "shift" in every case branch instead of once behind it, and a
-lot of conditionals and other manipulations can be made much easier on
-the eye by using parameter expansion patterns that are, as far as I
-can see, available with every reasonable Bourne Shell and clones.
+> Johannes Schindelin wrote:
+> > On Wed, 25 Jul 2007, Dmitry Kakurin wrote:
+> > 
+> > > How serious are you guys about Windows support?
+> > 
+> > Okay, let's talk business:
+> > 
+> > Pay me decently, and you will have to wait for a few weeks.
+> 
+> I propose that you set up a fundable:
+> 
+> http://fundable.com/
+> 
+> This is a system where anyone can contribute money to the project, but not
+> have to pay unless the required amount of money has been contributed in total.
+> 
+> Figure out your price, describe what you will deliver, and announce it.
 
-Here is an example context diff (in this case, I find it more readable
-than unified) to illustrate (untested!, please don't apply without a
-regular formatted git patch).
+I am not that much interested in money, really.  But I do want to get 
+something back in return for my efforts.  And no, this does not include 
+whining and complaints.
 
-Should I bother doing such cleanups as I read up on code, or should I
-just leave things alone?
+It includes useful bug reports.  It includes a willingness to keep working 
+with me until the bugs are fleshed out.  It possibly includes making (and 
+maintaining!) an installer.
 
+At the moment, I am happy to say that Git works for me.  Even on Windows.  
+I have no problems with the command line, and both Cygwin and MinGW Git do 
+their job reliably and joyfully here.
 
---=-=-=
-Content-Type: text/x-patch
-Content-Disposition: inline
+But there might come a time when I get into a position much like Shawn, 
+when I have to work with Aunt and Uncle Tillies, who are not as 
+clueful and intelligent^W^W^Wused to the command line as I am.
 
-diff --git a/git-commit.sh b/git-commit.sh
-index d7e7028..bdf20be 100755
-*** a/git-commit.sh
---- b/git-commit.sh
-***************
-*** 97,101 ****
-  		no_edit=t
-  		log_given=t$log_given
-  		logfile="$1"
-- 		shift
-  		;;
---- 97,100 ----
-***************
-*** 102,107 ****
-  	-F*|-f*)
-  		no_edit=t
-  		log_given=t$log_given
-! 		logfile=`expr "z$1" : 'z-[Ff]\(.*\)'`
-! 		shift
-  		;;
---- 101,105 ----
-  	-F*|-f*)
-  		no_edit=t
-  		log_given=t$log_given
-! 		logfile="${1#-?}"
-  		;;
-***************
-*** 108,113 ****
-  	--F=*|--f=*|--fi=*|--fil=*|--file=*)
-  		no_edit=t
-  		log_given=t$log_given
-! 		logfile=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-! 		shift
-  		;;
---- 106,110 ----
-  	--F=*|--f=*|--fi=*|--fil=*|--file=*)
-  		no_edit=t
-  		log_given=t$log_given
-! 		logfile="${1#*=}"
-  		;;
-***************
-*** 114,117 ****
-  	-a|--a|--al|--all)
-  		all=t
-- 		shift
-  		;;
---- 111,113 ----
-***************
-*** 118,127 ****
-  	--au=*|--aut=*|--auth=*|--autho=*|--author=*)
-! 		force_author=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-! 		shift
-  		;;
-  	--au|--aut|--auth|--autho|--author)
-  		case "$#" in 1) usage ;; esac
-  		shift
-  		force_author="$1"
-- 		shift
-  		;;
---- 114,121 ----
-  	--au=*|--aut=*|--auth=*|--autho=*|--author=*)
-! 		force_author="${1#*=}"
-  		;;
-  	--au|--aut|--auth|--autho|--author)
-  		case "$#" in 1) usage ;; esac
-  		shift
-  		force_author="$1"
-  		;;
-***************
-*** 128,144 ****
-  	-e|--e|--ed|--edi|--edit)
-  		edit_flag=t
-- 		shift
-  		;;
-  	-i|--i|--in|--inc|--incl|--inclu|--includ|--include)
-  		also=t
-- 		shift
-  		;;
-  	--int|--inte|--inter|--intera|--interac|--interact|--interacti|\
-  	--interactiv|--interactive)
-  		interactive=t
-- 		shift
-  		;;
-  	-o|--o|--on|--onl|--only)
-  		only=t
-- 		shift
-  		;;
---- 122,134 ----
-***************
-*** 145,159 ****
-  	-m|--m|--me|--mes|--mess|--messa|--messag|--message)
-  		case "$#" in 1) usage ;; esac
-- 		shift
-  		log_given=m$log_given
-! 		if test "$log_message" = ''
-! 		then
-! 		    log_message="$1"
-! 		else
-! 		    log_message="$log_message
-  
-! $1"
-! 		fi
-  		no_edit=t
-- 		shift
-  		;;
---- 135,142 ----
-  	-m|--m|--me|--mes|--mess|--messa|--messag|--message)
-  		case "$#" in 1) usage ;; esac
-  		log_given=m$log_given
-! 		log_message="${log_message}${log_message:+
-  
-! }$1"
-  		no_edit=t
-  		;;
-***************
-*** 160,172 ****
-  	-m*)
-  		log_given=m$log_given
-! 		if test "$log_message" = ''
-! 		then
-! 		    log_message=`expr "z$1" : 'z-m\(.*\)'`
-! 		else
-! 		    log_message="$log_message
-  
-! `expr "z$1" : 'z-m\(.*\)'`"
-! 		fi
-  		no_edit=t
-- 		shift
-  		;;
---- 143,149 ----
-  	-m*)
-  		log_given=m$log_given
-! 		log_message="${log_message}${log_message:+
-  
-! }${1#-m}"
-  		no_edit=t
-  		;;
-***************
-*** 173,185 ****
-  	--m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
-  		log_given=m$log_given
-! 		if test "$log_message" = ''
-! 		then
-! 		    log_message=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-! 		else
-! 		    log_message="$log_message
-  
-! `expr "z$1" : 'zq-[^=]*=\(.*\)'`"
-! 		fi
-  		no_edit=t
-- 		shift
-  		;;
---- 150,156 ----
-  	--m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
-  		log_given=m$log_given
-! 		log_message="${log_message}${log_message:+
-  
-! }${1#*=}"
-  		no_edit=t
-  		;;
-***************
-*** 186,197 ****
-  	-n|--n|--no|--no-|--no-v|--no-ve|--no-ver|--no-veri|--no-verif|\
-  	--no-verify)
-  		verify=
-- 		shift
-  		;;
-  	--a|--am|--ame|--amen|--amend)
-  		amend=t
-  		use_commit=HEAD
-- 		shift
-  		;;
-  	-c)
-  		case "$#" in 1) usage ;; esac
---- 157,166 ----
-***************
-*** 199,203 ****
-  		log_given=t$log_given
-  		use_commit="$1"
-  		no_edit=
-- 		shift
-  		;;
---- 168,171 ----
-***************
-*** 204,213 ****
-  	--ree=*|--reed=*|--reedi=*|--reedit=*|--reedit-=*|--reedit-m=*|\
-  	--reedit-me=*|--reedit-mes=*|--reedit-mess=*|--reedit-messa=*|\
-  	--reedit-messag=*|--reedit-message=*)
-  		log_given=t$log_given
-! 		use_commit=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-  		no_edit=
-- 		shift
-  		;;
-  	--ree|--reed|--reedi|--reedit|--reedit-|--reedit-m|--reedit-me|\
-  	--reedit-mes|--reedit-mess|--reedit-messa|--reedit-messag|\
---- 172,180 ----
-  	--ree=*|--reed=*|--reedi=*|--reedit=*|--reedit-=*|--reedit-m=*|\
-  	--reedit-me=*|--reedit-mes=*|--reedit-mess=*|--reedit-messa=*|\
-  	--reedit-messag=*|--reedit-message=*)
-  		log_given=t$log_given
-! 		use_commit="${1#*=}"
-  		no_edit=
-  		;;
-  	--ree|--reed|--reedi|--reedit|--reedit-|--reedit-m|--reedit-me|\
-  	--reedit-mes|--reedit-mess|--reedit-messa|--reedit-messag|\
-***************
-*** 217,223 ****
-  		log_given=t$log_given
-  		use_commit="$1"
-  		no_edit=
-- 		shift
-  		;;
-  	-C)
-  		case "$#" in 1) usage ;; esac
---- 184,189 ----
-***************
-*** 225,229 ****
-  		log_given=t$log_given
-  		use_commit="$1"
-  		no_edit=t
-- 		shift
-  		;;
---- 191,194 ----
-***************
-*** 230,239 ****
-  	--reu=*|--reus=*|--reuse=*|--reuse-=*|--reuse-m=*|--reuse-me=*|\
-  	--reuse-mes=*|--reuse-mess=*|--reuse-messa=*|--reuse-messag=*|\
-  	--reuse-message=*)
-  		log_given=t$log_given
-! 		use_commit=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-  		no_edit=t
-- 		shift
-  		;;
-  	--reu|--reus|--reuse|--reuse-|--reuse-m|--reuse-me|--reuse-mes|\
-  	--reuse-mess|--reuse-messa|--reuse-messag|--reuse-message)
---- 195,203 ----
-  	--reu=*|--reus=*|--reuse=*|--reuse-=*|--reuse-m=*|--reuse-me=*|\
-  	--reuse-mes=*|--reuse-mess=*|--reuse-messa=*|--reuse-messag=*|\
-  	--reuse-message=*)
-  		log_given=t$log_given
-! 		use_commit="${1#*=}"
-  		no_edit=t
-  		;;
-  	--reu|--reus|--reuse|--reuse-|--reuse-m|--reuse-me|--reuse-mes|\
-  	--reuse-mess|--reuse-messa|--reuse-messag|--reuse-message)
-***************
-*** 242,273 ****
-  		log_given=t$log_given
-  		use_commit="$1"
-  		no_edit=t
-- 		shift
-  		;;
-  	-s|--s|--si|--sig|--sign|--signo|--signof|--signoff)
-  		signoff=t
-- 		shift
-  		;;
-  	-t|--t|--te|--tem|--temp|--templ|--templa|--templat|--template)
-  		case "$#" in 1) usage ;; esac
-  		shift
-  		templatefile="$1"
-  		no_edit=
-- 		shift
-  		;;
-  	-q|--q|--qu|--qui|--quie|--quiet)
-  		quiet=t
-- 		shift
-  		;;
-  	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
-  		verbose=t
-- 		shift
-  		;;
-  	-u|--u|--un|--unt|--untr|--untra|--untrac|--untrack|--untracke|\
-  	--untracked|--untracked-|--untracked-f|--untracked-fi|--untracked-fil|\
-  	--untracked-file|--untracked-files)
-  		untracked_files=t
-- 		shift
-  		;;
-  	--)
-  		shift
---- 206,231 ----
-***************
-*** 280,285 ****
---- 238,244 ----
-  		break
-  		;;
-  	esac
-+ 	shift
-  done
-  case "$edit_flag" in t) no_edit= ;; esac
-  
-***************
-*** 437,448 ****
-  
-  if test t = "$verify" && test -x "$GIT_DIR"/hooks/pre-commit
-  then
-! 	if test "$TMP_INDEX"
-! 	then
-! 		GIT_INDEX_FILE="$TMP_INDEX" "$GIT_DIR"/hooks/pre-commit
-! 	else
-! 		GIT_INDEX_FILE="$USE_INDEX" "$GIT_DIR"/hooks/pre-commit
-! 	fi || exit
-  fi
-  
-  if test "$log_message" != ''
---- 396,403 ----
-  
-  if test t = "$verify" && test -x "$GIT_DIR"/hooks/pre-commit
-  then
-!     GIT_INDEX_FILE="${TMP_INDEX:-${USE_INDEX}}" "$GIT_DIR"/hooks/pre-commit \
-!     || exit
-  fi
-  
-  if test "$log_message" != ''
+So I want to exploit Open Source, meaning that I give _you_ something, and 
+_you_ give me something back.  And that might very well be just a 
+suggestion "make the commit button stick out; I did not find it, since 
+there are so many buttons".  Or a nice comic "how to use git".  Also a 
+beer is appreciated.  Or whatever.
 
---=-=-=
+My complaint "let's talk business" was some (frustrated) way to get the 
+attention of people who do _not_ give something back, and are astonished 
+that just complaining will not get them anywhere.
 
+FWIW I just applied for the project "Git on MSys" on SourceForge.  Let's 
+see how this will work out.
 
+Oh, and I will _not_ do such a thing as think about what you might want, 
+and then proclaim what would be my price for it.  You _know_ what you 
+want, so why don't you just tell me, as a detailed list?
 
--- 
-David Kastrup
-
---=-=-=--
+Ciao,
+Dscho
