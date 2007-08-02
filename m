@@ -1,58 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 02 Aug 2007 13:50:33 -0700
-Message-ID: <7vd4y5vexy.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Thu, 2 Aug 2007 16:56:48 -0400
+Message-ID: <fcaeb9bf0708021356v57b29a70yb69a2fa000bd5b55@mail.gmail.com>
+References: <86bqdqkygp.fsf@lola.quinscape.zz>
+	 <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: =?utf-8?Q?Jean-Fran=C3=A7ois?= Veillette 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Thu Aug 02 22:50:44 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 22:56:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGhd2-0001MY-EP
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 22:50:40 +0200
+	id 1IGhj3-0003RX-MG
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 22:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525AbXHBUuh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 2 Aug 2007 16:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbXHBUuh
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:50:37 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:37062 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbXHBUug convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 16:50:36 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070802205036.UEEJ11888.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 2 Aug 2007 16:50:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id X8qb1X0061kojtg0000000; Thu, 02 Aug 2007 16:50:35 -0400
-In-Reply-To: <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> (=?utf-8?Q?Je?=
- =?utf-8?Q?an-Fran=C3=A7ois?=
-	Veillette's message of "Thu, 2 Aug 2007 10:04:52 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754920AbXHBU4u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 16:56:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754333AbXHBU4u
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:56:50 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:13877 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752070AbXHBU4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 16:56:49 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so256001wra
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 13:56:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=I1BBvCZZKuM1AqKzcVziCwjmifXjAAIWqljEiRIkPuMaYNG76pDIS2/5iTyCSqkbLdI9+G/+DHgMyxjM6jR6rE3ThEoZgp95sjCa00+/1F+zoFDnLIw5qbmbUvQGXDmQwcfhPX0VqwN6C8jOWgNYNPDIa2BZQWTNpJxCBMTyFh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HR2Typ+UHdfKljGtNuxl0CMDkl6/F8BoeaK/BKKuYcLnVja+xEDT/6QgFtidsIK/Mtxmxz2bDwmLuklnUTxNsdfthGlQt2z6ybPDH8oAI/OjmxvuEmNDGpb/OF58OG0a2+k/YrG3KeXIor5/zF6qWjVdxsKIBr/64+seJk0zrwE=
+Received: by 10.100.111.16 with SMTP id j16mr1355133anc.1186088208649;
+        Thu, 02 Aug 2007 13:56:48 -0700 (PDT)
+Received: by 10.100.198.17 with HTTP; Thu, 2 Aug 2007 13:56:48 -0700 (PDT)
+In-Reply-To: <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54608>
 
-Jean-Fran=C3=A7ois Veillette <jean_francois_veillette@yahoo.ca>
-writes:
+On 8/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Non POSIX substitions such as ${parameter/pattern/string} and
+> ${parameter:offset} are not to be used.  We do not want to
+> depend on bash.
 
-> I find comments like this to be counter productive.
-> Admin it, git porcelain still has some work to be done.
-
-Yes, but this certainly is not an area that needs changing.
+There is in a test (t5300-pack-objects.sh) but I guess the
+restrictions do not apply on tests.
+-- 
+Duy
