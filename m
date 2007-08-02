@@ -1,90 +1,83 @@
-From: "Denis Bueno" <denbuen@sandia.gov>
-Subject: Re: Git clone error
-Date: Thu, 02 Aug 2007 09:08:56 -0600
-Message-ID: <C2D74FA8.2C06%denbuen@sandia.gov>
-References: <Pine.LNX.4.64.0708012211040.14781@racer.site>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-diff on touched files: bug or feature?
+Date: Thu, 02 Aug 2007 23:10:44 +0800
+Message-ID: <46B1F3F4.5030504@midwinter.com>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 17:09:22 2007
+Cc: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 17:10:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGcIk-0005LO-4e
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:09:22 +0200
+	id 1IGcKG-00063g-8s
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 17:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755980AbXHBPJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 11:09:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755889AbXHBPJQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:09:16 -0400
-Received: from mm03snlnto.sandia.gov ([132.175.109.20]:3623 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755583AbXHBPJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 11:09:15 -0400
-Received: from [134.253.164.156] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Thu, 02 Aug 2007 09:08:57 -0600
-X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
-Received: from ES21SNLNT.srn.sandia.gov ([134.253.164.104]) by
- ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Thu, 2
- Aug 2007 09:08:57 -0600
-Received: from 134.253.202.158 ([134.253.202.158]) by
- ES21SNLNT.srn.sandia.gov ([134.253.164.116]) with Microsoft Exchange
- Server HTTP-DAV ; Thu, 2 Aug 2007 15:08:57 +0000
-User-Agent: Microsoft-Entourage/11.3.3.061214
-Thread-Topic: Git clone error
-Thread-Index: AcfVFwupSlgFhEEKEdyUkAAX8tQlcQ==
-In-Reply-To: <Pine.LNX.4.64.0708012211040.14781@racer.site>
-X-OriginalArrivalTime: 02 Aug 2007 15:08:57.0536 (UTC)
- FILETIME=[0C945400:01C7D517]
-X-TMWD-Spam-Summary: TS=20070802150858; SEV=2.2.2; DFV=B2007080213;
- IFV=2.0.4,4.0-9; AIF=B2007080213; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230312E34364231463338412E303030432C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007080213_5.02.0125_4.0-9
-X-WSS-ID: 6AAF2C034Q42574004-02-01
+	id S1755338AbXHBPKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 11:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755268AbXHBPKt
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 11:10:49 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:55475 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755219AbXHBPKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 11:10:48 -0400
+Received: (qmail 17821 invoked from network); 2 Aug 2007 15:10:48 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=cg417oj2H1OpOFOVPScl1nAsQXl40QB+5NwILkn6pvv2J2gbdwrbYmjWRYgxNOhv  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 2 Aug 2007 15:10:47 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <Pine.LNX.4.64.0708021541520.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54559>
 
-On 08/01/2007 15:12, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-wrote:
->> How difficult would it be to create a new git repo which is exactly the same
->> minus the initial condor-uninstall.sh commit?  That is, just to pretend the
->> initial import of condor-uninstall.sh never existed, and use the second
->> commit of the old repo the first commit of the new, and preserve the rest of
->> the history of the entire repo?
-> 
-> That would be even easier.  Just graft "nothingness" as parent of the
-> second commit:
-> 
-> $ git rev-parse <second-commit> >> .git/info/grafts
+Johannes Schindelin wrote:
+> This use case has not much to do with new users.  A new user _has_ to know 
+> that updating all files, even if their content does not change, is not 
+> right.
+>   
 
-I must be misunderstanding:
+Someone who has used, say, Subversion might have a perfectly reasonable 
+expectation that "git diff" will show differences in content, and when 
+there are no differences in content, will not mention a file at all. 
+Other version control systems have "diff" commands that ignore touched 
+files.
 
-    scripts[] > git fsck --full
-    error: b28b949a1a3c8eb37ca6eefd024508fa8b253429: object corrupt or
-missing
-    missing blob b28b949a1a3c8eb37ca6eefd024508fa8b253429
+I admit I also thought the empty diffs were a bug (albeit a minor one 
+not worth making noise about) until this thread. Now I understand why it 
+happens, though I still think we'd be better off just not displaying the 
+filename in git-diff until we know there's an actual diff to display.
 
-    # b2... should fill in your <second-commit>?
+I certainly don't think the "it's a feature: it reminds you when you've 
+edited a file without changing it" argument holds any water at all. If 
+that were truly the intent, if we truly considered that to be useful 
+information a developer would want to get at after the fact, then why 
+would git-status throw away that information? If I check to see what 
+files I've modified/added (for which I run git-status) why does that 
+automatically imply I am no longer interested in being reminded that I 
+have saved a file without making changes, especially given that such 
+files *don't* show up in the git-status output? git-status is silently 
+losing information here; it gives you no indication that it has 
+refreshed the index for those touched-but-not-edited files.
 
-    scripts[30] > git rev-parse b28b949a1a3c8eb37ca6eefd024508fa8b253429 >>
-.git/info/grafts
+Now, I happen to think throwing away that information is just fine, 
+because I don't think I have ever once cared to know that I touched a 
+file but didn't change it. But fundamentally it's either a piece of 
+information we care about (in which case we shouldn't go silently 
+discarding it) or not (in which case it is just clutter in git-diff).
 
-    scripts[31] > git fsck --full
-    error: b28b949a1a3c8eb37ca6eefd024508fa8b253429: object corrupt or
-missing
-    missing blob b28b949a1a3c8eb37ca6eefd024508fa8b253429
+In the meantime, though, it's trivial enough to put a wrapper around 
+git-diff to filter out the diffless files. I haven't cared enough to 
+bother, but if I did it'd be just a few lines of Perl, no big deal.
 
-If I try to clone the repo, I get the same error.
-
-                      Denis
---
-"Program testing can be used to show the presence of bugs, but never to show
-their absence." -- Edsger Dijkstra
+-Steve
