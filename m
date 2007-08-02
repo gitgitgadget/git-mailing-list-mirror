@@ -1,74 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 2 Aug 2007 15:39:20 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708021537490.14781@racer.site>
+Date: Thu, 2 Aug 2007 15:43:30 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708021541520.14781@racer.site>
 References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
- <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net>
- <vpq4pji3zwm.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021315510.14781@racer.site>
- <vpqir7y15sr.fsf@bauges.imag.fr>
+ <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site>
+ <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>
+ <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 02 16:39:55 2007
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+X-From: git-owner@vger.kernel.org Thu Aug 02 16:44:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGbqF-0001SB-4J
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 16:39:55 +0200
+	id 1IGbuD-0003Xm-Sv
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 16:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201AbXHBOju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 10:39:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbXHBOju
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 10:39:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60733 "HELO mail.gmx.net"
+	id S1752871AbXHBOn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 10:43:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXHBOn6
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 10:43:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60773 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753500AbXHBOjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 10:39:48 -0400
-Received: (qmail invoked by alias); 02 Aug 2007 14:39:46 -0000
+	id S1752871AbXHBOn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 10:43:57 -0400
+Received: (qmail invoked by alias); 02 Aug 2007 14:43:56 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 02 Aug 2007 16:39:46 +0200
+  by mail.gmx.net (mp050) with SMTP; 02 Aug 2007 16:43:56 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Nd884uTmN389mvOT39+/SJQD59tOHPXnESjO/0s
-	CoE2vNOJx+418w
+X-Provags-ID: V01U2FsdGVkX19Xokpze4JXWhNMRVEJpLWIIuX/rEaiC3AsyXRfY6
+	1qMQZ7xiayBet4
 X-X-Sender: gene099@racer.site
-In-Reply-To: <vpqir7y15sr.fsf@bauges.imag.fr>
+In-Reply-To: <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54554>
 
 Hi,
 
-On Thu, 2 Aug 2007, Matthieu Moy wrote:
+[please do not top-post.  Either comment on what you quote, or delete it.]
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> I fully agree that git should be optimized for the common case. But
-> >> even for the common case, I also find the feature strange. You didn't
-> >> answer that part of my message, but I still fail to see a rationale
-> >> for making "git-diff; git-status" different from "git-status; git-diff".
-> >
-> > For performance reasons, git always compares the files' stat information 
-> > with that stored in the index.
-> 
-> I know that, but how does it answer the part of my message that you
-> are citing?
+On Thu, 2 Aug 2007, Jean-Fran?ois Veillette wrote:
 
-You _acknowledge_ that git is optimized for performance!  And therefore 
-you should also acknowledge that you _throw that away_ if you let your 
-index go out of sync.
+> Admin it, git porcelain still has some work to be done.
 
-> > So when you do "git diff" and it tells you all those diff lines, while no 
-> > file was really changed, it tells you "get your act together!  You just 
-> > _willfully_ slowed down git's performance".
-> 
-> The question remains: why should someone running git-diff get this,
-> and someone running git-status not get this?
+No need to argue there, I admit it.
 
-Because git-status is an index-updating operation.  That's why.
+> We can't expect new users to know the git internals workflow before they 
+> can use git effectively.
+
+This use case has not much to do with new users.  A new user _has_ to know 
+that updating all files, even if their content does not change, is not 
+right.
+
+At least we do not commit empty changes like CVS did all too happily.
 
 Ciao,
 Dscho
