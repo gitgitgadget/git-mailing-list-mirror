@@ -1,97 +1,75 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: Shell script cleanups/style changes?
-Date: Fri, 3 Aug 2007 01:45:15 +0200
-Message-ID: <20070802234515.GW29424@schiele.dyndns.org>
-References: <85odhpzmbo.fsf@lola.goethe.zz> <7vsl71tyyq.fsf@assigned-by-dhcp.cox.net> <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <20070802214103.GT29424@schiele.dyndns.org> <85vebxy47e.fsf@lola.goethe.zz> <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net> <20070802232126.GU29424@schiele.dyndns.org> <85k5sdy0lk.fsf@lola.goethe.zz>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Fri, 03 Aug 2007 01:50:00 +0200
+Message-ID: <46B26DA8.6010102@alum.mit.edu>
+References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <46B215E2.8010307@fs.ei.tum.de> <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de> <46B2309E.3060804@fs.ei.tum.de> <6715F560-FE69-4F15-8C5F-B5B6071D97ED@zib.de> <46B25FC3.6000205@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4WCFFtl4AQpQKunj"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Aug 03 01:45:25 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 01:50:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGkM8-00038c-Rh
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:45:25 +0200
+	id 1IGkR4-00049Q-7c
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758478AbXHBXpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 19:45:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758241AbXHBXpV
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:45:21 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:19940 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757780AbXHBXpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 19:45:19 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so547346fkz
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:45:18 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=DHPueOpkZi7wcGnEyVH0hkDN/WV703zAADXZTq5E2dpK9z2773DeKYy9HPjEFpRnwRwJx7snx+P8fC1pRFFCH8VJLbZMbP1Zfm+AsaSsWhCKf/+iWrdVUcpgX8rc/4KW2hZVsH4OyfV786AzKBNIytT97bGge/A46eJL23Mg1Gc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=SwUZAPbumLI1UMCppj7MqPkyoKchUj7wykqL2GVy5lDMOkHOAJh6HfSn6KdCWTMPmIzUOKlVdYWL4gCTPZwKUaItf6JY82Klp41v1hKcvhJQFmSkRU7jzh6I1JxiGdvN48Ew/JpnVMMa0wv8vMxX3j+EBZEw7r5/C0Uz3tD4gSM=
-Received: by 10.86.93.17 with SMTP id q17mr1791018fgb.1186098318101;
-        Thu, 02 Aug 2007 16:45:18 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
-        by mx.google.com with ESMTPS id y2sm7827022mug.2007.08.02.16.45.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 16:45:16 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 5856FC112CE; Fri,  3 Aug 2007 01:45:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <85k5sdy0lk.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756352AbXHBXuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 19:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbXHBXuI
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:50:08 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:48832 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367AbXHBXuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 19:50:07 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.178.20] (p5B17FC13.dip.t-dialin.net [91.23.252.19])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l72No1uf014479
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 3 Aug 2007 01:50:02 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <46B25FC3.6000205@fs.ei.tum.de>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54647>
 
+Simon 'corecode' Schubert wrote:
+> Steffen Prohaska wrote:
+>> BTW, togit creates much more complex branching patterns than cvs2svn
+>> does. The attached file branching.png displays a small view of a
+>> branching pattern that extends downwards over a couple of screens.
+>> I checked the cvs2svn history again. It doesn't contain anything
+>> of similar complexity.
+> 
+> haha yea, there is still some issue with duplicate branch names and the
+> branchpoint.  if it doesn't get the branch right, it will always "pull"
+> files from the parent branch.
 
---4WCFFtl4AQpQKunj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This sounds very much like the problem reported by Daniel Jacobowitz
+[1].  The problem is that if you create a branch A on a file, then
+create branch B from branch A before making a commit on branch A, then
+CVS doesn't record that branch A was the source of branch B.  (It treats
+B as if it sprouted directly from the revision that was the *source* of
+branch A.)  The same problem exists if "B" is a tag.
 
-On Fri, Aug 03, 2007 at 01:32:07AM +0200, David Kastrup wrote:
-> Robert Schiele <rschiele@gmail.com> writes:
-> > Well, I have now a patch ready for submission that would replace all
-> > occurences of ${PARAMETER#WORD}, ${PARAMETER%WORD}, and $((
-> > EXPRESSION )).  But if you say that you won't accept replacement of
-> > $( ... ) then this is not worth the effort since this one isn't
-> > accepted as well.
->=20
-> I absolutely can't understand your claim that most things work for
-> you, then.  Are you _really_, _really_ sure you are talking about
-> /bin/sh here?
+The only way to determine the correct branch hierarchy is to consider
+the branch hierarchy of multiple files at the same time.
 
-I started wondering myself and it turned out that we just didn't look in the
-right place.  Actually we _have_ an infrastructure in place to replace the
-shell.  (SHELL_PATH in the Makefile)  In that case I would not consider this
-an issue and you might go on with the cleanup from my point of view.
+cvs2svn 2.0 includes code to choose a "preferred parent" of each branch
+and try to use that parent for every file that is on the branch.  It
+helps simplify branch creation quite a bit.  The main limitation is that
+it still doesn't consider the revision copied back to trunk from a
+vendor branch as the possible parent of a branch whose nominal source
+was on the vendor branch (a limitation that has come up elsewhere in
+this thread).
 
-Robert
+Michael
 
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
-
-"Quidquid latine dictum sit, altum sonatur."
-
---4WCFFtl4AQpQKunj
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFGsmyLxcDFxyGNGNcRAn2jAJ9W9JjwacUwQ87hl6dcpv5MLu9QYgCfThlQ
-3o45V+xldVhkTMpZVPIODdI=
-=aV3A
------END PGP SIGNATURE-----
-
---4WCFFtl4AQpQKunj--
+[1] http://cvs2svn.tigris.org/servlets/ReadMsg?list=dev&msgNo=1441
