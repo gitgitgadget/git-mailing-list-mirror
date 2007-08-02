@@ -1,74 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Thu, 2 Aug 2007 13:19:51 +0200
-Message-ID: <200708021319.52565.jnareb@gmail.com>
-References: <200708010216.59750.jnareb@gmail.com> <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net> <200708020018.18610.jnareb@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: minor makefile issues
+Date: Thu, 02 Aug 2007 21:00:55 +0200
+Message-ID: <853az1223c.fsf@lola.goethe.zz>
+References: <46B21CB9.9050303@nuovasystems.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Theodore Tso <tytso@mit.edu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 20:23:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Joe Eykholt <joe@nuovasystems.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 21:01:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGfL1-0006a5-Cf
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 20:23:55 +0200
+	id 1IGfv7-0004Il-AB
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 21:01:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756719AbXHBSXu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 2 Aug 2007 14:23:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756689AbXHBSXu
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 14:23:50 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:7448 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756055AbXHBSXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 14:23:48 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so158487nfb
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 11:23:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=a+kELRXiCQvppO6LRqEbwqSxc91gF8lpEI4PTVobJgSJOaY2lEMl5vWCOScm/IW/AVXSnnwFryQ51vQLYDoM+3uuGMCeei4RuuWeNcRElVwE6HivRG5UMlFkwHwbsgcyCD04QaW3oMlgEBZt8n47DedoSmXaoXUa7HqUv6f34oU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SJqoK4hFV3FQ17PrzhbWEKl6xmQLMPJXdaF02Q3mm1s+o5x2NSYEuYENDiS8zpbT3OQQ+KBuWE45uqUXv+8D7sZ7S/VcinRUS76FI6OzRDX42Egpjvyz3PWU8M9/T/qlZ3vNO4oyVacn2QcpSmkJeS6OErJ6m4Ah0QtjDiRCCXg=
-Received: by 10.86.81.8 with SMTP id e8mr1567525fgb.1186079027592;
-        Thu, 02 Aug 2007 11:23:47 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id o11sm4546704fkf.2007.08.02.11.23.46
-        (version=SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 11:23:46 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200708020018.18610.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752263AbXHBTBG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 15:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbXHBTBE
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 15:01:04 -0400
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:57520 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752263AbXHBTBC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 15:01:02 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 0DA5812FF2;
+	Thu,  2 Aug 2007 21:01:00 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id EC3372C6A1A;
+	Thu,  2 Aug 2007 21:00:59 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-024-023.pools.arcor-ip.net [84.61.24.23])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id BDA0930A940;
+	Thu,  2 Aug 2007 21:00:59 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 6CC6B1D0344E; Thu,  2 Aug 2007 21:00:56 +0200 (CEST)
+In-Reply-To: <46B21CB9.9050303@nuovasystems.com> (Joe Eykholt's message of "Thu\, 02 Aug 2007 11\:04\:41 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3847/Thu Aug  2 13:26:26 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54586>
 
-Jakub Narebski wrote:
-> Junio C Hamano wrote:
->=20
-> > Perhaps if the destination is local,
-> >=20
-> > =A0 =A0 =A0 =A0 =A0- if -s is given, just set up alternates, do not=
-hing else;
-> > =A0 =A0 =A0 =A0 =A0- by default, do "always copy never hardlink";
-> > =A0 =A0 =A0 =A0 =A0- with -l, do "hardlink if possible";
-> >=20
-> > Hmmmm...
->=20
-> That I think it is the best solution, together with support for
-> file:///path/to/repo.git scheme which would turn on old repacking
-> behavior. I'm all for it.
+Joe Eykholt <joe@nuovasystems.com> writes:
 
-By the way, with "-l" you have hardlinks only till repack ("git gc"),
-isn't it?
+> Hi All,
+>
+> Due to my unusual environment, I ran into two issues when installing
+> git 1.5.2.4 from source.
+> Although these are unusual, they might not be unique and the fixes are easy:
+>
+>    1.  The make install failed because of line 49 in templates/Makefile:
+>           (cd blt && $(TAR) cf - .) | \
+>           (cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
+>    because I have CDPATH set, the 'cd blt' actually outputs the new
+> directory on stdout
+>    which confuses the second tar.  Changing this to 'cd ./blt' fixes
+> it.  Perhaps this could
+>    be considered a bash bug.
 
---=20
-Jakub Narebski
-Poland
+No, it is a user bug.  You don't want a script to _ever_ walk around
+on its own volition, so you must _not_ export CDPATH.  Instead, set it
+in .bashrc without exporting it.  That way, it will be available with
+every interactive shell, and not interfering with scripts.
+
+>    2.  My home directory containing my build tree is NFS-mounted, and
+> root doesn't have any
+>    permission to write it.  So, when doing 'make prefix=/usr/local
+> install-doc' as root, I got these errors:
+>
+>    # make prefix=/usr/local install-doc
+>    make -C Documentation install
+>    make[1]: Entering directory
+> /net/da01/home/jre/build/git-1.5.2.4/Documentation'
+>    rm -f doc.dep+ doc.dep
+>    rm: cannot remove `doc.dep': Permission denied
+>    make[1]: *** [doc.dep] Error 1
+>    make[1]: Leaving directory
+> /net/da01/home/jre/build/git-1.5.2.4/Documentation'
+>    make: *** [install-doc] Error 2
+>
+> I'm not sure what the best fix is for the second problem.  rm -f
+> ignores non-existent files but not permission errors.
+> I guess you could do 'rm -f doc.dep || true'.
+
+First do "make doc" for your normal user, then make doc-install as
+root.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
