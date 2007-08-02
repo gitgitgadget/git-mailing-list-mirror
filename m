@@ -1,67 +1,93 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Thu, 2 Aug 2007 18:31:32 -0400
-Message-ID: <20070802223132.GA15212@fieldses.org>
-References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <107BD473-E055-47D0-9720-9D878BDAB954@zib.de>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH] Fix documentation for core.gitproxy to reflect code
+Date: Fri, 3 Aug 2007 08:45:56 +1000
+Message-ID: <ee77f5c20708021545s54bc226ds4c1c4589c6617c00@mail.gmail.com>
+References: <ee77f5c20708020523m1a243bf2g9778994441cd21d5@mail.gmail.com>
+	 <7vtzrhvgpc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Aug 03 00:31:48 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 00:46:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGjCt-0000sg-H4
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:31:47 +0200
+	id 1IGjQh-00056m-Nb
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbXHBWbe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 18:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754737AbXHBWbd
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:31:33 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:36526 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754310AbXHBWbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 18:31:33 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IGjCe-00048g-4U; Thu, 02 Aug 2007 18:31:32 -0400
+	id S1756506AbXHBWp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 18:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756427AbXHBWp5
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:45:57 -0400
+Received: from rv-out-0910.google.com ([209.85.198.184]:63741 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756408AbXHBWp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 18:45:56 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so524877rvb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 15:45:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JFrOs5PtoKgH0JsZ237gLsu+PRC89fWtGxdSiT7p+OoUZ7yup/YEP56ardGm6DJuNWiIH1xmcgt2Wue+c7fevQRYDtTnm40O/7ubwckFzVuJ7wZ9arSEpJzQz7mj2+2UttXeB/NyAgcrPx1aAxoMwg4JS3VT1Trp0834O4vucxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ptgsQZhH1t6MBE4tm86HK9vyeXXxoqaScv/BFqw6OlrZIdHo/aLiflVTrYCvH6kqi5ws+AE7sZBgFhfWYEPLgWFDP5JY3sd7G3O7v3mBFzyo+fL7Zxh24dooEM+L7dIoCCjNEXAlJ7i+4ptV3Ag7gUGPb2Q6DySn++1q4WH5tt4=
+Received: by 10.140.142.7 with SMTP id p7mr829066rvd.1186094756350;
+        Thu, 02 Aug 2007 15:45:56 -0700 (PDT)
+Received: by 10.141.115.4 with HTTP; Thu, 2 Aug 2007 15:45:56 -0700 (PDT)
+In-Reply-To: <7vtzrhvgpc.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <107BD473-E055-47D0-9720-9D878BDAB954@zib.de>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54633>
 
-On Fri, Aug 03, 2007 at 12:24:10AM +0200, Steffen Prohaska wrote:
->
-> On Aug 2, 2007, at 8:18 PM, J. Bruce Fields wrote:
->
->> I wonder whether we could get away with just the brief list of features
->> ("lets you view changes in the index and the working file, lets you
->> individually select diff hunks for inclusion in the index"), and leave
->> the how-to stuff to online guit-gui help, if it's necessary?
->
-> Maybe, this would be sufficient. I mentioned the pop-up explicitly
-> because it wasn't obvious to me right away.
+The current implementation of core.gitproxy only operates on git:// URLs, so
+the ssh:// examples and custom protocol examples have been removed or edited.
+---
+ Documentation/config.txt     |    2 +-
+ Documentation/git-config.txt |    4 +---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-I took a quick look and it wasn't obvious to me either.  It'd be nice if
-this could be fixed in the interface or the documentation in git-gui
-itself instead of here, but perhaps saying it here is easiest for now.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3135cb7..de9e72b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -101,7 +101,7 @@ Example
 
->> Also, I like the verb "stage" as a way to explain the part of the index
->> file in creating commits, but I've been consistently using the word
->> "index" throughout the user manual, and I think that's consistent with
->> the rest of the documentation--so don't avoid it here.
->
-> "staging/unstaging" is how git gui calls adding/removing files to and
-> from the index.
+        # Proxy settings
+        [core]
+-               gitProxy="ssh" for "ssh://kernel.org/"
++               gitProxy="ssh" for "kernel.org"
+                gitProxy=default-proxy ; for the rest
 
-I understand what you meant, but a reader of the user manual at this
-point might not, since it's been consistently saying things like "to add
-the contents of a new file to the index, use git add".  So we should use
-the same language here.  Unless we want to update the whole thing to use
-"stage" and "unstage".  I'd rather not.
+ Variables
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 8451ccc..c3dffff 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -214,9 +214,7 @@ Given a .git/config like this:
 
---b.
+        ; Proxy settings
+        [core]
+-               gitproxy="ssh" for "ssh://kernel.org/"
+                gitproxy="proxy-command" for kernel.org
+-               gitproxy="myprotocol-command" for "my://"
+                gitproxy=default-proxy ; for all the rest
+
+ you can set the filemode to true with
+@@ -291,7 +289,7 @@ To actually match only values with an exclamation mark, you
+have to
+ To add a new proxy, without altering any of the existing ones, use
+
+ ------------
+-% git config core.gitproxy '"proxy" for example.com'
++% git config core.gitproxy '"proxy-command" for example.com'
+ ------------
+
+
+-- 
+1.5.2.4
