@@ -1,75 +1,54 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Thu, 02 Aug 2007 18:58:07 +0200
-Message-ID: <46B20D1F.1020308@alum.mit.edu>
-References: <46AFCF3E.5010805@alum.mit.edu> <f8r09t$qdg$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Shell script cleanups/style changes?
+Date: Thu, 2 Aug 2007 18:05:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708021804090.14781@racer.site>
+References: <86bqdqkygp.fsf@lola.quinscape.zz> <20070802140011.GN29424@schiele.dyndns.org>
+ <86sl72j9vn.fsf@lola.quinscape.zz> <20070802161902.GP29424@schiele.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 18:58:27 2007
+To: Robert Schiele <rschiele@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 19:06:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGe0A-0007cB-FB
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 18:58:18 +0200
+	id 1IGe7M-0001eO-Kx
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbXHBQ6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 12:58:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbXHBQ6P
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 12:58:15 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:40391 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbXHBQ6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 12:58:14 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.178.20] (p5B17FC13.dip.t-dialin.net [91.23.252.19])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l72Gw8N5030116
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 2 Aug 2007 18:58:09 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <f8r09t$qdg$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752455AbXHBRFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 13:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXHBRFa
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:05:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35650 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752250AbXHBRF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 13:05:28 -0400
+Received: (qmail invoked by alias); 02 Aug 2007 17:05:26 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 02 Aug 2007 19:05:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19L8JwdLc1LpOkH7qW7YQC/lNMWSjYvbImp2bd8Yv
+	YYYfPaRxOeDWev
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070802161902.GP29424@schiele.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54571>
 
-Jakub Narebski wrote:
-> Michael Haggerty wrote:
-> Have you contacted Jon Smirl about his unpublished work on cvs2git,
-> cvs2svn based CVS to Git converter?
+Hi,
 
-Yes, I am familiar with Jon Smirl's work, and as soon as he let us know
-what he was working on, we tried to help.  Unfortunately the cooperation
-was not very fruitful.
+On Thu, 2 Aug 2007, Robert Schiele wrote:
 
-- While Jon was (unknown to us) working on his git output patch, I was
-working on a big cvs2svn rewrite to make cvs2svn more robust and easier
-to hack.  By the time he contacted us, his patch did not apply to the
-cvs2svn code.  The refactoring that obsoleted the patch, in fact, was
-largely to remedy the very same architectural problems that were
-hampering his work.
+> On Thu, Aug 02, 2007 at 04:20:44PM +0200, David Kastrup wrote:
+> > Sigh.  It's in Posix.
+> 
+> It is in latest POSIX but latest POSIX is not in Solaris.
 
-- In my opinion, Jon misdiagnosed the reason for the "fragmented branch
-creation" problem that he claimed was preventing a clean conversion to
-git, and he felt that we were not interested in fixing the problem.  In
-fact, I was working on fixing another problem that I believe was the
-*real* reason for the fragmented branch creation.  This fix is
-implemented in cvs2svn version 2.0.
+It has been a really long standing tradition in git development to not 
+care about POSIX if it disagrees with reality.  A good tradition.
 
-> Footnotes:
-> ----------
-> [*] If I remember correctly authors of cvs2svn were talking about separating
-> the code dealing with disentangling CVS repository structure from the part
-> translating it into Subversion repository (with its quirks), and the part
-> generating Subversion repository.
-
-Yes, this is now done, which was why it was only a couple of days of
-programming for me to add a git output option.
-
-Michael
+Ciao,
+Dscho
