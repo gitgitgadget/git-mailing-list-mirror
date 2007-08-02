@@ -1,79 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Thu, 02 Aug 2007 14:26:12 +0200
-Message-ID: <vpqir7y15sr.fsf@bauges.imag.fr>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net>
-	<vpq4pji3zwm.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021315510.14781@racer.site>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Git User's Survey 2007 - web survey site
+Date: Thu, 2 Aug 2007 15:04:19 +0200
+Message-ID: <4d8e3fd30708020604m2a1e31cdm221700069af76d84@mail.gmail.com>
+References: <200707250358.58637.jnareb@gmail.com>
+	 <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
+	 <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
+	 <200707311835.03197.jnareb@gmail.com>
+	 <4d8e3fd30707311207q7ec48559n3ff091253085cb47@mail.gmail.com>
+	 <46a038f90708012151m468bbea0i51b95dc6ca0d9375@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 02 14:28:15 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 15:04:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGZmn-0008Ku-Rz
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 14:28:14 +0200
+	id 1IGaLq-0004bJ-B6
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 15:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755889AbXHBM2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 08:28:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755496AbXHBM2K
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 08:28:10 -0400
-Received: from imag.imag.fr ([129.88.30.1]:61291 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755320AbXHBM2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 08:28:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l72CQC00017117
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 2 Aug 2007 14:26:12 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IGZkq-0001vD-8s; Thu, 02 Aug 2007 14:26:12 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IGZkq-0002qN-6b; Thu, 02 Aug 2007 14:26:12 +0200
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0708021315510.14781@racer.site> (Johannes Schindelin's message of "Thu\, 2 Aug 2007 13\:19\:55 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 02 Aug 2007 14:26:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752154AbXHBNEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 09:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbXHBNEV
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 09:04:21 -0400
+Received: from nz-out-0506.google.com ([64.233.162.231]:5831 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148AbXHBNEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 09:04:20 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so193784nze
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 06:04:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FSXkm87bvL7DUI4RZDT9KAD0sKVaCe4tp0EhCD1Xz4IzRzKZDqGAOJBqnMrpGWhLEJ3tkUQZf8a7sOKY5khPCZ/Ky0guf+GOOclNy8di84rMU/NVvS5ksI/J5HEGULk36WInYl6DV+oQjTQrsh1UvHN92TDeBUPD8SUUfp/sCAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Lt6FBaJPJ/VCdoleaZa5npU/OXvtsJf1qyJxcjOOJVnc9SQsvYDdhh9zuAn197VT2rQyt2FP+p2n6dy2jpgOIGjCrqUbZxs1Z975+UkbXOZLYqyI8oGMTNfohTzkhblHLsXo9eJMBbIYT628Wq+stYcvZ3ZrEFx0g2U+kmzim8c=
+Received: by 10.142.222.21 with SMTP id u21mr84430wfg.1186059859425;
+        Thu, 02 Aug 2007 06:04:19 -0700 (PDT)
+Received: by 10.143.163.10 with HTTP; Thu, 2 Aug 2007 06:04:19 -0700 (PDT)
+In-Reply-To: <46a038f90708012151m468bbea0i51b95dc6ca0d9375@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54548>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> I fully agree that git should be optimized for the common case. But
->> even for the common case, I also find the feature strange. You didn't
->> answer that part of my message, but I still fail to see a rationale
->> for making "git-diff; git-status" different from "git-status; git-diff".
+On 8/2/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> > When I wrote the first survey Martin Langhoff help me in getting the
+> > data into the site.
+> > Maybe he can help us this time too (Martin CC'ed ;-)
 >
-> For performance reasons, git always compares the files' stat information 
-> with that stored in the index.
+> Did I? ;-)
 
-I know that, but how does it answer the part of my message that you
-are citing?
+Yes!
 
-> So when you do "git diff" and it tells you all those diff lines, while no 
-> file was really changed, it tells you "get your act together!  You just 
-> _willfully_ slowed down git's performance".
+> I don't remember what I did -- survey.net is supposed to be quite
+> self-service. Isn't your survey still there? Anyway, let me know what
+> I can help with.
+>
 
-The question remains: why should someone running git-diff get this,
-and someone running git-status not get this?
+I still have access to survey.net (you created the account for me ;-),
+if you don't mind I'll change the details and share the account with Jakub.
 
-(I mean, from the user point of view, not the implementation point of
-view)
+Regards,
 
 -- 
-Matthieu
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
