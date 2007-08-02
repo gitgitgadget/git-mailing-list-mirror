@@ -1,93 +1,102 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Fix documentation for core.gitproxy to reflect code
-Date: Fri, 3 Aug 2007 08:45:56 +1000
-Message-ID: <ee77f5c20708021545s54bc226ds4c1c4589c6617c00@mail.gmail.com>
-References: <ee77f5c20708020523m1a243bf2g9778994441cd21d5@mail.gmail.com>
-	 <7vtzrhvgpc.fsf@assigned-by-dhcp.cox.net>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Fri, 03 Aug 2007 00:50:43 +0200
+Message-ID: <46B25FC3.6000205@fs.ei.tum.de>
+References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <46B215E2.8010307@fs.ei.tum.de> <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de> <46B2309E.3060804@fs.ei.tum.de> <6715F560-FE69-4F15-8C5F-B5B6071D97ED@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 00:46:06 2007
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 00:50:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGjQh-00056m-Nb
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:46:04 +0200
+	id 1IGjVK-0006Jj-BE
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756506AbXHBWp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 18:45:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756427AbXHBWp5
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:45:57 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:63741 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756408AbXHBWp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 18:45:56 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so524877rvb
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 15:45:56 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JFrOs5PtoKgH0JsZ237gLsu+PRC89fWtGxdSiT7p+OoUZ7yup/YEP56ardGm6DJuNWiIH1xmcgt2Wue+c7fevQRYDtTnm40O/7ubwckFzVuJ7wZ9arSEpJzQz7mj2+2UttXeB/NyAgcrPx1aAxoMwg4JS3VT1Trp0834O4vucxg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ptgsQZhH1t6MBE4tm86HK9vyeXXxoqaScv/BFqw6OlrZIdHo/aLiflVTrYCvH6kqi5ws+AE7sZBgFhfWYEPLgWFDP5JY3sd7G3O7v3mBFzyo+fL7Zxh24dooEM+L7dIoCCjNEXAlJ7i+4ptV3Ag7gUGPb2Q6DySn++1q4WH5tt4=
-Received: by 10.140.142.7 with SMTP id p7mr829066rvd.1186094756350;
-        Thu, 02 Aug 2007 15:45:56 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Thu, 2 Aug 2007 15:45:56 -0700 (PDT)
-In-Reply-To: <7vtzrhvgpc.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1755239AbXHBWur convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 2 Aug 2007 18:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755135AbXHBWuq
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:50:46 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:59433 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492AbXHBWuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 18:50:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 6A777280E5;
+	Fri,  3 Aug 2007 00:50:44 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id EeHsL5A2uBDH; Fri,  3 Aug 2007 00:50:44 +0200 (CEST)
+Received: from sweatshorts.home.corecode.ath.cx (85-218-17-223.dclient.lsne.ch [85.218.17.223])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id F2B06280E3;
+	Fri,  3 Aug 2007 00:50:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <6715F560-FE69-4F15-8C5F-B5B6071D97ED@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54634>
 
-The current implementation of core.gitproxy only operates on git:// URLs, so
-the ssh:// examples and custom protocol examples have been removed or edited.
----
- Documentation/config.txt     |    2 +-
- Documentation/git-config.txt |    4 +---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+Steffen Prohaska wrote:
+>> yah, that pretty much tells me it is shawn's bug :)  but without mor=
+e=20
+>> details, it is very hard to diagnose.
+>=20
+> I tried again. Interestingly now togit works but tohg still fails.
+>=20
+> togit starts with reporting
+>=20
+> fatal: Not a valid object name
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3135cb7..de9e72b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -101,7 +101,7 @@ Example
+that's fine.
 
-        # Proxy settings
-        [core]
--               gitProxy="ssh" for "ssh://kernel.org/"
-+               gitProxy="ssh" for "kernel.org"
-                gitProxy=default-proxy ; for the rest
+> as the first line. But besides that it seems to work fine. What
+> concerns me a bit is that the last line togit reports is
+>=20
+> committing set 18100/18173
+>=20
+> I'd expect it should report 18173/18173.
 
- Variables
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 8451ccc..c3dffff 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -214,9 +214,7 @@ Given a .git/config like this:
+that's fine as well.  You only saw multiples of 100, but you didn't con=
+sider it would skip the itermediate ones, right? :)
 
-        ; Proxy settings
-        [core]
--               gitproxy="ssh" for "ssh://kernel.org/"
-                gitproxy="proxy-command" for kernel.org
--               gitproxy="myprotocol-command" for "my://"
-                gitproxy=default-proxy ; for all the rest
+> BTW, togit creates much more complex branching patterns than cvs2svn
+> does. The attached file branching.png displays a small view of a
+> branching pattern that extends downwards over a couple of screens.
+> I checked the cvs2svn history again. It doesn't contain anything
+> of similar complexity.
 
- you can set the filemode to true with
-@@ -291,7 +289,7 @@ To actually match only values with an exclamation mark, you
-have to
- To add a new proxy, without altering any of the existing ones, use
+haha yea, there is still some issue with duplicate branch names and the=
+ branchpoint.  if it doesn't get the branch right, it will always "pull=
+" files from the parent branch.
 
- ------------
--% git config core.gitproxy '"proxy" for example.com'
-+% git config core.gitproxy '"proxy-command" for example.com'
- ------------
+did you do some manual RCS file copying or manual branch name changing =
+of individual files?  this could be the reason.  I still have to find a=
+ simple repo to reproduce this.
 
+> tohg fails (on the same repo that togit imported) with the
+> following error
+[..]
+> AssertionError: failed to remove X/Y.cpp from manifest
 
--- 
-1.5.2.4
+This is a mercurial 0.9.3 error, as far as I can tell from the reports.=
+  This never occured here, and nobody reporting to me could ever reprod=
+uce this problem to pinpoint it.
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
+++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
