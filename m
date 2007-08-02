@@ -1,77 +1,101 @@
 From: Robert Schiele <rschiele@gmail.com>
-Subject: [PATCH] the ar tool is called gar on some systems
-Date: Thu, 2 Aug 2007 18:15:01 +0200
-Message-ID: <20070802161501.GO29424@schiele.dyndns.org>
+Subject: Re: Shell script cleanups/style changes?
+Date: Thu, 2 Aug 2007 18:19:02 +0200
+Message-ID: <20070802161902.GP29424@schiele.dyndns.org>
+References: <86bqdqkygp.fsf@lola.quinscape.zz> <20070802140011.GN29424@schiele.dyndns.org> <86sl72j9vn.fsf@lola.quinscape.zz>
 Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 18:15:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="o+ZCuNqY+dEAKBWl"
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 02 18:19:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGdKt-0006po-T8
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 18:15:40 +0200
+	id 1IGdP4-0008Nz-B0
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 18:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371AbXHBQPI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 12:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757191AbXHBQPH
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 12:15:07 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:30007 "EHLO
+	id S1758190AbXHBQTN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 12:19:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757406AbXHBQTJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 12:19:09 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:33419 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755305AbXHBQPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 12:15:05 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so150599nfb
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 09:15:04 -0700 (PDT)
+	with ESMTP id S1757091AbXHBQTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 12:19:07 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so150826nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 09:19:06 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=Ngm35vCmfripRlJIgI7XVwBB/hIwXw8e7YViTxgMhwZk1rOevXd/e0Eo6ouYPEIoB498OfbcYi4vSjdeo4sI5tutqQv8mFs7r8IJhzzilN5fAHa8AVwHDFVCFcM94IXac5/MntJEKOdOKjq2AZSdtXcxFpZUPQLLgvy0oUjjuYQ=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=j5Bel7cCGRZ7bLr3pKnfmsBeoDMMLkQq7/gN0nr/b90Af6lJkaXpzWxsUQ/1x13tN0pgX3HXdfuq9LuQLqEosjFgxUWLUiF0pOf3zaeNhe5glej/C3GnDc2FMui4qzX7YY5RcI8SiWDsVi3GsO8UMpOipPNIh1OuCSbnkbuRazM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from:reply-to;
-        b=tc5jnyqtPv3BGF3/geCyOe7MqICJQzrLX072FQDt7lWBZPwFtljaYW/mLmzqbRjmUjpVM0q6CLvsmztuR9gN0SAWrPILvH8P0hThg2Xlv3HaXaJg9IBWXXsobzxB/l58yjDNLZRwkRbwDbR4VDLEJH8Db+y9P+ZMHJTFKdKI3L4=
-Received: by 10.86.28.5 with SMTP id b5mr1510153fgb.1186071303983;
-        Thu, 02 Aug 2007 09:15:03 -0700 (PDT)
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=QoONL50JUmYVPjPepqp5TV2DIiU3R2FqU3raHu5/kyvbUApeHKsdqmy17zH0tnfR1wwuLqHoUocZNm8FR8D5AyoRK1+73wRe31u60iE5yHBheOVrkzhVHieSZfbGriN2dRNii+hqMvPHKvFwIFI3+95C9P7YhA5cbwvN4dc9+hI=
+Received: by 10.86.100.7 with SMTP id x7mr1504800fgb.1186071546697;
+        Thu, 02 Aug 2007 09:19:06 -0700 (PDT)
 Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
-        by mx.google.com with ESMTPS id 28sm4315743fkx.2007.08.02.09.15.03
+        by mx.google.com with ESMTPS id g1sm6687808muf.2007.08.02.09.19.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 09:15:03 -0700 (PDT)
+        Thu, 02 Aug 2007 09:19:04 -0700 (PDT)
 Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 16309C1124B; Thu,  2 Aug 2007 18:15:01 +0200 (CEST)
+	id 4C109C112C0; Thu,  2 Aug 2007 18:19:03 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <86sl72j9vn.fsf@lola.quinscape.zz>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54569>
 
-Some systems that have only installed the GNU toolchain (prefixed with "g")
-do not provide "ar" but only "gar".  Make configure find this tool as well.
 
-Signed-off-by: Robert Schiele <rschiele@gmail.com>
----
-This is another trivial configure patch.  If you don't want to include it in
-the upcomming release it is fine for me to delay it.  If you expect me to
-resubmit after the release, drop me a note.
+--o+ZCuNqY+dEAKBWl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Thu, Aug 02, 2007 at 04:20:44PM +0200, David Kastrup wrote:
+> Sigh.  It's in Posix.
 
-diff --git a/configure.ac b/configure.ac
-index 84fd7f1..ed7cc89 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -104,7 +104,7 @@ AC_MSG_NOTICE([CHECKS for programs])
- #
- AC_PROG_CC([cc gcc])
- #AC_PROG_INSTALL		# needs install-sh or install.sh in sources
--AC_CHECK_TOOL(AR, ar, :)
-+AC_CHECK_TOOLS(AR, [gar ar], :)
- AC_CHECK_PROGS(TAR, [gtar tar])
- # TCLTK_PATH will be set to some value if we want Tcl/Tk
- # or will be empty otherwise.
--- 
-1.5.2.3
+It is in latest POSIX but latest POSIX is not in Solaris.
+
+> I've seen a lot of "modern" constructs in the Shell scripts of git
+> (not least of all the eval hackery that is currently used instead of
+> this), so do you actually have positive knowledge that the existing
+> git stuff runs fine on such systems, and this wouldn't?
+
+I can't say for sure for every corner case but for the most important stuff
+the answer is "yes".  If you have specific doubts about some construct you =
+may
+ask me for that.  Then I would check.
+
+> I don't have access to Solaris systems, so I have to take your word on
+> it, but I find it somewhat surprising that they would not follow Posix
+> here.
+
+Nowadays you can download it for free if you like to test with it.
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--o+ZCuNqY+dEAKBWl
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGsgP2xcDFxyGNGNcRAptZAJ4uhQwSSuhXB1jQHJRkcgRNTG9h+ACfRkcD
+G5Ap7Etx7sybtrNVCggxMoU=
+=PEXM
+-----END PGP SIGNATURE-----
+
+--o+ZCuNqY+dEAKBWl--
