@@ -1,64 +1,73 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Shell script cleanups/style changes?
-Date: Thu, 02 Aug 2007 23:02:01 +0200
-Message-ID: <85ir7xzm46.fsf@lola.goethe.zz>
-References: <86bqdqkygp.fsf@lola.quinscape.zz>
-	<7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
-	<fcaeb9bf0708021356v57b29a70yb69a2fa000bd5b55@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix set_work_tree on cygwin
+Date: Thu, 2 Aug 2007 22:04:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708022204170.14781@racer.site>
+References: <81b0412b0708020825q4b64c47r3fa1d67858271b1e@mail.gmail.com>
+ <Pine.LNX.4.64.0708021636470.14781@racer.site> <20070802204909.GA2829@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 23:02:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 23:05:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGhoG-0005IS-0h
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 23:02:16 +0200
+	id 1IGhre-0006Mx-Cu
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 23:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181AbXHBVCN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 17:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755012AbXHBVCN
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 17:02:13 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:54568 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754333AbXHBVCM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 17:02:12 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 3866036658C;
-	Thu,  2 Aug 2007 23:02:10 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 29EB6ABE0E;
-	Thu,  2 Aug 2007 23:02:10 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-017-172.pools.arcor-ip.net [84.61.17.172])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 07308292B65;
-	Thu,  2 Aug 2007 23:02:09 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 864B11D0344E; Thu,  2 Aug 2007 23:02:01 +0200 (CEST)
-In-Reply-To: <fcaeb9bf0708021356v57b29a70yb69a2fa000bd5b55@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Thu\, 2 Aug 2007 16\:56\:48 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3848/Thu Aug  2 22:22:06 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1761035AbXHBVF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 17:05:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760387AbXHBVF2
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 17:05:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51727 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760517AbXHBVFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 17:05:25 -0400
+Received: (qmail invoked by alias); 02 Aug 2007 21:05:24 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 02 Aug 2007 23:05:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18HlIEQAxkHRFgG1POLVl9aRIwYVhpTRF44vq1SNe
+	kNw3eRLFNxuWgg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070802204909.GA2829@steel.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54611>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+Hi,
 
-> On 8/2/07, Junio C Hamano <gitster@pobox.com> wrote:
->> Non POSIX substitions such as ${parameter/pattern/string} and
->> ${parameter:offset} are not to be used.  We do not want to
->> depend on bash.
->
-> There is in a test (t5300-pack-objects.sh) but I guess the
-> restrictions do not apply on tests.
+On Thu, 2 Aug 2007, Alex Riesen wrote:
 
-Oh, but they definitely should.  Precisely on those platforms with
-shells not generally in use by the developers it becomes _most_
-important to reliably be able to trace failed tests to problems with
-the _commands_, not problems with the tests.
+> Johannes Schindelin, Thu, Aug 02, 2007 17:38:37 +0200:
+> 
+> > On Thu, 2 Aug 2007, Alex Riesen wrote:
+> > 
+> > >@@ -209,7 +209,8 @@ const char *set_work_tree(const char *dir)
+> > >        len = strlen(dir);
+> > >        if (len > postfix_len && !strcmp(dir + len - postfix_len,
+> > >                                "/" DEFAULT_GIT_DIR_ENVIRONMENT)) {
+> > >-                       strncpy(dir_buffer, dir, len - postfix_len);
+> > >+               strncpy(dir_buffer, dir, len - postfix_len);
+> > >+               dir_buffer[len - postfix_len] = '\0';
+> > >
+> > >                /* are we inside the default work tree? */
+> > >                rel = get_relative_cwd(buffer, sizeof(buffer), dir_buffer);
+> > 
+> > Darn, darn, darn.  strncpy does _not_ NUL terminate.  I keep forgetting 
+> > that.
+> > 
+> > Better use strlcpy()?
+> 
+> Of course, but it just should not be needed at all: static supposed to
+> be zeroed.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Certainly.  But reality outweighs theory, and so I Ack either your patch 
+or replacing it by strlcpy().
+
+Ciao,
+Dscho
