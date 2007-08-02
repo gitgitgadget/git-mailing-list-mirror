@@ -1,65 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Shell script cleanups/style changes?
-Date: Thu, 02 Aug 2007 16:20:44 +0200
-Message-ID: <86sl72j9vn.fsf@lola.quinscape.zz>
-References: <86bqdqkygp.fsf@lola.quinscape.zz> <20070802140011.GN29424@schiele.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-diff on touched files: bug or feature?
+Date: Thu, 2 Aug 2007 15:39:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708021537490.14781@racer.site>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+ <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net>
+ <vpq4pji3zwm.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021315510.14781@racer.site>
+ <vpqir7y15sr.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 16:21:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 02 16:39:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGbYO-00025d-En
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 16:21:28 +0200
+	id 1IGbqF-0001SB-4J
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 16:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151AbXHBOU5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 10:20:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754371AbXHBOU5
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 10:20:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:58194 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754334AbXHBOU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 10:20:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IGbXp-0004qW-Hf
-	for git@vger.kernel.org; Thu, 02 Aug 2007 16:20:53 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:20:53 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:20:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:DsP/Nbirfd+uyPN2AZic/8f+CV0=
+	id S1754201AbXHBOju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 10:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbXHBOju
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 10:39:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60733 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753500AbXHBOjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 10:39:48 -0400
+Received: (qmail invoked by alias); 02 Aug 2007 14:39:46 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 02 Aug 2007 16:39:46 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Nd884uTmN389mvOT39+/SJQD59tOHPXnESjO/0s
+	CoE2vNOJx+418w
+X-X-Sender: gene099@racer.site
+In-Reply-To: <vpqir7y15sr.fsf@bauges.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54553>
 
-Robert Schiele <rschiele@gmail.com> writes:
+Hi,
 
-> On Thu, Aug 02, 2007 at 12:44:22PM +0200, David Kastrup wrote:
->> ! 		logfile="${1#-?}"
->
-> You can't do something like that on /bin/sh on many systems (for
-> instance Solaris).
+On Thu, 2 Aug 2007, Matthieu Moy wrote:
 
-Sigh.  It's in Posix.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> I fully agree that git should be optimized for the common case. But
+> >> even for the common case, I also find the feature strange. You didn't
+> >> answer that part of my message, but I still fail to see a rationale
+> >> for making "git-diff; git-status" different from "git-status; git-diff".
+> >
+> > For performance reasons, git always compares the files' stat information 
+> > with that stored in the index.
+> 
+> I know that, but how does it answer the part of my message that you
+> are citing?
 
-I've seen a lot of "modern" constructs in the Shell scripts of git
-(not least of all the eval hackery that is currently used instead of
-this), so do you actually have positive knowledge that the existing
-git stuff runs fine on such systems, and this wouldn't?
+You _acknowledge_ that git is optimized for performance!  And therefore 
+you should also acknowledge that you _throw that away_ if you let your 
+index go out of sync.
 
-I don't have access to Solaris systems, so I have to take your word on
-it, but I find it somewhat surprising that they would not follow Posix
-here.
+> > So when you do "git diff" and it tells you all those diff lines, while no 
+> > file was really changed, it tells you "get your act together!  You just 
+> > _willfully_ slowed down git's performance".
+> 
+> The question remains: why should someone running git-diff get this,
+> and someone running git-status not get this?
 
--- 
-David Kastrup
+Because git-status is an index-updating operation.  That's why.
+
+Ciao,
+Dscho
