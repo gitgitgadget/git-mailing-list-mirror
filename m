@@ -1,114 +1,135 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH 5/6] Provide file completion for add/resolved/refresh
-	based on status.
-Date: Thu, 02 Aug 2007 22:18:36 +0200
-Message-ID: <20070802201836.16614.49897.stgit@gandelf.nowhere.earth>
+Subject: [StGIT PATCH 4/6] Add a no-act flag to stg-dispatch and
+	stg-fold-file-from.
+Date: Thu, 02 Aug 2007 22:18:31 +0200
+Message-ID: <20070802201831.16614.33481.stgit@gandelf.nowhere.earth>
 References: <20070802200704.16614.57993.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 22:20:04 2007
+X-From: git-owner@vger.kernel.org Thu Aug 02 22:20:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGh9N-0007HH-8A
+	id 1IGh9M-0007HH-NE
 	for gcvg-git@gmane.org; Thu, 02 Aug 2007 22:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760017AbXHBUTm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 16:19:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760019AbXHBUTl
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:19:41 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55163 "EHLO smtp3-g19.free.fr"
+	id S1759981AbXHBUTg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 16:19:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759931AbXHBUTg
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 16:19:36 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:55143 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759931AbXHBUTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 16:19:40 -0400
+	id S1759973AbXHBUTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 16:19:35 -0400
 Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E694859C83;
-	Thu,  2 Aug 2007 22:19:39 +0200 (CEST)
+	by smtp3-g19.free.fr (Postfix) with ESMTP id CE6DF5DF0;
+	Thu,  2 Aug 2007 22:19:34 +0200 (CEST)
 Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id CC48159FE3;
-	Thu,  2 Aug 2007 22:19:39 +0200 (CEST)
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B25D738F2;
+	Thu,  2 Aug 2007 22:19:34 +0200 (CEST)
 Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 8AA6B1F06F;
-	Thu,  2 Aug 2007 22:18:36 +0200 (CEST)
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 710D31F06F;
+	Thu,  2 Aug 2007 22:18:31 +0200 (CEST)
 In-Reply-To: <20070802200704.16614.57993.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54597>
+
+From: Yann Dirson <yann.dirson@sagem.com>
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- contrib/stgit-completion.bash |   35 ++++++++++++++++++++++++++++++++++-
- 1 files changed, 34 insertions(+), 1 deletions(-)
+ contrib/stg-dispatch        |   20 +++++++++++++++-----
+ contrib/stg-fold-files-from |   15 +++++++++++++--
+ 2 files changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
-index a843db4..2d0d5f2 100644
---- a/contrib/stgit-completion.bash
-+++ b/contrib/stgit-completion.bash
-@@ -111,6 +111,30 @@ _all_branches ()
-     [ "$g" ] && (cd .git/patches/ && echo *)
+diff --git a/contrib/stg-dispatch b/contrib/stg-dispatch
+index 8911946..e9cfb05 100755
+--- a/contrib/stg-dispatch
++++ b/contrib/stg-dispatch
+@@ -6,7 +6,7 @@ set -e
+ # do so), but from the patch containing the changes to migrate,
+ # instead of doing so from the target patch.
+ 
+-# usage: stg-dispatch <topatch> [-#<n>[-<n>][,<n>]...] <file-pattern>
++# usage: stg-dispatch [-n] <topatch> [-#<n>[-<n>][,<n>]...] <file-pattern>
+ 
+ # Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
+ # Subject to the GNU GPL, version 2.
+@@ -17,6 +17,12 @@ die()
+     exit 1
  }
  
-+_conflicting_files ()
-+{
-+    local g=$(_gitdir)
-+    [ "$g" ] && stg status --conflict
-+}
++noact=0
++if [ "x$1" = "x-n" ]; then
++    noact=1
++    shift
++fi
 +
-+_dirty_files ()
-+{
-+    local g=$(_gitdir)
-+    [ "$g" ] && stg status --modified --new --deleted
-+}
-+
-+_unknown_files ()
-+{
-+    local g=$(_gitdir)
-+    [ "$g" ] && stg status --unknown
-+}
-+
-+_known_files ()
-+{
-+    local g=$(_gitdir)
-+    [ "$g" ] && git ls-files
-+}
-+
- # List the command options
- _cmd_options ()
- {
-@@ -162,6 +186,11 @@ _complete_options ()
-     COMPREPLY=($(compgen -W "$options" -- "${COMP_WORDS[COMP_CWORD]}"))
- }
+ TOPATCH="$1"
+ shift
  
-+_complete_files ()
+@@ -28,7 +34,11 @@ CURRENTPATCH=$(stg top)
+ [ "x$TOPATCH" != "x$CURRENTPATCH" ] ||
+     die "dispatching to current patch ($CURRENTPATCH) makes no sense"
+ 
+-stg goto "$TOPATCH"
+-stg-fold-files-from "$CURRENTPATCH" "$@"
+-stg refresh
+-stg goto "$CURRENTPATCH"
++if [ $noact = 1 ]; then
++    stg-fold-files-from "$CURRENTPATCH" -n "$@"
++else
++    stg goto "$TOPATCH"
++    stg-fold-files-from "$CURRENTPATCH" "$@"
++    stg refresh
++    stg goto "$CURRENTPATCH"
++fi
+diff --git a/contrib/stg-fold-files-from b/contrib/stg-fold-files-from
+index 806a157..c52abfc 100755
+--- a/contrib/stg-fold-files-from
++++ b/contrib/stg-fold-files-from
+@@ -8,7 +8,7 @@ set -e
+ # identify hunk numbers easily.
+ # Use "-O -U<n>" to get finer hunk granularity for -#<n>.
+ 
+-# usage: stg-fold-files-from <patch> [-O <stg-show-flags>] [-#<n>[-<n>][,<n>]...] <file-pattern>
++# usage: stg-fold-files-from <patch> [-n] [-O <stg-show-flags>] [-#<n>[-<n>][,<n>]...] <file-pattern>
+ 
+ # Copyright (c) 2006-2007 Yann Dirson <ydirson@altern.org>
+ # Subject to the GNU GPL, version 2.
+@@ -20,10 +20,12 @@ filtercmd=cat
+ hunks=
+ foldflags=
+ showflags=()
++noact=0
+ while [ "$#" -gt 0 ]; do
+     case "$1" in
+ 	-\#*) hunks="$1" ;;
+ 	-t) foldflags="-t" ;;
++	-n) noact=1 ;;
+ 	-O) showflags+=(-O "$2"); shift ;;
+ 	-*) { echo >&2 "unknown flag '$1'"; exit 1; } ;;
+ 	*) break ;;
+@@ -32,4 +34,13 @@ while [ "$#" -gt 0 ]; do
+ done
+ [ "$#" = 1 ] || { echo >&2 "supports one file only"; exit 1; }
+ 
+-stg show "${showflags[@]}" "$PATCH" | filterdiff -p1 $hunks -i "$1" | stg fold $foldflags
++getpatch()
 +{
-+    COMPREPLY=($(compgen -W "$(_cmd_options $1) $2" -- "${COMP_WORDS[COMP_CWORD]}"))
++    stg show "${showflags[@]}" "$PATCH" | filterdiff -p1 $hunks -i "$1"
 +}
 +
- _stg_common ()
- {
-     _complete_options "$(_cmd_options $1)"
-@@ -223,12 +252,16 @@ _stg ()
-         log)    _stg_patches $command _all_patches ;;
-         mail)   _stg_patches $command _all_patches ;;
-         pick)   _stg_patches $command _unapplied_patches ;;
--        refresh)_stg_patches_options $command _applied_patches "-p --patch" ;;
-+#	refresh)_stg_patches_options $command _applied_patches "-p --patch" ;;
-+        refresh) _complete_files $command "$(_dirty_files)" ;;
-         rename) _stg_patches $command _all_patches ;;
-         show)   _stg_patches $command _all_patches ;;
-         sync)   _stg_patches $command _applied_patches ;;
-         # working-copy commands
-         diff)   _stg_patches_options $command _applied_patches "-r --range" ;;
-+	resolved) _complete_files $command "$(_conflicting_files)" ;;
-+	add)	_complete_files $command "$(_unknown_files)" ;;
-+#	rm)	_complete_files $command "$(_known_files)" ;;
- 	# commands that usually raher accept branches
- 	branch) _complete_branch $command _all_branches ;;
- 	rebase) _complete_branch $command _all_branches ;;
++if [ $noact = 1 ]; then
++    getpatch "$1"
++else
++    getpatch "$1" | stg fold $foldflags
++fi
