@@ -1,132 +1,97 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Thu, 2 Aug 2007 19:44:37 -0400
-Message-ID: <9e4733910708021644q6eba0e78gc2c6bcfba4816012@mail.gmail.com>
-References: <46AFCF3E.5010805@alum.mit.edu> <f8r09t$qdg$1@sea.gmane.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Fri, 3 Aug 2007 01:45:15 +0200
+Message-ID: <20070802234515.GW29424@schiele.dyndns.org>
+References: <85odhpzmbo.fsf@lola.goethe.zz> <7vsl71tyyq.fsf@assigned-by-dhcp.cox.net> <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <20070802214103.GT29424@schiele.dyndns.org> <85vebxy47e.fsf@lola.goethe.zz> <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net> <20070802232126.GU29424@schiele.dyndns.org> <85k5sdy0lk.fsf@lola.goethe.zz>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, users@cvs2svn.tigris.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 01:44:43 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4WCFFtl4AQpQKunj"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 03 01:45:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGkLT-00030H-9W
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:44:43 +0200
+	id 1IGkM8-00038c-Rh
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 01:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756478AbXHBXok (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 19:44:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756613AbXHBXok
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:44:40 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:13517 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756444AbXHBXoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 19:44:39 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so535483rvb
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:44:38 -0700 (PDT)
+	id S1758478AbXHBXpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 19:45:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758241AbXHBXpV
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 19:45:21 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:19940 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757780AbXHBXpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 19:45:19 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so547346fkz
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 16:45:18 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RjJ5d4vSYjepWURpM8BrznIQLUxiPp4tXZssrO/KKtZTbRlqHtDMb8Lsz8DzDiazENUje9HiTlHgctGTJn7Qg3s69OFmTz60PLFsOUaGS+tv1sHf+IdTZ2L5CLwjdiuQvYO0QDWuRYpYadXWNhB8S1mszaRGNppTrtd+6gWu4PE=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=DHPueOpkZi7wcGnEyVH0hkDN/WV703zAADXZTq5E2dpK9z2773DeKYy9HPjEFpRnwRwJx7snx+P8fC1pRFFCH8VJLbZMbP1Zfm+AsaSsWhCKf/+iWrdVUcpgX8rc/4KW2hZVsH4OyfV786AzKBNIytT97bGge/A46eJL23Mg1Gc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VtvyJGjT3b0TWdjn4+1iWk2OLn5gZLok8QNRhH+LrQEDnAc1op5KkW6V/k+Ue/Xm6RnOpNL2AEndc18GU0X4z/kolKM5s0l/P6uqS0XA/x1DLTta04JeVhlLAOErKm/Mzh94BLrRrJQJbdfZhGTBERi6g+YqGUIkM5ZGeRLs7n0=
-Received: by 10.115.90.1 with SMTP id s1mr2364986wal.1186098277900;
-        Thu, 02 Aug 2007 16:44:37 -0700 (PDT)
-Received: by 10.114.195.11 with HTTP; Thu, 2 Aug 2007 16:44:37 -0700 (PDT)
-In-Reply-To: <f8r09t$qdg$1@sea.gmane.org>
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=SwUZAPbumLI1UMCppj7MqPkyoKchUj7wykqL2GVy5lDMOkHOAJh6HfSn6KdCWTMPmIzUOKlVdYWL4gCTPZwKUaItf6JY82Klp41v1hKcvhJQFmSkRU7jzh6I1JxiGdvN48Ew/JpnVMMa0wv8vMxX3j+EBZEw7r5/C0Uz3tD4gSM=
+Received: by 10.86.93.17 with SMTP id q17mr1791018fgb.1186098318101;
+        Thu, 02 Aug 2007 16:45:18 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id y2sm7827022mug.2007.08.02.16.45.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 16:45:16 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 5856FC112CE; Fri,  3 Aug 2007 01:45:15 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <85k5sdy0lk.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54645>
-
-On 8/1/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> Michael Haggerty wrote:
->
-> > I am the maintainer of cvs2svn[1], which is a program for one-time
-> > conversions from CVS to Subversion. cvs2svn is very robust against the
-> > many peculiarities of CVS and can convert just about every CVS
-> > repository we have ever seen.
-> >
-> > I've been working on a cvs2svn output pass that writes the converted CVS
-> > repository directly into git rather than Subversion. The code runs now
-> > with at least one repository from our test suite of nasty CVS repositories.
->
-> Have you contacted Jon Smirl about his unpublished work on cvs2git,
-> cvs2svn based CVS to Git converter?
-
-My converter was derived from Michael's cvs2svn code. The bulk of my
-work was converting cvs2svn to output in a format that git-fastimport
-could consume. This was all rather straight forward and there was
-nothing really interesting in the code.
-
-What it exposed were fundamental issues about the technical
-complexities of trying to reconstruct a change set history from CVS
-which didn't record all of the needed info.  I was never able to
-construct a satisfactory git representation of the Mozilla CVS
-repository.  Michael has had a long time to work on the change set
-detection code and he's probably added some new strategies.
-
-My code did include a CVS file parser for extracting all the revisions
-from the file in a single pass. Doing that is a major performance
-benefit.  I believe I posted the code to the cvs2svn mailing list. It
-was about 200 lines of code. Forking off cvs a million times to
-extract the revisions takes days to run.
-
-Same goes for forking git a million times.git-fastimport uses a pipe
-to cvs2svn to avoid forking. git-fastimport also uses a technique from
-the database world for bulk import, it imports everything without
-indexing it. Indexing is done after the import finishes.
-
-Between parsing the CVS files internally and Shawn's git-fastimport,
-it was possible to import Mozilla CVS (2.4G) in about 2 hours and
-generate a 450MB pack file. You need 3GB of RAM to do this - if swap
-happens the process will take weeks to finish.
-
-> Quote from InterfacesFrontendsAndTools page on GIT wiki[1]:
->
->   cvs2git is the unofficial name of Jon Smirl's modifications to cvs2svn.
->   These modifications allow cvs2svn to generate a data stream which is
->   consumed by Shawn Pearce's git-fast-import (now included in git.git).
->   git-fast-import converts its input stream directly into a Git .pack file,
->   minimizing the amount of IO required on large imports.
->
->   Jon Smirl stopped working on cvs2git[2] because first, Mozilla (which was
->   main target of his work) decided that to not to move to git, and second
->   because of troubles with cvs2svn architecture[*] (which it is based on).
->   Jon Smirl has posted his impressions on working on CVS importer in
->   "Some tips for doing a CVS importer" thread[3].
->
-> References:
-> -----------
-> [1] http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-23858c2cde0cef60443d8e73e6829a95f8e191ef
-> [2] http://msgid.gmane.org/9e4733910611190940y147992b8mbdfac5a51f42e0fe@mail.gmail.com
-> [3] http://marc.theaimsgroup.com/?t=116405956000001&r=1&w=2
->
-> Footnotes:
-> ----------
-> [*] If I remember correctly authors of cvs2svn were talking about separating
-> the code dealing with disentangling CVS repository structure from the part
-> translating it into Subversion repository (with its quirks), and the part
-> generating Subversion repository.
->
-> --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54646>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+--4WCFFtl4AQpQKunj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Aug 03, 2007 at 01:32:07AM +0200, David Kastrup wrote:
+> Robert Schiele <rschiele@gmail.com> writes:
+> > Well, I have now a patch ready for submission that would replace all
+> > occurences of ${PARAMETER#WORD}, ${PARAMETER%WORD}, and $((
+> > EXPRESSION )).  But if you say that you won't accept replacement of
+> > $( ... ) then this is not worth the effort since this one isn't
+> > accepted as well.
+>=20
+> I absolutely can't understand your claim that most things work for
+> you, then.  Are you _really_, _really_ sure you are talking about
+> /bin/sh here?
+
+I started wondering myself and it turned out that we just didn't look in the
+right place.  Actually we _have_ an infrastructure in place to replace the
+shell.  (SHELL_PATH in the Makefile)  In that case I would not consider this
+an issue and you might go on with the cleanup from my point of view.
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--4WCFFtl4AQpQKunj
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGsmyLxcDFxyGNGNcRAn2jAJ9W9JjwacUwQ87hl6dcpv5MLu9QYgCfThlQ
+3o45V+xldVhkTMpZVPIODdI=
+=aV3A
+-----END PGP SIGNATURE-----
+
+--4WCFFtl4AQpQKunj--
