@@ -1,75 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Shell script cleanups/style changes?
-Date: Fri, 03 Aug 2007 00:02:43 +0200
-Message-ID: <85zm19y4qk.fsf@lola.goethe.zz>
-References: <86bqdqkygp.fsf@lola.quinscape.zz>
-	<7vlkctvfk9.fsf@assigned-by-dhcp.cox.net>
-	<85odhpzmbo.fsf@lola.goethe.zz>
-	<7vsl71tyyq.fsf@assigned-by-dhcp.cox.net>
-	<7vodhptyk3.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix unterminated string copy in set_work_tree
+Date: Fri, 3 Aug 2007 00:02:55 +0200
+Message-ID: <20070802220255.GB2829@steel.home>
+References: <81b0412b0708020825q4b64c47r3fa1d67858271b1e@mail.gmail.com> <Pine.LNX.4.64.0708021636470.14781@racer.site> <20070802204909.GA2829@steel.home> <Pine.LNX.4.64.0708022204170.14781@racer.site> <7vwswdtz98.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708022230070.14781@racer.site>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 00:02:55 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 00:03:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGikw-0000OH-LS
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:02:55 +0200
+	id 1IGilD-0000Tg-Jp
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 00:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbXHBWCu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 18:02:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbXHBWCu
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:02:50 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:59739 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754637AbXHBWCt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2007 18:02:49 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 6982E27B1C6;
-	Fri,  3 Aug 2007 00:02:48 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 5ABEA5BD63;
-	Fri,  3 Aug 2007 00:02:48 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-049-245.pools.arcor-ip.net [84.61.49.245])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 39835225126;
-	Fri,  3 Aug 2007 00:02:48 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 1FD5D1D0344E; Fri,  3 Aug 2007 00:02:43 +0200 (CEST)
-In-Reply-To: <7vodhptyk3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 02 Aug 2007 14\:29\:48 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3848/Thu Aug  2 22:22:06 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S1754863AbXHBWDF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 18:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbXHBWDD
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 18:03:03 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:17426 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754681AbXHBWDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 18:03:02 -0400
+Received: from tigra.home (Fac1b.f.strato-dslnet.de [195.4.172.27])
+	by post.webmailer.de (mrclete mo11) (RZmta 10.3)
+	with ESMTP id 007209j72LW4WD ; Fri, 3 Aug 2007 00:02:55 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 837D1277BD;
+	Fri,  3 Aug 2007 00:02:55 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 604EEC21D; Fri,  3 Aug 2007 00:02:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708022230070.14781@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcF9thg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54623>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Use strlcpy which zero-terminates the output string
 
-> You might find this thread amusing.
->
->     http://thread.gmane.org/gmane.comp.version-control.git/7116/focus=7136
->
-> Historically, I have even avoided accepting ${var#word}, ${var%word},
-> and arithmetic expansions.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+Johannes Schindelin, Thu, Aug 02, 2007 23:36:37 +0200:
+> On Thu, 2 Aug 2007, Junio C Hamano wrote:
+> > 
+> > Static is supposed to be zeroed and also is supposed to retain
+> > the value from the previous call.  I am guessing from the change
+> > to make "rel" to non-static that this function is called twice
+> > perhaps?
 
-I learnt Unix with a Banaham/Rutter primer in the early eighties.  I
-got hit so often by the "this is now supposed to work in Bourne
-shells?" surprise it wasn't funny.
+Actually, I was very confused. When I wrote about cygwin problems,
+I actually debugged it for dir_buffer, real stack-based variable,
+which of course is not zero-initialized. For an unknown reason I
+confused the variable with buffer, which is static. "rel" should
+be left of this particular discussion (it just does not matter whether
+it is static or not in this context).
 
-The first time I saw "for ((i=0; i<$NR; i++)) ..."  I thought the
-author had been smoking too much C and got things confused.  It still
-creeps me out.  I am more comfortable doing arithmetic with dc rather
-than sh.
+So the fix is a real fix for real problem which just happens to be
+invisible on our linux systems.
 
-Employing the existing globbing machinery for # and %, on the other
-hand, seems quite bournesque (still-bourne sounds so ugly) to me.  And
-it is certainly quite more readable than the regexp/expr stuff.
+> Apparently (but I would feel safer with strlcpy() anyway).  git-read-tree 
+> is the first and only offender which comes up in the test suite:
 
-If it works.
+Yes, I feel so too, so here it is.
 
+ setup.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 3653092..27d585c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -209,7 +209,7 @@ const char *set_work_tree(const char *dir)
+ 	len = strlen(dir);
+ 	if (len > postfix_len && !strcmp(dir + len - postfix_len,
+ 				"/" DEFAULT_GIT_DIR_ENVIRONMENT)) {
+-			strncpy(dir_buffer, dir, len - postfix_len);
++		strlcpy(dir_buffer, dir, len - postfix_len + 1);
+ 
+ 		/* are we inside the default work tree? */
+ 		rel = get_relative_cwd(buffer, sizeof(buffer), dir_buffer);
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.rc3.139.ga57724
