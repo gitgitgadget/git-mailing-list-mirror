@@ -1,70 +1,102 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: multiple checked out branches
-Date: Thu, 2 Aug 2007 19:16:08 +0200
-Message-ID: <8b65902a0708021016j4eb11577v8da5bd67df58adea@mail.gmail.com>
-References: <20070801220435.GA19226@raptus.dandreoli.com>
-	 <Pine.LNX.4.64.0708012309010.28202@beast.quantumfyre.co.uk>
-	 <20070802000217.GA20018@raptus.dandreoli.com>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Thu, 2 Aug 2007 19:22:25 +0200
+Message-ID: <20070802172225.GR29424@schiele.dyndns.org>
+References: <86bqdqkygp.fsf@lola.quinscape.zz> <20070802140011.GN29424@schiele.dyndns.org> <86sl72j9vn.fsf@lola.quinscape.zz> <20070802161902.GP29424@schiele.dyndns.org> <Pine.LNX.4.64.0708021804090.14781@racer.site>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="v9g2r9e2kvGs7M7R"
 Cc: git@vger.kernel.org
-To: "Domenico Andreoli" <cavokz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 19:16:19 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 19:22:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGeHY-0006HV-7m
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:16:16 +0200
+	id 1IGeNe-0000NM-A2
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:22:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbXHBRQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 13:16:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbXHBRQL
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:16:11 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:58633 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbXHBRQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 13:16:09 -0400
-Received: by an-out-0708.google.com with SMTP id d31so113063and
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 10:16:09 -0700 (PDT)
+	id S1752968AbXHBRWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 13:22:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXHBRWa
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:22:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:22178 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752968AbXHBRW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 13:22:29 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so154809nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 10:22:28 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ti+FbiwKM1IZots4n5Cpklb9+kPl0rufw2d+IC6roY/mDKIUQ9XFwz3KO2wpqaCKS5FhlK1BTIHovAeKDJfKrmyRiNyKyHa6+iIsiAERtZrkxPA/FSW9doJvcCvN7yMUD//MSeVsqZvlL0TE1Zpw0nT6Zi36rKlWS5QLmLaL+uc=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=ioKuSdkx5yLmuEciapJ3ZZQm0zb1nY+M4PVgvVdn+PymEijzeUokegkRZmyVz/ObJn7nR5FcHrAzh1zHjRSa1LPLIj6cm++uYj1RhgQtecaEiUlKsBe8I7CTDW5ot2+NDWTD/iQranvkFd19LKfbFuNPyTX79DuTidaF6nWptes=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SqZrnDO50Qh2qW1t8Ch8LzZR8WnStbkYpsSfluTcY3WttmebwZdCiCEwzPF4M708Bznj3Oe6Vs4Qq0FaW+bdUOTen4HuAHRaUw086QQyn8XyrcR7KtwUQbvGlWgvK+2k/UTUjgx5WCdHStiLrZ47xaZH7rorupyU31PHypc2oLI=
-Received: by 10.100.32.1 with SMTP id f1mr1260830anf.1186074968833;
-        Thu, 02 Aug 2007 10:16:08 -0700 (PDT)
-Received: by 10.100.44.8 with HTTP; Thu, 2 Aug 2007 10:16:08 -0700 (PDT)
-In-Reply-To: <20070802000217.GA20018@raptus.dandreoli.com>
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=aprVcidLhZF9/ZOvswl7/lHJdNxbufN8Z2cQOUUb7yTq7NdESb3F/ZDxoO1++SzNleOo3xnQsgSZLSkhWjBpFR0wZ5GLBGW/wK40MA4WLPu1wpitWGNftMvuEUZoLgosHxssE+MUsvpJEjZ7kAkLNiz+dKot8R/NIcQYfYF/ZKo=
+Received: by 10.86.60.7 with SMTP id i7mr1531701fga.1186075348414;
+        Thu, 02 Aug 2007 10:22:28 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id i5sm6860079mue.2007.08.02.10.22.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 10:22:27 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 33EF1C0D900; Thu,  2 Aug 2007 19:22:26 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708021804090.14781@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54574>
 
-On 8/2/07, Domenico Andreoli <cavokz@gmail.com> wrote:
-> On Wed, Aug 01, 2007 at 11:19:25PM +0100, Julian Phillips wrote:
-> The actual problem is that switching form a branch to another makes
-> my autotools fuck and I have to rebuild stuff all the time. My box is
-> still a faint-hearted single core...
 
-I encounter same problem. Actually, I did full rebuild every time
-(which is counter-productive). But, reading at your mail, I have an
-other idea: what about the "remote" compilation offered by autotools?
+--v9g2r9e2kvGs7M7R
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Normally, autotools are design in such way that you can share the same
-source for different configuration. To do this, simply create one
-"build" directory per branch, go to this directory and do:
-../configure && make
+On Thu, Aug 02, 2007 at 06:05:00PM +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 2 Aug 2007, Robert Schiele wrote:
+>=20
+> > On Thu, Aug 02, 2007 at 04:20:44PM +0200, David Kastrup wrote:
+> > > Sigh.  It's in Posix.
+> >=20
+> > It is in latest POSIX but latest POSIX is not in Solaris.
+>=20
+> It has been a really long standing tradition in git development to not=20
+> care about POSIX if it disagrees with reality.  A good tradition.
 
-I'm unable to try it now, so I express now all my "confuses" if it was
-a bad idea.
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+Sure.  I mean if Solaris was really a system nobody uses nowadays there wou=
+ld
+be no reason to care about it but it actually still is one of the mayor
+platforms availlable and thus not supporting it would be quite stupid.
+
+It would actually draw away my interest (and most likely the one of many
+others) from git since I need a system that works on _all_ systems we suppo=
+rt.
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--v9g2r9e2kvGs7M7R
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGshLRxcDFxyGNGNcRAhYTAJ9Kpa7MhG7d0GwuzAoanVj63rJlBQCgnY3e
+1n+/yjuv3bncXpriHmw1U3s=
+=1IJ6
+-----END PGP SIGNATURE-----
+
+--v9g2r9e2kvGs7M7R--
