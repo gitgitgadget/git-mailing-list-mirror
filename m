@@ -1,73 +1,72 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: Git User's Survey 2007 - web survey site
-Date: Thu, 2 Aug 2007 15:04:19 +0200
-Message-ID: <4d8e3fd30708020604m2a1e31cdm221700069af76d84@mail.gmail.com>
-References: <200707250358.58637.jnareb@gmail.com>
-	 <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
-	 <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
-	 <200707311835.03197.jnareb@gmail.com>
-	 <4d8e3fd30707311207q7ec48559n3ff091253085cb47@mail.gmail.com>
-	 <46a038f90708012151m468bbea0i51b95dc6ca0d9375@mail.gmail.com>
+From: Joel Reed <joelwreed@gmail.com>
+Subject: Re: git-diff on touched files: bug or feature?
+Date: Thu, 2 Aug 2007 09:25:41 -0400
+Message-ID: <20070802132541.GA9247@localdomain>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net> <vpq4pji3zwm.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021315510.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 15:04:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 02 15:17:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGaLq-0004bJ-B6
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 15:04:26 +0200
+	id 1IGaYg-0001Yk-5w
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 15:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbXHBNEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 09:04:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbXHBNEV
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 09:04:21 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:5831 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148AbXHBNEU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 09:04:20 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so193784nze
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 06:04:20 -0700 (PDT)
+	id S1754393AbXHBNRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 09:17:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbXHBNRh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 09:17:37 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:11176 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754393AbXHBNRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 09:17:36 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so449738wxd
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 06:17:35 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FSXkm87bvL7DUI4RZDT9KAD0sKVaCe4tp0EhCD1Xz4IzRzKZDqGAOJBqnMrpGWhLEJ3tkUQZf8a7sOKY5khPCZ/Ky0guf+GOOclNy8di84rMU/NVvS5ksI/J5HEGULk36WInYl6DV+oQjTQrsh1UvHN92TDeBUPD8SUUfp/sCAk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=d9XGmZ0NIcSZiGVWngxJBmYglHxhbdGl6IygBN/CER94pqdRzZdaz3LksPkYWS7KKh8ys1qA5dD9x01FBo6Dk/LrLSyIonE47lTh885ekK+8tpZceOLnWp0Xl48eFQ0qd9Yz4jNTbPGS7dJTgZ7d7SfOxx77GqA6sY0CvvTCj1Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Lt6FBaJPJ/VCdoleaZa5npU/OXvtsJf1qyJxcjOOJVnc9SQsvYDdhh9zuAn197VT2rQyt2FP+p2n6dy2jpgOIGjCrqUbZxs1Z975+UkbXOZLYqyI8oGMTNfohTzkhblHLsXo9eJMBbIYT628Wq+stYcvZ3ZrEFx0g2U+kmzim8c=
-Received: by 10.142.222.21 with SMTP id u21mr84430wfg.1186059859425;
-        Thu, 02 Aug 2007 06:04:19 -0700 (PDT)
-Received: by 10.143.163.10 with HTTP; Thu, 2 Aug 2007 06:04:19 -0700 (PDT)
-In-Reply-To: <46a038f90708012151m468bbea0i51b95dc6ca0d9375@mail.gmail.com>
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=Wub9hXqEgurxiX48wPVI0eOATThJXcFEz258zf/Wf6aDgBhHXgpOHOvFvDgN2IcglrH2S3Fy2EPiI6TTNR4kR5Qj79K32PSWUKVJgKx6YpOE2nssqycLJSpZewXIt8KHGxaetUyjj74NZryv81CLruQZY+skxDMimdJb+qxCS/Y=
+Received: by 10.90.63.16 with SMTP id l16mr1763670aga.1186060655847;
+        Thu, 02 Aug 2007 06:17:35 -0700 (PDT)
+Received: from localhost ( [12.108.121.5])
+        by mx.google.com with ESMTPS id 62sm2190783wri.2007.08.02.06.17.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 06:17:34 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708021315510.14781@racer.site>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54549>
 
-On 8/2/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > When I wrote the first survey Martin Langhoff help me in getting the
-> > data into the site.
-> > Maybe he can help us this time too (Martin CC'ed ;-)
->
-> Did I? ;-)
+On Thu, Aug 02, 2007 at 01:19:55PM +0100, Johannes Schindelin wrote:
 
-Yes!
+<snip>
 
-> I don't remember what I did -- survey.net is supposed to be quite
-> self-service. Isn't your survey still there? Anyway, let me know what
-> I can help with.
->
+> For performance reasons, git always compares the files' stat information 
+> with that stored in the index.
+> 
+> By updating the file, you make that check fail always.
+> 
+> Without updating the index (which is not a read-only operation, and 
+> therefore must not be done when doing a read-only operation like diff), 
+> you will therefore _destroy_ the main reason of git's kick-ass 
+> performance.
 
-I still have access to survey.net (you created the account for me ;-),
-if you don't mind I'll change the details and share the account with Jakub.
+The idea that read-only operation like diff shouldn't update the
+index makes a lot of sense.
 
-Regards,
+But, as a user of git and not a git developer, I certainly _thought_
+that git-status was a read-only operation as well. Now I know it
+isn't, but this doesn't seem very consistent.
 
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+jr
