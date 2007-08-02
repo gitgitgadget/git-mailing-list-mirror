@@ -1,58 +1,62 @@
-From: Allan Wind <allan_wind@lifeintegrity.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Thu, 2 Aug 2007 00:02:01 -0400
-Message-ID: <20070802040201.GI23484@lifeintegrity.com>
-References: <200708010216.59750.jnareb@gmail.com> <alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org> <7vodhrby6f.fsf@assigned-by-dhcp.cox.net> <20070801092428.GB28106@thunk.org> <7vr6mn5znm.fsf@assigned-by-dhcp.cox.net> <20070801220350.GD28106@thunk.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Git User's Survey 2007 - web survey site
+Date: Thu, 2 Aug 2007 16:51:28 +1200
+Message-ID: <46a038f90708012151m468bbea0i51b95dc6ca0d9375@mail.gmail.com>
+References: <200707250358.58637.jnareb@gmail.com>
+	 <4d8e3fd30707310433m24f5fc89hd2053cafbfac7cd8@mail.gmail.com>
+	 <8fe92b430707310530y555bae6dw11e4a4ea5d6934b0@mail.gmail.com>
+	 <200707311835.03197.jnareb@gmail.com>
+	 <4d8e3fd30707311207q7ec48559n3ff091253085cb47@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 02 06:25:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 06:52:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGSFl-0003Jx-CX
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 06:25:37 +0200
+	id 1IGSfY-0000F2-1E
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 06:52:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbXHBEZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 00:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbXHBEZX
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 00:25:23 -0400
-Received: from vs690.rosehosting.com ([209.135.157.90]:56125 "EHLO
-	lifeintegrity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbXHBEZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 00:25:21 -0400
-X-Greylist: delayed 1397 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Aug 2007 00:25:21 EDT
-Received: from viento.lifeintegrity.com (pool-71-184-95-212.bstnma.fios.verizon.net [71.184.95.212])
-	by submission.lifeintegrity.com (Postfix) with ESMTP id B5DB8D5C927;
-	Thu,  2 Aug 2007 04:02:02 +0000 (UTC)
-Received: by viento.lifeintegrity.com (Postfix, from userid 1000)
-	id 5379B24821B; Thu,  2 Aug 2007 00:02:01 -0400 (EDT)
-Mail-Followup-To: Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1754290AbXHBEvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 00:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754274AbXHBEvc
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 00:51:32 -0400
+Received: from wx-out-0506.google.com ([66.249.82.237]:12671 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290AbXHBEva (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 00:51:30 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so361306wxd
+        for <git@vger.kernel.org>; Wed, 01 Aug 2007 21:51:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sDD1uecTGElvBD5qUABlwPE9r9yUGbjYScxQ70T8deZz+kVEOT0FBWvXdX4mTtvOCQMPtXAdxC+DjmkFKvIBec+I3FS5c14OmaUgv70XzLp/X9CSkalBPrkTzKuXiatJM7cWVwxt8wdvAGUUsjhb4JZ2LM/OKIwSrrlc38ueBEI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WM+zKWOv0tIM3srSGBrKWR1+z5FeZLUZeG9PUdINUFTIKhnGNVVB9CMDuUi6B6nBFBAUJHtYGLPwO7+lA4BIWEvcTrpamxC9diZXcd7pOoaBNquix5EeTtczLrcEUAMbwqVX8wovgUIa1GQM1d029GQJ2eIRtKS1cV4Q+ovFsh8=
+Received: by 10.90.103.2 with SMTP id a2mr1403332agc.1186030288913;
+        Wed, 01 Aug 2007 21:51:28 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Wed, 1 Aug 2007 21:51:28 -0700 (PDT)
+In-Reply-To: <4d8e3fd30707311207q7ec48559n3ff091253085cb47@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070801220350.GD28106@thunk.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54512>
 
-On 2007-08-01T18:03:50-0400, Theodore Tso wrote:
-> Yeah, essentially, with a git-config option (and comand-line option)
-> to override the default for those people who are "squeamish" about git
-> clone -l.  Linus's suggestion of using file:// as a way to indicate
-> non-local also makes a lot of sense to me.
+> When I wrote the first survey Martin Langhoff help me in getting the
+> data into the site.
+> Maybe he can help us this time too (Martin CC'ed ;-)
 
-I would expect /something and file:///something to behave exactly the 
-same way (the latter just having bit extra syntax sugar).
+Did I? ;-)
+
+I don't remember what I did -- survey.net is supposed to be quite
+self-service. Isn't your survey still there? Anyway, let me know what
+I can help with.
 
 
-/Allan
+martin
