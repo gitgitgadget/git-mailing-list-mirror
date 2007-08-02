@@ -1,77 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git clone error
-Date: Thu, 2 Aug 2007 18:08:54 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708021806510.14781@racer.site>
-References: <C2D74FA8.2C06%denbuen@sandia.gov>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: multiple checked out branches
+Date: Thu, 2 Aug 2007 19:16:08 +0200
+Message-ID: <8b65902a0708021016j4eb11577v8da5bd67df58adea@mail.gmail.com>
+References: <20070801220435.GA19226@raptus.dandreoli.com>
+	 <Pine.LNX.4.64.0708012309010.28202@beast.quantumfyre.co.uk>
+	 <20070802000217.GA20018@raptus.dandreoli.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Denis Bueno <denbuen@sandia.gov>
-X-From: git-owner@vger.kernel.org Thu Aug 02 19:09:28 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Domenico Andreoli" <cavokz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 19:16:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGeAx-0003da-Ae
-	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:09:27 +0200
+	id 1IGeHY-0006HV-7m
+	for gcvg-git@gmane.org; Thu, 02 Aug 2007 19:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968AbXHBRJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 13:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752486AbXHBRJX
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:09:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51078 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751862AbXHBRJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 13:09:23 -0400
-Received: (qmail invoked by alias); 02 Aug 2007 17:09:21 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp019) with SMTP; 02 Aug 2007 19:09:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+4AzouVAe4l8DlkEoRgqYogvFyl7EawJ5it2iTc5
-	pAuKIFlq6yey/f
-X-X-Sender: gene099@racer.site
-In-Reply-To: <C2D74FA8.2C06%denbuen@sandia.gov>
-X-Y-GMX-Trusted: 0
+	id S1753107AbXHBRQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 13:16:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbXHBRQL
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 13:16:11 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:58633 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210AbXHBRQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 13:16:09 -0400
+Received: by an-out-0708.google.com with SMTP id d31so113063and
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 10:16:09 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ti+FbiwKM1IZots4n5Cpklb9+kPl0rufw2d+IC6roY/mDKIUQ9XFwz3KO2wpqaCKS5FhlK1BTIHovAeKDJfKrmyRiNyKyHa6+iIsiAERtZrkxPA/FSW9doJvcCvN7yMUD//MSeVsqZvlL0TE1Zpw0nT6Zi36rKlWS5QLmLaL+uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SqZrnDO50Qh2qW1t8Ch8LzZR8WnStbkYpsSfluTcY3WttmebwZdCiCEwzPF4M708Bznj3Oe6Vs4Qq0FaW+bdUOTen4HuAHRaUw086QQyn8XyrcR7KtwUQbvGlWgvK+2k/UTUjgx5WCdHStiLrZ47xaZH7rorupyU31PHypc2oLI=
+Received: by 10.100.32.1 with SMTP id f1mr1260830anf.1186074968833;
+        Thu, 02 Aug 2007 10:16:08 -0700 (PDT)
+Received: by 10.100.44.8 with HTTP; Thu, 2 Aug 2007 10:16:08 -0700 (PDT)
+In-Reply-To: <20070802000217.GA20018@raptus.dandreoli.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54573>
 
-Hi,
+On 8/2/07, Domenico Andreoli <cavokz@gmail.com> wrote:
+> On Wed, Aug 01, 2007 at 11:19:25PM +0100, Julian Phillips wrote:
+> The actual problem is that switching form a branch to another makes
+> my autotools fuck and I have to rebuild stuff all the time. My box is
+> still a faint-hearted single core...
 
-On Thu, 2 Aug 2007, Denis Bueno wrote:
+I encounter same problem. Actually, I did full rebuild every time
+(which is counter-productive). But, reading at your mail, I have an
+other idea: what about the "remote" compilation offered by autotools?
 
-> On 08/01/2007 15:12, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> wrote:
-> >> How difficult would it be to create a new git repo which is exactly the same
-> >> minus the initial condor-uninstall.sh commit?  That is, just to pretend the
-> >> initial import of condor-uninstall.sh never existed, and use the second
-> >> commit of the old repo the first commit of the new, and preserve the rest of
-> >> the history of the entire repo?
-> > 
-> > That would be even easier.  Just graft "nothingness" as parent of the
-> > second commit:
-> > 
-> > $ git rev-parse <second-commit> >> .git/info/grafts
-> 
-> I must be misunderstanding:
-> 
->     scripts[] > git fsck --full
->     error: b28b949a1a3c8eb37ca6eefd024508fa8b253429: object corrupt or
-> missing
->     missing blob b28b949a1a3c8eb37ca6eefd024508fa8b253429
-> 
->     # b2... should fill in your <second-commit>?
+Normally, autotools are design in such way that you can share the same
+source for different configuration. To do this, simply create one
+"build" directory per branch, go to this directory and do:
+../configure && make
 
-Ah no.  Linus diagnosed that this blob is your condor-uninstall script in 
-your initial commit.  You should be able to get at it by calling "git log 
---root" and taking the last commit.  Just to make sure, "git show 
-<first-commit>:bla/condor-uninstall.sh" should fail miserably, mentioning 
-a corrupt blob.
-
-The second commit I was referring to is the second last commit in the "git 
-log --root" output.
-
-Hth,
-Dscho
+I'm unable to try it now, so I express now all my "confuses" if it was
+a bad idea.
+-- 
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
