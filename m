@@ -1,116 +1,102 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Fri, 3 Aug 2007 08:48:13 +0200
-Message-ID: <2FEBD7A5-9932-4636-955D-F7E258F8E56E@zib.de>
-References: <46AFCF3E.5010805@alum.mit.edu>  <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com>  <46B1F96B.7050107@alum.mit.edu> <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com> <Pine.LNX.4.64.0708030454200.14781@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
+Date: Thu, 2 Aug 2007 23:56:00 -0700
+Message-ID: <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
-	git@vger.kernel.org, users@cvs2svn.tigris.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 03 08:50:07 2007
+Cc: <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 08:56:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGqz8-0004gx-Gx
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 08:50:06 +0200
+	id 1IGr52-0006I5-I2
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 08:56:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438AbXHCGty (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 02:49:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756518AbXHCGty
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 02:49:54 -0400
-Received: from mailer.zib.de ([130.73.108.11]:56403 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756321AbXHCGtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 02:49:53 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l736lMQA014666;
-	Fri, 3 Aug 2007 08:49:42 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l736lKRu008640
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 3 Aug 2007 08:47:21 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0708030454200.14781@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757156AbXHCG4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 02:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757102AbXHCG4H
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 02:56:07 -0400
+Received: from qb-out-0506.google.com ([72.14.204.236]:28775 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757025AbXHCG4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 02:56:04 -0400
+Received: by qb-out-0506.google.com with SMTP id e11so851646qbe
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 23:56:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=jyrKQSOv4rydlWZDXazoxu55msMHKLc7ddxX3yNWYeJvYiic/gVUBB8isOXqRtKVEX05/TipqBMvqe6SrpXGqkJjzsRQgEH1QXsHcQyrgcstqEqRtaC3d4UbY8QQuwcnTsoyVSdPeFCxuD8ZBnRbWI4BOI1WtOduRIzgtFvutJE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=suIt8mOaJ9L/Ka3uceeJGXny3ueZ6zIPTFQSV3ws+6mVwMWVjwPU7omVU5WFFWGTGoH8ndhrjuJDVlx5zqYXR0TPb/bnRnaF27X5268xDptrE7AAqFbxn9aFwuKWt8MoBAdgIbQ6S6A0e2ztZb5MCTiCf+XZ98ux59ZDbaJ+oOQ=
+Received: by 10.141.155.5 with SMTP id h5mr956010rvo.1186124163602;
+        Thu, 02 Aug 2007 23:56:03 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id k5sm2554052rvb.2007.08.02.23.56.00
+        (version=SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 23:56:01 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708022206130.14781@racer.site>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54678>
+
+Great job! Because finding and installing MSys, MinGW and dependencies was not trivial at all.
+I have 2 suggestions for this package:
+1. Remove git repository from it. It will make a download much smaller (~20MB smaller) and include the minimum git functionality to 
+pull mingw git from the server (may be even automatically on first startup).
+2. Add gdb. Not much could be done without it.
+
+With this package (+gdb) it took me about an hour to figure out why git is broken on Vista (this includes learning how to use gdb 
+:-). So you should expect much higher level of participation on the Windows side.
+
+P.S. If package becomes sufficiently small for a single file, try to remove 7zip dependency (use WinZip instead). The easier the 
+installation the better.
+
+- Dmitry
+----- Original Message ----- 
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Newsgroups: gmane.comp.version-control.git
+To: <git@vger.kernel.org>
+Sent: Thursday, 2 August 2007 14:23
+Subject: Git on MSys (or how to make it easy for Windows users to compile git)
 
 
-On Aug 3, 2007, at 6:03 AM, Johannes Schindelin wrote:
+Hi,
 
-> On Fri, 3 Aug 2007, Martin Langhoff wrote:
->
->> On 8/3/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> cvsps is not a conversion tool at all, though it is used by other
->>> conversion tools to generate the changesets.  It appears (I hope  
->>> I am
->>> not misinterpreting things) to emphasize speed and incremental
->>> operation, for example attempting to make changesets consistent  
->>> from one
->>> run to the next, even if the CVS repository has been changed  
->>> prudently
->>> between runs.  cvsps does not appear to attempt to create atomic  
->>> branch
->>> and tag creation commits or handle CVS's special vendorbranch  
->>> behavior.
->>>  cvsps operates via the CVS protocol; you don't need filesystem  
->>> access
->>> to the CVS repository.
->>
->> 100% in agreement. And though I can't claim to be happy with  
->> cvsps, in
->> many scenarios it is mighty useful, in spite of its significant  
->> warts.
->>  The "does incrementals" is hugely important these days, as lots of
->> people use git to run "vendor branches" of upstream projects that use
->> CVS.
->
-> Me too: 100% agreement.  A couple of people seem to be content to  
-> proclaim
-> that their incomplete solutions are better, but in the end of the day,
-> they are as bad as the programs they purport to replace: incomplete.
->
-> For the moment, I help myself with tracking the different branches
-> individually, but there, really, git-cvsimport is as good as the other
-> "solutions", with the further advantage that they are actually  
-> hackable,
-> and not closed to everybody outside a very small community.
+I finally broke down, waiting for the sourceforge project to get granted.
+In the meantime, I registered a project at
 
-I just want to add a warning. You should be suspicious of branched  
-imported
-using git-cvsimport (which is based on cvsps). If the time the branch is
-created differs from the time of the first commit to the branch git- 
-cvsimport
-may get the branching point wrong. This introduces a race condition.  
-Someone
-may have committed changes to a file that is later changed on the  
-branch. At
-that point the history of the imported branch is broken and git reports
-_wrong_ changesets.
+http://code.google.com/p/msysgit/
 
-I ran into this issue and abandoned the use of git-cvsimport. It's  
-too dangerous
-for me. The testcase in [1] illustrates the problem. I still strongly  
-believe
-the warning should be stated in *BOLD* in the documentation.
+(WARNING: temporary only!)
 
-I'm not saying git-cvsimport is useless. But you should be suspicious  
-about
-the result of the import, especially if you plan to rely on  
-changesets derived
-from the imported repo, for example if you plan to do cherry-picking  
-or merging
-in git; or if you plan to blame people for their stupid changes based  
-on what
-you see in gitk (almost happend to me ;).
+Would you believe that Google code has a restriction to 20MB per file, and
+100MB in total, and you cannot remove files?  The same Google that gives
+you 1TB mail space and counting?  Yes, it is ludicrous.
 
-	Steffen
+Anyway, you can get a complete Development environment in 3 files (because
+one would be too large), and... oh well, just read what is written on the
+website if you're really interested.
 
-[1] http://marc.info/?l=git&m=118260312708709&w=2
+The plan is to move to Source forget ;-) when they finally approve the
+project, or stay with Google, should they decide to lift the quota a bit.
+
+Dmitry already reported a buglet preventing gcc to run without changes on
+Vista, his theory is that the infamous access() function is at fault.  So
+if you are unlucky enough to be stuck with Vista, just copy
+msysGit/mingw/libexec/gcc/mingw32/3.4.2/cc1.exe to msysGit/mingw/bin/ and
+you're set.
+
+Ciao,
+Dscho
