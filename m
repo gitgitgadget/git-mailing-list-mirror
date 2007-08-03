@@ -1,81 +1,61 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: bug in t3700-add.sh?
-Date: Fri, 3 Aug 2007 16:51:37 -0400
-Message-ID: <fcaeb9bf0708031351g5e585a4bj849fbf2ec3720a18@mail.gmail.com>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
+Date: Fri, 3 Aug 2007 14:14:15 -0700
+Message-ID: <5AB2AD5AE96F4C2DAAE83AD66341C6E8@ntdev.corp.microsoft.com>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>  <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>  <46B2D4D9.4020103@trolltech.com> <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com> <Pine.LNX.4.64.0708031240450.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Sixt" <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Aug 03 22:51:48 2007
+Cc: "Marius Storm-Olsen" <marius@trolltech.com>, <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 23:14:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH47a-0001w2-79
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 22:51:42 +0200
+	id 1IH4Ta-0000Tb-Gr
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761544AbXHCUvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 16:51:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761345AbXHCUvj
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 16:51:39 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:65101 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760960AbXHCUvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 16:51:38 -0400
-Received: by an-out-0708.google.com with SMTP id d31so179280and
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 13:51:37 -0700 (PDT)
+	id S1763516AbXHCVOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 17:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763970AbXHCVOW
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:14:22 -0400
+Received: from qb-out-0506.google.com ([72.14.204.235]:5916 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763516AbXHCVOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 17:14:18 -0400
+Received: by qb-out-0506.google.com with SMTP id e11so1067476qbe
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 14:14:17 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=gmGn8Uqe9VU65l2milTpsLcY1aSIj3fxPHOqW66JNa8lxpMSH0y2gFlcltKBYsdjIOAQaYaERog3wmkw6sfuGY6A1ElAPAsKd8xzy4ozfa8a9O6lq8DT0SjqujtVNxCKUFOixtTJUiaOlzZJnD6s0If6A+uG2OCO1530HqQWh84=
+        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=AH+XlDndg1ThG9paztPWNfB021MBIeDYdHAvIU0gqpSdOv4ZTXTszKDmExPObKGynbmAzGUWMxcOXZ1/AkRDJJNet00i/Pn+Ag+m2ee0LG9xN3ba7rnMv/SvO6a4hvCno2YKsaLp6jSgOJiNqdxFDteLSDZTQuTnATWAQvVEjac=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=YlKbn8N5cj0w+Oe/y83WXgJHZf9nqGKhxihb4kJy3hWAokANjvLrovrL6eGLwxDb2M8qgShW+Q6z69lGDYcXJK8V2H1UpOtMbSSy2N5cv7gLBxyMFqKu8NEbbZ3SZS1axh4GqYz638pfMmW2hEEO6lAQzQ5cWzLmYVyk4nTLKr8=
-Received: by 10.100.174.16 with SMTP id w16mr1947685ane.1186174297427;
-        Fri, 03 Aug 2007 13:51:37 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Fri, 3 Aug 2007 13:51:37 -0700 (PDT)
-Content-Disposition: inline
+        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=XmXRPDID/XjxfZF3GFWmyjhJenJoEXm3anFS7jLi0Ggyc5oGGCu+k587mJqCqz8jFNCk/9GMBRz/5BW9KALJndggHrHJDsZzkR5l/QCJ+1smDP3iqmESdoBaFuJFH7xYJrOa4vlmvvcipff9S21/+uqzoRDXLyU4edX9QzeMcsw=
+Received: by 10.115.79.1 with SMTP id g1mr3369595wal.1186175656746;
+        Fri, 03 Aug 2007 14:14:16 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id y11sm6621059pod.2007.08.03.14.14.15
+        (version=SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2007 14:14:16 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708031240450.14781@racer.site>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54757>
 
-Hi,
+> With Vista fix you mean both adding the USE_MINGW_ACCESS define and 
+> copying cc1.exe to /bin?
 
-Running test 17, I got this output:
+Only the first one. I didn't copy cc1.exe because it could affect non-Vista users in a negative way.
 
-* expecting success:
-        git rm --cached -f file symlink &&
-        (
-                echo "100644 $(git hash-object -w stage1) 1     file"
-                echo "100755 $(git hash-object -w stage2) 2     file"
-                echo "100644 $(printf $s | git hash-object -w -t blob
---stdin) 1        symlink"
-                echo "120000 $(printf $s | git hash-object -w -t blob
---stdin) 2        symlink"
-        ) | git update-index --index-info &&
-        git config core.filemode 0 &&
-        git config core.symlinks 0 &&
-        echo new > file &&
-        echo new > symlink &&
-        git add file symlink &&
-        git ls-files --stage | grep "^100755 .* 0       file$" &&
-        git ls-files --stage | grep "^120000 .* 0       symlink$"
-
-rm 'file'
-rm 'symlink'
-printf: usage: printf [-v var] format [arguments]
-printf: usage: printf [-v var] format [arguments]
-100755 3e757656cf36eca53338e520d134963a44f793f8 0       file
-120000 3e757656cf36eca53338e520d134963a44f793f8 0       symlink
-*   ok 17: git add with filemode=0, symlinks=0 prefers stage 2 over stage 1
-
-I don't know if "printf $s" was intentional because $s was empty and
-caused printf to print out help usage. I have feeling that there is
-something wrong here. Anyone can clarify?
-
-Johannes Sixt CC'd as he added this code.
--- 
-Duy
+- Dmitry
