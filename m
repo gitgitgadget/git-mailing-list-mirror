@@ -1,78 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: RPMs for latest release
-Date: Fri, 3 Aug 2007 14:36:09 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708031433080.8184@woody.linux-foundation.org>
-References: <46B38125.9060805@centurytel.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Fri, 03 Aug 2007 14:50:15 -0700
+Message-ID: <7v1wekmgo8.fsf@assigned-by-dhcp.cox.net>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708031121000.14781@racer.site>
+	<7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
+	<vpqps24i9sx.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: rdavid274 <rdavid274@centurytel.net>
-X-From: git-owner@vger.kernel.org Fri Aug 03 23:36:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 23:50:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH4oq-0007L2-52
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:36:24 +0200
+	id 1IH52L-000369-L4
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763021AbXHCVgU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 17:36:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762453AbXHCVgU
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:36:20 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49794 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762834AbXHCVgT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 17:36:19 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73LaE7D029969
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 3 Aug 2007 14:36:15 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73La9Mt028928;
-	Fri, 3 Aug 2007 14:36:09 -0700
-In-Reply-To: <46B38125.9060805@centurytel.net>
-X-Spam-Status: No, hits=-2.715 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: lf$Revision: 1.184 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1762101AbXHCVuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 17:50:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762003AbXHCVuR
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:50:17 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49720 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761605AbXHCVuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 17:50:16 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070803215014.VVEQ23215.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 3 Aug 2007 17:50:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XZqE1X00g1kojtg0000000; Fri, 03 Aug 2007 17:50:15 -0400
+In-Reply-To: <vpqps24i9sx.fsf@bauges.imag.fr> (Matthieu Moy's message of "Fri,
+	03 Aug 2007 23:32:14 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54765>
 
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
+> Also, is there any particular reason not to update the index stat
+> information when files are found to be identical?
 
-On Fri, 3 Aug 2007, rdavid274 wrote:
->
-> Downloaded the 10 rpms necessary for a complete install however, there is NO
-> single rpm that is independent of the other rpms.
-> 
-> Every rpm that I have downloaded depends on at 1 other rpm to have been
-> already installed.
-> 
-> So, how does a newbie deal with this issue?
+Very much --- diff is a read-only operation.
 
-You should be able to do
-
-	rpm -Uvh <list-all-rpms-here>
-
-and be all good.
-
-In other words, if you have dependencies, you need to resolve all the 
-dependencies in one go by listing the packages together.
-
-Of course, you could also just force rpm to ignore dependencies (the 
-"--nodeps" flag, iirc), but that's usually a bad idea - it just means that 
-you will be all the more likely to have a non-working setup because you 
-forgot some package or other, and since you told rpm to ignore it, it 
-won't tell you.
-
-That said, most rpm distros tend to make things much easier for you by 
-letting you just run "yum", which will do all of this for you, and then 
-you can generally just do
-
-	yum install git
-
-and it will download all packages and install them by dependencies.
-
-			Linus
+"git-status $args" on the other hand is a preview of "what would
+happen if I say 'git-commit $args'", and in order to compute
+that, you would fundamentally need to be able to write into the
+object store.  In a special case of giving empty $args it can be
+read-only.  The commit Dscho quoted earlier was to hack that
+around so that "git-status" can pretend to be a read-only
+operation in a repository you do not have write permission to.
