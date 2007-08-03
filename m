@@ -1,94 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Fri, 3 Aug 2007 14:37:30 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708031434360.14781@racer.site>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site> 
- <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com> 
- <46B2D4D9.4020103@trolltech.com> <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
- <Pine.LNX.4.64.0708031243330.14781@racer.site> <Pine.LNX.4.64.0708031347160.14781@racer.site>
- <46B32981.9040904@trolltech.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Forcing rewrite of files in working tree
+Date: Fri, 3 Aug 2007 14:39:28 +0100
+Message-ID: <200708031439.29721.andyparkins@gmail.com>
+References: <200708031345.47127.andyparkins@gmail.com> <46B3268C.7060707@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 15:38:09 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Rogan Dawes <lists@dawes.za.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 03 15:39:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGxLx-000709-CL
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 15:38:05 +0200
+	id 1IGxNS-0007ZJ-Sw
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 15:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759042AbXHCNiC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 09:38:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758647AbXHCNiC
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 09:38:02 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42058 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758313AbXHCNiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 09:38:00 -0400
-Received: (qmail invoked by alias); 03 Aug 2007 13:37:59 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp028) with SMTP; 03 Aug 2007 15:37:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ac/cVQkgaBwa0eIgEAWilpTznNhaXQY2sn/NFD0
-	rD5ZvKSircw6Td
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46B32981.9040904@trolltech.com>
-X-Y-GMX-Trusted: 0
+	id S1760955AbXHCNjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 09:39:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760936AbXHCNjg
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 09:39:36 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:10177 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759884AbXHCNjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 09:39:35 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so462474ugf
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 06:39:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gybDnjgL1h7MUbtihrrm8i6KRM2TrbpXC6LdnZ/IdUXX2fMQ/ek3G4ygQaXOd41DaaV2S/wvtD+Ijul3lfjqeZGUcxMb7sN6aadLMO0y6rC0iC/x4vZGGg0Odz4piMKFPo8oqmRsm28UXcbmsdvVepYRQaW+uFucPkIIwWfGpu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=cwhc+qQiEq2CzkDA3htyVxW1Rl10UujaI6we56uEBLzL5yifg7fuGEBv/o6UHr3cx/l26x9oSsHMXGLii+6tmaR5vrv/Hj8cXf13owO6MmaOQ4ZOOxx82z2ebFMdyGDK8azY4xcUfHPsv8H+vO4b2Q411EsiO0Ovu9R8NWI1fOI=
+Received: by 10.67.28.9 with SMTP id f9mr2933474ugj.1186148374008;
+        Fri, 03 Aug 2007 06:39:34 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id y34sm6369746iky.2007.08.03.06.39.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2007 06:39:32 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <46B3268C.7060707@dawes.za.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54727>
 
-Hi,
+On Friday 2007 August 03, Rogan Dawes wrote:
 
-On Fri, 3 Aug 2007, Marius Storm-Olsen wrote:
+> > The only method I've found is to delete the file in the work tree then do
+> > git-checkout again.  Even with -f, if the file is not changed git doesn't
+> > perform a checkout again, so git-checkout -f is not sufficient.  I assume
+> > I can do what I want with some clever plumbing, but I don't know any
+> > plumbing. :-)
+>
+> $ git reset --hard
 
-> > > Completely forgot: we might want to do something like this at the end of
-> > > /etc/profile:
-> > > 
-> > > 	test ! -d /git || {
-> > > 		mv /git $HOME/ &&
-> > > 		cd $HOME/git &&
-> > > 		make install &&
-> > > 		git config remote.origin.url \
-> > > 			git://repo.or.cz/git/mingw.git
-> > > 		git config remote.origin.fetch \
-> > > 			'+refs/heads/*:refs/remotes/origin/*'
-> > > 		git config remote.mob.url \
-> > > 			repo.or.cz:/srv/git/git/mingw.git
-> > > 		git config remote.mob.fetch \
-> > > 			+refs/remote/mob:refs/remotes/origin/mob
-> > > 		git config remote.mob.push \
-> > > 			master:mob
-> > > 		git fetch
-> > > 		git reset 51785010a4d3e7f6c3
-> > > 	}
-> > > 
-> > > Please test that, and include it if it works.
-> 
-> Hmmm, I have trouble 'parsing' this.
-> You meant
->     test ! -d $HOME/git ||
-> right?
-> 
-> But, given that he removed the initial git sources, the script won't work. He
-> left the git executables to be able to check a new Git out, if I understand
-> correctly.
+I think that that suffers the same as "git-checkout -f"; if it doesn't see 
+changes then it doesn't reread.  Also, it's not possible to do per-file:
 
-I ended up doing it differently.  I test for $HOME/bin/git.exe, and if it 
-does not exist, the whole compiling && installing && fetching is done.
+$ git reset --hard HEAD somefile.txt
+Cannot do partial --hard reset.
 
-Actually, I found out by debugging why it did not work as intended that 
-commit 5178501 was a commit _I_ made, from experimental patches Hannes 
-sent to the list.
+Which is a necessity really; I don't want to accidentally overwrite work 
+that's not yet checked in in the rest of the tree.
 
-I updated it to origin/devel + patches.
+Is git-checkout-index the thing I'm looking for?  I'm wondering if the "-n" 
+switch is the trick?
 
-Hopefully these patches will be cleaned up, and submitted to Hannes (hint, 
-hint).
 
-Ciao,
-Dscho
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
