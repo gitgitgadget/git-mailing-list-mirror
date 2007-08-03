@@ -1,85 +1,89 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: [PATCH] gitweb: Provide RSS feeds for file history
-Date: Thu, 2 Aug 2007 22:05:55 -0400
-Message-ID: <20070803020555.GB8593@dervierte>
-Reply-To: stevenrwalter@gmail.com
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Fri, 3 Aug 2007 04:28:28 +0200
+Message-ID: <20070803022828.GY29424@schiele.dyndns.org>
+References: <7vsl71tyyq.fsf@assigned-by-dhcp.cox.net> <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <20070802214103.GT29424@schiele.dyndns.org> <85vebxy47e.fsf@lola.goethe.zz> <7vwswdsfjp.fsf@assigned-by-dhcp.cox.net> <85ps25y1ac.fsf@lola.goethe.zz> <7vk5sdscfr.fsf@assigned-by-dhcp.cox.net> <85wswdwjll.fsf@lola.goethe.zz>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jnareb@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 03 04:06:34 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="1Wg5Vd7si6EhrIHA"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 03 04:29:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGmYV-0006sk-Dz
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 04:06:21 +0200
+	id 1IGmuW-000385-T0
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 04:29:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759342AbXHCCGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 22:06:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759189AbXHCCGB
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 22:06:01 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:16130 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758741AbXHCCGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 22:06:00 -0400
-Received: by py-out-1112.google.com with SMTP id d32so1186869pye
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 19:05:59 -0700 (PDT)
+	id S1758315AbXHCC2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 22:28:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759043AbXHCC2h
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 22:28:37 -0400
+Received: from mu-out-0910.google.com ([209.85.134.188]:59341 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758315AbXHCC2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 22:28:36 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so864431mue
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 19:28:34 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-mimetrack:user-agent;
-        b=HVR05JFN524EYUXX6unfEJtgUo/Xjfpqg01VLsE8mCSjLDhvo1/KnQdTWVGTKynBmVSXV0gmvYe584E39HiLq4wCKV7cworHEOpGnkUb/xiRz8Y+siJ4TLthfnuKBq7Xp29Hr55ncSiaEPLc+RJplXpBMjxAg2YXmwa2xj4i+gk=
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=gZupAnO4CcarNoOxaX3kMBPlWItQ0sK2h2AhD8gnm6oxcqkjm3MVFohobWPuzXuDV+EWmwNOK+2d2+QQ9Ci+UMvCg5TBLJCMpQkxVf8CuGMPjtwFpHKpIoRXQTpgAXvyFCBcehbFzruA2+rw78Go5osCB3/4SdH4JJ03XaLPLU4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-mimetrack:user-agent;
-        b=NPR/kr3pWGhZCkqB1HnW5d5aFsnDVDP/8/dwI8rBD1N0F5yRJX+0WMuqL4sXeoj6jqP1xuVKfRQDxUIhBI4gamfRkPoA2M6bYjVGJJpImg0Kgrmjygi1NPA2qbvbELZR+FknmgL5dAj3Ya1nQgub4QV9YI/3n2YxhAu2Ui7UrXc=
-Received: by 10.35.117.5 with SMTP id u5mr3878941pym.1186106759146;
-        Thu, 02 Aug 2007 19:05:59 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [74.140.216.190])
-        by mx.google.com with ESMTPS id 18sm9785744nzo.2007.08.02.19.05.57
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=dIS63PHNLHRgX9d0VCo+QBNE1luvyIV1l21ONn3T9CeOwNhetJf3f8xb5fnmuQlH0w63wanzGl0evUql4A22oB/Dv/EJhtj5qfmKkz0wlzwLNvf4nwol5ncykXqeflAUb72HD5pBqVP+/V//g6p05zWBGhRwAK9umvIsCpYENSE=
+Received: by 10.86.74.15 with SMTP id w15mr1878165fga.1186108113758;
+        Thu, 02 Aug 2007 19:28:33 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.91.135])
+        by mx.google.com with ESMTPS id b17sm5267029fka.2007.08.02.19.28.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2007 19:05:57 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id C1FB1BBF587; Thu,  2 Aug 2007 22:05:55 -0400 (EDT)
+        Thu, 02 Aug 2007 19:28:30 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 999CFC112CF; Fri,  3 Aug 2007 04:28:28 +0200 (CEST)
 Content-Disposition: inline
-X-MIMETrack: Itemize by SMTP Server on smtp5b/Lex/Lexmark (Release 6.5.5|November 30, 2005) at 08/02/2007 13:17:14, Serialize by Router on smtp5b/Lex/Lexmark (Release 6.5.5|November 30, 2005) at 08/02/2007 13:30:32, Serialize complete at 08/02/2007 13:30:32
+In-Reply-To: <85wswdwjll.fsf@lola.goethe.zz>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54660>
-
-If git_feed is provided a file name, it ought to show only the history
-affecting that file.  The title was already being set correctly, but all
-commits from history were being shown anyway.
----
- gitweb/gitweb.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 498b936..26932a4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -611,6 +611,7 @@ sub href(%) {
- 	my %mapping = @mapping;
- 
- 	$params{'project'} = $project unless exists $params{'project'};
-+	$params{'file_name'} = $file_name unless exists $params{'file_name'};
- 
- 	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
- 	if ($use_pathinfo) {
-@@ -5365,7 +5366,7 @@ sub git_feed {
- 
- 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
- 	my $head = $hash || 'HEAD';
--	my @commitlist = parse_commits($head, 150);
-+	my @commitlist = parse_commits($head, 150, 0, "--full-history", $file_name);
- 
- 	my %latest_commit;
- 	my %latest_date;
--- 
-1.5.2.3
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54661>
 
 
--- 
--Steven Walter <swalter@lexmark.com>
+--1Wg5Vd7si6EhrIHA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Aug 03, 2007 at 02:24:38AM +0200, David Kastrup wrote:
+> The situation is that we currently don't avoid the former.  Robert
+> said that he had prepared a patch that would do so.
+>=20
+> It would make sense to either encourage him to present his patch
+
+Well, if you want to see it, just tell me.  Do you want to have it with or
+without the arithmetic replacements I did as well?
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--1Wg5Vd7si6EhrIHA
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGspLMxcDFxyGNGNcRAhlXAJ4ujApG2VJ34MLW/LXu+irMS3p7bACfbUCK
+QxziJssnYBLSSdNBVvSIMkA=
+=7ohy
+-----END PGP SIGNATURE-----
+
+--1Wg5Vd7si6EhrIHA--
