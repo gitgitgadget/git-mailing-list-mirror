@@ -1,56 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Fri, 3 Aug 2007 04:24:36 -0400
-Message-ID: <20070803082435.GA15475@coredump.intra.peff.net>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net> <7v1wemxnkk.fsf@assigned-by-dhcp.cox.net> <vpqzm1a2l72.fsf@bauges.imag.fr> <7vy7gtvhgc.fsf@assigned-by-dhcp.cox.net> <20070803070407.GA17287@coredump.intra.peff.net> <7vr6mlnj4g.fsf@assigned-by-dhcp.cox.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Fri, 03 Aug 2007 10:36:03 +0200
+Message-ID: <46B2E8F3.30301@alum.mit.edu>
+References: <46AFCF3E.5010805@alum.mit.edu>	 <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com>	 <46B1F96B.7050107@alum.mit.edu> <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 10:24:58 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGsSo-0005jK-GW
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 10:24:50 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760163AbXHCIYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 04:24:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760108AbXHCIYm
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 04:24:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1537 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759468AbXHCIYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 04:24:40 -0400
-Received: (qmail 12828 invoked from network); 3 Aug 2007 08:24:40 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 3 Aug 2007 08:24:40 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Aug 2007 04:24:36 -0400
-Content-Disposition: inline
-In-Reply-To: <7vr6mlnj4g.fsf@assigned-by-dhcp.cox.net>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>, git@vger.kernel.org,
+        users@cvs2svn.tigris.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: users-return-1612-gcvscu-users=m.gmane.org@cvs2svn.tigris.org Fri Aug 03 10:36:12 2007
+Return-path: <users-return-1612-gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscu-users@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IGsdn-0000st-Rx
+	for gcvscu-users@gmane.org; Fri, 03 Aug 2007 10:36:12 +0200
+Received: (qmail 9388 invoked by uid 5000); 3 Aug 2007 08:36:09 -0000
+Mailing-List: contact users-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54689>
+list-help: <mailto:users-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:users-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:users@cvs2svn.tigris.org>
+Delivered-To: mailing list users@cvs2svn.tigris.org
+Received: (qmail 9378 invoked from network); 3 Aug 2007 08:36:08 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAJaFskbAbSoIlGdsb2JhbACOEQEBAgcKBwg
+X-IronPort-AV: i="4.19,216,1183359600"; 
+   d="scan'208"; a="78902612:sNHT18955580"
+X-IRONPORT: SCANNED
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
+In-Reply-To: <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54690>
 
-On Fri, Aug 03, 2007 at 12:59:43AM -0700, Junio C Hamano wrote:
+Martin Langhoff wrote:
+> Is there any way we can run tweak cvs2svn to run incrementals, even if
+> not as fast as cvsps/git-cvsimport? The "do it remotely" part can be
+> worked around in most cases.
 
-> On the other hand, if your workflow is "work on one thing at a
-> time, and never make partial commits", then your diff tends to
-> be small and more focused to begin with, and you can afford to
-> care about "touched but ended up unmodified".  Interestingly, it
+I don't see any fundamental reason why not, but I think it would be a
+significant amount of work.  There are two main issues:
 
-In an ideal world, I would work that way. But often you uncover a bug in
-existing code while writing new code, and you want to make that bugfix a
-separate commit. I generally make a partial commit to stash the bugfix
-and test it individually. Without making a partial commit, how would you
-split the bugfix changes from the working changes?  Or do you manually
-pull the bugfix into another branch or working tree?
+1. With CVS, it is possible to change things retroactively, such as
+changing which version of a file is included in a tag, or adding a new
+file to a tag, or changing whether a file is text vs. binary.  And many
+people copy and/or rename files within the CVS repository itself (to get
+around CVS's inability to rename a file).  This makes it look like the
+file has *always* existed under the new name and *never* existed under
+the old name.  An incremental conversion tool would have to look
+carefully for such changes and either handle them properly or complain
+loudly and abort.
 
-There is one point you didn't address from my original mail which I
-would be curious to hear your take on. In your workflow, how do you
-remind yourself that there are untracked files that need to be added? Do
-you just wait until you see the commit template at the end?
+2. cvs2svn uses a lot of repository-wide information to make decisions
+about how to group CVSItems into changesets, and a lot of these
+decisions are based on heuristics.  Incremental conversion would require
+that the decisions made in one cvs2svn run are recorded and treated as
+unalterable in subsequent runs.
 
--Peff
+This hasn't been a priority in the Subversion world, because, frankly,
+what reason would a person have to stick with CVS instead of switching
+to Subversion, given that (1) they are intentionally so similar in
+workflow, an (2) there is no significant competition from other
+centralized SCMs?  But of course until the distributed SCM playing field
+has been thinned out a bit, people will probably be reluctant to commit
+to one or the other.
+
+I don't expect to have time to implement incremental conversions in
+cvs2svn in the near future.  (I'd much rather work on output back ends
+to other distributed SCMs.)  But if any volunteers step forward (hint,
+hint) I would be happy to help them get started and answer their
+questions.  I think that cvs2svn is quite hackable now, so the learning
+curve is hopefully much less frightening than when I started on the
+project :-)
+
+Michael
