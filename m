@@ -1,88 +1,67 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
-Date: Fri, 3 Aug 2007 02:58:16 -0700
-Message-ID: <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
-	 <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>
-	 <46B2D4D9.4020103@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when
+ contents are unchanged
+Date: Fri, 3 Aug 2007 11:23:21 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708031121000.14781@racer.site>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+ <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site>
+ <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>
+ <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site>
+ <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site>
+ <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Marius Storm-Olsen" <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 11:58:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 12:23:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGtvJ-0000dy-E9
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 11:58:21 +0200
+	id 1IGuK4-0007b2-Bb
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 12:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758316AbXHCJ6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 05:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758238AbXHCJ6S
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 05:58:18 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:62594 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758232AbXHCJ6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 05:58:17 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so637668rvb
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 02:58:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Yeo+Z7iSy+sVL6QVDn1BPDQMJoLKav9fpp6xs8ifWWqdDsEB4dMfzKbo9WUiJXtrtOAj91EKKywx+qv8q5fTq8tJkZlP0V9YDFerQ8+m6Pg5B05Wx545WKQA+pMEUxaxo6E2ZUL3yqVYLDe1iP92ErNuPCEqQqnEwY6ztJFg+yo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gN791lbymbTjn7a/teQiAFIDwTcV6iwHpEmJgE0DDN1iWinRNBp1sP8da78876/tKQuNJauISdFflhyeThNulgIBPJTfIbTNDJRlnL9f1oYSsQn8Br5qdyoNm2TQLTeKIXtGOGDeJzX0E3ud9DBDggUReupxKWS5HYMUDa/yDkk=
-Received: by 10.141.87.13 with SMTP id p13mr614307rvl.1186135096668;
-        Fri, 03 Aug 2007 02:58:16 -0700 (PDT)
-Received: by 10.141.2.18 with HTTP; Fri, 3 Aug 2007 02:58:16 -0700 (PDT)
-In-Reply-To: <46B2D4D9.4020103@trolltech.com>
-Content-Disposition: inline
+	id S1759067AbXHCKXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 06:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758967AbXHCKXz
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 06:23:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35317 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758917AbXHCKXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 06:23:54 -0400
+Received: (qmail invoked by alias); 03 Aug 2007 10:23:52 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp048) with SMTP; 03 Aug 2007 12:23:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+NNlhDd9mNLua1ocq5UlTOzzOIdA6pkp6+rDAjkN
+	PK9kA37xxGg4UD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54702>
 
-Fair enough.
-Johannes, please add me as a user to this Google project and I'll
-upload the files.
-The changes that I've made:
-* removed .git in /git directory to save space
-* installed gdb
-* applied my Vista fix
-* made self-extracting .rar archive
+Hi,
 
-Tatal size is 19+4 MB.
+On Thu, 2 Aug 2007, Junio C Hamano wrote:
 
-- Dmitry
+> Steven Grimm <koreth@midwinter.com> writes:
+> 
+> > 	Okay, enough arguing about whether the empty diff lines are
+> > 	useful or not -- here's a patch to get rid of them.
+> 
+> I do not think this addresses anything but -p (i.e. textual
+> diff) output.  If we _were_ to really do this, I think the patch
+> I sent earlier today, with possible improvements I suggested,
+> would be a better direction to go.
 
-On 8/3/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> Dmitry Kakurin said the following on 03.08.2007 08:56:
-> > Great job! Because finding and installing MSys, MinGW and dependencies was not trivial at all.
-> > I have 2 suggestions for this package:
-> > 1. Remove git repository from it. It will make a download much smaller (~20MB smaller) and include the minimum git functionality to
-> > pull mingw git from the server (may be even automatically on first startup).
-> > 2. Add gdb. Not much could be done without it.
-> >
-> > With this package (+gdb) it took me about an hour to figure out why git is broken on Vista (this includes learning how to use gdb
-> > :-). So you should expect much higher level of participation on the Windows side.
-> >
-> > P.S. If package becomes sufficiently small for a single file, try to remove 7zip dependency (use WinZip instead). The easier the
-> > installation the better.
->
-> Heh, why don't you try to do this yourself? Johannes as kind enough to
-> go out of his way to actually do all that he has already.
-> Seems like you feel strongly for it, so it shouldn't be too much
-> effort for you. If you provide Johannes with a link to a package of
-> which you speak, I'm sure he'll happily upload it to the google
-> project page.
->
-> --
-> .marius
->
->
->
+But I'd really think that what should be done (if anything has to be done 
+at all) is to introduce a config variable which triggers the same logic in 
+git-diff as was introduced in 2b5f9a8c0cff511f2bb0833b1ee02645b79323f4.
+
+Ciao,
+Dscho
