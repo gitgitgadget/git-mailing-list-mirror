@@ -1,273 +1,122 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] git-commit.sh: Shell script cleanup
-Date: Thu, 2 Aug 2007 13:40:04 +0200
-Message-ID: <86odhphtp9.fsf@lola.quinscape.zz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Provide RSS feeds for file history
+Date: Fri, 3 Aug 2007 11:10:55 +0200
+Message-ID: <200708031110.55969.jnareb@gmail.com>
+References: <20070803020555.GB8593@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 03 11:08:09 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Robert Fitzsimons <robfitz@273k.net>
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 11:11:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGt8i-0002TY-Ja
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 11:08:09 +0200
+	id 1IGtBc-0003RL-5E
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 11:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756434AbXHCJIA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 05:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756301AbXHCJIA
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 05:08:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:39936 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756183AbXHCJH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 05:07:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IGt8X-0006lU-Ib
-	for git@vger.kernel.org; Fri, 03 Aug 2007 11:07:57 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 11:07:57 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 11:07:57 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:oFzz+0vmUmjcLKKNFFkr18h6I1o=
+	id S1756495AbXHCJLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 05:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756659AbXHCJLE
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 05:11:04 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:23668 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756323AbXHCJLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 05:11:01 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so205374nfb
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 02:11:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=m1JKjzUnK9AEK16woY0ortZXDvQBHHP6RMheg1a7O4p4xog3znf/79mWrQOFDbGPU4UNswrIAW/XbSd7Sjm6OhRwWPbUSjMD9+AbQGXr/Us20o3UiDw9gSUr8hQ6WJr1KbXudX7n6FDRKMcZuLIFQAVryOJrjsoZkUR/vMzFjNM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WzXZ552wsu0akMc3UddOOIYKdQF15miafq/NnnHpoknim2a0PYcBQXJy0NLq4uJIV3lhFrCi+OSeRMFguQq7nAobkcdhlt3jKYiPG0EggpsWTjtFOV8fhpkwiNTx1Z+zCsXUw1HIupG8UKlihJENz4/lsFaSgDrs90huUuhkC98=
+Received: by 10.86.28.5 with SMTP id b5mr2108227fgb.1186132259534;
+        Fri, 03 Aug 2007 02:10:59 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id 28sm5869447fkx.2007.08.03.02.10.57
+        (version=SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2007 02:10:57 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070803020555.GB8593@dervierte>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54697>
 
+Steven Walter wrote:
 
-This moves "shift" out of the argument processing "case".  It also
-replaces quite a bit of expr calls with ${parameter#word} constructs,
-and uses ${parameter:+word} for avoiding conditionals where possible.
+Nak. Explanation below. Corrected patch will follow.
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- git-commit.sh |   72 +++++++++++---------------------------------------------
- 1 files changed, 14 insertions(+), 58 deletions(-)
+> If git_feed is provided a file name, it ought to show only the history
+> affecting that file.  The title was already being set correctly, but all
+> commits from history were being shown anyway.
 
-diff --git a/git-commit.sh b/git-commit.sh
-index d7e7028..7d5c8f9 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -97,101 +97,71 @@ do
- 		no_edit=t
- 		log_given=t$log_given
- 		logfile="$1"
--		shift
- 		;;
- 	-F*|-f*)
- 		no_edit=t
- 		log_given=t$log_given
--		logfile=`expr "z$1" : 'z-[Ff]\(.*\)'`
--		shift
-+		logfile="${1#-?}"
- 		;;
- 	--F=*|--f=*|--fi=*|--fil=*|--file=*)
- 		no_edit=t
- 		log_given=t$log_given
--		logfile=`expr "z$1" : 'z-[^=]*=\(.*\)'`
--		shift
-+		logfile="${1#*=}"
- 		;;
- 	-a|--a|--al|--all)
- 		all=t
--		shift
- 		;;
- 	--au=*|--aut=*|--auth=*|--autho=*|--author=*)
--		force_author=`expr "z$1" : 'z-[^=]*=\(.*\)'`
--		shift
-+		force_author="${1#*=}"
- 		;;
- 	--au|--aut|--auth|--autho|--author)
- 		case "$#" in 1) usage ;; esac
- 		shift
- 		force_author="$1"
--		shift
- 		;;
- 	-e|--e|--ed|--edi|--edit)
- 		edit_flag=t
--		shift
- 		;;
- 	-i|--i|--in|--inc|--incl|--inclu|--includ|--include)
- 		also=t
--		shift
- 		;;
- 	--int|--inte|--inter|--intera|--interac|--interact|--interacti|\
- 	--interactiv|--interactive)
- 		interactive=t
--		shift
- 		;;
- 	-o|--o|--on|--onl|--only)
- 		only=t
--		shift
- 		;;
- 	-m|--m|--me|--mes|--mess|--messa|--messag|--message)
- 		case "$#" in 1) usage ;; esac
- 		shift
- 		log_given=m$log_given
--		if test "$log_message" = ''
--		then
--		    log_message="$1"
--		else
--		    log_message="$log_message
-+		log_message="${log_message:+${log_message}
- 
--$1"
--		fi
-+}$1"
- 		no_edit=t
--		shift
- 		;;
- 	-m*)
- 		log_given=m$log_given
--		if test "$log_message" = ''
--		then
--		    log_message=`expr "z$1" : 'z-m\(.*\)'`
--		else
--		    log_message="$log_message
-+		log_message="${log_message:+${log_message}
- 
--`expr "z$1" : 'z-m\(.*\)'`"
--		fi
-+}${1#-m}"
- 		no_edit=t
--		shift
- 		;;
- 	--m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
- 		log_given=m$log_given
--		if test "$log_message" = ''
--		then
--		    log_message=`expr "z$1" : 'z-[^=]*=\(.*\)'`
--		else
--		    log_message="$log_message
-+		log_message="${log_message:+${log_message}
- 
--`expr "z$1" : 'zq-[^=]*=\(.*\)'`"
--		fi
-+}${1#*=}"
- 		no_edit=t
--		shift
- 		;;
- 	-n|--n|--no|--no-|--no-v|--no-ve|--no-ver|--no-veri|--no-verif|\
- 	--no-verify)
- 		verify=
--		shift
- 		;;
- 	--a|--am|--ame|--amen|--amend)
- 		amend=t
- 		use_commit=HEAD
--		shift
- 		;;
- 	-c)
- 		case "$#" in 1) usage ;; esac
-@@ -199,15 +169,13 @@ $1"
- 		log_given=t$log_given
- 		use_commit="$1"
- 		no_edit=
--		shift
- 		;;
- 	--ree=*|--reed=*|--reedi=*|--reedit=*|--reedit-=*|--reedit-m=*|\
- 	--reedit-me=*|--reedit-mes=*|--reedit-mess=*|--reedit-messa=*|\
- 	--reedit-messag=*|--reedit-message=*)
- 		log_given=t$log_given
--		use_commit=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+		use_commit="${1#*=}"
- 		no_edit=
--		shift
- 		;;
- 	--ree|--reed|--reedi|--reedit|--reedit-|--reedit-m|--reedit-me|\
- 	--reedit-mes|--reedit-mess|--reedit-messa|--reedit-messag|\
-@@ -217,7 +185,6 @@ $1"
- 		log_given=t$log_given
- 		use_commit="$1"
- 		no_edit=
--		shift
- 		;;
- 	-C)
- 		case "$#" in 1) usage ;; esac
-@@ -225,15 +192,13 @@ $1"
- 		log_given=t$log_given
- 		use_commit="$1"
- 		no_edit=t
--		shift
- 		;;
- 	--reu=*|--reus=*|--reuse=*|--reuse-=*|--reuse-m=*|--reuse-me=*|\
- 	--reuse-mes=*|--reuse-mess=*|--reuse-messa=*|--reuse-messag=*|\
- 	--reuse-message=*)
- 		log_given=t$log_given
--		use_commit=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+		use_commit="${1#*=}"
- 		no_edit=t
--		shift
- 		;;
- 	--reu|--reus|--reuse|--reuse-|--reuse-m|--reuse-me|--reuse-mes|\
- 	--reuse-mess|--reuse-messa|--reuse-messag|--reuse-message)
-@@ -242,32 +207,26 @@ $1"
- 		log_given=t$log_given
- 		use_commit="$1"
- 		no_edit=t
--		shift
- 		;;
- 	-s|--s|--si|--sig|--sign|--signo|--signof|--signoff)
- 		signoff=t
--		shift
- 		;;
- 	-t|--t|--te|--tem|--temp|--templ|--templa|--templat|--template)
- 		case "$#" in 1) usage ;; esac
- 		shift
- 		templatefile="$1"
- 		no_edit=
--		shift
- 		;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		quiet=t
--		shift
- 		;;
- 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
- 		verbose=t
--		shift
- 		;;
- 	-u|--u|--un|--unt|--untr|--untra|--untrac|--untrack|--untracke|\
- 	--untracked|--untracked-|--untracked-f|--untracked-fi|--untracked-fil|\
- 	--untracked-file|--untracked-files)
- 		untracked_files=t
--		shift
- 		;;
- 	--)
- 		shift
-@@ -280,6 +239,7 @@ $1"
- 		break
- 		;;
- 	esac
-+	shift
- done
- case "$edit_flag" in t) no_edit= ;; esac
- 
-@@ -437,12 +397,8 @@ esac
- 
- if test t = "$verify" && test -x "$GIT_DIR"/hooks/pre-commit
- then
--	if test "$TMP_INDEX"
--	then
--		GIT_INDEX_FILE="$TMP_INDEX" "$GIT_DIR"/hooks/pre-commit
--	else
--		GIT_INDEX_FILE="$USE_INDEX" "$GIT_DIR"/hooks/pre-commit
--	fi || exit
-+    GIT_INDEX_FILE="${TMP_INDEX:-${USE_INDEX}}" "$GIT_DIR"/hooks/pre-commit \
-+    || exit
- fi
- 
- if test "$log_message" != ''
--- 
-1.5.3.rc3.129.g974f
+This is a bug introduced while changing gitweb (among others git_feed
+subroutine) to use parse_commits, in commit b6093a5c. Earlier it worked.
+So the explanation (in commit message) is not full.
 
+By the way it affects not only RSS but also Atom feeds.
 
+Documentation/SubmittingPatches:
+
+  Checklist (and a short version for the impatient):
+
+        Commits:
+
+  [...]
+
+        - if you want your work included in git.git, add a
+          "Signed-off-by: Your Name <your@email.com>" line to the
+          commit message (or just use the option "-s" when
+          committing) to confirm that you agree to the Developer's
+          Certificate of Origin
+
+> ---
+>  gitweb/gitweb.perl |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 498b936..26932a4 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -611,6 +611,7 @@ sub href(%) {
+>  	my %mapping = @mapping;
+>  
+>  	$params{'project'} = $project unless exists $params{'project'};
+> +	$params{'file_name'} = $file_name unless exists $params{'file_name'};
+>  
+>  	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+>  	if ($use_pathinfo) {
+
+This is a big, intrusive change. It makes 'file_name' default argument,
+unless overriden. While it made sense for 'project' parameter, as almost
+all URLs in gitweb needed it, more than half URLs does not need 'file_name'
+parameter. And some of those URLs are present in a views which do use
+'file_name'.
+
+If you wanted alternative URLs for a feed preserve 'file_name' parameter,
+do it explicitely.
+
+> @@ -5365,7 +5366,7 @@ sub git_feed {
+>  
+>  	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
+>  	my $head = $hash || 'HEAD';
+> -	my @commitlist = parse_commits($head, 150);
+> +	my @commitlist = parse_commits($head, 150, 0, "--full-history", $file_name);
+>  
+>  	my %latest_commit;
+>  	my %latest_date;
+
+I'd rather not use "--full-history" for feeds. We use it in the 'history'
+view for backward compatibility reasons; I'd rather leave it for extra
+options in the feed.
 
 -- 
-David Kastrup
+Jakub Narebski
+Poland
