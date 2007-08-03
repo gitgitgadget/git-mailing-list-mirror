@@ -1,73 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-diff on touched files: bug or feature?
-Date: Fri, 03 Aug 2007 01:57:43 -0700
-Message-ID: <7vir7xngfs.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net>
-	<7v1wemxnkk.fsf@assigned-by-dhcp.cox.net>
-	<vpqzm1a2l72.fsf@bauges.imag.fr>
-	<7vy7gtvhgc.fsf@assigned-by-dhcp.cox.net>
-	<20070803070407.GA17287@coredump.intra.peff.net>
-	<7vr6mlnj4g.fsf@assigned-by-dhcp.cox.net>
-	<20070803082435.GA15475@coredump.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
+Date: Fri, 03 Aug 2007 10:59:39 +0200
+Message-ID: <vpq4pjh3sec.fsf@bauges.imag.fr>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 03 10:57:50 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 11:00:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGsyi-0007gq-O4
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 10:57:49 +0200
+	id 1IGt0x-0008Mr-Ml
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 11:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755718AbXHCI5p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 04:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755714AbXHCI5p
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 04:57:45 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:43855 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755597AbXHCI5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 04:57:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070803085743.CMUJ14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 3 Aug 2007 04:57:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id XLxj1X0041kojtg0000000; Fri, 03 Aug 2007 04:57:43 -0400
-In-Reply-To: <20070803082435.GA15475@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 3 Aug 2007 04:24:36 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755980AbXHCJAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 05:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755938AbXHCJAE
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 05:00:04 -0400
+Received: from imag.imag.fr ([129.88.30.1]:53331 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754575AbXHCJAB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 05:00:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l738xeRD020077
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 3 Aug 2007 10:59:40 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IGt0V-000672-LS; Fri, 03 Aug 2007 10:59:39 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IGt0V-0000we-J7; Fri, 03 Aug 2007 10:59:39 +0200
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0708022206130.14781@racer.site> (Johannes Schindelin's message of "Thu\, 2 Aug 2007 22\:23\:36 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 03 Aug 2007 10:59:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54695>
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Without making a partial commit, how would you split the
-> bugfix changes from the working changes?  Or do you manually
-> pull the bugfix into another branch or working tree?
+> The plan is to move to Source forget ;-) when they finally approve the 
+> project, or stay with Google, should they decide to lift the quota a bit.
 
-I typically stash the WIP away with "git diff HEAD >P.diff &&
-git reset --hard" (I should learn to use "git stash" these
-days), and switch to an appropriate branch for bugfix (if it is
-generally applicable) or stay on the branch (if it is a fix-up
-for an earlier patch for the topic) to work on the fix.  Then
-unstash to continue where I left off.
+You can also have a look at https://gna.org/ (a Savannah-like
+non-commercial project hosting).
 
-> In your workflow, how do you
-> remind yourself that there are untracked files that need to be added? Do
-> you just wait until you see the commit template at the end?
-
-I do not leave files that need to be added untracked for a long
-time.  Also, I tend to be picky about making sure that (1)
-things build from scratch, and that (2) "make clean" removes all
-crufts.  Because of this, I run "make clean" followed by "git
-clean -n" more often than other people.  The latter picks them
-up if I forget to add them when I created them.
+-- 
+Matthieu
