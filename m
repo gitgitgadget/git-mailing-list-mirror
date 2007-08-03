@@ -1,285 +1,137 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Thu, 2 Aug 2007 22:37:18 -0700
-Message-ID: <20070803053717.GA16379@midwinter.com>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Fix unterminated string in set_work_tree and improve error handling
+Date: Fri, 3 Aug 2007 07:47:24 +0200
+Message-ID: <81b0412b0708022247s1116f66al1e8751f33bcae581@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 03 07:37:37 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_65026_10730913.1186120044120"
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 07:48:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGpqy-0004l1-3G
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 07:37:36 +0200
+	id 1IGq1L-0006k6-ML
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 07:48:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463AbXHCFhU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 01:37:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbXHCFhU
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 01:37:20 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:37218 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1753361AbXHCFhT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 01:37:19 -0400
-Received: (qmail 16999 invoked by uid 1001); 3 Aug 2007 05:37:18 -0000
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708021614420.14781@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757025AbXHCFrk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 01:47:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756928AbXHCFrb
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 01:47:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:62376 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756185AbXHCFr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 01:47:26 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so194066nfb
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 22:47:24 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=fy4mBWeEFBMuy0nTQHsPMfsOEmhj3hRYBKVLOEws8LBt24KUobinLKPpFL6qSisGJiy2+3I6TxNn+1Gh8ydn7DmCOQT+jfriaPDmWqLw721T4UvGvb+PU7Ups+SZcRfH33vzACjS9Gky8nCqUdiuQ651igAYcQl6sE/QOF5/JBc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=Wrwx1YKA0OH4cA6mE7Y558iBoV6B3V/md3JcJwHHX6kK/DPfGj/UNbngafcONNxfUT6slyayeEBdk29iM6RLMjN1XnWTezg/heaC3BHfmZRIeocpU6LWgFV5f3S9Z9kboYlAeOURD6E/BzhS07ZeJ2PTCE4UjjoPLgQ9nvJMqU4=
+Received: by 10.78.37.7 with SMTP id k7mr728983huk.1186120044148;
+        Thu, 02 Aug 2007 22:47:24 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Thu, 2 Aug 2007 22:47:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54669>
 
-The default is now to not show the diff --git header line if the file's
-timestamp has changed but the contents and/or file mode haven't.
+------=_Part_65026_10730913.1186120044120
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
+Also, check if it fits in the temporary dir_buffer and can be chdir-ed into.
+Die for errors.
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
+ setup.c |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-	Okay, enough arguing about whether the empty diff lines are
-	useful or not -- here's a patch to get rid of them.
+On 8/3/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+> > Junio C Hamano, Thu, Aug 02, 2007 23:58:41 +0200:
+> >> "Alex Riesen" <raa.lkml@gmail.com> writes:
+> >> > +          if (chdir(dir))
+> >> > +                  rel = NULL;
+> > ...
+> >>
+> >> Shouldn't it die() instead, though?
+> >
+> > Dunno. Don't like dying.
+>
+> I do not understand your reasoning.  Why is it better to use
+> mysteriously truncated path, which may result in doing something
+> the user did not ask you to, rather than saying "No, my
+> temporary buffer is not equipped to handle such an insanely long
+> pathname"?
 
-	This passes all the existing "diff" tests, with one minor tweak
-	to the symlink test (since it expected the old behavior.)
-	If someone can find a case where this will spit out an actual
-	diff but not the "diff --git" line, please tell me how to make
-	that happen. The code *looks* like it has such a path, but I was
-	unable to make it happen in my ad-hoc testing and it doesn't
-	happen in any of the existing diff test cases.
+AFAIU, it is not only a truncated path which is a problem for chdir,
+but any failure to chdir, for any reason. And, if I understand
+set_work_tree returning NULL correctly (I assign rel NULL,
+which should be returned) - it is an error, and can be handled in
+the caller. But...
+Hmm... Looking at the code again, rel==NULL just means there
+is no prefix! You're right, better let it die.
 
-	Personally I'm in favor of doing away with the option altogether
-	and having the code always work the way it works by default with
-	this patch, but if some people find the old behavior useful they
-	can still get at it with the new option.
+> >> Consolidating two of your patches, would this be Ok?
+> >
+> > Yes, but you may consider replacing strncpy with strlcpy:
+> >
+> >> +            memcpy(dir_buffer, dir, len - suffix_len);
+> >> +            dir_buffer[len - suffix_len] = '\0';
+> >
+> > strlcpy(dir_buffer, dir, len - suffix_len + 1);
+>
+> Does that buy us that much?  Before going to that codepath, we
+> have made sure the result fits, haven't we?
 
-	My xmalloc() call allocates a few more bytes than strictly
-	needed, but I found it was less readable to subtract out the
-	space taken by the "%s" tokens in the format string.
+No, we haven't. The code just checks if the given work tree path
+is longer than "/.git", to be able to cut off that safely.
 
- Documentation/diff-options.txt |    4 ++
- diff.c                         |   46 ++++++++++++++++++++++++++----
- diff.h                         |    3 +-
- t/t4011-diff-symlink.sh        |    2 +-
- t/t4021-diff-untouched.sh      |   61 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 108 insertions(+), 8 deletions(-)
- create mode 100755 t/t4021-diff-untouched.sh
+------=_Part_65026_10730913.1186120044120
+Content-Type: text/plain; 
+	name=0001-Check-if-the-given-dir-fits-in-the-temporary-dir_buffe.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f4w9axc9
+Content-Disposition: attachment; filename="0001-Check-if-the-given-dir-fits-in-the-temporary-dir_buffe.txt"
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 228ccaf..12ad048 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -185,5 +185,9 @@
- --no-ext-diff::
- 	Disallow external diff drivers.
- 
-+--show-touched::
-+	Display the "diff --git" message for files whose modification
-+	timestamps have changed, even if the contents don't differ.
-+
- For more detailed explanation on these common options, see also
- link:diffcore.html[diffcore documentation].
-diff --git a/diff.c b/diff.c
-index a5fc56b..e1112e5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1260,6 +1260,9 @@ static const char *diff_funcname_pattern(struct diff_filespec *one)
- 	return NULL;
- }
- 
-+/* The message that gets printed at the top of a file's diffs */
-+#define DIFF_MESSAGE_FORMAT_STRING "%sdiff --git %s %s%s\n"
-+
- static void builtin_diff(const char *name_a,
- 			 const char *name_b,
- 			 struct diff_filespec *one,
-@@ -1268,6 +1271,7 @@ static void builtin_diff(const char *name_a,
- 			 struct diff_options *o,
- 			 int complete_rewrite)
- {
-+	char *diff_message;
- 	mmfile_t mf1, mf2;
- 	const char *lbl[2];
- 	char *a_one, *b_two;
-@@ -1278,25 +1282,50 @@ static void builtin_diff(const char *name_a,
- 	b_two = quote_two("b/", name_b + (*name_b == '/'));
- 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
- 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
--	printf("%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-+
-+	/*
-+	 * Generate the "diff --git" status message. By default we only
-+	 * show it if we have a difference to display, but the user can
-+	 * optionally choose to show it for all files that we examine for
-+	 * content differences (e.g. because their timestamps have changed.)
-+	 */
-+	diff_message = xmalloc(strlen(set) + strlen(reset) +
-+			       strlen(a_one) + strlen(b_two) +
-+			       sizeof(DIFF_MESSAGE_FORMAT_STRING));
-+	sprintf(diff_message, DIFF_MESSAGE_FORMAT_STRING,
-+	        set, a_one, b_two, reset);
-+	if (o->show_touched) {
-+		fputs(diff_message, stdout);
-+		*diff_message = '\0';
-+	}
-+
- 	if (lbl[0][0] == '/') {
- 		/* /dev/null */
--		printf("%snew file mode %06o%s\n", set, two->mode, reset);
-+		printf("%s%snew file mode %06o%s\n",
-+		       diff_message, set, two->mode, reset);
-+		*diff_message = '\0';
- 		if (xfrm_msg && xfrm_msg[0])
- 			printf("%s%s%s\n", set, xfrm_msg, reset);
- 	}
- 	else if (lbl[1][0] == '/') {
--		printf("%sdeleted file mode %06o%s\n", set, one->mode, reset);
-+		printf("%s%sdeleted file mode %06o%s\n",
-+		       diff_message, set, one->mode, reset);
-+		*diff_message = '\0';
- 		if (xfrm_msg && xfrm_msg[0])
- 			printf("%s%s%s\n", set, xfrm_msg, reset);
- 	}
- 	else {
- 		if (one->mode != two->mode) {
--			printf("%sold mode %06o%s\n", set, one->mode, reset);
-+			printf("%s%sold mode %06o%s\n",
-+			       diff_message, set, one->mode, reset);
- 			printf("%snew mode %06o%s\n", set, two->mode, reset);
-+			*diff_message = '\0';
-+		}
-+		if (xfrm_msg && xfrm_msg[0]) {
-+			printf("%s%s%s%s\n",
-+			       diff_message, set, xfrm_msg, reset);
-+			*diff_message = '\0';
- 		}
--		if (xfrm_msg && xfrm_msg[0])
--			printf("%s%s%s\n", set, xfrm_msg, reset);
- 		/*
- 		 * we do not run diff between different kind
- 		 * of objects.
-@@ -1304,6 +1333,8 @@ static void builtin_diff(const char *name_a,
- 		if ((one->mode ^ two->mode) & S_IFMT)
- 			goto free_ab_and_return;
- 		if (complete_rewrite) {
-+			fputs(diff_message, stdout);
-+			*diff_message = '\0';
- 			emit_rewrite_diff(name_a, name_b, one, two,
- 					o->color_diff);
- 			o->found_changes = 1;
-@@ -1372,6 +1403,7 @@ static void builtin_diff(const char *name_a,
- 	diff_free_filespec_data(two);
- 	free(a_one);
- 	free(b_two);
-+	free(diff_message);
- 	return;
- }
- 
-@@ -2381,6 +2413,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->allow_external = 1;
- 	else if (!strcmp(arg, "--no-ext-diff"))
- 		options->allow_external = 0;
-+	else if (!strcmp(arg, "--show-touched"))
-+		options->show_touched = 1;
- 	else
- 		return 0;
- 	return 1;
-diff --git a/diff.h b/diff.h
-index 9fd6d44..e172ecf 100644
---- a/diff.h
-+++ b/diff.h
-@@ -61,7 +61,8 @@ struct diff_options {
- 		 has_changes:1,
- 		 quiet:1,
- 		 allow_external:1,
--		 exit_with_status:1;
-+		 exit_with_status:1,
-+		 show_touched:1;
- 	int context;
- 	int break_opt;
- 	int detect_rename;
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index c6d1369..910c6cc 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -60,7 +60,7 @@ test_expect_success \
-     'diff identical, but newly created symlink' \
-     'sleep 3 &&
-     ln -s xyzzy frotz &&
--    git diff-index -M -p $tree > current &&
-+    git diff-index --show-touched -M -p $tree > current &&
-     compare_diff_patch current expected'
- 
- cat > expected << EOF
-diff --git a/t/t4021-diff-untouched.sh b/t/t4021-diff-untouched.sh
-new file mode 100755
-index 0000000..a8153e0
---- /dev/null
-+++ b/t/t4021-diff-untouched.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Johannes Schindelin
-+#
-+
-+test_description='Test display and suppression of unmodified files.
-+
-+'
-+. ./test-lib.sh
-+. ../diff-lib.sh
-+
-+touch empty
-+
-+test_expect_success 'no output when no changes' '
-+
-+	echo foobar > file1 &&
-+	chmod 644 file1 &&
-+	git add file1 &&
-+	git commit -m "initial commit" &&
-+	git diff > current &&
-+	compare_diff_patch current empty
-+'
-+
-+test_expect_success 'no output when file touched' '
-+
-+	sleep 1 &&
-+	touch file1 &&
-+	git diff > current &&
-+	compare_diff_patch current empty
-+'
-+
-+cat > expected << EOF
-+diff --git a/file1 b/file1
-+EOF
-+
-+test_expect_success 'output when --show-touched is used' '
-+
-+	git diff --show-touched > current &&
-+	compare_diff_patch current expected
-+'
-+
-+test_expect_success 'no output when index updated with touched file' '
-+
-+	git add file1 &&
-+	git diff --cached > current &&
-+	compare_diff_patch current empty
-+'
-+
-+cat > expected << EOF
-+diff --git a/file1 b/file1
-+old mode 100644
-+new mode 100755
-+EOF
-+
-+test_expect_success 'output when mode is changed' '
-+
-+	chmod 755 file1 &&
-+	git diff > current &&
-+	compare_diff_patch current expected
-+'
-+test_done
--- 
-1.5.3.rc2.4.g726f9
+RnJvbSA3ZTU1ZDRlZDg0ZTU4NjdiMjE3YzllMGJjMTk2NDQ0NGYxM2VhZWYyIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBGcmksIDMgQXVnIDIwMDcgMDc6NDE6MjYgKzAyMDAKU3ViamVjdDogW1BBVENIXSBGaXggdW50
+ZXJtaW5hdGVkIHN0cmluZyBpbiBzZXRfd29ya190cmVlIGFuZCBpbXByb3ZlIGVycm9yIGhhbmRs
+aW5nCgoKU2lnbmVkLW9mZi1ieTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KLS0t
+CiBzZXR1cC5jIHwgICAxMiArKysrKysrKy0tLS0KIDEgZmlsZXMgY2hhbmdlZCwgOCBpbnNlcnRp
+b25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3NldHVwLmMgYi9zZXR1cC5jCmlu
+ZGV4IDM2NTMwOTIuLjYwMDZmYzUgMTAwNjQ0Ci0tLSBhL3NldHVwLmMKKysrIGIvc2V0dXAuYwpA
+QCAtMjAxLDE1ICsyMDEsMTggQEAgaW50IGlzX2luc2lkZV93b3JrX3RyZWUodm9pZCkKICAqLwog
+Y29uc3QgY2hhciAqc2V0X3dvcmtfdHJlZShjb25zdCBjaGFyICpkaXIpCiB7Ci0JY2hhciBkaXJf
+YnVmZmVyW1BBVEhfTUFYXTsKLQlzdGF0aWMgY2hhciBidWZmZXJbUEFUSF9NQVggKyAxXSwgKnJl
+bCA9IE5VTEw7CisJY2hhciBkaXJfYnVmZmVyW1BBVEhfTUFYXSwgKnJlbCA9IE5VTEw7CisJc3Rh
+dGljIGNoYXIgYnVmZmVyW1BBVEhfTUFYICsgMV07CiAJaW50IGxlbiwgcG9zdGZpeF9sZW4gPSBz
+dHJsZW4oREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5UKSArIDE7CiAKIAkvKiBzdHJpcCB0aGUg
+dmFyaWFibGUgJ2Rpcicgb2YgdGhlIHBvc3RmaXggIi8uZ2l0IiBpZiBpdCBoYXMgaXQgKi8KIAls
+ZW4gPSBzdHJsZW4oZGlyKTsKIAlpZiAobGVuID4gcG9zdGZpeF9sZW4gJiYgIXN0cmNtcChkaXIg
+KyBsZW4gLSBwb3N0Zml4X2xlbiwKIAkJCQkiLyIgREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5U
+KSkgewotCQkJc3RybmNweShkaXJfYnVmZmVyLCBkaXIsIGxlbiAtIHBvc3RmaXhfbGVuKTsKKwkJ
+aWYgKGxlbiAtIHBvc3RmaXhfbGVuIDwgc2l6ZW9mKGRpcl9idWZmZXIpKQorCQkJc3RybGNweShk
+aXJfYnVmZmVyLCBkaXIsIGxlbiAtIHBvc3RmaXhfbGVuICsgMSk7CisJCWVsc2UKKwkJCWRpZSgi
+JXMgaXMgdG9vIGxvbmciLCBkaXIpOwogCiAJCS8qIGFyZSB3ZSBpbnNpZGUgdGhlIGRlZmF1bHQg
+d29yayB0cmVlPyAqLwogCQlyZWwgPSBnZXRfcmVsYXRpdmVfY3dkKGJ1ZmZlciwgc2l6ZW9mKGJ1
+ZmZlciksIGRpcl9idWZmZXIpOwpAQCAtMjE5LDcgKzIyMiw4IEBAIGNvbnN0IGNoYXIgKnNldF93
+b3JrX3RyZWUoY29uc3QgY2hhciAqZGlyKQogCQlpZiAoIWlzX2Fic29sdXRlX3BhdGgoZGlyKSkK
+IAkJCXNldF9naXRfZGlyKG1ha2VfYWJzb2x1dGVfcGF0aChkaXIpKTsKIAkJZGlyID0gZGlyX2J1
+ZmZlcjsKLQkJY2hkaXIoZGlyKTsKKwkJaWYgKGNoZGlyKGRpcikpCisJCQlkaWUoImNhbm5vdCBj
+aGRpciB0byAlczogJXMiLCBkaXIsIHN0cmVycm9yKGVycm5vKSk7CiAJCXN0cmNhdChyZWwsICIv
+Iik7CiAJCWluc2lkZV9naXRfZGlyID0gMDsKIAl9IGVsc2UgewotLSAKMS41LjMucmMzLjE0NS5n
+NGQ5Y2RiCgo=
+------=_Part_65026_10730913.1186120044120--
