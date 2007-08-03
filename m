@@ -1,105 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Fri, 03 Aug 2007 23:32:14 +0200
-Message-ID: <vpqps24i9sx.fsf@bauges.imag.fr>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
-	<Pine.LNX.4.64.0708021541520.14781@racer.site>
-	<46B1F3F4.5030504@midwinter.com>
-	<Pine.LNX.4.64.0708021614420.14781@racer.site>
-	<20070803053717.GA16379@midwinter.com>
-	<7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0708031121000.14781@racer.site>
-	<7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: RPMs for latest release
+Date: Fri, 3 Aug 2007 14:36:09 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708031433080.8184@woody.linux-foundation.org>
+References: <46B38125.9060805@centurytel.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steven Grimm <koreth@midwinter.com>,
-	Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 23:34:02 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: rdavid274 <rdavid274@centurytel.net>
+X-From: git-owner@vger.kernel.org Fri Aug 03 23:36:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH4mX-0006ci-Uh
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:34:02 +0200
+	id 1IH4oq-0007L2-52
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764105AbXHCVd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 17:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764095AbXHCVd6
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:33:58 -0400
-Received: from imag.imag.fr ([129.88.30.1]:33040 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763576AbXHCVd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 17:33:56 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l73LWECr025796
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 3 Aug 2007 23:32:15 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IH4ko-0000Gr-NQ; Fri, 03 Aug 2007 23:32:14 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IH4ko-0005wV-Kj; Fri, 03 Aug 2007 23:32:14 +0200
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Steven Grimm <koreth@midwinter.com>, Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>, git@vger.kernel.org
-In-Reply-To: <7vir7wmk84.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri\, 03 Aug 2007 13\:33\:31 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 03 Aug 2007 23:32:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1763021AbXHCVgU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 17:36:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762453AbXHCVgU
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:36:20 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49794 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762834AbXHCVgT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 17:36:19 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73LaE7D029969
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Aug 2007 14:36:15 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73La9Mt028928;
+	Fri, 3 Aug 2007 14:36:09 -0700
+In-Reply-To: <46B38125.9060805@centurytel.net>
+X-Spam-Status: No, hits=-2.715 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54764>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+On Fri, 3 Aug 2007, rdavid274 wrote:
 >
->> But I'd really think that what should be done (if anything has to be done 
->> at all) is to introduce a config variable which triggers the same logic in 
->> git-diff as was introduced in 2b5f9a8c0cff511f2bb0833b1ee02645b79323f4.
->
-> Sorry, I don't follow at all.  The diff toolchain works all
-> inside core without having to write a temporary index out, which
-> was the issue the commit you are quoting was about.
->
-> In any case, enough discussion.  Here is an updated patch, which
-> I _could_ be pursuaded to consider for inclusion after v1.5.3
-> happens, if there are enough agreements and Acks.
+> Downloaded the 10 rpms necessary for a complete install however, there is NO
+> single rpm that is independent of the other rpms.
+> 
+> Every rpm that I have downloaded depends on at 1 other rpm to have been
+> already installed.
+> 
+> So, how does a newbie deal with this issue?
 
-To me, that patch makes sense, yes.
+You should be able to do
 
-That said, a configuration option would probably be better than a
-command-line option. The expected behavior seems to depend on user,
-but not much on use-cases. So, people who like the old behavior could
-set the option and forget about it, and other would not be distracted
-about it.
+	rpm -Uvh <list-all-rpms-here>
 
-Also, is there any particular reason not to update the index stat
-information when files are found to be identical? Well, we've
-discussed that quite much in this thread, but this is what status is
-doing, and I still fail to see why diff shouldn't. (I can update the
-patch myself if you agree it should be done. I don't know the git
-codebase well, so it takes time for me, but the exercise is fun ;-) )
+and be all good.
 
-Side performance note: if I understand your patch correctly, you're
-comparing the file content twice for actually modified changes. But
-that probably doesn't matter much since the expansive thing is to load
-the files and to compute the diff.
+In other words, if you have dependencies, you need to resolve all the 
+dependencies in one go by listing the packages together.
 
-Thanks,
+Of course, you could also just force rpm to ignore dependencies (the 
+"--nodeps" flag, iirc), but that's usually a bad idea - it just means that 
+you will be all the more likely to have a non-working setup because you 
+forgot some package or other, and since you told rpm to ignore it, it 
+won't tell you.
 
--- 
-Matthieu
+That said, most rpm distros tend to make things much easier for you by 
+letting you just run "yum", which will do all of this for you, and then 
+you can generally just do
+
+	yum install git
+
+and it will download all packages and install them by dependencies.
+
+			Linus
