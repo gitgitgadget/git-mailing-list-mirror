@@ -1,93 +1,112 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Fri, 03 Aug 2007 10:40:43 +0200
-Message-ID: <46B2EA0B.9030805@fs.ei.tum.de>
-References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <46B215E2.8010307@fs.ei.tum.de> <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de> <46B2309E.3060804@fs.ei.tum.de> <6715F560-FE69-4F15-8C5F-B5B6071D97ED@zib.de> <46B25FC3.6000205@fs.ei.tum.de> <46B26DA8.6010102@alum.mit.edu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-diff on touched files: bug or feature?
+Date: Fri, 3 Aug 2007 04:40:10 -0400
+Message-ID: <20070803084010.GM20052@spearce.org>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <7vd4y6xnw4.fsf@assigned-by-dhcp.cox.net> <7v1wemxnkk.fsf@assigned-by-dhcp.cox.net> <vpqzm1a2l72.fsf@bauges.imag.fr> <7vy7gtvhgc.fsf@assigned-by-dhcp.cox.net> <20070803070407.GA17287@coredump.intra.peff.net> <7vr6mlnj4g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 03 10:40:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 10:41:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGsiI-0002Gv-8R
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 10:40:50 +0200
+	id 1IGsiv-0002V4-EL
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 10:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753013AbXHCIkr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 3 Aug 2007 04:40:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbXHCIkr
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 04:40:47 -0400
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:51949 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbXHCIkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 04:40:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 1028F280EA;
-	Fri,  3 Aug 2007 10:40:45 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 5xEtrIOlMowG; Fri,  3 Aug 2007 10:40:44 +0200 (CEST)
-Received: from sweatshorts.home.corecode.ath.cx (85-218-11-227.dclient.lsne.ch [85.218.11.227])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 8C3FF280E3;
-	Fri,  3 Aug 2007 10:40:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
-In-Reply-To: <46B26DA8.6010102@alum.mit.edu>
+	id S1753858AbXHCIl1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 04:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753525AbXHCIl1
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 04:41:27 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:36648 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596AbXHCIlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 04:41:25 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IGshd-0000eu-Rc; Fri, 03 Aug 2007 04:40:10 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 707B520FBAE; Fri,  3 Aug 2007 04:40:10 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vr6mlnj4g.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54692>
 
-Michael Haggerty wrote:
-> Simon 'corecode' Schubert wrote:
->> Steffen Prohaska wrote:
->>> BTW, togit creates much more complex branching patterns than cvs2sv=
-n
->>> does. The attached file branching.png displays a small view of a
->>> branching pattern that extends downwards over a couple of screens.
->>> I checked the cvs2svn history again. It doesn't contain anything
->>> of similar complexity.
->> haha yea, there is still some issue with duplicate branch names and =
-the
->> branchpoint.  if it doesn't get the branch right, it will always "pu=
-ll"
->> files from the parent branch.
->=20
-> This sounds very much like the problem reported by Daniel Jacobowitz
-> [1].  The problem is that if you create a branch A on a file, then
-> create branch B from branch A before making a commit on branch A, the=
-n
-> CVS doesn't record that branch A was the source of branch B.  (It tre=
-ats
-> B as if it sprouted directly from the revision that was the *source* =
-of
-> branch A.)  The same problem exists if "B" is a tag.
+Junio C Hamano <gitster@pobox.com> wrote:
+> > On Thu, Aug 02, 2007 at 12:56:19PM -0700, Junio C Hamano wrote:
+> >
+> >> Personally, I almost never run "git status".  The command is
+> >> there primarily because other systems had a command called
+> >> "status", and migrant wondered why we didn't.  We do not need
+> >> it, and we do not have to use it.
+> >
+> > So what is the recommended command to summarize which files have been
+> > modified, which files have been marked for commit, and which remain
+> > untracked?
 
-I think I have covered this case quite well.  I believe "my" problem ha=
-ppens when there are files being copied manually within the repository =
-and then branch names being changed (or just branch names being changed=
-).  However, the name change just happens only on a subset of files and=
- branches, so you wind up with a commit which is part of two branches. =
- Or something like that.  I really should have the time to investigate =
-this.
+git-gui?  ;-)
 
-One elementary problem with CVS is that you can assign two branch names=
- to the same branch.  During conversion you need to choose one over the=
- other.
+I also use the following two aliases:
 
-cheers
-  simon
+  [alias]
+    dw = diff --stat --summary
+    di = diff --stat --summary --cached
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
-++      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+...
+> I do not make partial commits myself, so
+> distinction between staged and unstaged are not something I am
+> usually interested in.
+
+I never used to either.  Then git-gui got really useful at showing
+the distinction and I started using the index for a staging ground.
+I almost never make partial commits, unless it is completely trivial,
+e.g. a comment fixup that isn't related to what I'm really doing
+but that was too darn obvious to not fix _right now_.
+
+But I always toss things into the index when I've read through the
+diff a few times and am very happy with it.  I may not be done with
+the overall commit, but I park the hunks into the index so I don't
+have to look at them again.  I use a trackball so "tossing into the
+index" is really just a flick of the wrist to select the menu item
+from the pop-up menu on that hunk.  Quite like a toss.  ;-)
+
+I tend to test only once I have everything staged into the index and
+my working directory is clean (nothing changed that isn't staged).
+Its at that point that I think my change is done and I'm happy with
+how the diff looks.  Usually the code is correct at this point too;
+but if its not I'll fix it, then commit.
+
+
+So where does that leave me regarding the touched but not changed
+files?  Usually they just get in my way in the end.  I don't much
+care that I've undone the file back to what I had in the index.
+It just doesn't provide any value to my workflow.  It is actually
+incredible rare that I cause it to happen too.  Usually I won't
+write the file back to disk if I'm just going to undo it.
+
+If I do write it to disk I'm likely to stage it or at least some
+hunks of it.  If I later change my mind and undo those changes I'm
+going to effectively stage the reverse difference.  This is a very
+nice hint showing me that yes in fact the older way was better.
+
+Personally?  The index is a killer feature for me.  Totally.
+I can't work without it anymore, it has become a total crutch to me.
+You would have to pry the index from my cold dead fingers to get
+me to stop using it.
+
+Yea, that is a total about-face for me.  I used to think the index
+was only useful for merges.  Boy was I wrong!
+
+-- 
+Shawn.
