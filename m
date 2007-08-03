@@ -1,70 +1,85 @@
-From: "Patrick Doyle" <wpdster@gmail.com>
-Subject: Re: Why does git-svn dcommit rewrite the log messages?
-Date: Thu, 2 Aug 2007 21:44:46 -0400
-Message-ID: <e2a1d0aa0708021844y251273a4q9af44e066cca2b42@mail.gmail.com>
-References: <e2a1d0aa0708011419m1f6cb323ge9e93680147a298@mail.gmail.com>
-	 <46B23415.8030008@vilain.net>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: [PATCH] gitweb: Provide RSS feeds for file history
+Date: Thu, 2 Aug 2007 22:05:55 -0400
+Message-ID: <20070803020555.GB8593@dervierte>
+Reply-To: stevenrwalter@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Sam Vilain" <sam@vilain.net>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 03 03:45:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: jnareb@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 03 04:06:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGmDs-0002uC-Be
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 03:45:00 +0200
+	id 1IGmYV-0006sk-Dz
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 04:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757895AbXHCBos (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 21:44:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756966AbXHCBos
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 21:44:48 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:49946 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756575AbXHCBor (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 21:44:47 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so698167wah
-        for <git@vger.kernel.org>; Thu, 02 Aug 2007 18:44:46 -0700 (PDT)
+	id S1759342AbXHCCGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 22:06:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759189AbXHCCGB
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 22:06:01 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:16130 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758741AbXHCCGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 22:06:00 -0400
+Received: by py-out-1112.google.com with SMTP id d32so1186869pye
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 19:05:59 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=f+XXrunbejqvNk3LcyWCmXvqWPnAK7dHhhuywv/hUOwaoKWS+4yJ7Z1CnRIHLBw2DQnkQnlYATo4+FIVt7IpmplL6kzacSKP3lW2ScGTVAjWS78eVkBmBDQ6km0MXMIEDyifeTqcSwU18lzj9L1T/xCxtYftV+ByQuLl/osLxfc=
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-mimetrack:user-agent;
+        b=HVR05JFN524EYUXX6unfEJtgUo/Xjfpqg01VLsE8mCSjLDhvo1/KnQdTWVGTKynBmVSXV0gmvYe584E39HiLq4wCKV7cworHEOpGnkUb/xiRz8Y+siJ4TLthfnuKBq7Xp29Hr55ncSiaEPLc+RJplXpBMjxAg2YXmwa2xj4i+gk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HtRsi+p/6Ex6kZjiZviYGxdWJA329MjS71eZTkwwvgL3Bhh10RvueYiiDENI2dWlFPX961hlMfKpXWoUYts8RAvTM3QqBSBC9DHfQkGMvauRJxvUgdHPcj75yuDDsJR4vTXMYk/r8neiHXrzhaqmpaENJVs4eVmczNsJXLo568o=
-Received: by 10.114.151.13 with SMTP id y13mr2445442wad.1186105486356;
-        Thu, 02 Aug 2007 18:44:46 -0700 (PDT)
-Received: by 10.114.15.11 with HTTP; Thu, 2 Aug 2007 18:44:46 -0700 (PDT)
-In-Reply-To: <46B23415.8030008@vilain.net>
+        h=received:date:from:to:cc:subject:message-id:reply-to:mime-version:content-type:content-disposition:x-mimetrack:user-agent;
+        b=NPR/kr3pWGhZCkqB1HnW5d5aFsnDVDP/8/dwI8rBD1N0F5yRJX+0WMuqL4sXeoj6jqP1xuVKfRQDxUIhBI4gamfRkPoA2M6bYjVGJJpImg0Kgrmjygi1NPA2qbvbELZR+FknmgL5dAj3Ya1nQgub4QV9YI/3n2YxhAu2Ui7UrXc=
+Received: by 10.35.117.5 with SMTP id u5mr3878941pym.1186106759146;
+        Thu, 02 Aug 2007 19:05:59 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [74.140.216.190])
+        by mx.google.com with ESMTPS id 18sm9785744nzo.2007.08.02.19.05.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 19:05:57 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id C1FB1BBF587; Thu,  2 Aug 2007 22:05:55 -0400 (EDT)
 Content-Disposition: inline
+X-MIMETrack: Itemize by SMTP Server on smtp5b/Lex/Lexmark (Release 6.5.5|November 30, 2005) at 08/02/2007 13:17:14, Serialize by Router on smtp5b/Lex/Lexmark (Release 6.5.5|November 30, 2005) at 08/02/2007 13:30:32, Serialize complete at 08/02/2007 13:30:32
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54660>
 
-> Primarily it's so that the person who pushed via dcommit and people who
-> sync via git-svn fetch get the same commit ID (assuming they are both
-> using the same authors map).
->
-> It might be possible to store the extra information needed to recreate
-> exactly the original git commit in SVN revision properties, but this
-> would need to be implemented once and basically not changed after that.
->
-> You can disable this behaviour, but you'll end up with duplicate commits.
->
-> Sam.
-Thanks Sam,
-Now I see the noMetadata option.  I'll give that try and see how much
-trouble I get myself in.
+If git_feed is provided a file name, it ought to show only the history
+affecting that file.  The title was already being set correctly, but all
+commits from history were being shown anyway.
+---
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-As I was thinking about this some more, I started wondering if perhaps
-the information could be stored in a .git-svnid file, that was
-versioned on the subversion server as well as in the local git
-repository.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 498b936..26932a4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -611,6 +611,7 @@ sub href(%) {
+ 	my %mapping = @mapping;
+ 
+ 	$params{'project'} = $project unless exists $params{'project'};
++	$params{'file_name'} = $file_name unless exists $params{'file_name'};
+ 
+ 	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+ 	if ($use_pathinfo) {
+@@ -5365,7 +5366,7 @@ sub git_feed {
+ 
+ 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
+ 	my $head = $hash || 'HEAD';
+-	my @commitlist = parse_commits($head, 150);
++	my @commitlist = parse_commits($head, 150, 0, "--full-history", $file_name);
+ 
+ 	my %latest_commit;
+ 	my %latest_date;
+-- 
+1.5.2.3
 
-I'll have to think through the implications of your explanation in the
-mean time.
 
---wpd
+-- 
+-Steven Walter <swalter@lexmark.com>
