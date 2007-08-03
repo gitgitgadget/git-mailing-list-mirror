@@ -1,8 +1,8 @@
 From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
 Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
-Date: Fri, 3 Aug 2007 14:14:15 -0700
-Message-ID: <5AB2AD5AE96F4C2DAAE83AD66341C6E8@ntdev.corp.microsoft.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>  <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>  <46B2D4D9.4020103@trolltech.com> <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com> <Pine.LNX.4.64.0708031240450.14781@racer.site>
+Date: Fri, 3 Aug 2007 14:21:25 -0700
+Message-ID: <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>  <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>  <46B2D4D9.4020103@trolltech.com> <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com> <Pine.LNX.4.64.0708031334530.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	format=flowed;
@@ -11,39 +11,39 @@ Content-Type: text/plain;
 Content-Transfer-Encoding: 7bit
 Cc: "Marius Storm-Olsen" <marius@trolltech.com>, <git@vger.kernel.org>
 To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 03 23:14:27 2007
+X-From: git-owner@vger.kernel.org Fri Aug 03 23:21:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH4Ta-0000Tb-Gr
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:14:26 +0200
+	id 1IH4aQ-0002ey-Tp
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763516AbXHCVOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 17:14:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763970AbXHCVOW
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:14:22 -0400
-Received: from qb-out-0506.google.com ([72.14.204.235]:5916 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763516AbXHCVOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 17:14:18 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so1067476qbe
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 14:14:17 -0700 (PDT)
+	id S1761886AbXHCVV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 17:21:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761792AbXHCVV2
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:21:28 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:3094 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757510AbXHCVV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 17:21:27 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so961892wah
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 14:21:26 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=AH+XlDndg1ThG9paztPWNfB021MBIeDYdHAvIU0gqpSdOv4ZTXTszKDmExPObKGynbmAzGUWMxcOXZ1/AkRDJJNet00i/Pn+Ag+m2ee0LG9xN3ba7rnMv/SvO6a4hvCno2YKsaLp6jSgOJiNqdxFDteLSDZTQuTnATWAQvVEjac=
+        b=ngtqPWSBAYIz/56X9HcoqJH7HmsnbMzyxp5LhwgH0evrbmy3JyTDjKJxxN0m8gL7q0S1cYc61md2mtmwEqXe2d3Wk0HiuQLMy9tbEyAOupfgVutxwVRkV6boMbgdO1iD+UarY+b1wBLJIXkvHqMTP7W5gcXBuM6oL3t2nQgasaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=XmXRPDID/XjxfZF3GFWmyjhJenJoEXm3anFS7jLi0Ggyc5oGGCu+k587mJqCqz8jFNCk/9GMBRz/5BW9KALJndggHrHJDsZzkR5l/QCJ+1smDP3iqmESdoBaFuJFH7xYJrOa4vlmvvcipff9S21/+uqzoRDXLyU4edX9QzeMcsw=
-Received: by 10.115.79.1 with SMTP id g1mr3369595wal.1186175656746;
-        Fri, 03 Aug 2007 14:14:16 -0700 (PDT)
+        b=idFMbkwhLIP/JGHbkcfpEW8padUYNvmq1wyQn5A51mQ4AJb7wi46VDUcCiwFLynLP42G72Gi1Qt1du4XEBmi59VvqucYOPFKsitE1WqU/q94wGmLhVO5uIohjKxea2kQizWoQtpYoTiQQvXMINlx8DCIAOP+ayNhXLl5NUOnQvI=
+Received: by 10.114.190.6 with SMTP id n6mr3359136waf.1186176086636;
+        Fri, 03 Aug 2007 14:21:26 -0700 (PDT)
 Received: from dmitrykl2 ( [71.112.20.227])
-        by mx.google.com with ESMTPS id y11sm6621059pod.2007.08.03.14.14.15
+        by mx.google.com with ESMTPS id a8sm6596194poa.2007.08.03.14.21.25
         (version=SSLv3 cipher=OTHER);
-        Fri, 03 Aug 2007 14:14:16 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0708031240450.14781@racer.site>
+        Fri, 03 Aug 2007 14:21:26 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708031334530.14781@racer.site>
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Windows Mail 6.0.6000.16480
@@ -51,11 +51,14 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54758>
 
-> With Vista fix you mean both adding the USE_MINGW_ACCESS define and 
-> copying cc1.exe to /bin?
+> * replace rxvt by that stupid cmd window
+> Sneaky.
 
-Only the first one. I didn't copy cc1.exe because it could affect non-Vista users in a negative way.
+This was a result of my customization that I have forgot to remove.
+In general cmd window is more familiar/convenient for Windows users.
+IMHO, our goal here should be "as native (Windows) as possible". Cygwin fills "as close to *nix as possible" niche.
+But in any case it's such a minor detail that I don't really care much.
 
 - Dmitry
