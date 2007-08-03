@@ -1,120 +1,113 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Some ideas for StGIT
-Date: Sat, 4 Aug 2007 01:23:51 +0200
-Message-ID: <20070803232351.GC30277@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <1186163410.26110.55.camel@dv>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix handling of $file_name in feed generation
+Date: Fri, 3 Aug 2007 19:50:42 +0200
+Message-ID: <200708031950.43126.jnareb@gmail.com>
+References: <20070803020555.GB8593@dervierte> <200708031110.55969.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 01:25:03 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Robert Fitzsimons <robfitz@273k.net>,
+	Junio Hamano <gitster@pobox.com>
+To: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 04 01:28:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH6Vz-00017a-Di
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 01:25:03 +0200
+	id 1IH6Zc-00024B-1y
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 01:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242AbXHCXY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 19:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753401AbXHCXY7
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 19:24:59 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42097 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753199AbXHCXY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 19:24:58 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id CB06A73AA;
-	Sat,  4 Aug 2007 01:24:56 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A3B005DF0;
-	Sat,  4 Aug 2007 01:24:56 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id B9BF01F070; Sat,  4 Aug 2007 01:23:51 +0200 (CEST)
+	id S1757315AbXHCX2p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 19:28:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755805AbXHCX2p
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 19:28:45 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:54638 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753401AbXHCX2o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 19:28:44 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so254160nfb
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 16:28:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=MrIgY8lZ9HHpgoev6BVrv1OzZgJp7Bzmpxc6zAPoArUlzv5/XnWM7ev4981L3fBluZXd4l33AR90SogPGC5zpdf9WVAhwVhm7cmHlGIABPgarEeU//xB0y7gd3noqQ0csCpPRwnXYc/6CdYavY+/Lno4rhDI32DHCurenjd+Qbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=eqOwRH8A9ntDYcLfD1fQRzHHWyNFXmwHQN5hbeOWU3xaJHcnvITq2aJ49ptJ0aCAnRQLHBAnh4MXwrrm+rcRch+FMTE15qBE02sqH5Q7ICLvMeQhSJuLV1HUoBghLfTMVD+kXbHAFgsk+1V1PVnATg+gwcbaemN1gO8Y5K3ElNs=
+Received: by 10.86.89.4 with SMTP id m4mr2624866fgb.1186183722862;
+        Fri, 03 Aug 2007 16:28:42 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id a37sm7349329fkc.2007.08.03.16.28.36
+        (version=SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2007 16:28:37 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200708031110.55969.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1186163410.26110.55.camel@dv>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54769>
 
-On Fri, Aug 03, 2007 at 01:50:10PM -0400, Pavel Roskin wrote:
-> One is to have a command opposite to "export".  It would read the files
-> that "export" produces, replacing the existing patches.
+>From 6ef05672bb1dd1fe1ded15707164eaac36772c21 Mon Sep 17 00:00:00 2001
+From: Steven Walter <stevenrwalter@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Date: Fri, 3 Aug 2007 19:35:00 +0200
+Subject: [PATCH] gitweb: Fix handling of $file_name in feed generation
 
-This should be already possible (although I never used it), with "stg
-pop -a && stg import --replace ..."
+The commit b6093a5c, by Robert Fitzsimons:
+  "gitweb: Change atom, rss actions to use parse_commits."
+forgot to pass $file_name parameter to parse_commits subroutine.
 
-> Another approach would be to reexamine the patch after "stg refresh -es"
-> and to apply it instead of the original patch.  If the patch doesn't
-> apply, the options would be to discard the edits or to re-launch the
-> editor.
+If git_feed is provided a file name, it ought to show only the history
+affecting that file or a directory.  The title was being set
+correctly, but all commits from history were being shown.
 
-Added to wishes: https://gna.org/bugs/index.php?9674
-
-
-> Next issue is that it should be possible to create a patch in one
-> operation.  StGIT follows quilt too closely here in requiring "new" and
-> "refresh", instead of utilizing the advantage of the workflow that
-> allows immediate editing of the sources without any commands.
-> 
-> Basically, I want one command that:
-> 
-> 1) shows user what was changed
-> 2) allows user to name the patch
-> 3) allows user to describe the patch
-> 4) allows user to exclude files from the patch
-> 5) doesn't require another command to put the changes to the patch
-> 
-> I think the most natural approach would be to enhance "stg new".
-
-Sure, something like this could be done.  A syntax like the following
-would IMHO fit in how things are done, but does not exactly address 4:
-
-$ stg new <name> -m <msg> -s [--] <files> <to> <add>
-
-Maybe another --exclude flag to reverse the meaning of the listed
-files would be a solution, but I'm not thrilled by this idea...
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Three comments. First, authorship. Steven Walter didn't signoff his patch,
+and the contents differs a bit from second chunk of his patch (see
+comment below) and I have added infor about which commit introduced this
+bug to the commit message. I have added my signoff, you can take this
+patch as either mine or Steven authorship.
 
 
->  I see
-> "stg new -s" is supposed to show the changes, but it's currently broken.
-> This is run in a clean StGIT repository with no patches:
-> 
-> $ stg new -s foo
+Second, I have discarded first chunk in Steven patch because it was too
+intrusive. As I have said, it makes 'file_name' default argument,
+unless overriden. While it made sense for 'project' parameter to be made
+default parameter in href(), as almost all URLs in gitweb needed it,
+more than half URLs does not need 'file_name' parameter. And some of
+those URLs are present in a views which do use 'file_name'.
 
-Hm, I'm not sure what -s would be supposed to show here, since we're
-asking for the creation of a patch, which currently always starts
-empty.
+So if we want alternative URLs for a feed preserve 'file_name' parameter,
+or we want RSS/Atom links for "file_name" kind of views, like 'tree',
+'blob' or 'history' views, we should add 'file_name' parameter
+explicitely, and not change href() to do it implicitely.
 
-Especially confusing is that if there are already applied patches, the
-diff shown is the one of the previous top patch - and if there is no
-applied patches, we get the exception you noticed.
-
-I guess -s should be removed for 0.13.1.
-
-
-> Another backtrace in "stg new", also run in a clean StGIT repository with no patches:
-
-This appears to occur when there is no description file, or when it is
-empty.  Thanks for the report.
-
-I also tried with "stg refresh -m ''" to see if it caused the same
-problem, but it appears to have another problem instead: it does not
-refresh the patch description at all.
-
-My guess is that we should not allow empty patch description (and
-maybe fill it with provided patchname).  What did you want to acheieve
-precisely with that command ?
+But as we are in stabilization (freeze) stage, I'd rather not add any new
+features. This one just fixes a bug in gitweb.
 
 
-> Finally, it would be great to have TLS support in the mail command.
-> Mercurial has it, and looking at their mail.py, it doesn't seem to be
-> much work.
+Third, I'd rather not use "--full-history" for feeds. We use it in the
+'history' view for backward compatibility reasons; I'd rather leave it
+for extra options in the feed. But this is also for after the release.
 
-Added to wishes: https://gna.org/bugs/index.php?9673
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Thanks,
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 498b936..4733728 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5365,7 +5365,7 @@ sub git_feed {
+ 
+ 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
+ 	my $head = $hash || 'HEAD';
+-	my @commitlist = parse_commits($head, 150);
++	my @commitlist = parse_commits($head, 150, 0, undef, $file_name);
+ 
+ 	my %latest_commit;
+ 	my %latest_date;
 -- 
-Yann
+1.5.2.4
