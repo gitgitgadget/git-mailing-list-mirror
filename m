@@ -1,113 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix handling of $file_name in feed generation
-Date: Fri, 3 Aug 2007 19:50:42 +0200
-Message-ID: <200708031950.43126.jnareb@gmail.com>
-References: <20070803020555.GB8593@dervierte> <200708031110.55969.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Fri, 03 Aug 2007 16:36:56 -0700
+Message-ID: <7vlkcskx5z.fsf@assigned-by-dhcp.cox.net>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708031121000.14781@racer.site>
+	<7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
+	<vpqps24i9sx.fsf@bauges.imag.fr>
+	<7v1wekmgo8.fsf@assigned-by-dhcp.cox.net>
+	<vpqir7wi5oc.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robert Fitzsimons <robfitz@273k.net>,
-	Junio Hamano <gitster@pobox.com>
-To: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 04 01:28:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Aug 04 01:37:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH6Zc-00024B-1y
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 01:28:48 +0200
+	id 1IH6hv-00040V-Dx
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 01:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757315AbXHCX2p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 19:28:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755805AbXHCX2p
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 19:28:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:54638 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753401AbXHCX2o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 19:28:44 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so254160nfb
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 16:28:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MrIgY8lZ9HHpgoev6BVrv1OzZgJp7Bzmpxc6zAPoArUlzv5/XnWM7ev4981L3fBluZXd4l33AR90SogPGC5zpdf9WVAhwVhm7cmHlGIABPgarEeU//xB0y7gd3noqQ0csCpPRwnXYc/6CdYavY+/Lno4rhDI32DHCurenjd+Qbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=eqOwRH8A9ntDYcLfD1fQRzHHWyNFXmwHQN5hbeOWU3xaJHcnvITq2aJ49ptJ0aCAnRQLHBAnh4MXwrrm+rcRch+FMTE15qBE02sqH5Q7ICLvMeQhSJuLV1HUoBghLfTMVD+kXbHAFgsk+1V1PVnATg+gwcbaemN1gO8Y5K3ElNs=
-Received: by 10.86.89.4 with SMTP id m4mr2624866fgb.1186183722862;
-        Fri, 03 Aug 2007 16:28:42 -0700 (PDT)
-Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id a37sm7349329fkc.2007.08.03.16.28.36
-        (version=SSLv3 cipher=OTHER);
-        Fri, 03 Aug 2007 16:28:37 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200708031110.55969.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753978AbXHCXg6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 19:36:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753638AbXHCXg6
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 19:36:58 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:47021 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbXHCXg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 19:36:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070803233656.RKGS7349.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 3 Aug 2007 19:36:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Xbcw1X0011kojtg0000000; Fri, 03 Aug 2007 19:36:56 -0400
+cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <vpqir7wi5oc.fsf@bauges.imag.fr> (Matthieu Moy's message of "Sat,
+	04 Aug 2007 01:01:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54770>
 
->From 6ef05672bb1dd1fe1ded15707164eaac36772c21 Mon Sep 17 00:00:00 2001
-From: Steven Walter <stevenrwalter@gmail.com>
-From: Jakub Narebski <jnareb@gmail.com>
-Date: Fri, 3 Aug 2007 19:35:00 +0200
-Subject: [PATCH] gitweb: Fix handling of $file_name in feed generation
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-The commit b6093a5c, by Robert Fitzsimons:
-  "gitweb: Change atom, rss actions to use parse_commits."
-forgot to pass $file_name parameter to parse_commits subroutine.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-If git_feed is provided a file name, it ought to show only the history
-affecting that file or a directory.  The title was being set
-correctly, but all commits from history were being shown.
+>> "git-status $args" on the other hand is a preview of "what would
+>> happen if I say 'git-commit $args'", and in order to compute
+>> that, you would fundamentally need to be able to write into the
+>> object store.  In a special case of giving empty $args it can be
+>> read-only.
+>
+> Can you give an example where it _could_ not be read-only?
 
-Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Three comments. First, authorship. Steven Walter didn't signoff his patch,
-and the contents differs a bit from second chunk of his patch (see
-comment below) and I have added infor about which commit introduced this
-bug to the commit message. I have added my signoff, you can take this
-patch as either mine or Steven authorship.
+Think of what "git commit -a" would have to do.  It needs to
+hash and deposit a new object for blobs that have been
+modified.  Where do those new blob object go?
 
+> In the same way, I expect git-status to be read-only for the user. You
+> say "what _would_ happen _if_ I say commit $args". But you don't
+> commit, the sentence is conditionnal. I don't expect any tool to have
+> visible side-effects when I say "what would happen if ...".
 
-Second, I have discarded first chunk in Steven patch because it was too
-intrusive. As I have said, it makes 'file_name' default argument,
-unless overriden. While it made sense for 'project' parameter to be made
-default parameter in href(), as almost all URLs in gitweb needed it,
-more than half URLs does not need 'file_name' parameter. And some of
-those URLs are present in a views which do use 'file_name'.
+By running git-status the user is asking to get the overall
+picture, discarding the "touched but not modified" information.
+Once you _HAVE TO_ refresh the index for whatever reason, it is
+better to keep the result of the effort and cycles spent for
+that refresh operation for obvious performance reasons in
+practice, and that is what we have now in git-status.  IOW, we
+are practical bunch.
 
-So if we want alternative URLs for a feed preserve 'file_name' parameter,
-or we want RSS/Atom links for "file_name" kind of views, like 'tree',
-'blob' or 'history' views, we should add 'file_name' parameter
-explicitely, and not change href() to do it implicitely.
-
-But as we are in stabilization (freeze) stage, I'd rather not add any new
-features. This one just fixes a bug in gitweb.
-
-
-Third, I'd rather not use "--full-history" for feeds. We use it in the
-'history' view for backward compatibility reasons; I'd rather leave it
-for extra options in the feed. But this is also for after the release.
-
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 498b936..4733728 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5365,7 +5365,7 @@ sub git_feed {
- 
- 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
- 	my $head = $hash || 'HEAD';
--	my @commitlist = parse_commits($head, 150);
-+	my @commitlist = parse_commits($head, 150, 0, undef, $file_name);
- 
- 	my %latest_commit;
- 	my %latest_date;
--- 
-1.5.2.4
+Maybe in a theoretical ideal world, you might prefer to
+reverting back to the stat-dirty original index to make
+git-status appear a read-only operation, with continued degraded
+performance.  You are welcome to reimplement it that way, and
+the patch should be trivial (while git-commit.sh is still a
+script, at least) but that is not what we did.
