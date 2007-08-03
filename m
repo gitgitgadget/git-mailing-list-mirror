@@ -1,64 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git benchmark - comparison with Bazaar, Darcs, Git and Mercurial
-Date: Thu, 02 Aug 2007 17:51:50 -0700
-Message-ID: <7v3az1samx.fsf@assigned-by-dhcp.cox.net>
-References: <200708010216.59750.jnareb@gmail.com>
-	<alpine.LFD.0.999.0707311850220.4161@woody.linux-foundation.org>
-	<7vodhrby6f.fsf@assigned-by-dhcp.cox.net>
-	<20070801092428.GB28106@thunk.org>
-	<7vr6mn5znm.fsf@assigned-by-dhcp.cox.net>
-	<87tzrjfe5h.wl%cworth@cworth.org>
-	<alpine.LFD.0.999.0708010937050.3582@woody.linux-foundation.org>
-	<7vejim1n92.fsf@assigned-by-dhcp.cox.net>
-	<86tzrikz5x.fsf@lola.quinscape.zz>
+From: Brian Hetro <whee@smaertness.net>
+Subject: gitweb via instaweb not showing log. Bug?
+Date: Thu, 2 Aug 2007 21:26:47 -0400
+Message-ID: <20070803012647.GA10402@ruiner>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Aug 03 02:51:55 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 03 03:27:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGlOV-0000PO-CH
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 02:51:55 +0200
+	id 1IGlwZ-0007rb-6P
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 03:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612AbXHCAvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 20:51:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbXHCAvw
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 20:51:52 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:44380 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262AbXHCAvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 20:51:52 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070803005151.YTOY7349.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 2 Aug 2007 20:51:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id XCrq1X00Y1kojtg0000000; Thu, 02 Aug 2007 20:51:51 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756042AbXHCB0v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Aug 2007 21:26:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbXHCB0v
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 21:26:51 -0400
+Received: from ag-out-0708.google.com ([72.14.246.240]:21937 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755102AbXHCB0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2007 21:26:51 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so722131aga
+        for <git@vger.kernel.org>; Thu, 02 Aug 2007 18:26:50 -0700 (PDT)
+Received: by 10.100.178.7 with SMTP id a7mr1486883anf.1186104409980;
+        Thu, 02 Aug 2007 18:26:49 -0700 (PDT)
+Received: from smaertness.net ( [66.67.48.108])
+        by mx.google.com with ESMTPS id c40sm2727479anc.2007.08.02.18.26.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2007 18:26:48 -0700 (PDT)
+Received: by smaertness.net (nbSMTP-1.00) for uid 1000
+	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
+	whee@smaertness.net; Thu,  2 Aug 2007 21:26:48 -0400 (EDT)
+Content-Disposition: inline
+X-PGP-Key: http://whee.smaertness.net/pubkey.asc
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54658>
 
-David Kastrup <dak@gnu.org> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>  * With -l, as long as the source repository is healthy, it is
->>    very likely that the recipient would be, too.  Also it is
->>    very cheap.  You do not get any back-up benefit.
->
-> Oh, but one does: an overzealous prune or rm -oopswrongoption in one
-> repo does not hurt the other.
+Using git version 1.5.3.rc3.120.g68d422, I am seeing a problem with
+git-instaweb not being able to show the commit logs.  For example, if
+I git-clone the git repository, run git-instaweb and browse to:
+  http://127.0.0.1:1234/?p=.git;a=log;h=v1.5.1.5
+I see:
+  Last change .
+and no log of changes.
 
-That's not "back-up" benefit I was thinking about.  It is more
-about protecting your data from hardware failure.  You
-physically have bits in two places, preferrably on separate disk
-drives.
+However, this does work using git version 1.5.2.4.  In that case, I do
+see the log.
 
-And that is what you do not get from hardlinked clone.
+I came up with a test script and let bisect have a go.  It came up
+with this commit:
+e90fdc39b6903502192b2dd11e5503cea721a1ad is first bad commit
+commit e90fdc39b6903502192b2dd11e5503cea721a1ad
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Wed Aug 1 01:30:14 2007 +0100
+
+    Clean up work-tree handling
+
+[..snip..]
+
+Known issue?
+
+--
+Brian
