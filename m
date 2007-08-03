@@ -1,71 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Thu, 2 Aug 2007 23:12:39 -0400
-Message-ID: <20070803031239.GL20052@spearce.org>
-References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <alpine.LFD.0.999.0708021340450.8184@woody.linux-foundation.org> <46B26686.3010002@alum.mit.edu>
+Date: Fri, 3 Aug 2007 05:03:10 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708030454200.14781@racer.site>
+References: <46AFCF3E.5010805@alum.mit.edu> 
+ <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com> 
+ <46B1F96B.7050107@alum.mit.edu> <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	users@cvs2svn.tigris.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 03 05:12:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	git@vger.kernel.org, users@cvs2svn.tigris.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 06:03:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGnat-0002dc-5Q
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 05:12:51 +0200
+	id 1IGoO9-0003ol-A0
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 06:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756857AbXHCDMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Aug 2007 23:12:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbXHCDMs
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Aug 2007 23:12:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:56799 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbXHCDMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2007 23:12:47 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IGnaX-0005bk-3V; Thu, 02 Aug 2007 23:12:29 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B3A8420FBAE; Thu,  2 Aug 2007 23:12:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <46B26686.3010002@alum.mit.edu>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751056AbXHCEDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 00:03:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbXHCEDm
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 00:03:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33569 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751032AbXHCEDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 00:03:41 -0400
+Received: (qmail invoked by alias); 03 Aug 2007 04:03:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp005) with SMTP; 03 Aug 2007 06:03:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0zad39ou06ed7BYT02rxDx7Aoui3Fk3gq1rX44d
+	LorAJH6yt/aCUW
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54666>
 
-Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> 1. The helper branches should be deleted after the tag has been defined.
->  I simply couldn't figure out how to do this using git-fast-import, and
-> git-fast-import complained when I tried to use a branch called
-> "TAG_FIXUP" without the "refs/head/" prefix.
+Hi,
 
-Two issues there:
+On Fri, 3 Aug 2007, Martin Langhoff wrote:
 
-* Deleting branches:
+> On 8/3/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> > cvsps is not a conversion tool at all, though it is used by other
+> > conversion tools to generate the changesets.  It appears (I hope I am
+> > not misinterpreting things) to emphasize speed and incremental
+> > operation, for example attempting to make changesets consistent from one
+> > run to the next, even if the CVS repository has been changed prudently
+> > between runs.  cvsps does not appear to attempt to create atomic branch
+> > and tag creation commits or handle CVS's special vendorbranch behavior.
+> >  cvsps operates via the CVS protocol; you don't need filesystem access
+> > to the CVS repository.
+> 
+> 100% in agreement. And though I can't claim to be happy with cvsps, in
+> many scenarios it is mighty useful, in spite of its significant warts.
+>  The "does incrementals" is hugely important these days, as lots of
+> people use git to run "vendor branches" of upstream projects that use
+> CVS.
 
-  I currently don't support this in fast-import, but I'll add support
-  for it.  Its actually pretty simple to tell it to drop a branch,
-  especially if the dang thing doesn't actually exist in the git
-  repository yet (because its only in-memory).
+Me too: 100% agreement.  A couple of people seem to be content to proclaim 
+that their incomplete solutions are better, but in the end of the day, 
+they are as bad as the programs they purport to replace: incomplete.
 
-* Creating a branch without refs/heads/ prefix:
+For the moment, I help myself with tracking the different branches 
+individually, but there, really, git-cvsimport is as good as the other 
+"solutions", with the further advantage that they are actually hackable, 
+and not closed to everybody outside a very small community.
 
-  This is a bug.  I had good intentions by trying to verify the
-  name was one that didn't contain special reserved characters,
-  but I wound up also requiring you to create branches only in the
-  refs/heads/ namespace.  That was not what I wanted to do.  I'm
-  patching it tonight.
+So I look forward to testing cvs2svn(git-branch) this weekend.
 
--- 
-Shawn.
+Ciao,
+Dscho
