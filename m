@@ -1,74 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Fri, 3 Aug 2007 13:47:50 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708031347160.14781@racer.site>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site> 
- <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com> 
- <46B2D4D9.4020103@trolltech.com> <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
- <Pine.LNX.4.64.0708031243330.14781@racer.site>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
+Date: Fri, 3 Aug 2007 08:56:01 -0400
+Message-ID: <20070803125601.GA28323@fieldses.org>
+References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <107BD473-E055-47D0-9720-9D878BDAB954@zib.de> <20070803030101.GI20052@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 14:48:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 03 14:56:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGwZr-0004FA-Qf
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 14:48:24 +0200
+	id 1IGwhO-0007T8-HF
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 14:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755143AbXHCMsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 08:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754888AbXHCMsV
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 08:48:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48687 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755143AbXHCMsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 08:48:20 -0400
-Received: (qmail invoked by alias); 03 Aug 2007 12:48:19 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp052) with SMTP; 03 Aug 2007 14:48:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19xP2QPTp1xTxDEk+R3udzjWud5vvQjKy8XvhLyie
-	rpumL1+2i3bmxB
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0708031243330.14781@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1756751AbXHCM4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 08:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757286AbXHCM4G
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 08:56:06 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:44689 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756185AbXHCM4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 08:56:05 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IGwhF-0007dg-Kp; Fri, 03 Aug 2007 08:56:01 -0400
+Content-Disposition: inline
+In-Reply-To: <20070803030101.GI20052@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54717>
 
-Hi,
-
-On Fri, 3 Aug 2007, Johannes Schindelin wrote:
-
-> Completely forgot: we might want to do something like this at the end of 
-> /etc/profile:
+On Thu, Aug 02, 2007 at 11:01:01PM -0400, Shawn O. Pearce wrote:
+> Steffen, you seem to be more in-tune with the Mac UI standards
+> than I am.  Any suggestions on what I can do in git-gui to make
+> this feature more obvious to users?
 > 
-> 	test ! -d /git || {
-> 		mv /git $HOME/ &&
-> 		cd $HOME/git &&
-> 		make install &&
-> 		git config remote.origin.url \
-> 			git://repo.or.cz/git/mingw.git
-> 		git config remote.origin.fetch \
-> 			'+refs/heads/*:refs/remotes/origin/*'
-> 		git config remote.mob.url \
-> 			repo.or.cz:/srv/git/git/mingw.git
-> 		git config remote.mob.fetch \
-> 			+refs/remote/mob:refs/remotes/origin/mob
-> 		git config remote.mob.push \
-> 			master:mob
-> 		git fetch
-> 		git reset 51785010a4d3e7f6c3
-> 	}
-> 
-> Please test that, and include it if it works.
+> I myself use a Mac OS X based PowerBook as my primary development
+> system, but I have to admit, I'm not the best GUI developer that has
+> ever walked on this planet.  Far far far from it.
 
-Oh well, I downloaded your archive, and making the adjustments right now.
+You're way ahead of me!
 
-Ciao,
-Dscho
+> So I'd really love to do better.  But frankly I'm at a loss here
+> and just don't know what sort of change to make.
+
+The one thing that struck me when I fired up git-gui was that it wasn't
+obvious to me which things I should try clicking on.
+
+For example: the buttons, drop-down menus, and check-boxes all cry out
+to be played with.  But the filenames in the lists at the top are less
+obvious, and it might never have occurred to me on my own to right-click
+on the diff hunks at the bottom.  That just looks like passive colorized
+text to me.
+
+I don't know what sort of user-interface conventions say "play with
+me!", though.  Random ideas:
+
+	- maybe the cursor should change shape over the diff hunks (or
+	  just the headers?)
+	- maybe buttons, hunk headers, file names, etc., should all be
+	  in the same color?
+	- maybe the hunk headers could benefit from a little more
+	  decoration?  I don't know how to do that without just making
+	  the display look more cluttered, though.
+	- maybe left-clicking on diff hunks should do something too?
+
+I dunno.
+
+--b.
