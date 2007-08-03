@@ -1,62 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Thu, 02 Aug 2007 23:30:51 -0700
-Message-ID: <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
-	<Pine.LNX.4.64.0708021541520.14781@racer.site>
-	<46B1F3F4.5030504@midwinter.com>
-	<Pine.LNX.4.64.0708021614420.14781@racer.site>
-	<20070803053717.GA16379@midwinter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 08:31:00 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: cvs2svn conversion directly to git ready for experimentation
+Date: Fri, 3 Aug 2007 08:48:13 +0200
+Message-ID: <2FEBD7A5-9932-4636-955D-F7E258F8E56E@zib.de>
+References: <46AFCF3E.5010805@alum.mit.edu>  <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com>  <46B1F96B.7050107@alum.mit.edu> <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com> <Pine.LNX.4.64.0708030454200.14781@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	git@vger.kernel.org, users@cvs2svn.tigris.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 03 08:50:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGqga-0008Hz-Kl
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 08:30:56 +0200
+	id 1IGqz8-0004gx-Gx
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 08:50:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755805AbXHCGay (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 02:30:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755783AbXHCGay
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 02:30:54 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34136 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754515AbXHCGax (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 02:30:53 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070803063053.DQCZ11888.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 3 Aug 2007 02:30:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id XJWs1X0071kojtg0000000; Fri, 03 Aug 2007 02:30:53 -0400
-In-Reply-To: <20070803053717.GA16379@midwinter.com> (Steven Grimm's message of
-	"Thu, 2 Aug 2007 22:37:18 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756438AbXHCGty (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 02:49:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756518AbXHCGty
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 02:49:54 -0400
+Received: from mailer.zib.de ([130.73.108.11]:56403 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756321AbXHCGtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 02:49:53 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l736lMQA014666;
+	Fri, 3 Aug 2007 08:49:42 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l736lKRu008640
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 3 Aug 2007 08:47:21 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0708030454200.14781@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54677>
 
-Steven Grimm <koreth@midwinter.com> writes:
 
-> 	Okay, enough arguing about whether the empty diff lines are
-> 	useful or not -- here's a patch to get rid of them.
+On Aug 3, 2007, at 6:03 AM, Johannes Schindelin wrote:
 
-I do not think this addresses anything but -p (i.e. textual
-diff) output.  If we _were_ to really do this, I think the patch
-I sent earlier today, with possible improvements I suggested,
-would be a better direction to go.
+> On Fri, 3 Aug 2007, Martin Langhoff wrote:
+>
+>> On 8/3/07, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>> cvsps is not a conversion tool at all, though it is used by other
+>>> conversion tools to generate the changesets.  It appears (I hope  
+>>> I am
+>>> not misinterpreting things) to emphasize speed and incremental
+>>> operation, for example attempting to make changesets consistent  
+>>> from one
+>>> run to the next, even if the CVS repository has been changed  
+>>> prudently
+>>> between runs.  cvsps does not appear to attempt to create atomic  
+>>> branch
+>>> and tag creation commits or handle CVS's special vendorbranch  
+>>> behavior.
+>>>  cvsps operates via the CVS protocol; you don't need filesystem  
+>>> access
+>>> to the CVS repository.
+>>
+>> 100% in agreement. And though I can't claim to be happy with  
+>> cvsps, in
+>> many scenarios it is mighty useful, in spite of its significant  
+>> warts.
+>>  The "does incrementals" is hugely important these days, as lots of
+>> people use git to run "vendor branches" of upstream projects that use
+>> CVS.
+>
+> Me too: 100% agreement.  A couple of people seem to be content to  
+> proclaim
+> that their incomplete solutions are better, but in the end of the day,
+> they are as bad as the programs they purport to replace: incomplete.
+>
+> For the moment, I help myself with tracking the different branches
+> individually, but there, really, git-cvsimport is as good as the other
+> "solutions", with the further advantage that they are actually  
+> hackable,
+> and not closed to everybody outside a very small community.
+
+I just want to add a warning. You should be suspicious of branched  
+imported
+using git-cvsimport (which is based on cvsps). If the time the branch is
+created differs from the time of the first commit to the branch git- 
+cvsimport
+may get the branching point wrong. This introduces a race condition.  
+Someone
+may have committed changes to a file that is later changed on the  
+branch. At
+that point the history of the imported branch is broken and git reports
+_wrong_ changesets.
+
+I ran into this issue and abandoned the use of git-cvsimport. It's  
+too dangerous
+for me. The testcase in [1] illustrates the problem. I still strongly  
+believe
+the warning should be stated in *BOLD* in the documentation.
+
+I'm not saying git-cvsimport is useless. But you should be suspicious  
+about
+the result of the import, especially if you plan to rely on  
+changesets derived
+from the imported repo, for example if you plan to do cherry-picking  
+or merging
+in git; or if you plan to blame people for their stupid changes based  
+on what
+you see in gitk (almost happend to me ;).
+
+	Steffen
+
+[1] http://marc.info/?l=git&m=118260312708709&w=2
