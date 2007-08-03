@@ -1,73 +1,90 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Forcing rewrite of files in working tree
-Date: Fri, 3 Aug 2007 12:55:56 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708031251130.8184@woody.linux-foundation.org>
-References: <200708031345.47127.andyparkins@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: git shell scripts flaw wrt dirty env
+Date: Fri, 3 Aug 2007 22:14:05 +0200
+Message-ID: <20070803201405.GB12430@artemis.corp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 21:56:28 2007
+Content-Type: multipart/signed; boundary="yNb1oOkm5a9FJOVX";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 03 22:14:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH3G4-0000nG-04
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 21:56:24 +0200
+	id 1IH3XJ-0006Jj-1b
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 22:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbXHCT4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 15:56:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbXHCT4H
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 15:56:07 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:39738 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751043AbXHCT4E (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 15:56:04 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73Ju2Ri026666
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 3 Aug 2007 12:56:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l73JtuMQ025509;
-	Fri, 3 Aug 2007 12:55:57 -0700
-In-Reply-To: <200708031345.47127.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: lf$Revision: 1.184 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1760909AbXHCUOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 16:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753812AbXHCUOI
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 16:14:08 -0400
+Received: from pan.madism.org ([88.191.52.104]:52151 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759481AbXHCUOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 16:14:07 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 4AE13C7FC
+	for <git@vger.kernel.org>; Fri,  3 Aug 2007 22:14:06 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id C50942BDBB7; Fri,  3 Aug 2007 22:14:05 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54750>
 
 
+--yNb1oOkm5a9FJOVX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 3 Aug 2007, Andy Parkins wrote:
-> 
-> I want to write a little recipe in a Makefile that ensures the $Id$ field in a 
-> series of text files is correct.  In case it's relevant, I'm including a load 
-> of asciidoc files as subsections into one master file; each file has a $Id$ 
-> field in the header, which very nicely prints out at the start of each 
-> section.  However, the $Id$ field is only written on checkout (not on checkin 
-> for fairly obvious reasons).  That means that for any files I've changed, the 
-> $Id$ is wrong.  Before I generate output using ASCIIdoc I'd like to ensure 
-> the $Id$ is correct.
-> 
-> How do I do it?
 
-Something like
+  I recently had an issue with git-rebase, and actually git-am, kind of
+hard to track down. After some hassle to understand what was going on,
+it happened that for an idiotic reason (me trying a fancy new login
+manager for X that didn't cleansed environment before staring X) made
+all my env dirty. In particular it had $resume (in small letters) set to
+/dev/sda5, and git-am happens to use the very same variable, without
+cleansing the environment.
 
-	git read-tree HEAD
-	git checkout -f
+  I'm maybe completely out of luck, and that's the sole unsafe use of
+variables in git shell scripts, but I don't think so, and maybe some
+kind of failsafe could be used. A crude way is to call:
 
-should do it.
+  unset `env | cut -d=3D -f1 | grep -v [A-Z]`
 
-The read-tree basically invalidated the index, by forcing it to the HEAD 
-tree (and *without* doing a merge with the old index, so it doesn't get 
-any of the size/date/inode fields right). And at that point, git thinks 
-that all files are stale, so "git checkout -f" will force the checkout for 
-all of them.
+  at the beginning of every script, so that every lowercase-only
+variables are unset, hence can be safely used. But it's completely
+tasteless. Though, as it can really lead to _very_ odd bugs, well, I
+just wanted to share the issue. For the curious, you can read on [0]
+what the issue looked like for me...
 
-I'm sure you can do it other ways too, but that's the "obvious" one.
 
-			Linus
+  [0] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=3D38;bug=3D435807#38
+
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--yNb1oOkm5a9FJOVX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGs4yNvGr7W6HudhwRAmJuAJ0YZgVSj4BxEYpNVIuU5lKvx8zNvgCfWtVn
+3dl/NDOD5Au7mSgQnIj4BZ4=
+=7MBC
+-----END PGP SIGNATURE-----
+
+--yNb1oOkm5a9FJOVX--
