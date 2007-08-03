@@ -1,58 +1,63 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Fri, 3 Aug 2007 08:58:47 -0400
-Message-ID: <20070803125846.GC28323@fieldses.org>
-References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <20070803030459.GJ20052@spearce.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: Forcing rewrite of files in working tree
+Date: Fri, 03 Aug 2007 14:58:52 +0200
+Message-ID: <46B3268C.7060707@dawes.za.net>
+References: <200708031345.47127.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 03 14:59:09 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 15:00:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGwkG-000091-Bi
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 14:59:08 +0200
+	id 1IGwlP-0000kJ-3x
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 15:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762687AbXHCM6u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 08:58:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762689AbXHCM6t
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 08:58:49 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:36259 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762536AbXHCM6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 08:58:48 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IGwjv-0007h0-70; Fri, 03 Aug 2007 08:58:47 -0400
-Content-Disposition: inline
-In-Reply-To: <20070803030459.GJ20052@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1762689AbXHCM7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 08:59:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762295AbXHCM7b
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 08:59:31 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:60846 "EHLO
+	spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1761475AbXHCM7a (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2007 08:59:30 -0400
+Received: from [192.168.201.102] (dsl-146-27-160.telkomadsl.co.za [165.146.27.160])
+	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id 97F567FAB;
+	Fri,  3 Aug 2007 05:59:27 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <200708031345.47127.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54720>
 
-On Thu, Aug 02, 2007 at 11:04:59PM -0400, Shawn O. Pearce wrote:
-> Online help?  In git-gui?  :-)
+Andy Parkins wrote:
+> Hello,
 > 
-> We don't have an online help system yet.  Basically no documentation
-> has been written for git-gui.  No thought has been put into how one
-> should be organized, maintained, or displayed to the poor human
-> who is just trying to learn more about Git and this gui thing it
-> came with.
+> I want to write a little recipe in a Makefile that ensures the $Id$ field in a 
+> series of text files is correct.  In case it's relevant, I'm including a load 
+> of asciidoc files as subsections into one master file; each file has a $Id$ 
+> field in the header, which very nicely prints out at the start of each 
+> section.  However, the $Id$ field is only written on checkout (not on checkin 
+> for fairly obvious reasons).  That means that for any files I've changed, the 
+> $Id$ is wrong.  Before I generate output using ASCIIdoc I'd like to ensure 
+> the $Id$ is correct.
 > 
-> Yes, Help->Online Documentation is abvailable to most users, but
-> that just opens your web browser (if it can find one) and points
-> it to kernel.org's git manual.  Not exactly the best material for
-> learning more about git-gui itself.
+> How do I do it?
+> 
+> The only method I've found is to delete the file in the work tree then do 
+> git-checkout again.  Even with -f, if the file is not changed git doesn't 
+> perform a checkout again, so git-checkout -f is not sufficient.  I assume I 
+> can do what I want with some clever plumbing, but I don't know any 
+> plumbing. :-)
+> 
+> Andy
 
-Fair enough.
+$ git reset --hard
 
-Though I'd like to keep the main body of the manual focused on the major
-command line tools, I'd have no objection to a separate chapter (or
-appendix?) devoted to git-gui; then you could point directly at that.
-Would that make sense?
+?
 
---b.
+Rogan
