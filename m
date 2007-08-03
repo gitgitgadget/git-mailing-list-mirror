@@ -1,67 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Fri, 3 Aug 2007 22:21:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708032218510.14781@racer.site>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site> 
- <46B32C8D.4060804@trolltech.com>  <Pine.LNX.4.64.0708031434130.14781@racer.site>
-  <46B34B0D.6030106@trolltech.com>  <Pine.LNX.4.64.0708031649480.14781@racer.site>
-  <46B36B7F.8010008@trolltech.com>  <fd2562310708031133m72b43265n35277c360ef2ca7a@mail.gmail.com>
-  <46B3764E.6090106@trolltech.com>  <Pine.LNX.4.64.0708031954480.14781@racer.site>
-  <46B37B09.1030808@trolltech.com> <fd2562310708031213sabc4599m79166f52e78edde3@mail.gmail.com>
- <Pine.LNX.4.64.0708032027250.14781@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: bug in t3700-add.sh?
+Date: Fri, 03 Aug 2007 14:26:09 -0700
+Message-ID: <7vabt8mhse.fsf@assigned-by-dhcp.cox.net>
+References: <fcaeb9bf0708031351g5e585a4bj849fbf2ec3720a18@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Mike Pape <dotzenlabs@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 23:22:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 23:26:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH4as-0002mv-Dh
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:21:58 +0200
+	id 1IH4f1-00043P-Ex
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 23:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761792AbXHCVV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 17:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761970AbXHCVV4
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:21:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46726 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761792AbXHCVVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 17:21:55 -0400
-Received: (qmail invoked by alias); 03 Aug 2007 21:21:53 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp028) with SMTP; 03 Aug 2007 23:21:53 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RlqRIxL8RbkABaYtqdk1CkBPJJZDb837E/e6fAs
-	n2TfWgNlgmEKo4
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0708032027250.14781@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1761420AbXHCV0M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 17:26:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761595AbXHCV0L
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 17:26:11 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55423 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988AbXHCV0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 17:26:10 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070803212610.ZZUL26965.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 3 Aug 2007 17:26:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XZS91X00B1kojtg0000000; Fri, 03 Aug 2007 17:26:09 -0400
+In-Reply-To: <fcaeb9bf0708031351g5e585a4bj849fbf2ec3720a18@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Fri, 3 Aug 2007 16:51:37 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54760>
 
-Hi,
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
-On Fri, 3 Aug 2007, Johannes Schindelin wrote:
+> Running test 17, I got this output:
 
-> Okay, I am really close to initialising the repository on
-> 
-> 	http://repo.or.cz/w/git/mingw/msysgit.git
+Gaah.  Those $s seem completely bogus.
 
-Actually, that did not work out too well.  It is not really a fork, so the 
-tags all pointed nowhere, and I could not even upload origin/devel to fix 
-that.  So I bit the apple and initialised a new repo:
 
-	http://repo.or.cz/w/msysgit.git
-
-This will be the official repo for this project.
-
-All users who sent me their username are already registered there.
-
-Ciao,
-Dscho
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index b52fde8..a27c593 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -131,8 +131,8 @@ test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over st
+ 	(
+ 		echo "100644 $(git hash-object -w stage1) 1	file"
+ 		echo "100755 $(git hash-object -w stage2) 2	file"
+-		echo "100644 $(printf $s | git hash-object -w -t blob --stdin) 1	symlink"
+-		echo "120000 $(printf $s | git hash-object -w -t blob --stdin) 2	symlink"
++		echo "100644 $(echo 1 | git hash-object -w -t blob --stdin) 1	symlink"
++		echo "120000 $(echo 2 | git hash-object -w -t blob --stdin) 2	symlink"
+ 	) | git update-index --index-info &&
+ 	git config core.filemode 0 &&
+ 	git config core.symlinks 0 &&
