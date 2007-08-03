@@ -1,99 +1,52 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Fri, 03 Aug 2007 09:12:07 +0200
-Message-ID: <46B2D547.6050406@trolltech.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix unterminated string in set_work_tree and improve error handling
+Date: Fri, 3 Aug 2007 09:23:24 +0200
+Message-ID: <81b0412b0708030023m359ec79as3197deee310e87a5@mail.gmail.com>
+References: <81b0412b0708022247s1116f66al1e8751f33bcae581@mail.gmail.com>
+	 <7v7iodqgg9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA8FE2C428FAC342EFD0D5737"
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 03 09:12:00 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 09:23:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGrKK-00024Y-5J
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 09:12:00 +0200
+	id 1IGrVS-0005I9-Ii
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 09:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758532AbXHCHL5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 03:11:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758565AbXHCHL5
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 03:11:57 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:60404 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758300AbXHCHL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 03:11:56 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 190F874144; Fri,  3 Aug 2007 09:11:17 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 0951274142; Fri,  3 Aug 2007 09:11:17 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <Pine.LNX.4.64.0708022206130.14781@racer.site>
-X-Enigmail-Version: 0.95.2
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1757783AbXHCHX1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 03:23:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757431AbXHCHX1
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 03:23:27 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:7794 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160AbXHCHX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 03:23:26 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so430685ugf
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 00:23:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WoeBdWxWIRX30XvymSOqr8BWC5kgSRbfbogTjwUGIzXFjG+S5ofwnEvCsyVmOjGdaY5gK/g+z/9BBdo403+1kNod9hUigjyqYzEIbVycEaaW1qW8yu5KjkIL4qak5KVRJk09WNLR+RKjL9Fn4fZ7BEos+sDMGOZl+XLDcKw61FE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bpyMoAq0K7igZUzAHngBba336Z+e7yg0kNQg/lVUqQIY+en/NDONkn/fSNfgpuiF91spcubX+i/LefCXXenwWOb70vmKinkSVKZfHU76THf9+N+WV49uGAXY/SWdQnyWjHLdf/87v0hzI5zmSkBH32EBv5Zjt6u9xX/bhsLHuhs=
+Received: by 10.78.160.4 with SMTP id i4mr752467hue.1186125804677;
+        Fri, 03 Aug 2007 00:23:24 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Fri, 3 Aug 2007 00:23:24 -0700 (PDT)
+In-Reply-To: <7v7iodqgg9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54684>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA8FE2C428FAC342EFD0D5737
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On 8/3/07, Junio C Hamano <gitster@pobox.com> wrote:
+> I sense you haven't read my replacement patch (Dscho Acked it).
 
-> I finally broke down, waiting for the sourceforge project to get
-> granted. In the meantime, I registered a project at
->=20
-> http://code.google.com/p/msysgit/
->=20
-> (WARNING: temporary only!)
->=20
-> Would you believe that Google code has a restriction to 20MB per
-> file, and 100MB in total, and you cannot remove files?  The same
-> Google that gives you 1TB mail space and counting?  Yes, it is
-> ludicrous.
->=20
-> Anyway, you can get a complete Development environment in 3 files
-> (because one would be too large), and... oh well, just read what is
-> written on the website if you're really interested.
-
-Great effort Johannes!
-The package work perfectly on XP.
-I'm trying to get it to work under Wine, but it (Wine) is not playing=20
-nice with me at the moment. (The whole system barfs of "Access Denied"=20
-and other things. Grrr)
-
---=20
-=2Emarius
-
-
---------------enigA8FE2C428FAC342EFD0D5737
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFGstVIKzzXl/njVP8RAnjoAJ9DeTO15X1i66AiMLFSfkQUIHlr0wCbBIxZ
-H2jqZdEoCw3V7qguxBgf9F8=
-=qmfC
------END PGP SIGNATURE-----
-
---------------enigA8FE2C428FAC342EFD0D5737--
+I did. I had to pay attention to what I read, though. Sorry.
