@@ -1,79 +1,93 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
 Subject: Re: cvs2svn conversion directly to git ready for experimentation
-Date: Fri, 03 Aug 2007 10:36:03 +0200
-Message-ID: <46B2E8F3.30301@alum.mit.edu>
-References: <46AFCF3E.5010805@alum.mit.edu>	 <8b65902a0708010438s24d16109k601b52c04cf9c066@mail.gmail.com>	 <46B1F96B.7050107@alum.mit.edu> <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
+Date: Fri, 03 Aug 2007 10:40:43 +0200
+Message-ID: <46B2EA0B.9030805@fs.ei.tum.de>
+References: <46AFCF3E.5010805@alum.mit.edu> <65F1862F-4DF2-4A52-9FD5-20802AEACDAB@zib.de> <46B215E2.8010307@fs.ei.tum.de> <EDE86758-FFD0-4CED-A2C9-033FA13DD3B6@zib.de> <46B2309E.3060804@fs.ei.tum.de> <6715F560-FE69-4F15-8C5F-B5B6071D97ED@zib.de> <46B25FC3.6000205@fs.ei.tum.de> <46B26DA8.6010102@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>, git@vger.kernel.org,
-        users@cvs2svn.tigris.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: users-return-1612-gcvscu-users=m.gmane.org@cvs2svn.tigris.org Fri Aug 03 10:36:12 2007
-Return-path: <users-return-1612-gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscu-users@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IGsdn-0000st-Rx
-	for gcvscu-users@gmane.org; Fri, 03 Aug 2007 10:36:12 +0200
-Received: (qmail 9388 invoked by uid 5000); 3 Aug 2007 08:36:09 -0000
-Mailing-List: contact users-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Aug 03 10:40:58 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IGsiI-0002Gv-8R
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 10:40:50 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753013AbXHCIkr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 3 Aug 2007 04:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbXHCIkr
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 04:40:47 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:51949 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbXHCIkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 04:40:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 1028F280EA;
+	Fri,  3 Aug 2007 10:40:45 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 5xEtrIOlMowG; Fri,  3 Aug 2007 10:40:44 +0200 (CEST)
+Received: from sweatshorts.home.corecode.ath.cx (85-218-11-227.dclient.lsne.ch [85.218.11.227])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 8C3FF280E3;
+	Fri,  3 Aug 2007 10:40:44 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <46B26DA8.6010102@alum.mit.edu>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:users-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:users-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:users@cvs2svn.tigris.org>
-Delivered-To: mailing list users@cvs2svn.tigris.org
-Received: (qmail 9378 invoked from network); 3 Aug 2007 08:36:08 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAJaFskbAbSoIlGdsb2JhbACOEQEBAgcKBwg
-X-IronPort-AV: i="4.19,216,1183359600"; 
-   d="scan'208"; a="78902612:sNHT18955580"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070604 Thunderbird/1.5.0.12 Mnenhy/0.7.5.666
-In-Reply-To: <46a038f90708021608o21480074ybcfada767afc7b04@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54690>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54691>
 
-Martin Langhoff wrote:
-> Is there any way we can run tweak cvs2svn to run incrementals, even if
-> not as fast as cvsps/git-cvsimport? The "do it remotely" part can be
-> worked around in most cases.
+Michael Haggerty wrote:
+> Simon 'corecode' Schubert wrote:
+>> Steffen Prohaska wrote:
+>>> BTW, togit creates much more complex branching patterns than cvs2sv=
+n
+>>> does. The attached file branching.png displays a small view of a
+>>> branching pattern that extends downwards over a couple of screens.
+>>> I checked the cvs2svn history again. It doesn't contain anything
+>>> of similar complexity.
+>> haha yea, there is still some issue with duplicate branch names and =
+the
+>> branchpoint.  if it doesn't get the branch right, it will always "pu=
+ll"
+>> files from the parent branch.
+>=20
+> This sounds very much like the problem reported by Daniel Jacobowitz
+> [1].  The problem is that if you create a branch A on a file, then
+> create branch B from branch A before making a commit on branch A, the=
+n
+> CVS doesn't record that branch A was the source of branch B.  (It tre=
+ats
+> B as if it sprouted directly from the revision that was the *source* =
+of
+> branch A.)  The same problem exists if "B" is a tag.
 
-I don't see any fundamental reason why not, but I think it would be a
-significant amount of work.  There are two main issues:
+I think I have covered this case quite well.  I believe "my" problem ha=
+ppens when there are files being copied manually within the repository =
+and then branch names being changed (or just branch names being changed=
+).  However, the name change just happens only on a subset of files and=
+ branches, so you wind up with a commit which is part of two branches. =
+ Or something like that.  I really should have the time to investigate =
+this.
 
-1. With CVS, it is possible to change things retroactively, such as
-changing which version of a file is included in a tag, or adding a new
-file to a tag, or changing whether a file is text vs. binary.  And many
-people copy and/or rename files within the CVS repository itself (to get
-around CVS's inability to rename a file).  This makes it look like the
-file has *always* existed under the new name and *never* existed under
-the old name.  An incremental conversion tool would have to look
-carefully for such changes and either handle them properly or complain
-loudly and abort.
+One elementary problem with CVS is that you can assign two branch names=
+ to the same branch.  During conversion you need to choose one over the=
+ other.
 
-2. cvs2svn uses a lot of repository-wide information to make decisions
-about how to group CVSItems into changesets, and a lot of these
-decisions are based on heuristics.  Incremental conversion would require
-that the decisions made in one cvs2svn run are recorded and treated as
-unalterable in subsequent runs.
+cheers
+  simon
 
-This hasn't been a priority in the Subversion world, because, frankly,
-what reason would a person have to stick with CVS instead of switching
-to Subversion, given that (1) they are intentionally so similar in
-workflow, an (2) there is no significant competition from other
-centralized SCMs?  But of course until the distributed SCM playing field
-has been thinned out a bit, people will probably be reluctant to commit
-to one or the other.
-
-I don't expect to have time to implement incremental conversions in
-cvs2svn in the near future.  (I'd much rather work on output back ends
-to other distributed SCMs.)  But if any volunteers step forward (hint,
-hint) I would be happy to help them get started and answer their
-questions.  I think that cvs2svn is quite hackable now, so the learning
-curve is hopefully much less frightening than when I started on the
-project :-)
-
-Michael
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
+++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
