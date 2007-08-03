@@ -1,67 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when
- contents are unchanged
-Date: Fri, 3 Aug 2007 11:23:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708031121000.14781@racer.site>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
- <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site>
- <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>
- <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site>
- <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site>
- <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
+Date: Fri, 3 Aug 2007 07:17:15 -0400
+Message-ID: <fcaeb9bf0708030417y39f84db2lb0b202af57d8fccb@mail.gmail.com>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
+	 <46B2D547.6050406@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 12:23:58 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Marius Storm-Olsen" <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 13:17:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IGuK4-0007b2-Bb
-	for gcvg-git@gmane.org; Fri, 03 Aug 2007 12:23:56 +0200
+	id 1IGv9q-0007KD-6h
+	for gcvg-git@gmane.org; Fri, 03 Aug 2007 13:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759067AbXHCKXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 06:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758967AbXHCKXz
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 06:23:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35317 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758917AbXHCKXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 06:23:54 -0400
-Received: (qmail invoked by alias); 03 Aug 2007 10:23:52 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 03 Aug 2007 12:23:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+NNlhDd9mNLua1ocq5UlTOzzOIdA6pkp6+rDAjkN
-	PK9kA37xxGg4UD
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1761530AbXHCLRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 07:17:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761509AbXHCLRT
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 07:17:19 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:3536 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760794AbXHCLRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 07:17:18 -0400
+Received: by an-out-0708.google.com with SMTP id d31so153185and
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 04:17:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AW+vB59UrxWT0Ds5iiy0FR38qzNa9x7/bUTYDG/wE/1GVPL5nVYZ0PMflUgI+owHdWm7UVXSIT/EtfA3TZ6ZjG13q09DwctaqBK81rgO9sM9QE/R3YWBYBDgUKWyuLhdT7eG7bZhLLH4LVMGrA3nNP4vgOXMvP5gmJUxbOwJxUA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tXJMc8VjHRLvOU0P23G+tsI/WBfeE4pTk7wdIkAoA3on2UbzF95PjtS4Sp9Il4oOOVAL9CFg/mmf0r+5+GEMtYonRcZIKpLJa/Jp7XR6vNSKi1Nl0SaYJE294K+lZETGA5Qn08F8KoA5GhqNkAWvpGtiHuux8xAvVnztkIJwvPs=
+Received: by 10.100.9.19 with SMTP id 19mr1661838ani.1186139836031;
+        Fri, 03 Aug 2007 04:17:16 -0700 (PDT)
+Received: by 10.100.198.17 with HTTP; Fri, 3 Aug 2007 04:17:15 -0700 (PDT)
+In-Reply-To: <46B2D547.6050406@trolltech.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54703>
 
-Hi,
+On 8/3/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> > I finally broke down, waiting for the sourceforge project to get
+> > granted. In the meantime, I registered a project at
+> >
+> > http://code.google.com/p/msysgit/
+> >
+> > (WARNING: temporary only!)
+> >
+> > Would you believe that Google code has a restriction to 20MB per
+> > file, and 100MB in total, and you cannot remove files?  The same
+> > Google that gives you 1TB mail space and counting?  Yes, it is
+> > ludicrous.
+> >
+> > Anyway, you can get a complete Development environment in 3 files
+> > (because one would be too large), and... oh well, just read what is
+> > written on the website if you're really interested.
+>
+> Great effort Johannes!
+> The package work perfectly on XP.
+> I'm trying to get it to work under Wine, but it (Wine) is not playing
+> nice with me at the moment. (The whole system barfs of "Access Denied"
+> and other things. Grrr)
 
-On Thu, 2 Aug 2007, Junio C Hamano wrote:
+Even if it installs ok under Wine, git may not work properly because a
+bug in dup2() not duplicating to 0-2 and some others that I think only
+affect tests. So get XP if you can or prepare to fix Wine along the
+way.
 
-> Steven Grimm <koreth@midwinter.com> writes:
-> 
-> > 	Okay, enough arguing about whether the empty diff lines are
-> > 	useful or not -- here's a patch to get rid of them.
-> 
-> I do not think this addresses anything but -p (i.e. textual
-> diff) output.  If we _were_ to really do this, I think the patch
-> I sent earlier today, with possible improvements I suggested,
-> would be a better direction to go.
-
-But I'd really think that what should be done (if anything has to be done 
-at all) is to introduce a config variable which triggers the same logic in 
-git-diff as was introduced in 2b5f9a8c0cff511f2bb0833b1ee02645b79323f4.
-
-Ciao,
-Dscho
+-- 
+Duy
