@@ -1,64 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: core.gitproxy and non-git protocols
-Date: Sat, 04 Aug 2007 02:34:41 +0200
-Organization: At home
-Message-ID: <f90his$3tg$2@sea.gmane.org>
-References: <ee77f5c20708012221j4d75ff0dl8fbf16cdaf1401bd@mail.gmail.com> <20070802053151.GH20052@spearce.org>
+From: Ismail =?iso-8859-1?q?D=F6nmez?= <ismail@pardus.org.tr>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 4 Aug 2007 03:41:36 +0300
+Organization: TUBITAK/UEKAE
+Message-ID: <200708040341.36147.ismail@pardus.org.tr>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 04 02:35:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 02:41:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH7br-0006Wt-OM
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 02:35:12 +0200
+	id 1IH7hg-0007n8-M7
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 02:41:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763288AbXHDAfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 20:35:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763798AbXHDAfI
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 20:35:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:57179 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763091AbXHDAfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 20:35:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IH7bi-0008FT-QL
-	for git@vger.kernel.org; Sat, 04 Aug 2007 02:35:02 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 02:35:02 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 02:35:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756287AbXHDAlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 20:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753762AbXHDAlH
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 20:41:07 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:59523 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753819AbXHDAlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 20:41:06 -0400
+Received: from ninjamobile.local (unknown [85.96.18.47])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 0BB8860B2BD3;
+	Sat,  4 Aug 2007 03:41:03 +0300 (EEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54781>
 
-Shawn O. Pearce wrote:
+On Saturday 04 August 2007 03:28:26 you wrote:
+> I tagged 1.5.3-rc4 and it will soon be mirrored out.  This is
+> the last rc before the real thing, which I am hoping to happen
+> by mid August.  Until then, I won't look at anything but
+> regression fixes and documentation updates.  Please test this
+> one well.
 
-> David Symonds <dsymonds@gmail.com> wrote:
+Can't build manpages, same error as 
+http://lists-archives.org/git/625107-having-problems-with-building-the-manpages.html :
 
->> It'd be great if (a) the documentation could be fixed, or (b) the
->> proxy-picking code could be at least extended to ssh:// protocols, and
->> preferrably extended to defining custom protocols.
-> 
-> Did you try setting GIT_SSH envvar to point to a script that does
-> what you need?  I do this in one particular case...
+xmlto -m callouts.xsl man git-add.xml
+runtime error: file 
+file:///usr/share/sgml/docbook/xsl-stylesheets-1.73.0/manpages/other.xsl line 
+129 element call-template
+The called template 'read-character-map' was not found.
 
-GIT_SSH environmental variable is *not described* anywhere in the
-documentation. Would you be so kind?
+Regards,
+ismail
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Perfect is the enemy of good
