@@ -1,70 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: rc4 - make quick-install-doc is broken
-Date: Sat, 4 Aug 2007 23:37:19 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708042328000.14781@racer.site>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
- <46B4A2B0.9080208@gmail.com> <46B4DF39.2070506@lsrfire.ath.cx>
- <Pine.LNX.4.64.0708042232390.14781@racer.site> <46B4F923.3090604@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] checkout-index needs a working tree
+Date: Sat, 04 Aug 2007 15:50:11 -0700
+Message-ID: <7vvebuj4nw.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0708042319470.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Aug 05 00:38:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 00:50:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHSGA-0005oT-LF
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 00:38:11 +0200
+	id 1IHSRu-0007vB-Hb
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 00:50:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762572AbXHDWhy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 18:37:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760496AbXHDWhy
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 18:37:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34799 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760219AbXHDWhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 18:37:53 -0400
-Received: (qmail invoked by alias); 04 Aug 2007 22:37:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 05 Aug 2007 00:37:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18QPXtb6j0Q8aQKY15e58IO46ASj0P5L8CZi7YShw
-	f6kxG2nc37HSzp
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46B4F923.3090604@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S932333AbXHDWuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 18:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765007AbXHDWuO
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 18:50:14 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:60094 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765029AbXHDWuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 18:50:12 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070804225013.FSUP11888.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 4 Aug 2007 18:50:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XyqB1X00M1kojtg0000000; Sat, 04 Aug 2007 18:50:12 -0400
+In-Reply-To: <Pine.LNX.4.64.0708042319470.14781@racer.site> (Johannes
+	Schindelin's message of "Sat, 4 Aug 2007 23:20:07 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54917>
 
-Hi,
+Hmmph.  I was trying to come up with a better commit log message
+for this change.
 
-your test script is slightly wrong...
+	Paths given from the command line of checkout-index name
+	files relative to the cwd, whose implication is that it
+	is relative to where you are in relation with the top of
+	the working tree.  For doing that, you need to have the
+	work tree to begin with.
 
-First you "git init", with GIT_DIR in $(pwd)/.git, i.e. the default.  But 
-then, you need not do this, test scripts are called when git init was 
-already called.
+Does this mean that any command that uses its prefix parameter
+to cmd_xxx() needs NEED_WORK_TREE?
 
-Then you make an untracked directory called untracked/.  Tradition 
-dictates that when we're in that directory, we get the prefix 
-"untracked/", because we might add a file, or reference a file in another 
-branch, where that directory is _not_ untracked.
-
-So it is expected that checkout-index and ls-files behave differently 
-in a subdirectory (even if that is currently untracked).
-
-It seems a bit counterintuitive that read-tree succeeds, but really, 
-read-tree is only a commit -> index operation, which should not care about 
-the current prefix.  So it is fine.
-
-Checkout-index, instead, is an index -> working tree operation, and for 
-most of these, we care about the current prefix (so that you can say git 
-checkout-index file1, where file1 is in the current directory, which is 
-_not_ the working tree root).
-
-Ciao,
-Dscho
+I wonder if it would help us to catch similar breakages if we
+change git.c::run_command() so that we do not pass prefix (or
+pass a bogus pointer ((const char *)1)) for commands that do not
+ask for NEED_WORK_TREE.
