@@ -1,62 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-gui: Added support for OS X right click
-Date: Sat, 4 Aug 2007 13:58:26 -0400
-Message-ID: <20070804175826.GC17113@sigill.intra.peff.net>
-References: <C4431971-A1F1-463E-B238-D351FCBB57F8@pp.inet.fi> <20070804065516.GS20052@spearce.org> <20070804071131.GA6557@coredump.intra.peff.net> <alpine.LFD.0.999.0708040928350.5037@woody.linux-foundation.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Terminology question about remote branches.
+Date: Sat, 04 Aug 2007 20:00:00 +0200
+Message-ID: <85hcnfdvtr.fsf@lola.goethe.zz>
+References: <854pjfin68.fsf@lola.goethe.zz>
+	<20070804120243.GB9716@coredump.intra.peff.net>
+	<85tzrfh3yg.fsf@lola.goethe.zz>
+	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+	<85r6mjdyl8.fsf@lola.goethe.zz>
+	<Pine.LNX.4.64.0708041804260.13596@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	V?in? J?rvel? <v@pp.inet.fi>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 19:58:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Lars Hjemli <lh@elementstorage.no>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sat Aug 04 20:00:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHNta-0007NB-4B
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 19:58:34 +0200
+	id 1IHNv7-0007oe-9I
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 20:00:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208AbXHDR6b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Aug 2007 13:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764923AbXHDR6b
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 13:58:31 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3683 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764167AbXHDR6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 13:58:30 -0400
-Received: (qmail 1348 invoked from network); 4 Aug 2007 17:58:34 -0000
-Received: from unknown (HELO sigill.intra.peff.net) (10.0.0.7)
-  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 4 Aug 2007 17:58:34 -0000
-Received: (qmail 17384 invoked by uid 1000); 4 Aug 2007 17:58:26 -0000
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0708040928350.5037@woody.linux-foundation.org>
+	id S932461AbXHDSAG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 14:00:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932460AbXHDSAG
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 14:00:06 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:35381 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932212AbXHDSAE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 14:00:04 -0400
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 2967730309D;
+	Sat,  4 Aug 2007 20:00:03 +0200 (CEST)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 110AB1B8E41;
+	Sat,  4 Aug 2007 20:00:03 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 9D3C636E86A;
+	Sat,  4 Aug 2007 20:00:02 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 182541C4F932; Sat,  4 Aug 2007 20:00:00 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0708041804260.13596@beast.quantumfyre.co.uk> (Julian Phillips's message of "Sat\, 4 Aug 2007 18\:19\:26 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54893>
 
-On Sat, Aug 04, 2007 at 09:37:17AM -0700, Linus Torvalds wrote:
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-> However (and this is a pretty common thing), the *headers* are=20
-> unspecified, and a lot of email clients seem to think that if that=20
-> happens, they default to US-ASCII and think that those iso-latin1=20
-> characters are crud.
+> On Sat, 4 Aug 2007, David Kastrup wrote:
+>
+>> "Lars Hjemli" <lh@elementstorage.no> writes:
+>>
+>>> The magic setup that makes this happen is the following lines in .git/config:
+>> It would be helpful.  Except that nothing whatsoever can be found in
+>> .git/config concerning my local and my remote tracking branches.  So
+>> where is that information _really_ hidden away?
+>
+>> What gives?
+>
+> It would appear that your repo was created with an old version of
+> git. Which also explains why you were talking about origin as a
+> branch - which it used to be (a real local branch too ...), rather
+> than as a remote - which it is now.
+>
+> The whole remotes/tracking mechanism changed in 1.5.0 - now it's
+> much more flexible (and probably more complicated too).
 
-Well, that _is_ what the standard says, I believe. I agree with you tha=
-t
-practice is more important than a standard, and if there are high-bit
-characters in the 'From' field, I think that using the body charset is =
-a
-reasonable guess (although keep in mind that the "body" could be hidden
-below a multipart/mixed,  multipart/alternative, or some other arcane
-structure).
+I think I am going to cry.  So I need to rebase my branches, pull out
+the resulting patch sets, scrap my repository, clone it new from
+upstream, reapply my branches, in order to have a system where the
+documentation is somewhat in synch with the actual behavior?
 
-But I really have no idea why fully mime-aware mailers refuse to use
-rfc2047 encoding of the headers. In fact, my copy of the message you
-sent (to which I am replying) has munged V=E4in=F6's name in the cc hea=
-der,
-because it failed to use rfc2047 encoding. I'm surprised that alpine
-would fail to get that right.
+[...]
 
--Peff
+No, it would seem that I can just
+git-clone -l
+my repository and be set up in the new order of things.  Nice.
+
+However, it would appear from my experiments up to now that the
+--track option _can't_ be made to work with a 1.4 repository.  I think
+that is worth mentioning in the docs.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
