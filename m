@@ -1,83 +1,66 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: rc4 - make quick-install-doc is broken
-Date: Sat, 04 Aug 2007 12:00:48 -0400
-Message-ID: <46B4A2B0.9080208@gmail.com>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sun, 05 Aug 2007 00:03:42 +0800
+Message-ID: <46B4A35E.5040601@midwinter.com>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>	<200708040341.36147.ismail@pardus.org.tr>	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>	<46B3F762.1050306@midwinter.com>	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>	<46B418AA.4070701@midwinter.com>	<20070804091249.GA17821@uranus.ravnborg.org>	<46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 04 18:01:12 2007
+Cc: Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?Ismail_D=F6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 18:03:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHM3z-0002Gj-6n
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:01:11 +0200
+	id 1IHM6Y-0002vf-Jh
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753075AbXHDQAx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 12:00:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbXHDQAx
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:00:53 -0400
-Received: from wx-out-0506.google.com ([66.249.82.233]:2033 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbXHDQAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 12:00:53 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1078569wxd
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 09:00:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=DabbWkutbBrp7uAo8wtCNy6UaxAMkxwH8l27Qbm/OdEmUGG5osnjgXPyarWDy7q/Aft1DIRFY3T9CEErsS1oi5xBK2NTyWIfmhG9sQz7QMVHHHP9C+2u/vwBHJYGWO0wQ/P2ZeVC7nEGDLzsG+2UIPfPdy19YY5StmugaHg95uM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=BWEwvrtQQnXrSyQ7v69NThn915Yqn9OVOwm1ZJGNyeQBNlh/AmzpYsGYxREQoYT0ewgc0z2ieiXyO8ss5FGe6Z9dBjtjNB/9CR1QaT6YDEZ2Aiu24teVz8hpy9UQ4mtgSNzbNaw768YSUGNwrJbPhSIoDQrJ0VNR9wR0b7yirv0=
-Received: by 10.70.98.17 with SMTP id v17mr6954928wxb.1186243252143;
-        Sat, 04 Aug 2007 09:00:52 -0700 (PDT)
-Received: from ?192.168.100.118? ( [72.66.124.87])
-        by mx.google.com with ESMTPS id h13sm4198307wxd.2007.08.04.09.00.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Aug 2007 09:00:51 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
-In-Reply-To: <Pine.LNX.4.64.0708041637450.14781@racer.site>
+	id S1753929AbXHDQDr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 12:03:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXHDQDr
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:03:47 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:52105 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751808AbXHDQDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 12:03:46 -0400
+Received: (qmail 29665 invoked from network); 4 Aug 2007 16:03:46 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=qV0Du9qbf1GHnHiiKQ3Io/RsBO/WfXkYCdvBWi1z5Ro3IdF/mbWceGp1QZpKSTYM  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 4 Aug 2007 16:03:45 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <85zm17h4pn.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54871>
 
-Johannes Schindelin wrote:
-> Could it be that you did not find this commit by bisecting the issue?  I 
-> highly doubt that said commit changes anything in the build process.
->
-> Ciao,
-> Dscho
->
->   
-<snip ...>
+David Kastrup wrote:
+> A system such as info, in contrast, is hierarchical, and organized
+> with indexes and cross references making it much easier to find
+> things.
 
-git>git bisect good
-6490a3383f1d0d96c122069e510ef1af1d019fbb is first bad commit
-commit 6490a3383f1d0d96c122069e510ef1af1d019fbb
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Thu Aug 2 15:10:56 2007 -0700
+Really? I find info a huge pain in the butt most of the time. I can't 
+just do a simple text search for the information I want in the relevant 
+manpage; I have to go navigating around to the appropriate subsection 
+(and that's assuming I know where it is) and am forced to use the 
+emacs-style pager whether I like it or not (not a big emacs fan here). 
+It always ticks me off when I go to read the manpage for some command 
+and it tells me to go read the info page if I want complete documentation.
 
-    Fix work-tree related breakages
+I would definitely not want to move to a documentation system that 
+prevented me from typing "man git-commit" to get a list of all the 
+command line options for that command.
 
-    In set_work_tree(), variable rel needs to be reinitialized to
-    NULL on every call (it should not be static).
+However, that said, I have no objection to an alternate view of the same 
+information that's organized differently.
 
-    Make sure the incoming dir variable is not too long before
-    copying to the temporary buffer, and make sure chdir to the
-    resulting directory succeeds.
+Am I alone in my dislike of info, I wonder?
 
-    This was spotted and fixed by Alex and Johannes in a handful
-    patch exchanges.  Here is the final version.
-
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-    Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
-:100644 100644 3653092ab657942639b6183fb04b3af783b77e7a 
-4945eb3134c3e047f54e51db25cd0aa81d9c47d7 M      setup.c
+-Steve
