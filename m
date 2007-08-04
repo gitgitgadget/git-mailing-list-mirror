@@ -1,103 +1,70 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: rc4 - make quick-install-doc is broken
-Date: Sat, 04 Aug 2007 22:19:05 +0200
-Message-ID: <46B4DF39.2070506@lsrfire.ath.cx>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site> <46B4A2B0.9080208@gmail.com>
+Date: Sat, 4 Aug 2007 21:21:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708042120320.14781@racer.site>
+References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
+ <46B4A2B0.9080208@gmail.com> <46B4DF39.2070506@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
 	Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 22:19:20 2007
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Aug 04 22:21:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHQ5n-0007xr-Hk
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:19:19 +0200
+	id 1IHQ8F-0000AX-2T
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759925AbXHDUTQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Aug 2007 16:19:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbXHDUTQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:19:16 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:55634
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751121AbXHDUTP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 16:19:15 -0400
-Received: from [10.0.1.201] (p508EBCE0.dip.t-dialin.net [80.142.188.224])
-	by neapel230.server4you.de (Postfix) with ESMTP id 2C66D8B008;
-	Sat,  4 Aug 2007 22:19:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <46B4A2B0.9080208@gmail.com>
+	id S1761866AbXHDUVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 16:21:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761708AbXHDUVo
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:21:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51541 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761536AbXHDUVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 16:21:43 -0400
+Received: (qmail invoked by alias); 04 Aug 2007 20:21:41 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp046) with SMTP; 04 Aug 2007 22:21:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19H8EUveNVHRK+aL/Pz+twoDgAqR1CPMXSURbFih6
+	/hBSkJ/MpQLUUW
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46B4DF39.2070506@lsrfire.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54903>
 
-Mark Levedahl schrieb:
-> git>git bisect good
-> 6490a3383f1d0d96c122069e510ef1af1d019fbb is first bad commit
+Hi,
 
-I've started a bisect run myself and ended up at a different commit,
-viz. e90fdc39b6903502192b2dd11e5503cea721a1ad ("Clean up work-tree
-handling").  Hmm.  I guess this candidate has a greater chance of
-actually being the culprit than yours. ;-)
+On Sat, 4 Aug 2007, Ren? Scharfe wrote:
 
-I can't offer a fix, but I think I've captured install-doc-quick.sh's
-problem in a test script (see below).  It fails with e90fdc3 (and
-master) but succeeds with e90fdc3^.
+> Mark Levedahl schrieb:
+> > git>git bisect good
+> > 6490a3383f1d0d96c122069e510ef1af1d019fbb is first bad commit
+> 
+> I've started a bisect run myself and ended up at a different commit,
+> viz. e90fdc39b6903502192b2dd11e5503cea721a1ad ("Clean up work-tree
+> handling").  Hmm.  I guess this candidate has a greater chance of
+> actually being the culprit than yours. ;-)
+> 
+> I can't offer a fix, but I think I've captured install-doc-quick.sh's
+> problem in a test script (see below).  It fails with e90fdc3 (and
+> master) but succeeds with e90fdc3^.
+> 
+> Apparently checkout-index (and ls-files, but this is not used by the
+> install script) can now be confused by running it from inside an
+> untracked directory.
+> 
+> Johannes, does this help you in finding out what's going on here?
 
-Apparently checkout-index (and ls-files, but this is not used by the
-install script) can now be confused by running it from inside an
-untracked directory.
+Thanks for doing this.  I will work on this in a few minutes; at the 
+moment I am occupied with msysGit...
 
-Johannes, does this help you in finding out what's going on here?
-
-Ren=E9
-
-
-diff --git a/dev/null b/t/t1502-untracked.sh
-new file mode 100755
-index 0000000..3fbdb02
---- /dev/null
-+++ b/t/t1502-untracked.sh
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+
-+test_description=3D'accessing the index from an untracked directory'
-+. ./test-lib.sh
-+
-+pwd=3D$(pwd)
-+GIT_DIR=3D$pwd/.git
-+export GIT_DIR
-+
-+test_expect_success 'setup' '
-+	git init &&
-+	echo some file content >some_file &&
-+	git add some_file &&
-+	git commit -m "added a file" some_file &&
-+	mkdir untracked
-+'
-+
-+test_expect_success 'test read-tree from an untracked directory' '
-+	(                GIT_INDEX_FILE=3D$pwd/idx-a git read-tree HEAD) &&
-+	(cd untracked && GIT_INDEX_FILE=3D$pwd/idx-b git read-tree HEAD) &&
-+	git diff --binary idx-a idx-b
-+'
-+
-+test_expect_success 'test checkout-index from an untracked directory' =
-'
-+	(                git checkout-index -a --prefix=3D$pwd/a/) &&
-+	(cd untracked && git checkout-index -a --prefix=3D$pwd/b/) &&
-+	git diff a/ b/
-+'
-+
-+test_expect_success 'test ls-files from an untracked directory' '
-+	(                git ls-files) >ls-files-a &&
-+	(cd untracked && git ls-files) >ls-files-b &&
-+	git diff ls-files-a ls-files-b
-+'
-+
-+test_done
+Ciao,
+Dscho
