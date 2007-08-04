@@ -1,143 +1,159 @@
-From: David Kastrup <dak@gnu.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
 Subject: Re: Terminology question about remote branches.
-Date: Sat, 04 Aug 2007 16:01:55 +0200
-Message-ID: <85ejijgzzg.fsf@lola.goethe.zz>
-References: <854pjfin68.fsf@lola.goethe.zz>
-	<20070804092933.aaec6d52.seanlkml@sympatico.ca>
+Date: Sat, 4 Aug 2007 16:03:48 +0200
+Message-ID: <8c5c35580708040703w44781498t7396588a3f8c81c8@mail.gmail.com>
+References: <854pjfin68.fsf@lola.goethe.zz> <85tzrfh3yg.fsf@lola.goethe.zz>
+	 <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+	 <85k5sbh129.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Sat Aug 04 16:02:18 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 16:03:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHKCt-0004mN-VD
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:02:16 +0200
+	id 1IHKES-00059v-B0
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:03:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759156AbXHDOB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 10:01:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758353AbXHDOB7
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:01:59 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:59454 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757432AbXHDOB6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 10:01:58 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 032F032F2AF;
-	Sat,  4 Aug 2007 16:01:57 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id E017628EE1C;
-	Sat,  4 Aug 2007 16:01:56 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id A2ED13027E5;
-	Sat,  4 Aug 2007 16:01:56 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 0551E1C4F932; Sat,  4 Aug 2007 16:01:56 +0200 (CEST)
-In-Reply-To: <20070804092933.aaec6d52.seanlkml@sympatico.ca> (Sean's message of "Sat\, 4 Aug 2007 09\:29\:33 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1760382AbXHDODt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 10:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759249AbXHDODt
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:03:49 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:14975 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758818AbXHDODs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 10:03:48 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1174129wah
+        for <git@vger.kernel.org>; Sat, 04 Aug 2007 07:03:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sZQpcFC3rhLs97IJPgXHJnpD52d2tbKt9QnrEYSM8W8sElx8cMleedZash8iNXOJW8aeCDuIFlTzK7i9Hku5wSiUOPr/77o2/oeRbR2Yrb1CO7HFZMFRVjU8mXURwugl1atisbfh/VhMM3FmLIo0QkP9eoyZ1egjoWQYL/r/6KY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=U7SeRfWdjgpD83MMM9ThnD6VGlE6ybl1GUrnvtXVNmRxj5lD9Ta6ccMXH5Ulj8h9c6w/S2BY0jt5XxX7JQF6pK0sp9BRI2q+qcFGRJ3ytNn+WnieNrnAGW7VGVo0szLL++gima9VPUxytHOnCVoOsWgNUpO1ogENlYxcULiBFSM=
+Received: by 10.114.199.1 with SMTP id w1mr3944383waf.1186236228303;
+        Sat, 04 Aug 2007 07:03:48 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Sat, 4 Aug 2007 07:03:48 -0700 (PDT)
+In-Reply-To: <85k5sbh129.fsf@lola.goethe.zz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54850>
 
-Sean <seanlkml@sympatico.ca> writes:
-
-> David Kastrup <dak@gnu.org> wrote:
+On 8/4/07, David Kastrup <dak@gnu.org> wrote:
+> "Lars Hjemli" <lh@elementstorage.no> writes:
 >
->> A local branch is one with a local branch head.  In contrast,
->> checking out a remote branch, while possible, leaves one with a
->> detached head.
+> > On 8/4/07, David Kastrup <dak@gnu.org> wrote:
+> >> Now I think that I basically have no chance figuring this out on my
+> >> own sufficiently well to be able to improve the documentation.
+> >
+> > Remote-tracking branch:
+> >   A local copy of a branch in another repository. This kind of branch
+> >   cannot be updated by 'git-commit' but only by 'git-fetch' (hence
+> >   indirectly by 'git-pull' and 'git-remote update'). If you try to
+> >   'git-checkout' a remote-tracking branch, you will get a detached HEAD.
+> >
+> > Local branch:
+> >   A branch to which you may commit changes. Optionally, the branch can be
+> >   configured to "follow" one of your remote-tracking branches. This means
+> >   that a 'git-pull' without arguments (when your local branch is checked
+> >   out), will automatically 'git-fetch' and then 'git-merge' the remote-
+> >   tracking branch.
 >
-> Yes.
+> Does that mean that specifying "--track" to git-checkout or git-branch
+> never creates a remote-tracking branch?
+
+Yes. The "--track" option just adds some extra info in .git/config:
+
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+
+
+This info is then used by "git-pull" to
+1. fetch updates from the remote repository "origin"
+2. merge those updates from refs/remotes/origin/master
+
 >
->> "remote-tracking" basically means that git-pull will update the
->> branch according to changes in the remote repository.
+> > Example:
+> >
+> > Your local branch 'master' is setup to "follow"
+> > 'refs/remotes/origin/master'.
 >
-> To be clear, it's the job of git-fetch to update remote-tracking
-> branches with any changes found in the remote repository.  Git-pull
-> runs git-fetch and then runs a git-merge to update the
-> currently-checked-out branch.
+> So --track/--no-track are actually supposed to be --follow and
+> --no-follow?
+
+Maybe ;-)
+
+I just tried to avoid using the word "track" in more than one context,
+since it seemed to be a main source of confusion.
+
 >
-> When this happens, git-merge must decide which
-> remote-tracking-branch to merge into the currently checked out local
-> branch.  You can set which remote-tracking-branch will be selected
-> in this situation with the --track option.
+> > So if you do this:
+> >
+> > $ git checkout master
+> > $ git pull
+> >
+> > Then the 'git pull'-command will do this:
+> >
+> > $ git fetch -f origin master:remotes/origin/master
 >
-> So assuming a remote-repo has two branches "master" and "branchX":
+> This is then tracking?
+
+Yes, this is the part that downloads objects from the remote
+repository and updates refs/remotes/origin/master to refer to the same
+commit as the master branch in the remote repository.
+
 >
->    git clone remote-repo
+> > $ git merge remotes/origin/master
 >
-> will give us two remote-branch (AKA remote-tracking-branches) of
-> "origin/master" and "origin/branchX".  So:
+> And this is then following?
+
+Yes, this updates your local 'master' with the commits downloaded by git-fetch
+
+
 >
->    git branch --track mylocalbranch origin/branchX
->    git checkout mylocalbranch
+> > The magic setup that makes this happen is the following lines in .git/config:
+> >
+> > [remote "origin"]
+> Namely: a remote-tracking branch "origin"
 
-So --track does not set up a tracking branch, but makes a local
-_following_ branch _refer_ to a tracking branch.
+No. A remote repository: the name 'origin' can be used as an alias for
 
-What happens with
+  git://git.kernel.org/pub/scm/git/git.git
 
-    git checkout origin/branchX
-    git branch --track mylocalbranch
-    git checkout mylocalbranch
-
-?  What if after the checkout (which leads to a detached head) I check
-in a few things, and then decide to name the branch and set it up as
-following a remote tracking branch?  Instead of using git-branch for
-setting up the following, do I have to explicitly add the respective
-"remote" line (which does not specify a remote, but a remote tracking
-branch) into, uh, where?
-
-> No, a local branch is never a remote-tracking branch; even when
-> created with a --track option.  The --track option has muddied the
-> terminology waters a bit and you're not the first to be confused by
-> it.  The --track selects a branch from the repo to merge by default.
-
-Well, GOOD.  I have already come to the conclusion that the "--track"
-option, like the "remote" configuration recorded by it have the main
-purpose of confusing people and should not be confused with setting up
-a remote tracking branch, or referring to a remote branch.
-
-> A remote branch and a remote-tracking branch are the same thing.
-> Strictly speaking a local branch is never a remote-tracking-branch
-> although the "--track" option makes that harder to explain.
-
-You bet.
-
->> So the terminology seems fuzzy at the moment, and my attempt to
->> clear it up might not be the preferred way of doing it.
 >
-> Yeah, the documentation could use some fine tuning.
+> >         url = git://git.kernel.org/pub/scm/git/git.git
+> >         fetch = +refs/heads/*:refs/remotes/origin/*
+> >
+> > [branch "master"]
+> >         remote = origin
+>
+> Namely: follow the remote tracking branch origin?
 
-It is much too fine-tuned already.  I think that first option names
-and config file options need to get some coarse-tuning where one does
-not have to split hairs and ignore the meaning of terms in order to
-understand them.
+No. Fetch objects from the remote repository alias "origin"
 
-I have now "following" or "automerge" local branches which are set up
-to follow a "remote tracking" branch.  Presumably, if I do
+>
+> >         merge = refs/heads/master
 
-git-branch -b new-branch --track remote-branch
+And this is the info added  by "git branch --track" which enables the
+automatic merging of refs/remotes/origin/master (since
+refs/remotes/origin/master is your local copy of refs/heads/master in
+the 'origin' repository)
 
-then I get a following branch set up which follows/automerges a remote
-tracking branch.  So far so good.  What do I get with
 
-git-branch -b another-new-branch --track new-branch
+> >
+> >
+> > Was this helpful?
 
-Does this follow/automerges with new-branch?  Does this
-follow/automerge with remote-branch?
+Talking to myself: obviously not
 
-What if I do
-
-git-checkout remote-branch
-git-branch -b new-branch --track
-
-Does this follow anything?
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+larsh
