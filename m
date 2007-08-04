@@ -1,115 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Terminology question about remote branches.
-Date: Sat, 04 Aug 2007 17:22:59 +0200
-Message-ID: <85k5sbfhnw.fsf@lola.goethe.zz>
-References: <854pjfin68.fsf@lola.goethe.zz>
-	<20070804092933.aaec6d52.seanlkml@sympatico.ca>
-	<85ejijgzzg.fsf@lola.goethe.zz>
-	<20070804104851.162d7e00.seanlkml@sympatico.ca>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Some ideas for StGIT
+Date: Sat, 4 Aug 2007 16:22:36 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708041618291.14781@racer.site>
+References: <1186163410.26110.55.camel@dv> <200708031914.04344.andyparkins@gmail.com>
+ <1186206085.28481.33.camel@dv> <20070804141438.GA15821@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Sat Aug 04 17:23:13 2007
+To: Chris Shoemaker <c.shoemaker@cox.net>
+X-From: git-owner@vger.kernel.org Sat Aug 04 17:23:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHLTA-0000XX-LD
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 17:23:09 +0200
+	id 1IHLTJ-0000Zj-SL
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 17:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758180AbXHDPXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 11:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbXHDPXE
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 11:23:04 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:37801 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755230AbXHDPXC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 11:23:02 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 5F58F4C958;
-	Sat,  4 Aug 2007 17:23:01 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 457D8212FAE;
-	Sat,  4 Aug 2007 17:23:01 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 1FE3530ABDE;
-	Sat,  4 Aug 2007 17:23:01 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id AE2DA1C4F932; Sat,  4 Aug 2007 17:22:59 +0200 (CEST)
-In-Reply-To: <20070804104851.162d7e00.seanlkml@sympatico.ca> (Sean's message of "Sat\, 4 Aug 2007 10\:48\:51 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1759625AbXHDPXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 11:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbXHDPXO
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 11:23:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758659AbXHDPXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 11:23:13 -0400
+Received: (qmail invoked by alias); 04 Aug 2007 15:23:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 04 Aug 2007 17:23:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Z67sX1fkZZ9C0ilIzt3PaiNbFjF1Z6rt+KuD1Qo
+	655T8WYSe+Tmna
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070804141438.GA15821@pe.Belkin>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54866>
 
-Sean <seanlkml@sympatico.ca> writes:
+Hi,
 
-> On Sat, 04 Aug 2007 16:01:55 +0200
-> David Kastrup <dak@gnu.org> wrote:
->
->> So --track does not set up a tracking branch, but makes a local
->> _following_ branch _refer_ to a tracking branch.
->
-> Sure, that's one way to describe it; perhaps it would be best if
-> we switched to that nomenclature in the documentation.
+On Sat, 4 Aug 2007, Chris Shoemaker wrote:
 
-Not according to my current understanding, but that can, of course,
-change again in the next few hours.  As far as I understand right now,
-such a branch indeed tracks a remote branch (and not a remote tracking
-branch), it just does not track it recklessly: it has a head of its
-own, and it won't use git-fetch -f for updating it.
+> IMO, here are some things that would probably be easier with an external
+> patch stack:
+> 
+>    - directly editing the diff hunks
+>    - moving single diff hunks between patches
+> 
+> Maybe there are others, too, but these are things I just don't do
+> nearly as frequently as the things that git-rebase -i is good at.  (I
+> use git-rebase -i *constantly*).
 
-> It's not a problem, you could just add an appropriate [branch...] section
-> in your .git/config.   Actually looking at a typical branch section
-> is even more confusing to me:
->
->     $ git branch fudge origin/fix1
->
-> adds this to the .git/config:
->
->     [branch "fudge"]
->         remote = origin
->         merge = refs/heads/fix1
->
-> The config file does not record the remote-tracking-branch, instead
-> it explicitly records the remote repository information.  So it sure
-> appears that if you add the --track option, it _does_ make the local
-> branch track a remote directly.  Thus it's hard to call it anything
-> but what you labelled it, a local tracking-branch.
+Good to hear!  (I almost missed this mail, since I usually skip the StGit 
+mails.)
 
-Yes, it seems --track does track after all.  Just more cautiously than
-a remote tracking branch does.
+> > The "cd ..", "quilt push -a" and off I am. That 
+> > the "database" of quilt is in a known format and I can hack on 
+> > it with an editor is a plus for me :-)
+> > [end of quote]
+> 
+> That sounds more like an argument from familiarity than anything else.
+> Nobody (reasonable) directly hacks git's internal binary format.  The
+> "known format" I can hack with my editor is just the content itself.
+> Honestly, when you have commit-handling that is as good as git's,
+> there's really very little appeal left to editing the diffs directly.
 
-> While I thought i had a handle on this, i'm now officially more
-> confused than you;
+Of course, you _could_ just export the patches as one mbox, edit them, and 
+reapply them:
 
-Good.  It means that I may not be a complete idiot.  It may also mean
-that the documentation can be improved in places.  With a lot of
-"grep" and fine-combing I realized that quite a bit of the information
-_is_ "available" (and some conflicting information as well).
+	git format-patch --stdout HEAD~4 > mbox.txt
+	$EDITOR mbox.txt # even moving hunks
+	git reset --hard HEAD~4
+	git am mbox.txt
 
-This is one reason why I would prefer to have something like a typical
-Texinfo manual, at least on the organisational level: a manual is
-supposed to present a single connected view to the available
-documentation.  And the information for git is scattered through a
-bunch of mostly disconnected files.
+If the need is great enough, it should be easy to hack something like this 
+into git rebase -i.
 
-If you want to see a more staggering example of this approach, take a
-look at the "guilt" documentation.  It consists only of the man pages
-for the individual commands, and then some few README-like files which
-mostly say something like "guilt is just like quilt, or like
-Mercurial's patch sets".  That's rather extreme as far as
-user-accessible information goes.  git has a few more generally useful
-files explaining underlying concepts, but they still are basically
-thrown into one large self-service heap, not a coherent document.
-
-> hopefully someone with knowledge of the guts of Git will speak up.
-
-I think I am slowly getting it, thanks to Lars and others.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Ciao,
+Dscho
