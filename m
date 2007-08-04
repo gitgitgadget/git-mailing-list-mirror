@@ -1,91 +1,80 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: Help a sed noob
-Date: Sat, 4 Aug 2007 12:31:26 +0200
-Message-ID: <20070804103126.GA28402@lapse.madduck.net>
-References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 4 Aug 2007 13:39:23 +0300
+Message-ID: <20070804133923.eb84a308.tihirvon@gmail.com>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
+	<200708040341.36147.ismail@pardus.org.tr>
+	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
+	<46B3F762.1050306@midwinter.com>
+	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7JfCtLOvnd9MIVvH"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 12:31:04 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Ismail =?ISO-8859-1?B?RPZubWV6?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 12:39:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHGuR-0004qm-3u
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 12:30:59 +0200
+	id 1IHH2k-0006XY-DX
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 12:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753744AbXHDKax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 06:30:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbXHDKax
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 06:30:53 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:49326 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753321AbXHDKaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 06:30:52 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 8F52F895D94;
-	Sat,  4 Aug 2007 12:30:47 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 24658-10; Sat, 4 Aug 2007 12:30:47 +0200 (CEST)
-Received: from lapse.madduck.net (AToulon-256-1-9-110.w86-211.abo.wanadoo.fr [86.211.64.110])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id E9FBC895D93;
-	Sat,  4 Aug 2007 12:30:46 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 24B434FD3D; Sat,  4 Aug 2007 12:31:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1756686AbXHDKjc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 06:39:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbXHDKjb
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 06:39:31 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:53639 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753396AbXHDKja (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 06:39:30 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so919074fkz
+        for <git@vger.kernel.org>; Sat, 04 Aug 2007 03:39:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=nYjbwSAl6uwYeyHg00lFpYrGGmry1/sc50zPAf4/ioYJilIPUl8doM1MPWHwbFpiu7ceeAWnZCY/nEQ/7wZypVCDNqylIr3rPWSAOyB+R1fUtFr1b/zGjZIKwfk0sb6aZe8tnI2lGAcmWtwxCGAU2imvKYDuWwb9aEBZC3KFUuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=c814FMwicO+bwpPL6qBbV90EpdrKKa/PfJ+WdnnGCC1zUUrKdWuC68+Mtmt4Mc0crnK8Ox+zwl4cTDRDC+SQPthHph1Us5ISJJ4KlYE+tZyqcVu0BprmR0NOSjMT3Jk60UDIqlpPi65tC2xpwtHkjg4gUI/G6RqNPrsM08MWVLs=
+Received: by 10.86.4.2 with SMTP id 2mr2893979fgd.1186223968746;
+        Sat, 04 Aug 2007 03:39:28 -0700 (PDT)
+Received: from garlic.home.net ( [85.23.17.126])
+        by mx.google.com with ESMTPS id k29sm8234156fkk.2007.08.04.03.39.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 04 Aug 2007 03:39:28 -0700 (PDT)
+In-Reply-To: <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed 2.4.4 (GTK+ 2.10.13; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54820>
 
+Junio C Hamano <gitster@pobox.com> wrote:
 
---7JfCtLOvnd9MIVvH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It might be more worthwhile to research what other "Text-ish
+> lightweight mark-up" systems are availble, and if there is one
+> that is more efficient and can go to at least html and man,
+> one-time convert our documentation source to that format using
+> your Perl magic.  The minimum requirements are:
+> 
+>  * The source is readable without too much mark-up distraction;
+> 
+>  * Can go to roff -man;
+> 
+>  * Can go to html.
 
-also sprach Nguyen Thai Ngoc Duy <pclouds@gmail.com> [2007.08.04.0122 +0200=
-]:
->                 sed -ne '/^URL: */{
->                         s///p
->                         q
->                 }' "$GIT_DIR/remotes/$1"
+I used asciidoc too but it was really PITA to install and use so I wrote
+a small tool (ttman) in C which converts .txt files directly to man
+pages. It doesn't have html support but you could use man2html for that.
+Unfortunately it does not format as pretty html as asciidoc.
 
-Looks like it prints the first matching line:
+http://onion.dynserv.net/git/?p=cmus.git;a=tree;f=Doc;h=8ab4e92a6356d9cca0d738130fe54026da8c690b;hb=54b6ddacd9d1387c256ce5e7d7d8bb3324799c04
 
-  grep '^URL: *' | head -1
+It might be quite easy to extend ttman to output html too...
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-quantum mechanics: the dreams stuff is made of.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---7JfCtLOvnd9MIVvH
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGtFV+IgvIgzMMSnURApVKAKCvpdL6G6LRpR0Gktrnuq5i65jaMgCeJ0jS
-lbt8lqu6OB8j1Dlz+RyiO88=
-=fuSw
------END PGP SIGNATURE-----
-
---7JfCtLOvnd9MIVvH--
+-- 
+http://onion.dynserv.net/~timo/
