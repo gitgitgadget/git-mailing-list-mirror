@@ -1,64 +1,70 @@
-From: Erik Colson <eco@ecocode.net>
-Subject: Re: git-gui console app ?
-Date: Sat, 4 Aug 2007 14:38:34 +0200
-Message-ID: <20070804123834.GA3036@Mac2.local>
-References: <20070804101058.GA520@Mac2.local> <Pine.LNX.4.64.0708041225520.14781@racer.site> <20070804115331.GA2962@Mac2.local> <20070804120342.GC9716@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Help a sed noob
+Date: Sat, 4 Aug 2007 08:40:05 -0400
+Message-ID: <20070804124005.GA15334@sigill.intra.peff.net>
+References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com> <20070804103126.GA28402@lapse.madduck.net> <20070804115003.GA9716@coredump.intra.peff.net> <20070804121811.GA1605@lapse.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 04 14:38:45 2007
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 14:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHIu2-0000Zf-6H
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:38:42 +0200
+	id 1IHIvU-0000yq-LW
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756421AbXHDMij (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 08:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756104AbXHDMij
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:38:39 -0400
-Received: from 27.mail-out.ovh.net ([213.186.38.137]:46260 "HELO
-	27.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754749AbXHDMij (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 08:38:39 -0400
-Received: (qmail 31668 invoked by uid 503); 4 Aug 2007 12:40:49 -0000
-Received: from unknown (HELO mail171.ha.ovh.net) (213.186.33.59)
-  by 27.mail-out.ovh.net with SMTP; 4 Aug 2007 12:40:49 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
-	by b0.ovh.net with SMTP; 4 Aug 2007 12:38:27 -0000
-Received: from 86-39-62-69.customer.fulladsl.be (HELO localhost) (erik.colson%beavernet.be@86.39.62.69)
-  by ns0.ovh.net with SMTP; 4 Aug 2007 12:38:26 -0000
-Mail-Followup-To: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
+	id S1756598AbXHDMkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 08:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756104AbXHDMkJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:40:09 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3657 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756598AbXHDMkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 08:40:08 -0400
+Received: (qmail 29816 invoked from network); 4 Aug 2007 12:40:12 -0000
+Received: from unknown (HELO sigill.intra.peff.net) (10.0.0.7)
+  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 4 Aug 2007 12:40:12 -0000
+Received: (qmail 15450 invoked by uid 1000); 4 Aug 2007 12:40:05 -0000
 Content-Disposition: inline
-In-Reply-To: <20070804120342.GC9716@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Ovh-Remote: 86.39.62.69 (86-39-62-69.customer.fulladsl.be)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|H 0.5/N
+In-Reply-To: <20070804121811.GA1605@lapse.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54840>
 
-On Sat, Aug 04, 2007 at 08:03:42AM -0400, Jeff King wrote:
-> On Sat, Aug 04, 2007 at 01:53:31PM +0200, Erik Colson wrote:
-> 
-> > Thanks for the very fast answer. I'm currently trying it out. However
-> > I can't figure out how to view the 'changed but not updated' in diff
-> > format...
-> 
-> git-diff ?
-> 
-> By default, it will show the changes between your working tree and the
-> index (i.e., changed but not updated). You can show the diff of "updated
-> but not commited" with "git-diff --cached".
+On Sat, Aug 04, 2007 at 02:18:11PM +0200, martin f krafft wrote:
 
-Peff,
+> The behaviour is absolutely unclear from the manpage and defies my
+> logic. Can you elaborate a bit, even though this is off-topic?
 
-yep that is the info I would like to browse in a way git-gui does it...
-showing a list of the files in the diff, and letting the user select a
-file to show the part of the diff for that file.
+The original sed code in question was:
 
--- 
-Erik
+                sed -ne '/^URL: */{
+                        s///p
+                        q
+                }' "$GIT_DIR/remotes/$1"
+
+There are a few things to note:
+  1. -n means "do not print lines by default"
+  2. sed addresses consist of an address (in this case a regex meaning
+     "do this for lines that match the regex") and a command
+  3. The braces start a set of commands, so that for lines matching the
+     address, we do all of the commands.
+  4. An empty matching portion for a regex means "use the last regex".
+
+So this script comes down to:
+  - don't write any lines except the ones we match
+  - find a line that starts with URL:
+    - replace the URL: part with nothing
+    - print the result
+    - quit
+
+It could be more simply written as:
+
+sed -ne 's/^URL: *//pq'
+
+which uses the substitution as an address, but I don't know whether that
+was allowed in the original sed.
+
+-Peff
