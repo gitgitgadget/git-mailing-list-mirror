@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Sat, 4 Aug 2007 02:20:10 -0400
-Message-ID: <20070804062010.GQ20052@spearce.org>
-References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <20070803030459.GJ20052@spearce.org> <20070803125846.GC28323@fieldses.org>
+Date: Sat, 4 Aug 2007 02:33:53 -0400
+Message-ID: <20070804063353.GR20052@spearce.org>
+References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <107BD473-E055-47D0-9720-9D878BDAB954@zib.de> <20070803030101.GI20052@spearce.org> <20070803125601.GA28323@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
 To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 08:20:25 2007
+X-From: git-owner@vger.kernel.org Sat Aug 04 08:34:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHCzu-0005IW-PA
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 08:20:23 +0200
+	id 1IHDD8-0007MV-M1
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 08:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607AbXHDGUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 02:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbXHDGUT
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 02:20:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43636 "EHLO
+	id S1752957AbXHDGd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 02:33:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbXHDGd7
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 02:33:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43967 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732AbXHDGUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 02:20:17 -0400
+	with ESMTP id S1752310AbXHDGd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 02:33:58 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1IHCzj-0008Ib-46; Sat, 04 Aug 2007 02:20:11 -0400
+	id 1IHDCz-000075-RL; Sat, 04 Aug 2007 02:33:54 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E67E520FBAE; Sat,  4 Aug 2007 02:20:10 -0400 (EDT)
+	id 17C1020FBAE; Sat,  4 Aug 2007 02:33:54 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070803125846.GC28323@fieldses.org>
+In-Reply-To: <20070803125601.GA28323@fieldses.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,57 +40,77 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54800>
 
 "J. Bruce Fields" <bfields@fieldses.org> wrote:
-> On Thu, Aug 02, 2007 at 11:04:59PM -0400, Shawn O. Pearce wrote:
-> > Online help?  In git-gui?  :-)
-> > 
-> > We don't have an online help system yet.
+> On Thu, Aug 02, 2007 at 11:01:01PM -0400, Shawn O. Pearce wrote:
+> > So I'd really love to do better.  But frankly I'm at a loss here
+> > and just don't know what sort of change to make.
 > 
-> Fair enough.
+> The one thing that struck me when I fired up git-gui was that it wasn't
+> obvious to me which things I should try clicking on.
+
+Yea, that I have noticed with other newbies.  I have recently had
+the chance to observe a few new users work with git-gui for the
+first time and I have noticed that they just don't quite know what
+to poke at and experiment with.  Unlike with many other applications
+where its more obvious what's there for the poking...
+ 
+> For example: the buttons, drop-down menus, and check-boxes all cry out
+> to be played with.  But the filenames in the lists at the top are less
+> obvious, and it might never have occurred to me on my own to right-click
+> on the diff hunks at the bottom.  That just looks like passive colorized
+> text to me.
+
+It doesn't just look like colored text to me anymore.  Which is a
+huge problem for me as an interface designer.  I know what's there.
+
+BTW, the reason why there's a context menu in the diff viewer?
+I right clicked in there one day and nothing happened.  The fact
+that nothing happen surprised the hell out of me.  Even though I
+had written all of that code myself.  So I went off and added
+that context menu.
+
+Later I realized I wanted to just stage that hunk.  I could click
+on it all I want, but the $@!*@(!@* computer didn't do what I really
+wanted it to.  So stage hunk was born and added to the context menu.
+
+That experience is actually true of much of the git-gui UI.  Things
+happen there only because I've actually tried to do something,
+only to shock myself when I find out it doesn't work!  I promptly
+write the patch and contribute it.  :)
+ 
+> I don't know what sort of user-interface conventions say "play with
+> me!", though.  Random ideas:
 > 
-> Though I'd like to keep the main body of the manual focused on the major
-> command line tools, I'd have no objection to a separate chapter (or
-> appendix?) devoted to git-gui; then you could point directly at that.
-> Would that make sense?
+> 	- maybe the cursor should change shape over the diff hunks (or
+> 	  just the headers?)
 
-Yea, that makes a lot of sense.  git-gui isn't a full replacement
-for the command line anyway, so I would never suggest a wholesale
-rewrite of the user manual to slant the entire thing towards git-gui.
-Doing so would only point out the many shortcomings in git-gui.  :)
+That's actually a pretty cool idea.  I might play with it just to
+see how I feel about the cursor changing and if it gives me any
+ideas about what might happen under it.  Though as I write this
+email I'm thinking that if the cursor changed shape when it was
+over the diff hunk header I'd try to left-click the hunk header to
+get a reaction from the computer.
 
-I haven't explored any in-Tk rendering options yet, been too busy
-with other projects.  Ideally I'd like to just render the asciidoc
-markup directly, but I don't think anyone has done an asciidoc
-viewer for Tk.  I can't imagine it would be that difficult to get
-some sort of parser working though...
+> 	- maybe buttons, hunk headers, file names, etc., should all be
+> 	  in the same color?
+> 	- maybe the hunk headers could benefit from a little more
+> 	  decoration?  I don't know how to do that without just making
+> 	  the display look more cluttered, though.
+> 	- maybe left-clicking on diff hunks should do something too?
 
+I just had a thought of putting an actual button icon in the first
+column of the hunk header lines.  If it looks enough like a button
+icon thingy, users might just click on it.  And when they do we
+can present that diff pane context menu, and look, they can stage
+their hunks!  ;-)
 
-But at this point in git (and git-gui's) life I think it would
-be very worthwhile to devote an entire (new) chapter to git-gui,
-maybe as part of git 1.5.4/git-gui 0.9.0.  I think we're far too
-late in the 1.5.3 cycle to do it now.  I personally won't have the
-time to even try to rough draft something anytime soon, let alone
-let others copy-edit me before Juino releases 1.5.3.  :)
+Just a thought.  Utterly random too.  Musta been that alpha particle
+slamming into a neuron.
 
-Being bundled with core git has brought git-gui a sizeable and
-growing userbase, and more and more users are discovering it
-each day.  We're now seeing it be translated into many different
-languages, and it is a somewhat core part of the MSYS port as many
-Windows users prefer to click in GUIs over type in cmd.exe terminal
-windows (can't say I blame them, cmd.exe is aweful!).
-
-In other words I think git-gui should get roughly as much attention
-from the user manual as git-add/rm/mv/commit/checkout/branch get,
-as it offers the same feature set.  But it shouldn't distract from
-the command line part of the manual.
-
-Maybe we should write parts of the manual in a "choose your own
-adventure style" and use different chapters for different paths.
-I think users can easily decide between the command line "i like to
-type" vs. the gui "i like to click" paths and focus their attention
-to the material they are most interested in.  :-)
+Thanks for the ideas.  Its certainly given me some things to
+experiment with in the next week or so when I can find the time.
 
 -- 
 Shawn.
