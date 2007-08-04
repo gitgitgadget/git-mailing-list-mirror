@@ -1,92 +1,103 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: possible bug in git apply?
-Date: Sat, 04 Aug 2007 22:08:12 +0200
-Message-ID: <857iobdpw3.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: rc4 - make quick-install-doc is broken
+Date: Sat, 04 Aug 2007 22:19:05 +0200
+Message-ID: <46B4DF39.2070506@lsrfire.ath.cx>
+References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site> <46B4A2B0.9080208@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, rob@landley.net
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sat Aug 04 22:08:21 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 22:19:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHPvA-0005CK-UB
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:08:21 +0200
+	id 1IHQ5n-0007xr-Hk
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765601AbXHDUIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 16:08:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765462AbXHDUIR
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:08:17 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:44397 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764110AbXHDUIR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 16:08:17 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 84CA71F58C2;
-	Sat,  4 Aug 2007 22:08:15 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 6F948ABAEC;
-	Sat,  4 Aug 2007 22:08:15 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 51ED91FB029;
-	Sat,  4 Aug 2007 22:08:15 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 132F71C4F932; Sat,  4 Aug 2007 22:08:12 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm> (david@lang.hm's message of "Sat\, 4 Aug 2007 12\:45\:23 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1759925AbXHDUTQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Aug 2007 16:19:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbXHDUTQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:19:16 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:55634
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751121AbXHDUTP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 16:19:15 -0400
+Received: from [10.0.1.201] (p508EBCE0.dip.t-dialin.net [80.142.188.224])
+	by neapel230.server4you.de (Postfix) with ESMTP id 2C66D8B008;
+	Sat,  4 Aug 2007 22:19:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <46B4A2B0.9080208@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54902>
 
-david@lang.hm writes:
+Mark Levedahl schrieb:
+> git>git bisect good
+> 6490a3383f1d0d96c122069e510ef1af1d019fbb is first bad commit
 
-> On Saturday 04 August 2007 2:03:59 pm Rob Landley wrote:
->> Signed-off-by: Rob Landley <rob@landley.net>
->> Amiga part Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
->>
->> Move architecture-specific Documentation into a common subdirectory.
->
-> I really, really, really hate git.
->
-> Ok, on my laptop I just noticed that "git apply" of the patch didn't
-> complain but it also left the empty subdirectories it moved stuff
-> out of.  (I don't believe this happened on the version of git I was
-> using on my previous laptop, which ate itself a month and change
-> ago, but obviously I can't check.)
->
-> There is no "git rmdir".  "git rm" refuses to delete the directory
-> without -r.  "git rm -r Documentation/x86_64" listed (as just deleted) all
-> the files that the patch already moved out of the directory.
->
-> Am I missing something obvious here?
+I've started a bisect run myself and ended up at a different commit,
+viz. e90fdc39b6903502192b2dd11e5503cea721a1ad ("Clean up work-tree
+handling").  Hmm.  I guess this candidate has a greater chance of
+actually being the culprit than yours. ;-)
 
-Committing the change?
+I can't offer a fix, but I think I've captured install-doc-quick.sh's
+problem in a test script (see below).  It fails with e90fdc3 (and
+master) but succeeds with e90fdc3^.
 
-> since git doesn't track directories, only content (per the big
-> discussion recently) I beleive that doing a checkout would leave Rob
-> without the directories that he emptied out, so shouldn't git apply
-> also clear the directories to end up in the same state?
+Apparently checkout-index (and ls-files, but this is not used by the
+install script) can now be confused by running it from inside an
+untracked directory.
 
-Yes, once he commits.  As long as git keeps files tracked in that
-directory, there is no reason for it to delete it.
+Johannes, does this help you in finding out what's going on here?
 
-I agree that it is hard to come up with a good logic for this sort of
-thing.  git-add checks the _current_ state of a file into the index.
-git-rm can actually do the same only by actually _deleting_ the
-working copy.  So when should git try deleting the directory?
-Probably when the directory becomes empty in the index, for
-consistency.  Too bad that the index does not contain any information
-about directories at all, so there is no good way to figure this
-particular point in time out efficiently.
+Ren=E9
 
-I guess that git rather attempts deleting the directory when the tree
-in the _repository_ rather than the index becomes empty.  And for that
-you need to commit.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+diff --git a/dev/null b/t/t1502-untracked.sh
+new file mode 100755
+index 0000000..3fbdb02
+--- /dev/null
++++ b/t/t1502-untracked.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description=3D'accessing the index from an untracked directory'
++. ./test-lib.sh
++
++pwd=3D$(pwd)
++GIT_DIR=3D$pwd/.git
++export GIT_DIR
++
++test_expect_success 'setup' '
++	git init &&
++	echo some file content >some_file &&
++	git add some_file &&
++	git commit -m "added a file" some_file &&
++	mkdir untracked
++'
++
++test_expect_success 'test read-tree from an untracked directory' '
++	(                GIT_INDEX_FILE=3D$pwd/idx-a git read-tree HEAD) &&
++	(cd untracked && GIT_INDEX_FILE=3D$pwd/idx-b git read-tree HEAD) &&
++	git diff --binary idx-a idx-b
++'
++
++test_expect_success 'test checkout-index from an untracked directory' =
+'
++	(                git checkout-index -a --prefix=3D$pwd/a/) &&
++	(cd untracked && git checkout-index -a --prefix=3D$pwd/b/) &&
++	git diff a/ b/
++'
++
++test_expect_success 'test ls-files from an untracked directory' '
++	(                git ls-files) >ls-files-a &&
++	(cd untracked && git ls-files) >ls-files-b &&
++	git diff ls-files-a ls-files-b
++'
++
++test_done
