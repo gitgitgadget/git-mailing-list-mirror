@@ -1,69 +1,55 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sat, 4 Aug 2007 17:08:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708041706200.14781@racer.site>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
- <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
- <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
- <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com>
- <85zm17h4pn.fsf@lola.goethe.zz> <46B4A35E.5040601@midwinter.com>
+Subject: Re: rc4 - make quick-install-doc is broken
+Date: Sat, 4 Aug 2007 17:04:39 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708041704040.14781@racer.site>
+References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
+ <46B4A2B0.9080208@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 18:09:38 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 18:12:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHMC4-0004UK-SW
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:09:33 +0200
+	id 1IHMEU-00055l-DJ
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759289AbXHDQJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 12:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759295AbXHDQJa
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:09:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58359 "HELO mail.gmx.net"
+	id S1764681AbXHDQMB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 12:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764690AbXHDQMB
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:12:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37980 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759145AbXHDQJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 12:09:29 -0400
-Received: (qmail invoked by alias); 04 Aug 2007 16:09:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 04 Aug 2007 18:09:22 +0200
+	id S1759572AbXHDQMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 12:12:00 -0400
+Received: (qmail invoked by alias); 04 Aug 2007 16:05:17 -0000
+Received: from unknown (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 04 Aug 2007 18:05:17 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ZqE4MuVGZuEzLG/Wo6AlZz4SLFdgciZYzE5IK1e
-	LkqF/wKqKtEbaW
+X-Provags-ID: V01U2FsdGVkX19DMLhfgLhDwMqH7KtG6AVGUIGaYujIjG73c1u3BX
+	HhYYgD/NVka0ui
 X-X-Sender: gene099@racer.site
-In-Reply-To: <46B4A35E.5040601@midwinter.com>
+In-Reply-To: <46B4A2B0.9080208@gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54876>
 
 Hi,
 
-On Sun, 5 Aug 2007, Steven Grimm wrote:
+On Sat, 4 Aug 2007, Mark Levedahl wrote:
 
-> David Kastrup wrote:
-> > A system such as info, in contrast, is hierarchical, and organized
-> > with indexes and cross references making it much easier to find
-> > things.
-> 
-> Really? I find info a huge pain in the butt most of the time. I can't just do
-> a simple text search for the information I want in the relevant manpage;
+> git>git bisect good
 
-I see the same.
+Could you please
 
-> Am I alone in my dislike of info, I wonder?
+	GIT_TRACE=1 make quick-install-doc
 
-There are so many reasons not to switch to info, but what you illustrated 
-is a very good one of those.
-
-But yes, if you have the time, and it would be fun for you (before your 
-battery runs flat), I'd appreciate a small script to do a 
-quick-and-not-so-dirty conversion.  Heck, if you use some kind of object 
-orientation, I might be talked into providing the html backend.
+? It breaks here, too, but because I have no origin/man branch.
 
 Ciao,
 Dscho
