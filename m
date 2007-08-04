@@ -1,95 +1,83 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sat, 04 Aug 2007 09:30:04 +0200
-Message-ID: <85wswbiwoz.fsf@lola.goethe.zz>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
-	<200708040341.36147.ismail@pardus.org.tr>
-	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
-	<46B3F762.1050306@midwinter.com>
-	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Added support for OS X right click
+Date: Sat, 4 Aug 2007 03:33:21 -0400
+Message-ID: <20070804073321.GU20052@spearce.org>
+References: <C4431971-A1F1-463E-B238-D351FCBB57F8@pp.inet.fi> <20070804065516.GS20052@spearce.org> <20070804071131.GA6557@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>,
+Cc: =?iso-8859-1?B?VuRpbvYgSuRydmVs5A==?= <v@pp.inet.fi>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 09:30:35 2007
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 04 09:33:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHE5q-0000ss-43
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 09:30:34 +0200
+	id 1IHE8f-0001d5-Ue
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 09:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbXHDHaM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 03:30:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbXHDHaM
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 03:30:12 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:47306 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755143AbXHDHaK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 03:30:10 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id DA05937A4CD;
-	Sat,  4 Aug 2007 09:30:08 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id CB47B2C6A17;
-	Sat,  4 Aug 2007 09:30:08 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 5539B36E868;
-	Sat,  4 Aug 2007 09:30:08 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 94F051C4F932; Sat,  4 Aug 2007 09:30:05 +0200 (CEST)
-In-Reply-To: <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri\, 03 Aug 2007 21\:38\:08 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1755525AbXHDHd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 03:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbXHDHd1
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 03:33:27 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45320 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755373AbXHDHd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 03:33:26 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IHE8X-0001m4-6I; Sat, 04 Aug 2007 03:33:21 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EC0CB20FBAE; Sat,  4 Aug 2007 03:33:21 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070804071131.GA6557@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54809>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> wrote:
+> On Sat, Aug 04, 2007 at 02:55:16AM -0400, Shawn O. Pearce wrote:
+> 
+> > V??in?? J??rvel?? <v@pp.inet.fi> wrote:
+> 
+> Your mailer claims this message is in us-ascii, but I think it isn't...
 
-> Steven Grimm <koreth@midwinter.com> writes:
->
->> Am I correct in observing that "*roff -man" and HTML are the only
->> two output formats we care about, or do people use other formats in
->> their private branches?
->
-> I obviously do not speak for others, but the only format I care
-> about personally is the *.txt one.  We picked asciidoc primarily
-> because the source language was readable.
+My mutt-foo isn't very good.  I tried to tell it utf-8, but I think
+its ignoring me:
 
-[...]
+  set allow_8bit=yes
+  set charset=utf8
 
-> It might be more worthwhile to research what other "Text-ish
-> lightweight mark-up" systems are availble, and if there is one
-> that is more efficient and can go to at least html and man,
-> one-time convert our documentation source to that format using
-> your Perl magic.  The minimum requirements are:
->
->  * The source is readable without too much mark-up distraction;
->
->  * Can go to roff -man;
->
->  * Can go to html.
+:-/
+ 
+> I tried reproducing the encoding breakage and it ended up fine. I just
+> edited the patch in the .dotest directory (looks like the leading spaces
+> were all stripped) and it applied fine when I re-ran "git-am".
+> 
+> Are you sure it didn't get munged by your editor when you hand-edited
+> the mbox file?
 
-Naturally I am biased, but Texinfo might be an option.  The source is
-editable without too much distraction, one can generate HTML, printed
-output, cross-referenced info files (those are really convenient for
-Emacs users), cross-referenced PDF output.  For man pages, one could
-follow the path outlined in
-<URL:http://gcc.gnu.org/onlinedocs/gccint/Man-Page-Generation.html>.
-That is probably the weakest point.
+I just tried to reproduce it myself and I can't do whatever I did
+before again now; it Just Works(tm).  *sigh*  No idea how I messed
+the patch application up earlier, but I did.
 
-Plain, user-readable ASCII text without any Texinfo markup can also be
-generated.  One can even include images in info, PDF and HTML and have
-those replaced by ASCII art in the plain text output.
+It wasn't my patch editing.  My vi clone only works on bytes, so
+it doesn't care about character encodings and won't mangle them
+unless I edit a utf-8 multibyte sequence by hand.  Which I'm sure
+I didn't do.  And the first time I messed up the apply I was fixing
+up only .dotest/patch, which was most certainly just us-ascii.
 
-There are some disadvantages: AFAIR, utf-8 characters will in general
-not fly.  One needs to code accented characters more or less
-explicitly.
-
-Texinfo conversions are fast.
+I'm actually pretty good about making sure I don't munge people's
+non-ASCII names, but my mutt seems to think us-ascii is the only
+character encoding in the world.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Shawn.
