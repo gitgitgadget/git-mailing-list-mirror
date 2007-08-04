@@ -1,101 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sat, 04 Aug 2007 14:19:48 +0200
-Message-ID: <85zm17h4pn.fsf@lola.goethe.zz>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
-	<200708040341.36147.ismail@pardus.org.tr>
-	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
-	<46B3F762.1050306@midwinter.com>
-	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
-	<46B418AA.4070701@midwinter.com>
-	<20070804091249.GA17821@uranus.ravnborg.org>
-	<46B45B1E.5020104@midwinter.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: Help a sed noob
+Date: Sat, 04 Aug 2007 14:26:05 +0200
+Message-ID: <46B4705D.2010208@fs.ei.tum.de>
+References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com> <20070804103126.GA28402@lapse.madduck.net> <20070804115003.GA9716@coredump.intra.peff.net> <20070804121811.GA1605@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>,
-	git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 14:19:57 2007
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 14:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHIbt-0004EZ-2i
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:19:57 +0200
+	id 1IHIhy-0005dE-U4
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760653AbXHDMTx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 08:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756385AbXHDMTx
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:19:53 -0400
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:48129 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760454AbXHDMTw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 08:19:52 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 359FF24B5BD;
-	Sat,  4 Aug 2007 14:19:51 +0200 (CEST)
-Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 2280312DF50;
-	Sat,  4 Aug 2007 14:19:51 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id C3C9C8C464;
-	Sat,  4 Aug 2007 14:19:50 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 1DA881C4F932; Sat,  4 Aug 2007 14:19:48 +0200 (CEST)
-In-Reply-To: <46B45B1E.5020104@midwinter.com> (Steven Grimm's message of "Sat\, 04 Aug 2007 18\:55\:26 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-12.arcor-online.net
-X-Virus-Status: Clean
+	id S1756598AbXHDM0K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Aug 2007 08:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756129AbXHDM0J
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:26:09 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:38565 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751269AbXHDM0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 08:26:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id F3B4D280EF;
+	Sat,  4 Aug 2007 14:26:06 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 5iIy+ze33JJo; Sat,  4 Aug 2007 14:26:06 +0200 (CEST)
+Received: from sweatshorts.home.corecode.ath.cx (85-218-11-248.dclient.lsne.ch [85.218.11.248])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 540B5280ED;
+	Sat,  4 Aug 2007 14:26:06 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070627)
+In-Reply-To: <20070804121811.GA1605@lapse.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54837>
 
-Steven Grimm <koreth@midwinter.com> writes:
+martin f krafft wrote:
+> also sprach Jeff King <peff@peff.net> [2007.08.04.1350 +0200]:
+>> No, it prints everything _except_ "URL: *" from the first matching l=
+ine.
+>=20
+> I am convinced we could submit this to the Obfuscated Code Contest.
+> :)
 
-> Sam Ravnborg wrote:
->> Never looked at Ascii-doc... but how about finding the loopholes
->> in Ascii-doc to make it 10x faster?
->> That would benefit a larger user-base than just doing-it-ourself.
->>   
->
-> Because AsciiDoc is only half of the toolchain we use. (Though in your
-> defense, I made the mistake of only mentioning AsciiDoc by name,
-> rather than "the AsciiDoc toolchain.") We run asciidoc's output
-> through xmlto, which is just as slow and is a highly general piece of
-> software for doing arbitrary transformations of XML documents. I won't
-> say it's impossible to speed up xmlto as well, of course, but it's
-> probably an order of magnitude more work than implementing a new
-> parser/renderer for our .txt files.
+This is basic sed scripting.
 
-Personally, I think it would make sense to move to a different
-documentation system, or at least a different organization.  The
-problem with the current layout is that it is basically flat.
+> The behaviour is absolutely unclear from the manpage and defies my
+> logic. Can you elaborate a bit, even though this is off-topic?
 
-A system such as info, in contrast, is hierarchical, and organized
-with indexes and cross references making it much easier to find
-things.  More importantly, it makes it possible to put things into
-perspective: which commands are porcelain, which are plumbing?  What
-do you do in a typical workflow?  What are the related internal data
-structures?  Where are they documented?  Can I print or navigate a
-complete PDF document explaining the whole system?
+-ne means "don't print, execute the following code".
 
-The manual pages of git have a high quality, but they remain manual
-pages: they are all standalone, not putting the tool into a context or
-hierarchy.  While the user manual is a place to start, it is more or
-less added as an afterthought: it does not structure the available
-documentation.
+/.../ should be clear, { starts a "function list"
+s// is "match last regexp, so s/// is "match last regexp and replace wi=
+th empty string.
+flag "p" to function "s" means "print if matched"
+q is "quit".
 
-For Texinfo there is a large number of backends, and there are also
-usable reader plugins (Tkinfo, and the presumably embeddable GNOME
-"yelp" also displays info files and the embedded links, and of course
-the wonderful Emacs info browser) for things like git-gui.
+that's really straight forward and all documented in my sed(1).
 
-It may be that the asciidoc/Docbook workflow also contains ways to get
-similarly useful stuff out: comments welcome.  I am just more
-acquainted with Texinfo myself.
+cheers
+  simon
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +=
+++      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
