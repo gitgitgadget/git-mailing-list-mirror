@@ -1,94 +1,101 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: Help a sed noob
-Date: Sat, 4 Aug 2007 14:18:11 +0200
-Message-ID: <20070804121811.GA1605@lapse.madduck.net>
-References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com> <20070804103126.GA28402@lapse.madduck.net> <20070804115003.GA9716@coredump.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 04 Aug 2007 14:19:48 +0200
+Message-ID: <85zm17h4pn.fsf@lola.goethe.zz>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
+	<200708040341.36147.ismail@pardus.org.tr>
+	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
+	<46B3F762.1050306@midwinter.com>
+	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
+	<46B418AA.4070701@midwinter.com>
+	<20070804091249.GA17821@uranus.ravnborg.org>
+	<46B45B1E.5020104@midwinter.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 04 14:17:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 14:19:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHIZg-0003lP-PF
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:17:41 +0200
+	id 1IHIbt-0004EZ-2i
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:19:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756129AbXHDMRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 08:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbXHDMRh
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:17:37 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56113 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755488AbXHDMRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 08:17:37 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 98DD5895D96;
-	Sat,  4 Aug 2007 14:17:35 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 04930-09; Sat, 4 Aug 2007 14:17:35 +0200 (CEST)
-Received: from lapse.madduck.net (AToulon-256-1-9-110.w86-211.abo.wanadoo.fr [86.211.64.110])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id C8301895D94;
-	Sat,  4 Aug 2007 14:17:30 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 4C6EB4FD3D; Sat,  4 Aug 2007 14:18:11 +0200 (CEST)
-Mail-Followup-To: Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070804115003.GA9716@coredump.intra.peff.net>
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
-X-Motto: Keep the good times rollin'
-X-Subliminal-Message: debian/rules!
-X-Spamtrap: madduck.bogus@madduck.net
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1760653AbXHDMTx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 08:19:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756385AbXHDMTx
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:19:53 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:48129 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760454AbXHDMTw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 08:19:52 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 359FF24B5BD;
+	Sat,  4 Aug 2007 14:19:51 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 2280312DF50;
+	Sat,  4 Aug 2007 14:19:51 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id C3C9C8C464;
+	Sat,  4 Aug 2007 14:19:50 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 1DA881C4F932; Sat,  4 Aug 2007 14:19:48 +0200 (CEST)
+In-Reply-To: <46B45B1E.5020104@midwinter.com> (Steven Grimm's message of "Sat\, 04 Aug 2007 18\:55\:26 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54836>
 
+Steven Grimm <koreth@midwinter.com> writes:
 
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Sam Ravnborg wrote:
+>> Never looked at Ascii-doc... but how about finding the loopholes
+>> in Ascii-doc to make it 10x faster?
+>> That would benefit a larger user-base than just doing-it-ourself.
+>>   
+>
+> Because AsciiDoc is only half of the toolchain we use. (Though in your
+> defense, I made the mistake of only mentioning AsciiDoc by name,
+> rather than "the AsciiDoc toolchain.") We run asciidoc's output
+> through xmlto, which is just as slow and is a highly general piece of
+> software for doing arbitrary transformations of XML documents. I won't
+> say it's impossible to speed up xmlto as well, of course, but it's
+> probably an order of magnitude more work than implementing a new
+> parser/renderer for our .txt files.
 
-also sprach Jeff King <peff@peff.net> [2007.08.04.1350 +0200]:
-> No, it prints everything _except_ "URL: *" from the first matching line.
+Personally, I think it would make sense to move to a different
+documentation system, or at least a different organization.  The
+problem with the current layout is that it is basically flat.
 
-I am convinced we could submit this to the Obfuscated Code Contest.
-:)
+A system such as info, in contrast, is hierarchical, and organized
+with indexes and cross references making it much easier to find
+things.  More importantly, it makes it possible to put things into
+perspective: which commands are porcelain, which are plumbing?  What
+do you do in a typical workflow?  What are the related internal data
+structures?  Where are they documented?  Can I print or navigate a
+complete PDF document explaining the whole system?
 
-The behaviour is absolutely unclear from the manpage and defies my
-logic. Can you elaborate a bit, even though this is off-topic?
+The manual pages of git have a high quality, but they remain manual
+pages: they are all standalone, not putting the tool into a context or
+hierarchy.  While the user manual is a place to start, it is more or
+less added as an afterthought: it does not structure the available
+documentation.
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-kill ugly radio
-                                                        -- frank zappa
-=20
-spamtraps: madduck.bogus@madduck.net
+For Texinfo there is a large number of backends, and there are also
+usable reader plugins (Tkinfo, and the presumably embeddable GNOME
+"yelp" also displays info files and the embedded links, and of course
+the wonderful Emacs info browser) for things like git-gui.
 
---uAKRQypu60I7Lcqm
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+It may be that the asciidoc/Docbook workflow also contains ways to get
+similarly useful stuff out: comments welcome.  I am just more
+acquainted with Texinfo myself.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGtG6DIgvIgzMMSnURArS0AKDSGK0Ks9IqVw9xMA3Zf2ryBd6FTwCfW5JX
-RnbCk2an/C9nq8CXVH+9O6k=
-=DiIB
------END PGP SIGNATURE-----
-
---uAKRQypu60I7Lcqm--
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
