@@ -1,97 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Some ideas for StGIT
-Date: Sat, 4 Aug 2007 01:51:11 -0400
-Message-ID: <20070804055110.GP20052@spearce.org>
-References: <1186163410.26110.55.camel@dv> <200708031914.04344.andyparkins@gmail.com> <1186206085.28481.33.camel@dv>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 4 Aug 2007 01:52:39 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0708040133500.23671@iabervon.org>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
+ <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
+ <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708040046400.23671@iabervon.org>
+ <7v1wejj2j8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@gmail.com>
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 07:51:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 07:52:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHCXy-0000YA-Ut
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 07:51:31 +0200
+	id 1IHCZ9-0000k7-Jr
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 07:52:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754199AbXHDFvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 01:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754173AbXHDFvP
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 01:51:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43166 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754142AbXHDFvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 01:51:15 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IHCXf-0007gJ-4S; Sat, 04 Aug 2007 01:51:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 15ECA20FBAE; Sat,  4 Aug 2007 01:51:11 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1186206085.28481.33.camel@dv>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754340AbXHDFwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 01:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754308AbXHDFwl
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 01:52:41 -0400
+Received: from iabervon.org ([66.92.72.58]:3980 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754199AbXHDFwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 01:52:40 -0400
+Received: (qmail 27320 invoked by uid 1000); 4 Aug 2007 05:52:39 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Aug 2007 05:52:39 -0000
+In-Reply-To: <7v1wejj2j8.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54796>
 
-Pavel Roskin <proski@gnu.org> wrote:
+On Fri, 3 Aug 2007, Junio C Hamano wrote:
+
+> Daniel Barkalow <barkalow@iabervon.org> writes:
 > 
-> On Fri, 2007-08-03 at 19:14 +0100, Andy Parkins wrote:
-> > On Friday 2007, August 03, Pavel Roskin wrote:
-> > 
-> > > I don't suggest that StGIT gives up on the git-based storage, but this
-> > > mode of operation could be implemented in two ways.
-> > 
-> > git's shiny new git rebase -i has removed, for me, those times when I needed 
-> > stgit.  Perhaps those who've move from git to quilt would try again when 
-> > 1.5.3 is out with the magic that is "rebase -i".
-
-I agree with Andy.  Aside from the performance issues that I
-am currently having with a 55 patch series, "rebase -i" (and its
-predecessor script from Dscho) have been a major part of my toolkit,
-to the point that I really don't need something like StGIT on
-my system.
-
-(Regarding the performance, cherry-picking 55 patches is
-slow, especially when many of them would apply trivially with
-git-diff|git-apply --index.  Be nice to improve that in 1.5.4.)
- 
-> I don't understand how one option can replace StGIT.  I assume you were
-> trying to avoid StGIT already, and "git-rebase -i" was just the last
-> missing piece.
-
-Oh, I'm sure there's features in StGIT that are useful that aren't
-available via "rebase -i".  But to be honest, "rebase -i" is good
-enough.  It just ain't fast enough.  Editing a patch that is 50
-back in the series *sucks*.
- 
-> It would be great if you could tell me how your approach would deal with
-> the issue of editable patches I mentioned already.  In case I was
-> unclear, here's the quote from one of the developers:
+> > It's worth noting that we're a substantial portion of the asciidoc user 
+> > base, at least based on asciidoc's "Projects using AsciiDoc" page. We 
+> > could probably be influential in the asciidoc development if we tried 
+> > (maybe starting with a config file mechanism for controlling what 
+> > characters are markup instead of literal, so that we'll be able to make 
+> > documents which will work the same with all versions of asciidoc).
 > 
-> [quote]
-> Sometimes, I just make patches in quilt, then I do "quilt 
-> refresh", "quilt pop -a", "cd patches" and modify the patches 
-> and series file manually, e.g. by moving one patch from one file 
-> into the other. The "cd ..", "quilt push -a" and off I am. That 
-> the "database" of quilt is in a known format and I can hack on 
-> it with an editor is a plus for me :-)
-> [end of quote]
+> Tempting, but...
+> 
+>  * The breakage that triggered this thread was not about asciidoc
+>    but about docbook-xsl.  AsciiDoc project cannot do much about
+>    it.
+> 
+>  * The slowness while formatting our manual pages are 50% from
+>    xmlto toolchain and even if AsciiDoc were were to be sped up
+>    20x, we will still spend 4-5 minutes to format ~140 manual
+>    pages.
 
-Uh, the "database" of "rebase -i" is just a chain of commits in a
-git repository.  These are a well known format and can be easily
-edited with "rebase -i".  This is a real plus for me as the series
-can be edited directly in my favorite vi clone, then applied to my
-working directory.  ;-)
+For the latter, asciidoc ought to be able to generate manpages. Not sure 
+what to do about docbook (for the user manual); it seems generally prone 
+to compatibility problems. Perhaps we should go through latex instead, 
+since that's extremely stable these days, or go straight to html.
 
--- 
-Shawn.
+	-Daniel
+*This .sig left intentionally blank*
