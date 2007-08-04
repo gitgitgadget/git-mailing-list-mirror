@@ -1,70 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: rc4 - make quick-install-doc is broken
-Date: Sat, 4 Aug 2007 21:21:09 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708042120320.14781@racer.site>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
- <46B4A2B0.9080208@gmail.com> <46B4DF39.2070506@lsrfire.ath.cx>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: Shell script cleanups/style changes?
+Date: Sat, 4 Aug 2007 22:32:20 +0200
+Message-ID: <20070804203220.GZ29424@schiele.dyndns.org>
+References: <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <7vsl71tyyq.fsf@assigned-by-dhcp.cox.net> <86bqdqkygp.fsf@lola.quinscape.zz> <7vlkctvfk9.fsf@assigned-by-dhcp.cox.net> <85odhpzmbo.fsf@lola.goethe.zz> <20070802214103.GT29424@schiele.dyndns.org> <873ayzojw7.fsf@mid.deneb.enyo.de>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Aug 04 22:21:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="QQ0dNM4HnH4+xgqD"
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sat Aug 04 22:32:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHQ8F-0000AX-2T
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:21:51 +0200
+	id 1IHQIX-0002c1-VO
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 22:32:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761866AbXHDUVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 16:21:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761708AbXHDUVo
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:21:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51541 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761536AbXHDUVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 16:21:43 -0400
-Received: (qmail invoked by alias); 04 Aug 2007 20:21:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 04 Aug 2007 22:21:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19H8EUveNVHRK+aL/Pz+twoDgAqR1CPMXSURbFih6
-	/hBSkJ/MpQLUUW
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46B4DF39.2070506@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1761400AbXHDUc0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 16:32:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761536AbXHDUc0
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 16:32:26 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:62777 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761067AbXHDUcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 16:32:25 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so1017271fkz
+        for <git@vger.kernel.org>; Sat, 04 Aug 2007 13:32:23 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=eS1FPiIgCTDcfa7RK5bcUGlEdCctMeTK1JNCcWtwDEA66QbM4fHDQisVb+rYsnZvzACIbPyyCnvINRYKAkK/2ilZN9aRk/J776RM7lWzAqhOFETJ6UU5GmN+sVqwg4F1sAKAGDZiqISU53bR4g3u4Xad/Gg1Ge4GH+zidRkTnbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=NLK0fCrwELlznccaevdcvVXAm1CkNkuoxNmypKjGRQKIAiF5XgFRHVH3MJYx3urOb46aodJOjXyV7YIiUjIlxK1z7p8K+wnXCAgqzQrwtVUFhOn7u3ToRgUo2qnGE1fOqkrsTvunRLV9TlvPahdusRrQh6VRxpN13wsG42Uydfs=
+Received: by 10.86.50.8 with SMTP id x8mr3214298fgx.1186259543161;
+        Sat, 04 Aug 2007 13:32:23 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [87.178.78.209])
+        by mx.google.com with ESMTPS id o11sm9157249fkf.2007.08.04.13.32.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 04 Aug 2007 13:32:22 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id C54BBC112D4; Sat,  4 Aug 2007 22:32:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <873ayzojw7.fsf@mid.deneb.enyo.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54904>
 
-Hi,
 
-On Sat, 4 Aug 2007, Ren? Scharfe wrote:
+--QQ0dNM4HnH4+xgqD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Mark Levedahl schrieb:
-> > git>git bisect good
-> > 6490a3383f1d0d96c122069e510ef1af1d019fbb is first bad commit
-> 
-> I've started a bisect run myself and ended up at a different commit,
-> viz. e90fdc39b6903502192b2dd11e5503cea721a1ad ("Clean up work-tree
-> handling").  Hmm.  I guess this candidate has a greater chance of
-> actually being the culprit than yours. ;-)
-> 
-> I can't offer a fix, but I think I've captured install-doc-quick.sh's
-> problem in a test script (see below).  It fails with e90fdc3 (and
-> master) but succeeds with e90fdc3^.
-> 
-> Apparently checkout-index (and ls-files, but this is not used by the
-> install script) can now be confused by running it from inside an
-> untracked directory.
-> 
-> Johannes, does this help you in finding out what's going on here?
+On Sat, Aug 04, 2007 at 09:10:00AM +0200, Florian Weimer wrote:
+> * Robert Schiele:
+>=20
+> >> Sure.  What about the git-rebase line using $(($end - $msgnum)) ?
+> >
+> > Bad on Solaris:
+> >
+> > $ uname -a
+> > SunOS solaris10-x64 5.10 Generic i86pc i386 i86pc
+> > $ end=3D1
+> > $ msgnum=3D5
+> > $ echo $(($end - $msgnum))
+> > syntax error: `(' unexpected
+> > $=20
+>=20
+> Is this with /usr/xpg4/bin/sh or /bin/sh?  The latter is not POSIX and
+> should not be used by GIT, IMHO, otherwise there will be endless
+> issues in less-well-tested code paths.  Is rewriting the shebang lines
+> to use the POSIX shell an option for GIT?
 
-Thanks for doing this.  I will work on this in a few minutes; at the 
-moment I am occupied with msysGit...
+Hi Florian,
 
-Ciao,
-Dscho
+I recommend you read the other mails in this thread.  This issue is already
+completely resolved.
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--QQ0dNM4HnH4+xgqD
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGtOJUxcDFxyGNGNcRAkQ/AKDYk8aviAoCZOuOa31jRiUiDcEbxgCg47W7
+CEbZqZwe/j6zcrw+5NthvfQ=
+=YGYu
+-----END PGP SIGNATURE-----
+
+--QQ0dNM4HnH4+xgqD--
