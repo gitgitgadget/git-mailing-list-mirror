@@ -1,140 +1,155 @@
-From: Sean <seanlkml@sympatico.ca>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Terminology question about remote branches.
-Date: Sat, 4 Aug 2007 09:29:33 -0400
-Message-ID: <20070804092933.aaec6d52.seanlkml@sympatico.ca>
+Date: Sat, 04 Aug 2007 15:38:38 +0200
+Message-ID: <85k5sbh129.fsf@lola.goethe.zz>
 References: <854pjfin68.fsf@lola.goethe.zz>
+	<20070804120243.GB9716@coredump.intra.peff.net>
+	<85tzrfh3yg.fsf@lola.goethe.zz>
+	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 15:29:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "Lars Hjemli" <lh@elementstorage.no>
+X-From: git-owner@vger.kernel.org Sat Aug 04 15:38:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHJhT-0004y7-6C
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 15:29:47 +0200
+	id 1IHJq9-0007KM-LW
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 15:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761409AbXHDN3o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 09:29:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759464AbXHDN3o
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 09:29:44 -0400
-Received: from bay0-omc2-s10.bay0.hotmail.com ([65.54.246.146]:3951 "EHLO
-	bay0-omc2-s10.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757966AbXHDN3n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 09:29:43 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]) by bay0-omc2-s10.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 4 Aug 2007 06:29:42 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 4 Aug 2007 06:29:42 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IHJhM-00019k-Uy; Sat, 04 Aug 2007 09:29:40 -0400
-In-Reply-To: <854pjfin68.fsf@lola.goethe.zz>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 04 Aug 2007 13:29:42.0580 (UTC) FILETIME=[83F9A740:01C7D69B]
+	id S1761612AbXHDNim (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 09:38:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758956AbXHDNim
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 09:38:42 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:58871 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757956AbXHDNil (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 09:38:41 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 53AB21F5228;
+	Sat,  4 Aug 2007 15:38:40 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 32E4223D2E4;
+	Sat,  4 Aug 2007 15:38:40 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id F3D6430ABD9;
+	Sat,  4 Aug 2007 15:38:39 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 184C31C4F932; Sat,  4 Aug 2007 15:38:38 +0200 (CEST)
+In-Reply-To: <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com> (Lars Hjemli's message of "Sat\, 4 Aug 2007 15\:07\:01 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54846>
 
-On Sat, 04 Aug 2007 12:55:43 +0200
-David Kastrup <dak@gnu.org> wrote:
+"Lars Hjemli" <lh@elementstorage.no> writes:
 
-> I am trying to dig through man-pages and user manual and trying to
-> match them with reality.  I seem to have a hard time.  My current
-> understanding (which definitely differs from the documented state) is
-> that there are two types of branches, local and remote branches, and
-> both types of branches can be remote-tracking (it may not be possible
-> to have a non-remote-tracking remote branch, though).
+> On 8/4/07, David Kastrup <dak@gnu.org> wrote:
+>> Now I think that I basically have no chance figuring this out on my
+>> own sufficiently well to be able to improve the documentation.
 >
-> A local branch is one with a local branch head.  In contrast, checking
-> out a remote branch, while possible, leaves one with a detached head.
+> Remote-tracking branch:
+>   A local copy of a branch in another repository. This kind of branch
+>   cannot be updated by 'git-commit' but only by 'git-fetch' (hence
+>   indirectly by 'git-pull' and 'git-remote update'). If you try to
+>   'git-checkout' a remote-tracking branch, you will get a detached HEAD.
+>
+> Local branch:
+>   A branch to which you may commit changes. Optionally, the branch can be
+>   configured to "follow" one of your remote-tracking branches. This means
+>   that a 'git-pull' without arguments (when your local branch is checked
+>   out), will automatically 'git-fetch' and then 'git-merge' the remote-
+>   tracking branch.
 
-Yes.
+Does that mean that specifying "--track" to git-checkout or git-branch
+never creates a remote-tracking branch?
 
-> "remote-tracking" basically means that git-pull will update the branch
-> according to changes in the remote repository.
+> Example:
+>
+> Your local branch 'master' is setup to "follow"
+> 'refs/remotes/origin/master'.
 
-To be clear, it's the job of git-fetch to update remote-tracking branches
-with any changes found in the remote repository.  Git-pull runs git-fetch
-and then runs a git-merge to update the currently-checked-out branch.
+So --track/--no-track are actually supposed to be --follow and
+--no-follow?
 
-When this happens, git-merge must decide which remote-tracking-branch
-to merge into the currently checked out local branch.  You can set which
-remote-tracking-branch will be selected in this situation with
-the --track option.
+> So if you do this:
+>
+> $ git checkout master
+> $ git pull
+>
+> Then the 'git pull'-command will do this:
+>
+> $ git fetch -f origin master:remotes/origin/master
 
-So assuming a remote-repo has two branches "master" and "branchX":
+This is then tracking?
 
-   git clone remote-repo
+> $ git merge remotes/origin/master
 
-will give us two remote-branch (AKA remote-tracking-branches) of
-"origin/master" and "origin/branchX".  So:
+And this is then following?
 
-   git branch --track mylocalbranch origin/branchX
-   git checkout mylocalbranch
+> The magic setup that makes this happen is the following lines in .git/config:
+>
+> [remote "origin"]
+Namely: a remote-tracking branch "origin"
 
-Creates a local branch named "mylocalbranch" that by default will
-merge in any changes found in the remote-tracking branch
-"origin/branchX".  Thus:
+>         url = git://git.kernel.org/pub/scm/git/git.git
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+>
+> [branch "master"]
+>         remote = origin
 
-   git pull
+Namely: follow the remote tracking branch origin?
 
-First runs git fetch which will update all remote-tracking branches
-such as origin/master and origin/branchX.  Then it runs git merge.
-Git merge has to decide whether to merge in the changes from
-origin/master or origin/branchX.  Because of the --track option used
-to setup "mylocalbranch",  "origin/branchX" will be merged.
+>         merge = refs/heads/master
+>
+>
+> Was this helpful?
 
-> Creating a branch using git-branch or git-checkout will always create
-> a local branch which may or may not be remote-tracking according to
-> the --no-track or --track options.
+So we have remote tracking branches, and we have local branches
+following remote tracking branches, and "--track" and "--no-track"
+create local branches following or not following a remote tracking
+branch?  And have nothing whatsoever to do with tracking or not
+tracking a remove branch?
 
-No, a local branch is never a remote-tracking branch; even when created
-with a --track option.  The --track option has muddied the terminology
-waters a bit and you're not the first to be confused by it.  The
---track selects a branch from the repo to merge by default.
+Talk about misleading option names here.
 
-> So there are basically three types of branches in a repository that I
-> can see:
-> 
-> local branch, not remote-tracking
-> local branch, remote-tracking
-> remote branch, remote-tracking
-> 
-> The way to add a remote branch basically is not via git-branch or
-> git-checkout -b (those always create local branches), but by editing
-> .git/config.
-> 
-> Is this understanding correct or did I get things completely wrong?
-> Because there is little sense in myself working on changing the
-> documentation if I have not understood the situation.
+Then in man git-branch we have:
 
-Functionally, your understanding is correct.  But it helps when you
-understand that remote-branches are the "real" remote-tracking-branches.
-You don't commit to them locally, they are essentially read-only copies
-of exactly what is happening in a remote repository.
+	In its second form, a new branch named <branchname> will be
+	created. It will start out with a head equal to the one
+	given as <start-point>. If no <start-point> is given, the
+	branch will be created with a head equal to that of the
+	currently checked out branch.
 
-A local --track branch, is one that merges changes from the proper
-remote-tracking-branch, and is also a place where you can commit your
-own work.
+	When a local branch is started off a remote branch, git can
+	setup the branch so that git-pull(1) will appropriately
+	merge from that remote branch. If this behavior is desired,
+	it is possible to make it the default using the global
+	branch.autosetupmerge configuration flag. Otherwise, it can
+	be chosen per-branch using the --track and --no-track
+	options.
 
-> Also, the documentation currently uses "remote-tracking"
-> interchangeably for "local branch, remote-tracking" and "remote
-> branch, remote-tracking", at some times claiming that one can locally
-> switch to a "remote-tracking" branch, at other times not.
+What does "remote branch" in this context mean?  A local branch
+following a remote tracked branch?  A remote tracked branch (which by
+definition can't be checked out as a branch, since that leads to a
+detached head)?  What does "start off" mean in this context?  If I
+can't check out a remote branch, I can't start off on it, can I?
 
-A remote branch and a remote-tracking branch are the same thing.
-Strictly speaking a local branch is never a remote-tracking-branch
-although the "--track" option makes that harder to explain.
+Does "--track" mean that the new branch will copy any "remote" lines
+which incidentally don't point to remote branches as their name would
+suggest, but rather to remote tracking branches?  And we want to have
+the relation to the remote tracking branch preserved, not to the
+actual remote branch?
 
-> So the terminology seems fuzzy at the moment, and my attempt to clear
-> it up might not be the preferred way of doing it.
+I don't get it.  Really.  No chance.  There are fine distinction lines
+in the git terminology, it would appear, and those lines are freely
+ignored in naming options and configuration parameters.  And the
+manual pages themselves are not overly concerned about explaining
+those distinctions either.
 
-Yeah, the documentation could use some fine tuning.
-
-Sean
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
