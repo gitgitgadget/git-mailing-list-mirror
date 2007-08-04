@@ -1,57 +1,81 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: rc4 - make quick-install-doc is broken
-Date: Sat, 04 Aug 2007 11:07:03 -0400
-Message-ID: <46B49617.3070402@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Terminology question about remote branches.
+Date: Sat, 04 Aug 2007 17:09:13 +0200
+Message-ID: <85odhnfiau.fsf@lola.goethe.zz>
+References: <854pjfin68.fsf@lola.goethe.zz> <85tzrfh3yg.fsf@lola.goethe.zz>
+	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+	<85k5sbh129.fsf@lola.goethe.zz>
+	<8c5c35580708040703w44781498t7396588a3f8c81c8@mail.gmail.com>
+	<854pjfgzit.fsf@lola.goethe.zz> <85y7grfkbe.fsf@lola.goethe.zz>
+	<8c5c35580708040735l54d1b9c7i40cd80d7d11e2961@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Aug 04 17:07:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 17:09:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHLDo-0004gu-9U
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 17:07:16 +0200
+	id 1IHLFn-0005Cf-IK
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 17:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757899AbXHDPHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 11:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbXHDPHK
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 11:07:10 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:43212 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756898AbXHDPHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 11:07:08 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1063961wxd
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 08:07:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=TIRBnmb7xA2Ze3dnmZvnb6seJNjeTrn7Ufu5uXmqHFAIr3PxrU35OT6RmCFmMd66IJqVY5NU9bQ1fK5c4aYRPnNRp8gvf/B3K5PmUQXtxaORbokzY4m9IpXVlwOaeNK3o3p8q6+JhlmDhU6xihTiJtZIdDYWZRi21E7l9ysXX+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=ka4IF49nljg1NZU9/zZVTSyrFq+/XHMcT83EwTL1cVi6dIYtY9UMnwMJ007/kqu4GG2CIvnr8U97aMXTN4cWSyp4xz0W2PuOMORKQmrZJU/o8QIYHHTP6AcYOGC9YQckVf8UgWls9rOf9ZGiI2Pk+9N3BAxzGOJUtIjuUW2nXnU=
-Received: by 10.90.51.17 with SMTP id y17mr3853233agy.1186240027845;
-        Sat, 04 Aug 2007 08:07:07 -0700 (PDT)
-Received: from ?192.168.100.118? ( [72.66.124.87])
-        by mx.google.com with ESMTPS id g7sm4695994wra.2007.08.04.08.07.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Aug 2007 08:07:05 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
+	id S1757899AbXHDPJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 11:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbXHDPJR
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 11:09:17 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:33473 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753193AbXHDPJQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 11:09:16 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 3C2F84C94C;
+	Sat,  4 Aug 2007 17:09:15 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 2A4CC212FAF;
+	Sat,  4 Aug 2007 17:09:15 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 058E42BB11D;
+	Sat,  4 Aug 2007 17:09:14 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id D00B21C4F932; Sat,  4 Aug 2007 17:09:13 +0200 (CEST)
+In-Reply-To: <8c5c35580708040735l54d1b9c7i40cd80d7d11e2961@mail.gmail.com> (Lars Hjemli's message of "Sat\, 4 Aug 2007 16\:35\:09 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-08.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54863>
 
-Beginning with commit
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-6490a3383f1d0d96c122069e510ef1af1d019fbb Fix work-tree related breakages
+> On 8/4/07, David Kastrup <dak@gnu.org> wrote:
+>> Can we get merge conflicts
+>> with a remote tracking branch, too?  Namely when the remote branch
+>> messed with its history, rebased/reverted stuff?
+>
+> No, since the "fetch" line in .git/config is prefixed by '+', which
+> gets translated to the '-f' option for 'git-fetch'.
+>
+> And this was probably the primary reason for refs/remotes/* in the
+> first place: you have a namespace in which there is no chance for
+> 'git-fetch' to overwrite local changes (ancient git had no such
+> namespace).
 
-install-doc-quick.sh no longer installs man pages, at least not to the 
-defined $mandir (if "git-checkout-index" is putting them somewhere else, 
-I haven't discovered where). Reverting the above commit eliminates this 
-problem. This is on Cygwin, haven't tried on Linux.
+Ok, so a remote tracking branch is a forcefully merged branch, so we
+put it into a separate category where we won't get tempted to have a
+branch head which will get overwritten.
 
-Mark Levedahl
+This whole "remote tracking" appears to be more a matter of _policy_
+rather than inherent design.  It would appear that local and remote
+tracking branches have no fundamental differences, they just get
+different defaults which make it less likely for the first to lose
+local changes, and less likely for the second to miss remote changes
+(in particular where those involve messing up the history).
+
+But it would be easy to create chimeras when working outside of the
+porcelain, right?
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
