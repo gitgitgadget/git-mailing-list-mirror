@@ -1,62 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] update-index: Add a --refresh-only option to refresh specified files.
-Date: Sat, 04 Aug 2007 11:34:34 -0700
-Message-ID: <7vlkcrgnd1.fsf@assigned-by-dhcp.cox.net>
-References: <87odhnk4cb.fsf@wine.dyndns.org>
+Subject: Re: git-gui console app ?
+Date: Sat, 04 Aug 2007 11:38:19 -0700
+Message-ID: <7vhcnfgn6s.fsf@assigned-by-dhcp.cox.net>
+References: <20070804101058.GA520@Mac2.local>
+	<Pine.LNX.4.64.0708041225520.14781@racer.site>
+	<20070804115331.GA2962@Mac2.local>
+	<20070804120342.GC9716@coredump.intra.peff.net>
+	<20070804123834.GA3036@Mac2.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 20:34:54 2007
+To: Erik Colson <eco@ecocode.net>
+X-From: git-owner@vger.kernel.org Sat Aug 04 20:38:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHOSf-0008DK-5m
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 20:34:49 +0200
+	id 1IHOWG-0000jW-Hz
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 20:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932856AbXHDSei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 14:34:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933022AbXHDSei
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 14:34:38 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:51557 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933000AbXHDSeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 14:34:36 -0400
+	id S933002AbXHDSi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 14:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932974AbXHDSiZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 14:38:25 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41136 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932870AbXHDSiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 14:38:22 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070804183435.CSMF11888.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 4 Aug 2007 14:34:35 -0400
+          id <20070804183820.BQZO2095.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 4 Aug 2007 14:38:20 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Xuaa1X00B1kojtg0000000; Sat, 04 Aug 2007 14:34:35 -0400
-In-Reply-To: <87odhnk4cb.fsf@wine.dyndns.org> (Alexandre Julliard's message of
-	"Sat, 04 Aug 2007 11:59:32 +0200")
+	id XueK1X0081kojtg0000000; Sat, 04 Aug 2007 14:38:19 -0400
+In-Reply-To: <20070804123834.GA3036@Mac2.local> (Erik Colson's message of
+	"Sat, 4 Aug 2007 14:38:34 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54896>
 
-Alexandre Julliard <julliard@winehq.org> writes:
+Erik Colson <eco@ecocode.net> writes:
 
-> This allows to quickly refresh a file that has been touched without
-> having to stat all the files of the project.
+> On Sat, Aug 04, 2007 at 08:03:42AM -0400, Jeff King wrote:
+>> On Sat, Aug 04, 2007 at 01:53:31PM +0200, Erik Colson wrote:
+>> 
+>> > Thanks for the very fast answer. I'm currently trying it out. However
+>> > I can't figure out how to view the 'changed but not updated' in diff
+>> > format...
+>> 
+>> git-diff ?
+>> 
+>> By default, it will show the changes between your working tree and the
+>> index (i.e., changed but not updated). You can show the diff of "updated
+>> but not commited" with "git-diff --cached".
 >
-> Signed-off-by: Alexandre Julliard <julliard@winehq.org>
-> ---
+> Peff,
 >
-> Does this look reasonable?  The refresh_index_path() function is a
-> copy/paste of refresh_index(), I'm not sure all of it is really
-> needed, but I don't claim to understand all the subtleties of the
-> index management...
+> yep that is the info I would like to browse in a way git-gui does it...
+> showing a list of the files in the diff, and letting the user select a
+> file to show the part of the diff for that file.
 
-Makes me wonder why it is not like:
-
-	$ git update-index --refresh Documentation/
-
-That is:
-
- - why a new option?
- - why not a pathspec or glob, similar to what ls-files gets?
+Since you are an Emacs user, perhaps contrib/emacs/* would be
+more to your taste?
+ 
