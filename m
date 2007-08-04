@@ -1,95 +1,117 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Julian Phillips <julian@quantumfyre.co.uk>
 Subject: Re: Terminology question about remote branches.
-Date: Sat, 4 Aug 2007 10:48:51 -0400
-Message-ID: <20070804104851.162d7e00.seanlkml@sympatico.ca>
-References: <854pjfin68.fsf@lola.goethe.zz>
-	<20070804092933.aaec6d52.seanlkml@sympatico.ca>
-	<85ejijgzzg.fsf@lola.goethe.zz>
+Date: Sat, 4 Aug 2007 15:50:21 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708041542270.11191@beast.quantumfyre.co.uk>
+References: <854pjfin68.fsf@lola.goethe.zz> <85tzrfh3yg.fsf@lola.goethe.zz>
+ <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+ <85k5sbh129.fsf@lola.goethe.zz> <8c5c35580708040703w44781498t7396588a3f8c81c8@mail.gmail.com>
+ <854pjfgzit.fsf@lola.goethe.zz> <85y7grfkbe.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
 To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 16:49:26 2007
+X-From: git-owner@vger.kernel.org Sat Aug 04 16:50:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHKwS-0000Dn-KX
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:49:20 +0200
+	id 1IHKxX-0000a1-07
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755230AbXHDOtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 10:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754599AbXHDOtB
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:49:01 -0400
-Received: from bay0-omc2-s3.bay0.hotmail.com ([65.54.246.139]:39190 "EHLO
-	bay0-omc2-s3.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754177AbXHDOtB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 10:49:01 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.184]) by bay0-omc2-s3.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 4 Aug 2007 07:49:00 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp11.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 4 Aug 2007 07:49:45 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IHKw6-0001GE-OK; Sat, 04 Aug 2007 10:48:58 -0400
-In-Reply-To: <85ejijgzzg.fsf@lola.goethe.zz>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 04 Aug 2007 14:49:46.0078 (UTC) FILETIME=[B31547E0:01C7D6A6]
+	id S1756898AbXHDOuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 10:50:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755896AbXHDOuY
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:50:24 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35901 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754599AbXHDOuY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 10:50:24 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6C9C9B8D7E
+	for <git@vger.kernel.org>; Sat,  4 Aug 2007 15:50:22 +0100 (BST)
+Received: (qmail 13583 invoked by uid 103); 4 Aug 2007 15:50:21 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/3852. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.050437 secs); 04 Aug 2007 14:50:21 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 4 Aug 2007 15:50:21 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <85y7grfkbe.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54861>
 
-On Sat, 04 Aug 2007 16:01:55 +0200
-David Kastrup <dak@gnu.org> wrote:
+On Sat, 4 Aug 2007, David Kastrup wrote:
 
-> So --track does not set up a tracking branch, but makes a local
-> _following_ branch _refer_ to a tracking branch.
+> David Kastrup <dak@gnu.org> writes:
+>
+>> "Lars Hjemli" <hjemli@gmail.com> writes:
+>>
+>>>>> Was this helpful?
+>>>
+>>> Talking to myself: obviously not
+>>
+>> Disagree.  "Does this answer all questions and makes git's behavior
+>> perfectly transparent" -- no.  But let's not confuse "magical" with
+>> "helpful" here.
+>
+> Ok, let's have another go.  Maybe I have understood more as compared
+> with last time.
+>
+> git-branch/git-commit -b creates and manages local branches, nothing
+> else.  Local branches' defining feature is that they have a branch
+> head I can move around myself.
+>
+> Then there are non-local branches.  Their defining feature is that
+> they have no locally moving branch head and _must_ track a remote
+> branch.
+>
+> But local branches _also_ can track the progress/head of a remote
+> branch.  Since they have a locally moving branch head, this will often
+> lead to merge conflicts which must be resolved.
+>
+> So this is more or less what I understand now.  There really is no
+> difference between "tracking" and "following" as I thought previously.
+> It is just that a local branch which happens to track a remote branch
+> is basically a remote tracking branch with a head of its own.
+>
+> Which means it can get merge conflicts.  Can we get merge conflicts
+> with a remote tracking branch, too?  Namely when the remote branch
+> messed with its history, rebased/reverted stuff?
 
-Sure, that's one way to describe it; perhaps it would be best if
-we switched to that nomenclature in the documentation.
+Well, sort of - they are not really merge conflicts as there is no merging 
+involved.  Fetching is strictly an updating process, either we update the 
+branch or we don't.
 
-> What happens with
-> 
->     git checkout origin/branchX
->     git branch --track mylocalbranch
->     git checkout mylocalbranch
+When updating a remote tracking branch there are two possible scenarios:
 
-This is easy to test, and the answer is that no tracking is set up.
-You must supply the remote-tracking-branch on the command line with
-the --track option to git branch.  Actually I realized that with a
-new enough version of Git, --track is implied.
+1) the new head is a superset of the old head (i.e. the old head forms 
+part of the history of the new)
+2) the new head is not a superset of the old head (i.e. the old head does 
+not form part of the history of the new)
 
-> ?  What if after the checkout (which leads to a detached head) I check
-> in a few things, and then decide to name the branch and set it up as
-> following a remote tracking branch?  Instead of using git-branch for
-> setting up the following, do I have to explicitly add the respective
-> "remote" line (which does not specify a remote, but a remote tracking
-> branch) into, uh, where?
+The normal case is 1), and we simply update the branch to point at the 
+new commit.  However what happens in case 2) depends on the configuration. 
+If we have told git to force an update (indicated by the '+' on the 
+beginning of the fetch line in the config) then we simply accept the new 
+head as with case 1), otherwise we complain to the user and don't update 
+that branch
 
-It's not a problem, you could just add an appropriate [branch...] section
-in your .git/config.   Actually looking at a typical branch section
-is even more confusing to me:
+> So that the real difference between a local and a remote tracking
+> branch is not that the latter tracks a remote branch (the former can
+> do that as well), but that the latter has no local branch head and
+> that saves us a lot (but not necessary all) merge conflicts?
 
-    $ git branch fudge origin/fix1
+Yes.  A remote tracking branch is basically a read-only local cache of 
+something that exists in some other repository.
 
-adds this to the .git/config:
+-- 
+Julian
 
-    [branch "fudge"]
-        remote = origin
-        merge = refs/heads/fix1
-
-The config file does not record the remote-tracking-branch, instead
-it explicitly records the remote repository information.  So it sure
-appears that if you add the --track option, it _does_ make the local
-branch track a remote directly.  Thus it's hard to call it anything
-but what you labelled it,  a local tracking-branch.
-
-While I thought i had a handle on this, i'm now officially more
-confused than you; hopefully someone with knowledge of the guts
-of Git will speak up.   Junio Help!
-
-Sean
+  ---
+If you're going to do something tonight that you'll be sorry for tomorrow
+morning, sleep late.
+ 		-- Henny Youngman
