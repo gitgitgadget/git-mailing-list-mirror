@@ -1,60 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Terminology question about remote branches.
-Date: Sat, 04 Aug 2007 14:14:04 +0200
-Organization: At home
-Message-ID: <f91qic$n06$1@sea.gmane.org>
-References: <854pjfin68.fsf@lola.goethe.zz>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Help a sed noob
+Date: Sat, 4 Aug 2007 14:18:11 +0200
+Message-ID: <20070804121811.GA1605@lapse.madduck.net>
+References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com> <20070804103126.GA28402@lapse.madduck.net> <20070804115003.GA9716@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 04 14:14:29 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 04 14:17:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHIWa-00031j-8o
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:14:28 +0200
+	id 1IHIZg-0003lP-PF
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755876AbXHDMOZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 08:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755488AbXHDMOZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:14:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:57320 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753195AbXHDMOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 08:14:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IHIWO-0006dh-Bv
-	for git@vger.kernel.org; Sat, 04 Aug 2007 14:14:16 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 14:14:16 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 14:14:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756129AbXHDMRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 08:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbXHDMRh
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:17:37 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56113 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755488AbXHDMRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 08:17:37 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 98DD5895D96;
+	Sat,  4 Aug 2007 14:17:35 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 04930-09; Sat, 4 Aug 2007 14:17:35 +0200 (CEST)
+Received: from lapse.madduck.net (AToulon-256-1-9-110.w86-211.abo.wanadoo.fr [86.211.64.110])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id C8301895D94;
+	Sat,  4 Aug 2007 14:17:30 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 4C6EB4FD3D; Sat,  4 Aug 2007 14:18:11 +0200 (CEST)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20070804115003.GA9716@coredump.intra.peff.net>
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.21-2-686 i686
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54835>
 
-[Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org]
 
-David Kastrup wrote:
+--uAKRQypu60I7Lcqm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The way to add a remote branch basically is not via git-branch or
-> git-checkout -b (those always create local branches), but by editing
-> .git/config.
+also sprach Jeff King <peff@peff.net> [2007.08.04.1350 +0200]:
+> No, it prints everything _except_ "URL: *" from the first matching line.
 
-Or by using "git remote" command.
+I am convinced we could submit this to the Obfuscated Code Contest.
+:)
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The behaviour is absolutely unclear from the manpage and defies my
+logic. Can you elaborate a bit, even though this is off-topic?
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+kill ugly radio
+                                                        -- frank zappa
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--uAKRQypu60I7Lcqm
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGtG6DIgvIgzMMSnURArS0AKDSGK0Ks9IqVw9xMA3Zf2ryBd6FTwCfW5JX
+RnbCk2an/C9nq8CXVH+9O6k=
+=DiIB
+-----END PGP SIGNATURE-----
+
+--uAKRQypu60I7Lcqm--
