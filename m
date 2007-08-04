@@ -1,105 +1,95 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sat, 4 Aug 2007 15:51:29 +0300
-Message-ID: <20070804155129.a20cdb9b.tihirvon@gmail.com>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
-	<200708040341.36147.ismail@pardus.org.tr>
-	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
-	<46B3F762.1050306@midwinter.com>
-	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
-	<20070804133923.eb84a308.tihirvon@gmail.com>
-	<Pine.LNX.4.64.0708041240500.14781@racer.site>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: Terminology question about remote branches.
+Date: Sat, 4 Aug 2007 15:07:01 +0200
+Message-ID: <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+References: <854pjfin68.fsf@lola.goethe.zz>
+	 <20070804120243.GB9716@coredump.intra.peff.net>
+	 <85tzrfh3yg.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Ismail =?ISO-8859-1?B?RPZubWV6?= <ismail@pardus.org.tr>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 04 14:51:56 2007
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 15:07:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHJ6o-0003cq-Ku
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 14:51:54 +0200
+	id 1IHJLZ-0007gJ-0P
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 15:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764211AbXHDMvx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 08:51:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756104AbXHDMvw
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 08:51:52 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:14591 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762621AbXHDMvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 08:51:36 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so941075fkz
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 05:51:35 -0700 (PDT)
+	id S1756455AbXHDNHF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 09:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756725AbXHDNHF
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 09:07:05 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:42764 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756421AbXHDNHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 09:07:02 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1162525wah
+        for <git@vger.kernel.org>; Sat, 04 Aug 2007 06:07:02 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=F/OImhzzrddHkAWz0AHiEMVETd4/A7qciJJISzb/DPCmxVDf41tIEcp3Ht3ac8I3ltXs+eYnz9Ey/GIgR0Qb+/KsFTkJv9dNaRFf/nzcCz5099098CHLCLJItfEpOcRgmVDw7RFxNZKkdlC6cbu5ebxUOFLjhXfsBV70XORh6oE=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=FUlEzmqCVdz2aNXU0+8+ax1DoFrdf5Yo11mCQkOmIHS/HMdATDfT7jeVUXjzVECwTnd+ygCmeYBZFHlMrxTL4pw7jEFPvcakdap/VmhJmh91hqh7EzDCEieBpcJJmvejDkO7He48id8RNYFXKUROkvgi8HFw3PGgxy7HL9Zv4ws=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=XCDVUfhla9Tn5T7EHe5XeCPDHjAamgHbY3SWN3p7ItK4d3cunJFVfPmuwtlsLCLQFbVmxcSnoRZwqTGexzNGa48c3CKpzoyfHJ6XR4uUm4AIPcWFYLKsqN8YvSFpX4mRJZmJM6SEzeAHjlyHsRILLt8WXNEDS01EIuzzBnEW2bw=
-Received: by 10.86.79.19 with SMTP id c19mr2967408fgb.1186231895080;
-        Sat, 04 Aug 2007 05:51:35 -0700 (PDT)
-Received: from garlic.home.net ( [85.23.17.126])
-        by mx.google.com with ESMTPS id v23sm8446942fkd.2007.08.04.05.51.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 04 Aug 2007 05:51:33 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0708041240500.14781@racer.site>
-X-Mailer: Sylpheed 2.4.4 (GTK+ 2.10.13; i686-pc-linux-gnu)
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=tEH+SJJ7Gs3uWuY6hkJ91jISPsQcmC5KvefDxVmsVvLSADTIzADow97LOEbCRZEUHhTuFcj79BWQeES00QFyXQApWSNpCtYRHtJdOljfFeNBNZkaHaRELN6hullgX+mEJEp7BzgII3fCWk9UhMsmTUXi7rnAPfNHPUs0HRSfn2U=
+Received: by 10.114.24.1 with SMTP id 1mr3913644wax.1186232821906;
+        Sat, 04 Aug 2007 06:07:01 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Sat, 4 Aug 2007 06:07:01 -0700 (PDT)
+In-Reply-To: <85tzrfh3yg.fsf@lola.goethe.zz>
+Content-Disposition: inline
+X-Google-Sender-Auth: cb5dbfc2386ce154
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54842>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On 8/4/07, David Kastrup <dak@gnu.org> wrote:
+> Now I think that I basically have no chance figuring this out on my
+> own sufficiently well to be able to improve the documentation.
 
-> Hi,
-> 
-> On Sat, 4 Aug 2007, Timo Hirvonen wrote:
-> 
-> > I used asciidoc too but it was really PITA to install and use
-> 
-> I disagree.  Whenever I had the need, installing asciidoc was pretty 
-> swift.  No problems at all.
+Remote-tracking branch:
+  A local copy of a branch in another repository. This kind of branch
+  cannot be updated by 'git-commit' but only by 'git-fetch' (hence
+  indirectly by 'git-pull' and 'git-remote update'). If you try to
+  'git-checkout' a remote-tracking branch, you will get a detached HEAD.
 
-Well asciidoc doesn't even have a Makefile. You have to copy the files
-manually (maybe it's easier now, I don't know). Also getting it work
-correctly with xsl-stylesheets etc. was really frustrating experience.
-Now there's asciidoc, xmlto etc. in Arch Linux community repo but I
-wouldn't be surprised if it couldn't build the GIT documentation.
+Local branch:
+  A branch to which you may commit changes. Optionally, the branch can be
+  configured to "follow" one of your remote-tracking branches. This means
+  that a 'git-pull' without arguments (when your local branch is checked
+  out), will automatically 'git-fetch' and then 'git-merge' the remote-
+  tracking branch.
 
-> > so I wrote a small tool (ttman) in C which converts .txt files directly 
-> > to man pages.
-> 
-> I was impressed!  Right until I saw that
-> 
-> 	- it rolls its own parser/lexer without using bison/flex, which 
-> 	  makes it much longer than necessary,
+Example:
 
-I've never liked parser generators.
+Your local branch 'master' is setup to "follow" 'refs/remotes/origin/master'.
+So if you do this:
 
-> 	- it looks like a perl script doing the same job would have been 
-> 	  even smaller yet, and
+$ git checkout master
+$ git pull
 
-Very likely but perl is incompatible with my brain :)
+Then the 'git pull'-command will do this:
 
-> 	- the syntax is nowhere near asciidoc syntax.
+$ git fetch -f origin master:remotes/origin/master
+$ git merge remotes/origin/master
 
-I needed something really simple.  asciidoc's syntax is full of
-surprises and it's much harder to parse.
 
-Of course having a perl script which could convert asciidoc files
-directly to man and html would be really nice.  We just need some brave
-perl hacker to write the script.
+The magic setup that makes this happen is the following lines in .git/config:
 
-> For official releases, I'd still want to rely on asciidoc.
+[remote "origin"]
+        url = git://git.kernel.org/pub/scm/git/git.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
 
-Agreed, rushing to change the documentation format wouldn't be wise.
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+
+
+Was this helpful?
 
 -- 
-http://onion.dynserv.net/~timo/
+larsh
