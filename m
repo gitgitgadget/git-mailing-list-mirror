@@ -1,81 +1,68 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Terminology question about remote branches.
-Date: Sat, 04 Aug 2007 19:00:19 +0200
-Message-ID: <85r6mjdyl8.fsf@lola.goethe.zz>
-References: <854pjfin68.fsf@lola.goethe.zz>
-	<20070804120243.GB9716@coredump.intra.peff.net>
-	<85tzrfh3yg.fsf@lola.goethe.zz>
-	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 4 Aug 2007 09:59:08 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
+ <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
+ <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
+ <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com>
+ <85zm17h4pn.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: "Lars Hjemli" <lh@elementstorage.no>
-X-From: git-owner@vger.kernel.org Sat Aug 04 19:00:30 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 19:00:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHMzJ-0001Ea-Se
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 19:00:26 +0200
+	id 1IHMzn-0001PZ-0b
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 19:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195AbXHDRAX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 13:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbXHDRAX
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 13:00:23 -0400
-Received: from mail-in-01.arcor-online.net ([151.189.21.41]:55528 "EHLO
-	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932128AbXHDRAW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 13:00:22 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 9F54815BFD7;
-	Sat,  4 Aug 2007 19:00:20 +0200 (CEST)
-Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 90A502C6A1A;
-	Sat,  4 Aug 2007 19:00:20 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-037.pools.arcor-ip.net [84.61.10.37])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 5905B13237;
-	Sat,  4 Aug 2007 19:00:20 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 6A59F1C4F932; Sat,  4 Aug 2007 19:00:19 +0200 (CEST)
-In-Reply-To: <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com> (Lars Hjemli's message of "Sat\, 4 Aug 2007 15\:07\:01 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3854/Sat Aug  4 06:49:48 2007 on mail-in-11.arcor-online.net
-X-Virus-Status: Clean
+	id S1760644AbXHDRAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 13:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759060AbXHDRAw
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 13:00:52 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:56938 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754124AbXHDRAv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 13:00:51 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l74GxEJA010699
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 4 Aug 2007 09:59:15 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l74Gx8vo002171;
+	Sat, 4 Aug 2007 09:59:08 -0700
+In-Reply-To: <85zm17h4pn.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.223 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54884>
 
-"Lars Hjemli" <lh@elementstorage.no> writes:
 
-> The magic setup that makes this happen is the following lines in .git/config:
->
-> [remote "origin"]
->         url = git://git.kernel.org/pub/scm/git/git.git
->         fetch = +refs/heads/*:refs/remotes/origin/*
->
-> [branch "master"]
->         remote = origin
->         merge = refs/heads/master
->
->
-> Was this helpful?
 
-It would be helpful.  Except that nothing whatsoever can be found in
-.git/config concerning my local and my remote tracking branches.  So
-where is that information _really_ hidden away?
+On Sat, 4 Aug 2007, David Kastrup wrote:
+> 
+> A system such as info, in contrast, is hierarchical, and organized
+> with indexes and cross references making it much easier to find
+> things.
 
-.git/FETCH_HEAD maybe?
+You must be kidding. Texinfo is the worst documentation format EVER. And 
+the readers universally suck too, unless you're a total GNU emacs fan and 
+have been for a decade, and have problems understanding people who don't 
+like the all-in-one mentality.
 
-It also appears that doing
+There are absolutely _zero_ advantages in Texinfo over AsciiDoc. It has 
+all the same disadvantages, except the source files are *also* unreadable 
+(which is the one really nice feature of AsciiDoc - you can ignore 
+everything else, and just read the original .txt file).
 
-git-checkout --track -b mybranch origin
-
-on a git.git clone does _not_ create a tracking branch.  I can't
-figure out what I could specify as an origin to create a tracking
-branch that would get reflected in .git/FETCH_HEAD.
-
-What gives?
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+			Linus
