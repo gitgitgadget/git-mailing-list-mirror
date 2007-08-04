@@ -1,66 +1,98 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sun, 05 Aug 2007 00:03:42 +0800
-Message-ID: <46B4A35E.5040601@midwinter.com>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>	<200708040341.36147.ismail@pardus.org.tr>	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>	<46B3F762.1050306@midwinter.com>	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>	<46B418AA.4070701@midwinter.com>	<20070804091249.GA17821@uranus.ravnborg.org>	<46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during check-out
+Date: Sat, 04 Aug 2007 12:03:28 -0400
+Message-ID: <46B4A350.9060806@tromer.org>
+References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>	<7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>	<20070801140532.GC31114MdfPADPa@greensroom.kotnet.org> <7v643vj316.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Ismail_D=F6nmez?= <ismail@pardus.org.tr>,
+Cc: skimo@liacs.nl, Sven Verdoolaege <skimo@kotnet.org>,
 	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 18:03:51 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 18:03:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHM6Y-0002vf-Jh
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:03:50 +0200
+	id 1IHM6Z-0002vf-4X
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 18:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929AbXHDQDr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 12:03:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXHDQDr
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:03:47 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:52105 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751808AbXHDQDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 12:03:46 -0400
-Received: (qmail 29665 invoked from network); 4 Aug 2007 16:03:46 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=qV0Du9qbf1GHnHiiKQ3Io/RsBO/WfXkYCdvBWi1z5Ro3IdF/mbWceGp1QZpKSTYM  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 4 Aug 2007 16:03:45 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <85zm17h4pn.fsf@lola.goethe.zz>
+	id S1756479AbXHDQDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 12:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756203AbXHDQDt
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 12:03:49 -0400
+Received: from rozz.csail.mit.edu ([128.30.2.16]:46824 "EHLO
+	rozz.csail.mit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753811AbXHDQDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 12:03:48 -0400
+Received: from c-66-30-26-80.hsd1.ma.comcast.net ([66.30.26.80] helo=moby.tromer.org)
+	by rozz.csail.mit.edu with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.63)
+	(envelope-from <git2eran@tromer.org>)
+	id 1IHM6H-0008PK-Cq; Sat, 04 Aug 2007 12:03:33 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.5) Gecko/20070719 Fedora/2.0.0.5-1.fc7 Thunderbird/2.0.0.5 Mnenhy/0.7.5.0
+In-Reply-To: <7v643vj316.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54872>
 
-David Kastrup wrote:
-> A system such as info, in contrast, is hierarchical, and organized
-> with indexes and cross references making it much easier to find
-> things.
+On 2007-08-04 01:13, Junio C Hamano wrote:
+> Let me understand the problem first.  If your first checkout
+> does not check out the submodule, switching between revisions
+> that has different commit of the submodule there would not fail,
+> but once you checkout the submodule, switching without updating
+> the submodule would be Ok (because by design updating the
+> submodule is optional) but then further switching out of that
+> state will fail because submodule in the supermodule tree and
+> checked-out submodule repository are now out of sync.  Is that
+> the problem?
+> 
+[snip]
 
-Really? I find info a huge pain in the butt most of the time. I can't 
-just do a simple text search for the information I want in the relevant 
-manpage; I have to go navigating around to the appropriate subsection 
-(and that's assuming I know where it is) and am forced to use the 
-emacs-style pager whether I like it or not (not a big emacs fan here). 
-It always ticks me off when I go to read the manpage for some command 
-and it tells me to go read the info page if I want complete documentation.
+> Where does the "No you are not up-to-date, I wouldn't let you
+> switch" come from?  Is that verify_uptodate() called from
+> merged_entry() called from twoway_merge()?  I think the right
+> approach to deal with this is to teach verify_uptodate() about
+> the policy.  The function is about "make sure the filesystem
+> entity that corresponds to this cache entry is up to date, lest
+> we lose the local modifications".  As we explicitly allow
+> submodule checkout to drift from the supermodule index entry,
+> the check should say "Ok, for submodules, not matching is the
+> norm" for now.  Later when we have the ability to mark "I care
+> about this submodule to be always in sync with the superproject"
+> (thereby implementing automatic recursive checkout and perhaps
+> diff, among other things), we should check if the submodule in
+> question is marked as such and perform the current test.
+> 
+> How about doing something like this instead?
+> 
+>  unpack-trees.c |    9 +++++++++
 
-I would definitely not want to move to a documentation system that 
-prevented me from typing "man git-commit" to get a list of all the 
-command line options for that command.
+Works here: it silences the check and allows switching branches. Still,
+leaving the working tree dirty can inadvertently affect subsequent
+commits. Consider the most ordinary of sequences:
 
-However, that said, I have no objection to an alternate view of the same 
-information that's organized differently.
+$ git checkout experimental-death-ray
+$ git submodules update
+(return a week later, woozy from the vacation.)
+$ git checkout master
+(hack hack hack)
+$ git commit -a -m "fixed typos"
+$ git push
+(Oops. You've just accidentally committed the wrong submodule heads.)
 
-Am I alone in my dislike of info, I wonder?
+So to safely make new commits you must remember to always run "git
+submodule update", or forgo use of "git commit -a", whenever submodules
+might be involved.
 
--Steve
+I guess you can hack around this by excluding submodules from "commit
+-a" and (for scripts) "ls-files -m" too...
+
+Another approach is for pull, checkout etc. to automatically update the
+submodule' head ref, but no more. In this case the supermodule always
+sees a consistent state with traditional semantics, but the *submodule*
+ends up with a dirty working tree and a head referring to a
+possibly-missing commit; "git submodule update" would need to clean that up.
+
+  Eran
