@@ -1,65 +1,73 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Terminology question about remote branches.
-Date: Sat, 4 Aug 2007 16:35:09 +0200
-Message-ID: <8c5c35580708040735l54d1b9c7i40cd80d7d11e2961@mail.gmail.com>
-References: <854pjfin68.fsf@lola.goethe.zz> <85tzrfh3yg.fsf@lola.goethe.zz>
-	 <8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
-	 <85k5sbh129.fsf@lola.goethe.zz>
-	 <8c5c35580708040703w44781498t7396588a3f8c81c8@mail.gmail.com>
-	 <854pjfgzit.fsf@lola.goethe.zz> <85y7grfkbe.fsf@lola.goethe.zz>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
+Date: Sat, 4 Aug 2007 10:35:59 -0400
+Message-ID: <20070804143559.GC10294@fieldses.org>
+References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <20070803030459.GJ20052@spearce.org> <20070803125846.GC28323@fieldses.org> <20070804062010.GQ20052@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 04 16:35:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Aug 04 16:36:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHKip-0004vD-NX
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:35:16 +0200
+	id 1IHKjg-0005AM-Df
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 16:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756957AbXHDOfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 10:35:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbXHDOfM
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:35:12 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:3337 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750968AbXHDOfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 10:35:10 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1180599wah
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 07:35:10 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GOrQn00Hr7gkIurXr85LgO75UiPbqPYDdA8gbiGjlnCyxhGlrEO6DFuY5PKYhT7w3QJPSAGFlpiydpEQsEb02TktN7ZYmT48cDw6b+tvo7catQP2gSSnbPox1oCwq1AxUF1eFXvntnGft23xgj+MJ7WIgwWt2KGZ9M7UuTgTmb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eJeR0ikMLdWCzDb/uEjP9JrIpbpJiyOWWB88iR2Lt1jmDt91Iq/f5/5A5MuOLFFjWBxTpNsJsWcauU/+Pov58tsvKqIx8IiBFa+HG6Ablbac3mkYBVDYxBS/dr724ijYekwG73a/AZ5yoqUWcmU7vXi+2ZMXZmOCpi/SvWs9H9M=
-Received: by 10.114.151.13 with SMTP id y13mr3988387wad.1186238109781;
-        Sat, 04 Aug 2007 07:35:09 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Sat, 4 Aug 2007 07:35:09 -0700 (PDT)
-In-Reply-To: <85y7grfkbe.fsf@lola.goethe.zz>
+	id S1758826AbXHDOgF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 10:36:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757310AbXHDOgE
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 10:36:04 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:39096 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757082AbXHDOgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 10:36:01 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IHKjX-0005xo-FK; Sat, 04 Aug 2007 10:35:59 -0400
 Content-Disposition: inline
+In-Reply-To: <20070804062010.GQ20052@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54859>
 
-On 8/4/07, David Kastrup <dak@gnu.org> wrote:
-> Can we get merge conflicts
-> with a remote tracking branch, too?  Namely when the remote branch
-> messed with its history, rebased/reverted stuff?
+On Sat, Aug 04, 2007 at 02:20:10AM -0400, Shawn O. Pearce wrote:
+> But at this point in git (and git-gui's) life I think it would
+> be very worthwhile to devote an entire (new) chapter to git-gui,
+> maybe as part of git 1.5.4/git-gui 0.9.0.  I think we're far too
+> late in the 1.5.3 cycle to do it now.  I personally won't have the
+> time to even try to rough draft something anytime soon, let alone
+> let others copy-edit me before Juino releases 1.5.3.  :)
+> 
+> Being bundled with core git has brought git-gui a sizeable and
+> growing userbase, and more and more users are discovering it
+> each day.  We're now seeing it be translated into many different
+> languages, and it is a somewhat core part of the MSYS port as many
+> Windows users prefer to click in GUIs over type in cmd.exe terminal
+> windows (can't say I blame them, cmd.exe is aweful!).
+> 
+> In other words I think git-gui should get roughly as much attention
+> from the user manual as git-add/rm/mv/commit/checkout/branch get,
+> as it offers the same feature set.  But it shouldn't distract from
+> the command line part of the manual.
+> 
+> Maybe we should write parts of the manual in a "choose your own
+> adventure style" and use different chapters for different paths.
+> I think users can easily decide between the command line "i like to
+> type" vs. the gui "i like to click" paths and focus their attention
+> to the material they are most interested in.  :-)
 
-No, since the "fetch" line in .git/config is prefixed by '+', which
-gets translated to the '-f' option for 'git-fetch'.
+Sure.
 
-And this was probably the primary reason for refs/remotes/* in the
-first place: you have a namespace in which there is no chance for
-'git-fetch' to overwrite local changes (ancient git had no such
-namespace).
+For now, though, I think it'd be simplest to start with an entirely
+separate appendix.  And find a way to make links to that chapter are
+prominently featured in Windows ports, as that sounds like an immediate
+need.
 
--- 
-larsh
+And then later as git-gui progresses we can figure out how to integrate
+it better.
+
+--b.
