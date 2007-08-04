@@ -1,74 +1,116 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Help a sed noob
-Date: Fri, 3 Aug 2007 20:06:34 -0400
-Message-ID: <fcaeb9bf0708031706o3e3f4839t39eca4b64b0aab5d@mail.gmail.com>
-References: <fcaeb9bf0708031622w25ab6e9ev61372169cfc0bd98@mail.gmail.com>
-	 <7vhcngkx38.fsf@assigned-by-dhcp.cox.net>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
+Date: Sat, 4 Aug 2007 02:16:38 +0200
+Message-ID: <e7bda7770708031716i61f80d89o8970b3236a961613@mail.gmail.com>
+References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
+	 <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>
+	 <46B2D4D9.4020103@trolltech.com>
+	 <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
+	 <Pine.LNX.4.64.0708031334530.14781@racer.site>
+	 <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com>
+	 <Pine.LNX.4.64.0708032231320.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"=?UTF-8?Q?Ren=C3=A9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Aug 04 02:06:50 2007
+Cc: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>,
+	"Marius Storm-Olsen" <marius@trolltech.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 04 02:16:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IH7AP-0001QV-Bg
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 02:06:49 +0200
+	id 1IH7K0-0003Aa-Du
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 02:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762282AbXHDAGg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Aug 2007 20:06:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762214AbXHDAGg
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 20:06:36 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:5369 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762054AbXHDAGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2007 20:06:35 -0400
-Received: by an-out-0708.google.com with SMTP id d31so185918and
-        for <git@vger.kernel.org>; Fri, 03 Aug 2007 17:06:34 -0700 (PDT)
+	id S1763651AbXHDAQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Aug 2007 20:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763642AbXHDAQl
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Aug 2007 20:16:41 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:32569 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754065AbXHDAQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2007 20:16:40 -0400
+Received: by py-out-1112.google.com with SMTP id d32so1643386pye
+        for <git@vger.kernel.org>; Fri, 03 Aug 2007 17:16:39 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DFYZ1+5aQIr+9VCQx5Jp10hGOG2YNrdfA+SnyF1ju8fjWQUoZr3WmDhDzUEUUW41Nx707+L+vJm5Xxt9HdQKCj4GwUCHWL4cpATAAgV83588dX95J7U1rwfrzS083xrzdJw63qVEM/a+5nCOXGwOZ7IPWkvoGR8eT2yAikFgXcg=
+        b=VVxHHnstykxGMo4hr/5g+kBxjV80UfsTa3eiw/myWCx+N9SIG2h3WyqPgTpL8CI/O5JRYdXOZS9ji9N2S/uc99GnDSXeTbiKalrcBeA8Y5rK6vwKpgA5L+8Z8i9v0JqbCeSg9Cw7MsmXwbcn7yPhaAV0ydg/dLob0VFXL4LWJt8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AKBfYyazJPV69OX6JLCwb8rfDdvBhF0DWwRTPRaNjo+Y0seLQtm9pzd73Tt51pexeZSky47q2wRV5gsZB+H2/ONSffsc8sUIlv95p2lpyEufuX7LAZQSm87DbyklKetXuqEOEhekgn8cQp5J2VyqLhN2s4sOSaDi9D0RGT+7uas=
-Received: by 10.100.128.8 with SMTP id a8mr2014029and.1186185994351;
-        Fri, 03 Aug 2007 17:06:34 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Fri, 3 Aug 2007 17:06:34 -0700 (PDT)
-In-Reply-To: <7vhcngkx38.fsf@assigned-by-dhcp.cox.net>
+        b=m/Zi89k3jZzELN0NffemBO5Z+W1rnVuRSa1mRwiDoOE4Nxvu/VxrGuF1/e8+PhcChduH4Xnu1Unjeqp8ULuYeNZ2KfJeuZBDyCQO4t5svzGnLiZU58RGvsMkUcTPAYtLafIG9hRvA5kIqrR+qHmMJdZqZYI/Y8v7UV2SWQ/ZFt4=
+Received: by 10.65.251.17 with SMTP id d17mr6023446qbs.1186186598775;
+        Fri, 03 Aug 2007 17:16:38 -0700 (PDT)
+Received: by 10.65.141.5 with HTTP; Fri, 3 Aug 2007 17:16:38 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708032231320.14781@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54775>
 
-Great! Thank you both.
+Hi,
 
-On 8/3/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+This is great news for win(-stuck)-users. I've tried
+"msysGit-0.2.exe", a few glitches
+
+1. Unpacking in a folder that have space in it's path gave various
+errors of this type (here, msysGit is unpacked on the desktop
+C:\Documents and settings\.... ) : make[1]: C:/Documents: Command not
+found
+
+2. rxvt-terminal had some freezes (echoed input but programs didn't
+output anything and didn't seem to respond to ctrl-c). Had it once
+during "make" and once during "ls".  I't might be related to me
+resizing the terminal during command execution (=I didn't see it
+otherwise).
+
+3. "gitk --all" said "Error reading commits: fatal: write failure on
+stdout: Invalid argument" on start - my other msys installation
+didn't. (I didn't do anything to make git dirty - i'm on master and
+gitk shows no uncommited changes)
+$ git --version
+git version mingw.v1.5.2.4.883.g3822-dirty
+
+4. Mouse-wheel didn't work to scroll views in gitk
+
+
+=> it works with minor installation effort!  I've done both MSYS and
+Cygwin installs - I think this will lower the git barrier on Win
+significantly. Thanks  & good work all involved!
+
+Best Regards,
+
+//Torgil
+
+On 8/3/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> > There is a construct like this in git-parse-remote.sh which makes
-> > busybox ash unhappy:
+> On Fri, 3 Aug 2007, Dmitry Kakurin wrote:
+>
+> > > * replace rxvt by that stupid cmd window
+> > > Sneaky.
 > >
-> >                 sed -ne '/^URL: */{
-> >                         s///p
-> >                         q
-> >                 }' "$GIT_DIR/remotes/$1"
-> >
-> > It complains about "no previous regexp" while gnu sed is ok. Can
-> > anyone explain to me what does "s///p" do? GNU Sed info page says
-> > nothing about empty regexp. If I replace it with "s/\(.*\)/\1/p" then
-> > I get "URL: " along with the remote path.
+> > This was a result of my customization that I have forgot to remove.
+> > In general cmd window is more familiar/convenient for Windows users.
+> > IMHO, our goal here should be "as native (Windows) as possible". Cygwin fills
+> > "as close to *nix as possible" niche.
+> > But in any case it's such a minor detail that I don't really care much.
 >
-> Traditionally empty LHS regexp means "the same as last match".
-> Replace it with "s/^URL: *//p" and you would be Ok.
+> Actually, I finally saw the light and implemented your idea of the
+> repo.or.cz repository, containing a full copy of the darn beast.
 >
+> And there, differences like this one are much easier to spot.
 >
-
-
--- 
-Duy
+> Besides, Marius convinced me already to include two versions.
+>
+> Ciao,
+> Dscho
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
