@@ -1,73 +1,119 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Some ideas for StGIT
-Date: Sat, 04 Aug 2007 01:41:25 -0400
-Message-ID: <1186206085.28481.33.camel@dv>
-References: <1186163410.26110.55.camel@dv>
-	 <200708031914.04344.andyparkins@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC (take 3)] Git User's Survey 2007
+Date: Sat, 4 Aug 2007 01:41:57 -0400
+Message-ID: <20070804054157.GN20052@spearce.org>
+References: <200707250358.58637.jnareb@gmail.com> <200708040250.55180.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 07:41:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 07:42:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHCOU-0007Q4-38
-	for gcvg-git@gmane.org; Sat, 04 Aug 2007 07:41:42 +0200
+	id 1IHCOt-0007Tr-Jz
+	for gcvg-git@gmane.org; Sat, 04 Aug 2007 07:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753673AbXHDFl3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 01:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753678AbXHDFl3
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 01:41:29 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:33101 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753650AbXHDFl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 01:41:28 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1IHCQj-0002ht-J3
-	for git@vger.kernel.org; Sat, 04 Aug 2007 01:44:01 -0400
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1IHCOD-0000GA-85; Sat, 04 Aug 2007 01:41:25 -0400
-In-Reply-To: <200708031914.04344.andyparkins@gmail.com>
-X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
+	id S1753815AbXHDFmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 01:42:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753420AbXHDFmD
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 01:42:03 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42946 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753225AbXHDFmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 01:42:01 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IHCOj-0007PU-Pw; Sat, 04 Aug 2007 01:41:58 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7E22520FBAE; Sat,  4 Aug 2007 01:41:57 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200708040250.55180.jnareb@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54793>
 
-Hello, Andy!
+Jakub Narebski <jnareb@gmail.com> wrote:
+> It's been more than a year since last Git User's Survey. It would be
+> interesting to find what changed since then. Therefore the idea to
+> have another survey.
 
-On Fri, 2007-08-03 at 19:14 +0100, Andy Parkins wrote:
-> On Friday 2007, August 03, Pavel Roskin wrote:
+This is actually a pretty good draft.  I'd say its about ready to
+go.  A couple of minor comments:
+ 
+> How you use GIT
 > 
-> > I don't suggest that StGIT gives up on the git-based storage, but this
-> > mode of operation could be implemented in two ways.
+>     1. Do you use GIT for work, unpaid projects, or both?
+>        work/unpaid projects/both/none(*)
+>        (*)I use git to interact with some project I'm interested in
+
+I don't understand the (*) point here.  What's the middle ground
+between work and unpaid projects?  Paid projects that aren't work?
+Isn't that the definition of work?  Very confused...
+
+>     7. How many different projects do you manage using GIT?
+>     8. Which porcelains do you use?
+>        (zero or more: multiple choice)
+>     -  core-git, cogito, StGIT, pg, guilt, other
+
+I really hope nobody chooses pg.  I haven't supported it in a very
+long time.  Might be a good idea to keep it in this survey just to
+make sure its 0, then omit it from the next survey.  :-)
+
+> Changes in GIT (since year ago, or since you started using it)
+...
+>     5. Which of the new features do you use?
+>        (zero or more: multiple choice)
+>     -  git-gui, bundle, eol conversion, gitattributes,
+>        submodules, worktree, release notes, user's manual,
+>        reflog, stash, shallow clone, detached HEAD, fast-import,
+>        mergetool, interactive rebase, commit template, blame improvements,
+>        other (not mentioned here)
+
+Wow.
+
+This community has accomplished a lot since the last survey.
+That list covers most of the major items over the past year, if
+not all of them.  But I'd never really seen it all written out
+in such a concise list; there's so much blood, sweat and tears
+in those topics from everyone on (and off) this mailing list.
+Reading it now is bringing back a lot of memories for me.
+
+Sorry, I just had a very emotional reaction to seeing how much we
+have managed to accomplish in so little time.  Thank you to everyone
+who has made this list possible!
+
+> Getting help, staying in touch
 > 
-> git's shiny new git rebase -i has removed, for me, those times when I needed 
-> stgit.  Perhaps those who've move from git to quilt would try again when 
-> 1.5.3 is out with the magic that is "rebase -i".
+>     1. Have you tried to get GIT help from other people?
+>     -  yes/no
+>     2. If yes, did you get these problems resolved quickly
+>        and to your liking?
+>     -  yes/no
 
-I don't understand how one option can replace StGIT.  I assume you were
-trying to avoid StGIT already, and "git-rebase -i" was just the last
-missing piece.
+Possible new item:
 
-It would be great if you could tell me how your approach would deal with
-the issue of editable patches I mentioned already.  In case I was
-unclear, here's the quote from one of the developers:
+  Would commerical (paid) support from a support vendor be of
+  interest to you/your organization?
 
-[quote]
-Sometimes, I just make patches in quilt, then I do "quilt 
-refresh", "quilt pop -a", "cd patches" and modify the patches 
-and series file manually, e.g. by moving one patch from one file 
-into the other. The "cd ..", "quilt push -a" and off I am. That 
-the "database" of quilt is in a known format and I can hack on 
-it with an editor is a plus for me :-)
-[end of quote]
+Just kicking the idea out there.  Some of us have talked about
+this on and off from time to time, I wonder what our user community
+thinks of it.  I think Sam Vilain was suggesting he sell Git support
+to my day-job company, so my coworkers could call him and ask him
+questions, and he could ask me those same questions on #git, then
+mail me a 6-pack of beer[*1*] for my troubles.  :)
 
+
+[*1*] And sadly I don't drink beer...
+ 
 -- 
-Regards,
-Pavel Roskin
+Shawn.
