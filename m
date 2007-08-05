@@ -1,83 +1,56 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Terminology question about remote branches.
-Date: Sun, 5 Aug 2007 12:56:49 +0200
-Message-ID: <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de>
-References: <854pjfin68.fsf@lola.goethe.zz> <20070804092933.aaec6d52.seanlkml@sympatico.ca> <85ejijgzzg.fsf@lola.goethe.zz> <20070805100532.GG12507@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Dan Zwell <dzwell@gmail.com>
+Subject: $GIT_DIR usage
+Date: Sun, 05 Aug 2007 05:58:59 -0400
+Message-ID: <46B59F63.8020707@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, Sean <seanlkml@sympatico.ca>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 12:56:40 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 12:59:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHdmo-0003y2-Px
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 12:56:39 +0200
+	id 1IHdpa-0004W6-HC
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 12:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757337AbXHEK4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 06:56:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757102AbXHEK4f
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 06:56:35 -0400
-Received: from mailer.zib.de ([130.73.108.11]:46959 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756359AbXHEK4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 06:56:34 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75AtwvJ008340;
-	Sun, 5 Aug 2007 12:55:58 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75Atudq016997
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 5 Aug 2007 12:55:57 +0200 (MEST)
-In-Reply-To: <20070805100532.GG12507@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1758944AbXHEK7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 06:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757978AbXHEK7X
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 06:59:23 -0400
+Received: from mailhub.lawrence.edu ([143.44.0.14]:35759 "EHLO lawrence.edu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756500AbXHEK7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 06:59:22 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Aug 2007 06:59:22 EDT
+Received: from [69.140.46.21] (account zwelld HELO [192.168.2.3])
+  by lawrence.edu (CommuniGate Pro SMTP 5.1.10)
+  with ESMTPSA id 29971393 for git@vger.kernel.org; Sun, 05 Aug 2007 04:59:21 -0500
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54991>
 
+Hi, I had a question about $GIT_DIR. That is to say, it doesn't seem to 
+work. I am using Git 1.5.2.4. See the following: (all the commands I 
+tried besides "git-init" failed).
 
-On Aug 5, 2007, at 12:05 PM, Jeff King wrote:
+$ export GIT_DIR="`pwd`/.git_public"
+$ git init
+warning: templates not found /usr/share//git-core/templates/
+Initialized empty Git repository in /home/user/temp/.git_public/
+$ echo > new_file
+$ git add new_file
+fatal: add must be run in a work tree
+$ git commit -a
+fatal: /usr/bin/git-commit cannot be used without a working tree.
+$ git commit
+fatal: /usr/bin/git-commit cannot be used without a working tree.
+$
 
-> On Sat, Aug 04, 2007 at 04:01:55PM +0200, David Kastrup wrote:
->
->> So --track does not set up a tracking branch, but makes a local
->> _following_ branch _refer_ to a tracking branch.
->
-> A minor nit, but --track sets up a local following branch to refer  
-> to a
-> remote's branch, _not_ to the tracking branch. In other words, if you
-> look at the config:
->
->   [branch "master"]
->     remote = origin
->     merge = refs/heads/master
->
-> It does _not_ reference the tracking branch
-> "refs/remotes/origin/master", but rather the remote's name for the
-> branch "refs/heads/master".
->
-> There was much discussion of this topic, but the general idea was  
-> not to
-> require remote tracking branches for this feature to be used (a  
-> position
-> I somewhat disagree with, but then I'm not the maintainer).
+Is $GIT_DIR not meant to be used this way? Does it have a different 
+purpose / use case, or is this just a bug?
 
-Interesting. I didn't even recognize this detail up to know. It was  
-somewhat
-beyond my imagination that I could have a local following/automerging
-branch that is directly referring to a branch in a remote repo, without
-have a remote-tracking branch.
-
-How could I create such a setup in the first place?
-
-     git branch --track something origin/something
-     git checkout --track -b something origin/something
-
-are obvious, but what to say if I don't have origin/something?
-
-	Steffen
+Thanks,
+Dan
