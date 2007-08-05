@@ -1,67 +1,144 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: How to figure out what 'git push' would do?
-Date: Sun, 5 Aug 2007 18:45:41 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708051839510.12656@beast.quantumfyre.co.uk>
-References: <267CDD46-549B-4BFE-B993-80CD1CFE75D8@zib.de> <20070805173340.GA3159@steel.home>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: possible bug in git apply?
+Date: Sun, 05 Aug 2007 19:53:18 +0200
+Message-ID: <85hcndj2b5.fsf@lola.goethe.zz>
+References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
+	<alpine.LFD.0.999.0708042141510.5037@woody.linux-foundation.org>
+	<7vvebuh8g8.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 19:45:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
+	git@vger.kernel.org, rob@landley.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 19:53:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHkAw-0004Kb-IG
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 19:45:58 +0200
+	id 1IHkIC-0006Dp-B5
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 19:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbXHERpo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 13:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbXHERpo
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 13:45:44 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:32992 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751782AbXHERpn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 13:45:43 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 82ADBB8D7E
-	for <git@vger.kernel.org>; Sun,  5 Aug 2007 18:45:42 +0100 (BST)
-Received: (qmail 29499 invoked by uid 103); 5 Aug 2007 18:45:42 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3855. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.042302 secs); 05 Aug 2007 17:45:42 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 5 Aug 2007 18:45:41 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <20070805173340.GA3159@steel.home>
+	id S1752074AbXHERxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 13:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbXHERxY
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 13:53:24 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:57332 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751691AbXHERxX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 13:53:23 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 9D5B627F85;
+	Sun,  5 Aug 2007 19:53:21 +0200 (CEST)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 6D50312E01B;
+	Sun,  5 Aug 2007 19:53:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 2490925D379;
+	Sun,  5 Aug 2007 19:53:21 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 531DB1C3D500; Sun,  5 Aug 2007 19:53:19 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 5 Aug 2007 09\:59\:03 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3862/Sun Aug  5 15:38:34 2007 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55047>
 
-On Sun, 5 Aug 2007, Alex Riesen wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Steffen Prohaska, Sun, Aug 05, 2007 13:37:34 +0200:
->> How can I check what a 'git push' would do, without
->> actually doing it?
->>
->> Is there something like 'git push --dry-run', similar
->> to 'rsync --dry-run'?
+> On Sat, 4 Aug 2007, Junio C Hamano wrote:
+>> >
+>> > Does this fix it? Totally untested, but it _looks_ obvious enough..
+>> 
+>> That would regress the fix made in aea19457, I am afraid.
 >
-> No. It is often safe to just do git-push, unless you have naive
-> developers doing pull every time some ref in your shared repo changes
-> *and* expecting the result to compile (typical for CVS way of work).
-> git-push will not overwrite anything, it always only forwards history.
+> The fix in aea19457 is broken anyway.
+>
+> Why? 
+>
+> That whole "do it in two phases" thing breaks it.
 
-Not strictly true.  You _can_ push out non fastforward changes, unless you 
-have receive.denyNonFastforwards in the repote repo - so you may well be 
-able to push out something that is completely unrelated to the last commit 
-the ref pointed to.
+Did not know that.
+
+> What can happen is that you have a directory with 100 files, and:
+>  - a patch modifies 99 of them
+>  - and removes one
+>
+> What happens is that during phase 0, we'll remove all the files (and *not* 
+> write new ones), and then beause the last patch entry is a removal, we'll 
+> also remove the directory (which succeeds, because all the files that got 
+> modified are all long gone).
+>
+> Then, in phase 1, we'll re-create the files that we modified, and create a 
+> whole new directory.
+>
+> IOW, as far as I can see we _already_ delete and then recreate the 
+> directory structure under some circumstances.
+
+Which will let the user sit in an empty directory void of . and ..,
+and a parallel directory with the old name elsewhere.  Unpretty...
+
+> I just extended it to also do it for "rename" and not just delete,
+> since a rename may be renaming it to another directory.
+>
+> So I'd say that my patch is a clear improvement on the current
+> situation.
+>
+> That said, if we really wanted to get it right, we should do this as
+> a three-phase thing: (1) remove old files (2) create new files (3)
+> for all removals and renames, try to remove source directories that
+> might have become empty.
+>
+> That would fix it properly and for all cases.
+
+Stupid question from someone without good background: why do we need
+two passes in the first place?  Can't we just do phase 1/2/3 for every
+file in one step?  Is there any case where not having done (1) for a
+_different_ file is going to cause trouble for (2)?  I presume this is
+intended for something like
+
+create a    (plain file, coming in sort order before a/)
+delete a/x
+delete a/y  (last file in a/)
+
+in the index and frankly, this will cease working in your three-phase
+scheme.
+
+The problem is that we really need a -depth sort order for deletion in
+the index, meaning that
+delete xxx/yyy
+sorts before
+create xxx*
+
+When we don't change the sorting order, one can do so with recursion:
+when finding
+create a
+we postpone processing it until a prospective
+delete a/*
+is over.  That means first processing a.txt, a.whatever/ and so on.  I
+think that is not sane.
+
+As far as I can see, changing the index sort order for deletions is
+probably the sanest _working_ way to go about this.
+
+One problem is that corresponding "delete" and "create" items are then
+no longer necessarily adjacent in the index.  The sensible way to go
+about this is to sort the requests into _two_ linked lists, one in
+"create" order, one in "delete" order, and when merging a "create"
+request in the index, one compares with the head of the "create"
+ordered list, and when merging a "delete" request in the index, one
+compares with the head of the "delete" ordered list.
+
+Is this pretty?  Not at all.  But I don't see that any _fixed_ number
+of phases will buy us out of the principal problem, namely that
+deletions have to be done depth-first, and deletions of a directory
+have to be finished before we can attempt creating a new file in their
+place.
+
+Yes, this implies changing the index sort order, unfortunately.
 
 -- 
-Julian
-
-  ---
-You never get a second chance to make a first impression.
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
