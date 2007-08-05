@@ -1,82 +1,56 @@
-From: pavlix <pavlix@pavlix.net>
-Subject: GIT push to sftp (feature request)
-Date: Sun, 5 Aug 2007 11:05:40 +0200
-Message-ID: <200708051105.44376.pavlix@pavlix.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sun, 5 Aug 2007 05:42:47 -0400
+Message-ID: <20070805094247.GE12507@coredump.intra.peff.net>
+References: <200708040341.36147.ismail@pardus.org.tr> <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com> <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com> <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org> <85myx7dwb3.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1671481.l3AtBR2RRg";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 11:42:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Steven Grimm <koreth@midwinter.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 11:42:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHcd7-00064D-1C
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 11:42:33 +0200
+	id 1IHcdR-00069x-4I
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 11:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbXHEJma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 05:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752745AbXHEJma
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 05:42:30 -0400
-Received: from 136.155.broadband6.iol.cz ([88.101.155.136]:4450 "EHLO
-	tentacle.pavlix.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751650AbXHEJm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 05:42:29 -0400
-X-Greylist: delayed 2117 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Aug 2007 05:42:29 EDT
-Received: from [2002:5865:9b88:1:214:85ff:fe34:c583] (unknown [IPv6:2002:5865:9b88:1:214:85ff:fe34:c583])
-	by tentacle.pavlix.net (Postfix) with ESMTP id 4351F10581
-	for <git@vger.kernel.org>; Sun,  5 Aug 2007 11:07:12 +0200 (CEST)
-User-Agent: KMail/1.9.5
+	id S1753414AbXHEJmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 05:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753039AbXHEJmt
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 05:42:49 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3685 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752795AbXHEJmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 05:42:49 -0400
+Received: (qmail 16049 invoked from network); 5 Aug 2007 09:42:52 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 5 Aug 2007 09:42:52 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Aug 2007 05:42:47 -0400
+Content-Disposition: inline
+In-Reply-To: <85myx7dwb3.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54976>
 
---nextPart1671481.l3AtBR2RRg
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Sat, Aug 04, 2007 at 07:49:36PM +0200, David Kastrup wrote:
 
-Hello
+> I can specify something like
+> 
+> (info "(gcc) Extended Asm")
+> 
+> and when you are reading mail in Emacs, you can click on that line and
+> get to the respective page in a manual comprising hundreds of pages.
 
-It would be very useful if git supported sftp urls to push to remote=20
-repositories.
+Ugh. A documentation referencing system that works only in one
+particular editor, or with one particular documentation format?
 
-The use cases are obvious... you would only need ssh run on the other side,=
-=20
-which is usually available. One cannot or doesn't want to install git on=20
-every machine where he wants his remote repository.
+Please, the net decided on a standard for referencing resources long
+ago, and they are called URLs.
 
-Git would also have to be able to create a remote repository (maybe an opti=
-on=20
-to push?).
-
-Did I miss something?
-
-Pavel =C5=A0imerda
-
-P.S.: I am switching from bazaar-ng which can save so sftp and other protoc=
-ols
-
-=2D-=20
-
-Web: http://www.pavlix.net/
-Jabber & E-mail: pavlix@pavlix.net
-
-
---nextPart1671481.l3AtBR2RRg
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBGtZLkCpyEseY5FAARAufYAJ9NOgd+Eb5+KrlAJIYPP8FeL6EjgQCfdW6F
-aFJb/MhN3ETK5aJYoFZOFvQ=
-=4x3Q
------END PGP SIGNATURE-----
-
---nextPart1671481.l3AtBR2RRg--
+-Peff
