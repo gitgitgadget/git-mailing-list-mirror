@@ -1,72 +1,67 @@
-From: "Miles Bader" <miles@gnu.org>
-Subject: Re: way to automatically add untracked files?
-Date: Sun, 5 Aug 2007 13:00:13 +0900
-Message-ID: <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com>
-References: <873ayymzc1.fsf@catnip.gol.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-diff new files (without using index)
+Date: Sun, 5 Aug 2007 00:08:41 -0400
+Message-ID: <20070805040841.GG9527@spearce.org>
+References: <87wswalkad.fsf@catnip.gol.com> <20070805035245.GE9527@spearce.org> <87r6miljfr.fsf@catnip.gol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 06:00:20 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 06:09:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHXHv-0005NQ-Oe
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 06:00:20 +0200
+	id 1IHXQN-0006SG-Fz
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 06:09:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750773AbXHEEAQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 00:00:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbXHEEAQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 00:00:16 -0400
-Received: from fk-out-0910.google.com ([209.85.128.184]:45703 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbXHEEAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 00:00:14 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so1090274fkz
-        for <git@vger.kernel.org>; Sat, 04 Aug 2007 21:00:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=kmQ7qPV6E/E/FxGcbivd5RhFl9Lkx+ooDvI5KPY07+7mkdjc7b38qgkVoe/N/27O4miEAQFUaafv4mMnscQkQJKWhR3lqcgjI7lPe3Xw9udWv7RGNhE9Azxq0f8UBJGC3Dn5VnNmAMhO5dPFyNUYUat6MVnFcYtgazGxnqQFpo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=r2sk3BMrzuWDtZZIsvtcfk/sy6dXSh7JrDrD8XvxoXG03QyAZCs/r2DqPlGSkcE5EbYGxS0+btapEnavE501nIaRj4kV0kPPUGOEFzD/Nd00UACvIHkel+1S+gMnQFwMby09mZn7LpZfQJ/7oHJK2ma9d9/HesXYIJdr8C+45aU=
-Received: by 10.86.57.9 with SMTP id f9mr3394819fga.1186286413055;
-        Sat, 04 Aug 2007 21:00:13 -0700 (PDT)
-Received: by 10.86.1.5 with HTTP; Sat, 4 Aug 2007 21:00:13 -0700 (PDT)
-In-Reply-To: <873ayymzc1.fsf@catnip.gol.com>
+	id S1750773AbXHEEIs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 00:08:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbXHEEIs
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 00:08:48 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45390 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbXHEEIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 00:08:48 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IHXPs-0004Nf-OW; Sun, 05 Aug 2007 00:08:32 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DB6F120FBAE; Sun,  5 Aug 2007 00:08:41 -0400 (EDT)
 Content-Disposition: inline
-X-Google-Sender-Auth: 8cc6311342235d0d
+In-Reply-To: <87r6miljfr.fsf@catnip.gol.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54933>
 
-I previously wrote
-> One thing I often want to do is git-add all untracked files, and also
-> automatically git-rm all "disappeared" files
-...
-> One way to do this seems to be just "git add ."
+Miles Bader <miles@gnu.org> wrote:
+> Thanks for the tip (I guess I can roll my own "git-diff-uncached"
+> script)!
 
-Oh, also, "git add ." doesn't seem to do the right thing with
-"dissapeared" files:  If I do:
+Indeed, Git is quite scriptable.  ;-)
+ 
+> The above sort of quirkiness does seem kind of a wart though; in my
+> (admittedly limited, using git) experience this sort of thing really
+> reduces the utility of the index, and I often end up feeling like it's
+> just getting in the way as a result.  Does adding something like a
+> "git-diff -N" option seem a _bad_ idea?
 
-    mv foo.cc bar.cc
-    git add .
+I'm not interested in such an option.  Typically if I want a
+diff on a new untracked file I actually want that file in my next
+commit anyway.  So I'm usually staging it into the index along with
+everything else that I have modified.  In which case this quirkiness
+isn't really a quirk at all.  Its just not an issue to me.
 
-then git-status will show a new  file "bar.cc", but will list "foo.cc"
-as "deleted " in the "Changed but not updated" section.  Perhaps the
-right thing will happen if I do "git-commit -a" (though I don't know,
-I don't really want to try it), this still results in incorrect
-"git-diff --cached" output (it shows bar.cc as a new file, not as a
-rename of foo.cc).
+If you want to try adding it, go right ahead.  The source for git
+is stored in git and available from many places.  :-)
 
-Am I doing something wrong, or is this just missing functionality?
-
-Thanks,
-
--Miles
 -- 
-Do not taunt Happy Fun Ball.
+Shawn.
