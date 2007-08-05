@@ -1,61 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during check-out
-Date: Sat, 04 Aug 2007 23:12:44 -0700
-Message-ID: <7v4pjeh5lv.fsf@assigned-by-dhcp.cox.net>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
-	<7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
-	<20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
-	<7v643vj316.fsf@assigned-by-dhcp.cox.net>
-	<46B4A350.9060806@tromer.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Terminology question about remote branches.
+Date: Sun, 05 Aug 2007 09:06:24 +0200
+Message-ID: <85k5sacvf3.fsf@lola.goethe.zz>
+References: <854pjfin68.fsf@lola.goethe.zz>
+	<20070804120243.GB9716@coredump.intra.peff.net>
+	<85tzrfh3yg.fsf@lola.goethe.zz>
+	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
+	<85r6mjdyl8.fsf@lola.goethe.zz>
+	<Pine.LNX.4.64.0708041804260.13596@beast.quantumfyre.co.uk>
+	<85hcnfdvtr.fsf@lola.goethe.zz> <20070804225655.GD11150@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, Sven Verdoolaege <skimo@kotnet.org>,
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Lars Hjemli <lh@elementstorage.no>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
-To: Eran Tromer <git2eran@tromer.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 08:12:50 2007
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Aug 05 09:06:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHZM9-0005q0-4R
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 08:12:49 +0200
+	id 1IHaCL-0004gA-OD
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 09:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbXHEGMq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 02:12:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753024AbXHEGMq
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 02:12:46 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64683 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301AbXHEGMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 02:12:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070805061244.QQZX23215.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 5 Aug 2007 02:12:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Y6Ck1X0031kojtg0000000; Sun, 05 Aug 2007 02:12:44 -0400
-In-Reply-To: <46B4A350.9060806@tromer.org> (Eran Tromer's message of "Sat, 04
-	Aug 2007 12:03:28 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753024AbXHEHGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 03:06:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbXHEHGc
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 03:06:32 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:50772 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752406AbXHEHGb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 03:06:31 -0400
+Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 443CC31F34A;
+	Sun,  5 Aug 2007 09:06:30 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 3108D114321;
+	Sun,  5 Aug 2007 09:06:30 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id DF431292B61;
+	Sun,  5 Aug 2007 09:06:29 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 3C2921C4F932; Sun,  5 Aug 2007 09:06:24 +0200 (CEST)
+In-Reply-To: <20070804225655.GD11150@thunk.org> (Theodore Tso's message of "Sat\, 4 Aug 2007 18\:56\:55 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3857/Sun Aug  5 08:20:59 2007 on mail-in-07.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54958>
 
-Eran Tromer <git2eran@tromer.org> writes:
+Theodore Tso <tytso@mit.edu> writes:
 
-> Another approach is for pull, checkout etc. to automatically update the
-> submodule' head ref, but no more. In this case the supermodule always
-> sees a consistent state with traditional semantics, but the *submodule*
-> ends up with a dirty working tree and a head referring to a
-> possibly-missing commit; "git submodule update" would need to clean that up.
+> On Sat, Aug 04, 2007 at 08:00:00PM +0200, David Kastrup wrote:
+>
+>> No, it would seem that I can just
+>> git-clone -l
+>> my repository and be set up in the new order of things.  Nice.
+>
+> Be careful, not really.  A git-clone -l will set up a new repository
+> where origin/master is your original repository, i.e.:
+>
+> [remote "origin"]
+>         url = /usr/projects/e2fsprogs/base
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+> [branch "master"]
+>         remote = origin
+>         merge = refs/heads/master
+>
+> In contrast, if you had done a git-clone of remote repository, you
+> might see something like this instead:
 
-That however would introduce the same problem as "pushing into
-live repository to update its HEAD while the index and working
-tree are looking the other way".  We would need to somehow make
-it possible for the subdirectory to remember which commit the
-index and the working tree are derived from, so that the local
-changes can be merged back to the revision the submodule HEAD
-points at.
+Yes, I noticed.  I can do a
+git-clone -l --reference /my/local/rep git://the/remote/repo
+
+instead.  That's still very fast, but I miss out on my local changes...
+
+> [remote "origin"]
+>         url = git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+> [branch "master"]
+>         remote = origin
+>         merge = refs/heads/master
+>
+>> However, it would appear from my experiments up to now that the
+>> --track option _can't_ be made to work with a 1.4 repository.  I think
+>> that is worth mentioning in the docs.
+>
+> The real issue is that a "1.4 repository" (that is a repository
+> created by "git clone" from git 1.4 and where the config file hasn't
+> been updated either by hand-editing the config file or by use of
+> "git config" or "git remote" to have remote branches) doesn't have
+> any remote branches, and git branch -track only has significance if
+> you are creating a new (local) branch from a remote tracking branch.
+
+An error message might be nice, though.  I find git hard to understand
+at times.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
