@@ -1,90 +1,93 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sun, 05 Aug 2007 13:23:04 +0200
-Message-ID: <85y7gq8btz.fsf@lola.goethe.zz>
-References: <46B418AA.4070701@midwinter.com>
-	<20070804091249.GA17821@uranus.ravnborg.org>
-	<46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
-	<85myx7dwb3.fsf@lola.goethe.zz>
-	<20070805094247.GE12507@coredump.intra.peff.net>
-	<85abt6b91w.fsf@lola.goethe.zz>
-	<20070805095928.GA15949@coredump.intra.peff.net>
-	<851weib7v3.fsf@lola.goethe.zz>
-	<20070805102242.GA17000@coredump.intra.peff.net>
-	<85ps229sck.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Steven Grimm <koreth@midwinter.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 13:23:21 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: way to automatically add untracked files?
+Date: Sun, 5 Aug 2007 13:22:22 +0200
+Message-ID: <8EA2C4F4-F947-427B-A1E8-ABAEB06C1360@zib.de>
+References: <873ayymzc1.fsf@catnip.gol.com> <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com> <20070805041320.GH9527@spearce.org> <87lkcqlif2.fsf@catnip.gol.com> <7v8x8qip7n.fsf@assigned-by-dhcp.cox.net> <87d4y2li2c.fsf@catnip.gol.com> <7v4pjeioi6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 13:23:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHeCd-0000x3-R3
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:23:20 +0200
+	id 1IHeDG-000165-Bn
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105AbXHELXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 07:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756005AbXHELXQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:23:16 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:43867 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755730AbXHELXP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 07:23:15 -0400
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 1677313620;
-	Sun,  5 Aug 2007 13:23:14 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id F2304345C03;
-	Sun,  5 Aug 2007 13:23:13 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id C61B9212F62;
-	Sun,  5 Aug 2007 13:23:13 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id D1C431C3D500; Sun,  5 Aug 2007 13:23:04 +0200 (CEST)
-In-Reply-To: <85ps229sck.fsf@lola.goethe.zz> (David Kastrup's message of "Sun\, 05 Aug 2007 12\:40\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3859/Sun Aug  5 11:16:51 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1755674AbXHELXk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 07:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbXHELXk
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:23:40 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49095 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751645AbXHELXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 07:23:39 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75BLZqZ010314;
+	Sun, 5 Aug 2007 13:21:43 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75BLUld021143
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 5 Aug 2007 13:21:30 +0200 (MEST)
+In-Reply-To: <7v4pjeioi6.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54995>
 
-David Kastrup <dak@gnu.org> writes:
 
-> Jeff King <peff@peff.net> writes:
+On Aug 5, 2007, at 6:39 AM, Junio C Hamano wrote:
+
 >
->> On Sun, Aug 05, 2007 at 12:20:32PM +0200, David Kastrup wrote:
->>
->>> Well, just for kicks I let firefox loose on
->>> 
->>> info:gcc#Extended Asm
->>
->> OK, I didn't know there was a URL style defined for info.
->
-> Neither did I, actually.  If anybody would actually use them, I'd have
-> to teach firefox to pass them off to Emacs.
+> Adding _new_ files, unless you are just beginning a new project,
+> are much more rare than updating modified files that you are
+> already tracking; and "git add new-file..." is what people
+> usually use for the former.  "git add ." is almost always the
+> "initial import" and not used later (after all you ought to know
+> what files you are creating and controlling ;-)).  You get into
+> an illusion that that is often used, only when you have just
+> started.  As your project progresses, that feeling will fade
+> away.
 
-The details can be found in <URL:man:uri(7)>.
+I exactly need the functionality that Miles is describing for
+the following good reason:
 
-If you find this syntax referring to a man page weird, you should
-probably not complain about me writing (info "(gcc) Extended Asm") as
-a reference.
+Mac OS X has the notion of a bundle, which is a directory that
+contains related files that are fully controlled by the application
+that is writing that bundle. The bundle functionality is
+directly supported by the OS and most applications save their
+data as bundles. For example on Mac OS X, the Openoffice format,
+which packs related files in a zip file, would just be a directory
+with all related files grouped together (no ZIP archive needed).
 
-When there are few readers of a format, it is easier to use a
-"natural" spelling.
+So here is what I need: I want to be able to track a directory
+with all its contents. The data inside the directory are not
+under my control. It's only the directory that matters for me.
 
-Anyway, I have seen in a posting about mathematics someone write an
-equation including sqrt(3) and saw Emacs highlight this expression.
-So I clicked on it.  And Emacs opened the man-page.  Definitely not
-what I had expected...
+Git is already quite good at that because it doesn't need to
+place anything inside the opaque directory! Subversion for example
+has no chance because it clutters the directory with .svn
+directories, which will be removed by the next Save (an
+application first creates a new temporary directory, stores
+all data there, moves the old directory to a backup location,
+and renames the new directory to the final destination only
+if no problems occurred).
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+When I started with git I figured out that
+
+    git-ls-files -z --others dir | git-update-index --add -z --stdin
+    git commit -a
+
+does the job for me. Would
+
+    git add dir
+    git add -u dir
+    git commit
+
+be equivalent, but restricted to the changes in dir?
+
+	Steffen
