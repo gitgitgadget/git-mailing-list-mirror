@@ -1,122 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Bootstraper for Git Dev Environment for Windows (Light version)
-Date: Sun, 5 Aug 2007 14:51:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708051444560.14781@racer.site>
-References: <2B8D8540264E4205BD1E4605770422BF@ntdev.corp.microsoft.com>
- <Pine.LNX.4.64.0708051252130.14781@racer.site>
- <26F4E92272F14115959CFA0C23809617@ntdev.corp.microsoft.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
+ check-out
+Date: Sun, 05 Aug 2007 15:55:29 +0200
+Message-ID: <20070805135529.GA999MdfPADPa@greensroom.kotnet.org>
+References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
+ <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
+ <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
+ <7v643vj316.fsf@assigned-by-dhcp.cox.net>
+ <8c5c35580708040441ue1c3ef8qc022912a5af4883e@mail.gmail.com>
+ <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
+ <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
+ <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
+ <7v643vj316.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Mike Pape <dotzenlabs@gmail.com>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Sixt <J.Sixt@eudaptics.com>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 15:51:55 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Eran Tromer <git2eran@tromer.org>
+To: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 15:55:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHgWP-0008KI-PZ
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 15:51:54 +0200
+	id 1IHgZy-0000ec-RX
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 15:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbXHENvu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 09:51:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751611AbXHENvu
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 09:51:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51430 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751595AbXHENvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 09:51:49 -0400
-Received: (qmail invoked by alias); 05 Aug 2007 13:51:48 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp004) with SMTP; 05 Aug 2007 15:51:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XNk4VY53XptvWlL1PLbNh6ALQafQVYTcUvOYeNe
-	/0I8rlhIuby8Z1
-X-X-Sender: gene099@racer.site
-In-Reply-To: <26F4E92272F14115959CFA0C23809617@ntdev.corp.microsoft.com>
-X-Y-GMX-Trusted: 0
+	id S1757013AbXHENzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 09:55:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbXHENzc
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 09:55:32 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:41954 "EHLO psmtp08.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751611AbXHENzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 09:55:31 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMB00BR400HJ3@psmtp08.wxs.nl> for git@vger.kernel.org; Sun,
+ 05 Aug 2007 15:55:30 +0200 (MEST)
+Received: (qmail 9144 invoked by uid 500); Sun, 05 Aug 2007 13:55:29 +0000
+In-reply-to: <8c5c35580708040441ue1c3ef8qc022912a5af4883e@mail.gmail.com>
+ <7v643vj316.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55019>
 
-Hi,
+On Fri, Aug 03, 2007 at 10:13:09PM -0700, Junio C Hamano wrote:
+> Let me understand the problem first.  If your first checkout
+> does not check out the submodule, switching between revisions
+> that has different commit of the submodule there would not fail,
+> but once you checkout the submodule, switching without updating
+> the submodule would be Ok (because by design updating the
+> submodule is optional) but then further switching out of that
+> state will fail because submodule in the supermodule tree and
+> checked-out submodule repository are now out of sync.  Is that
+> the problem?
 
-On Sun, 5 Aug 2007, Dmitry Kakurin wrote:
+Yes.
 
-> ----- Original Message ----- From: "Johannes Schindelin"
-> <Johannes.Schindelin@gmx.de>
-> 
-> 
-> > - How about calling your package msysGit-netInstall-<version>.exe?
-> No problem. Feel free to reupload it with a different name.
+> In any case, I doubt ce_compare_gitlink() is the right layer to
+> work this around -- it is not about "can we switch" but is about
+> "is it different".  It is at too low a level.
 
-I'll do so later... When it has to change.
+You are right.  I followed the logic down to ce_compare_gitlink,
+but I should have backed up again.
 
-> >   mingw.git as well...  Still, on dial-up, 40MB or 60MB makes a 
-> > difference, no?
->
-> Sorry, I didn't have dialup for years so I don't take it into 
-> consideration. Still 60MB is not that dialup unfriendly.
+> The current policy is to consider it is perfectly normal that
+> checked-out submodule is out-of-sync wrt the supermodule index,
+> if I am reading you right.  I think it is a good policy, at
+> least until we introduce a superproject repository configuration
+> option that says "in this repository, I do care about this
+> submodule and at any time I move around in the superproject,
+> recursively check out the submodule to match".  The most extreme
+> case of this policy is that the superproject index knows about
+> the submodule but the subdirectory does not even have to be
+> checked out, which is what we have now.
 
-Okay.
+Yes.  Alex Riesen convinced me that having the submodule checked
+out is a good indication that you care about the submodule being
+in sync (although you then apparently convinced him that this is
+not a good idea).  You didn't take any patch that implements this
+yet, so I'll probably try again after you release 1.5.3.
 
-> > - There is one big caveat with your bootstrapper: things have been 
-> > known to break, and I think msysgit.git is no exception.  So I'd like 
-> > to have a fallback in case things go awry, also to have something that 
-> > is tested (for example, Mike tested msysGit-0.4.exe before releasing 
-> > it).  Of course, we could solve that issue by branching off of the 
-> > last release tag.
->
-> That, or better yet always maintain master branch in a working 
-> condition. Seriously. If it (VERY rarely) breaks we'll just revert the 
-> offending checkin to bring it back in shape. Where I come from, 'main' 
-> or 'master' should ALWAYS be functional.
+Since some people seem to like the current situation, I'd only do
+the updating of checked-out submodules if some "autoUpdateSubmodules"
+is set.
 
-Okay, let's try to be anal then.
+> How about doing something like this instead?
 
-> > - AFAICT it is possible to make nicer installers with 7-Zip, and also
->
-> I have no preference here. I just use what I know (WinRAR). If you feel 
-> strongly about 7zip (which I can see you do for some reason :-) feel 
-> free to repackage it.
+Works like a charm.
 
-Yeah ;-)  I like it because it is Open Source... and easily scriptable.  
-Even if you want to make a graphical installer.
+On Sat, Aug 04, 2007 at 01:41:06PM +0200, Lars Hjemli wrote:
+> Btw: I've applied your patch to rc-4 and tested the result in my cgit
+> repo: very nice, and very ack'd ;-)
 
-> > - I wanted to hold off a little, until Hannes can apply the fix-up 
-> > patch we need in mingw.git.  Because when he does, your bootstrap will 
-> > run into problems...
->
-> Not sure why...
+If it matters, a definite
 
-Neither am I anymore.
+Acked-by: Sven Verdoolaege <skimo@kotnet.org>
 
-What would you say about this idea:
+too.
 
-- upload a branch "mingw-devel" to msysgit.git, which is identical to 
-  mingw.git's devel, plus our patches.
-
-- convert /git to a submodule, fetching from msysgit.git's mingw-devel 
-  branch.
-
-- adjust /etc/profile for the changes.
-
-- make a new net installer and upload it.
-
-- But keep doing some full releases in the meantime, which do not clone 
-  anything, but rather initialise /git/.git so that people can send in 
-  patches?
-
-> > It would be nice to have insight in how you went about to identify 
-> > what is needed?
->
-> Well, I've set path to a single directory (C:\GitMe\bin), copies over 
-> bash and git-clone and started running it until it worked. Which 
-> happened surprisingly fast.
-
-Ah, thanks.  Valuable work, this.
-
-Ciao,
-Dscho
+skimo
