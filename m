@@ -1,56 +1,86 @@
-From: Dan Zwell <dzwell@gmail.com>
-Subject: $GIT_DIR usage
-Date: Sun, 05 Aug 2007 05:58:59 -0400
-Message-ID: <46B59F63.8020707@gmail.com>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Bootstraper for Git Dev Environment for Windows (Light version)
+Date: Sun, 5 Aug 2007 04:00:14 -0700
+Message-ID: <2B8D8540264E4205BD1E4605770422BF@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+	format=flowed;
+	charset="koi8-r";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 12:59:30 2007
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 13:00:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHdpa-0004W6-HC
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 12:59:30 +0200
+	id 1IHdqR-0004kI-ON
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758944AbXHEK7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 06:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757978AbXHEK7X
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 06:59:23 -0400
-Received: from mailhub.lawrence.edu ([143.44.0.14]:35759 "EHLO lawrence.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756500AbXHEK7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 06:59:22 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Aug 2007 06:59:22 EDT
-Received: from [69.140.46.21] (account zwelld HELO [192.168.2.3])
-  by lawrence.edu (CommuniGate Pro SMTP 5.1.10)
-  with ESMTPSA id 29971393 for git@vger.kernel.org; Sun, 05 Aug 2007 04:59:21 -0500
-User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+	id S1757799AbXHELAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 07:00:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757102AbXHELAU
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:00:20 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:55815 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754819AbXHELAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 07:00:18 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1436077wah
+        for <git@vger.kernel.org>; Sun, 05 Aug 2007 04:00:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=Zbi+RmqdjwqRFxW9BiqE/p7TadTyQAz5l5lQ/fCVS/JEbKSsdjKRePXsTFrDJVhF/27Qh+yRc2dJwZi5XZFI+fBA/YhPAgReD97qm4V1TJAWf9xShrYQmvDafgijf26CqJZxpIKf0pWCHiw8QYmG/kjZzIA4xr6XNZbmx8LDfmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=VzacbtkV2X+l5TLDjwhXTVdUieLscp7HitrQ3b9H6G45d8L32GzstMe8zIx9z0oT/LhXgiWyDltxJlT3+hOAqNsgIn7Ci9ADhh1h2RJ5Lp2BQhkscwvV7sTPzap4BN1GXT0KNDK6FRM4YIFlpYgO8eoPDnJ5uiBnjjQ1B56LMp0=
+Received: by 10.115.107.1 with SMTP id j1mr4643789wam.1186311617066;
+        Sun, 05 Aug 2007 04:00:17 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id m30sm5294212wag.2007.08.05.04.00.16
+        (version=SSLv3 cipher=OTHER);
+        Sun, 05 Aug 2007 04:00:16 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54992>
 
-Hi, I had a question about $GIT_DIR. That is to say, it doesn't seem to 
-work. I am using Git 1.5.2.4. See the following: (all the commands I 
-tried besides "git-init" failed).
+Please give it a try and tell me how it works for you:
+http://msysgit.googlecode.com/files/GitMe-1.exe (1.6 MB)
 
-$ export GIT_DIR="`pwd`/.git_public"
-$ git init
-warning: templates not found /usr/share//git-core/templates/
-Initialized empty Git repository in /home/user/temp/.git_public/
-$ echo > new_file
-$ git add new_file
-fatal: add must be run in a work tree
-$ git commit -a
-fatal: /usr/bin/git-commit cannot be used without a working tree.
-$ git commit
-fatal: /usr/bin/git-commit cannot be used without a working tree.
-$
+Here is the idea that this installer implements:
+Now that we have both msysGit and mingw git as .git repositories here is what we can do:
+* Create a small bootstrap download with git-clone and it's dependencies
+* After you download and run it, it will first clone msysGit repository
+* Then it will clone mingw.git repository
+* Start msys and run 'make install' for git
+* Clear leftovers of bootstrap
 
-Is $GIT_DIR not meant to be used this way? Does it have a different 
-purpose / use case, or is this just a bug?
+There are huge advantages IMHO:
+* the bootstrap download is very small (1.6MB) and will (almost) never change
+* msysGit will not contain git sources at all (this causes very inconvenient overlap between 2 repositories right now)
+* after initial setup process user will be left with 2 fully-functioning repositories (msysGit and git), so staying up to date with 
+both mingw.git and msys dev/build environment will be trivial: just use git pull for both.
 
-Thanks,
-Dan
+If we want to stick with this installer here is what we need to do:
+* Remove /git directory from msysGit.git
+* Bring mingw.git up to date so we can remove patching step from installer
+
+If you want to change it/see how it works internally do the following:
+* start the GitMe.exe
+* answer yes to popup dialog
+* cmd window will open and ask you for installation directory, don't enter anything, just leave this window alone
+
+At this point all installer files will be unpacked in %temp%\RarSFX0\GitMe.
+Setup.cmd is the one to look at/tweak.
+
+To repack just use any compressor that can create SFX archives that can also start a file execution. I've used WinRAR.
+But the whole idea is that this bootstrap download should require very little/no tweaking. All changes should happen in msysgit.git 
+and mingw.git.
+
+- Dmitry
