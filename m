@@ -1,47 +1,79 @@
-From: Larry Finger <larry.finger@lwfinger.net>
-Subject: Re: Problem with bisect
-Date: Sun, 05 Aug 2007 15:33:00 -0500
-Message-ID: <46B633FC.5080004@lwfinger.net>
-References: <46B5F48D.7020907@lwfinger.net> <20070805145234.554bf671.seanlkml@sympatico.ca> <46B623D6.7070809@lwfinger.net> <20070805194454.GI25680@cip.informatik.uni-erlangen.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: way to automatically add untracked files?
+Date: Sun, 05 Aug 2007 21:16:03 +0200
+Message-ID: <200708052116.04140.johan@herland.net>
+References: <873ayymzc1.fsf@catnip.gol.com>
+ <200708051411.25238.johan@herland.net> <20070805161117.GE28263@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Sun Aug 05 22:33:11 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Theodore Tso <tytso@mit.edu>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miles Bader <miles@gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 23:08:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHmmi-0008W2-Bo
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 22:33:08 +0200
+	id 1IHnLJ-0008A3-2v
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 23:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbXHEUdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 16:33:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753632AbXHEUdE
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 16:33:04 -0400
-Received: from mtiwmhc11.worldnet.att.net ([204.127.131.115]:48148 "EHLO
-	mtiwmhc11.worldnet.att.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753105AbXHEUdD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 16:33:03 -0400
-Received: from [192.168.1.104] (cpe-72-129-173-253.kc.res.rr.com[72.129.173.253])
-          by worldnet.att.net (mtiwmhc11) with ESMTP
-          id <20070805203300111002lio5e>; Sun, 5 Aug 2007 20:33:01 +0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20070509)
-In-Reply-To: <20070805194454.GI25680@cip.informatik.uni-erlangen.de>
+	id S1753632AbXHEVIi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 17:08:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbXHEVIh
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 17:08:37 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:40180 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751888AbXHEVIh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 17:08:37 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JMB00A9IK2APC00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 05 Aug 2007 23:08:34 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JMB0081CEUSQPD0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 05 Aug 2007 21:16:04 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JMB005C0EUS1M00@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 05 Aug 2007 21:16:04 +0200 (CEST)
+In-reply-to: <20070805161117.GE28263@thunk.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55071>
 
-Thomas Glanzmann wrote:
-> Hello,
+On Sunday 05 August 2007, Theodore Tso wrote:
+> On Sun, Aug 05, 2007 at 02:11:24PM +0200, Johan Herland wrote:
+> > Adding a git-addremove command should not be much work, and it would be
+> > a lot friendlier to people whose workflow is more aligned with #2 than 
+> > #1. 
+> Not much work at all:
 > 
->> I'm using git version 1.4.4.2.g04509
+> # git config --system --add alias.addremove "git add . ; git add -u"
 > 
-> 1.4 has a issue with bisect at least the Debian 1.4 versio. Update to
-> 1.5 and try again.
+> :-)
 
-I'm now using git version 1.5.3.rc4 and still have the same situation.
+Nice :)
 
-Larry
+But I'm wondering whether we'd want to include it in git by default (instead 
+of having to tell confused users to add the alias).
+
+> (And the performance problem with git add . is fixed in 1.5.3-rc4,
+> right?)
+
+Yes, according to Junio elsewhere in this thread.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
