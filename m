@@ -1,86 +1,55 @@
-From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-Subject: Bootstraper for Git Dev Environment for Windows (Light version)
-Date: Sun, 5 Aug 2007 04:00:14 -0700
-Message-ID: <2B8D8540264E4205BD1E4605770422BF@ntdev.corp.microsoft.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Terminology question about remote branches.
+Date: Sun, 5 Aug 2007 07:02:00 -0400
+Message-ID: <20070805110200.GA18083@coredump.intra.peff.net>
+References: <854pjfin68.fsf@lola.goethe.zz> <20070804092933.aaec6d52.seanlkml@sympatico.ca> <85ejijgzzg.fsf@lola.goethe.zz> <20070805100532.GG12507@coredump.intra.peff.net> <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="koi8-r";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 13:00:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, Sean <seanlkml@sympatico.ca>,
+	git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 13:02:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHdqR-0004kI-ON
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:00:24 +0200
+	id 1IHds9-00055H-KW
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:02:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757799AbXHELAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 07:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757102AbXHELAU
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:00:20 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:55815 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819AbXHELAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 07:00:18 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1436077wah
-        for <git@vger.kernel.org>; Sun, 05 Aug 2007 04:00:18 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=Zbi+RmqdjwqRFxW9BiqE/p7TadTyQAz5l5lQ/fCVS/JEbKSsdjKRePXsTFrDJVhF/27Qh+yRc2dJwZi5XZFI+fBA/YhPAgReD97qm4V1TJAWf9xShrYQmvDafgijf26CqJZxpIKf0pWCHiw8QYmG/kjZzIA4xr6XNZbmx8LDfmg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=VzacbtkV2X+l5TLDjwhXTVdUieLscp7HitrQ3b9H6G45d8L32GzstMe8zIx9z0oT/LhXgiWyDltxJlT3+hOAqNsgIn7Ci9ADhh1h2RJ5Lp2BQhkscwvV7sTPzap4BN1GXT0KNDK6FRM4YIFlpYgO8eoPDnJ5uiBnjjQ1B56LMp0=
-Received: by 10.115.107.1 with SMTP id j1mr4643789wam.1186311617066;
-        Sun, 05 Aug 2007 04:00:17 -0700 (PDT)
-Received: from dmitrykl2 ( [71.112.20.227])
-        by mx.google.com with ESMTPS id m30sm5294212wag.2007.08.05.04.00.16
-        (version=SSLv3 cipher=OTHER);
-        Sun, 05 Aug 2007 04:00:16 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
+	id S1757393AbXHELCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 07:02:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660AbXHELCE
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:02:04 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3106 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754074AbXHELCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 07:02:04 -0400
+Received: (qmail 17649 invoked from network); 5 Aug 2007 11:02:06 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 5 Aug 2007 11:02:05 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Aug 2007 07:02:00 -0400
+Content-Disposition: inline
+In-Reply-To: <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54993>
 
-Please give it a try and tell me how it works for you:
-http://msysgit.googlecode.com/files/GitMe-1.exe (1.6 MB)
+On Sun, Aug 05, 2007 at 12:56:49PM +0200, Steffen Prohaska wrote:
 
-Here is the idea that this installer implements:
-Now that we have both msysGit and mingw git as .git repositories here is what we can do:
-* Create a small bootstrap download with git-clone and it's dependencies
-* After you download and run it, it will first clone msysGit repository
-* Then it will clone mingw.git repository
-* Start msys and run 'make install' for git
-* Clear leftovers of bootstrap
+> beyond my imagination that I could have a local following/automerging
+> branch that is directly referring to a branch in a remote repo, without
+> have a remote-tracking branch.
+>
+> How could I create such a setup in the first place?
+>
+>     git branch --track something origin/something
+>     git checkout --track -b something origin/something
+>
+> are obvious, but what to say if I don't have origin/something?
 
-There are huge advantages IMHO:
-* the bootstrap download is very small (1.6MB) and will (almost) never change
-* msysGit will not contain git sources at all (this causes very inconvenient overlap between 2 repositories right now)
-* after initial setup process user will be left with 2 fully-functioning repositories (msysGit and git), so staying up to date with 
-both mingw.git and msys dev/build environment will be trivial: just use git pull for both.
+I believe the --track setup uses the tracking branches to figure out
+which remote/branch combo to track. To do it without a remote tracking
+branch, you would have to add the lines to your .git/config manually.
 
-If we want to stick with this installer here is what we need to do:
-* Remove /git directory from msysGit.git
-* Bring mingw.git up to date so we can remove patching step from installer
-
-If you want to change it/see how it works internally do the following:
-* start the GitMe.exe
-* answer yes to popup dialog
-* cmd window will open and ask you for installation directory, don't enter anything, just leave this window alone
-
-At this point all installer files will be unpacked in %temp%\RarSFX0\GitMe.
-Setup.cmd is the one to look at/tweak.
-
-To repack just use any compressor that can create SFX archives that can also start a file execution. I've used WinRAR.
-But the whole idea is that this bootstrap download should require very little/no tweaking. All changes should happen in msysgit.git 
-and mingw.git.
-
-- Dmitry
+-Peff
