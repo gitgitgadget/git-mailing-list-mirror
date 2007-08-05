@@ -1,68 +1,67 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: way to automatically add untracked files?
-Date: Sun, 5 Aug 2007 12:11:17 -0400
-Message-ID: <20070805161117.GE28263@thunk.org>
-References: <873ayymzc1.fsf@catnip.gol.com> <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com> <20070805041320.GH9527@spearce.org> <200708051411.25238.johan@herland.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Terminology question about remote branches.
+Date: Sun, 05 Aug 2007 09:27:38 -0700
+Message-ID: <86lkcqvtdx.fsf@blue.stonehenge.com>
+References: <854pjfin68.fsf@lola.goethe.zz>
+	<20070804092933.aaec6d52.seanlkml@sympatico.ca>
+	<85ejijgzzg.fsf@lola.goethe.zz>
+	<20070805100532.GG12507@coredump.intra.peff.net>
+	<85172807-B7EB-47DD-813E-FAF5894E1190@zib.de>
+	<20070805110200.GA18083@coredump.intra.peff.net>
+	<85tzre8b4w.fsf@lola.goethe.zz>
+	<20070805115208.GA19734@coredump.intra.peff.net>
+	<85fy2y89kb.fsf@lola.goethe.zz> <20070805154801.GD28263@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Miles Bader <miles@gnu.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 18:11:37 2007
+Cc: David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Aug 05 18:27:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHihW-0007id-Oa
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 18:11:31 +0200
+	id 1IHixJ-0003a9-9H
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 18:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbXHEQL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 12:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752589AbXHEQL2
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 12:11:28 -0400
-Received: from thunk.org ([69.25.196.29]:46827 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752197AbXHEQL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 12:11:27 -0400
-Received: from root (helo=tinytim.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IHipv-0006G0-FR; Sun, 05 Aug 2007 12:20:11 -0400
-Received: from tytso by tinytim.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IHihJ-0004pO-UA; Sun, 05 Aug 2007 12:11:17 -0400
-Content-Disposition: inline
-In-Reply-To: <200708051411.25238.johan@herland.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1756115AbXHEQ1m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 12:27:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756112AbXHEQ1l
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 12:27:41 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:12978 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756847AbXHEQ1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 12:27:38 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 3C7DB1DE5A7; Sun,  5 Aug 2007 09:27:38 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.9.15; tzolkin = 2 Men; haab = 3 Yaxkin
+In-Reply-To: <20070805154801.GD28263@thunk.org> (Theodore Tso's message of "Sun, 5 Aug 2007 11:48:01 -0400")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55038>
 
-On Sun, Aug 05, 2007 at 02:11:24PM +0200, Johan Herland wrote:
-> $ hg addremove --help
-> hg addremove [OPTION]... [FILE]...
-> 
-> add all new files, delete all missing files
-> 
->     Add all new files and remove all missing files from the repository.
-> 
->     New files are ignored if they match any of the patterns in .hgignore. As
->     with add, these changes take effect at the next commit.
-> 
-> Adding a git-addremove command should not be much work, and it would be a 
-> lot friendlier to people whose workflow is more aligned with #2 than #1.
+>>>>> "Theodore" == Theodore Tso <tytso@mit.edu> writes:
 
-Not much work at alll:
+Theodore> To use a GNU emacs example, consider M-x customize, which is this
+Theodore> huge, very fancy, *very* complex hierarchical mechanism with a
+Theodore> pointy-clicky interface for setting options.  Most emacs experts
+Theodore> wouldn't use it, preferring to open code raw emacs-lisp settings in
+Theodore> their .emacs.el.  If you ask an old-time emacs user how to set up
+Theodore> some specific feature setting via M-x customize, they might look at
+Theodore> you blankly, because it's not an interface they use much, if at all.
 
-# git config --system --add alias.addremove "git add . ; git add -u"
+I beg to differ.  I *am* an old-time Emacs user, and I resisted customize when
+it first appeared, because *most* of the things still didn't use it.  However,
+as of a year ago, I assessed that customize had gotten to "critical mass", and
+that 75% of my .emacs could be replaced by it.  So I have, and it's made
+things simpler for me.
 
-:-)
+So, it just has to be complete enough and flexible enough.
 
-(And the performance problem with git add . is fixed in 1.5.3-rc4,
-right?)
-
-						- Ted
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
