@@ -1,7 +1,7 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sun, 5 Aug 2007 11:23:00 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708051118590.5037@woody.linux-foundation.org>
+Date: Sun, 5 Aug 2007 19:35:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708051933180.14781@racer.site>
 References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
  <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
  <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
@@ -10,68 +10,56 @@ References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail
  <85myx7dwb3.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708041156550.5037@woody.linux-foundation.org>
  <85bqdndqgr.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708042127160.5037@woody.linux-foundation.org>
  <85bqdmctcl.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708051004480.5037@woody.linux-foundation.org>
- <85bqdlj1lh.fsf@lola.goethe.zz>
+ <85bqdlj1lh.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708051118590.5037@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 20:24:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 20:36:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHkmE-0004Qg-U8
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 20:24:31 +0200
+	id 1IHkxd-0007AD-5R
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 20:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176AbXHESY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 14:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbXHESY2
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 14:24:28 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:46182 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751327AbXHESY1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 14:24:27 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75IN5PB001994
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 5 Aug 2007 11:23:06 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75IN0oh020157;
-	Sun, 5 Aug 2007 11:23:00 -0700
-In-Reply-To: <85bqdlj1lh.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-3.219 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: lf$Revision: 1.184 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751327AbXHESf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 14:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbXHESf6
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 14:35:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43014 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750798AbXHESf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 14:35:57 -0400
+Received: (qmail invoked by alias); 05 Aug 2007 18:35:55 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp037) with SMTP; 05 Aug 2007 20:35:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+oF0VYJpao2wQx+Hm3YQLAGsX7ta/GvBmg0wyY/Y
+	oy+caUkTQECivF
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.999.0708051118590.5037@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55053>
 
+Hi,
 
+On Sun, 5 Aug 2007, Linus Torvalds wrote:
 
-On Sun, 5 Aug 2007, David Kastrup wrote:
+> > You are still unable to focus on anything but name-calling and editors 
+> > rather than documentation formats.
 > 
-> You are still unable to focus on anything but name-calling and editors
-> rather than documentation formats.
+> No, it's the same thing.
 
-No, it's the same thing.
+Hehe.  Statements like the first made me set up a certain procmail filter.  
+Made me much happier, too.
 
-I started out by saying that Texinfo is horrible. It's horrible because it 
-doesn't *buy* you anything. The only thing it buys you (the "info" format) 
-is totally irrelevant, which I tried to explain.
+And now I see only one side of the conversation, which is actually pretty 
+funny... much like listening in into a heated phone conversation, and 
+guessing what the other one said. *grin*
 
-AsciiDoc is much nicer. It does everything that Texinfo does for us, and 
-it's readable on its own as plain text, something Texinfo isn't.
-
-So by advocating Texinfo, you're advocating something that is OBJECTIVELY 
-WORSE than what we have now.
-
-And I tried to explain why, by pointing out that info files (which was the 
-case you tried to push as an advantage) aren't actually an advantage to 
-any normal user.
-
-			Linus
+Ciao,
+Dscho
