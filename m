@@ -1,64 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clone: use cpio's --quiet flag
-Date: Sun, 05 Aug 2007 01:36:29 -0700
-Message-ID: <7v4pjefkdu.fsf@assigned-by-dhcp.cox.net>
-References: <20070804070308.GA6493@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0708041636290.14781@racer.site>
-	<20070804160409.GA16326@sigill.intra.peff.net>
-	<7vwswbgphu.fsf@assigned-by-dhcp.cox.net>
-	<20070804175240.GB17113@sigill.intra.peff.net>
-	<7vps23gnpj.fsf@assigned-by-dhcp.cox.net>
-	<20070805080651.GB10863@coredump.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Bug in update-index?
+Date: Sun, 05 Aug 2007 10:42:09 +0200
+Message-ID: <85vebubcf2.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 10:36:48 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 10:42:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHbbT-00033S-V4
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 10:36:48 +0200
+	id 1IHbhH-000441-7r
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 10:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756375AbXHEIgc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 04:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755801AbXHEIgc
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 04:36:32 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34996 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753845AbXHEIgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 04:36:31 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070805083630.KKLR2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 5 Aug 2007 04:36:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Y8cV1X00A1kojtg0000000; Sun, 05 Aug 2007 04:36:30 -0400
-In-Reply-To: <20070805080651.GB10863@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 5 Aug 2007 04:06:51 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759617AbXHEIm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 04:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756375AbXHEIm0
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 04:42:26 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:47205 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759600AbXHEImU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 04:42:20 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id D22A91ECF78
+	for <git@vger.kernel.org>; Sun,  5 Aug 2007 10:42:18 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id B6D3C23D296
+	for <git@vger.kernel.org>; Sun,  5 Aug 2007 10:42:18 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 10B893425E5
+	for <git@vger.kernel.org>; Sun,  5 Aug 2007 10:42:17 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 72FDA1C4F932; Sun,  5 Aug 2007 10:42:10 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3857/Sun Aug  5 08:20:59 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54968>
 
-Jeff King <peff@peff.net> writes:
 
-> On Sat, Aug 04, 2007 at 11:27:04AM -0700, Junio C Hamano wrote:
->
->> Try cloning across filesystem boundaries so that you do not get
->> a hardlink -- you will get block count of the copy ;-)
->
-> I see, though the hardlink warning is a bit much.
->
-> $ git-clone /path/on/fs/one /path/on/fs/two
-> Initialized empty Git repository in /path/on/fs/two/.git/
-> Warning: -l asked but cannot hardlink to /path/on/fs/one/.git
-> 36634 blocks
+Hi, the following bombs out:
 
-True; -l is not given explicitly in your example.  Should be
-trivial to fix.
+ time git --work-tree=/usr/local/texlive/2007/texmf-dist ls-files -z -m -o .|git --work-tree=/usr/local/texlive/2007/texmf-dist update-index --add -z --stdin
+error: bibtex/bib/IEEEtran/IEEEabrv.bib: does not exist and --remove not passed
+fatal: Unable to process path bibtex/bib/IEEEtran/IEEEabrv.bib
+
+It would appear that update-index is not finding the listed file in
+spite of the --work-tree argument.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
