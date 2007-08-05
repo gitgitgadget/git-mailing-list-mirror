@@ -1,71 +1,125 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: way to automatically add untracked files?
-Date: Sun, 5 Aug 2007 22:04:41 +0200
-Message-ID: <C3725674-7B33-4B2F-9386-704540D51C0E@zib.de>
-References: <873ayymzc1.fsf@catnip.gol.com> <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com> <20070805041320.GH9527@spearce.org> <200708051411.25238.johan@herland.net> <20070805161117.GE28263@thunk.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miles Bader <miles@gnu.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Aug 05 22:05:54 2007
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] send-email: let sanitize_address_rfc822 do rfc2047 quoting
+Date: Sun,  5 Aug 2007 22:09:08 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <11863445481996-git-send-email-ukleinek@informatik.uni-freiburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 22:09:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHmMJ-0002EQ-5q
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 22:05:51 +0200
+	id 1IHmPf-0003CP-Uk
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 22:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760566AbXHEUFi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 16:05:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756750AbXHEUFi
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 16:05:38 -0400
-Received: from mailer.zib.de ([130.73.108.11]:51810 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758156AbXHEUFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 16:05:36 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75K4x6T013657;
-	Sun, 5 Aug 2007 22:05:04 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75K3n7H018735
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 5 Aug 2007 22:03:55 +0200 (MEST)
-In-Reply-To: <20070805161117.GE28263@thunk.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1761478AbXHEUJQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 5 Aug 2007 16:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761428AbXHEUJQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 16:09:16 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:37705 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760284AbXHEUJN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 16:09:13 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IHmPX-0006dW-D2; Sun, 05 Aug 2007 22:09:11 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l75K99tW018646;
+	Sun, 5 Aug 2007 22:09:09 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l75K99df018645;
+	Sun, 5 Aug 2007 22:09:09 +0200 (MEST)
+X-Mailer: git-send-email 1.5.3.rc3.13.g7ab3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55068>
 
+Without this patch I'm not able to properly send emails as I have a
+non-ascii character in my name.
 
-On Aug 5, 2007, at 6:11 PM, Theodore Tso wrote:
+The former version tried to fix-up the real name part with double quote=
+s
+if it includes a '.'.  I removed this as rfc2047 can handle a dot, too.
 
-> On Sun, Aug 05, 2007 at 02:11:24PM +0200, Johan Herland wrote:
->> $ hg addremove --help
->> hg addremove [OPTION]... [FILE]...
->>
->> add all new files, delete all missing files
->>
->>     Add all new files and remove all missing files from the  
->> repository.
->>
->>     New files are ignored if they match any of the patterns  
->> in .hgignore. As
->>     with add, these changes take effect at the next commit.
->>
->> Adding a git-addremove command should not be much work, and it  
->> would be a
->> lot friendlier to people whose workflow is more aligned with #2  
->> than #1.
->
-> Not much work at all:
->
-> # git config --system --add alias.addremove "git add . ; git add -u"
+Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@informatik.uni-freiburg.=
+de>
+---
+Hello,
 
-But how can I handle the [FILE]... from above?
+I already sent a similar patch that was discussed a bit[1], but was not=
+ taken.
 
-	Steffen
+The list of allowed character was taken from Python's email package.
+
+Comparing with the former version I removed the quoting as described in
+the 2nd paragraph of the log and now I only test $recipient_name once.
+
+I will try to send this patch with next + this patch.  I think it shoul=
+d
+work in principle, but --suppress-from is not honored.  I will take a
+look on this issue later.
+
+Best regards
+Uwe
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/52093
+
+ git-send-email.perl |   23 +++++++++++++++++------
+ 1 files changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f43f92f..5785e29 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -459,16 +459,27 @@ sub unquote_rfc2047 {
+ 	return "$_";
+ }
+=20
+-# If an address contains a . in the name portion, the name must be quo=
+ted.
++# The name part of an address must consist only of alnum chars, space =
+and a few
++# others.
++# If it contains a "forbidden" char in the name port, quote it accordi=
+ng to
++# rfc2047.
+ sub sanitize_address_rfc822
+ {
+ 	my ($recipient) =3D @_;
+-	my ($recipient_name) =3D ($recipient =3D~ /^(.*?)\s+</);
+-	if ($recipient_name && $recipient_name =3D~ /\./ && $recipient_name !=
+~ /^".*"$/) {
+-		my ($name, $addr) =3D ($recipient =3D~ /^(.*?)(\s+<.*)/);
+-		$recipient =3D "\"$name\"$addr";
++	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?)(\s=
++<.*)/);
++
++	if ($recipient_name) {
++		if ($recipient_name =3D~ /[^-a-zA-Z0-9!*+\/ ]/ && $recipient_name !~=
+ /=3D\?utf-8\?q?.*\?=3D/) {
++			$recipient_name =3D~ s/([^-a-zA-Z0-9!*+\/ ])/sprintf("=3D%02X", ord=
+($1))/eg;
++			$recipient_name =3D~ s/ /_/;
++			$recipient_name =3D~ s/(.*)/=3D\?utf-8\?q\?$1\?=3D/;
++		}
++
++		return "$recipient_name$recipient_addr";
++
++	} else {
++		return "$recipient";
+ 	}
+-	return $recipient;
+ }
+=20
+ sub send_message
+--=20
+1.5.3.rc3.13.g7ab3
