@@ -1,78 +1,110 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix install-doc-quick target
-Date: Sun, 5 Aug 2007 19:10:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708051909300.14781@racer.site>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
- <46B4A2B0.9080208@gmail.com> <Pine.LNX.4.64.0708041704040.14781@racer.site>
- <46B4A5FD.3070107@gmail.com> <Pine.LNX.4.64.0708041719490.14781@racer.site>
- <46B4BDCF.9060809@gmail.com> <Pine.LNX.4.64.0708042229130.14781@racer.site>
- <46B4F91D.1070907@lsrfire.ath.cx> <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0708051344430.14781@racer.site> <7vzm15eukf.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: possible bug in git apply?
+Date: Sun, 5 Aug 2007 11:18:19 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708051106020.5037@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
+ <alpine.LFD.0.999.0708042141510.5037@woody.linux-foundation.org>
+ <7vvebuh8g8.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
+ <85hcndj2b5.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 20:11:18 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
+	git@vger.kernel.org, rob@landley.net
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 20:19:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHkZQ-0001jM-8I
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 20:11:16 +0200
+	id 1IHkho-0003V3-Ax
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 20:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755190AbXHESLA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 14:11:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755395AbXHESLA
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 14:11:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:32852 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755104AbXHESK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 14:10:59 -0400
-Received: (qmail invoked by alias); 05 Aug 2007 18:10:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 05 Aug 2007 20:10:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/mK+cxBFvm+9dED+r7OPunvBJRwNWwC2lQPtGlQ1
-	X+zLuQYj6/dnuw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzm15eukf.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752026AbXHESTm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 14:19:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbXHESTl
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 14:19:41 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46688 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751179AbXHESTk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 14:19:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75IIP8D001855
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 5 Aug 2007 11:18:26 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75IIJfP020054;
+	Sun, 5 Aug 2007 11:18:20 -0700
+In-Reply-To: <85hcndj2b5.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-2.566 required=5 tests=AWL,BAYES_00,TW_LR,TW_RW,TW_WX,TW_XR
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55051>
 
-Hi,
 
-On Sun, 5 Aug 2007, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sun, 5 Aug 2007, David Kastrup wrote:
 > 
-> > I do not like the behaviour "be stupid and assume cwd to be the working 
-> > tree root, if GIT_DIR is set and GIT_WORK_TREE is not".
+> Which will let the user sit in an empty directory void of . and ..,
+> and a parallel directory with the old name elsewhere.  Unpretty...
+
+It actually depends on the OS. POSIX allows the case of "rmdir()" 
+returning EBUSY if the directory is "in use", where "in use" may mean 
+being somebodys current working directory.
+
+But yes, most UNIXes (Linux very much included) will just remove the 
+directory, and yes, the user ends up sitting in a directory that is empty 
+and not reachable from anywhere else.
+
+Easy enough to see:
+
+	[torvalds@woody ~]$ mkdir test-me ; cd test-me ; rmdir $(pwd)
+	[torvalds@woody test-me]$ ls -a
+	[torvalds@woody test-me]$ pwd
+	/home/torvalds/test-me
+	[torvalds@woody test-me]$ /bin/pwd
+	/bin/pwd: couldn't find directory entry in `..' with matching i-node
+
+(the first "pwd" is a shell built-in, and the shell caches is).
+
+Under Linux, you can also see funky things like this:
+
+	[torvalds@woody test-me]$ ls -l /proc/self/cwd
+	lrwxrwxrwx 1 torvalds torvalds 0 2007-08-05 11:09 /proc/self/cwd -> /home/torvalds/test-me (deleted)
+
+ie khe kernel actually shows you that you're in a deleted directory, that 
+_used_ to be called "test-me".
+
+
+> > That said, if we really wanted to get it right, we should do this as
+> > a three-phase thing: (1) remove old files (2) create new files (3)
+> > for all removals and renames, try to remove source directories that
+> > might have become empty.
 > >
-> > It bears _all_ kind of stupid connotations.  Just imagine what would 
-> > happen with "git --git-dir=. add .".
-> >
-> > IMHO the new behaviour is _better_, since you can not shoot yourself in 
-> > the foot so easily.  Being able to safeguard against doing a work tree 
-> > operation inside the git directory is a direct and elegant consequence of 
-> > defaulting to $GIT_DIR/.. in case $GIT_DIR ends in "/.git", and no work 
-> > tree if $GIT_DIR does _not_ end in "/.git".
-> >
-> > The semantics "if GIT_DIR is set, just assume the cwd to be the work tree 
-> > root unilaterally" is _broken_ as far as I am concerned.
+> > That would fix it properly and for all cases.
 > 
-> I am not disputing that.  I was just pointing out that this is a
-> change in semantics and we need to advertise it as such, and
-> more importantly, advise people how to adjust to the new (and
-> improved) world order.
+> Stupid question from someone without good background: why do we need
+> two passes in the first place?
 
-Thanks.  I will prepare a patch to ReleaseNotes, but that'll have to wait 
-until tomorrow.  I'm pretty exhausted after the last night of msysGit 
-hacking.
+For example, a patch that removes a directory structure "x/..." and then 
+creates a file "x" in its place.
 
-Ciao,
-Dscho
+In order for the patch ordering to not matter, you want to do the "remove 
+old state" in an earlier phase.
+
+And patch order shouldn't matter, since you can have interesting things 
+like mixing of renames and creates etc (ie maybe it's not "removing" that 
+directory x, it's just moving all the contents somewhere else, and maybe 
+the new file "x" is a move from somewhere else).
+
+Criss-crossing renames make it even more interesting.
+
+So git-apply actually does things in more than two phases: there's a whole 
+another phase that is the "read the patch and create the in-memory 
+result". The "two phases" above are actually just the two phases concerned 
+with actually modifying the working tree, there's more phases elsewhere.
+
+			Linus
