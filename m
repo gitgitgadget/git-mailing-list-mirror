@@ -1,65 +1,100 @@
-From: Larry Finger <larry.finger@lwfinger.net>
-Subject: Re: Problem with bisect
-Date: Sun, 05 Aug 2007 14:24:06 -0500
-Message-ID: <46B623D6.7070809@lwfinger.net>
-References: <46B5F48D.7020907@lwfinger.net> <20070805145234.554bf671.seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sun, 5 Aug 2007 12:29:09 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708051221290.5037@woody.linux-foundation.org>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
+ <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
+ <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
+ <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com>
+ <85zm17h4pn.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
+ <85myx7dwb3.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708041156550.5037@woody.linux-foundation.org>
+ <85bqdndqgr.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708042127160.5037@woody.linux-foundation.org>
+ <85bqdmctcl.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708051004480.5037@woody.linux-foundation.org>
+ <85bqdlj1lh.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Sun Aug 05 21:24:14 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 21:30:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHli1-0001Lb-UA
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:24:14 +0200
+	id 1IHloC-0002nU-NT
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756098AbXHETYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 15:24:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbXHETYJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:24:09 -0400
-Received: from mtiwmhc13.worldnet.att.net ([204.127.131.117]:60468 "EHLO
-	mtiwmhc13.worldnet.att.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750858AbXHETYI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 15:24:08 -0400
-Received: from [192.168.1.104] (cpe-72-129-173-253.kc.res.rr.com[72.129.173.253])
-          by worldnet.att.net (mtiwmhc13) with ESMTP
-          id <20070805192407113008vaoje>; Sun, 5 Aug 2007 19:24:07 +0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20070509)
-In-Reply-To: <20070805145234.554bf671.seanlkml@sympatico.ca>
+	id S1756115AbXHETae (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 15:30:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbXHETae
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:30:34 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43505 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755976AbXHETad (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 15:30:33 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75JTFCl004624
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 5 Aug 2007 12:29:16 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75JT9sp022515;
+	Sun, 5 Aug 2007 12:29:09 -0700
+In-Reply-To: <85bqdlj1lh.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.219 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55059>
 
-Sean wrote:
-> On Sun, 05 Aug 2007 11:02:21 -0500
-> Larry Finger <Larry.Finger@lwfinger.net> wrote:
+
+
+On Sun, 5 Aug 2007, David Kastrup wrote:
+>
+> > The fact that you cannot see that fact is a sign of your personal
+> > (and rather odd) preferences.
 > 
->> I'm helping someone find what looks like a regression in bcm43xx-mac80211 between v2.6.22 and 
->> v2.6.23-rc1. This driver is not in the mainstream kernel, but is found in John Linville's 
->> wireless-dev git tree. When we do the first bisection between the current state and v2.6.22, we 
->> obtain a kernel whose Makefile says it is v2.6.22; however, it's code is based on a state before 
->> bcm43xx-mac80211 was introduced into this tree. My memory isn't what it used to be, but I think this 
->> code was put into this tree during 2.6.19 or .20. When I used visualize to see the tree, the bottom 
->> is all the way to v2.6.16, which I think is the origin of the git process.
->>
->> Is this a git bug, or is it some flaw in this particular tree? We have worked around the problem by 
->> arbitrarily calling each bisection that does not have the bcm43xx-mac80211 code as "good". It has 
->> been a source of confusion for the guy I'm helping as it is his first bisection. Unfortunately, the 
->> bug doesn't show on my machine.
->>
+> Yes, name-calling and ad hominem attacks again.
 
-The git repo is git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-dev.git.
+No. Emacs _is_ odd. It's not even installed by default on most modern 
+Linux distributions.
 
-The commands were:
+There's no name-calling there. That's just a solid fact. You are 
+emacs-fixated when you keep on trying to bring up totally irrelevant 
+emacs issues.
 
-git bisect start
-git bisect bad
-git bisect good v2.6.22
+> Please try to remember that Texinfo is a _source_ format, and it
+> produces reasonably hyperrefed and coherent PDF and HTML documents as
+> well as plain ASCII.  That it is also able to produce working info
+> files should not bother you.
 
-I'm using git version 1.4.4.2.g04509
+You do not even know what you are talking about.
 
-Larry
+AsciiDoc is *also* a source format. But the source format is already 
+readable IN ITSELF. Which is the whole point!
+
+I don't even bother to run "make doc".  I bet that is true of almost 
+everybody else too. Why? Because the *source* format we use (asciidoc) is 
+already basically as readable as any formatted man-page would ever be.
+
+You don't have to even *know* that they are AsciiDoc pages - they're just 
+called "*.txt", and that's what they are. Text. With very minimal fixups 
+that *allow* them to be used as source for things like html, and 
+admittedly you get prettier output, but it really is perfectly 
+straightforward to just read them, in ways that pretty much no other 
+documentation format allows. Everybody else puts very intrusive crap in 
+there, so that you *have* to be aware of in ways you don't need to worry 
+about in AsciiDoc.
+
+Headers? Lists? They look like headers and lists in the .txt files. No 
+need to think about it as a reader. 
+
+See? Texinfo is decidedly inferior. But you don't have to take it so 
+personally. So is pretty much anything else. Anything XML/SGML is even 
+*worse*.
+
+			Linus
