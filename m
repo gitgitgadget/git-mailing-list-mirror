@@ -1,75 +1,67 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
- check-out
-Date: Sun, 05 Aug 2007 16:46:32 +0200
-Message-ID: <20070805144632.GB999MdfPADPa@greensroom.kotnet.org>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
- <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
- <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
- <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org>
-Reply-To: skimo@liacs.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Sun, 5 Aug 2007 15:48:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708051547410.14781@racer.site>
+References: <20070803125634.GB28323@fieldses.org> <1186318785677-git-send-email-prohaska@zib.de>
+ <Pine.LNX.4.64.0708051457110.14781@racer.site> <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eran Tromer <git2eran@tromer.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 16:46:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: bfields@fieldses.org, gitster@pobox.com, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 16:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHhNO-0004Op-HF
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:46:38 +0200
+	id 1IHhPP-0004ps-UC
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752528AbXHEOqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 10:46:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbXHEOqf
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:46:35 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:35362 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751265AbXHEOqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 10:46:34 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMB003W32DK45@psmtp09.wxs.nl> for git@vger.kernel.org; Sun,
- 05 Aug 2007 16:46:33 +0200 (MEST)
-Received: (qmail 31051 invoked by uid 500); Sun, 05 Aug 2007 14:46:32 +0000
-In-reply-to: <46B4A350.9060806@tromer.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752325AbXHEOsl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 10:48:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbXHEOsl
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:48:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37866 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752213AbXHEOsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 10:48:40 -0400
+Received: (qmail invoked by alias); 05 Aug 2007 14:48:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp004) with SMTP; 05 Aug 2007 16:48:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18wdrBpEv0wsjCsBn2VzOsoRHw0PLIho22KgZlSga
+	tlsz7nbI1Jj0nB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55028>
 
-On Sat, Aug 04, 2007 at 12:03:28PM -0400, Eran Tromer wrote:
-> Works here: it silences the check and allows switching branches. Still,
-> leaving the working tree dirty can inadvertently affect subsequent
-> commits. Consider the most ordinary of sequences:
+Hi,
+
+On Sun, 5 Aug 2007, Steffen Prohaska wrote:
+
+> On Aug 5, 2007, at 3:58 PM, Johannes Schindelin wrote:
 > 
-> $ git checkout experimental-death-ray
-> $ git submodules update
-> (return a week later, woozy from the vacation.)
-> $ git checkout master
+> > Hi,
+> > 
+> > On Sun, 5 Aug 2007, Steffen Prohaska wrote:
+> > 
+> > > git gui is especially useful because it allows to select diff hunks.
+> > 
+> > You should give a _big_ _fat_ _red_ warning there.
+> > 
+> > If you selectively commit diff hunks, you _never_ tested what you
+> > committed.
+> > 
+> > That is the reason we're not advertising git add -i more actively.
+> 
+> Hmm... If you do 'git cherry-pick' or 'git rebase' you also did
+> not test what you committed. Should we advertise them less
+> actively as well?
 
-Here, it'll warn that your submodule isn't up-to-date.
+But you have that state in your working tree!  Big difference there!
 
-> (hack hack hack)
-> $ git commit -a -m "fixed typos"
-
-And if you run "git status" first, it'll tell you that the submodule
-(still) isn't up-to-date.
-
-> $ git push
-> (Oops. You've just accidentally committed the wrong submodule heads.)
-
-You always have to be careful when doing "git commit -a".
-
-> Another approach is for pull, checkout etc. to automatically update the
-> submodule' head ref, but no more.
-
-Then everything, including "git submodule update", would assume
-that the submodule is up-to-date.
-
-skimo
+Ciao,
+Dscho
