@@ -1,54 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Some ideas for StGIT
-Date: Sat, 04 Aug 2007 20:32:34 -0700
-Message-ID: <7vodhmirl9.fsf@assigned-by-dhcp.cox.net>
-References: <1186163410.26110.55.camel@dv>
-	<200708031914.04344.andyparkins@gmail.com>
-	<1186206085.28481.33.camel@dv> <20070804055110.GP20052@spearce.org>
-	<f934ve$3oi$1@sea.gmane.org> <20070805023130.GV20052@spearce.org>
+From: Miles Bader <miles@gnu.org>
+Subject: git-diff new files (without using index)
+Date: Sun, 05 Aug 2007 12:42:02 +0900
+Message-ID: <87wswalkad.fsf@catnip.gol.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 05:32:52 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 05:42:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHWrL-0001Yw-5v
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 05:32:51 +0200
+	id 1IHX0C-0002pV-Qw
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 05:42:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106AbXHEDch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Aug 2007 23:32:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757399AbXHEDcg
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 23:32:36 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:51069 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755760AbXHEDcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2007 23:32:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070805033236.JFLP7349.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 4 Aug 2007 23:32:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Y3Yb1X0011kojtg0000000; Sat, 04 Aug 2007 23:32:35 -0400
-In-Reply-To: <20070805023130.GV20052@spearce.org> (Shawn O. Pearce's message
-	of "Sat, 4 Aug 2007 22:31:30 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760583AbXHEDlr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 23:41:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757631AbXHEDlq
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 23:41:46 -0400
+Received: from smtp02.dentaku.gol.com ([203.216.5.72]:37693 "EHLO
+	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756106AbXHEDlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 23:41:46 -0400
+X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 Aug 2007 23:41:45 EDT
+Received: from 203-216-96-074.dsl.gol.ne.jp ([203.216.96.74] helo=catnip.gol.com)
+	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
+	id 1IHWzw-00080t-Az; Sun, 05 Aug 2007 12:41:44 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id B3170300F; Sun,  5 Aug 2007 12:42:02 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54927>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+One thing I often want to do is generate a complete diff of all changes,
+including new/removed files.
 
-> So really `revert`, `cherry-pick`, `rebase -m` (and also `am -3`
-> as it also uses merge-recursive) are all the same underlying
-> implementation.
+If I add things to the index, I can use "git-diff --cached" to do it;
+however I'd actually like to be able to do this _without_ updating the
+index; in other words, any un-added new file as a change.  As it is, the
+"non-indexed" state seems kind of a second-class citizen, as you can
+never have new files there (or rather, git will never really see them).
 
-Minor factual correction.  "am -3" uses merge-recursive *ONLY*
-when patch does not apply, so it is often the best of both
-worlds, as long as your changes do not involve renames.  And
-that is what the default rebase uses.
+Is there anyway to do this currently?  If not, maybe something like a
+"git-diff -N" (mirroring diff's -N/--new-file option) option could be
+added to do this?
+
+Thanks,
+
+-Miles
+-- 
+=====
+(^o^;
+(()))
+*This is the cute octopus virus, please copy it into your sig so it can spread.
