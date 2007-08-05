@@ -1,65 +1,78 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: How to figure out what 'git push' would do?
-Date: Sun, 05 Aug 2007 13:42:49 +0200
-Message-ID: <85ps228ax2.fsf@lola.goethe.zz>
-References: <267CDD46-549B-4BFE-B993-80CD1CFE75D8@zib.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Terminology question about remote branches.
+Date: Sun, 5 Aug 2007 07:52:08 -0400
+Message-ID: <20070805115208.GA19734@coredump.intra.peff.net>
+References: <854pjfin68.fsf@lola.goethe.zz> <20070804092933.aaec6d52.seanlkml@sympatico.ca> <85ejijgzzg.fsf@lola.goethe.zz> <20070805100532.GG12507@coredump.intra.peff.net> <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de> <20070805110200.GA18083@coredump.intra.peff.net> <85tzre8b4w.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Aug 05 13:43:04 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 13:52:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHeVj-0005KV-KD
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:43:03 +0200
+	id 1IHef0-0007B6-KK
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 13:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbXHELnA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 07:43:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752186AbXHELnA
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:43:00 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:49907 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752032AbXHELm7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 07:42:59 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id AC7383665C6;
-	Sun,  5 Aug 2007 13:42:58 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 9DF772DA964;
-	Sun,  5 Aug 2007 13:42:58 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 6574336E86F;
-	Sun,  5 Aug 2007 13:42:58 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 361671C3D500; Sun,  5 Aug 2007 13:42:49 +0200 (CEST)
-In-Reply-To: <267CDD46-549B-4BFE-B993-80CD1CFE75D8@zib.de> (Steffen Prohaska's message of "Sun\, 5 Aug 2007 13\:37\:34 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1754212AbXHELwd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 07:52:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756632AbXHELwR
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:52:17 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3382 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754808AbXHELwK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 07:52:10 -0400
+Received: (qmail 17989 invoked from network); 5 Aug 2007 11:52:13 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 5 Aug 2007 11:52:13 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Aug 2007 07:52:08 -0400
+Content-Disposition: inline
+In-Reply-To: <85tzre8b4w.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54999>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+On Sun, Aug 05, 2007 at 01:38:07PM +0200, David Kastrup wrote:
 
-> How can I check what a 'git push' would do, without
-> actually doing it?
->
-> Is there something like 'git push --dry-run', similar
-> to 'rsync --dry-run'?
+> > I believe the --track setup uses the tracking branches to figure out
+> > which remote/branch combo to track. To do it without a remote tracking
+> > branch, you would have to add the lines to your .git/config manually.
+> 
+> Fascinating, really fascinating.  Is there actually _anybody_ who
+> would not revert to phrases like "I believe" when describing git's
+> interaction with remote branches?
 
-Wel, you could put
+By "I believe", I meant "I am pretty sure this is the way it is
+implemented, but I have better things to do than read through
+builtin-branch.c right now, so please don't take this as gospel and go
+read the code yourself."
 
-#!/bin/sh
-cat >/tmp/dryrun
-exit 1
+But the point of --track is that I don't _have_ to care, and that it
+deduces the correct remote/branch combination itself.
 
-into
+> I don't find this particularly logical: origin/something basically
+> boils down referring to a commit.
 
-$GIT_DIR/hooks/pre-receive
+Really, "origin/something" refers to "refs/remotes/origin/something",
+which we can deduce from the config to be populated by a particular
+remote and branch (go read the code).
 
-on the receiving side.  Or maybe the update hook.
+> Maybe git-branch --track should allow referring to remote:branch or
+> URLs or something directly rather than a remote tracking branch?
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+It could, but at that point, you could just do:
+
+  git-branch newbranch oldbranch
+  git-config branch.newbranch.remote someremote
+  git-config branch.newbranch.merge remotebranch
+
+Perhaps it's slightly more convenient to be able to do
+
+  git-branch --track someremote:remotebranch newbranch oldbranch
+
+but the real convenience of --track is when it deduces those parameters
+itself.
+
+-Peff
