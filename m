@@ -1,73 +1,83 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sun, 05 Aug 2007 12:40:59 +0200
-Message-ID: <85ps229sck.fsf@lola.goethe.zz>
-References: <46B418AA.4070701@midwinter.com>
-	<20070804091249.GA17821@uranus.ravnborg.org>
-	<46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
-	<85myx7dwb3.fsf@lola.goethe.zz>
-	<20070805094247.GE12507@coredump.intra.peff.net>
-	<85abt6b91w.fsf@lola.goethe.zz>
-	<20070805095928.GA15949@coredump.intra.peff.net>
-	<851weib7v3.fsf@lola.goethe.zz>
-	<20070805102242.GA17000@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Steven Grimm <koreth@midwinter.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Terminology question about remote branches.
+Date: Sun, 5 Aug 2007 12:56:49 +0200
+Message-ID: <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de>
+References: <854pjfin68.fsf@lola.goethe.zz> <20070804092933.aaec6d52.seanlkml@sympatico.ca> <85ejijgzzg.fsf@lola.goethe.zz> <20070805100532.GG12507@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>, Sean <seanlkml@sympatico.ca>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 12:41:21 2007
+X-From: git-owner@vger.kernel.org Sun Aug 05 12:56:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHdXw-0000jT-V2
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 12:41:17 +0200
+	id 1IHdmo-0003y2-Px
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 12:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660AbXHEKlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 06:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755312AbXHEKlK
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 06:41:10 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:58478 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754146AbXHEKlJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 06:41:09 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 2433227F06;
-	Sun,  5 Aug 2007 12:41:08 +0200 (CEST)
-Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 1090D2DA969;
-	Sun,  5 Aug 2007 12:41:08 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id A58832BB5E7;
-	Sun,  5 Aug 2007 12:41:07 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 46EF01C3D500; Sun,  5 Aug 2007 12:40:59 +0200 (CEST)
-In-Reply-To: <20070805102242.GA17000@coredump.intra.peff.net> (Jeff King's message of "Sun\, 5 Aug 2007 06\:22\:42 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3858/Sun Aug  5 09:40:13 2007 on mail-in-08.arcor-online.net
-X-Virus-Status: Clean
+	id S1757337AbXHEK4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 06:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757102AbXHEK4f
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 06:56:35 -0400
+Received: from mailer.zib.de ([130.73.108.11]:46959 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756359AbXHEK4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 06:56:34 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75AtwvJ008340;
+	Sun, 5 Aug 2007 12:55:58 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75Atudq016997
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 5 Aug 2007 12:55:57 +0200 (MEST)
+In-Reply-To: <20070805100532.GG12507@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54990>
 
-Jeff King <peff@peff.net> writes:
 
-> On Sun, Aug 05, 2007 at 12:20:32PM +0200, David Kastrup wrote:
+On Aug 5, 2007, at 12:05 PM, Jeff King wrote:
+
+> On Sat, Aug 04, 2007 at 04:01:55PM +0200, David Kastrup wrote:
 >
->> Well, just for kicks I let firefox loose on
->> 
->> info:gcc#Extended Asm
+>> So --track does not set up a tracking branch, but makes a local
+>> _following_ branch _refer_ to a tracking branch.
 >
-> OK, I didn't know there was a URL style defined for info.
+> A minor nit, but --track sets up a local following branch to refer  
+> to a
+> remote's branch, _not_ to the tracking branch. In other words, if you
+> look at the config:
+>
+>   [branch "master"]
+>     remote = origin
+>     merge = refs/heads/master
+>
+> It does _not_ reference the tracking branch
+> "refs/remotes/origin/master", but rather the remote's name for the
+> branch "refs/heads/master".
+>
+> There was much discussion of this topic, but the general idea was  
+> not to
+> require remote tracking branches for this feature to be used (a  
+> position
+> I somewhat disagree with, but then I'm not the maintainer).
 
-Neither did I, actually.  If anybody would actually use them, I'd have
-to teach firefox to pass them off to Emacs.
+Interesting. I didn't even recognize this detail up to know. It was  
+somewhat
+beyond my imagination that I could have a local following/automerging
+branch that is directly referring to a branch in a remote repo, without
+have a remote-tracking branch.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+How could I create such a setup in the first place?
+
+     git branch --track something origin/something
+     git checkout --track -b something origin/something
+
+are obvious, but what to say if I don't have origin/something?
+
+	Steffen
