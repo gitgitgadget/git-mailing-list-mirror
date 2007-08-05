@@ -1,77 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Terminology question about remote branches.
-Date: Sun, 05 Aug 2007 00:31:04 -0700
-Message-ID: <7v8x8qfnev.fsf@assigned-by-dhcp.cox.net>
-References: <854pjfin68.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: way to automatically add untracked files?
+Date: Sun, 05 Aug 2007 09:32:28 +0200
+Message-ID: <85fy2ycu7n.fsf@lola.goethe.zz>
+References: <873ayymzc1.fsf@catnip.gol.com>
+	<fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com>
+	<alpine.LFD.0.999.0708042157150.5037@woody.linux-foundation.org>
+	<7vr6mih8a8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 09:31:12 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 09:32:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHaZz-0008Mx-Di
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 09:31:11 +0200
+	id 1IHabP-0000Ah-KC
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 09:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334AbXHEHbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 03:31:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753806AbXHEHbH
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 03:31:07 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:59768 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754089AbXHEHbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 03:31:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070805073105.KBRR2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 5 Aug 2007 03:31:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Y7X41X00C1kojtg0000000; Sun, 05 Aug 2007 03:31:04 -0400
-In-Reply-To: <854pjfin68.fsf@lola.goethe.zz> (David Kastrup's message of "Sat,
-	04 Aug 2007 12:55:43 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754510AbXHEHch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 03:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbXHEHch
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 03:32:37 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:57345 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753904AbXHEHcg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 03:32:36 -0400
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 04B2C1FD03C;
+	Sun,  5 Aug 2007 09:32:35 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id DEF3B345C62;
+	Sun,  5 Aug 2007 09:32:34 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id ABFF02BB280;
+	Sun,  5 Aug 2007 09:32:34 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id BA56F1C4F932; Sun,  5 Aug 2007 09:32:28 +0200 (CEST)
+In-Reply-To: <7vr6mih8a8.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 04 Aug 2007 22\:14\:55 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3857/Sun Aug  5 08:20:59 2007 on mail-in-08.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54961>
 
-David Kastrup <dak@gnu.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I am trying to dig through man-pages and user manual and trying to
-> match them with reality.  I seem to have a hard time.  My current
-> understanding (which definitely differs from the documented state) is
-> that there are two types of branches, local and remote branches, and
-> both types of branches can be remote-tracking (it may not be possible
-> to have a non-remote-tracking remote branch, though).
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> ... (except, as we found out last week, we've had a huge 
+>> performance regression, so that's actually a really slow way to do it, and 
+>> so it's actually faster to do
+>>
+>> 	git ls-files -o | git update-index --add --stdin
+>> 	git commit -a
+>>
+>> instead...
+>
+> Is it still the case after the fix in rc4?  Other than the
+> theoretical "on multi-core, ls-files and update-index can run in
+> parallel" performance boost potential,
 
-I think we have a brief discussion on #git before you brought
-this up ;-)
+When I did my apprenticeship, one thing I learnt was that to
+accomplish a repetitive task comprised of several steps, you organize
+it in a way that does not require you to change the tool you are
+holding/using until you have finished using it.
 
- - local branches -- we know what they are.
+What's good for the user is good for the computer: even on single core
+systems, working off a complete pipeline buffer before switching
+context again will help keeping disk positioning and cache poisoning
+down.  However, it will depend on the scheduler: if it never allows
+pipes to even slighly fill up (which has been the normal behavior of
+the Linux scheduler for years in spite of complaints I voiced several
+times), you don't get the advantages from this sort of processing.
+CFS could conceivably help in many use cases since then the context
+switch depends on more than just "pipe has some minimal content?"
+which is pretty much the worst choice for context switches in batch
+processing.  However, as long as we are talking buffered I/O (FILE*
+and block buffering), we are losing some parallelism potential and
+gaining some blocking advantage.
 
- - remote tracking branches -- refs that appear in refs/remotes/
-   in the current world order; they are updated only by copying
-   the corresponding local branches at the remote site, and are
-   meant to "keep track of what _they_ are doing".  In olden
-   days before 1.5.0 with non separate remote layout,
-   'refs/heads/origin' branch, and all the non default branches,
-   were treated this way as well.  You were not supposed to make
-   commit on them (because of the above "keep track of" reason),
-   and having them under refs/heads were too confusing, which
-   was the reason the separate remote layout was invented.
+> I thought the fixed "git-add ." would be the same...
 
-You can have a local branch that is created by forking off of a
-remote tracking branch, with the intention to "build on top" of
-the corresponding remote tracking brach.  You can create such a
-branch and mark it as such with --track option introduced in
-v1.5.1 timeperiod.  This is a relatively new concept, but many
-people find it useful.  We do not have the official term to call
-this concept, and some people have misused the term "remote
-tracking branches" to describe this, which made things very
-confusing.
+Possibly.  After all, there _is_ overhead associated with pipes, and
+currently released kernels' scheduling behavior reaps no cache
+poisoning gains.  Whatever.  I think I'll do a large test.
+Speculation is not everything.
 
-We would need an official terminology for it.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
