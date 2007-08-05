@@ -1,69 +1,69 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: rc4 - make quick-install-doc is broken
-Date: Sun, 05 Aug 2007 01:03:09 +0200
-Message-ID: <46B505AD.4010009@lsrfire.ath.cx>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site> <46B4A2B0.9080208@gmail.com> <46B4DF39.2070506@lsrfire.ath.cx> <Pine.LNX.4.64.0708042232390.14781@racer.site> <46B4F923.3090604@lsrfire.ath.cx> <Pine.LNX.4.64.0708042328000.14781@racer.site>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Some ideas for StGIT
+Date: Sat, 04 Aug 2007 20:08:23 -0400
+Message-ID: <1186272503.1948.21.camel@dv>
+References: <1186163410.26110.55.camel@dv>
+	 <200708031914.04344.andyparkins@gmail.com> <1186206085.28481.33.camel@dv>
+	 <20070804055110.GP20052@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 05 01:03:28 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 02:08:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHSed-00027L-EP
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 01:03:27 +0200
+	id 1IHTfb-0004vt-AT
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 02:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbXHDXDR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 4 Aug 2007 19:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbXHDXDQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 19:03:16 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:57339
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932150AbXHDXDQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Aug 2007 19:03:16 -0400
-Received: from [10.0.1.201] (p508EBCE0.dip.t-dialin.net [80.142.188.224])
-	by neapel230.server4you.de (Postfix) with ESMTP id 0FECD8B008;
-	Sun,  5 Aug 2007 01:03:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0708042328000.14781@racer.site>
+	id S1757686AbXHEAI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Aug 2007 20:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759101AbXHEAI2
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Aug 2007 20:08:28 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:32936 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756264AbXHEAI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2007 20:08:27 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1IHTi4-0000Mo-RX
+	for git@vger.kernel.org; Sat, 04 Aug 2007 20:11:04 -0400
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1IHTfU-0000lr-0f; Sat, 04 Aug 2007 20:08:24 -0400
+In-Reply-To: <20070804055110.GP20052@spearce.org>
+X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54920>
 
-Johannes Schindelin schrieb:
-> Then you make an untracked directory called untracked/.  Tradition=20
-> dictates that when we're in that directory, we get the prefix=20
-> "untracked/", because we might add a file, or reference a file in ano=
-ther=20
-> branch, where that directory is _not_ untracked.
+On Sat, 2007-08-04 at 01:51 -0400, Shawn O. Pearce wrote:
 
-The test is modelled after the install script; Documentation/ (the CWD
-during 'make quick-install-doc') is not tracked in branch origin/man.
+> I agree with Andy.  Aside from the performance issues that I
+> am currently having with a 55 patch series, "rebase -i" (and its
+> predecessor script from Dscho) have been a major part of my toolkit,
+> to the point that I really don't need something like StGIT on
+> my system.
+> 
+> (Regarding the performance, cherry-picking 55 patches is
+> slow, especially when many of them would apply trivially with
+> git-diff|git-apply --index.  Be nice to improve that in 1.5.4.)
 
-> So it is expected that checkout-index and ls-files behave differently=
-=20
-> in a subdirectory (even if that is currently untracked).
->=20
-> It seems a bit counterintuitive that read-tree succeeds, but really,=20
-> read-tree is only a commit -> index operation, which should not care =
-about=20
-> the current prefix.  So it is fine.
->=20
-> Checkout-index, instead, is an index -> working tree operation, and f=
-or=20
-> most of these, we care about the current prefix (so that you can say =
-git=20
-> checkout-index file1, where file1 is in the current directory, which =
-is=20
-> _not_ the working tree root).
+I understand that "git-rebase -i" is good for keeping local changes
+up-to-date, but the real issue is managing the local patches so that
+they can be enhanced to the point that they are ready for submission.
 
-OK, makes sense.
+That includes such things as moving chunks between patches, editing
+descriptions, joining patches together, sorting patches into groups by
+their urgency and so on.  Keeping the patches up-to-date is just one
+aspect.
 
-Thanks,
-Ren=E9
+Anyway, I'm going to give "git-rebase -i" a try.
+
+-- 
+Regards,
+Pavel Roskin
