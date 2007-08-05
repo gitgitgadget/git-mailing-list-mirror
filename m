@@ -1,71 +1,84 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: question about git-submodule
-Date: Sun, 05 Aug 2007 16:59:22 +0200
-Message-ID: <20070805145922.GC999MdfPADPa@greensroom.kotnet.org>
-References: <20070713214630.GB7106@genesis.frugalware.org>
- <20070715083959.GC999MdfPADPa@greensroom.kotnet.org>
- <20070715104712.GF2568@steel.home> <46B3B3D2.6030000@tromer.org>
-Reply-To: skimo@liacs.nl
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Sun, 05 Aug 2007 17:03:47 +0200
+Message-ID: <85wswa6n1o.fsf@lola.goethe.zz>
+References: <20070803125634.GB28323@fieldses.org>
+	<1186318785677-git-send-email-prohaska@zib.de>
+	<Pine.LNX.4.64.0708051457110.14781@racer.site>
+	<17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>, VMiklos <vmiklos@frugalware.org>,
-	git@vger.kernel.org
-To: Eran Tromer <git2eran@tromer.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 16:59:34 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	bfields@fieldses.org, gitster@pobox.com, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 17:03:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHhZu-0007Es-6j
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:59:34 +0200
+	id 1IHhe6-0008I5-RT
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 17:03:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643AbXHEO7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 10:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754296AbXHEO7Y
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:59:24 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:43527 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751658AbXHEO7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 10:59:23 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMB003SJ2YY41@psmtp09.wxs.nl> for git@vger.kernel.org; Sun,
- 05 Aug 2007 16:59:23 +0200 (MEST)
-Received: (qmail 13143 invoked by uid 500); Sun, 05 Aug 2007 14:59:22 +0000
-In-reply-to: <46B3B3D2.6030000@tromer.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1754863AbXHEPDv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 11:03:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754643AbXHEPDv
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 11:03:51 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:40770 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754806AbXHEPDu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 11:03:50 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id F18BD303295;
+	Sun,  5 Aug 2007 17:03:48 +0200 (CEST)
+Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id D129A23D2D9;
+	Sun,  5 Aug 2007 17:03:48 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 6306224E341;
+	Sun,  5 Aug 2007 17:03:48 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id AF1C91C3D500; Sun,  5 Aug 2007 17:03:47 +0200 (CEST)
+In-Reply-To: <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de> (Steffen Prohaska's message of "Sun\, 5 Aug 2007 16\:17\:00 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3862/Sun Aug  5 15:38:34 2007 on mail-in-10.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55031>
 
-On Fri, Aug 03, 2007 at 07:01:38PM -0400, Eran Tromer wrote:
-> $ mkdir super
-> $ cd super
-> $ git init
-> $ git submodule add ../sub-to-be sub
+Steffen Prohaska <prohaska@zib.de> writes:
 
-You probably don't want to do this as this URL
-probably won't work for anyone who wants to clone
-your superproject.
+> On Aug 5, 2007, at 3:58 PM, Johannes Schindelin wrote:
+>
+>> Hi,
+>>
+>> On Sun, 5 Aug 2007, Steffen Prohaska wrote:
+>>
+>>> git gui is especially useful because it allows to select diff hunks.
+>>
+>> You should give a _big_ _fat_ _red_ warning there.
+>>
+>> If you selectively commit diff hunks, you _never_ tested what you
+>> committed.
+>>
+>> That is the reason we're not advertising git add -i more actively.
+>
+> Hmm... If you do 'git cherry-pick' or 'git rebase' you also did
+> not test what you committed. Should we advertise them less
+> actively as well?
 
-> BTW, is there any easy way to create a submodule directly inside the
-> supermodule's working tree, instead of cloning it as in the above example?
+Selectively committing diff hunks also means that a subsequent rebase
+-i or git-cherry will have to reconsider the same commit as it has
+only been incompletely applied.
 
-Do you want to use the submodule porcelain or just the plumbing?
-If you simply want to add a submodule locally, "git add" will do that for
-you just fine.  It's only when you want to make it easier for people who
-clone your superproject to get updates of the submodules that you
-should set up the information required by "git submodule" in .gitmodules
-(see end of module_add in git-submodule.sh).
+So it can mean more work later.  Also one would in general have to
+edit the commit message (if it describes everything that has been
+done).
 
-Note that the "url" can be set directly in your git config
-(without specifying it in .gitmodules), but then anyone who clones
-from you will have to modify his config "manually" too.
-For some reason, the "path" element is required, even if it is equal
-to the submodule name.
+There are simply consequences for the workflow if you do things
+right.  Whether they are worth a "big fat red warning" is one
+question, but mentioning them is probably not amiss.
 
-skimo
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
