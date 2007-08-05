@@ -1,111 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix install-doc-quick target
-Date: Sun, 5 Aug 2007 15:44:02 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708051533590.14781@racer.site>
-References: <46B49617.3070402@gmail.com> <Pine.LNX.4.64.0708041637450.14781@racer.site>
- <46B4A2B0.9080208@gmail.com> <Pine.LNX.4.64.0708041704040.14781@racer.site>
- <46B4A5FD.3070107@gmail.com> <Pine.LNX.4.64.0708041719490.14781@racer.site>
- <46B4BDCF.9060809@gmail.com> <Pine.LNX.4.64.0708042229130.14781@racer.site>
- <46B4F91D.1070907@lsrfire.ath.cx> <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
+ check-out
+Date: Sun, 05 Aug 2007 16:46:32 +0200
+Message-ID: <20070805144632.GB999MdfPADPa@greensroom.kotnet.org>
+References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
+ <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
+ <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
+ <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 16:44:46 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eran Tromer <git2eran@tromer.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 16:46:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHhLZ-0003rv-AW
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:44:45 +0200
+	id 1IHhNO-0004Op-HF
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbXHEOoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 10:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbXHEOoi
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:44:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45834 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752418AbXHEOoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 10:44:37 -0400
-Received: (qmail invoked by alias); 05 Aug 2007 14:44:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp021) with SMTP; 05 Aug 2007 16:44:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZhoRZjiBZOjAL5W7RLwI7TE4Enf8aZJNuCHA6y3
-	UdPp4R9OI3g/Gw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752528AbXHEOqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 10:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbXHEOqf
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:46:35 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:35362 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751265AbXHEOqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 10:46:34 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMB003W32DK45@psmtp09.wxs.nl> for git@vger.kernel.org; Sun,
+ 05 Aug 2007 16:46:33 +0200 (MEST)
+Received: (qmail 31051 invoked by uid 500); Sun, 05 Aug 2007 14:46:32 +0000
+In-reply-to: <46B4A350.9060806@tromer.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55027>
 
-Hi,
-
-On Sun, 5 Aug 2007, Junio C Hamano wrote:
-
->    If you say:
+On Sat, Aug 04, 2007 at 12:03:28PM -0400, Eran Tromer wrote:
+> Works here: it silences the check and allows switching branches. Still,
+> leaving the working tree dirty can inadvertently affect subsequent
+> commits. Consider the most ordinary of sequences:
 > 
-> 	git --work-tree=. foo
-> 
->    without saying anything about GIT_DIR, shouldn't we run the
->    usual .git/ discovery, going up the directories? 
+> $ git checkout experimental-death-ray
+> $ git submodules update
+> (return a week later, woozy from the vacation.)
+> $ git checkout master
 
-Well, it seems natural.
+Here, it'll warn that your submodule isn't up-to-date.
 
-The problem is that if you are in a bare repository, after 
-setup_git_directory_gently() you will no longer be able to tell where you 
-started from, but you are in the same directory that HEAD was found.
+> (hack hack hack)
+> $ git commit -a -m "fixed typos"
 
-I had the following patch, but it breaks all kinds of tests :-(
+And if you run "git status" first, it'll tell you that the submodule
+(still) isn't up-to-date.
 
-Will keep you posted,
-Dscho
+> $ git push
+> (Oops. You've just accidentally committed the wrong submodule heads.)
 
--- snipsnap --
+You always have to be careful when doing "git commit -a".
 
- setup.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+> Another approach is for pull, checkout etc. to automatically update the
+> submodule' head ref, but no more.
 
-diff --git a/setup.c b/setup.c
-index d87e4e1..c627623 100644
---- a/setup.c
-+++ b/setup.c
-@@ -291,7 +291,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 			if (!work_tree_env)
- 				inside_work_tree = 0;
- 			setenv(GIT_DIR_ENVIRONMENT, ".", 1);
--			return NULL;
-+			goto ret;
- 		}
- 		chdir("..");
- 		do {
-@@ -311,6 +311,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	if (!work_tree_env)
- 		inside_work_tree = 1;
- 	git_work_tree_cfg = xstrndup(cwd, offset);
-+ret:
- 	if (offset == len)
- 		return NULL;
- 
-@@ -376,14 +377,15 @@ const char *setup_git_directory(void)
- 	/* If the work tree is not the default one, recompute prefix */
- 	if (inside_work_tree < 0) {
- 		static char buffer[PATH_MAX + 1];
-+		const char *git_dir = get_git_dir();
- 		char *rel;
- 
- 		/*
- 		 * When the git dir was determined automatically, it is
- 		 * a relative path.
- 		 */
--		if (!getenv(GIT_DIR_ENVIRONMENT))
--			set_git_dir(make_absolute_path(get_git_dir()));
-+		if (!is_absolute_path(git_dir))
-+			set_git_dir(make_absolute_path(git_dir));
- 
- 		if (retval && chdir(retval))
- 			die ("Could not jump back into original cwd");
+Then everything, including "git submodule update", would assume
+that the submodule is up-to-date.
+
+skimo
