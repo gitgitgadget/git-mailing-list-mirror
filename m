@@ -1,100 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
-Date: Sun, 5 Aug 2007 12:29:09 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708051221290.5037@woody.linux-foundation.org>
-References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
- <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
- <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
- <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com>
- <85zm17h4pn.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
- <85myx7dwb3.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708041156550.5037@woody.linux-foundation.org>
- <85bqdndqgr.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708042127160.5037@woody.linux-foundation.org>
- <85bqdmctcl.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708051004480.5037@woody.linux-foundation.org>
- <85bqdlj1lh.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: possible bug in git apply?
+Date: Sun, 05 Aug 2007 21:37:41 +0200
+Message-ID: <85odhlhiwq.fsf@lola.goethe.zz>
+References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
+	<alpine.LFD.0.999.0708042141510.5037@woody.linux-foundation.org>
+	<7vvebuh8g8.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
+	<85hcndj2b5.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708051106020.5037@woody.linux-foundation.org>
+	<853ayxiznp.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708051219440.5037@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 21:30:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
+	git@vger.kernel.org, rob@landley.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 21:37:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHloC-0002nU-NT
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:30:37 +0200
+	id 1IHlvK-0004KB-2i
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756115AbXHETae (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 15:30:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbXHETae
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:30:34 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43505 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755976AbXHETad (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 15:30:33 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75JTFCl004624
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 5 Aug 2007 12:29:16 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l75JT9sp022515;
-	Sun, 5 Aug 2007 12:29:09 -0700
-In-Reply-To: <85bqdlj1lh.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-3.219 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: lf$Revision: 1.184 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755206AbXHEThp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 15:37:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752907AbXHEThp
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:37:45 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:37312 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752494AbXHETho (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 15:37:44 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 41A5F4CBC3;
+	Sun,  5 Aug 2007 21:37:43 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 2D7C612DFA2;
+	Sun,  5 Aug 2007 21:37:43 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id B8C4430A94C;
+	Sun,  5 Aug 2007 21:37:42 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 1EF921C3D500; Sun,  5 Aug 2007 21:37:42 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0708051219440.5037@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 5 Aug 2007 12\:20\:48 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3864/Sun Aug  5 19:21:44 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55060>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-
-On Sun, 5 Aug 2007, David Kastrup wrote:
+> On Sun, 5 Aug 2007, David Kastrup wrote:
+>> 
+>> But your proposed three passes won't work with a patch removing
+>> "x/..."  and creating "x" in its place, since "x/" gets only removed
+>> in pass 3, and "x" needs to created in pass 2 already.
 >
-> > The fact that you cannot see that fact is a sign of your personal
-> > (and rather odd) preferences.
-> 
-> Yes, name-calling and ad hominem attacks again.
+> Yes, I was wrong. The current two passes are the right thing to do, and we 
+> should just always remove empty directories (and my patch was fine: we can 
+> leave them alone if it's a pure "modify file in place", but that's really 
+> the only case).
 
-No. Emacs _is_ odd. It's not even installed by default on most modern 
-Linux distributions.
+The consequence will be that renaming all files in one directory (and
+"all" can even be a single file) will temporarily delete and recreate
+that directory.  My proposed change of index sort and processing order
+would take care of that without requiring multiple passes, at the cost
+of changing the index format and processing.  I think that it would be
+a sound long-term solution.
 
-There's no name-calling there. That's just a solid fact. You are 
-emacs-fixated when you keep on trying to bring up totally irrelevant 
-emacs issues.
+Anyway, once directories can be tracked (again necessitating a change
+of index format), surprising directory deletion and recreation should
+become less of an issue, but it won't help with projects that continue
+not tracking directories (presumably most patch-based workflows).
 
-> Please try to remember that Texinfo is a _source_ format, and it
-> produces reasonably hyperrefed and coherent PDF and HTML documents as
-> well as plain ASCII.  That it is also able to produce working info
-> files should not bother you.
-
-You do not even know what you are talking about.
-
-AsciiDoc is *also* a source format. But the source format is already 
-readable IN ITSELF. Which is the whole point!
-
-I don't even bother to run "make doc".  I bet that is true of almost 
-everybody else too. Why? Because the *source* format we use (asciidoc) is 
-already basically as readable as any formatted man-page would ever be.
-
-You don't have to even *know* that they are AsciiDoc pages - they're just 
-called "*.txt", and that's what they are. Text. With very minimal fixups 
-that *allow* them to be used as source for things like html, and 
-admittedly you get prettier output, but it really is perfectly 
-straightforward to just read them, in ways that pretty much no other 
-documentation format allows. Everybody else puts very intrusive crap in 
-there, so that you *have* to be aware of in ways you don't need to worry 
-about in AsciiDoc.
-
-Headers? Lists? They look like headers and lists in the .txt files. No 
-need to think about it as a reader. 
-
-See? Texinfo is decidedly inferior. But you don't have to take it so 
-personally. So is pretty much anything else. Anything XML/SGML is even 
-*worse*.
-
-			Linus
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
