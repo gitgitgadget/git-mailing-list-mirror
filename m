@@ -1,80 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: way to automatically add untracked files?
-Date: Sun, 05 Aug 2007 14:17:54 +0200
-Message-ID: <85bqdm89al.fsf@lola.goethe.zz>
-References: <873ayymzc1.fsf@catnip.gol.com>
-	<fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com>
-	<20070805041320.GH9527@spearce.org>
-	<200708051411.25238.johan@herland.net>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: $GIT_DIR usage
+Date: Sun, 05 Aug 2007 08:22:54 -0400
+Message-ID: <46B5C11E.4000101@gmail.com>
+References: <46B59F63.8020707@gmail.com> <678E8953ECEB4B72A99DEA2137B05823@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Miles Bader <miles@gnu.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Aug 05 14:18:11 2007
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 14:24:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHf3i-0004ap-HI
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 14:18:10 +0200
+	id 1IHf9m-0005ns-5y
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 14:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755146AbXHEMSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 08:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbXHEMSG
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 08:18:06 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:58790 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750873AbXHEMSF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 08:18:05 -0400
-Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 68A1613652;
-	Sun,  5 Aug 2007 14:18:04 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 52693100C2;
-	Sun,  5 Aug 2007 14:18:04 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 27873292B67;
-	Sun,  5 Aug 2007 14:18:04 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 969841C3D500; Sun,  5 Aug 2007 14:17:54 +0200 (CEST)
-In-Reply-To: <200708051411.25238.johan@herland.net> (Johan Herland's message of "Sun\, 05 Aug 2007 14\:11\:24 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3859/Sun Aug  5 11:16:51 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1755789AbXHEMYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 08:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755146AbXHEMYK
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 08:24:10 -0400
+Received: from mailhub.lawrence.edu ([143.44.0.14]:40845 "EHLO lawrence.edu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755709AbXHEMYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 08:24:09 -0400
+Received: from [69.140.46.21] (account zwelld HELO [192.168.2.3])
+  by lawrence.edu (CommuniGate Pro SMTP 5.1.10)
+  with ESMTPSA id 29972478; Sun, 05 Aug 2007 07:24:08 -0500
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+In-Reply-To: <678E8953ECEB4B72A99DEA2137B05823@ntdev.corp.microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55006>
 
-Johan Herland <johan@herland.net> writes:
+Dmitry Kakurin wrote:
+> I think you also need to set GIT_WORK_TREE.
+> This way Git will know the root of directories that it controls.
+> 
+> - Dmitry
+> ----- Original Message ----- From: "Dan Zwell" <dzwell@gmail.com>
+> Newsgroups: gmane.comp.version-control.git
+> To: <git@vger.kernel.org>
+> Sent: Sunday, 5 August 2007 2:58
+> Subject: $GIT_DIR usage
+> 
+> 
+>> Hi, I had a question about $GIT_DIR. That is to say, it doesn't seem 
+>> to work. I am using Git 1.5.2.4. See the following: (all the commands 
+>> I tried besides "git-init" failed).
+>>
+>> $ export GIT_DIR="`pwd`/.git_public"
+>> $ git init
+>> warning: templates not found /usr/share//git-core/templates/
+>> Initialized empty Git repository in /home/user/temp/.git_public/
+>> $ echo > new_file
+>> $ git add new_file
+>> fatal: add must be run in a work tree
+>> $ git commit -a
+>> fatal: /usr/bin/git-commit cannot be used without a working tree.
+>> $ git commit
+>> fatal: /usr/bin/git-commit cannot be used without a working tree.
+>> $
+>>
+>> Is $GIT_DIR not meant to be used this way? Does it have a different 
+>> purpose / use case, or is this just a bug?
+>>
+>> Thanks,
+>> Dan
+> 
 
-> So different users seem to have two different (almost incompatible) 
-> expectations to git-add:
->
-> 1. git-add adds new files into the index. git-add has _no_ business removing 
-> deleted files from the index.
->
-> 2. git-add updates the index according to the state of the working tree. 
-> This includes adding new files and removing deleted files.
->
->
-> Both interpretations are useful and worth supporting, but git-add
-> currently seems focused on #1 (and rightly so, IMHO).
->
-> Even though #2 can be achieved by using a couple of git-add
-> commmands (or a longer series of more obscure plumbing-level
-> commands), it might be worth considering the more user-friendly
-> alternative of adding a dedicated command for supporting #2. Such a
-> command already exists in a similar RCS:
+Thank you. I also had to upgrade Git to the as-yet unreleased version 
+(this variable doesn't exist in the current stable release), but what 
+you said makes sense and seems like it should work.
 
-[...]
-
-> Adding a git-addremove command should not be much work, and it would
-> be a lot friendlier to people whose workflow is more aligned with #2
-> than #1.
-
-Maybe just git-add -a?
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Dan
