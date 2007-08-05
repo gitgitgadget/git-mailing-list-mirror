@@ -1,80 +1,127 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: possible bug in git apply?
-Date: Sun, 05 Aug 2007 21:37:41 +0200
-Message-ID: <85odhlhiwq.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
-	<alpine.LFD.0.999.0708042141510.5037@woody.linux-foundation.org>
-	<7vvebuh8g8.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
-	<85hcndj2b5.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708051106020.5037@woody.linux-foundation.org>
-	<853ayxiznp.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708051219440.5037@woody.linux-foundation.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Sun, 05 Aug 2007 21:42:50 +0200
+Message-ID: <vpqr6mhahtx.fsf@bauges.imag.fr>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708031121000.14781@racer.site>
+	<7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
+	<vpqps24i9sx.fsf@bauges.imag.fr>
+	<7v1wekmgo8.fsf@assigned-by-dhcp.cox.net>
+	<vpqir7wi5oc.fsf@bauges.imag.fr>
+	<7vlkcskx5z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
-	git@vger.kernel.org, rob@landley.net
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 21:37:59 2007
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 21:43:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHlvK-0004KB-2i
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:37:58 +0200
+	id 1IHm0R-0005Z8-FB
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 21:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206AbXHEThp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 15:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752907AbXHEThp
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:37:45 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:37312 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752494AbXHETho (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 15:37:44 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 41A5F4CBC3;
-	Sun,  5 Aug 2007 21:37:43 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 2D7C612DFA2;
-	Sun,  5 Aug 2007 21:37:43 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id B8C4430A94C;
-	Sun,  5 Aug 2007 21:37:42 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 1EF921C3D500; Sun,  5 Aug 2007 21:37:42 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.999.0708051219440.5037@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 5 Aug 2007 12\:20\:48 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3864/Sun Aug  5 19:21:44 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1755395AbXHETnN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 15:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753803AbXHETnM
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 15:43:12 -0400
+Received: from imag.imag.fr ([129.88.30.1]:45226 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755206AbXHETnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 15:43:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l75JgoUJ012541
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 5 Aug 2007 21:42:50 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IHm02-0000hx-FR; Sun, 05 Aug 2007 21:42:50 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IHm02-0007jw-BC; Sun, 05 Aug 2007 21:42:50 +0200
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, Steven Grimm <koreth@midwinter.com>, Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>, git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <7vlkcskx5z.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri\, 03 Aug 2007 16\:36\:56 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 05 Aug 2007 21:42:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55061>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sun, 5 Aug 2007, David Kastrup wrote:
->> 
->> But your proposed three passes won't work with a patch removing
->> "x/..."  and creating "x" in its place, since "x/" gets only removed
->> in pass 3, and "x" needs to created in pass 2 already.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> Yes, I was wrong. The current two passes are the right thing to do, and we 
-> should just always remove empty directories (and my patch was fine: we can 
-> leave them alone if it's a pure "modify file in place", but that's really 
-> the only case).
+>>> "git-status $args" on the other hand is a preview of "what would
+>>> happen if I say 'git-commit $args'", and in order to compute
+>>> that, you would fundamentally need to be able to write into the
+>>> object store.  In a special case of giving empty $args it can be
+>>> read-only.
+>>
+>> Can you give an example where it _could_ not be read-only?
+>
+> Think of what "git commit -a" would have to do.
 
-The consequence will be that renaming all files in one directory (and
-"all" can even be a single file) will temporarily delete and recreate
-that directory.  My proposed change of index sort and processing order
-would take care of that without requiring multiple passes, at the cost
-of changing the index format and processing.  I think that it would be
-a sound long-term solution.
+I don't know whether it was a typo, but we're not talking about
+"commit", but "status".
 
-Anyway, once directories can be tracked (again necessitating a change
-of index format), surprising directory deletion and recreation should
-become less of an issue, but it won't help with projects that continue
-not tracking directories (presumably most patch-based workflows).
+> It needs to hash and deposit a new object for blobs that have been
+> modified. Where do those new blob object go?
+
+git-status _does_ hash and deposit new objects, but it doesn't _need_
+to. It can very well show you what "commit -a" would do without
+actually doing it.
+
+A trivial (and very stupid, yes) way to do this would be
+
+cp -r . /tmp/git/
+cd /tmp/git
+git-status -a
+
+There's no visible side-effects for the user.
+
+IIRC, git-status -a does actually "git-add" the modified objects, but
+does so in a temporary index, so I believe the objects you leave in
+the objects database are not pointed to by anyone (indeed, I just
+checked, git-fsck --unreachable shows the dangling blob), and are not
+really useful (but will probably be used later when you run commit or
+add).
+
+> Maybe in a theoretical ideal world, you might prefer to
+> reverting back to the stat-dirty original index to make
+> git-status appear a read-only operation, with continued degraded
+> performance.  You are welcome to reimplement it that way, and
+> the patch should be trivial (while git-commit.sh is still a
+> script, at least) but that is not what we did.
+
+You still didn't understand my point about the difference between
+user-specification and internal behavior. I'm very happy with
+git-status updating the stat information in the index, since it is not
+suppose to have user-visible side effects (it has with the current
+empty-diff-for-touched-files behavior of git-diff).
+
+Now, at that point, if I still didn't manage to show you the
+difference between user-visible behavior and implementation, I believe
+I have no better thing to do than giving up.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Matthieu
