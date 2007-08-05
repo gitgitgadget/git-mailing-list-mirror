@@ -1,125 +1,107 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: [PATCH] send-email: let sanitize_address_rfc822 do rfc2047 quoting
-Date: Sun,  5 Aug 2007 22:09:08 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <11863445481996-git-send-email-ukleinek@informatik.uni-freiburg.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sun, 05 Aug 2007 22:32:07 +0200
+Message-ID: <85bqdlhge0.fsf@lola.goethe.zz>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net>
+	<200708040341.36147.ismail@pardus.org.tr>
+	<7vsl70jdcr.fsf@assigned-by-dhcp.cox.net>
+	<46B3F762.1050306@midwinter.com>
+	<7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net>
+	<46B418AA.4070701@midwinter.com>
+	<20070804091249.GA17821@uranus.ravnborg.org>
+	<46B45B1E.5020104@midwinter.com> <85zm17h4pn.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
+	<85myx7dwb3.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708041156550.5037@woody.linux-foundation.org>
+	<85bqdndqgr.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708042127160.5037@woody.linux-foundation.org>
+	<85bqdmctcl.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708051004480.5037@woody.linux-foundation.org>
+	<85bqdlj1lh.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708051118590.5037@woody.linux-foundation.org>
+	<85y7gphkdd.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 22:09:25 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 22:32:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHmPf-0003CP-Uk
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 22:09:20 +0200
+	id 1IHmm2-0008LK-EU
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 22:32:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761478AbXHEUJQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 5 Aug 2007 16:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761428AbXHEUJQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 16:09:16 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:37705 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760284AbXHEUJN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 16:09:13 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IHmPX-0006dW-D2; Sun, 05 Aug 2007 22:09:11 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l75K99tW018646;
-	Sun, 5 Aug 2007 22:09:09 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l75K99df018645;
-	Sun, 5 Aug 2007 22:09:09 +0200 (MEST)
-X-Mailer: git-send-email 1.5.3.rc3.13.g7ab3
+	id S1752394AbXHEUcM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 16:32:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbXHEUcM
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 16:32:12 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:56949 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751692AbXHEUcL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 16:32:11 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id E5E9830337D;
+	Sun,  5 Aug 2007 22:32:09 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id D54F3ABE0E;
+	Sun,  5 Aug 2007 22:32:09 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 49A0130A9F3;
+	Sun,  5 Aug 2007 22:32:09 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 01C261C3D500; Sun,  5 Aug 2007 22:32:07 +0200 (CEST)
+In-Reply-To: <85y7gphkdd.fsf@lola.goethe.zz> (David Kastrup's message of "Sun\, 05 Aug 2007 21\:06\:06 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3864/Sun Aug  5 19:21:44 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55069>
 
-Without this patch I'm not able to properly send emails as I have a
-non-ascii character in my name.
+David Kastrup <dak@gnu.org> writes:
 
-The former version tried to fix-up the real name part with double quote=
-s
-if it includes a '.'.  I removed this as rfc2047 can handle a dot, too.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> So by advocating Texinfo, you're advocating something that is
+>> OBJECTIVELY WORSE than what we have now.
+>>
+>> And I tried to explain why, by pointing out that info files (which
+>> was the case you tried to push as an advantage) aren't actually an
+>> advantage to any normal user.
+>
+> Linus, your "normal user" does not get any documentation that can
+> usefully be employed for navigating a large body of documentation.
+>
+> Anyway, this particular flame feast might be somewhat irrelevant: I
+> have read up a bit on AsciiDoc and Docbook.
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@informatik.uni-freiburg.=
-de>
----
-Hello,
+Ok, it turns out that
 
-I already sent a similar patch that was discussed a bit[1], but was not=
- taken.
+docbook2x-texi --info --to-stdout usermanual.xml >usermanual.info
 
-The list of allowed character was taken from Python's email package.
+cranks out (after a few inexplicable warnings/errors) a completely
+functional info file.  The one thing that is conspicously missing is
+indexing and info-dir information, and that's because it is not in the
+source in the first place.
 
-Comparing with the former version I removed the quoting as described in
-the 2nd paragraph of the log and now I only test $recipient_name once.
+Whether you want to believe it or not, this already helps me
+_considerably_ find my way around git.
 
-I will try to send this patch with next + this patch.  I think it shoul=
-d
-work in principle, but --suppress-from is not honored.  I will take a
-look on this issue later.
+So info, at least for the manual, can at the current point of time be
+supported by merely adding Makefile targets.
 
-Best regards
-Uwe
+Since an index is useful for other output formats, I don't think that
+there should be objections to adding indexing info into the manual.
+This takes the AsciiDoc form of ((primary)) for a primary entry
+appearing in the text, and (((primary[, secondary[, third]]))) for a
+hierarchical entry not appearing in the text itself.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/52093
+Correct?
 
- git-send-email.perl |   23 +++++++++++++++++------
- 1 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f43f92f..5785e29 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -459,16 +459,27 @@ sub unquote_rfc2047 {
- 	return "$_";
- }
-=20
--# If an address contains a . in the name portion, the name must be quo=
-ted.
-+# The name part of an address must consist only of alnum chars, space =
-and a few
-+# others.
-+# If it contains a "forbidden" char in the name port, quote it accordi=
-ng to
-+# rfc2047.
- sub sanitize_address_rfc822
- {
- 	my ($recipient) =3D @_;
--	my ($recipient_name) =3D ($recipient =3D~ /^(.*?)\s+</);
--	if ($recipient_name && $recipient_name =3D~ /\./ && $recipient_name !=
-~ /^".*"$/) {
--		my ($name, $addr) =3D ($recipient =3D~ /^(.*?)(\s+<.*)/);
--		$recipient =3D "\"$name\"$addr";
-+	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?)(\s=
-+<.*)/);
-+
-+	if ($recipient_name) {
-+		if ($recipient_name =3D~ /[^-a-zA-Z0-9!*+\/ ]/ && $recipient_name !~=
- /=3D\?utf-8\?q?.*\?=3D/) {
-+			$recipient_name =3D~ s/([^-a-zA-Z0-9!*+\/ ])/sprintf("=3D%02X", ord=
-($1))/eg;
-+			$recipient_name =3D~ s/ /_/;
-+			$recipient_name =3D~ s/(.*)/=3D\?utf-8\?q\?$1\?=3D/;
-+		}
-+
-+		return "$recipient_name$recipient_addr";
-+
-+	} else {
-+		return "$recipient";
- 	}
--	return $recipient;
- }
-=20
- sub send_message
---=20
-1.5.3.rc3.13.g7ab3
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
