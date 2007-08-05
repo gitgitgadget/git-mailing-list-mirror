@@ -1,78 +1,50 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Terminology question about remote branches.
-Date: Sun, 5 Aug 2007 11:48:01 -0400
-Message-ID: <20070805154801.GD28263@thunk.org>
-References: <854pjfin68.fsf@lola.goethe.zz> <20070804092933.aaec6d52.seanlkml@sympatico.ca> <85ejijgzzg.fsf@lola.goethe.zz> <20070805100532.GG12507@coredump.intra.peff.net> <85172807-B7EB-47DD-813E-FAF5894E1190@zib.de> <20070805110200.GA18083@coredump.intra.peff.net> <85tzre8b4w.fsf@lola.goethe.zz> <20070805115208.GA19734@coredump.intra.peff.net> <85fy2y89kb.fsf@lola.goethe.zz>
+From: Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Problem with bisect
+Date: Sun, 05 Aug 2007 11:02:21 -0500
+Message-ID: <46B5F48D.7020907@lwfinger.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 17:48:16 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 05 18:07:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHiL1-00024j-Lq
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 17:48:16 +0200
+	id 1IHidd-0006lF-3Y
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 18:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094AbXHEPsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 11:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbXHEPsM
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 11:48:12 -0400
-Received: from thunk.org ([69.25.196.29]:35382 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752146AbXHEPsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 11:48:11 -0400
-Received: from root (helo=tinytim.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IHiTO-0006Bj-EE; Sun, 05 Aug 2007 11:56:54 -0400
-Received: from tytso by tinytim.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IHiKn-0004eF-CF; Sun, 05 Aug 2007 11:48:01 -0400
-Content-Disposition: inline
-In-Reply-To: <85fy2y89kb.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752737AbXHEQHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 12:07:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752589AbXHEQHZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 12:07:25 -0400
+Received: from mtiwmhc11.worldnet.att.net ([204.127.131.115]:63014 "EHLO
+	mtiwmhc11.worldnet.att.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752073AbXHEQHY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 12:07:24 -0400
+X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Aug 2007 12:07:24 EDT
+Received: from [192.168.1.104] (cpe-72-129-173-253.kc.res.rr.com[72.129.173.253])
+          by worldnet.att.net (mtiwmhc11) with ESMTP
+          id <20070805160221111002lquhe>; Sun, 5 Aug 2007 16:02:22 +0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20070509)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55036>
 
-On Sun, Aug 05, 2007 at 02:12:04PM +0200, David Kastrup wrote:
-> Well, that is pretty much exactly what I find fascinating: that the
-> behavior is arbitrary and undocumented enough that one can't deduce it
-> either by logic or by recollection or by documentation, but just by
-> reading the code.
+I'm helping someone find what looks like a regression in bcm43xx-mac80211 between v2.6.22 and 
+v2.6.23-rc1. This driver is not in the mainstream kernel, but is found in John Linville's 
+wireless-dev git tree. When we do the first bisection between the current state and v2.6.22, we 
+obtain a kernel whose Makefile says it is v2.6.22; however, it's code is based on a state before 
+bcm43xx-mac80211 was introduced into this tree. My memory isn't what it used to be, but I think this 
+code was put into this tree during 2.6.19 or .20. When I used visualize to see the tree, the bottom 
+is all the way to v2.6.16, which I think is the origin of the git process.
 
-The behavior of how references work and how the config file parameters
-under remote.* and branch.* are pretty well understood, and the
-conceptual model is pretty simple; see Jeff's message.  And most of it
-*is* documented if you look at the git-fetch, git-pull, git-config man
-pages --- just not systematically in one place.
+Is this a git bug, or is it some flaw in this particular tree? We have worked around the problem by 
+arbitrarily calling each bisection that does not have the bcm43xx-mac80211 code as "good". It has 
+been a source of confusion for the guy I'm helping as it is his first bisection. Unfortunately, the 
+bug doesn't show on my machine.
 
-What's not so well understood I suspect by most people is how the "git
-branch" tool edits the config file.  It was added later, and many of
-the git hackers who already know the conceptual model and who are used
-to editing .git/config directly to get what they want, don't use git
-branch much themselves; that's really for more novice users and more
-simpler config files.
+Thanks,
 
-To use a GNU emacs example, consider M-x customize, which is this
-huge, very fancy, *very* complex hierarchical mechanism with a
-pointy-clicky interface for setting options.  Most emacs experts
-wouldn't use it, preferring to open code raw emacs-lisp settings in
-their .emacs.el.  If you ask an old-time emacs user how to set up some
-specific feature setting via M-x customize, they might look at you
-blankly, because it's not an interface they use much, if at all.
-
-A similar thing can be said of "git branch"; once you are familiar
-with how git works at a conceptual level, it can often be
-faster/easier to just hack the .git/config file directly, instead of
-using "git branch" to set up things the way you want.  And I'm pretty
-sure there are ways to set up the config file when you edit it by hand
-that you can't set up via "git branch".
-
-						- Ted
+Larry
