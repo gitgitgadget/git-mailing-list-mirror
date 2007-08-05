@@ -1,87 +1,122 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Sun, 5 Aug 2007 14:26:11 +0200
-Message-ID: <D17F92F4-3FF9-46CD-9E55-449C07DE2820@zib.de>
-References: <11858118802945-git-send-email-prohaska@zib.de> <20070802181853.GB31885@fieldses.org> <20070803030459.GJ20052@spearce.org> <20070803125846.GC28323@fieldses.org> <20070804062010.GQ20052@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sun Aug 05 14:25:28 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Bootstraper for Git Dev Environment for Windows (Light version)
+Date: Sun, 5 Aug 2007 13:27:36 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708051252130.14781@racer.site>
+References: <2B8D8540264E4205BD1E4605770422BF@ntdev.corp.microsoft.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Mike Pape <dotzenlabs@gmail.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <J.Sixt@eudaptics.com>
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 14:28:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHfAl-00065r-FF
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 14:25:27 +0200
+	id 1IHfDT-0006ue-Ho
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 14:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755789AbXHEMZY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 08:25:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755648AbXHEMZY
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 08:25:24 -0400
-Received: from mailer.zib.de ([130.73.108.11]:53746 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755146AbXHEMZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 08:25:23 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75CPJOt014883;
-	Sun, 5 Aug 2007 14:25:19 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75CPIip002533
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 5 Aug 2007 14:25:19 +0200 (MEST)
-In-Reply-To: <20070804062010.GQ20052@spearce.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1755738AbXHEM2M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 08:28:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755876AbXHEM2M
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 08:28:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54596 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755681AbXHEM2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 08:28:11 -0400
+Received: (qmail invoked by alias); 05 Aug 2007 12:28:09 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp029) with SMTP; 05 Aug 2007 14:28:09 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0kRZnzOy0hVk7tZA5JtWa3Z2MDVpVOKnLW8TUWW
+	G8iAqG4fv8nFjy
+X-X-Sender: gene099@racer.site
+In-Reply-To: <2B8D8540264E4205BD1E4605770422BF@ntdev.corp.microsoft.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55008>
 
+Hi Dmitry,
 
-On Aug 4, 2007, at 8:20 AM, Shawn O. Pearce wrote:
+[Mike, Marius and Hannes Cc:ed, since I reference their work]
 
->>
->> Though I'd like to keep the main body of the manual focused on the  
->> major
->> command line tools, I'd have no objection to a separate chapter (or
->> appendix?) devoted to git-gui; then you could point directly at that.
->> Would that make sense?
->
-> Yea, that makes a lot of sense.  git-gui isn't a full replacement
-> for the command line anyway, so I would never suggest a wholesale
-> rewrite of the user manual to slant the entire thing towards git-gui.
-> Doing so would only point out the many shortcomings in git-gui.  :)
+On Sun, 5 Aug 2007, Dmitry Kakurin wrote:
 
-I partially disagree.
+> Please give it a try and tell me how it works for you:
+> http://msysgit.googlecode.com/files/GitMe-1.exe (1.6 MB)
 
-When users start to learn git they are mostly interested in how to
-achieve a specific goal, e.g. how to create a commit. I think most
-users either accept a command line or a gui, whatever is the easiest
-and fastest way to do something.
+That file size is intriguing...  And I think you are on a good idea here.  
+Yesterday I was a bit negative, but after sleeping over it, I think that 
+you have a point there.
 
-I strongly believe that the sections in the manual should be organized
-along the tasks that users want to solve and discuss available  
-approaches.
-Obviously each chapter should start with simple tasks and simple tools
-(the commandline) and only later add advanced usage scenarios. But I
-don't think it makes sense to put git gui into a separate chapter.
+Some comments:
 
-I personally use the command line for most of my work, but for adding
-single diff hunks to the index I use git gui. It's much simple than
-'git add -i'.
+- It works very well!  Good job.
 
-In the chapter on history browsing, the manual pretty early states
+- we can have this bootstrap installer, the full package, snapshots 
+  (Marius had this idea, and is probably going to install some cron job 
+  of some sort or other), and an installer without the development 
+  environment (code name WinGit?) for the end user.
 
-"The best way to see how this works is using the gitk(1) command;
-running gitk now on a git repository and looking for merge commits
-will help understand how the git organizes history."
+- How about calling your package msysGit-netInstall-<version>.exe?
 
-which makes absolutely sense to me. If a gui is the best tool to
-do the job 'understanding history', then there's no reason to first
-restrict the manual to the command line tools, like 'git log'.
+- I'd like to have the full package, too...
 
+	- Partly for size reasons (msysGit.exe is an almost self-contained 
+	  19MB package, while the pack in the repository is something like 
+	  40 MB).  But in this sense, I would have to include the pack for 
+	  mingw.git as well...  Still, on dial-up, 40MB or 60MB makes a 
+	  difference, no?
 
-	Steffen
+	- Partly because I do not like net installers myself... I like to 
+	  download a big installer and be done with it.
+
+- There is one big caveat with your bootstrapper: things have been known 
+  to break, and I think msysgit.git is no exception.  So I'd like to have 
+  a fallback in case things go awry, also to have something that is tested 
+  (for example, Mike tested msysGit-0.4.exe before releasing it).  Of 
+  course, we could solve that issue by branching off of the last release 
+  tag.
+
+- I agree, though, that your approach is more convenient for us.
+
+- Your work is very valuable: it is the first step towards WinGit, because 
+  you already identified some parts that are necessary to run git.
+
+- AFAICT it is possible to make nicer installers with 7-Zip, and also 
+  smaller ones, and most importantly (for me), you can script it.  See for 
+  example the script release-msysGit.sh which resides in /bin in 
+  msysgit.git.  It's a hands-free no-hassle installer maker.
+
+- my idea is to turn /git into a subproject, but I want to make sure 
+  first, that it works, and that a transition is-subdirectory -> 
+  is-submodule goes smooth.  (There is one more submodule that will be 
+  nice to have in msysgit.git... a shell extension similar to TortoiseCVS 
+  is finally gathering way... stay tuned!)
+
+- I wanted to hold off a little, until Hannes can apply the fix-up patch 
+  we need in mingw.git.  Because when he does, your bootstrap will run 
+  into problems...
+
+> If we want to stick with this installer here is what we need to do:
+> * Remove /git directory from msysGit.git
+> * Bring mingw.git up to date so we can remove patching step from installer
+
+Sounds like a plan.  Hannes? (I know that Hannes was/is in holiday...)
+
+> To repack just use any compressor that can create SFX archives that can 
+> also start a file execution. I've used WinRAR. But the whole idea is 
+> that this bootstrap download should require very little/no tweaking. All 
+> changes should happen in msysgit.git and mingw.git.
+
+Like I said, I prefer 7-Zip (if only because it is Open Source).  It would 
+be nice to have insight in how you went about to identify what is needed?
+
+Eventually, I'd like to have a script which creates that installer, in 
+msysgit.git...
+
+Ciao,
+Dscho
