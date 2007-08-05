@@ -1,90 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Feature request: git-pull -e/--edit
-Date: Mon, 20 Nov 2006 19:11:59 +0100
-Message-ID: <20061120181159.GB7201@pasky.or.cz>
-References: <git2eran@tromer.org> <4561B0B5.1020305@tromer.org> <200611201709.kAKH9or1012062@laptop13.inf.utfsm.cl>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Re: $GIT_DIR usage
+Date: Sun, 5 Aug 2007 04:55:55 -0700
+Message-ID: <678E8953ECEB4B72A99DEA2137B05823@ntdev.corp.microsoft.com>
+References: <46B59F63.8020707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 18:17:01 +0000 (UTC)
-Cc: Eran Tromer <git2eran@tromer.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 5 Aug 2007 11:56:14 +0000 (UTC)
+Cc: <git@vger.kernel.org>
+To: "Dan Zwell" <dzwell@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611201709.kAKH9or1012062@laptop13.inf.utfsm.cl>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=MbnwX2UM8OquPQD/PCehZowZHmVEmPeocFDKVd++aNeoS0JzaJMioRTSXIKsQKOEllWmhAedfXA8LByB5cEFWC+3Fskw8KfQZMeyNsC5/d5N/ArbFscmElyKprcPIdAUwj0ZNvO108fD2gCcO8I8+Q/9i3KkrGdepsYWN1l6Hxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=NKaC1kiHv1rkzfEFoU2B0/lizSUjy7gGHTkcn2Z9SfYskecWlggzkrFee3yL7LHszMdohAPWp/oFfQJgHo9WT5rtZCT5M/oxIWGJs8EtmC15bNtmDzAftPP+CL533D0bLW+CK5QO8K8yFquf/WTSsfGIS+xf4EmJKjjYY3ZMlF8=
+In-Reply-To: <46B59F63.8020707@gmail.com>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31926>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmDgH-0001CQ-8c for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 19:15:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1IHeiP-0007oC-02 for gcvg-git@gmane.org; Sun, 05 Aug 2007
+ 13:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966347AbWKTSMK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 13:12:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966348AbWKTSMF
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 13:12:05 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:2274 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S966347AbWKTSMB (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 13:12:01 -0500
-Received: (qmail 25191 invoked by uid 2001); 20 Nov 2006 19:11:59 +0100
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S1755480AbXHEL4E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Aug 2007
+ 07:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXHEL4D
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:56:03 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:20795 "EHLO
+ wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1754235AbXHEL4A (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Aug
+ 2007 07:56:00 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1448020wah for
+ <git@vger.kernel.org>; Sun, 05 Aug 2007 04:56:00 -0700 (PDT)
+Received: by 10.114.53.1 with SMTP id b1mr4643911waa.1186314959494; Sun, 05
+ Aug 2007 04:55:59 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227]) by mx.google.com with ESMTPS id
+ l27sm5295632waf.2007.08.05.04.55.57 (version=SSLv3 cipher=OTHER); Sun, 05 Aug
+ 2007 04:55:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 
-On Mon, Nov 20, 2006 at 06:09:50PM CET, Horst H. von Brand wrote:
-> Eran Tromer <git2eran@tromer.org> wrote:
-> >   A------------F master
-> >    \          /
-> >     B--C--D--E
-..snip..
-> And if quux merges back, she gets the same plus a new merge node, and...
-> Linus told everybody (quite forcefully, I might add) that this is not
-> acceptable for distributed development.
+I think you also need to set GIT_WORK_TREE.
+This way Git will know the root of directories that it controls.
 
-Wrong, if quux merges back and does not do the same "force commit"
-fast-forward (why would it, anyway - OP clearly said it's only if you
-_want_ to make it explicit), quux won't get another merge but end up
-with F as well. It all converges back nicely.
+- Dmitry
+----- Original Message ----- 
+From: "Dan Zwell" <dzwell@gmail.com>
+Newsgroups: gmane.comp.version-control.git
+To: <git@vger.kernel.org>
+Sent: Sunday, 5 August 2007 2:58
+Subject: $GIT_DIR usage
 
-I can see how it could be useful.
 
-> > You'd need to educate users on how to use this responsibly
+> Hi, I had a question about $GIT_DIR. That is to say, it doesn't seem to 
+> work. I am using Git 1.5.2.4. See the following: (all the commands I 
+> tried besides "git-init" failed).
 > 
-> Looks like you've never met real users ;-)
-
-Yes, that is a real problem. ;-) But not adding features because users
-could use them irresponsibly doesn't get you too far.
-
-> > And to answer Linus: yes, it's expected that only non-leaf developers
-> > will use --force-commit on regular basis, but that's not because
-> > maintainers are technically special in any way. It's just because
-> > maintainers have something useful to say ("someone's private topic
-> > branch, starting at A and ending at E, has just been accepted into my
-> > all-important public repo and here's why"). Anyone else can do the same
-> > if he feels likewise.
+> $ export GIT_DIR="`pwd`/.git_public"
+> $ git init
+> warning: templates not found /usr/share//git-core/templates/
+> Initialized empty Git repository in /home/user/temp/.git_public/
+> $ echo > new_file
+> $ git add new_file
+> fatal: add must be run in a work tree
+> $ git commit -a
+> fatal: /usr/bin/git-commit cannot be used without a working tree.
+> $ git commit
+> fatal: /usr/bin/git-commit cannot be used without a working tree.
+> $
 > 
-> But the individual changes will presumably reflect said someone's
-> authorship.
-
-You are personifying too much. Git setups where multiple people have
-commit access are very common, and there's no reason to play them down
-just because Git makes other setups easy.
-
-> If they are interleaved with stuff by others or not doesn't make much
-> (development) sense. Yes, it might be interesting for a software
-> historian, but that's not git's main audience in the first place.
-
-Tell that to Junio, our pickaxe guy. :^)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+> Is $GIT_DIR not meant to be used this way? Does it have a different 
+> purpose / use case, or is this just a bug?
+> 
+> Thanks,
