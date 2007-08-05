@@ -1,61 +1,77 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: way to automatically add untracked files?
-Date: Sun, 05 Aug 2007 13:30:03 +0900
-Message-ID: <87d4y2li2c.fsf@catnip.gol.com>
-References: <873ayymzc1.fsf@catnip.gol.com>
-	<fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com>
-	<20070805041320.GH9527@spearce.org> <87lkcqlif2.fsf@catnip.gol.com>
-	<7v8x8qip7n.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.3-rc4
+Date: Sat, 4 Aug 2007 21:29:26 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708042127160.5037@woody.linux-foundation.org>
+References: <7vzm18jg7p.fsf@assigned-by-dhcp.cox.net> <200708040341.36147.ismail@pardus.org.tr>
+ <7vsl70jdcr.fsf@assigned-by-dhcp.cox.net> <46B3F762.1050306@midwinter.com>
+ <7vfy2zj4nj.fsf@assigned-by-dhcp.cox.net> <46B418AA.4070701@midwinter.com>
+ <20070804091249.GA17821@uranus.ravnborg.org> <46B45B1E.5020104@midwinter.com>
+ <85zm17h4pn.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708040954320.5037@woody.linux-foundation.org>
+ <85myx7dwb3.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708041156550.5037@woody.linux-foundation.org>
+ <85bqdndqgr.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 06:30:04 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ismail D?nmez <ismail@pardus.org.tr>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 06:30:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHXkh-0000r4-1x
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 06:30:03 +0200
+	id 1IHXlI-0000v4-UK
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 06:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbXHEE3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 00:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbXHEE3s
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 00:29:48 -0400
-Received: from smtp02.dentaku.gol.com ([203.216.5.72]:48637 "EHLO
-	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885AbXHEE3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 00:29:47 -0400
-Received: from 203-216-96-074.dsl.gol.ne.jp ([203.216.96.74] helo=catnip.gol.com)
-	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
-	id 1IHXkQ-0003XE-Bw; Sun, 05 Aug 2007 13:29:46 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 6DA0E300F; Sun,  5 Aug 2007 13:30:03 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-In-Reply-To: <7v8x8qip7n.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 04 Aug 2007 21\:23\:56 -0700")
-X-Abuse-Complaints: abuse@gol.com
+	id S1751535AbXHEEai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 00:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbXHEEai
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 00:30:38 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:33881 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751470AbXHEEah (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 00:30:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l754TWZY001055
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 4 Aug 2007 21:29:33 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l754TQdD024687;
+	Sat, 4 Aug 2007 21:29:26 -0700
+In-Reply-To: <85bqdndqgr.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-3.223 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54940>
 
-Junio C Hamano <gitster@pobox.com> writes:
->> Really I want a single command that just tells git "please add to the
->> index _all changes that you can find_".
->
-> "git add -u"
 
-So, to _really_ add all changes, I should give two commands:
 
-   git add .
-   git add -u
+On Sat, 4 Aug 2007, David Kastrup wrote:
+> >
+> > None that any normal user would want to use.
+> 
+> Linus, do you really think that the editor _you_ use is used by more
+> people than Emacs?  Think again.
 
-?
+No.
 
-(I tried combining them:  "git add -u .", but that didn't seem to do
-anything useful)
+But I'm also not confused enough to think that people should use 
+micro-emacs for reading man-pages.
 
--Miles
--- 
-o The existentialist, not having a pillow, goes everywhere with the book by
-  Sullivan, _I am going to spit on your graves_.
+The UNIX philosophy is "do one thing, and do it well". 
+
+Man-pages with man. html with a web browser. And edit stuff with an 
+editor.
+
+Why the *hell* do you confuse my choice of editor with my choice of 
+man-page format? I didn't. 
+
+That whole "do everything in emacs" is a disease. And then emacs users 
+think that it's "sane".
+
+		Linus
