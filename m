@@ -1,102 +1,120 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Terminology question about remote branches.
-Date: Sun, 05 Aug 2007 09:06:24 +0200
-Message-ID: <85k5sacvf3.fsf@lola.goethe.zz>
-References: <854pjfin68.fsf@lola.goethe.zz>
-	<20070804120243.GB9716@coredump.intra.peff.net>
-	<85tzrfh3yg.fsf@lola.goethe.zz>
-	<8c5c35580708040607ya186edcg89fbc90587b64d68@mail.gmail.com>
-	<85r6mjdyl8.fsf@lola.goethe.zz>
-	<Pine.LNX.4.64.0708041804260.13596@beast.quantumfyre.co.uk>
-	<85hcnfdvtr.fsf@lola.goethe.zz> <20070804225655.GD11150@thunk.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Fix install-doc-quick target
+Date: Sun, 05 Aug 2007 00:07:40 -0700
+Message-ID: <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
+References: <46B49617.3070402@gmail.com>
+	<Pine.LNX.4.64.0708041637450.14781@racer.site>
+	<46B4A2B0.9080208@gmail.com>
+	<Pine.LNX.4.64.0708041704040.14781@racer.site>
+	<46B4A5FD.3070107@gmail.com>
+	<Pine.LNX.4.64.0708041719490.14781@racer.site>
+	<46B4BDCF.9060809@gmail.com>
+	<Pine.LNX.4.64.0708042229130.14781@racer.site>
+	<46B4F91D.1070907@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Lars Hjemli <lh@elementstorage.no>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Aug 05 09:06:47 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Aug 05 09:07:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHaCL-0004gA-OD
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 09:06:46 +0200
+	id 1IHaDK-0004q2-4J
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 09:07:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbXHEHGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 03:06:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbXHEHGc
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 03:06:32 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:50772 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752406AbXHEHGb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 03:06:31 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 443CC31F34A;
-	Sun,  5 Aug 2007 09:06:30 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 3108D114321;
-	Sun,  5 Aug 2007 09:06:30 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-031.pools.arcor-ip.net [84.61.57.31])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id DF431292B61;
-	Sun,  5 Aug 2007 09:06:29 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 3C2921C4F932; Sun,  5 Aug 2007 09:06:24 +0200 (CEST)
-In-Reply-To: <20070804225655.GD11150@thunk.org> (Theodore Tso's message of "Sat\, 4 Aug 2007 18\:56\:55 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3857/Sun Aug  5 08:20:59 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1753516AbXHEHHn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 03:07:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXHEHHn
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 03:07:43 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57843 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512AbXHEHHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 03:07:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070805070742.IRJU14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 5 Aug 2007 03:07:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Y77g1X00A1kojtg0000000; Sun, 05 Aug 2007 03:07:41 -0400
+In-Reply-To: <46B4F91D.1070907@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of
+	"Sun, 05 Aug 2007 00:09:33 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/54959>
 
-Theodore Tso <tytso@mit.edu> writes:
+The script starts in a subdirectory of the source directory to
+muck with a branch whose structure does not have anything to
+do with the actual work tree.  Go up to the top to make it clear
+that we operate on the whole tree.
 
-> On Sat, Aug 04, 2007 at 08:00:00PM +0200, David Kastrup wrote:
->
->> No, it would seem that I can just
->> git-clone -l
->> my repository and be set up in the new order of things.  Nice.
->
-> Be careful, not really.  A git-clone -l will set up a new repository
-> where origin/master is your original repository, i.e.:
->
-> [remote "origin"]
->         url = /usr/projects/e2fsprogs/base
->         fetch = +refs/heads/*:refs/remotes/origin/*
-> [branch "master"]
->         remote = origin
->         merge = refs/heads/master
->
-> In contrast, if you had done a git-clone of remote repository, you
-> might see something like this instead:
+It also exported GIT_DIR without any good reason.  Remove it.
 
-Yes, I noticed.  I can do a
-git-clone -l --reference /my/local/rep git://the/remote/repo
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-instead.  That's still very fast, but I miss out on my local changes...
+ * I am getting the impression that the semantics of the updated
+   work-tree support is as broken as the original, although the
+   code that implements it is easier to read.  
 
-> [remote "origin"]
->         url = git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
->         fetch = +refs/heads/*:refs/remotes/origin/*
-> [branch "master"]
->         remote = origin
->         merge = refs/heads/master
->
->> However, it would appear from my experiments up to now that the
->> --track option _can't_ be made to work with a 1.4 repository.  I think
->> that is worth mentioning in the docs.
->
-> The real issue is that a "1.4 repository" (that is a repository
-> created by "git clone" from git 1.4 and where the config file hasn't
-> been updated either by hand-editing the config file or by use of
-> "git config" or "git remote" to have remote branches) doesn't have
-> any remote branches, and git branch -track only has significance if
-> you are creating a new (local) branch from a remote tracking branch.
+   Admittedly, this is an unorthodox corner case usage, that
+   deals with a tree structure that does not have any relation
+   with the current project state, and the script is started
+   with a subdirectory of the current project.  What is needed
+   is a way to tell git that "we may be in a subdirectory but
+   the tree structure we are dealing with does not have anything
+   to do with the current work tree structure -- ignore the fact
+   that we are not at the toplevel", and exporting of GIT_DIR
+   was the way to do so in the old world order.
 
-An error message might be nice, though.  I find git hard to understand
-at times.
+   Another way to do this in the new world order would be to
+   pass "--work-tree=.", but this has its own problems it
+   seems.  You can try commenting out cd_to_toplevel this patch
+   introduces, then rewrite checkout-index part with:
 
+    git --git-dir="$GIT_DIR" --work-tree=. checkout-index -a...
+
+   which seems to work, but if you drop --git-dir="$GIT_DIR"
+   from the above (without reintroducing the export of GIT_DIR),
+   you get "fatal: Could not switch to '.git'" which seems quite
+   bogus.  If you say:
+
+	git --work-tree=. foo
+
+   without saying anything about GIT_DIR, shouldn't we run the
+   usual .git/ discovery, going up the directories? 
+
+ Documentation/install-doc-quick.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/install-doc-quick.sh b/Documentation/install-doc-quick.sh
+index e6601bd..07d227f 100755
+--- a/Documentation/install-doc-quick.sh
++++ b/Documentation/install-doc-quick.sh
+@@ -7,7 +7,7 @@ mandir="$2"
+ SUBDIRECTORY_OK=t
+ USAGE='<refname> <target directory>'
+ . git-sh-setup
+-export GIT_DIR
++cd_to_toplevel
+ 
+ test -z "$mandir" && usage
+ if ! git rev-parse --verify "$head^0" >/dev/null; then
+@@ -18,6 +18,8 @@ fi
+ GIT_INDEX_FILE=`pwd`/.quick-doc.index
+ export GIT_INDEX_FILE
+ rm -f "$GIT_INDEX_FILE"
++trap 'rm -f "$GIT_INDEX_FILE"' 0
++
+ git read-tree $head
+ git checkout-index -a -f --prefix="$mandir"/
+ 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.rc4.8.ga120
