@@ -1,98 +1,66 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Terminology question about remote branches.
-Date: Sun, 5 Aug 2007 15:23:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708051519400.7631@beast.quantumfyre.co.uk>
-References: <854pjfin68.fsf@lola.goethe.zz> <7v8x8qfnev.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 16:23:19 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Sun, 5 Aug 2007 16:17:00 +0200
+Message-ID: <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de>
+References: <20070803125634.GB28323@fieldses.org> <1186318785677-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0708051457110.14781@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: bfields@fieldses.org, gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 16:25:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHh0o-0007Td-OT
-	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:23:19 +0200
+	id 1IHh2t-00081b-Fh
+	for gcvg-git@gmane.org; Sun, 05 Aug 2007 16:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752528AbXHEOXP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 10:23:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754576AbXHEOXP
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:23:15 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:56716 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752255AbXHEOXO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 10:23:14 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 8C6D1B8D7E
-	for <git@vger.kernel.org>; Sun,  5 Aug 2007 15:23:12 +0100 (BST)
-Received: (qmail 24092 invoked by uid 103); 5 Aug 2007 15:23:12 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/3855. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.031356 secs); 05 Aug 2007 14:23:12 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 5 Aug 2007 15:23:12 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <7v8x8qfnev.fsf@assigned-by-dhcp.cox.net>
+	id S1758020AbXHEOZY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 10:25:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbXHEOZY
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 10:25:24 -0400
+Received: from mailer.zib.de ([130.73.108.11]:62428 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757414AbXHEOZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 10:25:23 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l75EGDAG022094;
+	Sun, 5 Aug 2007 16:19:42 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db10786.pool.einsundeins.de [77.177.7.134])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l75EG8UJ020282
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 5 Aug 2007 16:16:09 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0708051457110.14781@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55025>
 
-On Sun, 5 Aug 2007, Junio C Hamano wrote:
 
-> David Kastrup <dak@gnu.org> writes:
+On Aug 5, 2007, at 3:58 PM, Johannes Schindelin wrote:
+
+> Hi,
 >
->> I am trying to dig through man-pages and user manual and trying to
->> match them with reality.  I seem to have a hard time.  My current
->> understanding (which definitely differs from the documented state) is
->> that there are two types of branches, local and remote branches, and
->> both types of branches can be remote-tracking (it may not be possible
->> to have a non-remote-tracking remote branch, though).
+> On Sun, 5 Aug 2007, Steffen Prohaska wrote:
 >
-> I think we have a brief discussion on #git before you brought
-> this up ;-)
+>> git gui is especially useful because it allows to select diff hunks.
 >
-> - local branches -- we know what they are.
+> You should give a _big_ _fat_ _red_ warning there.
 >
-> - remote tracking branches -- refs that appear in refs/remotes/
->   in the current world order; they are updated only by copying
->   the corresponding local branches at the remote site, and are
->   meant to "keep track of what _they_ are doing".  In olden
->   days before 1.5.0 with non separate remote layout,
->   'refs/heads/origin' branch, and all the non default branches,
->   were treated this way as well.  You were not supposed to make
->   commit on them (because of the above "keep track of" reason),
->   and having them under refs/heads were too confusing, which
->   was the reason the separate remote layout was invented.
+> If you selectively commit diff hunks, you _never_ tested what you
+> committed.
 >
-> You can have a local branch that is created by forking off of a
-> remote tracking branch, with the intention to "build on top" of
-> the corresponding remote tracking brach.  You can create such a
-> branch and mark it as such with --track option introduced in
-> v1.5.1 timeperiod.  This is a relatively new concept, but many
-> people find it useful.  We do not have the official term to call
-> this concept, and some people have misused the term "remote
-> tracking branches" to describe this, which made things very
-> confusing.
->
-> We would need an official terminology for it.
+> That is the reason we're not advertising git add -i more actively.
 
-Following was mentioned earlier in this thread ... could we use that?
+Hmm... If you do 'git cherry-pick' or 'git rebase' you also did
+not test what you committed. Should we advertise them less
+actively as well?
 
-tracking branch:
-   ref always points at a commit from the remote repo branch
+But I see your point. Selecting diff hunks tends to be more fine
+grained than cherry-picking. But this depends on the details of
+what you're doing. I don't think a general warning is appropriate.
 
-following branch:
-   ref either points at a commit from the remote repo branch, or a
-   local commit with a commit from the remote repo branch in the history
-
-perhaps?
-
--- 
-Julian
-
-  ---
-An optimist is a man who looks forward to marriage.
-A pessimist is a married optimist.
+	Steffen
