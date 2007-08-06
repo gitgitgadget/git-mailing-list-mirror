@@ -1,92 +1,83 @@
-From: Brett Schwarz <brett_schwarz@yahoo.com>
-Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-Date: Sun, 5 Aug 2007 20:33:29 -0700 (PDT)
-Message-ID: <608102.66070.qm@web38905.mail.mud.yahoo.com>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: way to automatically add untracked files?
+Date: Mon, 06 Aug 2007 12:45:19 +0900
+Message-ID: <buovebtwckw.fsf@dhapc248.dev.necel.com>
+References: <873ayymzc1.fsf@catnip.gol.com>
+	<200708051411.25238.johan@herland.net>
+	<20070805161117.GE28263@thunk.org>
+	<200708052116.04140.johan@herland.net>
+	<Pine.LNX.4.64.0708060112330.14781@racer.site>
+	<buo1wehxssa.fsf@dhapc248.dev.necel.com>
+	<Pine.LNX.4.64.0708060419230.14781@racer.site>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Aug 06 05:33:35 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 06 05:46:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHtLa-0006rW-Cl
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 05:33:34 +0200
+	id 1IHtXX-0000Li-O0
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 05:45:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757832AbXHFDdb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 23:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755858AbXHFDdb
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 23:33:31 -0400
-Received: from web38905.mail.mud.yahoo.com ([209.191.125.111]:27086 "HELO
-	web38905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755310AbXHFDda convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Aug 2007 23:33:30 -0400
-Received: (qmail 66075 invoked by uid 60001); 6 Aug 2007 03:33:29 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=WK1wZ9tvzBhoo7frMc2pFBs4EDdeKAujw9BD6SbORkRm2tdLASd/4Dr4yncUlZBrfsIzUXZnQCtGDvts64DF3TQqg9XD4nbtLt3eHTtmSQEHBs7CGCvRXfaBhlnG2lcEV1ygVaYmx1ftKkyBEpaw6C6Sg4cgYGiaTd0no0W27UM=;
-X-YMail-OSG: dMwwCk8VM1m0k4sKmhr4GlEo_aFRNMZ7jkdwjfrH0y7J2PJVhNgZj3gT4rwvTx_kpP7JF215UVJnhEcwvhbkpKvPtWvqUEhtTNSo1T7cRAM.IkLS1.Fiki_HlA--
-Received: from [24.16.125.24] by web38905.mail.mud.yahoo.com via HTTP; Sun, 05 Aug 2007 20:33:29 PDT
-X-Mailer: YahooMailRC/651.41 YahooMailWebService/0.7.119
+	id S1754365AbXHFDpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 23:45:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556AbXHFDpk
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 23:45:40 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:35256 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752042AbXHFDpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 23:45:39 -0400
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l763jKpd004153;
+	Mon, 6 Aug 2007 12:45:20 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Mon, 6 Aug 2007 12:45:20 +0900
+Received: from dhapc248.dev.necel.com ([10.114.98.116] [10.114.98.116]) by relay31.aps.necel.com with ESMTP; Mon, 6 Aug 2007 12:45:20 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 3539B46F; Mon,  6 Aug 2007 12:45:19 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <Pine.LNX.4.64.0708060419230.14781@racer.site> (Johannes Schindelin's message of "Mon\, 6 Aug 2007 04\:21\:30 +0100 \(BST\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55104>
 
-> 
-> ----- Original Message ----
-> From: Shawn O. Pearce <spearce@spearce.org>
-> To: J. Bruce Fields <bfields@fieldses.org>
-> Cc: Steffen Prohaska <prohaska@zib.de>; git@vger.kernel.org
-> Sent: Friday, August 3, 2007 11:20:10 PM
-> Subject: Re: [PATCH] user-manual: mention git gui citool (commit, amend)
-> 
-> "J. Bruce Fields" <bfields@fieldses.org> wrote:
-> > On Thu, Aug 02, 2007 at 11:04:59PM -0400, Shawn O. Pearce wrote:
-> > > Online help?  In git-gui?  :-)
-> > >
-> > > We don't have an online help system yet.
-> >
-> > Fair enough.
-> >
-> > Though I'd like to keep the main body of the manual focused on the major
-> > command line tools, I'd have no objection to a separate chapter (or
-> > appendix?) devoted to git-gui; then you could point directly at that.
-> > Would that make sense?
-> 
-> Yea, that makes a lot of sense.  git-gui isn't a full replacement
-> for the command line anyway, so I would never suggest a wholesale
-> rewrite of the user manual to slant the entire thing towards git-gui.
-> Doing so would only point out the many shortcomings in git-gui.  :)
-> 
-> I haven't explored any in-Tk rendering options yet, been too busy
-> with other projects.  Ideally I'd like to just render the asciidoc
-> markup directly, but I don't think anyone has done an asciidoc
-> viewer for Tk.  I can't imagine it would be that difficult to get
-> some sort of parser working though...
-> 
-> 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > I recommend against that, too.  All too often, I have some temporary files 
+>> > in the working tree, and I'll be dimmed if I'm the only one.  So 
+>> > "addremove" adds too much possibility for pilot errors.
+>> 
+>> "Recommend against it"?  Why?
+>
+> Didn't I say that? It just _asks_ for pilot errors.
 
-So, I took a stab at this earlier today, and it is fairly straight forward. I have 
-something that is semi working (I haven't tested all the scenarios yet), but 
-the rest is just really filling in the blanks.
+Huh?  How is it any worse than the underlying commands it uses
+("git add ." in particular)?!  Indeed, it seems rather less likely to
+cause problems, because it has a rather odd name.
 
-Question though: I was going to have a index tree on a side panel...but do
- you want this thing to only bring up the git-gui.txt file, and show the table 
-of contents, or do you want all *.txt files in the index? Or .... ?
+>> It's a separate command, so if it doesn't fit your working style, don't
+>> use it.
+>
+> Hah!  If that were true, we'd have a lot less mails like "I tried this and 
+> it did not work", only to find out that the person assumed that 
+> documentation is for wimps, and tried a command that "sounded" like it 
+> would do the right thing.
 
-Thanks,
-    --brett
+Git is not exactly a user-coddling, ultra-hand-holding application, nor
+does it seem to have that as a goal.  It offers _tons_ of rope to hang
+yourself if you wish (though it usually offers lots of ways to recover).
 
+Rather git seems to have as a goal being a useful toolkit for managing
+source trees, and based on what I've seen, tries to accomodate many
+different styles of usage (rather than trying to force a certain style
+down the users' throats -- as some VCSs try to do ...).
 
+-miles
 
-
-
-       
-____________________________________________________________________________________
-Be a better Globetrotter. Get better travel answers from someone who knows. Yahoo! Answers - Check it out.
-http://answers.yahoo.com/dir/?link=list&sid=396545469
+-- 
+/\ /\
+(^.^)
+(")")
+*This is the cute kitty virus, please copy this into your sig so it can spread.
