@@ -1,58 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [MinGW PATCH] git clone was failing with 'invalid object name
- HEAD' if ran from cmd.exe directly
-Date: Mon, 6 Aug 2007 22:56:26 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708062255420.14781@racer.site>
-References: <BD28FA320B7749FFBE3135FE92380BCE@ntdev.corp.microsoft.com> 
- <Pine.LNX.4.64.0708061134380.14781@racer.site>
- <a1bbc6950708061455v459182cei3fb6b3b518d4b176@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add support for an info version of the user manual
+Date: Mon, 06 Aug 2007 19:44:39 +0200
+Organization: At home
+Message-ID: <f985v4$b14$1@sea.gmane.org>
+References: <86ir7tc5xk.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 23:57:10 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 07 00:06:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIAZZ-0008Ry-IJ
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 23:57:09 +0200
+	id 1IIAid-00038N-Rg
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 00:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758100AbXHFV5I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 17:57:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbXHFV5G
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 17:57:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37803 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754263AbXHFV5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 17:57:05 -0400
-Received: (qmail invoked by alias); 06 Aug 2007 21:57:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp010) with SMTP; 06 Aug 2007 23:57:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/HrslGZT3HRrWwsJGAlov5cwUaOqiZRIkgKJN4Dq
-	HYqWQ6vWAdzHrb
-X-X-Sender: gene099@racer.site
-In-Reply-To: <a1bbc6950708061455v459182cei3fb6b3b518d4b176@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1764746AbXHFWF5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 18:05:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765538AbXHFWFy
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 18:05:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:49005 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764746AbXHFWFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 18:05:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIAhm-0006xC-W4
+	for git@vger.kernel.org; Tue, 07 Aug 2007 00:05:39 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 00:05:38 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 00:05:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55176>
 
-Hi,
+[Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org]
 
-On Mon, 6 Aug 2007, Dmitry Kakurin wrote:
+David Kastrup wrote:
 
-> On 8/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > I had more problems than I thought with setting up a fork of mingw.git.
-> > It seems that the relative alternates path to mingw.git is followed, but
-> > not that one from mingw.git to git.git.  So I could upload, but not fetch.
-> 
-> Does it mean that fork of a fork does not work on repo.or.cz?
+> These patches use docbook2x in order to create an info version of the
+> git user manual.
+[...]
+> ---
+>  Documentation/Makefile |   28 ++++++++++++++++++++++++++++
+>  Makefile               |    6 ++++++
+>  2 files changed, 34 insertions(+), 0 deletions(-)
+[...]
 
-Yes, at the moment it does not work.  Therefore I set up 
-git/mingw4msysgit.git, for the time being.
+First, a note on patch: please use $(AWK) instead of 'awk', just in case.
 
-Ciao,
-Dscho
+It would be nice to add a paragraph about build requirements for info
+version of Git User's Manual in the INSTALL file.
+
+In the future we would probably want configure.ac to support --with-info or
+something like that to install documentation in info format (it does
+support --infodir), perhaps with awk autodetection and docbook2x
+autodetection.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
