@@ -1,94 +1,69 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Problem with bisect
-Date: Mon, 6 Aug 2007 14:12:33 -0400
-Message-ID: <20070806141233.3d8a43cc.seanlkml@sympatico.ca>
-References: <46B5F48D.7020907@lwfinger.net>
-	<20070805145234.554bf671.seanlkml@sympatico.ca>
-	<46B623D6.7070809@lwfinger.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: way to automatically add untracked files?
+Date: Mon, 06 Aug 2007 20:19:53 +0200
+Message-ID: <85tzrcfrue.fsf@lola.goethe.zz>
+References: <873ayymzc1.fsf@catnip.gol.com>
+	<fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com>
+	<20070805041320.GH9527@spearce.org>
+	<7vwsw9capl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Larry Finger <larry.finger@lwfinger.net>
-X-From: git-owner@vger.kernel.org Mon Aug 06 20:13:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 20:20:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II74g-0006sx-Mk
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 20:13:03 +0200
+	id 1II7BV-0000nR-R7
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 20:20:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757346AbXHFSMv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 14:12:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757001AbXHFSMv
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 14:12:51 -0400
-Received: from bay0-omc2-s36.bay0.hotmail.com ([65.54.246.172]:63095 "EHLO
-	bay0-omc2-s36.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757216AbXHFSMu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2007 14:12:50 -0400
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]) by bay0-omc2-s36.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Mon, 6 Aug 2007 11:12:49 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp06.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Mon, 6 Aug 2007 11:13:37 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1II74R-0003d5-KC; Mon, 06 Aug 2007 14:12:47 -0400
-In-Reply-To: <46B623D6.7070809@lwfinger.net>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 06 Aug 2007 18:13:37.0843 (UTC) FILETIME=[829C0030:01C7D855]
+	id S1756814AbXHFST7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 14:19:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754692AbXHFST6
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 14:19:58 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:50054 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752661AbXHFST5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2007 14:19:57 -0400
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id AAD2D31F0E1;
+	Mon,  6 Aug 2007 20:19:56 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 9AA342D3B6A;
+	Mon,  6 Aug 2007 20:19:56 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-070-185.pools.arcor-ip.net [84.61.70.185])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 5696D3425E8;
+	Mon,  6 Aug 2007 20:19:56 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id AAD431C3C79D; Mon,  6 Aug 2007 20:19:53 +0200 (CEST)
+In-Reply-To: <7vwsw9capl.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon\, 06 Aug 2007 01\:45\:58 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3878/Mon Aug  6 18:24:41 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55164>
 
-On Sun, 05 Aug 2007 14:24:06 -0500
-Larry Finger <larry.finger@lwfinger.net> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Sean wrote:
-> > On Sun, 05 Aug 2007 11:02:21 -0500
-> > Larry Finger <Larry.Finger@lwfinger.net> wrote:
-> > 
-> >> I'm helping someone find what looks like a regression in bcm43xx-mac80211 between v2.6.22 and 
-> >> v2.6.23-rc1. This driver is not in the mainstream kernel, but is found in John Linville's 
-> >> wireless-dev git tree. When we do the first bisection between the current state and v2.6.22, we 
-> >> obtain a kernel whose Makefile says it is v2.6.22; however, it's code is based on a state before 
-> >> bcm43xx-mac80211 was introduced into this tree. My memory isn't what it used to be, but I think this 
-> >> code was put into this tree during 2.6.19 or .20. When I used visualize to see the tree, the bottom 
-> >> is all the way to v2.6.16, which I think is the origin of the git process.
-> >>
-> >> Is this a git bug, or is it some flaw in this particular tree? We have worked around the problem by 
-> >> arbitrarily calling each bisection that does not have the bcm43xx-mac80211 code as "good". It has 
-> >> been a source of confusion for the guy I'm helping as it is his first bisection. Unfortunately, the 
-> >> bug doesn't show on my machine.
-> >>
-> The git repo is git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-dev.git.
-> 
-> The commands were:
-> 
-> git bisect start
-> git bisect bad
-> git bisect good v2.6.22
-> 
-> I'm using git version 1.4.4.2.g04509
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>
+>> We recently talked about this on the mailing list and decided that
+>> git-add shouldn't remove files that have disappeared, as doing so
+>> might break most user's expections of what git-add does.
+>> ...
+>> "git commit -a" will remove disappeared files.  It has for quite
+>> some time.
+>
+> It obviously is not the time to do this as I have already said
+> that I won't look at anything but fixes and documentation
+> updates until 1.5.3, but I am not opposed to have "git add -a $paths"
+> which would do something like "git add $paths && git add -u $paths".
 
-The directory "drivers/net/wireless/bcm43xx-mac80211" is only introduced in
-commit v2.6.23-rc1-1621-gd05daff.   It didn't exist in v2.6.22.
+I'm all for it.
 
-You can see this with the command:
-
-  $ git log -- drivers/net/wireless/bcm43xx-mac80211
-
-Where the last listed commit is d05daff.  So of course there will be many
-bisection points back to v2.6.22 where that directory just doesn't exist.
-A bit of digging with Git shows this history for most of the files in
-that directory:
-
-  renamed in v2.6.23-rc1-1621 as bcm43xx-mac80211
-  renamed in v2.6.21-rc1-809 as mac80211
-  renamed in v2.6.17-rc2-357 as d80211/bcm43xx
- Imported in v2.6.16-1725 as bcm43xx-d80211
-
-HTH,
-Sean
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
