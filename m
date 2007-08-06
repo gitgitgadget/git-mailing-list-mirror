@@ -1,93 +1,69 @@
-From: Adam Roben <aroben@apple.com>
-Subject: [PATCH] Documentation/git-svn: Instructions for cloning a git-svn-created repository
-Date: Mon,  6 Aug 2007 01:16:43 -0700
-Message-ID: <1186388203181-git-send-email-aroben@apple.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Adam Roben <aroben@apple.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 06 10:16:53 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: possible bug in git apply?
+Date: Mon, 06 Aug 2007 01:29:46 -0700
+Message-ID: <7vabt5dq11.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0708041243070.6905@asgard.lang.hm>
+	<alpine.LFD.0.999.0708042141510.5037@woody.linux-foundation.org>
+	<7vvebuh8g8.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: david@lang.hm, git@vger.kernel.org, rob@landley.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Aug 06 10:29:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHxll-0007kx-GR
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 10:16:53 +0200
+	id 1IHxyL-0001uF-6y
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 10:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757366AbXHFIQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 04:16:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757508AbXHFIQp
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 04:16:45 -0400
-Received: from mail-out3.apple.com ([17.254.13.22]:62841 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757355AbXHFIQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 04:16:44 -0400
-Received: from relay5.apple.com (relay5.apple.com [17.128.113.35])
-	by mail-out3.apple.com (Postfix) with ESMTP id E9848DAC8E1;
-	Mon,  6 Aug 2007 01:16:43 -0700 (PDT)
-Received: from relay5.apple.com (unknown [127.0.0.1])
-	by relay5.apple.com (Symantec Mail Security) with ESMTP id D14E829C003;
-	Mon,  6 Aug 2007 01:16:43 -0700 (PDT)
-X-AuditID: 11807123-a7a49bb000007d99-12-46b6d8eb5d90
-Received: from localhost.localdomain (unknown [17.151.100.170])
-	by relay5.apple.com (Apple SCV relay) with ESMTP id 90E7F30400B;
-	Mon,  6 Aug 2007 01:16:43 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2.2
-X-Brightmail-Tracker: AAAAAA==
+	id S1759498AbXHFI3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 04:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758480AbXHFI3t
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 04:29:49 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38538 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755997AbXHFI3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 04:29:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070806082947.XUHG14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 6 Aug 2007 04:29:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YYVm1X00P1kojtg0000000; Mon, 06 Aug 2007 04:29:47 -0400
+In-Reply-To: <alpine.LFD.0.999.0708050949220.5037@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 5 Aug 2007 09:59:03 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55123>
 
-These instructions tell you how to create a clone of a repository created with
-git-svn, that can in turn be used with git-svn.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Signed-off-by: Adam Roben <aroben@apple.com>
----
-> gitster: (3) you prepare one git-svn managed git repository, allow others to
-> clone it via git, and have each of these cloned git repositories to interact
-> with svn via git-svn -- this third mode of operation is not supported.
-> 
-> spearce: be nice if someone who cared about git-svn supporting (3) either wrote
-> a patch for the documentation, or taught the tool how to do this more
-> automatically.
+> That said, if we really wanted to get it right, we should do this as a 
+> three-phase thing: (1) remove old files (2) create new files (3) for all 
+> removals and renames, try to remove source directories that might have 
+> become empty.
+>
+> That would fix it properly and for all cases.
 
-Here's that patch. Maybe I'll get around to Shawn's second (far more ideal)
-suggestion sometime.
+Actually that will break the case of removing foo/bar, which is
+the only file in directory foo, and creating a new file foo.  So
+if we really want to do all the corner cases, we would need to
+do something like:
 
- Documentation/git-svn.txt |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+ * scan the list of files that will remain (i.e., renamed-to,
+   modifed-in-place and created-anew) to note which directories
+   should remain in the result;
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 0a210e4..3e3b597 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -435,6 +435,25 @@ Tracking and contributing to an entire Subversion-managed project
- # of dcommit/rebase/show-ignore should be the same as above.
- ------------------------------------------------------------------------
- 
-+The initial 'git-svn clone' Subversion can be quite time-consuming (especially
-+for large repositories). If multiple people (or one person with multiple
-+machines) want to use git-svn to interact with the same Subversion repository,
-+you can do the initial 'git-svn clone' to a repository on a server and have
-+each person clone that repository with 'git clone':
-+
-+------------------------------------------------------------------------
-+# Do the initial import on a server
-+	ssh server "cd /pub && git-svn clone http://svn.foo.org/project
-+# Clone locally
-+	git clone server:/pub/project
-+# Tell git-svn which branch contains the Subversion commits
-+	git update-ref refs/remotes/git-svn origin/master
-+# Initialize git-svn locally (be sure to use the same URL and -T/-b/-t options as were used on server)
-+	git-svn init http://svn.foo.org/project
-+# Pull the latest changes from Subversion
-+	git-svn rebase
-+------------------------------------------------------------------------
-+
- REBASE VS. PULL/MERGE
- ---------------------
- 
--- 
-1.5.2.2
+ * remove old files, and remove its empty parent directories
+   that are not in the above list;
+
+ * create new files.
+
+But in the meantime for 1.5.3, I think your patch is better than
+what we currently have.
