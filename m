@@ -1,79 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Mon, 06 Aug 2007 22:05:04 +0200
-Message-ID: <vpqr6mgwhsf.fsf@bauges.imag.fr>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	 =?ISO-8859-1?Q?=20<AF1190=04E2-A0F4-?= =?ISO-8859-1?Q?479F-B0A1-50B2C7?= =?ISO-8859-1?Q?278995?=
-	=?ISO-8859-1?Q?@yahoo.ca>?=
-	<Pine.LNX.4.64.0708021541520.14781@racer.site>
-	<46B1F3F4.5030504@midwinter.com>
-	<Pine.LNX.4.64.0708021614420.14781@racer.site>
-	<20070803053717.GA16379@midwinter.com>
-	<7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>
-	 =?ISO-8859-1?Q?=20<Pine=04.LNX.4.64.?= =?ISO-8859-1?Q?0708031121000.14?= =?ISO-8859-1?Q?781@ra?=
-	=?ISO-8859-1?Q?cer.site>?=
-	<7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
-	<86bqdkbq59.fsf@lola.quinscape.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] check_repository_format_version(): run git_default_config() again
+Date: Mon, 06 Aug 2007 13:26:53 -0700
+Message-ID: <7vsl6wbe9e.fsf@assigned-by-dhcp.cox.net>
+References: <2BA49414-54E0-4353-B237-7799B675FAE8@silverinsanity.com>
+	<Pine.LNX.4.64.0708061831070.14781@racer.site>
+	<7vbqdkcxy3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 06 22:05:57 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 06 22:27:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II8pk-000405-12
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 22:05:44 +0200
+	id 1II9Ap-0003gt-TU
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 22:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387AbXHFUFl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 16:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756857AbXHFUFk
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 16:05:40 -0400
-Received: from imag.imag.fr ([129.88.30.1]:47018 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753593AbXHFUFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 16:05:39 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l76K54vW018724
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 6 Aug 2007 22:05:04 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1II8p6-0006Hf-9h; Mon, 06 Aug 2007 22:05:04 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1II8p6-0003wa-79; Mon, 06 Aug 2007 22:05:04 +0200
-Mail-Followup-To: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-In-Reply-To: <86bqdkbq59.fsf@lola.quinscape.zz> (David Kastrup's message of "Mon\, 06 Aug 2007 18\:10\:10 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 06 Aug 2007 22:05:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756166AbXHFU1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 16:27:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757526AbXHFU1C
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 16:27:02 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64306 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761193AbXHFU1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 16:27:00 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070806202653.JNNY2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 6 Aug 2007 16:26:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YkSt1X00K1kojtg0000000; Mon, 06 Aug 2007 16:26:54 -0400
+In-Reply-To: <7vbqdkcxy3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 06 Aug 2007 11:36:20 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55170>
 
-David Kastrup <dak@gnu.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Ack, ack, ack.  The current default behavior is plainly unusable.  For
-> example, I've rsynced -a a tree including .git, and suddenly git-diff
-> goes out of kilter.  And stops doing so when running git-status
-> once.
+> Sorry, I do not understand this patch from the commit log
+> description.
+>
+> In the old days in 1.5.2 before either implementation of
+> work-tree stuff, this function never called git_default_config()
+> and presumably "git log" worked as expected for Brian.  Why is
+> this call needed _here_, not in some of the callers?
 
-Unfortunately, the patch solves the "large and irrelevant output" of
-git-diff, but not the performance problem (see the rest of the thread,
-I failed to convince Junio that updating the index was a performance
-improvement while keeping the same user semantics).
+Sorry scratch that.  v1.5.2 did not even have core.pager.
 
--- 
-Matthieu
+I see git_config(git_default_config) is called from
+setup_git_directory_gently() in the version that introduced
+core.pager.  Curiously enough it does the config twice, once
+where no GIT_DIR is set and it sets inside_work_tree, and
+another by calling git_config(git_setup_config) -- big thanks
+for sorting this mess out.
+
+I however have a mild suspicion that this has to be done much
+earlier.
+
+For example, "git -p log" would first call handle_options(),
+which calls the setup_pager() logic, and then we call
+handle_internal_command() which calls setup_git_directory() that
+eventually leads to the callchain of finding the .git directory
+and .git/config file to be used.  In that case, when we make the
+call to setup_pager() from handle_options(), we haven't even
+figured out if there is a configuration file, let alone reading
+from it.
+
+We could work this around by having the "we need config -- where
+is it" logic in setup_pager(), but if we later have new options
+like -p that affects the way how git wrapper itself behaves
+based on the configuration, we would need the same "early config
+read" logic to support it.
