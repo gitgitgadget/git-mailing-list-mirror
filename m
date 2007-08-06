@@ -1,74 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC (take 3)] Git User's Survey 2007
-Date: Mon, 6 Aug 2007 01:29:02 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708060127090.14781@racer.site>
-References: <200707250358.58637.jnareb@gmail.com> <200708040250.55180.jnareb@gmail.com>
- <85sl6ziw7x.fsf@lola.goethe.zz> <200708052206.31734.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: way to automatically add untracked files?
+Date: Mon, 06 Aug 2007 02:32:56 +0200
+Organization: At home
+Message-ID: <f95q7l$8lv$2@sea.gmane.org>
+References: <873ayymzc1.fsf@catnip.gol.com> <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com> <20070805041320.GH9527@spearce.org> <200708051411.25238.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 02:29:43 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 06 02:33:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHqTe-0002c3-3m
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 02:29:42 +0200
+	id 1IHqX3-0003EG-Dp
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 02:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759072AbXHFA3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Aug 2007 20:29:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758373AbXHFA3j
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 20:29:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47162 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751935AbXHFA3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2007 20:29:38 -0400
-Received: (qmail invoked by alias); 06 Aug 2007 00:29:37 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 06 Aug 2007 02:29:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18SS+MsxBoSk1uKeSQCde7LhsjangXfqI2y0afGem
-	VVBQQDf0jAeQ99
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200708052206.31734.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1758991AbXHFAdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Aug 2007 20:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758933AbXHFAdJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 20:33:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:47353 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752060AbXHFAdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2007 20:33:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IHqWr-0001Kq-MR
+	for git@vger.kernel.org; Mon, 06 Aug 2007 02:33:01 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Aug 2007 02:33:01 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Aug 2007 02:33:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55097>
 
-Hi,
+Johan Herland wrote:
 
-On Sun, 5 Aug 2007, Jakub Narebski wrote:
-
-> On Sat, 4 August 2007, David Kastrup wrote:
-> >
-> > I miss a question about developer and mailing list attitude.  That is
-> > often inversely proportional to the quality of help and support: one
-> > has forums where lots of friendly people without much of a clue hang
-> > out, and then there are some where one can always get competent and
-> > fast help in one package with an ulcer.
+> So different users seem to have two different (almost incompatible) 
+> expectations to git-add:
 > 
-> What about a compromise (question)?
+> 1. git-add adds new files into the index. git-add has _no_ business removing 
+> deleted files from the index.
 > 
-> ----
-> Getting help, staying in touch
+> 2. git-add updates the index according to the state of the working tree. 
+> This includes adding new files and removing deleted files.
 > 
-> [...]
 > 
->    10. Did you have problems getting GIT help on mailing list or
->        on IRC channel? What were those problems? What could be improved?
+> Both interpretations are useful and worth supporting, but git-add currently 
+> seems focused on #1 (and rightly so, IMHO).
+> 
+> Even though #2 can be achieved by using a couple of git-add commmands (or a 
+> longer series of more obscure plumbing-level commands), it might be worth 
+> considering the more user-friendly alternative of adding a dedicated 
+> command for supporting #2. Such a command already exists in a similar RCS:
+> 
+> ---
+> $ hg addremove --help
+> hg addremove [OPTION]... [FILE]...
+> 
+> add all new files, delete all missing files
 
-Much better.
+git update-index --add --remove?
 
-Because otherwise, you'd have to have another question:
-
-	10a: Did you ever experience somebody on the mailing list who 
-	     perfectly fits the profile described here:
-	     http://developers.slashdot.org/article.pl?sid=07/03/12/1449201
-
-And admittedly, this has _nothing at all_ to do with Git.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
