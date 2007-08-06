@@ -1,138 +1,81 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Some ideas for StGIT
-Date: Mon, 6 Aug 2007 10:36:25 +0100
-Message-ID: <b0943d9e0708060236x19674e4cjf04cec716ae6246c@mail.gmail.com>
-References: <1186163410.26110.55.camel@dv>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Mon, 06 Aug 2007 17:36:43 +0800
+Message-ID: <46B6EBAB.4050805@midwinter.com>
+References: <20070803125634.GB28323@fieldses.org> <1186318785677-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0708051457110.14781@racer.site> <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de> <85wswa6n1o.fsf@lola.goethe.zz> <5AB64D44-2324-4A98-B010-8D6D6225F116@zib.de> <Pine.LNX.4.64.0708060119320.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Pavel Roskin" <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 06 11:36:36 2007
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 06 11:36:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHz0p-00011L-4L
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 11:36:31 +0200
+	id 1IHz1G-0001Aq-JZ
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 11:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760806AbXHFJg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 05:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760495AbXHFJg1
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 05:36:27 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:58489 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760323AbXHFJg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 05:36:26 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so611397ugf
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 02:36:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m1XBh6bstb6LT5ti+NIY1svkjS0Too5B917c82gmVHAd/EbFHOc3qezwFYVofqCFKeVdKtO4o5PYga9PDTiKWIfhxmYB5g2rwvXwR0oY3hu4hSwtsIClxnrhUypbH2oPPU4YWGFcceXNYgiG3b6DUki6cW85HXHx9iaPtECkiQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k8RKwsHfRtIoxrFkgQb+fOFvnLppnuvKknT07CL5X97+Evkgsn5ndutORNtW0pGaXPobGGQTxxifmEz7BkNcxQz/DSVV9vdnyR6efmnLDfnMjOsv+ITo2uOPVCWb7xfVYn6VNw+TD0221dmGbeJ02mYIZGxTcOnboUxSR9Moi4w=
-Received: by 10.66.252.18 with SMTP id z18mr5055248ugh.1186392985080;
-        Mon, 06 Aug 2007 02:36:25 -0700 (PDT)
-Received: by 10.66.255.6 with HTTP; Mon, 6 Aug 2007 02:36:25 -0700 (PDT)
-In-Reply-To: <1186163410.26110.55.camel@dv>
-Content-Disposition: inline
+	id S1761417AbXHFJgu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 05:36:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761430AbXHFJgt
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 05:36:49 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:36099 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1761124AbXHFJgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 05:36:46 -0400
+Received: (qmail 1434 invoked from network); 6 Aug 2007 09:36:45 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=dxx311830vTw16ByOhqlTf4UpslzlpSVRbvdOM/QOJG980NEFWq+Igb4QPbpA+hK  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 6 Aug 2007 09:36:45 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <Pine.LNX.4.64.0708060119320.14781@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55129>
 
-Hi Pavel,
+Johannes Schindelin wrote:
+> But how do you make sure that it works as expected?  I.e. when you commit 
+> a hunk using, say, variable "rule_the_world", and by mistake (happen to me 
+> all the time, maybe to you, too?) forgot to select the hunk which declares 
+> that variable, maybe because it is hidden in a forest of other variables?
+>   
 
-All the interesting discussion usually happen during my holidays :-).
+For cases like that, sure, partial commits are dangerous. On the other 
+hand, I've sometimes done partial commits for things like correcting 
+erroneous comments in code I'm working on, where there is no functional 
+change whatsoever in the hunk I'm committing and where I want to isolate 
+the corrections from the functional changes I *am* working on.
 
-On 03/08/2007, Pavel Roskin <proski@gnu.org> wrote:
-> I was recently disappointed to learn that one of the Linux drivers
-> (bcm43xx_mac80211, to be precise) switched from git to quilt.  I asked
-> whether StGIT was considered, a discussion followed, and I think the key
-> points need to be shared with StGIT developers.  I'll add some of my
-> ideas to the mix.
+Also, when I'm working on a topic branch in my local sandbox I like to 
+do lots of work-in-progress commits. I usually do those based on the 
+granularity of my mental model of what I'm working on, and I have no 
+expectation whatsoever that any particular percentage of them represent 
+working code or even code that compiles. Sometimes I do partial commits 
+in that situation too: I make a change to some function in a file that 
+I'm editing elsewhere, and commit just that hunk with a commit log 
+message reminding me of why I made the change. Those commits are not 
+intended for public consumption; they're just to help me keep track of 
+my own work. Once everything is in a working state, I do a squash merge 
+or a bunch of cherry-pick -n invocations to build some revisions to 
+publish to the outside world, and *then* I am in "each commit must 
+represent a non-broken state" mode.
 
-Thanks for the feedback.
+The great thing about git (well, *one* of the great things) is that it 
+unifies those two workflows in one system. With, say, svn, the "lots of 
+little checkpoints of my work in progress" part of that is awkward at 
+best, because it's very much oriented around an "if the version control 
+system knows about a change, it is by definition published to the 
+outside world" model.
 
-> The main point in favor of quilt is that it allows to edit the patches
-> with the text editor.  One can pop all patches, edit them and push the
-> all back.
+So I guess my point, after all that, is just that assumptions that are 
+valid in the context of one workflow are not necessarily as valid in 
+others, and that even in a particular context, not all changes are 
+created equal.
 
-If this is the main feature they need, they probably don't need git at
-all and quilt would be enough. I was using quilt before starting StGIT
-but the main problem I had with plain patches approach was the
-conflict solving.
-
-StGIT does a 'git-diff | git-apply' as a patch push optimization and
-we could even cache the diff but the current algorithm is that if
-git-apply fails, StGIT falls back to a three-way merge and even an
-interactive user merge (via xxdiff for example). I find the three-way
-merging (automatic or interactive) much more powerful than fuzzy patch
-application.
-
-If we would allow patch editing, the 'stg push' algorithms wouldn't
-know when git-apply failed because the patch was edited or the base
-was changed. Falling back to the three-way merge would lose the edited
-patch. If one doesn't need three-way merging, quilt is good enough.
-
-Other advantages of the three-way merging is the detection of full
-patches or hunks merged upstream (the former can also be achieved by
-testing the reverse-application of the patches).
-
-I don't usually edit patches during development, I prefer to edit the
-source files and review the diff. It happens many times to move hunks
-between patches but I usually towards the bottom patches in the stack
-(using stg export and emacs) and the three-way merging automatically
-removes the merged hunks from top patches.
-
-> I don't suggest that StGIT gives up on the git-based storage, but this
-> mode of operation could be implemented in two ways.
->
-> One is to have a command opposite to "export".  It would read the files
-> that "export" produces, replacing the existing patches.
-
-As Yann said, we already have 'stg import --replace'. I mainly use
-this feature with series sent to me and when they need some editing to
-apply cleanly. There is also 'stg import --ignore' to ignore the
-patches already applied (mainly when the importing fails in the middle
-of a series, there is no need to re-import the first patches).
-
-> Another approach would be to reexamine the patch after "stg refresh -es"
-> and to apply it instead of the original patch.  If the patch doesn't
-> apply, the options would be to discard the edits or to re-launch the
-> editor.
-
-That's an interesting idea but maybe we should have a separate command
-like --edit-full to edit the full patch + log (part of the
-functionality already available in import).
-
-> Next issue is that it should be possible to create a patch in one
-> operation.  StGIT follows quilt too closely here in requiring "new" and
-> "refresh", instead of utilizing the advantage of the workflow that
-> allows immediate editing of the sources without any commands.
->
-> Basically, I want one command that:
->
-> 1) shows user what was changed
-> 2) allows user to name the patch
-> 3) allows user to describe the patch
-> 4) allows user to exclude files from the patch
-> 5) doesn't require another command to put the changes to the patch
->
-> I think the most natural approach would be to enhance "stg new".  I see
-> "stg new -s" is supposed to show the changes, but it's currently broken.
-
-Thanks for reporting this. I don't use the --showpatch options much
-and we don't have any tests (yet) for the interactive options.
-
-> Finally, it would be great to have TLS support in the mail command.
-> Mercurial has it, and looking at their mail.py, it doesn't seem to be
-> much work.
-
-Indeed, the SMTP Python objects already provide support for TLS via starttls().
-
--- 
-Catalin
+-Steve
