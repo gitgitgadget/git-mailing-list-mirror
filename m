@@ -1,57 +1,61 @@
-From: =?ISO-8859-1?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
-Subject: typo in http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html
-Date: Mon, 06 Aug 2007 16:05:02 +0200
-Message-ID: <46B72A8E.3040602@gmx.de>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-am: initialize variable $resume on startup
+Date: Mon, 6 Aug 2007 14:15:30 +0000
+Message-ID: <20070806141530.10422.qmail@8bd9c2a0b9ecab.315fe32.mid.smarden.org>
+References: <20070803201405.GB12430@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 06 16:06:00 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 16:15:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II3DU-0006bD-R2
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 16:05:53 +0200
+	id 1II3Mf-0001nM-TJ
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 16:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933325AbXHFOFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 10:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765238AbXHFOFH
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 10:05:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50029 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1765832AbXHFOFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 10:05:05 -0400
-Received: (qmail invoked by alias); 06 Aug 2007 14:05:03 -0000
-Received: from c199054.adsl.hansenet.de (EHLO [213.39.199.54]) [213.39.199.54]
-  by mail.gmx.net (mp032) with SMTP; 06 Aug 2007 16:05:03 +0200
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX1+ZUeRI+kKZcWTvUY/Tv2Hhbdi2do3KLS5HgKLopf
-	m9gfyZbXNziuMH
-User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
-X-Y-GMX-Trusted: 0
+	id S932140AbXHFOPN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 10:15:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755219AbXHFOPN
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 10:15:13 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:42869 "HELO a.mx.smarden.org"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with SMTP
+	id S1753482AbXHFOPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 10:15:11 -0400
+Received: (qmail 10423 invoked by uid 1000); 6 Aug 2007 14:15:30 -0000
+Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <20070803201405.GB12430@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55150>
 
-Hello,
+git-am expects the variable $resume to be empty or unset, which might not
+be the case if $resume is set in the user's environment.  So initialize
+it to an empty value on startup.
 
-shouldn't " at the tip of one of your branches" better written as " at 
-the top of one of your branches".
+The problem was noticed by Pierre Habouzit and reported through
+ http://bugs.debian.org/435807
 
-BTW one question: I run a simple test unit (only build tests) against 
-the latest git tree, which is updated with "git pull" once a day.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ git-am.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-If I want to make some tests with a previous kernel version - say 
-v2.6.20 and switch then back to HEAD to continue with my common test 
-suite, would the following be ok : ?
-
-$> git checkout v2.6.20
-$> <do something useful with it>
-$> git reset
-
-Thanks for an answer
-
---
-Toralf
+diff --git a/git-am.sh b/git-am.sh
+index 6cf0eee..b5ed8ca 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -103,7 +103,8 @@ It does not apply to blobs recorded in its index."
+ }
+ 
+ prec=4
+-dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= resolvemsg=
++dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary=
++resolvemsg= resume=
+ git_apply_opt=
+ 
+ while case "$#" in 0) break;; esac
+-- 
+1.5.3.GIT
