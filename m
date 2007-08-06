@@ -1,72 +1,94 @@
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: question about git-submodule
-Date: Mon, 06 Aug 2007 13:23:19 -0400
-Message-ID: <46B75907.1070007@tromer.org>
-References: <20070713214630.GB7106@genesis.frugalware.org> <20070715083959.GC999MdfPADPa@greensroom.kotnet.org> <20070715104712.GF2568@steel.home> <46B3B3D2.6030000@tromer.org> <20070805145922.GC999MdfPADPa@greensroom.kotnet.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Problem with bisect
+Date: Mon, 6 Aug 2007 14:12:33 -0400
+Message-ID: <20070806141233.3d8a43cc.seanlkml@sympatico.ca>
+References: <46B5F48D.7020907@lwfinger.net>
+	<20070805145234.554bf671.seanlkml@sympatico.ca>
+	<46B623D6.7070809@lwfinger.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, VMiklos <vmiklos@frugalware.org>,
-	git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon Aug 06 19:53:34 2007
+Cc: git@vger.kernel.org
+To: Larry Finger <larry.finger@lwfinger.net>
+X-From: git-owner@vger.kernel.org Mon Aug 06 20:13:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II6lp-000071-G4
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 19:53:33 +0200
+	id 1II74g-0006sx-Mk
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 20:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759598AbXHFRxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 13:53:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759590AbXHFRxa
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 13:53:30 -0400
-Received: from forum2.org ([198.65.45.153]:4984 "EHLO forum2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758380AbXHFRx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 13:53:29 -0400
-X-Greylist: delayed 1749 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Aug 2007 13:53:29 EDT
-X-F2-Envelope-From: git2eran@tromer.org
-X-F2-Envelope-To: git@vger.kernel.org
-Received: from moby.tromer.org (c-66-30-26-80.hsd1.ma.comcast.net [66.30.26.80])
-	(authenticated bits=0)
-	by forum2.org (8.13.6.20060614/8.13.6) with ESMTP id l76HNYjb049923;
-	Mon, 6 Aug 2007 17:23:35 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.5) Gecko/20070719 Fedora/2.0.0.5-1.fc7 Thunderbird/2.0.0.5 Mnenhy/0.7.5.0
-In-Reply-To: <20070805145922.GC999MdfPADPa@greensroom.kotnet.org>
-X-Enigmail-Version: 0.95.3
+	id S1757346AbXHFSMv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 14:12:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757001AbXHFSMv
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 14:12:51 -0400
+Received: from bay0-omc2-s36.bay0.hotmail.com ([65.54.246.172]:63095 "EHLO
+	bay0-omc2-s36.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757216AbXHFSMu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2007 14:12:50 -0400
+Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]) by bay0-omc2-s36.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Mon, 6 Aug 2007 11:12:49 -0700
+X-Originating-IP: [64.231.205.174]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp06.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Mon, 6 Aug 2007 11:13:37 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1II74R-0003d5-KC; Mon, 06 Aug 2007 14:12:47 -0400
+In-Reply-To: <46B623D6.7070809@lwfinger.net>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 06 Aug 2007 18:13:37.0843 (UTC) FILETIME=[829C0030:01C7D855]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55163>
 
-On 2007-08-05 10:59, Sven Verdoolaege wrote:
->> BTW, is there any easy way to create a submodule directly inside the
->> supermodule's working tree, instead of cloning it as in the above example?
+On Sun, 05 Aug 2007 14:24:06 -0500
+Larry Finger <larry.finger@lwfinger.net> wrote:
+
+> Sean wrote:
+> > On Sun, 05 Aug 2007 11:02:21 -0500
+> > Larry Finger <Larry.Finger@lwfinger.net> wrote:
+> > 
+> >> I'm helping someone find what looks like a regression in bcm43xx-mac80211 between v2.6.22 and 
+> >> v2.6.23-rc1. This driver is not in the mainstream kernel, but is found in John Linville's 
+> >> wireless-dev git tree. When we do the first bisection between the current state and v2.6.22, we 
+> >> obtain a kernel whose Makefile says it is v2.6.22; however, it's code is based on a state before 
+> >> bcm43xx-mac80211 was introduced into this tree. My memory isn't what it used to be, but I think this 
+> >> code was put into this tree during 2.6.19 or .20. When I used visualize to see the tree, the bottom 
+> >> is all the way to v2.6.16, which I think is the origin of the git process.
+> >>
+> >> Is this a git bug, or is it some flaw in this particular tree? We have worked around the problem by 
+> >> arbitrarily calling each bisection that does not have the bcm43xx-mac80211 code as "good". It has 
+> >> been a source of confusion for the guy I'm helping as it is his first bisection. Unfortunately, the 
+> >> bug doesn't show on my machine.
+> >>
+> The git repo is git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-dev.git.
 > 
-> Do you want to use the submodule porcelain or just the plumbing?
-> If you simply want to add a submodule locally, "git add" will do that for
-> you just fine.  It's only when you want to make it easier for people who
-> clone your superproject to get updates of the submodules that you
-> should set up the information required by "git submodule" in .gitmodules
-> (see end of module_add in git-submodule.sh).
+> The commands were:
+> 
+> git bisect start
+> git bisect bad
+> git bisect good v2.6.22
+> 
+> I'm using git version 1.4.4.2.g04509
 
-If you just do "git add sub" (where sub is an existing repo subdir) then
-any subsequent "git submodule update" predictably complains:
-  No submodule mapping found in .gitmodules for path 'sub'
+The directory "drivers/net/wireless/bcm43xx-mac80211" is only introduced in
+commit v2.6.23-rc1-1621-gd05daff.   It didn't exist in v2.6.22.
 
-And if you wire up .gitmodules manually, then "git submodule update"
-chokes on the "git-fetch" in modules_update().
+You can see this with the command:
 
-So I suggest extending "git submodule add" to handle existing
-subdirectories by simply using them as-is instead of creating a new
-clone. And "git submodule update" shouldn't try fetching when the commit
-is already present locally.
+  $ git log -- drivers/net/wireless/bcm43xx-mac80211
 
-Speaking of which, currently "git submodule" clones/fetches *all*
-branches on the remote repository, which seems quite excessive given
-that the supermodule's content references just one submodule commit. By
-default, "git submodule add" should fetch only the needed head, and "git
-submodule update" should fetch only the commit sha1 (if needed).
+Where the last listed commit is d05daff.  So of course there will be many
+bisection points back to v2.6.22 where that directory just doesn't exist.
+A bit of digging with Git shows this history for most of the files in
+that directory:
 
-  Eran
+  renamed in v2.6.23-rc1-1621 as bcm43xx-mac80211
+  renamed in v2.6.21-rc1-809 as mac80211
+  renamed in v2.6.17-rc2-357 as d80211/bcm43xx
+ Imported in v2.6.16-1725 as bcm43xx-d80211
+
+HTH,
+Sean
