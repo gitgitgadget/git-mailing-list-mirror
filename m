@@ -1,84 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC (take 3)] Git User's Survey 2007
-Date: Mon, 06 Aug 2007 17:44:03 +0200
-Organization: At home
-Message-ID: <f985vc$b14$2@sea.gmane.org>
-References: <200707250358.58637.jnareb@gmail.com> <200708040250.55180.jnareb@gmail.com> <f9459f$ik$1@sea.gmane.org> <f95srg$dki$1@sea.gmane.org> <f96cks$e26$1@sea.gmane.org>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: [MinGW PATCH] git clone was failing with 'invalid object name HEAD' if ran from cmd.exe directly
+Date: Mon, 6 Aug 2007 15:32:56 -0700
+Message-ID: <a1bbc6950708061532t45fb0cf4w716971260b0640ae@mail.gmail.com>
+References: <BD28FA320B7749FFBE3135FE92380BCE@ntdev.corp.microsoft.com>
+	 <Pine.LNX.4.64.0708061134380.14781@racer.site>
+	 <a1bbc6950708061455v459182cei3fb6b3b518d4b176@mail.gmail.com>
+	 <Pine.LNX.4.64.0708062255420.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 00:10:10 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 07 00:33:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIAm9-0004K8-CC
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 00:10:09 +0200
+	id 1IIB8W-0002Bs-Au
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 00:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760227AbXHFWKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 18:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759354AbXHFWKG
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 18:10:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:49143 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758129AbXHFWKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 18:10:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IIAm2-0007Mn-7V
-	for git@vger.kernel.org; Tue, 07 Aug 2007 00:10:02 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 00:10:02 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 00:10:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1762842AbXHFWc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 18:32:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762271AbXHFWc7
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 18:32:59 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:17418 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753302AbXHFWc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 18:32:57 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1240448rvb
+        for <git@vger.kernel.org>; Mon, 06 Aug 2007 15:32:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ikoIX+e87HLm6eMYDvLd1YGgXcdQIRFL5IDe5dulaqUr0y+4STva3u/ddmKYW10yfg9zN0m9r8JmiYWAVIBY37xmpQbq25ShdXwMBpUAF8Z+QK1kVZY+3qSln5SeAeF8fcy9boWTw+mAVUY9l7urJUoeZTGiZ6oRvjNkgcIQUWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WeQRCi0N7SSfFDCZGkjgRBs6BETkCxzjnUjkxZ8+89zojERS2wdcZ/gxehffi7ycWHqjyTtzGZuDgPwy8NdCwynva3nh0eFcmIIwJeBgj/eQb2hJ/NhHcOpxxbVYD2KH/H+xcM66sQJuD/Z0zDxHOHerliDPAfO06j/GQIWywr0=
+Received: by 10.140.201.1 with SMTP id y1mr2284616rvf.1186439577020;
+        Mon, 06 Aug 2007 15:32:57 -0700 (PDT)
+Received: by 10.141.2.18 with HTTP; Mon, 6 Aug 2007 15:32:56 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708062255420.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55178>
 
-[Cc: Asger Ottar Alstrup <asger@ottaralstrup.dk>, git@vger.kernel.org]
+On 8/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Does it mean that fork of a fork does not work on repo.or.cz?
+>
+> Yes, at the moment it does not work.  Therefore I set up
+> git/mingw4msysgit.git, for the time being.
 
-Could you Cc: me (jnareb@gmail.com)? TIA.
+That's too bad.
+I was thinking about adopting distributed dev model for MinGW port of Git:
+we all would fork off mingw.git on repo.or.cz and then we would pull
+from each other instead of exchanging patches thru e-mail.
+Personally I don't like email patch exchange process.
 
-Asger Ottar Alstrup wrote:
-> Jakub Narebski wrote:
+Can this problem on repo.or.cs be fixed? Did Petr reply?
 
->> I don't quite understand: what would be the question? Note that survey is
->> meant to help git community notice what needs improvements.
-> 
-> Maybe include a question about hosting?
-> 
-> Do you use, or have a need for, a git hosting service?
-> 
-> [ ] No
-> [ ] Yes, an open source hosting service
-> [ ] Yes, a hosting service for commercial projects
-
-First, I think 65 questions is quite many, and I'd rather not add new
-questions to the survey. Besides, git hosting service belongs to area of
-git auxillary; we don't have any other questions about miscelaneus git
-tools, or wishes for git support in tools (like bugtracker or hosting
-service).
-
-Second, the question is a bit ambiguous: is "No" mean "no need for git
-hosting service, or not using git hosting service?
-
-BTW. there are a few free OSS git hosting services, http://repo.or.cz
-I think the most prominent: see http://git.or.cz/gitwiki/GitProjects
-
-Third, the survey is (among others) meant to help git commuinity develop git
-to be better. This question is not about this.
-
-So, I think I wont be ading this queation, unless somebody convinces me...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+- Dmitry
