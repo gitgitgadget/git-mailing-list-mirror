@@ -1,62 +1,157 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Some ideas for StGIT
-Date: Mon, 6 Aug 2007 11:01:09 +0100
-Message-ID: <b0943d9e0708060301q33b013efwc28d1c28d31ceb80@mail.gmail.com>
-References: <1186163410.26110.55.camel@dv>
-	 <200708031914.04344.andyparkins@gmail.com>
-	 <1186206085.28481.33.camel@dv>
-	 <20070804080801.GD30277@nan92-1-81-57-214-146.fbx.proxad.net>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] Add support for an info version of the user manual
+Date: Mon, 6 Aug 2007 11:41:48 +0200
+Message-ID: <86r6mhc6k7.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Pavel Roskin" <proski@gnu.org>,
-	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Mon Aug 06 12:01:16 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 06 12:16:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHzOl-0007U4-CO
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 12:01:15 +0200
+	id 1IHzd0-0002o5-CC
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 12:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761592AbXHFKBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 06:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761608AbXHFKBM
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 06:01:12 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:15036 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755823AbXHFKBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 06:01:10 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so613009ugf
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 03:01:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HPpuOdeNuqTFx+tMqDp/q2fT9TW08uepaT7FB48+dPr1eK96Bf2BJs4KTDdwHFtPeW0DBHTG6y8q2ilBHxtxdIHfVfM0fbc85nW8LvSIdUmJROER21fJwFhpIfjK23NQ9ZK3kqd7omzEdMQCZkxhLhcNRYqLJTwHAbMY7eCDIhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=O0ppUAl2XFFtLMklpWeg6FAojDPZXvsaBBGSmcIYYg9ytuAk0FLIjy3bxAxt0Nd8bxvlnG6F0+Ue9qeo14qVtPvycKuCi4vrFHVgG5qT4JHnFZE6ctFi8b003dfqMBG/4yhcj+zkSQLtqIXxpQ5h/w/+ZpS8HvJ62kYDhn4jzBM=
-Received: by 10.66.221.6 with SMTP id t6mr5088925ugg.1186394469463;
-        Mon, 06 Aug 2007 03:01:09 -0700 (PDT)
-Received: by 10.66.255.6 with HTTP; Mon, 6 Aug 2007 03:01:09 -0700 (PDT)
-In-Reply-To: <20070804080801.GD30277@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
+	id S1762305AbXHFKPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 06:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762292AbXHFKPy
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 06:15:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:51342 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755399AbXHFKPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 06:15:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IHzco-0000QI-R9
+	for git@vger.kernel.org; Mon, 06 Aug 2007 12:15:46 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Aug 2007 12:15:46 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Aug 2007 12:15:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:KFQ68iwgds+hDBjr2Yq6B2hhlEc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55135>
 
-On 04/08/2007, Yann Dirson <ydirson@altern.org> wrote:
-> FWIW, I have written a couple of scripts to help moving stuff around
-> between patches.  Those are not yet integrated in stgit proper, and it
-> happens that the 0.13 tarball does not contain them, they are only
-> available from the git tree (better use my tree[1], since I updated them
-> recently).
 
-That's probably because I haven't updated the MANIFEST.in file (I
-don't look in the contrib directory much :-)).
+These patches use docbook2x in order to create an info version of the
+git user manual.  No existing Makefile targets (including "all") are
+touched, so you need to explicitly say
 
+make info
+sudo make install-info
+
+to get git.info created and installed.  If the info target directory
+does not already contain a "dir" file, no directory entry is created.
+This facilitates $(DESTDIR)-based installations.  The same could be
+achieved with
+
+sudo make INSTALL_INFO=: install-info
+
+explicitly.
+
+awk is used for patching up sub-par file and directory information in
+the Texinfo file.  It would be cleaner to place the respective info
+straight into user-manual.txt or the conversion configurations, but I
+find myself unable to find out how to do this with Asciidoc/Texinfo.
+
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ Documentation/Makefile |   28 ++++++++++++++++++++++++++++
+ Makefile               |    6 ++++++
+ 2 files changed, 34 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 443114b..5a5961b 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -44,6 +44,11 @@ INSTALL?=install
+ RM ?= rm -f
+ DOC_REF = origin/man
+ 
++infodir?=$(prefix)/share/info
++MAKEINFO=makeinfo
++INSTALL_INFO=install-info
++DOCBOOK2X_TEXI=docbook2x-texi
++
+ -include ../config.mak.autogen
+ -include ../config.mak
+ 
+@@ -67,6 +72,8 @@ man1: $(DOC_MAN1)
+ man5: $(DOC_MAN5)
+ man7: $(DOC_MAN7)
+ 
++info: git.info
++
+ install: man
+ 	$(INSTALL) -d -m755 $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -d -m755 $(DESTDIR)$(man5dir)
+@@ -75,6 +82,14 @@ install: man
+ 	$(INSTALL) -m644 $(DOC_MAN5) $(DESTDIR)$(man5dir)
+ 	$(INSTALL) -m644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
+ 
++install-info: info
++	$(INSTALL) -d -m755 $(DESTDIR)$(infodir)
++	if test -r $(DESTDIR)$(infodir)/dir; then \
++	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) git.info ;\
++	else \
++	  $(INSTALL) -m644 git.info $(DESTDIR)$(infodir) ; \
++	  echo "No directory found in $(DESTDIR)$(infodir)" >&2 ; \
++	fi
+ 
+ ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	$(MAKE) -C ../ GIT-VERSION-FILE
+@@ -138,6 +153,19 @@ XSLTOPTS = --xinclude --stringparam html.stylesheet docbook-xsl.css
+ user-manual.html: user-manual.xml
+ 	xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
+ 
++git.info: user-manual.xml
++	$(RM) $@ $*.texi
++	$(DOCBOOK2X_TEXI) user-manual.xml --to-stdout | \
++	awk '/^@setfilename/{$$2="git.info"};\
++	     /^@direntry/{print "@dircategory Development"; \
++	                  print "@direntry"; \
++	                  print "* Git: (git).           A fast distributed revision control system"; \
++			  print "@end direntry"}; \
++	     /^@direntry/,/^@end direntry/ { next }; \
++	     {print}' > $*.texi
++	$(MAKEINFO) --no-split $*.texi
++	$(RM) $*.texi
++
+ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	$(RM) $@+ $@
+ 	sh ./howto-index.sh $(wildcard howto/*.txt) >$@+
+diff --git a/Makefile b/Makefile
+index 2f3b9b2..b685c7e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -913,6 +913,9 @@ perl/Makefile: perl/Git.pm perl/Makefile.PL GIT-CFLAGS
+ doc:
+ 	$(MAKE) -C Documentation all
+ 
++info:
++	$(MAKE) -C Documentation info
++
+ TAGS:
+ 	$(RM) TAGS
+ 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
+@@ -1005,6 +1008,9 @@ endif
+ install-doc:
+ 	$(MAKE) -C Documentation install
+ 
++install-info:
++	$(MAKE) -C Documentation install-info
++
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
 -- 
-Catalin
+1.5.3.rc4.21.ga63eb
