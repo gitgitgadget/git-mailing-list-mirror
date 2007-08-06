@@ -1,106 +1,59 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Mon, 06 Aug 2007 13:35:08 +0200
-Message-ID: <46B7076C.7090309@trolltech.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>  <460B6BF8541C4D9B916F02A12E0576F5@ntdev.corp.microsoft.com>  <46B2D4D9.4020103@trolltech.com>  <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com> <Pine.LNX.4.64.0708031334530.14781@racer.site>  <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com>  <Pine.LNX.4.64.0708032231320.14781@racer.site>  <e7bda7770708031716i61f80d89o8970b3236a961613@mail.gmail.com>  <Pine.LNX.4.64.0708040123560.14781@racer.site> <e7bda7770708051641h15bd38abo659e74322e6232c0@mail.gmail.com> <Pine.LNX.4.64.0708060054020.14781@racer.site> <46B6B60C.4080805@trolltech.com> <Pine.LNX.4.64.0708061123450.14781@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Mon, 6 Aug 2007 12:51:59 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708061250330.14781@racer.site>
+References: <20070803125634.GB28323@fieldses.org> <1186318785677-git-send-email-prohaska@zib.de>
+ <Pine.LNX.4.64.0708051457110.14781@racer.site> <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de>
+ <85wswa6n1o.fsf@lola.goethe.zz> <5AB64D44-2324-4A98-B010-8D6D6225F116@zib.de>
+ <Pine.LNX.4.64.0708060119320.14781@racer.site> <46B6EBAB.4050805@midwinter.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig8C6A94398DB8EF918AF6DA23"
-Cc: Torgil Svensson <torgil.svensson@gmail.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 06 13:34:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 13:52:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II0r1-0005Pc-Bn
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 13:34:31 +0200
+	id 1II18c-0001sP-Dt
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 13:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655AbXHFLeP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 07:34:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753636AbXHFLeP
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 07:34:15 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:50737 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753237AbXHFLeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 07:34:14 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 72FB574265; Mon,  6 Aug 2007 13:34:12 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 59ACC74214; Mon,  6 Aug 2007 13:34:12 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <Pine.LNX.4.64.0708061123450.14781@racer.site>
-X-Enigmail-Version: 0.95.2
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1763028AbXHFLwi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 07:52:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759225AbXHFLwi
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 07:52:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33302 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754811AbXHFLwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 07:52:37 -0400
+Received: (qmail invoked by alias); 06 Aug 2007 11:52:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp001) with SMTP; 06 Aug 2007 13:52:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/aCUM8fn/aMXC1JG8waK43uSaUls3/Sg61qBppFB
+	BRQZeYNuQ02beH
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46B6EBAB.4050805@midwinter.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55141>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig8C6A94398DB8EF918AF6DA23
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Johannes Schindelin said the following on 06.08.2007 12:24:
-> Hi,
->=20
-> On Mon, 6 Aug 2007, Marius Storm-Olsen wrote:
->=20
->> Instead of hacking away on this old terminal, what about simply includ=
-ing
->> another nice Open Source project?
->>
->> On Windows we have a replacement terminal, which has all the features =
-you
->> want, and also supports tabs like Konsole. I've used it for several ye=
-ars, and
->> it works great. Have a look and see if you like it, then we can add it=
- to the
->> repo:
->>     http://sourceforge.net/projects/console/
->>
->> Original name, ey? :-)
->=20
-> That sounds awesome.  However, from their sourceforge page, it seems th=
-ey=20
-> support only 2k and xp?  What about 95 and nt?
+On Mon, 6 Aug 2007, Steven Grimm wrote:
+>
+> [I pointed out how dangerous committing hunks selectively can be]
+>
+> So I guess my point, after all that, is just that assumptions that are 
+> valid in the context of one workflow are not necessarily as valid in 
+> others, and that even in a particular context, not all changes are 
+> created equal.
 
-Hmm, nope. Just tried it on 98, and that didn't fly. It requires=20
-symbols to do top-level transparency, which is only accessible from=20
-Win2K and later.
+Right.  But I think a warning _is_ needed.  So that everybody considers if 
+it is safe in _her_ workflow.
 
---=20
-=2Emarius
-
-
---------------enig8C6A94398DB8EF918AF6DA23
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFGtwdsKzzXl/njVP8RAnlkAJ9L4yM1QfdmlBfk4nnyw3TId94hOwCbBF0v
-rrwVv43lPRzrPxaX0imSMzw=
-=vLVa
------END PGP SIGNATURE-----
-
---------------enig8C6A94398DB8EF918AF6DA23--
+Ciao,
+Dscho
