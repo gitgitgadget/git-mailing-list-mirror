@@ -1,46 +1,52 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Mon, 6 Aug 2007 17:56:22 +0200
-Message-ID: <20070806155622.GA21448@moooo.ath.cx>
-References: <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708031121000.14781@racer.site> <7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 17:56:35 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: core.pager handling broken
+Date: Mon, 6 Aug 2007 11:56:43 -0400
+Message-ID: <2BA49414-54E0-4353-B237-7799B675FAE8@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 06 17:56:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II4wZ-0003Mc-10
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 17:56:31 +0200
+	id 1II4wt-0003Sd-FL
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 17:56:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbXHFP40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 11:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbXHFP40
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 11:56:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52780 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751209AbXHFP4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 11:56:25 -0400
-Received: (qmail invoked by alias); 06 Aug 2007 15:56:23 -0000
-Received: from pD9EBB594.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.148]
-  by mail.gmx.net (mp055) with SMTP; 06 Aug 2007 17:56:23 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1+NBtAx8lWNQs1zTRm8frEPA7w//oc7ODo3lNyH/5
-	/ld1cvQBgVcTyC
-Content-Disposition: inline
-In-Reply-To: <7vir7wmk84.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751284AbXHFP4r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 11:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbXHFP4r
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 11:56:47 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37667 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126AbXHFP4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 11:56:46 -0400
+Received: from [192.168.0.3] (cpe-69-204-218-82.stny.res.rr.com [69.204.218.82])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 0FADE1FFC22C
+	for <git@vger.kernel.org>; Mon,  6 Aug 2007 15:56:44 +0000 (UTC)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55156>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> In any case, enough discussion.  Here is an updated patch, which
-> I _could_ be pursuaded to consider for inclusion after v1.5.3
-> happens, if there are enough agreements and Acks.
+I don't have time to look into it, but something broke the core.pager  
+variable.  I've bisected it down to  
+"e90fdc39b6903502192b2dd11e5503cea721a1ad: Clean up work-tree  
+handling".  With this commit:
 
-I like this new behaviour but I don't see the old one too often
-either.
+$ git config core.pager
+tig
+$ git log
+# Uses less
+$ GIT_PAGER=tig git log
+# Uses tig
+
+I don't have time to track it down right now (I'm off visiting  
+family), but will look into it tomorrow unless someone thinks it's  
+obvious and points it out before then.
+
+~~ Brian
