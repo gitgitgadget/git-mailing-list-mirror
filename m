@@ -1,79 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile
- git)
-Date: Mon, 6 Aug 2007 15:37:19 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708061535390.14781@racer.site>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site> 
- <46B2D4D9.4020103@trolltech.com>  <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
-  <Pine.LNX.4.64.0708031334530.14781@racer.site> 
- <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com> 
- <Pine.LNX.4.64.0708032231320.14781@racer.site> 
- <e7bda7770708031716i61f80d89o8970b3236a961613@mail.gmail.com> 
- <Pine.LNX.4.64.0708040123560.14781@racer.site> 
- <e7bda7770708051641h15bd38abo659e74322e6232c0@mail.gmail.com> 
- <Pine.LNX.4.64.0708060054020.14781@racer.site>
- <e7bda7770708060730t7c0713c4m6abe42d929d847b0@mail.gmail.com>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: Some ideas for StGIT
+Date: Mon, 6 Aug 2007 11:19:21 -0400
+Message-ID: <20070806151920.GA22508@filer.fsl.cs.sunysb.edu>
+References: <1186163410.26110.55.camel@dv> <20070803232351.GC30277@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0708060249h4a3f59bobfac8f9014aca82f@mail.gmail.com> <1186406768.10627.50.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Torgil Svensson <torgil.svensson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 16:38:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 06 17:19:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II3id-0000as-Vx
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 16:38:04 +0200
+	id 1II4N1-0006sI-JA
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 17:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932449AbXHFOh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 10:37:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932414AbXHFOh7
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 10:37:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45241 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932280AbXHFOh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 10:37:56 -0400
-Received: (qmail invoked by alias); 06 Aug 2007 14:37:55 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp045) with SMTP; 06 Aug 2007 16:37:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18qijYCPuUqOnz2OzrNBDKzSCY9N+lvxqGAAGFtrX
-	ewVo5Y/aTWdL7g
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e7bda7770708060730t7c0713c4m6abe42d929d847b0@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932787AbXHFPTm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 11:19:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764392AbXHFPTm
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 11:19:42 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:43296 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762130AbXHFPTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 11:19:41 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l76FJLb9023838;
+	Mon, 6 Aug 2007 11:19:21 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l76FJLPX023836;
+	Mon, 6 Aug 2007 11:19:21 -0400
+X-Authentication-Warning: filer.fsl.cs.sunysb.edu: jsipek set sender to jsipek@fsl.cs.sunysb.edu using -f
+Content-Disposition: inline
+In-Reply-To: <1186406768.10627.50.camel@dv>
+User-Agent: Mutt/1.5.16 (2007-07-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55154>
 
-Hi,
+<shameless plugs>
 
-On Mon, 6 Aug 2007, Torgil Svensson wrote:
-
-> On 8/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On Mon, Aug 06, 2007 at 09:26:08AM -0400, Pavel Roskin wrote:
+> On Mon, 2007-08-06 at 10:49 +0100, Catalin Marinas wrote:
 > 
-> > > > > 3. "gitk --all" said "Error reading commits: fatal: write 
-> > > > > failure on stdout: Invalid argument"
+> > The story for the 'new -s' option was that with StGIT (not possible
+> > with Quilt), one can start modifying the local tree and only create a
+> > patch afterwards.
 > 
-> > I have to wonder how you called it... From msys.bat, cd'ing into a 
-> > valid repository, I had no issues whatsoever.
+> And that's what I really like about StGIT.  I like that I can edit code
+> without worrying (too much) about the state of the repository.
+ 
+guilt-new -f <patchname>
+
+> > The newly created patch is always empty, even if
+> > there were local changes and showing them was useful for writing the
+> > patch description. One can use refresh for checking the changes in.
+> > Indeed, the 'new' command can be improved to have part of the
+> > 'refresh' functionality, though I don't really like this duplication.
 > 
-> I called it from rxvt. I tried it now under cmd and it's all good. Did 
-> you try rxvt in this case?
+> It should be fine as long as the code is reused IMHO.
 
-I had no issues like that in rxvt.  But "git push" via ssh was a no go.  
-even with the "ssh://.." syntax.  Since it works in cmd, I'll stay with 
-cmd for now, but I'd like to see a working rxvt.
+Agreed.
 
-> I notice that with your net installer (great job btw!), I get the 
-> msysgit.git reop under /.git and the mingw.git repo under /git/.git but 
-> there is no /git in /.gitignore. Is this overlap intended?  Isn't this a 
-> case for submodules?
+> > I think we should put some default patch description.
+> 
+> I agree.  Sometimes it's too early to write a description.
+ 
+If Guilt doesn't find a description in the patch file during push, it uses
+"patch $patchname" as the commit message. This makes it enough of an
+eye-sore that you notice before you submit the patches upstream :)
 
-Exactly.  My bad.  Dmitry pointed out that I should not have done that, 
-and I'm in the middle of setting it up as a submodule.
+Josef 'Jeff' Sipek.
 
-Ciao,
-Dscho
+-- 
+Failure is not an option,
+It comes bundled with your Microsoft product.
