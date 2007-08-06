@@ -1,59 +1,76 @@
-From: Asger Ottar Alstrup <asger@ottaralstrup.dk>
-Subject: Re: [RFC (take 3)] Git User's Survey 2007
-Date: Mon, 06 Aug 2007 07:48:24 +0200
-Message-ID: <f96cks$e26$1@sea.gmane.org>
-References: <200707250358.58637.jnareb@gmail.com> <200708040250.55180.jnareb@gmail.com> <f9459f$ik$1@sea.gmane.org> <f95srg$dki$1@sea.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] setup.c:verify_non_filename(): don't die unnecessarily while disambiguating
+Date: Mon, 06 Aug 2007 00:24:12 -0700
+Message-ID: <7vk5s9dt2b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: spearce@spearce.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 06 07:47:24 2007
+X-From: git-owner@vger.kernel.org Mon Aug 06 09:24:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHvR6-0002j5-3G
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 07:47:24 +0200
+	id 1IHwws-0004Xm-44
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 09:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbXHFFrU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 01:47:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbXHFFrU
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 01:47:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:44076 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752842AbXHFFrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 01:47:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IHvQy-0004xi-RW
-	for git@vger.kernel.org; Mon, 06 Aug 2007 07:47:16 +0200
-Received: from x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk ([80.162.62.94])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 07:47:16 +0200
-Received: from asger by x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 07:47:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: x1-6-00-06-1b-ce-5f-2f.k253.webspeed.dk
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <f95srg$dki$1@sea.gmane.org>
+	id S1756640AbXHFHYO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 03:24:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756100AbXHFHYO
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 03:24:14 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:34547 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754194AbXHFHYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 03:24:13 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070806072411.ORXS7193.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 6 Aug 2007 03:24:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YXQC1X0061kojtg0000000; Mon, 06 Aug 2007 03:24:12 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55118>
 
-Jakub Narebski wrote:
-> I don't quite understand: what would be the question? Note that survey is
-> meant to help git community notice what needs improvements.
+If you have a working tree _file_ "foo", attempt to refer to a
+branch "foo/bar" without -- to disambiguate, like this:
 
-Maybe include a question about hosting?
+	$ git log foo/bar
 
-Do you use, or have a need for, a git hosting service?
+tried to make sure that foo/bar cannot be naming a working tree
+file "foo/bar" (in which case we would say "which one do you
+want?  A rev or a working tree file?  clarify with -- please").
+We run lstat("foo/bar") to check that.  If it does not succeed,
+there is no ambiguity.
 
-[ ] No
-[ ] Yes, an open source hosting service
-[ ] Yes, a hosting service for commercial projects
+That is good.  But we also checked the error status for the
+lstat() and expected it to fail with ENOENT.  For this
+particular case, however, it fails with ENOTDIR.  That one
+should be treated as "expected error" as well.
 
-Regards,
-Asger
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * This was from a real-life experience Shawn had.
+
+ setup.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index a45ea83..2b8e8c0 100644
+--- a/setup.c
++++ b/setup.c
+@@ -103,7 +103,7 @@ void verify_non_filename(const char *prefix, const char *arg)
+ 	if (!lstat(name, &st))
+ 		die("ambiguous argument '%s': both revision and filename\n"
+ 		    "Use '--' to separate filenames from revisions", arg);
+-	if (errno != ENOENT)
++	if (errno != ENOENT && errno != ENOTDIR)
+ 		die("'%s': %s", arg, strerror(errno));
+ }
+ 
+-- 
+1.5.3.rc4.15.ga2c3d
