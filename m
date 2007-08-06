@@ -1,103 +1,71 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] gitk - Handle MouseWheel events on Windows
-Date: Mon, 06 Aug 2007 18:45:52 -0400
-Message-ID: <11864403541120-git-send-email-mdl123@verizon.net>
-References: <1186440352826-git-send-email-mdl123@verizon.net>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mark Levedahl <mdl123@verizon.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Aug 07 00:46:18 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [MinGW PATCH] git clone was failing with 'invalid object name
+ HEAD' if ran from cmd.exe directly
+Date: Mon, 6 Aug 2007 23:48:10 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708062346120.14781@racer.site>
+References: <BD28FA320B7749FFBE3135FE92380BCE@ntdev.corp.microsoft.com> 
+ <Pine.LNX.4.64.0708061134380.14781@racer.site> 
+ <a1bbc6950708061455v459182cei3fb6b3b518d4b176@mail.gmail.com> 
+ <Pine.LNX.4.64.0708062255420.14781@racer.site>
+ <a1bbc6950708061532t45fb0cf4w716971260b0640ae@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 00:48:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIBL7-0005hO-L3
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 00:46:18 +0200
+	id 1IIBNc-0006G0-Vd
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 00:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761797AbXHFWqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 18:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761593AbXHFWqI
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 18:46:08 -0400
-Received: from vms040pub.verizon.net ([206.46.252.40]:37558 "EHLO
-	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761539AbXHFWqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 18:46:05 -0400
-Received: from fal-l07294-lp.us.ray.com ([72.66.124.87])
- by vms040.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JMD00I78J8IO3O1@vms040.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 06 Aug 2007 17:45:55 -0500 (CDT)
-In-reply-to: <1186440352826-git-send-email-mdl123@verizon.net>
-X-Mailer: git-send-email 1.5.3.rc4.5.g4f0b5
-X-Peer: 127.0.0.1
+	id S932518AbXHFWst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 18:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbXHFWss
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 18:48:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35433 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932121AbXHFWsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 18:48:47 -0400
+Received: (qmail invoked by alias); 06 Aug 2007 22:48:45 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 07 Aug 2007 00:48:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ZZt1xUJPZuvJRCt0O5iq5JluylGHJogemVf3Atc
+	tX8hZyuk3Ld82B
+X-X-Sender: gene099@racer.site
+In-Reply-To: <a1bbc6950708061532t45fb0cf4w716971260b0640ae@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55182>
 
-Windows, unlike X-Windows, sends mousewheel events by default to the
-window that has keyboard focus and uses the MouseWheel event to do so.
-The window to be scrolled must be able to take focus, but gitk's panels
-are disabled so cannot take focus. For all these reasons, a different
-design is needed to use the mousewheel on Windows. The approach here is
-to bind the mousewheel events to the top level window and redirect them
-based upon the current mouse position.
+Hi,
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
- gitk |   33 +++++++++++++++++++++++++++++++--
- 1 files changed, 31 insertions(+), 2 deletions(-)
+On Mon, 6 Aug 2007, Dmitry Kakurin wrote:
 
-diff --git a/gitk b/gitk
-index 08ff5df..f6fca9b 100755
---- a/gitk
-+++ b/gitk
-@@ -823,8 +823,13 @@ proc makewindow {} {
-     pack .ctop -fill both -expand 1
-     bindall <1> {selcanvline %W %x %y}
-     #bindall <B1-Motion> {selcanvline %W %x %y}
--    bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
--    bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+    if {[tk windowingsystem] == "win32"} {
-+	bind . <MouseWheel> { windows_mousewheel_redirector %W %X %Y %D }
-+	bind $ctext <MouseWheel> { windows_mousewheel_redirector %W %X %Y %D ; break }
-+    } else {
-+	bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
-+	bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+    }
-     bindall <2> "canvscan mark %W %x %y"
-     bindall <B2-Motion> "canvscan dragto %W %x %y"
-     bindkey <Home> selfirstline
-@@ -918,6 +923,30 @@ proc makewindow {} {
- 	-command rmbranch
- }
- 
-+# Windows sends all mouse wheel events to the current focused window, not the one where
-+# the mouse hovers, so instead bind mouse to the top level window and redirect
-+proc windows_mousewheel_redirector {W X Y D} {
-+    global canv canv2 canv3
-+    set w [winfo containing -displayof $W $X $Y]
-+    if {$w ne ""} {
-+	if {$w == $canv || $w == $canv2 || $w == $canv3} {
-+	    if {$D < 0} {
-+		allcanvs yview scroll 5 units
-+	    } else {
-+		allcanvs yview scroll -5 units
-+	    }
-+	} else {
-+	    catch {
-+		if {$D < 0} {
-+		    $w yview scroll 5 units
-+		} else {
-+		    $w yview scroll -5 units
-+		}
-+	    }
-+	}
-+    }
-+}
-+
- # mouse-2 makes all windows scan vertically, but only the one
- # the cursor is in scans horizontally
- proc canvscan {op w x y} {
--- 
-1.5.3.rc4.5.g4f0b5
+> On 8/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > > Does it mean that fork of a fork does not work on repo.or.cz?
+> >
+> > Yes, at the moment it does not work.  Therefore I set up 
+> > git/mingw4msysgit.git, for the time being.
+> 
+> That's too bad. I was thinking about adopting distributed dev model for 
+> MinGW port of Git: we all would fork off mingw.git on repo.or.cz and 
+> then we would pull from each other instead of exchanging patches thru 
+> e-mail. Personally I don't like email patch exchange process.
+
+We can still do that.  Just set up a fork of _git.git_, and initialise it 
+with mingw4msysgit.git.
+
+> Can this problem on repo.or.cs be fixed? Did Petr reply?
+
+I think it can.  But Pasky seems to be extraordinarily busy these days.  
+So no, I got no reply besides a message on IRC that he'll try to do 
+something about the situation tonight.
+
+Ciao,
+Dscho
