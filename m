@@ -1,102 +1,94 @@
 From: Johan Herland <johan@herland.net>
 Subject: Re: way to automatically add untracked files?
-Date: Mon, 06 Aug 2007 09:30:13 +0200
-Message-ID: <200708060930.13967.johan@herland.net>
+Date: Mon, 06 Aug 2007 09:46:12 +0200
+Message-ID: <200708060946.12793.johan@herland.net>
 References: <873ayymzc1.fsf@catnip.gol.com>
- <200708051411.25238.johan@herland.net> <f95q7l$8lv$2@sea.gmane.org>
+ <buo1wehxssa.fsf@dhapc248.dev.necel.com>
+ <Pine.LNX.4.64.0708060419230.14781@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miles Bader <miles.bader@necel.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 06 09:30:36 2007
+X-From: git-owner@vger.kernel.org Mon Aug 06 09:46:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHx2w-0005p3-Vi
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 09:30:35 +0200
+	id 1IHxIG-0000YK-8h
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 09:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754178AbXHFHaX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 03:30:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753752AbXHFHaX
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 03:30:23 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:48202 "EHLO smtp.getmail.no"
+	id S1756817AbXHFHqW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 03:46:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbXHFHqW
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 03:46:22 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:57312 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753668AbXHFHaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 03:30:22 -0400
+	id S1754387AbXHFHqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 03:46:20 -0400
 Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
  no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JMC00C01CULMQ00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 06 Aug 2007 09:30:21 +0200 (CEST)
+ id <0JMC00M03DL7AJ00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 06 Aug 2007 09:46:19 +0200 (CEST)
 Received: from smtp.getmail.no ([10.5.16.1])
  by no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JMC004WSCUJR570@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 06 Aug 2007 09:30:19 +0200 (CEST)
+ with ESMTP id <0JMC0042TDL5R180@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 06 Aug 2007 09:46:17 +0200 (CEST)
 Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
+ by no-osl-m323-srv-004-z1.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JMC00FY3CUH6430@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 06 Aug 2007 09:30:19 +0200 (CEST)
-In-reply-to: <f95q7l$8lv$2@sea.gmane.org>
+ with ESMTP id <0JMC005GWDL4XHE0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 06 Aug 2007 09:46:17 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0708060419230.14781@racer.site>
 Content-disposition: inline
 User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55120>
 
-On Monday 06 August 2007, Jakub Narebski wrote:
-> Johan Herland wrote:
+On Monday 06 August 2007, Johannes Schindelin wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > >> But I'm wondering whether we'd want to include it in git by default 
+> > >> (instead of having to tell confused users to add the alias).
+> > >
+> > > I recommend against that, too.  All too often, I have some temporary files 
+> > > in the working tree, and I'll be dimmed if I'm the only one.  So 
+> > > "addremove" adds too much possibility for pilot errors.
+> > 
+> > "Recommend against it"?  Why?
 > 
-> > So different users seem to have two different (almost incompatible) 
-> > expectations to git-add:
-> > 
-> > 1. git-add adds new files into the index. git-add has _no_ business removing 
-> > deleted files from the index.
-> > 
-> > 2. git-add updates the index according to the state of the working tree. 
-> > This includes adding new files and removing deleted files.
-> > 
-> > 
-> > Both interpretations are useful and worth supporting, but git-add currently 
-> > seems focused on #1 (and rightly so, IMHO).
-> > 
-> > Even though #2 can be achieved by using a couple of git-add commmands (or a 
-> > longer series of more obscure plumbing-level commands), it might be worth 
-> > considering the more user-friendly alternative of adding a dedicated 
-> > command for supporting #2. Such a command already exists in a similar RCS:
-> > 
-> > ---
-> > $ hg addremove --help
-> > hg addremove [OPTION]... [FILE]...
-> > 
-> > add all new files, delete all missing files
+> Didn't I say that? It just _asks_ for pilot errors.
+
+Ok, in that spirit I also suggest removing _all_ git plumbing-level commands
+from the default installation. I also suggest adding confirmation dialog to
+any command that alters the repo, since we have to protect the user against
+"pilot errors".
+
+Get real. Adding a separate command (provided it's well implemented and
+documented) does not push the user off a cliff. Just because the command
+doesn't fit your workflow doesn't mean it's dangerous and should never be
+included. Just don't use it.
+
+If git were only to support the (probably non-existing) intersection of its
+user's workflows, we would probably have to pull e.g. git-rebase out of the
+tree, because (according to some) rewriting history is evil, and extremely
+prone to "pilot errors".
+
+> > It's a separate command, so if it doesn't fit your working style, don't
+> > use it.
 > 
-> git update-index --add --remove?
+> Hah!  If that were true, we'd have a lot less mails like "I tried this and 
+> it did not work", only to find out that the person assumed that 
+> documentation is for wimps, and tried a command that "sounded" like it 
+> would do the right thing.
 
-This is actually the nicest looking command I've seen so far in this thread.
-It's reasonably simple to deduce what it does, or rather, should do...
+Having commands that "sound" like they do the right thing is not a bad idea
+at all. We should have more of those.
 
-Of course it has some shortcomings:
-
-- It only works on individual files. Supplying a directory (subdir or '.')
-  is not supported.
-
-- It _seems_ to not support .gitignore, i.e. new files that are already in
-  .gitignore give the same feedback (add 'foo') as new files that are not
-  ignored. But when you commit, the ignored files will in fact _not_ be
-  committed (which is correct, AFAICS). It would be nice if git-update-index
-  told me that up front.
-
-Of course, It may be that git-update-index is too low-level (i.e. plumbing)
-to support the above use case in a user-friendly fashion. In that case, feel
-free to ignore the above issues.
-
-
-Have fun!
 
 ...Johan
 
