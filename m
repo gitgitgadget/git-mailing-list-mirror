@@ -1,67 +1,128 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Mon, 06 Aug 2007 18:16:42 +0200
-Message-ID: <864pjcbpud.fsf@lola.quinscape.zz>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>  =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?AF1190=04E2-A0F4-4?= =?ISO-8859-1?Q?79F-B0A1-50B2C72?=
-	=?ISO-8859-1?Q?78995@yahoo.ca>?= <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net>  =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?Pine=04.LNX.4.64.0?= =?ISO-8859-1?Q?708031121000.147?=
-	=?ISO-8859-1?Q?81@racer.site>?= <7vir7wmk84.fsf@assigned-by-dhcp.cox.net> <86bqdkbq59.fsf@lola.quinscape.zz>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Some ideas for StGIT
+Date: Mon, 06 Aug 2007 13:17:26 -0400
+Message-ID: <1186420646.12895.3.camel@dv>
+References: <1186163410.26110.55.camel@dv>
+	 <b0943d9e0708060236x19674e4cjf04cec716ae6246c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 06 18:17:05 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 19:17:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1II5GS-0001ny-3j
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 18:17:04 +0200
+	id 1II6DN-0005T3-02
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 19:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753723AbXHFQQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 12:16:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753557AbXHFQQ6
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 12:16:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:33249 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753122AbXHFQQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 12:16:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1II5GJ-00012Q-D5
-	for git@vger.kernel.org; Mon, 06 Aug 2007 18:16:55 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 18:16:55 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Aug 2007 18:16:55 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:DCouFhbkRVw9GZiqtSaMj7hbR6k=
+	id S1761969AbXHFRRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 13:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765162AbXHFRRc
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 13:17:32 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:45515 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765144AbXHFRR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 13:17:29 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1II6Fb-0007hN-So
+	for git@vger.kernel.org; Mon, 06 Aug 2007 13:20:16 -0400
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1II6Cs-0005kI-Me; Mon, 06 Aug 2007 13:17:26 -0400
+In-Reply-To: <b0943d9e0708060236x19674e4cjf04cec716ae6246c@mail.gmail.com>
+X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55160>
 
+On Mon, 2007-08-06 at 10:36 +0100, Catalin Marinas wrote:
 
-David Kastrup <dak@gnu.org> writes:
+> > The main point in favor of quilt is that it allows to edit the patches
+> > with the text editor.  One can pop all patches, edit them and push the
+> > all back.
+> 
+> If this is the main feature they need, they probably don't need git at
+> all and quilt would be enough. I was using quilt before starting StGIT
+> but the main problem I had with plain patches approach was the
+> conflict solving.
 
-> I don't even think it prudent to _offer_ the --show-touched option
-> in a porcelain such as git-diff as long as purportedly read-only
-> porcelain commands like git-status can trash the state: what is
-> reported is not actually "touched" but something internal to the
-> operation of git.
->
-> At least not without a notice in the manual that this option might
-> or might not work, depending on what one did previously.
+OK, I understand it wasn't a good idea to ask for improvement on behalf
+of others.
 
-Proposal: if this option is to stay, call it rather --show-stale since
-that corresponds better with what the option actually does: show
-whether git's inode cache went stale.  It does _not_ show whether the
-file has been touched (git-status does not touch files, for example).
+> StGIT does a 'git-diff | git-apply' as a patch push optimization and
+> we could even cache the diff but the current algorithm is that if
+> git-apply fails, StGIT falls back to a three-way merge and even an
+> interactive user merge (via xxdiff for example). I find the three-way
+> merging (automatic or interactive) much more powerful than fuzzy patch
+> application.
+
+I agree.  I have no problem with what StGIT does internally.
+
+> If we would allow patch editing, the 'stg push' algorithms wouldn't
+> know when git-apply failed because the patch was edited or the base
+> was changed. Falling back to the three-way merge would lose the edited
+> patch. If one doesn't need three-way merging, quilt is good enough.
+
+I suggest that StGIT saves the original patch and then does interdiff
+between the old and the new patch.  The original patch is applied first
+just as it's applied now, and then the difference is applied on top of
+that.
+
+Temporary files should be kept in case of failure.
+
+> Other advantages of the three-way merging is the detection of full
+> patches or hunks merged upstream (the former can also be achieved by
+> testing the reverse-application of the patches).
+
+I'm fully with you here.  Having git history can only be a good thing.
+
+> I don't usually edit patches during development, I prefer to edit the
+> source files and review the diff. It happens many times to move hunks
+> between patches but I usually towards the bottom patches in the stack
+> (using stg export and emacs) and the three-way merging automatically
+> removes the merged hunks from top patches.
+
+What I normally need to edit is the comments.  Editing the code is
+risky, although I may want to rename some badly named variable
+introduced by the patch.
+
+> > I don't suggest that StGIT gives up on the git-based storage, but this
+> > mode of operation could be implemented in two ways.
+> >
+> > One is to have a command opposite to "export".  It would read the files
+> > that "export" produces, replacing the existing patches.
+> 
+> As Yann said, we already have 'stg import --replace'.
+
+Thanks!
+
+> > Another approach would be to reexamine the patch after "stg refresh -es"
+> > and to apply it instead of the original patch.  If the patch doesn't
+> > apply, the options would be to discard the edits or to re-launch the
+> > editor.
+> 
+> That's an interesting idea but maybe we should have a separate command
+> like --edit-full to edit the full patch + log (part of the
+> functionality already available in import).
+
+I hate to be in a situation when I want to edit something but cannot,
+because I didn't run some command before.  What I like about StGIT is
+that it allows me to do things my way.
+
+I don't know if I want to change the patch before I see it.
+
+> > Finally, it would be great to have TLS support in the mail command.
+> > Mercurial has it, and looking at their mail.py, it doesn't seem to be
+> > much work.
+> 
+> Indeed, the SMTP Python objects already provide support for TLS via starttls().
+
+And hg provides a great example.
 
 -- 
-David Kastrup
+Regards,
+Pavel Roskin
