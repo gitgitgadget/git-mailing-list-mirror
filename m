@@ -1,98 +1,92 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: way to automatically add untracked files?
-Date: Mon, 6 Aug 2007 06:58:33 +0200
-Message-ID: <4AF672E9-5D0A-4CD0-BC01-D9BB79A5C8EA@zib.de>
-References: <873ayymzc1.fsf@catnip.gol.com> <fc339e4a0708042100jdf0a0f1jd1fddfb5dc1c1052@mail.gmail.com> <20070805041320.GH9527@spearce.org> <200708051411.25238.johan@herland.net> <20070805161117.GE28263@thunk.org> <C3725674-7B33-4B2F-9386-704540D51C0E@zib.de> <Pine.LNX.4.64.0708060116590.14781@racer.site>
+Subject: Re: [PATCH v2] user-manual: mention git gui citool (commit, amend)
+Date: Mon, 6 Aug 2007 07:20:17 +0200
+Message-ID: <73E0048A-0F57-47AC-933C-55C041ACFD23@zib.de>
+References: <20070803125634.GB28323@fieldses.org> <1186318785677-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0708051457110.14781@racer.site> <17AA7EBE-B755-4F26-9C7E-AF6D762811F2@zib.de> <85wswa6n1o.fsf@lola.goethe.zz> <5AB64D44-2324-4A98-B010-8D6D6225F116@zib.de> <Pine.LNX.4.64.0708060119320.14781@racer.site>
 Mime-Version: 1.0 (Apple Message framework v752.3)
 Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Miles Bader <miles@gnu.org>
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 06 06:58:21 2007
+X-From: git-owner@vger.kernel.org Mon Aug 06 07:20:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IHufd-0003Bp-9x
-	for gcvg-git@gmane.org; Mon, 06 Aug 2007 06:58:21 +0200
+	id 1IHv0Z-00070J-1m
+	for gcvg-git@gmane.org; Mon, 06 Aug 2007 07:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbXHFE6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 00:58:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbXHFE6R
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 00:58:17 -0400
-Received: from mailer.zib.de ([130.73.108.11]:48478 "EHLO mailer.zib.de"
+	id S1751926AbXHFFTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 01:19:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbXHFFTn
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 01:19:43 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49534 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751776AbXHFE6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 00:58:16 -0400
+	id S1751871AbXHFFTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 01:19:42 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l764vpgx014129;
-	Mon, 6 Aug 2007 06:57:51 +0200 (CEST)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l765JSMc015006;
+	Mon, 6 Aug 2007 07:19:40 +0200 (CEST)
 Received: from [192.168.178.32] ([77.177.251.214])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l764vh0J011079
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l765JRh2013964
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 6 Aug 2007 06:57:44 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0708060116590.14781@racer.site>
+	Mon, 6 Aug 2007 07:19:27 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0708060119320.14781@racer.site>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55114>
 
 
-On Aug 6, 2007, at 2:17 AM, Johannes Schindelin wrote:
+On Aug 6, 2007, at 2:22 AM, Johannes Schindelin wrote:
 
-> Hi,
->
 > On Sun, 5 Aug 2007, Steffen Prohaska wrote:
 >
->>
->> On Aug 5, 2007, at 6:11 PM, Theodore Tso wrote:
->>
->>> On Sun, Aug 05, 2007 at 02:11:24PM +0200, Johan Herland wrote:
->>>> $ hg addremove --help
->>>> hg addremove [OPTION]... [FILE]...
->>>>
->>>> add all new files, delete all missing files
->>>>
->>>>    Add all new files and remove all missing files from the  
->>>> repository.
->>>>
->>>>    New files are ignored if they match any of the patterns  
->>>> in .hgignore.
->>>> As
->>>>    with add, these changes take effect at the next commit.
->>>>
->>>> Adding a git-addremove command should not be much work, and it  
->>>> would be a
->>>> lot friendlier to people whose workflow is more aligned with #2  
->>>> than #1.
->>>
->>> Not much work at all:
->>>
->>> # git config --system --add alias.addremove "git add . ; git add -u"
->>
->> But how can I handle the [FILE]... from above?
+>> I found it quite useful to be able to commit diff chunks selectively.
 >
-> See
-> http://git.or.cz/gitwiki/ 
-> Aliases#head-714f0aa64cb53eda636d41e16bf2b99477588685
+> But how do you make sure that it works as expected?  I.e. when you  
+> commit
+> a hunk using, say, variable "rule_the_world", and by mistake  
+> (happen to me
+> all the time, maybe to you, too?) forgot to select the hunk which  
+> declares
+> that variable, maybe because it is hidden in a forest of other  
+> variables?
 
-Thanks.
+In various ways, the details depend on what I'm doing. Here are three
+examples.
 
-"Starting with version 1.5.3, git supports appending the
-arguments to commands prefixed with "!", too. If you need
-to perform a reordering, or to use an argument twice, you
-can use this trick:
+1) I push the commit to a faster machine to compile it there and  
+continue
+working on the next commit (a complete build of the software package  
+that
+I'm mostly working on takes approximately 30 min on our fastest  
+machines. I
+can't wait for this before I continue working. Luckily a complete  
+compile is
+rarely needed).
 
-[alias]
-         example = !sh -c "ls $1 $0"
+2) I don't care about a single commit. I only care about the result of a
+series of commits. I need to check on multiple architectures anyway  
+and can't
+thoroughly test what I'm doing right now. Regularly gcc and Microsoft
+compilers disagree on warnings.
 
-NOTE: the arguments start with $0, not with $1 as you are
-used from shell scripts." [cited from the link above]
+3) I push a series of commits to my scratch space and wait one night  
+for the
+automated builds to complete on all architectures.
 
-should do the job.
+> I _try_ to test commits by my eyes, by compiling, and by running the
+> version I'll commit.  (Okay, sometimes I run the test _after_  
+> committing,
+> but then I test to see if I have to amend something.)
+
+Option (1) is probably the only solution that fulfills your  
+requirement that
+every single commit should compile and work. This is a perfect  
+approach but
+sometimes take too much time for me.
 
 	Steffen
