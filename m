@@ -1,89 +1,76 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: Re: Submodules
-Date: Tue, 7 Aug 2007 16:10:38 -0700
-Message-ID: <a1bbc6950708071610g4ea4d874t458cec14a444b519@mail.gmail.com>
-References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
-	 <Pine.LNX.4.64.0708072344450.14781@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Wed, 8 Aug 2007 01:20:14 +0200
+Message-ID: <16E4650F-5046-4F8D-A88B-2AE48BC5E446@zib.de>
+References: <f99cem$4a4$1@sea.gmane.org> <Pine.LNX.4.64.0708071257350.14781@racer.site> <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> <20070807145825.GO21692@lavos.net> <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com> <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de> <alpine.LFD.0.999.0708071439021.5037@woody.linux-foundation.org> <A80CCC35-DE1E-4A0B-9144-A8165AF6C98A@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 08 01:10:46 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 01:19:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIYCL-0008B4-Gw
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 01:10:45 +0200
+	id 1IIYKz-0001M5-0C
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 01:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933054AbXHGXKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 19:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761786AbXHGXKk
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 19:10:40 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:32919 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759013AbXHGXKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 19:10:39 -0400
-Received: by rv-out-0910.google.com with SMTP id l15so4223rvb
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 16:10:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=akK8yFXnxJ/HcRfWrAXvEp708B39BO29LxSth7lqhD+M3aG9u01WP6vP4K/TXkKk5bZWkRjVUs6H59wZykNwCkQ3xcjz73E072/NTIGDw6q1gyTTFzf3+5j3IajTlIYT8CEgDbmVAColuosPeFQkvYlDXHDjlcP9wdoakO43Et4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cwFZngIurxpEyf2M73En0kN6nEZ17r/HZO3SNwNQlUMo0s5snDxBg7dapQm3jIOGWBbK9adnekMcXG7vZc+efEt1k/cIElWAbcTUgtGn8ULo3synxQF3HDGsxodws4qTwFFdUXi+uDdCNTCDCwMbQmbLm2zL4roHKX3UEpaP5XU=
-Received: by 10.140.139.3 with SMTP id m3mr2733779rvd.1186528238447;
-        Tue, 07 Aug 2007 16:10:38 -0700 (PDT)
-Received: by 10.141.2.18 with HTTP; Tue, 7 Aug 2007 16:10:38 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0708072344450.14781@racer.site>
-Content-Disposition: inline
+	id S1753142AbXHGXTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 19:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbXHGXTh
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 19:19:37 -0400
+Received: from mailer.zib.de ([130.73.108.11]:34775 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751521AbXHGXTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 19:19:37 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l77NJSYE025586;
+	Wed, 8 Aug 2007 01:19:28 +0200 (CEST)
+Received: from [192.168.178.32] ([77.177.245.91])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l77NJRTW006346
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 8 Aug 2007 01:19:27 +0200 (MEST)
+In-Reply-To: <A80CCC35-DE1E-4A0B-9144-A8165AF6C98A@zib.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55286>
 
-Yeah, I've already went thru these. But I want (much) more details.
-I can ask a bunch of random questions on this list, like:
+I apologize, I didn't check the size of the attachment
+in the previous mail (which probably got blocked from
+the list).
 
-* Why after 'submodule update' it becomes detached, what if I want it
-to stay on certain branch?
-* How do I control which branches are fetched?
-* What if I do 'commit -a' standing in /super, will /super/submodule
-commit as well?
-* What if I'm standing in /super/submodule and do 'commit -a'? Will
-super notice it in any way?
+This time with a link to the logfile.
 
-But I was hoping that it's all summarized somewhere already.
 
-- Dmitry
-On 8/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+On Aug 8, 2007, at 12:46 AM, Steffen Prohaska wrote:
+
+> The tests are running. t0000-basic and t0010-racy-git pass. I'll
+> send a testlog later. It's running inside a virtual machine on a
+> laptop, so it may take some more time.
 >
-> On Tue, 7 Aug 2007, Dmitry Kakurin wrote:
->
-> > Where can I find more information about submodules?
-> > I'm interested in both internal implementation details and how to use them.
->
-> Most information is found in git-submodule.sh, although
-> Documentation/git-submodule.txt has beginnings of a good documentation.
->
-> The basic idea is this:
->
-> A subdirectory contains a self-contained project.
->
-> Once that project is at a stage you want to have in the superproject, you
-> can commit that submodule state, much like a subdirectory.
->
-> However, the history can progress in much coarser steps for the
-> superproject.  IOW an ideal case for msysgit.git, where we want to have a
-> stable version which can be checked out with GitMe.
->
-> Also, find more about submodules here:
->
-> http://git.or.cz/gitwiki/SubprojectSupport?highlight=%28submodule%29
->
-> Ciao,
-> Dscho
+> I suspect the tests will report a lot of errors. At least all
+> tests that compare 'echo' output with precomputed sha1's or
+> expected results that come with the tests should fail. I haven't
+> fully understood the details of line conversion of cygwin. Some
+> work may be needed to eliminate false fails from the tests, e.g. by
+> adding 'd2u', and find the real problems.
+
+I attached the log of a testrun on an textmode mounted directory
+in cygwin with the two recently sent patches applied.
+
+It doesn't look too bad, but it's far from perfect:
+
+1470 ok to 637 FAIL
+
+http://www.zib.de/prohaska/hidden/2007/git-cygwin-textmode/ 
+testlog-2007-08-08.txt
+
+	Steffen
