@@ -1,81 +1,69 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: [PATCH] git-p4: Fix support for symlinks.
-Date: Tue, 7 Aug 2007 12:28:00 +0200
-Message-ID: <200708071228.07645.simon@lst.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Documentation/Makefile: remove cmd-list.made before redirecting to it.
+Date: Tue, 07 Aug 2007 12:29:23 +0200
+Message-ID: <868x8n8wos.fsf@lola.quinscape.zz>
+References: <86vebsby27.fsf@lola.quinscape.zz>
+	<7vlkcn97ll.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 12:28:37 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 07 12:29:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIMIl-0007cu-3T
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 12:28:35 +0200
+	id 1IIMJu-0007us-Rb
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 12:29:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756930AbXHGK2Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 06:28:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755952AbXHGK2Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 06:28:24 -0400
-Received: from verein.lst.de ([213.95.11.210]:36549 "EHLO mail.lst.de"
+	id S1757805AbXHGK3o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 06:29:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757061AbXHGK3n
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 06:29:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:38107 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755459AbXHGK2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 06:28:23 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l77ARYA5001560
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 7 Aug 2007 12:27:35 +0200
-User-Agent: KMail/1.9.7
-Content-Disposition: inline
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1755245AbXHGK3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 06:29:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIMJj-0004ao-HG
+	for git@vger.kernel.org; Tue, 07 Aug 2007 12:29:35 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 12:29:35 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 12:29:35 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+In-Reply-To: <7vlkcn97ll.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon\, 06 Aug 2007 23\:33\:42 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:wP5PWACmUSo0OvajRPQ73Bj6Vac=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55241>
 
-Detect symlinks as file type, set the git file mode accordingly and strip off the trailing newline in the p4 print output.
-Make the mode handling a bit more readable at the same time.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Simon Hausmann <simon@lst.de>
-Acked-by: Brian Swetland <swetland@google.com>
----
- contrib/fast-import/git-p4 |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
+> Although I understand that it would be a problem if you built as
+> root earlier, which would have left files unmodifyable by you, I
+> think this is getting out of hand.  The cmd-list.perl script itself,
+> for example, does "creat in $out+, if the contents have changed from
+> the last round then rename $out+ to $out" sequence in order to avoid
+> unnecessary rebuild of files that depend on the generated command
+> list.  If it is interrupted in the middle while running as root, and
+> then you try to do another build, I suspect "creat in $out+" part
+> would fail.
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 41e86e7..3cbb2da 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -839,16 +839,20 @@ class P4Sync(Command):
-             if file["action"] == "delete":
-                 self.gitStream.write("D %s\n" % relPath)
-             else:
--                mode = 644
--                if file["type"].startswith("x"):
--                    mode = 755
--
-                 data = file['data']
- 
-+                mode = "644"
-+                if file["type"].startswith("x"):
-+                    mode = "755"
-+                elif file["type"] == "symlink":
-+                    mode = "120000"
-+                    # p4 print on a symlink contains "target\n", so strip it off
-+                    data = data[:-1]
-+
-                 if self.isWindows and file["type"].endswith("text"):
-                     data = data.replace("\r\n", "\n")
- 
--                self.gitStream.write("M %d inline %s\n" % (mode, relPath))
-+                self.gitStream.write("M %s inline %s\n" % (mode, relPath))
-                 self.gitStream.write("data %s\n" % len(data))
-                 self.gitStream.write(data)
-                 self.gitStream.write("\n")
+No, creat is only interested in the directory permissions.  It is
+open(..., O_TRUNC) that causes the problem.  There are not many
+programs that actually use that for their output files, but shell
+output redirection is one of them, and some editors tend to do this as
+well in order to easily preserve permissions.
+
+There are no other shell output redirections to an undeleted file in
+the Makefile.
+
 -- 
-1.5.3.rc3.91.g5c75
+David Kastrup
