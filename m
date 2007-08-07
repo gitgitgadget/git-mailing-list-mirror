@@ -1,95 +1,55 @@
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during check-out
-Date: Mon, 06 Aug 2007 23:24:46 -0400
-Message-ID: <46B7E5FE.7050006@tromer.org>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org> <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net> <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org> <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org> <20070805144632.GB999MdfPADPa@greensroom.kotnet.org> <46B76B8C.9050905@tromer.org> <20070806190344.GF999MdfPADPa@greensroom.kotnet.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] (Really) Fix install-doc-quick target
+Date: Mon, 06 Aug 2007 20:53:44 -0700
+Message-ID: <7vd4y09f07.fsf@assigned-by-dhcp.cox.net>
+References: <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
+	<11864401942772-git-send-email-mdl123@verizon.net>
+	<Pine.LNX.4.64.0708062349460.14781@racer.site>
+	<7vzm149s8s.fsf@assigned-by-dhcp.cox.net> <46B7B10F.4060402@gmail.com>
+	<7vhcnc9lpm.fsf@assigned-by-dhcp.cox.net> <46B7D108.20606@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Tue Aug 07 05:25:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mdl123@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ren Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 05:54:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIFhg-0004aa-IP
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 05:25:52 +0200
+	id 1IIG8x-00014Y-IG
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 05:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933344AbXHGDZt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Aug 2007 23:25:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933264AbXHGDZt
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 23:25:49 -0400
-Received: from forum2.org ([198.65.45.153]:1059 "EHLO forum2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933334AbXHGDZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 23:25:48 -0400
-X-F2-Envelope-From: git2eran@tromer.org
-X-F2-Envelope-To: git@vger.kernel.org
-Received: from moby.tromer.org (c-66-30-26-80.hsd1.ma.comcast.net [66.30.26.80])
-	(authenticated bits=0)
-	by forum2.org (8.13.6.20060614/8.13.6) with ESMTP id l773P1AD007779;
-	Tue, 7 Aug 2007 03:25:01 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.5) Gecko/20070719 Fedora/2.0.0.5-1.fc7 Thunderbird/2.0.0.5 Mnenhy/0.7.5.0
-In-Reply-To: <20070806190344.GF999MdfPADPa@greensroom.kotnet.org>
-X-Enigmail-Version: 0.95.3
+	id S1765773AbXHGDxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 23:53:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765632AbXHGDxs
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 23:53:48 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34830 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765463AbXHGDxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 23:53:47 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070807035346.SBOI2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 6 Aug 2007 23:53:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Yrtk1X0081kojtg0000000; Mon, 06 Aug 2007 23:53:45 -0400
+In-Reply-To: <46B7D108.20606@gmail.com> (Mark Levedahl's message of "Mon, 06
+	Aug 2007 21:55:20 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55213>
 
-On 2007-08-06 15:03, Sven Verdoolaege wrote:
-> I don't see the difference.  If you forgot you changed something
-> (be it a submodule or a file) you will commit something you
-> didn't plan to commit.
-...
->     bash-3.00$ git checkout master && echo "test" > b && git commit -a -m 'change b'
->     M       c
->     Switched to branch "master"
->     Created commit 657c5b1: change b
->      2 files changed, 2 insertions(+), 0 deletions(-)
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-Yes, you're right. (When I tried this, checkout complained about the
-dirty working tree because a *merge* was needed.)
+> +    printf "$mandir/%s\n" $(git ls-tree -r --name-only $head) | xargs
+> gzip -f
 
-So let's try to explicitly reset the index and work tree:
-
-$ git reset --hard master
-$ vi foo
-$ git commit -a -m 'fixed typos'
-
-Oops, still a corrupt commit.
-
-
->>>> Another approach is for pull, checkout etc. to automatically update the
->>>> submodule' head ref, but no more.
->>> Then everything, including "git submodule update", would assume
->>> that the submodule is up-to-date.
->> With that approach, "git submodule update" would fetch the submodule's
->> head commit (which could be missing), and then check it against the
->> submodule's index (and maybe its work tree).
-> And how is anyone supposed to figure out what HEAD the submodule's
-> index and working tree correspond to?
-
-What HEAD corresponds to any other dirty index or dirty working tree?
-It's irrelevant and may not exist. You just have some random dirty state.
-
-If it's the yet-to-exist submodule merging you're worried about, the
-submodule's old head can be saved in ORIG_HEAD or some such during the
-supermodule checkout.
-
-
-> I can only hope that "git submodule update" would never blindly assume
-> that the submodule is clean and so the user would have to manually
-> sync the HEAD and the working tree.
-
-Why would it assume that? In this approach, and ignoring submodule
-merging for now, "git submodule update" should mean roughly "cd
-submodule && git fetch HEAD && git reset --hard HEAD". After all, this
-is really the only way to end up with the prescribed commit sha1.
-
-I agree that for safety it makes sense to warn or abort if the index
-doesn't match ORIG_HEAD (saved by the supermodule checkout) or if the
-index doesn't match the work tree.
-
-  Eran
+No risk that ls-tree output is too long to fit within the exec
+args limit to run printf?
