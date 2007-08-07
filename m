@@ -1,57 +1,74 @@
-From: Erik Colson <eco@ecocode.net>
-Subject: Re: git-gui console app ?
-Date: Tue, 7 Aug 2007 17:18:31 +0200
-Message-ID: <20070807151831.GB6717@Mac2.local>
-References: <20070804101058.GA520@Mac2.local> <87k5s7e88d.fsf@morpheus.local>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Tue, 07 Aug 2007 17:27:22 +0200
+Message-ID: <46B88F5A.9040801@gmail.com>
+References: <f99cem$4a4$1@sea.gmane.org> <Pine.LNX.4.64.0708071257350.14781@racer.site> <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> <20070807145825.GO21692@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 17:25:45 2007
+X-From: git-owner@vger.kernel.org Tue Aug 07 17:27:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIQwL-0005eo-4g
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 17:25:45 +0200
+	id 1IIQy9-0006bR-R9
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 17:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759965AbXHGPZR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 11:25:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbXHGPZR
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 11:25:17 -0400
-Received: from 30.mail-out.ovh.net ([213.186.62.213]:41096 "HELO
-	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1758110AbXHGPZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 11:25:15 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Aug 2007 11:25:14 EDT
-Received: (qmail 4941 invoked by uid 503); 7 Aug 2007 15:18:57 -0000
-Received: (QMFILT: 1.0); 07 Aug 2007 15:18:57 -0000
-Received: from unknown (HELO mail243.ha.ovh.net) (213.186.33.59)
-  by 30.mail-out.ovh.net with SMTP; 7 Aug 2007 15:18:57 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
-	by b0.ovh.net with SMTP; 7 Aug 2007 15:18:26 -0000
-Received: from 213.219.141.51.adsl.dyn.edpnet.net (HELO localhost) (erik.colson%beavernet.be@213.219.141.51)
-  by ns0.ovh.net with SMTP; 7 Aug 2007 15:18:25 -0000
-Mail-Followup-To: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <87k5s7e88d.fsf@morpheus.local>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Ovh-Remote: 213.219.141.51 (213.219.141.51.adsl.dyn.edpnet.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|H 0.5/N
+	id S1753881AbXHGP1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 11:27:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754848AbXHGP1e
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 11:27:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:40938 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752909AbXHGP1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 11:27:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIQy3-0000jw-OK
+	for git@vger.kernel.org; Tue, 07 Aug 2007 17:27:31 +0200
+Received: from port-83-236-129-242.static.qsc.de ([83.236.129.242])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 17:27:31 +0200
+Received: from sschuberth by port-83-236-129-242.static.qsc.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 17:27:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: port-83-236-129-242.static.qsc.de
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20070807145825.GO21692@lavos.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55264>
 
-On Tue, Aug 07, 2007 at 04:21:06PM +0200, David K=E5gedal wrote:
-> If you are already using emacs, why not use the emacs frontend?  It
-> isn't as featureful as git gui right now, but it integrates better
-> with your emacs.
+>> Now on a normal UNIX system open(2) *always* by definition does
+>> binary IO.  But Cygwin's text mount option tries to make UNIX
+>> programs DOS-friendly by making all files treated as text, even if
+>> it supposedly doing binary IO via open(2).
+>>
+>> I think its a mis-feature of Cygwin.  Git has no way (that I know
+>> of) to defend itself from this, other than to tell the user to make
+>> sure they only store a Git repository in a location that is mounted
+>> with the binary flag.
+> 
+> Cygwin, like Windows' own open(2) simulation, defines an O_BINARY to pass
+> as a flag to open(2).  I once got Git half-working on Cygwin text-mode
+> mounts by doing a horrible hack approximating:
+> 
+> #define open(name, flag, ...) \
+> 	open(name, (flag) | O_BINARY, ## __VA_ARGS__)
+> 
+> But it only half worked.  Eventually it managed to corrupt itself again,
+> and worse, the test suite was completely hopeless, as all shell activity
+> still results in text-mode files.
 
-I'm actually using git-status in Emacs. But I'd like to access repo
-diffs in a gui like tig. It's quite nice excepted that I can't figure
-out how to show the result of git-diff --cached
+Something like that would have been my suggested work-around, too. 
+Unfortunate to hear this alone won't fix the problem. I've spotted 
+several fopen() calls in git where "b" is not explicitly used. Maybe 
+fixing those, too, would to do it.
 
---=20
-Erik
+-- 
+Sebastian Schuberth
