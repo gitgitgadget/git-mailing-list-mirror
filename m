@@ -1,74 +1,81 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
 Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Tue, 07 Aug 2007 17:27:22 +0200
-Message-ID: <46B88F5A.9040801@gmail.com>
-References: <f99cem$4a4$1@sea.gmane.org> <Pine.LNX.4.64.0708071257350.14781@racer.site> <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> <20070807145825.GO21692@lavos.net>
+Date: Tue, 7 Aug 2007 11:29:23 -0400
+Message-ID: <30e4a070708070829l1ca946b6j968c14eebec06bed@mail.gmail.com>
+References: <f99cem$4a4$1@sea.gmane.org>
+	 <Pine.LNX.4.64.0708071257350.14781@racer.site>
+	 <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 17:27:39 2007
+Cc: git@vger.kernel.org
+To: "Sebastian Schuberth" <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 17:29:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIQy9-0006bR-R9
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 17:27:38 +0200
+	id 1IIQzx-0007Qk-7G
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 17:29:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753881AbXHGP1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 11:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754848AbXHGP1e
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 11:27:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:40938 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752909AbXHGP1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 11:27:33 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIQy3-0000jw-OK
-	for git@vger.kernel.org; Tue, 07 Aug 2007 17:27:31 +0200
-Received: from port-83-236-129-242.static.qsc.de ([83.236.129.242])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 17:27:31 +0200
-Received: from sschuberth by port-83-236-129-242.static.qsc.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 17:27:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: port-83-236-129-242.static.qsc.de
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20070807145825.GO21692@lavos.net>
+	id S1761280AbXHGP31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 11:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934284AbXHGP30
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 11:29:26 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:59611 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761182AbXHGP3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 11:29:25 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so482791ika
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:29:23 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=clU4qtV2z9AY8s7FVwWXovr9GzttSBdSvW/vHM5GIn2vWhSV3RWG+0ucznTxw3Vdes9CLK9r5ldVeBev1ynJo1K7+nz53oyAt0MmXWfNRQ5UEzOuDiuUwxnH/myeHjx6aw5rzsJmE5ZuD/SJgvuOXYwiO0oi9QuvLVQ8Vg6dF74=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d5LKKnI3dWrzh7u7vmunnrw5bLjLza3grGTpmsWSqfcY7Vao0aOQcK2wFa4BQuTqLuKzzQwDqYnWtKAfZkTzHmnu/dAn+oAQP+Qgwv4PRep+4XCYENB2mKid5yr3/M/GCm/D+WV+t5bReOuWCtg1VMtP74aY1bJEijFnZ+PvoxM=
+Received: by 10.78.206.9 with SMTP id d9mr1824204hug.1186500563297;
+        Tue, 07 Aug 2007 08:29:23 -0700 (PDT)
+Received: by 10.78.190.5 with HTTP; Tue, 7 Aug 2007 08:29:23 -0700 (PDT)
+In-Reply-To: <f99rei$ou$1@sea.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55265>
 
->> Now on a normal UNIX system open(2) *always* by definition does
->> binary IO.  But Cygwin's text mount option tries to make UNIX
->> programs DOS-friendly by making all files treated as text, even if
->> it supposedly doing binary IO via open(2).
->>
->> I think its a mis-feature of Cygwin.  Git has no way (that I know
->> of) to defend itself from this, other than to tell the user to make
->> sure they only store a Git repository in a location that is mounted
->> with the binary flag.
-> 
-> Cygwin, like Windows' own open(2) simulation, defines an O_BINARY to pass
-> as a flag to open(2).  I once got Git half-working on Cygwin text-mode
-> mounts by doing a horrible hack approximating:
-> 
-> #define open(name, flag, ...) \
-> 	open(name, (flag) | O_BINARY, ## __VA_ARGS__)
-> 
-> But it only half worked.  Eventually it managed to corrupt itself again,
-> and worse, the test suite was completely hopeless, as all shell activity
-> still results in text-mode files.
+On 8/7/07, Sebastian Schuberth <sschuberth@gmail.com> wrote:
+> >>>  100% (2295/2295) done
+> >>> Resolving 1793 deltas...
+> >>>  100% (1793/1793) done
+> >>> : not a valid SHA1b870df7cde1e05ee76d1d15ea428f
+> >>> fatal: Not a valid object name HEAD
+>
+>
+> I wonder if this happens because git never passes "b" to any fopen()
+> calls (as there is no such thing like opening a file in binary mode
+> under Linux, because files are always opened "binary"). If fopen()
+> safely ignores the "b" option under Linux, I think it should always be
+> specified so Cygwin's git will work with text mode mounts when compiled
+> from the original git sources.
+>
+> --
+If you follow the Cygwin mailing lists, you'll find that the
+developers *really* want to kill off the whole text mount thing:
+ultimately, this has proved unsupportable as it requires deep
+modifications of every tool "ported" over to Cygwin and invariably
+leads to strange bugs as you have just discovered. Originally, Cygwin
+had the goal of porting Unix tools to Windows, requiring that every
+tool work on text mounts, but they restated their goal as providing a
+POSIX environment under Windows that matches what Linux does. So, I
+doubt you'll get support from the Cygwin developer's or the Cygwin git
+maintainer for a text mount aware version of git. Clearly, the mingw
+port has to deal with these issues, and it might be possible to
+leverage that work for Cygwin, but the flip side is that under POSIX,
+git explicitly recognizes the difference between \0d\0a and \0a while
+on a text mount, programs do not, and this would make such a ported
+git violate the currently stated Cygwin goals.
 
-Something like that would have been my suggested work-around, too. 
-Unfortunate to hear this alone won't fix the problem. I've spotted 
-several fopen() calls in git where "b" is not explicitly used. Maybe 
-fixing those, too, would to do it.
-
--- 
-Sebastian Schuberth
+Mark
