@@ -1,86 +1,81 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: git-sh-setup.sh:cd_to_toplevel problematic with symlinks
-Date: Tue, 7 Aug 2007 12:11:56 +0200
-Message-ID: <20070807101155.GA19233@moooo.ath.cx>
-References: <20070806161045.GA21815@moooo.ath.cx> <20070806211238.GA27363@informatik.uni-freiburg.de>
+From: Simon Hausmann <simon@lst.de>
+Subject: [PATCH] git-p4: Fix support for symlinks.
+Date: Tue, 7 Aug 2007 12:28:00 +0200
+Message-ID: <200708071228.07645.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Aug 07 12:12:06 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 12:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIM2n-0002Zq-Ra
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 12:12:06 +0200
+	id 1IIMIl-0007cu-3T
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 12:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756620AbXHGKMB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 06:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755794AbXHGKMB
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 06:12:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60506 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753387AbXHGKMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 06:12:00 -0400
-Received: (qmail invoked by alias); 07 Aug 2007 10:11:57 -0000
-Received: from pD9EBB480.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.128]
-  by mail.gmx.net (mp040) with SMTP; 07 Aug 2007 12:11:57 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1+CuKAO8EmCYEU+cWp76S9Og6ylVhxycj/uBM6K1M
-	hNRtJ4OFrBfyUA
+	id S1756930AbXHGK2Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 06:28:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755952AbXHGK2Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 06:28:24 -0400
+Received: from verein.lst.de ([213.95.11.210]:36549 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755459AbXHGK2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 06:28:23 -0400
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l77ARYA5001560
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 7 Aug 2007 12:27:35 +0200
+User-Agent: KMail/1.9.7
 Content-Disposition: inline
-In-Reply-To: <20070806211238.GA27363@informatik.uni-freiburg.de>
-X-Y-GMX-Trusted: 0
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55240>
 
-Your mail did not make it to the list, therefore I quote the full
-mail.
+Detect symlinks as file type, set the git file mode accordingly and strip off the trailing newline in the p4 print output.
+Make the mode handling a bit more readable at the same time.
 
-Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> wrote:
-> Matthias Lederhofer wrote:
-> > cd_to_toplevel takes the output of git rev-parse --show-cdup and fe=
-eds
-> > it to cd.  The problem is that cd uses PWD to do what the user mean=
-s
-> > when saying cd .., i.e. it goes to /foo when in /foo/bar even thoug=
-h
-> > /foo/bar might be a symlink.  Example:
-> >=20
-> >     (in an existing git repository)
-> >     /tmp/foo$ mkdir -p a/b
-> >     /tmp/foo$ ln -s a/b c
-> >     /tmp/foo$ cd c
-> >     /tmp/foo/c$ git fetch . master:master
-> >     git-fetch: line 108: /FETCH_HEAD: Permission denied
-> >=20
-> > Is there any way to tell cd to ignore $PWD?
-> cd -P ... does the trick.  IIRC it's in SUSv3, but once more, Solaris
-> /bin/sh doesn't know about that option:
->=20
-> 	login@~ > uname -a
-> 	SunOS login 5.10 Generic_125100-10 sun4u sparc
->=20
-> 	login@~ > /bin/sh
->=20
-> 	$ mkdir /tmp/foo; cd /tmp/foo
->=20
-> 	$ git init
-> 	Initialized empty Git repository in .git/
->=20
-> 	$ mkdir -p a/b; ln -s a/b c; cd c
->=20
-> 	$ git rev-parse --show-cdup
-> 	../../
->=20
-> 	$ cd -P ../../
-> 	-P: does not exist
+Signed-off-by: Simon Hausmann <simon@lst.de>
+Acked-by: Brian Swetland <swetland@google.com>
+---
+ contrib/fast-import/git-p4 |   14 +++++++++-----
+ 1 files changed, 9 insertions(+), 5 deletions(-)
 
-Do we care about that shell?  There was another thread about shell
-script cleanup where the default sun /bin/sh doesn't support some
-other features from the git shell scripts too.
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 41e86e7..3cbb2da 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -839,16 +839,20 @@ class P4Sync(Command):
+             if file["action"] == "delete":
+                 self.gitStream.write("D %s\n" % relPath)
+             else:
+-                mode = 644
+-                if file["type"].startswith("x"):
+-                    mode = 755
+-
+                 data = file['data']
+ 
++                mode = "644"
++                if file["type"].startswith("x"):
++                    mode = "755"
++                elif file["type"] == "symlink":
++                    mode = "120000"
++                    # p4 print on a symlink contains "target\n", so strip it off
++                    data = data[:-1]
++
+                 if self.isWindows and file["type"].endswith("text"):
+                     data = data.replace("\r\n", "\n")
+ 
+-                self.gitStream.write("M %d inline %s\n" % (mode, relPath))
++                self.gitStream.write("M %s inline %s\n" % (mode, relPath))
+                 self.gitStream.write("data %s\n" % len(data))
+                 self.gitStream.write(data)
+                 self.gitStream.write("\n")
+-- 
+1.5.3.rc3.91.g5c75
