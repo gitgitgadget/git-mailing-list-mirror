@@ -1,51 +1,82 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: resumable git-clone?
-Date: Tue, 7 Aug 2007 09:23:51 -0400
-Message-ID: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line
+	when contents are unchanged
+Date: Tue, 7 Aug 2007 09:34:58 -0400
+Message-ID: <20070807133458.GA19834@fieldses.org>
+References: <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708031121000.14781@racer.site> <7vir7wmk84.fsf@assigned-by-dhcp.cox.net> <86bqdkbq59.fsf@lola.quinscape.zz> <vpqr6mgwhsf.fsf@bauges.imag.fr> <7vodhkbdx2.fsf@assigned-by-dhcp.cox.net> <86k5s7am7c.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 07 15:24:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 15:35:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIP2U-0005VI-Ic
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:23:58 +0200
+	id 1IIPDE-0001f9-KH
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759869AbXHGNXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 09:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758310AbXHGNXy
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:23:54 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:54134 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758262AbXHGNXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 09:23:52 -0400
-Received: by an-out-0708.google.com with SMTP id d31so320460and
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 06:23:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=X1l/k7Q5iUm4Y6ZfdFfvBathxcw4hAcZvO5lkSL32Qgnyp2JxYnBute+I4npDtagrV1brMX7aXImpgli+UDBpcylvtPZUqcNYrazK8VdO6ZLPIlDz5vB+IouMO0EkP9PPhL7KJ2RsHvp2oAjAxSiGJCtLh+alIYUO3p44VwKVX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=C/XH4NuIfQcrEDDM8rZttUdMmbLauL9pijXyIST3Bk27LLIeyeXJhs6oXlYLHR+dHspY8YBngdQtlmQXUxGQj3FvOI2hFkBfhGcssBPTOfIv/VPT4lzzlw1RO3lSlybqOXzUyrEaPhkhFUxp4kxjpGDMtFNONK6/xdft5U9vFbw=
-Received: by 10.100.153.17 with SMTP id a17mr3782748ane.1186493031667;
-        Tue, 07 Aug 2007 06:23:51 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Tue, 7 Aug 2007 06:23:51 -0700 (PDT)
+	id S1762843AbXHGNfB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 09:35:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762747AbXHGNfA
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:35:00 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:56546 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762161AbXHGNfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 09:35:00 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IIPD8-0005Tv-KG; Tue, 07 Aug 2007 09:34:58 -0400
 Content-Disposition: inline
+In-Reply-To: <86k5s7am7c.fsf@lola.quinscape.zz>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55255>
 
-I was on a crappy connection and it was frustrated seeing git-clone
-reached 80% then failed, then started over again. Can we support
-resumable git-clone at some level? I think we could split into several
-small packs, keep fetched ones, just get missing packs until we have
-all.
-I didn't clone via http so I don't know if http supports resumable.
--- 
-Duy
+On Tue, Aug 07, 2007 at 08:32:55AM +0200, David Kastrup wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+> >
+> >> Unfortunately, the patch solves the "large and irrelevant output"
+> >> of git-diff, but not the performance problem (see the rest of the
+> >> thread, I failed to convince Junio that updating the index was a
+> >> performance improvement while keeping the same user semantics).
+> >
+> > That's what update-index --refresh (or status if you insist) are
+> > for, and the coalmine canary you are so dead set to kill are helping
+> > you realize the need for running.
+> 
+> That does not convince me.  Cache staleness should be a problem of
+> git, not of the user.  In particular if the user is just using
+> porcelain.  If letting the cache get stale impacts performance, then
+> git should clean up its act on its own without barfing when using
+> unrelated commands.  If it notices this during diff (presumably by
+> overstepping some staleness ratio), then it can set a "regenerate on
+> next opportunity" flag on the index, and then the next command wanting
+> to process the index from the start can rewrite a refreshed version.
+
+The last time I had a serious problem with "cache staleness", it was
+with Beagle, which modifies the files it indexes (by writing some
+extended attributes).  I figured out what was happening when I noticed
+that the list of touched files was growing each time I did a diff
+(implying the something was working on them right then), so I ran top,
+noticed beagled, eventually thought to query the extended attributes,
+and finally turned off beagled's indexing to solve the problem.
+
+So, in this case:
+
+	- If git had fixed up the problem silently, I probably would
+	  have just assumed git was slow and not found the problem.
+
+	- Seeing the actual list of files for which the index was dirty
+	  helped me identify the problem.  I probably would have
+	  eventually figured it out even if all I'd had was a single
+	  "index is stale" message, but I suspect it would have taken
+	  longer.
+
+Draw whatever moral you'd like....
+
+--b.
