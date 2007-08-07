@@ -1,72 +1,51 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Tue, 07 Aug 2007 15:18:10 +0200
-Message-ID: <f99rei$ou$1@sea.gmane.org>
-References: <f99cem$4a4$1@sea.gmane.org> <Pine.LNX.4.64.0708071257350.14781@racer.site> <f99nm6$9vi$1@sea.gmane.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: resumable git-clone?
+Date: Tue, 7 Aug 2007 09:23:51 -0400
+Message-ID: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 15:18:32 2007
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 15:24:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIOxB-0003H2-Iw
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:18:29 +0200
+	id 1IIP2U-0005VI-Ic
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760353AbXHGNS0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 09:18:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757819AbXHGNS0
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:18:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:52250 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753361AbXHGNSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 09:18:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIOwy-0003KY-Ut
-	for git@vger.kernel.org; Tue, 07 Aug 2007 15:18:16 +0200
-Received: from port-83-236-129-242.static.qsc.de ([83.236.129.242])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 15:18:16 +0200
-Received: from sschuberth by port-83-236-129-242.static.qsc.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 15:18:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: port-83-236-129-242.static.qsc.de
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <f99nm6$9vi$1@sea.gmane.org>
+	id S1759869AbXHGNXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 09:23:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758310AbXHGNXy
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:23:54 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:54134 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758262AbXHGNXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 09:23:52 -0400
+Received: by an-out-0708.google.com with SMTP id d31so320460and
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 06:23:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=X1l/k7Q5iUm4Y6ZfdFfvBathxcw4hAcZvO5lkSL32Qgnyp2JxYnBute+I4npDtagrV1brMX7aXImpgli+UDBpcylvtPZUqcNYrazK8VdO6ZLPIlDz5vB+IouMO0EkP9PPhL7KJ2RsHvp2oAjAxSiGJCtLh+alIYUO3p44VwKVX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=C/XH4NuIfQcrEDDM8rZttUdMmbLauL9pijXyIST3Bk27LLIeyeXJhs6oXlYLHR+dHspY8YBngdQtlmQXUxGQj3FvOI2hFkBfhGcssBPTOfIv/VPT4lzzlw1RO3lSlybqOXzUyrEaPhkhFUxp4kxjpGDMtFNONK6/xdft5U9vFbw=
+Received: by 10.100.153.17 with SMTP id a17mr3782748ane.1186493031667;
+        Tue, 07 Aug 2007 06:23:51 -0700 (PDT)
+Received: by 10.100.198.17 with HTTP; Tue, 7 Aug 2007 06:23:51 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55254>
 
->>>  100% (2295/2295) done
->>> Resolving 1793 deltas...
->>>  100% (1793/1793) done
->>> : not a valid SHA1b870df7cde1e05ee76d1d15ea428f
->>> fatal: Not a valid object name HEAD
-
-As Mark Levedahl assumed by e-mail, the problem is with Cygwin's binary 
-vs. text mount mode feature. Thanks Mark.
-
-I'm running on NTFS and I did try the "binary mount" stuff before "git 
-clone" by issuing
-
-mount -bc /cygdrive
-
-but I overlooked that this command only affects /cygdrive paths, and I 
-did clone into a non /cygdrive path. So cloning to a /cygdrive mounted 
-path works now.
-
-I wonder if this happens because git never passes "b" to any fopen() 
-calls (as there is no such thing like opening a file in binary mode 
-under Linux, because files are always opened "binary"). If fopen() 
-safely ignores the "b" option under Linux, I think it should always be 
-specified so Cygwin's git will work with text mode mounts when compiled 
-from the original git sources.
-
+I was on a crappy connection and it was frustrated seeing git-clone
+reached 80% then failed, then started over again. Can we support
+resumable git-clone at some level? I think we could split into several
+small packs, keep fetched ones, just get missing packs until we have
+all.
+I didn't clone via http so I don't know if http supports resumable.
 -- 
-Sebastian Schuberth
+Duy
