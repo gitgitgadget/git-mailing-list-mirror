@@ -1,68 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Tue, 07 Aug 2007 08:32:55 +0200
-Message-ID: <86k5s7am7c.fsf@lola.quinscape.zz>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708031121000.14781@racer.site> <7vir7wmk84.fsf@assigned-by-dhcp.cox.net> <86bqdkbq59.fsf@lola.quinscape.zz> <vpqr6mgwhsf.fsf@bauges.imag.fr> <7vodhkbdx2.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/Makefile: remove cmd-list.made before redirecting to it.
+Date: Mon, 06 Aug 2007 23:33:42 -0700
+Message-ID: <7vlkcn97ll.fsf@assigned-by-dhcp.cox.net>
+References: <86vebsby27.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 08:33:31 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIIdH-0006Q5-4V
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:33:31 +0200
+	id 1IIIdd-0006U4-2G
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbXHGGdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 02:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbXHGGdK
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:33:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:57496 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751456AbXHGGdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 02:33:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIIcq-00084V-NG
-	for git@vger.kernel.org; Tue, 07 Aug 2007 08:33:04 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:33:04 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:33:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:htqQ0Hw2xFiktn/KOli8TvrjeGY=
+	id S1752074AbXHGGdt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 02:33:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbXHGGdt
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:33:49 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33843 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbXHGGds (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 02:33:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070807063343.UPIT1335.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 7 Aug 2007 02:33:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YuZi1X00a1kojtg0000000; Tue, 07 Aug 2007 02:33:43 -0400
+In-Reply-To: <86vebsby27.fsf@lola.quinscape.zz> (David Kastrup's message of
+	"Mon, 6 Aug 2007 15:05:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55223>
 
-Junio C Hamano <gitster@pobox.com> writes:
+David Kastrup <dak@gnu.org> writes:
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+> If cmd-list.made has been created by a previous run as root, output
+> redirection to it will fail.  So remove it before regeneration.
 >
->> Unfortunately, the patch solves the "large and irrelevant output"
->> of git-diff, but not the performance problem (see the rest of the
->> thread, I failed to convince Junio that updating the index was a
->> performance improvement while keeping the same user semantics).
+> Signed-off-by: David Kastrup <dak@gnu.org>
+> ---
+>  Documentation/Makefile |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
 >
-> That's what update-index --refresh (or status if you insist) are
-> for, and the coalmine canary you are so dead set to kill are helping
-> you realize the need for running.
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 97ee067..120e7c0 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -120,6 +120,7 @@ $(cmds_txt): cmd-list.made
+>  
+>  cmd-list.made: cmd-list.perl $(MAN1_TXT)
+>  	perl ./cmd-list.perl
+> +	$(RM) $@
+>  	date >$@
+>  
+>  git.7 git.html: git.txt core-intro.txt
 
-That does not convince me.  Cache staleness should be a problem of
-git, not of the user.  In particular if the user is just using
-porcelain.  If letting the cache get stale impacts performance, then
-git should clean up its act on its own without barfing when using
-unrelated commands.  If it notices this during diff (presumably by
-overstepping some staleness ratio), then it can set a "regenerate on
-next opportunity" flag on the index, and then the next command wanting
-to process the index from the start can rewrite a refreshed version.
+Although I understand that it would be a problem if you built as
+root earlier, which would have left files unmodifyable by you, I
+think this is getting out of hand.  The cmd-list.perl script
+itself, for example, does "creat in $out+, if the contents have
+changed from the last round then rename $out+ to $out" sequence
+in order to avoid unnecessary rebuild of files that depend on
+the generated command list.  If it is interrupted in the middle
+while running as root, and then you try to do another build, I
+suspect "creat in $out+" part would fail.
 
--- 
-David Kastrup
+Maybe you can simply recover from such an error with a "make
+clean"?
+
+Also I'd prefer $(RM) before actually running the command to
+generate the list, but that is just the matter of taste.
