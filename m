@@ -1,60 +1,86 @@
-From: "pradeep singh" <pradeep.rautela@gmail.com>
-Subject: [Q]Which Bug tracking system is best for Git ??
-Date: Tue, 7 Aug 2007 15:22:44 +0530
-Message-ID: <a901b49a0708070252q4517279yca97518eff9fe071@mail.gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: git-sh-setup.sh:cd_to_toplevel problematic with symlinks
+Date: Tue, 7 Aug 2007 12:11:56 +0200
+Message-ID: <20070807101155.GA19233@moooo.ath.cx>
+References: <20070806161045.GA21815@moooo.ath.cx> <20070806211238.GA27363@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 11:53:09 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Aug 07 12:12:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IILkS-0005YX-RC
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 11:53:09 +0200
+	id 1IIM2n-0002Zq-Ra
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 12:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758385AbXHGJwq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 05:52:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758639AbXHGJwq
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 05:52:46 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:35399 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757647AbXHGJwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 05:52:45 -0400
-Received: by py-out-1112.google.com with SMTP id d32so2869031pye
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 02:52:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=RgyG96DEw5a7zxm9BF5e3aADvDSHi7WeYbzHP+CVpNkrApA0kkVkdSY/KWlIGgieYMeaBekb9Px6/EMw6ozfo8q51C6g6JVY88cr3Wv1DVaUco9gwcfCVxcOf+e/k5bdBRZ2Eipz3KaL7JqHpXPiRVkHDTPUznZm7NLnagDa+VY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kWd1Dr1F+CjfwwhuTVgOr5ztf40a7s7TWe72saU6TlLrZl5JmAWKQV7lyHFa2naFk1cYBibYoyJ2SV5rQ5Jyc/wfyC+4OYwI0b7geUg1lr+6oyBAK1S8U6SRgfnG0d0dbHHZC8Fai7+139LK/fhjf9Jw6h2xpxjHRxNINxwvHJ0=
-Received: by 10.35.71.1 with SMTP id y1mr11344333pyk.1186480364717;
-        Tue, 07 Aug 2007 02:52:44 -0700 (PDT)
-Received: by 10.35.93.15 with HTTP; Tue, 7 Aug 2007 02:52:44 -0700 (PDT)
+	id S1756620AbXHGKMB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 06:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755794AbXHGKMB
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 06:12:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60506 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753387AbXHGKMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 06:12:00 -0400
+Received: (qmail invoked by alias); 07 Aug 2007 10:11:57 -0000
+Received: from pD9EBB480.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.128]
+  by mail.gmx.net (mp040) with SMTP; 07 Aug 2007 12:11:57 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+CuKAO8EmCYEU+cWp76S9Og6ylVhxycj/uBM6K1M
+	hNRtJ4OFrBfyUA
 Content-Disposition: inline
+In-Reply-To: <20070806211238.GA27363@informatik.uni-freiburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55239>
 
-Hello All,
+Your mail did not make it to the list, therefore I quote the full
+mail.
 
-I am using Git for my internal project at work, after convincing my
-employer to switch to git.
-I am enjoying working with git but now as the project is about to
-complete we are faced with the issues of bug tracking and issuing
-system.
+Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> wrote:
+> Matthias Lederhofer wrote:
+> > cd_to_toplevel takes the output of git rev-parse --show-cdup and fe=
+eds
+> > it to cd.  The problem is that cd uses PWD to do what the user mean=
+s
+> > when saying cd .., i.e. it goes to /foo when in /foo/bar even thoug=
+h
+> > /foo/bar might be a symlink.  Example:
+> >=20
+> >     (in an existing git repository)
+> >     /tmp/foo$ mkdir -p a/b
+> >     /tmp/foo$ ln -s a/b c
+> >     /tmp/foo$ cd c
+> >     /tmp/foo/c$ git fetch . master:master
+> >     git-fetch: line 108: /FETCH_HEAD: Permission denied
+> >=20
+> > Is there any way to tell cd to ignore $PWD?
+> cd -P ... does the trick.  IIRC it's in SUSv3, but once more, Solaris
+> /bin/sh doesn't know about that option:
+>=20
+> 	login@~ > uname -a
+> 	SunOS login 5.10 Generic_125100-10 sun4u sparc
+>=20
+> 	login@~ > /bin/sh
+>=20
+> 	$ mkdir /tmp/foo; cd /tmp/foo
+>=20
+> 	$ git init
+> 	Initialized empty Git repository in .git/
+>=20
+> 	$ mkdir -p a/b; ln -s a/b c; cd c
+>=20
+> 	$ git rev-parse --show-cdup
+> 	../../
+>=20
+> 	$ cd -P ../../
+> 	-P: does not exist
 
-I would like to get a general view from the git developers and
-experienced users on this.
-Especially i would like to know of any good defect tracking systems
-which can work really well with git.
-
-thanks in advance.
-[PS: please CC me as i am not subscribed to git devel list]
--- 
-Pradeep
+Do we care about that shell?  There was another thread about shell
+script cleanup where the default sun /bin/sh doesn't support some
+other features from the git shell scripts too.
