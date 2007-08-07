@@ -1,94 +1,78 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
- check-out
-Date: Tue, 07 Aug 2007 10:51:49 +0200
-Message-ID: <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org>
- <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
- <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
- <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org>
- <20070805144632.GB999MdfPADPa@greensroom.kotnet.org>
- <46B76B8C.9050905@tromer.org>
- <20070806190344.GF999MdfPADPa@greensroom.kotnet.org>
- <46B7E5FE.7050006@tromer.org>
-Reply-To: skimo@liacs.nl
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: git on Cygwin: Not a valid object name HEAD
+Date: Tue, 07 Aug 2007 11:02:13 +0200
+Message-ID: <f99cem$4a4$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eran Tromer <git2eran@tromer.org>
-X-From: git-owner@vger.kernel.org Tue Aug 07 10:51:57 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 07 11:05:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIKnE-0003yo-SS
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 10:51:57 +0200
+	id 1IIL0c-0007uk-2a
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 11:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757796AbXHGIvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 04:51:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757863AbXHGIvv
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 04:51:51 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:36713 "EHLO psmtp09.wxs.nl"
+	id S1758289AbXHGJFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 05:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757986AbXHGJFP
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 05:05:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:55858 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757796AbXHGIvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 04:51:50 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JME00C5GBADAN@psmtp09.wxs.nl> for git@vger.kernel.org; Tue,
- 07 Aug 2007 10:51:49 +0200 (MEST)
-Received: (qmail 3730 invoked by uid 500); Tue, 07 Aug 2007 08:51:49 +0000
-In-reply-to: <46B7E5FE.7050006@tromer.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1757248AbXHGJFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 05:05:10 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IIKzu-0004MA-6J
+	for git@vger.kernel.org; Tue, 07 Aug 2007 11:05:02 +0200
+Received: from port-83-236-129-242.static.qsc.de ([83.236.129.242])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 11:05:02 +0200
+Received: from sschuberth by port-83-236-129-242.static.qsc.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 11:05:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: port-83-236-129-242.static.qsc.de
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55235>
 
-On Mon, Aug 06, 2007 at 11:24:46PM -0400, Eran Tromer wrote:
-> On 2007-08-06 15:03, Sven Verdoolaege wrote:
-> >>>> Another approach is for pull, checkout etc. to automatically update the
-> >>>> submodule' head ref, but no more.
-> >>> Then everything, including "git submodule update", would assume
-> >>> that the submodule is up-to-date.
-> >> With that approach, "git submodule update" would fetch the submodule's
-> >> head commit (which could be missing), and then check it against the
-> >> submodule's index (and maybe its work tree).
-> > And how is anyone supposed to figure out what HEAD the submodule's
-> > index and working tree correspond to?
-> 
-> What HEAD corresponds to any other dirty index or dirty working tree?
-> It's irrelevant and may not exist. You just have some random dirty state.
+Hi,
 
-The only way to know that it's dirty is if you know the HEAD.
-How can that not be relevant.
+I'm running git 1.5.2.2 under Cygwin on Windows XP. This is what I'm 
+(reproducibly) getting if I try to clone QGit's repository:
 
-> > I can only hope that "git submodule update" would never blindly assume
-> > that the submodule is clean and so the user would have to manually
-> > sync the HEAD and the working tree.
-> 
-> Why would it assume that? In this approach, and ignoring submodule
-> merging for now, "git submodule update" should mean roughly "cd
-> submodule && git fetch HEAD && git reset --hard HEAD".
+sschuber@xp-sschuber2 ~
+$ git clone git://git.kernel.org/pub/scm/qgit/qgit4.git
+Initialized empty Git repository in /home/sschuber/qgit4/.git/
+remote: Generating pack...
+remote: Done counting 2295 objects.
+remote: Deltifying 2295 objects...
+remote:  100% (2295/2295) done
+Indexing 2295 objects...
+remote: Total 2295 (delta 1793), reused 1218 (delta 955)
+  100% (2295/2295) done
+Resolving 1793 deltas...
+  100% (1793/1793) done
+: not a valid SHA1b870df7cde1e05ee76d1d15ea428f
+fatal: Not a valid object name HEAD
 
-If you're doing that, then that is exactly what you are assuming.
+sschuber@xp-sschuber2 ~
+$ git --version
+git version 1.5.2.2
 
-> After all, this
-> is really the only way to end up with the prescribed commit sha1.
+I'm not sure whether the cause for this is the same as mentioned at
 
-That's the best way of losing all you precious changes in the submodule.
-And there is no way to get them back!
-Surely this is a lot worse than occasionally committing something you
-didn't plan to commit, and only if you are performing a known "dangerous"
-operation.
+http://article.gmane.org/gmane.comp.version-control.git/54825
 
-> I agree that for safety it makes sense to warn or abort if the index
-> doesn't match ORIG_HEAD (saved by the supermodule checkout) or if the
-> index doesn't match the work tree.
+However, the most recent msysGit worked fine for me. Any clues whether 
+this is a repository problem, a Cygwin problem, or a git problem?
 
-You may have done several supermodule checkouts since you last changed
-the submodule.
+Thanks.
 
-skimo
+-- 
+Sebastian Schuberth
