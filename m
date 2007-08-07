@@ -1,79 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-diff: Output a warning about stale files in the index
-Date: Mon, 06 Aug 2007 23:46:30 -0700
-Message-ID: <7vbqdj9709.fsf@assigned-by-dhcp.cox.net>
-References: <46B80993.3080409@midwinter.com>
-	<20070807063523.GA29617@midwinter.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Tue, 07 Aug 2007 08:47:52 +0200
+Message-ID: <vpqfy2vu9gn.fsf@bauges.imag.fr>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 08:47:38 2007
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:49:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIIqv-0001VE-KG
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:47:37 +0200
+	id 1IIIsc-0001xy-Lu
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbXHGGqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 02:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755860AbXHGGqn
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:46:43 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46618 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752939AbXHGGqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 02:46:32 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070807064632.GKRJ26965.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 7 Aug 2007 02:46:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YumX1X0061kojtg0000000; Tue, 07 Aug 2007 02:46:31 -0400
-In-Reply-To: <20070807063523.GA29617@midwinter.com> (Steven Grimm's message of
-	"Mon, 6 Aug 2007 23:35:23 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753279AbXHGGtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 02:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbXHGGtT
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:49:19 -0400
+Received: from imag.imag.fr ([129.88.30.1]:43292 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753189AbXHGGtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 02:49:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l776lrkP027175
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 7 Aug 2007 08:47:53 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IIIrA-0002ML-TG; Tue, 07 Aug 2007 08:47:52 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IIIrA-0003tu-Pb; Tue, 07 Aug 2007 08:47:52 +0200
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>, Steven Grimm <koreth@midwinter.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>, Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
+In-Reply-To: <alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org> (Linus Torvalds's message of "Mon\, 6 Aug 2007 21\:22\:26 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 07 Aug 2007 08:47:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55228>
 
-Steven Grimm <koreth@midwinter.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Signed-off-by: Steven Grimm <koreth@midwinter.com>
-> ---
-> 	This is based on (and includes) Junio's patch. This should
-> 	hopefully address the "I want to know when my index is very
-> 	stale" problem with both his original patch and mine.
->
-> 	If we are running a pager, I output the warning to standard
-> 	output so it doesn't get immediately scrolled off the screen by
-> 	the paged diff output. Otherwise I output to standard error
-> 	which is really the more appropriate place for the warning.
-> 	Obviously that is no good if the user is running his own pager,
-> 	but I'm not sure how to detect that and not cause problems for
-> 	diffs that are piped into other programs.
+> It's not that the old output is "useful" in itself, but it's important for 
+> people to know that the index is clean. So I'd suggest just setting a flag 
+> when the header isn't printed, and then printing out a single line at the 
+> end about "git index not up-to-date" or something.
 
-Hmph.  One way to avoid causing problems for diffs that are
-piped into other programs and still give the "index of sync"
-warning is to emit "diff --git" line and no patch body fot
-textual diffs, or 0{40} SHA-1 on the right hand side for --raw
-format diffs.
+Yes. Junio's patch has this as a comment, it's probably good to
+uncomment it, and perhaps print it directly on stdout so that you see
+it even with a pager.
 
-Jokes aside...
+> Doing a "git diff" cannot actually update the index (since it very much 
+> has to work on a read-only setup too),
 
-For textual diffs, I think we can always spit out the warning
-message at the beginning of at the end on the standard output
-without harming any of the patch based toolchain.
+Err, what's the relationship between the two parts of your sentence?
+You can't be sure that git-diff will update the index (because you may
+be working on a read-only setup, yes), but git-diff can at least _try_
+to, and fall-back to the read-only behavior if updating the index
+fails.
 
-So how about...
+That's not a highly original idea since this is what git already does
+with "status".
 
- - If and only if the output format asks for textual diff
-   (DIFF_FORMAT_PATCH), we do this "stat-dirty-removal";
-   otherwise we do not spend extra cycles and keep the current
-   behaviour.
+Once more, I'm willing to write the code for that if it has a chance
+to be accepted.
 
- - At the end of patch text, show "stat-dirty-removal" warning
-   on stdout.
+-- 
+Matthieu
