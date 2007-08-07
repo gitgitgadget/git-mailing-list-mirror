@@ -1,69 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Tue, 07 Aug 2007 08:41:04 +0200
-Message-ID: <86d4xzaltr.fsf@lola.quinscape.zz>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org> <7v4pjc9czm.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-diff: Output a warning about stale files in the index
+Date: Mon, 06 Aug 2007 23:46:30 -0700
+Message-ID: <7vbqdj9709.fsf@assigned-by-dhcp.cox.net>
+References: <46B80993.3080409@midwinter.com>
+	<20070807063523.GA29617@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 08:41:21 2007
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:47:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIIkp-0008Ku-B9
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:41:19 +0200
+	id 1IIIqv-0001VE-KG
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753027AbXHGGlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 02:41:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbXHGGlQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:41:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:34981 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111AbXHGGlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 02:41:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIIkj-0000JN-BK
-	for git@vger.kernel.org; Tue, 07 Aug 2007 08:41:13 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:41:13 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:41:13 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:6DNXb6CUVlf4fKT+fuxnEUfu/bQ=
+	id S1753170AbXHGGqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 02:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755860AbXHGGqn
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:46:43 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46618 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752939AbXHGGqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 02:46:32 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070807064632.GKRJ26965.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 7 Aug 2007 02:46:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YumX1X0061kojtg0000000; Tue, 07 Aug 2007 02:46:31 -0400
+In-Reply-To: <20070807063523.GA29617@midwinter.com> (Steven Grimm's message of
+	"Mon, 6 Aug 2007 23:35:23 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55227>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> Signed-off-by: Steven Grimm <koreth@midwinter.com>
+> ---
+> 	This is based on (and includes) Junio's patch. This should
+> 	hopefully address the "I want to know when my index is very
+> 	stale" problem with both his original patch and mine.
 >
->> Doing a "git diff" cannot actually update the index (since it very
->> much has to work on a read-only setup too), which is why the index
->> _stays_ stale unless something is done (eg "git status") to refresh
->> it. And it's that stale index that continues to make for bad
->> performance without any indication of why that is a problem.
->
-> Indeed.
->
-> At least, I am now glad to know that somebody else is of the same
-> opinion as I am.
+> 	If we are running a pager, I output the warning to standard
+> 	output so it doesn't get immediately scrolled off the screen by
+> 	the paged diff output. Otherwise I output to standard error
+> 	which is really the more appropriate place for the warning.
+> 	Obviously that is no good if the user is running his own pager,
+> 	but I'm not sure how to detect that and not cause problems for
+> 	diffs that are piped into other programs.
 
-I don't want a system to tell me when it is shooting itself in the
-foot.  It should not be doing this in the first place.
+Hmph.  One way to avoid causing problems for diffs that are
+piped into other programs and still give the "index of sync"
+warning is to emit "diff --git" line and no patch body fot
+textual diffs, or 0{40} SHA-1 on the right hand side for --raw
+format diffs.
 
-File systems have automatic fsck procedures enforced regularly, too,
-to keep them operative. If git finds that it is getting inefficient,
-it should just mark the index as "regenerate at next access".  And
-then do it.
+Jokes aside...
 
--- 
-David Kastrup
+For textual diffs, I think we can always spit out the warning
+message at the beginning of at the end on the standard output
+without harming any of the patch based toolchain.
+
+So how about...
+
+ - If and only if the output format asks for textual diff
+   (DIFF_FORMAT_PATCH), we do this "stat-dirty-removal";
+   otherwise we do not spend extra cycles and keep the current
+   behaviour.
+
+ - At the end of patch text, show "stat-dirty-removal" warning
+   on stdout.
