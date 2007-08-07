@@ -1,71 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] (Really) Fix install-doc-quick target
-Date: Tue, 7 Aug 2007 15:08:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708071507410.14781@racer.site>
-References: <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>
- <11864401942772-git-send-email-mdl123@verizon.net> <Pine.LNX.4.64.0708062349460.14781@racer.site>
- <7vzm149s8s.fsf@assigned-by-dhcp.cox.net> <46B7B10F.4060402@gmail.com>
- <7vhcnc9lpm.fsf@assigned-by-dhcp.cox.net> <46B7D108.20606@gmail.com>
- <7vd4y09f07.fsf@assigned-by-dhcp.cox.net> <46B879DB.4090504@lsrfire.ath.cx>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: git-gui console app ?
+Date: Tue, 07 Aug 2007 16:21:06 +0200
+Message-ID: <87k5s7e88d.fsf@morpheus.local>
+References: <20070804101058.GA520@Mac2.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Mark Levedahl <mdl123@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Aug 07 16:09:43 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 07 16:21:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIPkk-0007ky-KC
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 16:09:42 +0200
+	id 1IIPw5-0004JL-I0
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 16:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754870AbXHGOJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 10:09:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754646AbXHGOJi
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 10:09:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57723 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753888AbXHGOJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 10:09:37 -0400
-Received: (qmail invoked by alias); 07 Aug 2007 14:09:35 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 07 Aug 2007 16:09:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX196q2F6ymJ6uz0Sh4gUdJZve42ctq5ruckN4/lZIT
-	JJZK93pbcoVmoT
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46B879DB.4090504@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1755621AbXHGOVW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 10:21:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754937AbXHGOVW
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 10:21:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:45672 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754567AbXHGOVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 10:21:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIPvu-0002Iq-Ue
+	for git@vger.kernel.org; Tue, 07 Aug 2007 16:21:15 +0200
+Received: from c83-253-22-183.bredband.comhem.se ([83.253.22.183])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 16:21:14 +0200
+Received: from davidk by c83-253-22-183.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 16:21:14 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-183.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:FEytE8oH2o68Z7RdoW9lS5X05tA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55260>
 
-Hi,
+Erik Colson <eco@ecocode.net> writes:
 
-On Tue, 7 Aug 2007, Ren? Scharfe wrote:
+> Hello !
+>
+> git-gui is a nice application and I like to use it while developping.
+> However as probably a lot of developpers do, I regularly code in Emac=
+s
+> from a distant ssh client.
+> Therefor I'd want to find some app like git-gui running in console...
+> Does this exist or is there a project in development ?
 
-> Junio C Hamano schrieb:
-> > Mark Levedahl <mlevedahl@gmail.com> writes:
-> > 
-> >> +    printf "$mandir/%s\n" $(git ls-tree -r --name-only $head) | xargs
-> >> gzip -f
-> > 
-> > No risk that ls-tree output is too long to fit within the exec
-> > args limit to run printf?
-> 
-> Perhaps this instead?
-> 
->    git ls-tree -r --name-only $head | (cd "$mandir" && xargs gzip -f)
+If you are already using emacs, why not use the emacs frontend?  It
+isn't as featureful as git gui right now, but it integrates better
+with your emacs.
 
-I would have done
-
-	git ls-tree -r --name-only $head | sed "s|^|$mandir|" | xargs gzip -f
-
-but I like your version better.
-
-Thanks for teaching me,
-Dscho
+--=20
+David K=C3=A5gedal
