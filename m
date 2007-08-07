@@ -1,50 +1,54 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: git-svn: "Malformed network data" issue
-Date: Tue, 7 Aug 2007 13:42:20 +0000
-Message-ID: <20070807134220.23420.qmail@c96e4a6cce1e57.315fe32.mid.smarden.org>
-References: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org> <20070704210526.GA9582@muzzle>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] (Really) Fix install-doc-quick target
+Date: Tue, 07 Aug 2007 15:55:39 +0200
+Message-ID: <46B879DB.4090504@lsrfire.ath.cx>
+References: <7vmyx6fohv.fsf_-_@assigned-by-dhcp.cox.net>	<11864401942772-git-send-email-mdl123@verizon.net>	<Pine.LNX.4.64.0708062349460.14781@racer.site>	<7vzm149s8s.fsf@assigned-by-dhcp.cox.net> <46B7B10F.4060402@gmail.com>	<7vhcnc9lpm.fsf@assigned-by-dhcp.cox.net> <46B7D108.20606@gmail.com> <7vd4y09f07.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Aug 07 15:42:11 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mdl123@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 15:56:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIPK3-0004W5-TD
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:42:08 +0200
+	id 1IIPXi-0001vz-A6
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 15:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758241AbXHGNmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 09:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759459AbXHGNmD
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:42:03 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:46898 "HELO a.mx.smarden.org"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with SMTP
-	id S1758310AbXHGNmB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 09:42:01 -0400
-Received: (qmail 23421 invoked by uid 1000); 7 Aug 2007 13:42:20 -0000
-Mail-Followup-To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <20070704210526.GA9582@muzzle>
+	id S1760761AbXHGN4A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 09:56:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759120AbXHGN4A
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 09:56:00 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:37690
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753881AbXHGN4A (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Aug 2007 09:56:00 -0400
+Received: from [10.0.1.201] (p508EBFB8.dip.t-dialin.net [80.142.191.184])
+	by neapel230.server4you.de (Postfix) with ESMTP id 1C0E38B008;
+	Tue,  7 Aug 2007 15:55:58 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vd4y09f07.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55257>
 
-On Wed, Jul 04, 2007 at 02:07:42PM -0700, Eric Wong wrote:
->   Although this fixes blocking reads, this does *not* fix the
->   "Malformed network data" issue, which has been around for a
->   while...
-> 
->   I'll try to find time to fix the "Malformed network data" bug
->   in a few days time, but it's not fatal (just restart git-svn,
->   this error happens at a point where it's not possible to have
->   a corrupted import).
+Junio C Hamano schrieb:
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+>=20
+>> +    printf "$mandir/%s\n" $(git ls-tree -r --name-only $head) | xar=
+gs
+>> gzip -f
+>=20
+> No risk that ls-tree output is too long to fit within the exec
+> args limit to run printf?
 
-Hi, this still is a problem we face on Debian with 1.5.3-rc3
- http://bugs.debian.org/436142
- http://bugs.debian.org/430091
+Perhaps this instead?
 
-I'm sorry, I didn't manage to provide a patch.
+   git ls-tree -r --name-only $head | (cd "$mandir" && xargs gzip -f)
 
-Thanks, Gerrit.
+Ren=E9
