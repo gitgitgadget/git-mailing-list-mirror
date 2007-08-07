@@ -1,85 +1,56 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: 'pu' branch for StGIT
-Date: Tue, 7 Aug 2007 04:20:43 +0200
-Message-ID: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: 'pu' branch for StGIT
+Date: Mon, 6 Aug 2007 22:38:36 -0400
+Message-ID: <20070807023836.GN9527@spearce.org>
+References: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pavel Roskin <proski@gnu.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Pavel Roskin <proski@gnu.org>,
 	Catalin Marinas <catalin.marinas@gmail.com>,
 	Yann Dirson <ydirson@altern.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 04:21:11 2007
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 04:39:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIEh2-0000fE-Si
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 04:21:09 +0200
+	id 1IIEyQ-0003iB-RM
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 04:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765608AbXHGCVF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 6 Aug 2007 22:21:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765656AbXHGCVE
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 22:21:04 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3027 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765544AbXHGCVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2007 22:21:03 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IIEge-0002Jz-00; Tue, 07 Aug 2007 03:20:44 +0100
+	id S1765680AbXHGCit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Aug 2007 22:38:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765752AbXHGCit
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Aug 2007 22:38:49 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59838 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765658AbXHGCis (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2007 22:38:48 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IIExm-0008VE-V8; Mon, 06 Aug 2007 22:38:27 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 054E220FBAE; Mon,  6 Aug 2007 22:38:36 -0400 (EDT)
 Content-Disposition: inline
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55200>
 
-So I finally got my act together and published a 'pu'-like branch for
-StGIT. Get it at git://repo.or.cz/stgit/kha.git; gitweb at
-http://repo.or.cz/w/stgit/kha.git.
+Karl Hasselstrm <kha@treskal.com> wrote:
+> (Does anyone know the incantation for Junio's status mails, with topic
+> branches grouped nicely?)
 
-The idea is that I grab the StGIT patches that are posted to the list,
-put each series in its own topic branch (based on Catalin's master),
-and publish a merge of them. _After_ having made sure that the test
-suite passes, naturally. It then becomes much easier for everyone to
-test these patches.
+Look at his todo branch; one of those scripts does the magic.
+Start with todo:WC, apparently it calls todo:git-topic.perl.
+Junio checks out the todo branch in a Meta/ subdirectory.  :-)
 
-This should lessen the pressure on Catalin to include patches in his
-master branch as soon as possible, which should in turn reduce the
-number of reverts in the official history.
-
-Here's what's currently in there:
-
-Karl Hasselstr=F6m (8):
-      Teach StGIT about core.excludesfile
-      New test: make sure that popping doesn't change patch order
-      Verify patch status during the test
-      Make use of the get_patch() utility function
-      Compute patch appliedness from commit DAG
-      Test the new DAG appliedness machinery
-      Fix bash completion after the DAG appliedness patch
-      Speed up the appliedness test
-
-Pavel Roskin (1):
-      Add support for SMTP over Transport Layer Security (TLS)
-
-Yann Dirson (7):
-      Include contrib scripts in the release tarball.
-      Improve stg-fold-files-from doc.
-      New contrib scripts: stg-dispatch and stg-show.
-      Add -O flag to stg-fold-files-from.
-      Add a no-act flag to stg-dispatch and stg-fold-file-from.
-      Provide file completion for add/resolved/refresh based on status.
-      Fixed completion function hardcoding .git/.
-
-(Does anyone know the incantation for Junio's status mails, with topic
-branches grouped nicely?)
-
-NOTE: The DAG appliedness patch series is in there. They will upgrade
-the format of any stgit branch they touch, and there's no convenient
-way to change it back if you change your mind.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Shawn.
