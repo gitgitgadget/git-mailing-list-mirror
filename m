@@ -1,117 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Mon, 06 Aug 2007 23:22:32 -0700
-Message-ID: <7vtzrb9847.fsf@assigned-by-dhcp.cox.net>
-References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
-	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
-	<7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
-	<7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
-	<7vejl0546b.fsf@assigned-by-dhcp.cox.net>
-	<7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
-	<7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
-	<7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
-	<7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
-	<7v7ipsz7vr.fsf@assigned-by-dhcp.pobox.com>
-	<7vk5tj3bj1.fsf@assigned-by-dhcp.cox.net>
-	<7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vvec4synj.fsf_-_@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Tue, 07 Aug 2007 08:32:55 +0200
+Message-ID: <86k5s7am7c.fsf@lola.quinscape.zz>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <7v3az1qgdg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708031121000.14781@racer.site> <7vir7wmk84.fsf@assigned-by-dhcp.cox.net> <86bqdkbq59.fsf@lola.quinscape.zz> <vpqr6mgwhsf.fsf@bauges.imag.fr> <7vodhkbdx2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 07 08:22:39 2007
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:33:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIISk-0003v8-87
-	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:22:38 +0200
+	id 1IIIdH-0006Q5-4V
+	for gcvg-git@gmane.org; Tue, 07 Aug 2007 08:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbXHGGWe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 7 Aug 2007 02:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXHGGWe
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:22:34 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:64529 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751182AbXHGGWd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Aug 2007 02:22:33 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070807062233.SNLA14885.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 7 Aug 2007 02:22:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YuNY1X00W1kojtg0000000; Tue, 07 Aug 2007 02:22:33 -0400
-X-maint-at: 93969438dca50c7f0039fcf35e7ab82776d4122f
-X-master-at: 5b56aaa29e9d7c0371b6d47bd8a6b12a0c4292dd
-In-Reply-To: <7vvec4synj.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 28 Jul 2007 01:47:12 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752203AbXHGGdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 02:33:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbXHGGdK
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 02:33:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:57496 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751456AbXHGGdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 02:33:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIIcq-00084V-NG
+	for git@vger.kernel.org; Tue, 07 Aug 2007 08:33:04 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:33:04 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Aug 2007 08:33:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:htqQ0Hw2xFiktn/KOli8TvrjeGY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55222>
 
-* The 'maint' branch has these fixes since the last
-  announcement, which are all included in 'master' as well.
-  Because 1.5.3 is just around the corner, I think it is
-  pointless to do 1.5.2.5 from here, though.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Christian Couder (1):
-  rev-list --bisect: fix allocation of "int*" instead of "int".
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> Unfortunately, the patch solves the "large and irrelevant output"
+>> of git-diff, but not the performance problem (see the rest of the
+>> thread, I failed to convince Junio that updating the index was a
+>> performance improvement while keeping the same user semantics).
+>
+> That's what update-index --refresh (or status if you insist) are
+> for, and the coalmine canary you are so dead set to kill are helping
+> you realize the need for running.
 
-Junio C Hamano (1):
-  setup.c:verify_non_filename(): don't die unnecessarily while
-      disambiguating
+That does not convince me.  Cache staleness should be a problem of
+git, not of the user.  In particular if the user is just using
+porcelain.  If letting the cache get stale impacts performance, then
+git should clean up its act on its own without barfing when using
+unrelated commands.  If it notices this during diff (presumably by
+overstepping some staleness ratio), then it can set a "regenerate on
+next opportunity" flag on the index, and then the next command wanting
+to process the index from the start can rewrite a refreshed version.
 
-Linus Torvalds (1):
-  apply: remove directory that becomes empty by renaming the last
-      file away
-
-* The 'master' branch has these since 1.5.3-rc4.
-
-Adam Roben (1):
-  Documentation/git-svn: how to clone a git-svn-created repository
-
-Gerrit Pape (1):
-  git-am: initialize variable $resume on startup
-
-J. Bruce Fields (4):
-  user-manual: update for new default --track behavior
-  user-manual: mention git-gui
-  documentation: use the word "index" in the git-add manual page
-  documentation: use the word "index" in the git-commit man page
-
-Jakub Narebski (1):
-  gitweb: Fix handling of $file_name in feed generation
-
-Johannes Schindelin (1):
-  checkout-index needs a working tree
-
-Junio C Hamano (8):
-  git-completion: add "git stash"
-  INSTALL: add warning on docbook-xsl 1.72 and 1.73
-  unpack-trees.c: assume submodules are clean during check-out
-  Fix install-doc-quick target
-  user-manual: mention git stash
-  setup.c:verify_non_filename(): don't die unnecessarily while
-      disambiguating
-  pager: find out pager setting from configuration
-  Fix "make GZ=3D1 quick-install-doc"
-
-Jyotirmoy Bhattacharya (1):
-  Fixed git-push manpage
-
-Linus Torvalds (1):
-  apply: remove directory that becomes empty by renaming the last
-      file away
-
-Randal L. Schwartz (1):
-  add "test-absolute-path" to .gitignore
-
-Shawn O. Pearce (1):
-  Document GIT_SSH environment variable alongside other variables
-
-Uwe Kleine-K=C3=B6nig (1):
-  send-email: teach sanitize_address to do rfc2047 quoting
+-- 
+David Kastrup
