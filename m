@@ -1,73 +1,62 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Wed, 8 Aug 2007 12:41:28 -0400
-Message-ID: <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
-References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>
-	 <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>
-	 <20070807145825.GO21692@lavos.net>
-	 <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de>
-	 <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>
-	 <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>
-	 <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>
-	 <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git-svn: commit author x commit committer issue
+Date: Wed, 8 Aug 2007 19:13:23 +0200
+Message-ID: <20070808171323.GD27703@xp.machine.xx>
+References: <46B9C92B.3000000@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Sebastian Schuberth" <sschuberth@gmail.com>
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Aug 08 18:41:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Richard MUSIL <richard.musil@st.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 19:13:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIobI-00032S-Ax
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 18:41:36 +0200
+	id 1IIp6P-0005SS-Td
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 19:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668AbXHHQlb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 12:41:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbXHHQlb
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 12:41:31 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:59561 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbXHHQla (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 12:41:30 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so58960nfb
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 09:41:28 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Dz4U78QkMGxYQpDNHRKmZtjaRmrq5fUIrcTPWRBr1WspcJtPL89Kw20n78l3c58Nl4p2svkPcNgHCwnGT4N20ATV8V1F48+iS5qqiNg/+xM87DGBQ44DtCr5ZynKyy1oEL/NEjY+tWlevNqcCsRe9vjXgPc3wDe+UIwSDbGPW8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MhyJ1lWiU4r5866Pxi0h2mjFkScK6qq8s7//w29Q+BoEjx8hMgCZhLQM7+Qq+maQS+RG+67HBDwfiWRNMBCy/V9AekNC5KqofJEps7SQvh+oksYNCU4c7N8mkmn8zVLmIRIkkL5nhb31YTobVjps/y2rh3TlblsdJXa3DtH0Q7U=
-Received: by 10.82.183.19 with SMTP id g19mr1013228buf.1186591288477;
-        Wed, 08 Aug 2007 09:41:28 -0700 (PDT)
-Received: by 10.78.190.5 with HTTP; Wed, 8 Aug 2007 09:41:28 -0700 (PDT)
-In-Reply-To: <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
+	id S937203AbXHHRNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 13:13:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937185AbXHHRN2
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 13:13:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48882 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S936769AbXHHRN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 13:13:26 -0400
+Received: (qmail invoked by alias); 08 Aug 2007 17:13:24 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp044) with SMTP; 08 Aug 2007 19:13:24 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/FBMlHI+TFKDGnM1pNq/XWLUlB5tuheNRzs60Lg6
+	FjWfKbCMPm8NFP
+Mail-Followup-To: Richard MUSIL <richard.musil@st.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <46B9C92B.3000000@st.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55332>
 
-On 8/8/07, Steffen Prohaska <prohaska@zib.de> wrote:
->
-> The bottom line for me is, git does not yet support Windows in a
-> usable way for the organizations that I need to convince.
->
->         Steffen
->
+On Wed, Aug 08, 2007 at 03:46:19PM +0200, Richard MUSIL wrote:
+> Normally, when patch is applied, git distinguishes commit author and
+> commit committer (relying on info from patch).
+> However, after the patches are committed to svn repository using:
+> git-svn dcommit
+> author and committer data are set to same values (or at least time and
+> date, I cannot verify it for names).
+> I wonder if there is any reason for this behavior, because I would
+> definitely like to keep original commit info (which came from patch) in
+> my git repository.
 
-Have you considered jumping in to help on the msys git port Johannes
-Schindelin is working? He has very generously offered to do
-essentially everything except find bugs, the latter because he does
-not actually use Windows so can't, and is clearly putting a great deal
-of effort into this. A stable and complete Windows port may be much
-closer than you think.
+I think it is because in SVN, you can't differentiate between author and
+committer. And git-svn just commits every local commit to svn, and after
+that, it throws away your local commits and uses the info from the
+reimported svn commits to recreate those thrown away commits. Thats why
+you loose your author name and also your commit date.
 
-Mark
+Ok, this was a little too simplified, but describes roughly what happens
+if you dcommit your changes.
+
+-Peter
