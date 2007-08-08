@@ -1,94 +1,69 @@
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during check-out
-Date: Tue, 07 Aug 2007 21:41:34 -0400
-Message-ID: <46B91F4E.8050008@tromer.org>
-References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org> <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net> <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org> <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org> <20070805144632.GB999MdfPADPa@greensroom.kotnet.org> <46B76B8C.9050905@tromer.org> <20070806190344.GF999MdfPADPa@greensroom.kotnet.org> <46B7E5FE.7050006@tromer.org> <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] tests: added d2u to have unix style testfiles even in
+ textmode
+Date: Tue, 7 Aug 2007 20:03:03 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708071959470.23971@woody.linux-foundation.org>
+References: <A80CCC35-DE1E-4A0B-9144-A8165AF6C98A@zib.de>
+ <11865269472595-git-send-email-prohaska@zib.de>
+ <11865269472121-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Wed Aug 08 03:42:05 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 05:04:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIaYi-0001jc-Ar
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 03:42:00 +0200
+	id 1IIbq4-0007rg-RY
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757652AbXHHBl5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 21:41:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762109AbXHHBl5
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 21:41:57 -0400
-Received: from forum2.org ([198.65.45.153]:1253 "EHLO forum2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756947AbXHHBl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 21:41:56 -0400
-X-F2-Envelope-From: git2eran@tromer.org
-X-F2-Envelope-To: git@vger.kernel.org
-Received: from moby.tromer.org (c-66-30-26-80.hsd1.ma.comcast.net [66.30.26.80])
-	(authenticated bits=0)
-	by forum2.org (8.13.6.20060614/8.13.6) with ESMTP id l781fmnH068098;
-	Wed, 8 Aug 2007 01:41:48 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.5) Gecko/20070719 Fedora/2.0.0.5-1.fc7 Thunderbird/2.0.0.5 Mnenhy/0.7.5.0
-In-Reply-To: <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
-X-Enigmail-Version: 0.95.3
+	id S1755635AbXHHDDz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 23:03:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756708AbXHHDDz
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:03:55 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:60084 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755108AbXHHDDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Aug 2007 23:03:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l78339ri005714
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 7 Aug 2007 20:03:10 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l78333G2017801;
+	Tue, 7 Aug 2007 20:03:03 -0700
+In-Reply-To: <11865269472121-git-send-email-prohaska@zib.de>
+X-Spam-Status: No, hits=-4.121 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_31,J_CHICKENPOX_84,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55293>
 
-On 2007-08-07 04:51, Sven Verdoolaege wrote:
-> Surely this is a lot worse than occasionally committing something you
-> didn't plan to commit, and only if you are performing a known "dangerous"
-> operation.
+
+
+On Wed, 8 Aug 2007, Steffen Prohaska wrote:
+>
+> This is needed if the content of files is compared with
+> precomputed sha1s or stored expected results.
 > 
-Are you saying that
-$ git reset --hard HEAD && vi foo && git commit -a
-is a "known dangerous" operation that can record corrupted content even
-though you didn't touch it? This is very bad news indeed! I don't see
-any such warnings in the documentation.
+> ***WARNING***
+> This patch is useful for testing and illustrating the problem
+> but not thought to be applied to any official git branch.
 
-So, when I'm sure all the edits I did in the work tree are fine, how
-*do* I safely make a commit without manually inspecting the changed
-files list, or manually listing the changed files for "git add", or
-manually running "git submodule update", or manually checking whether
-there happens to be some submodules in this project, some other such
-cumbersome measure?
+Quite frankly, *much* rather than having d2u everywhere, why not make the 
+default for DOS/Windows be to have
 
+	[core]
+		autocrlf=true
 
-> You may have done several supermodule checkouts since you last changed
-> the submodule.
+and then none of this should hopefully be needed.
 
-True, that approach won't work. I can imagine some logic to
-conditionally update ORIG_HEAD, but it gets messy and fragile. Looks
-like brokenness is just inevitable when you let the state get stale and
-then merrily read it out as if it's fresh.
+(We still need to write the internal git objects using O_BINARY to make 
+sure that cygwin doesn't corrupt binary data, but that's a totally 
+different issue).
 
-
-So.... Maybe we can tackle this head-on? Let index entries be explicitly
-marked as "adrift", meaning we just don't touch the work tree for these
-entries -- neither reads nor writes. It's used when the piece of
-content, say a submodule, is allowed to drift arbitrarily in the work
-tree in a way that doesn't represent meaningful edits that should be
-reflected in commits, diffs, etc.
-
-For example:
-- "git checkout" sets the "adrift" flag on all (modified?) submodules
-- "git submodule update" undrifts ("moores?") the submodules
-- "git commit -a" skips files that are adrift, and likewise "git add .",
-  "git diff" etc. (perhaps with some warning?)
-- "git add <path>" undrifts <path> and proceeds as usual
-- "git status" reports drifting files as such and doesn't bother to
-  check them in the work tree
-- When merging into the work tree, drifting files are left as such
-
-And why stop at submodules? If there's a large blob you don't want to
-check out, just "git drift <path>" it. To set whole *directories*
-adrift, we can piggybacking on the empty-directory support (i.e., add a
-directory entry to the index and set it adrift). So this could be the
-basis of partial-checkout support.
-
-Does this sound reasonable?
-
-  Eran
+			Linus
