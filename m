@@ -1,55 +1,90 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: Re: git-svn: commit author x commit committer issue
-Date: Thu, 09 Aug 2007 01:42:24 +1000
-Message-ID: <46B9E460.5080708@gmail.com>
-References: <46B9C92B.3000000@st.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [install info (using perl) 1/2] Add support for an info version of the user manual
+Date: Thu, 09 Aug 2007 01:46:21 +0200
+Message-ID: <85abt1pp2q.fsf@lola.goethe.zz>
+References: <591c5679ea79b76cd5db57443b1d691bde842351.1186484406.git.dak@gnu.org>
+	<7vabt11vkj.fsf@assigned-by-dhcp.cox.net>
+	<7v643p1vbr.fsf@assigned-by-dhcp.cox.net>
+	<7v1wed1up3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Richard MUSIL <richard.musil@st.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 01:28:30 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 01:46:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIux2-0002s6-Nr
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 01:28:29 +0200
+	id 1IIvEU-0007JC-1B
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 01:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761552AbXHHX2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 19:28:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761523AbXHHX2Z
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 19:28:25 -0400
-Received: from pecan.exetel.com.au ([220.233.0.17]:42310 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759431AbXHHX2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 19:28:24 -0400
-X-Greylist: delayed 27951 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2007 19:28:24 EDT
-Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=kingbee.home)
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1IIng1-0006eD-Ib; Thu, 09 Aug 2007 01:42:25 +1000
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <46B9C92B.3000000@st.com>
-X-Enigmail-Version: 0.95.2
+	id S1763275AbXHHXqZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 19:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763593AbXHHXqZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 19:46:25 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:46788 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1763106AbXHHXqX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 19:46:23 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id A130E24B17A;
+	Thu,  9 Aug 2007 01:46:22 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 9234B13EDB6;
+	Thu,  9 Aug 2007 01:46:22 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-025-080.pools.arcor-ip.net [84.61.25.80])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 7E0AD1BF3A1;
+	Thu,  9 Aug 2007 01:46:22 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id D54241C3C79D; Thu,  9 Aug 2007 01:46:21 +0200 (CEST)
+In-Reply-To: <7v1wed1up3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 08 Aug 2007 16\:18\:48 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3900/Wed Aug  8 22:55:59 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55399>
 
-Richard MUSIL wrote:
-> Normally, when patch is applied, git distinguishes commit author and
-> commit committer (relying on info from patch).
-> However, after the patches are committed to svn repository using:
-> git-svn dcommit
-> author and committer data are set to same values (or at least time and
-> date, I cannot verify it for names).
-> I wonder if there is any reason for this behavior, because I would
-> definitely like to keep original commit info (which came from patch) in
-> my git repository.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm sure this worked before (author and committee are different, that is).
-Something went wrong recently but I haven't got time to look into the problem.
-I hope someone would.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> How about doing something like this instead?
+>
 
-Quy
+> ---
+>
+>  Documentation/Makefile      |   13 ++++---------
+>  Documentation/fix-texi.perl |   15 +++++++++++++++
+>  2 files changed, 19 insertions(+), 9 deletions(-)
+>  create mode 100755 Documentation/fix-texi.perl
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 56d12aa..8c33729 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+
+> new file mode 100755
+> index 0000000..ff7d78f
+> --- /dev/null
+> +++ b/Documentation/fix-texi.perl
+
+[...]
+
+It makes Perl look like a programming language instead of line noise.
+But putting it into a file with .perl extension will make users
+recognize it nevertheless.  So
+
+Acked-by: David Kastrup <dak@gnu.org>
+
+I can fold this patch in and repost (probably not too many people have
+applied the previous patches and would require a good fast forward
+path, so one would probably not need a 3-commit version built on top
+of the existing patches), or you may do so at your discretion.
+
+Thanks, looks much nicer.  I still hope to rationalize Perl away
+altogether at some point of time, but...
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
