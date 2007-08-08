@@ -1,71 +1,68 @@
-From: Matthias Kleine <matthias_kleine@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-svn: Finding the svn-URL of the current branch in git
-Date: Wed, 08 Aug 2007 10:54:55 +0200
-Message-ID: <f9c0d1$7md$1@sea.gmane.org>
+Date: Wed, 08 Aug 2007 02:13:48 -0700
+Message-ID: <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
 References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx>
+	<f9c0d1$7md$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 11:00:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthias Kleine <matthias_kleine@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 11:13:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIhOm-0000qE-Ij
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:00:12 +0200
+	id 1IIhc2-0003bG-BW
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755209AbXHHJAI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 05:00:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754536AbXHHJAI
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:00:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:60600 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751436AbXHHJAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 05:00:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IIhOb-0004Kj-Uf
-	for git@vger.kernel.org; Wed, 08 Aug 2007 11:00:01 +0200
-Received: from e178070063.adsl.alicedsl.de ([85.178.70.63])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:00:01 +0200
-Received: from matthias_kleine by e178070063.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:00:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: e178070063.adsl.alicedsl.de
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20070807205543.GB27703@xp.machine.xx>
+	id S1753164AbXHHJNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 05:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753057AbXHHJNx
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:13:53 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56784 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752381AbXHHJNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 05:13:49 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808091349.VDKW7349.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 8 Aug 2007 05:13:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ZMDo1X0041kojtg0000000; Wed, 08 Aug 2007 05:13:48 -0400
+In-Reply-To: <f9c0d1$7md$1@sea.gmane.org> (Matthias Kleine's message of "Wed,
+	08 Aug 2007 10:54:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55309>
 
-Peter Baumann wrote:
-> 
-> I had this situation, too.
-> 
-> 
-> 			a = svn branch 'a'
-> 	  m		b = svn branch 'b' (in my case, it was trunk)
->       /   \		m = a merge of branch 'a' and 'b', not yet commited to svn
->      a     b
-> 
-> So trying to dcommit m, git svn can't figure out on which branch, as 'a'
-> and 'b' are both reachable. I had to use a graft file to lose one of the
-> parents, which let git-svn commit to SVN.
+Matthias Kleine <matthias_kleine@gmx.de> writes:
 
-You're right, both 'a' and 'b' are reachable from 'm'.  But if I got it 
-right 'm' also contains information as to which one is the first parent 
-and thereby which branch we're on. So wouldn't it be enough, if git-svn 
-automatically chose the first parent (using log --first-parent)?
-
-> 
-> So for a short fix to get the work done, you could create a graft file
-> where you fake m to only have one parent.
+> Peter Baumann wrote:
+>>
+>> I had this situation, too.
+>>
+>>
+>> 			a = svn branch 'a'
+>> 	  m		b = svn branch 'b' (in my case, it was trunk)
+>>       /   \		m = a merge of branch 'a' and 'b', not yet commited to svn
+>>      a     b
+>>
+>> So trying to dcommit m, git svn can't figure out on which branch, as 'a'
+>> and 'b' are both reachable. I had to use a graft file to lose one of the
+>> parents, which let git-svn commit to SVN.
 >
-Thanks for that one. I didn't know about the grafts file before.
+> You're right, both 'a' and 'b' are reachable from 'm'.  But if I got
+> it right 'm' also contains information as to which one is the first
+> parent and thereby which branch we're on. So wouldn't it be enough, if
+> git-svn automatically chose the first parent (using log
+> --first-parent)?
 
-Matthias
+Parents' order and which branch you are on may not have anything
+to do with each other.  Somebody else may have pulled a while on
+b, and you might have pulled from him the merge he created by
+doing so while you are on branch a.
