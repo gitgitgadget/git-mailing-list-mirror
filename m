@@ -1,73 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when
- contents are unchanged
-Date: Tue, 7 Aug 2007 20:42:13 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708072040160.25146@woody.linux-foundation.org>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
- <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site>
- <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site>
- <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site>
- <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site>
- <20070803053717.GA16379@midwinter.com> <alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org>
- <46B80993.3080409@midwinter.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Tue, 07 Aug 2007 20:44:14 -0700
+Message-ID: <7vabt2667l.fsf@assigned-by-dhcp.cox.net>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org>
+	<7v4pjc9czm.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 05:43:26 2007
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 05:44:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIcSD-0005dp-Ia
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:43:25 +0200
+	id 1IIcT7-0005nQ-Ck
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:44:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936036AbXHHDnK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 23:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935916AbXHHDnJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:43:09 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55933 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935543AbXHHDnH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Aug 2007 23:43:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l783gIVB008930
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 7 Aug 2007 20:42:23 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l783gDH3019094;
-	Tue, 7 Aug 2007 20:42:13 -0700
-In-Reply-To: <46B80993.3080409@midwinter.com>
-X-Spam-Status: No, hits=-4.724 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
-X-MIMEDefang-Filter: lf$Revision: 1.184 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S934827AbXHHDoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 23:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934547AbXHHDoR
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:44:17 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64365 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934202AbXHHDoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 23:44:16 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808034416.VOTK23215.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 7 Aug 2007 23:44:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZFkF1X0091kojtg0000000; Tue, 07 Aug 2007 23:44:16 -0400
+In-Reply-To: <alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 7 Aug 2007 20:07:08 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55296>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Everybody who takes patches will accept crud afterwards, since the normal 
+> thing is to email them around, so there's no real downside to adding some 
+> status output at the end. It shouldn't screw anything up, but people will 
+> hopefully notice (sure, if you exit the pager without looking at it all 
+> you wouldn't notice, but that's _already_ true, so..)
 
-On Tue, 7 Aug 2007, Steven Grimm wrote:
-> 
-> Actually, though this will probably make people roll their eyes, before this
-> discussion I would have guessed that "git status" would be the command that
-> would tell you the index was out of date, and that there'd be a separate
-> command (say, "git update-index"?) that you could then use to sync things up
-> again.
+Well, at least "hundreds of empty diff" has a value of getting
+attention for even such a use case, so you _could_ argue this
+patch is a regression ;-)
 
-Well, historically, you literally would just do
-
-	git update-index --refresh
-
-to do that.
-
-"git status" is fairly newfangled, and is purely because users from other 
-SCM's expected that kind of command to exist. The fact that as part of it 
-running it does that update-index is really just a side effect.
-
-		Linus
+In any case, this will go in as part of the first batch after
+1.5.3, I would guess.
