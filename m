@@ -1,57 +1,108 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Wed, 08 Aug 2007 19:07:04 -0400
-Message-ID: <46BA4C98.4050005@gmail.com>
-References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>  <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>  <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>  <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>  <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>  <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de> <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com> <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de> <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [install info (using perl) 1/2] Add support for an info version of the user manual
+Date: Wed, 08 Aug 2007 16:18:48 -0700
+Message-ID: <7v1wed1up3.fsf@assigned-by-dhcp.cox.net>
+References: <591c5679ea79b76cd5db57443b1d691bde842351.1186484406.git.dak@gnu.org>
+	<7vabt11vkj.fsf@assigned-by-dhcp.cox.net>
+	<7v643p1vbr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Aug 09 01:07:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 01:19:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIucb-0005Pu-EE
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 01:07:21 +0200
+	id 1IIuoI-0000Hx-4t
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 01:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760230AbXHHXHM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 19:07:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbXHHXHL
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 19:07:11 -0400
-Received: from el-out-1112.google.com ([209.85.162.176]:18284 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760230AbXHHXHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 19:07:09 -0400
-Received: by el-out-1112.google.com with SMTP id j27so85658elf
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 16:07:08 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=rx3oGdZ4ffL1UYwaI0Atylw9YhJFzsSy3gYuKVPcbVaWfekd4/wQv31/DUM3sAnd4J6BVC6YdU+MQd8VQfbT1ngpfQ9OAS6p4twVhfvHNpUNVSJ5s8rH3/14meIDsr4ylgixv4oLCIYQGTA7PlqSjsaLyqy7YspzaJkvhVZSwjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=bEKm/beRA8/x4vQw4EtRDvcuNlTJyp2YRxEHc/EvxUTjdWMB09qRlqN+hlWUjOAe2/+qnrqqDWC4S+vyUt6rUlpZDBnOvrTN8sXnmWOEJ6SUx52yH6qXct+rLXXD+0BjCHfrqfvM36hWC86p9L1P4cx/xtYw/yVyDfFv5u3TKmI=
-Received: by 10.90.63.16 with SMTP id l16mr2373816aga.1186614428331;
-        Wed, 08 Aug 2007 16:07:08 -0700 (PDT)
-Received: from ?192.168.100.118? ( [71.246.233.117])
-        by mx.google.com with ESMTPS id 29sm1554290wrl.2007.08.08.16.07.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Aug 2007 16:07:06 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
-In-Reply-To: <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de>
+	id S1764234AbXHHXSw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 19:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763979AbXHHXSv
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 19:18:51 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57567 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763941AbXHHXSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 19:18:50 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808231848.DGQV7956.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 8 Aug 2007 19:18:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZbJp1X00K1kojtg0000000; Wed, 08 Aug 2007 19:18:49 -0400
+In-Reply-To: <7v643p1vbr.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 08 Aug 2007 16:05:12 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55394>
 
-Steffen Prohaska wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> This part worries me.
 >
-Let me guess, you have Cygwin on the path along with Msys, and had it 
-that way when you downloaded the package and it tried to build. Hmmm. 
-Maybe Cygwin executables conflict with Msys executables. Nah. Couldn't 
-be. Must be a bug.
+> Aside from possible portability issue of multi-line script,
+> there is another slight problem I am not sure if it is worth
+> fixing.  If you do not have docbook2x-texi installed, nobody
+> notices that resulting $*.texi was a garbage and an almost empty
+> git.info is generated.
 
-Mark
+How about doing something like this instead?
+
+---
+
+ Documentation/Makefile      |   13 ++++---------
+ Documentation/fix-texi.perl |   15 +++++++++++++++
+ 2 files changed, 19 insertions(+), 9 deletions(-)
+ create mode 100755 Documentation/fix-texi.perl
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 56d12aa..8c33729 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -154,16 +154,11 @@ user-manual.html: user-manual.xml
+ 	xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
+ 
+ git.info: user-manual.xml
+-	$(RM) $@ $*.texi
+-	$(DOCBOOK2X_TEXI) user-manual.xml --to-stdout | \
+-	perl -ne 'if (/^\@setfilename/) {$$_="\@setfilename git.info\
+-"} elsif (/^\@direntry/) {print "\@dircategory Development\
+-\@direntry\
+-* Git: (git).           A fast distributed revision control system\
+-\@end direntry\
+-"} print unless (/^\@direntry/ .. /^\@end direntry/)' > $*.texi
++	$(RM) $@ $*.texi $*.texi+
++	$(DOCBOOK2X_TEXI) user-manual.xml --to-stdout >$*.texi+
++	perl fix-texi.perl <$*.texi+ >$*.texi
+ 	$(MAKEINFO) --no-split $*.texi
+-	$(RM) $*.texi
++	$(RM) $*.texi $*.texi+
+ 
+ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	$(RM) $@+ $@
+diff --git a/Documentation/fix-texi.perl b/Documentation/fix-texi.perl
+new file mode 100755
+index 0000000..ff7d78f
+--- /dev/null
++++ b/Documentation/fix-texi.perl
+@@ -0,0 +1,15 @@
++#!/usr/bin/perl -w
++
++while (<>) {
++	if (/^\@setfilename/) {
++		$_ = "\@setfilename git.info\n";
++	} elsif (/^\@direntry/) {
++		print '@dircategory Development
++@direntry
++* Git: (git).           A fast distributed revision control system
++@end direntry
++';	}
++	unless (/^\@direntry/../^\@end direntry/) {
++		print;
++	}
++}
