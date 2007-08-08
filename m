@@ -1,71 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Wed, 08 Aug 2007 11:58:49 +0200
-Organization: At home
-Message-ID: <f9c44o$gqs$1@sea.gmane.org>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr> <7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net> <vpqhcni47ek.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021050500.14781@racer.site> <vpqbqdq45ua.fsf@bauges.imag.fr> <Pine.LNX.4.64.0708021147110.14781@racer.site> <AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca> <Pine.LNX.4.64.0708021541520.14781@racer.site> <46B1F3F4.5030504@midwinter.com> <Pine.LNX.4.64.0708021614420.14781@racer.site> <20070803053717.GA16379@midwinter.com> <alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org> <7v4pjc9czm.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org> <Pine.LNX.4.64.0708080923580.14781@racer.site> <7v3ayu5scj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708081022440.14781@racer.site>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Submodules
+Date: Wed, 08 Aug 2007 12:27:10 +0200
+Message-ID: <20070808102710.GI999MdfPADPa@greensroom.kotnet.org>
+References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
+ <Pine.LNX.4.64.0708072344450.14781@racer.site>
+ <a1bbc6950708071610g4ea4d874t458cec14a444b519@mail.gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 11:59:51 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 12:27:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIiKU-0005Zs-EX
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:59:50 +0200
+	id 1IIil6-0003Ij-L6
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 12:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759737AbXHHJ7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 05:59:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759134AbXHHJ7J
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:59:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:55741 "EHLO ciao.gmane.org"
+	id S1760029AbXHHK1Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 06:27:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759677AbXHHK1P
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 06:27:15 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:63123 "EHLO psmtp09.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759355AbXHHJ7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 05:59:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIiJg-0001GG-SX
-	for git@vger.kernel.org; Wed, 08 Aug 2007 11:59:00 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:59:00 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:59:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1758863AbXHHK1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 06:27:13 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMG0029OADASN@psmtp09.wxs.nl> for git@vger.kernel.org; Wed,
+ 08 Aug 2007 12:27:10 +0200 (MEST)
+Received: (qmail 23988 invoked by uid 500); Wed, 08 Aug 2007 10:27:10 +0000
+In-reply-to: <a1bbc6950708071610g4ea4d874t458cec14a444b519@mail.gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55315>
 
-Johannes Schindelin wrote:
-
-> On Wed, 8 Aug 2007, Junio C Hamano wrote:
+On Tue, Aug 07, 2007 at 04:10:38PM -0700, Dmitry Kakurin wrote:
+> Yeah, I've already went thru these. But I want (much) more details.
+> I can ask a bunch of random questions on this list, like:
 > 
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->>> So I have the slight suspicion that all this will accomplish is "shut the 
->>> darn thing up", and old-timers will have a harder time, since they no 
->>> longer spot easily when they did a Dumb Thing and left the index out of 
->>> sync.
->> 
->> The hardest hit would be old-timers who try to be friendly by
->> trying to help new people, who has much less chance to notice
->> and report these much less prominent warnings, over e-mail or
->> irc.
-> 
-> True.  It is even bigger than that annoyance to people who know how git 
-> works.
+> * Why after 'submodule update' it becomes detached, what if I want it
+> to stay on certain branch?
 
-Perhaps config variable, by default old behaviour if not set?
+You'd need to have a way to specify which branch you want to have updated.
+There was some discussion about this some time ago and the general
+conclusion was that a detached HEAD was the best solution.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> * How do I control which branches are fetched?
+
+Currently, you can't.
+
+> * What if I do 'commit -a' standing in /super, will /super/submodule
+> commit as well?
+
+No.
+
+> * What if I'm standing in /super/submodule and do 'commit -a'? Will
+> super notice it in any way?
+
+Any commit in the submodule will be seen as a "change" to the submodule
+from the perspective of the supermodule.
+
+skimo
