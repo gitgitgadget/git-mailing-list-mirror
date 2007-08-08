@@ -1,132 +1,104 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Git'ing a non-labeled set of sources
-Date: Wed, 8 Aug 2007 22:17:18 +0200
-Message-ID: <20070808201718.GE27470@xp.machine.xx>
-References: <CF7E46FCFF66AD478BB72724345289EC170CE4@twx-exch01.twacs.local> <20070808193720.GD27470@xp.machine.xx> <CF7E46FCFF66AD478BB72724345289EC170CE5@twx-exch01.twacs.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Submodules
+Date: Wed, 08 Aug 2007 13:27:02 -0700
+Message-ID: <7vlkcl3h7t.fsf@assigned-by-dhcp.cox.net>
+References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
+	<Pine.LNX.4.64.0708072349400.14781@racer.site>
+	<a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
+	<20070808104117.GK999MdfPADPa@greensroom.kotnet.org>
+	<7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708082138520.21916@wbgn129.biozentrum.uni-wuerzburg.de>
+	<7vps1x3ihp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Sparks, Sam" <SSparks@twacs.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 22:17:28 2007
+Cc: skimo@liacs.nl, Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 22:27:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIryB-0006uX-0x
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 22:17:27 +0200
+	id 1IIs7b-000229-6T
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 22:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938097AbXHHURT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 16:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760941AbXHHURT
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 16:17:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53667 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S938079AbXHHURS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 16:17:18 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 20:17:17 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp028) with SMTP; 08 Aug 2007 22:17:17 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+/S2AA0Li/00LrSmgpceByf/8aYHxl7yrqK+6tNI
-	khRsfjDbcMSZom
-Mail-Followup-To: "Sparks, Sam" <SSparks@twacs.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CF7E46FCFF66AD478BB72724345289EC170CE5@twx-exch01.twacs.local>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S935575AbXHHU1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 16:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935694AbXHHU1G
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 16:27:06 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:40770 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935575AbXHHU1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 16:27:05 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808202703.WPEM7193.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 8 Aug 2007 16:27:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZYT31X0021kojtg0000000; Wed, 08 Aug 2007 16:27:03 -0400
+In-Reply-To: <7vps1x3ihp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 08 Aug 2007 12:59:30 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55357>
 
-On Wed, Aug 08, 2007 at 02:52:14PM -0500, Sparks, Sam wrote:
->  
-> 
-> >-----Original Message-----
-> >From: Peter Baumann [mailto:waste.manager@gmx.de] 
-> >Sent: Wednesday, August 08, 2007 2:37 PM
-> >To: Sparks, Sam
-> >Cc: git@vger.kernel.org
-> >Subject: Re: Git'ing a non-labeled set of sources
-> >
-> >On Wed, Aug 08, 2007 at 01:59:38PM -0500, Sparks, Sam wrote:
-> >> Hello All,
-> >> 
-> >> Please excuse me if this is an ignorant question; I'm new to 
-> >git and my
-> >> have overlooked something in the documentation.
-> >> 
-> >> I'm attempting to obtain a snapshot of source code from an 
-> >unlabeled git
-> >> branch in a public repository. I've found in the documentation that a
-> >> timestamp cannot be used to specify a particular version of 
-> >source code,
-> >> but I believe I can work with the commit value as returned by 'git
-> >> show'.
-> >> 
-> >> However, I have been unsuccessful in my attempts to use this 
-> >identifier
-> >> to clone or checkout the associated source tree. Has anyone been
-> >> successful in using git to successfully replicate an 
-> >unlabeled version
-> >> of sources in a repository?
-> >> 
-> >> Here is my latest attempt:
-> >> /dir_i_want_to_replicate $ git show --pretty=short
-> >> commit 5b1313fb2758ffce8b624457f777d8cc6709608d
-> >> Author: ....
-> >> 
-> >> /replication_dir $ git clone git://www.denx.de/git/u-boot.git
-> >> u-boot-mpc83xx
-> >> Blah blah blah..
-> >>  100% (4378/4378) done
-> >> /replication_dir/u-boot-mpc83xx/ $ git checkout
-> >> 5b1313fb2758ffce8b624457f777d8cc6709608d
-> >> error: pathspec '5b1313fb2758ffce8b624457f777d8cc6709608d' 
-> >did not match
-> >> any. 
-> >> 
-> >
-> >Because there is no 5b1313fb2758ffce8b624457f777d8cc6709608d in the
-> >repo.
-> >
-> >  $ git clone git://www.denx.de/git/u-boot.git
-> >  Initialized empty Git repository in /tmp/u-boot/.git/
-> >  remote: Generating pack...
-> >  remote: Done counting 40938 objects.
-> >  remote: Deltifying 40938 objects.
-> >  remote:  100% (40938/40938) done
-> >  Indexing 40938 objects...
-> >  remote: Total 40938 (delta 32545), reused 39302 (delta 31040)
-> >  100% (40938/40938) done
-> >  Resolving 32545 deltas...
-> >  100% (32545/32545) done
-> >
-> >  $ cd u-boot; git-rev-list --all|grep ^5b1
-> >  5b1d713721c3ea02549940133f09236783dda1f9
-> >
-> >-Peter
-> 
-> Hmmm. There must be something I am not understanding about git.
-> When I run the same command on my existing git repository, I get the
-> following:
-> $ git-rev-list --all | grep ^5b1
-> 5b1313fb2758ffce8b624457f777d8cc6709608d
-> 5b1d713721c3ea02549940133f09236783dda1f9
-> 
-> Does git allow the removal of commits? I don't understand how I was able
-> to download it a couple of months ago, but it is no longer accessible.
-> 
-> Thanks for the quick reply,
-> Sam
+Ok, this is my second try.
 
-If the branch was rebased, then yes. But this is not nice for
-contributers, so it is normally the rule to not rebase a published
-branch. But e.g. the branch 'pu' on git.git is a branch which will be
-rebased. This is mentioned by Junio in his notes from the maintainer.
+ - Incorporated Sven's suggestion to give an example of
+   problematic situation on submodule after "git-checkout" at
+   the supermodule level;
 
-What made me wonder is, if you have the commit localy, why can't you
-check it out? Please try a git-fsck --full run, to see if you have a
-corrupt repo.
+ - Describe semantic clean-up of specifying GIT_DIR that is
+   not strictly needed (because it is situated at the normal
+   place relative to the working tree).
 
--Peter
+---
+diff --git a/Documentation/RelNotes-1.5.3.txt b/Documentation/RelNotes-1.5.3.txt
+index 21bb1fc..bf7a341 100644
+--- a/Documentation/RelNotes-1.5.3.txt
++++ b/Documentation/RelNotes-1.5.3.txt
+@@ -9,6 +9,40 @@ Updates since v1.5.2
+ 
+ * The submodule support has Porcelain layer.
+ 
++  Note that the current submodule support is minimal and this is
++  deliberately so.  A design decision we made is that operations
++  at the supermodule level do not recurse into submodules by
++  default.  The expectation is that later we would add a
++  mechanism to tell git which submodules the user is interested
++  in, and this information might be used to determine the
++  recursive behaviour of certain commands (e.g. "git checkout"
++  and "git diff"), but currently we haven't agreed on what that
++  mechanism should look like.  In particular, if you have any
++  submodules checked out, running a "git checkout" at the
++  supermodule level will not update these submodules.  They will
++  therefore appear to be modified (to the state prior to the
++  checkout) to any subsequent git command, until they have been
++  updated explicitly using "git submodule update".
++
++* You can have a work tree not at the parent directory of .git
++  which is the repository.  This is done with GIT_WORK_TREE
++  environment, or --work-tree option.
++
++  This support slightly changes the semantics of having GIT_DIR
++  environment variable.  The rule used to be that when it is
++  given, you are supposed to be at the top level of the working
++  tree.  However, if it names a .git directory at the top of the
++  working tree, you can be in a subdirectory of that directory
++  and git notices you are in the subdirectory.  E.g. in t/
++  subdirectory of git.git project, 
++
++	$ cd t
++	$ GIT_DIR=../.git/ git ls-files -s
++
++  will list the files in t/ (i.e. your current directory).  It
++  used not to notice that you are in a subdirectory and listed
++  the files from the top-level of the working tree.
++
+ * There are a handful pack-objects changes to help you cope better
+   with repositories with pathologically large blobs in them.
+ 
