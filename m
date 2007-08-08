@@ -1,56 +1,79 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: Submodules
-Date: Wed, 08 Aug 2007 22:08:31 +0200
-Message-ID: <20070808200831.GS999MdfPADPa@greensroom.kotnet.org>
-References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
- <Pine.LNX.4.64.0708072349400.14781@racer.site>
- <a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
- <20070808104117.GK999MdfPADPa@greensroom.kotnet.org>
- <7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0708082138520.21916@wbgn129.biozentrum.uni-wuerzburg.de>
- <7vps1x3ihp.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Mod. gitk to support REBASE (with stash support).
+Date: Wed, 08 Aug 2007 22:08:48 +0200
+Message-ID: <85lkclrdpr.fsf@lola.goethe.zz>
+References: <1186598028457-git-send-email-alexandre.bourget@savoirfairelinux.com>
+	<Pine.LNX.4.64.0708082141170.21916@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
+Cc: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
+	Git Mailing List <git@vger.kernel.org>, paulus@samba.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-From: git-owner@vger.kernel.org Wed Aug 08 22:09:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIrq3-00049m-U2
+	id 1IIrq4-00049m-F3
 	for gcvg-git@gmane.org; Wed, 08 Aug 2007 22:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934249AbXHHUIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 16:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934202AbXHHUIe
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 16:08:34 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:40199 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762963AbXHHUId (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 16:08:33 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMH007ZT1A7V4@psmtp09.wxs.nl> for git@vger.kernel.org; Wed,
- 08 Aug 2007 22:08:32 +0200 (MEST)
-Received: (qmail 2008 invoked by uid 500); Wed, 08 Aug 2007 20:08:31 +0000
-In-reply-to: <7vps1x3ihp.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S934364AbXHHUIz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 16:08:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934330AbXHHUIy
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 16:08:54 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:57871 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762731AbXHHUIx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 16:08:53 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 7DCCC37A70D;
+	Wed,  8 Aug 2007 22:08:51 +0200 (CEST)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 6F945ABEB1;
+	Wed,  8 Aug 2007 22:08:51 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-025-080.pools.arcor-ip.net [84.61.25.80])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 0898212F0B;
+	Wed,  8 Aug 2007 22:08:50 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 5C6791C3C79D; Wed,  8 Aug 2007 22:08:49 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0708082141170.21916@wbgn129.biozentrum.uni-wuerzburg.de> (Johannes Schindelin's message of "Wed\, 8 Aug 2007 21\:42\:19 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3898/Wed Aug  8 20:20:48 2007 on mail-in-11.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55354>
 
-On Wed, Aug 08, 2007 at 12:59:30PM -0700, Junio C Hamano wrote:
-> Sorry, but I do not use submodules yet myself.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-If you would ever start using submodules (for, say, gitgui),
-then I'm sure we'd have much more usable submodules support
-in no time.
+> On Wed, 8 Aug 2007, Alexandre Bourget wrote:
+>
+>> ---
+>> Adds a context menu for commits, so that a 'rebase' can be done.
+>> 
+>> Optionally, it will ask if you want to 'stash' current work before doing so.
+>> 
+>
+> You want something like this as a commit message, _not_ between "---" and 
+> diffstat.
+>
+> General question: should this not be in git-gui rather than gitk?  Gitk as 
+> of now is really more a viewing tool.
 
-skimo
+Well, yes.  But git-gui only works on a single branch head at a time,
+and that is not enough for rebasing.  It would be really nice if
+git-gui did not outsource its branch handling and viewing to gitk.
+
+Could git-gui perhaps be merged with giggle at some point of time?
+Another option might be to let it talk with uDraw(Graph) over a
+socket: uDraw(Graph) keeps track of the graph layout and tells its
+client what has been dragged where.
+
+Rebasing would also be a fine operation for drag and drop on a
+graphical revision history/branch system: pull one head onto another,
+or mark one segment and pull it onto another head.  And use the reflog
+to recover from catastrophes...
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
