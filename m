@@ -1,102 +1,94 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] gitk - Handle MouseWheel events on Windows
-Date: Tue, 07 Aug 2007 21:40:35 -0400
-Message-ID: <11865372381125-git-send-email-mdl123@verizon.net>
-References: <1186440352826-git-send-email-mdl123@verizon.net>
- <11865372352543-git-send-email-mdl123@verizon.net>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mark Levedahl <mdl123@verizon.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 03:41:00 2007
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during check-out
+Date: Tue, 07 Aug 2007 21:41:34 -0400
+Message-ID: <46B91F4E.8050008@tromer.org>
+References: <20070717182828.GA4583MdfPADPa@greensroom.kotnet.org> <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net> <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org> <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org> <20070805144632.GB999MdfPADPa@greensroom.kotnet.org> <46B76B8C.9050905@tromer.org> <20070806190344.GF999MdfPADPa@greensroom.kotnet.org> <46B7E5FE.7050006@tromer.org> <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Wed Aug 08 03:42:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIaXk-0001a2-AI
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 03:41:00 +0200
+	id 1IIaYi-0001jc-Ar
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 03:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760314AbXHHBk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 21:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756947AbXHHBk4
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 21:40:56 -0400
-Received: from vms040pub.verizon.net ([206.46.252.40]:55285 "EHLO
-	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757652AbXHHBkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 21:40:55 -0400
-Received: from fal-l07294-lp.us.ray.com ([72.66.124.87])
- by vms040.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JMF00DXKLZQ5MJ0@vms040.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 07 Aug 2007 20:40:39 -0500 (CDT)
-In-reply-to: <11865372352543-git-send-email-mdl123@verizon.net>
-X-Mailer: git-send-email 1.5.3.rc4.25.gade7b9
-X-Peer: 127.0.0.1
+	id S1757652AbXHHBl5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 21:41:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762109AbXHHBl5
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 21:41:57 -0400
+Received: from forum2.org ([198.65.45.153]:1253 "EHLO forum2.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756947AbXHHBl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2007 21:41:56 -0400
+X-F2-Envelope-From: git2eran@tromer.org
+X-F2-Envelope-To: git@vger.kernel.org
+Received: from moby.tromer.org (c-66-30-26-80.hsd1.ma.comcast.net [66.30.26.80])
+	(authenticated bits=0)
+	by forum2.org (8.13.6.20060614/8.13.6) with ESMTP id l781fmnH068098;
+	Wed, 8 Aug 2007 01:41:48 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.5) Gecko/20070719 Fedora/2.0.0.5-1.fc7 Thunderbird/2.0.0.5 Mnenhy/0.7.5.0
+In-Reply-To: <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55292>
 
-Windows, unlike X-Windows, sends mousewheel events by default to the
-window that has keyboard focus and uses the MouseWheel event to do so.
-The window to be scrolled must be able to take focus, but gitk's panels
-are disabled so cannot take focus. For all these reasons, a different
-design is needed to use the mousewheel on Windows. The approach here is
-to bind the mousewheel events to the top level window and redirect them
-based upon the current mouse position.
+On 2007-08-07 04:51, Sven Verdoolaege wrote:
+> Surely this is a lot worse than occasionally committing something you
+> didn't plan to commit, and only if you are performing a known "dangerous"
+> operation.
+> 
+Are you saying that
+$ git reset --hard HEAD && vi foo && git commit -a
+is a "known dangerous" operation that can record corrupted content even
+though you didn't touch it? This is very bad news indeed! I don't see
+any such warnings in the documentation.
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
+So, when I'm sure all the edits I did in the work tree are fine, how
+*do* I safely make a commit without manually inspecting the changed
+files list, or manually listing the changed files for "git add", or
+manually running "git submodule update", or manually checking whether
+there happens to be some submodules in this project, some other such
+cumbersome measure?
 
-This version is a slight clean-up of the original, collapsing two
-if/else blocks into a single conditional assignment.
 
- gitk |   27 +++++++++++++++++++++++++--
- 1 files changed, 25 insertions(+), 2 deletions(-)
+> You may have done several supermodule checkouts since you last changed
+> the submodule.
 
-diff --git a/gitk b/gitk
-index 84f5ee4..eb2b194 100755
---- a/gitk
-+++ b/gitk
-@@ -823,8 +823,13 @@ proc makewindow {} {
-     pack .ctop -fill both -expand 1
-     bindall <1> {selcanvline %W %x %y}
-     #bindall <B1-Motion> {selcanvline %W %x %y}
--    bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
--    bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+    if {[tk windowingsystem] == "win32"} {
-+	bind . <MouseWheel> { windows_mousewheel_redirector %W %X %Y %D }
-+	bind $ctext <MouseWheel> { windows_mousewheel_redirector %W %X %Y %D ; break }
-+    } else {
-+	bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
-+	bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+    }
-     bindall <2> "canvscan mark %W %x %y"
-     bindall <B2-Motion> "canvscan dragto %W %x %y"
-     bindkey <Home> selfirstline
-@@ -918,6 +923,24 @@ proc makewindow {} {
- 	-command rmbranch
- }
+True, that approach won't work. I can imagine some logic to
+conditionally update ORIG_HEAD, but it gets messy and fragile. Looks
+like brokenness is just inevitable when you let the state get stale and
+then merrily read it out as if it's fresh.
 
-+# Windows sends all mouse wheel events to the current focused window, not
-+# the one where the mouse hovers, so bind those events here and redirect
-+# to the correct window
-+proc windows_mousewheel_redirector {W X Y D} {
-+    global canv canv2 canv3
-+    set w [winfo containing -displayof $W $X $Y]
-+    if {$w ne ""} {
-+	set u [expr {$D < 0 ? 5 : -5}]
-+	if {$w == $canv || $w == $canv2 || $w == $canv3} {
-+	    allcanvs yview scroll $u units
-+	} else {
-+	    catch {
-+		$w yview scroll $u units
-+	    }
-+	}
-+    }
-+}
-+
- # mouse-2 makes all windows scan vertically, but only the one
- # the cursor is in scans horizontally
- proc canvscan {op w x y} {
---
-1.5.3.rc4.25.gade7b9
+
+So.... Maybe we can tackle this head-on? Let index entries be explicitly
+marked as "adrift", meaning we just don't touch the work tree for these
+entries -- neither reads nor writes. It's used when the piece of
+content, say a submodule, is allowed to drift arbitrarily in the work
+tree in a way that doesn't represent meaningful edits that should be
+reflected in commits, diffs, etc.
+
+For example:
+- "git checkout" sets the "adrift" flag on all (modified?) submodules
+- "git submodule update" undrifts ("moores?") the submodules
+- "git commit -a" skips files that are adrift, and likewise "git add .",
+  "git diff" etc. (perhaps with some warning?)
+- "git add <path>" undrifts <path> and proceeds as usual
+- "git status" reports drifting files as such and doesn't bother to
+  check them in the work tree
+- When merging into the work tree, drifting files are left as such
+
+And why stop at submodules? If there's a large blob you don't want to
+check out, just "git drift <path>" it. To set whole *directories*
+adrift, we can piggybacking on the empty-directory support (i.e., add a
+directory entry to the index and set it adrift). So this could be the
+basis of partial-checkout support.
+
+Does this sound reasonable?
+
+  Eran
