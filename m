@@ -1,64 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Wed, 8 Aug 2007 22:30:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708082228520.21857@racer.site>
-References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org> 
- <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> 
- <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de>
- <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com> 
- <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de> 
- <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com> 
- <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
- <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
- <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: 'pu' branch for StGIT
+Date: Wed, 8 Aug 2007 23:39:17 +0200
+Message-ID: <20070808213917.GA22521@diana.vm.bytemark.co.uk>
+References: <20070807022043.GA8482@diana.vm.bytemark.co.uk> <1186549433.2112.34.camel@dv> <20070808092027.GB7860@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Aug 08 23:30:49 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Yann Dirson <ydirson@altern.org>
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 23:39:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIt7B-0005Tw-6Z
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:30:49 +0200
+	id 1IItFd-0008EY-0o
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764418AbXHHVaq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 17:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765781AbXHHVaq
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:30:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43945 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763702AbXHHVap (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 17:30:45 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 21:30:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp023) with SMTP; 08 Aug 2007 23:30:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Ngwox/ovNRxzp5ADyHaTdMgknpJ1L/HcK5pnBKO
-	nXsGRTTM07Glzt
-X-X-Sender: gene099@racer.site
-In-Reply-To: <75EB313E-807D-44FB-A186-A151F182B47B@zib.de>
-X-Y-GMX-Trusted: 0
+	id S935828AbXHHVj2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 17:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763820AbXHHVj2
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:39:28 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2870 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765029AbXHHVj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 17:39:27 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IItFN-0005vA-00; Wed, 08 Aug 2007 22:39:17 +0100
+Content-Disposition: inline
+In-Reply-To: <20070808092027.GB7860@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55373>
 
-Hi,
+On 2007-08-08 11:20:27 +0200, Karl Hasselstr=F6m wrote:
 
-On Wed, 8 Aug 2007, Steffen Prohaska wrote:
+> On 2007-08-08 01:03:53 -0400, Pavel Roskin wrote:
+>
+> > Also, "stg import" commits the patch, which seems wrong to me.
+>
+> Hmm, I hadn't noticed. That would be an unintended side-effect of
+> the DAG patches, presumably. I'll look into it tonight.
 
-> On Aug 8, 2007, at 7:20 PM, Johannes Schindelin wrote:
-> 
-> > So go for it, everybody, or alternatively do not even bother to whine.
-> 
-> I don't care about these things. I typically start the Explorer by 
-> typing explorer into the 'Run ...' box of the start meny. So don't 
-> expect anything from me that makes git more beautiful.
+I can't reproduce. (Using master of git://repo.or.cz/stgit/kha.git.)
+The last subtest of t1800 actually tests that a mailbox was imported
+as a series of patches, and that works fine for me (the other subtests
+don't make sure that a patch was created; they just verify that we got
+the right tree). Furthermore, the following works for me:
 
-That's nice to hear.  Finally somebody honest.  I'll return the favour: I 
-have no time to work on the bugs you sent in a reply.
+kha@yoghurt:~/stgit/t> ./t1800-import.sh
+*   ok 1: Initialize the StGIT repository
+*   ok 2: Apply a patch created with "git diff"
+*   ok 3: Apply a patch created with GNU diff
+*   ok 4: Apply a patch created with "stg export"
+*   ok 5: Apply a patch from an 8bit-encoded e-mail
+*   ok 6: Apply a patch from a QP-encoded e-mail
+*   ok 7: Apply several patches from an mbox file
+* passed all 7 test(s)
+kha@yoghurt:~/stgit/t> cd trash/
+kha@yoghurt:~/stgit/t/trash> ls
+foo.txt
+kha@yoghurt:~/stgit/t/trash> PATH=3D/home/kha/stgit:$PATH stg series -d
+kha@yoghurt:~/stgit/t/trash> PATH=3D/home/kha/stgit:$PATH stg import -m=
+ ../t1800-import/email-qp
+Checking for changes in the working directory ... done
+=46inding uninteresting commits ... done
+Importing patch "email-qp" ... done
+Now at patch "email-qp"
+kha@yoghurt:~/stgit/t/trash> PATH=3D/home/kha/stgit:$PATH stg series -d
+> email-qp | test patch
 
-Ciao,
-Dscho
+So a patch is definitely created. Could you describe in more detail
+exactly what you do to make it fail?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
