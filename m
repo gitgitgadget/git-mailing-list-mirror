@@ -1,70 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Submodules
-Date: Wed, 8 Aug 2007 22:12:52 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708082211100.21857@racer.site>
-References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
- <7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0708082138520.21916@wbgn129.biozentrum.uni-wuerzburg.de>
- <200708082147.57822.andyparkins@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] checkout_entry: only try to create directories when no file existed there
+Date: Wed, 08 Aug 2007 14:17:43 -0700
+Message-ID: <7v4pj93evc.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0708082200240.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	skimo@liacs.nl, Dmitry Kakurin <dmitry.kakurin@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 23:13:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 23:17:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIsqc-0000cN-On
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:13:43 +0200
+	id 1IIsub-0001ik-Ii
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:17:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764276AbXHHVNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 17:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763241AbXHHVNj
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:13:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55550 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760752AbXHHVNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 17:13:38 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 21:13:37 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp002) with SMTP; 08 Aug 2007 23:13:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/fx5tklD7fTx7Kf4I6TjfBUocdWfOcx+ZdRzIr7o
-	VtB6asSfDPYWVA
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200708082147.57822.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S934361AbXHHVRp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 17:17:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933942AbXHHVRp
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:17:45 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33670 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764677AbXHHVRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 17:17:44 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808211744.IIET2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 8 Aug 2007 17:17:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZZHj1X00B1kojtg0000000; Wed, 08 Aug 2007 17:17:43 -0400
+In-Reply-To: <Pine.LNX.4.64.0708082200240.14781@racer.site> (Johannes
+	Schindelin's message of "Wed, 8 Aug 2007 22:00:53 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55369>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 8 Aug 2007, Andy Parkins wrote:
+> It is obvious that we do not have to create directories when the file we
+> want to check out already existed.
 
-> On Wednesday 2007, August 08, Johannes Schindelin wrote:
-> 
-> > Also, I realised that git is not really happy unless you install
-> > alternates pointing to the object stores of the submodules.  Shouldn't we
-> > make this my default (for example in "init")?
-> 
-> I use submodules on a daily basis and haven't experienced this at all.  
-> Would you mind saying a little more about this problem?
-
-Not at all!
-
-This is what I did.  I cloned msysgit.git, which contains one submodule.  
-To initialise that, I did "git submodule init" and "git submodule update".  
-It went and cloned the submodule.  Fine.
-
-Then I committed in the submodule, a well-needed fix.
-
-If I now go to the superproject again, and say "git submodule status", it 
-will not find the newest commit, and complain that it cannot access that 
-object.
-
-Ciao,
-Dscho
+It is not so obvious to me.  In fact I vaguely recall we had
+complaint about opposite case where we did not honor a symlink
+to be checked out as a symlink because an earlier branch had it
+as a directory.
