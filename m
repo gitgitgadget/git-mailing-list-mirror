@@ -1,62 +1,116 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git-svn: commit author x commit committer issue
-Date: Wed, 8 Aug 2007 19:13:23 +0200
-Message-ID: <20070808171323.GD27703@xp.machine.xx>
-References: <46B9C92B.3000000@st.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Wed, 8 Aug 2007 18:20:02 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708081810130.14781@racer.site>
+References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org> 
+ <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> 
+ <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de>
+  <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com> 
+ <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de> 
+ <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com> 
+ <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
+ <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard MUSIL <richard.musil@st.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 19:13:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 19:23:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIp6P-0005SS-Td
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 19:13:46 +0200
+	id 1IIpFh-0008UY-OL
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 19:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937203AbXHHRNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 13:13:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937185AbXHHRN2
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 13:13:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48882 "HELO mail.gmx.net"
+	id S934938AbXHHRUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 13:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965095AbXHHRUp
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 13:20:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43953 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S936769AbXHHRN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 13:13:26 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 17:13:24 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp044) with SMTP; 08 Aug 2007 19:13:24 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/FBMlHI+TFKDGnM1pNq/XWLUlB5tuheNRzs60Lg6
-	FjWfKbCMPm8NFP
-Mail-Followup-To: Richard MUSIL <richard.musil@st.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <46B9C92B.3000000@st.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S965082AbXHHRUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 13:20:43 -0400
+Received: (qmail invoked by alias); 08 Aug 2007 17:20:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp029) with SMTP; 08 Aug 2007 19:20:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/m12Fc0cHm/0s4DtASL1/MeMOtVaLjcNlFbQBp4M
+	xKatpvk9QUiH+n
+X-X-Sender: gene099@racer.site
+In-Reply-To: <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55333>
 
-On Wed, Aug 08, 2007 at 03:46:19PM +0200, Richard MUSIL wrote:
-> Normally, when patch is applied, git distinguishes commit author and
-> commit committer (relying on info from patch).
-> However, after the patches are committed to svn repository using:
-> git-svn dcommit
-> author and committer data are set to same values (or at least time and
-> date, I cannot verify it for names).
-> I wonder if there is any reason for this behavior, because I would
-> definitely like to keep original commit info (which came from patch) in
-> my git repository.
+Hi,
 
-I think it is because in SVN, you can't differentiate between author and
-committer. And git-svn just commits every local commit to svn, and after
-that, it throws away your local commits and uses the info from the
-reimported svn commits to recreate those thrown away commits. Thats why
-you loose your author name and also your commit date.
+On Wed, 8 Aug 2007, Mark Levedahl wrote:
 
-Ok, this was a little too simplified, but describes roughly what happens
-if you dcommit your changes.
+> On 8/8/07, Steffen Prohaska <prohaska@zib.de> wrote:
+> >
+> > The bottom line for me is, git does not yet support Windows in a
+> > usable way for the organizations that I need to convince.
+> >
+> >         Steffen
+> >
+> 
+> Have you considered jumping in to help on the msys git port Johannes
+> Schindelin is working? He has very generously offered to do
+> essentially everything except find bugs, the latter because he does
+> not actually use Windows so can't, and is clearly putting a great deal
+> of effort into this. A stable and complete Windows port may be much
+> closer than you think.
 
--Peter
+To be fair, we are already a team of five working on it.  The 3rd 
+generation of the net installer works as flawlessly as the first, but 
+msysgit.git is a superproject now, containing the complete build 
+environment you need, and has git/mingw/4msysgit.git as a submodule (yes, 
+that is a fork of a fork; they work now on repo.or.cz).
+
+Please find it on
+
+	http://msysgit.googlecode.com/
+
+(It's a meager 1.4 MB, so the whole rest is git-cloned natively!) It 
+already passes all tests, is able to start gitk and git-gui, and more is 
+to come!
+
+And no, I did not agree to do _everything_.  I agreed to do things _when I 
+get something in return_.
+
+For example, we have a functional script sitting in msysgit.git which 
+builds a complete WinGit installer (WinGit being the code name for "Git on 
+MSys without the whole build environment").
+
+It is incomplete in only a few issues:
+
+	- it does not install anything in the start menu
+
+	- it does not install any short cut on the Desktop
+
+	- it does not install anything in the Quick Launch bar
+
+	- it does not include a nice WelcomeToGit.html, to be launched 
+	  after a successful install
+
+	- it does not contain a nice way to start git-gui (you have to 
+	  start it by hand from the command line inside bash)
+
+	- etc.
+
+So go for it, everybody, or alternatively do not even bother to whine.
+
+Ciao,
+Dscho
+
+P.S.: I'll be not really available for a few days, starting from tomorrow, 
+so do use the mailing list to keep in touch with others working on msysgit 
+or 4msysgit, and do use the mob branch (you can bug the project members 
+listed on the homepage to cherry-pick, sign off and push if need be).
