@@ -1,106 +1,95 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: resumable git-clone?
-Date: Tue, 7 Aug 2007 23:59:46 -0400
-Message-ID: <20070808035946.GP9527@spearce.org>
-References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Tue, 7 Aug 2007 23:25:13 -0500
+Message-ID: <20070808042513.GP21692@lavos.net>
+References: <Pine.LNX.4.64.0708071257350.14781@racer.site> <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> <20070807145825.GO21692@lavos.net> <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com> <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de> <alpine.LFD.0.999.0708071439021.5037@woody.linux-foundation.org> <A80CCC35-DE1E-4A0B-9144-A8165AF6C98A@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 05:59:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 06:25:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIciB-0007yU-LX
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:59:56 +0200
+	id 1IId7C-0003st-QJ
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 06:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934939AbXHHD7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 23:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934674AbXHHD7v
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:59:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49217 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934330AbXHHD7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 23:59:50 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IIchr-00040Q-JZ; Tue, 07 Aug 2007 23:59:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AB3AE20FBAE; Tue,  7 Aug 2007 23:59:46 -0400 (EDT)
+	id S1751599AbXHHEZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 00:25:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbXHHEZ0
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 00:25:26 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:7716 "EHLO
+	asav07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751599AbXHHEZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 00:25:24 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav07.insightbb.com with ESMTP; 08 Aug 2007 00:25:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AnA9ALTiuEZKhvbzRmdsb2JhbACBU4w7AQEBNQE
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id E2782309F31; Tue,  7 Aug 2007 23:25:13 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <A80CCC35-DE1E-4A0B-9144-A8165AF6C98A@zib.de>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55299>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> I was on a crappy connection and it was frustrated seeing git-clone
-> reached 80% then failed, then started over again. Can we support
-> resumable git-clone at some level? I think we could split into several
-> small packs, keep fetched ones, just get missing packs until we have
-> all.
+On Wed, Aug 08, 2007 at 12:46:49AM +0200, Steffen Prohaska wrote:
+> I started to run the tests on cygwin in textmode. I chose the
+> following setup.
 
-This is uh, difficult over the native git protocol.  The problem
-is the native protocol negotiates what the client already has and
-what it needs by comparing sets of commits.  If the client says
-"I have commit X" then the server assumes it has not only commit
-X _but also every object reachable from it_.
+In addition to all the other stuff discussed, I believe you also need
+to worry about the binaryness of stdin and stdout.
 
-Now packfiles are organized to place commits at the front of the
-packfile.  So a truncated download will give the client a whole
-host of commits, like maybe all of them, but none of the trees
-or blobs associated with them as those come behind the commits.
-Worse, the commits are sorted most recent to least recent.  So if
-the client claims he has the very first commit he received, that
-is currently an assertion that he has the entire repository.
+Looking at:
 
-I have been thinking about this resumable fetch idea for the native
-protocol for a few days now, like since the last time it came up
-on #git.
+http://www.cygwin.com/cygwin-ug-net/using-textbinary.html
 
-One possiblity is to have the client store locally in a temporary
-file the list of wants and the list of haves it sent to the server
-during the last fetch.
+I think this can be achieved by putting something like:
 
-During a resume of a packfile download we actually just replay this
-list of wants/haves, even if the server has newer data.  We also tell
-the server which object we last successfully downloaded (its SHA-1).
+	setmode(0, O_BINARY);
+	setmode(1, O_BINARY);
 
-The server would only accept the resumed want list if all of the
-wants are reachable from its current refs.  If one or more aren't
-then they are just culled from the want list; this way you can still
-successfully resume a download of say git.git where pu rebases often.
-You just might not get pu without going back for it.
+at the start of git's main().
 
-If the server always performs a very stable (meaning we don't ever
-change the sorting order!) and deterministic sorting of the objects
-in the packfile then given the same list of wants/haves and a
-"prior" point it can pickup from where it left off.
+When I was trying to get this to work, I did this as well as fixing up
+open() and fopen() calls as has already been discussed.  What got me
+to quit, however, was that I never found a decent way to make the Git
+shell scripts binary safe, and enough of the system was in shell as to
+make it pretty much useless for everyday use.
 
-At worst we are retransmitting one whole object again, e.g. the
-client had all but the last byte of the object, so it was no good.
-I'm willing to say we do the full object retransmission in case the
-object was recompressed on the server between the first fetch and
-the second.  It just simplifies the restart.
+Looking at the examples on the above page:
 
-Probably not that difficult.  The hardest part is committing to the
-object sorting order so that when we ask for a restart we *know*
-we didn't miss an object.
+    To illustrate the various rules, we provide scripts to delete CRs from
+    files by using the tr program, which can only write to standard output.
+    The script
 
-> I didn't clone via http so I don't know if http supports resumable.
+    #!/bin/sh
+    # Remove \r from the file given as argument
+    tr -d '\r' < "$1" > "$1".nocr
 
-This would have a better chance at doing a resume.  Looking at the
-code it looks like we do in fact resume a packfile download if it
-was truncated.
+    will not work on a text mounted systems because the \r will be
+    reintroduced on writing. However scripts such as
 
--- 
-Shawn.
+    #!/bin/sh
+    # Remove \r from the file given as argument
+    tr -d '\r' | gzip | gunzip > "$1".nocr
+
+    work fine. In the first case (assuming the pipes are binary) we rely
+    on gunzip to set its output to binary mode, possibly overriding the
+    mode used by the shell.
+
+was all it took to convince me this was probably a fool's errand.
+
+I wound up fixing our software so it would build on a binary mount,
+which I decided was a much more sane solution.
+
+-bcd
