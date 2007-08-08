@@ -1,99 +1,84 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: Re: [PATCH] Further changes, thanks to <tp@lists.linux.it>
-Date: Wed, 8 Aug 2007 23:04:53 +0200
-Message-ID: <200708082304.53867.barra_cuda@katamail.com>
-References: <20070808172739.5647a81b@paolo-desktop>
+From: "Thomas Adam" <thomas.adam22@gmail.com>
+Subject: Workflow question: A case for git-rebase?
+Date: Wed, 8 Aug 2007 22:11:22 +0100
+Message-ID: <18071eea0708081411p41eaa44ai105adaef0e4b10a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 23:04:01 2007
+X-From: git-owner@vger.kernel.org Wed Aug 08 23:11:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIshE-000682-MX
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:04:01 +0200
+	id 1IIsoT-0008Vo-Bt
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762332AbXHHVD4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 17:03:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760561AbXHHVD4
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:03:56 -0400
-Received: from slim-3a.inet.it ([213.92.5.124]:46880 "EHLO slim-3a.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755990AbXHHVDz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 17:03:55 -0400
-Received: from host12-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.12]) by slim-3a.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.57.12+nG60FO7nBDgt; Wed, 08 Aug 2007 23:03:52 +0200
-User-Agent: KMail/1.9.4
-In-Reply-To: <20070808172739.5647a81b@paolo-desktop>
+	id S1763799AbXHHVLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 17:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763071AbXHHVLX
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:11:23 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:40612 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760884AbXHHVLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 17:11:22 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so324638wah
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 14:11:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=X2OdmIA2miOWxp+zu3DSmbDV1rXIxJknKe10JpBKUCTy5ju/XDry7W96m4zV+id1NIigvYrnY9B4WJaPDQ8UluQiiOY7AtMRgUlZ/qhjU+idPhcZyro0x9BX4EMkd5K6NAXPqYcj9cI/K/AIJjKu8DuEqEspTi0xZDPr6loCTpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ox55xoGtVT16beod0csMfZrxcRmkTQ1pC1jKVRMqMi+AyAY1WplgLpv7rXaw7yy3MW+XI4lJhvPP8hii30VXrVgT6Yc/lrB4Nmv3V0E4RW0Z3HRED3Ic5FalJRc1fbxkIP4Nmw2RJUYt8197vDdidOcStPjzykWQwCq2JGOqtUI=
+Received: by 10.115.46.9 with SMTP id y9mr1648007waj.1186607482501;
+        Wed, 08 Aug 2007 14:11:22 -0700 (PDT)
+Received: by 10.114.135.16 with HTTP; Wed, 8 Aug 2007 14:11:22 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55367>
 
-On Wednesday 08 August 2007 17:27, Paolo Ciarrocchi wrote:
-> Further changes, thanks to <tp@lists.linux.it>
->=20
-> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-> ---
+Hello all,
 
-Is it just me, or this patch is corrupted?
+So we've (as in my place of work) have switched from SVN to GIT
+although I do have a few questions -- hopefully they're not too
+obvious.  :)
 
->  po/it.po |  130
-> ++++++++++++++++++++++++++++++++------------------------------ 1 file=
-s
-> changed, 67 insertions(+), 63 deletions(-)
+We have our master branch which is where all the latest changes are
+added to as a "remote shared repository which everyone pushes and
+pulls to.   That's emulating pretty much what SVN did -- which is
+fine.
 
-git-am says:
+As for myself, I maintain _locally_ a few branches (branchX, branchY)
+which dictate some bits and pieces I'm working on.  Periodically, I
+will tend to merge either merge to master and then push those changes
+out.  So far so good...
 
-	Applying Further changes, thanks to <tp@lists.linux.it>
+But, I've now come up against a case whereby if one of my colleagues
+changes a file (call it fileA) in branch master, and, in the course of
+my working in branchX means i modify fileA also, when I come to merge
+branchX into master I find the original change in master (as submitted
+by my colleague) being reverted by my changes in branchX.  Luckily I
+don't commit that since I do a git-diff beforehand.   :)
 
-	fatal: corrupt patch at line 13
-	Patch failed at 0001.
+One suggest solution to this is to merge master into branchX/branchY
+periodically, although this has the same problems as described when I
+try to merge -- if I'm going to make branchX the same as master, I
+might as well just work in master and be done with it, right?
 
-git-gui-i18n$ grep ^- .dotest/0001 | wc
-     66     434    3074
-git-gui-i18n$ grep ^+ .dotest/0001 | wc
-     27     105     955
+So I was wondering if it's fine to branch from master at any given
+point and perhaps use git-rebasse when I come to merge?  Is this even
+the correct mode of working?  Indeed, there might be times when
+git-rebase isn't necessary if a merge to master from branchX or
+branchY won't revert a commit in master because that file had been
+edited, so how do I determine when to use git-rebase in this case?  Or
+is that the correct indicator?
 
-I think there's a problem somewhere...
+I do hope that makes sense.
 
-> diff --git a/po/it.po b/po/it.po
-> index e87263e..1950b56 100644
-> --- a/po/it.po
-> +++ b/po/it.po
-> @@ -2,18 +2,21 @@
->  # Copyright (C) 2007 Shawn Pearce
->  # This file is distributed under the same license as the git-gui
-> package. # Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, 2007
+Kindly,
 
-Whitespace/newline corruption?
-
-> -"Content-Type: text/plain; charset=3DUTF-8\n"
-> -"Content-Transfer-Encoding: 8bit\n"
-> +"Content-Type: text/plain; charset=3Diso-8859-1\n"
-> +"Content-Transfer-Encoding: 8bit"
-
-I'd guess the previous version is better :)
-
-> @@ -34,9 +37,9 @@ msgid ""
->  "\n"
->  "Assume '%s' is version 1.5.0?\n"
->  msgstr ""
-> -"La versione di GIT non pu=C3=B2 essere determinata.\n"
->  "\n"
-> -"%s sostiene che la versione =C3=A8 '%s'.\n"
->  "\n"
->  "%s richiede almeno Git 1.5.0 o superiore.\n"
->  "\n"
-
-Here and in many other places there are unneeded deletions... Is
-that what you wanted? I don't think so, since the hunk header says
-"@@ -34,9 +37,9 @@". I guess gmail has done a mess with your
-patch: git-am had some problems parsing the headers too.
-
-You should try to mail the same patch to yourself and re-apply that on
-your tree to see if it fails.
+Thomas Adam
