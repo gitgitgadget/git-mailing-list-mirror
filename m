@@ -1,77 +1,88 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: resumable git-clone?
-Date: Wed, 8 Aug 2007 07:20:59 -0400
-Message-ID: <fcaeb9bf0708080420t192596f0kfabbaa5b058d49e5@mail.gmail.com>
-References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
-	 <20070808035946.GP9527@spearce.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
+ check-out
+Date: Wed, 08 Aug 2007 13:39:52 +0200
+Message-ID: <20070808113952.GN999MdfPADPa@greensroom.kotnet.org>
+References: <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
+ <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
+ <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org>
+ <20070805144632.GB999MdfPADPa@greensroom.kotnet.org>
+ <46B76B8C.9050905@tromer.org>
+ <20070806190344.GF999MdfPADPa@greensroom.kotnet.org>
+ <46B7E5FE.7050006@tromer.org>
+ <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
+ <46B91F4E.8050008@tromer.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 13:21:38 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eran Tromer <git2eran@tromer.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 13:40:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIjbZ-0008VX-Q2
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 13:21:34 +0200
+	id 1IIjtY-0004zA-0D
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 13:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbXHHLVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 07:21:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbXHHLVC
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 07:21:02 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:64113 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694AbXHHLVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 07:21:00 -0400
-Received: by an-out-0708.google.com with SMTP id d31so23693and
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 04:20:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FoOXJlOrHoteTVzF11YDTD5FK3rclZRwwPSth5KfNReK2cFdWwkw6FOhV4Xlu9kNIaOKt6Q/EYAo9hdydMNMaeQ6RCSj7wBNQfp0Qg94LLAUTzQzbrQUjfuqSj7OgmM56d/zvvQxn8uNH4w2wJyQjvuxLsaYH2BEp9SLP1/1wU0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s9CQE7idHALD4udjU6F9g76TLPuL6hS6s+fizaM5nPwqvX07T3rI+ZR+C++FulV86m99MmXV4W3l8rRPg3DajT3nTRs50KmISyZg65lzSpHjhDe1zh9V0s5Z0IBGSCJe9O7danFJTQybL+QaBpIxIcr7CoInfttOzza0OLHSXlc=
-Received: by 10.100.10.20 with SMTP id 20mr1122837anj.1186572059481;
-        Wed, 08 Aug 2007 04:20:59 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Wed, 8 Aug 2007 04:20:59 -0700 (PDT)
-In-Reply-To: <20070808035946.GP9527@spearce.org>
-Content-Disposition: inline
+	id S1751287AbXHHLkD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 07:40:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbXHHLkD
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 07:40:03 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:56859 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751287AbXHHLkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 07:40:00 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMG002XWDQLSZ@psmtp09.wxs.nl> for git@vger.kernel.org; Wed,
+ 08 Aug 2007 13:39:58 +0200 (MEST)
+Received: (qmail 24474 invoked by uid 500); Wed, 08 Aug 2007 11:39:52 +0000
+In-reply-to: <46B91F4E.8050008@tromer.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55318>
 
-On 8/7/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> > I was on a crappy connection and it was frustrated seeing git-clone
-> > reached 80% then failed, then started over again. Can we support
-> > resumable git-clone at some level? I think we could split into several
-> > small packs, keep fetched ones, just get missing packs until we have
-> > all.
->
-> This is uh, difficult over the native git protocol.  The problem
-> is the native protocol negotiates what the client already has and
-> what it needs by comparing sets of commits.  If the client says
-> "I have commit X" then the server assumes it has not only commit
-> X _but also every object reachable from it_.
->
-> Now packfiles are organized to place commits at the front of the
-> packfile.  So a truncated download will give the client a whole
-> host of commits, like maybe all of them, but none of the trees
-> or blobs associated with them as those come behind the commits.
-> Worse, the commits are sorted most recent to least recent.  So if
-> the client claims he has the very first commit he received, that
-> is currently an assertion that he has the entire repository.
+On Tue, Aug 07, 2007 at 09:41:34PM -0400, Eran Tromer wrote:
+> On 2007-08-07 04:51, Sven Verdoolaege wrote:
+> > Surely this is a lot worse than occasionally committing something you
+> > didn't plan to commit, and only if you are performing a known "dangerous"
+> > operation.
+> > 
+> Are you saying that
+> $ git reset --hard HEAD && vi foo && git commit -a
+> is a "known dangerous" operation that can record corrupted content even
+> though you didn't touch it?
 
-I'm thinking about things like bisect and use it to cut the history
-into parts. Clients only use completed parts. Uncompleted parts are
-thrown away. So if users think they cannot suffer too big packs, they
-tell server to send smaller (and less efficient) packs. Anyway I don't
-have deep knowledge of Git internals, my opion could be completely
-wrong.
--- 
-Duy
+I'm only saying that "git commit -a" will commit anything that has been
+modified, so you have to be careful when using it and it just so happens
+that git reset may leave submodules modified.  This should probably
+be documented.
+And I agree with you that this is not ideal (personally, I'd want
+all checked-out submodules to get updated automatically), but it's
+certainly better than your earlier proposal.
+
+> So, when I'm sure all the edits I did in the work tree are fine, how
+> *do* I safely make a commit without manually inspecting the changed
+> files list, or manually listing the changed files for "git add", or
+> manually running "git submodule update", or manually checking whether
+> there happens to be some submodules in this project, some other such
+> cumbersome measure?
+
+If you've ever done a "git submodule update" in the project, you should
+know that there are submodules and if you haven't then there are no
+checked-out submodules that can get out of sync.
+If you're talking about tools, then they should indeed be extra careful.
+
+[another proposal]
+> 
+> Does this sound reasonable?
+
+I'll leave it to others to comment on that one.
+
+skimo
