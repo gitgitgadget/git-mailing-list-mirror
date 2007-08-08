@@ -1,86 +1,72 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: 'pu' branch for StGIT
-Date: Wed, 08 Aug 2007 18:18:34 -0400
-Message-ID: <1186611514.7383.4.camel@dv>
-References: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
-	 <1186549433.2112.34.camel@dv>
-	 <20070808092027.GB7860@diana.vm.bytemark.co.uk>
-	 <20070808213917.GA22521@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Submodules
+Date: Wed, 8 Aug 2007 23:18:33 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708082317510.21857@racer.site>
+References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
+ <Pine.LNX.4.64.0708072349400.14781@racer.site>
+ <a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
+ <20070808104117.GK999MdfPADPa@greensroom.kotnet.org> <7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0708082138520.21916@wbgn129.biozentrum.uni-wuerzburg.de>
+ <7vps1x3ihp.fsf@assigned-by-dhcp.cox.net> <20070808200831.GS999MdfPADPa@greensroom.kotnet.org>
+ <7vzm111xyw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
-	Yann Dirson <ydirson@altern.org>
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 00:18:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: skimo@liacs.nl, Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 00:19:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IItrW-0001JJ-QG
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 00:18:43 +0200
+	id 1IIts6-0001Sd-AU
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 00:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755692AbXHHWSj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 18:18:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755418AbXHHWSj
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 18:18:39 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:34146 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754632AbXHHWSi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 18:18:38 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1IItuL-0001l7-Dg
-	for git@vger.kernel.org; Wed, 08 Aug 2007 18:21:37 -0400
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1IItrP-0003HW-3v; Wed, 08 Aug 2007 18:18:35 -0400
-In-Reply-To: <20070808213917.GA22521@diana.vm.bytemark.co.uk>
-X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
+	id S1754878AbXHHWTP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 18:19:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753785AbXHHWTO
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 18:19:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46437 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752531AbXHHWTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 18:19:14 -0400
+Received: (qmail invoked by alias); 08 Aug 2007 22:19:12 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 09 Aug 2007 00:19:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+WUJFXv+CWXKFKNlpt0JXwNm1tPurwprOJOdWxKo
+	rAufHWyQ9GigpO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vzm111xyw.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55382>
 
-Hello, Karl!
+Hi,
 
-On Wed, 2007-08-08 at 23:39 +0200, Karl Hasselstr=F6m wrote:
+On Wed, 8 Aug 2007, Junio C Hamano wrote:
 
-> > Hmm, I hadn't noticed. That would be an unintended side-effect of
-> > the DAG patches, presumably. I'll look into it tonight.
->=20
-> I can't reproduce.
+> Sven Verdoolaege <skimo@kotnet.org> writes:
+> 
+> > On Wed, Aug 08, 2007 at 12:59:30PM -0700, Junio C Hamano wrote:
+> >> Sorry, but I do not use submodules yet myself.
+> >
+> > If you would ever start using submodules (for, say, gitgui),
+> > then I'm sure we'd have much more usable submodules support
+> > in no time.
+> 
+> Heh, I do not have infinite time to spend on every little corner
+> features, and have been hoping that other people who have more
+> immediate need of submodule support to be the guinea pigs to
+> encounter real-life issues first and come up with solutions to
+> them, before I start using it.
+> 
+> So far, I think the plan has been working out alright ;-).
 
-OK, it's trickier.  There are some bad patch names that don't get
-imported properly.  In particular, patches ending with ".diff" are
-committed after import.
+Sure.  I already like submodules, and I think that msysgit.git using it 
+can bring submodules along more painlessly for git.git users.
 
-Try changing this in the testsuite:
-
-diff --git a/t/t1800-import.sh b/t/t1800-import.sh
-index 8c8c9a0..6cd3cdb 100755
---- a/t/t1800-import.sh
-+++ b/t/t1800-import.sh
-@@ -15,7 +15,7 @@ test_expect_success \
- test_expect_success \
-     'Apply a patch created with "git diff"' \
-     '
--    stg import ../t1800-import/git-diff &&
-+    stg import -n git.diff ../t1800-import/git-diff &&
-     [ $(git cat-file -p $(stg id) \
-         | grep -c "tree e96b1fba2160890ff600b675d7140d46b022b155") =3D=
- 1 ] &&
-     stg delete ..
-
-And now run the test
-
-$ ./t1800-import.sh -i -v
-=2E..
-Importing patch "git.diff" ... done
-No patches applied
-
-The mainline StGIT is OK.
-
---=20
-Regards,
-Pavel Roskin
+Ciao,
+Dscho
