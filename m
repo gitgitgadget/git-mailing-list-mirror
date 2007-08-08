@@ -1,71 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
-Date: Tue, 07 Aug 2007 20:44:14 -0700
-Message-ID: <7vabt2667l.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwswf8c1i.fsf@bauges.imag.fr>
-	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
-	<vpqhcni47ek.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021050500.14781@racer.site>
-	<vpqbqdq45ua.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0708021147110.14781@racer.site>
-	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
-	<Pine.LNX.4.64.0708021541520.14781@racer.site>
-	<46B1F3F4.5030504@midwinter.com>
-	<Pine.LNX.4.64.0708021614420.14781@racer.site>
-	<20070803053717.GA16379@midwinter.com>
-	<alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org>
-	<7v4pjc9czm.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Tue, 7 Aug 2007 20:47:24 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708072045260.25146@woody.linux-foundation.org>
+References: <f99cem$4a4$1@sea.gmane.org> <Pine.LNX.4.64.0708071257350.14781@racer.site>
+ <f99nm6$9vi$1@sea.gmane.org> <f99rei$ou$1@sea.gmane.org>
+ <20070807143616.GO9527@spearce.org> <20070807145825.GO21692@lavos.net>
+ <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de>
+ <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>
+ <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>
+ <alpine.LFD.0.999.0708071439021.5037@woody.linux-foundation.org>
+ <7vejif56a2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jean-Fran?ois Veillette <jean_francois_veillette@yahoo.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 05:44:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 05:48:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIcT7-0005nQ-Ck
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:44:21 +0200
+	id 1IIcWm-0006NS-Gk
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 05:48:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934827AbXHHDoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Aug 2007 23:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934547AbXHHDoR
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:44:17 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64365 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934202AbXHHDoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2007 23:44:16 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070808034416.VOTK23215.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 7 Aug 2007 23:44:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZFkF1X0091kojtg0000000; Tue, 07 Aug 2007 23:44:16 -0400
-In-Reply-To: <alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 7 Aug 2007 20:07:08 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762817AbXHHDsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Aug 2007 23:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761883AbXHHDsD
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Aug 2007 23:48:03 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:39904 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761114AbXHHDsA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Aug 2007 23:48:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l783lU3I009142
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 7 Aug 2007 20:47:31 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l783lOND019290;
+	Tue, 7 Aug 2007 20:47:24 -0700
+In-Reply-To: <7vejif56a2.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.724 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55297>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Everybody who takes patches will accept crud afterwards, since the normal 
-> thing is to email them around, so there's no real downside to adding some 
-> status output at the end. It shouldn't screw anything up, but people will 
-> hopefully notice (sure, if you exit the pager without looking at it all 
-> you wouldn't notice, but that's _already_ true, so..)
 
-Well, at least "hundreds of empty diff" has a value of getting
-attention for even such a use case, so you _could_ argue this
-patch is a regression ;-)
+On Tue, 7 Aug 2007, Junio C Hamano wrote:
+> 
+> > @@ -2023,6 +2027,12 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+> > ...
+> > +static void close_or_die(int fd, const char *file)
+> > +{
+> > +	if (close(fd))
+> > +		die("unable to close %s (%s)", file, strerror(errno));
+> > +}
+> > +
+> 
+> And I like this even better ;-).
 
-In any case, this will go in as part of the first batch after
-1.5.3, I would guess.
+Gaah, that was unintentional. Just random noise I had in my tree, and 
+didn't even realize made it into the patch.
+
+That "close_or_die()" was because I saw somebody report a write error 
+without the error string, apparently because the error only got reported 
+on the close (probably NFS). This way you see if the reason the close 
+failed was due to out of diskspace or whatever.
+
+But I should have split them up properly - the close_or_die() part 
+obviously had nothing to do with the O_BINARY part. Feel free to take it 
+regardless, or split it yourself.
+
+		Linus
