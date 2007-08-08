@@ -1,77 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Submodules
-Date: Wed, 08 Aug 2007 12:33:26 -0700
-Message-ID: <7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
-References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
-	<Pine.LNX.4.64.0708072349400.14781@racer.site>
-	<a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
-	<20070808104117.GK999MdfPADPa@greensroom.kotnet.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: resumable git-clone?
+Date: Wed, 8 Aug 2007 21:35:45 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0708082134130.21916@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+ <20070808035946.GP9527@spearce.org> <Pine.LNX.4.64.0708081012110.14781@racer.site>
+ <7vlkcl4zcw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Wed Aug 08 21:33:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 21:35:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIrHn-0000zK-0T
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 21:33:39 +0200
+	id 1IIrK1-0001hQ-BO
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 21:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761580AbXHHTd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 15:33:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761552AbXHHTd3
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 15:33:29 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41505 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761550AbXHHTd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 15:33:28 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070808193328.FTNM2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 8 Aug 2007 15:33:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZXZS1X00E1kojtg0000000; Wed, 08 Aug 2007 15:33:27 -0400
-In-Reply-To: <20070808104117.GK999MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Wed, 08 Aug 2007 12:41:17 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762019AbXHHTfx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 15:35:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761389AbXHHTfx
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 15:35:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37922 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757474AbXHHTfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 15:35:52 -0400
+Received: (qmail invoked by alias); 08 Aug 2007 19:35:50 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp003) with SMTP; 08 Aug 2007 21:35:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX187oikobXY7jrnsZG8duuHM3boMAmgPGt3b0Qrwsj
+	N+V9wqW+TF53K6
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vlkcl4zcw.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55343>
 
-There was a discussion about the semantics currently
-implemented, as a subset of what we might want to eventually
-have, and some recommended that we mention where things stand
-now in the release notes.
+Hi,
 
-How about this?
+On Wed, 8 Aug 2007, Junio C Hamano wrote:
 
-diff --git a/Documentation/RelNotes-1.5.3.txt b/Documentation/RelNotes-1.5.3.txt
-index 21bb1fc..901f813 100644
---- a/Documentation/RelNotes-1.5.3.txt
-+++ b/Documentation/RelNotes-1.5.3.txt
-@@ -9,6 +9,19 @@ Updates since v1.5.2
- 
- * The submodule support has Porcelain layer.
- 
-+  Note that the current submodule support is minimal and this is
-+  deliberately so.  A design decision we made is that operations
-+  at the supermodule level do not recurse into submodules by
-+  default.  The expectation is that later we would add a
-+  mechanism to tell git which submodules the user is interested
-+  in, and this information might be used to determine the
-+  recursive behaviour of certain commands (e.g. "git checkout"
-+  and "git diff"), but currently we haven't agreed on what that
-+  mechanism should look like.  Therefore, if you use submodules,
-+  you would probably need "git submodule update" on the
-+  submodules you care about after running a "git checkout" at
-+  the supermodule level.
-+
- * There are a handful pack-objects changes to help you cope better
-   with repositories with pathologically large blobs in them.
- 
+> So I've been thinking about teaching the server side, when responding to 
+> a fetch request, to be able to say something like "Sorry but this 
+> repository is for fetching by people who have at least these commits 
+> from that other project I am a fork of." We make that "at least these 
+> from that other project" part machine readable, and git-fetch request 
+> git-clone makes can redirect itself to fill the prerequisites before 
+> attempting to go there again.
+
+Something like the alternates that http transport can use?
+
+> *1* Sheesh.  While I was writing this I noticed that the current
+>     'git bundle' is suitable only for incremental sneakernet but
+>     not for this particular use case.
+> 
+>     $ git bundle create 2612.bndl v2.6.12
+> 
+>     does not work, although
+> 
+>     $ git bundle create 2612-2613.bndl v2.6.12..v2.6.13
+> 
+>     does.  We need to fix this.
+
+Yes, I noticed this a long time ago.  Time is lacking...
+
+Ciao,
+Dscho
