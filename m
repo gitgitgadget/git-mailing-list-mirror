@@ -1,78 +1,77 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: Submodules
-Date: Wed, 08 Aug 2007 12:41:17 +0200
-Message-ID: <20070808104117.GK999MdfPADPa@greensroom.kotnet.org>
-References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
- <Pine.LNX.4.64.0708072349400.14781@racer.site>
- <a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
-Reply-To: skimo@liacs.nl
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: resumable git-clone?
+Date: Wed, 8 Aug 2007 07:20:59 -0400
+Message-ID: <fcaeb9bf0708080420t192596f0kfabbaa5b058d49e5@mail.gmail.com>
+References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+	 <20070808035946.GP9527@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 12:41:25 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 13:21:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIiyi-0006T7-7D
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 12:41:24 +0200
+	id 1IIjbZ-0008VX-Q2
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 13:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbXHHKlV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 06:41:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbXHHKlV
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 06:41:21 -0400
-Received: from psmtp08.wxs.nl ([195.121.247.22]:63009 "EHLO psmtp08.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768AbXHHKlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 06:41:20 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp08.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMG00KHKB0TGF@psmtp08.wxs.nl> for git@vger.kernel.org; Wed,
- 08 Aug 2007 12:41:18 +0200 (MEST)
-Received: (qmail 24101 invoked by uid 500); Wed, 08 Aug 2007 10:41:17 +0000
-In-reply-to: <a1bbc6950708071631w5d232e92gd0fa27158b27b5c3@mail.gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752818AbXHHLVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 07:21:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbXHHLVC
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 07:21:02 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:64113 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbXHHLVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 07:21:00 -0400
+Received: by an-out-0708.google.com with SMTP id d31so23693and
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 04:20:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FoOXJlOrHoteTVzF11YDTD5FK3rclZRwwPSth5KfNReK2cFdWwkw6FOhV4Xlu9kNIaOKt6Q/EYAo9hdydMNMaeQ6RCSj7wBNQfp0Qg94LLAUTzQzbrQUjfuqSj7OgmM56d/zvvQxn8uNH4w2wJyQjvuxLsaYH2BEp9SLP1/1wU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s9CQE7idHALD4udjU6F9g76TLPuL6hS6s+fizaM5nPwqvX07T3rI+ZR+C++FulV86m99MmXV4W3l8rRPg3DajT3nTRs50KmISyZg65lzSpHjhDe1zh9V0s5Z0IBGSCJe9O7danFJTQybL+QaBpIxIcr7CoInfttOzza0OLHSXlc=
+Received: by 10.100.10.20 with SMTP id 20mr1122837anj.1186572059481;
+        Wed, 08 Aug 2007 04:20:59 -0700 (PDT)
+Received: by 10.100.198.17 with HTTP; Wed, 8 Aug 2007 04:20:59 -0700 (PDT)
+In-Reply-To: <20070808035946.GP9527@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55317>
 
-On Tue, Aug 07, 2007 at 04:31:57PM -0700, Dmitry Kakurin wrote:
-> This is exactly the level of details I'm talking about:
-> * how come sumbodules are not initialized when I do a clone of super.
+On 8/7/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> > I was on a crappy connection and it was frustrated seeing git-clone
+> > reached 80% then failed, then started over again. Can we support
+> > resumable git-clone at some level? I think we could split into several
+> > small packs, keep fetched ones, just get missing packs until we have
+> > all.
+>
+> This is uh, difficult over the native git protocol.  The problem
+> is the native protocol negotiates what the client already has and
+> what it needs by comparing sets of commits.  If the client says
+> "I have commit X" then the server assumes it has not only commit
+> X _but also every object reachable from it_.
+>
+> Now packfiles are organized to place commits at the front of the
+> packfile.  So a truncated download will give the client a whole
+> host of commits, like maybe all of them, but none of the trees
+> or blobs associated with them as those come behind the commits.
+> Worse, the commits are sorted most recent to least recent.  So if
+> the client claims he has the very first commit he received, that
+> is currently an assertion that he has the entire repository.
 
-See you second question.
-
-> I expect to be able to build super after I clone it. Is there a new
-> (undocumented) flag to clone?
-
-Not (yet).  Right now, you have to do
-
-git submodule init
-git submodule update
-
-after you clone to fetch and check-out all (first-level) submodules.
-
-> * is it OK to *not* init a submodule? will super become unhappy? Can I
-> do commits to super in this case?
-
-Yes. No. Yes.
-In fact, only the "git submodule" subcommand are affected by a
-"git submodule init".  Doing a "git submodule update" will actually
-check out the submodules and from then on, the HEAD of this checked-out
-submodule will be considered the content of the submodule in
-the working tree of the supermodule.
-
-> * why submodules should be listed in 2 places: in .submodules and in
-> super/.git/config?
-
-It only has to be specified in .git/config.
-The value in .gitmodules (if present) is used by "git submodule init"
-as a default value for the one in .git/config.
-
-skimo
+I'm thinking about things like bisect and use it to cut the history
+into parts. Clients only use completed parts. Uncompleted parts are
+thrown away. So if users think they cannot suffer too big packs, they
+tell server to send smaller (and less efficient) packs. Anyway I don't
+have deep knowledge of Git internals, my opion could be completely
+wrong.
+-- 
+Duy
