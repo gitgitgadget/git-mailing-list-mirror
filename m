@@ -1,93 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] checkout_entry: only try to create directories when no file
- existed there
-Date: Wed, 8 Aug 2007 22:00:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708082200240.14781@racer.site>
+From: Michael <barra_cuda@katamail.com>
+Subject: Re: [PATCH] Further changes, thanks to <tp@lists.linux.it>
+Date: Wed, 8 Aug 2007 23:04:53 +0200
+Message-ID: <200708082304.53867.barra_cuda@katamail.com>
+References: <20070808172739.5647a81b@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 23:01:41 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 23:04:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIsev-0005QE-QE
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:01:38 +0200
+	id 1IIshE-000682-MX
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 23:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757680AbXHHVBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 17:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756207AbXHHVBf
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:01:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50818 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757566AbXHHVBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 17:01:34 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 21:01:32 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp011) with SMTP; 08 Aug 2007 23:01:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Hx9F6+9HHa/1T92q/VVn5sCEepLqDLwFfhne2bT
-	OblxmNZvOzKxcu
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1762332AbXHHVD4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 17:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760561AbXHHVD4
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 17:03:56 -0400
+Received: from slim-3a.inet.it ([213.92.5.124]:46880 "EHLO slim-3a.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755990AbXHHVDz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 17:03:55 -0400
+Received: from host12-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.12]) by slim-3a.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.57.12+nG60FO7nBDgt; Wed, 08 Aug 2007 23:03:52 +0200
+User-Agent: KMail/1.9.4
+In-Reply-To: <20070808172739.5647a81b@paolo-desktop>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55366>
 
+On Wednesday 08 August 2007 17:27, Paolo Ciarrocchi wrote:
+> Further changes, thanks to <tp@lists.linux.it>
+>=20
+> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+> ---
 
-It is obvious that we do not have to create directories when the file we
-want to check out already existed.
+Is it just me, or this patch is corrupted?
 
-Besides, it fixes the obscure use case, where you want to track a file which
-is _outside_ of your working tree, by creating a symbolic link to the directory
-it lives in, and adding the file with something like "git add symlink/file".
-Without this patch, "git checkout symlink/file" would actually _replace_
-"symlink" by a directory of the same name.
+>  po/it.po |  130
+> ++++++++++++++++++++++++++++++++------------------------------ 1 file=
+s
+> changed, 67 insertions(+), 63 deletions(-)
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- entry.c                     |    8 +++++---
- t/t2007-checkout-symlink.sh |   11 +++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+git-am says:
 
-diff --git a/entry.c b/entry.c
-index 0625112..eacdba2 100644
---- a/entry.c
-+++ b/entry.c
-@@ -223,8 +223,10 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
- 		}
--	} else if (state->not_new)
--		return 0;
--	create_directories(path, state);
-+	} else {
-+		if (state->not_new)
-+			return 0;
-+		create_directories(path, state);
-+	}
- 	return write_entry(ce, path, state, 0);
- }
-diff --git a/t/t2007-checkout-symlink.sh b/t/t2007-checkout-symlink.sh
-index 0526fce..02224eb 100755
---- a/t/t2007-checkout-symlink.sh
-+++ b/t/t2007-checkout-symlink.sh
-@@ -47,4 +47,15 @@ test_expect_success 'switch from dir to symlink' '
- 
- '
- 
-+test_expect_success 'checkout does not replace symlink/file with dir/file' '
-+	mkdir 123 &&
-+	ln -s 123 abc &&
-+	echo 1 > abc/1 &&
-+	echo 2 > abc/2 &&
-+	echo 3 > abc/3 &&
-+	git add abc/? &&
-+	echo 0 > abc/3 &&
-+	git checkout abc/3 &&
-+	test -h abc
-+'
- test_done
--- 
-1.5.3.rc4.26.g782e
+	Applying Further changes, thanks to <tp@lists.linux.it>
+
+	fatal: corrupt patch at line 13
+	Patch failed at 0001.
+
+git-gui-i18n$ grep ^- .dotest/0001 | wc
+     66     434    3074
+git-gui-i18n$ grep ^+ .dotest/0001 | wc
+     27     105     955
+
+I think there's a problem somewhere...
+
+> diff --git a/po/it.po b/po/it.po
+> index e87263e..1950b56 100644
+> --- a/po/it.po
+> +++ b/po/it.po
+> @@ -2,18 +2,21 @@
+>  # Copyright (C) 2007 Shawn Pearce
+>  # This file is distributed under the same license as the git-gui
+> package. # Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, 2007
+
+Whitespace/newline corruption?
+
+> -"Content-Type: text/plain; charset=3DUTF-8\n"
+> -"Content-Transfer-Encoding: 8bit\n"
+> +"Content-Type: text/plain; charset=3Diso-8859-1\n"
+> +"Content-Transfer-Encoding: 8bit"
+
+I'd guess the previous version is better :)
+
+> @@ -34,9 +37,9 @@ msgid ""
+>  "\n"
+>  "Assume '%s' is version 1.5.0?\n"
+>  msgstr ""
+> -"La versione di GIT non pu=C3=B2 essere determinata.\n"
+>  "\n"
+> -"%s sostiene che la versione =C3=A8 '%s'.\n"
+>  "\n"
+>  "%s richiede almeno Git 1.5.0 o superiore.\n"
+>  "\n"
+
+Here and in many other places there are unneeded deletions... Is
+that what you wanted? I don't think so, since the hunk header says
+"@@ -34,9 +37,9 @@". I guess gmail has done a mess with your
+patch: git-am had some problems parsing the headers too.
+
+You should try to mail the same patch to yourself and re-apply that on
+your tree to see if it fails.
