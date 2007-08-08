@@ -1,62 +1,115 @@
-From: Matthias Kleine <matthias_kleine@gmx.de>
-Subject: Re: git-svn: Finding the svn-URL of the current branch in git
-Date: Wed, 08 Aug 2007 20:51:55 +0200
-Message-ID: <f9d3ce$1lo$1@sea.gmane.org>
-References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx>	<f9c0d1$7md$1@sea.gmane.org> <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 20:52:26 2007
+From: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+Subject: [PATCH] Mod. gitk to support REBASE (with stash support).
+Date: Wed,  8 Aug 2007 14:33:48 -0400
+Message-ID: <1186598028457-git-send-email-alexandre.bourget@savoirfairelinux.com>
+Cc: paulus@samba.org,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 20:58:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIqdr-0004hc-4H
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 20:52:23 +0200
+	id 1IIqjk-0006TL-Rk
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 20:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935897AbXHHSwT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 14:52:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935711AbXHHSwS
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 14:52:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:43714 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935479AbXHHSwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 14:52:17 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IIqdj-0002lQ-Fi
-	for git@vger.kernel.org; Wed, 08 Aug 2007 20:52:15 +0200
-Received: from e178106053.adsl.alicedsl.de ([85.178.106.53])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 20:52:15 +0200
-Received: from matthias_kleine by e178106053.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Aug 2007 20:52:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: e178106053.adsl.alicedsl.de
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
+	id S934313AbXHHS6W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 14:58:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933182AbXHHS6V
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 14:58:21 -0400
+Received: from mail.savoirfairelinux.net ([69.28.212.163]:41166 "EHLO
+	open-xchange.savoirfairelinux.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761334AbXHHS6U (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 14:58:20 -0400
+X-Greylist: delayed 1466 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2007 14:58:20 EDT
+Received: by open-xchange.savoirfairelinux.net (Postfix, from userid 99)
+	id E1B8D4612A0; Wed,  8 Aug 2007 14:33:51 -0400 (EDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on
+	open-xchange.savoirfairelinux.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.1.8
+Received: from localhost.localdomain (savoirfairelinux.net [199.243.85.90])
+	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 36482460E14;
+	Wed,  8 Aug 2007 14:33:50 -0400 (EDT)
+X-Mailer: git-send-email 1.5.3.rc4.24.g5b56a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55336>
 
-Junio C Hamano wrote:
-> Parents' order and which branch you are on may not have anything
-> to do with each other.  Somebody else may have pulled a while on
-> b, and you might have pulled from him the merge he created by
-> doing so while you are on branch a.
-> 
+---
+Adds a context menu for commits, so that a 'rebase' can be done.
 
-You're right, I didn't think of that. While pondering this I came up 
-with another problem: git-svn currently remembers which svn-branch a 
-commit belongs to by including this information in the git commit log 
-message.
-This way it is not possible to have one git-commit appear in more than 
-one svn branch. Maybe it's better to store this git-commit->svn-branch 
-mapping somewhere else. Although it's probably even better to completely 
-switch to git :)
+Optionally, it will ask if you want to 'stash' current work before doing so.
 
-Matthias
+TODO: better error handling.
+
+ gitk |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/gitk b/gitk
+index f74ce51..558b7bb 100755
+--- a/gitk
++++ b/gitk
+@@ -898,6 +898,8 @@ proc makewindow {} {
+ 	-command cherrypick
+     $rowctxmenu add command -label "Reset HEAD branch to here" \
+ 	-command resethead
++    $rowctxmenu add command -label "Rebase HEAD branch on this commit" \
++	-command rebasehead
+ 
+     set fakerowmenu .fakerowmenu
+     menu $fakerowmenu -tearoff 0
+@@ -5593,6 +5595,7 @@ proc rowmenu {x y id} {
+     if {$id ne $nullid && $id ne $nullid2} {
+ 	set menu $rowctxmenu
+ 	$menu entryconfigure 7 -label "Reset $mainhead branch to here"
++	$menu entryconfigure 8 -label "Rebase $mainhead branch on this commit"
+     } else {
+ 	set menu $fakerowmenu
+     }
+@@ -5972,6 +5975,41 @@ proc cherrypick {} {
+     notbusy cherrypick
+ }
+ 
++proc rebasehead {} {
++    global mainheadid mainhead rowmenuid confirm_ok
++    global localfrow localirow
++
++
++    set head $mainhead
++    set id $rowmenuid
++
++    set confirm_ok 0
++
++    if {$localfrow != -1 || $localirow != -1} {
++	# There's something to stash.
++	set confirm_ok [confirm_popup "There are some local modifications.\n\nDo you want to git-stash any changes before doing a rebase?\n\n(They will be reapplied right after, and stash will be *cleared*)"]
++    }
++
++    nowbusy rebasehead
++    update
++
++    if {$confirm_ok} {
++	exec git stash save
++    }
++
++    # TODO: error handling.
++    exec git rebase $id
++
++    if {$confirm_ok} {
++	exec git stash apply stash@{0}
++	exec git stash clear
++    }
++
++    notbusy rebasehead
++    updatecommits
++}
++
++
+ proc resethead {} {
+     global mainheadid mainhead rowmenuid confirm_ok resettype
+     global showlocalchanges
+-- 
+1.5.3.rc4.24.g5b56a
