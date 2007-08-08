@@ -1,69 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: resumable git-clone?
-Date: Wed, 8 Aug 2007 10:14:28 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708081012110.14781@racer.site>
-References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
- <20070808035946.GP9527@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: 'pu' branch for StGIT
+Date: Wed, 8 Aug 2007 11:20:27 +0200
+Message-ID: <20070808092027.GB7860@diana.vm.bytemark.co.uk>
+References: <20070807022043.GA8482@diana.vm.bytemark.co.uk> <1186549433.2112.34.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 11:15:18 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Yann Dirson <ydirson@altern.org>
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 08 11:20:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIhdJ-0003xX-SI
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:15:14 +0200
+	id 1IIhih-0005K4-61
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759423AbXHHJPL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 05:15:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759121AbXHHJPK
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:15:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33018 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758779AbXHHJPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 05:15:08 -0400
-Received: (qmail invoked by alias); 08 Aug 2007 09:15:07 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 08 Aug 2007 11:15:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/vSfNcdkbvmZm+MPQG8oigs9jhVunRK5DA7jyMtN
-	oalRIWhwOp4F96
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070808035946.GP9527@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1754799AbXHHJUo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 05:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755705AbXHHJUo
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:20:44 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4506 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753737AbXHHJUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 05:20:43 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IIhiN-0002G2-00; Wed, 08 Aug 2007 10:20:27 +0100
+Content-Disposition: inline
+In-Reply-To: <1186549433.2112.34.camel@dv>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55312>
 
-Hi,
+On 2007-08-08 01:03:53 -0400, Pavel Roskin wrote:
 
-On Tue, 7 Aug 2007, Shawn O. Pearce wrote:
+> On Tue, 2007-08-07 at 04:20 +0200, Karl Hasselstr=F6m wrote:
+>
+> > So I finally got my act together and published a 'pu'-like branch
+> > for StGIT. Get it at git://repo.or.cz/stgit/kha.git; gitweb at
+> > http://repo.or.cz/w/stgit/kha.git.
+>
+> Just a word of warning. This version converts all branches to
+> version 3, so that the standard StGIT won't work with them anymore.
 
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> > I was on a crappy connection and it was frustrated seeing git-clone
-> > reached 80% then failed, then started over again. Can we support
-> > resumable git-clone at some level? I think we could split into several
-> > small packs, keep fetched ones, just get missing packs until we have
-> > all.
-> 
-> This is uh, difficult over the native git protocol.  The problem
-> is the native protocol negotiates what the client already has and
-> what it needs by comparing sets of commits.  If the client says
-> "I have commit X" then the server assumes it has not only commit
-> X _but also every object reachable from it_.
+I believe I said (or tried to say) as much towards the end of my mail.
+Thanks for trying it out though! It seems my evil master plan is
+working. :-)
 
-Now here is a thought: after an interrupted fetch, you could do a 
-(possibly expensive) analysis what commits are dangling, but do not 
-contain broken links in their _complete_ history.  Then mark them as 
-(temporary) refs.
+> Also, "stg import" commits the patch, which seems wrong to me.
 
-Another possibility should be to start with a shallow clone, and to deepen 
-it.  However, IIRC there have been complaints that that does not work, and 
-it was not my itch, so I did not come around to scratch it.
+Hmm, I hadn't noticed. That would be an unintended side-effect of the
+DAG patches, presumably. I'll look into it tonight.
 
-Ciao,
-Dscho
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
