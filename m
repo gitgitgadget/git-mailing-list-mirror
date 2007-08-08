@@ -1,84 +1,106 @@
-From: "Sparks, Sam" <SSparks@twacs.com>
-Subject: Git'ing a non-labeled set of sources
-Date: Wed, 8 Aug 2007 13:59:38 -0500
-Message-ID: <CF7E46FCFF66AD478BB72724345289EC170CE4@twx-exch01.twacs.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: resumable git-clone?
+Date: Wed, 08 Aug 2007 12:09:51 -0700
+Message-ID: <7vlkcl4zcw.fsf@assigned-by-dhcp.cox.net>
+References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+	<20070808035946.GP9527@spearce.org>
+	<Pine.LNX.4.64.0708081012110.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 21:00:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 08 21:10:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIqlT-00077N-9k
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 21:00:15 +0200
+	id 1IIqv3-0001rm-S1
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 21:10:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760087AbXHHTAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 15:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760056AbXHHTAF
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 15:00:05 -0400
-Received: from outbound-cpk.frontbridge.com ([207.46.163.16]:53665 "EHLO
-	outbound3-cpk-R.bigfish.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757533AbXHHTAB convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 15:00:01 -0400
-Received: from outbound3-cpk.bigfish.com (localhost [127.0.0.1])
-	by outbound3-cpk-R.bigfish.com (Postfix) with ESMTP id 76F8F9956D9
-	for <git@vger.kernel.org>; Wed,  8 Aug 2007 19:00:00 +0000 (UTC)
-Received: from mail131-cpk-R.bigfish.com (unknown [10.2.40.3])
-	by outbound3-cpk.bigfish.com (Postfix) with ESMTP id 7541680004E
-	for <git@vger.kernel.org>; Wed,  8 Aug 2007 19:00:00 +0000 (UTC)
-Received: from mail131-cpk (localhost.localdomain [127.0.0.1])
-	by mail131-cpk-R.bigfish.com (Postfix) with ESMTP id F10C72F830C
-	for <git@vger.kernel.org>; Wed,  8 Aug 2007 18:59:59 +0000 (UTC)
-X-BigFish: VP
-X-MS-Exchange-Organization-Antispam-Report: OrigIP: 68.89.149.4;Service: EHS
-Received: by mail131-cpk (MessageSwitch) id 1186599599312150_11907; Wed,  8 Aug 2007 18:59:59 +0000 (UCT)
-Received: from mail.twacs.com (unknown [68.89.149.4])
-	by mail131-cpk.bigfish.com (Postfix) with ESMTP id E98EE3F8081
-	for <git@vger.kernel.org>; Wed,  8 Aug 2007 18:59:58 +0000 (UTC)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Git'ing a non-labeled set of sources
-Thread-Index: AcfZ7kRLuTV7AFzKQfagIUfTE2slVQ==
+	id S932964AbXHHTJ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 15:09:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764672AbXHHTJ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 15:09:57 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:62511 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932926AbXHHTJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 15:09:55 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070808190952.QJDP26965.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 8 Aug 2007 15:09:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZX9r1X00G1kojtg0000000; Wed, 08 Aug 2007 15:09:52 -0400
+In-Reply-To: <Pine.LNX.4.64.0708081012110.14781@racer.site> (Johannes
+	Schindelin's message of "Wed, 8 Aug 2007 10:14:28 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55338>
 
-Hello All,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Please excuse me if this is an ignorant question; I'm new to git and my
-have overlooked something in the documentation.
+> Now here is a thought: after an interrupted fetch, you could do a 
+> (possibly expensive) analysis what commits are dangling, but do not 
+> contain broken links in their _complete_ history.  Then mark them as 
+> (temporary) refs.
 
-I'm attempting to obtain a snapshot of source code from an unlabeled git
-branch in a public repository. I've found in the documentation that a
-timestamp cannot be used to specify a particular version of source code,
-but I believe I can work with the commit value as returned by 'git
-show'.
+That's all too elaborate and sounds fairly expensive.
 
-However, I have been unsuccessful in my attempts to use this identifier
-to clone or checkout the associated source tree. Has anyone been
-successful in using git to successfully replicate an unlabeled version
-of sources in a repository?
+I think another practical solution is to reduce the need to
+resume git-clone, and I foresee a nice side effect.
 
-Here is my latest attempt:
-/dir_i_want_to_replicate $ git show --pretty=short
-commit 5b1313fb2758ffce8b624457f777d8cc6709608d
-Author: ....
+Let's talk a bit about the side effect first.  Often I see
+people wondering...
 
-/replication_dir $ git clone git://www.denx.de/git/u-boot.git
-u-boot-mpc83xx
-Blah blah blah..
- 100% (4378/4378) done
-/replication_dir/u-boot-mpc83xx/ $ git checkout
-5b1313fb2758ffce8b624457f777d8cc6709608d
-error: pathspec '5b1313fb2758ffce8b624457f777d8cc6709608d' did not match
-any. 
+ - I am forking off of somebody's big project;
 
-Any suggestions would be greatly appreciated.
-Thanks in advance,
-Sam Sparks
+ - I want to publish the result of _my_ part of the work;
+
+ - I cannot afford the diskspace nor the bandwidth at the
+   hosting service to offer the whole project, but my own work
+   on top of the upstream is small enough;
+
+So I've been thinking about teaching the server side, when
+responding to a fetch request, to be able to say something like
+"Sorry but this repository is for fetching by people who have at
+least these commits from that other project I am a fork of."
+We make that "at least these from that other project" part
+machine readable, and git-fetch request git-clone makes can
+redirect itself to fill the prerequisites before attempting to
+go there again.
+
+And one way of doing that "at least these commits" part could be
+a pre-built, well known bundle.  The bulk of the older history
+of a repository insanely large for your bandwidth requirements
+could be made to a single bundle [*1*], and distributed from
+other places like mirrored HTTP servers, or even from torrent
+network.  The pre-built bundle does not have to be built too
+often.  Probably after every other big release would do.
+
+Once we have such a support, cloning from a regular full
+repository ove an unreliable connection could fall back on
+getting a bundle (a regular repository does not have to refuse
+to serve downloaders that do not have the prerequisites, but
+it could still suggest that as an alternate method to fall back
+on.
+
+
+[Footnote]
+
+*1* Sheesh.  While I was writing this I noticed that the current
+    'git bundle' is suitable only for incremental sneakernet but
+    not for this particular use case.
+
+    $ git bundle create 2612.bndl v2.6.12
+
+    does not work, although
+
+    $ git bundle create 2612-2613.bndl v2.6.12..v2.6.13
+
+    does.  We need to fix this.
