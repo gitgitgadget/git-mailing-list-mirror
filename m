@@ -1,68 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn: Finding the svn-URL of the current branch in git
-Date: Wed, 08 Aug 2007 02:13:48 -0700
-Message-ID: <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
-References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx>
-	<f9c0d1$7md$1@sea.gmane.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Add --show-touched option to show "diff --git" line when contents are unchanged
+Date: Wed, 08 Aug 2007 11:13:27 +0200
+Message-ID: <86abt25qyw.fsf@lola.quinscape.zz>
+References: <vpqwswf8c1i.fsf@bauges.imag.fr>
+	<7v4pjj5fp6.fsf@assigned-by-dhcp.cox.net>
+	<vpqhcni47ek.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021050500.14781@racer.site>
+	<vpqbqdq45ua.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0708021147110.14781@racer.site>
+	<AF1190E2-A0F4-479F-B0A1-50B2C7278995@yahoo.ca>
+	<Pine.LNX.4.64.0708021541520.14781@racer.site>
+	<46B1F3F4.5030504@midwinter.com>
+	<Pine.LNX.4.64.0708021614420.14781@racer.site>
+	<20070803053717.GA16379@midwinter.com>
+	<alpine.LFD.0.999.0708062118190.5037@woody.linux-foundation.org>
+	<7v4pjc9czm.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708072004150.23971@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0708080923580.14781@racer.site>
+	<7v3ayu5scj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthias Kleine <matthias_kleine@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 08 11:13:59 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 11:14:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIhc2-0003bG-BW
+	id 1IIhc1-0003bG-PI
 	for gcvg-git@gmane.org; Wed, 08 Aug 2007 11:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753164AbXHHJNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 05:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753057AbXHHJNx
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:13:53 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56784 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752381AbXHHJNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 05:13:49 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070808091349.VDKW7349.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 8 Aug 2007 05:13:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ZMDo1X0041kojtg0000000; Wed, 08 Aug 2007 05:13:48 -0400
-In-Reply-To: <f9c0d1$7md$1@sea.gmane.org> (Matthias Kleine's message of "Wed,
-	08 Aug 2007 10:54:55 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752159AbXHHJNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 05:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbXHHJNq
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 05:13:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:58067 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751004AbXHHJNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 05:13:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIhbo-0005hO-1x
+	for git@vger.kernel.org; Wed, 08 Aug 2007 11:13:40 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:13:40 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 11:13:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+In-Reply-To: <7v3ayu5scj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 08 Aug 2007 01\:43\:40 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:mZ1wh6qjOkjH4xMtoBZmtHsAifk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55310>
 
-Matthias Kleine <matthias_kleine@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Peter Baumann wrote:
->>
->> I had this situation, too.
->>
->>
->> 			a = svn branch 'a'
->> 	  m		b = svn branch 'b' (in my case, it was trunk)
->>       /   \		m = a merge of branch 'a' and 'b', not yet commited to svn
->>      a     b
->>
->> So trying to dcommit m, git svn can't figure out on which branch, as 'a'
->> and 'b' are both reachable. I had to use a graft file to lose one of the
->> parents, which let git-svn commit to SVN.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> You're right, both 'a' and 'b' are reachable from 'm'.  But if I got
-> it right 'm' also contains information as to which one is the first
-> parent and thereby which branch we're on. So wouldn't it be enough, if
-> git-svn automatically chose the first parent (using log
-> --first-parent)?
+>> So I have the slight suspicion that all this will accomplish is "shut the 
+>> darn thing up", and old-timers will have a harder time, since they no 
+>> longer spot easily when they did a Dumb Thing and left the index out of 
+>> sync.
+>
+> The hardest hit would be old-timers who try to be friendly by
+> trying to help new people, who has much less chance to notice
+> and report these much less prominent warnings, over e-mail or
+> irc.
 
-Parents' order and which branch you are on may not have anything
-to do with each other.  Somebody else may have pulled a while on
-b, and you might have pulled from him the merge he created by
-doing so while you are on branch a.
+"Dude, you got a stale index hanging out of your trousers."
+
+I find it ridiculous to parade local problems in patches sent out to
+the world rather than fixing them, so that old-timers have a chance to
+get karma points.
+
+Really: if stale indexes are considered a problem, git should silently
+mark the staleness in the file, and the next time (or after three more
+times or whatever) the index is used, it is silently regenerated.
+
+Old-timers can get an option disabling this so that they can proud
+themselves on cleaning up after themselves consciously, but for the
+normal user, this is a bother he can do without.
+
+-- 
+David Kastrup
