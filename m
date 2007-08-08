@@ -1,88 +1,55 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] unpack-trees.c: assume submodules are clean during
- check-out
-Date: Wed, 08 Aug 2007 13:39:52 +0200
-Message-ID: <20070808113952.GN999MdfPADPa@greensroom.kotnet.org>
-References: <7vy7he6ufj.fsf@assigned-by-dhcp.cox.net>
- <20070801140532.GC31114MdfPADPa@greensroom.kotnet.org>
- <7v643vj316.fsf@assigned-by-dhcp.cox.net> <46B4A350.9060806@tromer.org>
- <20070805144632.GB999MdfPADPa@greensroom.kotnet.org>
- <46B76B8C.9050905@tromer.org>
- <20070806190344.GF999MdfPADPa@greensroom.kotnet.org>
- <46B7E5FE.7050006@tromer.org>
- <20070807085149.GH999MdfPADPa@greensroom.kotnet.org>
- <46B91F4E.8050008@tromer.org>
-Reply-To: skimo@liacs.nl
+From: Richard MUSIL <richard.musil@st.com>
+Subject: git-svn: commit author x commit committer issue
+Date: Wed, 08 Aug 2007 15:46:19 +0200
+Message-ID: <46B9C92B.3000000@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eran Tromer <git2eran@tromer.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 13:40:12 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 15:46:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIjtY-0004zA-0D
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 13:40:08 +0200
+	id 1IIls0-0004ik-Dn
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 15:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287AbXHHLkD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 07:40:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbXHHLkD
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 07:40:03 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:56859 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751287AbXHHLkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2007 07:40:00 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMG002XWDQLSZ@psmtp09.wxs.nl> for git@vger.kernel.org; Wed,
- 08 Aug 2007 13:39:58 +0200 (MEST)
-Received: (qmail 24474 invoked by uid 500); Wed, 08 Aug 2007 11:39:52 +0000
-In-reply-to: <46B91F4E.8050008@tromer.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S932198AbXHHNqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 09:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765994AbXHHNqe
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 09:46:34 -0400
+Received: from s200aog14.obsmtp.com ([207.126.144.128]:40886 "EHLO
+	s200aog14.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765769AbXHHNqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 09:46:33 -0400
+Received: from source ([164.129.1.35]) (using TLSv1) by eu1sys200aob014.postini.com ([207.126.147.11]) with SMTP;
+	Wed, 08 Aug 2007 13:46:25 UTC
+Received: from zeta.dmz-eu.st.com (ns2.st.com [164.129.230.9])
+	by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1C6F9DAC4
+	for <git@vger.kernel.org>; Wed,  8 Aug 2007 13:46:21 +0000 (GMT)
+Received: from mail1.prg.st.com (mail1.prg.st.com [164.130.59.16])
+	by zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id B9D0D4C077
+	for <git@vger.kernel.org>; Wed,  8 Aug 2007 13:46:20 +0000 (GMT)
+Received: from [10.139.4.224] (pcdyn4224.prg.st.com [10.139.4.224])
+	by mail1.prg.st.com (MOS 3.7.5a-GA)
+	with ESMTP id CIL34790 (AUTH "richard musil");
+	Wed, 8 Aug 2007 15:46:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55319>
 
-On Tue, Aug 07, 2007 at 09:41:34PM -0400, Eran Tromer wrote:
-> On 2007-08-07 04:51, Sven Verdoolaege wrote:
-> > Surely this is a lot worse than occasionally committing something you
-> > didn't plan to commit, and only if you are performing a known "dangerous"
-> > operation.
-> > 
-> Are you saying that
-> $ git reset --hard HEAD && vi foo && git commit -a
-> is a "known dangerous" operation that can record corrupted content even
-> though you didn't touch it?
+Normally, when patch is applied, git distinguishes commit author and
+commit committer (relying on info from patch).
+However, after the patches are committed to svn repository using:
+git-svn dcommit
+author and committer data are set to same values (or at least time and
+date, I cannot verify it for names).
+I wonder if there is any reason for this behavior, because I would
+definitely like to keep original commit info (which came from patch) in
+my git repository.
 
-I'm only saying that "git commit -a" will commit anything that has been
-modified, so you have to be careful when using it and it just so happens
-that git reset may leave submodules modified.  This should probably
-be documented.
-And I agree with you that this is not ideal (personally, I'd want
-all checked-out submodules to get updated automatically), but it's
-certainly better than your earlier proposal.
-
-> So, when I'm sure all the edits I did in the work tree are fine, how
-> *do* I safely make a commit without manually inspecting the changed
-> files list, or manually listing the changed files for "git add", or
-> manually running "git submodule update", or manually checking whether
-> there happens to be some submodules in this project, some other such
-> cumbersome measure?
-
-If you've ever done a "git submodule update" in the project, you should
-know that there are submodules and if you haven't then there are no
-checked-out submodules that can get out of sync.
-If you're talking about tools, then they should indeed be extra careful.
-
-[another proposal]
-> 
-> Does this sound reasonable?
-
-I'll leave it to others to comment on that one.
-
-skimo
+Richard Musil
+(please cc: me)
