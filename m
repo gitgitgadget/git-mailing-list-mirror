@@ -1,98 +1,62 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] patch open-editor-at-top-line
-Date: Wed, 08 Aug 2007 19:43:46 +0200
-Message-ID: <85wsw5rkfh.fsf@lola.goethe.zz>
-References: <20070808151145.GA2897@dnb.sw.ru>
+From: Matthias Kleine <matthias_kleine@gmx.de>
+Subject: Re: git-svn: Finding the svn-URL of the current branch in git
+Date: Wed, 08 Aug 2007 20:51:55 +0200
+Message-ID: <f9d3ce$1lo$1@sea.gmane.org>
+References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx>	<f9c0d1$7md$1@sea.gmane.org> <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dmitry Monakhov <dmonakhov@openvz.org>
-X-From: git-owner@vger.kernel.org Wed Aug 08 19:43:57 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 20:52:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIpZc-00077q-0R
-	for gcvg-git@gmane.org; Wed, 08 Aug 2007 19:43:56 +0200
+	id 1IIqdr-0004hc-4H
+	for gcvg-git@gmane.org; Wed, 08 Aug 2007 20:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934445AbXHHRnv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Aug 2007 13:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934435AbXHHRnu
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 13:43:50 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:48692 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760781AbXHHRnt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 13:43:49 -0400
-Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 9F09F183AC3;
-	Wed,  8 Aug 2007 19:43:47 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 8B2BE2793FE;
-	Wed,  8 Aug 2007 19:43:47 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-025-080.pools.arcor-ip.net [84.61.25.80])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 56AD3225123;
-	Wed,  8 Aug 2007 19:43:47 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9285E1C3C79D; Wed,  8 Aug 2007 19:43:46 +0200 (CEST)
-In-Reply-To: <20070808151145.GA2897@dnb.sw.ru> (Dmitry Monakhov's message of "Wed\, 8 Aug 2007 19\:11\:45 +0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3897/Wed Aug  8 18:50:38 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S935897AbXHHSwT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 14:52:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935711AbXHHSwS
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 14:52:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:43714 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935479AbXHHSwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 14:52:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IIqdj-0002lQ-Fi
+	for git@vger.kernel.org; Wed, 08 Aug 2007 20:52:15 +0200
+Received: from e178106053.adsl.alicedsl.de ([85.178.106.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 20:52:15 +0200
+Received: from matthias_kleine by e178106053.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2007 20:52:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: e178106053.adsl.alicedsl.de
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vy7gm4cdv.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55335>
 
-Dmitry Monakhov <dmonakhov@openvz.org> writes:
+Junio C Hamano wrote:
+> Parents' order and which branch you are on may not have anything
+> to do with each other.  Somebody else may have pulled a while on
+> b, and you might have pulled from him the merge he created by
+> doing so while you are on branch a.
+> 
 
-> When i use "guilt series -e" for realy long series file
-> it is not confortable always search current top patch line.
-> IMHO editor have to start at the top patch automaticaly.
-> Btw: open_editor_at_line may be useful in other places
->
-> +# usage: open_editor_at_line <editor> <filename> <line>
-> +# try to open editor with "filename"" at "line"
-> +# different editors use different syntax for start line parameter
-> +# so the only thing we can do is just compare with known editiors
-> +# and ignore line if editor is unknown.
-> +open_editor_at_line()
-> +{
-> +	editor_name=$1
-> +	file_name=$2
-> +	line_pos=$3
-> +	case "$editor_name" in
-> +		"vi" |"vim")
-> +			$editor_name $file_name +$line_pos;;
-> +		"emacs")
-> +			$editor_name $file_mame:$line_pos;;
-                                     ^^^^^^^^^^^^^^^^^^^^^^
+You're right, I didn't think of that. While pondering this I came up 
+with another problem: git-svn currently remembers which svn-branch a 
+commit belongs to by including this information in the git commit log 
+message.
+This way it is not possible to have one git-commit appear in more than 
+one svn branch. Maybe it's better to store this git-commit->svn-branch 
+mapping somewhere else. Although it's probably even better to completely 
+switch to git :)
 
-You have not actually tested this patch.
-
-> +		*)
-> +			# editor is unknown, line_pos is just ignored
-> +			$editor_name $file_name;;
-> +	esac
-> +	return $?
-> +}
-> +
-
-This does not make much sense.  Pretty much every editor that can be
-placed into $EDITOR/$VISUAL will understand the
-
-$EDITOR +line filename
-
-line convention (and if they don't, the damage is small).  Certainly
-Emacs does so.  I don't know the situation under Windows, but in Unix
-this has been the state for editors for eternity.
-
-It turns out that I recently patched the git_editor function in
-git-setup-sh.sh to take multiple arguments, and this should come in
-handy: just do
-
-git_editor "+$line_pos" "$filename"
-
-and this should open the desired editor at the right line number.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Matthias
