@@ -1,95 +1,117 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Documentation/git-svn: Instructions for cloning a git-svn-created repository
-Date: Thu, 9 Aug 2007 12:37:59 -0700
-Message-ID: <20070809193759.GA4545@untitled>
-References: <1186388203181-git-send-email-aroben@apple.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Git'ing a non-labeled set of sources
+Date: Thu, 9 Aug 2007 22:02:18 +0200
+Message-ID: <20070809200218.GA4567@efreet.light.src>
+References: <CF7E46FCFF66AD478BB72724345289EC170CE4@twx-exch01.twacs.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 21:38:38 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+Cc: git@vger.kernel.org
+To: "Sparks, Sam" <SSparks@twacs.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 22:02:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJDq4-000377-Dy
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 21:38:32 +0200
+	id 1IJEDb-0003XV-TD
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 22:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbXHITi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 15:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbXHITi1
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 15:38:27 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:33088 "EHLO hand.yhbt.net"
+	id S1757336AbXHIUCb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 16:02:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbXHIUCb
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 16:02:31 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:46217 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbXHITi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 15:38:26 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 0A93C2DC08D;
-	Thu,  9 Aug 2007 12:38:25 -0700 (PDT)
+	id S1756178AbXHIUCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 16:02:30 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 783E55748B;
+	Thu,  9 Aug 2007 22:02:28 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id VaazYdqeOYMX; Thu,  9 Aug 2007 22:02:24 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 83D3B5745A;
+	Thu,  9 Aug 2007 22:02:24 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IJED4-00032J-Rz; Thu, 09 Aug 2007 22:02:18 +0200
 Content-Disposition: inline
-In-Reply-To: <1186388203181-git-send-email-aroben@apple.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <CF7E46FCFF66AD478BB72724345289EC170CE4@twx-exch01.twacs.local>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55469>
 
-Adam Roben <aroben@apple.com> wrote:
-> These instructions tell you how to create a clone of a repository created with
-> git-svn, that can in turn be used with git-svn.
-> 
-> Signed-off-by: Adam Roben <aroben@apple.com>
-> ---
-> > gitster: (3) you prepare one git-svn managed git repository, allow others to
-> > clone it via git, and have each of these cloned git repositories to interact
-> > with svn via git-svn -- this third mode of operation is not supported.
-> > 
-> > spearce: be nice if someone who cared about git-svn supporting (3) either wrote
-> > a patch for the documentation, or taught the tool how to do this more
-> > automatically.
-> 
-> Here's that patch. Maybe I'll get around to Shawn's second (far more ideal)
-> suggestion sometime.
-> 
->  Documentation/git-svn.txt |   19 +++++++++++++++++++
->  1 files changed, 19 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 0a210e4..3e3b597 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -435,6 +435,25 @@ Tracking and contributing to an entire Subversion-managed project
->  # of dcommit/rebase/show-ignore should be the same as above.
->  ------------------------------------------------------------------------
->  
-> +The initial 'git-svn clone' Subversion can be quite time-consuming (especially
-> +for large repositories). If multiple people (or one person with multiple
-> +machines) want to use git-svn to interact with the same Subversion repository,
-> +you can do the initial 'git-svn clone' to a repository on a server and have
-> +each person clone that repository with 'git clone':
-> +
-> +------------------------------------------------------------------------
-> +# Do the initial import on a server
-> +	ssh server "cd /pub && git-svn clone http://svn.foo.org/project
-> +# Clone locally
-> +	git clone server:/pub/project
-> +# Tell git-svn which branch contains the Subversion commits
-> +	git update-ref refs/remotes/git-svn origin/master
-> +# Initialize git-svn locally (be sure to use the same URL and -T/-b/-t options as were used on server)
-> +	git-svn init http://svn.foo.org/project
-> +# Pull the latest changes from Subversion
-> +	git-svn rebase
-> +------------------------------------------------------------------------
-> +
->  REBASE VS. PULL/MERGE
->  ---------------------
 
-This method won't get branches and tags under the refs/remotes/
-namespace, will it?
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I personally believe using rsync to clone repositories created with
-git-svn is the simplest and best method for now.
+On Wed, Aug 08, 2007 at 13:59:38 -0500, Sparks, Sam wrote:
+> Hello All,
+>=20
+> Please excuse me if this is an ignorant question; I'm new to git and my
+> have overlooked something in the documentation.
+>=20
+> I'm attempting to obtain a snapshot of source code from an unlabeled git
+> branch in a public repository. I've found in the documentation that a
+> timestamp cannot be used to specify a particular version of source code,
+> but I believe I can work with the commit value as returned by 'git
+> show'.
 
--- 
-Eric Wong
+Clone and pull, over git protocol, only ask the server for objects referenc=
+ed
+by any refs -- plus all objects those depend on. Which does not necessarily
+mean all commits, because references may be removed.
+
+If a branch (ie. ref in refs/heads) is removed or rewound (moved to point to
+commit that is not descendant of what it pointed to before), some commits m=
+ay
+become dangling. Clone and pull won't know such commits exist and therefore
+won't be able to ask server to provide them.
+
+> However, I have been unsuccessful in my attempts to use this identifier
+> to clone or checkout the associated source tree. Has anyone been
+> successful in using git to successfully replicate an unlabeled version
+> of sources in a repository?
+>=20
+> Here is my latest attempt:
+> /dir_i_want_to_replicate $ git show --pretty=3Dshort
+> commit 5b1313fb2758ffce8b624457f777d8cc6709608d
+> Author: ....
+
+I bet that if you do 'git lost-found' here, it will find something and this
+commit will be among the finds, or predecessor of one of them.
+
+> /replication_dir $ git clone git://www.denx.de/git/u-boot.git
+> u-boot-mpc83xx
+> Blah blah blah..
+>  100% (4378/4378) done
+> /replication_dir/u-boot-mpc83xx/ $ git checkout
+> 5b1313fb2758ffce8b624457f777d8cc6709608d
+> error: pathspec '5b1313fb2758ffce8b624457f777d8cc6709608d' did not match
+> any.=20
+
+It seems that git pull only accepts refs as arguments. So you'll have to
+create a branch at that commit in the origin to get it over to destination.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGu3LKRel1vVwhjGURAulOAKDMPs8fdgt7nRm/ThEQN3/Q08hn2gCfaWv4
+DZ74HFDlv65QVapSzLpQzoI=
+=q+f5
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
