@@ -1,73 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git and larger trees, not so fast?
-Date: Thu, 09 Aug 2007 15:02:36 -0700
-Message-ID: <7vtzr8wemb.fsf@assigned-by-dhcp.cox.net>
-References: <20070809163026.GD568@mbox.bz>
-	<alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
-	<7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net>
-	<7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
-	<20070809165218.9b76ebf7.seanlkml@sympatico.ca>
-	<alpine.LFD.0.999.0708091426050.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] checkout-index needs a working tree
+Date: Fri, 10 Aug 2007 00:35:30 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070809223530.GA29680@cassiopeia>
+References: <Pine.LNX.4.64.0708042319470.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, moe <moe-git@mbox.bz>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 10 00:02:43 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 00:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJG5b-0003sj-BD
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 00:02:43 +0200
+	id 1IJGbY-0005S2-2Z
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 00:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbXHIWCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 18:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753218AbXHIWCj
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 18:02:39 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:62051 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752940AbXHIWCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 18:02:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070809220237.PSUJ2095.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 9 Aug 2007 18:02:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Zy2c1X00A1kojtg0000000; Thu, 09 Aug 2007 18:02:36 -0400
-In-Reply-To: <alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 9 Aug 2007 14:46:41 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755001AbXHIWfm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 18:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbXHIWfm
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 18:35:42 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:34238 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762730AbXHIWfk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 18:35:40 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IJGbT-0003gs-7w; Fri, 10 Aug 2007 00:35:39 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l79MZbQ3000011;
+	Fri, 10 Aug 2007 00:35:37 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l79MZX70000010;
+	Fri, 10 Aug 2007 00:35:33 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, gitster@pobox.com,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708042319470.14781@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55481>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Johannes Schindelin wrote:
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>=20
+> 	This fixes "git --work-tree=3D/some/where/else checkout-index".
+>=20
+>  git.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git.c b/git.c
+> index 25b8274..f8c4545 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -315,7 +315,8 @@ static void handle_internal_command(int argc, con=
+st char **argv)
+>  		{ "branch", cmd_branch, RUN_SETUP },
+>  		{ "bundle", cmd_bundle },
+>  		{ "cat-file", cmd_cat_file, RUN_SETUP },
+> -		{ "checkout-index", cmd_checkout_index, RUN_SETUP },
+> +		{ "checkout-index", cmd_checkout_index,
+> +			RUN_SETUP | NEED_WORK_TREE},
+>  		{ "check-ref-format", cmd_check_ref_format },
+>  		{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
+>  		{ "cherry", cmd_cherry, RUN_SETUP },
+With this patch I'm not able to do
 
-> On Thu, 9 Aug 2007, Linus Torvalds wrote:
->> 
->> So "builtin-read-tree.c" (or rather unpack-trees.c) would need the same 
->> kind of logic.
->
-> The path seems to be:
->
->   cmd_read_tree ->
->     unpack_trees ->
->       unpack_trees_rec ->
->         [ recursive .. unpack_trees_rec ] ->
-> 	  oneway_merge ->
-> 	    keep_entry ->
-> 	      add_index_entry()
->
-> and here again we end up having the same insertion sort issue.
+	git checkout-index --prefix=3D/tmp/exportdir -a
 
-Quite honestly, I was this (shows the "thumb and index finger
-almost touching" gesture) close to declare that unpack-trees is
-unsalvageable, and was planning to redo the one-tree (and
-perhaps two-tree) read-tree without using that mess after 1.5.3.
+to export an entire tree as described in git-checkout-index(1) in a bar=
+e
+repo.
+
+(Not that I need it, but I claimed on #git that it works, ... )
+
+BTW: I didn't try if reverting this patch helps, but probably it does.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D72+PS+point+in+inch
