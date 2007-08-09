@@ -1,71 +1,99 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
-Date: Thu, 9 Aug 2007 15:55:54 +0200
-Message-ID: <81b0412b0708090655v7cf8acc3rbca86d0d59ff813c@mail.gmail.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
-	 <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com>
-	 <Pine.LNX.4.64.0708032231320.14781@racer.site>
-	 <e7bda7770708031716i61f80d89o8970b3236a961613@mail.gmail.com>
-	 <Pine.LNX.4.64.0708040123560.14781@racer.site>
-	 <e7bda7770708051641h15bd38abo659e74322e6232c0@mail.gmail.com>
-	 <Pine.LNX.4.64.0708060054020.14781@racer.site>
-	 <46B6B60C.4080805@trolltech.com>
-	 <81b0412b0708090147y11783e3i4f0a6251dbe2c736@mail.gmail.com>
-	 <Pine.LNX.4.64.0708091013430.21857@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: 'pu' branch for StGIT
+Date: Thu, 9 Aug 2007 16:18:48 +0200
+Message-ID: <20070809141848.GA6342@diana.vm.bytemark.co.uk>
+References: <20070807022043.GA8482@diana.vm.bytemark.co.uk> <1186549433.2112.34.camel@dv> <20070808092027.GB7860@diana.vm.bytemark.co.uk> <20070808213917.GA22521@diana.vm.bytemark.co.uk> <1186611514.7383.4.camel@dv> <20070808232349.GA23172@diana.vm.bytemark.co.uk> <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net> <20070809073801.GA31482@diana.vm.bytemark.co.uk> <1186665883.28228.31.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Marius Storm-Olsen" <marius@trolltech.com>,
-	"Torgil Svensson" <torgil.svensson@gmail.com>,
-	"Dmitry Kakurin" <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 09 15:56:02 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Yann Dirson <ydirson@altern.org>
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 16:19:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ8Ua-0001RP-SC
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 15:56:01 +0200
+	id 1IJ8rD-00037l-P3
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 16:19:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932978AbXHINz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 09:55:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762057AbXHINz5
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 09:55:57 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:29175 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754001AbXHINz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 09:55:56 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so340269ugf
-        for <git@vger.kernel.org>; Thu, 09 Aug 2007 06:55:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mmKuOJX1Cmup62i17FsGNw/6oAMzgfkvHOBCTqHMPjFEcO6rWilc+xc/DWTGaLhyUDTUqtluHWORiuKo25nxGuRIb9KfgOHJba8Ob8621ka3Rizm3+j3iYX6Wb7EPXxW9i3YGN49mCKDFqWxI3T83h9KmKPvXrjbfn03kFy5X40=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hjQ8GMJsh2/GoUyYq5fKp4LSWlQPOlBqP3inIXV1EzAd0FF/eoAAjJkCix3uWhY9YwPwDIykfSPvLGA1UkW4uFKNyg+jICeaEuXEL1UxsAKRPCtbjIlWoF/0492ogzOjKvtwpH5BVbsbFafcgHijMcH9tg1RdV5EiSeB3tLVz4Y=
-Received: by 10.78.180.18 with SMTP id c18mr914999huf.1186667754134;
-        Thu, 09 Aug 2007 06:55:54 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Thu, 9 Aug 2007 06:55:54 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0708091013430.21857@racer.site>
+	id S1765724AbXHIOTL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 10:19:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933000AbXHIOTK
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 10:19:10 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3987 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758770AbXHIOTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 10:19:08 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IJ8qe-0001la-00; Thu, 09 Aug 2007 15:18:48 +0100
 Content-Disposition: inline
+In-Reply-To: <1186665883.28228.31.camel@dv>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55453>
 
-On 8/9/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Very impressive.
->
-> I have some issues with it, though.
->
-> - I really hate to leave anything older than W2K behind.  You might not
->   care, but I do.
->
-> - I tested it, and it gave a constant flicker, at least in the status bar.
->   Does not seem to be that fleshed out.
+On 2007-08-09 09:24:43 -0400, Pavel Roskin wrote:
 
-That's typical for impressive windows hackery...
-Switching the transparency completely (frame and background in tabs) off
-seem to help with the flicker. At least it does not flicker much for w2k here.
+> On Thu, 2007-08-09 at 09:38 +0200, Karl Hasselstr=F6m wrote:
+>
+> > I take it this all means you're actually using my branch? What's
+> > your opinion on its usefulness?
+>
+> Well, I tried it, and then ran a script to update all local
+> repositories. It converted everything to "version 3", so I'm sort of
+> stuck with it. If the "version 3" code is not committed to the
+> mainline StGIT, I'll have to convert my repositories back or even
+> re-fetch them.
+
+Thanks for the vote of confidence. :-)
+
+You should be able to do something like
+
+  $ stg applied > .git/patches/branch/applied
+  $ stg unapplied > .git/patches/branch/unapplied
+
+and then manually change the version from 3 to 2, and be ready to go.
+I haven't tested this, though!
+
+> I have noticed two problems so far, but I cannot tell is they are
+> specific to the "pu" branch.
+>
+> 1) Undead patches.
+
+I saw the same problem today. I haven't had time to look into it, but
+I believe it's due to stgit trying to directly modify files under
+=2Egit/refs instead of using git-update-ref, which breaks with packed
+refs. The DAG patches rely much more on the refs, so the bug is more
+severe in that case.
+
+https://gna.org/bugs/?9710
+
+> There is also a file .git/patches/wireless-dev/patchorder, which
+> contains "at76_usb".
+
+The patchorder file should be harmless. It's only used to determine
+patch order for those cases where the DAG information isn't
+sufficient. (That is, for unapplied patches.) It's strictly advisory,
+and _not_ used to determine which patches exist.
+
+> I was updating the repository by "stg pull", there were two patches,
+> "at76_usb" being first. It couldn't be merged, so I deleted it. I
+> deleted the other patch as well, since I new it was applied
+> upstream. After another "stg pull" at76_usb became "undead".
+
+Until this is fixed, you can use git-show-ref and git-update-ref to
+manually delete the offending ref. That fixed the problem for me.
+
+> 2) Invisible branches.
+
+I haven't seen this problem at all -- in my repositories, "stg branch
+-l" just works. Will try to reproduce (hopefully tonight). Do you have
+a recepie on how to reproduce this from scratch?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
