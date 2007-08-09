@@ -1,100 +1,86 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: 'pu' branch for StGIT
-Date: Thu, 09 Aug 2007 12:33:30 -0400
-Message-ID: <1186677210.31394.28.camel@dv>
-References: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
-	 <1186549433.2112.34.camel@dv>
-	 <20070808092027.GB7860@diana.vm.bytemark.co.uk>
-	 <20070808213917.GA22521@diana.vm.bytemark.co.uk>
-	 <1186611514.7383.4.camel@dv>
-	 <20070808232349.GA23172@diana.vm.bytemark.co.uk>
-	 <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net>
-	 <20070809073801.GA31482@diana.vm.bytemark.co.uk>
-	 <1186665883.28228.31.camel@dv>
-	 <20070809141848.GA6342@diana.vm.bytemark.co.uk>
+From: moe <moe-git@mbox.bz>
+Subject: git and larger trees, not so fast?
+Date: Thu, 9 Aug 2007 18:06:56 +0200
+Message-ID: <20070809160655.GA19494@mbox.bz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
-	Yann Dirson <ydirson@altern.org>
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 18:34:06 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 09 18:40:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJAxZ-0001sq-KX
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 18:34:05 +0200
+	id 1IJB43-0004Xa-9c
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 18:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S939020AbXHIQdh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 12:33:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761992AbXHIQdg
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 12:33:36 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:50448 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S940599AbXHIQde convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 12:33:34 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1IJB00-0001Op-Or
-	for git@vger.kernel.org; Thu, 09 Aug 2007 12:36:36 -0400
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1IJAx0-0003CA-MY; Thu, 09 Aug 2007 12:33:30 -0400
-In-Reply-To: <20070809141848.GA6342@diana.vm.bytemark.co.uk>
-X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
+	id S1761061AbXHIQkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 12:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759809AbXHIQkm
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 12:40:42 -0400
+Received: from mx02.qsc.de ([213.148.130.14]:50410 "EHLO mx02.qsc.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755049AbXHIQkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 12:40:41 -0400
+Received: from x.xxs.cc (port-212-202-38-87.dynamic.qsc.de [212.202.38.87])
+	by mx02.qsc.de (Postfix) with ESMTP id 5A6E316C0CFF
+	for <git@vger.kernel.org>; Thu,  9 Aug 2007 18:06:56 +0200 (CEST)
+Received: (qmail 3692 invoked by uid 1000); 9 Aug 2007 16:06:56 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55460>
 
-On Thu, 2007-08-09 at 16:18 +0200, Karl Hasselstr=F6m wrote:
+hi guys,
 
-> You should be able to do something like
->=20
->   $ stg applied > .git/patches/branch/applied
->   $ stg unapplied > .git/patches/branch/unapplied
->=20
-> and then manually change the version from 3 to 2, and be ready to go.
-> I haven't tested this, though!
+earlier today i imported one of my larger trees
+(~70k files) into git and was quite disappointed
+by the performance.
 
-That seems to work.  Thank you!  "branch" should be substituted with th=
-e
-current branch, of course.
+i made some tests on latest master branch
+(1.5.3.rc4.29.g74276) and it seems like git
+hits a wall somewhere above ~50k files.
 
-> > I have noticed two problems so far, but I cannot tell is they are
-> > specific to the "pu" branch.
-> >
-> > 1) Undead patches.
->=20
-> I saw the same problem today. I haven't had time to look into it, but
-> I believe it's due to stgit trying to directly modify files under
-> .git/refs instead of using git-update-ref, which breaks with packed
-> refs. The DAG patches rely much more on the refs, so the bug is more
-> severe in that case.
->=20
-> https://gna.org/bugs/?9710
+i'm seeing 'commit' timings of 30s and
+up as well as 'status' timings in the 10s
+ballpark.
 
-I've attached the test case to that bug.  You are right, git-gc is invo=
-lved.
+here's a test-case (should be safe to
+copy/paste on linux, bash):
 
-> > 2) Invisible branches.
->=20
-> I haven't seen this problem at all -- in my repositories, "stg branch
-> -l" just works. Will try to reproduce (hopefully tonight). Do you hav=
-e
-> a recepie on how to reproduce this from scratch?
+#
+# first create a tree of roughly 100k files
+#
+mkdir bummer
+cd bummer
+for ((i=0;i<100;i++)); do
+mkdir $i && pushd $i;
+for ((j=0;j<1000;j++)); do
+echo "$j" >$j; done; popd;
+done
 
-It's a problem with git-gc too!  Just clone some repository and run "st=
-g
-branch -l" in it.  It with show master.  Run git-gc, and "stg branch -l=
-"
-will show "No branches".
+#
+# init and add this to git
+#
+time git init
+git config user.email "no@thx"
+git config user.name "nothx"
+time git add .
+time git commit -m 'buurrrrn' -a
 
-I see that in my Linux repository there are files
-in .git/refs/remotes/wireless-dev but not in other directories
-under .git/refs/remotes/
+#
+# git-status, tunes in at around ~10s for me
+#
+time git-status
+time git-status
+time git-status
 
---=20
-Regards,
-Pavel Roskin
+#
+# git-commit, takes a whopping 52s for me
+#
+date >50/500
+time git commit -m 'expose the turtle' 50/500
+
+
+regards,
+moe
