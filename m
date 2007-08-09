@@ -1,55 +1,61 @@
-From: Joe Perches <joe@perches.com>
-Subject: git and linux kernel source
-Date: Thu, 09 Aug 2007 16:11:46 -0700
-Message-ID: <1186701106.3073.71.camel@localhost>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: git and linux kernel source
+Date: Thu, 9 Aug 2007 19:17:18 -0400
+Message-ID: <20070809231718.GH12875@fieldses.org>
+References: <1186701106.3073.71.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 01:11:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 01:17:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJHAX-0007Tb-La
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 01:11:54 +0200
+	id 1IJHG4-0000Rs-D7
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 01:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754056AbXHIXLt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 19:11:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbXHIXLt
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 19:11:49 -0400
-Received: from DSL022.labridge.com ([206.117.136.22]:3268 "EHLO Perches.com"
+	id S1756401AbXHIXRY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 19:17:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757067AbXHIXRW
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 19:17:22 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:47373 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752584AbXHIXLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 19:11:48 -0400
-Received: from [192.168.1.128] ([192.168.1.128])
-	by Perches.com (8.9.3/8.9.3) with ESMTP id QAA26570
-	for <git@vger.kernel.org>; Thu, 9 Aug 2007 16:05:38 -0700
-X-Mailer: Evolution 2.10.2-2.1mdv2007.1 
+	id S1756824AbXHIXRU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 19:17:20 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IJHFm-00062R-7M; Thu, 09 Aug 2007 19:17:18 -0400
+Content-Disposition: inline
+In-Reply-To: <1186701106.3073.71.camel@localhost>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55483>
 
-A few linux kernel source and git questions:
+On Thu, Aug 09, 2007 at 04:11:46PM -0700, Joe Perches wrote:
+> A few linux kernel source and git questions:
+> 
+> What's the best procedure to handle a tree-wide source tranformation?
+> For instance:
+> 
+>   git branch foo2bar
+>   egrep -r -w --include=*.[ch] -l "foo" * | \
+> 	xargs perl -pi -e 's/\bfoo\b/bar/msg'
+>   git commit -a -m "use bar not foo"
 
-What's the best procedure to handle a tree-wide source tranformation?
-For instance:
 
-  git branch foo2bar
-  egrep -r -w --include=*.[ch] -l "foo" * | \
-	xargs perl -pi -e 's/\bfoo\b/bar/msg'
-  git commit -a -m "use bar not foo"
+> Is there a way to separate the resultant single patch into multiple
+> patches by subdirectory?  Perhaps some git-rev-parse option?
 
-Is there a way to separate the resultant single patch into multiple
-patches by subdirectory?  Perhaps some git-rev-parse option?
+Something like
 
-  git-format-patch -p --stat -o outputdir
+	for each sub/dir:
+		git add sub/dir
+		git commit -m "use bar not foo in sub/dir"
 
-Is there a way to automatically include the appropriate MAINTAINER and
-mailing lists from the MAINTAINERS file for each subdirectory?
+should do it.  (Of course, in the particular case above the patches you
+ended up with probably wouldn't compile individually.)
 
-  git-send-mail --to $APPROPRIATE_MAINTAINER \
-	-cc linux-kernel@vger.kernel.org
-
-Any ideas or help?
+--b.
