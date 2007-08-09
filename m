@@ -1,102 +1,111 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Thu, 09 Aug 2007 08:47:07 +0200
-Message-ID: <46BAB86B.8070904@trolltech.com>
-References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>  <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>  <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>  <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>  <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>  <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de> <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com> <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de> <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de> <46BAADC8.9020003@trolltech.com> <872D90BF-CB37-496B-9E7D-3C9A19125EBA@zib.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Mod. gitk to support REBASE (with stash support).
+Date: Thu, 9 Aug 2007 02:58:10 -0400
+Message-ID: <20070809065810.GC24573@spearce.org>
+References: <1186598028457-git-send-email-alexandre.bourget@savoirfairelinux.com> <Pine.LNX.4.64.0708082141170.21916@wbgn129.biozentrum.uni-wuerzburg.de> <85lkclrdpr.fsf@lola.goethe.zz> <20070809032610.GA24573@spearce.org> <85odhhntmb.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig058375CEE62311CAC16513AE"
+Content-Type: text/plain; charset=utf-8
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Aug 09 08:46:23 2007
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
+	Git Mailing List <git@vger.kernel.org>, paulus@samba.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 08:58:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ1mn-0001GB-5Y
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 08:46:21 +0200
+	id 1IJ1yQ-0004NX-8H
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 08:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762723AbXHIGqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 02:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760565AbXHIGqK
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 02:46:10 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:55921 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756890AbXHIGqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 02:46:09 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 8654C7429E; Thu,  9 Aug 2007 08:46:07 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 3FE30743DE; Thu,  9 Aug 2007 08:46:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <872D90BF-CB37-496B-9E7D-3C9A19125EBA@zib.de>
-X-Enigmail-Version: 0.95.3
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1761258AbXHIG6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 02:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759025AbXHIG6S
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 02:58:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39180 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760024AbXHIG6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 02:58:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IJ1yF-0001oI-EM; Thu, 09 Aug 2007 02:58:11 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 93D7520FBAE; Thu,  9 Aug 2007 02:58:10 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <85odhhntmb.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55418>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig058375CEE62311CAC16513AE
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+David Kastrup <dak@gnu.org> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> >> Well, yes.  But git-gui only works on a single branch head at a time,
+> >> and that is not enough for rebasing.
+> >
+> > Sure.  But so does git's command line tools.  They tend to only
+> > work on a single branch at time, the one called `HEAD`.
+> 
+> "tend", and many accept an explicit override: rebase accepts three
+> commit names, for example.  Those that _write_ into the repository
+> usually _end_ up at HEAD, but most need not start there.
+> 
+> And git-gui does not have any operation either looking at or working
+> other than on the current HEAD.  No diff, no file view, no rebase,
+> nothing.
 
-Steffen Prohaska said the following on 09.08.2007 08:38:
-> On Aug 9, 2007, at 8:01 AM, Marius Storm-Olsen wrote:
->> Does it work then? If so, the problem is likely to be that you
->> have Cygwin in the system path, which is not advisable/compatible
->> with MSys.
->=20
-> I had cygwin at the tail of my PATH. After removing it the=20
-> installation went through flawlessly.
->=20
-> A check in the installer would be a good idea.
->=20
-> Would you recommend running git only from the mingw shell prompt,=20
-> or can I start it also from a Cygwin shell prompt?
+Uh, "Repository->Browse Browse Branch Files..." will let you look
+at files from any commit-ish, not just HEAD or an existing branch.
+You can open many file browsers at once against the same commit or
+different commits.  Double clicking a file opens it in the blame
+viewer, which itself can move around history a little bit.
 
-Well, some say that you can, but I'm not sure (especially since you're=20
-using Cygwin in Windows EOL mode, which is opposite of MSys).
-The way I use it is either from the MSys shell, or directly from CMD=20
-shell. (If you have PATH=3Dc:\msysgit\bin;C:\msysgit\mingw\bin;%PATH% it =
+"Merge->Local Merge..." will let you select any another commit to
+merge with this current branch.  That's two commits.
 
-works quite well like that.)
+So your assertion that git-gui only works with one commit, HEAD,
+is wrong.
 
-Actually, I use CMD most of the time..
+And git-rebase taking three arguments?  Its actually two; if it
+is given the optional final argument of the branch to rebase it
+first switches to that branch, then does the rebase.  In other
+words these are identical:
 
---=20
-=2Emarius
+  # this...
+  git checkout to-rebase &&
+  git rebase --onto upstreamA upstreamB
 
+  # is the same as this...
+  git rebase --onto upstreamA upstreamB to-rebase
+ 
+> >> Could git-gui perhaps be merged with giggle at some point of time?
+> >
+> > Unlikely.  A while ago I considered "Stay in Tcl/Tk or move to
+> > something more 'powerful/better/faster/Linus friendly'" and stayed
+> > in Tcl/Tk.  I doubt git-gui will leave Tcl/Tk.  giggle is Gtk based.
+> 
+> My bad: git-gui has a nice polished look on my systems (Ubuntu Feisty)
+> while gitk has an ugly retro-blockish old-font Tk look; so not looking
+> at the innards, I had assumed they were implemented using different
+> systems.
 
---------------enig058375CEE62311CAC16513AE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Nope.  Myself and a few others have just spent some time making
+git-gui look somewhat sane by default.  It doesn't always; there are
+at least a few places where it still has too much of a Tk-ish look
+to it.  This is especially true in a few of the dialog boxes that
+git-gui might open when you are about to do something potentially
+bad.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+> User interfaces are really not what I am good at, and I don't even
+> have enough time to deal with the things I am good at.
 
-iD8DBQFGurhrKzzXl/njVP8RAuZJAJ4huhzpm4QCgiec0mxMi9Tf/F1iFACg34AC
-ojXBm3X1uKiZOCXn0NryX7s=
-=Ho/d
------END PGP SIGNATURE-----
+Hah.  Me neither.  Yet git-gui exists.
 
---------------enig058375CEE62311CAC16513AE--
+-- 
+Shawn.
