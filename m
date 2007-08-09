@@ -1,70 +1,53 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH] cvsserver: Fix for work trees
-Date: Wed,  8 Aug 2007 23:26:10 -0500
-Message-ID: <1186633570700-git-send-email-bdowning@lavos.net>
-Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
-	Brian Downing <bdowning@lavos.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 06:38:23 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Thu, 9 Aug 2007 06:59:23 +0200
+Message-ID: <D6212E0B-0CCB-4F55-A19C-24734BAA90C7@zib.de>
+References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>  <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>  <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>  <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>  <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>  <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de> <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com> <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de> <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de> <46BA4C98.4050005@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 06:58:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIzmw-00020t-IM
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 06:38:23 +0200
+	id 1IJ06g-0005Sp-Ex
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 06:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089AbXHIEiT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 00:38:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbXHIEiS
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 00:38:18 -0400
-Received: from gateway.insightbb.com ([74.128.0.19]:16016 "EHLO
-	asav00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752384AbXHIEiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 00:38:18 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aj1KAEI3ukZKhvbzRmdsb2JhbACBU4UlhxcBAQE1AZsM
-Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
-  by asav00.insightbb.com with ESMTP; 09 Aug 2007 00:38:17 -0400
-Received: from silvara (silvara.lavos.net [10.4.0.20])
-	by mail.lavos.net (Postfix) with ESMTP id C27C2309F30;
-	Wed,  8 Aug 2007 23:38:07 -0500 (CDT)
-Received: by silvara (Postfix, from userid 1000)
-	id 523DB50103; Wed,  8 Aug 2007 23:26:11 -0500 (CDT)
-X-Mailer: git-send-email 1.5.3.GIT
+	id S1755591AbXHIE6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 00:58:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758714AbXHIE6k
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 00:58:40 -0400
+Received: from mailer.zib.de ([130.73.108.11]:48574 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753767AbXHIE6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 00:58:39 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l794wbYl001375;
+	Thu, 9 Aug 2007 06:58:37 +0200 (CEST)
+Received: from [192.168.178.32] ([77.177.247.82])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l794wavM004461
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 9 Aug 2007 06:58:36 +0200 (MEST)
+In-Reply-To: <46BA4C98.4050005@gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55406>
 
-git-cvsserver used checkout-index internally for commit and annotate.
-Since a work tree is required for this to function now, this was
-breaking.  Work around this by defining GIT_WORK_TREE=. in the
-appropriate places.
 
-Signed-off-by: Brian Downing <bdowning@lavos.net>
----
- git-cvsserver.perl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+On Aug 9, 2007, at 1:07 AM, Mark Levedahl wrote:
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index ae7d511..13dbd27 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1196,6 +1196,7 @@ sub req_ci
-     $log->info("Lockless commit start, basing commit on '$tmpdir', index file is '$file_index'");
- 
-     $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
-+    $ENV{GIT_WORK_TREE} = ".";
-     $ENV{GIT_INDEX_FILE} = $file_index;
- 
-     # Remember where the head was at the beginning.
-@@ -1721,6 +1722,7 @@ sub req_annotate
-     $log->info("Temp checkoutdir creation successful, basing annotate session work on '$tmpdir', index file is '$file_index'");
- 
-     $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
-+    $ENV{GIT_WORK_TREE} = ".";
-     $ENV{GIT_INDEX_FILE} = $file_index;
- 
-     chdir $tmpdir;
--- 
-1.5.3.GIT
+> Steffen Prohaska wrote:
+>>
+> Let me guess, you have Cygwin on the path along with Msys, and had  
+> it that way when you downloaded the package and it tried to build.
+
+I don't think so. At least I did not actively do something to
+have Cygwin in my path.
+
+	Steffen
