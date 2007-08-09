@@ -1,103 +1,113 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Mod. gitk to support REBASE (with stash support).
-Date: Thu, 09 Aug 2007 07:51:08 +0200
-Message-ID: <85odhhntmb.fsf@lola.goethe.zz>
-References: <1186598028457-git-send-email-alexandre.bourget@savoirfairelinux.com>
-	<Pine.LNX.4.64.0708082141170.21916@wbgn129.biozentrum.uni-wuerzburg.de>
-	<85lkclrdpr.fsf@lola.goethe.zz> <20070809032610.GA24573@spearce.org>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Thu, 09 Aug 2007 08:01:44 +0200
+Message-ID: <46BAADC8.9020003@trolltech.com>
+References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>  <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>  <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>  <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>  <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>  <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de> <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com> <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de> <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig15B6B4894B3225C13DCB50A7"
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
-	Git Mailing List <git@vger.kernel.org>, paulus@samba.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 09 07:51:19 2007
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Aug 09 08:00:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ0vU-0006oe-Ks
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 07:51:16 +0200
+	id 1IJ14n-0000Yt-Tx
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 08:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763408AbXHIFvN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 01:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757691AbXHIFvN
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 01:51:13 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:34750 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756530AbXHIFvM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 01:51:12 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id A3A4B17F411;
-	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 93781ABAE0;
-	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-052-115.pools.arcor-ip.net [84.61.52.115])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 61EC030A992;
-	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 535D31C3C79D; Thu,  9 Aug 2007 07:51:09 +0200 (CEST)
-In-Reply-To: <20070809032610.GA24573@spearce.org> (Shawn O. Pearce's message of "Wed\, 8 Aug 2007 23\:26\:10 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3904/Thu Aug  9 04:01:48 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1765880AbXHIGAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 02:00:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761748AbXHIGAr
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 02:00:47 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:33196 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760907AbXHIGAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 02:00:46 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 8909C74306; Thu,  9 Aug 2007 08:00:44 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 16AE6741C2; Thu,  9 Aug 2007 08:00:44 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de>
+X-Enigmail-Version: 0.95.3
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55411>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig15B6B4894B3225C13DCB50A7
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-> David Kastrup <dak@gnu.org> wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > General question: should this not be in git-gui rather than gitk?  Gitk as 
->> > of now is really more a viewing tool.
->> 
->> Well, yes.  But git-gui only works on a single branch head at a time,
->> and that is not enough for rebasing.
->
-> Sure.  But so does git's command line tools.  They tend to only
-> work on a single branch at time, the one called `HEAD`.
+>> I have two 'crashes' during installation. I attached snapshots of
+>> the requesters. I don't know how to copy text from the installer.
+>> Therefore I attached snapshots.
+>=20
+> Hmm... how do I get started? I naively chose cygwin as my shell. I
+> set
+>=20
+> export PATH=3D$PATH:/cygdrive/c/msysgit/bin
+>=20
+> then I tried
+>=20
+> $ git clone git://git.kernel.org/pub/scm/git/git.git=20
+> c:/msysgit/bin/git-clone: line 214: git-init: command not found
+>=20
+> Maybe it's related to the errors during installation?
+>=20
+> How can I build and install git manually, based on the result of
+> GitMe-3's basic setup?
 
-"tend", and many accept an explicit override: rebase accepts three
-commit names, for example.  Those that _write_ into the repository
-usually _end_ up at HEAD, but most need not start there.
+Ok, first, which system is this? Windows 2000/XP/Vista?
+(The Gitme installer doesn't work on old ones for now)
 
-And git-gui does not have any operation either looking at or working
-other than on the current HEAD.  No diff, no file view, no rebase,
-nothing.
+Try running gitme from a terminal. Download gitme-3.exe into C:\temp,=20
+open a native terminal (Start - Run - Type "cmd" <enter>); then in the=20
+terminal, type:
+     C:\temp> set PATH=3D%WINDIR%\system32;%WINDIR%
+     C:\temp> gitme-3
 
-> So "single branch head at a time" is *not* why git-gui doesn't
-> support rebase.  Its because nobody has gotten around to writing it.
+Does it work then? If so, the problem is likely to be that you have=20
+Cygwin in the system path, which is not advisable/compatible with MSys.
 
-I never claimed that it is not possible to put a rebase in there (the
-patch does this, after all).  I just said that it does not _fit_ in
-there since you can't actually look at what you are rebasing on.
+--=20
+=2Emarius
 
->> Could git-gui perhaps be merged with giggle at some point of time?
->
-> Unlikely.  A while ago I considered "Stay in Tcl/Tk or move to
-> something more 'powerful/better/faster/Linus friendly'" and stayed
-> in Tcl/Tk.  I doubt git-gui will leave Tcl/Tk.  giggle is Gtk based.
 
-My bad: git-gui has a nice polished look on my systems (Ubuntu Feisty)
-while gitk has an ugly retro-blockish old-font Tk look; so not looking
-at the innards, I had assumed they were implemented using different
-systems.
+--------------enig15B6B4894B3225C13DCB50A7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-> I decided that any sort of rebase operation in git-gui must be *at
-> least* as easy to use/user friendly as `rebase -i` is.  Anything
-> less is just mocking the end-user.  Or something like that.  Anyway,
-> since git-gui is restricted to a graphical interface and most such
-> interfaces have these pointy rodents available we can do fancy
-> things like dragging to express what we want to have happen, instead
-> of moving lines of text around.
->
-> Want to write a patch (or series of patches) for git-gui?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-User interfaces are really not what I am good at, and I don't even
-have enough time to deal with the things I am good at.
+iD8DBQFGuq3IKzzXl/njVP8RAmfqAJ9QQNP+MBkvI7yvVJIIA7N95VobMwCg109W
+qU0tkdJOaiWh7ZWmL9bm+pE=
+=kole
+-----END PGP SIGNATURE-----
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+--------------enig15B6B4894B3225C13DCB50A7--
