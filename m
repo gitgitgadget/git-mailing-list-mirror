@@ -1,72 +1,66 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Git on MSys (or how to make it easy for Windows users to compile git)
-Date: Thu, 9 Aug 2007 10:47:12 +0200
-Message-ID: <81b0412b0708090147y11783e3i4f0a6251dbe2c736@mail.gmail.com>
-References: <Pine.LNX.4.64.0708022206130.14781@racer.site>
-	 <a1bbc6950708030258h16a6514kf5c637af13874fb7@mail.gmail.com>
-	 <Pine.LNX.4.64.0708031334530.14781@racer.site>
-	 <E3C81783E0454702B1F38D0B68CE1AC0@ntdev.corp.microsoft.com>
-	 <Pine.LNX.4.64.0708032231320.14781@racer.site>
-	 <e7bda7770708031716i61f80d89o8970b3236a961613@mail.gmail.com>
-	 <Pine.LNX.4.64.0708040123560.14781@racer.site>
-	 <e7bda7770708051641h15bd38abo659e74322e6232c0@mail.gmail.com>
-	 <Pine.LNX.4.64.0708060054020.14781@racer.site>
-	 <46B6B60C.4080805@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Thu, 9 Aug 2007 09:50:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708090949200.21857@racer.site>
+References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org> 
+ <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org> 
+ <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de>
+ <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com> 
+ <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de> 
+ <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com> 
+ <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
+ <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
+ <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de>
+ <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de>
+ <46BAADC8.9020003@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Torgil Svensson" <torgil.svensson@gmail.com>,
-	"Dmitry Kakurin" <dmitry.kakurin@gmail.com>, git@vger.kernel.org
-To: "Marius Storm-Olsen" <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 10:47:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 10:51:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ3fu-00023X-GX
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 10:47:22 +0200
+	id 1IJ3jR-0003Yu-5t
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 10:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934776AbXHIIrT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 04:47:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934644AbXHIIrS
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 04:47:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:25591 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbXHIIrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 04:47:16 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so115592nfb
-        for <git@vger.kernel.org>; Thu, 09 Aug 2007 01:47:14 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=J0lPcxIDWpkfhXEr7Uqm/qhVW186FeFRlPUvQOpmn/0R0cDss/YchxB+GHXZ1X26jSLqIuP8EfCMrKzWzZz5vz1QlJT2kqepf8EzHPOUz/njJEQ+nrKDETDqCTA3GndmLgpxiBBiVZMqQM6zZoUv98QVzFsBjoFRja5PzFwNRHM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jkmjPYT0HJB3VFwnUqKwWfQxZDo20dw7rU2Mi7pLB9nKt1xd2qbH/69M/c0lV/UPlc8bzYXDnMVlePDQQpH/a9ZeRSBwVFNyPniqTHpG/geSAz1+ksmbCrjgTCMVHq7vavkzhjfSETuTNClbWT+LQt9utvHmkeflA0eHCqytncA=
-Received: by 10.78.175.14 with SMTP id x14mr376371hue.1186649232262;
-        Thu, 09 Aug 2007 01:47:12 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Thu, 9 Aug 2007 01:47:12 -0700 (PDT)
-In-Reply-To: <46B6B60C.4080805@trolltech.com>
-Content-Disposition: inline
+	id S1760565AbXHIIu6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 04:50:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759332AbXHIIu6
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 04:50:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36192 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754591AbXHIIu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 04:50:57 -0400
+Received: (qmail invoked by alias); 09 Aug 2007 08:50:56 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp033) with SMTP; 09 Aug 2007 10:50:56 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LDV9zD1CLFY9CgyjBaZDkokEE3IfvKi1TvyyVSI
+	mO2FAE6CvpAo4n
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46BAADC8.9020003@trolltech.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55430>
 
-On 8/6/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> Johannes Schindelin said the following on 06.08.2007 02:11:
-> On Windows we have a replacement terminal, which has all the features
-> you want, and also supports tabs like Konsole. I've used it for
-> several years, and it works great. Have a look and see if you like it,
-> then we can add it to the repo:
->      http://sourceforge.net/projects/console/
->
-> Original name, ey? :-)
+Hi,
 
-A fine example of windows hackery (they had to inject some code into
-the process running a standard windows console to redirect the IO,
-because windows has no tty of any form).
-It is wonder it works, but it really does (surprisingly often).
-Very impressive.
+On Thu, 9 Aug 2007, Marius Storm-Olsen wrote:
+
+> Try running gitme from a terminal.
+
+And there I thought that you download GitMe-3.exe, and then double click 
+on it...
+
+Ciao,
+Dscho
