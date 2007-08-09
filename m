@@ -1,86 +1,105 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Thu, 9 Aug 2007 08:38:33 +0200
-Message-ID: <872D90BF-CB37-496B-9E7D-3C9A19125EBA@zib.de>
-References: <f99cem$4a4$1@sea.gmane.org> <f99nm6$9vi$1@sea.gmane.org>  <f99rei$ou$1@sea.gmane.org> <20070807143616.GO9527@spearce.org>  <20070807145825.GO21692@lavos.net>  <66DD7425-6073-4CA8-BF01-BF07213A4804@zib.de> <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>  <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>  <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>  <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de> <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com> <Pine.LNX.4.64.0708081810130.14781@racer.site> <75EB313E-807D-44FB-A186-A151F182B47B@zib.de> <2F00D32E-8D0C-48D6-86E1-6F6E7611E364@zib.de> <7E22DF40-1E28-4B8A-B132-18B05136B5E9@zib.de> <46BAADC8.9020003@trolltech.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 08:38:15 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 3/3] Use the empty tree for base diff in paranoid-update on new branches
+Date: Thu, 9 Aug 2007 02:38:16 -0400
+Message-ID: <20070809063816.GC26843@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 08:38:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ1eu-0007zh-67
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 08:38:12 +0200
+	id 1IJ1fW-00087S-Lj
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 08:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764316AbXHIGh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 02:37:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760565AbXHIGh6
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 02:37:58 -0400
-Received: from mailer.zib.de ([130.73.108.11]:54929 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936579AbXHIGhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 02:37:51 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l796bl9B007362;
-	Thu, 9 Aug 2007 08:37:47 +0200 (CEST)
-Received: from [192.168.178.32] ([77.177.247.82])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l796bjUJ022265
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 9 Aug 2007 08:37:46 +0200 (MEST)
-In-Reply-To: <46BAADC8.9020003@trolltech.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1764463AbXHIGiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 02:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763964AbXHIGiW
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 02:38:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38811 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762991AbXHIGiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 02:38:20 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IJ1ez-0001DV-82; Thu, 09 Aug 2007 02:38:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4945020FBAE; Thu,  9 Aug 2007 02:38:16 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55414>
 
+We have to load a tree difference for the purpose of testing
+file patterns.  But if our branch is being created and there is no
+specific base to difference against in the rule our base will be
+'0'x40.  This is (usually) not a valid tree-ish object in a Git
+repository, so there's nothing to difference against.
 
-On Aug 9, 2007, at 8:01 AM, Marius Storm-Olsen wrote:
+Instead of creating the empty tree and running git-diff against
+that we just take the output of `ls-tree -r --name-only` and mark
+every returned pathname as an add.
 
->>> I have two 'crashes' during installation. I attached snapshots of
->>> the requesters. I don't know how to copy text from the installer.
->>> Therefore I attached snapshots.
->> Hmm... how do I get started? I naively chose cygwin as my shell. I
->> set
->> export PATH=$PATH:/cygdrive/c/msysgit/bin
->> then I tried
->> $ git clone git://git.kernel.org/pub/scm/git/git.git c:/msysgit/ 
->> bin/git-clone: line 214: git-init: command not found
->> Maybe it's related to the errors during installation?
->> How can I build and install git manually, based on the result of
->> GitMe-3's basic setup?
->
-> Ok, first, which system is this? Windows 2000/XP/Vista?
-> (The Gitme installer doesn't work on old ones for now)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/hooks/update-paranoid |   31 +++++++++++++++++++++----------
+ 1 files changed, 21 insertions(+), 10 deletions(-)
 
-XP 32bit.
-
-> Try running gitme from a terminal. Download gitme-3.exe into C: 
-> \temp, open a native terminal (Start - Run - Type "cmd" <enter>);  
-> then in the terminal, type:
->     C:\temp> set PATH=%WINDIR%\system32;%WINDIR%
->     C:\temp> gitme-3
-
-> Does it work then? If so, the problem is likely to be that you have  
-> Cygwin in the system path, which is not advisable/compatible with  
-> MSys.
-
-I had cygwin at the tail of my PATH. After removing it the
-installation went through flawlessly.
-
-A check in the installer would be a good idea.
-
-Would you recommend running git only from the mingw shell prompt,
-or can I start it also from a Cygwin shell prompt?
-
-Thanks a lot,
-
-	Steffen
+diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
+index 84ed452..068fa37 100644
+--- a/contrib/hooks/update-paranoid
++++ b/contrib/hooks/update-paranoid
+@@ -223,20 +223,31 @@ sub load_diff ($) {
+ 	my $d = $diff_cache{$base};
+ 	unless ($d) {
+ 		local $/ = "\0";
+-		open(T,'-|','git','diff-tree',
+-			'-r','--name-status','-z',
+-			$base,$new) or return undef;
+ 		my %this_diff;
+-		while (<T>) {
+-			my $op = $_;
+-			chop $op;
++		if ($base =~ /^0{40}$/) {
++			open(T,'-|','git','ls-tree',
++				'-r','--name-only','-z',
++				$new) or return undef;
++			while (<T>) {
++				chop;
++				$this_diff{$_} = 'A';
++			}
++			close T or return undef;
++		} else {
++			open(T,'-|','git','diff-tree',
++				'-r','--name-status','-z',
++				$base,$new) or return undef;
++			while (<T>) {
++				my $op = $_;
++				chop $op;
+ 
+-			my $path = <T>;
+-			chop $path;
++				my $path = <T>;
++				chop $path;
+ 
+-			$this_diff{$path} = $op;
++				$this_diff{$path} = $op;
++			}
++			close T or return undef;
+ 		}
+-		close T or return undef;
+ 		$d = \%this_diff;
+ 		$diff_cache{$base} = $d;
+ 	}
+-- 
+1.5.3.rc4.29.g74276
