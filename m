@@ -1,104 +1,46 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git and larger trees, not so fast?
-Date: Thu, 9 Aug 2007 16:52:18 -0400
-Message-ID: <20070809165218.9b76ebf7.seanlkml@sympatico.ca>
-References: <20070809163026.GD568@mbox.bz>
-	<alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
-	<7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net>
-	<7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-merge: do up-to-date check also for strategies ours, subtree.
+Date: Thu, 09 Aug 2007 14:11:24 -0700
+Message-ID: <7v3aysxvk3.fsf@assigned-by-dhcp.cox.net>
+References: <20070809120831.19319.qmail@a61af064a2a242.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	moe <moe-git@mbox.bz>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 22:52:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 23:11:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJEzu-0005kF-4q
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 22:52:46 +0200
+	id 1IJFI4-0004AF-D1
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 23:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755605AbXHIUwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 16:52:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbXHIUwo
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 16:52:44 -0400
-Received: from s1.bay2.hotmail.com ([65.54.246.99]:36696 "EHLO
-	bay0-omc1-s27.bay0.hotmail.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1754483AbXHIUwn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 16:52:43 -0400
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]) by bay0-omc1-s27.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Thu, 9 Aug 2007 13:52:42 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Thu, 9 Aug 2007 13:54:42 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IJEzo-0005s7-Q5; Thu, 09 Aug 2007 16:52:40 -0400
-In-Reply-To: <7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 09 Aug 2007 20:54:42.0843 (UTC) FILETIME=[82A336B0:01C7DAC7]
+	id S1754123AbXHIVL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 17:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbXHIVL1
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 17:11:27 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:49538 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751371AbXHIVLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 17:11:25 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070809211125.EINN7193.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 9 Aug 2007 17:11:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ZxBQ1X0061kojtg0000000; Thu, 09 Aug 2007 17:11:24 -0400
+In-Reply-To: <20070809120831.19319.qmail@a61af064a2a242.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Thu, 9 Aug 2007 12:08:31 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55474>
 
-On Thu, 09 Aug 2007 13:42:50 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-
-
-> I do not know if this "fixes" the performance problem or not (I
-> do not have that much time during the day), so I would not call
-> this a "fix" yet, but at least the _change_ looks trivially
-> correct, and passes all the existing tests.
-> 
-> Interested parties may want to try it and see if it shifts the
-> bottleneck.
-
-Junio,
-
-This makes things _much_ better, however the final commit in the 
-test script still shows a lot of user time:
-
-## time git init
-real    0m0.005s
-user    0m0.001s
-sys     0m0.004s
-
-## time git add . 
-real    0m3.501s
-user    0m1.268s
-sys     0m2.159s
-
-## time git commit -q -m 'buurrrrn' -a
-real    0m2.299s
-user    0m1.065s
-sys     0m1.317s
-
-## time git status
-real    0m1.107s
-user    0m0.548s
-sys     0m0.557s
-
-## time git status
-real    0m1.122s
-user    0m0.545s
-sys     0m0.557s
-
-## time git status
-real    0m1.142s
-user    0m0.545s
-sys     0m0.576s
-
-## time git commit -q -m 'hurry' 50/500
-real    0m16.944s
-user    0m15.466s
-sys     0m1.133s
-
-
-Cheers,
-Sean
+Right now I do not have time to dig mailing list archive around
+mid March 2006, and I do not recall the requestor's original
+rationale, but I have a vague recollection that we added this
+"no fast-forward check" specifically in response to a user
+request.
