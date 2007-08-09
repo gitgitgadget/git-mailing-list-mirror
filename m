@@ -1,65 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git and larger trees, not so fast?
-Date: Thu, 09 Aug 2007 11:00:55 -0700
-Message-ID: <7vr6mcy4dk.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 9 Aug 2007 11:06:27 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
 References: <20070809163026.GD568@mbox.bz>
-	<alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: moe <moe-git@mbox.bz>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 09 20:01:04 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: moe <moe-git@mbox.bz>
+X-From: git-owner@vger.kernel.org Thu Aug 09 20:06:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJCJj-00018B-Ub
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 20:01:04 +0200
+	id 1IJCPF-0003g5-2V
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 20:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbXHISA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 14:00:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197AbXHISA7
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 14:00:59 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:41530 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752394AbXHISA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 14:00:58 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070809180055.ZPGE7193.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 9 Aug 2007 14:00:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Zu0v1X0071kojtg0000000; Thu, 09 Aug 2007 14:00:55 -0400
+	id S1751594AbXHISGl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 14:06:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751810AbXHISGl
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 14:06:41 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47566 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750955AbXHISGk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 14:06:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l79I6X5k011907
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 9 Aug 2007 11:06:34 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l79I6RGP011912;
+	Thu, 9 Aug 2007 11:06:27 -0700
 In-Reply-To: <alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 9 Aug 2007 10:38:53 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Spam-Status: No, hits=-2.725 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55465>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> So this is all O(n**2), which is why we haven't reacted very much - it 
-> doesn't show up nearly as much with the kernel. Also, with a smaller set 
-> of files, it would tends to fit in the L2 cache of most competent CPU's. 
-> So not only is it n**2, you get the cache trashing behaviour too, and 
-> that, I think, is what really causes it to fall off the cliff edge!
->
+
+On Thu, 9 Aug 2007, Linus Torvalds wrote:
+> 
 > Gaah. This shouldn't be *that* hard to fix, but I'm not entirely sure I'll 
 > have time today.
 
-One thing to keep in mind is that in your earlier test of "git
-write-tree" (or "git commit") followed by "git add a/file"
-followed by "git write-tree" is extremely fast because the
-last operation optimizes otherwise O(n) behaviour of write-tree
-from index extreamely cheap, thanks to cache-tree in the index.
+In fact, I'm almost sure I will *not* have time today.
 
-> Diffing the index against the tree *should* be instantaneous.
+Anyway, the really trivial (and ugly) fix is to handle the cases of adding 
+_independent_ stages to the index (which is the case for both "git 
+diff-index" and "git read-tree -m") differently: instead of using the 
+standard "add_index_entry()", which does all the complex sorting and 
+checks that there aren't duplicates, we could do a much simpler one that 
+just unconditionally appends to the end of the index.
 
-Right now we do not cull the subdirectory that we _know_ are
-unchanged in "git diff-index --cached" using cache-tree, but
-diffing the index against the tree could be instantaneous.
+This works, because when the stages are independent, there can be no index 
+clashes (by definition).
+
+Then, after adding all the stages, we could just do a "qsort()" on the 
+result, and rather than having an expensive O(n**2) thing, we'd have a 
+much nicer and well-behaved (with a smaller constant too) O(n*logn) thing.
+
+I bet it's just ~50 lines of code, it really shouldn't be that hard to do. 
+I just won't be able to do it and test it until late tonight or tomorrow, 
+I suspect.
+
+Sadly, this is an area that is almost exclusively mine and Junio's. I'd 
+love for somebody else to get their feet wet, but doing a
+
+	gitk read-cache.c
+
+shows that few enough people have done anythign really fundamental in this 
+file..
+
+			Linus
