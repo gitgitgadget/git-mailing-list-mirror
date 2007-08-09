@@ -1,96 +1,78 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: msysgit: does git gui work?
-Date: Thu, 9 Aug 2007 23:23:15 +0200
-Message-ID: <E886F099-5E9F-4785-A560-F9AAAA4E4C1F@zib.de>
-References: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 09 23:22:57 2007
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: 'pu' branch for StGIT
+Date: Thu, 9 Aug 2007 22:31:09 +0100
+Message-ID: <b0943d9e0708091431k57ac095asa940cca73ad95b13@mail.gmail.com>
+References: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
+	 <1186549433.2112.34.camel@dv>
+	 <20070808092027.GB7860@diana.vm.bytemark.co.uk>
+	 <20070808213917.GA22521@diana.vm.bytemark.co.uk>
+	 <1186611514.7383.4.camel@dv>
+	 <20070808232349.GA23172@diana.vm.bytemark.co.uk>
+	 <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net>
+	 <20070809073801.GA31482@diana.vm.bytemark.co.uk>
+	 <1186665883.28228.31.camel@dv>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org, "Yann Dirson" <ydirson@altern.org>
+To: "Pavel Roskin" <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 23:31:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJFT3-000832-0Q
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 23:22:53 +0200
+	id 1IJFb9-0002PW-MM
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 23:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbXHIVWq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 17:22:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753262AbXHIVWp
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 17:22:45 -0400
-Received: from mailer.zib.de ([130.73.108.11]:36952 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752942AbXHIVWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 17:22:44 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l79LMQdd001391;
-	Thu, 9 Aug 2007 23:22:26 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l79LMQ7q015171
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 9 Aug 2007 23:22:26 +0200 (MEST)
-In-Reply-To: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754477AbXHIVbN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 17:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753887AbXHIVbN
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 17:31:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:3076 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbXHIVbL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 17:31:11 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so410855ugf
+        for <git@vger.kernel.org>; Thu, 09 Aug 2007 14:31:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e8kz7yjplSPz6yVfWeV4Yxq6mOHo9o7riCQbvD3PnJi9C6bcuuhhC16OK2InaVAKTg7AdOhe2+054kLcpr1DpEk+FHiWk43TD/vYjSJ1TTbB3x23V70EPnAFVYCMhYUnQfQcw1jQG6/nUo0seL5odbvnpaqvVOlLZvBt1OUZnJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Td4/B2z17ckdQmzaCqVfcXetblMS90VPkjOQrWv8O0dncOeB/TBgBGdDUyuOgNUlwlxx8p0iOousi+PGel6X0Pj2giatS+2gSwZxwACyxAUz2mbmGPgA3S3NqV8ggAnZheywmYIBoX1wIIUDICdF2sxGQ/M0kw7H4H/gnfaisiE=
+Received: by 10.67.29.12 with SMTP id g12mr1350124ugj.1186695069950;
+        Thu, 09 Aug 2007 14:31:09 -0700 (PDT)
+Received: by 10.67.23.15 with HTTP; Thu, 9 Aug 2007 14:31:09 -0700 (PDT)
+In-Reply-To: <1186665883.28228.31.camel@dv>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55476>
 
-
-On Aug 9, 2007, at 9:24 AM, Steffen Prohaska wrote:
-
-> Does 'git gui' work for you in msysgit?
+On 09/08/2007, Pavel Roskin <proski@gnu.org> wrote:
+> On Thu, 2007-08-09 at 09:38 +0200, Karl Hasselstr=F6m wrote:
 >
-> I get
+> > I take it this all means you're actually using my branch? What's yo=
+ur
+> > opinion on its usefulness?
 >
-> Invalid command name "git-version"
->   while executing
-> "git-version >= 1.5.3"
->    (in namespace eval "::blame" script line 36)
-> [...]
->
-> with msysgit (v1.5.3-rc2-690-g8ca1f6a)
+> Well, I tried it, and then ran a script to update all local
+> repositories.  It converted everything to "version 3", so I'm sort of
+> stuck with it.  If the "version 3" code is not committed to the mainl=
+ine
+> StGIT, I'll have to convert my repositories back or even re-fetch the=
+m.
 
-Ok this is a bit complex but simple to solve: I created a
-symlink from tclsh84.exe to tclsh.exe, that is
+I'll merge many of Karl's patches for the next stable release (which I
+hope to be sooner than the current 0.13) but I'm still on holiday for
+one more week and can't do much work (busy with DIY).
 
-    cd /mingw/bin
-    ln -s tclsh84.exe tclsh.exe
+Thanks to Karl for setting up this experimental branch. BTW, what does
+'pu' mean?
 
-And than run
-
-    make install
-
-[
-offtopic:
-I also hacked the Makefile to set GIT_VERSION to normal
-version number, like 99.9, because git gui complained that
-it failed to parse the version number.
-
-I'll look into this later.
-]
-
-Now the long story.
-
-mingw only contains tclsh84 but not tclsh. This causes
-the Makefile in git-gui to fail on the creation of
-lib/tclIndex. Therefore git gui decides to take the slow
-path of sourcing the files in lib explicitly but this failes
-because they are sourced before git-version is defined.
-Therefore blame.tcl reports the error mentioned above.
-
-Johannes (or someone else from the msysgit team),
-We should modify mingw to contain the symlink to tclsh.
-Or something similar, at least 'tclsh' should be there.
-
-Shawn,
-The fallback mechanism of sourcing files from lib is broken.
-Either git-version must be defined before sourcing them, or
-the auto_index must always work.
-
-	Steffen
+--=20
+Catalin
