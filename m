@@ -1,166 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] allow git-bundle to create bottomless bundle
-Date: Wed, 08 Aug 2007 22:04:06 -0700
-Message-ID: <7v643pz4c9.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
-	<20070808035946.GP9527@spearce.org>
-	<Pine.LNX.4.64.0708081012110.14781@racer.site>
-	<7vlkcl4zcw.fsf@assigned-by-dhcp.cox.net>
-	<7vps1xzic2.fsf_-_@assigned-by-dhcp.cox.net>
-	<46BA8065.6010005@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Submodules
+Date: Thu, 09 Aug 2007 07:44:19 +0200
+Message-ID: <20070809054419.GT999MdfPADPa@greensroom.kotnet.org>
+References: <a1bbc6950708071537xfa6b9a0ne8cf66e345fa31b4@mail.gmail.com>
+ <7vhcn94y9l.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0708082138520.21916@wbgn129.biozentrum.uni-wuerzburg.de>
+ <200708082147.57822.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0708082211100.21857@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mark Levedahl <mdl123@verizon.net>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 07:04:30 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 09 07:44:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ0C8-0006Mw-PW
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 07:04:25 +0200
+	id 1IJ0os-0005Jm-So
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 07:44:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753184AbXHIFEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 01:04:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXHIFEK
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 01:04:10 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:32841 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbXHIFEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 01:04:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070809050408.XMMO7349.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 9 Aug 2007 01:04:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Zh461X00M1kojtg0000000; Thu, 09 Aug 2007 01:04:07 -0400
-In-Reply-To: <46BA8065.6010005@gmail.com> (Mark Levedahl's message of "Wed, 08
-	Aug 2007 22:48:05 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763032AbXHIFoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 01:44:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762951AbXHIFoW
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 01:44:22 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:50455 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762050AbXHIFoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 01:44:21 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMH00GRYRXV2H@psmtp09.wxs.nl> for git@vger.kernel.org; Thu,
+ 09 Aug 2007 07:44:20 +0200 (MEST)
+Received: (qmail 6343 invoked by uid 500); Thu, 09 Aug 2007 05:44:19 +0000
+In-reply-to: <Pine.LNX.4.64.0708082211100.21857@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55408>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+On Wed, Aug 08, 2007 at 10:12:52PM +0100, Johannes Schindelin wrote:
+> This is what I did.  I cloned msysgit.git, which contains one submodule.  
+> To initialise that, I did "git submodule init" and "git submodule update".  
+> It went and cloned the submodule.  Fine.
+> 
+> Then I committed in the submodule, a well-needed fix.
+> 
+> If I now go to the superproject again, and say "git submodule status", it 
+> will not find the newest commit, and complain that it cannot access that 
+> object.
 
-> Junio C Hamano wrote:
->> While "git bundle" was a useful way to sneakernet incremental
->> changes, we did not allow:
->>
-> Thanks - I've been thinking for months I could fix this bug, never
-> figured it out and didn't want to nag Dscho one more time. I confirm
-> that this allows creation of bundles with arbitrary refs, not just
-> those under refs/heads. Yahoo!
+There must be something else you're not telling us.
+This procedure works just fine for me
 
-Actually, there is another bug nearby.
+bash-3.00$ git clone git://repo.or.cz/msysgit.git
+Initialized empty Git repository in /home/skimo/git/msysgit/.git/
+remote: Generating pack...
+remote: Done counting 1857 objects.
+remote: Deltifying 1857 objects...
+remote:  100% (1857/1857) done
+Indexing 1857 objects...
+remote: Total 1857 (delta 475), reused 1857 (delta 475)
+ 100% (1857/1857) done
+Resolving 475 deltas...
+ 100% (475/475) done
+bash-3.00$ cd msysgit/
+bash-3.00$ git submodule init
+Submodule 'git' (git://repo.or.cz/git/mingw/4msysgit.git/) registered for path 'git'
+bash-3.00$ git submodule update
+Initialized empty Git repository in /home/skimo/git/msysgit/git/.git/
+remote: Generating pack...
+remote: Done counting 58074 objects.
+remote: Deltifying 58074 objects...
+remote:  100% (58074/58074) done
+Indexing 58074 objects...
+remote: Total 58074 (delta 40790), reused 55132 (delta 37853)
+ 100% (58074/58074) done
+Resolving 40790 deltas...
+ 100% (40790/40790) done
+Submodule path 'git': checked out 'f1e1dc5119bd9862bb4d2a975c8ca6362ea43af5'
+bash-3.00$ cd git/
+bash-3.00$ touch a; git add a; git commit -m 'add a'
+Created commit 5318784: add a
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a
+bash-3.00$ cd ..
+bash-3.00$ git submodule status
++5318784e6d492d988284a4d9aa4025496f2a3309 git (v1.5.3-rc2-690-g5318784)
 
-If you do:
-
-	git bundle create v2.6-20-v2.6.22.bndl v2.6.20..v2.6.22
-
-the bundle records that it requires v2.6.20^0 commit (correct)
-and gives you tag v2.6.22 (incorrect); the bug is that the
-object it lists in fact is the commit v2.6.22^0, not the tag.
-
-This is because the revision range operation .. is always about
-set of commits, but the code near where my patch touches does
-not validate that the sha1 value obtained from dwim_ref()
-against the commit object name e->item->sha1 before placing the
-head information in the commit.
-
-The attached patch attempts to fix this problem.
-
----
-
- builtin-bundle.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
- t/t5510-fetch.sh |    8 ++++++++
- 2 files changed, 50 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index 6ae5ab0..2d0e106 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -208,6 +208,10 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 	struct rev_info revs;
- 	struct child_process rls;
- 
-+	/*
-+	 * NEEDSWORK: this should use something like lock-file
-+	 * to create temporary that is cleaned up upon error.
-+	 */
- 	bundle_fd = (!strcmp(path, "-") ? 1 :
- 			open(path, O_CREAT | O_EXCL | O_WRONLY, 0666));
- 	if (bundle_fd < 0)
-@@ -267,12 +271,49 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		 * Make sure the refs we wrote out is correct; --max-count and
- 		 * other limiting options could have prevented all the tips
- 		 * from getting output.
-+		 *
-+		 * Non commit objects such as tags and blobs do not have
-+		 * this issue as they are not affected by those extra
-+		 * constraints.
- 		 */
--		if (!(e->item->flags & SHOWN)) {
-+		if (!(e->item->flags & SHOWN) && e->item->type == OBJ_COMMIT) {
- 			warning("ref '%s' is excluded by the rev-list options",
- 				e->name);
-+			free(ref);
-+			continue;
-+		}
-+		/*
-+		 * If you run "git bundle create bndl v1.0..v2.0", the
-+		 * name of the positive ref is "v2.0" but that is the
-+		 * commit that is referenced by the tag, and not the tag
-+		 * itself.
-+		 */
-+		if (hashcmp(sha1, e->item->sha1)) {
-+			/*
-+			 * Is this the positive end of a range expressed
-+			 * in terms of a tag (e.g. v2.0 from the range
-+			 * "v1.0..v2.0")?
-+			 */
-+			struct commit *one = lookup_commit_reference(sha1);
-+			struct object *obj;
-+
-+			if (e->item == &(one->object)) {
-+				/*
-+				 * Need to include e->name as an
-+				 * independent ref to the pack-objects
-+				 * input, so that the tag is included
-+				 * in the output; otherwise we would
-+				 * end up triggering "empty bundle"
-+				 * error.
-+				 */
-+				obj = parse_object(sha1);
-+				obj->flags |= SHOWN;
-+				add_pending_object(&revs, obj, e->name);
-+			}
-+			free(ref);
- 			continue;
- 		}
-+
- 		ref_count++;
- 		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
- 		write_or_die(bundle_fd, " ", 1);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 426017e..439430f 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -145,4 +145,12 @@ test_expect_success 'bundle does not prerequisite objects' '
- 	test 4 = $(git verify-pack -v bundle.pack | wc -l)
- '
- 
-+test_expect_success 'bundle should be able to create a full history' '
-+
-+	cd "$D" &&
-+	git tag -a -m '1.0' v1.0 master &&
-+	git bundle create bundle4 v1.0
-+
-+'
-+
- test_done
+skimo
