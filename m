@@ -1,54 +1,69 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: msysgit: does git gui work?
-Date: Thu, 9 Aug 2007 09:24:47 +0200
-Message-ID: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 09:24:20 2007
+From: Mike Hommey <mh@glandium.org>
+Subject: git-filter-branch
+Date: Thu, 9 Aug 2007 08:34:53 +0200
+Organization: glandium.org
+Message-ID: <20070809063453.GA12602@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 09:27:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ2NX-0003of-HH
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 09:24:19 +0200
+	id 1IJ2QH-0004Uj-Rc
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 09:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765693AbXHIHYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 03:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765561AbXHIHYI
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 03:24:08 -0400
-Received: from mailer.zib.de ([130.73.108.11]:59038 "EHLO mailer.zib.de"
+	id S1764643AbXHIH1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 03:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764456AbXHIH1G
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 03:27:06 -0400
+Received: from vawad.err.no ([85.19.200.177]:54308 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760963AbXHIHYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 03:24:06 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l797O0oC011436;
-	Thu, 9 Aug 2007 09:24:01 +0200 (CEST)
-Received: from [192.168.178.32] ([77.177.247.82])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l797Nxve002350
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 9 Aug 2007 09:24:00 +0200 (MEST)
-X-Mailer: Apple Mail (2.752.3)
+	id S1751287AbXHIH1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 03:27:05 -0400
+X-Greylist: delayed 3088 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2007 03:27:05 EDT
+Received: from aputeaux-153-1-54-147.w82-124.abo.wanadoo.fr ([82.124.176.147] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IJ1cM-0001y0-J0
+	for git@vger.kernel.org; Thu, 09 Aug 2007 08:35:36 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IJ1bh-0003Hx-Qs
+	for git@vger.kernel.org; Thu, 09 Aug 2007 08:34:54 +0200
+Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55421>
 
-Does 'git gui' work for you in msysgit?
+Hi,
 
-I get
+What is supposed to be the usage() of git-fetch-branch ?
 
-Invalid command name "git-version"
-   while executing
-"git-version >= 1.5.3"
-    (in namespace eval "::blame" script line 36)
-[...]
+git-filter-branch itself says:
+git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]
 
-with msysgit (v1.5.3-rc2-690-g8ca1f6a).
+while the documentation doesn't explicitely talk about DESTBRANCH,
+expect in the form of an hypothetical /newbranch/, that you obviously
+don't give to the command line.
 
-	Steffen
+And whereas git-filter-branch itself says there is such an argument,
+it actually doesn't take it, and doesn't seem to be hardwired to create
+a new branch instead of overwriting the current one.
+
+So what is git-filter-branch supposed to be doing ?
+
+As a side note, if it ever happens that git-filter-branch can create a
+new branch, it might be nice to have each commit on the branch to have
+the original commit as parent, as well as its branch parent, so that
+they are seen as merges.
+
+Cheers,
+
+Mike
