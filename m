@@ -1,101 +1,62 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: Bug in git-svn: dcommit commits in the wrong branch after a rebase
-Date: Thu, 9 Aug 2007 17:45:38 +0200
-Message-ID: <6E86FCDA-F2A9-4516-8CE7-E1CC385FA9E2@lrde.epita.fr>
+Date: Thu, 09 Aug 2007 23:46:03 +0800
+Message-ID: <46BB36BB.4030708@midwinter.com>
 References: <21FC6D7F-5459-406D-AA06-D16E525B3C17@lrde.epita.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-4-61225096"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 09 17:45:53 2007
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 09 17:46:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJACu-0007e7-Ge
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 17:45:52 +0200
+	id 1IJADE-0007n9-5Q
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 17:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765244AbXHIPpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 11:45:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760191AbXHIPps
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 11:45:48 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:46610 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753384AbXHIPps (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 11:45:48 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.50)
-	id 1IJACo-00069d-8S; Thu, 09 Aug 2007 17:45:46 +0200
+	id S938987AbXHIPqH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 11:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932920AbXHIPqG
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 11:46:06 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:58530 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S938928AbXHIPqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 11:46:05 -0400
+Received: (qmail 19764 invoked from network); 9 Aug 2007 15:46:03 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=MdT1Xx7MVSyLMxAZVRWdvZA9bXggRUZD6+AiLv4N+dFxfXEtPwrA1H1yZHRhXdnc  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 9 Aug 2007 15:46:03 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
 In-Reply-To: <21FC6D7F-5459-406D-AA06-D16E525B3C17@lrde.epita.fr>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55457>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-4-61225096
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-On Aug 8, 2007, at 11:35 PM, Benoit SIGOURE wrote:
-
-> Test case:
->
-> svnadmin create repos
-> svn co file://`pwd`/repos wc
-> cd wc
-> svn mkdir branches
-> svn mkdir branches/a
-> echo foo >branches/a/foo
-> svn add branches/a/foo
-> svn ci -m 'branch a'
-> cd ..
-> git-svn clone --branches=branches file://`pwd`/repos wc.git
-> cd wc.git
-> echo git is cool >>foo
-> git-commit -a -m 'commit in git in branch a'
-> cd ../wc
-> svn cp branches/a branches/b
-> svn ci -m 'branch b'
-> cd ../wc.git
+Benoit SIGOURE wrote:
 > git-svn fetch
-
-
 > git-checkout -b myb b
 > git-rebase master
-> git-svn dcommit # sends the commit to SVN branch `a' instead of SVN  
+> git-svn dcommit # sends the commit to SVN branch `a' instead of SVN 
 > branch `b'!
->
 
-Actually the test case is wrong, it should end in:
-git-rebase b # while being on `master' branch
-git-svn dcommit # this works as expected
+That's exactly what I would expect to happen. The "git-rebase" is the 
+key here; it is effectively telling git to switch back to your master 
+branch. Try running "git log" before and after the rebase command and 
+you should get a slightly better idea of what's happening. Rebase is 
+kind of a tricky beast; a basic rule of thumb is that you should only 
+use it to go forward in time on a single upstream branch, not to hop 
+between upstream branches. Its behavior in non-forward-in-time cases is 
+predictable once you know how it works, but not necessarily intuitive.
 
-Thanks to siprbaum for spotting this on IRC.  Sorry for the noise.
+What are you expecting rebase to do here? We can probably suggest some 
+other commands that will do what you're hoping to do. My hunch is that 
+you're trying to use it to effectively do a merge of your "a" and "b" 
+branches, but maybe I'm wrong about that.
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-4-61225096
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFGuzaiwwE67wC8PUkRAlk1AJ9l6ph1Z57A6Tiq/0oouFHqtSauQwCggfxF
-4hlYYxa+Ev2OgqXbXfTbHJ0=
-=6BOJ
------END PGP SIGNATURE-----
-
---Apple-Mail-4-61225096--
+-Steve
