@@ -1,69 +1,94 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: git-filter-branch
-Date: Thu, 9 Aug 2007 08:34:53 +0200
-Organization: glandium.org
-Message-ID: <20070809063453.GA12602@glandium.org>
+From: Eric Lesh <eclesh@ucla.edu>
+Subject: Re: [GUILT PATCH 2/5] guilt-guard: Assign guards to patches in series
+Date: Thu, 09 Aug 2007 00:34:48 -0700
+Message-ID: <87bqdhnotj.fsf@hubert.paunchy.net>
+References: <1185851481190-git-send-email-eclesh@ucla.edu>
+	<1185851481271-git-send-email-eclesh@ucla.edu>
+	<20070731040510.GD12918@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 09 09:27:10 2007
+Cc: git@vger.kernel.org
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 09 09:35:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ2QH-0004Uj-Rc
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 09:27:10 +0200
+	id 1IJ2Xv-0006jp-N8
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 09:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764643AbXHIH1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 03:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764456AbXHIH1G
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 03:27:06 -0400
-Received: from vawad.err.no ([85.19.200.177]:54308 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751287AbXHIH1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 03:27:05 -0400
-X-Greylist: delayed 3088 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2007 03:27:05 EDT
-Received: from aputeaux-153-1-54-147.w82-124.abo.wanadoo.fr ([82.124.176.147] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IJ1cM-0001y0-J0
-	for git@vger.kernel.org; Thu, 09 Aug 2007 08:35:36 +0200
-Received: from mh by namakemono.glandium.org with local (Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1IJ1bh-0003Hx-Qs
-	for git@vger.kernel.org; Thu, 09 Aug 2007 08:34:54 +0200
-Content-Disposition: inline
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
+	id S1763858AbXHIHfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 03:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763987AbXHIHfA
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 03:35:00 -0400
+Received: from smtp-2.smtp.ucla.edu ([169.232.47.136]:35699 "EHLO
+	smtp-2.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760029AbXHIHe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 03:34:59 -0400
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
+	by smtp-2.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l797YpBV027009;
+	Thu, 9 Aug 2007 00:34:51 -0700
+Received: from localhost (adsl-75-26-181-145.dsl.scrm01.sbcglobal.net [75.26.181.145])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l797Yobq021143
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 9 Aug 2007 00:34:51 -0700
+Received: by localhost (Postfix, from userid 1000)
+	id A28CB1E80B6; Thu,  9 Aug 2007 00:34:48 -0700 (PDT)
+In-Reply-To: <20070731040510.GD12918@filer.fsl.cs.sunysb.edu> (Josef Sipek's message of "Tue\, 31 Jul 2007 00\:05\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.0 (gnu/linux)
+X-Probable-Spam: no
+X-Spam-Report: none
+X-Scanned-By: smtp.ucla.edu on 169.232.47.136
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55422>
 
-Hi,
+[ I'm finally back to this.  Thanks for your comments. ]
 
-What is supposed to be the usage() of git-fetch-branch ?
+Josef Sipek <jsipek@fsl.cs.sunysb.edu> writes:
 
-git-filter-branch itself says:
-git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]
+[...]
 
-while the documentation doesn't explicitely talk about DESTBRANCH,
-expect in the form of an hypothetical /newbranch/, that you obviously
-don't give to the command line.
+>> +}
+>> +
+>> +# usage: set_guards <patch> <guards...>
+>> +set_guards()
+>> +{
+>> +	p="$1"
+>
+> Again, be careful about namespace polution.
+>
 
-And whereas git-filter-branch itself says there is such an argument,
-it actually doesn't take it, and doesn't seem to be hardwired to create
-a new branch instead of overwriting the current one.
+Can I use "local", or is it a bashism?  If not, use parentheses around
+the function body?
 
-So what is git-filter-branch supposed to be doing ?
+>> +	shift
+>> +	for x in "$@"; do
+>> +		if [ -z $(printf %s "$x" | grep -e "^[+-]") ]; then
+>
+> Out of curiosity, why printf and not echo?
+>
 
-As a side note, if it ever happens that git-filter-branch can create a
-new branch, it might be nice to have each commit on the branch to have
-the original commit as parent, as well as its branch parent, so that
-they are seen as merges.
+For guards named '-e' or other funky things echo doesn't like and can't
+process with echo --.
 
-Cheers,
+>> +			echo "'$x' is not a valid guard name"
+>> +		else
+>> +			sed -i -e "s,^\($p[[:space:]]*.*\)$,\1 #$x," "$series"
+>
+> The regexp is in double quotes, so you should escape the $ (EOL), as well as
+> all the \. Yep, this is shell scripting at its worst.
+>
 
-Mike
+Yikes.
+
+[...]
+
+I'm trying to clean the rest and get it ready again. This whole series
+will definitely need to incubate for a while once there's a
+reasonable-looking version, to make sure nothing goes crazy.  Hopefully
+it ends up being useful somewhere!
+
+	Eric
