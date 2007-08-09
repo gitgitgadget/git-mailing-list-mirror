@@ -1,60 +1,60 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: 'pu' branch for StGIT
-Date: Wed, 08 Aug 2007 20:10:03 -0400
-Message-ID: <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net>
-References: <20070807022043.GA8482@diana.vm.bytemark.co.uk>
-	<1186549433.2112.34.camel@dv>
-	<20070808092027.GB7860@diana.vm.bytemark.co.uk>
-	<20070808213917.GA22521@diana.vm.bytemark.co.uk>
-	<1186611514.7383.4.camel@dv>
-	<20070808232349.GA23172@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] allow git-bundle to create bottomless bundle
+Date: Thu, 9 Aug 2007 01:28:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708090127440.21857@racer.site>
+References: <fcaeb9bf0708070623p24f1cae2q2af959a89738c4e8@mail.gmail.com>
+ <20070808035946.GP9527@spearce.org> <Pine.LNX.4.64.0708081012110.14781@racer.site>
+ <7vlkcl4zcw.fsf@assigned-by-dhcp.cox.net> <7vps1xzic2.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
-	Yann Dirson <ydirson@altern.org>
-To: Karl =?iso-8859-1?b?SGFzc2Vsc3Ry9m0=?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 02:10:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Mark Levedahl <mdl123@verizon.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 02:29:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IIvbM-0004KB-OU
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 02:10:09 +0200
+	id 1IIvto-00086I-N0
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 02:29:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763492AbXHIAKF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 8 Aug 2007 20:10:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762145AbXHIAKF
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 20:10:05 -0400
-Received: from c60.cesmail.net ([216.154.195.49]:54713 "EHLO c60.cesmail.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762676AbXHIAKE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2007 20:10:04 -0400
-Received: from unknown (HELO epsilon2) ([192.168.1.60])
-  by c60.cesmail.net with ESMTP; 08 Aug 2007 20:10:03 -0400
-Received: from c-71-230-131-166.hsd1.pa.comcast.net
-	(c-71-230-131-166.hsd1.pa.comcast.net [71.230.131.166]) by
-	webmailbeta.spamcop.net (Horde MIME library) with HTTP; Wed, 08 Aug 2007
-	20:10:03 -0400
-In-Reply-To: <20070808232349.GA23172@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+	id S935704AbXHIA3I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Aug 2007 20:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934274AbXHIA3I
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Aug 2007 20:29:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45615 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933477AbXHIA3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2007 20:29:06 -0400
+Received: (qmail invoked by alias); 09 Aug 2007 00:29:05 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 09 Aug 2007 02:29:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180zCAzpGI00GkysRGOSKLNhd60pmJqP5HK9Z9+kF
+	xseanH2XazKOqk
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vps1xzic2.fsf_-_@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55402>
 
-Quoting Karl Hasselstr=F6m <kha@treskal.com>:
+Hi,
 
-> It was all due to a sloppy regexp. This is the fix:
+On Wed, 8 Aug 2007, Junio C Hamano wrote:
 
-Thank you!
+> +		 *
+> +		 * Non commit objects such as tags and blobs do not have
+> +		 * this issue as they are not affected by those extra
+> +		 * constraints.
+>  		 */
+> -		if (!(e->item->flags & SHOWN)) {
+> +		if (!(e->item->flags & SHOWN) && e->item->type == OBJ_COMMIT) {
 
-And by the way, please fix the description of the commit where you =20
-added --smtp-server option.  You added it to "stg mail", not to "stg =20
-add".
+That is all?  Heh.
 
---=20
-Regards,
-Pavel Roskin
+Thanks for fixing this bug,
+Dscho
