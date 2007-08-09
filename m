@@ -1,146 +1,88 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Workflow question: A case for git-rebase?
-Date: Thu, 9 Aug 2007 22:30:56 +0200
-Message-ID: <20070809203056.GB4567@efreet.light.src>
-References: <18071eea0708081411p41eaa44ai105adaef0e4b10a5@mail.gmail.com> <Pine.LNX.4.64.0708082246370.21857@racer.site> <18071eea0708081456l2ff1b73dy90ef33c1b5058c77@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: 'pu' branch for StGIT
+Date: Thu, 9 Aug 2007 22:39:57 +0200
+Message-ID: <20070809203957.GA14441@diana.vm.bytemark.co.uk>
+References: <1186549433.2112.34.camel@dv> <20070808092027.GB7860@diana.vm.bytemark.co.uk> <20070808213917.GA22521@diana.vm.bytemark.co.uk> <1186611514.7383.4.camel@dv> <20070808232349.GA23172@diana.vm.bytemark.co.uk> <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net> <20070809073801.GA31482@diana.vm.bytemark.co.uk> <1186665883.28228.31.camel@dv> <20070809141848.GA6342@diana.vm.bytemark.co.uk> <1186677210.31394.28.camel@dv>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="mojUlQ0s9EVzWg2t"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Thomas Adam <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 22:31:44 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Yann Dirson <ydirson@altern.org>
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 22:40:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJEfW-0005UY-8M
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 22:31:42 +0200
+	id 1IJEo5-0001L5-09
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 22:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646AbXHIUbH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 16:31:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755626AbXHIUbG
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 16:31:06 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:38202 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754653AbXHIUbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 16:31:03 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 116DE5738F;
-	Thu,  9 Aug 2007 22:31:02 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id w3D71oN-sW32; Thu,  9 Aug 2007 22:30:59 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A25BE57380;
-	Thu,  9 Aug 2007 22:30:58 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IJEem-00036U-1x; Thu, 09 Aug 2007 22:30:56 +0200
+	id S1764712AbXHIUkO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 16:40:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764670AbXHIUkO
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 16:40:14 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1298 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761219AbXHIUkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 16:40:11 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IJEnV-0003op-00; Thu, 09 Aug 2007 21:39:57 +0100
 Content-Disposition: inline
-In-Reply-To: <18071eea0708081456l2ff1b73dy90ef33c1b5058c77@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+In-Reply-To: <1186677210.31394.28.camel@dv>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55471>
 
+On 2007-08-09 12:33:30 -0400, Pavel Roskin wrote:
 
---mojUlQ0s9EVzWg2t
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Aug 08, 2007 at 22:56:33 +0100, Thomas Adam wrote:
-> On 08/08/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
+> On Thu, 2007-08-09 at 16:18 +0200, Karl Hasselstr=F6m wrote:
+>
+> > You should be able to do something like
 > >
-> > On Wed, 8 Aug 2007, Thomas Adam wrote:
+> >   $ stg applied > .git/patches/branch/applied
+> >   $ stg unapplied > .git/patches/branch/unapplied
 > >
-> > > As for myself, I maintain _locally_ a few branches (branchX, branchY)
-> > > which dictate some bits and pieces I'm working on.  Periodically, I
-> > > will tend to merge either merge to master and then push those changes
-> > > out.  So far so good...
-> > >
-> > > But, I've now come up against a case whereby if one of my colleagues
-> > > changes a file (call it fileA) in branch master, and, in the course of
-> > > my working in branchX means i modify fileA also, when I come to merge
-> > > branchX into master I find the original change in master (as submitted
-> > > by my colleague) being reverted by my changes in branchX.
+> > and then manually change the version from 3 to 2, and be ready to
+> > go. I haven't tested this, though!
+>
+> That seems to work. Thank you!
+
+What? You mean I didn't forget any step? ;-)
+
+> "branch" should be substituted with the current branch, of course.
+
+I was just too lazy to type the brackets. Or maybe I'm just evil and
+_want_ the lock-in effect. Who knows? :-)
+
+> > I saw the same problem today.
 > >
-> > I have a hard time seeing that.  If you touch the same code,
-> > unidentically, merge-recursive will not be nice to you: it will show
-> > conflicts, and you have to resolve them.
-> >
-> > Or do you use "-s ours"?
->=20
-> No, nothing like that.  I have had a situation where by a merge from
-> branchX to master has resulted in master's changes to fileA being
-> reverted based on what was in the contents of fileA in branchX -- this
-> is of course wrong though -- master hsa the most recent copy.  My
-> solution therefore was to cherry pick the commit into branchX and
-> remerge into master.  This is why I was forced to ask about whether or
-> not git-rebase was the correct way to go.
+> > https://gna.org/bugs/?9710
+>
+> I've attached the test case to that bug. You are right, git-gc is
+> involved.
 
-Git rebase is a correct way to go, with advantage of resulting in simpler
-history and disadvantage of slightly harder conflict resolution (since you
-merge commit-at-a-time rather than in one big block). However merge is
-equally correct way to go.
+Thanks.
 
-Either there is a bug in merge -- which I would consider rather unlikely,
-though not impossible -- or you actually did, probably unintentionally, undo
-the master's changes. This might happen if:
+> > I haven't seen this problem at all -- in my repositories, "stg
+> > branch -l" just works. Will try to reproduce (hopefully tonight).
+> > Do you have a recepie on how to reproduce this from scratch?
+>
+> It's a problem with git-gc too! Just clone some repository and run
+> "stg branch -l" in it. It with show master. Run git-gc, and "stg
+> branch -l" will show "No branches".
 
- - You try to merge, either in --no-commit mode, or have a conflict, so it's
-   not commited.
- - Then decide you don't want to resolve now and undo the
-   changes by checking out the files, but don't clean the information about
-   merge in progress.
- - Commit some changes in such state. This records a merge, that revers all
-   changes from master.
+Well, well! In that case, I'm off to kill two birds with one stone!
 
-Similarly attempt to merge just part of files would result in a problem like
-you describe -- merging is only supported on whole trees.
+> I see that in my Linux repository there are files in
+> .git/refs/remotes/wireless-dev but not in other directories under
+> .git/refs/remotes/
 
-> Although I suppose this leads me to the ancillory question of:  At the
-> point I merged master into branchX did this cause any problems for any
-> future merges of branchX into master?   I cannot recall if this
-> "revert scenario" I describe to master happened pre or past my merge
-> of master into branchX, but I suspect it was after I had merged master
-> into branchX.
-
-Merge is completely symetrical operation in git. Merging branchX into master
-and merging master into branchX is the same for all purposes whatsoever
-(though you can tell how you did it by order of the parsent in the commit
-objecT).
-
-Repeated merges between two branches are allowed and always correct thing t=
-o do.
-However, you should be aware, that attempt to reject a change will be
-recorded as a reversal and merged as such. You can try visualizing the
-situation before the merge with:
-  gitk master-before-merge...branchX-before-merge
-  (or equivalently: gitk merge-result^...merge-result^2)
-print the base revision with:
-  git merge-base master-before-merge...branchX-before-merge
-  (or equivalently: git merge-base merge-result^...merge-result^2)
-look it up the graph and contemplate at what could have caused the reversal.
-I expect you can't disclose the code to ask anybody help you with that.
+Presumably the only nonpacked refs are the ones that have been updated
+after the last ref packing. Or however it works.
 
 --=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---mojUlQ0s9EVzWg2t
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGu3l/Rel1vVwhjGURAmQVAJ443DH/HGxc5stZikw2aYGSNkdLcACghgm0
-wAufy4ntGNtYFWZ8+z7Aq7Q=
-=M5EQ
------END PGP SIGNATURE-----
-
---mojUlQ0s9EVzWg2t--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
