@@ -1,64 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cvsserver: Fix for work trees
-Date: Wed, 08 Aug 2007 22:45:48 -0700
-Message-ID: <7v1wedz2er.fsf@assigned-by-dhcp.cox.net>
-References: <1186633570700-git-send-email-bdowning@lavos.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Mod. gitk to support REBASE (with stash support).
+Date: Thu, 09 Aug 2007 07:51:08 +0200
+Message-ID: <85odhhntmb.fsf@lola.goethe.zz>
+References: <1186598028457-git-send-email-alexandre.bourget@savoirfairelinux.com>
+	<Pine.LNX.4.64.0708082141170.21916@wbgn129.biozentrum.uni-wuerzburg.de>
+	<85lkclrdpr.fsf@lola.goethe.zz> <20070809032610.GA24573@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Thu Aug 09 07:45:55 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
+	Git Mailing List <git@vger.kernel.org>, paulus@samba.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 09 07:51:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJ0qI-0005aE-44
-	for gcvg-git@gmane.org; Thu, 09 Aug 2007 07:45:54 +0200
+	id 1IJ0vU-0006oe-Ks
+	for gcvg-git@gmane.org; Thu, 09 Aug 2007 07:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763373AbXHIFpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 01:45:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762739AbXHIFpu
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 01:45:50 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:48622 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763304AbXHIFpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 01:45:49 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070809054548.XGRU1335.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 9 Aug 2007 01:45:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Zhlo1X00Q1kojtg0000000; Thu, 09 Aug 2007 01:45:49 -0400
-In-Reply-To: <1186633570700-git-send-email-bdowning@lavos.net> (Brian
-	Downing's message of "Wed, 8 Aug 2007 23:26:10 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763408AbXHIFvN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 01:51:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757691AbXHIFvN
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 01:51:13 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:34750 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756530AbXHIFvM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2007 01:51:12 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id A3A4B17F411;
+	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 93781ABAE0;
+	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-052-115.pools.arcor-ip.net [84.61.52.115])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 61EC030A992;
+	Thu,  9 Aug 2007 07:51:10 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 535D31C3C79D; Thu,  9 Aug 2007 07:51:09 +0200 (CEST)
+In-Reply-To: <20070809032610.GA24573@spearce.org> (Shawn O. Pearce's message of "Wed\, 8 Aug 2007 23\:26\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3904/Thu Aug  9 04:01:48 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55410>
 
-Hmmmmm....
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-This is a good fix to adjust to the new world order introduced
-by Dscho's rewrite of work-tree stuff, where the rules are:
+> David Kastrup <dak@gnu.org> wrote:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > General question: should this not be in git-gui rather than gitk?  Gitk as 
+>> > of now is really more a viewing tool.
+>> 
+>> Well, yes.  But git-gui only works on a single branch head at a time,
+>> and that is not enough for rebasing.
+>
+> Sure.  But so does git's command line tools.  They tend to only
+> work on a single branch at time, the one called `HEAD`.
 
- * When GIT_DIR is set and GIT_WORK_TREE is not, GIT_DIR is used
-   to read config file, to figure out core.worktree.  When
-   core.worktree is not set, a complicated algorithm is used to
-   figure out the top of the working tree based on the value of
-   GIT_DIR, and this can sometimes figure out that you are in a
-   subdirectory of the working tree.  In such a case, you are in
-   the working tree, but not necessarily at the top.
+"tend", and many accept an explicit override: rebase accepts three
+commit names, for example.  Those that _write_ into the repository
+usually _end_ up at HEAD, but most need not start there.
 
- * Otherwise, commands that require to have working tree now
-   barf.  Earlier they always and consistently treated that your
-   $cwd is the top of working tree and did not barf.
+And git-gui does not have any operation either looking at or working
+other than on the current HEAD.  No diff, no file view, no rebase,
+nothing.
 
-This new world order is probably an improvement, and if the
-rules were like this from the beginning, it would have been
-much nicer.  However, this _is_ a change of semantics in the
-middle of the road, and probably we will see many fallouts like
-this.  Unfortunate...  I am torn between a cleaner semantics and
-the short-term pain...
+> So "single branch head at a time" is *not* why git-gui doesn't
+> support rebase.  Its because nobody has gotten around to writing it.
+
+I never claimed that it is not possible to put a rebase in there (the
+patch does this, after all).  I just said that it does not _fit_ in
+there since you can't actually look at what you are rebasing on.
+
+>> Could git-gui perhaps be merged with giggle at some point of time?
+>
+> Unlikely.  A while ago I considered "Stay in Tcl/Tk or move to
+> something more 'powerful/better/faster/Linus friendly'" and stayed
+> in Tcl/Tk.  I doubt git-gui will leave Tcl/Tk.  giggle is Gtk based.
+
+My bad: git-gui has a nice polished look on my systems (Ubuntu Feisty)
+while gitk has an ugly retro-blockish old-font Tk look; so not looking
+at the innards, I had assumed they were implemented using different
+systems.
+
+> I decided that any sort of rebase operation in git-gui must be *at
+> least* as easy to use/user friendly as `rebase -i` is.  Anything
+> less is just mocking the end-user.  Or something like that.  Anyway,
+> since git-gui is restricted to a graphical interface and most such
+> interfaces have these pointy rodents available we can do fancy
+> things like dragging to express what we want to have happen, instead
+> of moving lines of text around.
+>
+> Want to write a patch (or series of patches) for git-gui?
+
+User interfaces are really not what I am good at, and I don't even
+have enough time to deal with the things I am good at.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
