@@ -1,52 +1,53 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH 2/2] tweak manpage formatting
-Date: Fri, 10 Aug 2007 15:32:07 -0400
-Message-ID: <3BCFD157-64CE-408E-BFE8-C720A9FAE080@silverinsanity.com>
-References: <7vbqdfvng9.fsf@assigned-by-dhcp.cox.net> <0F764326-63E8-447D-A2D4-E56E999775D7@silverinsanity.com> <7v3ayrtil5.fsf@assigned-by-dhcp.cox.net> <1b46aba20708101216s7660741ds5ef4c4c0fd13b45c@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 21:32:17 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Relative alternates question
+Date: Fri, 10 Aug 2007 12:38:50 -0700
+Message-ID: <7vfy2rrxh1.fsf@assigned-by-dhcp.cox.net>
+References: <20070810164556.GB3442@efreet.light.src>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Aug 10 21:38:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJaDX-0001ws-UZ
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 21:32:16 +0200
+	id 1IJaK2-0004Bq-Jm
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 21:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086AbXHJTcL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 15:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758793AbXHJTcJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 15:32:09 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:41752 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754978AbXHJTcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 15:32:08 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 997911FFC231;
-	Fri, 10 Aug 2007 19:32:07 +0000 (UTC)
-In-Reply-To: <1b46aba20708101216s7660741ds5ef4c4c0fd13b45c@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1760327AbXHJTix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 15:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759173AbXHJTiw
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 15:38:52 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:57928 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754304AbXHJTiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 15:38:52 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070810193850.JEWW7193.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 10 Aug 2007 15:38:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aKer1X0031kojtg0000000; Fri, 10 Aug 2007 15:38:51 -0400
+In-Reply-To: <20070810164556.GB3442@efreet.light.src> (Jan Hudec's message of
+	"Fri, 10 Aug 2007 18:45:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55570>
 
+Jan Hudec <bulb@ucw.cz> writes:
 
-On Aug 10, 2007, at 3:16 PM, Carlos Rica wrote:
+> And my question is, is there any good reason to reject relative paths in
+> alternates of an alternate? From what I see the recursive call to
+> link_alt_odb_entries (via link_alt_odb_entry and read_info_alternates) has
+> all the information it needs to resolve such paths.
 
-> I think this was because the end-of-line backslash "\" in the ASCII
-> art diagram in the Documentation/git-rev-parse.txt.
-
-No, it was complaining about unknown "man.indent.width" in  
-callout.xsl.  Apparently docbook-xsl 1.69 doesn't like that.   
-Updating it to 1.71 made it work again.  I lost the original error  
-while updating before sending the first mail, unfortunately.  If it's  
-truly needed, I probably still have the 1.69 deb file on my computer  
-somewhere.
-
-~~ Brian
+As long as you are careful not to introduce loops that cause the
+rest of the code to add the same thing twice, I do not think
+there is anything fundamentally wrong with relative alternate
+paths.  The original motivation of that check was not much more
+than "let's not complicate our lives by supporting it", I think.
