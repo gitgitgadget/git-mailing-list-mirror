@@ -1,59 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: 'pu' branch for StGIT
-Date: Fri, 10 Aug 2007 02:30:14 +0200
-Message-ID: <20070810003014.GA18294@diana.vm.bytemark.co.uk>
-References: <20070807022043.GA8482@diana.vm.bytemark.co.uk> <1186549433.2112.34.camel@dv> <20070808092027.GB7860@diana.vm.bytemark.co.uk> <20070808213917.GA22521@diana.vm.bytemark.co.uk> <1186611514.7383.4.camel@dv> <20070808232349.GA23172@diana.vm.bytemark.co.uk> <20070808201003.nm90u2s5ny888wcc@webmailbeta.spamcop.net> <20070809073801.GA31482@diana.vm.bytemark.co.uk> <1186665883.28228.31.camel@dv> <b0943d9e0708091431k57ac095asa940cca73ad95b13@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] checkout-index needs a working tree
+Date: Fri, 10 Aug 2007 01:31:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708100129200.21857@racer.site>
+References: <Pine.LNX.4.64.0708042319470.14781@racer.site>
+ <20070809223530.GA29680@cassiopeia>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org,
-	Yann Dirson <ydirson@altern.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 02:30:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 02:31:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJIOd-000177-G1
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 02:30:31 +0200
+	id 1IJIQ2-0001NW-9w
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 02:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753027AbXHJAa2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 9 Aug 2007 20:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbXHJAa2
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 20:30:28 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2866 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752991AbXHJAa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 20:30:27 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IJIOM-0004no-00; Fri, 10 Aug 2007 01:30:14 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0708091431k57ac095asa940cca73ad95b13@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751330AbXHJAby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 20:31:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbXHJAby
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 20:31:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48893 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751047AbXHJAbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 20:31:53 -0400
+Received: (qmail invoked by alias); 10 Aug 2007 00:31:51 -0000
+Received: from ppp-82-135-7-57.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.7.57]
+  by mail.gmx.net (mp001) with SMTP; 10 Aug 2007 02:31:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18F0uAigl8F5otIUQ1m7JIJv/38lrH87Te62KU4t0
+	5wudra9FmMTd+V
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070809223530.GA29680@cassiopeia>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55491>
 
-On 2007-08-09 22:31:09 +0100, Catalin Marinas wrote:
+Hi,
 
-> I'll merge many of Karl's patches for the next stable release (which
-> I hope to be sooner than the current 0.13) but I'm still on holiday
-> for one more week and can't do much work (busy with DIY).
+On Fri, 10 Aug 2007, Uwe Kleine-K?nig wrote:
 
-Great! Would you like me to select the "safe" topics and give you a
-single integration branch to pull, or do you want to be the one that
-does the selecting?
+> Johannes Schindelin wrote:
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 
+> > 	This fixes "git --work-tree=/some/where/else checkout-index".
+> > 
+> >  git.c |    3 ++-
+> >  1 files changed, 2 insertions(+), 1 deletions(-)
+> > 
+> > diff --git a/git.c b/git.c
+> > index 25b8274..f8c4545 100644
+> > --- a/git.c
+> > +++ b/git.c
+> > @@ -315,7 +315,8 @@ static void handle_internal_command(int argc, const char **argv)
+> >  		{ "branch", cmd_branch, RUN_SETUP },
+> >  		{ "bundle", cmd_bundle },
+> >  		{ "cat-file", cmd_cat_file, RUN_SETUP },
+> > -		{ "checkout-index", cmd_checkout_index, RUN_SETUP },
+> > +		{ "checkout-index", cmd_checkout_index,
+> > +			RUN_SETUP | NEED_WORK_TREE},
+> >  		{ "check-ref-format", cmd_check_ref_format },
+> >  		{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
+> >  		{ "cherry", cmd_cherry, RUN_SETUP },
+> With this patch I'm not able to do
+> 
+> 	git checkout-index --prefix=/tmp/exportdir -a
+> 
+> to export an entire tree as described in git-checkout-index(1) in a bare
+> repo.
 
-> Thanks to Karl for setting up this experimental branch. BTW, what
-> does 'pu' mean?
+That is _completely_ expected.  If it is a bare repository, you can _only_ 
+override that check by GIT_WORK_TREE or --work-tree.
 
-Proposed Updates, as I recall. But I just used that to explain how my
-branch is going to behave (meaning: it'll behave like Junio's pu
-branch); it isn't actually called "pu". Not so pedagogical if no one
-has heard of Junio's pu branch, I guess. :-)
+But I have to wonder: if you want to use git checkout-index, which is a 
+work-tree operation, why did you mark it as bare to begin with?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
