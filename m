@@ -1,73 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] tweak manpage formatting
-Date: Fri, 10 Aug 2007 00:49:26 -0700
-Message-ID: <7vbqdfvng9.fsf@assigned-by-dhcp.cox.net>
+From: Domenico Andreoli <cavokz@gmail.com>
+Subject: git-log-branches
+Date: Fri, 10 Aug 2007 09:53:49 +0200
+Message-ID: <20070810075349.GA29584@raptus.dandreoli.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Carlos Rica <jasampler@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 09:51:10 2007
+X-From: git-owner@vger.kernel.org Fri Aug 10 09:53:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJPH4-0005tv-4y
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 09:51:10 +0200
+	id 1IJPJP-0006UF-B4
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 09:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754657AbXHJHvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 03:51:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbXHJHvG
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 03:51:06 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40848 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751977AbXHJHvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 03:51:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070810074926.FHFF2095.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 10 Aug 2007 03:49:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id a7pT1X0011kojtg0000000; Fri, 10 Aug 2007 03:49:27 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753897AbXHJHxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 03:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbXHJHxc
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 03:53:32 -0400
+Received: from mu-out-0910.google.com ([209.85.134.184]:36527 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753673AbXHJHxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 03:53:31 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so987040mue
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 00:53:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=p70mF1dkKze/To+HIJaLjjqs3vsJ0LbZQHPXymA+4jbYy600iy58L3Mye36096NGLR98/2rH3BvOcD4EaKtc58+K1trfyaj2/oG6xKEP4TuIdXOE0vAirUeDZ1T3dvDAoYvFeh6FDFtJBGBT+FULznnK55hrJBJkGNmalwzPqD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=lFa05/UBUdkmJTWg1hmRsEfhgZ3QzMR/kpZUC5cWjX7N/2ZVeAqzQW8u/GqRk/2mTvbCK5uACZRtMCdf9BlOZ1HeKBul6Z+r/j0a54j5j0MabLytWj6x7ST6RSYoUyQWseHwyLG/SXIf83TTsVtOK1xeOIndnUuoP+mNIraEeR0=
+Received: by 10.86.58.3 with SMTP id g3mr2156731fga.1186732408921;
+        Fri, 10 Aug 2007 00:53:28 -0700 (PDT)
+Received: from raptus.dandreoli.com ( [159.149.71.27])
+        by mx.google.com with ESMTPS id k29sm4954633fkk.2007.08.10.00.53.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Aug 2007 00:53:28 -0700 (PDT)
+Received: by raptus.dandreoli.com (Postfix, from userid 1000)
+	id 96E057B0527; Fri, 10 Aug 2007 09:53:49 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55518>
 
-This attempts to force fixed-font in manpages for literal
-blocks.  I have tested this with docbook 1.71 and it seems to
-work as expected.
+Hi,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+  in trying to survive in the forest of git repositories I spread all
+over my boxes, I came to this script. I use it to see which changes
+are in my local branches w.r.t. tracked remotes and vice versa.
 
- * The illustration in git-rev-parse.1 is much easier to read
-   with this...
+It is pretty raw and uses only commands I know. Feel free to point me
+to better command using. Or to a better script, which I am sure has
+been already written ;)
 
- Documentation/callouts.xsl |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
+cheers,
+Domenico
 
-diff --git a/Documentation/callouts.xsl b/Documentation/callouts.xsl
-index 6a361a2..7941af7 100644
---- a/Documentation/callouts.xsl
-+++ b/Documentation/callouts.xsl
-@@ -27,4 +27,17 @@
-   </xsl:if>
- </xsl:template>
- 
-+<xsl:template match="literallayout[@class='monospaced']">
-+  <xsl:text>.RS</xsl:text>
-+  <xsl:if test="not($man.indent.width = '')">
-+    <xsl:text> </xsl:text>
-+    <xsl:value-of select="$man.indent.width"/>
-+  </xsl:if>
-+  <xsl:text>&#10;</xsl:text>
-+  <xsl:text>&#10;.ft C&#10;.nf&#10;</xsl:text>
-+  <xsl:apply-templates/>
-+  <xsl:text>&#10;.fi&#10;.ft&#10;</xsl:text>
-+  <xsl:text>.RE&#10;</xsl:text>
-+</xsl:template>
-+
- </xsl:stylesheet>
+
+#! /bin/sh
+
+if [ -z "$1" ]; then
+        echo "usage: $0 <remote>"
+        exit
+fi
+
+for b in $(git branch | sed 's/^..//'); do
+        if ! git branch -r | grep $1/$b >/dev/null; then
+                continue
+        fi
+
+        if [ -n "$(git log $b..$1/$b)" ]; then
+                echo "$b..$1/$b:"
+                git log $b..$1/$b
+        fi
+
+        if [ -n "$(git log $1/$b..$b)" ]; then
+                echo "$1/$b..$b:"
+                git log $1/$b..$b
+        fi
+done
+
+
+-----[ Domenico Andreoli, aka cavok
+ --[ http://www.dandreoli.com/gpgkey.asc
+   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
