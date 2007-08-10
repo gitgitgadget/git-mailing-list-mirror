@@ -1,88 +1,60 @@
-From: Jeff King <peff@peff.net>
+From: Erik Colson <eco@ecocode.net>
 Subject: Re: git-gui console app ?
-Date: Fri, 10 Aug 2007 10:21:04 -0400
-Message-ID: <20070810142104.GA10997@sigill.intra.peff.net>
+Date: Fri, 10 Aug 2007 16:25:40 +0200
+Message-ID: <20070810142540.GE363@Mac2.local>
 References: <20070804101058.GA520@Mac2.local> <Pine.LNX.4.64.0708041225520.14781@racer.site> <20070804115331.GA2962@Mac2.local> <20070804120342.GC9716@coredump.intra.peff.net> <20070804123834.GA3036@Mac2.local> <20070805101953.GI12507@coredump.intra.peff.net> <20070810133132.GA3770@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Fri Aug 10 16:21:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 10 16:25:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJVMa-00047F-Ah
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 16:21:16 +0200
+	id 1IJVR0-0006AW-98
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 16:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbXHJOVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 10:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXHJOVK
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 10:21:10 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4448 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754005AbXHJOVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 10:21:09 -0400
-Received: (qmail 2743 invoked by uid 111); 10 Aug 2007 14:21:14 -0000
-X-Spam-Status: No, hits=-1.0 required=15.0
-	tests=ALL_TRUSTED,AWL
-X-Spam-Check-By: peff.net
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 10 Aug 2007 10:21:13 -0400
-Received: (qmail 12092 invoked by uid 1000); 10 Aug 2007 14:21:04 -0000
+	id S1754734AbXHJOZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 10:25:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXHJOZr
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 10:25:47 -0400
+Received: from 30.mail-out.ovh.net ([213.186.62.213]:42765 "HELO
+	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753292AbXHJOZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 10:25:46 -0400
+Received: (qmail 26244 invoked by uid 503); 10 Aug 2007 14:26:08 -0000
+Received: (QMFILT: 1.0); 10 Aug 2007 14:26:08 -0000
+Received: from b7.ovh.net (HELO mail93.ha.ovh.net) (213.186.33.57)
+  by 30.mail-out.ovh.net with SMTP; 10 Aug 2007 14:26:08 -0000
+Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
+	by b0.ovh.net with SMTP; 10 Aug 2007 14:25:51 -0000
+Received: from 213.219.143.110.adsl.dyn.edpnet.net (HELO localhost) (erik.colson%beavernet.be@213.219.143.110)
+  by ns0.ovh.net with SMTP; 10 Aug 2007 14:25:50 -0000
+Mail-Followup-To: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
 Content-Disposition: inline
 In-Reply-To: <20070810133132.GA3770@diku.dk>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Ovh-Remote: 213.219.143.110 (213.219.143.110.adsl.dyn.edpnet.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|H 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55543>
 
 On Fri, Aug 10, 2007 at 03:31:32PM +0200, Jonas Fonseca wrote:
-
 > Not quite a one-liner, but I've implemented something that will show
 > diffs of staged/unstaged changes as well as the content of untracked
 > files when pressing Enter on a file in the status view. To update the
 > status of a file (unstaged->staged, untracked->staged, etc) you now
 > have to press 'u'.
+> 
+> Hope this helps.
 
-Nice. This was exactly what I had envisioned. Minor help text fixup is
-below.
+Works like a charm ! Thanks for the implementation.  Btw, I'm using
+git (and tig) on MacosX and got it compiled by using the same remarks
+you mention for FreeBSD, so may be you could add this to the INSTALL
+document...
 
--Peff
-
--- >8 --
-status window: mention 'u' instead of Enter
-
-Commits ca1d71ea and 89d917a bound the Enter functionality
-to 'u' (and Enter now shows the diff).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- tig.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/tig.c b/tig.c
-index d9c9df8..40670e2 100644
---- a/tig.c
-+++ b/tig.c
-@@ -3156,15 +3156,15 @@ status_select(struct view *view, struct line *line)
- 
- 	switch (line->type) {
- 	case LINE_STAT_STAGED:
--		text = "Press Enter to unstage file for commit";
-+		text = "Press 'u' to unstage file for commit";
- 		break;
- 
- 	case LINE_STAT_UNSTAGED:
--		text = "Press Enter to stage file for commit  ";
-+		text = "Press 'u' to stage file for commit  ";
- 		break;
- 
- 	case LINE_STAT_UNTRACKED:
--		text = "Press Enter to stage file for addition";
-+		text = "Press 'u' to stage file for addition";
- 		break;
- 
- 	case LINE_STAT_NONE:
 -- 
-1.5.2.4
+Erik
