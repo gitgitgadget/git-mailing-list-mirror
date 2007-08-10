@@ -1,60 +1,84 @@
-From: Erik Colson <eco@ecocode.net>
-Subject: Re: git-gui console app ?
-Date: Fri, 10 Aug 2007 16:25:40 +0200
-Message-ID: <20070810142540.GE363@Mac2.local>
-References: <20070804101058.GA520@Mac2.local> <Pine.LNX.4.64.0708041225520.14781@racer.site> <20070804115331.GA2962@Mac2.local> <20070804120342.GC9716@coredump.intra.peff.net> <20070804123834.GA3036@Mac2.local> <20070805101953.GI12507@coredump.intra.peff.net> <20070810133132.GA3770@diku.dk>
+From: "Govind Salinas" <govindsalinas@gmail.com>
+Subject: Re: git-p4 question
+Date: Fri, 10 Aug 2007 10:17:04 -0500
+Message-ID: <69b0c0350708100817u58f74acbyed5c19830cb92ed7@mail.gmail.com>
+References: <69b0c0350708091953wdc9c22vd2b17b1edd1c5cd2@mail.gmail.com>
+	 <81b0412b0708100106m3123a504p16309b6e06cd9609@mail.gmail.com>
+	 <81b0412b0708100110w6ff90215gd5c367fb65e2ae21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 16:25:56 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 17:17:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJVR0-0006AW-98
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 16:25:50 +0200
+	id 1IJWFA-00027d-1x
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 17:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754734AbXHJOZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 10:25:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXHJOZr
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 10:25:47 -0400
-Received: from 30.mail-out.ovh.net ([213.186.62.213]:42765 "HELO
-	30.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753292AbXHJOZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 10:25:46 -0400
-Received: (qmail 26244 invoked by uid 503); 10 Aug 2007 14:26:08 -0000
-Received: (QMFILT: 1.0); 10 Aug 2007 14:26:08 -0000
-Received: from b7.ovh.net (HELO mail93.ha.ovh.net) (213.186.33.57)
-  by 30.mail-out.ovh.net with SMTP; 10 Aug 2007 14:26:08 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
-	by b0.ovh.net with SMTP; 10 Aug 2007 14:25:51 -0000
-Received: from 213.219.143.110.adsl.dyn.edpnet.net (HELO localhost) (erik.colson%beavernet.be@213.219.143.110)
-  by ns0.ovh.net with SMTP; 10 Aug 2007 14:25:50 -0000
-Mail-Followup-To: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
+	id S934185AbXHJPRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 11:17:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933086AbXHJPRK
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 11:17:10 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:18514 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760297AbXHJPRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 11:17:08 -0400
+Received: by an-out-0708.google.com with SMTP id d31so162302and
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 08:17:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ubjdT4nDGHU+Zq4axGYauLB++N8CQ1ZLEGhIJwzN2IuPbCAmcrWIaCkGifCVYzbm16mmSMZ2WM3Mt2Y2LzldcQISlXpblcJtQV7vRINKXRiNKUbIOLwJcBXoIAQiFV+gKSMaEWfE7FIMJdBHvnr8f9MvcfTZZmBYuWXNMSDfXms=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=W0koN6U3ptrbJMhB9R3vUCPMxDJu76xt0sLI9zTuBGwV7f/hOBNuSobwUEl3X9Vj+DsJRfyVnEZYxagivKWJwBHAyQiukLybKzFRnKh8V7zHmWiTCr4YK6JhdLMJ2wl12dcNdxQcUwRKH9exX8lJx8FE0HBNqS2zRLhmI4MyOXo=
+Received: by 10.100.14.19 with SMTP id 19mr58372ann.1186759024385;
+        Fri, 10 Aug 2007 08:17:04 -0700 (PDT)
+Received: by 10.100.119.8 with HTTP; Fri, 10 Aug 2007 08:17:04 -0700 (PDT)
+In-Reply-To: <81b0412b0708100110w6ff90215gd5c367fb65e2ae21@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070810133132.GA3770@diku.dk>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Ovh-Remote: 213.219.143.110 (213.219.143.110.adsl.dyn.edpnet.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|H 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55544>
 
-On Fri, Aug 10, 2007 at 03:31:32PM +0200, Jonas Fonseca wrote:
-> Not quite a one-liner, but I've implemented something that will show
-> diffs of staged/unstaged changes as well as the content of untracked
-> files when pressing Enter on a file in the status view. To update the
-> status of a file (unstaged->staged, untracked->staged, etc) you now
-> have to press 'u'.
-> 
-> Hope this helps.
+I am having some problems running the script.  It seems that (line
+1425) $f->{sha1} is uninitialized and causing the import to fail (the
+perforce path is missing the leading "//" I don't know if that is
+intentional).  Let me know if you want to continue this off list since
+it isn't really a part of git.
 
-Works like a charm ! Thanks for the implementation.  Btw, I'm using
-git (and tig) on MacosX and got it compiled by using the same remarks
-you mention for FreeBSD, so may be you could add this to the INSTALL
-document...
-
--- 
-Erik
+On 8/10/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> On 8/10/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > On 8/10/07, Govind Salinas <govindsalinas@gmail.com> wrote:
+> > > If I can just sync from p4 and then sync my binary share and THEN tell
+> > > git-p4 that //depot/my/product/... maps to c:\path\src\realworkhere,
+> > > get it to import history etc,  then I would be set.
+> >
+> > git-p4-import.bat can import a state from the client have-list,
+> > but it does not import the history. It can import the history
+> > separately, so that you can stitch it into a merge which will be
+> > the state imported from the client. Complicated, but I couldn't
+> > bring myself to figure out the history automatically.
+>
+> Err, example:
+>
+> Import a state from p4 client:
+>
+>   git-p4-import -y -c client-name -e
+>
+> Import p4 history of a path mapping:
+>
+>   git-p4-import --p4-path //perforce/path \
+>     --local-path very-local-path \
+>     --p4-range '@1234,5678' \
+>     --start start-commit \
+>     --branch branch-name
+>
+> The last argument (--branch) is optional, will just store the last imported
+> commit there. start-commit will be assumed current HEAD, if omitted.
+>
