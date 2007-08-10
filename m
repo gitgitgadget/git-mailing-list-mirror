@@ -1,80 +1,93 @@
-From: Brian Hetro <whee@smaertness.net>
-Subject: Bug in gitk: can't unset "idinlist(...) ..."
-Date: Fri, 10 Aug 2007 11:41:08 -0400
-Message-ID: <20070810154108.GA779@ruiner>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git and larger trees, not so fast?
+Date: Fri, 10 Aug 2007 08:49:56 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708100836340.30176@woody.linux-foundation.org>
+References: <20070809163026.GD568@mbox.bz>
+ <alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
+ <7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net> <7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
+ <20070809165218.9b76ebf7.seanlkml@sympatico.ca>
+ <alpine.LFD.0.999.0708091426050.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
+ <7vtzr8wemb.fsf@assigned-by-dhcp.cox.net> <7vps1wwa5w.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.999.0708091734210.25146@woody.linux-foundation.org>
+ <7vhcn8w6sw.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.999.0708091754150.25146@woody.linux-foundation.org>
+ <7v643ovyli.fsf@assigned-by-dhcp.cox.net>
+ <7vy7gkue5s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 17:41:38 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, moe <moe-git@mbox.bz>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 17:50:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJWcK-00039d-8Q
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 17:41:36 +0200
+	id 1IJWlE-0006mX-I4
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 17:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936281AbXHJPl3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 11:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936282AbXHJPl2
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 11:41:28 -0400
-Received: from ag-out-0708.google.com ([72.14.246.248]:60728 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760490AbXHJPl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 11:41:26 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so1102758aga
-        for <git@vger.kernel.org>; Fri, 10 Aug 2007 08:41:22 -0700 (PDT)
-Received: by 10.100.191.5 with SMTP id o5mr3245925anf.1186760482183;
-        Fri, 10 Aug 2007 08:41:22 -0700 (PDT)
-Received: from smaertness.net ( [66.67.48.108])
-        by mx.google.com with ESMTPS id c20sm4529393ana.2007.08.10.08.41.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Aug 2007 08:41:10 -0700 (PDT)
-Received: by smaertness.net (nbSMTP-1.00) for uid 1000
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	whee@smaertness.net; Fri, 10 Aug 2007 11:41:10 -0400 (EDT)
-Content-Disposition: inline
-X-PGP-Key: http://whee.smaertness.net/pubkey.asc
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1757745AbXHJPun (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 11:50:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936500AbXHJPun
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 11:50:43 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52964 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S937382AbXHJPuj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 11:50:39 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AFo2m2020065
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 10 Aug 2007 08:50:07 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AFnuRr028674;
+	Fri, 10 Aug 2007 08:49:56 -0700
+In-Reply-To: <7vy7gkue5s.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.724 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55547>
 
-Hi,
-I have a problem with gitk not being able to show one of my
-repositories (git version 1.5.3.rc4.41.g7efe).  I get this error while
-gitk starts:
 
-can't unset "idinlist(f1d795add789ec43d3ccf1d35f3c39fb464f6e72)": no
-such element in array
-can't unset "idinlist(f1d795add789ec43d3ccf1d35f3c39fb464f6e72)": no
-such element in array
-    while executing
-"unset idinlist($id)"
-    (procedure "layouttail" line 11)
-    invoked from within
-"layouttail"
-    (procedure "layoutmore" line 35)
-    invoked from within
-"layoutmore $tlimit $allread"
-    (procedure "chewcommits" line 9)
-    invoked from within
-"chewcommits 1"
-    ("eval" body line 1)
-    invoked from within
-"eval $script"
-    (procedure "dorunq" line 9)
-    invoked from within
-"dorunq"
-    ("after" script)
 
-The repository log is partially displayed.  gitk does work in git
-version 1.5.2.4, and qgit and giggle also work.  git-fsck --full
---strict indicates no problems.
+On Thu, 9 Aug 2007, Junio C Hamano wrote:
+> 
+> FWIW, moe's script with and without two patches gives these
+> numbers for me.
 
-I performed a bisect and commit
-1ed84157a21a3e868228b15588e4aadfbe5a030b appears to be the culprit
-(Revert 88494423 (removal of duplicate parents in the output
-codepath)).
+Btw, I really think it's worth doing even just the hacky patches at this 
+stage, even though it's late in the game for 1.5.3.
 
-Brian
+That performance problem is serious enough that I'd call it a major bug. 
+Performance has always been one of the goals of git, and when you have a 
+difference between 17s and 0.7s for "git status", that's a *huge* 
+usability thing. It would be sad to release 1.5.3 with a known bug.
+
+[ Some people don't think performance issues are "real bugs", and I think 
+  such people shouldn't be allowed to program. ]
+
+Side note: your first patch is actually quite noticeable on even just the 
+kernel. Not nearly as much, but without it, I get about 0.5s, and with it, 
+I get consistently under 0.3s. So it's about a 40% improvement even for 
+smaller projects (and it's probably much more if you have a CPU with a 
+smaller cache: my Core 2 Duo has 4MB of L2 cache, and a lot of the index 
+will even fit in the L1 - a slower CPU with less cache will see a bigger 
+impact, and with smaller repositories, from the unnecessary memory 
+moving).
+
+While 0.5s -> 0.3s may not sound like much, on a slower machine where it 
+might otherwise be 2.5s -> 1.5s, that's likely to be quite noticeable.
+
+In fact, I can tell even on my machine: 0.3s is visible as a "I'm clearly 
+thinking about it" delay (quite frankly, it would be better at 0.1s, which 
+is "immediate"), but 0.5s is already approaching the point where you 
+actually wait for the answer (rather than just notice that it wasn't quite 
+immediate).
+
+				Linus
