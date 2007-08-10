@@ -1,63 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug in gitk: can't unset "idinlist(...) ..."
-Date: Fri, 10 Aug 2007 12:11:23 -0400
-Message-ID: <20070810161123.GA14875@sigill.intra.peff.net>
-References: <20070810154108.GA779@ruiner>
+From: David Kastrup <dak@gnu.org>
+Subject: [fixed PATCH] git-filter-branch.sh: Fix broken setting of GIT_DIR
+Date: Fri, 10 Aug 2007 18:21:34 +0200
+Message-ID: <864pj74ay9.fsf@lola.quinscape.zz>
+References: <868x8j7aj2.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Hetro <whee@smaertness.net>
-X-From: git-owner@vger.kernel.org Fri Aug 10 18:13:50 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 10 18:22:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJX7V-0007wq-0u
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:13:49 +0200
+	id 1IJXFa-0002Sl-JI
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S941073AbXHJQLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 12:11:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S940801AbXHJQLa
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:11:30 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4131 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S941061AbXHJQL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 12:11:28 -0400
-Received: (qmail 3860 invoked by uid 111); 10 Aug 2007 16:11:33 -0000
-X-Spam-Status: No, hits=-1.2 required=15.0
-	tests=ALL_TRUSTED,AWL
-X-Spam-Check-By: peff.net
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 10 Aug 2007 12:11:32 -0400
-Received: (qmail 15540 invoked by uid 1000); 10 Aug 2007 16:11:23 -0000
-Content-Disposition: inline
-In-Reply-To: <20070810154108.GA779@ruiner>
+	id S1764611AbXHJQWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 12:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765167AbXHJQWF
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:22:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:33458 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762545AbXHJQWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 12:22:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IJXFI-0008CL-Tl
+	for git@vger.kernel.org; Fri, 10 Aug 2007 18:21:53 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 18:21:52 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 18:21:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+In-Reply-To: <868x8j7aj2.fsf@lola.quinscape.zz>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:bvAatrvXLVlW0y1opb36mp63Bco=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55551>
 
-On Fri, Aug 10, 2007 at 11:41:08AM -0400, Brian Hetro wrote:
+If filter-branch is entered with an unset GIT_DIR, things are rather
+fragile.  The GIT_DIR variable setting then points to something like
+$(pwd)/../.. which is neither guaranteed to be a git directory
+(depends on where filter-branch is started), nor will it continue to
+work once the temporary directory (for which the pwd is output) ceases
+to exist.
 
-> Hi,
-> I have a problem with gitk not being able to show one of my
-> repositories (git version 1.5.3.rc4.41.g7efe).  I get this error while
-> gitk starts:
-> 
-> can't unset "idinlist(f1d795add789ec43d3ccf1d35f3c39fb464f6e72)": no
-> such element in array
-> [...]
-> 
-> I performed a bisect and commit
-> 1ed84157a21a3e868228b15588e4aadfbe5a030b appears to be the culprit
-> (Revert 88494423 (removal of duplicate parents in the output
-> codepath)).
+So we just call git-rev-parse in order to get the correct setting here
+for exporting.
 
-This was fixed in e1abc69b, which is in 1.5.3-rc3, covered in this
-thread:
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ git-filter-branch.sh |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
 
-http://thread.gmane.org/gmane.comp.version-control.git/53126
-
-Can you confirm that it is still a problem in 1.5.3-rc4?
-
--Peff
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index b5fa449..9e9e8bf 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -170,14 +170,11 @@ do
+ 	esac
+ done < "$tempdir"/backup-refs
+ 
+-case "$GIT_DIR" in
+-/*)
+-	;;
+-*)
+-	GIT_DIR="$(pwd)/../../$GIT_DIR"
+-	;;
+-esac
+-export GIT_DIR GIT_WORK_TREE=.
++GIT_DIR=$(cd ../..;cd "./$(git-rev-parse --git-dir)";pwd)
++
++GIT_WORK_TREE=.
++
++export GIT_DIR GIT_WORK_TREE
+ 
+ # These refs should be updated if their heads were rewritten
+ 
+-- 
+1.5.3.rc4.74.g3739cb17
