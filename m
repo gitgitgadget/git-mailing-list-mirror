@@ -1,90 +1,180 @@
-From: Domenico Andreoli <cavokz@gmail.com>
-Subject: git-log-branches
-Date: Fri, 10 Aug 2007 09:53:49 +0200
-Message-ID: <20070810075349.GA29584@raptus.dandreoli.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Reinstate the old behaviour when GIT_DIR is set and GIT_WORK_TREE is unset
+Date: Fri, 10 Aug 2007 00:57:12 -0700
+Message-ID: <7vr6mbu8iv.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0708042319470.14781@racer.site>
+	<20070809223530.GA29680@cassiopeia>
+	<Pine.LNX.4.64.0708100129200.21857@racer.site>
+	<7vd4xww6mr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0708100210280.21857@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 09:53:35 2007
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 09:57:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJPJP-0006UF-B4
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 09:53:35 +0200
+	id 1IJPN2-0007X9-A4
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 09:57:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753897AbXHJHxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 03:53:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbXHJHxc
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 03:53:32 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:36527 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753673AbXHJHxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 03:53:31 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so987040mue
-        for <git@vger.kernel.org>; Fri, 10 Aug 2007 00:53:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
-        b=p70mF1dkKze/To+HIJaLjjqs3vsJ0LbZQHPXymA+4jbYy600iy58L3Mye36096NGLR98/2rH3BvOcD4EaKtc58+K1trfyaj2/oG6xKEP4TuIdXOE0vAirUeDZ1T3dvDAoYvFeh6FDFtJBGBT+FULznnK55hrJBJkGNmalwzPqD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
-        b=lFa05/UBUdkmJTWg1hmRsEfhgZ3QzMR/kpZUC5cWjX7N/2ZVeAqzQW8u/GqRk/2mTvbCK5uACZRtMCdf9BlOZ1HeKBul6Z+r/j0a54j5j0MabLytWj6x7ST6RSYoUyQWseHwyLG/SXIf83TTsVtOK1xeOIndnUuoP+mNIraEeR0=
-Received: by 10.86.58.3 with SMTP id g3mr2156731fga.1186732408921;
-        Fri, 10 Aug 2007 00:53:28 -0700 (PDT)
-Received: from raptus.dandreoli.com ( [159.149.71.27])
-        by mx.google.com with ESMTPS id k29sm4954633fkk.2007.08.10.00.53.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Aug 2007 00:53:28 -0700 (PDT)
-Received: by raptus.dandreoli.com (Postfix, from userid 1000)
-	id 96E057B0527; Fri, 10 Aug 2007 09:53:49 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1756641AbXHJH5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 03:57:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751033AbXHJH5P
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 03:57:15 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:37460 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751128AbXHJH5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 03:57:13 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070810075712.VVTA7956.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 10 Aug 2007 03:57:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id a7xC1X0031kojtg0000000; Fri, 10 Aug 2007 03:57:13 -0400
+In-Reply-To: <Pine.LNX.4.64.0708100210280.21857@racer.site> (Johannes
+	Schindelin's message of "Fri, 10 Aug 2007 02:11:11 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55519>
 
-Hi,
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date: Sun, 5 Aug 2007 14:12:53 +0100
 
-  in trying to survive in the forest of git repositories I spread all
-over my boxes, I came to this script. I use it to see which changes
-are in my local branches w.r.t. tracked remotes and vice versa.
+The old behaviour was to unilaterally default to the cwd is the work tree
+when GIT_DIR was set, but GIT_WORK_TREE wasn't, no matter if we are inside
+the GIT_DIR, or if GIT_DIR is actually something like ../../../.git.
 
-It is pretty raw and uses only commands I know. Feel free to point me
-to better command using. Or to a better script, which I am sure has
-been already written ;)
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-cheers,
-Domenico
+ Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+ > I think I sent a patch for that, but was negative about it, even if I 
+ > promised not to question your decision.
 
-#! /bin/sh
+ Yes you did.  Here is a refresher with an affected test
+ adjusted.
 
-if [ -z "$1" ]; then
-        echo "usage: $0 <remote>"
-        exit
-fi
+ We already have a few changes that worked around the semantics
+ change by either setting GIT_WORK_TREE or cd'ing up, but I
+ think they should not need to be reverted.
 
-for b in $(git branch | sed 's/^..//'); do
-        if ! git branch -r | grep $1/$b >/dev/null; then
-                continue
-        fi
+ It makes more sense to keep the old semantics -- people who use
+ unusual GIT_DIR setting should know what they are doing, and
+ the new GIT_WORK_TREE feature (and core.worktree) would give
+ them better control.  We just should not break existing users
+ that set GIT_DIR and nothing else.  Which means I need another
+ rewrite on the Release Notes, and probably yet another rc
+ cycle.
 
-        if [ -n "$(git log $b..$1/$b)" ]; then
-                echo "$b..$1/$b:"
-                git log $b..$1/$b
-        fi
+ setup.c              |   52 +++++++++----------------------------------------
+ t/t1500-rev-parse.sh |    6 +++-
+ 2 files changed, 14 insertions(+), 44 deletions(-)
 
-        if [ -n "$(git log $1/$b..$b)" ]; then
-                echo "$1/$b..$b:"
-                git log $1/$b..$b
-        fi
-done
-
-
------[ Domenico Andreoli, aka cavok
- --[ http://www.dandreoli.com/gpgkey.asc
-   ---[ 3A0F 2F80 F79C 678A 8936  4FEE 0677 9033 A20E BC50
+diff --git a/setup.c b/setup.c
+index b55b82c..06004f1 100644
+--- a/setup.c
++++ b/setup.c
+@@ -189,53 +189,21 @@ int is_inside_work_tree(void)
+ }
+ 
+ /*
+- * If no worktree was given, and we are outside of a default work tree,
+- * now is the time to set it.
+- *
+- * In other words, if the user calls git with something like
+- *
+- *	git --git-dir=/some/where/else/.git bla
+- *
+- * default to /some/where/else as working directory; if the specified
+- * git-dir does not end in "/.git", the cwd is used as working directory.
++ * set_work_tree() is only ever called if you set GIT_DIR explicitely.
++ * The old behaviour (which we retain here) is to set the work tree root
++ * to the cwd, unless overridden by the config, the command line, or
++ * GIT_WORK_TREE.
+  */
+-const char *set_work_tree(const char *dir)
++static const char *set_work_tree(const char *dir)
+ {
+-	char dir_buffer[PATH_MAX], *rel = NULL;
+-	static char buffer[PATH_MAX + 1];
+-	int len, suffix_len = strlen(DEFAULT_GIT_DIR_ENVIRONMENT) + 1;
+-
+-	/* strip the variable 'dir' of the postfix "/.git" if it has it */
+-	len = strlen(dir);
+-	if (len > suffix_len &&
+-	    !strcmp(dir + len - suffix_len, "/" DEFAULT_GIT_DIR_ENVIRONMENT)) {
+-		if ((len - suffix_len) >= sizeof(dir_buffer))
+-			die("directory name too long");
+-		memcpy(dir_buffer, dir, len - suffix_len);
+-		dir_buffer[len - suffix_len] = '\0';
+-
+-		/* are we inside the default work tree? */
+-		rel = get_relative_cwd(buffer, sizeof(buffer), dir_buffer);
+-	}
++	char buffer[PATH_MAX + 1];
+ 
+-	/* if rel is set, the cwd is _not_ the current working tree */
+-	if (rel && *rel) {
+-		if (!is_absolute_path(dir))
+-			set_git_dir(make_absolute_path(dir));
+-		dir = dir_buffer;
+-		if (chdir(dir))
+-			die("cannot chdir to %s: %s", dir, strerror(errno));
+-		else
+-			strcat(rel, "/");
+-		inside_git_dir = 0;
+-	} else {
+-		rel = NULL;
+-		dir = getcwd(buffer, sizeof(buffer));
+-	}
+-	git_work_tree_cfg = xstrdup(dir);
++	if (!getcwd(buffer, sizeof(buffer)))
++		die ("Could not get the current working directory");
++	git_work_tree_cfg = xstrdup(buffer);
+ 	inside_work_tree = 1;
+ 
+-	return rel;
++	return NULL;
+ }
+ 
+ /*
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index bea40cb..e474b3f 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -28,6 +28,8 @@ test_rev_parse() {
+ 	[ $# -eq 0 ] && return
+ }
+ 
++# label is-bare is-inside-git is-inside-work prefix
++
+ test_rev_parse toplevel false false true ''
+ 
+ cd .git || exit 1
+@@ -53,13 +55,13 @@ export GIT_DIR=../.git
+ export GIT_CONFIG="$(pwd)"/../.git/config
+ 
+ git config core.bare false
+-test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true work/
++test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true ''
+ 
+ git config core.bare true
+ test_rev_parse 'GIT_DIR=../.git, core.bare = true' true false false ''
+ 
+ git config --unset core.bare
+-test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true work/
++test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true ''
+ 
+ mv ../.git ../repo.git || exit 1
+ export GIT_DIR=../repo.git
+-- 
+1.5.3.rc4.29.g74276
