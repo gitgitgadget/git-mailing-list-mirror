@@ -1,53 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Relative alternates question
-Date: Fri, 10 Aug 2007 12:38:50 -0700
-Message-ID: <7vfy2rrxh1.fsf@assigned-by-dhcp.cox.net>
-References: <20070810164556.GB3442@efreet.light.src>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git and larger trees, not so fast?
+Date: Fri, 10 Aug 2007 12:39:42 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708101231580.30176@woody.linux-foundation.org>
+References: <20070809163026.GD568@mbox.bz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Aug 10 21:38:59 2007
+To: moe <moe-git@mbox.bz>
+X-From: git-owner@vger.kernel.org Fri Aug 10 21:39:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJaK2-0004Bq-Jm
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 21:38:58 +0200
+	id 1IJaKx-0004Ww-Bc
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 21:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760327AbXHJTix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 15:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759173AbXHJTiw
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 15:38:52 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:57928 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754304AbXHJTiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 15:38:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070810193850.JEWW7193.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 10 Aug 2007 15:38:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aKer1X0031kojtg0000000; Fri, 10 Aug 2007 15:38:51 -0400
-In-Reply-To: <20070810164556.GB3442@efreet.light.src> (Jan Hudec's message of
-	"Fri, 10 Aug 2007 18:45:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758327AbXHJTjw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 15:39:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760458AbXHJTjw
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 15:39:52 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52857 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758327AbXHJTjv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 15:39:51 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AJdlbx003423
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 10 Aug 2007 12:39:48 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AJdgXr005042;
+	Fri, 10 Aug 2007 12:39:42 -0700
+In-Reply-To: <20070809163026.GD568@mbox.bz>
+X-Spam-Status: No, hits=-2.724 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.23__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55571>
 
-Jan Hudec <bulb@ucw.cz> writes:
 
-> And my question is, is there any good reason to reject relative paths in
-> alternates of an alternate? From what I see the recursive call to
-> link_alt_odb_entries (via link_alt_odb_entry and read_info_alternates) has
-> all the information it needs to resolve such paths.
 
-As long as you are careful not to introduce loops that cause the
-rest of the code to add the same thing twice, I do not think
-there is anything fundamentally wrong with relative alternate
-paths.  The original motivation of that check was not much more
-than "let's not complicate our lives by supporting it", I think.
+On Thu, 9 Aug 2007, moe wrote:
+> 
+> earlier today i imported one of my larger trees
+> (~70k files) into git and was quite disappointed
+> by the performance.
+
+Ok, I said I wouldn't have time to fix it yesterday, but today it's all 
+done.
+
+With the first fix from Junio yesterday (the one that fixed "git status"), 
+and the fixes I've sent out today, your cases should not all be basically 
+instantaneous (ie we're talking low seconds, even on not-the-fastest- 
+possible-machines).
+
+So with the following patches that were posted over the last 24 hours, you 
+should be ok:
+
+  Junio:
+	Fix performance problem in "git status"
+
+  Me:
+	Start moving unpack-trees to "struct tree_desc"
+	Fix "git commit directory/" performance anomaly (+ one-liner fix)
+	Move old index entry removal from "unpack_trees()" into the individual functions
+	Optimize the common cases of git-read-tree
+	Optimize the two-way merge of git-read-tree too
+
+(that patch from Junio was sent in an email in this thread, with the 
+subject line "Re: git and larger trees, not so fast?" and a message ID of 
+"<7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>": the patches from me should 
+all have the appropriate Subject lines and be findable that way).
+
+If you can test with your real load to make sure, that would be good.
+
+			Linus
