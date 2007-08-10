@@ -1,99 +1,190 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: msysgit: does git gui work?
-Date: Fri, 10 Aug 2007 14:53:54 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708101452060.21857@racer.site>
-References: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de>
- <E886F099-5E9F-4785-A560-F9AAAA4E4C1F@zib.de> <20070810053158.GJ24573@spearce.org>
- <B6C82889-ABE0-4B3D-A455-A2EE1CE48297@zib.de> <Pine.LNX.4.64.0708101113380.21857@racer.site>
- <3351C69E-C0A8-4D02-9E04-085E18F1DF75@zib.de> <Pine.LNX.4.64.0708101309430.21857@racer.site>
- <31EFF30A-CC7A-4BB0-B083-13A1F7B62781@zib.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: [PATCH resend] git-apply: apply submodule changes
+Date: Fri, 10 Aug 2007 15:57:44 +0200
+Message-ID: <20070810135744.GA29243MdfPADPa@greensroom.kotnet.org>
+References: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Aug 10 15:54:54 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Steffen Prohaska <prohaska@zib.de>, Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 10 15:57:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJUwx-000156-A8
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 15:54:47 +0200
+	id 1IJUzu-0002W5-Rg
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 15:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932677AbXHJNyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 09:54:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932130AbXHJNyn
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 09:54:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55816 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932126AbXHJNym (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 09:54:42 -0400
-Received: (qmail invoked by alias); 10 Aug 2007 13:54:40 -0000
-Received: from ppp-82-135-86-56.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.86.56]
-  by mail.gmx.net (mp047) with SMTP; 10 Aug 2007 15:54:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+9kIZIf4S90POTtIhtiYRr9BqkjcAnS53GifiwZB
-	EMMX+d6AWyjnG+
-X-X-Sender: gene099@racer.site
-In-Reply-To: <31EFF30A-CC7A-4BB0-B083-13A1F7B62781@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1761085AbXHJN5r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 09:57:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760810AbXHJN5r
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 09:57:47 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:38803 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757593AbXHJN5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 09:57:46 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMK00DJ89G8DR@psmtp09.wxs.nl> for git@vger.kernel.org; Fri,
+ 10 Aug 2007 15:57:45 +0200 (MEST)
+Received: (qmail 27592 invoked by uid 500); Fri, 10 Aug 2007 13:57:44 +0000
+In-reply-to: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55539>
 
-Hi,
+Apply "Subproject commit HEX" changes produced by git-diff.
+As usual in the current git, only the superproject itself is actually
+modified (possibly creating empty directories for new submodules).
+Any checked-out submodule is left untouched and is not required to
+be up-to-date.
 
-On Fri, 10 Aug 2007, Steffen Prohaska wrote:
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+---
+This second version has a test and an extra sanity check.
 
-> On Aug 10, 2007, at 2:13 PM, Johannes Schindelin wrote:
-> 
-> > On Fri, 10 Aug 2007, Steffen Prohaska wrote:
-> > 
-> > > On Aug 10, 2007, at 12:16 PM, Johannes Schindelin wrote:
-> > > 
-> > > > On Fri, 10 Aug 2007, Steffen Prohaska wrote:
-> > > 
-> > > I agree and pushed the following to mob
-> > > 
-> > > faeb4e3df9fb7c853dd1a46d6942776d4a743545
-> > > 
-> > > I forced a non-fast-forward of mob. Is this ok? Apparently it's allowed.
-> > 
-> > Yes, it is allowed exactly for this purpose.  When you want to redo/undo
-> > commits.
-> > 
-> > > Another question related to mob. How do I need to setup /git/.git/config
-> > > to be able to push to git's mob?
-> > 
-> > My understanding is that the GitMe installer already sets up a remote
-> > named "mob".
-> > 
-> > 	$ git push mob
-> > 
-> > It automatically pushes the "master" branch to "mob".  If you have to
-> > force the push, you'll have to do this:
-> > 
-> > 	$ git push mob +master:mob
-> > 
-> > But please avoid this when possible, since you might well overwrite other
-> > people's work.
-> 
-> I have a mob for /.git, but I do not have the setup for /git/.git. Maybe
-> I deleted it because I didn't understand what is means.
+I seem to be experiencing some problems receiving emails,
+so I'll reply to a message from Dscho here.
 
-Ah, I misunderstood.  Yes, it is quite possible to have a mob installed 
-for 4msysgit.git by default.  Should by done in 
-msysgit.git:share/GitMe/setup-msysgit.sh.
+Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+> For rebase and cherry-pick, it would be nice if git just ignored the 
+> changes in the submodules, provided that the submodule commit was not 
+> affected by the to-be-applied patches.
 
-> Whoever has setup the mob configurations, maybe it would be a good idea 
-> to forbid non-fast-forward but instead allow the creation of new mob* 
-> branches. If I can't push to mob, I could push to mob-topic instead. 
-> Cleanup would be in the responsibility of the repository owner.
+I have no idea what you mean.
 
-This is not possible.  The refusal of a non-fast-forward is a per-repo, 
-not a per-user, configuration.
+The checked out copies of the submodules are ignored completely
+(if that is what you were talking about, then I hope this issue
+is clarified by the updated commit message).  In the superproject,
+the change to the submodule is obviously not ignored, since it's
+an integral part of the patch.  However, git-apply will fail if
+the original submodule commit does not correspond exactly to the
+"from-file" submodule commit.
+I don't think there is anything else we can do without a true
+recursive git-diff/git-apply.
 
-Ciao,
-Dscho
+skimo
+
+ builtin-apply.c            |   50 ++++++++++++++++++++++++++++++++++---------
+ t/t7400-submodule-basic.sh |    8 +++++++
+ 2 files changed, 47 insertions(+), 11 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index da27075..a38dbf1 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1984,6 +1984,26 @@ static int apply_fragments(struct buffer_desc *desc, struct patch *patch)
+ 	return 0;
+ }
+ 
++static int read_file_or_gitlink(struct cache_entry *ce, char **buf_p,
++				unsigned long *size_p)
++{
++	if (!ce)
++		return 0;
++
++	if (S_ISGITLINK(ntohl(ce->ce_mode))) {
++		*buf_p = xmalloc(100);
++		*size_p = snprintf(*buf_p, 100,
++			"Subproject commit %s\n", sha1_to_hex(ce->sha1));
++	} else {
++		enum object_type type;
++		*buf_p = read_sha1_file(ce->sha1, &type, size_p);
++		if (!*buf_p)
++			return -1;
++	}
++
++	return 0;
++}
++
+ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
+ {
+ 	char *buf;
+@@ -1994,20 +2014,18 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 	alloc = 0;
+ 	buf = NULL;
+ 	if (cached) {
+-		if (ce) {
+-			enum object_type type;
+-			buf = read_sha1_file(ce->sha1, &type, &size);
+-			if (!buf)
+-				return error("read of %s failed",
+-					     patch->old_name);
+-			alloc = size;
+-		}
++		if (read_file_or_gitlink(ce, &buf, &size))
++			return error("read of %s failed", patch->old_name);
++		alloc = size;
+ 	}
+ 	else if (patch->old_name) {
+ 		size = xsize_t(st->st_size);
+ 		alloc = size + 8192;
+ 		buf = xmalloc(alloc);
+-		if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
++		if (S_ISGITLINK(patch->old_mode))
++			size = snprintf(buf, alloc,
++				"Subproject commit %s\n", sha1_to_hex(ce->sha1));
++		else if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+ 			return error("read of %s failed", patch->old_name);
+ 	}
+ 
+@@ -2098,7 +2116,7 @@ static int check_patch(struct patch *patch, struct patch *prev_patch)
+ 			}
+ 			if (!cached)
+ 				changed = ce_match_stat(ce, &st, 1);
+-			if (changed)
++			if (changed && !S_ISGITLINK(patch->old_mode))
+ 				return error("%s: does not match index",
+ 					     old_name);
+ 			if (cached)
+@@ -2387,7 +2405,10 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ 			die("unable to stat newly created file %s", path);
+ 		fill_stat_cache_info(ce, &st);
+ 	}
+-	if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
++	if (S_ISGITLINK(mode)) {
++		if (get_sha1_hex(buf + strlen("Subproject commit "), ce->sha1))
++			die("corrupt patch for subproject %s", path);
++	} else if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
+ 		die("unable to create backing store for newly created file %s", path);
+ 	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
+ 		die("unable to add cache entry for %s", path);
+@@ -2398,6 +2419,13 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	int fd;
+ 	char *nbuf;
+ 
++	if (S_ISGITLINK(mode)) {
++		struct stat st;
++		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
++			return 0;
++		return mkdir(path, 0777);
++	}
++
+ 	if (has_symlinks && S_ISLNK(mode))
+ 		/* Although buf:size is counted string, it also is NUL
+ 		 * terminated.
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index e8ce7cd..cede2e7 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -175,4 +175,12 @@ test_expect_success 'checkout superproject with subproject already present' '
+ 	git-checkout master
+ '
+ 
++test_expect_success 'rebase with subproject changes' '
++	git-checkout initial &&
++	echo t > t &&
++	git add t &&
++	git-commit -m "change t" &&
++	git-rebase HEAD master
++'
++
+ test_done
+-- 
+1.5.3.rc4.29.g74276-dirty
