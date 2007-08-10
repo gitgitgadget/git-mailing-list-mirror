@@ -1,83 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Bug in gitk: can't unset "idinlist(...) ..."
-Date: Fri, 10 Aug 2007 11:14:13 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708101109310.30176@woody.linux-foundation.org>
-References: <20070810154108.GA779@ruiner>
- <20070810173242.GA23628@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Fix "git commit directory/" performance anomaly
+Date: Fri, 10 Aug 2007 11:31:34 -0700
+Message-ID: <7vsl6rs0l5.fsf@assigned-by-dhcp.cox.net>
+References: <20070809163026.GD568@mbox.bz>
+	<alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
+	<7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net>
+	<7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
+	<20070809165218.9b76ebf7.seanlkml@sympatico.ca>
+	<alpine.LFD.0.999.0708091426050.25146@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
+	<7vtzr8wemb.fsf@assigned-by-dhcp.cox.net>
+	<7vps1wwa5w.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708091734210.25146@woody.linux-foundation.org>
+	<7vhcn8w6sw.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708091754150.25146@woody.linux-foundation.org>
+	<7v643ovyli.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.999.0708100852540.30176@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0708100924570.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brian Hetro <whee@smaertness.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 10 20:14:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, moe <moe-git@mbox.bz>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 10 20:31:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJZ0V-00017m-Ka
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 20:14:43 +0200
+	id 1IJZGt-0006nG-KE
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 20:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848AbXHJSOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 14:14:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbXHJSOi
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 14:14:38 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51178 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751626AbXHJSOh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 14:14:37 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AIEJsZ031159
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 10 Aug 2007 11:14:20 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AIEDMW001869;
-	Fri, 10 Aug 2007 11:14:14 -0700
-In-Reply-To: <20070810173242.GA23628@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.21__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753030AbXHJSbg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 14:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753790AbXHJSbg
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 14:31:36 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62700 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753030AbXHJSbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 14:31:35 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070810183134.HUOG7956.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 10 Aug 2007 14:31:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aJXa1X0081kojtg0000000; Fri, 10 Aug 2007 14:31:34 -0400
+In-Reply-To: <alpine.LFD.0.999.0708100924570.30176@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Fri, 10 Aug 2007 09:51:58 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55561>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> This trivial patch avoids re-hashing files that are already clean in the 
+> index. This mirrors what commit 0781b8a9b2fe760fc4ed519a3a26e4b9bd6ccffe 
+> did for "git add .", only for "git commit ." instead.
 
-On Fri, 10 Aug 2007, Jeff King wrote:
-> 
-> So maybe the right attitude is "hg2git should not be generating such
-> broken commits"
-
-I think this is true.
-
-> (or "gitk should not barf on such broken commits" :) ),
-
-And I think this is *also* true.
-
-> but I thought I would mention it as an additional data point for those
-> changes. Should git handle duplicate parents of this fashion more
-> robustly? Or should we just assume that they should never have been
-> generated in the first place?
-
-I think git itself is quite robust in the face of duplicate parents, and 
-it really is a gitk bug that it has problems with them. That said, I don't 
-think we should *assume* they don't happen, and while we should consider 
-it a bug in hg2git that they did, it is not a "serious" bug per se. It's 
-only gitk that reacts this violently to it.
-
-I guess we could prune duplicate parents even for commits that didn't get 
-rewritten, but I don't see why we really should even have to. I think Paul 
-already said that he should look into it:
-
-			    "I see from the following messages that the
-    bug turned out to be elsewhere in git, but it looks like gitk should 
-    be more robust and do something sensible rather than just throwing a 
-    Tcl error.  I'll look at it."
-
-so I think we should fix gitk regardless, and then *maybe* also consider 
-doing parent simplification universally.
-
-			Linus
+Makes sense.  Thanks.
