@@ -1,58 +1,51 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Documentation/git-svn: Instructions for cloning a git-svn-created repository
-Date: Thu, 9 Aug 2007 18:43:12 -0700
-Message-ID: <20070810014312.GE9764@hand.yhbt.net>
-References: <1186388203181-git-send-email-aroben@apple.com> <20070809193759.GA4545@untitled> <46BBADBB.6070502@midwinter.com>
+From: Joe Perches <joe@perches.com>
+Subject: Re: git and linux kernel source
+Date: Thu, 09 Aug 2007 18:59:47 -0700
+Message-ID: <1186711187.3073.75.camel@localhost>
+References: <1186701106.3073.71.camel@localhost>
+	 <20070809231718.GH12875@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Roben <aroben@apple.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 03:43:21 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Aug 10 04:00:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJJX5-00007B-EK
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 03:43:19 +0200
+	id 1IJJnF-0003Ub-Mv
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 04:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756088AbXHJBnQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Aug 2007 21:43:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755865AbXHJBnP
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 21:43:15 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:34280 "EHLO hand.yhbt.net"
+	id S1758410AbXHJB76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Aug 2007 21:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758357AbXHJB76
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Aug 2007 21:59:58 -0400
+Received: from DSL022.labridge.com ([206.117.136.22]:3349 "EHLO Perches.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755783AbXHJBnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2007 21:43:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id E02082DC08D;
-	Thu,  9 Aug 2007 18:43:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <46BBADBB.6070502@midwinter.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758296AbXHJB74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2007 21:59:56 -0400
+Received: from [192.168.1.128] ([192.168.1.128])
+	by Perches.com (8.9.3/8.9.3) with ESMTP id SAA27043;
+	Thu, 9 Aug 2007 18:53:36 -0700
+In-Reply-To: <20070809231718.GH12875@fieldses.org>
+X-Mailer: Evolution 2.10.2-2.1mdv2007.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55499>
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> Eric Wong wrote:
-> >I personally believe using rsync to clone repositories created with
-> >git-svn is the simplest and best method for now.
-> 
-> But then you don't get to use alternates -- one of the things I like 
-> about the idea of doing a "git clone" of a git-svn repository is that 
-> you could do "git clone -s" and get the full svn history with a tiny 
-> .git directory.
+On Thu, 2007-08-09 at 19:17 -0400, J. Bruce Fields wrote:
+> > Is there a way to separate the resultant single patch into multiple
+> > patches by subdirectory?  Perhaps some git-rev-parse option?
+> Something like
+> 	for each sub/dir:
+> 		git add sub/dir
+> 		git commit -m "use bar not foo in sub/dir"
+> should do it.  (Of course, in the particular case above the patches you
+> ended up with probably wouldn't compile individually.)
 
-If I'm working on multiple directories  on the same machine, I have
-libflcow in my LD_PRELOAD and use cp -al (GNU-specific) to make hardlink
-images of my working directory.  I've been using fl-cow with cp -al
-since long before I used git.
+Nor would it likely survive a git bisect, but it's a start.
+My goal is to eventually commit by maintainer.
 
-The new-ish git-new-workdir command could probably be a replacement
-for git-clone / flcow + cp -al / rsync in these situations as well.
-
--- 
-Eric Wong
+Thanks, Joe
