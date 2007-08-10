@@ -1,103 +1,81 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Relative alternates question
-Date: Fri, 10 Aug 2007 18:45:56 +0200
-Message-ID: <20070810164556.GB3442@efreet.light.src>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="p4qYPpj5QlsIQJ0K"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 10 18:46:46 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: msysgit: does git gui work?
+Date: Fri, 10 Aug 2007 18:47:50 +0200
+Message-ID: <8CC7951E-48C9-411E-8F98-776661C38BD3@zib.de>
+References: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de> <E886F099-5E9F-4785-A560-F9AAAA4E4C1F@zib.de> <20070810053158.GJ24573@spearce.org> <B6C82889-ABE0-4B3D-A455-A2EE1CE48297@zib.de> <Pine.LNX.4.64.0708101113380.21857@racer.site> <3351C69E-C0A8-4D02-9E04-085E18F1DF75@zib.de> <Pine.LNX.4.64.0708101309430.21857@racer.site> <31EFF30A-CC7A-4BB0-B083-13A1F7B62781@zib.de> <Pine.LNX.4.64.0708101452060.21857@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 18:50:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJXdL-0003b4-H8
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:46:43 +0200
+	id 1IJXh6-00050K-Rt
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936390AbXHJQqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 12:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939707AbXHJQqF
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:46:05 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:32998 "EHLO ns1.bluetone.cz"
+	id S938640AbXHJQtw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 12:49:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937799AbXHJQtw
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:49:52 -0400
+Received: from mailer.zib.de ([130.73.108.11]:63634 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765174AbXHJQqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 12:46:03 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 0395C5746E
-	for <git@vger.kernel.org>; Fri, 10 Aug 2007 18:46:01 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id mKvA88kHlddE for <git@vger.kernel.org>;
-	Fri, 10 Aug 2007 18:45:58 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 508805725C
-	for <git@vger.kernel.org>; Fri, 10 Aug 2007 18:45:58 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IJXca-0001Mz-UL
-	for git@vger.kernel.org; Fri, 10 Aug 2007 18:45:56 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S937238AbXHJQtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 12:49:51 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7AGl3fK006514;
+	Fri, 10 Aug 2007 18:49:45 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7AGl2XT029263
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 10 Aug 2007 18:47:02 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0708101452060.21857@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55554>
 
 
---p4qYPpj5QlsIQJ0K
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Aug 10, 2007, at 3:53 PM, Johannes Schindelin wrote:
 
-Hello,
+> On Fri, 10 Aug 2007, Steffen Prohaska wrote:
+>
+>> I have a mob for /.git, but I do not have the setup for /git/.git.  
+>> Maybe
+>> I deleted it because I didn't understand what is means.
+>
+> Ah, I misunderstood.  Yes, it is quite possible to have a mob  
+> installed
+> for 4msysgit.git by default.  Should by done in
+> msysgit.git:share/GitMe/setup-msysgit.sh.
 
-Trying to solve a problem with object/info/alternates and http (a rather
-problematic combination) I noticed the following code in sha1_file.c:336 in
-function link_alt_odb_entries.
-(current master -- v1.5.3-rc4-41-g7efeb8f):
+Yeah, but what is the right URL to push mob to? I wasn't abel to
+figure it out.
 
-                        if ((*last !=3D '/') && depth) {
-                                error("%s: ignoring relative alternate obje=
-ct store %s",
-                                                relative_base, last);
-                        } else {
-                                link_alt_odb_entry(last, cp - last,
-                                                relative_base, depth);
-                        }
 
-The last is (if I understood the code correctly) begining of line, cp is end
-of that line and depth is depth of recursion in resolving the alternates. N=
-ow
-unless I read the code completely wrong, it means, that when git reads
-a repository, it resolves relative paths in it's objects/info/alternates, b=
-ut
-if that contains further alternates, it would ignore relative alternate pat=
-hs
-there -- and therefore not find objects needed from there.
+>> Whoever has setup the mob configurations, maybe it would be a good  
+>> idea
+>> to forbid non-fast-forward but instead allow the creation of new mob*
+>> branches. If I can't push to mob, I could push to mob-topic instead.
+>> Cleanup would be in the responsibility of the repository owner.
+>
+> This is not possible.  The refusal of a non-fast-forward is a per- 
+> repo,
+> not a per-user, configuration.
 
-And my question is, is there any good reason to reject relative paths in
-alternates of an alternate? From what I see the recursive call to
-link_alt_odb_entries (via link_alt_odb_entry and read_info_alternates) has
-all the information it needs to resolve such paths.
+I see.
 
-Thanks,
+I expected some scripting magic in place that already deals with  
+handling
+the mob user, and expected it could be used to deny fast-forwards on  
+a per
+user basis. But I haven't looked into the git scripting hooks so far.
+So I have basically no clue about what I'm talking here ;)
 
-Jan
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---p4qYPpj5QlsIQJ0K
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGvJZERel1vVwhjGURAt3bAJ932lFpa3L3HF5v1eYm0MeAUI3acQCghF6o
-YPD2anhkRLlnks4U/1XJDSc=
-=AoNM
------END PGP SIGNATURE-----
-
---p4qYPpj5QlsIQJ0K--
+	Steffen
