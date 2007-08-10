@@ -1,117 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git and larger trees, not so fast?
-Date: Thu, 09 Aug 2007 22:55:27 -0700
-Message-ID: <7vy7gkue5s.fsf@assigned-by-dhcp.cox.net>
-References: <20070809163026.GD568@mbox.bz>
-	<alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
-	<7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net>
-	<7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
-	<20070809165218.9b76ebf7.seanlkml@sympatico.ca>
-	<alpine.LFD.0.999.0708091426050.25146@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
-	<7vtzr8wemb.fsf@assigned-by-dhcp.cox.net>
-	<7vps1wwa5w.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0708091734210.25146@woody.linux-foundation.org>
-	<7vhcn8w6sw.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0708091754150.25146@woody.linux-foundation.org>
-	<7v643ovyli.fsf@assigned-by-dhcp.cox.net>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Fri, 10 Aug 2007 08:07:03 +0200
+Message-ID: <e7bda7770708092307g49fa9976l5f9972592129fc8e@mail.gmail.com>
+References: <f99cem$4a4$1@sea.gmane.org>
+	 <30e4a070708071042g5623cb7ak724a8b8e588bd1da@mail.gmail.com>
+	 <07BB2580-4406-496F-8ACE-F6A03D1687BE@zib.de>
+	 <30e4a070708080650j5de7ee92p4acd7e82de7d9dff@mail.gmail.com>
+	 <A2397231-1B81-4AD4-87CB-8FF8FB9BA89C@zib.de>
+	 <30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
+	 <Pine.LNX.4.64.0708081810130.14781@racer.site>
+	 <75EB313E-807D-44FB-A186-A151F182B47B@zib.de>
+	 <Pine.LNX.4.64.0708082228520.21857@racer.site>
+	 <76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, moe <moe-git@mbox.bz>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 10 07:55:39 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 08:07:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJNTB-0002Nv-Pu
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 07:55:34 +0200
+	id 1IJNep-0004j0-VU
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 08:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555AbXHJFza (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 01:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbXHJFza
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 01:55:30 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:58736 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512AbXHJFz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 01:55:29 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070810055528.CTWI1335.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 10 Aug 2007 01:55:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id a5vT1X00B1kojtg0000000; Fri, 10 Aug 2007 01:55:28 -0400
-In-Reply-To: <7v643ovyli.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 09 Aug 2007 20:48:41 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752208AbXHJGHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 02:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbXHJGHH
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 02:07:07 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:41250 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752182AbXHJGHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 02:07:05 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so804161wah
+        for <git@vger.kernel.org>; Thu, 09 Aug 2007 23:07:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dyyLChoZaIhkOip5QY/LR15GGCEQfI9I3yOkI5K31SZq00thklFE406cgNeMoo/nFFbIJiBANP6W5ZJ3w7A09JFKfnK0HrMgC+q74OiPwSkdnYC4wZnBhMWEB9eT4rCRQhOlGKQaPKiFuzk8f+5TGQYux8bzRw77wwD3yILqAyA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B0ixsbJFpIcTecf0QscVi1dVC44P0kECv2E+7Q+F0IS8nY69XdHVIV8G1WMRF5t+SNCv3Vpjo2xVaPGgkIwZRFLatvnfVCwZ+bUh0Oa+h7mRXfu6sc5G9wNq9lhodRtlZ1RZAkm8PegE2gpehZI71lYhJK8bWNvk2oBw0DskG08=
+Received: by 10.115.77.1 with SMTP id e1mr2197975wal.1186726024124;
+        Thu, 09 Aug 2007 23:07:04 -0700 (PDT)
+Received: by 10.114.47.7 with HTTP; Thu, 9 Aug 2007 23:07:03 -0700 (PDT)
+In-Reply-To: <76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55508>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 8/9/07, Steffen Prohaska <prohaska@zib.de> wrote:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> The next would be a good integration with
+> useful tools on Windows, for example git-mergetool should launch
+> Windows three-way merge tools.
+
+Do you mean tools included in Windows or tools using the Windows API?
+
+
+> My goal would be to type 'make windist' in the official repo and
+> get a very basic installer (maybe just a zip archive) that contains
+> everything needed to run git on Windows. Unpacking this self-contained
+> installer on a freshly installed Windows should get you going. There
+> should be no need to install Cygwin or something else.
 >
->> (I didn't test it, though, maybe I missed something).
+> Is this realistic?
+> What is needed to get there?
+> What would be an estimated timeframe to achieve this goal?
 >
-> I do not think the change affects the normal codepath.  The
-> one-liner patch to git-commit.sh touches the codepath that
-> updates the index used only to write out the partial commit, and
-> losing the cached stat info from that index does not matter, as
-> that index is removed immediately after writing the tree out and
-> is never compared with working tree as far as I can tell.
+> Will all this run on Windows XP 64 bit and Windows Vista 64 bit?
 
-FWIW, moe's script with and without two patches gives these
-numbers for me.
+How fast can you type?
 
-      with patches                      without patches
-----------------------------------------------------------------
-# git init                          | # git init			       
-Initialized empty Git repository in | Initialized empty Git repository in  
-                                    | 				       
-real    0m0.029s                    | real    0m0.004s		       
-user    0m0.000s                    | user    0m0.000s		       
-sys     0m0.008s                    | sys     0m0.004s		       
-# git add .                         | # git add .			       
-                                    | 				       
-real    0m2.947s                    | real    0m3.038s		       
-user    0m0.808s                    | user    0m0.876s		       
-sys     0m2.120s                    | sys     0m1.996s		       
-# git commit -a                     | # git commit -a		       
-                                    | 				       
-real    0m4.537s                    | real    0m4.674s		       
-user    0m1.980s                    | user    0m1.888s		       
-sys     0m2.356s                    | sys     0m2.332s		       
-# git status (three times)          | # git status (three times)	       
-# On branch master                  | # On branch master		       
-nothing to commit (working directory| nothing to commit (working directory 
-                                    | 				       
-real    0m0.718s                    | real    0m17.323s		       
-user    0m0.300s                    | user    0m16.913s		       
-sys     0m0.416s                    | sys     0m0.396s		       
-# On branch master                  | # On branch master		       
-nothing to commit (working directory| nothing to commit (working directory 
-                                    | 				       
-real    0m0.707s                    | real    0m16.994s		       
-user    0m0.312s                    | user    0m16.573s		       
-sys     0m0.400s                    | sys     0m0.416s		       
-# On branch master                  | # On branch master		       
-nothing to commit (working directory| nothing to commit (working directory 
-                                    | 				       
-real    0m0.720s                    | real    0m18.042s		       
-user    0m0.344s                    | user    0m17.633s		       
-sys     0m0.376s                    | sys     0m0.408s		       
-# git commit (one path)             | # git commit (one path)	       
-Created commit 3483df5: expose the t| Created commit ced664f: expose the t 
- 1 files changed, 1 insertions(+), 1|  1 files changed, 1 insertions(+), 1 
-                                    | 				       
-real    0m3.057s                    | real    0m38.130s		       
-user    0m0.888s                    | user    0m37.458s		       
-sys     0m0.712s                    | sys     0m0.616s                     
-----------------------------------------------------------------
+Why does it have to be the _official_ repo? Git have submodule
+support, so you could do a repo called
+"my_excellent_git_environment_for_windows.git" and have the official
+repo as submodule (msysgit is done this way).
+
+You could even start with cloning the TortoiseSVN repo using git. Or
+maybe even better, since KDE4 will compile on Windows [take on wood],
+do it as a kioslave (or whatever mechanism) to have an environment
+that works in both Windows and Linux and most OtherOs:es. Aiming for
+environments that works on several OSes is a good thing for future
+migrations.
+
+//Torgil
