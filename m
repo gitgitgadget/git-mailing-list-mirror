@@ -1,118 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/2] Optimize the two-way merge of git-read-tree too
-Date: Fri, 10 Aug 2007 12:53:51 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708101240200.30176@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0708101213560.30176@woody.linux-foundation.or
- g> <alpine.LFD.0.999.0708101216000.30176@woody.linux-foundation.org>
- <alpine.LFD.0.999.0708101224110.30176@woody.linux-foundation.org>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: msysgit: does git gui work?
+Date: Fri, 10 Aug 2007 15:00:34 -0700 (PDT)
+Message-ID: <559166.44497.qm@web38913.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-To: Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 10 21:54:13 2007
+To: Steffen Prohaska <prohaska@zib.de>,
+	Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Sat Aug 11 00:01:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJaYm-00016F-9r
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 21:54:12 +0200
+	id 1IJcXx-0000Hg-9c
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 00:01:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765225AbXHJTyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 15:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935520AbXHJTyE
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 15:54:04 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54123 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752417AbXHJTyA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 15:54:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AJru1o004300
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 10 Aug 2007 12:53:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AJrpkB005578;
-	Fri, 10 Aug 2007 12:53:51 -0700
-In-Reply-To: <alpine.LFD.0.999.0708101224110.30176@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.224 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.23__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754339AbXHJWAj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 18:00:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbXHJWAi
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 18:00:38 -0400
+Received: from web38913.mail.mud.yahoo.com ([209.191.125.119]:34970 "HELO
+	web38913.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755363AbXHJWAf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 18:00:35 -0400
+Received: (qmail 44504 invoked by uid 60001); 10 Aug 2007 22:00:34 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=4bV4Yz/NIUjZv1c8qowLD4VhzWkhZiRFI2KJVXoCyGX0m0iFlJ88JuhJaIIyGspkS289++aB7wh8JM9GLi0GFCVMlSC8LNz/mX5+HpDaDdy/vf1oCK8Ba8LjJx7zvxW6macrdGBxUlXQEk09EVn0+6Qjr3G17ZLFsY5aD0m981g=;
+X-YMail-OSG: _cscJtIVM1ni2KW2Ud.PbgrGyXmfMNaeFoOrQe4.WmBE6xxcbIETmFPV0au3mH.lPjAM9tqvlF53zkv4xxu2cC3Bx_BBRhi3WkAKWQ4azsuI4EZ_93cJTKpYG3yFUA--
+Received: from [128.251.102.204] by web38913.mail.mud.yahoo.com via HTTP; Fri, 10 Aug 2007 15:00:34 PDT
+X-Mailer: YahooMailRC/651.48 YahooMailWebService/0.7.119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55573>
 
-
-On Fri, 10 Aug 2007, Linus Torvalds wrote:
 > 
-> This trivially optimizes the two-way merge case of git-read-tree too, 
-> which affects switching branches.
+> btw, does someone know, where stderr of wish is piped to.
+> It doesn't appear on the mingw console, which makes debugging
+> more challenging.
+> 
 
-Side note, if this wasn't obvious: this series of three patches (four, if 
-you count the one in this email) obviates the need for Junio's hacky fix 
-from yesterday that removed the "-i -m" flags from "git read-tree" in 
-git-commit.sh, and made builtin-read-tree sometimes use the "read_tree()" 
-function.
+"wish" redirects it. If you want to see it, you need to add a "console show" command near the top of the script. Another way around this, is to have tclsh as the program, and do a "package require Tk"
 
-Now "unpack_trees()" is just fast enough that we don't need to avoid it 
-(although it's probably still a good idea to eventually convert it to use 
-the traverse_trees() infrastructure some day - just to avoid having 
-extraneous tree traversal functions).
+HTH,
+    --brett
 
-And as mentioned, the three-way case *should* be as trivial as the 
-following. It passes all the tests, and I verified that a conflicting 
-merge in the 100,000 file horror-case merged correctly (with the conflict 
-markers) in 0.687 seconds with this, so it works, but I'm lazy and 
-somebody else should double-check it.
 
-(Again - *without* this patch, the merge took 8.355 seconds, so this patch 
-really does make a huge difference for merge performance with lots and 
-lots of files, and we're not talking percentages, we're talking 
-orders-of-magnitude differences!)
 
-		Linus
 
----
- unpack-trees.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 810816e..ccfeb6e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -667,7 +667,6 @@ int threeway_merge(struct cache_entry **stages,
- 	int no_anc_exists = 1;
- 	int i;
- 
--	remove_entry(remove);		
- 	for (i = 1; i < o->head_idx; i++) {
- 		if (!stages[i] || stages[i] == o->df_conflict_entry)
- 			any_anc_missing = 1;
-@@ -730,8 +729,10 @@ int threeway_merge(struct cache_entry **stages,
- 	}
- 
- 	/* #1 */
--	if (!head && !remote && any_anc_missing)
-+	if (!head && !remote && any_anc_missing) {
-+		remove_entry(remove);
- 		return 0;
-+	}
- 
- 	/* Under the new "aggressive" rule, we resolve mostly trivial
- 	 * cases that we historically had git-merge-one-file resolve.
-@@ -763,6 +764,7 @@ int threeway_merge(struct cache_entry **stages,
- 		if ((head_deleted && remote_deleted) ||
- 		    (head_deleted && remote && remote_match) ||
- 		    (remote_deleted && head && head_match)) {
-+			remove_entry(remove);
- 			if (index)
- 				return deleted_entry(index, index, o);
- 			else if (ce && !head_deleted)
-@@ -785,6 +787,7 @@ int threeway_merge(struct cache_entry **stages,
- 		verify_uptodate(index, o);
- 	}
- 
-+	remove_entry(remove);
- 	o->nontrivial_merge = 1;
- 
- 	/* #2, #3, #4, #6, #7, #9, #10, #11. */
+       
+____________________________________________________________________________________
+Take the Internet to Go: Yahoo!Go puts the Internet in your pocket: mail, news, photos & more. 
+http://mobile.yahoo.com/go?refer=1GNXIC
