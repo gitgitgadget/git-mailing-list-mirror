@@ -1,106 +1,69 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Reinstate the old behaviour when GIT_DIR is set and GIT_WORK_TREE is unset
-Date: Fri, 10 Aug 2007 13:28:21 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070810112821.GA11026@informatik.uni-freiburg.de>
-References: <Pine.LNX.4.64.0708042319470.14781@racer.site> <20070809223530.GA29680@cassiopeia> <Pine.LNX.4.64.0708100129200.21857@racer.site> <7vd4xww6mr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0708100210280.21857@racer.site> <7vr6mbu8iv.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: msysgit: does git gui work?
+Date: Fri, 10 Aug 2007 13:40:28 +0200
+Message-ID: <81b0412b0708100440l116f934ft22d3ac3c71e2e7cf@mail.gmail.com>
+References: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de>
+	 <E886F099-5E9F-4785-A560-F9AAAA4E4C1F@zib.de>
+	 <20070810053158.GJ24573@spearce.org>
+	 <B6C82889-ABE0-4B3D-A455-A2EE1CE48297@zib.de>
+	 <Pine.LNX.4.64.0708101113380.21857@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 13:28:50 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Steffen Prohaska" <prohaska@zib.de>,
+	"Marius Storm-Olsen" <marius@trolltech.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 13:40:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJSfi-0002jC-6c
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 13:28:50 +0200
+	id 1IJSrM-0007Gx-TA
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 13:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757078AbXHJL2g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 10 Aug 2007 07:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757565AbXHJL2g
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 07:28:36 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:37094 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757030AbXHJL2f (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 07:28:35 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IJSfS-0000uA-E0; Fri, 10 Aug 2007 13:28:34 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7ABSTgL011438;
-	Fri, 10 Aug 2007 13:28:29 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7ABSLs6011436;
-	Fri, 10 Aug 2007 13:28:21 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+	id S1763803AbXHJLkb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 07:40:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763749AbXHJLkb
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 07:40:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:33416 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763723AbXHJLka (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 07:40:30 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so229495nfb
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 04:40:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=p9UdBVx1PfwuF9TCmCOJsAtRyQFFOuykt2smXFHooSHnlm7oe8y3qTRDINupgmZZa6cHt2ki5WGgiMK7IidVFvObPaKhrsxhwE6tmsreGOOQI5bB7gJVBahxo55sVYw7CJIt9IurHRf+DNfht4ge3lc1jwnjaToXiw6wUq/T00Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=A5KIJbLQbc0yxd0VzWnSV3HKtuDaCJPz64SmMM60OQ4P5J3esBZ3LYnNxXkX/msEMzbXRlQiezfFLDAv/+WGFoff6guhqn9aofefEVXmPrMqX+4RbmNvRwo1cYi3TGVbdU1+gITtaQQSYySoqpO7mbc+gnTUpZSzbld0j7CHr30=
+Received: by 10.78.149.15 with SMTP id w15mr1224047hud.1186746028489;
+        Fri, 10 Aug 2007 04:40:28 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Fri, 10 Aug 2007 04:40:28 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708101113380.21857@racer.site>
 Content-Disposition: inline
-In-Reply-To: <7vr6mbu8iv.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55531>
 
-Hello Junio,
+On 8/10/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Fri, 10 Aug 2007, Steffen Prohaska wrote:
+>
+> > I recognized that '.' is included in the PATH in /etc/profile.
+> > I don't think this is a good idea. At least it bit me once when
+> > I expected to run /bin/git but instead /git/./git was chosen.
+> > Shouldn't we remove '.' from the PATH?
+>
+> In my experience, Windows users (not Mac users forced to use Windows)
+> _expect_ "." to be in the PATH.
 
-Junio C Hamano wrote:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Date: Sun, 5 Aug 2007 14:12:53 +0100
->=20
-> The old behaviour was to unilaterally default to the cwd is the work =
-tree
-> when GIT_DIR was set, but GIT_WORK_TREE wasn't, no matter if we are i=
-nside
-> the GIT_DIR, or if GIT_DIR is actually something like ../../../.git.
->=20
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->=20
->  Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
->  > I think I sent a patch for that, but was negative about it, even i=
-f I=20
->  > promised not to question your decision.
->=20
->  Yes you did.  Here is a refresher with an affected test
->  adjusted.
->=20
->  We already have a few changes that worked around the semantics
->  change by either setting GIT_WORK_TREE or cd'ing up, but I
->  think they should not need to be reverted.
->=20
->  It makes more sense to keep the old semantics -- people who use
->  unusual GIT_DIR setting should know what they are doing, and
->  the new GIT_WORK_TREE feature (and core.worktree) would give
->  them better control.  We just should not break existing users
->  that set GIT_DIR and nothing else.  Which means I need another
->  rewrite on the Release Notes, and probably yet another rc
->  cycle.
-
-I don't know if you planed to make=20
-
-	git checkout-index --prefix=3D/tmp/tra -a
-
-work (again) in a bare repo.  Probably not, so it's no surprise that it
-still doesn't work.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-cat /*dev/null; echo 'Hello World!';
-cat > /dev/null <<*/=20
-() { } int main() { printf("Hello World!\n");}
-/* */
+...because they _cannot_ know otherwise. In Windows, you cannot remove "."
+from PATH, it is implicitly in it.
+It is actually worse than that: the system directories are in PATH
+too. Unconditionally.
+Yes, the same system directories all them programs put their .exes into.
