@@ -1,81 +1,138 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: msysgit: does git gui work?
-Date: Fri, 10 Aug 2007 18:47:50 +0200
-Message-ID: <8CC7951E-48C9-411E-8F98-776661C38BD3@zib.de>
-References: <3CD6111C-13B5-444C-A28C-A7445C8A199B@zib.de> <E886F099-5E9F-4785-A560-F9AAAA4E4C1F@zib.de> <20070810053158.GJ24573@spearce.org> <B6C82889-ABE0-4B3D-A455-A2EE1CE48297@zib.de> <Pine.LNX.4.64.0708101113380.21857@racer.site> <3351C69E-C0A8-4D02-9E04-085E18F1DF75@zib.de> <Pine.LNX.4.64.0708101309430.21857@racer.site> <31EFF30A-CC7A-4BB0-B083-13A1F7B62781@zib.de> <Pine.LNX.4.64.0708101452060.21857@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 10 18:50:38 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Fix "git commit directory/" performance anomaly
+Date: Fri, 10 Aug 2007 09:51:58 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708100924570.30176@woody.linux-foundation.org>
+References: <20070809163026.GD568@mbox.bz>
+ <alpine.LFD.0.999.0708090948250.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091015500.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091056180.25146@woody.linux-foundation.org>
+ <7vmyx0y3vp.fsf@assigned-by-dhcp.cox.net> <7v7io4xwvp.fsf@assigned-by-dhcp.cox.net>
+ <20070809165218.9b76ebf7.seanlkml@sympatico.ca>
+ <alpine.LFD.0.999.0708091426050.25146@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0708091444550.25146@woody.linux-foundation.org>
+ <7vtzr8wemb.fsf@assigned-by-dhcp.cox.net> <7vps1wwa5w.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.999.0708091734210.25146@woody.linux-foundation.org>
+ <7vhcn8w6sw.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.999.0708091754150.25146@woody.linux-foundation.org>
+ <7v643ovyli.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.999.0708100852540.30176@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, moe <moe-git@mbox.bz>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 18:53:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJXh6-00050K-Rt
-	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:50:37 +0200
+	id 1IJXjy-000690-SD
+	for gcvg-git@gmane.org; Fri, 10 Aug 2007 18:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938640AbXHJQtw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 12:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937799AbXHJQtw
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:49:52 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63634 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S937238AbXHJQtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 12:49:51 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7AGl3fK006514;
-	Fri, 10 Aug 2007 18:49:45 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7AGl2XT029263
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 10 Aug 2007 18:47:02 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0708101452060.21857@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1763847AbXHJQxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 12:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934127AbXHJQxa
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 12:53:30 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:38267 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762484AbXHJQx2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2007 12:53:28 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AGq4LK024873
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 10 Aug 2007 09:52:05 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7AGpw9F031332;
+	Fri, 10 Aug 2007 09:51:58 -0700
+In-Reply-To: <alpine.LFD.0.999.0708100852540.30176@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.20__
+X-MIMEDefang-Filter: lf$Revision: 1.184 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55555>
 
 
-On Aug 10, 2007, at 3:53 PM, Johannes Schindelin wrote:
+This trivial patch avoids re-hashing files that are already clean in the 
+index. This mirrors what commit 0781b8a9b2fe760fc4ed519a3a26e4b9bd6ccffe 
+did for "git add .", only for "git commit ." instead.
 
-> On Fri, 10 Aug 2007, Steffen Prohaska wrote:
->
->> I have a mob for /.git, but I do not have the setup for /git/.git.  
->> Maybe
->> I deleted it because I didn't understand what is means.
->
-> Ah, I misunderstood.  Yes, it is quite possible to have a mob  
-> installed
-> for 4msysgit.git by default.  Should by done in
-> msysgit.git:share/GitMe/setup-msysgit.sh.
+This improves the cold-cache case immensely, since we don't need to bring 
+in all the file contents, just the index and any files dirty in the index.
 
-Yeah, but what is the right URL to push mob to? I wasn't abel to
-figure it out.
+Before:
 
+	[torvalds@woody linux]$ time git commit .
+	real    1m49.537s
+	user    0m3.892s
+	sys     0m2.432s
 
->> Whoever has setup the mob configurations, maybe it would be a good  
->> idea
->> to forbid non-fast-forward but instead allow the creation of new mob*
->> branches. If I can't push to mob, I could push to mob-topic instead.
->> Cleanup would be in the responsibility of the repository owner.
->
-> This is not possible.  The refusal of a non-fast-forward is a per- 
-> repo,
-> not a per-user, configuration.
+After:
 
-I see.
+	[torvalds@woody linux]$ time git commit .
+	real    0m14.273s
+	user    0m1.312s
+	sys     0m0.516s
 
-I expected some scripting magic in place that already deals with  
-handling
-the mob user, and expected it could be used to deny fast-forwards on  
-a per
-user basis. But I haven't looked into the git scripting hooks so far.
-So I have basically no clue about what I'm talking here ;)
+(both after doing a "echo 3 > /proc/sys/vm/drop_caches" to get cold-cache 
+behaviour - even with the index optimization git still has to "lstat()" 
+all the files, so with a truly cold cache, bringing all the inodes in 
+will take some time).
 
-	Steffen
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+On Fri, 10 Aug 2007, Linus Torvalds wrote:
+> 
+> Try this on the kernel archive (use a clean one, so these things *should* 
+> all be no-ops):
+> 
+> 	time sh -c "git add . ; git commit"
+> 
+> which is nice and fast and takes just over a second for me, but then try
+> 
+> 	time git commit .
+> 
+> which *should* be nice and fast, but it takes forever, because we now 
+> re-compute all the SHA1's for *every* file. Of course, if it's all in the 
+> cache, it's still just 4s for me, but I tried with a cold cache, and it 
+> was over half a minute!
+> 
+> (I don't actually ever do something like "git commit .", but I could see 
+> people doing it. What I *do* do is that if I have multiple independent 
+> changes, I may actually do "git commit fs" to commit just part of them, 
+> and rather than list all the files, I literally just say "commit that 
+> sub-tree". So this really is another valid performance issue).
+> 
+> Sad.
+> 
+> 			Linus
+> 
+---
+ builtin-update-index.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 509369e..8d22dfa 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -86,9 +86,15 @@ static int process_lstat_error(const char *path, int err)
+ 
+ static int add_one_path(struct cache_entry *old, const char *path, int len, struct stat *st)
+ {
+-	int option, size = cache_entry_size(len);
+-	struct cache_entry *ce = xcalloc(1, size);
++	int option, size;
++	struct cache_entry *ce;
++
++	/* Was the old index entry already up-to-date? */
++	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
++		return;
+ 
++	size = cache_entry_size(len);
++	ce = xcalloc(1, size);
+ 	memcpy(ce->name, path, len);
+ 	ce->ce_flags = htons(len);
+ 	fill_stat_cache_info(ce, st);
