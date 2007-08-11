@@ -1,134 +1,60 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v4, ping] gitk: let you easily specify lines of context in diff view
-Date: Sat, 11 Aug 2007 17:30:50 +0200
-Message-ID: <11868462503722-git-send-email-prohaska@zib.de>
-References: <11856503182381-git-send-email-prohaska@zib.de>
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Sat Aug 11 17:35:35 2007
+Subject: Re: [PATCH] gitk - Handle MouseWheel events on Windows
+Date: Sat, 11 Aug 2007 18:58:06 +0200
+Message-ID: <6F740E93-EE08-4CBD-9E8E-1E891D82A30B@zib.de>
+References: <1186440352826-git-send-email-mdl123@verizon.net> <11865372352543-git-send-email-mdl123@verizon.net> <11865372381125-git-send-email-mdl123@verizon.net> <46BDAA49.40802@verizon.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 11 18:58:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJt02-0006zg-1F
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 17:35:34 +0200
+	id 1IJuIG-0006Ru-HY
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 18:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbXHKPfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 11:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753667AbXHKPfF
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 11:35:05 -0400
-Received: from mailer.zib.de ([130.73.108.11]:61562 "EHLO mailer.zib.de"
+	id S1752646AbXHKQ6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 12:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbXHKQ6V
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 12:58:21 -0400
+Received: from mailer.zib.de ([130.73.108.11]:35044 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751364AbXHKPfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 11:35:04 -0400
+	id S1751790AbXHKQ6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 12:58:20 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BFV47b010702;
-	Sat, 11 Aug 2007 17:34:44 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BFUo8a011264;
-	Sat, 11 Aug 2007 17:30:50 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11856503182381-git-send-email-prohaska@zib.de>
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BGvMUm016758;
+	Sat, 11 Aug 2007 18:57:22 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1a312.pool.einsundeins.de [77.177.163.18])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BGvIYZ027619
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 11 Aug 2007 18:57:18 +0200 (MEST)
+In-Reply-To: <46BDAA49.40802@verizon.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55614>
 
-More lines of context sometimes help to better understand a diff.
-This patch introduces a text field above the box displaying the
-blobdiffs. You can type in the number of lines of context that
-you wish to view. The number of lines of context is initially
-always set to 3.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- gitk |   41 +++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 39 insertions(+), 2 deletions(-)
+On Aug 11, 2007, at 2:23 PM, Mark Levedahl wrote:
 
-rebased to the current master, fixed one trailing whitespace.
+> Ping - any chance of getting these two patches into 1.5.3? They fix  
+> a pair of long-standing frustrations for
+> Cygwin (and now msys/Windows) users:
+>
+> [PATCH] gitk - enable selected patch text on Windows
+> [PATCH] gitk - Handle MouseWheel events on Windows
 
-Any chance to get this patch applied? It works for me.
+Both work for me in msysgit.
 
-    Steffen
+Would be really, really nice to have them. Missing copy
+text from gitk is a bug in my opinion, which is fixed
+by the first patch. Support for MouseWheel is also nice
+to have.
 
-diff --git a/gitk b/gitk
-index f74ce51..2f86c7c 100755
---- a/gitk
-+++ b/gitk
-@@ -517,6 +517,7 @@ proc makewindow {} {
-     global textfont mainfont uifont tabstop
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-+    global diffcontextstring diffcontext
-     global maincursor textcursor curtextcursor
-     global rowctxmenu fakerowmenu mergemax wrapcomment
-     global highlight_files gdttype
-@@ -731,7 +732,16 @@ proc makewindow {} {
- 	-command changediffdisp -variable diffelide -value {0 1}
-     radiobutton .bleft.mid.new -text "New version" \
- 	-command changediffdisp -variable diffelide -value {1 0}
--    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
-+    label .bleft.mid.labeldiffcontext -text "      Lines of context: " \
-+    -font $uifont
-+    spinbox .bleft.mid.diffcontext -width 5 -font $textfont \
-+    -from 1 -increment 1 -to 10000000 \
-+    -validate all -validatecommand "diffcontextvalidate %P" \
-+    -textvariable diffcontextstring
-+    .bleft.mid.diffcontext set $diffcontext
-+    trace add variable diffcontextstring write diffcontextchange
-+    lappend entries .bleft.mid.diffcontext
-+    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
-     set ctext .bleft.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-tabs "[expr {$tabstop * $charspc}]" \
-@@ -4985,12 +4995,37 @@ proc gettreediffline {gdtf ids} {
-     return 0
- }
- 
-+# empty strings or integers accepted
-+proc diffcontextvalidate {v} {
-+    if {[string length $v] == 0} {
-+	return 1
-+    }
-+    if {[string is integer $v]} {
-+	if {$v > 0} {
-+	    return 1
-+	}
-+    }
-+    return 0
-+}
-+
-+proc diffcontextchange {n1 n2 op} {
-+    global diffcontextstring diffcontext
-+
-+    if {[string is integer $diffcontextstring]} {
-+        if {$diffcontextstring > 0} {
-+            set diffcontext $diffcontextstring
-+		    reselectline
-+        }
-+    }
-+}
-+
- proc getblobdiffs {ids} {
-     global diffopts blobdifffd diffids env
-     global diffinhdr treediffs
-+    global diffcontext
- 
-     set env(GIT_DIFF_OPTS) $diffopts
--    if {[catch {set bdf [open [diffcmd $ids {-p -C --no-commit-id}] r]} err]} {
-+    if {[catch {set bdf [open [diffcmd $ids "-p -C --no-commit-id -U$diffcontext"] r]} err]} {
- 	puts "error getting diffs: $err"
- 	return
-     }
-@@ -7646,6 +7681,8 @@ set markingmatches 0
- 
- set optim_delay 16
- 
-+set diffcontext 3
-+
- set nextviewnum 1
- set curview 0
- set selectedview 0
--- 
-1.5.3.rc4.31.g6adda
+	Steffen
