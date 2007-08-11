@@ -1,122 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] Add a test for git-commit being confused by relative GIT_DIR
-Date: Sun, 12 Aug 2007 00:02:28 +0200
-Organization: Organization?!?
-Message-ID: <85tzr5spaj.fsf@lola.goethe.zz>
-References: <7vbqddn8zj.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 00:02:35 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: msysgit, help: teach git help to open html from /doc/git/html/
+Date: Sun, 12 Aug 2007 00:05:21 +0200
+Message-ID: <37CBFBA3-6A07-44D7-BFCF-5C969C123000@zib.de>
+References: <51772B53-642F-4D52-9CF3-906A21FC0D6F@zib.de> <7vps1tlpbb.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 00:04:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJz2Y-0004Ez-Gk
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:02:34 +0200
+	id 1IJz4h-0004iE-Al
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760587AbXHKWCb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 18:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757948AbXHKWCb
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:02:31 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:51978 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756661AbXHKWCa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Aug 2007 18:02:30 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 492FA17FB25
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 00:02:29 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 3AC555BD6A
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 00:02:29 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-049-066.pools.arcor-ip.net [84.61.49.66])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 03352292B62
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 00:02:28 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 705831C3C79D; Sun, 12 Aug 2007 00:02:28 +0200 (CEST)
-In-Reply-To: <7vbqddn8zj.fsf@assigned-by-dhcp.cox.net>
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3927/Sat Aug 11 22:11:25 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1761458AbXHKWEo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 18:04:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761275AbXHKWEo
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:04:44 -0400
+Received: from mailer.zib.de ([130.73.108.11]:58659 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761342AbXHKWEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 18:04:43 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BM4Z2J009368;
+	Sun, 12 Aug 2007 00:04:35 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1a312.pool.einsundeins.de [77.177.163.18])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BM4Xqs028847
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 12 Aug 2007 00:04:33 +0200 (MEST)
+In-Reply-To: <7vps1tlpbb.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55639>
 
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
-It takes an inordinarily large amount of time to create these tests, I
-am afraid.  There is little sense in making a more extensive audit,
-cranking out more cases which fail with relative paths, when the fix,
-namely making GIT_DIR absolute, is so simple.
+On Aug 11, 2007, at 11:43 PM, Junio C Hamano wrote:
 
- t/t2050-git-dir-relative.sh |   54 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 54 insertions(+), 0 deletions(-)
- create mode 100755 t/t2050-git-dir-relative.sh
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> Junio,
+>> are you interested in such patches at this time. The patch doesn't
+>> interfere with the existing code, but clutters it with ifdefs.
+>
+> Actually "showing HTML pages upon 'git help' request" makes
+> sense even on Unixen.  I think a patch to help.c::cmd_help()
+> that allows the user to specify alternate action before going to
+> the codepath to call show_man_page(help_cmd) would make sense,
+> like the attached patch.
 
-diff --git a/t/t2050-git-dir-relative.sh b/t/t2050-git-dir-relative.sh
-new file mode 100755
-index 0000000..54a3512
---- /dev/null
-+++ b/t/t2050-git-dir-relative.sh
-@@ -0,0 +1,54 @@
-+#!/bin/sh
-+
-+test_description='check problems with relative GIT_DIR
-+
-+This test creates a working tree state with a file and subdir:
-+
-+  top (committed several times)
-+  subdir (a subdirectory)
-+
-+It creates a commit-hook and tests it, then moves .git
-+into the subdir while keeping the worktree location, 
-+and tries commits from the top and the subdir, checking
-+that the commit-hook still gets called.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'Setting up post-commit hook' '
-+mkdir -p .git/hooks &&
-+cat <<EOF >.git/hooks/post-commit &&
-+#!/bin/sh
-+touch $(pwd)/output
-+echo "Post commit hook was called."
-+EOF
-+chmod +x .git/hooks/post-commit'
-+
-+test_expect_success 'post-commit hook used ordinarily' '
-+echo initial >top &&
-+git-add top
-+git-commit -m initial &&
-+test -r output
-+'
-+
-+rm -rf output
-+mkdir subdir
-+mv .git subdir
-+
-+test_expect_success 'post-commit-hook created and used from top dir' '
-+echo changed >top &&
-+git --git-dir subdir/.git add top &&
-+git --git-dir subdir/.git commit -m topcommit &&
-+test -r output
-+'
-+
-+rm -rf output
-+
-+test_expect_success 'post-commit-hook from sub dir' '
-+echo changed again >top
-+cd subdir &&
-+git --git-dir .git --work-tree .. add ../top &&
-+git --git-dir .git --work-tree .. commit -m subcommit &&
-+test -r ../output
-+'
-+
-+test_done
--- 
-1.5.3.rc2.187.g9a1d2-dirty
+So the custom command needs to have the knowledge how to find
+the page (as 'man' has), based on the string 'git-<command>'.
+
+Makes sense to me to build only the generic mechanism into
+help.c and delegate the rest to core.helpcmd.
+
+
+> Having said that, a patch that makes the build procedure depend
+> on the presense of the html branch is unacceptable, as that
+> branch does not even exist in my private build repository.
+
+Sure, the build procedure doesn't depend on it. The executable
+wouldn't do anything useful if no html is present.
+
+
+> If you are building html pages from the source, it surely would
+> make sense.
+
+I'd prefer to fetch pages from your repo, at least for msysgit.
+Building them requires tools that are, to my knowledge, not
+present in msysgit.
+
+	Steffen
