@@ -1,49 +1,66 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: msysgit list vs. git list
-Date: Sun, 12 Aug 2007 00:10:43 +0200
-Message-ID: <4DCDB012-2594-4EAE-9F5E-76EC68E60BE5@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Sun Aug 12 00:10:04 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git and larger trees, not so fast?
+Date: Sat, 11 Aug 2007 15:27:20 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708111522570.30176@woody.linux-foundation.org>
+References: <20070809163026.GD568@mbox.bz>
+ <alpine.LFD.0.999.0708111137250.30176@woody.linux-foundation.org>
+ <20070811190201.GB4710@ferdyx.org> <alpine.LFD.0.999.0708111337280.30176@woody.linux-foundation.org>
+ <20070811205137.GC4710@ferdyx.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: moe <moe-git@mbox.bz>, git@vger.kernel.org
+To: "Fernando J. Pereda" <ferdy@gentoo.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 00:28:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJz9n-00060E-Q5
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:10:04 +0200
+	id 1IJzRV-0001DF-Lp
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762360AbXHKWJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 18:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762351AbXHKWJ7
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:09:59 -0400
-Received: from mailer.zib.de ([130.73.108.11]:59026 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759750AbXHKWJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 18:09:59 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BM9txB009697;
-	Sun, 12 Aug 2007 00:09:55 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1a312.pool.einsundeins.de [77.177.163.18])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BM9saX029844
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 12 Aug 2007 00:09:54 +0200 (MEST)
-X-Mailer: Apple Mail (2.752.3)
+	id S1760013AbXHKW2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 18:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759579AbXHKW2A
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:28:00 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55435 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759538AbXHKW2A (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Aug 2007 18:28:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7BMRQYi022227
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 11 Aug 2007 15:27:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7BMRKKU027809;
+	Sat, 11 Aug 2007 15:27:20 -0700
+In-Reply-To: <20070811205137.GC4710@ferdyx.org>
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55643>
 
-Could someone briefly explain the scope of the msysgit list.
 
-When should I post to the msysgit git?
-When to the git list?
-When to both lists?
 
-If the traffic on msysgit is not too high, wouldn't it be
-more reasonable just to use the git list and indicate in
-the subject that the post is primarily related to msysgit?
+On Sat, 11 Aug 2007, Fernando J. Pereda wrote:
+> > 
+> > What does "usable" mean? Is it still slow ("barely usable") or is it 
+> > actually fast enough to be truly _nice_ to use?
+> 
+> Very nice to use considering my hardware is rather old. git status used
+> to take >1m and it now takes ~3s and git commit takes ~7s while it used
+> to take >1m too. So it makes things nice to use and I guess things are
+> MUCH better on faster hardware.
 
-	Steffen
+Oh, ok. Having a 7s commit sounds fine - certainly not instantaneous, but 
+it doesn't sound too painful. Certainly not compared to what people live 
+with normally in some other environments, at least.
+
+Thanks go to moe for just giving a trivial script to reproduce the 
+performance anomaly. It wasn't that hard to fix once there was a trivial 
+and unambiguous test case.
+
+		Linus
