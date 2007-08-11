@@ -1,57 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: GitMe: check if cygwin is in PATH; if so abort installer
-Date: Sat, 11 Aug 2007 19:41:20 +0200
-Message-ID: <3DA53F0C-9E1D-475F-BA7A-2B79D4FEFBCF@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: [PATCH] submodule update - don't run git-fetch if sha1 available
+Date: Sat, 11 Aug 2007 19:48:37 +0200
+Message-ID: <e7bda7770708111048s77fbf416k9d0352486aee6b4a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Sat Aug 11 19:40:43 2007
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 11 19:48:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJux8-0001M5-0P
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 19:40:42 +0200
+	id 1IJv54-0003jf-7y
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 19:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294AbXHKRkh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 13:40:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbXHKRkh
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 13:40:37 -0400
-Received: from mailer.zib.de ([130.73.108.11]:38011 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753822AbXHKRkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 13:40:35 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BHeWbL019559;
-	Sat, 11 Aug 2007 19:40:33 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1a312.pool.einsundeins.de [77.177.163.18])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BHeVSc005722
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 11 Aug 2007 19:40:32 +0200 (MEST)
-X-Mailer: Apple Mail (2.752.3)
+	id S1754335AbXHKRsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 13:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbXHKRsj
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 13:48:39 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:11908 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753729AbXHKRsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 13:48:38 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1276772wah
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 10:48:37 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=g9ocApLmFte63BbBwFjmM5yuZaxzE/qUjIwiLCa8g+xBaYmJQ+6UpY3ADCHCxW/OhFjC2y+m3aXzWvA47Mb4I5HmEePFTWLYHPXsjshs245LbRGwejthTQ8B0kkIx98bax83MtWt9AMtFVH3/GCWBlaXy4G3y+IMU+zMZXKUM7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=tW6zY2+AFr0y9GxWziegzdGyEKEsKrTWqhkFEOZK/So7o0FK5NlkGoF/6V0dOk2mU/u8CZ2R27AdHGKJ+IzHPvyf/BIld3EIbglm4BJ5ItCbzUGwQcPOZr7JERlN76Lbf4D/7lJIRA8gtID9RbR13uGtd3ODy9heojyqx93Dx/8=
+Received: by 10.115.59.4 with SMTP id m4mr1733043wak.1186854517552;
+        Sat, 11 Aug 2007 10:48:37 -0700 (PDT)
+Received: by 10.114.47.7 with HTTP; Sat, 11 Aug 2007 10:48:37 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55617>
 
-Johannes, Marius,
-I pushed a commit to msysgit.git's mob branch that adds
-a check to the GitMe installer if cygwin is in the PATH:
+It's un-necessary (both time-consuming and annoying if you are
+disconnected) for git submodule update to always running git-fetch
+prior to the detached head checkout of the submodule if the commit
+already exists.
 
-32ad66aed4899bab11849bdecf254a823cb6cf4b GitMe: check if cygwin is in  
-PATH; if so abort installer.
+Signed-off-by: Torgil Svensson <torgil.svensson@gmail.com>
+---
+ git-submodule.sh |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-I did check the shell script but I didn't build a full
-installer. The change seems obvious to me. However, I
-did not verified it in a real-world test.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2cfeadd..dc2ed4b 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -39,6 +39,11 @@ get_repo_base() {
+        ) 2>/dev/null
+ }
 
-btw,
-would you like to see patches sent to the list for review?
-Or is pushing them to the mob branch sufficient? Pushing
-them to mob only is much easier for me.
++has_sha1()
++{
++       git rev-list 2>/dev/null --max-count=0 $1
++}
++
+ #
+ # Map submodule path to submodule name
+ #
+@@ -193,9 +198,9 @@ modules_update()
 
-	Steffen
+                if test "$subsha1" != "$sha1"
+                then
+-                       (unset GIT_DIR && cd "$path" && git-fetch &&
++                       (unset GIT_DIR && cd "$path" && (has_sha1
+"$sha1" || git-fetch) &&
+                                git-checkout -q "$sha1") ||
+-                       die "Unable to checkout '$sha1' in submodule
+path '$path'"
++                       die "Unable to checkout '$sha1' in submodule
+path '$path'"
+
+                        say "Submodule path '$path': checked out '$sha1'"
+                fi
+--
+1.5.3.rc4.730.ga8c3-dirty
