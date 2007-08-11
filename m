@@ -1,58 +1,55 @@
-From: Mark Levedahl <mlevedahl@verizon.net>
-Subject: [BUG} git-fetch - won't fetch wildcarded tags
-Date: Fri, 10 Aug 2007 22:59:08 -0400
-Message-ID: <46BD25FC.1050201@verizon.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [BUG} git-fetch - won't fetch wildcarded tags
+Date: Fri, 10 Aug 2007 23:25:29 -0400
+Message-ID: <46BD2C29.3040002@gmail.com>
+References: <46BD25FC.1050201@verizon.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 11 04:59:46 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@verizon.net>
+X-From: git-owner@vger.kernel.org Sat Aug 11 05:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJhCW-0006Bw-8L
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 04:59:40 +0200
+	id 1IJhbk-0002GO-RE
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 05:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761054AbXHKC71 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 22:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761133AbXHKC71
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 22:59:27 -0400
-Received: from vms046pub.verizon.net ([206.46.252.46]:38273 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761054AbXHKC70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 22:59:26 -0400
-Received: from [192.168.100.117] ([71.246.233.117])
- by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JML00HAN9MK2CZ9@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 10 Aug 2007 21:59:08 -0500 (CDT)
+	id S1761664AbXHKDZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 23:25:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760465AbXHKDZh
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 23:25:37 -0400
+Received: from wx-out-0506.google.com ([66.249.82.234]:32532 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759953AbXHKDZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 23:25:36 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so715605wxd
+        for <git@vger.kernel.org>; Fri, 10 Aug 2007 20:25:35 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=FU3HsYiQseoKs2AJl/2Wj/Z2I21GkZ6McaMJCHSgY3GD70QhA5VpON30HXdelsFeGbI83MqnT7YbREHdJDzD45CAESFgQO7j6H2LffMhr5Kufpj/6ycCh4Mr6Cw/jfKa0q7A6lAo/Cl39yuC19SjDbkV0y8L/dkqBs+AZV8RDJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=oE6yi+FSaIcq7dm+7B1eMPWhScioYsp2uJiyjjnNm1vK8G6PIZ9kUENPbVEecs9z5OPlFqaGt1YX8CVPN/JwQNHhaH7LTFQlAmzrOYGyQnzxyHRXYyykkA3t1gI4L5qJNcDyvcwZXE1c/bsOAZkpZiFeoCVGsaqQtX3UHO9TU08=
+Received: by 10.70.52.1 with SMTP id z1mr6456605wxz.1186802735828;
+        Fri, 10 Aug 2007 20:25:35 -0700 (PDT)
+Received: from ?192.168.100.117? ( [71.246.233.117])
+        by mx.google.com with ESMTPS id h34sm6658943wxd.2007.08.10.20.25.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 10 Aug 2007 20:25:33 -0700 (PDT)
 User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
+In-Reply-To: <46BD25FC.1050201@verizon.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55584>
 
-git fetch does not seem to handle refs/tags/* refspecs, at least no from 
-bundles...
-
-git>git bundle create /tmp/foo v1.5.2
-<snip>
-git>git ls-remote /tmp/foo
-8b1e5575ab18757272e86c5ec7a10411bbaa3662        refs/tags/v1.5.2
-git>git tag -d v1.5.2
-Deleted tag v1.5.2.
-git>git fetch /tmp/foo 'refs/tags/*:refs/tags/*'
-* refusing to create funny ref 'tags/*' locally
-
-
-Huh?
-
-but...
-git>git fetch /tmp/foo 'refs/tags/v1.5.2:refs/tags/v1.5.2'
-* refs/tags/v1.5.2: storing tag 'v1.5.2' of /tmp/foo
-  tag: 8b1e557
-
-What's going on? This is a severe limitation of the utility of bundles 
-to transmit tagged versions.
-
-Mark
+Mark Levedahl wrote:
+> git fetch does not seem to handle refs/tags/* refspecs, at least no 
+> from bundles...
+>
+groan - Never mind
+git fetch -t /tmp/foo
