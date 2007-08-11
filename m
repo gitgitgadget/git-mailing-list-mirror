@@ -1,86 +1,61 @@
-From: "Wincent Colaiuta" <win@wincent.com>
-Subject: --exit-code (and --quiet) broken in git-diff?
-Date: Sat, 11 Aug 2007 18:12:40 -0500 (CDT)
-Message-ID: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: performance on repack
+Date: Sat, 11 Aug 2007 19:21:05 -0400
+Message-ID: <9e4733910708111621j6a9ba950i114be8b84d7fb1bb@mail.gmail.com>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+	 <85ps1tsozb.fsf@lola.goethe.zz>
+	 <alpine.LFD.0.999.0708111529310.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 01:12:45 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 01:21:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IK08T-0001uq-8I
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 01:12:45 +0200
+	id 1IK0Gp-0003iz-8h
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 01:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755076AbXHKXMl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 19:12:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbXHKXMl
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 19:12:41 -0400
-Received: from wincent.com ([72.3.236.74]:57497 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752304AbXHKXMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 19:12:40 -0400
-Received: from s69819.wincent.com (localhost [127.0.0.1])
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l7BNCehd017617
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 11 Aug 2007 18:12:40 -0500
-Received: (from apache@localhost)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11/Submit) id l7BNCe6Q017615;
-	Sat, 11 Aug 2007 18:12:40 -0500
-Received: from 88.10.191.55
-        (SquirrelMail authenticated user win%wincent.org)
-        by secure.wincent.com with HTTP;
-        Sat, 11 Aug 2007 18:12:40 -0500 (CDT)
-User-Agent: SquirrelMail/1.4.8-6.el3
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1752246AbXHKXVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 19:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbXHKXVJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 19:21:09 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:21787 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751665AbXHKXVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 19:21:06 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1351688wah
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 16:21:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Op+D3Q4eZpYyxho+d0TTqkg67h7+ybsAfRjpZdk8KKtJXiAobWVCtCSU7xmdfQNtU1O3CdPtr1QlZnI6nIRvPqFHjkPaQArTxD/b/Nsj0GwJ0brkhB1NYOUweoU+FI0ogDvr+09OsxiFwOc2YqzTT1VrO9T72tA1BsnTlsF5/kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YdSiJC6q/QtTvHqQeDxH5S1R3HY3RfMEAK50oXSb+8hm+JZ6UyDIqrOvK6TuJrm8kFm702VibyP1VK+TBoFHe+PF5cRkFkCgIQt4bq/IWjYnXQTjhhcK2fCIymQqJc/g5jGpPqvPcIHrJ4hvV/AsnLQEE2gWmfR27ta51OsHiig=
+Received: by 10.114.149.2 with SMTP id w2mr904894wad.1186874465647;
+        Sat, 11 Aug 2007 16:21:05 -0700 (PDT)
+Received: by 10.114.195.11 with HTTP; Sat, 11 Aug 2007 16:21:05 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708111529310.30176@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55647>
 
-The git-diff man page documents an "--exit-code" option, as well as a
-"--quiet" option which automatically implies the former.
+On 8/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Sun, 12 Aug 2007, David Kastrup wrote:
+> > "Jon Smirl" <jonsmirl@gmail.com> writes:
+> >
+> > > If anyone is bored and looking for something to do, making the delta
+> > > code in git repack multithreaded would help.
 
-In my tests on Mac OS X and Bash 3, however, "git diff" always return an
-exit code of 0, never of 1, regardless of how I use the "--quiet" and
-"--exit-code" options. I see that there are tests in t/t4017-quiet.sh for
-the lower-level git-diff-files, git-diff-index, git-diff-tree commands,
-but none for the porcelain git-diff.
+To put this perspective, monotone takes 40hrs on the same box to
+repack a repository of similar size.
 
-Is this a bug with a missing test case? Or am I using this incorrectly? In
-the example below I'm looking for differences between the working tree and
-the last commit, so I'm using "git diff HEAD", but as you can see, the
-exit code is always 0 for "git diff" and "git diff --cached" as well:
-
-$ git --version
-git version 1.5.2.4
-$ mkdir example
-$ cd example
-$ git init
-Initialized empty Git repository in .git/
-$ echo "start" > foo
-$ git add foo
-$ git commit -m "Add foo"
-Created initial commit 85954f6: Add foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 foo
-$ git diff --quiet HEAD; echo $?
-0
-$ echo "more" >> foo
-$ git diff --quiet HEAD; echo $?
-0
-$ git add foo
-$ git diff --quiet HEAD; echo $?
-0
-$ git diff --quiet; echo $?
-0
-$ git diff --exit-code; echo $?
-0
-$ git diff --cached --quiet; echo $?
-0
-
-Cheers,
-Wincent
+-- 
+Jon Smirl
+jonsmirl@gmail.com
