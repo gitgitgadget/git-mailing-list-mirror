@@ -1,115 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/2] Optimize the two-way merge of git-read-tree too
-Date: Sat, 11 Aug 2007 02:17:07 -0700
-Message-ID: <7vtzr6mnvw.fsf@assigned-by-dhcp.cox.net>
-References: <alpine.LFD.0.999.0708101213560.30176@woody.linux-foundation.or g>
-	<alpine.LFD.0.999.0708101216000.30176@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708101224110.30176@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708101240200.30176@woody.linux-foundation.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: What's in git.git (stable)
+Date: Sat, 11 Aug 2007 11:32:01 +0200
+Message-ID: <85hcn6xvqm.fsf@lola.goethe.zz>
+References: <7vir7mo42w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 11 11:17:44 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 11 11:32:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJn6M-0004Wb-3q
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 11:17:42 +0200
+	id 1IJnKP-0006up-Mk
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 11:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759532AbXHKJRQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 05:17:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753683AbXHKJRP
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 05:17:15 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58432 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759511AbXHKJRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 05:17:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070811091708.JIVV2095.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 11 Aug 2007 05:17:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aZH71X00F1kojtg0000000; Sat, 11 Aug 2007 05:17:07 -0400
-In-Reply-To: <alpine.LFD.0.999.0708101240200.30176@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 10 Aug 2007 12:53:51 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755520AbXHKJcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 05:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755512AbXHKJcE
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 05:32:04 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:53740 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755496AbXHKJcD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Aug 2007 05:32:03 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 6B8D92DD78D;
+	Sat, 11 Aug 2007 11:32:02 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 55C9B2C6A03;
+	Sat, 11 Aug 2007 11:32:02 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-049-066.pools.arcor-ip.net [84.61.49.66])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 317658C469;
+	Sat, 11 Aug 2007 11:32:02 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id C99141C3C79D; Sat, 11 Aug 2007 11:32:01 +0200 (CEST)
+In-Reply-To: <7vir7mo42w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 11 Aug 2007 01\:41\:59 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3923/Sat Aug 11 10:03:45 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55596>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> And as mentioned, the three-way case *should* be as trivial as the 
-> following. It passes all the tests, and I verified that a conflicting 
-> merge in the 100,000 file horror-case merged correctly (with the conflict 
-> markers) in 0.687 seconds with this, so it works, but I'm lazy and 
-> somebody else should double-check it.
+> I thought we were pretty in good shape and in a nice and quiet
+> freeze period.
 >
-> (Again - *without* this patch, the merge took 8.355 seconds, so this patch 
-> really does make a huge difference for merge performance with lots and 
-> lots of files, and we're not talking percentages, we're talking 
-> orders-of-magnitude differences!)
+> Until a few days ago.
+>
+> Then suddenly, flurry of activity happened.  A few performance
+> issues were raised and fixed:
 
-Hmph, this might make what I was hoping to find time to do more
-or less unnecessary.
+The fix to git-filter-branch I posted is tested and obviously
+necessary (without it, git-filter-branch will only work if GIT_DIR is
+set previously to calling it).
 
-But here it is anyway.
+Also documentation and usage of git-filter-branch are out of kilter,
+the given examples for wiping a file from history don't work,
+specifing the refs to work on reacts impredictably (it is not clear
+what gets accepted and what not, and one seemingly has to always
+specify "HEAD" which is basically ignored).
 
-I wanted to speed up the three-way merges.  The assumption is
-that when you do a merge, you are not in the middle of your own
-messy work.  It is either while you are in a merge binge,
-pulling from one subsystem lieutenant after another, or perhaps
-applying patchbombs from people.  In either case, you would
-start your merge with a clean index that >99% matches the HEAD,
-after writing your index out as a tree.
+Could you ask Dscho to consider adding cases based on the
+documentation to the test suite?  That should help weed out the worst
+discrepances.
 
-Then, the new 3-way read-tree (or unpack_trees) would go like
-this.
-
-First, we scan the index and find locally modified paths;
-invalidate cache-tree by calling cache_tree_invalidate_path()
-for such paths.  The expectation is that you will still have
-largely usable cache-tree after this step.
-
-The main part of the merge will be done by using tree_desc based
-traversal that walks over three (ancestor, mine and theirs)
-trees, instead of the current unpack_trees() that iterates
-mainly over the index entries.
-
-(A) The three trees all may have a subtree at the same path, or
-    the one that does not have a tree where others have does not
-    have a blob at the path either (i.e. the subtree is missing
-    from the tree without a D/F conflict).  If the usual 3-way
-    tree level merge rule (one side changes while the other side
-    does not do anything, or both sides change to the same) can
-    be applied, and if the cache tree entry for that subtree is
-    valid and matches our tree, then...
-
-    - we know the working tree for that entire subdirectory is
-      also clean because of the earlier invalidation;
-
-    - we can simply follow the tree level merge without ever
-      looking at individual paths contained in the subtree.
-
-(B) If the precondition of (A) does not hold, we recurse into
-    the subtree, and perform per-path 3-way merge, like the
-    current unpack_trees() does.
-
-If your merge does not involve anything in large subdirectories,
-e.g., include/, arch/, or drivers/, this would allow you to skip
-quite a lot of per-path merge computation by doing comparison of
-four (tree entries and cache-tree) tree object names (the three
-subdirectories have about 6k paths each, so this could be a huge
-win).
-
-Another optimization I was hoping to do was "git diff --cached",
-which is unrelated to the recent change to use read_tree().
-Instead of reading the tree into the stage #1 of the same index,
-we could walk the tree and skip the subtree whose cache-tree
-matches the entry from the tree.  This would have the same scale
-of performance improvement opportunity.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
