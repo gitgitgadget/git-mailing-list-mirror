@@ -1,143 +1,113 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] mergetool: added support for kdiff3 on windows
-Date: Sat, 11 Aug 2007 01:56:01 +0200
-Message-ID: <11867901621009-git-send-email-prohaska@zib.de>
-References: <11867901612954-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org, torgil.svensson@gmail.com,
-	Johannes.Schindelin@gmx.de, tytso@mit.edu
-X-From: git-owner@vger.kernel.org Sat Aug 11 01:56:19 2007
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] builtin-bundle - use buffered reads for bundle header
+Date: Fri, 10 Aug 2007 20:27:24 -0400
+Message-ID: <11867920441883-git-send-email-mdl123@verizon.net>
+References: <7vvebnq9nv.fsf@assigned-by-dhcp.cox.net>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Mark Levedahl <mdl123@verizon.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 11 02:27:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJeL2-0003jZ-RR
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 01:56:17 +0200
+	id 1IJepI-0001gO-Fq
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 02:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598AbXHJX4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Aug 2007 19:56:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754640AbXHJX4K
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 19:56:10 -0400
-Received: from mailer.zib.de ([130.73.108.11]:62212 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753926AbXHJX4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2007 19:56:08 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7ANu2Mo007589;
-	Sat, 11 Aug 2007 01:56:02 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7ANu1eN023484;
-	Sat, 11 Aug 2007 01:56:02 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11867901612954-git-send-email-prohaska@zib.de>
+	id S1755937AbXHKA12 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Aug 2007 20:27:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754978AbXHKA12
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Aug 2007 20:27:28 -0400
+Received: from vms048pub.verizon.net ([206.46.252.48]:35489 "EHLO
+	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754289AbXHKA11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2007 20:27:27 -0400
+Received: from fal-l07294-lp.us.ray.com ([71.246.233.117])
+ by vms048.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JML009S62LQO6Q1@vms048.mailsrvcs.net> for
+ git@vger.kernel.org; Fri, 10 Aug 2007 19:27:27 -0500 (CDT)
+In-reply-to: <7vvebnq9nv.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: git-send-email 1.5.3.rc4.54.gbe00
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55579>
 
-kdiff3's homepage is http://kdiff3.sourceforge.net/.
+This eliminates all use of byte-at-a-time reading of data in this
+function: as Junio noted, a bundle file is seekable so we can
+reset the file position to the first part of the pack-file using lseek
+after reading the header.
 
-kdiff3 is automatically added to the available
-mergetools if its path is found in the Windows
-Registry. Be sure to set
-
-    git config core.autocrlf true
-
-kdiff3 seems to follow Windows crlf convention.
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
 ---
- git-mergetool.sh |   22 ++++++++++++++++++----
- 1 files changed, 18 insertions(+), 4 deletions(-)
+ builtin-bundle.c |   37 +++++++++++++------------------------
+ 1 files changed, 13 insertions(+), 24 deletions(-)
 
-
-This patch was developed against msysgit, and is add
-functionality specific to Windows. It should also apply
-against git.git's master and shouldn't do any harm
-to the handling of mergetools on platforms other than
-Windows
-
-It was tested on a Windows with german localization. I'd
-be interested if the lookup of kdiff3 works on other
-localizations, too.
-
-Handling mergetools that needs an absolute path is a bit
-hacky. merge_tool is mostly used as an alias but also as
-the name of an executable. A level of indirection would
-be nice for handling absolute paths.
-
-kdiff3 on Windows doesn't accept '--' on it's commandline.
-Is '--' really needed on other platforms? I replaced it by
-the variable KDIFF3SEPARATOR.
-
-	Steffen
-
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 90a69b3..9f64e7c 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -14,6 +14,7 @@ SUBDIRECTORY_OK=Yes
- require_work_tree
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index b954213..6651c51 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -44,38 +44,21 @@ struct bundle_header {
+ 	struct ref_list references;
+ };
  
- KDIFF3=kdiff3
-+KDIFF3SEPARATOR=--
+-/* this function returns the length of the string */
+-static int read_string(int fd, char *buffer, int size)
+-{
+-	int i;
+-	for (i = 0; i < size - 1; i++) {
+-		ssize_t count = xread(fd, buffer + i, 1);
+-		if (count < 0)
+-			return error("Read error: %s", strerror(errno));
+-		if (count == 0) {
+-			i--;
+-			break;
+-		}
+-		if (buffer[i] == '\n')
+-			break;
+-	}
+-	buffer[i + 1] = '\0';
+-	return i + 1;
+-}
+-
+ /* returns an fd */
+ static int read_header(const char *path, struct bundle_header *header) {
+ 	char buffer[1024];
+-	int fd = open(path, O_RDONLY);
++	int fd;
++    long fpos;
++    FILE *ffd = fopen(path, "r");
  
- # Returns true if the mode reflects a symlink
- is_symlink () {
-@@ -194,10 +195,10 @@ merge_file () {
- 	kdiff3)
- 	    if base_present ; then
- 		("$KDIFF3" --auto --L1 "$path (Base)" -L2 "$path (Local)" --L3 "$path (Remote)" \
--		    -o "$path" -- "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		    -o "$path" $KDIFF3SEPERATOR "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
- 	    else
- 		("$KDIFF3" --auto -L1 "$path (Local)" --L2 "$path (Remote)" \
--		    -o "$path" -- "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		    -o "$path" $KDIFF3SEPERATOR "$LOCAL" "$REMOTE" > /dev/null 2>&1)
- 	    fi
- 	    status=$?
- 	    remove_backup
-@@ -321,6 +322,11 @@ if test -z "$merge_tool" ; then
-             merge_tool_candidates="kdiff3 $merge_tool_candidates"
-         fi
-     fi
-+    regentry="$(REG QUERY 'HKEY_LOCAL_MACHINE\SOFTWARE\KDiff3\diff-ext' 2>/dev/null)" && {
-+        KDIFF3=$(echo "$regentry" | grep diffcommand | cut -f 3)
-+        KDIFF3SEPARATOR=
-+        merge_tool_candidates="$merge_tool_candidates kdiff3"
-+    } 
-     if echo "${VISUAL:-$EDITOR}" | grep 'emacs' > /dev/null 2>&1; then
-         merge_tool_candidates="$merge_tool_candidates emerge"
-     fi
-@@ -332,10 +338,12 @@ if test -z "$merge_tool" ; then
-     for i in $merge_tool_candidates; do
-         if test $i = emerge ; then
-             cmd=emacs
-+        elif test $i = kdiff3 ; then
-+            cmd="$KDIFF3"
-         else
-             cmd=$i
-         fi
--        if type $cmd > /dev/null 2>&1; then
-+        if type "$cmd" > /dev/null 2>&1; then
-             merge_tool=$i
-             break
-         fi
-@@ -347,7 +355,13 @@ if test -z "$merge_tool" ; then
- fi
+-	if (fd < 0)
++	if (!ffd)
+ 		return error("could not open '%s'", path);
+-	if (read_string(fd, buffer, sizeof(buffer)) < 0 ||
++    if (!fgets(buffer, sizeof(buffer), ffd) ||
+ 			strcmp(buffer, bundle_signature)) {
+-		close(fd);
++        fclose(ffd);
+ 		return error("'%s' does not look like a v2 bundle file", path);
+ 	}
+-	while (read_string(fd, buffer, sizeof(buffer)) > 0
++    while (fgets(buffer, sizeof(buffer), ffd)
+ 			&& buffer[0] != '\n') {
+ 		int is_prereq = buffer[0] == '-';
+ 		int offset = is_prereq ? 1 : 0;
+@@ -97,6 +80,12 @@ static int read_header(const char *path, struct bundle_header *header) {
+ 		add_to_ref_list(sha1, isspace(delim) ?
+ 				buffer + 41 + offset : "", list);
+ 	}
++    fpos = ftell(ffd);
++    fclose(ffd);
++    fd = open(path, O_RDONLY);
++    if (fd < 0)
++        return error("could not open '%s'", path);
++    lseek(fd, fpos, SEEK_SET);
+ 	return fd;
+ }
  
- case "$merge_tool" in
--    kdiff3|tkdiff|meld|xxdiff|vimdiff|gvimdiff|opendiff)
-+    kdiff3)
-+	if ! type "$KDIFF3" > /dev/null 2>&1; then
-+	    echo "The merge tool $merge_tool is not available"
-+	    exit 1
-+	fi
-+	;;
-+    tkdiff|meld|xxdiff|vimdiff|gvimdiff|opendiff)
- 	if ! type "$merge_tool" > /dev/null 2>&1; then
- 	    echo "The merge tool $merge_tool is not available"
- 	    exit 1
 -- 
-1.5.3.rc4.744.g68381
+1.5.3.rc4.54.gbe00
