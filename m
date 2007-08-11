@@ -1,81 +1,110 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: msysgit, help: teach git help to open html from /doc/git/html/
-Date: Sun, 12 Aug 2007 00:05:21 +0200
-Message-ID: <37CBFBA3-6A07-44D7-BFCF-5C969C123000@zib.de>
-References: <51772B53-642F-4D52-9CF3-906A21FC0D6F@zib.de> <7vps1tlpbb.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Advertise per branch RSS/Atom feeds
+Date: Sat, 11 Aug 2007 21:57:31 +0200
+Message-ID: <200708112157.31764.jnareb@gmail.com>
+References: <7vps1ummqy.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 00:04:47 2007
+X-From: git-owner@vger.kernel.org Sun Aug 12 00:06:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJz4h-0004iE-Al
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:04:47 +0200
+	id 1IJz64-00053u-Ex
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761458AbXHKWEo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 18:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761275AbXHKWEo
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:04:44 -0400
-Received: from mailer.zib.de ([130.73.108.11]:58659 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761342AbXHKWEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 18:04:43 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7BM4Z2J009368;
-	Sun, 12 Aug 2007 00:04:35 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1a312.pool.einsundeins.de [77.177.163.18])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7BM4Xqs028847
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 12 Aug 2007 00:04:33 +0200 (MEST)
-In-Reply-To: <7vps1tlpbb.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1762297AbXHKWGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 18:06:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762329AbXHKWGF
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:06:05 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:37542 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762230AbXHKWGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 18:06:02 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so1041033fkz
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 15:06:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=F57sX7Kaab9fYQGj0xAM6L673e8TXxlz1oIw+eW7sAHc/FzSGnGGcW5GcFOaIUdoSKEIXbmleG716zymqdwFfnvYUfX22sM/eoO5T9lPG1NTquQSWRDvdvdOEjm80TJmBKt7W9h9SQUCnjUUfJukIL5r/XYjpe6kTl9Q+TSzJAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fa665r6IfMizZQWCA1sVenu9Q8z5g7k4mPkC+mfWzNBRPTADzULuLThLFjdaAEXFVh/LO1sRPNMC8at9PO8aFUrYB7xzem2sveVY4APe/thrFyOm80C6S5KTfR3WMXpUafuhw8+ysdVwuLpIlB4TU7zF7Sp7I+hZGsu9L0siDoc=
+Received: by 10.86.3.2 with SMTP id 2mr3504150fgc.1186869960839;
+        Sat, 11 Aug 2007 15:06:00 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id c28sm8331668fka.2007.08.11.15.05.57
+        (version=SSLv3 cipher=OTHER);
+        Sat, 11 Aug 2007 15:05:58 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vps1ummqy.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55640>
 
+On Sat, 11 August 2007, Junio C Hamano wrote:
 
-On Aug 11, 2007, at 11:43 PM, Junio C Hamano wrote:
+> The feeder code had provisions to accept 'h' parameter to
+> specify which branch to send the feed data from, but there was
+> no link that advertised this capability on the pages.
+> 
+> This adds h parameter to the footer of shortlog/log page for the
+> branch.
 
-> Steffen Prohaska <prohaska@zib.de> writes:
->
->> Junio,
->> are you interested in such patches at this time. The patch doesn't
->> interfere with the existing code, but clutters it with ifdefs.
->
-> Actually "showing HTML pages upon 'git help' request" makes
-> sense even on Unixen.  I think a patch to help.c::cmd_help()
-> that allows the user to specify alternate action before going to
-> the codepath to call show_man_page(help_cmd) would make sense,
-> like the attached patch.
+And also of 'history' and 'tree' views; see comments below.
 
-So the custom command needs to have the knowledge how to find
-the page (as 'man' has), based on the string 'git-<command>'.
+Besides, that is only half of the places where we put links to
+RSS/Atom feeds. There are RSS/Atom feeds in the page header,
+in the form of "<link .../>" elements; but that is perhaps for
+separate patch. I think for example that we should add more
+specialized feeds to HTML header instead of replacing generic
+feeds by specialized ones like this patch does in footer.
 
-Makes sense to me to build only the generic mechanism into
-help.c and delegate the rest to core.helpcmd.
+>  	if (defined $project) {
+>  		my $descr = git_get_project_description($project);
+> +		my @tips = ();
+> +		if ($hash !~ /^[0-9a-fA-F]{40}$/) {
+> +			@tips = (hash => $hash);
+> +		}
 
+I'd use hash instead of array (list) here, c.f. %hash_base trick,
+i.e. "my %tips" and "%tips = (hash => $hash);". Just for code
+consistency and slightly better readibility.
 
-> Having said that, a patch that makes the build procedure depend
-> on the presense of the html branch is unacceptable, as that
-> branch does not even exist in my private build repository.
+By the way, the above would work also for 'history' and 'tree'
+views if h parameter is not literal hash (perhaps we should exclude
+"HEAD" as well, by the way), and we can have path limited feeds,
+then perhaps it would be even better to use
 
-Sure, the build procedure doesn't depend on it. The executable
-wouldn't do anything useful if no html is present.
+			%tips = (hash=>$hash, file_name=>$file_name);
 
+I'm also not sure if %tips (or @tips) is best name for this variable,
+but I don't have better proposal. %narrow perhaps or something like
+that.
 
-> If you are building html pages from the source, it surely would
-> make sense.
+>  		if (defined $descr) {
+>  			print "<div class=\"page_footer_text\">" . esc_html($descr) . "</div>\n";
+>  		}
+> -		print $cgi->a({-href => href(action=>"rss"),
+> +		print $cgi->a({-href => href(action=>"rss", @tips),
+>  		              -class => "rss_logo"}, "RSS") . " ";
+> -		print $cgi->a({-href => href(action=>"atom"),
+> +		print $cgi->a({-href => href(action=>"atom", @tips),
+>  		              -class => "rss_logo"}, "Atom") . "\n";
+>  	} else {
+>  		print $cgi->a({-href => href(project=>undef, action=>"opml"),
+> 
 
-I'd prefer to fetch pages from your repo, at least for msysgit.
-Building them requires tools that are, to my knowledge, not
-present in msysgit.
+And perhaps we should add title attribute explaining that feed is for
+given branch... or perhaps not.
 
-	Steffen
+-- 
+Jakub Narebski
+Poland
