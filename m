@@ -1,81 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: performance on repack
-Date: Sat, 11 Aug 2007 15:34:31 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708111529310.30176@woody.linux-foundation.org>
-References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
- <85ps1tsozb.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 12 00:35:02 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Documentation: List environmental variables which were missing
+Date: Sun, 12 Aug 2007 00:38:37 +0200
+Message-ID: <1186871917846-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 12 00:38:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJzXy-0002gJ-40
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:35:02 +0200
+	id 1IJzbc-0003ZA-Ue
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762042AbXHKWeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 18:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760375AbXHKWeq
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:34:46 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:33411 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759200AbXHKWep (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Aug 2007 18:34:45 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7BMYbmd022492
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 11 Aug 2007 15:34:38 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7BMYVAg028062;
-	Sat, 11 Aug 2007 15:34:31 -0700
-In-Reply-To: <85ps1tsozb.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1761124AbXHKWip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 18:38:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758990AbXHKWip
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:38:45 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:60457 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759200AbXHKWio (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 18:38:44 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so1046837fkz
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 15:38:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=V6qT6UouQkam6a7xPH1H8WkkhhOeuUO1niCJycHem8guxaQWsc0n1x/5DRxRhoc7iWurFFQEUzRuhO51dPwjzJZvG1zeaTB7OCr6q2FWYTgT1TILwMt11cWavJHuXGM3/FiKqZ1LlS02AK5Rjg2mg9RO+fuqMQorPEtwd+IbajM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=Q/fWbAJbGPgZuMu7YwiMHU6bn6cm73XSgB98+KhXa2xsFRp40XF4qijj5qfq9HT4GwKPCQ3nJ4YwjtnOqXlMXVuM+bDARLF70EuAZsDh9zjO4pVGkTwK4NIF8xHMwQka4KUGZjYNtXtzsinhbS/P6pC/8Obm2+TSnt9PzI4bp8U=
+Received: by 10.86.1.1 with SMTP id 1mr3140145fga.1186871922625;
+        Sat, 11 Aug 2007 15:38:42 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.8.65])
+        by mx.google.com with ESMTPS id g28sm8388277fkg.2007.08.11.15.38.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 11 Aug 2007 15:38:41 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l7BMccf4025012;
+	Sun, 12 Aug 2007 00:38:39 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l7BMcboV025011;
+	Sun, 12 Aug 2007 00:38:37 +0200
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55645>
 
+Add to list environmental variables in "Environment variables" section
+of git(7) which are documented on other manpages, but were missing in
+the list, in the form of link to appropriate manpage (similarly to how
+GIT_AUTHOR_* variables are documented in git(7)).
 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/git.txt |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
 
-On Sun, 12 Aug 2007, David Kastrup wrote:
-
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
-> 
-> > If anyone is bored and looking for something to do, making the delta
-> > code in git repack multithreaded would help.
-> 
-> I severely doubt that.  It is like the "coding stuff in assembly
-> language will make it faster" myth.  The problem is that of manageable
-> complexity.  Making the stuff multithreaded or coded in assembly means
-> that it becomes inaccessible for a sound algorithmic redesign.
-
-I have to admit that I'm not a huge fan of threading: the complexity and 
-locking often kills you, if memory bandwidth constraints do not, and the 
-end result is often really really hard to debug.
-
-That said, I suspect we could some some *simple* form of this by just 
-partitioning the problem space up - we could have a MT repack that 
-generates four *different* packs on four different CPU's: each thread 
-taking one quarter of the objects. At that point, you wouldn't even need 
-threads, you could do it with regular processes, since the problem set is 
-fully partitioned ocne you've generated the list of objects!
-
-Then, after you've generated four different packs, doing a "git gc" 
-(without any threading) will repack them into one big pack, and mostly 
-just re-use the existing deltas.
-
-So this would not be a generic thing, but it could be somethign that is 
-useful for the forced full-repack after importing a large repository with 
-fast-import, for example.
-
-So while I agree with David in general about the problem of threading, I 
-think that we can possibly simplify the special case of repacking into 
-something less complicated than a "real" multi-threading problem.
-
-		Linus
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 18f8b6a..8a0399e 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -411,6 +411,24 @@ parameter, <path>.
+ 
+ other
+ ~~~~~
++'GIT_CONFIG'::
++'GIT_CONFIG_LOCAL'::
++	Specifies config file.
++	See gitlink:git-config[1]
++
++'GIT_PROXY_COMMAND'::
++'GIT_SSL_NO_VERIFY'::
++'GIT_SSL_CERT'::
++'GIT_SSL_KEY'::
++'GIT_SSL_CAINFO'::
++'GIT_SSL_CAPATH'::
++'GIT_HTTP_MAX_REQUESTS'::
++'GIT_HTTP_LOW_SPEED_LIMIT'::
++'GIT_HTTP_LOW_SPEED_TIME'::
++'GIT_CURL_FTP_NO_EPSV'::
++	Overrides appropriate configuration variable.
++	See gitlink:git-config[1]
++
+ 'GIT_MERGE_VERBOSITY'::
+ 	A number controlling the amount of output shown by
+ 	the recursive merge strategy.  Overrides merge.verbosity.
+-- 
+1.5.2.4
