@@ -1,129 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: msysgit, help: teach git help to open html from /doc/git/html/
-Date: Sat, 11 Aug 2007 14:43:52 -0700
-Message-ID: <7vps1tlpbb.fsf@assigned-by-dhcp.cox.net>
-References: <51772B53-642F-4D52-9CF3-906A21FC0D6F@zib.de>
+From: "Govind Salinas" <govindsalinas@gmail.com>
+Subject: Re: gitbox status (for those who want to hack on it)
+Date: Sat, 11 Aug 2007 16:58:31 -0500
+Message-ID: <69b0c0350708111458u5c9d4b16kc118cee4666d376a@mail.gmail.com>
+References: <fcaeb9bf0708041040w6d2b3f2cu1680e1e7dc542ffb@mail.gmail.com>
+	 <Pine.LNX.4.64.0708051635170.14781@racer.site>
+	 <fcaeb9bf0708051841w4701d04dw894b61c5a26d6ed5@mail.gmail.com>
+	 <Pine.LNX.4.64.0708060323200.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Aug 11 23:44:01 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 11 23:58:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJyka-0008Lb-2a
-	for gcvg-git@gmane.org; Sat, 11 Aug 2007 23:44:00 +0200
+	id 1IJyyk-0003PK-W7
+	for gcvg-git@gmane.org; Sat, 11 Aug 2007 23:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761369AbXHKVnz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 17:43:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759861AbXHKVnz
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 17:43:55 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:43707 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759579AbXHKVny (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 17:43:54 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070811214354.IULA7956.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 11 Aug 2007 17:43:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aljt1X00A1kojtg0000000; Sat, 11 Aug 2007 17:43:53 -0400
-In-Reply-To: <51772B53-642F-4D52-9CF3-906A21FC0D6F@zib.de> (Steffen Prohaska's
-	message of "Sat, 11 Aug 2007 22:44:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759309AbXHKV6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 17:58:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759538AbXHKV6e
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 17:58:34 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:15538 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759108AbXHKV6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 17:58:33 -0400
+Received: by an-out-0708.google.com with SMTP id d31so218580and
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 14:58:32 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S6rGyCHcc8JAJ5E/RDdDtTNwNcnlPzdbLpaqAouQ2hZ09L7M6bB/QNOmyCFm06/dPUuKufcI7o0wDLXLbmGjMulUPYa66boi16GwdD/V+5B9KkuoKLXSZEcF09ubhEZ4UC6u9XZv7m9dB6jfCM2LO9Z/dt579Gpby3jbN+L89sU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=On1AJ0ZX+Oxzq+2ACvaGDohMCoTWpatHkcFui7cFYtZovWXMiMnBf8yxQOZGfBsqfSZLXDt0+HtmQVwOU3kDHn1aeBhmMAaqC5W3luJ6ENeqX7p5yr0/94ptepCxSKGlIRFVmDiUg+CPIdpKUi6iohL+poRUc33wDIFI86xojTE=
+Received: by 10.100.139.12 with SMTP id m12mr3905903and.1186869512091;
+        Sat, 11 Aug 2007 14:58:32 -0700 (PDT)
+Received: by 10.100.119.8 with HTTP; Sat, 11 Aug 2007 14:58:31 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0708060323200.14781@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55636>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hi,
 
-> Junio,
-> are you interested in such patches at this time. The patch doesn't
-> interfere with the existing code, but clutters it with ifdefs.
+I'm interested in the various git on Windows projects.  I can't seem
+to find any information on gitbox on the web though.  Can you tell me
+a bit about it?  What makes it different from the other cygwin git or
+mingw?
 
-Actually "showing HTML pages upon 'git help' request" makes
-sense even on Unixen.  I think a patch to help.c::cmd_help()
-that allows the user to specify alternate action before going to
-the codepath to call show_man_page(help_cmd) would make sense,
-like the attached patch.
-
-Having said that, a patch that makes the build procedure depend
-on the presense of the html branch is unacceptable, as that
-branch does not even exist in my private build repository.  If
-you are building html pages from the source, it surely would
-make sense.
-
----
- cache.h       |    3 +++
- config.c      |    5 +++++
- environment.c |    1 +
- help.c        |    3 ++-
- 4 files changed, 11 insertions(+), 1 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 4507404..d7aeaaf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -597,4 +597,7 @@ extern void *convert_sha1_file(const char *path, const unsigned char *sha1, unsi
- /* match-trees.c */
- void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
- 
-+/* help.c - show manual page for the named command */
-+extern char *custom_help_cmd;
-+
- #endif /* CACHE_H */
-diff --git a/config.c b/config.c
-index dc3148d..8a9d0b7 100644
---- a/config.c
-+++ b/config.c
-@@ -431,6 +431,11 @@ int git_default_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.helpcmd")) {
-+		custom_help_cmd = xstrdup(value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index b5a6c69..05c4ba5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -34,6 +34,7 @@ char *pager_program;
- int pager_in_use;
- int pager_use_color = 1;
- char *editor_program;
-+char *custom_help_cmd;
- int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
-diff --git a/help.c b/help.c
-index 1cd33ec..49db50d 100644
---- a/help.c
-+++ b/help.c
-@@ -168,6 +168,7 @@ static void list_common_cmds_help(void)
- static void show_man_page(const char *git_cmd)
- {
- 	const char *page;
-+	const char *help = custom_help_cmd ? custom_help_cmd : "man";
- 
- 	if (!prefixcmp(git_cmd, "git"))
- 		page = git_cmd;
-@@ -180,7 +181,7 @@ static void show_man_page(const char *git_cmd)
- 		page = p;
- 	}
- 
--	execlp("man", "man", page, NULL);
-+	execlp(help, help, page, NULL);
- }
- 
- void help_unknown_cmd(const char *cmd)
+On 8/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sun, 5 Aug 2007, Nguyen Thai Ngoc Duy wrote:
+>
+> > On 8/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > Hi,
+> > >
+> > > On Sat, 4 Aug 2007, Nguyen Thai Ngoc Duy wrote:
+> > >
+> > > > I would say it's in pretty good state now because it can run through
+> > > > test cases. Running tests on Windows can take about an hour so I'll
+> > > > put test results here so you don't have to rerun the whole thing if
+> > > > you want to know what part needs work.
+> > >
+> > > I think your project is awesome.  Unfortunately, I did not have time to
+> > > check it out yet -- work-tree regressions and msysgit keep me occupied,
+> > > along with daytime job...
+> >
+> > Hey no worries. msysgit is actually good job.
+>
+> Gee thanks!
+>
+> > BTW, where was msysgit.git going? I recall I saw something there in
+> > repo.or.cz, now it's gone.
+>
+> No, it's still there: http://repo.or.cz/w/msysgit.git
+>
+> What you probably saw (for a while) was my unsuccessful attempt to make
+> this a fork of mingw.git, which is a fork of git.git.
+>
+> Ciao,
+> Dscho
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
