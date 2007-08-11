@@ -1,91 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Documentation: List environmental variables which were missing
-Date: Sun, 12 Aug 2007 00:38:37 +0200
-Message-ID: <1186871917846-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: "Wincent Colaiuta" <win@wincent.com>
+Subject: --exit-code (and --quiet) broken in git-diff?
+Date: Sat, 11 Aug 2007 18:12:40 -0500 (CDT)
+Message-ID: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 00:38:49 2007
+X-From: git-owner@vger.kernel.org Sun Aug 12 01:12:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IJzbc-0003ZA-Ue
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 00:38:49 +0200
+	id 1IK08T-0001uq-8I
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 01:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761124AbXHKWip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 18:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758990AbXHKWip
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 18:38:45 -0400
-Received: from fk-out-0910.google.com ([209.85.128.184]:60457 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759200AbXHKWio (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 18:38:44 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so1046837fkz
-        for <git@vger.kernel.org>; Sat, 11 Aug 2007 15:38:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=V6qT6UouQkam6a7xPH1H8WkkhhOeuUO1niCJycHem8guxaQWsc0n1x/5DRxRhoc7iWurFFQEUzRuhO51dPwjzJZvG1zeaTB7OCr6q2FWYTgT1TILwMt11cWavJHuXGM3/FiKqZ1LlS02AK5Rjg2mg9RO+fuqMQorPEtwd+IbajM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=Q/fWbAJbGPgZuMu7YwiMHU6bn6cm73XSgB98+KhXa2xsFRp40XF4qijj5qfq9HT4GwKPCQ3nJ4YwjtnOqXlMXVuM+bDARLF70EuAZsDh9zjO4pVGkTwK4NIF8xHMwQka4KUGZjYNtXtzsinhbS/P6pC/8Obm2+TSnt9PzI4bp8U=
-Received: by 10.86.1.1 with SMTP id 1mr3140145fga.1186871922625;
-        Sat, 11 Aug 2007 15:38:42 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.8.65])
-        by mx.google.com with ESMTPS id g28sm8388277fkg.2007.08.11.15.38.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 11 Aug 2007 15:38:41 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l7BMccf4025012;
-	Sun, 12 Aug 2007 00:38:39 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l7BMcboV025011;
-	Sun, 12 Aug 2007 00:38:37 +0200
-X-Mailer: git-send-email 1.5.2.4
+	id S1755076AbXHKXMl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Aug 2007 19:12:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbXHKXMl
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 19:12:41 -0400
+Received: from wincent.com ([72.3.236.74]:57497 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752304AbXHKXMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2007 19:12:40 -0400
+Received: from s69819.wincent.com (localhost [127.0.0.1])
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l7BNCehd017617
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sat, 11 Aug 2007 18:12:40 -0500
+Received: (from apache@localhost)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11/Submit) id l7BNCe6Q017615;
+	Sat, 11 Aug 2007 18:12:40 -0500
+Received: from 88.10.191.55
+        (SquirrelMail authenticated user win%wincent.org)
+        by secure.wincent.com with HTTP;
+        Sat, 11 Aug 2007 18:12:40 -0500 (CDT)
+User-Agent: SquirrelMail/1.4.8-6.el3
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55646>
 
-Add to list environmental variables in "Environment variables" section
-of git(7) which are documented on other manpages, but were missing in
-the list, in the form of link to appropriate manpage (similarly to how
-GIT_AUTHOR_* variables are documented in git(7)).
+The git-diff man page documents an "--exit-code" option, as well as a
+"--quiet" option which automatically implies the former.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/git.txt |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+In my tests on Mac OS X and Bash 3, however, "git diff" always return an
+exit code of 0, never of 1, regardless of how I use the "--quiet" and
+"--exit-code" options. I see that there are tests in t/t4017-quiet.sh for
+the lower-level git-diff-files, git-diff-index, git-diff-tree commands,
+but none for the porcelain git-diff.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 18f8b6a..8a0399e 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -411,6 +411,24 @@ parameter, <path>.
- 
- other
- ~~~~~
-+'GIT_CONFIG'::
-+'GIT_CONFIG_LOCAL'::
-+	Specifies config file.
-+	See gitlink:git-config[1]
-+
-+'GIT_PROXY_COMMAND'::
-+'GIT_SSL_NO_VERIFY'::
-+'GIT_SSL_CERT'::
-+'GIT_SSL_KEY'::
-+'GIT_SSL_CAINFO'::
-+'GIT_SSL_CAPATH'::
-+'GIT_HTTP_MAX_REQUESTS'::
-+'GIT_HTTP_LOW_SPEED_LIMIT'::
-+'GIT_HTTP_LOW_SPEED_TIME'::
-+'GIT_CURL_FTP_NO_EPSV'::
-+	Overrides appropriate configuration variable.
-+	See gitlink:git-config[1]
-+
- 'GIT_MERGE_VERBOSITY'::
- 	A number controlling the amount of output shown by
- 	the recursive merge strategy.  Overrides merge.verbosity.
--- 
-1.5.2.4
+Is this a bug with a missing test case? Or am I using this incorrectly? In
+the example below I'm looking for differences between the working tree and
+the last commit, so I'm using "git diff HEAD", but as you can see, the
+exit code is always 0 for "git diff" and "git diff --cached" as well:
+
+$ git --version
+git version 1.5.2.4
+$ mkdir example
+$ cd example
+$ git init
+Initialized empty Git repository in .git/
+$ echo "start" > foo
+$ git add foo
+$ git commit -m "Add foo"
+Created initial commit 85954f6: Add foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+$ git diff --quiet HEAD; echo $?
+0
+$ echo "more" >> foo
+$ git diff --quiet HEAD; echo $?
+0
+$ git add foo
+$ git diff --quiet HEAD; echo $?
+0
+$ git diff --quiet; echo $?
+0
+$ git diff --exit-code; echo $?
+0
+$ git diff --cached --quiet; echo $?
+0
+
+Cheers,
+Wincent
