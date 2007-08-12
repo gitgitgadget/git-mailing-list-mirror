@@ -1,93 +1,123 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: --exit-code (and --quiet) broken in git-diff?
-Date: Sun, 12 Aug 2007 11:40:58 +0200
-Message-ID: <46BED5AA.7050900@lsrfire.ath.cx>
-References: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 11:41:16 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v4, ping] gitk: let you easily specify lines of context in diff view
+Date: Sun, 12 Aug 2007 12:02:53 +0200
+Message-ID: <AC6A824F-E268-41AE-823B-2C01D78FAF30@zib.de>
+References: <11856503182381-git-send-email-prohaska@zib.de> <11868462503722-git-send-email-prohaska@zib.de> <18110.31705.747583.463206@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 12:05:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IK9wh-000421-IP
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 11:41:15 +0200
+	id 1IKAK6-0000Ub-BS
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 12:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbXHLJlM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 05:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbXHLJlM
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 05:41:12 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:52808
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756436AbXHLJlL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 05:41:11 -0400
-Received: from [10.0.1.201] (p508ED523.dip.t-dialin.net [80.142.213.35])
-	by neapel230.server4you.de (Postfix) with ESMTP id 0B6748B008;
-	Sun, 12 Aug 2007 11:41:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+	id S1759401AbXHLKFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 06:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756742AbXHLKFV
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 06:05:21 -0400
+Received: from mailer.zib.de ([130.73.108.11]:39273 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752734AbXHLKFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 06:05:19 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7CA29fo021684;
+	Sun, 12 Aug 2007 12:04:42 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1ff88.pool.einsundeins.de [77.177.255.136])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7CA24Zb019615
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 12 Aug 2007 12:02:09 +0200 (MEST)
+In-Reply-To: <18110.31705.747583.463206@cargo.ozlabs.ibm.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55670>
 
-Wincent Colaiuta schrieb:
-> The git-diff man page documents an "--exit-code" option, as well as a
-> "--quiet" option which automatically implies the former.
->=20
-> In my tests on Mac OS X and Bash 3, however, "git diff" always return=
- an
-> exit code of 0, never of 1, regardless of how I use the "--quiet" and
-> "--exit-code" options. I see that there are tests in t/t4017-quiet.sh=
- for
-> the lower-level git-diff-files, git-diff-index, git-diff-tree command=
-s,
-> but none for the porcelain git-diff.
->=20
-> Is this a bug with a missing test case? Or am I using this incorrectl=
-y? In
-> the example below I'm looking for differences between the working tre=
-e and
-> the last commit, so I'm using "git diff HEAD", but as you can see, th=
-e
-> exit code is always 0 for "git diff" and "git diff --cached" as well:
->=20
-> $ git --version
-> git version 1.5.2.4
-> $ mkdir example
-> $ cd example
-> $ git init
-> Initialized empty Git repository in .git/
-> $ echo "start" > foo
-> $ git add foo
-> $ git commit -m "Add foo"
-> Created initial commit 85954f6: Add foo
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 foo
-> $ git diff --quiet HEAD; echo $?
-> 0
-> $ echo "more" >> foo
-> $ git diff --quiet HEAD; echo $?
-> 0
-> $ git add foo
-> $ git diff --quiet HEAD; echo $?
-> 0
-> $ git diff --quiet; echo $?
-> 0
-> $ git diff --exit-code; echo $?
-> 0
-> $ git diff --cached --quiet; echo $?
-> 0
 
-git diff passes the output through your pager by default, so you see th=
-e
-exit code of that instead of diff's.  Set PAGER=3Dcat or redirect the
-output to /dev/null to get rid of it.
+On Aug 12, 2007, at 5:17 AM, Paul Mackerras wrote:
 
-A test case for diff would be nice regardless, though. :)
+> Steffen Prohaska writes:
+>
+>> Any chance to get this patch applied? It works for me.
+>
+> Some comments:
+>
+>> @@ -731,7 +732,16 @@ proc makewindow {} {
+>>  	-command changediffdisp -variable diffelide -value {0 1}
+>>      radiobutton .bleft.mid.new -text "New version" \
+>>  	-command changediffdisp -variable diffelide -value {1 0}
+>> -    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
+>
+> Just add another pack command rather than extending this one.
 
-Ren=E9
+Thanks. Didn't understand what pack does and thought it might be
+needed to pack all at once into a 'single' pack.
+
+
+>> +    label .bleft.mid.labeldiffcontext -text "      Lines of  
+>> context: " \
+>> +    -font $uifont
+>
+> This is hard to read because the continuation line isn't indented
+> further that the first line.  Please indent continuation lines by an
+> extra 4 spaces.
+
+I fixed more of them. I typically work with a no-tab rule. Hope I
+spotted all other places with wrong indent, too.
+
+
+>> +# empty strings or integers accepted
+>> +proc diffcontextvalidate {v} {
+>> +    if {[string length $v] == 0} {
+>> +	return 1
+>> +    }
+>> +    if {[string is integer $v]} {
+>> +	if {$v > 0} {
+>> +	    return 1
+>> +	}
+>> +    }
+>> +    return 0
+>> +}
+>
+> "string is integer" will already accept the null string and return 1.
+
+replaced this by a regexp.
+
+
+>> +proc diffcontextchange {n1 n2 op} {
+>> +    global diffcontextstring diffcontext
+>> +
+>> +    if {[string is integer $diffcontextstring]} {
+>> +        if {$diffcontextstring > 0} {
+>
+> Once again, "string is integer" returning 1 doesn't guarantee the
+> string is non-empty.  Use "string is integer -strict" if you want
+> that.
+
+Ah, thanks, didn't know that.
+
+
+>> +            set diffcontext $diffcontextstring
+>> +		    reselectline
+>
+> Inconsistent indentation.
+
+ok.
+
+
+>> +set diffcontext 3
+>> +
+>
+> It would be nice to save diffcontext in the ~/.gitkrc.
+
+done.
+
+Will send a patch in a minute.
+
+	Steffen
