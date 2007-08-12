@@ -1,77 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-apply: apply submodule changes
-Date: Sun, 12 Aug 2007 12:24:29 -0700
-Message-ID: <7vr6m8imj6.fsf@assigned-by-dhcp.cox.net>
-References: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
-	<20070812142340.GA10399MdfPADPa@greensroom.kotnet.org>
-	<7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
-	<20070812185006.GG999MdfPADPa@greensroom.kotnet.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Can I have this, pretty please?
+Date: Sun, 12 Aug 2007 12:24:48 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708121219540.30176@woody.linux-foundation.org>
+References: <85ir7kq42k.fsf@lola.goethe.zz>
+ <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
+ <85abswo9gf.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Johannes.Schindelin@gmx.de
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sun Aug 12 21:24:40 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 21:25:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKJ3E-0002cn-Sd
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 21:24:37 +0200
+	id 1IKJ3g-0002jF-BQ
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 21:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935954AbXHLTYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 15:24:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935941AbXHLTYc
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 15:24:32 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:50875 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935275AbXHLTYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 15:24:32 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070812192431.YUUE5405.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 12 Aug 2007 15:24:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id b7QW1X0061kojtg0000000; Sun, 12 Aug 2007 15:24:31 -0400
-In-Reply-To: <20070812185006.GG999MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Sun, 12 Aug 2007 20:50:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S936363AbXHLTZB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 15:25:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936127AbXHLTZB
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 15:25:01 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46417 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935941AbXHLTZA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 15:25:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CJOuAU004983
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 12 Aug 2007 12:24:57 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CJOmIk018257;
+	Sun, 12 Aug 2007 12:24:51 -0700
+In-Reply-To: <85abswo9gf.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-2.743 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55705>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
 
->>  - what does ce have to do in this codepath?  read_old_data()
->>    does not care about what is in the index (in fact, in the
->>    index the entry can be a symlink when the path on the
->>    filesystem is a regular file, and it reads from the regular
->>    file as asked--it does not even look at ce by design).  
->>    if you have a regular file there in the current version, ce
->>    would say it is a regular file blob and you would not want
->>    read_gitlink_or_skip() to say "Subproject commit xyz...".
+
+On Sun, 12 Aug 2007, David Kastrup wrote:
 >
-> Hmmm... the documentation says that if --index is in effect
-> then the file to be patched in the work tree is supposed to be 
-> up-to-date.
+> > But to visualize a history, it's useless.
+> 
+> Not half as useless as existing git-specific tools.  They thrash my
+> computer to death on serious sized trees.
 
-But that is the job of check_patch(), not this function, isn't it?
+So, use "git log --pretty=oneline" instead, which doesn't have the 
+expense.
 
->> The type-mismatch case to attempt to apply gitlink patch to a
->> regular blob is covered much earlier in check_patch().  It
->> complains if st_mode does not match patch->old_mode; I think you
->> need to adjust it a bit to:
->> 
->>  - allow gitlink patch to a path that currently has nothing (no
->>    submodule checked out) or a directory that has ".git/"
->>    (i.e. submodule checked out).
->> 
->>  - reject gitlink patch otherwise.
->
-> Are you talking about the case where --index is specified?
+I don't see why you think that using nntp would help anything. The 
+_problem_ is still the same one, of calculating full reachability. It 
+didn't go away just because you changed to another intermediate protocol.
 
-Talking about both cases, and the division of responsibility
-between check_patch() and apply_data().
+Yes, you could perhaps use the nntp caching, but I don't know if you've 
+noticed: the reason news servers tend to expire old messages is that a 
+news reader and the NNTP protocol won't be able to handle huge histories 
+either.
+
+And if you just want the "expire" feature, then you might as well just 
+make git date-limit things for you, ie "gitk --since=last.week"
+
+			Linus
