@@ -1,75 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: syntax for checking out specific tag on a remote
-Date: Sat, 11 Aug 2007 19:01:28 -0700
-Message-ID: <7vmywxjytj.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910708111833r6588557al1876bd6aaae38204@mail.gmail.com>
-	<7v1we9leb9.fsf@assigned-by-dhcp.cox.net>
-	<9e4733910708111850v6e9669c3i536fba49f63d0f10@mail.gmail.com>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Re: msysgit list vs. git list
+Date: Sat, 11 Aug 2007 22:30:58 -0700
+Message-ID: <A81033F5A41C44638DB51C59D3F7863C@ntdev.corp.microsoft.com>
+References: <4DCDB012-2594-4EAE-9F5E-76EC68E60BE5@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 04:01:34 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 12 07:31:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IK2lp-0005SZ-T9
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 04:01:34 +0200
+	id 1IK62e-0002Ua-S5
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 07:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756249AbXHLCBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Aug 2007 22:01:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756232AbXHLCBa
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Aug 2007 22:01:30 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:46572 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753934AbXHLCB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2007 22:01:29 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070812020128.NKBC7193.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 11 Aug 2007 22:01:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aq1U1X00a1kojtg0000000; Sat, 11 Aug 2007 22:01:29 -0400
-In-Reply-To: <9e4733910708111850v6e9669c3i536fba49f63d0f10@mail.gmail.com>
-	(Jon Smirl's message of "Sat, 11 Aug 2007 21:50:10 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751605AbXHLFbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 01:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbXHLFbB
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 01:31:01 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:15727 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751439AbXHLFbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 01:31:00 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1428745wah
+        for <git@vger.kernel.org>; Sat, 11 Aug 2007 22:31:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=f981+GFRr2hpF2sNCdCsd368t1t403SY/FGcx42IR9qxQTOtJKENTPCv1E5EwMBdv4u0FRph/bSUF9akY2LiOheIWSj6fSH0PAvK4QioFOweVdYwVtSu+/PHGmNKcFfTiLvJstYaKqwmYXWljfum+arnQC4IpSp2cL0gVM0cSY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=fHfTRQL5FH2Mpyvh4y3tC4naMy0pXZtQjhSkdtrvCH2WPpP4xQ/Vi/FPqGiAFCTI2nY4WrrZPSa0IjXkTLBxochMqMLMm8YmmIYF+2W0J16z8EuC7kMb9Os6+GULzGX9Ks+5OeDmojCi3GXbxEPbtSg3rmHWXmaxIEke7w/bZpE=
+Received: by 10.114.103.1 with SMTP id a1mr4082267wac.1186896659932;
+        Sat, 11 Aug 2007 22:30:59 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id j26sm4938163waf.2007.08.11.22.30.59
+        (version=SSLv3 cipher=OTHER);
+        Sat, 11 Aug 2007 22:30:59 -0700 (PDT)
+In-Reply-To: <4DCDB012-2594-4EAE-9F5E-76EC68E60BE5@zib.de>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MIMEOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55663>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+----- Original Message ----- 
+From: "Steffen Prohaska" <prohaska@zib.de>
+> Could someone briefly explain the scope of the msysgit list.
+> 
+> When should I post to the msysgit git?
 
-> On 8/11/07, Junio C Hamano <gitster@pobox.com> wrote:
->> "Jon Smirl" <jonsmirl@gmail.com> writes:
->>
->> > What's the syntax for checking out a specific tag on a remote?
->>
->> This depends on where you stored the tags you obtained from the
->> remote.  By default, "git fetch --tags" would store the tags in
->> a flat namespace; there is no "remote tag" namespace.
->
-> I've been storing unrelated trees in the same git db. It never
-> occurred to me that there was a single tag name space. So if two of my
-> remotes both make a tag TEST then last one fetched will win? Are
-> "remote tag" namespaces planned for the future?
+When issue is specific to MinGW port of Git
 
-There actually is no need to plan anything.
+> When to the git list?
 
-Typically people do not publish "private" tags to require such a
-layout to differentiate tags from 47 different sources, so we
-have never talked about this, but you can look into .git/config
-file in your repository, and adjust [remote "foo"] fetch lines
-to your specific taste.  e.g.
+When its a general Git issue
 
-	[remote "a"]
-        	fetch = +refs/heads/*:refs/remotes/a/*
-                fetch = +refs/tags/*:refs/remote-tags/a/*
+> When to both lists?
+Never?
 
-	[remote "b"]
-        	fetch = +refs/heads/*:refs/remotes/b/*
-                fetch = +refs/tags/*:refs/remote-tags/b/*
+> If the traffic on msysgit is not too high, wouldn't it be
+> more reasonable just to use the git list and indicate in
+> the subject that the post is primarily related to msysgit?
+
+It depends. We use msysgit to discuss issues that are totally uninteresting to the rest of git community.
+Like discussion of specific bugs etc.
+On the other hand we do read this list as well, so it's your call.
+
+- Dmitry
