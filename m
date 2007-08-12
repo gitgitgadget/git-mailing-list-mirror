@@ -1,89 +1,118 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Can I have this, pretty please?
-Date: Sun, 12 Aug 2007 11:48:57 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708121140190.30176@woody.linux-foundation.org>
-References: <85ir7kq42k.fsf@lola.goethe.zz>
- <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH v3] git-apply: apply submodule changes
+Date: Sun, 12 Aug 2007 20:50:06 +0200
+Message-ID: <20070812185006.GG999MdfPADPa@greensroom.kotnet.org>
+References: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
+ <20070812142340.GA10399MdfPADPa@greensroom.kotnet.org>
+ <7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 12 20:49:18 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
+	Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 20:50:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKIUz-00023H-5K
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 20:49:13 +0200
+	id 1IKIVz-0002Ht-Ci
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 20:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933673AbXHLStJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 14:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933482AbXHLStI
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 14:49:08 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:60953 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932753AbXHLStH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 14:49:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CIn3W1003243
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 12 Aug 2007 11:49:04 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CImvZV017054;
-	Sun, 12 Aug 2007 11:48:57 -0700
-In-Reply-To: <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.744 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S933647AbXHLSuM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 14:50:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933696AbXHLSuM
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 14:50:12 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:49671 "EHLO psmtp08.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933743AbXHLSuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 14:50:10 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMO00BGRCBJXQ@psmtp08.wxs.nl> for git@vger.kernel.org; Sun,
+ 12 Aug 2007 20:50:08 +0200 (MEST)
+Received: (qmail 9786 invoked by uid 500); Sun, 12 Aug 2007 18:50:06 +0000
+In-reply-to: <7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55701>
 
-
-
-On Sun, 12 Aug 2007, Linus Torvalds wrote:
+On Sun, Aug 12, 2007 at 11:16:09AM -0700, Junio C Hamano wrote:
+> Sven Verdoolaege <skimo@kotnet.org> writes:
+> >  	else if (patch->old_name) {
+> >  		size = xsize_t(st->st_size);
+> >  		alloc = size + 8192;
+> >  		buf = xmalloc(alloc);
+> > -		if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+> > +		if (S_ISGITLINK(patch->old_mode))
+> > +			size = read_gitlink_or_skip(patch, ce, buf, alloc);
+> > +		else if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+> >  			return error("read of %s failed", patch->old_name);
+> >  	}
 > 
-> A newsreader is mis-designed for all the same reasons SVN is misdesigned: 
-> it sees the messages (commits) as a _tree_.
+> read_old_data() gets the lstat information from the current
+> filesystem data at old_name, and gives the preimage to be
+> patched, and naturally it bombs out if it is a directory, but
+> when we are applying a change to gitlink, the patch expects
+> old_name to be a directory.
+> 
+> So you introduced read_gitlink_or_skip() to work it around.  But
+> this makes me wonder...
+> 
+>  - what does ce have to do in this codepath?  read_old_data()
+>    does not care about what is in the index (in fact, in the
+>    index the entry can be a symlink when the path on the
+>    filesystem is a regular file, and it reads from the regular
+>    file as asked--it does not even look at ce by design).  
+>    if you have a regular file there in the current version, ce
+>    would say it is a regular file blob and you would not want
+>    read_gitlink_or_skip() to say "Subproject commit xyz...".
 
-Side note: the lack of this bug is what makes showing large histories 
-graphically be expensive in the first place. 
+Hmmm... the documentation says that if --index is in effect
+then the file to be patched in the work tree is supposed to be 
+up-to-date.  Then for files it shouldn't matter if the data
+comes from the index or not.  For submodules it's crucial to
+look at the index (if it is available), since that's the
+only place you can find the current state of the submodule.
+(Remember that git currently doesn't automatically update submodules.)
 
-In fact, in git, merges are "first-class" entities, and forking is 
-something you have to infer from the history (by finding two commits with 
-the same parent), and that's why calculating the graph is actually pretty 
-expensive: when you do so, you have to keep all the commit relationships 
-in memory, and you basically have to sort it topologically.
+If I specify --index (e.g., through git rebase), then I really
+wouldn't want the patch to apply if the old submodule commit
+in the patch doesn't match the submodule commit in the index.
+Would you?
 
-So even if you don't want to show the graph itself (and just add 
-references to allow the user to walk to parents/children manually), you'd 
-still have to calculate - and keep track of - the commit relationships. 
-And I suspect that's what makes gitk and other visualizers take time.
+>  - what is alloc at this point?  it is based on the size of
+>    directory st->st_size.
 
-I think one solution is to limit the size fo the visualization by date or 
-number, ie if you want to see history, it's often useful to do things like
+I assume you mean "size".  For submodules, the value isn't used,
+except to test that the "file" is empty (size==0) on delete.
+So it seems safe to set it to zero for submodules in any case.
 
-	gitk --since=10.weeks.ago
+> I think dropping fragments for a patch that tries to modify a
+> gitlink here is fine, but that can be done regardless of what ce
+> is.
 
-to see just the "recent" commits. That very fundamentally makes the 
-problem much cheaper, because you simply have to generate the graph for a 
-much smaller set of commits.
+As explained above, I don't think it would a good idea to
+just drop gitlink patches if --index is specified.
 
-I used to think that we should just default to some reasonable value, but 
-then we optimized the hell out of git-rev-list and Paul fixed a number of 
-scalability issues in gitk too, so it kind of fell by the wayside because 
-it wasn't as important any more. But if you have a huge project with lots 
-of history, the right answer may well be to make gitk *default* to using 
-something like "show only the last year unless some revision limiting has 
-been done explicitly".
+> The type-mismatch case to attempt to apply gitlink patch to a
+> regular blob is covered much earlier in check_patch().  It
+> complains if st_mode does not match patch->old_mode; I think you
+> need to adjust it a bit to:
+> 
+>  - allow gitlink patch to a path that currently has nothing (no
+>    submodule checked out) or a directory that has ".git/"
+>    (i.e. submodule checked out).
+> 
+>  - reject gitlink patch otherwise.
 
-IOW, showing the whole history for a big project is simply pretty 
-expensive. If you have a hundred thousand commits, just keeping track of 
-the tree structure *is* going to take megabytes and megabytes of data. 
-Limiting the size of the problem is usually a really good solution, 
-especially since most people tend to care about what happened in the last 
-few days, not what happened five months ago.
+Are you talking about the case where --index is specified?
+Otherwise, I don't think we can make any assumptions on
+what's inside the subdirectory.
 
-			Linus
+skimo
