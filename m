@@ -1,74 +1,47 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: git-gui i18n / 0.9.x plans
-Date: Sun, 12 Aug 2007 22:08:10 +0200
-Message-ID: <200708122208.11307.stimming@tuhh.de>
-References: <20070731012804.GZ20052@spearce.org> <Pine.LNX.4.64.0707311136540.14781@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: Can I have this, pretty please?
+Date: Sun, 12 Aug 2007 16:09:16 -0400
+Message-ID: <20070812200916.GB13298@sigill.intra.peff.net>
+References: <85ir7kq42k.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org> <85abswo9gf.fsf@lola.goethe.zz> <20070812200258.GA13298@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 12 22:08:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 22:09:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKJjg-00056d-Ly
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:08:29 +0200
+	id 1IKJkb-0005Qf-LQ
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759459AbXHLUIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 16:08:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759448AbXHLUIZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:08:25 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:42657 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758154AbXHLUIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 16:08:24 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l7CK8IRW003223
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sun, 12 Aug 2007 22:08:18 +0200
-Received: from [192.168.2.102] (p549002F8.dip0.t-ipconnect.de [84.144.2.248])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l7CK8GCW030376
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 12 Aug 2007 22:08:17 +0200
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0707311136540.14781@racer.site>
+	id S1761442AbXHLUJW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 16:09:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759448AbXHLUJW
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:09:22 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4180 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759348AbXHLUJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 16:09:21 -0400
+Received: (qmail 4985 invoked by uid 111); 12 Aug 2007 20:09:28 -0000
+X-Spam-Status: No, hits=-1.3 required=15.0
+	tests=ALL_TRUSTED,AWL
+X-Spam-Check-By: peff.net
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 12 Aug 2007 16:09:27 -0400
+Received: (qmail 15581 invoked by uid 1000); 12 Aug 2007 20:09:16 -0000
 Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH on 134.28.202.179
+In-Reply-To: <20070812200258.GA13298@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55718>
 
-Am Dienstag, 31. Juli 2007 12:47 schrieb Johannes Schindelin:
-> On Mon, 30 Jul 2007, Shawn O. Pearce wrote:
-> > Regarding future development for the off-in-the-future 0.9.0 release I'd
-> > like to see the i18n work merge in before we do anything else major to
-> > git-gui.
+On Sun, Aug 12, 2007 at 04:02:58PM -0400, Jeff King wrote:
 
-That sounds very good. Of course I'm very interested in having a i18n'ized 
-git-gui available as soon as possible. In the git-gui-i18n.git code I think 
-we've by now covered really all of the strings that appear throughout the 
-program. Thanks to Johannes' maintenance work, the i18n patches are based on 
-your (almost) latest master. Once the translation will actually be accepted 
-into git-gui.git, I will also spend some weeks on final polish for the 
-glossary and the German translation. I think it will be possible for you to 
-offer at least a few language in complete translations in a 0.8.x release.
+> git-log \
+>   --pretty=format:'From %H Mon Sep 17 00:00:00 2001%nFrom: %an <%ae>%nDate: %ad%nSubject: %s%nMessage-ID: <%H@none>%nReferences: %P%n%n%b' \
 
-> Very good!  As it happens, I pushed an update this morning.
-> temp-rebase-to-shawns-master is the branch which forward-ported all
-> patches to the current master of git-gui.git.
->
-> As I understand, Christian will find and mark all strings lacking [mc ...]
-> and update the .pot file.  Then we'll kindly ask the good translators
-> (thanks everyone!) to review the changes, and after that I'll prepare some
-> submittable patch series (no need to have several patches per language).
+Er, sorry, that should be '%aD' in the date.
 
-Yes, this is how this should work. I'm looking forward to a fully i18n'ized 
-git-gui! Thanks for this great program.
-
-Christian
+-Peff
