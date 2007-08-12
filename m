@@ -1,79 +1,86 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Can I have this, pretty please?
-Date: Sun, 12 Aug 2007 23:35:56 +0200
-Message-ID: <85y7gg5tc3.fsf@lola.goethe.zz>
-References: <85ir7kq42k.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
-	<85abswo9gf.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121219540.30176@woody.linux-foundation.org>
-	<85wsw0mt77.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121255230.30176@woody.linux-foundation.org>
-	<69b0c0350708121358w13d04047s1916d3599c2e040a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] checkout: fix attribute handling in checkout all
+Date: Sun, 12 Aug 2007 14:50:21 -0700
+Message-ID: <7veji8ifs2.fsf@assigned-by-dhcp.cox.net>
+References: <11869508753328-git-send-email-prohaska@zib.de>
+	<118695087531-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Govind Salinas" <govindsalinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 23:36:04 2007
+Cc: dmitry.kakurin@gmail.com, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 12 23:50:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKL6R-00019i-IU
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 23:36:03 +0200
+	id 1IKLKN-0004RQ-Al
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 23:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760890AbXHLVf7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 17:35:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759786AbXHLVf7
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 17:35:59 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:52065 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759481AbXHLVf6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 17:35:58 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id F0D804CB2E;
-	Sun, 12 Aug 2007 23:35:56 +0200 (CEST)
-Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id DD2C15BD69;
-	Sun, 12 Aug 2007 23:35:56 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-036-190.pools.arcor-ip.net [84.61.36.190])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id AC8B48C467;
-	Sun, 12 Aug 2007 23:35:56 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 485061C3C79D; Sun, 12 Aug 2007 23:35:56 +0200 (CEST)
-In-Reply-To: <69b0c0350708121358w13d04047s1916d3599c2e040a@mail.gmail.com> (Govind Salinas's message of "Sun\, 12 Aug 2007 15\:58\:05 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3936/Sun Aug 12 17:10:09 2007 on mail-in-12.arcor-online.net
-X-Virus-Status: Clean
+	id S1761673AbXHLVuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 17:50:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761587AbXHLVuY
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 17:50:24 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60542 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761299AbXHLVuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 17:50:23 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070812215023.KMPN3478.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 12 Aug 2007 17:50:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id b9qN1X0011kojtg0000000; Sun, 12 Aug 2007 17:50:22 -0400
+In-Reply-To: <118695087531-git-send-email-prohaska@zib.de> (Steffen Prohaska's
+	message of "Sun, 12 Aug 2007 22:34:35 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55728>
 
-"Govind Salinas" <govindsalinas@gmail.com> writes:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> Since you all are talking about such things, I thought I would show
-> you a shot of my git UI.  It does what I think Linus is talking
-> about.  I have a window of x commits which I show in a list and
-> allow the user to look at each one.  You can click on a commit to
-> see full details.  There are back/next buttons to browse the entire
-> history and date/author/etc filters to narrow your results.  The
-> only thing I am missing is the pretty chart that gitk and others
-> have.  The chart (in my app) would only show the chart for the
-> current window of commits.  I'll get to that sometime after work
-> gives me enough time to start working on this again.
+> We need to check out .gitattributes files first to have
+> them in place when we check out the remaining files. This
+> is needed to get the right attributes during checkout,
+> for example having the right crlf conversion on the first
+> checkout if crlf is controlled by a .gitattribute file.
 >
-> Is this something like what you had in mind?
+> This works only together with the commit
+>
+> 'attr: fix attribute handling if .gitattributes is involved'
 
-Well, what I have in mind boils down to something I can use without
-leaving my editor...  Your tool does not look all too different from
-gitk, git-gui, giggle, giwhatever.  There is a variety of those
-around, and they all don't really blow me away.  Part of the problem
-is that my work flow involves editing a lot and I naturally use Emacs.
-If those tools used Emacs for all their editing, I'd probably become
-more friendly with them (for what it's worth: one can talk with Emacs
-through sockets if necessary).  However, Linus might have something
-different in mind.
+While I think it is _one_ good approach to make things two-pass,
+I do not know if this is enough.  A logic similar to this should
+be made available to the codepath that switches branches,
+shouldn't it?
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+It feels somewhat bogus to treat only the files that contain
+".gitattributes" as substring.  Don't you want to at least say
+"is .gitattributes or ends with /.gitattributes"?
+
+I am not 100% convinced that it is "unexpected" that
+these two sequences give different results.
+
+ (1) rm -f .gitattributes other
+     git-checkout-index -f .gitattributes
+     git-checkout-index -f other
+
+ (2) rm -f .gitattributes other
+     git-checkout-index -f other
+     git-checkout-index -f .gitattributes
+
+And if this is mostly to work around the chicken-and-egg problem
+of the initial checkout, I do not know if we would want to
+complicate checkout_all() nor prepare_attr_stack().  Perhaps the
+_initial_ checkout can do something like:
+
+ * look at index, checkout .gitattributes and */.gitattributes;
+ * checkout -f -a
+
+_at the Porcelain level_, without complicating the plumbing?
+
+Both patches are seriously out of existing coding style, by the
+way.  Extra spaces after called function names everywhere, etc.
