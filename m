@@ -1,94 +1,99 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: [BUG] git --work-tree=... status
-Date: Sun, 12 Aug 2007 20:58:56 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070812185855.GA16704@informatik.uni-freiburg.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Can I have this, pretty please?
+Date: Sun, 12 Aug 2007 21:10:24 +0200
+Message-ID: <85abswo9gf.fsf@lola.goethe.zz>
+References: <85ir7kq42k.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 20:59:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 21:10:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKIeU-0004Pe-0u
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 20:59:02 +0200
+	id 1IKIpb-0007ML-9p
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 21:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932867AbXHLS67 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 14:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761586AbXHLS67
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 14:58:59 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:48011 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751284AbXHLS66 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 14:58:58 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IKIeP-0004uL-3C
-	for git@vger.kernel.org; Sun, 12 Aug 2007 20:58:57 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7CIwuY1017135
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 20:58:56 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7CIwuYa017134
-	for git@vger.kernel.org; Sun, 12 Aug 2007 20:58:56 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933600AbXHLTK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 15:10:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933285AbXHLTK1
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 15:10:27 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:33407 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761586AbXHLTK0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 15:10:26 -0400
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 927FB15C31E;
+	Sun, 12 Aug 2007 21:10:25 +0200 (CEST)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 7FD89345C1B;
+	Sun, 12 Aug 2007 21:10:25 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-036-190.pools.arcor-ip.net [84.61.36.190])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id F2A1013C49;
+	Sun, 12 Aug 2007 21:10:24 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 84E661C3C79D; Sun, 12 Aug 2007 21:10:24 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 12 Aug 2007 11\:38\:53 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3936/Sun Aug 12 17:10:09 2007 on mail-in-11.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55703>
 
-Hello,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I don't have time now to look into it, so for now as usual just a
-report.  If nobody takes it, I will do it later.
+> On Sun, 12 Aug 2007, David Kastrup wrote:
+>>
+>> And then it struck me: Emacs has a very efficient browser for linked
+>> one-line information that can be expanded into complete changesets
+>> with diffs inside.  It is called "Gnus".  A newsreader.
+>
+> A newsreader is mis-designed for all the same reasons SVN is
+> misdesigned: it sees the messages (commits) as a _tree_.
 
-	zeisberg@cassiopeia:~/gsrc/git$ git version
-	git version 1.5.3.rc4.887.gd56871c
+In the first place, it sees linked messages.  They usually correspond
+to something treeish, but a newsreader that would barf when they don't
+would be unusable.  Newsreaders actually have to deal with stupid
+things like _loops_ in message referals without going into a tizzy.
+Those things happen in Usenet.
 
-[That's Junio's next + my doc change "checkout-index doc: use --work-di=
-r in
-the export example"]
+> Anybody who sees development as a tree is totally bogus by
+> definition. It sees things forking off, but it doesn't see them
+> merging. That's a fundamnetal and unfixable design bug.
 
-	zeisberg@cassiopeia:~/gsrc/git$ mkdir export
+It is not inherent in NNTP.  It depends on the particular newsreader,
+and for pretty much all of them, you can turn off threaded display if
+it disturbs you.
 
-	zeisberg@cassiopeia:~/gsrc/git$ git --work-tree=3Dexport checkout-inde=
-x -a
+> But to visualize a history, it's useless.
 
-	zeisberg@cassiopeia:~/gsrc/git$ git --work-tree=3Dexport status
-	fatal: /home/zeisberg/usr/bin/git-status cannot be used without a work=
-ing tree.
+Not half as useless as existing git-specific tools.  They thrash my
+computer to death on serious sized trees.  Putting every branch into a
+newsgroup of its own, in contrast, together with the usual header
+search and refinement options, would be _much_ _much_ faster for
+accessing a particular patch.
 
-runstatus works as expected (at least after some thought):
+I'll probably be able to create a Gnus _backend_ for this sort of
+setup (there are even backends for directory browsing: most files
+become articles written by their owner that either are plain text, or
+that contain their file contents as an attachment -- quite more crazy
+than a git commit tree).  But an nntp server would make the idea
+usable for more than just Emacs users, and it would allow a much more
+convenient "what happened on the "next" branch in the last few days"
+overview than existing tools.
 
-	zeisberg@cassiopeia:~/gsrc/git$ git --work-tree=3Dexport runstatus | h=
-ead
-	# On branch next
-	# Changed but not updated:
-	#   (use "git add <file>..." to update what will be committed)
-	#
-	#       modified:   .gitignore
-	#       modified:   .mailmap
-	#       modified:   COPYING
-	#       modified:   Documentation/.gitignore
-	#       modified:   Documentation/Makefile
-	#       modified:   Documentation/RelNotes-1.5.0.1.txt
+It lends itself not well to actually serving trees and blobs (even
+though one could superficially rely on a rigid tree topology there):
+newsreaders just don't match the natural way of accessing them (Gnus
+offers that for files, but it plainly is not much use compared to a
+dedicated directory browser).
 
-The problem seems to be that require_work_tree demands more that I thin=
-k
-it should.  It calls `git rev-parse --is-inside-work-tree`.
+But for commits and patches, one group per branch?  That would be
+fine.
 
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+newton+in+kg*m+%2F+s%5E2
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
