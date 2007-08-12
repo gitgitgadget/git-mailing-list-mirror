@@ -1,113 +1,169 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: performance on repack
-Date: Sun, 12 Aug 2007 09:49:32 -0400
-Message-ID: <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
-References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
-	 <20070812103338.GA7763@auto.tuwien.ac.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Sun Aug 12 15:49:40 2007
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] builtin-bundle create - use lock_file
+Date: Sun, 12 Aug 2007 10:14:09 -0400
+Message-ID: <11869280491451-git-send-email-mdl123@verizon.net>
+References: <11869231822803-git-send-email-mdl123@verizon.net>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Mark Levedahl <mdl123@verizon.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 16:14:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKDp6-0004lh-B8
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 15:49:40 +0200
+	id 1IKECz-0002RA-Ns
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 16:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763921AbXHLNtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 09:49:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759068AbXHLNtg
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 09:49:36 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:34362 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439AbXHLNtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 09:49:35 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1525919wah
-        for <git@vger.kernel.org>; Sun, 12 Aug 2007 06:49:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kHN0cwo36bYSAUIne8Q7UA5T82XAoqOr3jTPe73JZuaZofdyLvD6qS3NjYIZV6AH2/E61J3QoocwoD9XHJ1QZ4bheTjCafsiIRoEtKrWQZ+61TOwHz+nMZyofu3hIfYgw2rF/thP+NgtwJ6YZp9mvp5cd41k89unLQa5DJ69Czw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VQbXfjvi7lwYSXdGv1m2dK6TFih4b2QJE9NWfMfvk6zx548L2cf0iLA5ahl4O5fp0wI5rD68uWk+VJdl003pGZSsPV1mRyYy0r7jPMIfGbsli+T5aeDCexqERhPlV8dDUfmU1XxlT1NEFT4jrJCg5DMV+fHPSyM2DMjOtyOURBI=
-Received: by 10.115.93.16 with SMTP id v16mr476413wal.1186926572388;
-        Sun, 12 Aug 2007 06:49:32 -0700 (PDT)
-Received: by 10.114.195.11 with HTTP; Sun, 12 Aug 2007 06:49:32 -0700 (PDT)
-In-Reply-To: <20070812103338.GA7763@auto.tuwien.ac.at>
-Content-Disposition: inline
+	id S1754898AbXHLOOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 10:14:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755320AbXHLOOS
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 10:14:18 -0400
+Received: from vms048pub.verizon.net ([206.46.252.48]:41343 "EHLO
+	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753684AbXHLOOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 10:14:18 -0400
+Received: from fal-l07294-lp.us.ray.com ([71.246.233.117])
+ by vms048.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JMN0096GZJMO3T5@vms048.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 12 Aug 2007 09:14:11 -0500 (CDT)
+In-reply-to: <11869231822803-git-send-email-mdl123@verizon.net>
+X-Mailer: git-send-email 1.5.3.rc4.79.gb5c7e-dirty
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55685>
 
-On 8/12/07, Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> On Sat, Aug 11, 2007 at 05:12:24PM -0400, Jon Smirl wrote:
-> > If anyone is bored and looking for something to do, making the delta
-> > code in git repack multithreaded would help. Yesterday I did a big
-> > repack that took 20 minutes and it only used one of my four cores. It
-> > was compute bound the entire time.
->
-> First, how much time is used by the write and how much by the deltify
-> phase?
+git bundle create would leave an invalid, partially written bundle if
+an error occured during creation. Fix that using lock_file.
 
-95% in deltify
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ struct lock_file is now static.
+ *caller* closes the lock file before commiting / rolling back.
 
->
-> If the writing phase uses too much time and you have enough free
-> memory, you can try to raise the config variable pack.deltacachelimit
-> (default 1000). It will save an additional delta operation for all
-> object, whose delta is smaller than pack.deltacachelimit by caching
-> the delta.
+ builtin-bundle.c |   57 +++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 37 insertions(+), 20 deletions(-)
 
-I have 4GB RAM and fast RAID 10 disk, writing happens very quickly.
-Pretty much everything is in RAM.
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index f4b4f03..e5a2859 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -186,10 +186,21 @@ static int list_heads(struct bundle_header *header, int argc, const char **argv)
+ 	return list_refs(&header->references, argc, argv);
+ }
 
-> Have you considered the impact on memory usage, if there are large
-> blobs in the repository?
++/* create_bundle uses lock_file, delete if write fails */
++static inline void lwrite_or_die(int fd, const void *buf, size_t count, struct lock_file *lock)
++{
++	if (write_in_full(fd, buf, count) != count) {
++		close(fd);
++		rollback_lock_file(lock);
++		die("Unable to write bundle");
++	}
++}
++
+ static int create_bundle(struct bundle_header *header, const char *path,
+ 		int argc, const char **argv)
+ {
+ 	int bundle_fd = -1;
++	static struct lock_file lock;
+ 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
+ 	int i, ref_count = 0;
+@@ -198,17 +209,9 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	struct child_process rls;
+ 	FILE *rls_fout;
 
-The process size maxed at 650MB. I'm in 64b mode so there is no
-virtual memory limit.
+-	/*
+-	 * NEEDSWORK: this should use something like lock-file
+-	 * to create temporary that is cleaned up upon error.
+-	 */
+-	bundle_fd = (!strcmp(path, "-") ? 1 :
+-			open(path, O_CREAT | O_EXCL | O_WRONLY, 0666));
+-	if (bundle_fd < 0)
+-		return error("Could not create '%s': %s", path, strerror(errno));
+-
+ 	/* write signature */
+-	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
++	bundle_fd = hold_lock_file_for_update(&lock, path, 1);
++	lwrite_or_die(bundle_fd, bundle_signature, strlen(bundle_signature), &lock);
 
-On 32b there's windowing code for accessing the packfile since we can
-run out of address space, does this code get turned off for 64b?
+ 	/* init revs to list objects for pack-objects later */
+ 	save_commit_buffer = 0;
+@@ -230,7 +233,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	while (fgets(buffer, sizeof(buffer), rls_fout)) {
+ 		unsigned char sha1[20];
+ 		if (buffer[0] == '-') {
+-			write_or_die(bundle_fd, buffer, strlen(buffer));
++			lwrite_or_die(bundle_fd, buffer, strlen(buffer), &lock);
+ 			if (!get_sha1_hex(buffer + 1, sha1)) {
+ 				struct object *object = parse_object(sha1);
+ 				object->flags |= UNINTERESTING;
+@@ -242,13 +245,19 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		}
+ 	}
+ 	fclose(rls_fout);
+-	if (finish_command(&rls))
++	if (finish_command(&rls)) {
++		close(bundle_fd);
++		rollback_lock_file(&lock);
+ 		return error("rev-list died");
++	}
 
->
-> While repacking, git keeps $window_size (default: 10) objects unpacked
-> in memory. For all (except one), it additionally stores the delta
-> index, which has about the same size as the object.
->
-> So the worst case memory usage is "sizeof(biggest object)*(2*$window_size - 1)".
-> If you have blobs >=100 MB, you need some GB of memory.
->
-> Partitioning the problem is not trivial:
->
-> * To get not worse packing resultes, we must first sort all objects by
->   type, path, size. Then we can split split the list (for each task
->   one part), which we can deltify individually.
->
->   The problems are:
->
->   - We need more memory, as each tasks keeps its own window of
->     $window_size objects (+ delta indexes) in memory.
->
->   - The list must be split in parts, which require the same amount of
->     time. This is difficult, as it depends on the size of the objects as
->     well as how they are stored (delta chain length).
->
-> * On the other hand, we could run all try_delta operations for one object
->   parallel. This way, we would need not very much more memory, but
->   require more synchronization (and more complex code).
+ 	/* write references */
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+-	if (argc > 1)
++	if (argc > 1) {
++		close(bundle_fd);
++		rollback_lock_file(&lock);
+ 		return error("unrecognized argument: %s'", argv[1]);
++	}
 
-This solution was my first thought too. Use the main thread to get
-everything needed for the object into RAM, then multi-thread the
-compute bound, in-memory delta search operation. Shared CPU caches
-might make this very fast.
+ 	for (i = 0; i < revs.pending.nr; i++) {
+ 		struct object_array_entry *e = revs.pending.objects + i;
+@@ -307,17 +316,20 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		}
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+ 		ref_count++;
+-		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
+-		write_or_die(bundle_fd, " ", 1);
+-		write_or_die(bundle_fd, ref, strlen(ref));
+-		write_or_die(bundle_fd, "\n", 1);
++		lwrite_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40, &lock);
++		lwrite_or_die(bundle_fd, " ", 1, &lock);
++		lwrite_or_die(bundle_fd, ref, strlen(ref), &lock);
++		lwrite_or_die(bundle_fd, "\n", 1, &lock);
+ 		free(ref);
+ 	}
+-	if (!ref_count)
++	if (!ref_count) {
++		close(bundle_fd);
++		rollback_lock_file(&lock);
+ 		die ("Refusing to create empty bundle.");
++	}
+
+ 	/* end header */
+-	write_or_die(bundle_fd, "\n", 1);
++	lwrite_or_die(bundle_fd, "\n", 1, &lock);
+
+ 	/* write pack */
+ 	argv_pack[0] = "pack-objects";
+@@ -339,8 +351,13 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		write(rls.in, sha1_to_hex(object->sha1), 40);
+ 		write(rls.in, "\n", 1);
+ 	}
+-	if (finish_command(&rls))
++	if (finish_command(&rls)) {
++		close(bundle_fd);
++		rollback_lock_file(&lock);
+ 		return error ("pack-objects died");
++	}
++	close(bundle_fd);
++	commit_lock_file(&lock);
+ 	return 0;
+ }
+
+--
+1.5.3.rc4.79.gb5c7e-dirty
