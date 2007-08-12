@@ -1,136 +1,75 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v5] gitk: let you easily specify lines of context in diff view
-Date: Sun, 12 Aug 2007 12:05:46 +0200
-Message-ID: <11869131461127-git-send-email-prohaska@zib.de>
-References: <AC6A824F-E268-41AE-823B-2C01D78FAF30@zib.de>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Steffen Prohaska <prohaska@zib.de>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 12:06:09 2007
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: msysgit: should core.autocrlf=true be the default on Windows?
+Date: Sun, 12 Aug 2007 03:36:20 -0700
+Message-ID: <a1bbc6950708120336p61c7f10fw8d2d43ee7f5a924c@mail.gmail.com>
+References: <7816DAAF-53CB-468C-9597-36AA94AC6476@zib.de>
+	 <84CFEBB5D7FE48FF86FEF3289C8DDAA8@ntdev.corp.microsoft.com>
+	 <F5024D9F-B008-4C14-B36B-A2E8BEFD0FE4@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 12 12:36:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKAKd-0000ca-G4
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 12:05:59 +0200
+	id 1IKAoM-0007Cg-Sj
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 12:36:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761863AbXHLKF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 06:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756742AbXHLKFz
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 06:05:55 -0400
-Received: from mailer.zib.de ([130.73.108.11]:39313 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754159AbXHLKFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 06:05:53 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7CA5kEu021978;
-	Sun, 12 Aug 2007 12:05:46 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7CA5k3k020040;
-	Sun, 12 Aug 2007 12:05:46 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <AC6A824F-E268-41AE-823B-2C01D78FAF30@zib.de>
+	id S1761999AbXHLKgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 06:36:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934450AbXHLKgX
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 06:36:23 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:35273 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934476AbXHLKgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 06:36:21 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so969204rvb
+        for <git@vger.kernel.org>; Sun, 12 Aug 2007 03:36:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CpMjWeG8fXJ5U8H4HsOkyScl87PEMrfrbBzMC3sH11scIKX1hhZtnw97JDTSFwvTX7bQwGvf3DgtiKVmVyBvNqM2kj8jVH3uXj+zQIhRgPJ5203bpIgErJYBVUum/ssIMP2nOqkHTZbeMEecrQgbIyVuW1OuEVNQimkDxnSAmvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Lx7SJ/CeBH2mn7Lppt+EaEe7FsbJBuwDjdNIz+z0RYCbltL9YcdHGZ1MopTY0w3NpQogvqqzl/YtZEb4n5YoBgbToe+NdyDYBR9LWDZX0By6RJqnrM1UrSQ/XDKjQmbmiEbEw7afMt7rATosC+zPu0ZiBD86NSutLNsBH69iQwM=
+Received: by 10.141.164.10 with SMTP id r10mr2104415rvo.1186914980948;
+        Sun, 12 Aug 2007 03:36:20 -0700 (PDT)
+Received: by 10.141.21.17 with HTTP; Sun, 12 Aug 2007 03:36:20 -0700 (PDT)
+In-Reply-To: <F5024D9F-B008-4C14-B36B-A2E8BEFD0FE4@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55672>
 
-More lines of context sometimes help to better understand a diff.
-This patch introduces a text field above the box displaying the
-blobdiffs. You can type in the number of lines of context that
-you wish to view. The number of lines of context is saved to
-~/.gitk.
+I'll be short.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- gitk |   34 ++++++++++++++++++++++++++++++++--
- 1 files changed, 32 insertions(+), 2 deletions(-)
+On 8/12/07, Steffen Prohaska <prohaska@zib.de> wrote:
+> > Please keep in mind that msysgit is targeting developers who want
+> > to contribute to MinGW port of git.
+> Why that?. In my opinion msysgit is already the best git you can
+> get on Windows.
 
-diff --git a/gitk b/gitk
-index 1103baf..4366c7f 100755
---- a/gitk
-+++ b/gitk
-@@ -517,6 +517,7 @@ proc makewindow {} {
-     global textfont mainfont uifont tabstop
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-+    global diffcontextstring diffcontext
-     global maincursor textcursor curtextcursor
-     global rowctxmenu fakerowmenu mergemax wrapcomment
-     global highlight_files gdttype
-@@ -731,7 +732,17 @@ proc makewindow {} {
- 	-command changediffdisp -variable diffelide -value {0 1}
-     radiobutton .bleft.mid.new -text "New version" \
- 	-command changediffdisp -variable diffelide -value {1 0}
-+    label .bleft.mid.labeldiffcontext -text "      Lines of context: " \
-+	-font $uifont
-     pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
-+    spinbox .bleft.mid.diffcontext -width 5 -font $textfont \
-+	-from 1 -increment 1 -to 10000000 \
-+	-validate all -validatecommand "diffcontextvalidate %P" \
-+	-textvariable diffcontextstring
-+    .bleft.mid.diffcontext set $diffcontext
-+    trace add variable diffcontextstring write diffcontextchange
-+    lappend entries .bleft.mid.diffcontext
-+    pack .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
-     set ctext .bleft.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-tabs "[expr {$tabstop * $charspc}]" \
-@@ -968,7 +979,7 @@ proc savestuff {w} {
-     global maxwidth showneartags showlocalchanges
-     global viewname viewfiles viewargs viewperm nextviewnum
-     global cmitmode wrapcomment
--    global colors bgcolor fgcolor diffcolors selectbgcolor
-+    global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
- 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -989,6 +1000,7 @@ proc savestuff {w} {
- 	puts $f [list set fgcolor $fgcolor]
- 	puts $f [list set colors $colors]
- 	puts $f [list set diffcolors $diffcolors]
-+	puts $f [list set diffcontext $diffcontext]
- 	puts $f [list set selectbgcolor $selectbgcolor]
- 
- 	puts $f "set geometry(main) [wm geometry .]"
-@@ -4986,12 +4998,29 @@ proc gettreediffline {gdtf ids} {
-     return 0
- }
- 
-+# empty string or positive integer
-+proc diffcontextvalidate {v} {
-+    return [regexp {^(|[1-9][0-9]*)$} $v]
-+}
-+
-+proc diffcontextchange {n1 n2 op} {
-+    global diffcontextstring diffcontext
-+
-+    if {[string is integer -strict $diffcontextstring]} {
-+	if {$diffcontextstring > 0} {
-+	    set diffcontext $diffcontextstring
-+	    reselectline
-+	}
-+    }
-+}
-+
- proc getblobdiffs {ids} {
-     global diffopts blobdifffd diffids env
-     global diffinhdr treediffs
-+    global diffcontext
- 
-     set env(GIT_DIFF_OPTS) $diffopts
--    if {[catch {set bdf [open [diffcmd $ids {-p -C --no-commit-id}] r]} err]} {
-+    if {[catch {set bdf [open [diffcmd $ids "-p -C --no-commit-id -U$diffcontext"] r]} err]} {
- 	puts "error getting diffs: $err"
- 	return
-     }
-@@ -7569,6 +7598,7 @@ set colors {green red blue magenta darkgrey brown orange}
- set bgcolor white
- set fgcolor black
- set diffcolors {red "#00a000" blue}
-+set diffcontext 3
- set selectbgcolor gray85
- 
- catch {source ~/.gitk}
+End-user version could be made MUCH smaller.
+
+> > On the other hand, setup for end-users should have it as default, I
+> > agree.
+>
+> But our end-users are developers! We should leverage on that and make
+> msysgit the 'end-user' installation. Developers tend to be interested
+> in fixing problems with their working environment. We should provide
+> them a _very_ easy way of submitting their fixes and improvements
+> back to msysgit, e.g. via mob branch. This could speed up the Windows
+> porting effort tremendously.
+
+I agree. That's why msysgit was created.
+On the other hand, for many user Git is just a tool that they use to
+accomplish something important for them (completely unrelated to git).
+That's why end-user installer exists as well.
+
 -- 
-1.5.3.rc4.762.g17d7
+- Dmitry
