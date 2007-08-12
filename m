@@ -1,169 +1,65 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] builtin-bundle create - use lock_file
-Date: Sun, 12 Aug 2007 10:14:09 -0400
-Message-ID: <11869280491451-git-send-email-mdl123@verizon.net>
-References: <11869231822803-git-send-email-mdl123@verizon.net>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mark Levedahl <mdl123@verizon.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 16:14:25 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Can I have this, pretty please?
+Date: Sun, 12 Aug 2007 22:21:10 +0800
+Message-ID: <46BF1756.5070305@midwinter.com>
+References: <85ir7kq42k.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 16:21:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKECz-0002RA-Ns
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 16:14:22 +0200
+	id 1IKEJh-0004I4-Sf
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 16:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898AbXHLOOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 10:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755320AbXHLOOS
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 10:14:18 -0400
-Received: from vms048pub.verizon.net ([206.46.252.48]:41343 "EHLO
-	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753684AbXHLOOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 10:14:18 -0400
-Received: from fal-l07294-lp.us.ray.com ([71.246.233.117])
- by vms048.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JMN0096GZJMO3T5@vms048.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 12 Aug 2007 09:14:11 -0500 (CDT)
-In-reply-to: <11869231822803-git-send-email-mdl123@verizon.net>
-X-Mailer: git-send-email 1.5.3.rc4.79.gb5c7e-dirty
-X-Peer: 127.0.0.1
+	id S1758964AbXHLOVP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 10:21:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758876AbXHLOVO
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 10:21:14 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:46320 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754660AbXHLOVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 10:21:14 -0400
+Received: (qmail 28374 invoked from network); 12 Aug 2007 14:21:13 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=iVBF3Ztat5f78y8W+kewTNQ87d3vO4ovn0+tn7tXRc78o0V2EoOqXCpq1Gn0+PpW  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 12 Aug 2007 14:21:12 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <85ir7kq42k.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55686>
 
-git bundle create would leave an invalid, partially written bundle if
-an error occured during creation. Fix that using lock_file.
+David Kastrup wrote:
+> Mapping a repository into newsgroups (one per branch head?), complete
+> with threads, references, header display, article fetch (by
+> git-format-patch), Message Ids (=commit id) is much more
+> straightforward than creating an HTML server.  And it means that
+> everybody can use his favorite newsreader for navigating a repository.
+>   
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
- struct lock_file is now static.
- *caller* closes the lock file before commiting / rolling back.
+The news data model has one big problem. It is a tree structure (or 
+rather, a set of tree structures). But git's ancestry graphs are not 
+trees; a commit can have multiple parents as well as multiple children, 
+and branches can join each other multiple times (via merges) as well as 
+split off indefinitely.
 
- builtin-bundle.c |   57 +++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 37 insertions(+), 20 deletions(-)
+I realize that you can give a list of parent message IDs in a news 
+header, but I'm going to go out on a limb and guess that all existing 
+newsreaders expect that list to be a linear series of messages going 
+back toward the root of the thread (since that's all that ever occurs in 
+real netnews), rather than an arbitrary DAG.
 
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index f4b4f03..e5a2859 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -186,10 +186,21 @@ static int list_heads(struct bundle_header *header, int argc, const char **argv)
- 	return list_refs(&header->references, argc, argv);
- }
+Not saying it's a worthless idea, but I bet you will not be able to get 
+an accurate display of a repository's history using a news reader 
+without modifying it to deal with more complex ancestry structures.
 
-+/* create_bundle uses lock_file, delete if write fails */
-+static inline void lwrite_or_die(int fd, const void *buf, size_t count, struct lock_file *lock)
-+{
-+	if (write_in_full(fd, buf, count) != count) {
-+		close(fd);
-+		rollback_lock_file(lock);
-+		die("Unable to write bundle");
-+	}
-+}
-+
- static int create_bundle(struct bundle_header *header, const char *path,
- 		int argc, const char **argv)
- {
- 	int bundle_fd = -1;
-+	static struct lock_file lock;
- 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
- 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
- 	int i, ref_count = 0;
-@@ -198,17 +209,9 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 	struct child_process rls;
- 	FILE *rls_fout;
-
--	/*
--	 * NEEDSWORK: this should use something like lock-file
--	 * to create temporary that is cleaned up upon error.
--	 */
--	bundle_fd = (!strcmp(path, "-") ? 1 :
--			open(path, O_CREAT | O_EXCL | O_WRONLY, 0666));
--	if (bundle_fd < 0)
--		return error("Could not create '%s': %s", path, strerror(errno));
--
- 	/* write signature */
--	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
-+	bundle_fd = hold_lock_file_for_update(&lock, path, 1);
-+	lwrite_or_die(bundle_fd, bundle_signature, strlen(bundle_signature), &lock);
-
- 	/* init revs to list objects for pack-objects later */
- 	save_commit_buffer = 0;
-@@ -230,7 +233,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 	while (fgets(buffer, sizeof(buffer), rls_fout)) {
- 		unsigned char sha1[20];
- 		if (buffer[0] == '-') {
--			write_or_die(bundle_fd, buffer, strlen(buffer));
-+			lwrite_or_die(bundle_fd, buffer, strlen(buffer), &lock);
- 			if (!get_sha1_hex(buffer + 1, sha1)) {
- 				struct object *object = parse_object(sha1);
- 				object->flags |= UNINTERESTING;
-@@ -242,13 +245,19 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		}
- 	}
- 	fclose(rls_fout);
--	if (finish_command(&rls))
-+	if (finish_command(&rls)) {
-+		close(bundle_fd);
-+		rollback_lock_file(&lock);
- 		return error("rev-list died");
-+	}
-
- 	/* write references */
- 	argc = setup_revisions(argc, argv, &revs, NULL);
--	if (argc > 1)
-+	if (argc > 1) {
-+		close(bundle_fd);
-+		rollback_lock_file(&lock);
- 		return error("unrecognized argument: %s'", argv[1]);
-+	}
-
- 	for (i = 0; i < revs.pending.nr; i++) {
- 		struct object_array_entry *e = revs.pending.objects + i;
-@@ -307,17 +316,20 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		}
-
- 		ref_count++;
--		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
--		write_or_die(bundle_fd, " ", 1);
--		write_or_die(bundle_fd, ref, strlen(ref));
--		write_or_die(bundle_fd, "\n", 1);
-+		lwrite_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40, &lock);
-+		lwrite_or_die(bundle_fd, " ", 1, &lock);
-+		lwrite_or_die(bundle_fd, ref, strlen(ref), &lock);
-+		lwrite_or_die(bundle_fd, "\n", 1, &lock);
- 		free(ref);
- 	}
--	if (!ref_count)
-+	if (!ref_count) {
-+		close(bundle_fd);
-+		rollback_lock_file(&lock);
- 		die ("Refusing to create empty bundle.");
-+	}
-
- 	/* end header */
--	write_or_die(bundle_fd, "\n", 1);
-+	lwrite_or_die(bundle_fd, "\n", 1, &lock);
-
- 	/* write pack */
- 	argv_pack[0] = "pack-objects";
-@@ -339,8 +351,13 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		write(rls.in, sha1_to_hex(object->sha1), 40);
- 		write(rls.in, "\n", 1);
- 	}
--	if (finish_command(&rls))
-+	if (finish_command(&rls)) {
-+		close(bundle_fd);
-+		rollback_lock_file(&lock);
- 		return error ("pack-objects died");
-+	}
-+	close(bundle_fd);
-+	commit_lock_file(&lock);
- 	return 0;
- }
-
---
-1.5.3.rc4.79.gb5c7e-dirty
+-Steve
