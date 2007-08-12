@@ -1,62 +1,50 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: --exit-code (and --quiet) broken in git-diff?
-Date: Sun, 12 Aug 2007 13:33:28 +0200
-Message-ID: <7C233CA0-D6A4-42F2-B072-B04B1874D991@zib.de>
-References: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com> <46BED5AA.7050900@lsrfire.ath.cx>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Aug 12 13:34:49 2007
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Bug in gitk: can't unset "idinlist(...) ..."
+Date: Sun, 12 Aug 2007 22:04:48 +1000
+Message-ID: <18110.63328.644861.651934@cargo.ozlabs.ibm.com>
+References: <20070810154108.GA779@ruiner>
+	<20070810173242.GA23628@coredump.intra.peff.net>
+	<alpine.LFD.0.999.0708101109310.30176@woody.linux-foundation.org>
+	<18109.21984.26228.849806@cargo.ozlabs.ibm.com>
+	<20070811134927.GA2411@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brian Hetro <whee@smaertness.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 12 14:17:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKBia-0004Q2-Pu
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 13:34:49 +0200
+	id 1IKCNX-0005fY-Dj
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 14:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760997AbXHLLeq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 07:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760837AbXHLLep
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 07:34:45 -0400
-Received: from mailer.zib.de ([130.73.108.11]:45387 "EHLO mailer.zib.de"
+	id S1759193AbXHLMQu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 08:16:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758401AbXHLMQu
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 08:16:50 -0400
+Received: from ozlabs.org ([203.10.76.45]:41265 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759276AbXHLLep convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 07:34:45 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7CBWfiv026985;
-	Sun, 12 Aug 2007 13:34:43 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1ff88.pool.einsundeins.de [77.177.255.136])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7CBWeaV004011
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 12 Aug 2007 13:32:40 +0200 (MEST)
-In-Reply-To: <46BED5AA.7050900@lsrfire.ath.cx>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754264AbXHLMQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 08:16:49 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 9EBA7DDF01; Sun, 12 Aug 2007 22:16:47 +1000 (EST)
+In-Reply-To: <20070811134927.GA2411@coredump.intra.peff.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55678>
 
+Jeff King writes:
 
-On Aug 12, 2007, at 11:40 AM, Ren=E9 Scharfe wrote:
+> gitk fails with this test script, which creates two commits, the second
+> one referencing the first as a duplicate:
 
->
-> git diff passes the output through your pager by default, so you =20
-> see the
-> exit code of that instead of diff's.  Set PAGER=3Dcat or redirect the
-> output to /dev/null to get rid of it.
->
-> A test case for diff would be nice regardless, though. :)
+Thanks, that shows the problem nicely.  I've pushed out a fix.
 
-Which is not that easy, because of the redirections done
-by test-lib.sh. I think git-diff needs a tty to exhibit
-the wrong behaviour, which it doesn't get from test-lib
-if run in standard mode (non verbose).
-
-I tried to write a test case once, but after it got more
-and more complex, I was too lazy to complete it.
-
-	Steffen
+Paul.
