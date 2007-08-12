@@ -1,86 +1,94 @@
-From: David Kastrup <dak@gnu.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: Can I have this, pretty please?
-Date: Sun, 12 Aug 2007 23:51:24 +0200
-Message-ID: <85tzr45smb.fsf@lola.goethe.zz>
+Date: Mon, 13 Aug 2007 10:17:20 +1200
+Message-ID: <46a038f90708121517s3ce137e6x898e3f7a59d55a2f@mail.gmail.com>
 References: <85ir7kq42k.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
-	<85abswo9gf.fsf@lola.goethe.zz>
-	<20070812200258.GA13298@sigill.intra.peff.net>
+	 <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
+	 <85abswo9gf.fsf@lola.goethe.zz>
+	 <alpine.LFD.0.999.0708121219540.30176@woody.linux-foundation.org>
+	 <85wsw0mt77.fsf@lola.goethe.zz>
+	 <alpine.LFD.0.999.0708121255230.30176@woody.linux-foundation.org>
+	 <69b0c0350708121358w13d04047s1916d3599c2e040a@mail.gmail.com>
+	 <85y7gg5tc3.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 12 23:51:32 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Govind Salinas" <govindsalinas@gmail.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 13 00:17:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKLLP-0004hE-TZ
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 23:51:32 +0200
+	id 1IKLkT-0001ti-Ky
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 00:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761933AbXHLVv2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 17:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762151AbXHLVv2
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 17:51:28 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:60392 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761688AbXHLVv0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 17:51:26 -0400
-Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id C072D17FD38;
-	Sun, 12 Aug 2007 23:51:25 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id AB7952793F9;
-	Sun, 12 Aug 2007 23:51:25 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-036-190.pools.arcor-ip.net [84.61.36.190])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 786D8BC5E4;
-	Sun, 12 Aug 2007 23:51:25 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id DAA771C3C79D; Sun, 12 Aug 2007 23:51:24 +0200 (CEST)
-In-Reply-To: <20070812200258.GA13298@sigill.intra.peff.net> (Jeff King's message of "Sun\, 12 Aug 2007 16\:02\:58 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3936/Sun Aug 12 17:10:09 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S1764764AbXHLWRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 18:17:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764671AbXHLWRW
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 18:17:22 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:18283 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762067AbXHLWRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 18:17:21 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1045895wxd
+        for <git@vger.kernel.org>; Sun, 12 Aug 2007 15:17:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aKqZISzLQEYu5rXbxJ9xjdHBL4a9VonFppxZlyLhJV8xSIMIVwuZ59DmABkMRmWygUyMECzdyqct5Iu2wyFUqublAGosapx96zHR/cr1boLzl++D57lQcdJrFCutCAODIyZYzh8/JTHBXCMw5CEZM59f8hcSjjTXxp3PVU9hi2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GaLY4guIpiOP/YYijDY6yiTwf+UGUv1NPOjCZ5NqFre4NnQRih095/nUFpUge1vGg9TBeZpJPPX8iRY0FsPTNk1NNa3MrMDgSBHlsEH5xexgDfgtzkmoSrBRUsWLRCuXxJ+frHDCNFlAhtYxG8ol6/9jnJ0wODhnGJ/cVeN/I9M=
+Received: by 10.90.53.16 with SMTP id b16mr5835001aga.1186957040398;
+        Sun, 12 Aug 2007 15:17:20 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Sun, 12 Aug 2007 15:17:20 -0700 (PDT)
+In-Reply-To: <85y7gg5tc3.fsf@lola.goethe.zz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55730>
 
-Jeff King <peff@peff.net> writes:
+On 8/13/07, David Kastrup <dak@gnu.org> wrote:
+> Well, what I have in mind boils down to something I can use without
+> leaving my editor... (...) and I naturally use Emacs.
 
-> On Sun, Aug 12, 2007 at 09:10:24PM +0200, David Kastrup wrote:
->
->> I'll probably be able to create a Gnus _backend_ for this sort of
->> setup (there are even backends for directory browsing: most files
->
-> You can somewhat prototype this by just dumping the commits to an mbox
-> (sorry for the long lines):
->
-> git-log \
->   --pretty=format:'From %H Mon Sep 17 00:00:00 2001%nFrom: %an <%ae>%nDate: %ad%nSubject: %s%nMessage-ID: <%H@none>%nReferences: %P%n%n%b' \
->   | perl -pe 's/References: (.*)/"References: " .  %join(" ", map { "<" . $_ . "\@none>" } split \/ \/, $1)/e' \
->   >mbox
+heh! As an emacs user, I have to say this might just be a tad too much :-)
 
-One percent too many before join, and the order of the articles is
-reversed (--reverse helps here).
+The main fix for your immediate woes of having gitk work fast is -
+imho - to limit it by time, which I do all the time.
 
-It is also a good idea to set gnus-thread-indent to 0 or 1, and
-gnus-use-trees seems interesting, though not in a reasonably good
-state (the graph layout tries to avoid crossing links and node names,
-and that's rather useless).
+And on that track I'd *love* it if gitk could work as follows:
+start-up as if I had said --since=10.days.ago (unless I pass an
+explicit --since) and put a "get more history" button at the bottom of
+the commit list. And make the default --since settable via git config
+as gitk.since or somesuch.
 
-So actually Gnus would need some kicking into shape before it actually
-would present a useful tool.  On the positive side, it takes about 15
-seconds sucking up and toposorting the complete group of about 11000
-commits from an mbox file (which one would not ever do anyway).  And
-that is Elisp.  However, the git history is still rather harmless
-considering the commit amounts.
+That'd make newcomers to git go -- WOW -- on gitk, and save old hands
+some typing ;-)
 
-> Also, have you tried looking at tig (make sure to try a recent
-> version and use the 'g' command to turn on the graph display)?
+On the gnus backend - I don't think the nntp backend is good enough,
+as it can't deal with merges. But if you can write up a new backend
+that can read merges, you'll be golden. You'll definitely want to
+limit the number of commits you read initially, too.
 
-There are too many tools around.  Sigh.  Another to try.  Thanks for
-the tip.
+Now - both your emacs-gnus-git backend and gitk/qgit would benefit
+from having a long-lived git process that you can talk to via a socket
+for the stuff that you are bound to be asking a lot of (cat-file,
+diff, etc). Something like git-fastimport but for common queries.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+I *thought* there was one -- I was just reading gitk to check and not
+look like a doofus -- but at least my gitk is exec'ing git cat-file
+all over the place. I am sure that it'd speed up gitk and friends
+enormoustly, specially on non-linux environments where IO isn't as
+optimised.
+
+cheers,
+
+
+
+m
