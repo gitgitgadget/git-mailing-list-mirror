@@ -1,108 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Can I have this, pretty please?
-Date: Sun, 12 Aug 2007 22:04:05 +0200
-Message-ID: <85k5s0msei.fsf@lola.goethe.zz>
-References: <85ir7kq42k.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708121140190.30176@woody.linux-foundation.org>
-	<854pj4o8k5.fsf@lola.goethe.zz>
-	<20070812195126.GA17914@informatik.uni-freiburg.de>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: git-gui i18n / 0.9.x plans
+Date: Sun, 12 Aug 2007 22:08:10 +0200
+Message-ID: <200708122208.11307.stimming@tuhh.de>
+References: <20070731012804.GZ20052@spearce.org> <Pine.LNX.4.64.0707311136540.14781@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Sun Aug 12 22:04:20 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 12 22:08:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKJff-0004BF-Ml
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:04:20 +0200
+	id 1IKJjg-00056d-Ly
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758181AbXHLUEK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 16:04:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757012AbXHLUEJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:04:09 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:37461 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756206AbXHLUEI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 16:04:08 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 9B770336886;
-	Sun, 12 Aug 2007 22:04:06 +0200 (CEST)
-Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 7E9815BD63;
-	Sun, 12 Aug 2007 22:04:06 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-036-190.pools.arcor-ip.net [84.61.36.190])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 24BFF8C463;
-	Sun, 12 Aug 2007 22:04:06 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id C2BD91C3C79D; Sun, 12 Aug 2007 22:04:05 +0200 (CEST)
-In-Reply-To: <20070812195126.GA17914@informatik.uni-freiburg.de> ("Uwe
- =?iso-8859-1?Q?Kleine-K=F6nig=22's?= message of "Sun\, 12 Aug 2007
- 21\:51\:26 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3936/Sun Aug 12 17:10:09 2007 on mail-in-12.arcor-online.net
-X-Virus-Status: Clean
+	id S1759459AbXHLUIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 16:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759448AbXHLUIZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:08:25 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:42657 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758154AbXHLUIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 16:08:24 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l7CK8IRW003223
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 12 Aug 2007 22:08:18 +0200
+Received: from [192.168.2.102] (p549002F8.dip0.t-ipconnect.de [84.144.2.248])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.1/8.13.1) with ESMTP id l7CK8GCW030376
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 12 Aug 2007 22:08:17 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0707311136540.14781@racer.site>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55717>
 
-Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> writes:
+Am Dienstag, 31. Juli 2007 12:47 schrieb Johannes Schindelin:
+> On Mon, 30 Jul 2007, Shawn O. Pearce wrote:
+> > Regarding future development for the off-in-the-future 0.9.0 release I'd
+> > like to see the i18n work merge in before we do anything else major to
+> > git-gui.
 
-> David Kastrup wrote:
->> Linus Torvalds <torvalds@linux-foundation.org> writes:
->> > On Sun, 12 Aug 2007, Linus Torvalds wrote:
->> >>=20
->> >> A newsreader is mis-designed for all the same reasons SVN is misd=
-esigned:=20
->> >> it sees the messages (commits) as a _tree_.
->> >
->> > Side note: the lack of this bug is what makes showing large
->> > histories graphically be expensive in the first place.
->>=20
->> Not really.
->>=20
->> dak@lola:/home/tmp/emacs$ time git-rev-list --parents --topo-order -=
--all>/dev/null
->>=20
->> real    0m9.042s
->> user    0m8.801s
->> sys     0m0.168s
->>=20
->> This does not even start to _think_ of swapping.
-> rev-list doesn't try to draw a line from each commit to its parents.
+That sounds very good. Of course I'm very interested in having a i18n'ized 
+git-gui available as soon as possible. In the git-gui-i18n.git code I think 
+we've by now covered really all of the strings that appear throughout the 
+program. Thanks to Johannes' maintenance work, the i18n patches are based on 
+your (almost) latest master. Once the translation will actually be accepted 
+into git-gui.git, I will also spend some weeks on final polish for the 
+glossary and the German translation. I think it will be possible for you to 
+offer at least a few language in complete translations in a 0.8.x release.
 
-Well, that's what --topo-order is somewhat about, but it might
-actually not do much together with --all.
-
-> That's the really intensive part.  So when gitk reads
+> Very good!  As it happens, I pushed an update this morning.
+> temp-rebase-to-shawns-master is the branch which forward-ported all
+> patches to the current master of git-gui.git.
 >
-> 	d56871cb0e6ceeca8e5435ff95409d78bed014f0 a046fe0cb8697bc97993b2e6096=
-88ff5e89e3e9
->
-> it must remember this line at least until it sees a line starting wit=
-h
-> a046fe0cb8697bc97993b2e609688ff5e89e3e9.
+> As I understand, Christian will find and mark all strings lacking [mc ...]
+> and update the .pot file.  Then we'll kindly ask the good translators
+> (thanks everyone!) to review the changes, and after that I'll prepare some
+> submittable patch series (no need to have several patches per language).
 
-20 bytes of payload for a commit number.  Make a usable hashing data
-structure for it, adds perhaps another 20 bytes.  Links to all parents
-are 4 bytes each.  All in all, we won't need more than 64 bytes per
-commit.  Take 100000 of them, and you are at 6.4MB.  And that is not
-taking into account that you can let git-name-rev cut the information
-retrieval down much much more, and just get the rest of the
-information when it is actually moved on-screen.  I don't actually
-_want_ to see 50 parallel lines from bottom to top of screen obscuring
-my branch display and taking away all the screen estate: that is
-completely useless information.  Pack the branches away into a cable
-pipe and let them come out isolated again only when they are actually
-involved on the screen.
+Yes, this is how this should work. I'm looking forward to a fully i18n'ized 
+git-gui! Thanks for this great program.
 
-There is no necessity to prerender/layout 50 yards of graphing.
-
---=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Christian
