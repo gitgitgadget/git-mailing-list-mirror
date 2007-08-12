@@ -1,82 +1,168 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] diff: don't run pager if user asked for a diff style exit
- code
-Date: Sun, 12 Aug 2007 19:46:55 +0200
-Message-ID: <46BF478F.7030603@lsrfire.ath.cx>
-References: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-apply: apply submodule changes
+Date: Sun, 12 Aug 2007 11:16:09 -0700
+Message-ID: <7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
+References: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
+	<20070812142340.GA10399MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Aug 12 19:47:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
+	Johannes.Schindelin@gmx.de
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Aug 12 20:16:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKHWx-0002mj-Lh
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 19:47:12 +0200
+	id 1IKHz5-0002IY-RE
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 20:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765157AbXHLRrI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 13:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764726AbXHLRrH
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 13:47:07 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:37206
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1765033AbXHLRrF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 13:47:05 -0400
-Received: from [10.0.1.201] (p508ED523.dip.t-dialin.net [80.142.213.35])
-	by neapel230.server4you.de (Postfix) with ESMTP id 860D38B008;
-	Sun, 12 Aug 2007 19:47:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+	id S1753641AbXHLSQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 14:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754945AbXHLSQM
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 14:16:12 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35761 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753578AbXHLSQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 14:16:11 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070812181610.ITER24055.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 12 Aug 2007 14:16:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id b6G91X0121kojtg0000000; Sun, 12 Aug 2007 14:16:10 -0400
+In-Reply-To: <20070812142340.GA10399MdfPADPa@greensroom.kotnet.org> (Sven
+	Verdoolaege's message of "Sun, 12 Aug 2007 16:23:40 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55695>
 
-As Wincent Colaiuta found out, it's a bit unexpected for git diff to
-start a pager even when the --quiet option is specified.  The problem
-is that the pager hides the return code -- which is the only output
-we're interested in in this case.
+Sven Verdoolaege <skimo@kotnet.org> writes:
 
-Push pager setup down into builtin-diff.c and don't start the pager
-if --exit-code or --quiet (which implies --exit-code) was specified.
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index f03f661..804fdc3 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -171,6 +171,20 @@ apply.whitespace::
+>  	When no `--whitespace` flag is given from the command
+>  	line, this configuration item is used as the default.
+>  
+> +Submodules
+> +----------
+> +If the patch contains any changes to submodules then gitlink:git-apply[1]
+> +behaves as follows.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
+perhaps "as follows wrt the submodules"...
 
- builtin-diff.c |    6 ++++++
- git.c          |    2 +-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+> diff --git a/builtin-apply.c b/builtin-apply.c
+> index da27075..eef596b 100644
+> --- a/builtin-apply.c
+> +++ b/builtin-apply.c
+> @@ -1984,6 +1984,40 @@ static int apply_fragments(struct buffer_desc *desc, struct patch *patch)
+>  	return 0;
+>  }
+>  
+> +static int read_file_or_gitlink(struct cache_entry *ce, char **buf_p,
+> +				unsigned long *size_p)
+> +{
+> +	if (!ce)
+> +		return 0;
+> +
+> +	if (S_ISGITLINK(ntohl(ce->ce_mode))) {
+> +		*buf_p = xmalloc(100);
+> +		*size_p = snprintf(*buf_p, 100,
+> +			"Subproject commit %s\n", sha1_to_hex(ce->sha1));
+> +	} else {
+> +		enum object_type type;
+> +		*buf_p = read_sha1_file(ce->sha1, &type, size_p);
+> +		if (!*buf_p)
+> +			return -1;
+> +	}
+> +
+> +	return 0;
+> +}
 
-diff --git a/builtin-diff.c b/builtin-diff.c
-index b48121e..8dc17b0 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -235,6 +235,12 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	rev.diffopt.allow_external = 1;
- 	rev.diffopt.recursive = 1;
- 
-+	/* If the user asked for our exit code then don't start a
-+	 * pager or we would end up reporting its exit code instead.
-+	 */
-+	if (!rev.diffopt.exit_with_status)
-+		setup_pager();
-+
- 	/* Do we have --cached and not have a pending object, then
- 	 * default to HEAD by hand.  Eek.
- 	 */
-diff --git a/git.c b/git.c
-index e5daae0..cab0e72 100644
---- a/git.c
-+++ b/git.c
-@@ -325,7 +325,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "config", cmd_config },
- 		{ "count-objects", cmd_count_objects, RUN_SETUP },
- 		{ "describe", cmd_describe, RUN_SETUP },
--		{ "diff", cmd_diff, USE_PAGER },
-+		{ "diff", cmd_diff },
- 		{ "diff-files", cmd_diff_files },
- 		{ "diff-index", cmd_diff_index, RUN_SETUP },
- 		{ "diff-tree", cmd_diff_tree, RUN_SETUP },
+Ok, read_file_or_gitlink() expects ce taken from the current
+index and fills *buf_p with the preimage to be patched from it.
+
+> +static int read_gitlink_or_skip(struct patch *patch, struct cache_entry *ce,
+> +				char *buf, unsigned long alloc)
+> +{
+> +	if (ce)
+> +		return snprintf(buf, alloc,
+> +				"Subproject commit %s\n", sha1_to_hex(ce->sha1));
+> +
+> +	/* We can't apply the submodule change without an index, so just
+> +	 * skip the patch itself and only create/remove directory.
+> +	 */
+> +	patch->fragments = NULL;
+> +	return 0;
+> +}
+
+Hmmmm...  see below.
+
+>  static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
+>  {
+>  	char *buf;
+> @@ -1994,20 +2028,17 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+>  	alloc = 0;
+>  	buf = NULL;
+>  	if (cached) {
+> +		if (read_file_or_gitlink(ce, &buf, &size))
+> +			return error("read of %s failed", patch->old_name);
+> +		alloc = size;
+>  	}
+
+This part is consistent with the read_file_or_gitlink()
+semantics above...
+
+>  	else if (patch->old_name) {
+>  		size = xsize_t(st->st_size);
+>  		alloc = size + 8192;
+>  		buf = xmalloc(alloc);
+> -		if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+> +		if (S_ISGITLINK(patch->old_mode))
+> +			size = read_gitlink_or_skip(patch, ce, buf, alloc);
+> +		else if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+>  			return error("read of %s failed", patch->old_name);
+>  	}
+
+read_old_data() gets the lstat information from the current
+filesystem data at old_name, and gives the preimage to be
+patched, and naturally it bombs out if it is a directory, but
+when we are applying a change to gitlink, the patch expects
+old_name to be a directory.
+
+So you introduced read_gitlink_or_skip() to work it around.  But
+this makes me wonder...
+
+ - what does ce have to do in this codepath?  read_old_data()
+   does not care about what is in the index (in fact, in the
+   index the entry can be a symlink when the path on the
+   filesystem is a regular file, and it reads from the regular
+   file as asked--it does not even look at ce by design).  
+   if you have a regular file there in the current version, ce
+   would say it is a regular file blob and you would not want
+   read_gitlink_or_skip() to say "Subproject commit xyz...".
+
+ - what is alloc at this point?  it is based on the size of
+   directory st->st_size.
+
+I think dropping fragments for a patch that tries to modify a
+gitlink here is fine, but that can be done regardless of what ce
+is.
+
+The type-mismatch case to attempt to apply gitlink patch to a
+regular blob is covered much earlier in check_patch().  It
+complains if st_mode does not match patch->old_mode; I think you
+need to adjust it a bit to:
+
+ - allow gitlink patch to a path that currently has nothing (no
+   submodule checked out) or a directory that has ".git/"
+   (i.e. submodule checked out).
+
+ - reject gitlink patch otherwise.
