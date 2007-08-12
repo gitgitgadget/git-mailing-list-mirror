@@ -1,72 +1,88 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] git-send-email.perl: Add angle brackets to In-Reply-To if necessary
-Date: Sun, 12 Aug 2007 10:02:47 +0200
-Organization: Organization?!?
-Message-ID: <85lkchqixk.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 12 10:03:20 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: msysgit: should core.autocrlf=true be the default on Windows?
+Date: Sun, 12 Aug 2007 11:36:35 +0200
+Message-ID: <F5024D9F-B008-4C14-B36B-A2E8BEFD0FE4@zib.de>
+References: <7816DAAF-53CB-468C-9597-36AA94AC6476@zib.de> <84CFEBB5D7FE48FF86FEF3289C8DDAA8@ntdev.corp.microsoft.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 11:36:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IK8Pu-0000q1-JJ
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 10:03:18 +0200
+	id 1IK9rj-0002tQ-DF
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 11:36:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755422AbXHLICw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 04:02:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbXHLICv
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 04:02:51 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:33466 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752497AbXHLICt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 04:02:49 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id E2C9F17FBAC
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 10:02:47 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id D2964114372
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 10:02:47 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-036-190.pools.arcor-ip.net [84.61.36.190])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id B0BEB3425EA
-	for <git@vger.kernel.org>; Sun, 12 Aug 2007 10:02:47 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 42D731C3C79D; Sun, 12 Aug 2007 10:02:47 +0200 (CEST)
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/3934/Sun Aug 12 03:59:08 2007 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1757755AbXHLJfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 05:35:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756436AbXHLJfv
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 05:35:51 -0400
+Received: from mailer.zib.de ([130.73.108.11]:37111 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755274AbXHLJfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 05:35:50 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7C9Zl0p020205;
+	Sun, 12 Aug 2007 11:35:48 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db1ff88.pool.einsundeins.de [77.177.255.136])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7C9ZkUV015480
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 12 Aug 2007 11:35:47 +0200 (MEST)
+In-Reply-To: <84CFEBB5D7FE48FF86FEF3289C8DDAA8@ntdev.corp.microsoft.com>
+X-Priority: 3
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55668>
 
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
-I have not actually tested this, but from staring at it intensively,
-it should be correct.  One of the things that bit me when I tried
-using this program.
+On Aug 12, 2007, at 7:36 AM, Dmitry Kakurin wrote:
 
- git-send-email.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> Please keep in mind that msysgit is targeting developers who want  
+> to contribute to MinGW port of git.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 69559b2..877f74c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -309,7 +309,8 @@ if ($thread && !defined $initial_reply_to && $prompting) {
- 	} while (!defined $_);
- 
- 	$initial_reply_to = $_;
--	$initial_reply_to =~ s/(^\s+|\s+$)//g;
-+	$initial_reply_to =~ s/^\s+<?/</;
-+	$initial_reply_to =~ s/>?\s+$/>/;
- }
- 
- if (!$smtp_server) {
--- 
-1.5.3.rc2.187.g9a1d2-dirty
+Why that?. In my opinion msysgit is already the best git you can
+get on Windows. It's a one click, self-contained installation,
+with the most up-to-date git. The installation is kept separate
+from cygwin, which saves a lot of trouble with textmode/binmode.
+It's easy to get started, easy to contribute fixes, easy to upgrade
+to a new version. It should be polished a bit, but then I would
+announce it as _the_ default way of installing git on Windows.
+
+
+> Since building and editing happens in MinGW environment the LF-only  
+> default seems reasonable.
+
+I have my msysgit set to autocrlf=true and have no problems.
+It's even better now, because I can open files in Windows
+programs without problems.
+
+
+> On the other hand, setup for end-users should have it as default, I  
+> agree.
+
+But our end-users are developers! We should leverage on that and make
+msysgit the 'end-user' installation. Developers tend to be interested
+in fixing problems with their working environment. We should provide
+them a _very_ easy way of submitting their fixes and improvements
+back to msysgit, e.g. via mob branch. This could speed up the Windows
+porting effort tremendously.
+
+I also think we should work in the same environment that we propose
+to our end-users. If we believe end-users should work with  
+autocrlf=true,
+we should do so as well, just to be sure that our recommendation is
+the right one.
+
+
+> Please report this issue here: http://code.google.com/p/msysgit/ 
+> issues/list
+
+done.
+
+	Steffen
