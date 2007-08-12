@@ -1,88 +1,93 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: msysgit: should core.autocrlf=true be the default on Windows?
-Date: Sun, 12 Aug 2007 11:36:35 +0200
-Message-ID: <F5024D9F-B008-4C14-B36B-A2E8BEFD0FE4@zib.de>
-References: <7816DAAF-53CB-468C-9597-36AA94AC6476@zib.de> <84CFEBB5D7FE48FF86FEF3289C8DDAA8@ntdev.corp.microsoft.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 11:36:08 2007
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: --exit-code (and --quiet) broken in git-diff?
+Date: Sun, 12 Aug 2007 11:40:58 +0200
+Message-ID: <46BED5AA.7050900@lsrfire.ath.cx>
+References: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 11:41:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IK9rj-0002tQ-DF
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 11:36:07 +0200
+	id 1IK9wh-000421-IP
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 11:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757755AbXHLJfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 05:35:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756436AbXHLJfv
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 05:35:51 -0400
-Received: from mailer.zib.de ([130.73.108.11]:37111 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755274AbXHLJfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 05:35:50 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7C9Zl0p020205;
-	Sun, 12 Aug 2007 11:35:48 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1ff88.pool.einsundeins.de [77.177.255.136])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7C9ZkUV015480
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 12 Aug 2007 11:35:47 +0200 (MEST)
-In-Reply-To: <84CFEBB5D7FE48FF86FEF3289C8DDAA8@ntdev.corp.microsoft.com>
-X-Priority: 3
-X-Mailer: Apple Mail (2.752.3)
+	id S1756436AbXHLJlM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 05:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbXHLJlM
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 05:41:12 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:52808
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756436AbXHLJlL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 05:41:11 -0400
+Received: from [10.0.1.201] (p508ED523.dip.t-dialin.net [80.142.213.35])
+	by neapel230.server4you.de (Postfix) with ESMTP id 0B6748B008;
+	Sun, 12 Aug 2007 11:41:10 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55669>
 
+Wincent Colaiuta schrieb:
+> The git-diff man page documents an "--exit-code" option, as well as a
+> "--quiet" option which automatically implies the former.
+>=20
+> In my tests on Mac OS X and Bash 3, however, "git diff" always return=
+ an
+> exit code of 0, never of 1, regardless of how I use the "--quiet" and
+> "--exit-code" options. I see that there are tests in t/t4017-quiet.sh=
+ for
+> the lower-level git-diff-files, git-diff-index, git-diff-tree command=
+s,
+> but none for the porcelain git-diff.
+>=20
+> Is this a bug with a missing test case? Or am I using this incorrectl=
+y? In
+> the example below I'm looking for differences between the working tre=
+e and
+> the last commit, so I'm using "git diff HEAD", but as you can see, th=
+e
+> exit code is always 0 for "git diff" and "git diff --cached" as well:
+>=20
+> $ git --version
+> git version 1.5.2.4
+> $ mkdir example
+> $ cd example
+> $ git init
+> Initialized empty Git repository in .git/
+> $ echo "start" > foo
+> $ git add foo
+> $ git commit -m "Add foo"
+> Created initial commit 85954f6: Add foo
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 foo
+> $ git diff --quiet HEAD; echo $?
+> 0
+> $ echo "more" >> foo
+> $ git diff --quiet HEAD; echo $?
+> 0
+> $ git add foo
+> $ git diff --quiet HEAD; echo $?
+> 0
+> $ git diff --quiet; echo $?
+> 0
+> $ git diff --exit-code; echo $?
+> 0
+> $ git diff --cached --quiet; echo $?
+> 0
 
-On Aug 12, 2007, at 7:36 AM, Dmitry Kakurin wrote:
+git diff passes the output through your pager by default, so you see th=
+e
+exit code of that instead of diff's.  Set PAGER=3Dcat or redirect the
+output to /dev/null to get rid of it.
 
-> Please keep in mind that msysgit is targeting developers who want  
-> to contribute to MinGW port of git.
+A test case for diff would be nice regardless, though. :)
 
-Why that?. In my opinion msysgit is already the best git you can
-get on Windows. It's a one click, self-contained installation,
-with the most up-to-date git. The installation is kept separate
-from cygwin, which saves a lot of trouble with textmode/binmode.
-It's easy to get started, easy to contribute fixes, easy to upgrade
-to a new version. It should be polished a bit, but then I would
-announce it as _the_ default way of installing git on Windows.
-
-
-> Since building and editing happens in MinGW environment the LF-only  
-> default seems reasonable.
-
-I have my msysgit set to autocrlf=true and have no problems.
-It's even better now, because I can open files in Windows
-programs without problems.
-
-
-> On the other hand, setup for end-users should have it as default, I  
-> agree.
-
-But our end-users are developers! We should leverage on that and make
-msysgit the 'end-user' installation. Developers tend to be interested
-in fixing problems with their working environment. We should provide
-them a _very_ easy way of submitting their fixes and improvements
-back to msysgit, e.g. via mob branch. This could speed up the Windows
-porting effort tremendously.
-
-I also think we should work in the same environment that we propose
-to our end-users. If we believe end-users should work with  
-autocrlf=true,
-we should do so as well, just to be sure that our recommendation is
-the right one.
-
-
-> Please report this issue here: http://code.google.com/p/msysgit/ 
-> issues/list
-
-done.
-
-	Steffen
+Ren=E9
