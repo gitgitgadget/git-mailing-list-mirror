@@ -1,90 +1,158 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] git-send-email.perl: Add angle brackets to In-Reply-To if necessary
-Date: Sun, 12 Aug 2007 14:49:01 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070812124901.GA9662@informatik.uni-freiburg.de>
-References: <85lkchqixk.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 12 14:50:05 2007
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] builtin-bundle create - use lock_file semantics
+Date: Sun, 12 Aug 2007 08:53:02 -0400
+Message-ID: <11869231822803-git-send-email-mdl123@verizon.net>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Mark Levedahl <mdl123@verizon.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 14:53:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKCtQ-0006Gm-SH
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 14:50:05 +0200
+	id 1IKCwT-000797-Oh
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 14:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758126AbXHLMtW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 12 Aug 2007 08:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934785AbXHLMtM
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 08:49:12 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46629 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934581AbXHLMtE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 08:49:04 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IKCsR-0001eN-1I; Sun, 12 Aug 2007 14:49:03 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7CCn1eU009998;
-	Sun, 12 Aug 2007 14:49:01 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7CCn1hX009997;
-	Sun, 12 Aug 2007 14:49:01 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	David Kastrup <dak@gnu.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <85lkchqixk.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757957AbXHLMxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 08:53:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758140AbXHLMxK
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 08:53:10 -0400
+Received: from vms046pub.verizon.net ([206.46.252.46]:60673 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757789AbXHLMxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 08:53:09 -0400
+Received: from fal-l07294-lp.us.ray.com ([71.246.233.117])
+ by vms046.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JMN003R9VSG96G1@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 12 Aug 2007 07:53:05 -0500 (CDT)
+X-Mailer: git-send-email 1.5.3.rc4.78.g5acb3-dirty
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55680>
 
-Hello David,
+git bundle create would leave an invalid, partially written bundle if
+an error occured during creation. Fix that using lock_file.
 
-> I have not actually tested this, but from staring at it intensively,
-> it should be correct.  One of the things that bit me when I tried
-> using this program.
->=20
-> ...
-> -	$initial_reply_to =3D~ s/(^\s+|\s+$)//g;
-> +	$initial_reply_to =3D~ s/^\s+<?/</;
-> +	$initial_reply_to =3D~ s/>?\s+$/>/;
-> ...
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ builtin-bundle.c |   51 +++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 31 insertions(+), 20 deletions(-)
 
-some rules from rfc822:
-
-	optional-field	=3D ... / "In-Reply-To:"  *(phrase / msg-id) / ...
-	msg-id		=3D "<" addr-spec ">"
-	phrase		=3D 1*word
-	word		=3D atom / quoted-string
-	atom		=3D 1*<any CHAR except specials, SPACE and CTLs>
-	quoted-string	=3D <"> *(qtext/quoted-pair) <">
-	...
-
-With 1*... meaning "one or more" and *... meaning "zero or more".
-
-That is not all fields of In-Reply-To: must be enclosed in '<', '>'.  I
-didn't know that before looking it up and I expect it's not very common=
-=2E
-Even if no "phrase" is used there can be multiple msg-id's and then you=
-r
-patch doesn't do the right thing.
-
-But anyhow I think it's bearable to include these angle brackets in the
-cut-and-paste process.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+electron+mass%3D
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index f4b4f03..82e00f5 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -186,10 +186,20 @@ static int list_heads(struct bundle_header *header, int argc, const char **argv)
+ 	return list_refs(&header->references, argc, argv);
+ }
+ 
++/* create_bundle uses lock_file, delete if write fails */
++static inline void lwrite_or_die(int fd, const void *buf, size_t count, struct lock_file *lock)
++{
++	if (write_in_full(fd, buf, count) != count) {
++		rollback_lock_file(lock);
++		die("Unable to write bundle");
++	}
++}
++
+ static int create_bundle(struct bundle_header *header, const char *path,
+ 		int argc, const char **argv)
+ {
+ 	int bundle_fd = -1;
++	struct lock_file lock;
+ 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
+ 	int i, ref_count = 0;
+@@ -198,17 +208,9 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	struct child_process rls;
+ 	FILE *rls_fout;
+ 
+-	/*
+-	 * NEEDSWORK: this should use something like lock-file
+-	 * to create temporary that is cleaned up upon error.
+-	 */
+-	bundle_fd = (!strcmp(path, "-") ? 1 :
+-			open(path, O_CREAT | O_EXCL | O_WRONLY, 0666));
+-	if (bundle_fd < 0)
+-		return error("Could not create '%s': %s", path, strerror(errno));
+-
+ 	/* write signature */
+-	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
++	bundle_fd = hold_lock_file_for_update(&lock, path, 1);
++	lwrite_or_die(bundle_fd, bundle_signature, strlen(bundle_signature), &lock);
+ 
+ 	/* init revs to list objects for pack-objects later */
+ 	save_commit_buffer = 0;
+@@ -230,7 +232,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	while (fgets(buffer, sizeof(buffer), rls_fout)) {
+ 		unsigned char sha1[20];
+ 		if (buffer[0] == '-') {
+-			write_or_die(bundle_fd, buffer, strlen(buffer));
++			lwrite_or_die(bundle_fd, buffer, strlen(buffer), &lock);
+ 			if (!get_sha1_hex(buffer + 1, sha1)) {
+ 				struct object *object = parse_object(sha1);
+ 				object->flags |= UNINTERESTING;
+@@ -242,13 +244,17 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		}
+ 	}
+ 	fclose(rls_fout);
+-	if (finish_command(&rls))
++	if (finish_command(&rls)) {
++		rollback_lock_file(&lock);
+ 		return error("rev-list died");
++	}
+ 
+ 	/* write references */
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+-	if (argc > 1)
++	if (argc > 1) {
++		rollback_lock_file(&lock);
+ 		return error("unrecognized argument: %s'", argv[1]);
++	}
+ 
+ 	for (i = 0; i < revs.pending.nr; i++) {
+ 		struct object_array_entry *e = revs.pending.objects + i;
+@@ -307,17 +313,19 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		}
+ 
+ 		ref_count++;
+-		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
+-		write_or_die(bundle_fd, " ", 1);
+-		write_or_die(bundle_fd, ref, strlen(ref));
+-		write_or_die(bundle_fd, "\n", 1);
++		lwrite_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40, &lock);
++		lwrite_or_die(bundle_fd, " ", 1, &lock);
++		lwrite_or_die(bundle_fd, ref, strlen(ref), &lock);
++		lwrite_or_die(bundle_fd, "\n", 1, &lock);
+ 		free(ref);
+ 	}
+-	if (!ref_count)
++	if (!ref_count) {
++		rollback_lock_file(&lock);
+ 		die ("Refusing to create empty bundle.");
++	}
+ 
+ 	/* end header */
+-	write_or_die(bundle_fd, "\n", 1);
++	lwrite_or_die(bundle_fd, "\n", 1, &lock);
+ 
+ 	/* write pack */
+ 	argv_pack[0] = "pack-objects";
+@@ -339,8 +347,11 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		write(rls.in, sha1_to_hex(object->sha1), 40);
+ 		write(rls.in, "\n", 1);
+ 	}
+-	if (finish_command(&rls))
++	if (finish_command(&rls)) {
++		rollback_lock_file(&lock);
+ 		return error ("pack-objects died");
++	}
++	commit_lock_file(&lock);
+ 	return 0;
+ }
+ 
+-- 
+1.5.3.rc4.78.g5acb3-dirty
