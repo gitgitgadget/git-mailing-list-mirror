@@ -1,77 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: Can I have this, pretty please?
-Date: Sun, 12 Aug 2007 12:59:48 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708121255230.30176@woody.linux-foundation.org>
-References: <85ir7kq42k.fsf@lola.goethe.zz>
- <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
- <85abswo9gf.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708121219540.30176@woody.linux-foundation.org>
- <85wsw0mt77.fsf@lola.goethe.zz>
+Date: Sun, 12 Aug 2007 16:02:58 -0400
+Message-ID: <20070812200258.GA13298@sigill.intra.peff.net>
+References: <85ir7kq42k.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org> <85abswo9gf.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 12 22:00:10 2007
+X-From: git-owner@vger.kernel.org Sun Aug 12 22:03:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKJbd-0003Bs-55
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:00:09 +0200
+	id 1IKJeX-0003uX-AC
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 22:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937639AbXHLUAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 16:00:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765472AbXHLUAA
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:00:00 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53028 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933211AbXHLT76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2007 15:59:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CJxsBE006860
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 12 Aug 2007 12:59:55 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7CJxmtQ019427;
-	Sun, 12 Aug 2007 12:59:49 -0700
-In-Reply-To: <85wsw0mt77.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-2.741 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756640AbXHLUDG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 16:03:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756206AbXHLUDG
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 16:03:06 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2277 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756161AbXHLUDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 16:03:04 -0400
+Received: (qmail 4893 invoked by uid 111); 12 Aug 2007 20:03:10 -0000
+X-Spam-Status: No, hits=-1.2 required=15.0
+	tests=ALL_TRUSTED,AWL
+X-Spam-Check-By: peff.net
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 12 Aug 2007 16:03:08 -0400
+Received: (qmail 13681 invoked by uid 1000); 12 Aug 2007 20:02:58 -0000
+Content-Disposition: inline
+In-Reply-To: <85abswo9gf.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55715>
 
+On Sun, Aug 12, 2007 at 09:10:24PM +0200, David Kastrup wrote:
 
+> I'll probably be able to create a Gnus _backend_ for this sort of
+> setup (there are even backends for directory browsing: most files
 
-On Sun, 12 Aug 2007, David Kastrup wrote:
-> >
-> > So, use "git log --pretty=oneline" instead, which doesn't have the
-> > expense.
-> 
-> Yes, like managing a manual with grep is all one needs.  git log
-> --pretty=oneline provides just the commit headers, but offers no way
-> to jump into the commits themselves and back easily.
+You can somewhat prototype this by just dumping the commits to an mbox
+(sorry for the long lines):
 
-You misunderstand.
+git-log \
+  --pretty=format:'From %H Mon Sep 17 00:00:00 2001%nFrom: %an <%ae>%nDate: %ad%nSubject: %s%nMessage-ID: <%H@none>%nReferences: %P%n%n%b' \
+  | perl -pe 's/References: (.*)/"References: " .  %join(" ", map { "<" . $_ . "\@none>" } split \/ \/, $1)/e' \
+  >mbox
 
-I was suggesting you do a *tool* that bases its listing on 
---pretty=oneline, and then goes from there.
+Looking at an appreciably large chunk of history means that you will be
+very far down in a subthread. mutt, at least, doesn't display this in a
+very readable way. But my point is that you are probably better to look
+at a couple of different view strategies just by dumping and tweaking
+the references relationships (which really only takes about a second for
+me on the git.git repository).
 
-If you don't show the graph anyway, all the complex and expensive things 
-that "git-rev-list --topo-order" does is pretty much totally useless. 
-You're going to show the commits as a list anyway, and then when you 
-*select* one commit for closer inspection, you can then try to do a better 
-job at that point of doing the reachability (ie parenthood is trivial, and 
-the branch reachability is cheap if it's close to the tip of the tree, 
-which it would almost always be).
+Also, have you tried looking at tig (make sure to try a recent version
+and use the 'g' command to turn on the graph display)? I think it is
+similar to what you are looking for, and I have found it to be very fast
+(both in implementation and in usability).
 
-The real problem with the topological sort is that it requires you to have 
-the full history. That not only makes everything pretty big, it also means 
-that the startup cost is bad, since you can't do things incrementally.
-
-But if you have a client that is incremental anyway, almost all of that 
-goes away.
-
-			Linus
+-Peff
