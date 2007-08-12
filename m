@@ -1,158 +1,62 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] builtin-bundle create - use lock_file semantics
-Date: Sun, 12 Aug 2007 08:53:02 -0400
-Message-ID: <11869231822803-git-send-email-mdl123@verizon.net>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mark Levedahl <mdl123@verizon.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 14:53:14 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: --exit-code (and --quiet) broken in git-diff?
+Date: Sun, 12 Aug 2007 21:02:40 +0800
+Message-ID: <46BF04F0.5020304@midwinter.com>
+References: <17875.88.10.191.55.1186873960.squirrel@secure.wincent.com>	<46BED5AA.7050900@lsrfire.ath.cx>	<24332.88.10.191.55.1186917895.squirrel@secure.wincent.com> <85643lq99h.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Wincent Colaiuta <win@wincent.com>,
+	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Aug 12 15:02:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKCwT-000797-Oh
-	for gcvg-git@gmane.org; Sun, 12 Aug 2007 14:53:14 +0200
+	id 1IKD5n-0001Gf-Uq
+	for gcvg-git@gmane.org; Sun, 12 Aug 2007 15:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757957AbXHLMxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 08:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758140AbXHLMxK
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 08:53:10 -0400
-Received: from vms046pub.verizon.net ([206.46.252.46]:60673 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757789AbXHLMxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 08:53:09 -0400
-Received: from fal-l07294-lp.us.ray.com ([71.246.233.117])
- by vms046.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JMN003R9VSG96G1@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 12 Aug 2007 07:53:05 -0500 (CDT)
-X-Mailer: git-send-email 1.5.3.rc4.78.g5acb3-dirty
-X-Peer: 127.0.0.1
+	id S932794AbXHLNCr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 09:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbXHLNCr
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 09:02:47 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:55894 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1765418AbXHLNCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 09:02:46 -0400
+Received: (qmail 23117 invoked from network); 12 Aug 2007 13:02:46 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=TgvB9M9AGt9I0rYDDQLNCirp/F+/2zaoQaIwBAoHB8XvjcEq+H6KdY9JpBoX+dW3  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 12 Aug 2007 13:02:45 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <85643lq99h.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55681>
 
-git bundle create would leave an invalid, partially written bundle if
-an error occured during creation. Fix that using lock_file.
+David Kastrup wrote:
+> I think I would call that a mistake.  However, I don't see that fixing
+> it would actually be useful: if a pager gets called, this means that
+> git-diff might die with SIGPIPE (when the user quits the pager), and
+> that in turn has pretty much no meaning.  So one really needs to
+> redirect the output, anyway.
+>   
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
- builtin-bundle.c |   51 +++++++++++++++++++++++++++++++--------------------
- 1 files changed, 31 insertions(+), 20 deletions(-)
+It does sort of make one wonder, though, if there's much point ever 
+launching a pager when git-diff is run with --quiet -- it will never 
+produce any output to page, so running a pager is guaranteed to always 
+be a waste of cycles.
 
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index f4b4f03..82e00f5 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -186,10 +186,20 @@ static int list_heads(struct bundle_header *header, int argc, const char **argv)
- 	return list_refs(&header->references, argc, argv);
- }
- 
-+/* create_bundle uses lock_file, delete if write fails */
-+static inline void lwrite_or_die(int fd, const void *buf, size_t count, struct lock_file *lock)
-+{
-+	if (write_in_full(fd, buf, count) != count) {
-+		rollback_lock_file(lock);
-+		die("Unable to write bundle");
-+	}
-+}
-+
- static int create_bundle(struct bundle_header *header, const char *path,
- 		int argc, const char **argv)
- {
- 	int bundle_fd = -1;
-+	struct lock_file lock;
- 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
- 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
- 	int i, ref_count = 0;
-@@ -198,17 +208,9 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 	struct child_process rls;
- 	FILE *rls_fout;
- 
--	/*
--	 * NEEDSWORK: this should use something like lock-file
--	 * to create temporary that is cleaned up upon error.
--	 */
--	bundle_fd = (!strcmp(path, "-") ? 1 :
--			open(path, O_CREAT | O_EXCL | O_WRONLY, 0666));
--	if (bundle_fd < 0)
--		return error("Could not create '%s': %s", path, strerror(errno));
--
- 	/* write signature */
--	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
-+	bundle_fd = hold_lock_file_for_update(&lock, path, 1);
-+	lwrite_or_die(bundle_fd, bundle_signature, strlen(bundle_signature), &lock);
- 
- 	/* init revs to list objects for pack-objects later */
- 	save_commit_buffer = 0;
-@@ -230,7 +232,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 	while (fgets(buffer, sizeof(buffer), rls_fout)) {
- 		unsigned char sha1[20];
- 		if (buffer[0] == '-') {
--			write_or_die(bundle_fd, buffer, strlen(buffer));
-+			lwrite_or_die(bundle_fd, buffer, strlen(buffer), &lock);
- 			if (!get_sha1_hex(buffer + 1, sha1)) {
- 				struct object *object = parse_object(sha1);
- 				object->flags |= UNINTERESTING;
-@@ -242,13 +244,17 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		}
- 	}
- 	fclose(rls_fout);
--	if (finish_command(&rls))
-+	if (finish_command(&rls)) {
-+		rollback_lock_file(&lock);
- 		return error("rev-list died");
-+	}
- 
- 	/* write references */
- 	argc = setup_revisions(argc, argv, &revs, NULL);
--	if (argc > 1)
-+	if (argc > 1) {
-+		rollback_lock_file(&lock);
- 		return error("unrecognized argument: %s'", argv[1]);
-+	}
- 
- 	for (i = 0; i < revs.pending.nr; i++) {
- 		struct object_array_entry *e = revs.pending.objects + i;
-@@ -307,17 +313,19 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		}
- 
- 		ref_count++;
--		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
--		write_or_die(bundle_fd, " ", 1);
--		write_or_die(bundle_fd, ref, strlen(ref));
--		write_or_die(bundle_fd, "\n", 1);
-+		lwrite_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40, &lock);
-+		lwrite_or_die(bundle_fd, " ", 1, &lock);
-+		lwrite_or_die(bundle_fd, ref, strlen(ref), &lock);
-+		lwrite_or_die(bundle_fd, "\n", 1, &lock);
- 		free(ref);
- 	}
--	if (!ref_count)
-+	if (!ref_count) {
-+		rollback_lock_file(&lock);
- 		die ("Refusing to create empty bundle.");
-+	}
- 
- 	/* end header */
--	write_or_die(bundle_fd, "\n", 1);
-+	lwrite_or_die(bundle_fd, "\n", 1, &lock);
- 
- 	/* write pack */
- 	argv_pack[0] = "pack-objects";
-@@ -339,8 +347,11 @@ static int create_bundle(struct bundle_header *header, const char *path,
- 		write(rls.in, sha1_to_hex(object->sha1), 40);
- 		write(rls.in, "\n", 1);
- 	}
--	if (finish_command(&rls))
-+	if (finish_command(&rls)) {
-+		rollback_lock_file(&lock);
- 		return error ("pack-objects died");
-+	}
-+	commit_lock_file(&lock);
- 	return 0;
- }
- 
--- 
-1.5.3.rc4.78.g5acb3-dirty
+Unfortunately the pager is launched before the option processing code 
+knows whether --quiet is being used or not; I'm not sure it's worth 
+refactoring the pager launch code just to handle this one special case. 
+(Or are there other cases where programs would want to be able to 
+control the use of the pager?)
+
+-Steve
