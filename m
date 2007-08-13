@@ -1,87 +1,80 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: msysgit: merge, stat
-Date: Mon, 13 Aug 2007 23:31:29 +0200
-Message-ID: <AAF0E632-AC7D-49E0-A332-96F78EABB1F6@zib.de>
-References: <2C573942-DD22-46EC-AE4A-1334450A7C4D@zib.de> <Pine.LNX.4.64.0708131743360.25989@racer.site> <7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] git-p4: Fix sorting changelists when cloning a Perforce repository
+Date: Mon, 13 Aug 2007 23:45:17 +0200
+Message-ID: <200708132345.23647.simon@lst.de>
+References: <3f4fd2640708131150r1d9fb02ai1f655a22658cb544@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2187969.LysIL89uYS";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 23:32:40 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Reece Dunn" <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 23:46:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKhWi-0007sr-Dk
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 23:32:40 +0200
+	id 1IKhjc-0003Uz-1U
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 23:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S939733AbXHMVcX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 17:32:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936719AbXHMVcW
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 17:32:22 -0400
-Received: from mailer.zib.de ([130.73.108.11]:44656 "EHLO mailer.zib.de"
+	id S1764522AbXHMVpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 17:45:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764445AbXHMVpj
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 17:45:39 -0400
+Received: from verein.lst.de ([213.95.11.210]:53180 "EHLO mail.lst.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S939615AbXHMVcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 17:32:17 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7DLUpTV003438;
-	Mon, 13 Aug 2007 23:30:55 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db10789.pool.einsundeins.de [77.177.7.137])
+	id S1754525AbXHMVph (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 17:45:37 -0400
+Received: from luria.local (2.84-48-121.nextgentel.com [84.48.121.2])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7DLUgke016778
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 13 Aug 2007 23:30:43 +0200 (MEST)
-In-Reply-To: <7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l7DLjRA5000848
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Mon, 13 Aug 2007 23:45:28 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <3f4fd2640708131150r1d9fb02ai1f655a22658cb544@mail.gmail.com>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55788>
 
+--nextPart2187969.LysIL89uYS
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On Aug 13, 2007, at 9:54 PM, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Monday 13 August 2007 20:50:59 Reece Dunn wrote:
+> Hi,
 >
->> On Sun, 12 Aug 2007, Steffen Prohaska wrote:
->>
->>> After a 'git merge' in msysgit some stat information of the index
->>> doesn't match the working tree. Thus 'git diff' looks at files,
->>> which it shouldn't look at. I need to do a
->>> 'git update-index --refresh' before everything's in sync.
->>>
->>> Is this a know issue? Do other experience the same?
->>
->> Yes, it is.  The real issue is that the index is out of date, and  
->> the full
->> speed of git is not available until a refresh (which you can have  
->> with a
->> "git status", too).
+> When performing a git-p4 clone operation on a Perforce repository,
+> where the changelists change in order of magnitude (e.g. 100 to 1000),
+> the set of changes to import from is not sorted properly. This is
+> because the data in the list is strings not integers. The other place
+> where this is done already converts the value to an integer, so it is
+> not affected.
 >
-> Wait a minute.
->
-> What does the above "After a 'git merge'" exactly mean?  After a
-> successful automerge that made a commit, of stopped in the
-> middle because of conflicts?  I am getting an impression that
-> Steffen is talking about the former, but if that is the case,
-> somebody is seriously confused.
+> This patch fixes this issue.
 
-Yes. I'm talking about a successful merge that made a commit.
+Acked-by: Simon Hausmann <simon@lst.de>
 
 
-> When "merge-recursive" with a 3-way file level merge in core
-> writes the result out to the work tree, it uses a cache entry
-> that is stat clean (see merge-recursive.c::make_cache_entry(),
-> refresh option is passed and it calls refresh_cache_entry() to
-> obtain the cached stat bits).  The traditional "read-tree -m -u"
-> followed by merge-one-file of course runs "git update-index"
-> inside merge-one-file script and cleanly merged paths should be
-> stat clean after a merge.
+Thanks,
+Simon
 
-Well, they are not with msysgit. At least not all, or not always.
-I'm not completely sure about the details, but the problem
-happens frequently, near to always.
+--nextPart2187969.LysIL89uYS
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-	Steffen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGwNDzWXvMThJCpvIRAnamAKD3YPVs2zMaV/gQVuRrcGzlZA0B9QCgzTrz
+G6ThuYnJCl4PBVCNJoiqNgQ=
+=MUuV
+-----END PGP SIGNATURE-----
+
+--nextPart2187969.LysIL89uYS--
