@@ -1,80 +1,78 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH] git-p4: Fix sorting changelists when cloning a Perforce repository
-Date: Mon, 13 Aug 2007 23:45:17 +0200
-Message-ID: <200708132345.23647.simon@lst.de>
-References: <3f4fd2640708131150r1d9fb02ai1f655a22658cb544@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: msysgit: merge, stat
+Date: Mon, 13 Aug 2007 14:57:38 -0700
+Message-ID: <7vfy2nf67h.fsf@assigned-by-dhcp.cox.net>
+References: <2C573942-DD22-46EC-AE4A-1334450A7C4D@zib.de>
+	<Pine.LNX.4.64.0708131743360.25989@racer.site>
+	<7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
+	<AAF0E632-AC7D-49E0-A332-96F78EABB1F6@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2187969.LysIL89uYS";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Reece Dunn" <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 23:46:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 13 23:57:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKhjc-0003Uz-1U
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 23:46:00 +0200
+	id 1IKhv1-00073z-Le
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 23:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764522AbXHMVpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 17:45:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764445AbXHMVpj
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 17:45:39 -0400
-Received: from verein.lst.de ([213.95.11.210]:53180 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754525AbXHMVph (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 17:45:37 -0400
-Received: from luria.local (2.84-48-121.nextgentel.com [84.48.121.2])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l7DLjRA5000848
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 13 Aug 2007 23:45:28 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <3f4fd2640708131150r1d9fb02ai1f655a22658cb544@mail.gmail.com>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1752612AbXHMV5m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 17:57:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbXHMV5m
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 17:57:42 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41770 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbXHMV5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 17:57:40 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070813215740.DGHX5405.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 13 Aug 2007 17:57:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id bZxe1X00K1kojtg0000000; Mon, 13 Aug 2007 17:57:39 -0400
+In-Reply-To: <AAF0E632-AC7D-49E0-A332-96F78EABB1F6@zib.de> (Steffen Prohaska's
+	message of "Mon, 13 Aug 2007 23:31:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55789>
 
---nextPart2187969.LysIL89uYS
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Steffen Prohaska <prohaska@zib.de> writes:
 
-On Monday 13 August 2007 20:50:59 Reece Dunn wrote:
-> Hi,
+>> Wait a minute.
+>>
+>> What does the above "After a 'git merge'" exactly mean?  After a
+>> successful automerge that made a commit, of stopped in the
+>> middle because of conflicts?  I am getting an impression that
+>> Steffen is talking about the former, but if that is the case,
+>> somebody is seriously confused.
 >
-> When performing a git-p4 clone operation on a Perforce repository,
-> where the changelists change in order of magnitude (e.g. 100 to 1000),
-> the set of changes to import from is not sorted properly. This is
-> because the data in the list is strings not integers. The other place
-> where this is done already converts the value to an integer, so it is
-> not affected.
+> Yes. I'm talking about a successful merge that made a commit.
 >
-> This patch fixes this issue.
+>> When "merge-recursive" with a 3-way file level merge in core
+>> writes the result out to the work tree, it uses a cache entry
+>> that is stat clean (see merge-recursive.c::make_cache_entry(),
+>> refresh option is passed and it calls refresh_cache_entry() to
+>> obtain the cached stat bits).  The traditional "read-tree -m -u"
+>> followed by merge-one-file of course runs "git update-index"
+>> inside merge-one-file script and cleanly merged paths should be
+>> stat clean after a merge.
+>
+> Well, they are not with msysgit. At least not all, or not always.
+> I'm not completely sure about the details, but the problem
+> happens frequently, near to always.
 
-Acked-by: Simon Hausmann <simon@lst.de>
+Johannes, is this something you want me to look at?  I do not
+know how much read-cache.c and other low level routines of
+Windows version deviated from the mainline.
 
-
-Thanks,
-Simon
-
---nextPart2187969.LysIL89uYS
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGwNDzWXvMThJCpvIRAnamAKD3YPVs2zMaV/gQVuRrcGzlZA0B9QCgzTrz
-G6ThuYnJCl4PBVCNJoiqNgQ=
-=MUuV
------END PGP SIGNATURE-----
-
---nextPart2187969.LysIL89uYS--
+I do not think we touched this area in any major way recently,
+but I wouldn't be surprised if refresh_cache_entry() around
+lstat() on the Windows side looked drastically from the POSIX
+version.
