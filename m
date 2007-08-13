@@ -1,58 +1,50 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Integrating the kernel tree and lkml
-Date: Mon, 13 Aug 2007 10:08:24 +0800
-Message-ID: <46BFBD18.50007@midwinter.com>
-References: <9e4733910708121731h1245eab3h9e331de8285daf8a@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk - dont warn when deleting synonym for current head
+Date: Mon, 13 Aug 2007 13:52:44 +1000
+Message-ID: <18111.54668.327095.685366@cargo.ozlabs.ibm.com>
+References: <1186952583887-git-send-email-mdl123@verizon.net>
+	<18111.39773.231609.306547@cargo.ozlabs.ibm.com>
+	<46BFAF8E.1000508@verizon.net>
+	<46BFB908.7050000@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 04:08:43 2007
+Cc: Mark Levedahl <mdl123@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 05:53:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKPMI-00079E-8r
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 04:08:42 +0200
+	id 1IKQzM-0006pu-P3
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 05:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933874AbXHMCI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Aug 2007 22:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933802AbXHMCI3
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 22:08:29 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:44913 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S933742AbXHMCI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2007 22:08:28 -0400
-Received: (qmail 10835 invoked from network); 13 Aug 2007 02:08:28 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=kz2ONGZxFQjqAH5cFlw7bVe0QRWLc//2renauKU3B4UJsPDCnfrNWKM+hNZmU2fS  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 13 Aug 2007 02:08:27 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <9e4733910708121731h1245eab3h9e331de8285daf8a@mail.gmail.com>
+	id S964856AbXHMDwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Aug 2007 23:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934337AbXHMDwv
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Aug 2007 23:52:51 -0400
+Received: from ozlabs.org ([203.10.76.45]:42055 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764188AbXHMDwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2007 23:52:50 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 14F07DDEDE; Mon, 13 Aug 2007 13:52:49 +1000 (EST)
+In-Reply-To: <46BFB908.7050000@gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55742>
 
-Jon Smirl wrote:
-> You could load the lkml history into the git db along with the kernel
-> tree. Then process the mailing list history to tie discussion threads
-> to commits. As you look at commits with gitk you could also see the
-> relevant messages on lkml.
->   
+Mark Levedahl writes:
 
-That sounds a lot like the "notes" proposal that was discussed on this 
-list a couple months back. It included a notion of "soft references" 
-which were used to tie commits to the note objects; that would 
-presumably apply to the mailing list messages as well. IIRC the 
-implementation that was proposed had some issues. Not sure what happened 
-to it in the end.
+> By the way, I'm not sure how gitk can usefully do the implied check 
+> without loading the full repository DAG.
 
-Such a capability would also be a good integration point for bug 
-tracking systems.
+It does load the full repository DAG - that's how it gets the
+information for the Precedes:, Follows: and Branch(es): fields in the
+commit display.  It's true that that can be turned off, though, and in
+that case an "are you sure" dialog would be appropriate.
 
--Steve
+Paul.
