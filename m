@@ -1,263 +1,88 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH v4] git-apply: apply submodule changes
-Date: Mon, 13 Aug 2007 19:13:49 +0200
-Message-ID: <20070813171349.GL999MdfPADPa@greensroom.kotnet.org>
-References: <20070810093049.GA868MdfPADPa@greensroom.kotnet.org>
- <20070812142340.GA10399MdfPADPa@greensroom.kotnet.org>
- <7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
- <20070812185006.GG999MdfPADPa@greensroom.kotnet.org>
- <7vr6m8imj6.fsf@assigned-by-dhcp.cox.net> <20070813093740.GA4684@liacs.nl>
-Reply-To: skimo@liacs.nl
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: gitk performance questions/issues
+Date: Mon, 13 Aug 2007 18:18:24 +0100
+Message-ID: <e1dab3980708131018h495c5cf2m76cb8f6ffc4df6dc@mail.gmail.com>
+References: <e1dab3980708130248g1cbab0cej18e260c8bfa2b315@mail.gmail.com>
+	 <alpine.LFD.0.999.0708130945420.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 19:14:14 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Aug 13 19:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKdUb-00014B-Nq
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 19:14:14 +0200
+	id 1IKdYs-0002hf-2t
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 19:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S972616AbXHMROA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 13:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032376AbXHMRN6
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 13:13:58 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:49912 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S972616AbXHMRNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 13:13:53 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JMQ00BL82J1VA@psmtp09.wxs.nl> for git@vger.kernel.org; Mon,
- 13 Aug 2007 19:13:51 +0200 (MEST)
-Received: (qmail 23222 invoked by uid 500); Mon, 13 Aug 2007 17:13:49 +0000
-In-reply-to: <20070813093740.GA4684@liacs.nl>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S973497AbXHMRSf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 13:18:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032251AbXHMRSc
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 13:18:32 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:10315 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031877AbXHMRS3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 13:18:29 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so602816ugf
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 10:18:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QlesE5IJ+9xAoyKk/+XXIzUezMFP5DT1dbvT9QDLAOLM3DRZb22qPEsh47xBSIbQ8zuDUl3KvC01bLUh5oTo7wOxHy+zf2WquxrYNI+yMQRrVfAVmsBd2cL2KAfR6PpUnV2oa7a3yM5Psm6hmzqzcb8ldfW7fH35+zwfKuDBVCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HnUtmz1GCT7/tgNspzZ6xcyuPlZSNE35Or//yOnGMSQzrOYbQHQBf6AgzMyLbP9+x8HEUSbXWvJzuQUkmuK6FDUGTAuajoxH+d5ZF36p+rWAoAaxOLTZr93CManA1nZSL7jCB1vub0l2yv6esmOvi1m8y0MhSCO899zB5JBWKiQ=
+Received: by 10.70.129.6 with SMTP id b6mr9847084wxd.1187025504341;
+        Mon, 13 Aug 2007 10:18:24 -0700 (PDT)
+Received: by 10.70.26.12 with HTTP; Mon, 13 Aug 2007 10:18:24 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708130945420.30176@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55773>
 
-Apply "Subproject commit HEX" changes produced by git-diff.
-As usual in the current git, only the superproject itself is actually
-modified (possibly creating empty directories for new submodules).
-Any checked-out submodule is left untouched and is not required to
-be up-to-date.
+On 8/13/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Alternatively, maybe your repo has some odd structure (do you have tons
+> and tons of branches or tags?) and "gitk" ends up having some problem with
+> that. What does
+>
+>         git rev-parse --all | wc -l
+>
+> say? Various git tools have had performance problems with thousands of
+> branches or tags in the past.
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
-This version adds an extra check to verify that a submodule
-still looks like a submodule in the work tree.
+Ah, that's it: I've got
+$ wc .git/packed-refs
+  1915   3832 130178 .git/packed-refs
+and 35 currently unpacked tags and temporarily moving that
+file away, gitk now starts up virtually instantly. My usage generates
+a tag per commit which is probably excessive. For completeness,
+$ git rev-parse --all | wc -l
+1957
 
- Documentation/git-apply.txt |   14 +++++++
- builtin-apply.c             |   91 +++++++++++++++++++++++++++++++++++++------
- t/t7400-submodule-basic.sh  |    8 ++++
- 3 files changed, 101 insertions(+), 12 deletions(-)
+Thinking about it, I suppose even if you're only looking at the last
+256 commits you've got to look through all the tags to see whether
+or not they refer to something within that window, so it's not
+unreasonable for it to affect startup time.
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index f03f661..4c7e3a2 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -171,6 +171,20 @@ apply.whitespace::
- 	When no `--whitespace` flag is given from the command
- 	line, this configuration item is used as the default.
- 
-+Submodules
-+----------
-+If the patch contains any changes to submodules then gitlink:git-apply[1]
-+treats these changes as follows.
-+
-+If --index is specified (explicitly or implicitly), then the submodule
-+commits must match the index exactly for the patch to apply.  If any
-+of the submodules are checked-out, then these check-outs are completely
-+ignored, i.e., they are not required to be up-to-date or clean and they
-+are not updated.
-+
-+If --index is not specified, then the submodule commits in the patch
-+are ignored and only the absence of presence of the corresponding
-+subdirectory is checked and (if possible) updated.
- 
- Author
- ------
-diff --git a/builtin-apply.c b/builtin-apply.c
-index da27075..8ba20a6 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -12,6 +12,7 @@
- #include "blob.h"
- #include "delta.h"
- #include "builtin.h"
-+#include "refs.h"
- 
- /*
-  *  --check turns on checking that the working tree matches the
-@@ -1984,6 +1985,40 @@ static int apply_fragments(struct buffer_desc *desc, struct patch *patch)
- 	return 0;
- }
- 
-+static int read_file_or_gitlink(struct cache_entry *ce, char **buf_p,
-+				unsigned long *size_p)
-+{
-+	if (!ce)
-+		return 0;
-+
-+	if (S_ISGITLINK(ntohl(ce->ce_mode))) {
-+		*buf_p = xmalloc(100);
-+		*size_p = snprintf(*buf_p, 100,
-+			"Subproject commit %s\n", sha1_to_hex(ce->sha1));
-+	} else {
-+		enum object_type type;
-+		*buf_p = read_sha1_file(ce->sha1, &type, size_p);
-+		if (!*buf_p)
-+			return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int read_gitlink_or_skip(struct patch *patch, struct cache_entry *ce,
-+				char *buf, unsigned long alloc)
-+{
-+	if (ce)
-+		return snprintf(buf, alloc,
-+				"Subproject commit %s\n", sha1_to_hex(ce->sha1));
-+
-+	/* We can't apply the submodule change without an index, so just
-+	 * skip the patch itself and only create/remove directory.
-+	 */
-+	patch->fragments = NULL;
-+	return 0;
-+}
-+
- static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
- {
- 	char *buf;
-@@ -1994,20 +2029,17 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
- 	alloc = 0;
- 	buf = NULL;
- 	if (cached) {
--		if (ce) {
--			enum object_type type;
--			buf = read_sha1_file(ce->sha1, &type, &size);
--			if (!buf)
--				return error("read of %s failed",
--					     patch->old_name);
--			alloc = size;
--		}
-+		if (read_file_or_gitlink(ce, &buf, &size))
-+			return error("read of %s failed", patch->old_name);
-+		alloc = size;
- 	}
- 	else if (patch->old_name) {
- 		size = xsize_t(st->st_size);
- 		alloc = size + 8192;
- 		buf = xmalloc(alloc);
--		if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
-+		if (S_ISGITLINK(patch->old_mode))
-+			size = read_gitlink_or_skip(patch, ce, buf, alloc);
-+		else if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
- 			return error("read of %s failed", patch->old_name);
- 	}
- 
-@@ -2055,6 +2087,20 @@ static int check_to_create_blob(const char *new_name, int ok_if_exists)
- 	return 0;
- }
- 
-+/* Check that the directory corresponding to a gitlink is either
-+ * empty or a git repo.
-+ */
-+static int verify_gitlink_clean(const char *path)
-+{
-+	unsigned char sha1[20];
-+
-+	if (!rmdir(path)) {
-+		mkdir(path, 0777);
-+		return 0;
-+	}
-+	return resolve_gitlink_ref(path, "HEAD", sha1);
-+}
-+
- static int check_patch(struct patch *patch, struct patch *prev_patch)
- {
- 	struct stat st;
-@@ -2096,8 +2142,15 @@ static int check_patch(struct patch *patch, struct patch *prev_patch)
- 				    lstat(old_name, &st))
- 					return -1;
- 			}
--			if (!cached)
-+			if (!cached) {
- 				changed = ce_match_stat(ce, &st, 1);
-+				if (S_ISGITLINK(patch->old_mode)) {
-+					changed &= TYPE_CHANGED;
-+					if (!changed &&
-+					    verify_gitlink_clean(patch->old_name))
-+						changed |= TYPE_CHANGED;
-+				}
-+			}
- 			if (changed)
- 				return error("%s: does not match index",
- 					     old_name);
-@@ -2354,7 +2407,11 @@ static void remove_file(struct patch *patch, int rmdir_empty)
- 		cache_tree_invalidate_path(active_cache_tree, patch->old_name);
- 	}
- 	if (!cached) {
--		if (!unlink(patch->old_name) && rmdir_empty) {
-+		if (S_ISGITLINK(patch->old_mode)) {
-+			if (rmdir(patch->old_name))
-+				warning("unable to remove submodule %s",
-+					patch->old_name);
-+		} else if (!unlink(patch->old_name) && rmdir_empty) {
- 			char *name = xstrdup(patch->old_name);
- 			char *end = strrchr(name, '/');
- 			while (end) {
-@@ -2387,7 +2444,10 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
- 			die("unable to stat newly created file %s", path);
- 		fill_stat_cache_info(ce, &st);
- 	}
--	if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
-+	if (S_ISGITLINK(mode)) {
-+		if (get_sha1_hex(buf + strlen("Subproject commit "), ce->sha1))
-+			die("corrupt patch for subproject %s", path);
-+	} else if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
- 		die("unable to create backing store for newly created file %s", path);
- 	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
- 		die("unable to add cache entry for %s", path);
-@@ -2398,6 +2458,13 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
- 	int fd;
- 	char *nbuf;
- 
-+	if (S_ISGITLINK(mode)) {
-+		struct stat st;
-+		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
-+			return 0;
-+		return mkdir(path, 0777);
-+	}
-+
- 	if (has_symlinks && S_ISLNK(mode))
- 		/* Although buf:size is counted string, it also is NUL
- 		 * terminated.
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index e8ce7cd..cede2e7 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -175,4 +175,12 @@ test_expect_success 'checkout superproject with subproject already present' '
- 	git-checkout master
- '
- 
-+test_expect_success 'rebase with subproject changes' '
-+	git-checkout initial &&
-+	echo t > t &&
-+	git add t &&
-+	git-commit -m "change t" &&
-+	git-rebase HEAD master
-+'
-+
- test_done
+The bit that is a quite surprising to me is that once the window has
+finished initialising, clicking on one of the blue dots now (ie
+without .git/packed-refs file) now generates the diffs instantly
+as well. It's not obvious to me why the existence/non-existence
+of tags should affect displaying-diff performance.
+
+Anyway, now I know I can rearrange things not to need anything
+like as many tags.
+
+Many thanks for the help,
+
 -- 
-1.5.3.rc4.68.g4411e-dirty
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
