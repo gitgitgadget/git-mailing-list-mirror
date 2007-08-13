@@ -1,117 +1,116 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Can I have this, pretty please?
-Date: Mon, 13 Aug 2007 07:49:11 +0200
-Message-ID: <85wsw03rxk.fsf@lola.goethe.zz>
-References: <85ir7kq42k.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121135050.30176@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708121140190.30176@woody.linux-foundation.org>
-	<854pj4o8k5.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708121246020.30176@woody.linux-foundation.org>
-	<18111.42072.605823.932110@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] checkout: fix attribute handling in checkout all
+Date: Sun, 12 Aug 2007 23:14:22 -0700
+Message-ID: <7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net>
+References: <11869508753328-git-send-email-prohaska@zib.de>
+	<118695087531-git-send-email-prohaska@zib.de>
+	<7veji8ifs2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Aug 13 07:49:32 2007
+Cc: dmitry.kakurin@gmail.com, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Aug 13 08:14:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKSnz-0001ZN-5Y
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 07:49:31 +0200
+	id 1IKTC7-0006tk-CS
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 08:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462AbXHMFtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 01:49:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753461AbXHMFtO
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 01:49:14 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:46021 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750814AbXHMFtO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Aug 2007 01:49:14 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 78AC730340C;
-	Mon, 13 Aug 2007 07:49:12 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 6195D28EE24;
-	Mon, 13 Aug 2007 07:49:12 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-055-003.pools.arcor-ip.net [84.61.55.3])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 2F2FA36E869;
-	Mon, 13 Aug 2007 07:49:12 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id C88A31C3C79D; Mon, 13 Aug 2007 07:49:11 +0200 (CEST)
-In-Reply-To: <18111.42072.605823.932110@cargo.ozlabs.ibm.com> (Paul Mackerras's message of "Mon\, 13 Aug 2007 10\:22\:48 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1756504AbXHMGOY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 02:14:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757548AbXHMGOY
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 02:14:24 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:43876 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756347AbXHMGOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 02:14:23 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070813061422.INKK325.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 13 Aug 2007 02:14:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id bJEN1X00B1kojtg0000000; Mon, 13 Aug 2007 02:14:22 -0400
+In-Reply-To: <7veji8ifs2.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 12 Aug 2007 14:50:21 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55745>
 
-Paul Mackerras <paulus@samba.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Linus Torvalds writes:
+> Steffen Prohaska <prohaska@zib.de> writes:
+> ...
+>> This works only together with the commit
+>>
+>> 'attr: fix attribute handling if .gitattributes is involved'
 >
->> Well, gitk has certainly had performance problems in the past, they've 
->> been fixable. I think this should just be fixed too. And if the rev-list 
->> is fast enough, then the gitk fix may well be to just not compute the 
->> *whole* history - ie the solution may be as simple as stopping the 
->> background job that does all the graph calculations when it is (pick a 
->> point at random) something like a thousand commits into the graph, and the 
->> user hasn't scrolled down..
->
-> I have made a "dev" branch in the gitk.git repository that has some
-> tweaks to the graph layout algorithm which change the appearance a
-> bit; specifically it doesn't continue the graph lines downwards until
-> it has to terminate them with an arrow because the graph is getting
-> too wide.  Instead, it always terminates them if they are going to be
-> longer than a certain length (about 100 rows).
+> While I think it is _one_ good approach to make things two-pass,
+> I do not know if this is enough.  A logic similar to this should
+> be made available to the codepath that switches branches,
+> shouldn't it?
 
-How about terminating them when they are going off-screen?  If you
-worry about reformatting when scrolling, you can terminate them if
-there will be no change for at least one screen more.
+Ok, let's step back a bit and I'll suggest an alternative
+approach to your 1/2.  This would hopefully solve 2/2 without
+any code change your patch 2/2 has.
 
-More importantly: you can do your layout without having to look at
-more than two screen's worth of commit data.
+I think this approach is very much in line with how the git
+plumbing works, but you would need to know how the world is
+designed to work in order to appreciate it fully.  Let's have a
+few paragraphs to give the readers some background.
 
-> Also I made some changes to reduce the incidence of two lines having
-> a corner at the same point, for visual clarity.
->
-> The point of terminating the graph lines early is that it means gitk
-> won't have to lay out the whole graph, just the visible bits and a
-> limited number of rows around that.
+The work tree side of git is primarily about the index, and what
+is on the work tree is more or less secondary.  At the lower
+level, often we deliberately treat not having a working tree
+file as equivalent to having an unmodified work tree file.  We
+can apply the same principle to this "missing .gitattributes
+file" case.
 
-Ok, that was what you were already thinking.
+People who only know modern git may not be aware of this, but
+you can apply patches and perform a merge in a work tree that
+does not have any file checked out, as long as your index is
+fully populated.  For example, you can do something like this:
 
-> So I'm interested to know if people think it looks OK visually.  (I
-> think it's actually better, myself.)
+    $ git clone -n git://.../git.git v.git
+    $ cd v.git
+    $ git update-ref --no-deref HEAD $(git rev-parse v1.5.3-rc4^0)
+    $ git read-tree HEAD
+    $ git apply --index patch.txt
 
-I'd think so, too, but will be able to check only later this days.
+You will have the files that are patched in the resulting work
+tree, so that you can inspect the result.  If you like the
+result, you can even make a commit in such a sparsely populated
+tree:
 
-> The other thing that takes time is reading in the topology for the
-> previous/next tag computations.
+    $ git commit
 
-If you can move that out of the busy loop and do it in the
-background...
+Of course, "git commit -a" and "git add -u" Porcelain options
+are more recent inventions, and they would not work with such a
+sparsely populated work tree.  But the above demonstration shows
+that at the plumbing level the index is the king and the work
+tree is secondary, and this is very much as designed.  The merge
+operation has similar characteristics:
 
-> I did a patch that wrote out the topology to a cache file but I ran
-> into some problems where the cache includes commits that have gone
-> away since the cache was created.
+    $ git merge master
 
-I think it should be possible to come up with a data structure that
-swallows less memory than the current one.  All the info you need are
-the SHA1s and their relations: the rest can be asked from git while
-one is scrolling, with a LRU buffer of a few hundred commits for
-speed.
+... will check out the paths that need file-level 3-way merge,
+so that you can inspect the result, but what you will have is a
+sparsely populated work tree, and this is as designed.
 
-> Would it be possible to make git rev-list ignore commits that don't
-> exist if they have a "^" in front of them, i.e. where we're asking
-> for them to be excluded anyway?  If we can do that (or something
-> equivalent) then I can make the cache work reliably.  It does speed
-> up gitk enormously, and the cache file is only about 3MB for the
-> kernel tree, so it seems well worth while.
+Currently, the attr_stack code reads only from the work tree
+and work tree alone.  We could change it to:
 
-Cough, cough.  If the cache file is only about 3MB, why wouldn't you
-be able to keep it in memory?
+ - If the directory on the work tree has .gitattributes, use it
+   (this is what the current code does);
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+ - Otherwise if the index has .gitattributes at the
+   corresponding path, use that instead.
+
+This essentially treats not having .gitattributes files checked
+out as equivalent to having these files checked out unmodified,
+which is very much in line with how the world is designed to
+work.
