@@ -1,73 +1,85 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
-Subject: Re: [PATCH] gitk - dont warn when deleting synonym for current head
-Date: Mon, 13 Aug 2007 09:22:24 -0400
-Message-ID: <30e4a070708130622l7558230cpb870378aeba537fb@mail.gmail.com>
-References: <1186952583887-git-send-email-mdl123@verizon.net>
-	 <18111.39773.231609.306547@cargo.ozlabs.ibm.com>
-	 <46BFAF8E.1000508@verizon.net> <46BFB908.7050000@gmail.com>
-	 <18111.54668.327095.685366@cargo.ozlabs.ibm.com>
-	 <30e4a070708130604g5b848b2fm4b42e145384c0ba4@mail.gmail.com>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: [PATCH 2/2] checkout: fix attribute handling in checkout all
+Date: Mon, 13 Aug 2007 07:35:40 -0700
+Message-ID: <a1bbc6950708130735g73508d1ev2114cea3612d77c9@mail.gmail.com>
+References: <11869508753328-git-send-email-prohaska@zib.de>
+	 <118695087531-git-send-email-prohaska@zib.de>
+	 <7veji8ifs2.fsf@assigned-by-dhcp.cox.net>
+	 <7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net>
+	 <46BFFB1A.4070704@trolltech.com>
+	 <5BA0164D-8327-4B01-84CD-595D8573BEEF@zib.de>
+	 <46C00515.5050308@trolltech.com>
+	 <521D9D91-2422-4378-BD68-37550731E06A@zib.de>
+	 <46C018DA.1020309@trolltech.com>
+	 <DD0F51D8-390E-41DB-BD80-0BB440418D01@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Mark Levedahl" <mdl123@verizon.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Aug 13 15:23:12 2007
+Cc: "Marius Storm-Olsen" <marius@trolltech.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Brian Downing" <bdowning@lavos.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Aug 13 16:36:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKZsy-0005KO-Sc
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 15:23:09 +0200
+	id 1IKb1l-0006lZ-Da
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 16:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S972890AbXHMNWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 09:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S972886AbXHMNWa
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 09:22:30 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:55246 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S972839AbXHMNW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 09:22:27 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so569469ugf
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 06:22:25 -0700 (PDT)
+	id S946931AbXHMOfs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 10:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S946864AbXHMOfq
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 10:35:46 -0400
+Received: from rv-out-0910.google.com ([209.85.198.184]:56332 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S946894AbXHMOfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 10:35:42 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1188617rvb
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 07:35:41 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rvtIelUjfMAhmIQcvY4lf74YLEPtc1q01MEWw4MBRnFwEhKM/x6nG2BHjYhf+3SpivsA1Zin/YFU6/MEAfdA1TZNqxA87HUr27Tcz0z5U9HHz4qniasXI24tGxTslHvYcslMAk58XVBf7zPvEH+q1dZRyLSSO904DDV/Yz5deDk=
+        b=rAvYjBM7mo25mJwwg8DR3AN/JkL5rJI7gMZ0pxNypDsPb1iZFoReH4HIh2DNRg9tEk5dc7FGXeckkiX/b7mxk7KdOntP0DJTmhIQCGjIpWw/E8SaQBovyxf6BrPWWLboTd4wHBHQfrtGhMJa2IjfNT1Ei8ihuBzPF5kMxmNXTOE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SV3oVmUuyheH9GKTVj1MvYoPeXEmdnLWJQV08M6oPGwwboPne/tx8ijbPUD8TKF8OO654+NIkKnYeFzaPTMBwfXjJ9aGb2Ga5WHxRjS4sD+VgOy/AlqxpGcTPtaXnKEc2zWwSAQ03hkngfaarK7GYEkfd1hO8fwaXiBuNQnf1wU=
-Received: by 10.78.162.4 with SMTP id k4mr2172161hue.1187011344611;
-        Mon, 13 Aug 2007 06:22:24 -0700 (PDT)
-Received: by 10.78.190.5 with HTTP; Mon, 13 Aug 2007 06:22:24 -0700 (PDT)
-In-Reply-To: <30e4a070708130604g5b848b2fm4b42e145384c0ba4@mail.gmail.com>
+        b=bfu6Txgd7byaDKvDxtTjORhPbeYeK8QLg9RjZ+sZU1zrIcYrQu5W6C/zzHJytD9u1dRbE0v8OGjPatRX3kGxg88xW3noJRHDjRpt0F707TpwFB+prh4UOpuU1CyRFdsyNj6cVtVbd/d2hea89WUBopJAi+LVJttzvMGlgdhnXh4=
+Received: by 10.140.249.20 with SMTP id w20mr2553205rvh.1187015740617;
+        Mon, 13 Aug 2007 07:35:40 -0700 (PDT)
+Received: by 10.141.21.17 with HTTP; Mon, 13 Aug 2007 07:35:40 -0700 (PDT)
+In-Reply-To: <DD0F51D8-390E-41DB-BD80-0BB440418D01@zib.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55764>
 
-On 8/13/07, Mark Levedahl <mlevedahl@gmail.com> wrote:
-> On 8/12/07, Paul Mackerras <paulus@samba.org> wrote:
-> > It does load the full repository DAG - that's how it gets the
-> > information for the Precedes:, Follows: and Branch(es): fields in the
-> > commit display.  It's true that that can be turned off, though, and in
-> > that case an "are you sure" dialog would be appropriate.
-> >
-> > Paul.
->
+On 8/13/07, Steffen Prohaska <prohaska@zib.de> wrote:
+> My target audience of Git on Windows are Windows users and, frankly,
+> that is the only reasonable way to think about Windows. Why else should
+> I boot Windows, if I don't have real Windows users in mind? I mean,
+> Windows is not the superior platform to build Unix on top. The reason
+> to boot Windows is Windows itself, including its real users.
 
-Double groan - I hit the wrong key (send rather than abort) with a
-partially written incorrect message. Drat.
+I agree with this approach.
 
-I was fooled as the "Precedes:" entry is blank if I do, for instance:
-   git checkout -b foo master~1
-   gitk
-even though HEAD=foo which precedes master. However, master shows up
-in the list of branches containing the commit. So yes, I see that gitk
-has the full DAG available and could therefore generate a useful
-warning when deleting a branch would leave dangling commits.
+> Maybe I don't fully understand what msysgit is about. I thought it would
+> be about real Windows support, which I think requires to accept what
+> Windows users expect to be the right thing: Windows EOL.
 
-Mark
+msysgit is Build Environment for Git on Windows. It's purpose is to
+facilitate Git development. This is not what end-user wants.
+Another installer (WinGit) is targeting end users. It is just so
+happens that msysgit is in better shape right now and more useful. But
+long term it will not be the case.
+
+Here is another consideration: let's say I've started a new git repo
+under Windows with no autocrlf set. Then my repo will contain crlf
+line endings.
+Now let's say that someone else checks out this repo with
+autocrlf=true. What would happen then? Will they get cr cr lf?
+-- 
+- Dmitry
