@@ -1,64 +1,72 @@
-From: "Evan Carroll" <me@evancarroll.com>
-Subject: git-peek-remote vs git-pull (error in latter)
-Date: Mon, 13 Aug 2007 17:01:38 -0500
-Message-ID: <428b865e0708131501m45b6e2f9t9926821cf93b7abc@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] Improved hint on how to set identity
+Date: Tue, 14 Aug 2007 00:05:50 +0200
+Message-ID: <1187042750257-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 14 00:01:46 2007
+X-From: git-owner@vger.kernel.org Tue Aug 14 00:06:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKhyr-00084o-C0
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 00:01:45 +0200
+	id 1IKi2x-0000YB-Cp
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 00:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758621AbXHMWBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 18:01:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758596AbXHMWBl
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 18:01:41 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:12184 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860AbXHMWBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 18:01:39 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1278420rvb
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 15:01:39 -0700 (PDT)
-Received: by 10.141.145.11 with SMTP id x11mr2762182rvn.1187042498854;
-        Mon, 13 Aug 2007 15:01:38 -0700 (PDT)
-Received: by 10.141.212.7 with HTTP; Mon, 13 Aug 2007 15:01:38 -0700 (PDT)
-Content-Disposition: inline
+	id S1760524AbXHMWFy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 18:05:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760529AbXHMWFy
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 18:05:54 -0400
+Received: from mailer.zib.de ([130.73.108.11]:47270 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760383AbXHMWFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 18:05:52 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7DM5o7K005784
+	for <git@vger.kernel.org>; Tue, 14 Aug 2007 00:05:50 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7DM5ofe023831;
+	Tue, 14 Aug 2007 00:05:50 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55791>
 
-I'm having a *major* problem with git-pull and ssh locations. Notice
-the bottom works, and the top not so much can't find --upload-pack. As
-an aside, an error when people try ssh://user@location/ an error would
-be nice. die "Bad ssh-location syntax" if $cmd =~ /^ssh:/
+Users typically want to set the default for their account. Thus,
+start the hint with how to achieve that; and only later explain
+how to restrict identity to a single repository.
 
-ecarroll@x60s:~/Desktop/scraper$ git pull
---upload-pack=/home/dealermade/bin/git-upload-pack
-dealermade@chason:/home/dealermad
-/Desktop/scraper/.git
-sh: /home/dealermade/bin/git-upload-pack: not found
-fatal: The remote end hung up unexpectedly
-Cannot get the repository state from origin
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ ident.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-ecarroll@x60s:~/Desktop/scraper$ git-peek-remote
---upload-pack=/home/dealermade/bin/git-upload-pack
-dealermade@chason:/home/dealermade/Desktop/scraper/.git
-00af556bab4850c1f52eb259445688689f1dd4ff        HEAD
-00af556bab4850c1f52eb259445688689f1dd4ff        refs/heads/master
-fe0e395cc4161071ac871215919563edc8de59c3        refs/heads/origin
+I watched someone setting up git, who never used it before.
+The hint was leading him into the wrong direction. He
+certainly wanted to set a global default. Let's give users
+the right hint first.
 
-Please cc me in all correspondence, me@evancarroll.com
+    Steffen
 
-Thanks again!
-
+diff --git a/ident.c b/ident.c
+index 6612d17..9b2a852 100644
+--- a/ident.c
++++ b/ident.c
+@@ -185,11 +185,11 @@ static const char *env_hint =
+ "\n"
+ "Run\n"
+ "\n"
+-"  git config user.email \"you@email.com\"\n"
+-"  git config user.name \"Your Name\"\n"
++"  git config --global user.email \"you@email.com\"\n"
++"  git config --global user.name \"Your Name\"\n"
+ "\n"
+-"To set the identity in this repository.\n"
+-"Add --global to set your account\'s default\n"
++"to set your account\'s default identity.\n"
++"Omit --global to set the identity only in this repository.\n"
+ "\n";
+ 
+ const char *fmt_ident(const char *name, const char *email,
 -- 
-Evan Carroll
-System Lord of the Internets
-me@evancarroll.com
-832-445-8877
+1.5.3.rc4.96.g6ceb
