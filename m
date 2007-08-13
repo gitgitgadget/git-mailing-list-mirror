@@ -1,98 +1,58 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: [PATCH 2/2] checkout: fix attribute handling in checkout all
-Date: Mon, 13 Aug 2007 09:15:33 +0200
-Message-ID: <46C00515.5050308@trolltech.com>
-References: <11869508753328-git-send-email-prohaska@zib.de> <118695087531-git-send-email-prohaska@zib.de> <7veji8ifs2.fsf@assigned-by-dhcp.cox.net> <7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net> <46BFFB1A.4070704@trolltech.com> <5BA0164D-8327-4B01-84CD-595D8573BEEF@zib.de>
+Date: Mon, 13 Aug 2007 09:24:42 +0200
+Message-ID: <86eji7lww5.fsf@lola.quinscape.zz>
+References: <11869508753328-git-send-email-prohaska@zib.de> <118695087531-git-send-email-prohaska@zib.de> <7veji8ifs2.fsf@assigned-by-dhcp.cox.net> <7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig6B679BB8A2D558AC813F41BA"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Brian Downing <bdowning@lavos.net>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 13 09:14:54 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 13 09:25:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKU8b-0004mE-9n
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 09:14:53 +0200
+	id 1IKUIX-00071M-Sm
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 09:25:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S940890AbXHMHOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 03:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S940884AbXHMHOb
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 03:14:31 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:56521 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S940872AbXHMHO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 03:14:29 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 5E91174245; Mon, 13 Aug 2007 09:14:27 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 5059574221; Mon, 13 Aug 2007 09:14:27 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <5BA0164D-8327-4B01-84CD-595D8573BEEF@zib.de>
-X-Enigmail-Version: 0.95.3
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S941710AbXHMHZB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 03:25:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S941706AbXHMHZA
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 03:25:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:45928 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S941698AbXHMHY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 03:24:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IKUIG-0007Re-JE
+	for git@vger.kernel.org; Mon, 13 Aug 2007 09:24:52 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 09:24:52 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 09:24:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:/Av9JsVDTQ3UJEGZpQ5LY2hSYfk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55750>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig6B679BB8A2D558AC813F41BA
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-Steffen Prohaska said the following on 13.08.2007 08:50:
-> On Aug 13, 2007, at 8:32 AM, Marius Storm-Olsen wrote:
->> In msysgit.git/etc/.gitattributes we have 'termcap -crlf', to avoid =20
->> the termcaps being checked out with Windows EOL, if the user =20
->> happens to have 'autocrlf =3D true'. However, when you checkout the =20
->> working dir the first time it still has Windows EOL due to exactly =20
->> this problem.
->=20
-> And exactly this is where I recognized the issue.
->=20
-> msysgit devs,
-> We should really make autocrlf =3D true the default for us and fix
-> all problems that we'll encounter. There may be more tricky stuff
-> ahead, like merges, cherry-picks, ...
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>     $ git update-ref --no-deref HEAD $(git rev-parse v1.5.3-rc4^0)
 
-I'm more leaning towards having the installer give you the option to=20
-choose what kind of line-endings you want Git to work with; just like=20
-the Cygwin installer.
+Is there a fundamental difference to using
 
---=20
-=2Emarius
+git-symbolic-ref HEAD $(git rev-parse v1.5.3-rc4^0)
 
+here?
 
---------------enig6B679BB8A2D558AC813F41BA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFGwAUVKzzXl/njVP8RAl2nAKCEfat06rEtGFU0a4aPzG8Dz0cqkwCdGqfl
-CCIz12n9jrd+lxZwRdJk/Gw=
-=dehg
------END PGP SIGNATURE-----
-
---------------enig6B679BB8A2D558AC813F41BA--
+-- 
+David Kastrup
