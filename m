@@ -1,74 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: msysgit: merge, stat
-Date: Mon, 13 Aug 2007 12:54:55 -0700
-Message-ID: <7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
-References: <2C573942-DD22-46EC-AE4A-1334450A7C4D@zib.de>
-	<Pine.LNX.4.64.0708131743360.25989@racer.site>
+Subject: Re: [PATCH 2/2] checkout: fix attribute handling in checkout all
+Date: Mon, 13 Aug 2007 13:12:49 -0700
+Message-ID: <7vtzr3fb26.fsf@assigned-by-dhcp.cox.net>
+References: <11869508753328-git-send-email-prohaska@zib.de>
+	<118695087531-git-send-email-prohaska@zib.de>
+	<7veji8ifs2.fsf@assigned-by-dhcp.cox.net>
+	<7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net>
+	<86eji7lww5.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 13 22:10:31 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 13 22:16:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKg0D-0008Lf-62
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 21:55:01 +0200
+	id 1IKgHj-0004MX-27
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 22:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760733AbXHMTzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 15:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761818AbXHMTy7
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 15:54:59 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:62475 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759602AbXHMTy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 15:54:57 -0400
+	id S1031813AbXHMUMz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 16:12:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031761AbXHMUMx
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 16:12:53 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:33808 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S943209AbXHMUMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 16:12:51 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070813195457.YZNY5405.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 13 Aug 2007 15:54:57 -0400
+          id <20070813201251.YTMM325.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 13 Aug 2007 16:12:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id bXuv1X00G1kojtg0000000; Mon, 13 Aug 2007 15:54:56 -0400
-In-Reply-To: <Pine.LNX.4.64.0708131743360.25989@racer.site> (Johannes
-	Schindelin's message of "Mon, 13 Aug 2007 17:45:07 +0100 (BST)")
+	id bYCp1X00U1kojtg0000000; Mon, 13 Aug 2007 16:12:50 -0400
+In-Reply-To: <86eji7lww5.fsf@lola.quinscape.zz> (David Kastrup's message of
+	"Mon, 13 Aug 2007 09:24:42 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55780>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+David Kastrup <dak@gnu.org> writes:
 
-> On Sun, 12 Aug 2007, Steffen Prohaska wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>     $ git update-ref --no-deref HEAD $(git rev-parse v1.5.3-rc4^0)
 >
->> After a 'git merge' in msysgit some stat information of the index
->> doesn't match the working tree. Thus 'git diff' looks at files,
->> which it shouldn't look at. I need to do a
->> 'git update-index --refresh' before everything's in sync.
->> 
->> Is this a know issue? Do other experience the same?
+> Is there a fundamental difference to using
 >
-> Yes, it is.  The real issue is that the index is out of date, and the full 
-> speed of git is not available until a refresh (which you can have with a 
-> "git status", too).
+> git-symbolic-ref HEAD $(git rev-parse v1.5.3-rc4^0)
+>
+> here?
 
-Wait a minute.
+The symbolic-ref command is about setting the HEAD to "point at
+a(nother) ref".  There is no point talking about "fundamental
+difference" here --- the latter is plain wrong, feeding
+rev-parse output (which is an object name) as its second
+parameter.
 
-What does the above "After a 'git merge'" exactly mean?  After a
-successful automerge that made a commit, of stopped in the
-middle because of conflicts?  I am getting an impression that
-Steffen is talking about the former, but if that is the case,
-somebody is seriously confused.
+Did you mean to ask about the difference between "git-update-ref
+HEAD $param" with or without --no-deref?
 
-When "merge-recursive" with a 3-way file level merge in core
-writes the result out to the work tree, it uses a cache entry
-that is stat clean (see merge-recursive.c::make_cache_entry(),
-refresh option is passed and it calls refresh_cache_entry() to
-obtain the cached stat bits).  The traditional "read-tree -m -u"
-followed by merge-one-file of course runs "git update-index"
-inside merge-one-file script and cleanly merged paths should be
-stat clean after a merge.
+With --no-deref, it makes the HEAD detached even when HEAD is a
+symref that points at a ref, e.g. "refs/heads/master".  Without
+that option, it updates the ref that is pointed at by the HEAD
+symref.
