@@ -1,78 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: msysgit: merge, stat
-Date: Mon, 13 Aug 2007 14:57:38 -0700
-Message-ID: <7vfy2nf67h.fsf@assigned-by-dhcp.cox.net>
-References: <2C573942-DD22-46EC-AE4A-1334450A7C4D@zib.de>
-	<Pine.LNX.4.64.0708131743360.25989@racer.site>
-	<7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
-	<AAF0E632-AC7D-49E0-A332-96F78EABB1F6@zib.de>
+From: "Evan Carroll" <me@evancarroll.com>
+Subject: git-peek-remote vs git-pull (error in latter)
+Date: Mon, 13 Aug 2007 17:01:38 -0500
+Message-ID: <428b865e0708131501m45b6e2f9t9926821cf93b7abc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 13 23:57:51 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 14 00:01:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKhv1-00073z-Le
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 23:57:48 +0200
+	id 1IKhyr-00084o-C0
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 00:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752612AbXHMV5m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 17:57:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbXHMV5m
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 17:57:42 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41770 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750907AbXHMV5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 17:57:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070813215740.DGHX5405.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 13 Aug 2007 17:57:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bZxe1X00K1kojtg0000000; Mon, 13 Aug 2007 17:57:39 -0400
-In-Reply-To: <AAF0E632-AC7D-49E0-A332-96F78EABB1F6@zib.de> (Steffen Prohaska's
-	message of "Mon, 13 Aug 2007 23:31:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758621AbXHMWBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 18:01:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758596AbXHMWBl
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 18:01:41 -0400
+Received: from rv-out-0910.google.com ([209.85.198.184]:12184 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860AbXHMWBj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 18:01:39 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1278420rvb
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 15:01:39 -0700 (PDT)
+Received: by 10.141.145.11 with SMTP id x11mr2762182rvn.1187042498854;
+        Mon, 13 Aug 2007 15:01:38 -0700 (PDT)
+Received: by 10.141.212.7 with HTTP; Mon, 13 Aug 2007 15:01:38 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55790>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+I'm having a *major* problem with git-pull and ssh locations. Notice
+the bottom works, and the top not so much can't find --upload-pack. As
+an aside, an error when people try ssh://user@location/ an error would
+be nice. die "Bad ssh-location syntax" if $cmd =~ /^ssh:/
 
->> Wait a minute.
->>
->> What does the above "After a 'git merge'" exactly mean?  After a
->> successful automerge that made a commit, of stopped in the
->> middle because of conflicts?  I am getting an impression that
->> Steffen is talking about the former, but if that is the case,
->> somebody is seriously confused.
->
-> Yes. I'm talking about a successful merge that made a commit.
->
->> When "merge-recursive" with a 3-way file level merge in core
->> writes the result out to the work tree, it uses a cache entry
->> that is stat clean (see merge-recursive.c::make_cache_entry(),
->> refresh option is passed and it calls refresh_cache_entry() to
->> obtain the cached stat bits).  The traditional "read-tree -m -u"
->> followed by merge-one-file of course runs "git update-index"
->> inside merge-one-file script and cleanly merged paths should be
->> stat clean after a merge.
->
-> Well, they are not with msysgit. At least not all, or not always.
-> I'm not completely sure about the details, but the problem
-> happens frequently, near to always.
+ecarroll@x60s:~/Desktop/scraper$ git pull
+--upload-pack=/home/dealermade/bin/git-upload-pack
+dealermade@chason:/home/dealermad
+/Desktop/scraper/.git
+sh: /home/dealermade/bin/git-upload-pack: not found
+fatal: The remote end hung up unexpectedly
+Cannot get the repository state from origin
 
-Johannes, is this something you want me to look at?  I do not
-know how much read-cache.c and other low level routines of
-Windows version deviated from the mainline.
+ecarroll@x60s:~/Desktop/scraper$ git-peek-remote
+--upload-pack=/home/dealermade/bin/git-upload-pack
+dealermade@chason:/home/dealermade/Desktop/scraper/.git
+00af556bab4850c1f52eb259445688689f1dd4ff        HEAD
+00af556bab4850c1f52eb259445688689f1dd4ff        refs/heads/master
+fe0e395cc4161071ac871215919563edc8de59c3        refs/heads/origin
 
-I do not think we touched this area in any major way recently,
-but I wouldn't be surprised if refresh_cache_entry() around
-lstat() on the Windows side looked drastically from the POSIX
-version.
+Please cc me in all correspondence, me@evancarroll.com
+
+Thanks again!
+
+-- 
+Evan Carroll
+System Lord of the Internets
+me@evancarroll.com
+832-445-8877
