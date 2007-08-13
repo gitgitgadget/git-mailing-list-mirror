@@ -1,63 +1,65 @@
-From: David Kastrup <dak@gnu.org>
-Subject: git-update-ref bug? (was: [PATCH 2/2] checkout: fix attribute handling in checkout all)
-Date: Mon, 13 Aug 2007 16:55:10 +0200
-Message-ID: <86fy2niiwh.fsf_-_@lola.quinscape.zz>
-References: <11869508753328-git-send-email-prohaska@zib.de> <118695087531-git-send-email-prohaska@zib.de> <7veji8ifs2.fsf@assigned-by-dhcp.cox.net> <7vfy2ogdvl.fsf@assigned-by-dhcp.cox.net> <86eji7lww5.fsf@lola.quinscape.zz>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: git and linux kernel source
+Date: Mon, 13 Aug 2007 11:27:14 -0400
+Message-ID: <20070813152714.GF3122@fieldses.org>
+References: <1186701106.3073.71.camel@localhost> <20070809231718.GH12875@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 13 16:55:43 2007
+Cc: git@vger.kernel.org
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 17:27:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKbKY-0005VO-S5
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 16:55:43 +0200
+	id 1IKbpZ-0000b2-Vj
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 17:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S947640AbXHMOzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 10:55:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S947633AbXHMOz2
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 10:55:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:33876 "EHLO ciao.gmane.org"
+	id S968388AbXHMP1W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 11:27:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966736AbXHMP1U
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 11:27:20 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:57008 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S947532AbXHMOzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 10:55:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IKbKB-0007tC-AR
-	for git@vger.kernel.org; Mon, 13 Aug 2007 16:55:19 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 16:55:19 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 16:55:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:i1K9Hs/y9yUudh9jT71SBnQsYG0=
+	id S966577AbXHMP1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 11:27:16 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IKbp4-0002Hb-Nb; Mon, 13 Aug 2007 11:27:14 -0400
+Content-Disposition: inline
+In-Reply-To: <20070809231718.GH12875@fieldses.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55766>
 
-David Kastrup <dak@gnu.org> writes:
+On Thu, Aug 09, 2007 at 07:17:18PM -0400, bfields wrote:
+> On Thu, Aug 09, 2007 at 04:11:46PM -0700, Joe Perches wrote:
+> > A few linux kernel source and git questions:
+> > 
+> > What's the best procedure to handle a tree-wide source tranformation?
+> > For instance:
+> > 
+> >   git branch foo2bar
+> >   egrep -r -w --include=*.[ch] -l "foo" * | \
+> > 	xargs perl -pi -e 's/\bfoo\b/bar/msg'
+> >   git commit -a -m "use bar not foo"
+> 
+> 
+> > Is there a way to separate the resultant single patch into multiple
+> > patches by subdirectory?  Perhaps some git-rev-parse option?
+> 
+> Something like
+> 
+> 	for each sub/dir:
+> 		git add sub/dir
+> 		git commit -m "use bar not foo in sub/dir"
+> 
+> should do it.  (Of course, in the particular case above the patches you
+> ended up with probably wouldn't compile individually.)
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>     $ git update-ref --no-deref HEAD $(git rev-parse v1.5.3-rc4^0)
->
-> Is there a fundamental difference to using
->
-> git-symbolic-ref HEAD $(git rev-parse v1.5.3-rc4^0)
->
-> here?
+OK, now I feel like I have to ask--you're not seriously considering
+doing anything like that, are you?
 
-Apart from the fact that the latter works, and the former doesn't
-because "--no-deref" is actually ignored?
-
--- 
-David Kastrup
+--b.
