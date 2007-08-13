@@ -1,59 +1,74 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Is repo.or.cz down?
-Date: Mon, 13 Aug 2007 21:31:26 +0200
-Message-ID: <20070813193126.GB26805@xp.machine.xx>
-References: <a1bbc6950708131127w182ffd5cv56b251c69a695fb7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: msysgit: merge, stat
+Date: Mon, 13 Aug 2007 12:54:55 -0700
+Message-ID: <7vzm0vfbw0.fsf@assigned-by-dhcp.cox.net>
+References: <2C573942-DD22-46EC-AE4A-1334450A7C4D@zib.de>
+	<Pine.LNX.4.64.0708131743360.25989@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 21:31:33 2007
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 13 22:10:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKfdU-0003iy-V5
-	for gcvg-git@gmane.org; Mon, 13 Aug 2007 21:31:33 +0200
+	id 1IKg0D-0008Lf-62
+	for gcvg-git@gmane.org; Mon, 13 Aug 2007 21:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755859AbXHMTb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 15:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756636AbXHMTb2
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 15:31:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753596AbXHMTb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 15:31:26 -0400
-Received: (qmail invoked by alias); 13 Aug 2007 19:31:23 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp037) with SMTP; 13 Aug 2007 21:31:23 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+CoG4qJsOCYBZphzyZM7PqowReOeiVzX6mzyiIox
-	mRa99cLmgmKUGf
-Mail-Followup-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <a1bbc6950708131127w182ffd5cv56b251c69a695fb7@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S1760733AbXHMTzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 15:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761818AbXHMTy7
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 15:54:59 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:62475 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759602AbXHMTy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 15:54:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070813195457.YZNY5405.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 13 Aug 2007 15:54:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id bXuv1X00G1kojtg0000000; Mon, 13 Aug 2007 15:54:56 -0400
+In-Reply-To: <Pine.LNX.4.64.0708131743360.25989@racer.site> (Johannes
+	Schindelin's message of "Mon, 13 Aug 2007 17:45:07 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55779>
 
-On Mon, Aug 13, 2007 at 11:27:53AM -0700, Dmitry Kakurin wrote:
-> -- 
-> - Dmitry
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Pasky did this on #git:
+> On Sun, 12 Aug 2007, Steffen Prohaska wrote:
+>
+>> After a 'git merge' in msysgit some stat information of the index
+>> doesn't match the working tree. Thus 'git diff' looks at files,
+>> which it shouldn't look at. I need to do a
+>> 'git update-index --refresh' before everything's in sync.
+>> 
+>> Is this a know issue? Do other experience the same?
+>
+> Yes, it is.  The real issue is that the index is out of date, and the full 
+> speed of git is not available until a refresh (which you can have with a 
+> "git status", too).
 
-pasky changed the topic of #git to: 1.5.2.4/1.5.3-rc4 | Everyone asleep
-or clueless? Try git@vger.kernel.org | Channel log
-http://colabti.de/irclogger/irclogger_log/git | Linus on git:
-http://youtube.com/watch?v=4XpnKHJAok8 | Mailing list archives:
-http://news.gmane.org/group/gmane.comp.version-control.git/ |
-repo.or.cz's DNS is in trouble, ip = 62.24.64.27
+Wait a minute.
 
+What does the above "After a 'git merge'" exactly mean?  After a
+successful automerge that made a commit, of stopped in the
+middle because of conflicts?  I am getting an impression that
+Steffen is talking about the former, but if that is the case,
+somebody is seriously confused.
 
-So it seems the DNS has problems.
-
--Peter
+When "merge-recursive" with a 3-way file level merge in core
+writes the result out to the work tree, it uses a cache entry
+that is stat clean (see merge-recursive.c::make_cache_entry(),
+refresh option is passed and it calls refresh_cache_entry() to
+obtain the cached stat bits).  The traditional "read-tree -m -u"
+followed by merge-one-file of course runs "git update-index"
+inside merge-one-file script and cleanly merged paths should be
+stat clean after a merge.
