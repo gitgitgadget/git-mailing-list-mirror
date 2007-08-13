@@ -1,57 +1,75 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: Re: Fetching a single file from remote repo
-Date: Mon, 13 Aug 2007 15:38:27 -0700
-Message-ID: <a1bbc6950708131538n364f6a82l34b00baa1d751d48@mail.gmail.com>
-References: <a1bbc6950708131131q74525060x85d5e31c6a538f76@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improved hint on how to set identity
+Date: Mon, 13 Aug 2007 16:36:53 -0700
+Message-ID: <7vbqdbf1m2.fsf@assigned-by-dhcp.cox.net>
+References: <1187042750257-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 00:38:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Aug 14 01:37:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKiYY-0000mO-Nm
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 00:38:39 +0200
+	id 1IKjT2-00064N-H6
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 01:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933483AbXHMWie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Aug 2007 18:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933441AbXHMWid
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 18:38:33 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:59930 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932981AbXHMWia (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2007 18:38:30 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1284617rvb
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 15:38:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dY59+QgiMpUo6vP0gKg++vBTgqp4ngUSMZE5ZGZD0wgBDTPhmxuo4KC+3ulzPbqXTnYZbi2dQIUUaULowrdym/9+oEOCOaFMwLIpE4zWRU8us1Y8Ib5fPbqgYxezLcs1Eqp6GduYgl301bjuQP1mPJ0MNweJrE9IV9mBnEsHr2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QW+yd8zP7rTxgBfxNRgrRGDJfhEsgePU61xMC+rHpnVRaN5hQo5CTVDBda37rbNylZmke7AVP2vq4y0Q3UFiBX60y8KLhkVFPTevam8kxGyiSybtiuFrhat0PnrPkj4CtePfIgZlv71lVe2CnUjhuw8Ffr/8mA00qW5lt6HvYB4=
-Received: by 10.141.164.10 with SMTP id r10mr2736769rvo.1187044707723;
-        Mon, 13 Aug 2007 15:38:27 -0700 (PDT)
-Received: by 10.141.21.17 with HTTP; Mon, 13 Aug 2007 15:38:27 -0700 (PDT)
-In-Reply-To: <a1bbc6950708131131q74525060x85d5e31c6a538f76@mail.gmail.com>
-Content-Disposition: inline
+	id S1757095AbXHMXg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Aug 2007 19:36:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757333AbXHMXg4
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Aug 2007 19:36:56 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39835 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757095AbXHMXgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2007 19:36:55 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070813233653.SRLD1335.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 13 Aug 2007 19:36:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id bbct1X00W1kojtg0000000; Mon, 13 Aug 2007 19:36:54 -0400
+In-Reply-To: <1187042750257-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Tue, 14 Aug 2007 00:05:50 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55794>
 
-On 8/13/07, Dmitry Kakurin <dmitry.kakurin@gmail.com> wrote:
-> Is there a way to fetch a single file from remote repo without
-> creating a client repo?
-> I want to do something like
->  git show --repo git://repo.or.cz/bla.git master:/somedir/file.txt
+Steffen Prohaska <prohaska@zib.de> writes:
 
-I think I have found it:
-git archive --remote=http://62.24.64.27/r/msysgit.git
-master:share/GitMe setup-msysgit.sh | tar -x
+> Users typically want to set the default for their account. Thus,
+> start the hint with how to achieve that; and only later explain
+> how to restrict identity to a single repository.
 
--- 
-- Dmitry
+If this were about the introductory part of the user manual, I
+would definitely vote for suggesting the --global one first as
+the baby steps will be done with one practice/sandbox repository
+and then when the user graduates to work on other projects and
+possibly under a different identity, it would make sense to
+introduce the non global one as an advanced option.
+
+> I watched someone setting up git, who never used it before.
+> The hint was leading him into the wrong direction.
+
+Real-life new user experience is a very valuable one.  Can you
+elaborate how the hint led in a _wrong_ direction?  What is the
+definition of "wrong" here?  It may be that not using --global
+is perfectly the correct thing to do.  It really depends on the
+project and the situation.
+
+The condition to cause this error message to be shown is
+probably a borderline, compared to the earlier "introductory
+part of the manual" case.  You may have set an identity in one
+repository without global, and then switched to another
+repository and saw this message.  In which case you may want to
+use a different identity or the same one and I would not say
+which one is more common in the case for such a "second
+repository".  When you work on two projects, managed by two
+different organizations, it often is that you would want
+per-repository identity.
+
+Was this the first repository for this person to set up?
