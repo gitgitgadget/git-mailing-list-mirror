@@ -1,62 +1,137 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: performance on repack
-Date: Tue, 14 Aug 2007 10:52:35 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708141037020.5415@xanadu.home>
-References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
- <20070812103338.GA7763@auto.tuwien.ac.at>
- <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
- <20070814031236.GC27913@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: bisect / history preserving on rename + update
+Date: Tue, 14 Aug 2007 09:14:30 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708140853500.30176@woody.linux-foundation.org>
+References: <1187080681.12828.174.camel@chaos>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 16:52:41 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Aug 14 18:17:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKxlA-0001HM-MD
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:52:41 +0200
+	id 1IKz50-0004uv-Gu
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 18:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752747AbXHNOwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 10:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbXHNOwh
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:52:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:26208 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455AbXHNOwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 10:52:36 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JMR008C8QNN1VG0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 14 Aug 2007 10:52:35 -0400 (EDT)
-In-reply-to: <20070814031236.GC27913@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1757846AbXHNQRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 12:17:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758132AbXHNQRF
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 12:17:05 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:40684 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757604AbXHNQRD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Aug 2007 12:17:03 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7EGEZI4001762
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 14 Aug 2007 09:14:36 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7EGEUDl024396;
+	Tue, 14 Aug 2007 09:14:30 -0700
+In-Reply-To: <1187080681.12828.174.camel@chaos>
+X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55839>
 
-On Mon, 13 Aug 2007, Shawn O. Pearce wrote:
 
-> Jon Smirl <jonsmirl@gmail.com> wrote:
-> > This solution was my first thought too. Use the main thread to get
-> > everything needed for the object into RAM, then multi-thread the
-> > compute bound, in-memory delta search operation. Shared CPU caches
-> > might make this very fast.
+
+On Tue, 14 Aug 2007, Thomas Gleixner wrote:
+>
+> is there a built in way to handle the following situation:
 > 
-> I have been thinking about doing this, especially now that the
-> default window size is much larger.  I think the default is up as
-> high as 50, which means we'd keep that shiny new UltraSPARC T2 busy.
-> Not that I have one...  so anyone from Sun is welcome to send me
-> one if they want.  ;-)
+> file A is renamed to B
+> file A is created again and new content is added.
 
-Note that the default of 50 applies to the maximum delta depth, not the 
-delta search window.  And the delta depth limit is costless on the 
-packing side.  I, too, wouldn't mind the UltraSPARC T2 though.
+That "should just work".
 
+[ However, there does seem to be a bug in the "-B" logic, so it doesn't 
+  actually work as well as it should! See below ]
 
-Nicolas
+BUT! By default, rename detection isn't on at all, mostly because it 
+results in patches that non-git "patch" cannot apply, but partly also 
+because it can slow certain things down.
+
+So to get nice diffs, use
+
+	git show -B -C
+
+where the magic is:
+
+ - "-B" means "break file associations when a file is *too* dissimilar" 
+
+   Normally, git will assume that if a filename stays around, it's the 
+   same file. However, with "-B", it does similarity analysis even for 
+   files that are the same, and if they are very different, git will 
+   decide that maybe they weren't the same file after all!
+
+ - "-C" is "find code movement and copying".
+
+However, nobody ever actually uses "-B" (it's so rare as to effectively 
+not exist, and it does slow things down a bit), so it seems to have 
+bit-rotted (or maybe it had this bug even originally: as I said, I don't 
+think anybody has ever really _used_ this functionality).
+
+Junio, look at this:
+
+	# create a repo in "testing"
+	cd
+	mkdir testing
+	cd testing/
+	git init
+
+	# copy a file from the git repo
+	cp ~/git/revision.c .
+	git add revision.c
+	git commit -a -m "Add file 'A'"
+
+	# move it around, copy another file in its stead
+	git mv revision.c old-revision.c
+	cp ~/git/Makefile revision.c
+	git add revision.c
+	git commit -a -m "Move file 'A' to 'B', create new 'A'"
+	git show -B -C
+
+and notice how "-B" *did* actually work, and we get a nice:
+
+	diff --git a/revision.c b/old-revision.c
+	similarity index 100%
+	rename from revision.c
+	rename to old-revision.c
+
+but then it breaks: instead of creating the new "revision.c", we get:
+
+	diff --git a/revision.c b/revision.c
+	dissimilarity index 98%
+	index 038693c..4eb4637 100644
+	--- a/revision.c
+	+++ b/revision.c
+	@@ -1,1572 +1,1117 @@
+	-#include "cache.h"
+	...
+
+which uses "reivision.c" as the base, even though it was already broken 
+up! I think it *should* have looked like
+
+	diff --git a/old-revision.c b/old-revision.c
+	new file mode 100644
+	index 0000000..4eb4637
+	--- /dev/null
+	+++ b/revision.c
+	+# The default target of this Makefile is...
+	...
+
+so I think there is a bug there where the "-B" thing doesn't really 
+"stick", and some part still uses the old file content even though it was 
+dis-associated with the new content!
+
+Hmm?
+
+			Linus
