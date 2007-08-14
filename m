@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] attr.c: refactoring
-Date: Tue, 14 Aug 2007 01:40:45 -0700
-Message-ID: <7v1we6ecfm.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH 2/2] attr.c: read .gitattributes from index as well.
+Date: Tue, 14 Aug 2007 01:41:02 -0700
+Message-ID: <7vwsvycxup.fsf_-_@assigned-by-dhcp.cox.net>
 References: <11869508753328-git-send-email-prohaska@zib.de>
 	<118695087531-git-send-email-prohaska@zib.de>
 	<7veji8ifs2.fsf@assigned-by-dhcp.cox.net>
@@ -12,186 +12,259 @@ Content-Type: text/plain; charset=us-ascii
 Cc: Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
 	git@vger.kernel.org
 To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 10:40:55 2007
+X-From: git-owner@vger.kernel.org Tue Aug 14 10:41:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKrxO-0004RL-PP
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 10:40:55 +0200
+	id 1IKrxi-0004Vb-4H
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 10:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753881AbXHNIkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 04:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbXHNIkt
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 04:40:49 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60274 "EHLO
+	id S1753920AbXHNIlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 04:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753897AbXHNIlH
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 04:41:07 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60334 "EHLO
 	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753787AbXHNIkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 04:40:46 -0400
+	with ESMTP id S1753918AbXHNIlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 04:41:04 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao105.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070814084046.PIUJ325.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 14 Aug 2007 04:40:46 -0400
+          id <20070814084103.PIYG325.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 14 Aug 2007 04:41:03 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id bkgl1X00M1kojtg0000000; Tue, 14 Aug 2007 04:40:46 -0400
+	id bkh31X00C1kojtg0000000; Tue, 14 Aug 2007 04:41:03 -0400
 In-Reply-To: <46BFFB1A.4070704@trolltech.com> (Marius Storm-Olsen's message of
 	"Mon, 13 Aug 2007 08:32:58 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55817>
 
-This splits out a common routine that parses a single line of
-attribute file and adds it to the attr_stack.  It should not
-change any behaviour, other than attrs array in the attr_stack
-structure is now grown with alloc_nr() macro, instead of one by
-one, which relied on xrealloc() to give enough slack to be
-efficient enough.
+This makes .gitattributes files to be read from the index when
+they are not checked out to the work tree.  This is in line with
+the way we always allowed low-level tools to operate in sparsely
+checked out work tree in a reasonable way.
+
+It swaps the order of new file creation and converting the blob
+to work tree representation; otherwise when we are in the middle
+of checking out .gitattributes we would notice an empty but
+unwritten .gitattributes file in the work tree and will ignore
+the copy in the index.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-
- Marius Storm-Olsen <marius@trolltech.com> writes:
-
- >> This essentially treats not having .gitattributes files checked
- >> out as equivalent to having these files checked out unmodified,
- >> which is very much in line with how the world is designed to
- >> work.
- >
- > ACK! We really need this! :-)
-
- So this is the first part, which does not do much.  The second
- one is interesting.
-
- attr.c |   67 +++++++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 41 insertions(+), 26 deletions(-)
+ attr.c          |   61 ++++++++++++++++++++++++++++++++++++++++-
+ entry.c         |   19 +++++++------
+ t/t0020-crlf.sh |   81 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 150 insertions(+), 11 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index a071254..8d778f1 100644
+index 8d778f1..1293993 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -257,6 +257,7 @@ static struct attr_stack {
- 	struct attr_stack *prev;
- 	char *origin;
- 	unsigned num_matches;
-+	unsigned alloc;
- 	struct match_attr **attrs;
- } *attr_stack;
+@@ -336,13 +336,70 @@ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
+ 	return res;
+ }
  
-@@ -287,6 +288,26 @@ static const char *builtin_attr[] = {
- 	NULL,
- };
- 
-+static void handle_attr_line(struct attr_stack *res,
-+			     const char *line,
-+			     const char *src,
-+			     int lineno,
-+			     int macro_ok)
++static void *read_index_data(const char *path)
 +{
-+	struct match_attr *a;
++	int pos, len;
++	unsigned long sz;
++	enum object_type type;
++	void *data;
 +
-+	a = parse_attr_line(line, src, lineno, macro_ok);
-+	if (!a)
-+		return;
-+	if (res->alloc <= res->num_matches) {
-+		res->alloc = alloc_nr(res->num_matches);
-+		res->attrs = xrealloc(res->attrs,
-+				      sizeof(struct match_attr *) *
-+				      res->alloc);
++	len = strlen(path);
++	pos = cache_name_pos(path, len);
++	if (pos < 0) {
++		/*
++		 * We might be in the middle of a merge, in which
++		 * case we would read stage #2 (ours).
++		 */
++		int i;
++		for (i = -pos - 1;
++		     (pos < 0 && i < active_nr &&
++		      !strcmp(active_cache[i]->name, path));
++		     i++)
++			if (ce_stage(active_cache[i]) == 2)
++				pos = i;
 +	}
-+	res->attrs[res->num_matches++] = a;
++	if (pos < 0)
++		return NULL;
++	data = read_sha1_file(active_cache[pos]->sha1, &type, &sz);
++	if (!data || type != OBJ_BLOB) {
++		free(data);
++		return NULL;
++	}
++	return data;
 +}
 +
- static struct attr_stack *read_attr_from_array(const char **list)
+ static struct attr_stack *read_attr(const char *path, int macro_ok)
  {
  	struct attr_stack *res;
-@@ -294,42 +315,34 @@ static struct attr_stack *read_attr_from_array(const char **list)
- 	int lineno = 0;
++	char *buf, *sp;
++	int lineno = 0;
  
- 	res = xcalloc(1, sizeof(*res));
--	while ((line = *(list++)) != NULL) {
--		struct match_attr *a;
--
--		a = parse_attr_line(line, "[builtin]", ++lineno, 1);
--		if (!a)
--			continue;
--		res->attrs = xrealloc(res->attrs,
--			sizeof(struct match_attr *) * (res->num_matches + 1));
--		res->attrs[res->num_matches++] = a;
--	}
-+	while ((line = *(list++)) != NULL)
-+		handle_attr_line(res, line, "[builtin]", ++lineno, 1);
- 	return res;
- }
- 
- static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
- {
--	FILE *fp;
-+	FILE *fp = fopen(path, "r");
- 	struct attr_stack *res;
- 	char buf[2048];
- 	int lineno = 0;
- 
--	res = xcalloc(1, sizeof(*res));
--	fp = fopen(path, "r");
- 	if (!fp)
--		return res;
-+		return NULL;
+ 	res = read_attr_from_file(path, macro_ok);
+-	if (!res)
+-		res = xcalloc(1, sizeof(*res));
++	if (res)
++		return res;
++
 +	res = xcalloc(1, sizeof(*res));
-+	while (fgets(buf, sizeof(buf), fp))
-+		handle_attr_line(res, buf, path, ++lineno, macro_ok);
-+	fclose(fp);
-+	return res;
-+}
- 
--	while (fgets(buf, sizeof(buf), fp)) {
--		struct match_attr *a;
-+static struct attr_stack *read_attr(const char *path, int macro_ok)
-+{
-+	struct attr_stack *res;
- 
--		a = parse_attr_line(buf, path, ++lineno, macro_ok);
--		if (!a)
--			continue;
--		res->attrs = xrealloc(res->attrs,
--			sizeof(struct match_attr *) * (res->num_matches + 1));
--		res->attrs[res->num_matches++] = a;
--	}
--	fclose(fp);
-+	res = read_attr_from_file(path, macro_ok);
-+	if (!res)
-+		res = xcalloc(1, sizeof(*res));
++
++	/*
++	 * There is no checked out .gitattributes file there, but
++	 * we might have it in the index.  We allow operation in a
++	 * sparsely checked out work tree, so read from it.
++	 */
++	buf = read_index_data(path);
++	if (!buf)
++		return res;
++
++	for (sp = buf; *sp; ) {
++		char *ep;
++		int more;
++		for (ep = sp; *ep && *ep != '\n'; ep++)
++			;
++		more = (*ep == '\n');
++		*ep = '\0';
++		handle_attr_line(res, sp, path, ++lineno, macro_ok);
++		sp = ep + more;
++	}
++	free(buf);
  	return res;
  }
  
-@@ -370,13 +383,15 @@ static void bootstrap_attr_stack(void)
- 		elem->prev = attr_stack;
- 		attr_stack = elem;
+diff --git a/entry.c b/entry.c
+index 0625112..fc3a506 100644
+--- a/entry.c
++++ b/entry.c
+@@ -112,6 +112,16 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 		if (!new)
+ 			return error("git-checkout-index: unable to read sha1 file of %s (%s)",
+ 				path, sha1_to_hex(ce->sha1));
++
++		/*
++		 * Convert from git internal format to working tree format
++		 */
++		buf = convert_to_working_tree(ce->name, new, &size);
++		if (buf) {
++			free(new);
++			new = buf;
++		}
++
+ 		if (to_tempfile) {
+ 			strcpy(path, ".merge_file_XXXXXX");
+ 			fd = mkstemp(path);
+@@ -123,15 +133,6 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 				path, strerror(errno));
+ 		}
  
--		elem = read_attr_from_file(GITATTRIBUTES_FILE, 1);
-+		elem = read_attr(GITATTRIBUTES_FILE, 1);
- 		elem->origin = strdup("");
- 		elem->prev = attr_stack;
- 		attr_stack = elem;
- 		debug_push(elem);
+-		/*
+-		 * Convert from git internal format to working tree format
+-		 */
+-		buf = convert_to_working_tree(ce->name, new, &size);
+-		if (buf) {
+-			free(new);
+-			new = buf;
+-		}
+-
+ 		wrote = write_in_full(fd, new, size);
+ 		close(fd);
+ 		free(new);
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index fe1dfd0..0807d9f 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -290,4 +290,85 @@ test_expect_success '.gitattributes says two and three are text' '
+ 	fi
+ '
  
- 		elem = read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1);
-+		if (!elem)
-+			elem = xcalloc(1, sizeof(*elem));
- 		elem->origin = NULL;
- 		elem->prev = attr_stack;
- 		attr_stack = elem;
-@@ -441,7 +456,7 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 		memcpy(pathbuf + dirlen, "/", 2);
- 		cp = strchr(pathbuf + len + 1, '/');
- 		strcpy(cp + 1, GITATTRIBUTES_FILE);
--		elem = read_attr_from_file(pathbuf, 0);
-+		elem = read_attr(pathbuf, 0);
- 		*cp = '\0';
- 		elem->origin = strdup(pathbuf);
- 		elem->prev = attr_stack;
++test_expect_success 'in-tree .gitattributes (1)' '
++
++	echo "one -crlf" >>.gitattributes &&
++	git add .gitattributes &&
++	git commit -m "Add .gitattributes" &&
++
++	rm -rf tmp one dir .gitattributes patch.file three &&
++	git read-tree --reset -u HEAD &&
++
++	if remove_cr one >/dev/null
++	then
++		echo "Eh? one should not have CRLF"
++		false
++	else
++		: happy
++	fi &&
++	remove_cr three >/dev/null || {
++		echo "Eh? three should still have CRLF"
++		false
++	}
++'
++
++test_expect_success 'in-tree .gitattributes (2)' '
++
++	rm -rf tmp one dir .gitattributes patch.file three &&
++	git read-tree --reset HEAD &&
++	git checkout-index -f -q -u -a &&
++
++	if remove_cr one >/dev/null
++	then
++		echo "Eh? one should not have CRLF"
++		false
++	else
++		: happy
++	fi &&
++	remove_cr three >/dev/null || {
++		echo "Eh? three should still have CRLF"
++		false
++	}
++'
++
++test_expect_success 'in-tree .gitattributes (3)' '
++
++	rm -rf tmp one dir .gitattributes patch.file three &&
++	git read-tree --reset HEAD &&
++	git checkout-index -u .gitattributes &&
++	git checkout-index -u one dir/two three &&
++
++	if remove_cr one >/dev/null
++	then
++		echo "Eh? one should not have CRLF"
++		false
++	else
++		: happy
++	fi &&
++	remove_cr three >/dev/null || {
++		echo "Eh? three should still have CRLF"
++		false
++	}
++'
++
++test_expect_success 'in-tree .gitattributes (4)' '
++
++	rm -rf tmp one dir .gitattributes patch.file three &&
++	git read-tree --reset HEAD &&
++	git checkout-index -u one dir/two three &&
++	git checkout-index -u .gitattributes &&
++
++	if remove_cr one >/dev/null
++	then
++		echo "Eh? one should not have CRLF"
++		false
++	else
++		: happy
++	fi &&
++	remove_cr three >/dev/null || {
++		echo "Eh? three should still have CRLF"
++		false
++	}
++'
++
+ test_done
 -- 
 1.5.3.rc4.89.g18078
