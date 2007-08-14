@@ -1,88 +1,68 @@
-From: David Kastrup <dak@gnu.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 Subject: Re: bisect / history preserving on rename + update
-Date: Tue, 14 Aug 2007 12:03:10 +0200
-Message-ID: <86d4xqh1r5.fsf@lola.quinscape.zz>
+Date: Tue, 14 Aug 2007 12:16:40 +0200
+Message-ID: <1187086600.12828.177.camel@chaos>
 References: <1187080681.12828.174.camel@chaos>
+	 <20070814093357.GA14010@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 14 12:03:44 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 12:16:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKtFV-0004iw-7n
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 12:03:41 +0200
+	id 1IKtSJ-0000Pm-Er
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 12:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154AbXHNKDc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 06:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbXHNKDc
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 06:03:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:51696 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755170AbXHNKDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 06:03:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IKtFD-0003QZ-CP
-	for git@vger.kernel.org; Tue, 14 Aug 2007 12:03:23 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Aug 2007 12:03:23 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Aug 2007 12:03:23 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:ismdicjr4IXOHHE5JK6EUZT5TG8=
+	id S1759166AbXHNKQs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 14 Aug 2007 06:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758910AbXHNKQr
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 06:16:47 -0400
+Received: from www.osadl.org ([213.239.205.134]:38115 "EHLO mail.tglx.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759150AbXHNKQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 06:16:45 -0400
+Received: from [127.0.0.1] (debian [213.239.205.147])
+	by mail.tglx.de (Postfix) with ESMTP id 1581265C3EA;
+	Tue, 14 Aug 2007 12:16:40 +0200 (CEST)
+In-Reply-To: <20070814093357.GA14010@diana.vm.bytemark.co.uk>
+X-Mailer: Evolution 2.10.1 (2.10.1-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55823>
 
-Thomas Gleixner <tglx@linutronix.de> writes:
+On Tue, 2007-08-14 at 11:33 +0200, Karl Hasselstr=C3=B6m wrote:
+> On 2007-08-14 10:38:01 +0200, Thomas Gleixner wrote:
+>=20
+> > is there a built in way to handle the following situation:
+> >
+> > file A is renamed to B
+> > file A is created again and new content is added.
+> >
+> > I found only two ways to do that, which both suck:
+> >
+> > 1)
+> >       git-mv A B
+> >       git-add A
+> >       git commit
+> >
+> >       results in a copy A to B and lost history of B
+>=20
+> What exactly do you mean by "lost history of B"? You do know that git
+> doesn't record renames? So you could just as well do
 
-> is there a built in way to handle the following situation:
->
-> file A is renamed to B
-> file A is created again and new content is added.
->
-> I found only two ways to do that, which both suck:
->
-> 1)
-> 	git-mv A B
-> 	git-add A
-> 	git commit
->
-> 	results in a copy A to B and lost history of B
->
-> 2)
-> 	git-mv A B
-> 	git commit
-> 	git-add A
-> 	git commit
->
-> 	preserves the history of B, but breaks bisection because
-> 	A is needed to compile
->
-> I have no real good idea how to solve this. After staring at the git
-> source for a while, I think that 1) is quite hard to solve. A sane
-> solution for 2) might be to add a flag to the second commit, which
-> bundles the two commits for bisection.
->
-> Any other solutions ?
+Err.
 
-You are confused, probably because something like "git-mv" exists (it
-is just syntactic sugar, and it might be less confusing to users to
-actually remove it).  git does _not_ track file histories.  Not the
-tiniest bit.
+git-mv A B
+git commit
+edit B
+git commit
+git blame B <- shows the full history of A & B
 
-It _constructs_ them when you ask it nicely.  All commands that
-display "tracking" information have options like -M -C -R and so on
-that tell git just how much effort it should spend on keeping abreast
-of copying/renaming/modification.
+IMHO that's why we have git-mv
 
--- 
-David Kastrup
+	tglx
