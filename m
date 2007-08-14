@@ -1,71 +1,63 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Allow git-svnimport to take "" as the trunk directory.
-Date: Tue, 14 Aug 2007 15:33:47 +0200
-Message-ID: <86ps1qfdfo.fsf@lola.quinscape.zz>
-References: <11870641981207-git-send-email-albertito@gmail.com> <85vebi3bzv.fsf@lola.goethe.zz> <20070814123604.GA10472@homero.springfield.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add read_cache to builtin-check-attr
+Date: Tue, 14 Aug 2007 15:08:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708141506260.25989@racer.site>
+References: <11870975181798-git-send-email-bdowning@lavos.net>
+ <20070814132209.GJ21692@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 14 15:34:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
+	git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Tue Aug 14 16:10:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKwXR-0001nY-8X
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 15:34:25 +0200
+	id 1IKx6B-0000P0-AN
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757437AbXHNNeN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 09:34:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbXHNNeM
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 09:34:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:53874 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754583AbXHNNeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 09:34:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IKwX9-0007YA-MJ
-	for git@vger.kernel.org; Tue, 14 Aug 2007 15:34:07 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Aug 2007 15:34:07 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Aug 2007 15:34:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:GrjDdXHlrDhX0Ff3sdz6FAh/dKQ=
+	id S1755457AbXHNOJ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 10:09:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbXHNOJ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:09:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59041 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754524AbXHNOJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 10:09:54 -0400
+Received: (qmail invoked by alias); 14 Aug 2007 14:09:52 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
+  by mail.gmx.net (mp039) with SMTP; 14 Aug 2007 16:09:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QwTwJT0fQoRpmgzLJzzXNdC1nfhSc6uTrq4Nh9l
+	n1yfDh9aCR7zAz
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070814132209.GJ21692@lavos.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55833>
 
-Leandro Lucarella <llucax@gmail.com> writes:
+Hi,
 
-> David Kastrup, el 14 de agosto a las 07:45 me escribiste:
->> Alberto Bertogli <albertito@gmail.com> writes:
->> 
->> > Some repositories started with the trunk in "/" and then moved it to the
->> > standard "trunk/" location.
->> >
->> > On these repositories, the correct thing would be to call
->> > git-svnimport -T "",
->> 
->> I would not call that the best solution: it makes the bad decision
->> from the past impact useful work in the future.  I very much like git
->> having a good toplevel directory structure.
->
-> Besides the example of a mutating trunk directory, I have repositories
-> where there is only trunk (in "/" directory) and it never changes. Without
-> this patch, I can't even import that kind of repositories.
+On Tue, 14 Aug 2007, Brian Downing wrote:
 
-[...]
+> On Tue, Aug 14, 2007 at 08:18:38AM -0500, Brian Downing wrote:
+> > We can now read .gitattributes files out of the index, but the index
+> > must be loaded for this to work.
+> 
+> This was supposed to be In-Reply-To Junio's patch, "attr.c: read
+> .gitattributes from index as well."  It's not much use without it.
 
-> The patch is for git-svnimport, not git-svn
+Shouldn't read_cache() be _only_ called if
 
-Oops.  In that case, I have no qualified opinion.
+- it has not been read yet, and
+- .gitattributes was not found in the work tree?
 
--- 
-David Kastrup
+IOW check-attr is the wrong place for your patch IMHO.
+
+Ciao,
+Dscho
