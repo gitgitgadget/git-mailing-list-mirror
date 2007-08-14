@@ -1,77 +1,100 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: call external editor from git-gui?
-Date: Tue, 14 Aug 2007 00:55:11 -0400
-Message-ID: <20070814045511.GF27913@spearce.org>
-References: <20070810153008.GA31759@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] Improved hint on how to set identity
+Date: Tue, 14 Aug 2007 07:05:59 +0200
+Message-ID: <06A460CB-BF06-4D9D-9219-4D4EC656EF9B@zib.de>
+References: <1187042750257-git-send-email-prohaska@zib.de> <7vbqdbf1m2.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 06:55:32 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 07:05:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKoRH-00026G-RP
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 06:55:32 +0200
+	id 1IKobE-0003jG-TG
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 07:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S940028AbXHNEzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 00:55:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939958AbXHNEzU
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 00:55:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55384 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936624AbXHNEzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 00:55:16 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IKoQz-0002so-3Z; Tue, 14 Aug 2007 00:55:13 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BCAE420FBAE; Tue, 14 Aug 2007 00:55:11 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070810153008.GA31759@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1764936AbXHNFFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 01:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765142AbXHNFFn
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 01:05:43 -0400
+Received: from mailer.zib.de ([130.73.108.11]:42791 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764936AbXHNFFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 01:05:40 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7E55T2K004944;
+	Tue, 14 Aug 2007 07:05:33 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db19c78.pool.einsundeins.de [77.177.156.120])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7E55Oht009998
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 14 Aug 2007 07:05:25 +0200 (MEST)
+In-Reply-To: <7vbqdbf1m2.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55806>
 
-Karl Hasselstrm <kha@treskal.com> wrote:
-> git-gui is very good at composing commits. But for writing the actual
-> commit message -- especially if it's long and needs paragraph
-> reflowing, indentation, and so on -- I vastly prefer emacs over
-> git-gui's text field.
 
-Yea, I've been thinking about adding fancy features like those.
-But been lazy.  Spawning the user's preferred editor would be a
-nice way to get some of that.
- 
-> It seems to me like it would be straightforward to have a button or
-> something to launch the user's favorite editor for editing of the
-> commit message -- after all, git even knows what editor that is!
+On Aug 14, 2007, at 1:36 AM, Junio C Hamano wrote:
 
-Probably.  git-gui already has the data from .git/config loaded in
-memory, it should be fairly simple.
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> I watched someone setting up git, who never used it before.
+>> The hint was leading him into the wrong direction.
+>
+> Real-life new user experience is a very valuable one.  Can you
+> elaborate how the hint led in a _wrong_ direction?  What is the
+> definition of "wrong" here?  It may be that not using --global
+> is perfectly the correct thing to do.  It really depends on the
+> project and the situation.
 
-> Unfortunately, with my tcl expertise, this is likely a whole-weekend
-> project, so I probably won't try to build it myself in the near
-> future.
+"wrong" == "more complex", "doing work twice",
+            "solving a special case instead of the common case"
 
-With my busy schedule its unlikely to happen anytime soon either.
-But I've added it to my todo branch.  Sometimes things on that list
-get accomplished.  ;-)
 
-An annoying work-around would be to run your editor to create/edit
-.git/GITGUI_MSG (or .git/MERGE_MSG) then hit Rescan in git-gui.
-It loads that file into its editor buffer if the editor buffer is
-empty or has not been modified from within git-gui since the last
-time the file was read.
+> The condition to cause this error message to be shown is
+> probably a borderline, compared to the earlier "introductory
+> part of the manual" case.  You may have set an identity in one
+> repository without global, and then switched to another
+> repository and saw this message.  In which case you may want to
+> use a different identity or the same one and I would not say
+> which one is more common in the case for such a "second
+> repository".  When you work on two projects, managed by two
+> different organizations, it often is that you would want
+> per-repository identity.
 
--- 
-Shawn.
+maybe... but my feeling is that the majority of people has only
+a single identity. Having multiple identities is, in my opinion,
+advanced usage, and should be mentioned after the common case.
+
+Would the majority of users want to set up a global identity
+or a per repository identity?
+
+Whatever the majority typically needs should be mentioned first.
+
+
+> Was this the first repository for this person to set up?
+
+It was the first commit.
+
+
+It would even be a good idea to remove the gecos auto detection
+and force _everyone_ to explicitly set the identity on the first
+commit. git may derive something from gecos, but often it is
+not the correct identity.
+
+I remember when I started, I didn't immediately recognize that
+I need to set my identity (or how to do it). Therefore I ended
+up with different identities on different machines, because the
+information derived from gecos varied. And there's still a
+chance that this will happen again. The situation is quite bad,
+because it is very hard, if not impossible, to solve later,
+after your identity was use to build some history, which may
+even have been pushed to the public.
+
+	Steffen
