@@ -1,61 +1,77 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk performance questions/issues
-Date: Tue, 14 Aug 2007 14:39:05 +1000
-Message-ID: <18113.12777.164103.302185@cargo.ozlabs.ibm.com>
-References: <e1dab3980708130248g1cbab0cej18e260c8bfa2b315@mail.gmail.com>
-	<alpine.LFD.0.999.0708130945420.30176@woody.linux-foundation.org>
-	<e1dab3980708131018h495c5cf2m76cb8f6ffc4df6dc@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: call external editor from git-gui?
+Date: Tue, 14 Aug 2007 00:55:11 -0400
+Message-ID: <20070814045511.GF27913@spearce.org>
+References: <20070810153008.GA31759@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "David Tweed" <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 06:39:19 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 06:55:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKoBZ-0007aJ-W0
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 06:39:18 +0200
+	id 1IKoRH-00026G-RP
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 06:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759212AbXHNEjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 00:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbXHNEjN
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 00:39:13 -0400
-Received: from ozlabs.org ([203.10.76.45]:55397 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758675AbXHNEjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 00:39:12 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 31442DDEF4; Tue, 14 Aug 2007 14:39:11 +1000 (EST)
-In-Reply-To: <e1dab3980708131018h495c5cf2m76cb8f6ffc4df6dc@mail.gmail.com>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S940028AbXHNEzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 00:55:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939958AbXHNEzU
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 00:55:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55384 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936624AbXHNEzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 00:55:16 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IKoQz-0002so-3Z; Tue, 14 Aug 2007 00:55:13 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BCAE420FBAE; Tue, 14 Aug 2007 00:55:11 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070810153008.GA31759@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55805>
 
-David Tweed writes:
+Karl Hasselstrm <kha@treskal.com> wrote:
+> git-gui is very good at composing commits. But for writing the actual
+> commit message -- especially if it's long and needs paragraph
+> reflowing, indentation, and so on -- I vastly prefer emacs over
+> git-gui's text field.
 
-> Thinking about it, I suppose even if you're only looking at the last
-> 256 commits you've got to look through all the tags to see whether
-> or not they refer to something within that window, so it's not
-> unreasonable for it to affect startup time.
+Yea, I've been thinking about adding fancy features like those.
+But been lazy.  Spawning the user's preferred editor would be a
+nice way to get some of that.
+ 
+> It seems to me like it would be straightforward to have a button or
+> something to launch the user's favorite editor for editing of the
+> commit message -- after all, git even knows what editor that is!
 
-Gitk uses a Tcl associative array for that, which should be very
-fast.
+Probably.  git-gui already has the data from .git/config loaded in
+memory, it should be fairly simple.
 
-Could you try this: go to the Edit->Preferences window and turn off
-"Display nearby tags".  Then with your ~2000 refs in place, see how
-long gitk takes to start up and to display a diff.
+> Unfortunately, with my tcl expertise, this is likely a whole-weekend
+> project, so I probably won't try to build it myself in the near
+> future.
 
-If doing that makes it fast, then I suspect that my topology caching
-patch will also help.  That's waiting on an answer from Junio or Linus
-to my question about making git rev-list ignore negated non-existent
-refs.
+With my busy schedule its unlikely to happen anytime soon either.
+But I've added it to my todo branch.  Sometimes things on that list
+get accomplished.  ;-)
 
-Also, if it's possible to give me a copy of your repo, that would
-help.
+An annoying work-around would be to run your editor to create/edit
+.git/GITGUI_MSG (or .git/MERGE_MSG) then hit Rescan in git-gui.
+It loads that file into its editor buffer if the editor buffer is
+empty or has not been modified from within git-gui since the last
+time the file was read.
 
-Paul.
+-- 
+Shawn.
