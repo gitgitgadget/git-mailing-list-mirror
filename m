@@ -1,67 +1,80 @@
-From: Al Viro <viro@ftp.linux.org.uk>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
-Date: Tue, 14 Aug 2007 20:33:33 +0100
-Message-ID: <20070814193333.GI21089@ftp.linux.org.uk>
-References: <1187026955.2688.4.camel@laptopd505.fenrus.org> <1187037445.6628.98.camel@heimdal.trondhjem.org> <1187054366.2757.0.camel@laptopd505.fenrus.org> <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu> <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: [PATCH] Avoid ambiguous error message if pack.idx header is wrong
+Date: Tue, 14 Aug 2007 16:42:37 -0300
+Organization: Mandriva
+Message-ID: <20070814164237.20aa54c9@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joe Perches <joe@perches.com>, Rene Herman <rene.herman@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 21:34:40 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 21:43:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IL2A3-0006ao-Kn
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 21:34:39 +0200
+	id 1IL2If-0001U7-Fo
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 21:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760367AbXHNTdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 15:33:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765839AbXHNTds
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 15:33:48 -0400
-Received: from zeniv.linux.org.uk ([195.92.253.2]:46144 "EHLO
-	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760367AbXHNTdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 15:33:46 -0400
-Received: from viro by ZenIV.linux.org.uk with local (Exim 4.52 #1 (Red Hat Linux))
-	id 1IL28z-0002By-GB; Tue, 14 Aug 2007 20:33:33 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
-User-Agent: Mutt/1.4.1i
+	id S933365AbXHNTnC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 15:43:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934912AbXHNTnB
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 15:43:01 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:53401 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934785AbXHNTm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 15:42:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 9251B1AB40;
+	Tue, 14 Aug 2007 16:42:56 -0300 (BRT)
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id StgLokedUMQM; Tue, 14 Aug 2007 16:42:50 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id F39601AB4D;
+	Tue, 14 Aug 2007 16:42:40 -0300 (BRT)
+X-Mailer: Claws Mail 2.10.0 (GTK+ 2.11.6; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55850>
 
-On Tue, Aug 14, 2007 at 11:40:09AM -0700, Linus Torvalds wrote:
 
-> A much *better* picture than some manually maintained thing, in fact, 
-> because it tells you who really does the work, and which way patches go...
-> 
-> (Maybe you want to add a
-> 
-> 	grep -v '\(Linus Torvalds\)\|\(Andrew Morton\)'
-> 
-> to avoid seeing the normal chain too much, but hey, we probably want to 
-> know too. Anyway - the script can certainly be tweaked, the point is 
-> really just that the git tree _already_ contains the relevant 
-> information).
+Print the index version when an error occurs so the user
+knows what type of header (and size) we thought the index
+should have had.
 
-FWIW, I suspect that we are looking at that from the wrong POV.  If
-that's about "who ought to be Cc'd on the issues dealing with <list
-of pathnames>", why does it have to be tied to "who is maintainer for
-<pathname>"?
+Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
+---
+ sha1_file.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I'm not suggesting something like fs.ext2@kernel.org with something
-like majordomo allowing to add yourself to those, but something less
-extreme in that direction might be worth thinking about...  Hell,
-even simple
-$ finger fs/minix/dir.c@cc.kernel.org
-with majordomo-like interface for adding yourself to such lists
-might solve most of those problems...
+diff --git a/sha1_file.c b/sha1_file.c
+index aca741b..b219d4d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -497,7 +497,7 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 		 */
+ 		if (idx_size != 4*256 + nr * 24 + 20 + 20) {
+ 			munmap(idx_map, idx_size);
+-			return error("wrong index file size in %s", path);
++			return error("wrong index v1 file size in %s", path);
+ 		}
+ 	} else if (version == 2) {
+ 		/*
+@@ -519,7 +519,7 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 			max_size += (nr - 1)*8;
+ 		if (idx_size < min_size || idx_size > max_size) {
+ 			munmap(idx_map, idx_size);
+-			return error("wrong index file size in %s", path);
++			return error("wrong index v2 file size in %s", path);
+ 		}
+ 		if (idx_size != min_size) {
+ 			/* make sure we can deal with large pack offsets */
+-- 
+1.5.3.GIT
+
+
+
+-- 
+Luiz Fernando N. Capitulino
