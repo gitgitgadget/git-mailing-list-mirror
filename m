@@ -1,85 +1,74 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: gitk performance questions/issues
-Date: Tue, 14 Aug 2007 12:25:59 +0100
-Message-ID: <e1dab3980708140425r72733f1bn4bc0d2e6cc68fb4c@mail.gmail.com>
-References: <e1dab3980708130248g1cbab0cej18e260c8bfa2b315@mail.gmail.com>
-	 <alpine.LFD.0.999.0708130945420.30176@woody.linux-foundation.org>
-	 <e1dab3980708131018h495c5cf2m76cb8f6ffc4df6dc@mail.gmail.com>
-	 <18113.12777.164103.302185@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 13:26:11 2007
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCH] Add read_cache to builtin-check-attr
+Date: Tue, 14 Aug 2007 08:18:38 -0500
+Message-ID: <11870975181798-git-send-email-bdowning@lavos.net>
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
+	git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 15:18:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKuXK-0003MV-Gv
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 13:26:10 +0200
+	id 1IKwIG-0003XD-0O
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 15:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998AbXHNL0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 07:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbXHNL0F
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 07:26:05 -0400
-Received: from wx-out-0506.google.com ([66.249.82.236]:11519 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbXHNL0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 07:26:01 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1425341wxd
-        for <git@vger.kernel.org>; Tue, 14 Aug 2007 04:26:00 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WPWfp5x/b4Ib57OSswYvl6X6r7slFTojk6gpyWIg+n03s/+QWCGplVbjCN8W4/0jlZMogdy+xwxgz9KZgT8FpxZysTIwlfzyRQMYcc1mFDC9mWepe/B6pDlX86LE7zIU7GcYZfOjm5ngmONb1klCecj0WAIFJ653qsGnWgvLgyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Rh0ooxzTq09FZa8++JMVTA8ipZMDStA/kKKg5i0SPmLv7/77bJtKL+nincKGU9sD5wOvNj1ve5r5MmnJSYZ9VG99gOdroT1/8YQBDikhHLFv90O9wyrvJbK7g2d0Ca35v2yauQCGjDAJ2wPY+/zibHeDvkXrCpUZt+3fROBoIXM=
-Received: by 10.70.13.1 with SMTP id 1mr12092807wxm.1187090759345;
-        Tue, 14 Aug 2007 04:25:59 -0700 (PDT)
-Received: by 10.70.26.12 with HTTP; Tue, 14 Aug 2007 04:25:59 -0700 (PDT)
-In-Reply-To: <18113.12777.164103.302185@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1757281AbXHNNSj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 09:18:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752338AbXHNNSi
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 09:18:38 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:14946 "EHLO
+	asav00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755468AbXHNNSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 09:18:37 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtZjAN9IwUZKhvbzRmdsb2JhbACBVIUlhxUBAQE1AZs/
+X-IronPort-AV: E=Sophos;i="4.19,259,1183348800"; 
+   d="scan'208";a="64653798"
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav00.insightbb.com with ESMTP; 14 Aug 2007 09:18:36 -0400
+Received: from silvara (silvara.lavos.net [10.4.0.20])
+	by mail.lavos.net (Postfix) with ESMTP id C6618309F30;
+	Tue, 14 Aug 2007 08:18:26 -0500 (CDT)
+Received: by silvara (Postfix, from userid 1000)
+	id 5A8FE50117; Tue, 14 Aug 2007 08:18:38 -0500 (CDT)
+X-Mailer: git-send-email 1.5.3.GIT
+In-Reply-To: 7vwsvycxup.fsf_-_@assigned-by-dhcp.cox.net
+References: 7vwsvycxup.fsf_-_@assigned-by-dhcp.cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55829>
 
-On 8/14/07, Paul Mackerras <paulus@samba.org> wrote:
-> David Tweed writes:
-> Could you try this: go to the Edit->Preferences window and turn off
-> "Display nearby tags".  Then with your ~2000 refs in place, see how
-> long gitk takes to start up and to display a diff.
+We can now read .gitattributes files out of the index, but the index
+must be loaded for this to work.
 
-Right, I've restored the file of 1915 packed tags (but not the 35 loose
-tags). Using DNT for "display nearby tags"
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
+ builtin-check-attr.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-DNT on: consistently 11s to window appear, 20s to normal cursor
-DNT off: consistently 11s to window appear but normal cursor immediately
-
-Regarding getting the diffs, I think that was "user misunderstanding" and
-I'm doubting if I definitely did click on the blue circles yesterday. Clicking
-on the any part yellow tag marker displays the SHA of the tag object
-(which I'd confused with the start of an unfinished commit diff);
-for some reason I'd thought it would give the diff-with-parent. Clicking on
-either the blue circle or "commit headline text" does bring up the diff
-instantly even with the packed refs file. Sorry for the confusion.
-
-> Also, if it's possible to give me a copy of your repo, that would
-> help.
-
-I'll privately mail Paul about getting it; if anyone else wants a copy
-of the repository
-in order look at startup performance issues mail me. (The most embarassing
-thing in there is just some astonishingly crap code, but I'd prefer not to
-blanket publish it.)
-
+diff --git a/builtin-check-attr.c b/builtin-check-attr.c
+index 9d77f76..d949733 100644
+--- a/builtin-check-attr.c
++++ b/builtin-check-attr.c
+@@ -1,4 +1,5 @@
+ #include "builtin.h"
++#include "cache.h"
+ #include "attr.h"
+ #include "quote.h"
+ 
+@@ -10,6 +11,10 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 	struct git_attr_check *check;
+ 	int cnt, i, doubledash;
+ 
++	if (read_cache() < 0) {
++		die("invalid cache");
++	}
++
+ 	doubledash = -1;
+ 	for (i = 1; doubledash < 0 && i < argc; i++) {
+ 		if (!strcmp(argv[i], "--"))
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+1.5.3.GIT
