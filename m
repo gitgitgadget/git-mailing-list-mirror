@@ -1,78 +1,118 @@
-From: Alberto Bertogli <albertito@gmail.com>
-Subject: [PATCH] Allow git-svnimport to take "" as the trunk directory.
-Date: Tue, 14 Aug 2007 01:03:18 -0300
-Message-ID: <11870641981207-git-send-email-albertito@gmail.com>
-Cc: llucax@gmail.com, Alberto Bertogli <albertito@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 14 06:03:44 2007
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: performance on repack
+Date: Tue, 14 Aug 2007 00:10:31 -0400
+Message-ID: <9e4733910708132110u6cdf5e6bg10417317c70b82f1@mail.gmail.com>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+	 <20070812103338.GA7763@auto.tuwien.ac.at>
+	 <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
+	 <20070814031236.GC27913@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 14 06:10:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKnd7-0001HL-SC
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 06:03:42 +0200
+	id 1IKnjz-0002Ks-7q
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 06:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbXHNEDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 00:03:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbXHNEDh
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 00:03:37 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:12384 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbXHNEDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 00:03:35 -0400
-Received: by py-out-1112.google.com with SMTP id d32so2749116pye
-        for <git@vger.kernel.org>; Mon, 13 Aug 2007 21:03:34 -0700 (PDT)
+	id S1753074AbXHNEKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 00:10:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbXHNEKd
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 00:10:33 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:26068 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbXHNEKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 00:10:31 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1337279rvb
+        for <git@vger.kernel.org>; Mon, 13 Aug 2007 21:10:31 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=MUcFbXss4OslJOYk67dv7SAbxJDz+5Jd1/HlaEAHaNFkBp786XfNgl3O30D5HOYqGoUKEzjPPDLSOa6bGXswBJuYEddKlyqHuI++VYMVYiHJKN7LTv9sB+OmHjpkePz15MYA/axq6+GEUNXV7modZ5OMJ2d8Xg3tUyyvrkFw8H0=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=M9TD9iwrB7cQ3JKFWSqTC5Mjw+9L/JjLWbPp9CIeumUV3Z640YnxxEh6Yr8bSZDKd7Z6jWNsOp3be7gjU9E1LF5e0xIDLeCvNA7qW5xeZreTUS3OhNGk9NN+kkFnKdf0RmVRWoyltjkPZVGgdHGGgYGWminIaVJpKI90CfLp3mk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=h1EvYEVCRb4PseGUknubLWUK37l09c1t/hpMaml/7e1WLw6MBUiwC4abNKuKesLrS2uurpZYllmSaCYAH8LfdlxZV0mB5aIcONj0CWNzlT9W0oKkYYLow8hD3tDB7rLpZ2Z0/mVw8/CgjEaODz7Xs/dQVfhQk8/ky5skbP1SRMI=
-Received: by 10.35.115.18 with SMTP id s18mr9840670pym.1187064214160;
-        Mon, 13 Aug 2007 21:03:34 -0700 (PDT)
-Received: from gmail.com ( [201.253.220.24])
-        by mx.google.com with ESMTPS id 15sm24718468nzo.2007.08.13.21.03.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Aug 2007 21:03:32 -0700 (PDT)
-X-Mailer: git-send-email 1.5.3.rc4.67.gf9286-dirty
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Yti9vx1QLSdBUYr9d8x7ll5b7pPyjNL9gjvlanPE94PVmXIRe8HvYwIPsnl99tibV/fBfop20w1YyibvcHjQJRcVCHipCRiUiC7Sy6YfJTT9dE+gk5MyU4/0VJSRjzoAvWq5Q5Azn6/2i1JOPn1buTsf5LQpaMJnPkyRpasTTyo=
+Received: by 10.115.110.6 with SMTP id n6mr1666487wam.1187064631121;
+        Mon, 13 Aug 2007 21:10:31 -0700 (PDT)
+Received: by 10.114.195.11 with HTTP; Mon, 13 Aug 2007 21:10:31 -0700 (PDT)
+In-Reply-To: <20070814031236.GC27913@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55803>
 
-Some repositories started with the trunk in "/" and then moved it to the
-standard "trunk/" location.
+On 8/13/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > On 32b there's windowing code for accessing the packfile since we can
+> > run out of address space, does this code get turned off for 64b?
+>
+> The windowing code you are talking about defaults as follows:
+>
+>   Parameter                  32b      64b
+>   -----------------------------------------
+>   core.packedGitWindowSize    32M     1G
+>   core.packedGitLimit        256M     8G
+>
+> So I doubt you are having issues with the windowing code on a 64b
+> system, unless your repository is just *huge*.  I did not think that
+> anyone had a Git repository that exceeded 8G, though the window
+> size of 1G might be a tad too small if there are many packfiles
+> and they are each larger than 1G.
 
-On these repositories, the correct thing would be to call git-svnimport -T "",
-but because of the way the options are handled, it uses the default "trunk"
-instead of the given empty string. This patch fixes that behaviour.
+Why use windows on 64b? Default core.packedGitWindowSize equal to
+core.packedGitLimit
 
-Reported by Leandro Lucarella <llucax@gmail.com>.
+I haven't measured it but I suspect the OS calls for moving the
+windows are are quite slow on a relative basis since they have to
+rewrite a bunch of page tables. Why is the window so small on 32b? I
+thought we were up to about a 1GB packfile before running out of
+address space with Mozilla. Shouldn't the window simply be set as
+large as possible on 32b, this size being a function of the available
+address space, not the amount of physical memory?
 
-Signed-off-by: Alberto Bertogli <albertito@gmail.com>
----
 
-While the same could be done for tags and branches, I don't think it makes
-much sense.
+> > > * On the other hand, we could run all try_delta operations for one object
+> > >   parallel. This way, we would need not very much more memory, but
+> > >   require more synchronization (and more complex code).
+> >
+> > This solution was my first thought too. Use the main thread to get
+> > everything needed for the object into RAM, then multi-thread the
+> > compute bound, in-memory delta search operation. Shared CPU caches
+> > might make this very fast.
+>
+> I have been thinking about doing this, especially now that the
+> default window size is much larger.  I think the default is up as
+> high as 50, which means we'd keep that shiny new UltraSPARC T2 busy.
+> Not that I have one...  so anyone from Sun is welcome to send me
+> one if they want.  ;-)
+>
+> I'm not sure its that complex to run all try_delta calls of the
+> current window in parallel.  Might be a simple enough change that
+> its actually worth the extra complexity, especially with these
+> multi-core systems being so readily available.  Repacking is the
+> most CPU intensive operation Git performs, and the one that is also
+> the easiest to make parallel.
+>
+> Maybe someone else will beat me to it, but if not I might give such
+> a patch a shot in a few weeks.
+
+I'll test it. But my assignment this week is to figure out how to
+program the BestComm DMA engine in a PowerPC chip. It's oh so much fun
+trying to figure out how to program these "engines" that ASIC
+designers love to build and never fully document.
+
+>
+> --
+> Shawn.
+>
 
 
-git-svnimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index b73d649..8c17fb5 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -49,7 +49,7 @@ getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:SP:R:uv") or usage();
- usage if $opt_h;
- 
- my $tag_name = $opt_t || "tags";
--my $trunk_name = $opt_T || "trunk";
-+my $trunk_name = defined $opt_T ? $opt_T : "trunk";
- my $branch_name = $opt_b || "branches";
- my $project_name = $opt_P || "";
- $project_name = "/" . $project_name if ($project_name);
 -- 
-1.5.3.rc4.67.gf9286-dirty
+Jon Smirl
+jonsmirl@gmail.com
