@@ -1,72 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: call external editor from git-gui?
-Date: Tue, 14 Aug 2007 09:00:00 +0200
-Message-ID: <20070814070000.GA12052@diana.vm.bytemark.co.uk>
-References: <20070810153008.GA31759@diana.vm.bytemark.co.uk> <20070814045511.GF27913@spearce.org>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: bisect / history preserving on rename + update
+Date: Tue, 14 Aug 2007 10:38:01 +0200
+Message-ID: <1187080681.12828.174.camel@chaos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 09:00:17 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 14 10:38:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKqO1-0002hV-3X
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 09:00:17 +0200
+	id 1IKrvA-0003eX-21
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 10:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750791AbXHNHAH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 14 Aug 2007 03:00:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbXHNHAG
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 03:00:06 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1042 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791AbXHNHAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 03:00:04 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IKqNk-0003As-00; Tue, 14 Aug 2007 08:00:00 +0100
-Content-Disposition: inline
-In-Reply-To: <20070814045511.GF27913@spearce.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753506AbXHNIiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 04:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753490AbXHNIiH
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 04:38:07 -0400
+Received: from www.osadl.org ([213.239.205.134]:54283 "EHLO mail.tglx.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753506AbXHNIiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 04:38:03 -0400
+Received: from [127.0.0.1] (debian [213.239.205.147])
+	by mail.tglx.de (Postfix) with ESMTP id B34EA65C3EA
+	for <git@vger.kernel.org>; Tue, 14 Aug 2007 10:38:01 +0200 (CEST)
+X-Mailer: Evolution 2.10.1 (2.10.1-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55814>
 
-On 2007-08-14 00:55:11 -0400, Shawn O. Pearce wrote:
+Hi,
 
-> Karl Hasselstrm <kha@treskal.com> wrote:
->
-> > git-gui is very good at composing commits. But for writing the
-> > actual commit message -- especially if it's long and needs
-> > paragraph reflowing, indentation, and so on -- I vastly prefer
-> > emacs over git-gui's text field.
->
-> Yea, I've been thinking about adding fancy features like those. But
-> been lazy.
+is there a built in way to handle the following situation:
 
-Yeah, every time I read the git list, I think to myself, "Wow, Shawn
-sure is lazy!" :-)
+file A is renamed to B
+file A is created again and new content is added.
 
-You do a lot of seriously useful work on git.
+I found only two ways to do that, which both suck:
 
-> Spawning the user's preferred editor would be a nice way to get some
-> of that.
+1)
+	git-mv A B
+	git-add A
+	git commit
 
-Mmm. I wouldn't call it a _nice_ way: popping up an external program
-just to get the right text editing behavior. More like the _only_ way,
-if the user is picky enough.
+	results in a copy A to B and lost history of B
 
-> An annoying work-around would be to run your editor to create/edit
-> .git/GITGUI_MSG (or .git/MERGE_MSG) then hit Rescan in git-gui. It
-> loads that file into its editor buffer if the editor buffer is empty
-> or has not been modified from within git-gui since the last time the
-> file was read.
+2)
+	git-mv A B
+	git commit
+	git-add A
+	git commit
 
-I just tend to git-commit --amend to accomplish that.
+	preserves the history of B, but breaks bisection because
+	A is needed to compile
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I have no real good idea how to solve this. After staring at the git
+source for a while, I think that 1) is quite hard to solve. A sane
+solution for 2) might be to add a flag to the second commit, which
+bundles the two commits for bisection.
+
+Any other solutions ?
+
+	tglx
