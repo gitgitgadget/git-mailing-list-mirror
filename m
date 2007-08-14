@@ -1,74 +1,59 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: bisect / history preserving on rename + update
-Date: Tue, 14 Aug 2007 16:19:43 +0200
-Message-ID: <1187101183.12828.191.camel@chaos>
-References: <1187080681.12828.174.camel@chaos>
-	 <20070814093357.GA14010@diana.vm.bytemark.co.uk>
-	 <1187086600.12828.177.camel@chaos>
-	 <20070814105056.GA14536@diana.vm.bytemark.co.uk>
-	 <1187089619.12828.183.camel@chaos>
-	 <20070814111828.GA15399@diana.vm.bytemark.co.uk>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH] Add read_cache to builtin-check-attr
+Date: Tue, 14 Aug 2007 09:24:29 -0500
+Message-ID: <20070814142428.GK21692@lavos.net>
+References: <11870975181798-git-send-email-bdowning@lavos.net> <20070814132209.GJ21692@lavos.net> <Pine.LNX.4.64.0708141506260.25989@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 16:19:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 14 16:24:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKxFQ-0004Gm-AJ
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:19:52 +0200
+	id 1IKxKC-0006HD-UV
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756416AbXHNOTq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 14 Aug 2007 10:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756254AbXHNOTq
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:19:46 -0400
-Received: from www.osadl.org ([213.239.205.134]:57158 "EHLO mail.tglx.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756250AbXHNOTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 10:19:45 -0400
-Received: from [127.0.0.1] (debian [213.239.205.147])
-	by mail.tglx.de (Postfix) with ESMTP id B3B9665C3EA;
-	Tue, 14 Aug 2007 16:19:43 +0200 (CEST)
-In-Reply-To: <20070814111828.GA15399@diana.vm.bytemark.co.uk>
-X-Mailer: Evolution 2.10.1 (2.10.1-4.fc7) 
+	id S1756658AbXHNOYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 10:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756806AbXHNOYl
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:24:41 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:25613 "EHLO
+	asav02.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbXHNOYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 10:24:40 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtZjAKNXwUZKhvbzRmdsb2JhbACBVIUlhxUBAQE1AQ
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav02.insightbb.com with ESMTP; 14 Aug 2007 10:24:38 -0400
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 37C29309F31; Tue, 14 Aug 2007 09:24:29 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708141506260.25989@racer.site>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55835>
 
-On Tue, 2007-08-14 at 13:18 +0200, Karl Hasselstr=C3=B6m wrote:
-> On 2007-08-14 13:06:59 +0200, Thomas Gleixner wrote:
->=20
-> > On Tue, 2007-08-14 at 12:50 +0200, Karl Hasselstr=C3=B6m wrote:
-> >
-> > > The result is exactly the same. git-mv is just a convenience.
-> >
-> > Fair enough, but it still does not solve my initial problem of
-> > keeping the history of B (former A) intact, while creating a new A
-> > which is necessary to compile the tree, simply because I can not
-> > change #include <A> to #include <B> for various reasons.
->=20
-> Have you tried running blame with -C, or -C -C? That will make it try
-> harder to identify lines originating from other files.
+On Tue, Aug 14, 2007 at 03:08:52PM +0100, Johannes Schindelin wrote:
+> Shouldn't read_cache() be _only_ called if
+> 
+> - it has not been read yet, and
+> - .gitattributes was not found in the work tree?
+> 
+> IOW check-attr is the wrong place for your patch IMHO.
 
-Does not help. Strange enough it results in
+I admit I just cargo-culted what builtin-checkout-index did upon starting.
+Off the cuff, though, I don't see how the cache could ever already be
+loaded upon the start of cmd_check_attr, and the way the attr.c code is
+written, the cache be loaded when we check attributes or it will default
+to the old behavior (only checking the working directory.)
 
-# git blame include/B
+What would you suggest here?
 
-b4062b16 include/A (Joe Hacker      2007-08-14 10:52:28 +0200  1) #ifnd=
-ef _A_H_
-b4062b16 include/A (Joe Hacker      2007-08-14 10:52:28 +0200  2) #defi=
-ne _A_H_
-b4062b16 include/A (Joe Hacker      2007-08-14 10:52:28 +0200  3)=20
-b4062b16 include/A (Joe Hacker      2007-08-14 10:52:28 +0200  4) #defi=
-ne TEST_1 1
-f098c4ad include/B (Thomas Gleixner 2007-08-14 16:01:05 +0200  5) #defi=
-ne TEST_2 2
-f098c4ad include/B (Thomas Gleixner 2007-08-14 16:01:05 +0200  6)=20
-f098c4ad include/B (Thomas Gleixner 2007-08-14 16:01:05 +0200  7) #endi=
-f
-
-	tglx
+-bcd
