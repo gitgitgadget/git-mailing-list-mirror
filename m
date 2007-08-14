@@ -1,81 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add read_cache to builtin-check-attr
-Date: Tue, 14 Aug 2007 15:46:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708141540420.25989@racer.site>
-References: <11870975181798-git-send-email-bdowning@lavos.net>
- <20070814132209.GJ21692@lavos.net> <Pine.LNX.4.64.0708141506260.25989@racer.site>
- <20070814142428.GK21692@lavos.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: performance on repack
+Date: Tue, 14 Aug 2007 10:52:35 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0708141037020.5415@xanadu.home>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+ <20070812103338.GA7763@auto.tuwien.ac.at>
+ <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
+ <20070814031236.GC27913@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
-	git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Tue Aug 14 16:48:01 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 14 16:52:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IKxge-0007yL-KM
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:48:00 +0200
+	id 1IKxlA-0001HM-MD
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 16:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbXHNOr5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 10:47:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbXHNOr5
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:47:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40323 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752697AbXHNOr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 10:47:56 -0400
-Received: (qmail invoked by alias); 14 Aug 2007 14:47:55 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
-  by mail.gmx.net (mp051) with SMTP; 14 Aug 2007 16:47:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18iHw1Bdikig33KXNcrh6vh6NRmfzBeTnHFWlOl5Y
-	liScFRkefecT9l
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070814142428.GK21692@lavos.net>
-X-Y-GMX-Trusted: 0
+	id S1752747AbXHNOwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 10:52:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbXHNOwh
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 10:52:37 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:26208 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752455AbXHNOwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 10:52:36 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JMR008C8QNN1VG0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 14 Aug 2007 10:52:35 -0400 (EDT)
+In-reply-to: <20070814031236.GC27913@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55838>
 
-Hi,
+On Mon, 13 Aug 2007, Shawn O. Pearce wrote:
 
-On Tue, 14 Aug 2007, Brian Downing wrote:
-
-> On Tue, Aug 14, 2007 at 03:08:52PM +0100, Johannes Schindelin wrote:
-> > Shouldn't read_cache() be _only_ called if
-> > 
-> > - it has not been read yet, and
-> > - .gitattributes was not found in the work tree?
-> > 
-> > IOW check-attr is the wrong place for your patch IMHO.
+> Jon Smirl <jonsmirl@gmail.com> wrote:
+> > This solution was my first thought too. Use the main thread to get
+> > everything needed for the object into RAM, then multi-thread the
+> > compute bound, in-memory delta search operation. Shared CPU caches
+> > might make this very fast.
 > 
-> I admit I just cargo-culted what builtin-checkout-index did upon starting.
-> Off the cuff, though, I don't see how the cache could ever already be
-> loaded upon the start of cmd_check_attr,
+> I have been thinking about doing this, especially now that the
+> default window size is much larger.  I think the default is up as
+> high as 50, which means we'd keep that shiny new UltraSPARC T2 busy.
+> Not that I have one...  so anyone from Sun is welcome to send me
+> one if they want.  ;-)
 
-Right.  I was talking more about read_cache() being called later anyway, 
-so you do not have to read the cache if a .gitattributes is there and you 
-do not need the index to begin with.
+Note that the default of 50 applies to the maximum delta depth, not the 
+delta search window.  And the delta depth limit is costless on the 
+packing side.  I, too, wouldn't mind the UltraSPARC T2 though.
 
-> and the way the attr.c code is
-> written, the cache be loaded when we check attributes or it will default
-> to the old behavior (only checking the working directory.)
 
-Why not just make sure that the index is read in read_index_data()?  
-Something like
-
-	/* read index if that was not already done yet */
-	if (!istate->mmap)
-		read_index(&istate);
-
-(Yes, I know that read_index() calls read_index_from(), which in turn 
-checks that, but read_attr() is called possibly pretty often, right?  So 
-we might just as well spare a few cycles here.)
-
-Ciao,
-Dscho
+Nicolas
