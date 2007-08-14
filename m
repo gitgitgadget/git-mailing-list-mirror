@@ -1,57 +1,58 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCH] Add read_cache to builtin-check-attr
-Date: Tue, 14 Aug 2007 13:45:41 -0500
-Message-ID: <20070814184541.GL21692@lavos.net>
-References: <11870975181798-git-send-email-bdowning@lavos.net> <7vhcn2c673.fsf@assigned-by-dhcp.cox.net>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch -
+	scripts/get_maintainer.pl
+Date: Tue, 14 Aug 2007 11:54:48 -0700
+Message-ID: <1187117688.32555.149.camel@localhost>
+References: <1186984174.10249.7.camel@localhost>
+	 <200708131933.10125.m.kozlowski@tuxland.pl>
+	 <1187026955.2688.4.camel@laptopd505.fenrus.org>
+	 <1187037445.6628.98.camel@heimdal.trondhjem.org>
+	 <1187054366.2757.0.camel@laptopd505.fenrus.org>
+	 <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu>
+	 <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
+	 <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost>
+	 <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Steffen Prohaska <prohaska@zib.de>, dmitry.kakurin@gmail.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 20:46:02 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Alan Cox <alan@lxorguk.ukuu.org.uk>,
+	Arjan van de Ven <arjan@infradead.org>,
+	Trond Myklebust <trond.myklebust@fys.uio.no>,
+	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
+	akpm@linux-foundation.org, linux-kernel@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 14 20:55:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IL1Oz-0004m6-04
-	for gcvg-git@gmane.org; Tue, 14 Aug 2007 20:46:01 +0200
+	id 1IL1YW-0008Sm-LN
+	for gcvg-git@gmane.org; Tue, 14 Aug 2007 20:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765628AbXHNSp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Aug 2007 14:45:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761450AbXHNSp5
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 14:45:57 -0400
-Received: from gateway.insightbb.com ([74.128.0.19]:23204 "EHLO
-	asav02.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761381AbXHNSp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2007 14:45:56 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtZjAM+UwUZKhvbzRmdsb2JhbACBVIUlhxYBAQE1AQ
-Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
-  by asav02.insightbb.com with ESMTP; 14 Aug 2007 14:45:50 -0400
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 97EFE309F31; Tue, 14 Aug 2007 13:45:41 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <7vhcn2c673.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S933296AbXHNSzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 14:55:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933254AbXHNSzE
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 14:55:04 -0400
+Received: from DSL022.labridge.com ([206.117.136.22]:4827 "EHLO perches.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764558AbXHNSzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 14:55:02 -0400
+Received: from [192.168.1.128] ([192.168.1.128])
+	by perches.com (8.9.3/8.9.3) with ESMTP id MAA23734;
+	Tue, 14 Aug 2007 12:17:18 -0700
+In-Reply-To: <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
+X-Mailer: Evolution 2.10.2-2.1mdv2007.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55848>
 
-On Tue, Aug 14, 2007 at 11:38:24AM -0700, Junio C Hamano wrote:
-> That interface is at too low a level, I am afraid.  Many
-> commands do want to control when they read the index and it
-> affects the result, especially when the work tree traversal
-> implemented in dir.c is involved.
-> 
-> I am not rejecting/objecting, but just raising concerns.  I do
-> not have time to review this today, but just wanted to see if
-> you fully assessed the implications (and if so that would save
-> work on my end).
+On Tue, 2007-08-14 at 11:40 -0700, Linus Torvalds wrote:
+> Anyway - the script can certainly be tweaked, the point is 
+> really just that the git tree _already_ contains the relevant 
+> information).
 
-I really don't understand the implications.  That was just something
-that got it working on my end, and I figured I should send it along
-in case it was just that simple.
-
--bcd
+I believe it's not specific enough.
+Things like email lists would never show up.
