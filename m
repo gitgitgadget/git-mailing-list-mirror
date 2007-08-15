@@ -1,86 +1,139 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Wed, 15 Aug 2007 15:06:58 +0200
-Message-ID: <3F9AF722-0610-4778-A244-DBE5A0918D0B@zib.de>
-References: <76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de> <e7bda7770708101531n782118e9qb9c6de4e934940ea@mail.gmail.com> <EF7DFA5A-9C3A-4D0B-9533-D1D60AE4A44C@zib.de> <e7bda7770708141704m587dfdbdqfbab51b8ac6fcff@mail.gmail.com> <30FE2B1C-B651-4F1D-B5D9-CD3C3261F531@zib.de> <85fy2l1i1g.fsf@lola.goethe.zz> <ABA1D7D2-92A6-4E8C-AC36-93912621E3D4@zib.de> <86k5rx474o.fsf@lola.quinscape.zz> <20070815073811.GL27913@spearce.org> <30e4a070708150542m3f3f5c62l5e4bf5b3ff098b52@mail.gmail.com> <30e4a070708150548r3234cd66yd4ee6a85989a98b1@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"David Kastrup" <dak@gnu.org>,
-	"Torgil Svensson" <torgil.svensson@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 15:06:32 2007
+From: Satyam Sharma <satyam@infradead.org>
+Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch -
+ scripts/get_maintainer.pl
+Date: Wed, 15 Aug 2007 19:03:53 +0530 (IST)
+Message-ID: <alpine.LFD.0.999.0708151846130.16414@enigma.security.iitk.ac.in>
+References: <1187026955.2688.4.camel@laptopd505.fenrus.org>
+ <1187037445.6628.98.camel@heimdal.trondhjem.org> <1187054366.2757.0.camel@laptopd505.fenrus.org>
+ <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu>
+ <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
+ <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost>
+ <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
+ <20070814193333.GI21089@ftp.linux.org.uk> <46C2548D.80605@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Al Viro <viro@ftp.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Joe Perches <joe@perches.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Alan Cox <alan@lxorguk.ukuu.org.uk>,
+	Arjan van de Ven <arjan@infradead.org>,
+	Trond Myklebust <trond.myklebust@fys.uio.no>,
+	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+To: Rene Herman <rene.herman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 15:21:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILIZz-0006Fc-Rz
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 15:06:32 +0200
+	id 1ILIoT-00044C-Tt
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 15:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755389AbXHONGY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 09:06:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbXHONGX
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 09:06:23 -0400
-Received: from mailer.zib.de ([130.73.108.11]:59815 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751606AbXHONGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 09:06:22 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l7FD6DRe004126;
-	Wed, 15 Aug 2007 15:06:13 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l7FD6Cg5009302
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 15 Aug 2007 15:06:12 +0200 (MEST)
-In-Reply-To: <30e4a070708150548r3234cd66yd4ee6a85989a98b1@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1756096AbXHONV0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 09:21:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755610AbXHONV0
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 09:21:26 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:48595 "EHLO
+	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754368AbXHONVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 09:21:25 -0400
+Received: from localhost ([127.0.0.1])
+	by pentafluge.infradead.org with esmtps (Exim 4.63 #1 (Red Hat Linux))
+	id 1ILIoE-000649-8R; Wed, 15 Aug 2007 14:21:15 +0100
+X-X-Sender: satyam@enigma.security.iitk.ac.in
+In-Reply-To: <46C2548D.80605@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55900>
+
+Hi Rene,
 
 
-On Aug 15, 2007, at 2:48 PM, Mark Levedahl wrote:
+On Wed, 15 Aug 2007, Rene Herman wrote:
 
-> On 8/15/07, Mark Levedahl <mlevedahl@gmail.com> wrote:
->> On 8/15/07, Shawn O. Pearce <spearce@spearce.org> wrote:
->>> David Kastrup <dak@gnu.org> wrote:
->>>>     Load a Hive, Query, Save, Restore, and Unload a Hive. To  
->>>> install
->>>>     the Support Tools:
->>>>
->>>>     1.
->>>>
->>>>
->>>>     Insert the Windows 2000 CD-ROM into your CD-ROM drive.
->>>
->>> Indeed, that step right there will stop many users cold in their
->>> tracks.
->>
-> maybe something like ...
->
-> case "$(uname -s) in
->    MSYS*)
->        <your way>;;
->    *)
->        <the unix way>;;
-> esac
+> It mostly is just about that it seems. However, this would not also allow the
+> other information currently in the MAINTAINERS file to be queried in similar
+> ways.
+> 
+> Git could grow a generic file meta data implementation through the use of
+> tags, sort of like tags on multimedia files although while with multimedia
+> files the tags are in fact stored as a file header, here you'd keep them just
+> in git. Any project using git would be free to define its own set of info tags
+> and you'd supply them to git simply as a list of
+> 
+> <tag>=<value>
+> 
+> pairs:
+> 
+> $ git info --add drivers/ide/ide-cd.c <<EOF
+> CC="Alan Cox <alan@lxorguk.ukuu.org.uk>", linux-ide@vger.kernel.org
+> EOF
+> 
+> Or as a more expansive example, with the tags set on a directory (and the
+> output shown this time):
+> 
+> $ git info drivers/infiniband/
+> CC="Roland Dreier <rolandd@cisco.com>"
+> CC="Sean Hefty <mshefty@ichips.intel.com>"
+> CC="Hal Rosenstock <halr@voltaire.com>"
+> CC=openib-general@openib.org
 
-If reg.exe is not there kdiff3 will not be found. The code will
-already be _ignored_. It's just not working.
+Considering some people may want to differentiate between "those who want
+to be Cc'ed for patches on subsystem X" and "those who are maintainer(s)
+of subsystem X", I think another "P=" kind of tag might also be useful
+here.
 
-It may make sense to use 'uname -s' to explicitly control that the
-code is expected to work. This would allow to report errors if a
-command is missing. However, cluttering all shell scripts with
-uname's will likely become quite confusing.
+> W=http://www.openib.org/
+> T=git kernel.org:/pub/scm/linux/kernel/git/roland/infiniband.git
+> 
+> $ git info --type="W" drivers/infiniband/
+> http://www.openib.org/
+> 
+> The project can link the actual tags such as CC, W and T to --options for the
+> "info" command in the git configuration file for the tree (and/or just define
+> a few upfront I guess) making it look nicer:
+> 
+> $ git info --cc drivers/infiniband/
+> "Roland Dreier <rolandd@cisco.com>"
+> "Sean Hefty <mshefty@ichips.intel.com>"
+> "Hal Rosenstock <halr@voltaire.com>"
+> openib-general@openib.org
+> 
+> $ git info --website drivers/infiniband/
+> http://www.openib.org/
+> 
+> $ git info --tree drivers/infiniband/
+> git kernel.org:/pub/scm/linux/kernel/git/roland/infiniband.git
+> 
+> Extra: when you have such an implementation, you can use it for other purposes
+> as well such as the summary Documentation/ files want for the 00-INDEX files:
+> 
+> $ git info --summary Documentation/BUG-HUNTING
+> brute force method of doing binary search of patches to find bug.
+> 
+> And importantly -- when queuried for a file that itself doesn't have the
+> requested info tag:
+> 
+> $ git info --cc drivers/infiniband/core/addr.c
+> 
+> git looks for the tag on the drivers/infiniband/core/ directory next, and then
+> on drivers/infiniband/, where it finds it. linux-kernel@vger.kernel.org would
+> be the final fallback, being set on the project root.
+> 
+> I'd really like something like this. As long as projects are both free to use
+> and not use them and free to define their own set of tags I believe this would
+> work very nicely.
+> 
+> Once you have these tags, you can basically use them for anything.
 
-If performance is a concern, we may execute uname -s only once
-in git-sh-setup and assign its return to something like GIT_UNAME.
-This may save us a few forks, which are to my knowledge quite
-expensive on Windows.
+I'd really _love_ a tool that does all that what you've proposed above!
 
-	Steffen
+But why does it have to be "git-info" or anything in the git(7) suite for
+that matter? This sounds like a job for a different specialised tool,
+along with ".metatags" kind of files dispersed in the source tree.
+
+
+Satyam
