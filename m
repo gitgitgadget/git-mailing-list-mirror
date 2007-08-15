@@ -1,136 +1,326 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: performance on repack
-Date: Wed, 15 Aug 2007 19:11:52 +0200
-Message-ID: <20070815171152.GA15155@auto.tuwien.ac.at>
-References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com> <20070812103338.GA7763@auto.tuwien.ac.at> <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com> <20070814031236.GC27913@spearce.org> <alpine.LFD.0.999.0708141634160.5415@xanadu.home> <20070815053231.GJ27913@spearce.org> <9e4733910708150808x39241071j1a4012f16cd26ef8@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: [PATCH v6] git-apply: apply submodule changes
+Date: Wed, 15 Aug 2007 19:22:09 +0200
+Message-ID: <20070815172209.GD1070MdfPADPa@greensroom.kotnet.org>
+References: <20070812142340.GA10399MdfPADPa@greensroom.kotnet.org>
+ <7vwsw0ipp2.fsf@assigned-by-dhcp.cox.net>
+ <20070812185006.GG999MdfPADPa@greensroom.kotnet.org>
+ <7vr6m8imj6.fsf@assigned-by-dhcp.cox.net> <20070813093740.GA4684@liacs.nl>
+ <20070813171349.GL999MdfPADPa@greensroom.kotnet.org>
+ <7vmywvfag3.fsf@assigned-by-dhcp.cox.net>
+ <7vd4xqeilh.fsf@assigned-by-dhcp.cox.net>
+ <20070814083940.GN999MdfPADPa@greensroom.kotnet.org>
+ <7vps1qcwj4.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 19:12:00 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
+	Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 19:22:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILMPY-00030v-2X
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 19:12:00 +0200
+	id 1ILMZW-00075n-SM
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 19:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbXHORL4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Aug 2007 13:11:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbXHORL4
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 13:11:56 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:50934 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962AbXHORLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 13:11:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 31261744025D;
-	Wed, 15 Aug 2007 19:11:53 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HtNoQ-JvkWNC; Wed, 15 Aug 2007 19:11:52 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id A9888744025C; Wed, 15 Aug 2007 19:11:52 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <9e4733910708150808x39241071j1a4012f16cd26ef8@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1762743AbXHORWO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 13:22:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762173AbXHORWO
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 13:22:14 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:60312 "EHLO psmtp08.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760748AbXHORWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 13:22:11 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMT001T9S8X43@psmtp08.wxs.nl> for git@vger.kernel.org; Wed,
+ 15 Aug 2007 19:22:10 +0200 (MEST)
+Received: (qmail 27462 invoked by uid 500); Wed, 15 Aug 2007 17:22:09 +0000
+In-reply-to: <7vps1qcwj4.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55927>
 
-On Wed, Aug 15, 2007 at 11:08:38AM -0400, Jon Smirl wrote:
-> On 8/15/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > > Also... read_sha1_file() is currently not thread safe, and thread=
-ed
-> > > delta searching would requires that its usage be serialized with =
-a
-> > > global mutex (not done in this patch which is a bug), or ideally =
-be made
-> > > thread aware.
->=20
-> You can avoid making all the low level calls thread safe by using the
-> main thread to get everything into RAM before starting to search for
-> the deltas. The worker threads would only deal with things completely
-> in memory. You may need to ref count these in-memory objects if they
-> are shared between worker threads. For simplicity the in-memory input
-> objects should be read only by the threads. The worker threads create
-> new structures to hand their results back to the main thread for
-> writing to disk.
+Apply "Subproject commit HEX" changes produced by git-diff.
+As usual in the current git, only the superproject itself is actually
+modified (possibly creating empty directories for new submodules).
+Any checked-out submodule is left untouched and is not required to
+be up-to-date.
 
-git-pack-objects knows the order, in which it will use the objects.  A
-seperate thread could pre-read the next object and wait until the main
-thread starts processing it. After the read is complete, another
-thread could start computing the delta index.
+With clean-ups from Junio C Hamano.
 
-git-pack-objects currently reads an object (and computes the delta
-index), if it is really necessary. With the pre-read, unnecessary
-operations would happen.
-
-> Initially I would just ignore very large objects while getting the
-> basic code to work. After the basic code is working if a very large
-> object is encountered when the main thread is faulting objects in, th=
-e
-> main thread should just process this object on the spot using the
-> existing low memory code.
-
-I expect that the biggest gain will be for big objects, as they
-require more time to read+unpack the source objects and compute the
-delta index as well as the delta.
-
-> > @@ -1862,10 +1863,12 @@ int pretend_sha1_file(void *buf, unsigned l=
-ong len, enum object_type type,
-> >  void *read_sha1_file(const unsigned char *sha1, enum object_type *=
-type,
-> >                      unsigned long *size)
-> >  {
-> > +       static pthread_mutex_t locky =3D PTHREAD_MUTEX_INITIALIZER;
-> >         unsigned long mapsize;
-> >         void *map, *buf;
-> >         struct cached_object *co;
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+---
+On Tue, Aug 14, 2007 at 02:09:35AM -0700, Junio C Hamano wrote:
+> Sven Verdoolaege <skimo@kotnet.org> writes:
+> >> diff --git a/builtin-apply.c b/builtin-apply.c
 > >
-> > +       pthread_mutex_lock(&locky);
-> >         co =3D find_cached_object(sha1);
-> >         if (co) {
-> >                 buf =3D xmalloc(co->size + 1);
-> > @@ -1873,20 +1876,26 @@ void *read_sha1_file(const unsigned char *s=
-ha1, enum object_type *type,
-> >                 ((char*)buf)[co->size] =3D 0;
-> >                 *type =3D co->type;
-> >                 *size =3D co->size;
-> > +               pthread_mutex_unlock(&locky);
-> >                 return buf;
-> >         }
-> >
-> >         buf =3D read_packed_sha1(sha1, type, size);
+> > Did you remove the documentation on purpose ?
+> 
+> No, I just wanted to get a feedback on a (possibly partial)
+> cleanup, as I couldn't make heads or tails of your patch
+> especially around that TYPE_CHANGED part, and also the part to
+> write out the results.
 
-Couldn't we release the mutex at this point?
+I agree that the TYPE_CHANGED thing may have been confusing,
+so I kept your version (although I switched the tests around,
+since there is no point in checking if the stat info matches
+if you're going to ignore the result anyway).
 
-Why do we need to protect from concurrent access, when we are reading
-a loose object?
+Other than that, the only change wrt to your version is that
+I added back the creation and (attempt at) removal of the
+corresponding subdirectory.
 
-> > -       if (buf)
-> > +       if (buf) {
-> > +               pthread_mutex_unlock(&locky);
-> >                 return buf;
-> > +       }
-> >         map =3D map_sha1_file(sha1, &mapsize);
-> >         if (map) {
-> >                 buf =3D unpack_sha1_file(map, mapsize, type, size, =
-sha1);
-> >                 munmap(map, mapsize);
-> > +               pthread_mutex_unlock(&locky);
-> >                 return buf;
-> >         }
-> >         reprepare_packed_git();
-> > -       return read_packed_sha1(sha1, type, size);
-> > +       buf =3D read_packed_sha1(sha1, type, size);
-> > +       pthread_mutex_unlock(&locky);
-> > +       return buf;
-> >  }
+I'm not sure if you intented to remove the check for
+either an empty dir or a git repo.  You asked me to add
+it before, but then you removed it in your version.
+I didn't add it back again.
 
-mfg Martin K=F6gler
+skimo
+
+ Documentation/git-apply.txt |   14 +++++
+ builtin-apply.c             |  112 +++++++++++++++++++++++++++++++++----------
+ t/t7400-submodule-basic.sh  |   17 +++++++
+ 3 files changed, 118 insertions(+), 25 deletions(-)
+
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index f03f661..4c7e3a2 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -171,6 +171,20 @@ apply.whitespace::
+ 	When no `--whitespace` flag is given from the command
+ 	line, this configuration item is used as the default.
+ 
++Submodules
++----------
++If the patch contains any changes to submodules then gitlink:git-apply[1]
++treats these changes as follows.
++
++If --index is specified (explicitly or implicitly), then the submodule
++commits must match the index exactly for the patch to apply.  If any
++of the submodules are checked-out, then these check-outs are completely
++ignored, i.e., they are not required to be up-to-date or clean and they
++are not updated.
++
++If --index is not specified, then the submodule commits in the patch
++are ignored and only the absence of presence of the corresponding
++subdirectory is checked and (if possible) updated.
+ 
+ Author
+ ------
+diff --git a/builtin-apply.c b/builtin-apply.c
+index da27075..8055c7d 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1984,6 +1984,25 @@ static int apply_fragments(struct buffer_desc *desc, struct patch *patch)
+ 	return 0;
+ }
+ 
++static int read_file_or_gitlink(struct cache_entry *ce, char **buf_p,
++				unsigned long *size_p)
++{
++	if (!ce)
++		return 0;
++
++	if (S_ISGITLINK(ntohl(ce->ce_mode))) {
++		*buf_p = xmalloc(100);
++		*size_p = snprintf(*buf_p, 100,
++			"Subproject commit %s\n", sha1_to_hex(ce->sha1));
++	} else {
++		enum object_type type;
++		*buf_p = read_sha1_file(ce->sha1, &type, size_p);
++		if (!*buf_p)
++			return -1;
++	}
++	return 0;
++}
++
+ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
+ {
+ 	char *buf;
+@@ -1994,22 +2013,32 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 	alloc = 0;
+ 	buf = NULL;
+ 	if (cached) {
+-		if (ce) {
+-			enum object_type type;
+-			buf = read_sha1_file(ce->sha1, &type, &size);
+-			if (!buf)
++		if (read_file_or_gitlink(ce, &buf, &size))
++			return error("read of %s failed", patch->old_name);
++		alloc = size;
++	} else if (patch->old_name) {
++		if (S_ISGITLINK(patch->old_mode)) {
++			if (ce)
++				read_file_or_gitlink(ce, &buf, &size);
++			else {
++				/*
++				 * There is no way to apply subproject
++				 * patch without looking at the index.
++				 */
++				patch->fragments = NULL;
++				size = 0;
++			}
++		}
++		else {
++			size = xsize_t(st->st_size);
++			alloc = size + 8192;
++			buf = xmalloc(alloc);
++			if (read_old_data(st, patch->old_name,
++					  &buf, &alloc, &size))
+ 				return error("read of %s failed",
+ 					     patch->old_name);
+-			alloc = size;
+ 		}
+ 	}
+-	else if (patch->old_name) {
+-		size = xsize_t(st->st_size);
+-		alloc = size + 8192;
+-		buf = xmalloc(alloc);
+-		if (read_old_data(st, patch->old_name, &buf, &alloc, &size))
+-			return error("read of %s failed", patch->old_name);
+-	}
+ 
+ 	desc.size = size;
+ 	desc.alloc = alloc;
+@@ -2055,6 +2084,16 @@ static int check_to_create_blob(const char *new_name, int ok_if_exists)
+ 	return 0;
+ }
+ 
++static int verify_index_match(struct cache_entry *ce, struct stat *st)
++{
++	if (S_ISGITLINK(ntohl(ce->ce_mode))) {
++		if (!S_ISDIR(st->st_mode))
++			return -1;
++		return 0;
++	}
++	return ce_match_stat(ce, st, 1);
++}
++
+ static int check_patch(struct patch *patch, struct patch *prev_patch)
+ {
+ 	struct stat st;
+@@ -2065,8 +2105,14 @@ static int check_patch(struct patch *patch, struct patch *prev_patch)
+ 	int ok_if_exists;
+ 
+ 	patch->rejected = 1; /* we will drop this after we succeed */
++
++	/*
++	 * Make sure that we do not have local modifications from the
++	 * index when we are looking at the index.  Also make sure
++	 * we have the preimage file to be patched in the work tree,
++	 * unless --cached, which tells git to apply only in the index.
++	 */
+ 	if (old_name) {
+-		int changed = 0;
+ 		int stat_ret = 0;
+ 		unsigned st_mode = 0;
+ 
+@@ -2096,15 +2142,12 @@ static int check_patch(struct patch *patch, struct patch *prev_patch)
+ 				    lstat(old_name, &st))
+ 					return -1;
+ 			}
+-			if (!cached)
+-				changed = ce_match_stat(ce, &st, 1);
+-			if (changed)
++			if (!cached && verify_index_match(ce, &st))
+ 				return error("%s: does not match index",
+ 					     old_name);
+ 			if (cached)
+ 				st_mode = ntohl(ce->ce_mode);
+-		}
+-		else if (stat_ret < 0)
++		} else if (stat_ret < 0)
+ 			return error("%s: %s", old_name, strerror(errno));
+ 
+ 		if (!cached)
+@@ -2354,7 +2397,11 @@ static void remove_file(struct patch *patch, int rmdir_empty)
+ 		cache_tree_invalidate_path(active_cache_tree, patch->old_name);
+ 	}
+ 	if (!cached) {
+-		if (!unlink(patch->old_name) && rmdir_empty) {
++		if (S_ISGITLINK(patch->old_mode)) {
++			if (rmdir(patch->old_name))
++				warning("unable to remove submodule %s",
++					patch->old_name);
++		} else if (!unlink(patch->old_name) && rmdir_empty) {
+ 			char *name = xstrdup(patch->old_name);
+ 			char *end = strrchr(name, '/');
+ 			while (end) {
+@@ -2382,13 +2429,21 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ 	memcpy(ce->name, path, namelen);
+ 	ce->ce_mode = create_ce_mode(mode);
+ 	ce->ce_flags = htons(namelen);
+-	if (!cached) {
+-		if (lstat(path, &st) < 0)
+-			die("unable to stat newly created file %s", path);
+-		fill_stat_cache_info(ce, &st);
++	if (S_ISGITLINK(mode)) {
++		const char *s = buf;
++
++		if (get_sha1_hex(s + strlen("Subproject commit "), ce->sha1))
++			die("corrupt patch for subproject %s", path);
++	} else {
++		if (!cached) {
++			if (lstat(path, &st) < 0)
++				die("unable to stat newly created file %s",
++				    path);
++			fill_stat_cache_info(ce, &st);
++		}
++		if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
++			die("unable to create backing store for newly created file %s", path);
+ 	}
+-	if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
+-		die("unable to create backing store for newly created file %s", path);
+ 	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
+ 		die("unable to add cache entry for %s", path);
+ }
+@@ -2398,6 +2453,13 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	int fd;
+ 	char *nbuf;
+ 
++	if (S_ISGITLINK(mode)) {
++		struct stat st;
++		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
++			return 0;
++		return mkdir(path, 0777);
++	}
++
+ 	if (has_symlinks && S_ISLNK(mode))
+ 		/* Although buf:size is counted string, it also is NUL
+ 		 * terminated.
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index e8ce7cd..9d142ed 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -175,4 +175,21 @@ test_expect_success 'checkout superproject with subproject already present' '
+ 	git-checkout master
+ '
+ 
++test_expect_success 'apply submodule diff' '
++	git branch second &&
++	(
++		cd lib &&
++		echo s >s &&
++		git add s &&
++		git commit -m "change subproject"
++	) &&
++	git update-index --add lib &&
++	git-commit -m "change lib" &&
++	git-format-patch -1 --stdout >P.diff &&
++	git checkout second &&
++	git apply --index P.diff &&
++	D=$(git diff --cached master) &&
++	test -z "$D"
++'
++
+ test_done
+-- 
+1.5.3.rc5.1.g7de89
