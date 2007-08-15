@@ -1,73 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Wed, 15 Aug 2007 03:38:11 -0400
-Message-ID: <20070815073811.GL27913@spearce.org>
-References: <76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de> <e7bda7770708092307g49fa9976l5f9972592129fc8e@mail.gmail.com> <2383328F-300E-459C-A299-90242DA230F7@zib.de> <e7bda7770708101531n782118e9qb9c6de4e934940ea@mail.gmail.com> <EF7DFA5A-9C3A-4D0B-9533-D1D60AE4A44C@zib.de> <e7bda7770708141704m587dfdbdqfbab51b8ac6fcff@mail.gmail.com> <30FE2B1C-B651-4F1D-B5D9-CD3C3261F531@zib.de> <85fy2l1i1g.fsf@lola.goethe.zz> <ABA1D7D2-92A6-4E8C-AC36-93912621E3D4@zib.de> <86k5rx474o.fsf@lola.quinscape.zz>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: [msysGit] Re: Need your help with MinGW Issue 17: --color options don't work (produce garbage)
+Date: Wed, 15 Aug 2007 01:03:25 -0700
+Message-ID: <a1bbc6950708150103v35330b47o781fb5d74e3d9aef@mail.gmail.com>
+References: <a1bbc6950708142329w4e0e3d7cq573c67dd3b28f03a@mail.gmail.com>
+	 <3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Torgil Svensson <torgil.svensson@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 15 09:38:45 2007
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: msclrhd@googlemail.com
+X-From: git-owner@vger.kernel.org Wed Aug 15 10:03:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILDSn-0001Sv-CL
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 09:38:45 +0200
+	id 1ILDqp-00007z-9v
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 10:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753203AbXHOHiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 03:38:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbXHOHiU
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 03:38:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51286 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751441AbXHOHiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 03:38:19 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1ILDSG-00047r-MT; Wed, 15 Aug 2007 03:38:12 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5662120FBAE; Wed, 15 Aug 2007 03:38:11 -0400 (EDT)
+	id S1754267AbXHOIDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 04:03:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbXHOIDa
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 04:03:30 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:36078 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753352AbXHOID1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 04:03:27 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1663501rvb
+        for <git@vger.kernel.org>; Wed, 15 Aug 2007 01:03:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=udCX2TcM9+aqVBe00ZsfDfnC48+XS4rGodUw7+zB6ATnfV1i4vYnWjpgoRcQF5jXgZ146OpmtW6mZf0dss+sajjLFjOZMz6qa2/lJK4mgKnJgokcw1rKRoyW8Nvrl7W96fmv5tcg/WSUjJlzlXX49zrXZoEOxBw0/nZc68dh2RU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=G8Va1dymZATLAI/AIQSp2DBMYwISOHl8F3oSP93YEw//q/GSbOcANKj4NW8rMcTXFVGvVu4J6nnkaQPB/h4JGNQgMCnYSUZka9xkOWWEkxB2wtJtTmIy04volVXXnrpl5YhGY5WPrZatArRsIKSIOfImuvhncW5inYMSmCEG/zY=
+Received: by 10.141.99.4 with SMTP id b4mr86468rvm.1187165005956;
+        Wed, 15 Aug 2007 01:03:25 -0700 (PDT)
+Received: by 10.141.21.17 with HTTP; Wed, 15 Aug 2007 01:03:25 -0700 (PDT)
+In-Reply-To: <3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <86k5rx474o.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55887>
 
-David Kastrup <dak@gnu.org> wrote:
->     Load a Hive, Query, Save, Restore, and Unload a Hive. To install
->     the Support Tools:
-> 
->     1.
-> 
-> 
->     Insert the Windows 2000 CD-ROM into your CD-ROM drive.
+On 8/15/07, Reece Dunn <msclrhd@googlemail.com> wrote:
+>
+> On 15/08/07, Dmitry Kakurin wrote:
+> > Here are the facts:
+> >
+> > 'git branch --color' produces garbage:
+> > $ git branch --color
+> >   devel←[m
+> >   dima←[m
+> >   dmitryk←[m
+> > * ←[32mmaster←[m
+> >   mob←[m
+> >   next←[m
+> >
+> > 'git branch --color | cat' produces expected colored output.
+> >
+> > I've traced it down to printf statement in gdb and it sends the right
+> > esc-sequence.
+> > Where should I look next?
+>
+> Windows doesn't recognise the *nix printf colour codes.
+>
+> Piping through cat will be going through cygwin/mingw emulation,
+> translating the colour codes to the correct API calls.
 
-Indeed, that step right there will stop many users cold in their
-tracks.
-
-Who the hell has their Windows 2000 CD-ROM handy?  Or wants to open a
-CD-ROM drive?  Or wants to wait for a 40x CD-ROM to spin up and copy
-data?  Who even still has a CD-ROM drive connected to a computer?
-(I usually don't have any optical media drive attached...)
-
-Where's the damn URL to download setup.exe?  Where's the webpage
-with the Internet Explorer buffer overflow exploit to automatically
-install the software for the user?  Why doesn't it create a thousand
-icons on the desktop, obscuring the user's picture of their kitty?
-
-;-)
-
+That's my question. If there is a way to build cat.exe to do this kind
+of emulation under MinGW then I should be able to do the same for
+git.exe.
+I hope I just need to #define something while building Git.
+But what is it?
 -- 
-Shawn.
+- Dmitry
