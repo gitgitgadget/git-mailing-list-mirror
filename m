@@ -1,79 +1,63 @@
-From: Perrin Meyer <perrinmeyer@yahoo.com>
-Subject: 1.5.3-rc5 regression on OS X?
-Date: Wed, 15 Aug 2007 14:19:47 -0700 (PDT)
-Message-ID: <600399.61066.qm@web52807.mail.re2.yahoo.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [msysGit] Re: Need your help with MinGW Issue 17: --color options
+   don't work (produce garbage)
+Date: Wed, 15 Aug 2007 23:22:04 +0200
+Message-ID: <46C36E7C.1080501@dawes.za.net>
+References: <a1bbc6950708142329w4e0e3d7cq573c67dd3b28f03a@mail.gmail.com> <3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com> <Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 15 23:20:00 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 15 23:23:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILQHS-0002AB-Ms
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 23:19:55 +0200
+	id 1ILQKZ-0003Q4-Pf
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 23:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933616AbXHOVTu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 17:19:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934018AbXHOVTt
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 17:19:49 -0400
-Received: from web52807.mail.re2.yahoo.com ([206.190.48.250]:22655 "HELO
-	web52807.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S933616AbXHOVTt convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 17:19:49 -0400
-Received: (qmail 61292 invoked by uid 60001); 15 Aug 2007 21:19:47 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=xlfMv2JeH9zSZsACNEjgPO3d8e6RCGR2S6xSFhkiZ43LcknUHzhmKMVYzRqdg0UA7gCAMQBmvF/6Izt5E6olo1zLKFYUimGDNgjbqieILKS18CQlhxBzaj521PqmpPuuBHvz/qctzlDbjHDgTVnwaAJJhACEq7Ya1RAE+AH8Iak=;
-X-YMail-OSG: 27mylYkVM1nyKxs5QQcbEyjqJ2.EXvSDNJOJrdpdYKHa_zvVGPyi97akSU_1ZhhCkbk6CJfwQQ--
-Received: from [216.52.12.233] by web52807.mail.re2.yahoo.com via HTTP; Wed, 15 Aug 2007 14:19:47 PDT
-X-Mailer: YahooMailRC/651.48 YahooMailWebService/0.7.119
+	id S934285AbXHOVXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 17:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbXHOVXE
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 17:23:04 -0400
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:46187 "EHLO
+	spunkymail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1763531AbXHOVXB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 17:23:01 -0400
+Received: from [192.168.201.100] (dsl-146-27-164.telkomadsl.co.za [165.146.27.164])
+	by spunkymail-a18.g.dreamhost.com (Postfix) with ESMTP id BD88C5B53A;
+	Wed, 15 Aug 2007 14:22:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55950>
 
+Johannes Schindelin wrote:
 
-Hi,
+> Hmm.  Somehow I doubt that this hack works _outside_ of the Windows 
+> console.  I.e. if you call git in rxvt, it will fail, if you ssh into 
+> Windows, it will fail.
+> 
+> Ciao,
+> Dscho
+> 
 
-When I try to build and test 1.5.3-rc5 on my OS X box, I get a failure on "make test"
+I'd say that since Windows doesn't have the concept of terminfo or 
+terminal types, and since SSH is mostly only supported through 
+cygwin-style "hacks", (or F-Secure, but I have no experience with that) 
+that we should not be _too_ concerned about that.
 
-*   ok 82: 15 (fail) - must match A in O && A && B && O==A && O==B case
-* FAIL 83: 16 - A matches in one and B matches in another.
-        rm -f .git/index F16 &&
-            echo F16 >F16 &&
-            git update-index --add F16 &&
-            tree0=`git write-tree` &&
-            echo E16 >F16 &&
-            git update-index F16 &&
-            tree1=`git write-tree` &&
-            git read-tree -m $tree0 $tree1 $tree1 $tree0 &&
-            git ls-files --stage
-* failed 1 among 83 test(s)
-make[1]: *** [t1000-read-tree-m-3way.sh] Error 1
-make: *** [test] Error 2
+Users that *do* need to use rxvt or SSH should simply disable the color 
+mode, or alternatively, use the cygwin version. Color, while useful, is 
+hardly critical functionality.
 
+My R0.02.
 
-I was able to build and test git 1.5.2.4 fine, with no errors in the test suite. 
+Regards,
 
-I also just build 1.5.3-rc5 on a redhat box, with no errors in the testsuite. 
-
-My OS X box is a quad G5 running OS X 10.4.10, with gcc version: 
-
-perrin-meyers-power-mac-g5:~/GIT/git perrin$ gcc -v
-Using built-in specs.
-Target: powerpc-apple-darwin8
-Configured with: /private/var/tmp/gcc/gcc-5026.obj~19/src/configure --disable-checking --prefix=/usr --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-transform-name=/^[cg][^+.-]*$/s/$/-4.0/ --with-gxx-include-dir=/include/gcc/darwin/4.0/c++ --build=powerpc-apple-darwin8 --host=powerpc-apple-darwin8 --target=powerpc-apple-darwin8
-Thread model: posix
-gcc version 4.0.0 (Apple Computer, Inc. build 5026)
-
-I define "NO_EXPAT" when I build on OS X. 
-
-Am I doing something wrong?
-
-Thanks,
-
-Perrin
+Rogan
