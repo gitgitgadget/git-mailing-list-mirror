@@ -1,56 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-cvsexportcommit getting out of sync with CVS status requests
-Date: Wed, 15 Aug 2007 18:11:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0708151810000.19496@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <1187178510.13096.46.camel@murta.transitives.com>
- <1187182726.13096.50.camel@murta.transitives.com> <46C3218E.6020309@fs.ei.tum.de>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: [PATCH 1/2] Introduces xmkstemp()
+Date: Wed, 15 Aug 2007 13:17:04 -0300
+Organization: Mandriva
+Message-ID: <20070815131704.6cb76dbe@localhost>
+References: <20070814164453.400b9c55@localhost>
+	<1b46aba20708150811o3a6fa14ew72e925c93d158ec4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: alex.bennee@transitive.com, git@vger.kernel.org
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Wed Aug 15 18:11:16 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Carlos Rica" <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 18:17:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILLSl-0002Yq-2U
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:11:15 +0200
+	id 1ILLZ7-0005ME-If
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:17:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757362AbXHOQLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 12:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758214AbXHOQLI
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:11:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47151 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757066AbXHOQLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 12:11:07 -0400
-Received: (qmail invoked by alias); 15 Aug 2007 16:11:05 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp048) with SMTP; 15 Aug 2007 18:11:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19PWh0+DBlP2ltS6bG1hhic3JeLbe4Xq5rmVzAMW8
-	RyV//Tmt2J19M6
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <46C3218E.6020309@fs.ei.tum.de>
-X-Y-GMX-Trusted: 0
+	id S1757119AbXHOQRq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 12:17:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756965AbXHOQRq
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:17:46 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:36908 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757060AbXHOQRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 12:17:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 84E981A2BB;
+	Wed, 15 Aug 2007 13:17:40 -0300 (BRT)
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id wJ96K7RFngdc; Wed, 15 Aug 2007 13:17:35 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 0D00C1A2C3;
+	Wed, 15 Aug 2007 13:17:11 -0300 (BRT)
+In-Reply-To: <1b46aba20708150811o3a6fa14ew72e925c93d158ec4@mail.gmail.com>
+X-Mailer: Claws Mail 2.10.0 (GTK+ 2.11.6; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55917>
 
-Hi,
 
-On Wed, 15 Aug 2007, Simon 'corecode' Schubert wrote:
+ Hi Carlos,
 
-> Alex Bennee wrote:
-> > It looks like running a single CVS query for each file is the only
-> > solution.
-> 
-> I think internally CVS is doing single queries anyways.  At least that 
-> was my impression.
+Em Wed, 15 Aug 2007 17:11:02 +0200
+"Carlos Rica" <jasampler@gmail.com> escreveu:
 
-Why then was cvsexportcommit so much slower without 
-c56f0d9c661dc918a088e60d0ab69dd48019a9be?
+| 2007/8/14, Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>:
+| >
+| > This is a wrapper for mkstemp() that performs error checking and
+| > calls die() when an error occur.
+| 
+| I think that it is related with the git_mkstemp() function in path.c.
 
-Ciao,
-Dscho
+ Yeah, you right.
+
+| Perhaps we should use xmkstemp inside that function too, since
+| it is only used in diff.c and after the call it also dies when fd<0.
+
+ Actually, git_mkstemp() is also called by your builtin-verify-tag.c
+program and the function which calls it (run_gpg_verify()) doesn't
+die() on error.
+
+ This series is not supposed to change programs/design behaivor,
+hence I've chosen to not port the calls which doesn't explicit die
+on error.
+
+ But feel free to go ahead and port the others. ;)
+
+-- 
+Luiz Fernando N. Capitulino
