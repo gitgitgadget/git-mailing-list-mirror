@@ -1,63 +1,48 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [msysGit] Re: Need your help with MinGW Issue 17: --color options
-   don't work (produce garbage)
-Date: Wed, 15 Aug 2007 23:22:04 +0200
-Message-ID: <46C36E7C.1080501@dawes.za.net>
-References: <a1bbc6950708142329w4e0e3d7cq573c67dd3b28f03a@mail.gmail.com> <3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com> <Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 1.5.3-rc5 regression on OS X?
+Date: Wed, 15 Aug 2007 14:33:04 -0700
+Message-ID: <7vwsvwo54f.fsf@gitster.siamese.dyndns.org>
+References: <600399.61066.qm@web52807.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Reece Dunn <msclrhd@googlemail.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 15 23:23:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Perrin Meyer <perrinmeyer@yahoo.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 23:33:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILQKZ-0003Q4-Pf
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 23:23:08 +0200
+	id 1ILQUX-0007E2-LD
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 23:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934285AbXHOVXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 17:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbXHOVXE
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 17:23:04 -0400
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:46187 "EHLO
-	spunkymail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1763531AbXHOVXB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 17:23:01 -0400
-Received: from [192.168.201.100] (dsl-146-27-164.telkomadsl.co.za [165.146.27.164])
-	by spunkymail-a18.g.dreamhost.com (Postfix) with ESMTP id BD88C5B53A;
-	Wed, 15 Aug 2007 14:22:51 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>
+	id S1755741AbXHOVdT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 17:33:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755591AbXHOVdT
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 17:33:19 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:45526 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753824AbXHOVdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 17:33:18 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E0E67121F68;
+	Wed, 15 Aug 2007 17:33:35 -0400 (EDT)
+In-Reply-To: <600399.61066.qm@web52807.mail.re2.yahoo.com> (Perrin Meyer's
+	message of "Wed, 15 Aug 2007 14:19:47 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55951>
 
-Johannes Schindelin wrote:
+Perrin Meyer <perrinmeyer@yahoo.com> writes:
 
-> Hmm.  Somehow I doubt that this hack works _outside_ of the Windows 
-> console.  I.e. if you call git in rxvt, it will fail, if you ssh into 
-> Windows, it will fail.
-> 
-> Ciao,
-> Dscho
-> 
+> I was able to build and test git 1.5.2.4 fine, with no errors in the test suite. 
+>
+> I also just build 1.5.3-rc5 on a redhat box, with no errors in the testsuite. 
+The above sounds as if you built 1.5.2.4 on your Mac in not so
+recent past, and 1.5.3-rc5 on your Mac and RH recently.
 
-I'd say that since Windows doesn't have the concept of terminfo or 
-terminal types, and since SSH is mostly only supported through 
-cygwin-style "hacks", (or F-Secure, but I have no experience with that) 
-that we should not be _too_ concerned about that.
-
-Users that *do* need to use rxvt or SSH should simply disable the color 
-mode, or alternatively, use the cygwin version. Color, while useful, is 
-hardly critical functionality.
-
-My R0.02.
-
-Regards,
-
-Rogan
+Has anything changed on your Mac between the time you built
+1.5.2.4 and failed to pass the test for 1.5.3-rc5?
