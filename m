@@ -1,75 +1,120 @@
-From: Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
-Date: Wed, 15 Aug 2007 21:37:45 +0200
-Message-ID: <m3fy2kk2ra.fsf@maximus.localdomain>
-References: <1187026955.2688.4.camel@laptopd505.fenrus.org>
-	<1187037445.6628.98.camel@heimdal.trondhjem.org>
-	<1187054366.2757.0.camel@laptopd505.fenrus.org>
-	<46C10AA8.3090505@gmail.com>
-	<20070814102033.604c8695@the-village.bc.nu>
-	<46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
-	<46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost>
-	<alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org>
-	<20070814193333.GI21089@ftp.linux.org.uk>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Make git-cvsexportcommit "status" each file in turn
+Date: Wed, 15 Aug 2007 21:40:35 +0200
+Message-ID: <200708152140.36432.robin.rosenberg.lists@dewire.com>
+References: <1187184448.13096.54.camel@murta.transitives.com> <20070815140431.GC4550@xp.machine.xx> <1187195112.13096.71.camel@murta.transitives.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Joe Perches <joe@perches.com>,
-	Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org
-To: Al Viro <viro@ftp.linux.org.uk>
-X-From: git-owner@vger.kernel.org Wed Aug 15 21:38:01 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 21:39:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILOgq-0004q1-0E
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 21:38:00 +0200
+	id 1ILOiR-0005Ja-5d
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 21:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935634AbXHOThv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 15:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935263AbXHOThu
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 15:37:50 -0400
-Received: from khc.piap.pl ([195.187.100.11]:38834 "EHLO khc.piap.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935634AbXHOTht (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 15:37:49 -0400
-Received: by khc.piap.pl (Postfix, from userid 500)
-	id 0E52965652; Wed, 15 Aug 2007 21:37:46 +0200 (CEST)
-In-Reply-To: <20070814193333.GI21089@ftp.linux.org.uk> (Al Viro's message of "Tue, 14 Aug 2007 20:33:33 +0100")
+	id S1760663AbXHOTjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 15:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758221AbXHOTjV
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 15:39:21 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:17553 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1758734AbXHOTjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 15:39:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9D48B802850;
+	Wed, 15 Aug 2007 21:31:42 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 29181-04; Wed, 15 Aug 2007 21:31:42 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 30F6980019B;
+	Wed, 15 Aug 2007 21:31:42 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <1187195112.13096.71.camel@murta.transitives.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55941>
 
-Al Viro <viro@ftp.linux.org.uk> writes:
+onsdag 15 augusti 2007 skrev Alex Bennee:
+> On Wed, 2007-08-15 at 16:04 +0200, Peter Baumann wrote:
+> > On Wed, Aug 15, 2007 at 02:27:28PM +0100, Alex Bennee wrote:
+> > > Hi,
+> > > 
+> > > It turns out CVS doesn't always give the status output in the order
+> > > requested. According to my local CVS gurus this is a known CVS issue.
+> > <snip>
+> > I inlined the patch for easier commenting. Please inline further
+> > patches.
+> 
+> Will do. I assumed Evolution would do something sensible. My mistake :-(
+> 
+> > 
+> > > ---
+> > >  git-cvsexportcommit.perl |   30 ++++++++++++++++++++----------
+> > >  1 files changed, 20 insertions(+), 10 deletions(-)
+> > > 
+> > > diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+> > <snip>
+> > This is extremly wastefull, because it will spawn a CVS process for each 
+file.
+> > A better fix would be to parse the filename from the output of
+> > 'cvs status' and use that as input for $cvsstat.
+> > 
+> > (And/or you could use an hash instead of an array for 'cvsoutput', so
+> > you could double check that you only get the status for those files you
+> > asked for.)
+> 
+> I agree it's wasteful and could be done better however I'm no perl
+> hacker so I just went for something that was correct and worked. 
+> 
+> The path that is echoed later in the status output is however the CVS
+> file path which may not be directly related to the actual path in your
+> source tree. For example I have one status reported as:
+> 
+> $ cvs status src/proj_version
+> ===================================================================
+> File: proj_version      Status: Up-to-date
+> 
+>    Working revision:    1.1.380.1
+>    Repository revision: 
+1.1.380.1       /export/cvsroot/project/src/Attic/proj_version,v
+>    Sticky Tag:          ATAG (branch: 1.1.380)
+>    Sticky Date:         (none)
+>    Sticky Options:      (none)
+> 
+> This makes the matching more than a little problematic.
+CVS/Root contains the first part of the path. Just use the one found at the 
+top of the CVS checkout. Using CVS may be insane, but mixing different repos 
+in the same checkout is absolute madness.
 
-> I'm not suggesting something like fs.ext2@kernel.org with something
-> like majordomo allowing to add yourself to those,
+Then drop /Attic/ if present and the ,v at the end of the file name. Not 
+rocket science I'd say.
 
-Why not
+> It depends on how much people that use this script care about performance?
+We do although I rarely commit big patches so cvsexportcommit usually does 
+it's job in seconds for me. I also use the -u option and don't do any work in 
+the CVS checkout so performing status if just overhead for me. We might drop 
+it completely with a switch.
 
-> but something less
-> extreme in that direction might be worth thinking about...  Hell,
-> even simple
-> $ finger fs/minix/dir.c@cc.kernel.org
-> with majordomo-like interface for adding yourself to such lists
-> might solve most of those problems...
+> For my part it's a fire and forget script once I've finished my hacking
+> in a git tree so I don't mind it taking some time. I'm not particularly
+> minded to dig further in perl to make it faster unless there is a real
+> clamour - or perhaps someone with a bigger itch and more perl foo can
+> tackle it. 
 
-I think so.
+> 
+> In the meantime it does fix a bug in the script so I would say it's
+> applying.
+> 
 
-And you would be able to add yourself even if you're merely
-interested in something, not a maintainer.
+I suggest Junio wait a few days in case a real fix materializes.
 
-However I think the mailing lists could do better. Duplicate
-suppression, among other things.
-
-And they could eventually supersede the subsystem mailing lists
-we use today. Just use net@kernel.org or drivers.net@kernel.org.
--- 
-Krzysztof Halasa
+-- robin
