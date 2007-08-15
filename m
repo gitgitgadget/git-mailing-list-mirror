@@ -1,78 +1,64 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
+From: Perrin Meyer <perrinmeyer@yahoo.com>
 Subject: Re: 1.5.3-rc5 regression on OS X?
-Date: Wed, 15 Aug 2007 17:43:09 -0400
-Message-ID: <6081AC6E-4F76-4865-82FB-5F620ECB446F@silverinsanity.com>
-References: <600399.61066.qm@web52807.mail.re2.yahoo.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 15 Aug 2007 15:01:20 -0700 (PDT)
+Message-ID: <375487.35999.qm@web52802.mail.re2.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: Perrin Meyer <perrinmeyer@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 23:43:18 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 00:01:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILQe3-000240-H1
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 23:43:15 +0200
+	id 1ILQvf-000861-Hy
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 00:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863AbXHOVnL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 17:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755443AbXHOVnK
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 17:43:10 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:57698 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863AbXHOVnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 17:43:08 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 064191FFC230;
-	Wed, 15 Aug 2007 21:43:07 +0000 (UTC)
-In-Reply-To: <600399.61066.qm@web52807.mail.re2.yahoo.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757738AbXHOWBX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 18:01:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757776AbXHOWBW
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 18:01:22 -0400
+Received: from web52802.mail.re2.yahoo.com ([206.190.48.245]:30566 "HELO
+	web52802.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1757702AbXHOWBW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 18:01:22 -0400
+Received: (qmail 36153 invoked by uid 60001); 15 Aug 2007 22:01:20 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=E2w9PMjLOQMSKI1/V8WG98Ux7WS8/zr/LMWhHWDnkf9PbrqEqVQmG17kdDMSSIgl0ukPWGnyjGb8fw2Te9Vu5+RPf5BWGiqsGI4WsNeeYiomspG5fc8ZyGU65qCcx5CC1n213He+BQRudfuhlmo7ZkxrxKXA6lu2zcyMawGNcP8=;
+X-YMail-OSG: OQECvy4VM1luIgUzBuPh2n3M2eMN8.oXvX6.3Zs_TD10MehdjzrUfuuVb1qp6EWkM4qNdAI7CUnvdrTHtcEd4EwrltuNgRtrx0xoiLZA3RIAUwOFWCVmAuE6PLuqqR5qnpahsrAVlNB5gNU-
+Received: from [216.52.12.233] by web52802.mail.re2.yahoo.com via HTTP; Wed, 15 Aug 2007 15:01:20 PDT
+X-Mailer: YahooMailRC/651.48 YahooMailWebService/0.7.119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55955>
 
 
-On Aug 15, 2007, at 5:19 PM, Perrin Meyer wrote:
+Nothing has changed,, I just did a git checkout v1.5.2.4; make clean; make ; make test, and that same test passes. Then I did a git checkout v1.5.3-rc5 ; make clean ; make ; make test, and the same test fails. 
 
-> My OS X box is a quad G5 running OS X 10.4.10, with gcc version:
+I'll try updating to a newer version of Xcode and see if that helps. 
+
+Perrin
+
+
+----- Original Message ----
+From: Junio C Hamano <gitster@pobox.com>
+To: Perrin Meyer <perrinmeyer@yahoo.com>
+Cc: git@vger.kernel.org
+Sent: Wednesday, August 15, 2007 2:33:04 PM
+Subject: Re: 1.5.3-rc5 regression on OS X?
+
+Perrin Meyer <perrinmeyer@yahoo.com> writes:
+
+> I was able to build and test git 1.5.2.4 fine, with no errors in the test suite. 
 >
-> perrin-meyers-power-mac-g5:~/GIT/git perrin$ gcc -v
-> Using built-in specs.
-> Target: powerpc-apple-darwin8
-> Configured with: /private/var/tmp/gcc/gcc-5026.obj~19/src/configure  
-> --disable-checking --prefix=/usr --mandir=/share/man --enable- 
-> languages=c,objc,c++,obj-c++ --program-transform-name=/^[cg][^+.-]* 
-> $/s/$/-4.0/ --with-gxx-include-dir=/include/gcc/darwin/4.0/c++ -- 
-> build=powerpc-apple-darwin8 --host=powerpc-apple-darwin8 -- 
-> target=powerpc-apple-darwin8
-> Thread model: posix
-> gcc version 4.0.0 (Apple Computer, Inc. build 5026)
->
-> I define "NO_EXPAT" when I build on OS X.
->
-> Am I doing something wrong?
+> I also just build 1.5.3-rc5 on a redhat box, with no errors in the testsuite. 
+The above sounds as if you built 1.5.2.4 on your Mac in not so
+recent past, and 1.5.3-rc5 on your Mac and RH recently.
 
-I believe you have an old version of the Developer Tools.  I have no  
-issues with that test on my MacBook Pro (2.16 GHz Intel Core Duo).
-
-$ gcc -v
-Using built-in specs.
-Target: i686-apple-darwin8
-Configured with: /private/var/tmp/gcc/gcc-5367.obj~1/src/configure -- 
-disable-checking -enable-werror --prefix=/usr --mandir=/share/man -- 
-enable-languages=c,objc,c++,obj-c++ --program-transform-name=/^[cg] 
-[^.-]*$/s/$/-4.0/ --with-gxx-include-dir=/include/c++/4.0.0 --with- 
-slibdir=/usr/lib --build=powerpc-apple-darwin8 --with-arch=nocona -- 
-with-tune=generic --program-prefix= --host=i686-apple-darwin8 -- 
-target=i686-apple-darwin8
-Thread model: posix
-gcc version 4.0.1 (Apple Computer, Inc. build 5367)
-
-I don't use NO_EXPAT, but that shouldn't affect read-tree at all.
-
-~~ Brian
+Has anything changed on your Mac between the time you built
+1.5.2.4 and failed to pass the test for 1.5.3-rc5?
