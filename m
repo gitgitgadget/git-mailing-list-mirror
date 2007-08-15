@@ -1,88 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: call external editor from git-gui?
-Date: Wed, 15 Aug 2007 20:38:33 +0200
-Message-ID: <86ir7g4p92.fsf@lola.quinscape.zz>
-References: <20070810153008.GA31759@diana.vm.bytemark.co.uk>
-	<20070814045511.GF27913@spearce.org>
-	<20070814070000.GA12052@diana.vm.bytemark.co.uk>
-	<20070815182228.GA3419@efreet.light.src>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: performance on repack
+Date: Wed, 15 Aug 2007 15:00:14 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0708151453390.5415@xanadu.home>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+ <20070812103338.GA7763@auto.tuwien.ac.at>
+ <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
+ <20070814031236.GC27913@spearce.org>
+ <alpine.LFD.0.999.0708141634160.5415@xanadu.home>
+ <20070815053231.GJ27913@spearce.org>
+ <9e4733910708150808x39241071j1a4012f16cd26ef8@mail.gmail.com>
+ <20070815171152.GA15155@auto.tuwien.ac.at>
+ <9e4733910708151138x2b267dc6w27c1bc8d948e5633@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 15 20:39:28 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 21:00:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILNmC-0006dD-A2
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 20:39:28 +0200
+	id 1ILO6a-0006KO-14
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 21:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbXHOSix convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Aug 2007 14:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757358AbXHOSix
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 14:38:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:40643 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760873AbXHOSiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 14:38:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ILNlQ-0000Zu-Kr
-	for git@vger.kernel.org; Wed, 15 Aug 2007 20:38:40 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Aug 2007 20:38:40 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Aug 2007 20:38:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:G/80eN8XTHUPJxTe5EtcnxpjUBs=
+	id S1754655AbXHOTAW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 15:00:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754102AbXHOTAV
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 15:00:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:39665 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149AbXHOTAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 15:00:18 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JMT00EI1WSE7IR0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 15 Aug 2007 15:00:15 -0400 (EDT)
+In-reply-to: <9e4733910708151138x2b267dc6w27c1bc8d948e5633@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55937>
 
-Jan Hudec <bulb@ucw.cz> writes:
+On Wed, 15 Aug 2007, Jon Smirl wrote:
 
-> On Tue, Aug 14, 2007 at 09:00:00 +0200, Karl Hasselstr=F6m wrote:
->> On 2007-08-14 00:55:11 -0400, Shawn O. Pearce wrote:
->> > Spawning the user's preferred editor would be a nice way to get so=
-me
->> > of that.
->>=20
->> Mmm. I wouldn't call it a _nice_ way: popping up an external program
->> just to get the right text editing behavior. More like the _only_ wa=
-y,
->> if the user is picky enough.
->
-> It might actually have a rather serious twist. Often the editor for
-> git-commit would use the terminal git-commit runs on. But for git-gui=
- you may
-> not have any terminal (running git-gui from context menu of some file
-> manager) and even if you do, the user does not expect it to be used. =
-So the
-> user may -- and quite often will -- want different editors for runnin=
-g from
-> git-gui and git-commit.
+> On 8/15/07, Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> > git-pack-objects knows the order, in which it will use the objects.  A
+> > seperate thread could pre-read the next object and wait until the main
+> > thread starts processing it. After the read is complete, another
+> > thread could start computing the delta index.
+> 
+> The hope is that the new adaptive read ahead code in the kernel will
+> get this right and you won't need the second thread. Letting the
+> kernel handle the read ahead will dynamically scale as other demands
+> are made on the host. There's effectively only one read ahead cache in
+> the system, only the kernel really knows how to divide it up between
+> competing apps.
 
-The usual convention (though _very_ hard to find anywhere explicitly,
-so it might more often than not be ignored) is that $VISUAL points to
-an editor that requires a tty to work on, while $EDITOR might get
-along without one.
+No read ahead will ever help the delta search phase.  Objects listed for 
+deltification against each other are sorted in a way that results in 
+reads from completely random location in the object store.
 
-So one uses VISUAL in preference of EDITOR on ttys/proper terminals,
-but only EDITOR when without one.  A call from git-gui would probably
-fall in the second category.  A call from tig, in contrast, in the
-first category.
+Normally the delta search phase is so compute intensive that the read 
+shouldn't matter much.
 
-The GIT_EDITOR variable has no way of expressing this difference,
-though.  And I doubt that many people remember this.  I googled around
-but failed to come up with a useful reference (of course, both
-variable names being common words does not exactly help).
 
---=20
-David Kastrup
+Nicolas
