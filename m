@@ -1,99 +1,115 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
-Subject: Re: [PATCH] Make git-cvsexportcommit "status" each file in turn
-Date: Wed, 15 Aug 2007 17:25:12 +0100
-Organization: Insert joke here
-Message-ID: <1187195112.13096.71.camel@murta.transitives.com>
-References: <1187184448.13096.54.camel@murta.transitives.com>
-	 <20070815140431.GC4550@xp.machine.xx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix initialization of a bare repository
+Date: Wed, 15 Aug 2007 18:25:44 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0708151821260.19496@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <7v643hrnh1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 15 18:24:54 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 18:26:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILLfx-00009F-CP
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:24:53 +0200
+	id 1ILLhA-00013f-Kt
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:26:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763156AbXHOQYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 12:24:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762767AbXHOQYa
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:24:30 -0400
-Received: from mx.transitive.com ([217.207.128.220]:57976 "EHLO
-	pennyblack.transitives.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1761811AbXHOQY3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 12:24:29 -0400
-Received: from [192.168.2.164] (helo=[192.168.2.164])
-	by pennyblack.transitives.com with esmtp (Exim 4.50)
-	id 1ILLWQ-00011y-4F; Wed, 15 Aug 2007 16:15:02 +0000
-In-Reply-To: <20070815140431.GC4550@xp.machine.xx>
-X-Mailer: Evolution 2.10.1 
+	id S1763213AbXHOQZt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 12:25:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762454AbXHOQZs
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:25:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41210 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762625AbXHOQZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 12:25:47 -0400
+Received: (qmail invoked by alias); 15 Aug 2007 16:25:45 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp040) with SMTP; 15 Aug 2007 18:25:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HJvlYPMeHip9ox7odmu8RBcLveOYumXZlOQVXGv
+	Ft6bb9CAv8zv/x
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v643hrnh1.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55920>
 
-On Wed, 2007-08-15 at 16:04 +0200, Peter Baumann wrote:
-> On Wed, Aug 15, 2007 at 02:27:28PM +0100, Alex Bennee wrote:
-> > Hi,
-> > 
-> > It turns out CVS doesn't always give the status output in the order
-> > requested. According to my local CVS gurus this is a known CVS issue.
-> <snip>
-> I inlined the patch for easier commenting. Please inline further
-> patches.
 
-Will do. I assumed Evolution would do something sensible. My mistake :-(
+The recent work-tree cleanup broke it; core.bare was set to false
+erroneously when calling "git --bare init".  Coincidentally, this
+fixes "git clone --bare", too.
 
-> 
-> > ---
-> >  git-cvsexportcommit.perl |   30 ++++++++++++++++++++----------
-> >  1 files changed, 20 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-> <snip>
-> This is extremly wastefull, because it will spawn a CVS process for each file.
-> A better fix would be to parse the filename from the output of
-> 'cvs status' and use that as input for $cvsstat.
-> 
-> (And/or you could use an hash instead of an array for 'cvsoutput', so
-> you could double check that you only get the status for those files you
-> asked for.)
+Noticed by Junio Hamano.
 
-I agree it's wasteful and could be done better however I'm no perl
-hacker so I just went for something that was correct and worked. 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-The path that is echoed later in the status output is however the CVS
-file path which may not be directly related to the actual path in your
-source tree. For example I have one status reported as:
+	On Wed, 15 Aug 2007, Junio C Hamano wrote:
 
-$ cvs status src/proj_version
-===================================================================
-File: proj_version      Status: Up-to-date
+	> It appears that with 1.5.3-rc5
+	> 
+	> 	$ git clone --bare $origin_url target.git
+	> 
+	> does not set "core.bare = true" in target.git/config.  We used
+	> to, at least with 1.5.2.2.  I am strongly suspecting that this
+	> is another fallout from the worktree series.
 
-   Working revision:    1.1.380.1
-   Repository revision: 1.1.380.1       /export/cvsroot/project/src/Attic/proj_version,v
-   Sticky Tag:          ATAG (branch: 1.1.380)
-   Sticky Date:         (none)
-   Sticky Options:      (none)
+	Sorry.  Yes, this is another fallout.
 
-This makes the matching more than a little problematic.
+	Maybe this is not enough, though.  Maybe we need to check if the 
+	GIT_DIR=. too, since 7efeb8f0 would set the work tree to ".", too.
 
-It depends on how much people that use this script care about performance?
+	But maybe this would merit a separate fix in set_work_tree(), like
 
-For my part it's a fire and forget script once I've finished my hacking
-in a git tree so I don't mind it taking some time. I'm not particularly
-minded to dig further in perl to make it faster unless there is a real
-clamour - or perhaps someone with a bigger itch and more perl foo can
-tackle it. 
+		if (!strcmp(getenv(GIT_DIR_ENVIRONMENT), ".")) {
+			inside_work_tree = 0;
+			return NULL;
+		}
 
-In the meantime it does fix a bug in the script so I would say it's
-applying.
+	Hmm?
 
+ builtin-init-db.c |   13 ++++++++-----
+ git.c             |    1 +
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 75fb227..2e45a7e 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -302,11 +302,14 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 			usage(init_db_usage);
+ 	}
+ 
+-	git_work_tree_cfg = xcalloc(PATH_MAX, 1);
+-	if (!getcwd(git_work_tree_cfg, PATH_MAX))
+-		die ("Cannot access current working directory.");
+-	if (access(get_git_work_tree(), X_OK))
+-		die ("Cannot access work tree '%s'", get_git_work_tree());
++	if (!is_bare_repository_cfg) {
++		git_work_tree_cfg = xcalloc(PATH_MAX, 1);
++		if (!getcwd(git_work_tree_cfg, PATH_MAX))
++			die ("Cannot access current working directory.");
++		if (access(get_git_work_tree(), X_OK))
++			die ("Cannot access work tree '%s'",
++					get_git_work_tree());
++	}
+ 
+ 	/*
+ 	 * Set up the default .git directory contents
+diff --git a/git.c b/git.c
+index 1bf2744..f0062a0 100644
+--- a/git.c
++++ b/git.c
+@@ -100,6 +100,7 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 		} else if (!strcmp(cmd, "--bare")) {
+ 			static char git_dir[PATH_MAX+1];
+ 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 1);
++			is_bare_repository_cfg = 1;
+ 		} else if (!strcmp(cmd, "-2") ||
+ 				!strcmp(cmd, "--redirect-stderr")) {
+ 			if (dup2(1, 2) < 0)
 -- 
-Alex, homepage: http://www.bennee.com/~alex/
-Blessed is he who has reached the point of no return and knows it, for
-he shall enjoy living. -- W. C. Bennett
+1.5.1.rc1.4887.ga4a43-dirty
