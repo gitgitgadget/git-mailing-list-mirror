@@ -1,57 +1,49 @@
-From: Salikh Zakirov <salikh@gmail.com>
-Subject: Re: Restoring files from old commits
-Date: Thu, 16 Aug 2007 02:28:42 +0900
-Message-ID: <f9vd4l$dj6$1@sea.gmane.org>
-References: <4698BD17.5080205@random-state.net>	 <20070714123754.GA29622@piper.oerlikon.madduck.net>	 <20070714143233.GC2544@steel.home>	 <7vbqeeizue.fsf@assigned-by-dhcp.cox.net>	 <20070715084141.GA2568@steel.home> <6bcc356f0708151022v6cb8c348nb19690c81e489c5d@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: git-svn fetch updating master
+Date: Wed, 15 Aug 2007 20:12:28 +0200
+Organization: glandium.org
+Message-ID: <20070815181228.GA6363@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 15 19:29:21 2007
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 15 20:13:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILMgK-0001Wd-L3
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 19:29:21 +0200
+	id 1ILNMm-0003BZ-Ji
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 20:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757362AbXHOR3Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Aug 2007 13:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756297AbXHOR3Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 13:29:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:50394 "EHLO ciao.gmane.org"
+	id S1754146AbXHOSNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 14:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbXHOSNH
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 14:13:07 -0400
+Received: from vawad.err.no ([85.19.200.177]:57586 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753801AbXHOR3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 13:29:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ILMg5-0000WN-PR
-	for git@vger.kernel.org; Wed, 15 Aug 2007 19:29:05 +0200
-Received: from 221x115x75x108.ap221.ftth.ucom.ne.jp ([221.115.75.108])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Aug 2007 19:29:05 +0200
-Received: from salikh by 221x115x75x108.ap221.ftth.ucom.ne.jp with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Aug 2007 19:29:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 221x115x75x108.ap221.ftth.ucom.ne.jp
-User-Agent: Thunderbird 2.0.0.4 (X11/20070708)
-In-Reply-To: <6bcc356f0708151022v6cb8c348nb19690c81e489c5d@mail.gmail.com>
+	id S1758423AbXHOSNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 14:13:06 -0400
+Received: from aputeaux-153-1-87-165.w86-205.abo.wanadoo.fr ([86.205.105.165] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1ILNMX-0004HC-RB
+	for git@vger.kernel.org; Wed, 15 Aug 2007 20:13:00 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1ILNM4-0001f3-5E
+	for git@vger.kernel.org; Wed, 15 Aug 2007 20:12:28 +0200
+Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55931>
 
-Nikodemus Siivola =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> So what I'd like is something like
->=20
->  git cat-path <commit> <path-in-the-tree-referenced-by-that-commit>
->=20
-> Does this exist, or is this scripting time?
+Hi,
 
-Have you tried
+I was wondering why the master branch was hardcoded to be updated in
+post_fetch_checkout() in git-svn. Why not allow to use another branch ?
 
-   git show <commit>:<path>
-
-?
+Mike
