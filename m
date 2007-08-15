@@ -1,64 +1,66 @@
-From: Perrin Meyer <perrinmeyer@yahoo.com>
-Subject: Re: 1.5.3-rc5 regression on OS X?
-Date: Wed, 15 Aug 2007 15:01:20 -0700 (PDT)
-Message-ID: <375487.35999.qm@web52802.mail.re2.yahoo.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [msysGit] Re: Need your help with MinGW Issue 17: --color options
+ don't work (produce garbage)
+Date: Thu, 16 Aug 2007 00:04:19 +0200
+Message-ID: <46C37863.4020203@dawes.za.net>
+References: <a1bbc6950708142329w4e0e3d7cq573c67dd3b28f03a@mail.gmail.com>	<3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com>	<Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>	<46C36E7C.1080501@dawes.za.net> <7vsl6ko51b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 00:01:29 2007
+X-From: git-owner@vger.kernel.org Thu Aug 16 00:05:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILQvf-000861-Hy
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 00:01:27 +0200
+	id 1ILQz7-0000nm-CV
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 00:05:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757738AbXHOWBX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 18:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757776AbXHOWBW
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 18:01:22 -0400
-Received: from web52802.mail.re2.yahoo.com ([206.190.48.245]:30566 "HELO
-	web52802.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757702AbXHOWBW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 18:01:22 -0400
-Received: (qmail 36153 invoked by uid 60001); 15 Aug 2007 22:01:20 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=E2w9PMjLOQMSKI1/V8WG98Ux7WS8/zr/LMWhHWDnkf9PbrqEqVQmG17kdDMSSIgl0ukPWGnyjGb8fw2Te9Vu5+RPf5BWGiqsGI4WsNeeYiomspG5fc8ZyGU65qCcx5CC1n213He+BQRudfuhlmo7ZkxrxKXA6lu2zcyMawGNcP8=;
-X-YMail-OSG: OQECvy4VM1luIgUzBuPh2n3M2eMN8.oXvX6.3Zs_TD10MehdjzrUfuuVb1qp6EWkM4qNdAI7CUnvdrTHtcEd4EwrltuNgRtrx0xoiLZA3RIAUwOFWCVmAuE6PLuqqR5qnpahsrAVlNB5gNU-
-Received: from [216.52.12.233] by web52802.mail.re2.yahoo.com via HTTP; Wed, 15 Aug 2007 15:01:20 PDT
-X-Mailer: YahooMailRC/651.48 YahooMailWebService/0.7.119
+	id S1757804AbXHOWE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 18:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758169AbXHOWE6
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 18:04:58 -0400
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:34963 "EHLO
+	spunkymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757661AbXHOWE5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 18:04:57 -0400
+Received: from [192.168.201.100] (dsl-146-27-164.telkomadsl.co.za [165.146.27.164])
+	by spunkymail-a5.g.dreamhost.com (Postfix) with ESMTP id C472E14D6B0;
+	Wed, 15 Aug 2007 15:04:50 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vsl6ko51b.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55956>
 
+Junio C Hamano wrote:
+> Rogan Dawes <lists@dawes.za.net> writes:
+> 
+>> Users that *do* need to use rxvt or SSH should simply disable the
+>> color mode, or alternatively, use the cygwin version. Color, while
+>> useful, is hardly critical functionality.
+> 
+> Heh, that almost suggests that the native Windows command.com
+> support can disable the color without upsetting anybody ;-)
+> 
 
-Nothing has changed,, I just did a git checkout v1.5.2.4; make clean; make ; make test, and that same test passes. Then I did a git checkout v1.5.3-rc5 ; make clean ; make ; make test, and the same test fails. 
+If that is the easiest way, yes.
 
-I'll try updating to a newer version of Xcode and see if that helps. 
+I *do* think that trying to get color working on the DOS cmdline is a 
+worthy goal. I just don't think it is worth overcomplicating the issue 
+and trying to handle rare corner cases such as someone SSHing into a 
+Windows box, or running CMD inside rxvt.
 
-Perrin
+One approach that might be more compatible with the existing escape code 
+approach is to define the appropriate ANSI color escape sequences. Ah, a 
+bit more googling shows that cmd.exe doesn't handle ANSI sequences in 
+Windows NT and later.
 
+Regards,
 
------ Original Message ----
-From: Junio C Hamano <gitster@pobox.com>
-To: Perrin Meyer <perrinmeyer@yahoo.com>
-Cc: git@vger.kernel.org
-Sent: Wednesday, August 15, 2007 2:33:04 PM
-Subject: Re: 1.5.3-rc5 regression on OS X?
-
-Perrin Meyer <perrinmeyer@yahoo.com> writes:
-
-> I was able to build and test git 1.5.2.4 fine, with no errors in the test suite. 
->
-> I also just build 1.5.3-rc5 on a redhat box, with no errors in the testsuite. 
-The above sounds as if you built 1.5.2.4 on your Mac in not so
-recent past, and 1.5.3-rc5 on your Mac and RH recently.
-
-Has anything changed on your Mac between the time you built
-1.5.2.4 and failed to pass the test for 1.5.3-rc5?
+Rogan
