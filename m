@@ -1,64 +1,59 @@
-From: Stefan Richter <stefanr@s5r6.in-berlin.de>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch -	scripts/get_maintainer.pl
-Date: Wed, 15 Aug 2007 11:39:40 +0200
-Message-ID: <46C2C9DC.9030307@s5r6.in-berlin.de>
-References: <1186984174.10249.7.camel@localhost>	 <200708131933.10125.m.kozlowski@tuxland.pl>	 <1187026955.2688.4.camel@laptopd505.fenrus.org>	 <1187037445.6628.98.camel@heimdal.trondhjem.org>	 <1187054366.2757.0.camel@laptopd505.fenrus.org>	 <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu>	 <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>	 <7vwsvx8twx.fsf@assigned-by-dhcp.cox.net> <1187143925.32555.208.camel@localhost>
+From: David Kastrup <dak@gnu.org>
+Subject: Multiple branches and git-svn
+Date: Wed, 15 Aug 2007 12:17:15 +0200
+Message-ID: <864pj16r10.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 11:40:24 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 15 12:17:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILFMV-00058t-TE
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 11:40:24 +0200
+	id 1ILFwl-0007aQ-3M
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 12:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753535AbXHOJjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 05:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbXHOJjm
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 05:39:42 -0400
-Received: from hp3.statik.tu-cottbus.de ([141.43.120.68]:37545 "EHLO
-	hp3.statik.tu-cottbus.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791AbXHOJjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 05:39:41 -0400
-Received: from [141.43.120.89] (ap10.statik.tu-cottbus.de [141.43.120.89])
-	by hp3.statik.tu-cottbus.de (Postfix) with ESMTP id 2A53E396EC;
-	Wed, 15 Aug 2007 11:39:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4
-In-Reply-To: <1187143925.32555.208.camel@localhost>
+	id S1751605AbXHOKR0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 06:17:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751616AbXHOKRZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 06:17:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:43895 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751526AbXHOKRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 06:17:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ILFwH-0003Ib-MB
+	for git@vger.kernel.org; Wed, 15 Aug 2007 12:17:21 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Aug 2007 12:17:21 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Aug 2007 12:17:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:5FK6Gn8pXUjtAH98JcmWk0JpWf0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55891>
 
-Joe Perches wrote:
-> On Tue, 2007-08-14 at 18:31 -0700, Junio C Hamano wrote:
->>    On the other hand, git-send-email _is_ all about sending it
->>    out, and it needs to know who your patch should reach.  I
->>    think it makes sense to have one script that,
-[...]
 
-> Yes please.
-> 
-> The LK MAINTAINERS file is ugly.
-> 
-> Might there be a git portable way to "find"?
+After having had several embarrassing occurences with git-svn dcommit,
+I think it would not be amiss to mention in the docs just how git-svn
+happens to figure out which Subversion remote it is associated with.
 
-Note, maintainer contacts
-  - should be available to patch submitters and
-  - must be available to *problem reporters*
-without having to have git and a .git repo.
+One surprising relevation was that this association changed after a
+git-rebase.
+
+It may be a general git thing, or it may be git-svn specific, but it
+was not exactly what I expected.  And the docs were not really that
+helpful.
+
+In particular, man git-svn is completely silent about this.
+
 -- 
-Stefan Richter
--=====-=-=== =--- -====
-http://arcgraph.de/sr/
+David Kastrup
