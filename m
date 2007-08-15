@@ -1,124 +1,99 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git submodule init and redundant data in .gitmodules/.git/config
-Date: Wed, 15 Aug 2007 18:20:05 +0200
-Message-ID: <20070815162005.GA18463@piper.oerlikon.madduck.net>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Re: [PATCH] Make git-cvsexportcommit "status" each file in turn
+Date: Wed, 15 Aug 2007 17:25:12 +0100
+Organization: Insert joke here
+Message-ID: <1187195112.13096.71.camel@murta.transitives.com>
+References: <1187184448.13096.54.camel@murta.transitives.com>
+	 <20070815140431.GC4550@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 15 18:20:22 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 15 18:24:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILLbX-0006R7-R5
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:20:20 +0200
+	id 1ILLfx-00009F-CP
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759121AbXHOQUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 12:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759193AbXHOQUQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:20:16 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:54702 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759188AbXHOQUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 12:20:14 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id B9DC4895D90
-	for <git@vger.kernel.org>; Wed, 15 Aug 2007 18:20:06 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 16701-10 for <git@vger.kernel.org>;
-	Wed, 15 Aug 2007 18:20:06 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 87422895D8A
-	for <git@vger.kernel.org>; Wed, 15 Aug 2007 18:20:06 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id C6FCB9F171
-	for <git@vger.kernel.org>; Wed, 15 Aug 2007 18:20:05 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 9B86E43F9; Wed, 15 Aug 2007 18:20:05 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1763156AbXHOQYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 12:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762767AbXHOQYa
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:24:30 -0400
+Received: from mx.transitive.com ([217.207.128.220]:57976 "EHLO
+	pennyblack.transitives.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1761811AbXHOQY3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 12:24:29 -0400
+Received: from [192.168.2.164] (helo=[192.168.2.164])
+	by pennyblack.transitives.com with esmtp (Exim 4.50)
+	id 1ILLWQ-00011y-4F; Wed, 15 Aug 2007 16:15:02 +0000
+In-Reply-To: <20070815140431.GC4550@xp.machine.xx>
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55919>
 
+On Wed, 2007-08-15 at 16:04 +0200, Peter Baumann wrote:
+> On Wed, Aug 15, 2007 at 02:27:28PM +0100, Alex Bennee wrote:
+> > Hi,
+> > 
+> > It turns out CVS doesn't always give the status output in the order
+> > requested. According to my local CVS gurus this is a known CVS issue.
+> <snip>
+> I inlined the patch for easier commenting. Please inline further
+> patches.
 
---3V7upXqbjpZ4EhLz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Will do. I assumed Evolution would do something sensible. My mistake :-(
 
-Hi,
+> 
+> > ---
+> >  git-cvsexportcommit.perl |   30 ++++++++++++++++++++----------
+> >  1 files changed, 20 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+> <snip>
+> This is extremly wastefull, because it will spawn a CVS process for each file.
+> A better fix would be to parse the filename from the output of
+> 'cvs status' and use that as input for $cvsstat.
+> 
+> (And/or you could use an hash instead of an array for 'cvsoutput', so
+> you could double check that you only get the status for those files you
+> asked for.)
 
-I am starting to learn submodules and hit the first state of
-confusion when I encountered git-submodule init:
+I agree it's wasteful and could be done better however I'm no perl
+hacker so I just went for something that was correct and worked. 
 
-After git-submodule add, I find in my repository a .gitmodules file
-as well as the newly-cloned submodule. I can call git-submodule
-status on it to get the HEAD hash. The .gitmodules file has a stanza
-for each submodule, linking remote url to local path, e.g.:
+The path that is echoed later in the status output is however the CVS
+file path which may not be directly related to the actual path in your
+source tree. For example I have one status reported as:
 
-  [submodule "foo"]
-    path =3D foo
-    url =3D ../foo.git
+$ cvs status src/proj_version
+===================================================================
+File: proj_version      Status: Up-to-date
 
-The manpage then talks about git-submodule init:
+   Working revision:    1.1.380.1
+   Repository revision: 1.1.380.1       /export/cvsroot/project/src/Attic/proj_version,v
+   Sticky Tag:          ATAG (branch: 1.1.380)
+   Sticky Date:         (none)
+   Sticky Options:      (none)
 
-    init
-      Initialize the submodules, i.e. register in .git/config each
-      submodule name and url found in .gitmodules. The key used in
-      .git/config is submodule.$name.url. This command does not
-      alter existing information in .git/config.
+This makes the matching more than a little problematic.
 
-When I run git-submodule init, the following stanza gets added to
-=2Egit/config:
+It depends on how much people that use this script care about performance?
 
-  [submodule "foo"]
-    url =3D ../foo.git
+For my part it's a fire and forget script once I've finished my hacking
+in a git tree so I don't mind it taking some time. I'm not particularly
+minded to dig further in perl to make it faster unless there is a real
+clamour - or perhaps someone with a bigger itch and more perl foo can
+tackle it. 
 
-Unless I call init, I cannot use git-submodule update.
+In the meantime it does fix a bug in the script so I would say it's
+applying.
 
-But looking at the two stanzas, it strikes me that the remote url of
-the submodule is duplicated and detached, creating redundant data
-which may become desynchronised.
-
-Why is this?
-
-What is the reason for git-submodule init and moving the data to
-=2Egit/config?
-
-Thanks,
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"it is only the modern that ever becomes old-fashioned."=20
-                                                        -- oscar wilde
-=20
-spamtraps: madduck.bogus@madduck.net
-
---3V7upXqbjpZ4EhLz
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGwye1IgvIgzMMSnURAkhXAKDTtuLKBLYbfdCYKKvmCja6LMgKggCfSk08
-QX0BhO94YrRcBTYs6zYSySM=
-=iRQk
------END PGP SIGNATURE-----
-
---3V7upXqbjpZ4EhLz--
+-- 
+Alex, homepage: http://www.bennee.com/~alex/
+Blessed is he who has reached the point of no return and knows it, for
+he shall enjoy living. -- W. C. Bennett
