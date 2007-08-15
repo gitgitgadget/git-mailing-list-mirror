@@ -1,136 +1,94 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
-Date: Wed, 15 Aug 2007 03:19:09 +0200
-Message-ID: <46C2548D.80605@gmail.com>
-References: <1187026955.2688.4.camel@laptopd505.fenrus.org> <1187037445.6628.98.camel@heimdal.trondhjem.org> <1187054366.2757.0.camel@laptopd505.fenrus.org> <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu> <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org> <20070814193333.GI21089@ftp.linux.org.uk>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: performance on repack
+Date: Tue, 14 Aug 2007 21:59:36 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0708142127350.5415@xanadu.home>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+ <20070812103338.GA7763@auto.tuwien.ac.at>
+ <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
+ <20070814031236.GC27913@spearce.org>
+ <alpine.LFD.0.999.0708141634160.5415@xanadu.home>
+ <9e4733910708141820n9a09f08h6e104b7469f63375@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Joe Perches <joe@perches.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org
-To: Al Viro <viro@ftp.linux.org.uk>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1761407AbXHOBqZ@vger.kernel.org Wed Aug 15 03:46:27 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1761407AbXHOBqZ@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 03:59:46 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IL7xr-0005ki-BK
-	for glk-linux-kernel-3@gmane.org; Wed, 15 Aug 2007 03:46:27 +0200
+	id 1IL8Aj-0008Ve-Bh
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 03:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761407AbXHOBqZ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 14 Aug 2007 21:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758154AbXHOBpz
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Tue, 14 Aug 2007 21:45:55 -0400
-Received: from smtpq2.tilbu1.nb.home.nl ([213.51.146.201]:35814 "EHLO
-	smtpq2.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763994AbXHOBpt (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 14 Aug 2007 21:45:49 -0400
-Received: from [213.51.146.188] (port=54379 helo=smtp3.tilbu1.nb.home.nl)
-	by smtpq2.tilbu1.nb.home.nl with esmtp (Exim 4.30)
-	id 1IL7x7-0002Gm-Bd; Wed, 15 Aug 2007 03:45:41 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:60449 helo=[192.168.0.3])
-	by smtp3.tilbu1.nb.home.nl with esmtp (Exim 4.30)
-	id 1IL7b8-0005FM-JX; Wed, 15 Aug 2007 03:22:58 +0200
-User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-In-Reply-To: <20070814193333.GI21089@ftp.linux.org.uk>
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1757709AbXHOB7l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Aug 2007 21:59:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbXHOB7l
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Aug 2007 21:59:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:39601 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756530AbXHOB7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2007 21:59:40 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JMS00LOULJELH40@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 14 Aug 2007 21:59:39 -0400 (EDT)
+In-reply-to: <9e4733910708141820n9a09f08h6e104b7469f63375@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55873>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55874>
 
-On 08/14/2007 09:33 PM, Al Viro wrote:
+On Tue, 14 Aug 2007, Jon Smirl wrote:
 
-> FWIW, I suspect that we are looking at that from the wrong POV.  If
-> that's about "who ought to be Cc'd on the issues dealing with <list
-> of pathnames>", why does it have to be tied to "who is maintainer for
-> <pathname>"?
+> On 8/14/07, Nicolas Pitre <nico@cam.org> wrote:
+> > On Mon, 13 Aug 2007, Shawn O. Pearce wrote:
+> >
+> > > I'm not sure its that complex to run all try_delta calls of the
+> > > current window in parallel.  Might be a simple enough change that
+> > > its actually worth the extra complexity, especially with these
+> > > multi-core systems being so readily available.  Repacking is the
+> > > most CPU intensive operation Git performs, and the one that is also
+> > > the easiest to make parallel.
+> > >
+> > > Maybe someone else will beat me to it, but if not I might give such
+> > > a patch a shot in a few weeks.
+> >
+> > Well, here's my quick attempt at it.  Unfortunately, performance isn't
+> > as good as I'd expected, especially with relatively small blobs like
+> > those found in the linux kernel repo.  It looks like the overhead of
+> > thread creation/joining might be significant compared to the actual
+> > delta computation.  I have a P4 with HT which might behave differently
+> > from a real SMP machine, or whatever, but the CPU usage never exceeded
+> > 110% according to top (sometimes it even dropped below 95%). Actually, a
+> > git-repack gets much slower due to 2m27s of system time compared to
+> > 0m03s without threads.  And this is with NPTL.
 > 
-> I'm not suggesting something like fs.ext2@kernel.org with something
-> like majordomo allowing to add yourself to those, but something less
-> extreme in that direction might be worth thinking about...  Hell,
-> even simple
-> $ finger fs/minix/dir.c@cc.kernel.org
-> with majordomo-like interface for adding yourself to such lists
-> might solve most of those problems...
+> Thread creation/destruction overhead is way too high to make these
+> threads for every delta.
+> 
+> Another strategy is to create four worker threads once when the
+> process is loaded. Then use synchronization primitives to feed the
+> threads lumps of work. The threads persist for the life of the
+> process.
 
-It mostly is just about that it seems. However, this would not also allow 
-the other information currently in the MAINTAINERS file to be queried in 
-similar ways.
+Still, those synchronization primitives would have to be activated for 
+every delta which might also add some overhead.
 
-Git could grow a generic file meta data implementation through the use of 
-tags, sort of like tags on multimedia files although while with multimedia 
-files the tags are in fact stored as a file header, here you'd keep them 
-just in git. Any project using git would be free to define its own set of 
-info tags and you'd supply them to git simply as a list of
+But there is another issue to consider: delta searching is limited by 
+previous results for the same delta.  If first attempt for a delta 
+produces a 10x reduction, then the next delta computation has to produce 
+less than 1/10 the original object size or it is aborted early. And so 
+on for subsequent attempts.  When performing delta computations in 
+parallel for the same target then early delta computation abort cannot 
+occur since no result is initially available to further limit delta 
+processing.
 
-<tag>=<value>
+Segmenting the list of objects to deltify into sub-lists for individual 
+threads solves both issues.
 
-pairs:
 
-$ git info --add drivers/ide/ide-cd.c <<EOF
-CC="Alan Cox <alan@lxorguk.ukuu.org.uk>", linux-ide@vger.kernel.org
-EOF
-
-Or as a more expansive example, with the tags set on a directory (and the 
-output shown this time):
-
-$ git info drivers/infiniband/
-CC="Roland Dreier <rolandd@cisco.com>"
-CC="Sean Hefty <mshefty@ichips.intel.com>"
-CC="Hal Rosenstock <halr@voltaire.com>"
-CC=openib-general@openib.org
-W=http://www.openib.org/
-T=git kernel.org:/pub/scm/linux/kernel/git/roland/infiniband.git
-
-$ git info --type="W" drivers/infiniband/
-http://www.openib.org/
-
-The project can link the actual tags such as CC, W and T to --options for 
-the "info" command in the git configuration file for the tree (and/or just 
-define a few upfront I guess) making it look nicer:
-
-$ git info --cc drivers/infiniband/
-"Roland Dreier <rolandd@cisco.com>"
-"Sean Hefty <mshefty@ichips.intel.com>"
-"Hal Rosenstock <halr@voltaire.com>"
-openib-general@openib.org
-
-$ git info --website drivers/infiniband/
-http://www.openib.org/
-
-$ git info --tree drivers/infiniband/
-git kernel.org:/pub/scm/linux/kernel/git/roland/infiniband.git
-
-Extra: when you have such an implementation, you can use it for other 
-purposes as well such as the summary Documentation/ files want for the 
-00-INDEX files:
-
-$ git info --summary Documentation/BUG-HUNTING
-brute force method of doing binary search of patches to find bug.
-
-And importantly -- when queuried for a file that itself doesn't have the 
-requested info tag:
-
-$ git info --cc drivers/infiniband/core/addr.c
-
-git looks for the tag on the drivers/infiniband/core/ directory next, and 
-then on drivers/infiniband/, where it finds it. linux-kernel@vger.kernel.org 
-would be the final fallback, being set on the project root.
-
-I'd really like something like this. As long as projects are both free to 
-use and not use them and free to define their own set of tags I believe this 
-would work very nicely.
-
-Once you have these tags, you can basically use them for anything.
-
-Rene.
+Nicolas
