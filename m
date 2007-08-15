@@ -1,58 +1,58 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: git-cvsexportcommit getting out of sync with CVS status requests
-Date: Wed, 15 Aug 2007 18:34:56 +0200
-Message-ID: <46C32B30.8040504@fs.ei.tum.de>
-References: <1187178510.13096.46.camel@murta.transitives.com> <1187182726.13096.50.camel@murta.transitives.com> <46C3218E.6020309@fs.ei.tum.de> <Pine.LNX.4.64.0708151810000.19496@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: git submodule init and redundant data in .gitmodules/.git/config
+Date: Wed, 15 Aug 2007 18:38:22 +0200
+Message-ID: <20070815163822.GC1070MdfPADPa@greensroom.kotnet.org>
+References: <20070815162005.GA18463@piper.oerlikon.madduck.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: alex.bennee@transitive.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 15 18:35:12 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 15 18:38:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILLpq-00057M-0o
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:35:06 +0200
+	id 1ILLt8-0006Tm-1M
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933357AbXHOQe7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 12:34:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933325AbXHOQe7
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:34:59 -0400
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:43847 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933056AbXHOQe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 12:34:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id C2933280E9;
-	Wed, 15 Aug 2007 18:34:56 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 6sUInfvq3LhT; Wed, 15 Aug 2007 18:34:56 +0200 (CEST)
-Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 7A633280D5;
-	Wed, 15 Aug 2007 18:34:56 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <Pine.LNX.4.64.0708151810000.19496@wbgn129.biozentrum.uni-wuerzburg.de>
+	id S932959AbXHOQi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 12:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932807AbXHOQiZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:38:25 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:35379 "EHLO psmtp08.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932539AbXHOQiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 12:38:24 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMT002OMQ7Z2L@psmtp08.wxs.nl> for git@vger.kernel.org; Wed,
+ 15 Aug 2007 18:38:23 +0200 (MEST)
+Received: (qmail 5351 invoked by uid 500); Wed, 15 Aug 2007 16:38:22 +0000
+In-reply-to: <20070815162005.GA18463@piper.oerlikon.madduck.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55922>
 
-Johannes Schindelin wrote:
->> Alex Bennee wrote:
->>> It looks like running a single CVS query for each file is the only
->>> solution.
->> I think internally CVS is doing single queries anyways.  At least that 
->> was my impression.
-> Why then was cvsexportcommit so much slower without 
-> c56f0d9c661dc918a088e60d0ab69dd48019a9be?
+On Wed, Aug 15, 2007 at 06:20:05PM +0200, martin f krafft wrote:
+> But looking at the two stanzas, it strikes me that the remote url of
+> the submodule is duplicated and detached, creating redundant data
+> which may become desynchronised.
+> 
+> Why is this?
+> 
+> What is the reason for git-submodule init and moving the data to
+> .git/config?
 
-Ah, my bad.  Didn't use such a recent cvsexportcommit.  So we need to mimic the cvs sorting.
+The (most appropriate) URL from which to get updates of a submodule
+may be different for different people and therefore has to be stored
+in .git/config.  It was then decided that the default value
+for this URL should be stored in .gitmodules.  git submodule init
+simply initializes the URL using this default value.  You are free
+to not call git submodule init and set a (more) appropriate URL manually.
 
-cheers
-  simon
+skimo
