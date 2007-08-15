@@ -1,95 +1,71 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: call external editor from git-gui?
-Date: Wed, 15 Aug 2007 20:31:49 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070815183149.GD1644@informatik.uni-freiburg.de>
-References: <20070810153008.GA31759@diana.vm.bytemark.co.uk> <20070814045511.GF27913@spearce.org> <20070814070000.GA12052@diana.vm.bytemark.co.uk> <20070815182228.GA3419@efreet.light.src>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: performance on repack
+Date: Wed, 15 Aug 2007 14:38:15 -0400
+Message-ID: <9e4733910708151138x2b267dc6w27c1bc8d948e5633@mail.gmail.com>
+References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
+	 <20070812103338.GA7763@auto.tuwien.ac.at>
+	 <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
+	 <20070814031236.GC27913@spearce.org>
+	 <alpine.LFD.0.999.0708141634160.5415@xanadu.home>
+	 <20070815053231.GJ27913@spearce.org>
+	 <9e4733910708150808x39241071j1a4012f16cd26ef8@mail.gmail.com>
+	 <20070815171152.GA15155@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Aug 15 20:32:15 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Nicolas Pitre" <nico@cam.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Wed Aug 15 20:38:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILNfC-0003Tk-CQ
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 20:32:14 +0200
+	id 1ILNl9-0006Gx-SR
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 20:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753702AbXHOScK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 15 Aug 2007 14:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbXHOScJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 14:32:09 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:33783 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753225AbXHOScH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 14:32:07 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1ILNf3-00074b-Q3; Wed, 15 Aug 2007 20:32:05 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7FIW3jT002193;
-	Wed, 15 Aug 2007 20:32:03 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7FIVnIc002192;
-	Wed, 15 Aug 2007 20:31:49 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Jan Hudec <bulb@ucw.cz>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+	id S933973AbXHOSiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 14:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933723AbXHOSiS
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 14:38:18 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:32126 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933598AbXHOSiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 14:38:16 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so10181wah
+        for <git@vger.kernel.org>; Wed, 15 Aug 2007 11:38:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=i4XMMeIdZSSSBRwqBTG55kqTwhA5K4BOFEcEZDV2Ep75TlDco7hiYEQtc69pa57o9mSVH2N1hmmX5bzctih3qAsQ9BOfqp1P13c36JS4dON0jWPer0UnKXYEVnooodKSF/nqu33JkqQf/0CfHwlcR1O7f84lpwzoDyEMdsjbbvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OEYydqyPlTdbicfX7O6S8/7w85qbJ4mOVm/KrYXnjmkkMSf3V0iF07JAwYuMJ1xM3OQT9JS9a8LhulEpx6d25MiW3hxfUjDXclIoz4VxOzP+EPBzhwnmpcCGyWnOqELhOzvqrpBf6vL0v88b7ghUPz/mwUvNP2//XOopnKUBJSY=
+Received: by 10.115.79.1 with SMTP id g1mr914133wal.1187203095731;
+        Wed, 15 Aug 2007 11:38:15 -0700 (PDT)
+Received: by 10.114.195.11 with HTTP; Wed, 15 Aug 2007 11:38:15 -0700 (PDT)
+In-Reply-To: <20070815171152.GA15155@auto.tuwien.ac.at>
 Content-Disposition: inline
-In-Reply-To: <20070815182228.GA3419@efreet.light.src>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55935>
 
-Hello,
+On 8/15/07, Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> git-pack-objects knows the order, in which it will use the objects.  A
+> seperate thread could pre-read the next object and wait until the main
+> thread starts processing it. After the read is complete, another
+> thread could start computing the delta index.
 
-Jan Hudec wrote:
-> On Tue, Aug 14, 2007 at 09:00:00 +0200, Karl Hasselstr=F6m wrote:
-> > On 2007-08-14 00:55:11 -0400, Shawn O. Pearce wrote:
-> > > Spawning the user's preferred editor would be a nice way to get s=
-ome
-> > > of that.
-> >=20
-> > Mmm. I wouldn't call it a _nice_ way: popping up an external progra=
-m
-> > just to get the right text editing behavior. More like the _only_ w=
-ay,
-> > if the user is picky enough.
->=20
-> It might actually have a rather serious twist. Often the editor for
-> git-commit would use the terminal git-commit runs on. But for git-gui=
- you may
-> not have any terminal (running git-gui from context menu of some file
-> manager) and even if you do, the user does not expect it to be used. =
-So the
-> user may -- and quite often will -- want different editors for runnin=
-g from
-> git-gui and git-commit.
+The hope is that the new adaptive read ahead code in the kernel will
+get this right and you won't need the second thread. Letting the
+kernel handle the read ahead will dynamically scale as other demands
+are made on the host. There's effectively only one read ahead cache in
+the system, only the kernel really knows how to divide it up between
+competing apps.
 
-Alternatively you need to find out/let the user specify if her editor
-needs a terminal and then use
-
-	xterm -e myfavoriteeditor
-
-or simply
-
-	myfavoriteeditor
-
-depending on the result.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-$ dc -e "5735816763073014741799356604682P"
+-- 
+Jon Smirl
+jonsmirl@gmail.com
