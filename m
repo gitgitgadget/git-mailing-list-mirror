@@ -1,52 +1,106 @@
-From: Al Viro <viro@ftp.linux.org.uk>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
-Date: Thu, 16 Aug 2007 00:19:49 +0100
-Message-ID: <20070815231949.GM21089@ftp.linux.org.uk>
-References: <1187054366.2757.0.camel@laptopd505.fenrus.org> <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu> <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org> <20070814193333.GI21089@ftp.linux.org.uk> <m3fy2kk2ra.fsf@maximus.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.5.2.5
+Date: Wed, 15 Aug 2007 16:24:16 -0700
+Message-ID: <7vr6m4mlen.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Joe Perches <joe@perches.com>,
-	Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org
-To: Krzysztof Halasa <khc@pm.waw.pl>
-X-From: git-owner@vger.kernel.org Thu Aug 16 01:20:10 2007
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 16 01:24:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILS9q-00079n-7S
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 01:20:10 +0200
+	id 1ILSDz-00008W-By
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 01:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762852AbXHOXUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 19:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757228AbXHOXUF
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 19:20:05 -0400
-Received: from zeniv.linux.org.uk ([195.92.253.2]:52776 "EHLO
-	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756779AbXHOXUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 19:20:03 -0400
-Received: from viro by ZenIV.linux.org.uk with local (Exim 4.52 #1 (Red Hat Linux))
-	id 1ILS9V-0005aV-Ux; Thu, 16 Aug 2007 00:19:49 +0100
-Content-Disposition: inline
-In-Reply-To: <m3fy2kk2ra.fsf@maximus.localdomain>
-User-Agent: Mutt/1.4.1i
+	id S1759501AbXHOXYX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 19:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760620AbXHOXYX
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 19:24:23 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47060 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759438AbXHOXYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 19:24:22 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E728C122042;
+	Wed, 15 Aug 2007 19:24:39 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55968>
 
-On Wed, Aug 15, 2007 at 09:37:45PM +0200, Krzysztof Halasa wrote:
-> > I'm not suggesting something like fs.ext2@kernel.org with something
-> > like majordomo allowing to add yourself to those,
-> 
-> Why not
+The latest maintenance release GIT 1.5.2.5 is available at the
+usual places:
 
-You'd need to implement serious anti-spam measures for that.  Besides,
-cross-postings between random sets of lists would become a nightmare
-pretty soon.
+  http://www.kernel.org/pub/software/scm/git/
+
+  git-1.5.2.5.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.2.5.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.2.5.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.5.2.5-1.$arch.rpm	(RPM)
+
+Although 1.5.3 has been in -rc cycle for quite some time, there
+was a rather nasty data corruption bug discovered, so here is
+primarily to push that fix out.
+
+When "git add -u $paths" records ONLY removes in a directory,
+your next "git write-tree" will write out a bogus tree object
+and cause your commit not to match the reality.
+
+
+GIT v1.5.2.5 Release Notes
+==========================
+
+Fixes since v1.5.2.4
+--------------------
+
+ * Bugfixes
+
+   - "git add -u" had a serious data corruption problem in one
+     special case (when the changes to a subdirectory's files
+     consist only deletion of files).
+
+   - "git add -u <path>" did not work from a subdirectory.
+
+   - "git apply" left an empty directory after all its files are
+     renamed away.
+
+   - "git $anycmd foo/bar", when there is a file 'foo' in the
+     working tree, complained that "git $anycmd foo/bar --" form
+     should be used to disambiguate between revs and files,
+     which was completely bogus.
+
+   - "git checkout-index" and other commands that checks out
+     files to the work tree tried unlink(2) on directories,
+     which is a sane thing to do on sane systems, but not on
+     Solaris when you are root.
+
+ * Documentation Fixes and Updates
+
+   - A handful documentation fixes.
+
+----------------------------------------------------------------
+
+Changes since v1.5.2.4 are as follows:
+
+Christian Couder (1):
+      rev-list --bisect: fix allocation of "int*" instead of "int".
+
+Julian Phillips (1):
+      Force listingblocks to be monospaced in manpages
+
+Junio C Hamano (4):
+      Do not expect unlink(2) to fail on a directory.
+      setup.c:verify_non_filename(): don't die unnecessarily while disambiguating
+      Fix "git add -u" data corruption.
+      GIT 1.5.2.5
+
+Linus Torvalds (1):
+      apply: remove directory that becomes empty by renaming the last file away
+
+Salikh Zakirov (1):
+      git-add -u paths... now works from subdirectory
