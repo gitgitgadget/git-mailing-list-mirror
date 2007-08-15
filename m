@@ -1,75 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
-Date: Tue, 14 Aug 2007 22:25:45 -0700
-Message-ID: <7vlkcdjrmu.fsf@assigned-by-dhcp.cox.net>
-References: <1186984174.10249.7.camel@localhost>
-	<200708131933.10125.m.kozlowski@tuxland.pl>
-	<1187026955.2688.4.camel@laptopd505.fenrus.org>
-	<1187037445.6628.98.camel@heimdal.trondhjem.org>
-	<1187054366.2757.0.camel@laptopd505.fenrus.org>
-	<46C10AA8.3090505@gmail.com>
-	<20070814102033.604c8695@the-village.bc.nu>
-	<46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
-	<7vwsvx8twx.fsf@assigned-by-dhcp.cox.net>
-	<1187143925.32555.208.camel@localhost>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git on Cygwin: Not a valid object name HEAD
+Date: Wed, 15 Aug 2007 07:30:19 +0200
+Message-ID: <85fy2l1i1g.fsf@lola.goethe.zz>
+References: <f99cem$4a4$1@sea.gmane.org>
+	<30e4a070708080941j49b3d58cxc39bbe65f2fee9d5@mail.gmail.com>
+	<Pine.LNX.4.64.0708081810130.14781@racer.site>
+	<75EB313E-807D-44FB-A186-A151F182B47B@zib.de>
+	<Pine.LNX.4.64.0708082228520.21857@racer.site>
+	<76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de>
+	<e7bda7770708092307g49fa9976l5f9972592129fc8e@mail.gmail.com>
+	<2383328F-300E-459C-A299-90242DA230F7@zib.de>
+	<e7bda7770708101531n782118e9qb9c6de4e934940ea@mail.gmail.com>
+	<EF7DFA5A-9C3A-4D0B-9533-D1D60AE4A44C@zib.de>
+	<e7bda7770708141704m587dfdbdqfbab51b8ac6fcff@mail.gmail.com>
+	<30FE2B1C-B651-4F1D-B5D9-CD3C3261F531@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 07:26:01 2007
+Cc: Torgil Svensson <torgil.svensson@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Aug 15 07:30:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILBOG-000244-FA
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 07:25:56 +0200
+	id 1ILBSd-0002zM-Mx
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 07:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204AbXHOFZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 01:25:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbXHOFZx
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 01:25:53 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:35012 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbXHOFZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 01:25:51 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070815052552.GUCZ25808.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 15 Aug 2007 01:25:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id c5Rp1X00o1kojtg0000000; Wed, 15 Aug 2007 01:25:50 -0400
-In-Reply-To: <1187143925.32555.208.camel@localhost> (Joe Perches's message of
-	"Tue, 14 Aug 2007 19:12:05 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751268AbXHOFaY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 01:30:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbXHOFaY
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 01:30:24 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:49899 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751268AbXHOFaX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2007 01:30:23 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id A306017F486;
+	Wed, 15 Aug 2007 07:30:21 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 940C0ABE0E;
+	Wed, 15 Aug 2007 07:30:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-014-216.pools.arcor-ip.net [84.61.14.216])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 70B4031276F;
+	Wed, 15 Aug 2007 07:30:21 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 5DE511C3D500; Wed, 15 Aug 2007 07:30:20 +0200 (CEST)
+In-Reply-To: <30FE2B1C-B651-4F1D-B5D9-CD3C3261F531@zib.de> (Steffen Prohaska's message of "Wed\, 15 Aug 2007 07\:22\:50 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3959/Wed Aug 15 06:33:29 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55878>
 
-Joe Perches <joe@perches.com> writes:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> Yes please.
+> Author: Johannes Schmidt-Ehrenberg <schmidt-ehrenberg@zib.de>
+> Date:   Mon Aug 13 19:00:39 2007 +0200
+>
+>     mergetool: fixed parsing of registry entry for kdiff3
+>
+>     The old code failed on Windows Vista. The output of
+>     reg.exe or something else may be a bit different.
+>     This patch improves the parsing code to be more robust.
 
-Huh?
+I seem to remember that you can't rely on reg.exe being available on
+Windows.  The Microsoft support pages talk about using regedit.exe
+instead (which is quite more cumbersome).
 
-> Rene Herman had an idea about using some git
-> metadata that might be useful.  The completely
-> external data approach suggested by Al Viro 
-> might be OK too in that it wouldn't tie listeners
-> to git requiring more content in git metadata.
-
-The reason I found Linus's suggestion desirable is because it
-fundamentally does not require git to track any metadata.  If
-the commits are in git, then his script would let you gather the
-data, but otherwise you should be able to do the same by
-grepping patches.  Obviously you would need to filter by paths,
-looking at the diffstat, but the approach does _not_ tie users
-to git.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
