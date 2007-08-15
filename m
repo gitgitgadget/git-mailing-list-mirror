@@ -1,106 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.2.5
-Date: Wed, 15 Aug 2007 16:24:16 -0700
-Message-ID: <7vr6m4mlen.fsf@gitster.siamese.dyndns.org>
+From: Perrin Meyer <perrinmeyer@yahoo.com>
+Subject: Re: 1.5.3-rc5 regression on OS X?
+Date: Wed, 15 Aug 2007 16:35:18 -0700 (PDT)
+Message-ID: <186438.43606.qm@web52812.mail.re2.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 16 01:24:28 2007
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 01:42:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILSDz-00008W-By
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 01:24:27 +0200
+	id 1ILSVo-0005Sb-8A
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 01:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759501AbXHOXYX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 19:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760620AbXHOXYX
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 19:24:23 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47060 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759438AbXHOXYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 19:24:22 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E728C122042;
-	Wed, 15 Aug 2007 19:24:39 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965184AbXHOXmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 19:42:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965182AbXHOXmD
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 19:42:03 -0400
+Received: from web52812.mail.re2.yahoo.com ([206.190.49.1]:30756 "HELO
+	web52812.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S965174AbXHOXmA convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 19:42:00 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Aug 2007 19:42:00 EDT
+Received: (qmail 46040 invoked by uid 60001); 15 Aug 2007 23:35:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=q0DkvpMt6iu9WQ8ezkpsy82X71Ji07OSJVbOGhXwiPN9m/89kQ775YuMIHtsdov5ZxWHSG+KK+JmpAsPenWLATKat+qtp2bf+1YelDeEnJn2BsvljMth56of006GmC+y+ZX0im2ggQetk7VRbZAxPCGVvpC8WMrfMSIGeT5g8lQ=;
+X-YMail-OSG: RxnaJeYVM1k8sh8ZEeZLhT7uY20EIPL4QY4VCadOXaHhl53vZ_FeUsutn_TXlU72E4j9OD9npw--
+Received: from [216.52.12.233] by web52812.mail.re2.yahoo.com via HTTP; Wed, 15 Aug 2007 16:35:18 PDT
+X-Mailer: YahooMailRC/651.48 YahooMailWebService/0.7.119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55968>
-
-The latest maintenance release GIT 1.5.2.5 is available at the
-usual places:
-
-  http://www.kernel.org/pub/software/scm/git/
-
-  git-1.5.2.5.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.2.5.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.2.5.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.2.5-1.$arch.rpm	(RPM)
-
-Although 1.5.3 has been in -rc cycle for quite some time, there
-was a rather nasty data corruption bug discovered, so here is
-primarily to push that fix out.
-
-When "git add -u $paths" records ONLY removes in a directory,
-your next "git write-tree" will write out a bogus tree object
-and cause your commit not to match the reality.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55969>
 
 
-GIT v1.5.2.5 Release Notes
-==========================
+Yes, this patch fixes the error I was seeing in t1000-read-tree-m-3way.sh
 
-Fixes since v1.5.2.4
---------------------
+Thanks,
 
- * Bugfixes
+Perrin
 
-   - "git add -u" had a serious data corruption problem in one
-     special case (when the changes to a subdirectory's files
-     consist only deletion of files).
 
-   - "git add -u <path>" did not work from a subdirectory.
+----- Original Message ----
+From: Junio C Hamano <gitster@pobox.com>
+To: Perrin Meyer <perrinmeyer@yahoo.com>
+Cc: git@vger.kernel.org
+Sent: Wednesday, August 15, 2007 3:59:17 PM
+Subject: Re: 1.5.3-rc5 regression on OS X?
 
-   - "git apply" left an empty directory after all its files are
-     renamed away.
+Perrin Meyer <perrinmeyer@yahoo.com> writes:
 
-   - "git $anycmd foo/bar", when there is a file 'foo' in the
-     working tree, complained that "git $anycmd foo/bar --" form
-     should be used to disambiguate between revs and files,
-     which was completely bogus.
+> Well, this is my first time using git-bisect (which seems like a VERY cool tool), but iterating through, using 
+> $ make clean ; make -j 4 ; cd t ; sh t1000-read-tree-m-3way.sh ; cd ..
+>
+> The first bad commit is:
+>
+> 933bf40a5c6328b6c022b636f45a6f2c48c3838e is first bad commit
+> ...
+> I'll install the newest Xcode and see if that fixes things. 
 
-   - "git checkout-index" and other commands that checks out
-     files to the work tree tried unlink(2) on directories,
-     which is a sane thing to do on sane systems, but not on
-     Solaris when you are root.
-
- * Documentation Fixes and Updates
-
-   - A handful documentation fixes.
-
-----------------------------------------------------------------
-
-Changes since v1.5.2.4 are as follows:
-
-Christian Couder (1):
-      rev-list --bisect: fix allocation of "int*" instead of "int".
-
-Julian Phillips (1):
-      Force listingblocks to be monospaced in manpages
-
-Junio C Hamano (4):
-      Do not expect unlink(2) to fail on a directory.
-      setup.c:verify_non_filename(): don't die unnecessarily while disambiguating
-      Fix "git add -u" data corruption.
-      GIT 1.5.2.5
-
-Linus Torvalds (1):
-      apply: remove directory that becomes empty by renaming the last file away
-
-Salikh Zakirov (1):
-      git-add -u paths... now works from subdirectory
+Thanks, but before doing so could you try the patch I just sent
+out?
