@@ -1,160 +1,120 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix log with single revision against a non-HEAD branch
-Date: Wed, 15 Aug 2007 09:55:18 -0700
-Message-ID: <1187196918619-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 18:56:08 2007
+From: Salikh Zakirov <salikh.zakirov@gmail.com>
+Subject: [PATCH] git-add -u paths... now works from subdirectory
+Date: Thu, 16 Aug 2007 02:01:43 +0900
+Message-ID: <20070815170143.GA3068@makoto.usen.ad.jp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Aug 15 19:02:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILMA9-00051v-3W
-	for gcvg-git@gmane.org; Wed, 15 Aug 2007 18:56:05 +0200
+	id 1ILMGV-0007kB-5w
+	for gcvg-git@gmane.org; Wed, 15 Aug 2007 19:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760355AbXHOQzv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 12:55:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760934AbXHOQzv
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 12:55:51 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:32867 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759254AbXHOQzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 12:55:49 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 39AED2DC08D;
-	Wed, 15 Aug 2007 09:55:47 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 15 Aug 2007 09:55:18 -0700
-X-Mailer: git-send-email 1.5.3.rc5.1.gb318
+	id S934160AbXHORCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Aug 2007 13:02:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933777AbXHORCC
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 13:02:02 -0400
+Received: from rv-out-0910.google.com ([209.85.198.186]:2104 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934144AbXHORB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2007 13:01:59 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1755140rvb
+        for <git@vger.kernel.org>; Wed, 15 Aug 2007 10:01:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from;
+        b=Iv4M+Pwbo/KMCQ66KeUgjpK9b+S43MHxf6TIWA814WZ0J28GYZ2TGA5Vo094u2jNFVqeF3n0kaBpLL17pPLUOoW66g9ekN5lhTOCdiFEG7L0InJd10Ldat3N8GbKPWlNSsEGKdff4C4QfXFTSSIwivSB0lMgc3+KAFRNwsZObBY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:from;
+        b=pM+LhApLYg55OEMGD2P/oxFLUOqNIM/kwWo32ozVQu/hIW5YiWMp+eftbUilMapHJGma8v8SWhgeXeBj2keYhVR8zonjlBZ6yL7MhCaa2jw7gLOaj8BH+8j5UzqJ9Ba07tNEHF27gebp8FQCDFpU/kj2pp4BHljLS1PiC/yxh+E=
+Received: by 10.141.202.12 with SMTP id e12mr287738rvq.1187197318597;
+        Wed, 15 Aug 2007 10:01:58 -0700 (PDT)
+Received: from makoto ( [221.115.75.108])
+        by mx.google.com with ESMTPS id l17sm2531743rvb.2007.08.15.10.01.56
+        (version=SSLv3 cipher=OTHER);
+        Wed, 15 Aug 2007 10:01:57 -0700 (PDT)
+Received: by makoto (sSMTP sendmail emulation); Thu, 16 Aug 2007 02:01:43 +0900
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55925>
 
-Running git-svn log <ref> -r<rev> against a <ref> other than the
-current HEAD did not work if the <rev> was exclusive to the
-other branch.
+git-add used to take the path limiters, but always considered them
+as top-level paths, and thus didn't work from subdirectories.
+However, using git-add -u from subdirectories is very convenient,
+especially when development is done from within a subdirectory,
+(e.g. for easier grepping), as it allows to use a universal
+incantation 'git-add -u .' from anywhere.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Documentaion for git-add does not mention if the paths were supposed to be
+relative to current directory of from the top, and the relative paths are far
+more intuitive.
+
+Signed-off-by: Salikh Zakirov <salikh@gmail.com>
 ---
- git-svn.perl           |   24 +++++++++++++++---------
- t/t9116-git-svn-log.sh |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 9 deletions(-)
- create mode 100755 t/t9116-git-svn-log.sh
 
-diff --git a/git-svn.perl b/git-svn.perl
-index ee7ef69..d162114 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3501,11 +3501,17 @@ sub log_use_color {
- sub git_svn_log_cmd {
- 	my ($r_min, $r_max, @args) = @_;
- 	my $head = 'HEAD';
-+	my (@files, @log_opts);
- 	foreach my $x (@args) {
--		last if $x eq '--';
--		next unless ::verify_ref("$x^0");
--		$head = $x;
--		last;
-+		if ($x eq '--' || @files) {
-+			push @files, $x;
-+		} else {
-+			if (::verify_ref("$x^0")) {
-+				$head = $x;
-+			} else {
-+				push @log_opts, $x;
-+			}
-+		}
+The trivial test added with this patch failed before the patch and passes
+after. All tests pass with this modification on my machine (Linux/i686).
+
+Note that the potentially incorrect 'git-add -u ; git commit' behaviour is not
+affected by this patch and still can cause horribly incorrect commits.
+
+ builtin-add.c         |    8 ++++----
+ t/t2200-add-update.sh |    8 ++++++++
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-add.c b/builtin-add.c
+index 82c806a..a09771f 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -109,12 +109,12 @@ static void update_callback(struct diff_queue_struct *q,
  	}
- 
- 	my ($url, $rev, $uuid, $gs) = ::working_head_info($head);
-@@ -3515,13 +3521,13 @@ sub git_svn_log_cmd {
- 	push @cmd, '-r' unless $non_recursive;
- 	push @cmd, qw/--raw --name-status/ if $verbose;
- 	push @cmd, '--color' if log_use_color();
--	return @cmd unless defined $r_max;
--	if ($r_max == $r_min) {
-+	push @cmd, @log_opts;
-+	if (defined $r_max && $r_max == $r_min) {
- 		push @cmd, '--max-count=1';
- 		if (my $c = $gs->rev_db_get($r_max)) {
- 			push @cmd, $c;
- 		}
--	} else {
-+	} elsif (defined $r_max) {
- 		my ($c_min, $c_max);
- 		$c_max = $gs->rev_db_get($r_max);
- 		$c_min = $gs->rev_db_get($r_min);
-@@ -3537,7 +3543,7 @@ sub git_svn_log_cmd {
- 			push @cmd, $c_min;
- 		}
- 	}
--	return @cmd;
-+	return (@cmd, @files);
  }
  
- # adapted from pager.c
-@@ -3702,7 +3708,7 @@ sub cmd_show_log {
+-static void update(int verbose, const char **files)
++static void update(int verbose, const char *prefix, const char **files)
+ {
+ 	struct rev_info rev;
+-	init_revisions(&rev, "");
++	init_revisions(&rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+-	rev.prune_data = get_pathspec(rev.prefix, files);
++	rev.prune_data = get_pathspec(prefix, files);
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &verbose;
+@@ -216,7 +216,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
  	}
  
- 	config_pager();
--	@args = (git_svn_log_cmd($r_min, $r_max, @args), @args);
-+	@args = git_svn_log_cmd($r_min, $r_max, @args);
- 	my $log = command_output_pipe(@args);
- 	run_pager();
- 	my (@k, $c, $d, $stat);
-diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
-new file mode 100755
-index 0000000..0d4e6b3
---- /dev/null
-+++ b/t/t9116-git-svn-log.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Eric Wong
-+#
+ 	if (take_worktree_changes) {
+-		update(verbose, argv + i);
++		update(verbose, prefix, argv + i);
+ 		goto finish;
+ 	}
+ 
+diff --git t/t2200-add-update.sh t/t2200-add-update.sh
+index 0a703af..93c007d 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -35,4 +35,12 @@ test_expect_success 'update did not touch other tracked files' \
+ test_expect_success 'update did not touch untracked files' \
+   'test "`git diff-files --name-status dir/other`" = ""'
+ 
++test_expect_success 'more changes' 'echo modified >> dir/sub'
 +
-+test_description='git-svn log tests'
-+. ./lib-git-svn.sh
++test_expect_success 'update from subdirectory' \
++  '(cd dir; git add -u sub)'
 +
-+test_expect_success 'setup repository and import' "
-+	mkdir import &&
-+	cd import &&
-+		for i in trunk branches/a branches/b \
-+		         tags/0.1 tags/0.2 tags/0.3; do
-+			mkdir -p \$i && \
-+			echo hello >> \$i/README || exit 1
-+		done && \
-+		svn import -m test . $svnrepo
-+		cd .. &&
-+	git-svn init $svnrepo -T trunk -b branches -t tags &&
-+	git-svn fetch &&
-+	git reset --hard trunk &&
-+	echo bye >> README &&
-+	git commit -a -m bye &&
-+	git svn dcommit &&
-+	git reset --hard a &&
-+	echo why >> FEEDME &&
-+	git update-index --add FEEDME &&
-+	git commit -m feedme &&
-+	git svn dcommit &&
-+	git reset --hard trunk &&
-+	echo aye >> README &&
-+	git commit -a -m aye &&
-+	git svn dcommit
-+	"
++test_expect_success 'update touched correct path' \
++  'test "`git diff-files --name-status dir/sub`" = ""'
 +
-+test_expect_success 'run log' "
-+	git reset --hard a &&
-+	git svn log -r2 trunk | grep ^r2 &&
-+	git svn log -r4 trunk | grep ^r4 &&
-+	git svn log -r3 | grep ^r3
-+	"
-+
-+test_expect_success 'run log against a from trunk' "
-+	git reset --hard trunk &&
-+	git svn log -r3 a | grep ^r3
-+	"
-+
-+test_done
+ test_done
 -- 
-1.5.3.rc5.1.gb318
+1.5.3.rc5.24.gac513
