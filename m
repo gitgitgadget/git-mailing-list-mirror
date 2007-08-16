@@ -1,69 +1,160 @@
-From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-Subject: Re: [ANNOUNCE] GIT MinGW port is now at v1.5.3-rc4
-Date: Thu, 16 Aug 2007 03:08:23 -0700
-Message-ID: <6020F7321DB14F7B9288F0782A316803@ntdev.corp.microsoft.com>
-References: <46C41C49.A92AEF07@eudaptics.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: gitignore and shared worktrees (resend)
+Date: Thu, 16 Aug 2007 12:22:25 +0200
+Message-ID: <20070816102225.GA5351@piper.oerlikon.madduck.net>
+References: <20070717130936.GA19724@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="ISO-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Johannes Sixt" <J.Sixt@eudaptics.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 16 12:08:38 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ikeVEW9yuYc//A+q"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 16 12:22:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILcHL-0006Oa-HC
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 12:08:35 +0200
+	id 1ILcV4-0002Uy-LG
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 12:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760185AbXHPKIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 06:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760228AbXHPKIc
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 06:08:32 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:36851 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758999AbXHPKIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 06:08:31 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so230669wah
-        for <git@vger.kernel.org>; Thu, 16 Aug 2007 03:08:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=YfH4kNJ8A88GFQsQpmkvR9Xb8MglBnKBZzV1JKj2aLgSNsmAU5Kn6Ir3z3dc+ffN3Inv2EzvlljvufJRe8iY70R3ruTMhocgKyQB25rSCDE0OpL7ABAVGGs4EZt67fSWF4VlzW8P+v6QVAL8Ez9ImM2rnn0cJ7ILw/AY077Qr6c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=SbqKTjs0wkz9uv9DLYUog8m1roJcmVquCM4JYrhZ2UiWS56ZlTqcaciiaw4puJ9WCUAedv2MBjWlcXh44BX1ZID8BDyBZnL8tCzmeF5WweQD7JkmiSeD5cA1qXxOEfdbm6AFw7msd/Hh8zneDyvJnP19dRTZPAdXP4lEyVEaaA8=
-Received: by 10.114.194.1 with SMTP id r1mr855646waf.1187258911041;
-        Thu, 16 Aug 2007 03:08:31 -0700 (PDT)
-Received: from dmitrykl2 ( [71.112.20.227])
-        by mx.google.com with ESMTPS id l28sm820898waf.2007.08.16.03.08.25
-        (version=SSLv3 cipher=OTHER);
-        Thu, 16 Aug 2007 03:08:26 -0700 (PDT)
-In-Reply-To: <46C41C49.A92AEF07@eudaptics.com>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
+	id S1761121AbXHPKWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 06:22:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933323AbXHPKWc
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 06:22:32 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:44116 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933234AbXHPKW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 06:22:29 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id C0D19895F7D;
+	Thu, 16 Aug 2007 12:22:27 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 14974-09; Thu, 16 Aug 2007 12:22:27 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 00B65895F7B;
+	Thu, 16 Aug 2007 12:22:26 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 4F2489F171;
+	Thu, 16 Aug 2007 12:22:26 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id C72E543F9; Thu, 16 Aug 2007 12:22:25 +0200 (CEST)
+Mail-Followup-To: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <20070717130936.GA19724@piper.oerlikon.madduck.net>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56002>
 
------ Original Message ----- 
-From: "Johannes Sixt" <J.Sixt@eudaptics.com>
-> I've just pushed an update of the MinGW port to:
-> clone:  git://repo.or.cz/git/mingw.git
 
-We need to make sure that we don't duplicate our efforts.
-Have you looked at http://repo.or.cz/w/git/mingw/4msysgit.git ?
-We've made some progress while you were on vacation.
+--ikeVEW9yuYc//A+q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also I think it's now time to merge two repos.
-Two Johanneses (corresponding repo owners on the to: line), please coordinate with each other.
+I sent the following message a month ago to the mailing list and
+never got a reply. Just to make sure it didn't simply get
+overlooked, I am reposting.
 
-- Dmitry
+Basically the issue is with using multiple git repos all sharing the
+same worktree, and that I cannot come up with a sensible way to
+maintain the .gitignore file such that it is part of the repo (and
+thus exists in other clones as well).
+
+I found that one can actually add and commit $GIT_DIR/info/exclude to
+a repo (quite possibly a bug), but the checkout fails without -f, so
+this is not really an option.
+
+I could set core.excludesfile to some unique name, but that again is
+not saved in the repository and requires manual intervention after
+cloning.
+
+I still like best the suggestion to honour .gitignore/* in case
+=2Egitignore is a directory instead of a file. Would people be
+interested in a patch for this?
+
+----- Forwarded message from martin f krafft <madduck@madduck.net> -----
+
+Date: Tue, 17 Jul 2007 15:09:36 +0200
+=46rom: martin f krafft <madduck@madduck.net>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: gitignore and shared worktrees (was: finding the right remote
+	branch for a commit)
+Message-ID: <20070717130936.GA19724@piper.oerlikon.madduck.net>
+
+Sorry for the somewhat late reply, I just found time on the weekend
+to check out this suggestion by Johannes
+
+  (http://marc.info/?l=3Dgit&m=3D118418927823760&w=3D2)
+
+also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.07.11.21=
+26 +0200]:
+> Come to think of it, this is maybe what I would have done, but it
+> appears to me that this is the _ideal_ use case for worktree:
+>=20
+> In $HOME/gits:
+>=20
+> $ mkdir vim.git && cd vim.git
+> $ git --work-tree=3D$HOME init
+> $ cat >> info/exclude < EOF
+> *
+> !/.vimrc
+> EOF
+>=20
+> Then you could do all Git operations like push, fetch, pull, log in=20
+> $HOME/gits/vim.git, and all editing in $HOME.
+
+This actually seems to work really nicely, but I am somewhat
+displeased by the gitignore/exclude handling, since it's local. What
+I want to do is synchronise the vim configuration across many
+workstations with git, and I don't want to have to modify
+$GIT_DIR/info/exclude on each machine.
+
+So I am tempted to use .gitignore, but that lives in the worktree,
+and since the suggestion is to share worktrees between different git
+repos, I can only ever have one .gitignore file, which would have to
+list ignores for *all* repos in $HOME/gits, which breaks my head.
+
+Do you have any other idea on how to handle ignores? I guess one
+alternative is just to ignore git status output altogether, but
+that's not really nice.
+
+Would people consider honoring .gitignore-* in addition to just
+=2Egitignore? Or maybe even honouring .gitignore/*, if .gitignore is
+a directory, not a file?
+
+Cheers,
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+fashions have done more harm than revolutions.
+                                                        -- victor hugo
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--ikeVEW9yuYc//A+q
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGxCVhIgvIgzMMSnURAniqAJ91JoRPNKy+r9FflCO25d8FsAOm2gCffIbm
+y2YMKy1zfdatgTlruI5N5eY=
+=VmuX
+-----END PGP SIGNATURE-----
+
+--ikeVEW9yuYc//A+q--
