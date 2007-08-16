@@ -1,69 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix an unitialized pointer in merge-recursive.c
-Date: Thu, 16 Aug 2007 01:23:59 -0700
-Message-ID: <7vodh7khuo.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550708160100t5aa93430x6cbe83e6e7a61d73@mail.gmail.com>
-	<7vsl6jkila.fsf@gitster.siamese.dyndns.org>
-	<e5bfff550708160111n66b5ea94k26cf2fecc06fd84c@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git-svn fetch updating master
+Date: Thu, 16 Aug 2007 10:27:06 +0200
+Organization: glandium.org
+Message-ID: <20070816082706.GA29521@glandium.org>
+References: <20070815181228.GA6363@glandium.org> <20070816080349.GA16849@muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 10:24:18 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 16 10:28:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILaeM-0004Y9-2p
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:24:14 +0200
+	id 1ILai8-0005pE-Uc
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752489AbXHPIYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 04:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbXHPIYL
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:24:11 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:52887 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326AbXHPIYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 04:24:09 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E21C122357;
-	Thu, 16 Aug 2007 04:24:22 -0400 (EDT)
-In-Reply-To: <e5bfff550708160111n66b5ea94k26cf2fecc06fd84c@mail.gmail.com>
-	(Marco Costalba's message of "Thu, 16 Aug 2007 10:11:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752449AbXHPI2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 04:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753427AbXHPI2F
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:28:05 -0400
+Received: from vawad.err.no ([85.19.200.177]:39363 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752342AbXHPI2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 04:28:01 -0400
+Received: from aputeaux-153-1-17-6.w82-124.abo.wanadoo.fr ([82.124.59.6] helo=vaio.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1ILahx-0004oE-9F; Thu, 16 Aug 2007 10:27:57 +0200
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1ILah8-0007gq-G7; Thu, 16 Aug 2007 10:27:06 +0200
+Content-Disposition: inline
+In-Reply-To: <20070816080349.GA16849@muzzle>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55991>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+On Thu, Aug 16, 2007 at 01:03:49AM -0700, Eric Wong <normalperson@yhbt.net> wrote:
+> Mike Hommey <mh@glandium.org> wrote:
+> > Hi,
+> > 
+> > I was wondering why the master branch was hardcoded to be updated in
+> > post_fetch_checkout() in git-svn. Why not allow to use another branch ?
+> 
+> It shouldn't update master if it the branch already exists and is a
+> valid ref.
+> 
+> The default for git-clone is to create "master", too, so I wanted
+> git-svn clone behavior to be the same.
 
-> On 8/16/07, Junio C Hamano <gitster@pobox.com> wrote:
->> "Marco Costalba" <mcostalba@gmail.com> writes:
->>
->> > Indeed &mrtree is passed to merge_trees() that not always
->> > seems to set the value, so on some paths mrtree could
->> > return uninitialized.
->> >
->> > Spotted by a gcc 4.2.1 warning
->>
->> Are you sure that gcc is correctly seeing the codeflow?
->>
->> In merge(), mrtree is used only under index_only, and
->> merge_trees() always sets *result under index_only.
->>
->
-> Ok ;-)
->
-> Now two options:
->
-> - discard the patch
->
-> - change the title in 'silence a gcc bougus warning'
+git-svn fetch is not only invoqued at cloning time...
 
-Third option.  Change the assignment from "mrtree = NULL" to
-"mrtree = mtree".  It is a standard idiom to work around stupid
-gcc warnings.
+My problem is that I (purposely) removed the master branch, so git-svn fetch
+is creating it again every time I run to update the svn branch...
+
+Mike
