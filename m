@@ -1,107 +1,61 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: [PATCH] clarify need for init in git-submodules documentation
-Date: Thu, 16 Aug 2007 20:10:02 +0200
-Message-ID: <11872878021267-git-send-email-madduck@madduck.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 16 20:10:52 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [ANNOUNCE] GIT MinGW port is now at v1.5.3-rc4
+Date: Thu, 16 Aug 2007 19:25:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708161922200.20400@racer.site>
+References: <46C41C49.A92AEF07@eudaptics.com>
+ <6020F7321DB14F7B9288F0782A316803@ntdev.corp.microsoft.com>
+ <46C4332A.AF464A67@eudaptics.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 20:26:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILjnz-00026Y-GQ
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 20:10:48 +0200
+	id 1ILk3F-00009j-7b
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 20:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761355AbXHPSKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 14:10:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761383AbXHPSKO
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 14:10:14 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:45817 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760761AbXHPSKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 14:10:12 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id AEE85895D99
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 20:10:04 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 20542-09 for <git@vger.kernel.org>;
-	Thu, 16 Aug 2007 20:10:04 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 4B143895D8B
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 20:10:04 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 565FF9F171
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 20:10:03 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id A293743F9; Thu, 16 Aug 2007 20:10:02 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc5.1.g44065
-In-Reply-To: 200708161553.10991.Josef.Weidendorfer@gmx.de
-References: 200708161553.10991.Josef.Weidendorfer@gmx.de
-In-Reply-To: <200708161553.10991.Josef.Weidendorfer@gmx.de>
-References: <200708161553.10991.Josef.Weidendorfer@gmx.de>
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1753338AbXHPS0I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 14:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753292AbXHPS0G
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 14:26:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52998 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750725AbXHPS0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 14:26:04 -0400
+Received: (qmail invoked by alias); 16 Aug 2007 18:26:01 -0000
+Received: from R597b.r.pppool.de (EHLO noname) [89.54.89.123]
+  by mail.gmx.net (mp056) with SMTP; 16 Aug 2007 20:26:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18H72A7rJQHJ+AAhd71mWmV10cHjDU5prw97AwWpi
+	4xp/uPXVk2afYg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46C4332A.AF464A67@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56028>
 
-As per the discussion in this thread:
+Hi,
 
-  http://marc.info/?t=118721709500008&r=1&w=2
+On Thu, 16 Aug 2007, Johannes Sixt wrote:
 
-this patch updates the git-submodules documentation to make the situation a bit clearer.
+> Dmitry Kakurin wrote:
+> 
+> > Also I think it's now time to merge two repos. Two Johanneses 
+> > (corresponding repo owners on the to: line), please coordinate with 
+> > each other.
+> 
+> Sure! First thing I need to know is which branch I should keep an eye 
+> on. master?
 
-Signed-off-by: martin f. krafft <madduck@madduck.net>
----
- Documentation/git-submodule.txt |   23 +++++++++++++++--------
- 1 files changed, 15 insertions(+), 8 deletions(-)
+AFAIAC 'master' is supposed to be for end-user consumption, and 'devel' is 
+where all the action is (sort of our 'next' branch).
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 2c48936..b1a4f95 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -32,15 +32,17 @@ status::
- 	repository. This command is the default command for git-submodule.
- 
- init::
--	Initialize the submodules, i.e. register in .git/config each submodule
--	name and url found in .gitmodules. The key used in .git/config is
--	`submodule.$name.url`. This command does not alter existing information
--	in .git/config.
-+	Initialize the submodules, i.e. register in $GIT_DIR/config each
-+	submodule name and url found in .gitmodules. The key used in
-+	$GIT_DIR/config is `submodule.$name.url`. This command does not alter
-+	existing information in $GIT_DIR/config, it only serves to initialise
-+	the local configuration from the defaults in .gitmodules.
- 
- update::
--	Update the registered submodules, i.e. clone missing submodules and
--	checkout the commit specified in the index of the containing repository.
--	This will make the submodules HEAD be detached.
-+	Update the submodules registered in $GIT_DIR/config, i.e. clone
-+	missing submodules and checkout the commit specified in the index of
-+	the containing repository. This will make the submodules HEAD be
-+	detached.
- 
- 
- OPTIONS
-@@ -64,9 +66,14 @@ FILES
- -----
- When initializing submodules, a .gitmodules file in the top-level directory
- of the containing repository is used to find the url of each submodule.
--This file should be formatted in the same way as $GIR_DIR/config. The key
-+This file should be formatted in the same way as $GIT_DIR/config. The key
- to each submodule url is "submodule.$name.url".
- 
-+The file .gitmodules serves default configuration data to users who cloned the
-+repository. In order to work with submodules, these data need to be copied to
-+$GIT_DIR/config with `git-submodule init`. Only the data in $GIT_DIR/config
-+are used for `git-submodule update`.
-+
- 
- AUTHOR
- ------
--- 
-1.5.3.rc5.1.g44065
+BTW I just added you (Hannes) to the pushers list.
+
+Ciao,
+Dscho
