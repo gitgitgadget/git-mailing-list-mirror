@@ -1,90 +1,67 @@
-From: arjen@yaph.org (Arjen Laarhoven)
-Subject: Re: [PATCH] t1301-shared-repo.sh: fix 'stat' portability issue
-Date: Fri, 17 Aug 2007 00:02:17 +0200
-Message-ID: <20070816220217.GH25161@regex.yaph.org>
-References: <1187277663740-git-send-email-arjen@yaph.org> <7v3ayjjnz7.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCH] Clarify actual behavior of 'git add' and ignored files
+Date: Thu, 16 Aug 2007 17:56:08 -0500
+Message-ID: <11873049683651-git-send-email-bdowning@lavos.net>
+Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 00:02:49 2007
+X-From: git-owner@vger.kernel.org Fri Aug 17 00:56:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILnQX-0000Kr-0B
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 00:02:49 +0200
+	id 1ILoG8-0000Ly-PS
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 00:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663AbXHPWCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 18:02:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXHPWCT
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 18:02:19 -0400
-Received: from regex.yaph.org ([193.202.115.201]:50599 "EHLO regex.yaph.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753074AbXHPWCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 18:02:18 -0400
-Received: by regex.yaph.org (Postfix, from userid 1000)
-	id BA90B5B7D2; Fri, 17 Aug 2007 00:02:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v3ayjjnz7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
+	id S1760665AbXHPW4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 18:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759602AbXHPW4D
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 18:56:03 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:30427 "EHLO
+	asav00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755580AbXHPW4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 18:56:01 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AglXAKRyxEZKhvbzRmdsb2JhbACBVIUmhxgBAQE1AZMa
+X-IronPort-AV: E=Sophos;i="4.19,273,1183348800"; 
+   d="scan'208";a="67157531"
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav00.insightbb.com with ESMTP; 16 Aug 2007 18:55:59 -0400
+Received: from silvara (silvara.lavos.net [10.4.0.20])
+	by mail.lavos.net (Postfix) with ESMTP id 1104D309F30;
+	Thu, 16 Aug 2007 17:55:50 -0500 (CDT)
+Received: by silvara (Postfix, from userid 1000)
+	id B828D5012D; Thu, 16 Aug 2007 17:56:08 -0500 (CDT)
+X-Mailer: git-send-email 1.5.3.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56034>
 
-The t1301-shared-repo.sh testscript uses /usr/bin/stat to get the file
-mode, which isn't portable.  Implement the test in shell using 'ls' as
-shown by Junio.
-
-Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+Signed-off-by: Brian Downing <bdowning@lavos.net>
 ---
- t/t1301-shared-repo.sh |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+ Documentation/git-add.txt |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index bb5f302..6bfe19a 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -21,7 +21,16 @@ test_expect_success 'update-server-info honors core.sharedRepository' '
- 	git commit -m a1 &&
- 	umask 0277 &&
- 	git update-server-info &&
--	test 444 = $(stat -c %a .git/info/refs)
-+	actual="$(ls -l .git/info/refs)" &&
-+	case "$actual" in
-+	-r--r--r--*)
-+		: happy
-+		;;
-+	*)
-+		echo Oops, .git/info/refs is not 0444
-+		false
-+		;;
-+	esac
- '
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index dee38f8..3383aca 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -28,10 +28,12 @@ you must run 'git add' again to add the new content to the index.
+ The 'git status' command can be used to obtain a summary of which
+ files have changes that are staged for the next commit.
  
- test_done
+-The 'add' command can be used to add ignored files with `-f` (force)
+-option, but they have to be explicitly and exactly specified from the
+-command line.  File globbing and recursive behaviour do not add ignored
+-files.
++The 'git add' command will not add ignored files by default.  If any
++ignored files were explicitly specified on the command line, 'git add'
++will fail with a list of ignored files.  Ignored files reached by
++directory recursion or filename globbing will be silently ignored.
++The 'add' command can be used to add ignored files with the `-f`
++(force) option.
+ 
+ Please see gitlink:git-commit[1] for alternative ways to add content to a
+ commit.
 -- 
-1.5.3.rc4.67.gf9286
-
-> > -	test 444 = $(stat -c %a .git/info/refs)
-> > +	$(perl -e '\''exit !(((stat ".git/info/refs")[2] & 0777) == 0444)'\'')
-> >  '
-> 
-> Why is this inside a $()?
-
-Bah.
-
-> I am just wondering if this is more portable and readable...
-> 
-> 	... &&
-> 	current="$(ls -l .git/info/refs)" &&
-> 	case "$current" in
->         -r--r--r--*)
->         	: happy
->                 ;;
-> 	*)
->         	echo Oops, .git/info/refs is not 0444
->                 false
->                 ;;
-> 	esac
+1.5.3.GIT
