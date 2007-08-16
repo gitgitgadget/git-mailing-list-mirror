@@ -1,65 +1,53 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [ANNOUNCE] GIT MinGW port is now at v1.5.3-rc4
-Date: Thu, 16 Aug 2007 13:21:14 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46C4332A.AF464A67@eudaptics.com>
-References: <46C41C49.A92AEF07@eudaptics.com> <6020F7321DB14F7B9288F0782A316803@ntdev.corp.microsoft.com>
+From: Salikh Zakirov <salikh@gmail.com>
+Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
+Date: Thu, 16 Aug 2007 20:26:16 +0900
+Message-ID: <fa1c95$sv6$1@sea.gmane.org>
+References: <1187026955.2688.4.camel@laptopd505.fenrus.org> <1187037445.6628.98.camel@heimdal.trondhjem.org> <1187054366.2757.0.camel@laptopd505.fenrus.org> <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu> <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org> <20070814193333.GI21089@ftp.linux.org.uk> <46C2548D.80605@gmail.com> <alpine.LFD.0.999.0708151846130.16414@enigma.security.iitk.ac.in> <46C30220.6060007@gmail.com> <68B09015-4411-470A-BA88-732969469AA2@mac.com> <46C42DCB.1060502@gmail.com> <46C43015.7080804@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 13:21:11 2007
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 16 13:27:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILdPY-0004Tv-M2
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 13:21:09 +0200
+	id 1ILdVK-0006bn-UE
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 13:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755940AbXHPLUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 07:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755863AbXHPLUg
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 07:20:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:56721 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755229AbXHPLUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 07:20:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1ILdP0-0003J0-6W; Thu, 16 Aug 2007 13:20:34 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id B3B09B662; Thu, 16 Aug 2007 13:20:33 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 1.3 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.394, BAYES_99=3.5
+	id S1755940AbXHPL0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 07:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755418AbXHPL0l
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 07:26:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:51548 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754843AbXHPL0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 07:26:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ILdUs-0001y1-GH
+	for git@vger.kernel.org; Thu, 16 Aug 2007 13:26:38 +0200
+Received: from cerberus.is.titech.ac.jp ([131.112.51.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Aug 2007 13:26:38 +0200
+Received: from salikh by cerberus.is.titech.ac.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Aug 2007 13:26:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cerberus.is.titech.ac.jp
+User-Agent: Thunderbird 2.0.0.4 (X11/20070708)
+In-Reply-To: <46C43015.7080804@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56006>
 
-Dmitry Kakurin wrote:
-> 
-> ----- Original Message -----
-> From: "Johannes Sixt" <J.Sixt@eudaptics.com>
-> > I've just pushed an update of the MinGW port to:
-> > clone:  git://repo.or.cz/git/mingw.git
-> 
-> We need to make sure that we don't duplicate our efforts.
-> Have you looked at http://repo.or.cz/w/git/mingw/4msysgit.git ?
-> We've made some progress while you were on vacation.
+Rene Herman wrote:
+> Perhaps that immediately suggests an implementation to someone already
+> familiar with git internals?
 
-I've basically hiding under a stone when I was away. So, no, I didn't
-see it until yesterday ;)
-
-> Also I think it's now time to merge two repos.
-> Two Johanneses (corresponding repo owners on the to: line), please coordinate with each other.
-
-Sure! First thing I need to know is which branch I should keep an eye
-on. master?
-
--- Hannes
+perhaps http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+and http://www.kernel.org/pub/software/scm/git/docs/git-check-attr.html
+can help you?
