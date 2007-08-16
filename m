@@ -1,66 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] pack-objects: remove bogus arguments to delta_cacheable()
-Date: Wed, 15 Aug 2007 22:46:01 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708152241430.16727@xanadu.home>
+From: Miles Bader <miles@gnu.org>
+Subject: [PATCH] Make git-archimport log entries more consistent
+Date: Thu, 16 Aug 2007 01:01:19 -0400
+Message-ID: <61lkcc2huo.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Aug 16 04:46:37 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 16 06:57:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILVNa-0005RD-GX
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 04:46:34 +0200
+	id 1ILXQg-000700-Ug
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 06:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760089AbXHPCqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Aug 2007 22:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757814AbXHPCqI
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Aug 2007 22:46:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:43155 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734AbXHPCqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2007 22:46:07 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JMU00DQ8ICPGSF0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 15 Aug 2007 22:46:01 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1752319AbXHPE5m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 00:57:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753008AbXHPE5m
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 00:57:42 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:54763 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbXHPE5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 00:57:41 -0400
+Received: from miles by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <miles@gnu.org>)
+	id 1ILXTz-0002nZ-O9; Thu, 16 Aug 2007 01:01:19 -0400
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55977>
 
-Not only are they unused, but the order in the function declaration
-and the actual usage don't match.
+When appending the "git-archimport-id:" line to the end of log entries,
+git-archimport would use two blank lines as a separator when there was no
+body in the arch log (only a Summary: line), and zero blank lines when there
+was a body (making it hard to see the break between the actual log message
+and the git-archimport-id: line).
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+This patch makes git-archimport generate one blank line as a separator in all
+cases.
 ---
+ git-archimport.perl |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 51a850e..24926db 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1273,9 +1273,8 @@ struct unpacked {
- 	unsigned depth;
- };
+diff --git a/git-archimport.perl b/git-archimport.perl
+index b210772..9e38ba5 100755
+--- a/git-archimport.perl
++++ b/git-archimport.perl
+@@ -595,8 +595,12 @@ foreach my $ps (@psets) {
+     my $pid = open2(*READER, *WRITER,'git-commit-tree',$tree,@par)
+         or die $!;
+     print WRITER $ps->{summary},"\n\n";
+-    print WRITER $ps->{message},"\n";
  
--static int delta_cacheable(struct unpacked *trg, struct unpacked *src,
--			    unsigned long src_size, unsigned long trg_size,
--			    unsigned long delta_size)
-+static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
-+			   unsigned long delta_size)
- {
- 	if (max_delta_cache_size && delta_cache_size + delta_size > max_delta_cache_size)
- 		return 0;
-@@ -1397,7 +1396,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	trg_entry->delta_size = delta_size;
- 	trg->depth = src->depth + 1;
++    # only print message if it's not empty, to avoid a spurious blank line;
++    # also append an extra newline, so there's a blank line before the
++    # following "git-archimport-id:" line.
++    print WRITER $ps->{message},"\n\n" if ($ps->{message} ne "");
++    
+     # make it easy to backtrack and figure out which Arch revision this was:
+     print WRITER 'git-archimport-id: ',$ps->{id},"\n";
  
--	if (delta_cacheable(src, trg, src_size, trg_size, delta_size)) {
-+	if (delta_cacheable(src_size, trg_size, delta_size)) {
- 		trg_entry->delta_data = xrealloc(delta_buf, delta_size);
- 		delta_cache_size += trg_entry->delta_size;
- 	} else
+-- 
+1.5.3.rc3.91.g5c75-dirty
