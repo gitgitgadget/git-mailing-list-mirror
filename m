@@ -1,61 +1,69 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: [ANNOUNCE] GIT MinGW port is now at v1.5.3-rc4
-Date: Thu, 16 Aug 2007 11:43:37 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46C41C49.A92AEF07@eudaptics.com>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: [MinGW PATCH] Fixed error 'fatal: Not a git repository' on
+	Vista
+Date: Thu, 16 Aug 2007 11:56:55 +0200
+Message-ID: <20070816095655.GA13069@fiberbit.xs4all.nl>
+References: <DE6EEF3D318C4051827B95DF26D97BE7@ntdev.corp.microsoft.com> <46C40CB3.5415D888@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 16 11:43:21 2007
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 12:06:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILbsu-00068J-Ji
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 11:43:20 +0200
+	id 1ILcEK-0005HI-31
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 12:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754653AbXHPJm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 05:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754484AbXHPJm4
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 05:42:56 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51551 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753917AbXHPJm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 05:42:56 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1ILbsU-00010r-PG
-	for git@vger.kernel.org; Thu, 16 Aug 2007 11:42:55 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP id 5AA4EFCD1
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 11:42:54 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 1.3 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.395, BAYES_99=3.5
+	id S1759461AbXHPKFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 06:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758968AbXHPKFF
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 06:05:05 -0400
+Received: from smtp-vbr7.xs4all.nl ([194.109.24.27]:3880 "EHLO
+	smtp-vbr7.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757481AbXHPKFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 06:05:02 -0400
+X-Greylist: delayed 467 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Aug 2007 06:05:01 EDT
+Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [213.84.224.214])
+	by smtp-vbr7.xs4all.nl (8.13.8/8.13.8) with ESMTP id l7G9uuXw034642;
+	Thu, 16 Aug 2007 11:56:56 +0200 (CEST)
+	(envelope-from marco.roeland@xs4all.nl)
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.67)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1ILc63-0003Pe-TK; Thu, 16 Aug 2007 11:56:55 +0200
+Content-Disposition: inline
+In-Reply-To: <46C40CB3.5415D888@eudaptics.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56000>
 
-I've just pushed an update of the MinGW port to:
+On Thursday August 16th 2007 at 10:37 Johannes Sixt wrote:
 
-clone:  git://repo.or.cz/git/mingw.git
-gitweb: http://repo.or.cz/w/git/mingw.git
+> I don't see how this could make a difference: __USE_MINGW_ACCESS appears
+> in none of the mingw header files nor in the mingw.git sources.
+> 
+> Is my build environment outdated?
 
-This passes the test suite, but I still haven't used it in production.
+The mingw patch for fixing this Vista regression (from Danny Smith on
+March 5th) is in mingw-runtime-3.12-1. It is in file <include/io.h> and
+works like this:
 
-There are two additional changes that are of interest for the msysgit
-effort:
+#ifdef __USE_MINGW_ACCESS
+/*  Old versions of MSVCRT access() just ignored X_OK, while the version
+    shipped with Vista, returns an error code.  This will restore the
+    old behaviour  */
+static inline int __mingw_access (const char* __fname, int __mode)
+  { return  _access (__fname, __mode & ~X_OK); }
+#define access(__f,__m)  __mingw_access (__f, __m)
+#endif
 
-- The test scripts no longer accept --no-symlinks becaust test-lib.sh
-auto-detects whether the file system supports symbolic links.
-
-- The devel branch no longer patches out libiconv, which is now required
-in the shipped configuration (the one from
-http://gnuwin32.sourceforge.net/packages/libiconv.htm, which requires
-the OLD_ICONV setting in the Makefile).
-
--- Hannes
+Whenever the X_OK bit is set in the mode flag for access(2) Vista
+returns an error for the call. So yes, using __USE_MINGW_ACCESS will not
+work on older mingw versions. Defining X_OK to 0 for mingw might fix the
+problem for older versions.
+-- 
+Marco Roeland
