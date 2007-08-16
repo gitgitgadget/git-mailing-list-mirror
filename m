@@ -1,95 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: performance on repack
-Date: Thu, 16 Aug 2007 11:34:19 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708161103080.16727@xanadu.home>
-References: <9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com>
- <20070812103338.GA7763@auto.tuwien.ac.at>
- <9e4733910708120649g5a5e0f48pa71bd983f2bc2945@mail.gmail.com>
- <20070814031236.GC27913@spearce.org>
- <alpine.LFD.0.999.0708141634160.5415@xanadu.home>
- <20070815053231.GJ27913@spearce.org>
- <9e4733910708150808x39241071j1a4012f16cd26ef8@mail.gmail.com>
- <20070815171152.GA15155@auto.tuwien.ac.at>
- <9e4733910708151138x2b267dc6w27c1bc8d948e5633@mail.gmail.com>
- <alpine.LFD.0.999.0708151453390.5415@xanadu.home>
- <86d4xn5287.fsf@lola.quinscape.zz>
+From: Al Viro <viro@ftp.linux.org.uk>
+Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
+Date: Thu, 16 Aug 2007 16:40:29 +0100
+Message-ID: <20070816154029.GN21089@ftp.linux.org.uk>
+References: <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org> <20070814193333.GI21089@ftp.linux.org.uk> <46C2548D.80605@gmail.com> <alpine.LFD.0.999.0708151846130.16414@enigma.security.iitk.ac.in> <46C30220.6060007@gmail.com> <68B09015-4411-470A-BA88-732969469AA2@mac.com> <46C42DCB.1060502@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 16 17:34:25 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Kyle Moffett <mrmacman_g4@mac.com>,
+	Satyam Sharma <satyam@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Joe Perches <joe@perches.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Alan Cox <alan@lxorguk.ukuu.org.uk>,
+	Arjan van de Ven <arjan@infradead.org>,
+	Trond Myklebust <trond.myklebust@fys.uio.no>,
+	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+To: Rene Herman <rene.herman@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 17:41:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILhMe-000220-Ll
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 17:34:25 +0200
+	id 1ILhTK-0004us-Fe
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 17:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760066AbXHPPeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 11:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760174AbXHPPeW
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 11:34:22 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:38524 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760066AbXHPPeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 11:34:21 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JMV00DYCHX7GH50@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 16 Aug 2007 11:34:20 -0400 (EDT)
-In-reply-to: <86d4xn5287.fsf@lola.quinscape.zz>
-X-X-Sender: nico@xanadu.home
+	id S1754382AbXHPPlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 11:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbXHPPlH
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 11:41:07 -0400
+Received: from zeniv.linux.org.uk ([195.92.253.2]:44532 "EHLO
+	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757739AbXHPPks (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 11:40:48 -0400
+Received: from viro by ZenIV.linux.org.uk with local (Exim 4.52 #1 (Red Hat Linux))
+	id 1ILhSX-0005ns-HO; Thu, 16 Aug 2007 16:40:29 +0100
+Content-Disposition: inline
+In-Reply-To: <46C42DCB.1060502@gmail.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56020>
 
-On Thu, 16 Aug 2007, David Kastrup wrote:
+On Thu, Aug 16, 2007 at 12:58:19PM +0200, Rene Herman wrote:
+ 
+> Googling around, I see subversion already has this and calls the meta-data 
+> "properties" (svn propset/get and friends). It uses a few properties 
+> itself, such as the svn:executable property (which I saw is also the only 
+> permission bit git keeps) and svn:ignore, which serves the same role as the 
+> .gitignore files for git. Both those would fit into this scheme nicely for 
+> git as well, if git were to do something similar and reserve for example 
+> the "git.*" namespace for internal use.
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > On Wed, 15 Aug 2007, Jon Smirl wrote:
-> >
-> >> On 8/15/07, Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> >> > git-pack-objects knows the order, in which it will use the objects.  A
-> >> > seperate thread could pre-read the next object and wait until the main
-> >> > thread starts processing it. After the read is complete, another
-> >> > thread could start computing the delta index.
-> >> 
-> >> The hope is that the new adaptive read ahead code in the kernel will
-> >> get this right and you won't need the second thread. Letting the
-> >> kernel handle the read ahead will dynamically scale as other demands
-> >> are made on the host. There's effectively only one read ahead cache in
-> >> the system, only the kernel really knows how to divide it up between
-> >> competing apps.
-> >
-> > No read ahead will ever help the delta search phase.
-> 
-> Well, the delta search phase consists of computing a delta index and
-> then matching against it.
+"svn does it" is usually an indication of a bad idea, but anyway - it's
+fundamentally wrong in this case, simply because "$FOO is interested
+in $BAR" is a property of $FOO, not of $BAR.
 
-No, what I mean is what happens at a higher level where one object is 
-deltified against several base object candidates to find the best match.  
-Those several objects are presorted according to a combination of 
-heuristics that makes their actual access completely random, hence no 
-kernel read ahead might help here.
+> The git-blame thing as sketched before by Linus would never be able to 
+> point out mailing lists, or general lists of "interested parties" for 
+> example, but these properties can do anything...
 
-> If I understand correctly, delta indices
-> for the search window are kept, and the current file is compared
-> against them.  Locality might be better if just one delta index gets
-> calculated and then compared with all _upcoming_ delta candidates in
-> one go.
-
-This appears so obvious that I attempted that a while ago already.
-
-The idea turned up to be so complex to implement correctly and produced 
-suboptimal results in practice that I abandoned it.
-
-See http://marc.info/?l=git&m=114610715706599&w=2 for the details if 
-you're interested.
-
-PS: please at least CC me when replying to my mails
-
-
-Nicolas
+No, they can not.  "I'm interested in drivers/foo/bar.c fixes" is not
+an earth-shattering event and it sure as hell does not create a new revision
+of the tree.
