@@ -1,88 +1,61 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: update documentation with CAVEATS section
-Date: Thu, 16 Aug 2007 01:56:45 -0700
-Message-ID: <20070816085645.GA3159@soma>
+Subject: Re: git-svn fetch updating master
+Date: Thu, 16 Aug 2007 02:03:28 -0700
+Message-ID: <20070816090327.GC16849@muzzle>
+References: <20070815181228.GA6363@glandium.org> <20070816080349.GA16849@muzzle> <20070816082706.GA29521@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 10:56:59 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Aug 16 11:03:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILb9y-00073e-IZ
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:56:54 +0200
+	id 1ILbGU-00013W-Lg
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 11:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436AbXHPI4u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 04:56:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754891AbXHPI4u
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:56:50 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35794 "EHLO hand.yhbt.net"
+	id S1755436AbXHPJD3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 05:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755420AbXHPJD3
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 05:03:29 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:35817 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753626AbXHPI4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 04:56:49 -0400
+	id S1754891AbXHPJD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 05:03:28 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id EFF6D2DC08D;
-	Thu, 16 Aug 2007 01:56:45 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id 391832DC08D;
+	Thu, 16 Aug 2007 02:03:28 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20070816082706.GA29521@glandium.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55995>
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+Mike Hommey <mh@glandium.org> wrote:
+> On Thu, Aug 16, 2007 at 01:03:49AM -0700, Eric Wong <normalperson@yhbt.net> wrote:
+> > Mike Hommey <mh@glandium.org> wrote:
+> > > Hi,
+> > > 
+> > > I was wondering why the master branch was hardcoded to be updated in
+> > > post_fetch_checkout() in git-svn. Why not allow to use another branch ?
+> > 
+> > It shouldn't update master if it the branch already exists and is a
+> > valid ref.
+> > 
+> > The default for git-clone is to create "master", too, so I wanted
+> > git-svn clone behavior to be the same.
+> 
+> git-svn fetch is not only invoqued at cloning time...
+> 
+> My problem is that I (purposely) removed the master branch, so git-svn fetch
+> is creating it again every time I run to update the svn branch...
 
-  I've been meaning to do this for a while, hopefully this cuts
-  down on the redundant mailing list traffic about these subjects.
+Ah.  The old usage was: git-svn init && git-svn fetch; so it'll create
+a master branch each time.   You can use --no-checkout with fetch to
+avoid this behavior.
 
- Documentation/git-svn.txt |   32 ++++++++++++++++++++++++++++++++
- 1 files changed, 32 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 816340b..fbc5887 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -479,6 +479,38 @@ the user on the git side.  git-svn does however follow copy
- history of the directory that it is tracking, however (much like
- how 'svn log' works).
- 
-+CAVEATS
-+-------
-+
-+For the sake of simplicity and interoperating with a less-capable system
-+(SVN), it is recommended that all git-svn users clone, fetch and dcommit
-+directly from the SVN server, and avoid all git-clone/pull/merge/push
-+operations between git repositories and branches.  The recommended
-+method of exchanging code between git branches and users is
-+git-format-patch and git-am, or just dcommiting to the SVN repository.
-+
-+Running 'git-merge' or 'git-pull' is NOT recommended on a branch you
-+plan to dcommit from.  Subversion does not represent merges in any
-+reasonable or useful fashion; so users using Subversion cannot see any
-+merges you've made.  Furthermore, if you merge or pull from a git branch
-+that is a mirror of an SVN branch, dcommit may commit to the wrong
-+branch.
-+
-+'git-clone' does not clone branches under the refs/remotes/ hierarchy or
-+any git-svn metadata, or config.  So repositories created and managed with
-+using git-svn should use rsync(1) for cloning, if cloning is to be done
-+at all.
-+
-+Since 'dcommit' uses rebase internally, any git branches you git-push to
-+before dcommit on will require forcing an overwrite of the existing ref
-+on the remote repository.  This is generally considered bad practice,
-+see the git-push(1) documentation for details.
-+
-+Do not use the --amend option of git-commit(1) on a change you've
-+already dcommitted.  It is considered bad practice to --amend commits
-+you've already pushed to a remote repository for other users, and
-+dcommit with SVN is analogous to that.
-+
- BUGS
- ----
- 
 -- 
 Eric Wong
