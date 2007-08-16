@@ -1,50 +1,50 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn fetch updating master
-Date: Thu, 16 Aug 2007 01:03:49 -0700
-Message-ID: <20070816080349.GA16849@muzzle>
-References: <20070815181228.GA6363@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix an unitialized pointer in merge-recursive.c
+Date: Thu, 16 Aug 2007 01:08:01 -0700
+Message-ID: <7vsl6jkila.fsf@gitster.siamese.dyndns.org>
+References: <e5bfff550708160100t5aa93430x6cbe83e6e7a61d73@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Aug 16 10:04:05 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 10:08:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILaKj-0005RH-MJ
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:03:58 +0200
+	id 1ILaOv-00074S-M0
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871AbXHPIDx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 04:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753785AbXHPIDx
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:03:53 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35630 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753462AbXHPIDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 04:03:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D45E42DC08D;
-	Thu, 16 Aug 2007 01:03:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20070815181228.GA6363@glandium.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751937AbXHPIIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 04:08:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbXHPIIK
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:08:10 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:52784 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757039AbXHPIIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 04:08:07 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 37496122381;
+	Thu, 16 Aug 2007 04:08:25 -0400 (EDT)
+In-Reply-To: <e5bfff550708160100t5aa93430x6cbe83e6e7a61d73@mail.gmail.com>
+	(Marco Costalba's message of "Thu, 16 Aug 2007 10:00:26 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55986>
 
-Mike Hommey <mh@glandium.org> wrote:
-> Hi,
-> 
-> I was wondering why the master branch was hardcoded to be updated in
-> post_fetch_checkout() in git-svn. Why not allow to use another branch ?
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-It shouldn't update master if it the branch already exists and is a
-valid ref.
+> Indeed &mrtree is passed to merge_trees() that not always
+> seems to set the value, so on some paths mrtree could
+> return uninitialized.
+>
+> Spotted by a gcc 4.2.1 warning
 
-The default for git-clone is to create "master", too, so I wanted
-git-svn clone behavior to be the same.
+Are you sure that gcc is correctly seeing the codeflow?
 
--- 
-Eric Wong
+In merge(), mrtree is used only under index_only, and
+merge_trees() always sets *result under index_only.
