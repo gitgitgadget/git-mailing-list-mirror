@@ -1,50 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: [PATCH] Fix an unitialized pointer in merge-recursive.c
-Date: Thu, 16 Aug 2007 01:08:01 -0700
-Message-ID: <7vsl6jkila.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 16 Aug 2007 10:11:00 +0200
+Message-ID: <e5bfff550708160111n66b5ea94k26cf2fecc06fd84c@mail.gmail.com>
 References: <e5bfff550708160100t5aa93430x6cbe83e6e7a61d73@mail.gmail.com>
+	 <7vsl6jkila.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 10:08:18 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 10:11:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILaOv-00074S-M0
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:08:18 +0200
+	id 1ILaRj-0008EM-BL
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 10:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbXHPIIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 04:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbXHPIIK
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:08:10 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:52784 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757039AbXHPIIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 04:08:07 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 37496122381;
-	Thu, 16 Aug 2007 04:08:25 -0400 (EDT)
-In-Reply-To: <e5bfff550708160100t5aa93430x6cbe83e6e7a61d73@mail.gmail.com>
-	(Marco Costalba's message of "Thu, 16 Aug 2007 10:00:26 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756557AbXHPILH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 04:11:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbXHPILG
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 04:11:06 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:59076 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752731AbXHPILB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 04:11:01 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so201783wah
+        for <git@vger.kernel.org>; Thu, 16 Aug 2007 01:11:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Eu7poG8ltXjTczbZxvBxt2Pmx+7bD9zfPLsBMiizLrB5PVe44OOiEKnEEEhIYKRI5i9+ta93GlbsoJbqBNSfDSZU58pHLnysYzsG2KATbFrl2wXX6SDnGI0imQPuW7RJQeIgZT/EYYdeW9Jau4iQ7F2KpaBqgt5t/rW3C+KvliM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Rsiv9RWGELVbMazl3uew/Vxyhk7LHJWd7ZA8Lg4sW9HmWknOLm75FaOm+8rWDwyQK0Cm0IHI+uAfK5Bk93Qx06YMxekKpbnJ36cPrc5pSFi2wvghAvuyYDN9gec+B9/Py7Bn9myC+56QTrck88eez6lbPfsHiJFTVCcxMtNn4xw=
+Received: by 10.114.199.1 with SMTP id w1mr1479113waf.1187251860421;
+        Thu, 16 Aug 2007 01:11:00 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Thu, 16 Aug 2007 01:11:00 -0700 (PDT)
+In-Reply-To: <7vsl6jkila.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55987>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
-
-> Indeed &mrtree is passed to merge_trees() that not always
-> seems to set the value, so on some paths mrtree could
-> return uninitialized.
+On 8/16/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
 >
-> Spotted by a gcc 4.2.1 warning
+> > Indeed &mrtree is passed to merge_trees() that not always
+> > seems to set the value, so on some paths mrtree could
+> > return uninitialized.
+> >
+> > Spotted by a gcc 4.2.1 warning
+>
+> Are you sure that gcc is correctly seeing the codeflow?
+>
+> In merge(), mrtree is used only under index_only, and
+> merge_trees() always sets *result under index_only.
+>
 
-Are you sure that gcc is correctly seeing the codeflow?
+Ok ;-)
 
-In merge(), mrtree is used only under index_only, and
-merge_trees() always sets *result under index_only.
+Now two options:
+
+- discard the patch
+
+- change the title in 'silence a gcc bougus warning'
