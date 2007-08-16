@@ -1,77 +1,60 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
-Subject: Re: git on Cygwin: Not a valid object name HEAD
-Date: Thu, 16 Aug 2007 07:55:55 -0400
-Message-ID: <30e4a070708160455t78eae31cx3e6d3a7203d0b4b8@mail.gmail.com>
-References: <76795DDC-29A5-4C7E-B56E-A6316A183C75@zib.de>
-	 <85fy2l1i1g.fsf@lola.goethe.zz>
-	 <ABA1D7D2-92A6-4E8C-AC36-93912621E3D4@zib.de>
-	 <86k5rx474o.fsf@lola.quinscape.zz>
-	 <20070815073811.GL27913@spearce.org>
-	 <30e4a070708150542m3f3f5c62l5e4bf5b3ff098b52@mail.gmail.com>
-	 <30e4a070708150548r3234cd66yd4ee6a85989a98b1@mail.gmail.com>
-	 <3F9AF722-0610-4778-A244-DBE5A0918D0B@zib.de>
-	 <46C39A06.7020003@gmail.com>
-	 <3CDBDF39-F6FB-411D-9691-3146B882B8EC@zib.de>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: [PATCH] [1/2many] - FInd the maintainer(s) for a patch - scripts/get_maintainer.pl
+Date: Thu, 16 Aug 2007 13:57:23 +0200
+Message-ID: <46C43BA3.6090807@gmail.com>
+References: <1187026955.2688.4.camel@laptopd505.fenrus.org> <1187037445.6628.98.camel@heimdal.trondhjem.org> <1187054366.2757.0.camel@laptopd505.fenrus.org> <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu> <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost> <46C1EE6F.2080807@gmail.com> <1187116082.32555.122.camel@localhost> <alpine.LFD.0.999.0708141131140.30176@woody.linux-foundation.org> <20070814193333.GI21089@ftp.linux.org.uk> <46C2548D.80605@gmail.com> <alpine.LFD.0.999.0708151846130.16414@enigma.security.iitk.ac.in> <46C30220.6060007@gmail.com> <68B09015-4411-470A-BA88-732969469AA2@mac.com> <46C42DCB.1060502@gmail.com> <46C43015.7080804@gmail.com> <fa1c95$sv6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"David Kastrup" <dak@gnu.org>,
-	"Torgil Svensson" <torgil.svensson@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Aug 16 13:56:02 2007
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Salikh Zakirov <salikh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 16 14:01:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILdxJ-0000Gs-NP
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 13:56:02 +0200
+	id 1ILe2g-00028p-N6
+	for gcvg-git@gmane.org; Thu, 16 Aug 2007 14:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbXHPLz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 07:55:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbXHPLz5
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 07:55:57 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:33227 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332AbXHPLz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 07:55:56 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so77351nze
-        for <git@vger.kernel.org>; Thu, 16 Aug 2007 04:55:56 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IYGtgGgeLWtir/ifdPjxTzIoVau14lBVbBj6DuEYbikJLbXr1tQ7biMZC3JyXUcN0WYlhUEMyVFjv0DkdEgAWm8usD9qpHY309lSHEDC6Ebga6BcDR2ZliPGX5wVnYkuQqJYawD7P3D/EdCXzlWMHp23IgqXjg1h31cipLLZKOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bnf08N9gXdFfIIhSZO1Z05zW1+Z/rq58nUFP0E5SiAMGbAmfk0F8xc9fF2cqJ1MUjbtxOYsZCGvnxY6ZA+jbiVP7v3cKtAeGrSCuVi239cSKgpVkFrVbsdf+o6/D+93ynO2LQW6sSykolxVcm8DH8eDl1BxuHtUaR+vT8L6pDtA=
-Received: by 10.142.234.12 with SMTP id g12mr82998wfh.1187265355390;
-        Thu, 16 Aug 2007 04:55:55 -0700 (PDT)
-Received: by 10.143.156.1 with HTTP; Thu, 16 Aug 2007 04:55:55 -0700 (PDT)
-In-Reply-To: <3CDBDF39-F6FB-411D-9691-3146B882B8EC@zib.de>
-Content-Disposition: inline
+	id S1752904AbXHPMB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 08:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbXHPMB3
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 08:01:29 -0400
+Received: from smtpq2.tilbu1.nb.home.nl ([213.51.146.201]:51801 "EHLO
+	smtpq2.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752257AbXHPMB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 08:01:28 -0400
+Received: from [213.51.146.190] (port=37522 helo=smtp1.tilbu1.nb.home.nl)
+	by smtpq2.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1ILe2Z-0004QG-FD; Thu, 16 Aug 2007 14:01:27 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:50840 helo=[192.168.0.3])
+	by smtp1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1ILe2X-0004qY-Mk; Thu, 16 Aug 2007 14:01:25 +0200
+User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
+In-Reply-To: <fa1c95$sv6$1@sea.gmane.org>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56009>
 
-> Assuming that 'REG' is only available on Windows and has a defined
-> meaning seems to be reasonable assumption to me. I don't see the need
-> to test which platform the script is running on. Testing if 'REG' is
-> available seems to be sufficient.
->
->         Steffen
->
+On 08/16/2007 01:26 PM, Salikh Zakirov wrote:
 
-I don't think that REG is a a name reserved for use only on Windows
-that could never exist on another box. Its meaning is undefined
-outside of Windows. Undefined means unreliable and therefore, not
-useful as a test to decide what to do on arbitrary platforms. Also, on
-Cygwin you would use regtool and parse things differently anyway,
-while Cygwin users tend to be educable enough that if they want to use
-kdiff or whatever, they'll symlink it or otherwise put it on their
-path.
+Please don't drop CCs.
 
-Mark
+> Rene Herman wrote:
+>> Perhaps that immediately suggests an implementation to someone already
+>> familiar with git internals?
+> 
+> perhaps http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+> and http://www.kernel.org/pub/software/scm/git/docs/git-check-attr.html
+> can help you?
+
+No, thanks, saw them, but .gitattributes is in fact in the same category as 
+.gitignore, which would _be_ a property.
+
+If you do this stuff in files scattered around the tree, updating and moving 
+stuff becomes a pain -- the tool would need to go edit files.
+
+Rene.
