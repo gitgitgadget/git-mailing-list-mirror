@@ -1,62 +1,90 @@
-From: Stefan Richter <stefanr@s5r6.in-berlin.de>
-Subject: Re: [linux-pm] Re: Storing Maintainers info around the kernel tree
-Date: Thu, 16 Aug 2007 23:39:24 +0200
-Message-ID: <46C4C40C.4050406@s5r6.in-berlin.de>
-References: <Pine.LNX.4.44L0.0708161128540.3757-100000@iolanthe.rowland.org> <46C47246.9020800@gmail.com>
+From: arjen@yaph.org (Arjen Laarhoven)
+Subject: Re: [PATCH] t1301-shared-repo.sh: fix 'stat' portability issue
+Date: Fri, 17 Aug 2007 00:02:17 +0200
+Message-ID: <20070816220217.GH25161@regex.yaph.org>
+References: <1187277663740-git-send-email-arjen@yaph.org> <7v3ayjjnz7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Alan Stern <stern@rowland.harvard.edu>,
-	Kyle Moffett <mrmacman_g4@mac.com>,
-	Salikh Zakirov <salikh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	Joe Perches <joe@perches.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-pm@lists.linux-foundation.org, git@vger.kernel.org
-To: Rene Herman <rene.herman@gmail.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1765813AbXHPVpr@vger.kernel.org Thu Aug 16 23:46:00 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1765813AbXHPVpr@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 00:02:49 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILnAF-0002qR-8G
-	for glk-linux-kernel-3@gmane.org; Thu, 16 Aug 2007 23:45:59 +0200
+	id 1ILnQX-0000Kr-0B
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 00:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765813AbXHPVpr (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 16 Aug 2007 17:45:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbXHPVpg
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 16 Aug 2007 17:45:36 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:53841 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752832AbXHPVpf (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 16 Aug 2007 17:45:35 -0400
-X-Envelope-From: stefanr@s5r6.in-berlin.de
-Received: from [192.168.0.42] (k5.avc-online.de [83.221.230.29])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l7GLdOZ3001131
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 16 Aug 2007 23:39:28 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070807 SeaMonkey/1.1.4
-In-Reply-To: <46C47246.9020800@gmail.com>
-X-Enigmail-Version: 0.95.2
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753663AbXHPWCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 18:02:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXHPWCT
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 18:02:19 -0400
+Received: from regex.yaph.org ([193.202.115.201]:50599 "EHLO regex.yaph.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753074AbXHPWCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2007 18:02:18 -0400
+Received: by regex.yaph.org (Postfix, from userid 1000)
+	id BA90B5B7D2; Fri, 17 Aug 2007 00:02:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v3ayjjnz7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56032>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56033>
 
-Rene Herman wrote:
-> I personally don't think there's a whole lot wrong with more and more
-> expecting people who submit patches (for whom this automation is
-> intended) to be using git.
+The t1301-shared-repo.sh testscript uses /usr/bin/stat to get the file
+mode, which isn't portable.  Implement the test in shell using 'ls' as
+shown by Junio.
 
-You mean "people who frequently submit patches for various different
-subsystems".
+Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+---
+ t/t1301-shared-repo.sh |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index bb5f302..6bfe19a 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -21,7 +21,16 @@ test_expect_success 'update-server-info honors core.sharedRepository' '
+ 	git commit -m a1 &&
+ 	umask 0277 &&
+ 	git update-server-info &&
+-	test 444 = $(stat -c %a .git/info/refs)
++	actual="$(ls -l .git/info/refs)" &&
++	case "$actual" in
++	-r--r--r--*)
++		: happy
++		;;
++	*)
++		echo Oops, .git/info/refs is not 0444
++		false
++		;;
++	esac
+ '
+ 
+ test_done
 -- 
-Stefan Richter
--=====-=-=== =--- =----
-http://arcgraph.de/sr/
+1.5.3.rc4.67.gf9286
+
+> > -	test 444 = $(stat -c %a .git/info/refs)
+> > +	$(perl -e '\''exit !(((stat ".git/info/refs")[2] & 0777) == 0444)'\'')
+> >  '
+> 
+> Why is this inside a $()?
+
+Bah.
+
+> I am just wondering if this is more portable and readable...
+> 
+> 	... &&
+> 	current="$(ls -l .git/info/refs)" &&
+> 	case "$current" in
+>         -r--r--r--*)
+>         	: happy
+>                 ;;
+> 	*)
+>         	echo Oops, .git/info/refs is not 0444
+>                 false
+>                 ;;
+> 	esac
