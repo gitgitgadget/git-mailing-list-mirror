@@ -1,105 +1,162 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: using .gitmodule as default (was: git submodule init and
-	redundant data in .gitmodules/.git/config)
-Date: Thu, 16 Aug 2007 16:21:33 +0200
-Message-ID: <20070816142133.GA26013@piper.oerlikon.madduck.net>
-References: <20070815162005.GA18463@piper.oerlikon.madduck.net> <20070815163822.GC1070MdfPADPa@greensroom.kotnet.org> <20070815222907.GA7395@piper.oerlikon.madduck.net> <200708161553.10991.Josef.Weidendorfer@gmx.de>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: Storing Maintainers info around the kernel tree
+Date: Thu, 16 Aug 2007 17:13:41 +0200
+Message-ID: <46C469A5.8020003@gmail.com>
+References: <46bffbd3.IqsNHrHU1Y9BF7Dd%joe@perches.com> <20070814232430.GA9325@redhat.com> <2ABEF126-D860-46D2-8E15-673C3ADB51A0@mac.com> <200708151321.05959.rjw@sisk.pl> <D31EF534-ACD1-426D-AF88-F152C23CB542@mac.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 16 16:22:06 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Rafael J. Wysocki" <rjw@sisk.pl>, Dave Jones <davej@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Joe Perches <joe@perches.com>, Pavel Machek <pavel@ucw.cz>,
+	linux-pm@lists.linux-foundation.org,
+	LKML Kernel <linux-kernel@vger.kernel.org>,
+	Salikh Zakirov <salikh@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Kyle Moffett <mrmacman_g4@mac.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763677AbXHPPS3@vger.kernel.org Thu Aug 16 17:18:51 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763677AbXHPPS3@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILgEZ-0003gU-Uy
-	for gcvg-git@gmane.org; Thu, 16 Aug 2007 16:22:00 +0200
+	id 1ILh7a-0003ab-Rs
+	for glk-linux-kernel-3@gmane.org; Thu, 16 Aug 2007 17:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756075AbXHPOVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 10:21:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758363AbXHPOVh
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 10:21:37 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:59518 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753553AbXHPOVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 10:21:36 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id E02F5895F4A
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 16:21:34 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 30973-10 for <git@vger.kernel.org>;
-	Thu, 16 Aug 2007 16:21:34 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 9DE9E895F48
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 16:21:34 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id D15679F171
-	for <git@vger.kernel.org>; Thu, 16 Aug 2007 16:21:33 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 9A41643F9; Thu, 16 Aug 2007 16:21:33 +0200 (CEST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200708161553.10991.Josef.Weidendorfer@gmx.de>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
-Sender: git-owner@vger.kernel.org
+	id S1763677AbXHPPS3 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 16 Aug 2007 11:18:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756787AbXHPPSR
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 16 Aug 2007 11:18:17 -0400
+Received: from smtpq1.tilbu1.nb.home.nl ([213.51.146.200]:48195 "EHLO
+	smtpq1.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756784AbXHPPSP (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 16 Aug 2007 11:18:15 -0400
+Received: from [213.51.146.189] (port=40147 helo=smtp2.tilbu1.nb.home.nl)
+	by smtpq1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1ILh6b-0005A6-4L; Thu, 16 Aug 2007 17:17:49 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:57268 helo=[192.168.0.3])
+	by smtp2.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1ILh6Y-0005ja-FA; Thu, 16 Aug 2007 17:17:46 +0200
+User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
+In-Reply-To: <D31EF534-ACD1-426D-AF88-F152C23CB542@mac.com>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56016>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56017>
 
+On 08/16/2007 03:04 PM, Kyle Moffett wrote:
 
---0OAP2g/MAC+5xKAE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Aug 16, 2007, at 07:57:23, Rene Herman wrote:
 
-also sprach Josef Weidendorfer <Josef.Weidendorfer@gmx.de> [2007.08.16.1553=
- +0200]:
-> The information in .gitmodules is only a default value for the
-> URL, and not to be actually used. The URL in the config has to
-> exist and will be used for updating. So the config value is not
-> about overriding anything, but is required information.
+>> category as .gitignore, which would _be_ a property.
+>>
+>> If you do this stuff in files scattered around the tree, updating and 
+>> moving stuff becomes a pain -- the tool would need to go edit files.
+> 
+> From a practical standpoint we don't want to duplicate someone's 
+> maintainer information in the attributes of every file they maintain.  
 
-It's not required for git-submodule status.
+In a tree structure, you don't have to. As described earlier, the tool 
+(git-prop) looks for the requested property being set first on the file 
+itself, then on the directory in which it resides, then its parent, and so 
+on. If I read things right, this is also how properties work in subversion 
+in fact.
 
-> The URL should not depend on the current revision you have checked
-> out at the moment; otherwise, if the default URL in .gitmodules
-> changed at some point in the history, and you check out some
-> earlier commit in the superproject, the update of the submodule
-> would not work: the submodule project still resides on the new
-> URL, regardless of the old information in .gitmodules at the time
-> of the old commit.
+So after
 
-Fair point. Thanks,
+$ git prop --set --name maintainer --value \
+	"Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>" drivers/ide/
+and
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"heuristic is computer science jargon for 'doesn't actually work.'"
-                                                     -- charlie reiman
-=20
-spamtraps: madduck.bogus@madduck.net
+$ git prop --set --name maintainer --value \
+	"Alan Cox <alan@lxorguk.ukuu.org.uk>" drivers/ide/ide-cd.*
 
---0OAP2g/MAC+5xKAE
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+we get:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+$ git prop --get --name maintainer drivers/ide/ide-cd.c
+Alan Cox <alan@lxorguk.ukuu.org.uk>
 
-iD8DBQFGxF1tIgvIgzMMSnURAsm9AJ9bvLxIcC3KSAGTAUZM35KIYn99yACeOCrV
-7vRW/wbBa+ay/VkwfPZKXL8=
-=bT9u
------END PGP SIGNATURE-----
+$ git prop --get --name maintainer drivers/ide/ide-generic.c
+Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
 
---0OAP2g/MAC+5xKAE--
+Now, this override behaviour needs a tree structure ofcourse, but notice I 
+set the "maintainer" property only to the name/address. The other 
+information from the MAINTAINERS file would be using their own properties:
+
+$ git prop --set --name tree --value \
+     "quilt kernel.org/pub/linux/kernel/people/bart/pata-2.6/" drivers/ide/
+
+and nothing under drivers/ide/ would override this value nor would it be 
+repeated anywhere. Alan takes care of more than ide-cd but only the actual 
+"maintainer" value string would be set on the others as well and repeating 
+that much for different "maintenance units" is no different from the current 
+MAINTAINERS file where it also is (well, would be, Alan is in fact only 
+listed for ide-cd it seems...) repeated in different entries.
+
+(as a slight difference -- in the above example, Alan's information _is_ 
+repeated over ide-cd.c and ide-cd.h where the current MAINTAINERS file just 
+says "IDE/ATAPI CDROM DRIVER", but that's a bit of an oddbal situation since 
+you normally have either single files or a tree that make up a "maintenance 
+unit" -- and is in fact just a human versus tool difference).
+
+> It would be much easier to put in the "kernel/somesubsys" directory a 
+> Maintainers file which has:
+
+It's ofcourse possible, but note that if we want this stuff to be minimally 
+manual, moving files around (and deleting them) then requires editing these 
+actual in-tree files via a tool.
+
+With the properties deleting files just requires deleting any file-specific 
+properties alongside which is trivial since those are linked from the file.
+
+Moving stuff works by building a list of all properties that are set on the 
+source starting at the source and destination's highest shared parent 
+directory and then reconstructing this list at the destination, striking 
+properties off the list that are already set at the destination.
+
+Adding properties, alongside added files or after the fact, could be done 
+via standard patch submissals via the kind of "meta-diff" that already 
+exists for "git move".
+
+I really believe this stuff should be meta-data -- and these properties as 
+outlined work well it seems.
+
+$ git prop --set --name git.ignore -V ./.gitignore .
+$ rm .gitignore
+
+This is something I saw subversion also uses properties for. Takes the value 
+from a file instead of the command line. .gitattributes are also easily 
+incorporated into the property-system directly.
+
+$ git prop --set --name git.executable scripts/Lindent
+
+Must say I'm not particularly sure if this one has much value over the 
+current executable bit storage,but also from svn and example of a boolean 
+property.
+
+$ git prop --set --name license --value "GPL v2" .
+$ git prop --set --name license --value "GPL" sound/alsa/
+
+and so on. The GPL v2 on the source root only works if you set the property 
+on everything that's not, so you may not want to but as a "wouldn't it be 
+nice if" kinda thing. Makes for easy license analysis at least...
+
+$ git prop --set --name FIXME drivers/block/floppy.c
+
+Okay, that's probably overdoing it a bit, but as long as I'm having fun here...
+
+Note -- the properties would be versioned themselves ofcourse so that you'd 
+always have a tree where data and meta-data matched. Basically, I believe 
+you'd view the properties as just more data files, one per property, with 
+the exception that they'd not actually live in the working tree and are 
+linked from data (files/directories) that do.
+
+Long "letters of intent" this, but I'm by now in love with these things. 
+More comments (or implementations obviously :-) welcome. Any significant 
+misses in this?
+
+Rene.
