@@ -1,116 +1,69 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH] clarify need for init in git-submodules documentation
-Date: Fri, 17 Aug 2007 12:08:15 +0200
-Message-ID: <20070817100815.GC28477@piper.oerlikon.madduck.net>
-References: <200708161553.10991.Josef.Weidendorfer@gmx.de> <11872878021267-git-send-email-madduck@madduck.net> <20070817093116.GH1070MdfPADPa@greensroom.kotnet.org>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: [PATCH] add to gitk documentation
+Date: Fri, 17 Aug 2007 11:29:05 +0100
+Message-ID: <e1dab3980708170329s33ba4937xf9586b296cc4858b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oJ71EGRlYNjSvfq7"
-Cc: git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Fri Aug 17 12:08:45 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: paulus@samba.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 17 12:29:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILyl3-0005DJ-D9
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 12:08:45 +0200
+	id 1ILz4z-0003fV-S9
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 12:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755034AbXHQKIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 06:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754255AbXHQKIU
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 06:08:20 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:55156 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752161AbXHQKIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 06:08:19 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 761C0895F78;
-	Fri, 17 Aug 2007 12:08:17 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 10370-01; Fri, 17 Aug 2007 12:08:17 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id F230B895F51;
-	Fri, 17 Aug 2007 12:08:16 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 10D989F171;
-	Fri, 17 Aug 2007 12:08:16 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id D468F43F9; Fri, 17 Aug 2007 12:08:15 +0200 (CEST)
-Mail-Followup-To: skimo@liacs.nl, git@vger.kernel.org
+	id S1752245AbXHQK3K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 06:29:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbXHQK3I
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 06:29:08 -0400
+Received: from wx-out-0506.google.com ([66.249.82.234]:45330 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752245AbXHQK3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 06:29:07 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so446649wxd
+        for <git@vger.kernel.org>; Fri, 17 Aug 2007 03:29:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Cx03AIyJ0kF0VG/DXuux2CRCentifd7/O7M5HICi83tfp45C+IlwU2aK86XArBg5a8+xSFSc8wP4imDDbkt1Zdqrdvdn6G8QVl5UM+S9qx0yEmMHgZGfCK4McgmHb4LGkf0y283OYdSNS8lgwF1QWpDE10E6RHj3U1qs8RCCCZ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=s310vaEqgsNRgjgRC8slghyiJK6SPufidcc+uuGST2kWOjmAFx557vXF1fO8CcfVyiTbFVDLv5CgZuXYrhVdMc/Sa9qPDn3uPmS6ZhiupCVILeziFMmf0vZtSwFO/tY+QYteOWcvXrYb6/UVMlbVhryYSvn+m9+IiT6xRbHY66o=
+Received: by 10.70.19.20 with SMTP id 20mr4600611wxs.1187346546038;
+        Fri, 17 Aug 2007 03:29:06 -0700 (PDT)
+Received: by 10.70.26.12 with HTTP; Fri, 17 Aug 2007 03:29:05 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20070817093116.GH1070MdfPADPa@greensroom.kotnet.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56058>
 
+A very brief couple of sentences on the basic "click" usage of gitk
+which I can't find explicitly documented anywhere else.
 
---oJ71EGRlYNjSvfq7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: David Tweed <david.tweed@gmail.com>
+-- 
+ Documentation/gitk.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index e9f82b9..d9fb0a7 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -15,6 +15,13 @@ Displays changes in a repository or a selected set
+of commits. This includes
+ visualizing the commit graph, showing information related to each commit, and
+ the files in the trees of each revision.
 
-also sprach Sven Verdoolaege <skimo@kotnet.org> [2007.08.17.1131 +0200]:
-> This is not true.  The url (which is local information) is taken from .gi=
-t/config,
-> the name/path relation (which is shared information) is taken from .gitmo=
-dules.
-
-If you approve of this change, I shall prepare a new patch:
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.=
-txt
-index b1a4f95..2f69047 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -71,8 +71,9 @@ to each submodule url is "submodule.$name.url".
-=20
- The file .gitmodules serves default configuration data to users who cloned=
- the
- repository. In order to work with submodules, these data need to be copied=
- to
--$GIT_DIR/config with `git-submodule init`. Only the data in $GIT_DIR/config
--are used for `git-submodule update`.
-+$GIT_DIR/config with `git-submodule init`. Only the URL in $GIT_DIR/config
-+is used for `git-submodule update`, as it is local information. The name/p=
-ath
-+relation is taken from the .gitmodules file, as it is shared data.
-=20
-=20
- AUTHOR
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-in africa some of the native tribes have a custom of beating the
-ground with clubs and uttering spine chilling cries. anthropologists
-call this a form of primitive self-expression. in america they call
-it golf.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---oJ71EGRlYNjSvfq7
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGxXOPIgvIgzMMSnURAmNiAJ9HrXK1Ra5p0UbQShF0ZNbmtXodiwCg0uyg
-1JVirySTx5uwVzBsh0jxd7Y=
-=Yycq
------END PGP SIGNATURE-----
-
---oJ71EGRlYNjSvfq7--
++The basic idea in gitk is that clicking on an element related to a commit
++(either the nodes in the commit graph or the commit brief message)
++provides both metadata and either a diff with the immediate parent or
++the tree contents of the commit (depending whether the patch or tree view
++is chosen). Clicking on a yellow tag marker provides the object id of the
++commit it references.
++
+ Historically, gitk was the first repository browser. It's written in tcl/tk
+ and started off in a separate repository but was later merged into the main
+ git repository.
