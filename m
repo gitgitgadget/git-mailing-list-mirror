@@ -1,88 +1,92 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Clarify commit-tree documentation
-Date: Fri, 17 Aug 2007 22:13:36 +0200
-Organization: glandium.org
-Message-ID: <20070817201336.GA20300@glandium.org>
-References: <20070817163034.GA11151@glandium.org> <Pine.LNX.4.64.0708171751360.20400@racer.site> <20070817170411.GF28529@fieldses.org> <20070817172323.GA14145@glandium.org> <20070817173622.GI28529@fieldses.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: How do I manage this setup with git-svn and/or git remotes?
+Date: Fri, 17 Aug 2007 23:04:22 +0200
+Message-ID: <85abspyisp.fsf@lola.goethe.zz>
+References: <86y7gaxef5.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708171042570.30176@woody.linux-foundation.org>
+	<86d4xmxbjf.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708171142510.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri Aug 17 22:14:57 2007
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 17 23:04:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IM8Dg-0004iP-Ra
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 22:14:57 +0200
+	id 1IM8zo-0006Wz-Fw
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 23:04:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbXHQUOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 16:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbXHQUOx
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 16:14:53 -0400
-Received: from vawad.err.no ([85.19.200.177]:35306 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752668AbXHQUOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 16:14:52 -0400
-Received: from aputeaux-153-1-51-63.w82-124.abo.wanadoo.fr ([82.124.11.63] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IM8DW-0002Cp-F8; Fri, 17 Aug 2007 22:14:47 +0200
-Received: from mh by namakemono.glandium.org with local (Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1IM8CO-0005Nj-CH; Fri, 17 Aug 2007 22:13:36 +0200
-Content-Disposition: inline
-In-Reply-To: <20070817173622.GI28529@fieldses.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 0.8): Status=No hits=0.8 required=5.0 tests=INFO_TLD version=3.1.4
+	id S1757504AbXHQVEf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 17:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757483AbXHQVEf
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 17:04:35 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:33902 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757490AbXHQVEe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2007 17:04:34 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id DCBF619B762;
+	Fri, 17 Aug 2007 23:04:32 +0200 (CEST)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id CFB92ABF1B;
+	Fri, 17 Aug 2007 23:04:32 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-047-037.pools.arcor-ip.net [84.61.47.37])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 843D81037E3;
+	Fri, 17 Aug 2007 23:04:24 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 780C31C3D500; Fri, 17 Aug 2007 23:04:23 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0708171142510.30176@woody.linux-foundation.org> (Linus Torvalds's message of "Fri\, 17 Aug 2007 11\:53\:06 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3974/Fri Aug 17 20:13:57 2007 on mail-in-07.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56083>
 
-As per http://marc.info/?l=git&m=118737219702802&w=2 , clarify
-git-commit-tree documentation.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- Documentation/git-commit-tree.txt |   15 ++++++---------
- 1 files changed, 6 insertions(+), 9 deletions(-)
+> On Fri, 17 Aug 2007, David Kastrup wrote:
+>> 
+>> But it isn't an independent git project: the superproject has its
+>> _own_ copy of dsp, with its _own_ specific commits and fixes that are
+>> not supposed to ever end up in the dsp "mothership". 
+>
+> Sure. And that's different from any git "branch" exactly how?
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 5870c2c..6a328f4 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -51,9 +51,9 @@ A commit encapsulates:
- - author name, email and date
- - committer name and email and the commit time.
- 
--If not provided, "git-commit-tree" uses your name, hostname and domain to
--provide author and committer info. This can be overridden by
--either `.git/config` file, or using the following environment variables.
-+While parent object ids are provided on the command line, author and
-+commiter information is taken from the following environment variables,
-+if set:
- 
- 	GIT_AUTHOR_NAME
- 	GIT_AUTHOR_EMAIL
-@@ -65,12 +65,9 @@ either `.git/config` file, or using the following environment variables.
- 
- (nb "<", ">" and "\n"s are stripped)
- 
--In `.git/config` file, the following items are used for GIT_AUTHOR_NAME and
--GIT_AUTHOR_EMAIL:
--
--	[user]
--		name = "Your Name"
--		email = "your@email.address.xz"
-+In case (some of) these environment variables are not set, the information
-+is taken from the configuration items user.name and user.email, or, if not
-+present, system user name and fully qualified hostname.
- 
- A commit comment is read from stdin. If a changelog
- entry is not provided via "<" redirection, "git-commit-tree" will just wait
+Different directory structure.  That can't easily be rectified as far
+as I can see since the stuff still needs to get synched with
+Subversion.
+
+> So you'd have different branches in the superproject - the way you
+> always have when you have two copies of a git project. And then you
+> merge between the two at will.
+
+The problem is the different location: root vs subdirectory.
+
+>> With Subversion, I can actually merge files in different projects
+>> of the repository even when they are in different directory levels.
+>> Of course, since Subversion does not track any merge info, that is
+>> not an accomplishment.
+>
+> Right. Git can do that too. It's called "patches".
+
+Yup.  The question is just whether it is possible to do better than
+that.
+
+>> Well, that would be at least quite handy for propagating upstream
+>> dsp fixes into project/great.  How do I merge one project into a
+>> _subdirectory_ of another one?
+>
+> There's a special "subtree" merge that does exactly that: it
+> basically is the normal recursive merge, except it merges into a
+> subtree.
+
+Sounds like just the thing.
+
+> I think that's how Junio does the "git-gui" merges. Junio?
+
 -- 
-1.5.3.rc4
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
