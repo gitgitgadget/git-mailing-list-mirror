@@ -1,62 +1,89 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Reset terminal attributes when terminating git
- send-email
-Date: Fri, 17 Aug 2007 18:35:44 -0400
-Message-ID: <20070817183544.f2897cb3.seanlkml@sympatico.ca>
-References: <11873867051906-git-send-email-seanlkml@sympatico.ca>
-	<11873867051589-git-send-email-seanlkml@sympatico.ca>
-	<7vr6m1g5y4.fsf@gitster.siamese.dyndns.org>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH v2] Minor clarifications to git-filter-branch usage and doc
+Date: Fri, 17 Aug 2007 19:13:04 -0400
+Message-ID: <20070817231304.GA14501@Hermes.local>
+References: <Pine.LNX.4.64.0708172252440.20400@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 00:36:36 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 18 01:13:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMAQl-0001vr-H8
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 00:36:35 +0200
+	id 1IMB09-0003QT-MQ
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 01:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752994AbXHQWgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 18:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbXHQWgb
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 18:36:31 -0400
-Received: from bay0-omc1-s33.bay0.hotmail.com ([65.54.246.105]:40507 "EHLO
-	bay0-omc1-s33.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752705AbXHQWgb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2007 18:36:31 -0400
-Received: from BAYC1-PASMTP09.bayc1.hotmail.com ([65.54.191.182]) by bay0-omc1-s33.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Fri, 17 Aug 2007 15:36:30 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by BAYC1-PASMTP09.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Fri, 17 Aug 2007 15:38:14 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IMAQe-00007c-Sy; Fri, 17 Aug 2007 18:36:28 -0400
-In-Reply-To: <7vr6m1g5y4.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 17 Aug 2007 22:38:14.0343 (UTC) FILETIME=[4C48E570:01C7E11F]
+	id S1753212AbXHQXNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 19:13:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755813AbXHQXNE
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 19:13:04 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:40229 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbXHQXND (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 19:13:03 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id C54C71FFC230
+	for <git@vger.kernel.org>; Fri, 17 Aug 2007 23:13:01 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708172252440.20400@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56095>
 
-On Fri, 17 Aug 2007 15:19:15 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+- Remove "DESTBRANCH" from usage, as it rewrites the branches given.
+- Remove an = from an example usage, as the script doesn't understand
+it.
 
-> I wonder if this is something Term::ReadLine when not using
-> FakeTerm should and does provide...  Is this the standard
-> workaround all the applications that use Term::ReadLine need to
-> implement themselves?
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
-Unfortunately Term::ReadLine (at least here with perl 5.8.8) does
-not properly reset the terminal even when used in a test script
-without FakeTerm.   I don't know anything about perl and couldn't
-turn up any answers to this problem with Google, but maybe there
-is still a better solution known.  It would sure be much nicer if
-ReadLine just took care of this detail itself.
+ On Aug 17, 2007, at 5:53 PM, Johannes Schindelin wrote:
 
-Sean
+ > On Fri, 17 Aug 2007, Brian Gernhardt wrote:
+ >  
+ >> -USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
+ >> +USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] [BRANCHES]"
+ > 
+ > It is not just [BRANCHES].  Something like "HEAD~2..HEAD" is perfectly 
+ > valid, and it will rewrite only the commits in that range, leaving HEAD~2 
+ > and ancestors alone.
+
+ Well then that should be left as REV-RANGE then, but DESTBRANCH still
+ needs to leave.
+
+ Documentation/git-filter-branch.txt |    2 +-
+ git-filter-branch.sh                |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 915258f..8c43be6 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -120,7 +120,7 @@ have all of them as parents.
+ 	tag name is expected on standard output.
+ +
+ The original tags are not deleted, but can be overwritten;
+-use "--tag-name-filter=cat" to simply update the tags.  In this
++use "--tag-name-filter cat" to simply update the tags.  In this
+ case, be very careful and make sure you have the old tags
+ backed up in case the conversion has run afoul.
+ +
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index c42e451..0190060 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -8,7 +8,7 @@
+ # a new branch. You can specify a number of filters to modify the commits,
+ # files and trees.
+ 
+-USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
++USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] [REV-RANGE]"
+ . git-sh-setup
+ 
+ warn () {
+-- 
+1.5.3.rc5.11.g312e
