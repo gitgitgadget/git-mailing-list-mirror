@@ -1,124 +1,86 @@
-From: Joe Perches <joe@perches.com>
-Subject: [PATCH] - git-send-email.perl
-Date: Fri, 17 Aug 2007 10:54:38 -0700
-Message-ID: <1187373278.822.100.camel@localhost>
-References: <1186984174.10249.7.camel@localhost>
-	 <200708131933.10125.m.kozlowski@tuxland.pl>
-	 <1187026955.2688.4.camel@laptopd505.fenrus.org>
-	 <1187037445.6628.98.camel@heimdal.trondhjem.org>
-	 <1187054366.2757.0.camel@laptopd505.fenrus.org>
-	 <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu>
-	 <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
-	 <7vwsvx8twx.fsf@assigned-by-dhcp.cox.net>
-	 <1187316783.822.19.camel@localhost>  <1187317826.822.23.camel@localhost>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: How do I manage this setup with git-svn and/or git remotes?
+Date: Fri, 17 Aug 2007 10:56:25 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708171042570.30176@woody.linux-foundation.org>
+References: <86y7gaxef5.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 19:55:29 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 17 19:56:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IM62h-0003BC-7p
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 19:55:27 +0200
+	id 1IM648-0003g4-Tp
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 19:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758543AbXHQRzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 13:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbXHQRzW
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 13:55:22 -0400
-Received: from DSL022.labridge.com ([206.117.136.22]:4064 "EHLO perches.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756941AbXHQRzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 13:55:20 -0400
-Received: from [192.168.1.128] ([192.168.1.128])
-	by perches.com (8.9.3/8.9.3) with ESMTP id LAA05002;
-	Fri, 17 Aug 2007 11:15:53 -0700
-In-Reply-To: <1187317826.822.23.camel@localhost>
-X-Mailer: Evolution 2.10.2-2.1mdv2007.1 
+	id S1758209AbXHQR4y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 13:56:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbXHQR4x
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 13:56:53 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58175 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757279AbXHQR4w (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2007 13:56:52 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7HHuVsD027731
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 17 Aug 2007 10:56:32 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7HHuPvb022360;
+	Fri, 17 Aug 2007 10:56:25 -0700
+In-Reply-To: <86y7gaxef5.fsf@lola.quinscape.zz>
+X-Spam-Status: No, hits=-2.715 required=5 tests=AWL,BAYES_00,TW_SV
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56078>
 
-Here's a path to enable a command line option
-that takes a string argument
 
-	cc-cmd
 
-This modifies the @cc array to include whatever
-output is produced by cc_cmd $patchfile
+On Fri, 17 Aug 2007, David Kastrup wrote:
+> 
+> Now is there any chance to set up a git structure that will me allow
+> to let _git_ perform merges between the standalone dsp project and the
+> part that has started off as a copy of it in a subdirectory from
+> projects/great, so that I have a merge history in my git mirror?
 
-cccmd can be stored in a config settings file
+Yes. That's what git "submodule" support is all about. You could create 
+that "dsp" project as its own git project, and then include it within the 
+bigger project as a submodule. Then, that "dsp" thing is really a totally 
+independent git project in its own right, with git support for just 
+"tying" it into the superproject.
 
-previous versions of this patch were submitted
-against an older version of git-send-email.perl
+A few words of caution:
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 69559b2..828a77a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -46,6 +46,9 @@ Options:
-    --cc           Specify an initial "Cc:" list for the entire series
-                   of emails.
- 
-+   --cc-cmd       Specify a command to execute per file which adds
-+                  per file specific cc address entries
-+
-    --bcc          Specify a list of email addresses that should be Bcc:
- 		  on all the emails.
- 
-@@ -157,13 +160,14 @@ if ($@) {
- my ($quiet, $dry_run) = (0, 0);
- 
- # Variables with corresponding config settings
--my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc);
-+my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
- 
- my %config_settings = (
-     "thread" => [\$thread, 1],
-     "chainreplyto" => [\$chain_reply_to, 1],
-     "suppressfrom" => [\$suppress_from, 0],
-     "signedoffcc" => [\$signed_off_cc, 1],
-+    "cccmd" => [\$cc_cmd, ""],
- );
- 
- foreach my $setting (keys %config_settings) {
-@@ -189,6 +193,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "smtp-server=s" => \$smtp_server,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
-+		    "cc-cmd=s" => \$cc_cmd,
- 		    "suppress-from!" => \$suppress_from,
- 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_cc,
- 		    "dry-run" => \$dry_run,
-@@ -652,11 +657,21 @@ foreach my $t (@files) {
- 		}
- 	}
- 	close F;
-+
-+	if (${cc_cmd} ne "") {
-+	    my $output = `${cc_cmd} $t`;
-+	    my @lines = split("\n", $output);
-+	    foreach my $c (@lines) {
-+		push @cc, $c;
-+		printf("(cc-cmd) Adding cc: %s from: '%s'\n", $c, $cc_cmd)
-+		    unless $quiet;
-+	    }
-+	}
-+
- 	if (defined $author) {
- 		$message = "From: $author\n\n$message";
- 	}
- 
--
- 	send_message();
- 
- 	# set up for the next message
+ - while the low-level core submodule support has been around for a while
+   now, the actual "porcelain" level helper stuff is new to 1.5.3 (which 
+   is unreleased, so you'd have to use the current git "master" branch, of 
+   course)
+
+ - submodules are (very much by design) meant to be git projects in their
+   own right, and kept separate. That very explicit separation means that 
+   you will *see* it as a separate project, and you may decide that it's 
+   not worth the extra setup/complexity if the "dsp" thing just isn't big 
+   enough or the merge complexity just isn't worth the effort.
+
+ - not very many people use it. The msysgit people seem to be using it,
+   and Andy Parkins has been using it for a while (and seems happy), but I 
+   think you basically end up having less documentation and somewhat less 
+   support for it (and it doesn't get the same kind of testing that the 
+   "basic" git behaviours get).
+
+Another alternative is to do what git has long done with "gitk": you can 
+maintain a separate project and just merge it directly into another git 
+project, and it works fine that way, but it gets impossible to merge back 
+and forth between the two projects (you can only merge one way: make all 
+the major changes in the "dsp" project, and then you can just merge it 
+into the project that uses it (but if you fix things in the bigger 
+project, you can't merge the fixes back, you'll have to export the fixes 
+as patches and do them in the "dsp" tree).
+
+			Linus
