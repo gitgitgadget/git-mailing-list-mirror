@@ -1,67 +1,83 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH] Clarify actual behavior of 'git add' and ignored files
-Date: Thu, 16 Aug 2007 17:56:08 -0500
-Message-ID: <11873049683651-git-send-email-bdowning@lavos.net>
-Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Fix read-tree merging more than 3 trees using 3-way
+ merge
+Date: Thu, 16 Aug 2007 17:59:18 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708161750550.30176@woody.linux-foundation.org>
+References: <600399.61066.qm@web52807.mail.re2.yahoo.com>
+ <7vbqd8o1qs.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Perrin Meyer <perrinmeyer@yahoo.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 00:56:09 2007
+X-From: git-owner@vger.kernel.org Fri Aug 17 03:00:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILoG8-0000Ly-PS
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 00:56:09 +0200
+	id 1ILqCr-0005F4-F3
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 03:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760665AbXHPW4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Aug 2007 18:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759602AbXHPW4D
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 18:56:03 -0400
-Received: from gateway.insightbb.com ([74.128.0.19]:30427 "EHLO
-	asav00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755580AbXHPW4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2007 18:56:01 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AglXAKRyxEZKhvbzRmdsb2JhbACBVIUmhxgBAQE1AZMa
-X-IronPort-AV: E=Sophos;i="4.19,273,1183348800"; 
-   d="scan'208";a="67157531"
-Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
-  by asav00.insightbb.com with ESMTP; 16 Aug 2007 18:55:59 -0400
-Received: from silvara (silvara.lavos.net [10.4.0.20])
-	by mail.lavos.net (Postfix) with ESMTP id 1104D309F30;
-	Thu, 16 Aug 2007 17:55:50 -0500 (CDT)
-Received: by silvara (Postfix, from userid 1000)
-	id B828D5012D; Thu, 16 Aug 2007 17:56:08 -0500 (CDT)
-X-Mailer: git-send-email 1.5.3.GIT
+	id S1752823AbXHQBAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Aug 2007 21:00:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752195AbXHQBAY
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Aug 2007 21:00:24 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58506 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752772AbXHQBAX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Aug 2007 21:00:23 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7H0xOIL018632
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 16 Aug 2007 17:59:25 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7H0xI72014809;
+	Thu, 16 Aug 2007 17:59:19 -0700
+In-Reply-To: <7vbqd8o1qs.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-4.748 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56035>
 
-Signed-off-by: Brian Downing <bdowning@lavos.net>
+
+
+On Wed, 15 Aug 2007, Junio C Hamano wrote:
+>
+> For multi-base merges, we allowed read-tree -m to take more than
+> three trees (the last two are our and their branches, and all the
+> earlier ones, typically one but potentially more, are used as the
+> merge base).  Unfortunately, the conversion done by commit 933bf40
+> broke this.
+
+Sorry. I didn't even realize people did this. Oops.
+
+I note that the thign you committed limited the number of trees to 4. 
+May I suggest this patch in addition to your patch? Also, is 4 actually 
+the real maximum? Maybe it should be raised?
+
+What *is* the behaviour for four trees? Reading "unpack_trees()" source 
+implies that all other trees go into stage 1, where the first matching 
+entry is used?
+
+		Linus
+
 ---
- Documentation/git-add.txt |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+ builtin-read-tree.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index dee38f8..3383aca 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -28,10 +28,12 @@ you must run 'git add' again to add the new content to the index.
- The 'git status' command can be used to obtain a summary of which
- files have changes that are staged for the next commit.
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index f6764b9..d5f849b 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -21,7 +21,7 @@ static int list_tree(unsigned char *sha1)
+ {
+ 	struct tree *tree;
  
--The 'add' command can be used to add ignored files with `-f` (force)
--option, but they have to be explicitly and exactly specified from the
--command line.  File globbing and recursive behaviour do not add ignored
--files.
-+The 'git add' command will not add ignored files by default.  If any
-+ignored files were explicitly specified on the command line, 'git add'
-+will fail with a list of ignored files.  Ignored files reached by
-+directory recursion or filename globbing will be silently ignored.
-+The 'add' command can be used to add ignored files with the `-f`
-+(force) option.
- 
- Please see gitlink:git-commit[1] for alternative ways to add content to a
- commit.
--- 
-1.5.3.GIT
+-	if (nr_trees >= 4)
++	if (nr_trees >= MAX_TREES)
+ 		return -1;
+ 	tree = parse_tree_indirect(sha1);
+ 	if (!tree)
