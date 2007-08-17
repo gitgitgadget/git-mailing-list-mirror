@@ -1,69 +1,73 @@
-From: David Kastrup <dak@gnu.org>
-Subject: How do I manage this setup with git-svn and/or git remotes?
-Date: Fri, 17 Aug 2007 19:24:14 +0200
-Message-ID: <86y7gaxef5.fsf@lola.quinscape.zz>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Can't figure out some sense from the git-commit-tree man page
+Date: Fri, 17 Aug 2007 19:23:23 +0200
+Organization: glandium.org
+Message-ID: <20070817172323.GA14145@glandium.org>
+References: <20070817163034.GA11151@glandium.org> <Pine.LNX.4.64.0708171751360.20400@racer.site> <20070817170411.GF28529@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 19:24:46 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Aug 17 19:24:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IM5Yy-0007tO-RX
+	id 1IM5Yz-0007tO-Gs
 	for gcvg-git@gmane.org; Fri, 17 Aug 2007 19:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755753AbXHQRY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 13:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbXHQRY3
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 13:24:29 -0400
-Received: from main.gmane.org ([80.91.229.2]:38092 "EHLO ciao.gmane.org"
+	id S1757512AbXHQRYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 13:24:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbXHQRYn
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 13:24:43 -0400
+Received: from vawad.err.no ([85.19.200.177]:42645 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753875AbXHQRY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 13:24:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IM5Yc-0005Rf-He
-	for git@vger.kernel.org; Fri, 17 Aug 2007 19:24:22 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 19:24:22 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 19:24:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:LwlL6kIh2NqcuGc2KzrZVzA6maE=
+	id S1753875AbXHQRYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 13:24:38 -0400
+Received: from aputeaux-153-1-51-63.w82-124.abo.wanadoo.fr ([82.124.11.63] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IM5Yo-0008SV-VU; Fri, 17 Aug 2007 19:24:38 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IM5Xf-0003gf-V4; Fri, 17 Aug 2007 19:23:24 +0200
+Content-Disposition: inline
+In-Reply-To: <20070817170411.GF28529@fieldses.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56073>
 
+On Fri, Aug 17, 2007 at 01:04:11PM -0400, J. Bruce Fields <bfields@fieldses.org> wrote:
+> On Fri, Aug 17, 2007 at 05:52:52PM +0100, Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > On Fri, 17 Aug 2007, Mike Hommey wrote:
+> > 
+> > >   ?   committer name and email and the commit time.
+> > >   If not provided, "git-commit-tree" uses your name, hostname and domain to
+> > >   provide author and committer info. This can be overridden by either
+> > >   .git/config file, or using the following environment variables.
+> > >   (...)
+> > > 
+> > > The "If not provided" part doesn't make sense.
+> > 
+> > It does, if you know how to specify the committer info.
+> >
+> > Which the man page specifies how to provide:
+> 
+> At least on a first reading all of the following appears to fall under
+> the "if not provided" case.  I know what you mean, but the language here
+> is misleading.  One simple fix would be just to delete the words "If not
+> provided", or maybe replace them by "By default, ...".
 
-I have a Subversion repository which contains the following:
+I think it would be better to put the fact that "If not provided..."
+*after* telling that you can provide author, committer, etc. by setting
+environment or editing the conf.
 
-https://repo.here/svn/dsp/{trunk,tags,branches}
-and
-https://repo.here/svn/projects/great/{trunk/tags/branches}
-
-I have those currently checked out into separate git repositories.
-However,
-
-https://repo.here/svn/projects/great/{trunk/tags/branches}
-
-contain a subdirectory dsp that has been copied via Subversion from
-the main dsp trunk.  Subsequently this copy and the original dsp have
-progressed.
-
-Now is there any chance to set up a git structure that will me allow
-to let _git_ perform merges between the standalone dsp project and the
-part that has started off as a copy of it in a subdirectory from
-projects/great, so that I have a merge history in my git mirror?
-
-Or is basically the only thing I can do to create selective patches
-and apply them, thus not tracking the merges?
-
--- 
-David Kastrup
+Mike
