@@ -1,69 +1,78 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: [PATCH] add to gitk documentation
-Date: Fri, 17 Aug 2007 11:29:05 +0100
-Message-ID: <e1dab3980708170329s33ba4937xf9586b296cc4858b@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] clarify need for init in git-submodules documentation
+Date: Fri, 17 Aug 2007 12:36:52 +0200
+Message-ID: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
+References: <200708161553.10991.Josef.Weidendorfer@gmx.de>
+ <11872878021267-git-send-email-madduck@madduck.net>
+ <20070817093116.GH1070MdfPADPa@greensroom.kotnet.org>
+ <20070817100815.GC28477@piper.oerlikon.madduck.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: paulus@samba.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 12:29:22 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 17 12:37:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILz4z-0003fV-S9
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 12:29:22 +0200
+	id 1ILzCX-0006lk-2n
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 12:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbXHQK3K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 06:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbXHQK3I
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 06:29:08 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:45330 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbXHQK3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 06:29:07 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so446649wxd
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 03:29:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Cx03AIyJ0kF0VG/DXuux2CRCentifd7/O7M5HICi83tfp45C+IlwU2aK86XArBg5a8+xSFSc8wP4imDDbkt1Zdqrdvdn6G8QVl5UM+S9qx0yEmMHgZGfCK4McgmHb4LGkf0y283OYdSNS8lgwF1QWpDE10E6RHj3U1qs8RCCCZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=s310vaEqgsNRgjgRC8slghyiJK6SPufidcc+uuGST2kWOjmAFx557vXF1fO8CcfVyiTbFVDLv5CgZuXYrhVdMc/Sa9qPDn3uPmS6ZhiupCVILeziFMmf0vZtSwFO/tY+QYteOWcvXrYb6/UVMlbVhryYSvn+m9+IiT6xRbHY66o=
-Received: by 10.70.19.20 with SMTP id 20mr4600611wxs.1187346546038;
-        Fri, 17 Aug 2007 03:29:06 -0700 (PDT)
-Received: by 10.70.26.12 with HTTP; Fri, 17 Aug 2007 03:29:05 -0700 (PDT)
-Content-Disposition: inline
+	id S1753489AbXHQKgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 06:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXHQKgz
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 06:36:55 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:36103 "EHLO psmtp08.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753144AbXHQKgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 06:36:54 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMW00BMQYTGON@psmtp08.wxs.nl> for git@vger.kernel.org; Fri,
+ 17 Aug 2007 12:36:53 +0200 (MEST)
+Received: (qmail 22990 invoked by uid 500); Fri, 17 Aug 2007 10:36:52 +0000
+In-reply-to: <20070817100815.GC28477@piper.oerlikon.madduck.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56059>
 
-A very brief couple of sentences on the basic "click" usage of gitk
-which I can't find explicitly documented anywhere else.
+On Fri, Aug 17, 2007 at 12:08:15PM +0200, martin f krafft wrote:
+> also sprach Sven Verdoolaege <skimo@kotnet.org> [2007.08.17.1131 +0200]:
+> > This is not true.  The url (which is local information) is taken from .git/config,
+> > the name/path relation (which is shared information) is taken from .gitmodules.
+> 
+> If you approve of this change, I shall prepare a new patch:
+> 
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index b1a4f95..2f69047 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -71,8 +71,9 @@ to each submodule url is "submodule.$name.url".
+>  
+>  The file .gitmodules serves default configuration data to users who cloned the
 
-Signed-off-by: David Tweed <david.tweed@gmail.com>
--- 
- Documentation/gitk.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index e9f82b9..d9fb0a7 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -15,6 +15,13 @@ Displays changes in a repository or a selected set
-of commits. This includes
- visualizing the commit graph, showing information related to each commit, and
- the files in the trees of each revision.
+This still seems to suggest that the only purpose of .gitmodules is to
+contain default configuration data.  I think you should restrict the
+whole paragraph to talking about URLs.  Btw, please be consistent about
+the spelling of URL.  Either use "url" or change the "url"s in the remainder
+of the text to "URL".
+Oh, and CC Lars on your patch.
 
-+The basic idea in gitk is that clicking on an element related to a commit
-+(either the nodes in the commit graph or the commit brief message)
-+provides both metadata and either a diff with the immediate parent or
-+the tree contents of the commit (depending whether the patch or tree view
-+is chosen). Clicking on a yellow tag marker provides the object id of the
-+commit it references.
-+
- Historically, gitk was the first repository browser. It's written in tcl/tk
- and started off in a separate repository but was later merged into the main
- git repository.
+>  repository. In order to work with submodules, these data need to be copied to
+> -$GIT_DIR/config with `git-submodule init`. Only the data in $GIT_DIR/config
+> -are used for `git-submodule update`.
+> +$GIT_DIR/config with `git-submodule init`. Only the URL in $GIT_DIR/config
+> +is used for `git-submodule update`, as it is local information. The name/path
+> +relation is taken from the .gitmodules file, as it is shared data.
+
+There is no mention in this man page of this relationship, so I think
+you should either add a description or drop the last sentence.
+I'm also not sure if local/shared are the best way to describe the
+distinction in a manual page.  I was only trying to make it clear to you.
+
+skimo
