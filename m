@@ -1,69 +1,57 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: using .gitmodule as default (was: git submodule init and redundant data in .gitmodules/.git/config)
-Date: Fri, 17 Aug 2007 09:14:45 +0200
-Message-ID: <8c5c35580708170014i5af2da62w1dbcbad71430e26@mail.gmail.com>
-References: <20070815162005.GA18463@piper.oerlikon.madduck.net>
-	 <20070815163822.GC1070MdfPADPa@greensroom.kotnet.org>
-	 <20070815222907.GA7395@piper.oerlikon.madduck.net>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: [PATCH] git-submodule: re-enable 'status' as the default subcommand
+Date: Fri, 17 Aug 2007 09:25:04 +0200
+Message-ID: <8c5c35580708170025g70db9f3eu664551400e9430d4@mail.gmail.com>
+References: <11862375532593-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "martin f krafft" <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Fri Aug 17 09:15:10 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 09:25:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILw32-00007m-OD
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 09:15:09 +0200
+	id 1ILwCm-0003K6-RZ
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 09:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756027AbXHQHOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 03:14:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755697AbXHQHOs
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 03:14:48 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:26381 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756553AbXHQHOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 03:14:46 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so147434wah
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 00:14:46 -0700 (PDT)
+	id S1756174AbXHQHZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 03:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbXHQHZH
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 03:25:07 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:5523 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755225AbXHQHZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 03:25:05 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so407268rvb
+        for <git@vger.kernel.org>; Fri, 17 Aug 2007 00:25:05 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NkruuPPoSSJELSgbKqOSOGkUb9VECCrm2Jmwb58saYcjJa1x0RgiyQtxAXxqozCO+cd7DANIVXQkC/YQfENtbq00ohuXzpcnCvepKX4P1m26NZ95iVC3Ej/0UyWNoKw1m+/tQWWXrqNXDIw4cFY/y3+nP8ImmEPFKhW/hj79Jew=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=HeVAMbm1OwI7boQNlvWqOkl3Ev7EC8UW9ueNgB5CDDnl6lD+7359jxn2SYjEQ6t/NAaob6GmOfNt8GsgkCpsQ0P/yK2vFcZAgaElf8j59TR7XXAhS9n6/m9sP7Vtonn+mbDYIYXPuPu0fZ7Z5r9qL1pcRbbiAot/Q2LzGqJGwK8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Xu2GsT4IWMFYdm62l/HdMEwF0mN+xQMtDZYwlGQFVnYrwxM6AccahE3T039mNYTo2hRYEcuA2nkI4KGG8a5rhO9enaoZ/jY+Ut21wXycAj1qKzT03o9VAkfnhvP5J43il/XU5OXqJA/ehLuvsVtztIlwjaebQfrN2zWspOQw2zI=
-Received: by 10.114.204.7 with SMTP id b7mr818833wag.1187334885919;
-        Fri, 17 Aug 2007 00:14:45 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Fri, 17 Aug 2007 00:14:45 -0700 (PDT)
-In-Reply-To: <20070815222907.GA7395@piper.oerlikon.madduck.net>
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=UDDczBLvsbxC1pcTR64wFoV6ODEzqlLkXouvRL+6KfE4MNrANCK4yJO2dxj0Q7zR+CN30v1y4W5i25uWBTGCNRJse5wQ20vX73/E0kXS8TtcQ5sQ+Z1SyiXZ/DcsWqqnfDKUuovFoP5aQdevYYPjFC5drVjyxw3k7h3x8CEV9mU=
+Received: by 10.114.59.1 with SMTP id h1mr588231waa.1187335504989;
+        Fri, 17 Aug 2007 00:25:04 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Fri, 17 Aug 2007 00:25:04 -0700 (PDT)
+In-Reply-To: <11862375532593-git-send-email-hjemli@gmail.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: 6de6ce8c64052715
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56048>
 
-On 8/16/07, martin f krafft <madduck@madduck.net> wrote:
-> I have one open question though: why require init?
+Hi
 
-The purpose of 'init' is to inform git-submodule about which
-submodules you want to checkout. E.g. for a project with submodules in
-directories 'a', 'b' and 'c', you could do
+I got no response on this patch, was it simply overlooked? I really think
 
-$ git submodule init b c
-$ git submodule update
+$ git submodule
 
-This would only fetch/checkout the submodules in direcotories 'b' and
-'c', while 'git submodule status' would still inform you that there is
-actually three submodules available.
-
-Note: If you wanted to initialize all three submodules at once, you
-could simply do
-
-$ git submodule init
+should show the available submodules and their status.
 
 --
 larsh
