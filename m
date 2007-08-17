@@ -1,82 +1,74 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [StGit PATCH] Don't print unnecessary backtraces when testing
-Date: Fri, 17 Aug 2007 13:36:51 +0200
-Message-ID: <87sl6ipf3g.fsf@morpheus.local>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [BUG] git --work-tree=... status
+Date: Fri, 17 Aug 2007 13:50:51 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070817115051.GA11107@informatik.uni-freiburg.de>
+References: <20070812185855.GA16704@informatik.uni-freiburg.de> <7vlkcgim5w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 13:50:55 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 13:51:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IM0Lp-0008L4-80
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 13:50:49 +0200
+	id 1IM0Mm-0000KS-5P
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 13:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759870AbXHQLuk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 17 Aug 2007 07:50:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755823AbXHQLuj
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 07:50:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:51810 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759714AbXHQLuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 07:50:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IM0Gg-0001HO-Sz
-	for git@vger.kernel.org; Fri, 17 Aug 2007 13:45:30 +0200
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 13:45:30 +0200
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 13:45:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:CtKGgTI6zaGgQs+QfDXRmz36qEY=
+	id S1760541AbXHQLvP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 17 Aug 2007 07:51:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760629AbXHQLvN
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 07:51:13 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46361 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760541AbXHQLvK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2007 07:51:10 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IM0M9-0005R7-3g; Fri, 17 Aug 2007 13:51:09 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7HBox0e011386;
+	Fri, 17 Aug 2007 13:50:59 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7HBopN1011385;
+	Fri, 17 Aug 2007 13:50:51 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vlkcgim5w.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56061>
 
-When stg fails, and handles it properly, no backtrace should be printed=
-,
-even when running tests with -v.  Getting a backtrace in the output sig=
-nals
-some kind of bug, but in this case there is no bug.
----
+Junio C Hamano wrote:
+> Uwe Kleine-K=F6nig  <ukleinek@informatik.uni-freiburg.de> writes:
+>=20
+> > The problem seems to be that require_work_tree demands more that I =
+think
+> > it should.  It calls `git rev-parse --is-inside-work-tree`.
+>=20
+> I think the semantics of require_work_tree is (currently and has
+> been) indeed "you are supposed to be inside the work tree".
+>=20
+> "git-status $args" is a "git commit --dry-run $args" and $args
+> are often filenames relative to $cwd that name paths to include
+> in the partial commit, so for this particular case I think it is
+> understandable that it wants you to be _IN_ the work tree.
+An (IMHO better) alternative is to introduce two flags---say
+--absolute-paths and --relative-paths.  --relative-paths is the default
+if you're in a work tree, otherwise it's --absolute-paths.
 
-I was running tests with -v and saw python backtraces, and assumed
-that there was a bug somewhere.  But apparently this backtrace only
-appeared when running tests.
-
-I think it's better if you only get backtraces when something actually
-went wrong.  The test driver sets the debug level to -1, so I changed
-the check to check for positive instead.
-
- stgit/main.py |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/stgit/main.py b/stgit/main.py
-index 294b703..2390110 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -286,7 +286,7 @@ def main():
-             StackException, GitException, GitMergeException,
-             EditorException), err:
-         print >> sys.stderr, '%s %s: %s' % (prog, cmd, err)
--        if debug_level:
-+        if debug_level > 0:
-             raise
-         else:
-             sys.exit(2)
---=20
-1.5.3.rc3.119.g1812
-
+Best regards
+Uwe
 
 --=20
-David K=C3=A5gedal
+Uwe Kleine-K=F6nig
+
+fib where fib =3D 0 : 1 : zipWith (+) fib (tail fib)
