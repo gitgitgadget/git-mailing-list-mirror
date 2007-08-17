@@ -1,63 +1,55 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Make git-prune submodule aware (and fix a SEGFAULT in the 
- process)
-Date: Fri, 17 Aug 2007 11:14:44 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46C56704.6D917A53@eudaptics.com>
-References: <200707021356.58553.andyparkins@gmail.com> <200708170939.47214.andyparkins@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] clarify need for init in git-submodules documentation
+Date: Fri, 17 Aug 2007 11:31:16 +0200
+Message-ID: <20070817093116.GH1070MdfPADPa@greensroom.kotnet.org>
+References: <200708161553.10991.Josef.Weidendorfer@gmx.de>
+ <11872878021267-git-send-email-madduck@madduck.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 11:14:15 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "martin f. krafft" <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Fri Aug 17 11:31:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILxuH-0005Z3-Nu
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 11:14:14 +0200
+	id 1ILyAy-0002Nk-El
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 11:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758236AbXHQJOK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 05:14:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755580AbXHQJOK
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 05:14:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:60685 "EHLO ciao.gmane.org"
+	id S1752257AbXHQJbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 05:31:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbXHQJbV
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 05:31:21 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:43298 "EHLO psmtp08.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757856AbXHQJOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 05:14:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ILxu5-00030E-HU
-	for git@vger.kernel.org; Fri, 17 Aug 2007 11:14:01 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 11:14:01 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Aug 2007 11:14:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751120AbXHQJbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 05:31:18 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JMW00BE1VS5OD@psmtp08.wxs.nl> for git@vger.kernel.org; Fri,
+ 17 Aug 2007 11:31:17 +0200 (MEST)
+Received: (qmail 21483 invoked by uid 500); Fri, 17 Aug 2007 09:31:16 +0000
+In-reply-to: <11872878021267-git-send-email-madduck@madduck.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56056>
 
-Andy Parkins wrote:
-> Could any of the guru's give me a guide to upload-pack.c?  I assume the
-> problem is going to be the same as it was for git-prune, the hash for the
-> gitlink object in the tree is being assumed to be an object in the ODB;
-> which isn't the case with gitlink entries.  Where would that be happening
-> in git-upload-pack?  The fix is going to be..
-> 
->  if( S_ISGITLINK(mode))
->       continue;
-> 
-> But I've got no idea where to put it :-)
+On Thu, Aug 16, 2007 at 08:10:02PM +0200, martin f. krafft wrote:
+> +The file .gitmodules serves default configuration data to users who cloned the
+> +repository. In order to work with submodules, these data need to be copied to
+> +$GIT_DIR/config with `git-submodule init`. Only the data in $GIT_DIR/config
+> +are used for `git-submodule update`.
+> +
 
-Most likely in list-objects.c:traverse_commit_list(), which is called
-from somewhere in upload-pack.c.
+This is not true.  The url (which is local information) is taken from .git/config,
+the name/path relation (which is shared information) is taken from .gitmodules.
 
--- Hannes
+skimo
+
+PS, please don't prune (me from) the CC list when replying.
