@@ -1,75 +1,51 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: commit author x commit committer issue
-Date: Fri, 17 Aug 2007 00:58:40 -0700
-Message-ID: <20070817075840.GA9504@soma>
-References: <46B9C92B.3000000@st.com> <20070816092002.GD16849@muzzle> <46C43F5F.3040508@st.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule: re-enable 'status' as the default subcommand
+Date: Fri, 17 Aug 2007 01:10:42 -0700
+Message-ID: <7vmywqh98d.fsf@gitster.siamese.dyndns.org>
+References: <11862375532593-git-send-email-hjemli@gmail.com>
+	<8c5c35580708170025g70db9f3eu664551400e9430d4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard MUSIL <richard.musil@st.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 09:58:46 2007
+Cc: git@vger.kernel.org, skimo@kotnet.org
+To: "Lars Hjemli" <lh@elementstorage.no>
+X-From: git-owner@vger.kernel.org Fri Aug 17 10:11:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ILwjF-0005mR-FD
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 09:58:45 +0200
+	id 1ILwve-00028b-Te
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 10:11:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757542AbXHQH6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 03:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757486AbXHQH6m
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 03:58:42 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:39521 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753066AbXHQH6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 03:58:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 878462DC08E;
-	Fri, 17 Aug 2007 00:58:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <46C43F5F.3040508@st.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758876AbXHQIKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 04:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758630AbXHQIKx
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 04:10:53 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762200AbXHQIKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 04:10:50 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D950A12098F;
+	Fri, 17 Aug 2007 04:11:06 -0400 (EDT)
+In-Reply-To: <8c5c35580708170025g70db9f3eu664551400e9430d4@mail.gmail.com>
+	(Lars Hjemli's message of "Fri, 17 Aug 2007 09:25:04 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56051>
 
-Richard MUSIL <richard.musil@st.com> wrote:
-> Eric Wong wrote:
-> > Richard MUSIL <richard.musil@st.com> wrote:
-> > I also want to avoid creating extra junk on the SVN repository which I
-> > don't personally consider very important.  SVK does stuff like that with
-> > merges, and only SVK understands the metadata it uses.  I prefer
-> > transparency.
-> 
-> I made some suggestions in this thread about using revision
-> (unversioned) property of SVN fot git "metadata". AFAIK using rev. props
-> is completely transparent to other SVN clients (in this case those not
-> being git-svn), so they could easily ignore them.
-> 
-> It could be optional on git config property for commit and autodetected
-> for clone/pull.
-> 
-> The scenario I could easily imagine (though it is not something I am
-> currently using) is having dev teams using git internally (because its
-> much easier for tracking local development) and having SVN repo as a
-> "central hub". In such environment, there will be probably one person in
-> each team (dev. lead) collecting commits from others and once things are
-> set, he will commit all changes to svn. In that particular case, he does
-> not have to worry about different sha1s, because they use only one SVN
-> (as it was meant to be used). But he could be sad about losing all
-> authors info about the people commits. And my personal believe is, this
-> is how git-svn may enter svn world on big projects.
-> 
-> But you are right, it is up to you to decide. It was just an idea ;-).
+"Lars Hjemli" <lh@elementstorage.no> writes:
 
-It'd be easy for git-svn to write metadata to rev-props.  Whether or not
-it reads and does anything with them is another issue...  I think Sam
-was working on something that allowed it to track merges on the
-git-side, but we'd be introducing a third or fourth method of
-non-standard merge-tracking into SVN :)
+> I got no response on this patch, was it simply overlooked? I really think
+>
+> $ git submodule
+>
+> should show the available submodules and their status.
 
-In any case, this behavior should always be optional and off by default.
+Probably.  I do not think of any other alternative behaviour
+that would make sense.
 
--- 
-Eric Wong
+Sven?
