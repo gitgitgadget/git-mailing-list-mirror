@@ -1,80 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Make git-prune submodule aware (and fix a SEGFAULT in
- the process)
-Date: Fri, 17 Aug 2007 09:56:54 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org>
-References: <200707021356.58553.andyparkins@gmail.com>
- <200708170939.47214.andyparkins@gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Can't figure out some sense from the git-commit-tree man page
+Date: Fri, 17 Aug 2007 18:56:55 +0200
+Organization: glandium.org
+Message-ID: <20070817165655.GA13891@glandium.org>
+References: <20070817163034.GA11151@glandium.org> <Pine.LNX.4.64.0708171751360.20400@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 18:57:14 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 17 18:58:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IM58K-0005Ef-10
-	for gcvg-git@gmane.org; Fri, 17 Aug 2007 18:57:12 +0200
+	id 1IM59Y-0005lN-3o
+	for gcvg-git@gmane.org; Fri, 17 Aug 2007 18:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757512AbXHQQ5I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 12:57:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbXHQQ5H
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 12:57:07 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:36068 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757149AbXHQQ5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2007 12:57:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7HGv0oa024248
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 17 Aug 2007 09:57:01 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7HGutqc020143;
-	Fri, 17 Aug 2007 09:56:55 -0700
-In-Reply-To: <200708170939.47214.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-4.153 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_54,J_CHICKENPOX_64,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1765551AbXHQQ5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Aug 2007 12:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765552AbXHQQ5y
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 12:57:54 -0400
+Received: from vawad.err.no ([85.19.200.177]:50543 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753992AbXHQQ5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2007 12:57:53 -0400
+Received: from aputeaux-153-1-51-63.w82-124.abo.wanadoo.fr ([82.124.11.63] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IM58s-0007R8-Km; Fri, 17 Aug 2007 18:57:49 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IM583-0003cH-V4; Fri, 17 Aug 2007 18:56:55 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708171751360.20400@racer.site>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56066>
 
-
-
-On Fri, 17 Aug 2007, Andy Parkins wrote:
->
-> Could any of the guru's give me a guide to upload-pack.c?  I assume the 
-> problem is going to be the same as it was for git-prune, the hash for the 
-> gitlink object in the tree is being assumed to be an object in the ODB; 
-> which isn't the case with gitlink entries.  Where would that be happening 
-> in git-upload-pack?  The fix is going to be..
+On Fri, Aug 17, 2007 at 05:52:52PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 > 
->  if( S_ISGITLINK(mode))
->       continue;
+> On Fri, 17 Aug 2007, Mike Hommey wrote:
 > 
-> But I've got no idea where to put it :-)
+> >   ?   committer name and email and the commit time.
+> >   If not provided, "git-commit-tree" uses your name, hostname and domain to
+> >   provide author and committer info. This can be overridden by either
+> >   .git/config file, or using the following environment variables.
+> >   (...)
+> > 
+> > The "If not provided" part doesn't make sense.
+> 
+> It does, if you know how to specify the committer info.  Which the man 
+> page specifies how to provide:
+> 
+> This can be overridden by either `.git/config` file, or using the 
+> following environment variables.
+> 
+>         GIT_AUTHOR_NAME
+>         GIT_AUTHOR_EMAIL
+>         GIT_AUTHOR_DATE
+>         GIT_COMMITTER_NAME
+>         GIT_COMMITTER_EMAIL
+>         GIT_COMMITTER_DATE
+>         EMAIL
 
-Maybe this one?
+This is exactly where the man page doesn't make sense to me. It tells
+you that if you don't provide committer name, etc. it uses your name,
+hostname, etc., and you can override this with .git/config or the
+environment variable you listed.
 
-			Linus
+So where were you supposed to provide these informations in the first
+place ?
 
----
- builtin-pack-objects.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 24926db..77481df 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -979,6 +979,8 @@ static void add_pbase_object(struct tree_desc *tree,
- 	int cmp;
- 
- 	while (tree_entry(tree,&entry)) {
-+		if (S_ISGITLINK(entry.mode))
-+			continue;
- 		cmp = tree_entry_len(entry.path, entry.sha1) != cmplen ? 1 :
- 		      memcmp(name, entry.path, cmplen);
- 		if (cmp > 0)
+Mike
