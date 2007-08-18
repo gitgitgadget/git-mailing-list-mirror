@@ -1,161 +1,97 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [PATCH] - git-send-email.perl
-Date: Fri, 17 Aug 2007 18:51:12 -0700
-Message-ID: <1187401873.822.146.camel@localhost>
-References: <1186984174.10249.7.camel@localhost>
-	 <200708131933.10125.m.kozlowski@tuxland.pl>
-	 <1187026955.2688.4.camel@laptopd505.fenrus.org>
-	 <1187037445.6628.98.camel@heimdal.trondhjem.org>
-	 <1187054366.2757.0.camel@laptopd505.fenrus.org>
-	 <46C10AA8.3090505@gmail.com> <20070814102033.604c8695@the-village.bc.nu>
-	 <46C1CFFE.4000001@gmail.com> <1187110824.32555.76.camel@localhost>
-	 <7vwsvx8twx.fsf@assigned-by-dhcp.cox.net>
-	 <1187316783.822.19.camel@localhost> <1187317826.822.23.camel@localhost>
-	 <1187373278.822.100.camel@localhost>
-	 <7vy7g9enqd.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: How do I manage this setup with git-svn and/or git remotes?
+Date: Sat, 18 Aug 2007 09:07:23 +0200
+Message-ID: <85643dwcb8.fsf@lola.goethe.zz>
+References: <86y7gaxef5.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708171042570.30176@woody.linux-foundation.org>
+	<86d4xmxbjf.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708171142510.30176@woody.linux-foundation.org>
+	<7vvebdg8r5.fsf@gitster.siamese.dyndns.org>
+	<85mywpx2wl.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Rene Herman <rene.herman@gmail.com>, git@vger.kernel.org,
-	Alan Cox <alan@lxorguk.ukuu.org.uk>,
-	Arjan van de Ven <arjan@infradead.org>,
-	Trond Myklebust <trond.myklebust@fys.uio.no>,
-	Mariusz Kozlowski <m.kozlowski@tuxland.pl>,
-	akpm@linux-foundation.org, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 03:52:50 2007
+X-From: git-owner@vger.kernel.org Sat Aug 18 09:07:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMDUd-0005g0-SK
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 03:52:48 +0200
+	id 1IMIPf-00048G-AG
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 09:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751402AbXHRBwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Aug 2007 21:52:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbXHRBwo
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Aug 2007 21:52:44 -0400
-Received: from DSL022.labridge.com ([206.117.136.22]:4438 "EHLO perches.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751009AbXHRBwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2007 21:52:42 -0400
-Received: from [192.168.1.128] ([192.168.1.128])
-	by perches.com (8.9.3/8.9.3) with ESMTP id TAA07188;
-	Fri, 17 Aug 2007 19:12:20 -0700
-In-Reply-To: <7vy7g9enqd.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.10.2-2.1mdv2007.1 
+	id S1752132AbXHRHHe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 03:07:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbXHRHHe
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 03:07:34 -0400
+Received: from mail-in-11.arcor-online.net ([151.189.21.51]:45909 "EHLO
+	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751877AbXHRHHd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2007 03:07:33 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id DEECA1336D;
+	Sat, 18 Aug 2007 09:07:31 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id CC87C2130E6;
+	Sat, 18 Aug 2007 09:07:31 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-041-107.pools.arcor-ip.net [84.61.41.107])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 6E5823425E7;
+	Sat, 18 Aug 2007 09:07:27 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 0A5E31C36605; Sat, 18 Aug 2007 09:07:23 +0200 (CEST)
+In-Reply-To: <85mywpx2wl.fsf@lola.goethe.zz> (David Kastrup's message of "Fri\, 17 Aug 2007 23\:32\:58 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3978/Sat Aug 18 06:51:41 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56102>
 
-On Fri, 2007-08-17 at 16:38 -0700, Junio C Hamano wrote:
-> Joe Perches <joe@perches.com> writes:
-> ... Signed-off-by: ...
-> I do not see a patch to "Documentation/git-send-email.txt" here...
-> Something like this, with appropriate error checking, perhaps?
-> 
-> 	open my $cc, "${cc_cmd} $t |";
->         while (my $c = <$cc>) {
->         	...
-> 	}
->         close $cc;
+David Kastrup <dak@gnu.org> writes:
 
-Add --cc-cmd, the ability to execute an arbitrary "cmd" to
-generate per patch file specific "Cc:"s to git-send-email.perl
+> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> My reading of the project David is talking about is that its dsp
+>> project which is a "subproject" part gets non generic commits within
+>> the context of the superproject --- which means (1) you would have
+>> branches in the subproject not superproject, and (2) once you did
+>> that, the subproject is not really a subproject anymore, as you
+>> cannot merge that back to the standalone dsp project without
+>> dragging the non-generic bits along with it.
+>
+> Ok, I should perhaps should not make things harder than they are: the
+> superprojects, being particular to one customer each, don't really
+> branch (except that git-svn makes a git branch from every Subversion
+> tag).  The subproject is the one that has considerable branching and
+> merges.  What usually gets pulled into the superproject is a copy of a
+> stable subproject branch.  Once this copy is in, only fixes (from the
+> stable branch) or features (from the development branch) that the
+> customer definitely needs are merged into the superproject.  While
+> there might happen some subproject work in the customer branch, this
+> mostly happens during bugfixing for the customer, and the changes are
+> typically pulled back into the subproject proper at some point of
+> time.  Inside of the subproject tree, there is really no superproject
+> _development_ going on.
 
-Signed-off-by: Joe Perches <joe@perches.com>
+I think I got it.  My mistake was focusing all the time what I could
+do with the git repository of "great" to facilitate two-way merges.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index d243ed1..9a48847 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -34,6 +34,12 @@ The --bcc option must be repeated for each user you want on the bcc list.
- +
- The --cc option must be repeated for each user you want on the cc list.
- 
-+--cc-cmd::
-+	Specify a command to execute once per patch file which
-+	should generate patch file specific "Cc:" entries.
-+	Output of this command must be single email address per line.
-+	Default is the value of 'sendemail.cccmd' configuration value.
-+	
- --chain-reply-to, --no-chain-reply-to::
- 	If this is set, each email will be sent as a reply to the previous
- 	email sent.  If disabled with "--no-chain-reply-to", all emails after
-@@ -124,6 +130,9 @@ sendemail.aliasfiletype::
- 	Format of the file(s) specified in sendemail.aliasesfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
- 
-+sendemail.cccmd::
-+	Command to execute to generate per patch file specific "Cc:"s.
-+
- sendemail.bcc::
- 	Email address (or alias) to always bcc.
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 69559b2..d49947c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -46,6 +46,9 @@ Options:
-    --cc           Specify an initial "Cc:" list for the entire series
-                   of emails.
- 
-+   --cc-cmd       Specify a command to execute per file which adds
-+                  per file specific cc address entries
-+
-    --bcc          Specify a list of email addresses that should be Bcc:
- 		  on all the emails.
- 
-@@ -157,13 +160,14 @@ if ($@) {
- my ($quiet, $dry_run) = (0, 0);
- 
- # Variables with corresponding config settings
--my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc);
-+my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
- 
- my %config_settings = (
-     "thread" => [\$thread, 1],
-     "chainreplyto" => [\$chain_reply_to, 1],
-     "suppressfrom" => [\$suppress_from, 0],
-     "signedoffcc" => [\$signed_off_cc, 1],
-+    "cccmd" => [\$cc_cmd, ""],
- );
- 
- foreach my $setting (keys %config_settings) {
-@@ -189,6 +193,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "smtp-server=s" => \$smtp_server,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
-+		    "cc-cmd=s" => \$cc_cmd,
- 		    "suppress-from!" => \$suppress_from,
- 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_cc,
- 		    "dry-run" => \$dry_run,
-@@ -652,11 +657,25 @@ foreach my $t (@files) {
- 		}
- 	}
- 	close F;
-+
-+	if (${cc_cmd} ne "") {
-+	    open(F, "${cc_cmd} $t |")
-+		or die "(cc-cmd) Could not execute '${cc_cmd}'\n";
-+	    while(<F>) {
-+		my $c = $_;
-+		$c =~ s/^\s*//g;
-+		$c =~ s/\n$//g;
-+		push @cc, $c;
-+		printf("(cc-cmd) Adding cc: %s from: '%s'\n", $c, $cc_cmd)
-+		    unless $quiet;
-+	    }
-+	    close F;
-+	}
-+
- 	if (defined $author) {
- 		$message = "From: $author\n\n$message";
- 	}
- 
--
- 	send_message();
- 
- 	# set up for the next message
+Instead I need to import great/trunk/dsp into a remote branch in my
+_dsp_ git repository.  Since for git-svn, every Subversion directory
+is as good to import as any other (there is no concept of a worktree
+root in the repository) that should be all it takes.
+
+I'll need to use the dsp repository when doing merge work, but apart
+from that, I can work in the great repository r/w even while in the
+dsp subdirectory.
+
+If one could tell git in a remote section to
+fetch/consider/synchronize/push just a subdirectory as the repo root,
+then the same setup for bidirectional merges could be made to work
+with projects like gitk.  Though I am fuzzy about the merge
+information...  But that is a problem when pushing merges with private
+branches, anyway, isn't it?
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
