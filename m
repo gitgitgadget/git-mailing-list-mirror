@@ -1,101 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: Finding the svn-URL of the current branch in git
-Date: Sat, 18 Aug 2007 02:09:13 -0700
-Message-ID: <20070818090913.GA13936@soma>
-References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx> <20070816082110.GB16849@muzzle> <7vir7eh7mc.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Extending .gitignore
+Date: Sat, 18 Aug 2007 02:43:50 -0700
+Message-ID: <C0E9F681E68D48EB8989022D11FEE3D1@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Kleine <matthias_kleine@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 11:09:45 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="koi8-r";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 11:44:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMKJQ-0005tD-D5
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:09:40 +0200
+	id 1IMKqo-0005Fn-27
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbXHRJJQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Aug 2007 05:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbXHRJJQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:09:16 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44123 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751401AbXHRJJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2007 05:09:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 1368B2DC08D;
-	Sat, 18 Aug 2007 02:09:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vir7eh7mc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756297AbXHRJn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 05:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756295AbXHRJnz
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:43:55 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:22659 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753713AbXHRJny (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2007 05:43:54 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so149981wah
+        for <git@vger.kernel.org>; Sat, 18 Aug 2007 02:43:54 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=rwSD48okAUKpGCtvENS9ktkmOWgrsPqmQrGytsNkJ4Hl4HtVPghR0ogwY3x7A5b/VYdrEtk+9QpQ/Xf6g4wxDdvFaXmOOmNvZ31eX03Y5HqqYX6ZHXGikEe2GeIXB4spnUhRrtbSUoE5KplclSANfOLcDiR4/3SvdXRDfZQUH2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=IOAZcCG0ufpe8pcuF9v1KcEki4vTlZWo2XVAZPU5n5+0/HxilhbrZAJuw0ymz7Da/LJpCoxnWJA4+QlV3GSghyS3mBajAHozyWzR7mJEu8C6LaOwxWYQgfqnWhDaw1lDlWoUtBrurU+OW95oUqqkhi+5v4OuqoEVhGAetsuWN1w=
+Received: by 10.114.149.2 with SMTP id w2mr433548wad.1187430233273;
+        Sat, 18 Aug 2007 02:43:53 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id j26sm3255222waf.2007.08.18.02.43.52
+        (version=SSLv3 cipher=OTHER);
+        Sat, 18 Aug 2007 02:43:52 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56104>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Junio:
-> > Would you object to having git-merge spew a big fat warning
-> > and/or outright refuse to let git-merge run on git-svn repositories?
-> 
-> Actually I do.  A major, if not primary, selling point of
-> git-svn has been that svn cannot do merges but if you import to
-> git you can, and I've had an impression that Sam's git-svn intro
-> alludes to this capability as well.
+Currently .gitignore serves (at least) 2 purposes:
+1. Specifies which files to ignore during git add
+2. Specifies which files to ignore during git cleanup, but still deletes them with git cleanup -x
+So it effectively splits files in 2 categories.
 
-Wow.  My primary reasons for git-svn are completely different: speed and
-offline usability; and merging was not so much a concern for me.
+I always find myself with 3 categories of files:
+1. Important files that I want tracked by SCM (normal files like *.c)
+2. Unimportant files that I want ignored by SCM and cleaned (usually build files like *.obj, *.exe)
+3. Important files that I don't want to be tracked by SCM but also I don't want them to be cleaned either (these are usually 
+machine-specific config files)
 
-I've grown to prefer the patch + rebase model of keeping history linear
-in my work.  This is different than from when I first picked up git:
-went overboard on merging just to see what kind of interesting graphs I
-could create in gitk :)
+So I want to be able to say to git: don't track this file, but don't delete it either (even with clean -x).
+What do you think? Does it make sense? Can it be done right now?
 
-So I didn't always prefer the recommended way git-svn works now.  In the
-beginning there was the "git-svn commit" command, which has now been
-named "set-tree".  I haven't used set-tree in ages, but I think it still
-supports preserving history of a git <-> git merging after commiting to
-SVN.  The problem with set-tree was that it would either:
-
-a) make history ugly (with duplicate commits) for git users, as history
-   never gets rewritten when using set-tree.
-
-or
-
-b) hide history from SVN users.
-
-> If I understand you correctly, your position is that the svn
-> side has the authoritative history when using git-svn, and we
-> should refuse to do anything on the git side that the resulting
-> history in svn cannot represent.  I know and respect that you
-> have thought about the issues involved long enough before that
-> declaration of defeat, but at the same time, I would really hope
-> that we can come up with a workable compromise to allow merge
-> tracking on the git side.
-
-Yes.  From what I gather, developers only use git-svn because they don't
-have enough swing within their group to replace SVN.  I don't think
-encouraging git-svn users to isolate themselves with their own history
-and propagating less-useful history to the non-SVN users in a project is
-a good thing.
-
-> It probably does not even have to interoperate with people who
-> do their own merge tracking using svk.  Perhaps something as
-> simple and ugly as recording the parent commit object names on
-> the git side as a trailer to the commit log message we push back
-> to svn would allow people who interact with the same svn
-> repository from their own git-svn managed git repository to
-> interoperate with each other?
-
-Of course, git-svn has gotten a lot more users than I expected it
-would, so maybe I'll implement it and see where it takes us.
-
-This could just be as simple as using the code for set-tree and instead
-using it to create revprops in SVN.  I'd probably be inventing a fourth
-method of doing merge-tracking in SVN, though...
-
--- 
-Eric Wong
+- Dmitry 
