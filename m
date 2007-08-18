@@ -1,130 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Make thin-pack generation subproject aware.
-Date: Sat, 18 Aug 2007 02:54:52 -0700
-Message-ID: <7vwsvtcglv.fsf_-_@gitster.siamese.dyndns.org>
-References: <200707021356.58553.andyparkins@gmail.com>
-	<200708170939.47214.andyparkins@gmail.com>
-	<alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-svn: Finding the svn-URL of the current branch in git
+Date: Sat, 18 Aug 2007 11:57:57 +0200
+Message-ID: <85fy2hupui.fsf@lola.goethe.zz>
+References: <46B8BA03.1030809@gmx.de> <20070807205543.GB27703@xp.machine.xx>
+	<20070816082110.GB16849@muzzle>
+	<7vir7eh7mc.fsf@gitster.siamese.dyndns.org>
+	<20070818090913.GA13936@soma>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 18 11:55:05 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthias Kleine <matthias_kleine@gmx.de>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Aug 18 11:58:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IML1N-0007nH-3z
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:55:05 +0200
+	id 1IML4P-0008Sz-9o
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752003AbXHRJzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Aug 2007 05:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbXHRJzA
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:55:00 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59401 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751869AbXHRJy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2007 05:54:59 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8AB12123879;
-	Sat, 18 Aug 2007 05:55:16 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 17 Aug 2007 09:56:54 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752779AbXHRJ6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 05:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbXHRJ6I
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:58:08 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:50792 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751713AbXHRJ6H (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2007 05:58:07 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id ED4544C42A;
+	Sat, 18 Aug 2007 11:58:05 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id D94172C6B79;
+	Sat, 18 Aug 2007 11:58:05 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-041-107.pools.arcor-ip.net [84.61.41.107])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 9A38719B322;
+	Sat, 18 Aug 2007 11:57:57 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 1D5131C36605; Sat, 18 Aug 2007 11:57:57 +0200 (CEST)
+In-Reply-To: <20070818090913.GA13936@soma> (Eric Wong's message of "Sat\, 18 Aug 2007 02\:09\:13 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3982/Sat Aug 18 09:45:32 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56106>
 
-When a thin pack wants to send a tree object at "sub/dir", and
-the commit that is common between the sender and the receiver
-that is used as the base object has a subproject at that path,
-we should not try to use the data at "sub/dir" of the base tree
-as a tree object.  It is not a tree to begin with, and more
-importantly, the commit object there does not have to even
-exist.
+Eric Wong <normalperson@yhbt.net> writes:
 
----
+> Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Actually I do.  A major, if not primary, selling point of
+>> git-svn has been that svn cannot do merges but if you import to
+>> git you can, and I've had an impression that Sam's git-svn intro
+>> alludes to this capability as well.
+>
+> Wow.  My primary reasons for git-svn are completely different: speed
+> and offline usability; and merging was not so much a concern for me.
+>
+>> If I understand you correctly, your position is that the svn side
+>> has the authoritative history when using git-svn, and we should
+>> refuse to do anything on the git side that the resulting history in
+>> svn cannot represent.  I know and respect that you have thought
+>> about the issues involved long enough before that declaration of
+>> defeat, but at the same time, I would really hope that we can come
+>> up with a workable compromise to allow merge tracking on the git
+>> side.
+>
+> Yes.  From what I gather, developers only use git-svn because they
+> don't have enough swing within their group to replace SVN.
 
- This turned out to be trickier to trigger than I thought.  One
- case to trigger is to have a subproject in the past at sub/dir
- and then turn it into a directory.
+Not at all.  Subversion has _working_ subproject support (which is
+rather easy, since every directory is treated the same and you can
+merge at every level).  It also has other tools like "Trac".  And it
+provides a _stable_ history and point of reference and backup.  While
+I appreciate being able to create and undo almost any mess in my
+personal git repository (and this happens not infrequently), I would
+not want to propose that to everybody.
 
- builtin-pack-objects.c       |    2 +
- t/t3050-subprojects-fetch.sh |   52 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 0 deletions(-)
- create mode 100755 t/t3050-subprojects-fetch.sh
+git-svn makes it possible for me to keep the mess that is git to
+myself, and only expose others to the _results_ of my work with it.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 24926db..77481df 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -979,6 +979,8 @@ static void add_pbase_object(struct tree_desc *tree,
- 	int cmp;
- 
- 	while (tree_entry(tree,&entry)) {
-+		if (S_ISGITLINK(entry.mode))
-+			continue;
- 		cmp = tree_entry_len(entry.path, entry.sha1) != cmplen ? 1 :
- 		      memcmp(name, entry.path, cmplen);
- 		if (cmp > 0)
-diff --git a/t/t3050-subprojects-fetch.sh b/t/t3050-subprojects-fetch.sh
-new file mode 100755
-index 0000000..34f26a8
---- /dev/null
-+++ b/t/t3050-subprojects-fetch.sh
-@@ -0,0 +1,52 @@
-+#!/bin/sh
-+
-+test_description='fetching and pushing project with subproject'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_tick &&
-+	mkdir -p sub && (
-+		cd sub &&
-+		git init &&
-+		>subfile &&
-+		git add subfile
-+		git commit -m "subproject commit #1"
-+	) &&
-+	>mainfile
-+	git add sub mainfile &&
-+	test_tick &&
-+	git commit -m "superproject commit #1"
-+'
-+
-+test_expect_success clone '
-+	git clone file://`pwd`/.git cloned &&
-+	(git rev-parse HEAD; git ls-files -s) >expected &&
-+	(
-+		cd cloned &&
-+		(git rev-parse HEAD; git ls-files -s) >../actual
-+	) &&
-+	diff -u expected actual
-+'
-+
-+test_expect_success advance '
-+	echo more >mainfile &&
-+	git update-index --force-remove sub &&
-+	mv sub/.git sub/.git-disabled &&
-+	git add sub/subfile mainfile &&
-+	mv sub/.git-disabled sub/.git &&
-+	test_tick &&
-+	git commit -m "superproject commit #2"
-+'
-+
-+test_expect_success fetch '
-+	(git rev-parse HEAD; git ls-files -s) >expected &&
-+	(
-+		cd cloned &&
-+		git pull &&
-+		(git rev-parse HEAD; git ls-files -s) >../actual
-+	) &&
-+	diff -u expected actual
-+'
-+
-+test_done
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
