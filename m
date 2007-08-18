@@ -1,85 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
 Subject: Re: file disappears after git rebase (missing one commit)
-Date: Sat, 18 Aug 2007 13:01:05 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708181247330.30176@woody.linux-foundation.org>
+Date: Sat, 18 Aug 2007 22:29:52 +0200
+Message-ID: <e7bda7770708181329i7a64e613y88187a608c323a07@mail.gmail.com>
 References: <e7bda7770708181237u34253bf1h7c3fe0987d13d3b3@mail.gmail.com>
+	 <alpine.LFD.0.999.0708181247330.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
 	msysGit <msysgit@googlegroups.com>
-To: Torgil Svensson <torgil.svensson@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 22:02:21 2007
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 22:30:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMUV2-00080d-31
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 22:02:20 +0200
+	id 1IMUw5-0006Nj-Jb
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 22:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759039AbXHRUBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Aug 2007 16:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759038AbXHRUBh
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 16:01:37 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34602 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759022AbXHRUBb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2007 16:01:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7IK1Aja021390
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 18 Aug 2007 13:01:11 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7IK15nF009697;
-	Sat, 18 Aug 2007 13:01:05 -0700
-In-Reply-To: <e7bda7770708181237u34253bf1h7c3fe0987d13d3b3@mail.gmail.com>
-X-Spam-Status: No, hits=-2.452 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_63
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751777AbXHRU3y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 16:29:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752041AbXHRU3x
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 16:29:53 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:10259 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751063AbXHRU3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2007 16:29:53 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so302094wah
+        for <git@vger.kernel.org>; Sat, 18 Aug 2007 13:29:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EP1ItkSvLQkCXBKEUyPTYLdlUimtBDEqv1Fx+8JSBE3tZIO1VMmk5AE5oRLNPkpvWLrtqiYpbjBGvJYK5sRJM51iEeWAvsvESumeUZC5oUIw5gMl/IDWfsNoSUr90yngbD+0OMCsUcbZVwqrlssOGctTVVc3W3CBq5dtzgGhlBk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s2ELUbw+NvjYCV+gZT2fxCEihR1ZEqp/dKq92lY9nKTaLrxh13e/FJpG1zfyx3+RC26o4PYaaGfjJdfvapEsof6w7jE+E/+NWG4ATI+CZbsFE0JXPYfij+YzLIWLDzmFuz2cIXvm9DiasBfaXCh6+Idt9ZpeLIMmVsE8mOW2AoU=
+Received: by 10.115.54.1 with SMTP id g1mr1910535wak.1187468992688;
+        Sat, 18 Aug 2007 13:29:52 -0700 (PDT)
+Received: by 10.114.180.20 with HTTP; Sat, 18 Aug 2007 13:29:52 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708181247330.30176@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56111>
 
-
-
-On Sat, 18 Aug 2007, Torgil Svensson wrote:
+On 8/18/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 >
-> $ git rebase devel
-> First, rewinding head to replay your work on top of it...
-> HEAD is now at 57aa840... Add disk summarize tool (du.exe)
-> Nothing to do.
+> The reason, I think, is that I suspect that the newly added file is a
+> binary file, no?
 
-Ok. "git rebase" really does believe that there's nothing to do.
+Yes, that's correct.
 
-The reason, I think, is that I suspect that the newly added file is a 
-binary file, no? That, in turn, will mean that the *patch* will have no 
-patch ID (or rather, it will have an empty patch ID) - which in turn will 
-make it invisible to "--ignore-if-in-upstream" if there are already some 
-*other* patches that also just adds a binary file (which I think there is: 
-I think upstream has "Add disk summarize tool (du.exe)" which I assume has 
-exactly the same patch fingerprint).
 
-In other words, "git rebase" really is just a series of cherry-picks, but 
-it avoids patches that have the same patch ID as something that is already 
-upstream. That helps *enormously*, but it so happens that the patch ID's 
-don't work really well for binary diffs.
+> That, in turn, will mean that the *patch* will have no
+> patch ID (or rather, it will have an empty patch ID) - which in turn will
+> make it invisible to "--ignore-if-in-upstream" if there are already some
+> *other* patches that also just adds a binary file (which I think there is:
+> I think upstream has "Add disk summarize tool (du.exe)" which I assume has
+> exactly the same patch fingerprint).
 
-Try this patch - see if it helps. Totally untested! It will enable patch 
-ID's on binary diffs too, which should avoid this issue.
+The "du.exe" is only in the devel branch but there is five other
+patches that meets your criteria.
 
-		Linus
 
----
-diff --git a/patch-ids.c b/patch-ids.c
-index a288fac..4a3432e 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -122,6 +122,7 @@ int init_patch_ids(struct patch_ids *ids)
- 	memset(ids, 0, sizeof(*ids));
- 	diff_setup(&ids->diffopts);
- 	ids->diffopts.recursive = 1;
-+	ids->diffopts.binary = 1;
- 	if (diff_setup_done(&ids->diffopts) < 0)
- 		return error("diff_setup_done failed");
- 	return 0;
+> In other words, "git rebase" really is just a series of cherry-picks, but
+> it avoids patches that have the same patch ID as something that is already
+> upstream. That helps *enormously*, but it so happens that the patch ID's
+> don't work really well for binary diffs.
+
+Git cherry-pick seems to work on that particular patch:
+
+$ git cherry-pick b11cf4ce6262a7c3b243e3cfdc70e6b44682cb59
+Finished one cherry-pick.
+Created commit 92a58d3: Added msmtp.exe SMTP client
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 bin/msmtp.exe
+
+
+> Try this patch - see if it helps. Totally untested! It will enable patch
+> ID's on binary diffs too, which should avoid this issue.
+
+That didn't help. Same symptom.
+
+//Torgil
