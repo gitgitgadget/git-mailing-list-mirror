@@ -1,143 +1,85 @@
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: file disappears after git rebase (missing one commit)
-Date: Sat, 18 Aug 2007 21:37:34 +0200
-Message-ID: <e7bda7770708181237u34253bf1h7c3fe0987d13d3b3@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: file disappears after git rebase (missing one commit)
+Date: Sat, 18 Aug 2007 13:01:05 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708181247330.30176@woody.linux-foundation.org>
+References: <e7bda7770708181237u34253bf1h7c3fe0987d13d3b3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: msysGit <msysgit@googlegroups.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 18 21:37:41 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Torgil Svensson <torgil.svensson@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 18 22:02:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMU7A-0000i4-US
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 21:37:41 +0200
+	id 1IMUV2-00080d-31
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 22:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758168AbXHRThg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Aug 2007 15:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758145AbXHRThg
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 15:37:36 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:45322 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758032AbXHRThf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2007 15:37:35 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so291515wah
-        for <git@vger.kernel.org>; Sat, 18 Aug 2007 12:37:34 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=QWncYlr6qJM8epaZH2sWSSdFMv9HU1Nzept6Xd+FDjseL7F4MDk1RF7w1NCnQHetAe0CY9t7g/cxlJlLANCvxSkWCF5GhTuIlLrmSg1cZeOEMApYsCcZCJT2L4vPHbDVG6IRjLjhG0ABH8WbQ7aGLNpVc6dryTfbfHHDFFLdOzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=W8a7mdsf/MLYzx5Sf6I/FYuvTZf5jB4DwazaTFpqFN2dViSTuPOWgSzQVO3ZP+CZDlg1CU/42zHEJS9i/2j9A5EpQzm6DA6JEj0ChvjgC+OwUzrEGB4PZcGnofe3Jkd29rH1IU8IPNkxuTeImhOUzFu1F9u7HEZf/vDmfU8pjEs=
-Received: by 10.114.183.1 with SMTP id g1mr706610waf.1187465854579;
-        Sat, 18 Aug 2007 12:37:34 -0700 (PDT)
-Received: by 10.114.180.20 with HTTP; Sat, 18 Aug 2007 12:37:34 -0700 (PDT)
-Content-Disposition: inline
+	id S1759039AbXHRUBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 16:01:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759038AbXHRUBh
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 16:01:37 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:34602 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759022AbXHRUBb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2007 16:01:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7IK1Aja021390
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 18 Aug 2007 13:01:11 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7IK15nF009697;
+	Sat, 18 Aug 2007 13:01:05 -0700
+In-Reply-To: <e7bda7770708181237u34253bf1h7c3fe0987d13d3b3@mail.gmail.com>
+X-Spam-Status: No, hits=-2.452 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_63
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.24__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56109>
-
-Hi,
-
-I'm trying to rebase a branch ("msmtp") on another branch ("devel").
-The msmtp has a number of commits that are already in the devel branch
-(but with different history) and one new commit that adds one file.
-
-$ git clone git://repo.or.cz/msysgit.git
-$ cd msysgit
-$ git rev-parse origin/msmtp
-b11cf4ce6262a7c3b243e3cfdc70e6b44682cb59
-$ git rev-parse origin/devel
-57aa8405103856106ec0e31453089c33c899c98b
-$ git -b checkout devel origin/devel
-$ git -b checkout msmtp origin/msmtp
-$ git show-branch msmtp devel
-* [msmtp] Added msmtp.exe SMTP client
- ! [devel] Add disk summarize tool (du.exe)
---
- + [devel] Add disk summarize tool (du.exe)
- + [devel^] gdb updated to v6.6
- + [devel~2] w32api updated to v3.10
- + [devel~3] Updated gcc to v3.4.5
- + [devel~4] Updated binutils to v2.17.50
- + [devel~5] Remove remnants of the c++ compiler
- + [devel~6] GitMe: only fetch 'master' of msysgit.git
- + [devel~7] GitMe: inline 7z's install script
- + [devel~8] GitMe: avoid dependency on cmd.exe
- + [devel~9] msysGit: adjust for submodule layout
- + [devel~10] msysGit: we have 7zip installed in /share/7-Zip/ now
- + [devel~11] msysGit: 7z cannot update existing installers
- + [devel~12] msysGit: move scripts to /share/msysGit/
- + [devel~13] WinGit: do not pack builtins, but copy them when unpacking
- + [devel~14] Update TODO: Marius squashed two
- + [devel~15] WinGit: strip executables (Issue 25)
- + [devel~16^2] GitMe: fix HTTP transport
- + [devel~16^2^] Undo hacky she-bang fixup
- + [devel~16^2~2] Issue 21: core.autocrlf should be set to true (at
-least for end-users)
- + [devel~16^2~3] Add clear script, and remove the clear=clsb alias in profile
- + [devel~16^2~4] Make 7z functional
- + [devel~16^2~5] msys: support for Windows XP x64
- + [devel~16^2~6] Removed all SuperGitMe functionality Also propagated
-latest fixes and made installer even smaller
- + [devel~16^2~7] Fixed Issue 37: Errors during install because repo
-now has tags
- + [devel~18] Issue 21: core.autocrlf should be set to true (at least
-for end-users)
- + [devel~19] Add clear script, and remove the clear=clsb alias in profile
- + [devel~20] Make 7z functional
- + [devel~21] msys: support for Windows XP x64
- + [devel~22] GitMe SuperFetch
- + [devel~23] Latest git submodule
-*  [msmtp] Added msmtp.exe SMTP client
-*  [msmtp^] gdb updated to v6.6
-*  [msmtp~2] w32api updated to v3.10
-*  [msmtp~3] Updated gcc to v3.4.5
-*  [msmtp~4] Updated binutils to v2.17.50
-*  [msmtp~5] Remove remnants of the c++ compiler
-*+ [devel~24] GitMe: check if cygwin is in PATH; if so abort installer.
-$ find bin -name "msmtp.exe"
-bin/msmtp.exe
-
-Note! that this file is added with the commit "*  [msmtp] Added
-msmtp.exe SMTP client". After rebase I expect that this commit will be
-on top of the devel branch.
-
-$ cat .git/HEAD
-ref: refs/heads/msmtp
-$ git rebase devel
-First, rewinding head to replay your work on top of it...
-HEAD is now at 57aa840... Add disk summarize tool (du.exe)
-Nothing to do.
-$ git show-branch msmtp devel
-* [msmtp] Add disk summarize tool (du.exe)
- ! [devel] Add disk summarize tool (du.exe)
---
-*+ [msmtp] Add disk summarize tool (du.exe)
-$ find bin -name "msmtp.exe"
-
-And the msmtp commit + file is lost.
-
-I've tested on windows (4msysgit.git):
-$ git --version
-git version 1.5.3.rc4.mingw.2.49.g3314
-
-And on linux (git.git):
-$ git --version
-git version 1.5.2.5.g0734d
-
-And on linux with next branch (git.git)
-$ git version
-git version 1.5.3.rc5.843.gdac75
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56110>
 
 
-Is this a bug?  Any ideas?
 
-Best regards,
+On Sat, 18 Aug 2007, Torgil Svensson wrote:
+>
+> $ git rebase devel
+> First, rewinding head to replay your work on top of it...
+> HEAD is now at 57aa840... Add disk summarize tool (du.exe)
+> Nothing to do.
 
-//Torgil
+Ok. "git rebase" really does believe that there's nothing to do.
+
+The reason, I think, is that I suspect that the newly added file is a 
+binary file, no? That, in turn, will mean that the *patch* will have no 
+patch ID (or rather, it will have an empty patch ID) - which in turn will 
+make it invisible to "--ignore-if-in-upstream" if there are already some 
+*other* patches that also just adds a binary file (which I think there is: 
+I think upstream has "Add disk summarize tool (du.exe)" which I assume has 
+exactly the same patch fingerprint).
+
+In other words, "git rebase" really is just a series of cherry-picks, but 
+it avoids patches that have the same patch ID as something that is already 
+upstream. That helps *enormously*, but it so happens that the patch ID's 
+don't work really well for binary diffs.
+
+Try this patch - see if it helps. Totally untested! It will enable patch 
+ID's on binary diffs too, which should avoid this issue.
+
+		Linus
+
+---
+diff --git a/patch-ids.c b/patch-ids.c
+index a288fac..4a3432e 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -122,6 +122,7 @@ int init_patch_ids(struct patch_ids *ids)
+ 	memset(ids, 0, sizeof(*ids));
+ 	diff_setup(&ids->diffopts);
+ 	ids->diffopts.recursive = 1;
++	ids->diffopts.binary = 1;
+ 	if (diff_setup_done(&ids->diffopts) < 0)
+ 		return error("diff_setup_done failed");
+ 	return 0;
