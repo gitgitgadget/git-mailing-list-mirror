@@ -1,67 +1,130 @@
-From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-Subject: Extending .gitignore
-Date: Sat, 18 Aug 2007 02:43:50 -0700
-Message-ID: <C0E9F681E68D48EB8989022D11FEE3D1@ntdev.corp.microsoft.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Make thin-pack generation subproject aware.
+Date: Sat, 18 Aug 2007 02:54:52 -0700
+Message-ID: <7vwsvtcglv.fsf_-_@gitster.siamese.dyndns.org>
+References: <200707021356.58553.andyparkins@gmail.com>
+	<200708170939.47214.andyparkins@gmail.com>
+	<alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="koi8-r";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 18 11:44:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 11:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMKqo-0005Fn-27
-	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:44:10 +0200
+	id 1IML1N-0007nH-3z
+	for gcvg-git@gmane.org; Sat, 18 Aug 2007 11:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756297AbXHRJn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Aug 2007 05:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756295AbXHRJnz
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:43:55 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:22659 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753713AbXHRJny (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2007 05:43:54 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so149981wah
-        for <git@vger.kernel.org>; Sat, 18 Aug 2007 02:43:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=rwSD48okAUKpGCtvENS9ktkmOWgrsPqmQrGytsNkJ4Hl4HtVPghR0ogwY3x7A5b/VYdrEtk+9QpQ/Xf6g4wxDdvFaXmOOmNvZ31eX03Y5HqqYX6ZHXGikEe2GeIXB4spnUhRrtbSUoE5KplclSANfOLcDiR4/3SvdXRDfZQUH2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=IOAZcCG0ufpe8pcuF9v1KcEki4vTlZWo2XVAZPU5n5+0/HxilhbrZAJuw0ymz7Da/LJpCoxnWJA4+QlV3GSghyS3mBajAHozyWzR7mJEu8C6LaOwxWYQgfqnWhDaw1lDlWoUtBrurU+OW95oUqqkhi+5v4OuqoEVhGAetsuWN1w=
-Received: by 10.114.149.2 with SMTP id w2mr433548wad.1187430233273;
-        Sat, 18 Aug 2007 02:43:53 -0700 (PDT)
-Received: from dmitrykl2 ( [71.112.20.227])
-        by mx.google.com with ESMTPS id j26sm3255222waf.2007.08.18.02.43.52
-        (version=SSLv3 cipher=OTHER);
-        Sat, 18 Aug 2007 02:43:52 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
+	id S1752003AbXHRJzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Aug 2007 05:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbXHRJzA
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Aug 2007 05:55:00 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59401 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869AbXHRJy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2007 05:54:59 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8AB12123879;
+	Sat, 18 Aug 2007 05:55:16 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Fri, 17 Aug 2007 09:56:54 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56105>
 
-Currently .gitignore serves (at least) 2 purposes:
-1. Specifies which files to ignore during git add
-2. Specifies which files to ignore during git cleanup, but still deletes them with git cleanup -x
-So it effectively splits files in 2 categories.
+When a thin pack wants to send a tree object at "sub/dir", and
+the commit that is common between the sender and the receiver
+that is used as the base object has a subproject at that path,
+we should not try to use the data at "sub/dir" of the base tree
+as a tree object.  It is not a tree to begin with, and more
+importantly, the commit object there does not have to even
+exist.
 
-I always find myself with 3 categories of files:
-1. Important files that I want tracked by SCM (normal files like *.c)
-2. Unimportant files that I want ignored by SCM and cleaned (usually build files like *.obj, *.exe)
-3. Important files that I don't want to be tracked by SCM but also I don't want them to be cleaned either (these are usually 
-machine-specific config files)
+---
 
-So I want to be able to say to git: don't track this file, but don't delete it either (even with clean -x).
-What do you think? Does it make sense? Can it be done right now?
+ This turned out to be trickier to trigger than I thought.  One
+ case to trigger is to have a subproject in the past at sub/dir
+ and then turn it into a directory.
 
-- Dmitry 
+ builtin-pack-objects.c       |    2 +
+ t/t3050-subprojects-fetch.sh |   52 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3050-subprojects-fetch.sh
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 24926db..77481df 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -979,6 +979,8 @@ static void add_pbase_object(struct tree_desc *tree,
+ 	int cmp;
+ 
+ 	while (tree_entry(tree,&entry)) {
++		if (S_ISGITLINK(entry.mode))
++			continue;
+ 		cmp = tree_entry_len(entry.path, entry.sha1) != cmplen ? 1 :
+ 		      memcmp(name, entry.path, cmplen);
+ 		if (cmp > 0)
+diff --git a/t/t3050-subprojects-fetch.sh b/t/t3050-subprojects-fetch.sh
+new file mode 100755
+index 0000000..34f26a8
+--- /dev/null
++++ b/t/t3050-subprojects-fetch.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description='fetching and pushing project with subproject'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	test_tick &&
++	mkdir -p sub && (
++		cd sub &&
++		git init &&
++		>subfile &&
++		git add subfile
++		git commit -m "subproject commit #1"
++	) &&
++	>mainfile
++	git add sub mainfile &&
++	test_tick &&
++	git commit -m "superproject commit #1"
++'
++
++test_expect_success clone '
++	git clone file://`pwd`/.git cloned &&
++	(git rev-parse HEAD; git ls-files -s) >expected &&
++	(
++		cd cloned &&
++		(git rev-parse HEAD; git ls-files -s) >../actual
++	) &&
++	diff -u expected actual
++'
++
++test_expect_success advance '
++	echo more >mainfile &&
++	git update-index --force-remove sub &&
++	mv sub/.git sub/.git-disabled &&
++	git add sub/subfile mainfile &&
++	mv sub/.git-disabled sub/.git &&
++	test_tick &&
++	git commit -m "superproject commit #2"
++'
++
++test_expect_success fetch '
++	(git rev-parse HEAD; git ls-files -s) >expected &&
++	(
++		cd cloned &&
++		git pull &&
++		(git rev-parse HEAD; git ls-files -s) >../actual
++	) &&
++	diff -u expected actual
++'
++
++test_done
