@@ -1,47 +1,48 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: renaming question
-Date: Sun, 19 Aug 2007 20:16:02 +0200
-Message-ID: <87vebbo0f1.fsf@mid.deneb.enyo.de>
-References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 19 20:16:33 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [RFC] Clean way to disable pager
+Date: Sun, 19 Aug 2007 14:24:07 -0400
+Message-ID: <819D2F58-960A-4DA4-8FAC-7DE69A78F971@silverinsanity.com>
+References: <vpq1wdz307k.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Aug 19 20:24:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMpKC-00086X-2M
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 20:16:32 +0200
+	id 1IMpS7-0001tl-14
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 20:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527AbXHSSQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 14:16:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbXHSSQF
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 14:16:05 -0400
-Received: from mail.enyo.de ([212.9.189.167]:4286 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752527AbXHSSQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 14:16:05 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1IMpJj-0003WA-6H
-	for git@vger.kernel.org; Sun, 19 Aug 2007 20:16:03 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.67)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1IMpJi-0003Ka-5v
-	for git@vger.kernel.org; Sun, 19 Aug 2007 20:16:02 +0200
-In-Reply-To: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> (Aaron Gray's message
-	of "Sun, 19 Aug 2007 18:58:20 +0100")
+	id S1751517AbXHSSYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 14:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbXHSSYK
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 14:24:10 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:50016 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbXHSSYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 14:24:09 -0400
+Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 8CADB1FFC231;
+	Sun, 19 Aug 2007 18:24:07 +0000 (UTC)
+In-Reply-To: <vpq1wdz307k.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56135>
 
-* Aaron Gray:
 
-> I have a very large C source project that I am converting from C to C++.
->
-> Is it posssible to track changes with renamed files in GIT ?
+On Aug 19, 2007, at 1:26 PM, Matthieu Moy wrote:
 
-You don't need to rename the files if you compile them using g++.  If
-you still want to rename them, most history-related GIT commands
-accept an -M switch which enables rename ("move") detection.
+> I think that deserves an less-hacky, and documented way. I'd suggest a
+> --no-pager, or --dont-paginate, that would do the opposite of -p as a
+> global option for git.
+
+ACK.  I was going to write this pretty soon myself.
+
+~~ Brian
