@@ -1,89 +1,126 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Git tree for old kernels
-Date: Sun, 19 Aug 2007 15:24:56 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708191453030.16727@xanadu.home>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [RFC] Clean way to disable pager
+Date: Sun, 19 Aug 2007 21:44:02 +0200
+Message-ID: <vpq643bz4vx.fsf@bauges.imag.fr>
+References: <vpq1wdz307k.fsf@bauges.imag.fr>
+	<7vodh3bbmx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: lkml <linux-kernel@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756087AbXHSTZP@vger.kernel.org Sun Aug 19 21:25:53 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756087AbXHSTZP@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 19 21:44:52 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMqPI-0003rg-GD
-	for glk-linux-kernel-3@gmane.org; Sun, 19 Aug 2007 21:25:52 +0200
+	id 1IMqhf-0000IG-4G
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 21:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087AbXHSTZP (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 19 Aug 2007 15:25:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752527AbXHSTZA
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 19 Aug 2007 15:25:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:61487 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752226AbXHSTZA (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 19 Aug 2007 15:25:00 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JN100122CLMRSF0@VL-MO-MR004.ip.videotron.ca>; Sun,
- 19 Aug 2007 15:24:58 -0400 (EDT)
-In-reply-to: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753548AbXHSToh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 15:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754236AbXHSToh
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 15:44:37 -0400
+Received: from imag.imag.fr ([129.88.30.1]:61371 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753548AbXHSTog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 15:44:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7JJi3Xk010544
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 19 Aug 2007 21:44:03 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IMqgs-000071-Vu; Sun, 19 Aug 2007 21:44:03 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IMqgs-0002jv-Th; Sun, 19 Aug 2007 21:44:02 +0200
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+In-Reply-To: <7vodh3bbmx.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 19 Aug 2007 11\:52\:06 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 19 Aug 2007 21:44:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56141>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56142>
 
-On Sun, 22 Jul 2007, Jon Smirl wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Continuing on with kernel archeology for embedded systems, any
-> interest in making a git tree with all of the kernel versions from the
-> beginning up to the start of the current git tree?
+> Please resend an applyable patch with a sign-off (and acked-by
+> as you have seen).
 
-I just put the archive I've gathered so far in a Git tree on kernel.org:
+>From 2c79b9a1b446ca9fa9d72fc595120da34fd403dd Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Sun, 19 Aug 2007 19:24:36 +0200
+Subject: [PATCH] Add and document a global --no-pager option for git.
 
-    git://git.kernel.org/pub/scm/linux/kernel/git/nico/archive.git
+To keep the change small, this is done by setting GIT_PAGER to "cat".
 
-It is also available through gitweb from:
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+Acked-by: Brian Gernhardt <benji@silverinsanity.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git.txt |    6 +++++-
+ git.c                 |    6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-    http://git.kernel.org/?p=linux/kernel/git/nico/archive.git
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 8017997..707a756 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,8 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate]
++'git' [--version] [--exec-path[=GIT_EXEC_PATH]] 
++    [-p|--paginate] [--no-pager]
+     [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
+     [--help] COMMAND [ARGS]
+ 
+@@ -103,6 +104,9 @@ OPTIONS
+ -p|--paginate::
+        Pipe all output into 'less' (or if set, $PAGER).
+ 
++--no-pager::
++       Do not pipe git output into a pager.
++
+ --git-dir=<path>::
+        Set the path to the repository. This can also be controlled by
+        setting the GIT_DIR environment variable.
+diff --git a/git.c b/git.c
+index cab0e72..f280e7d 100644
+--- a/git.c
++++ b/git.c
+@@ -4,7 +4,7 @@
+ #include "quote.h"
+ 
+ const char git_usage_string[] =
+-       "git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
++       "git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND 
+[ARGS]";                                                                                                                                                     
+ 
+ static void prepend_to_path(const char *dir, int len)
+ {
+@@ -58,6 +58,10 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+                        }
+                } else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+                        setup_pager();
++               } else if (!strcmp(cmd, "--no-pager")) {
++                       setenv("GIT_PAGER", "cat", 1);
++                       if (envchanged)
++                               *envchanged = 1;
+                } else if (!strcmp(cmd, "--git-dir")) {
+                        if (*argc < 2) {
+                                fprintf(stderr, "No directory given for --git-dir.\n" );
+-- 
+1.5.3.rc0.64.gf4f4a-dirty
 
-It currently stops at Linux v1.0. I would like to continue populating 
-this archive up to the current "Linux kernel history" Git repository 
-from Thomas Gleixner which currently doesn't go further back than 
-v2.4.0.  This is however extremely time consuming to track down old 
-mailing list and newsgroup archives in order to find announcements to 
-serve as commit log material.  Therefore I'd be really glad if people 
-could help me find those and send me copies of relevant announcements.  
-The content of the current archive should give a good idea of what I'm 
-looking for.
-
-Also, the following items are currently missing and apparently vanished 
-from the surface of the planet:
-
- - v0.02 sources
-
- - v0.03 sources and announcement
-
- - v0.10 announcement
-
- - v0.96 sources
-
- - sources for v0.99.13{abcdefghij} (got k, don't know where the serie
-   ends) as well as announcements for all of them
-
- - all announcements for v0.99.14{a-z} except for pl14r
-
- - announcements for pl15c to pl15j, 1.0-pre1, and ALPHA-1.0.
-
-If you happen to have any of those please drop me a note.
-
-Otherwise the archive appears fairly complete with almost 3 years of 
-Linux development history captured in a 3MB pack file.
 
 
-Nicolas
+-- 
+Matthieu
