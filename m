@@ -1,67 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: log -g --reverse horribly insane
-Date: Sun, 19 Aug 2007 04:56:24 -0400
-Message-ID: <20070819085624.GU27913@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: log -g --reverse horribly insane
+Date: Sun, 19 Aug 2007 02:09:52 -0700
+Message-ID: <7v8x87dh5r.fsf@gitster.siamese.dyndns.org>
+References: <20070819085624.GU27913@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 19 10:57:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Aug 19 11:10:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMgam-00004z-GT
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 10:57:04 +0200
+	id 1IMgnY-0002r9-1O
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 11:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845AbXHSI4c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 04:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbXHSI4c
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 04:56:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34381 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbXHSI4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 04:56:31 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IMga8-000149-C7
-	for git@vger.kernel.org; Sun, 19 Aug 2007 04:56:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7053B20FBAE; Sun, 19 Aug 2007 04:56:24 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752052AbXHSJKE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 05:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752041AbXHSJKB
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 05:10:01 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42197 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903AbXHSJKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 05:10:01 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 58418124225;
+	Sun, 19 Aug 2007 05:10:17 -0400 (EDT)
+In-Reply-To: <20070819085624.GU27913@spearce.org> (Shawn O. Pearce's message
+	of "Sun, 19 Aug 2007 04:56:24 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56126>
 
-OK, I'm just too tired to find this on my own right now.  I'll try
-again later after I get some sleep, but maybe someone with a
-different sleeping pattern than me will find and fix this before
-I arise...
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-  git log -g --reverse --pretty=oneline
+> OK, I'm just too tired to find this on my own right now.  I'll try
+> again later after I get some sleep, but maybe someone with a
+> different sleeping pattern than me will find and fix this before
+> I arise...
+>
+>   git log -g --reverse --pretty=oneline
 
-Does not produce anything useful.  Results are ranging from getting
-a single line with upwards of 50 commits on it and a corrupt log
-message to lines with no log message and only one commit, even
-though the non --reverse output has over 200 results to report.
-
-  git log -g --reverse
-
-Does not show the reflog message headers, but is otherwise fine.
-So it shows the history according to the reflog (I think that's
-what I saw) but isn't showing the data I asked for with -g.
-
-Results are the same for HEAD's reflog as for any other branch in
-my tree.  Basically its nutso.  I think we need to either support
--g --reverse combination properly, or we need to disallow it.
-The current behavior is uh, not user friendly.
-
--- 
-Shawn.
+I would have to say that "-g" support was hacked into the normal
+revision traversal machinery in such a way to minimize the
+amount of changes, without refactoring the two completely
+different traversal machineries separate to make the resulting
+code maintainable.  Ideal refactoring would require quite a lot
+of changes, unfortunately.  I would say it probably would make
+sense to make the two options incompatible for now.
