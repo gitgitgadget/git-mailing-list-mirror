@@ -1,48 +1,71 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [RFC] Clean way to disable pager
-Date: Sun, 19 Aug 2007 14:24:07 -0400
-Message-ID: <819D2F58-960A-4DA4-8FAC-7DE69A78F971@silverinsanity.com>
-References: <vpq1wdz307k.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: renaming question
+Date: Sun, 19 Aug 2007 19:32:01 +0100
+Message-ID: <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
+References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> <87vebbo0f1.fsf@mid.deneb.enyo.de>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Aug 19 20:24:47 2007
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 19 20:32:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMpS7-0001tl-14
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 20:24:43 +0200
+	id 1IMpZT-00048y-JR
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 20:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbXHSSYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 14:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbXHSSYK
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 14:24:10 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:50016 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbXHSSYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 14:24:09 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 8CADB1FFC231;
-	Sun, 19 Aug 2007 18:24:07 +0000 (UTC)
-In-Reply-To: <vpq1wdz307k.fsf@bauges.imag.fr>
-X-Mailer: Apple Mail (2.752.3)
+	id S1750991AbXHSScJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 14:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754572AbXHSScI
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 14:32:08 -0400
+Received: from lon1-mail-1.visp.demon.net ([193.195.70.4]:2017 "ehlo
+	lon1-mail-1.visp.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754559AbXHSScH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2007 14:32:07 -0400
+Received: from mwgray.force9.co.uk (EHLO ze4427wm) ([212.159.110.144])
+	by lon1-mail-1.visp.demon.net (MOS 3.7.5a-GA FastPath)
+	with ESMTP id FKT50349 (AUTH angray);
+	Sun, 19 Aug 2007 19:32:05 +0100 (BST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.3138
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56136>
 
+>* Aaron Gray:
+>
+>> I have a very large C source project that I am converting from C to C++.
+>>
+>> Is it posssible to track changes with renamed files in GIT ?
+>
+> You don't need to rename the files if you compile them using g++.  If
+> you still want to rename them, most history-related GIT commands
+> accept an -M switch which enables rename ("move") detection.
 
-On Aug 19, 2007, at 1:26 PM, Matthieu Moy wrote:
+For sanity they have to be renamed.
 
-> I think that deserves an less-hacky, and documented way. I'd suggest a
-> --no-pager, or --dont-paginate, that would do the opposite of -p as a
-> global option for git.
+I am a bit of a GIT newbie. With the -M switch what would be the proceedure 
+with a single file conversion such as with test.c and test.cpp ?
 
-ACK.  I was going to write this pretty soon myself.
+Would the following do the trick ?
 
-~~ Brian
+    git add test.c
+    git commit
+
+    rename test.c test.cpp *
+    vi test.cpp
+
+    git rm test.c
+    git add test.cpp
+    git commit -M
+
+Many thanks in advance,
+
+Aaron
