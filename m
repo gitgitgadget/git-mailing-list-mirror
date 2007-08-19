@@ -1,121 +1,85 @@
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: [PATCH] submodule update - don't run git-fetch if sha1 available
-Date: Sun, 19 Aug 2007 20:57:09 +0200
-Message-ID: <e7bda7770708191157v54c2c2a3k8e17208a1d5b6dc9@mail.gmail.com>
-References: <e7bda7770708111048s77fbf416k9d0352486aee6b4a@mail.gmail.com>
-	 <7vfy2pn9eb.fsf@assigned-by-dhcp.cox.net>
-	 <e7bda7770708111703u40f89c1fx17bfac4b9aed9d2e@mail.gmail.com>
-	 <7vfy2plfb4.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: renaming question
+Date: Sun, 19 Aug 2007 21:05:24 +0200
+Message-ID: <85sl6fqr9n.fsf@lola.goethe.zz>
+References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm>
+	<87vebbo0f1.fsf@mid.deneb.enyo.de>
+	<03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 20:57:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "Aaron Gray" <angray@beeb.net>
+X-From: git-owner@vger.kernel.org Sun Aug 19 21:05:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMpxa-0002es-EV
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 20:57:14 +0200
+	id 1IMq5k-00055g-L1
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 21:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753383AbXHSS5M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 14:57:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753548AbXHSS5M
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 14:57:12 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:19819 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753383AbXHSS5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 14:57:10 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so826969rvb
-        for <git@vger.kernel.org>; Sun, 19 Aug 2007 11:57:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k/pbQ5gISCuROt5pCAqKIWgO+UDjJLsgjeLEvxda8sLuVI/Ba66zi07xaSGNnBr+UAY4olgJRvLSW41xHIMN3gPb/ppt9nWekoK1sbCQDe+eDQqfzKWxSLYQXEdZXg5rC74px3PJTnkELVGYFFoynb2HndoaRI0qIoMZlbaWcHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MWikH9Gk1jPUs8nz4ODLJIGbP53UnbIHREKALQouJverRXQ4z8R3ZrRvijum0x8Fc1dqSaWQ8U13SKDMuCgPU76A+58rvM8fHZTjoD81Y/wDnJ9nIr2wbUfF1gOwgx1+LhV7DAZRk8nQzGUvwnnnfe9BTPNDCrELKDJgYOGwyX4=
-Received: by 10.114.60.19 with SMTP id i19mr2409351waa.1187549829746;
-        Sun, 19 Aug 2007 11:57:09 -0700 (PDT)
-Received: by 10.114.180.20 with HTTP; Sun, 19 Aug 2007 11:57:09 -0700 (PDT)
-In-Reply-To: <7vfy2plfb4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1752684AbXHSTFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 15:05:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752193AbXHSTFd
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 15:05:33 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:51133 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751489AbXHSTFd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2007 15:05:33 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id C1FD027AD51;
+	Sun, 19 Aug 2007 21:05:30 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id AF95A201002;
+	Sun, 19 Aug 2007 21:05:30 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-025-172.pools.arcor-ip.net [84.61.25.172])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 84F401F7090;
+	Sun, 19 Aug 2007 21:05:30 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 0BFDB1C36605; Sun, 19 Aug 2007 21:05:26 +0200 (CEST)
+In-Reply-To: <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm> (Aaron Gray's message of "Sun\, 19 Aug 2007 19\:32\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/3997/Sun Aug 19 17:04:14 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56139>
 
-On 8/12/07, Junio C Hamano <gitster@pobox.com> wrote:
+"Aaron Gray" <angray@beeb.net> writes:
 
-> unnecessary work), you may want to add a more lightweight
-> built-in command to do so.  Perhaps...
+>>* Aaron Gray:
+>>
+>>> I have a very large C source project that I am converting from C to C++.
+>>>
+>>> Is it posssible to track changes with renamed files in GIT ?
+>>
+>> You don't need to rename the files if you compile them using g++.  If
+>> you still want to rename them, most history-related GIT commands
+>> accept an -M switch which enables rename ("move") detection.
 >
-> -- >8 --
-> Subject: ls-tree --check
+> For sanity they have to be renamed.
 >
-> You can run "ls-tree --check" to make sure that all necessary
-> objects exist in the repository to complete a tree object.  This
-> may be useful to make sure that the subproject commit bound to a
-> superproject index can be checked out in its entirety.
+> I am a bit of a GIT newbie. With the -M switch what would be the
+> proceedure with a single file conversion such as with test.c and
+> test.cpp ?
+>
+> Would the following do the trick ?
+>
+>    git add test.c
+>    git commit
+>
+>    rename test.c test.cpp *
+>    vi test.cpp
+>
+>    git rm test.c
+>    git add test.cpp
+>    git commit -M
+>
+> Many thanks in advance,
 
-This looks good, and the subproject part of it should be trivial to
-implement but i'm struggling with applying your patch.
+There is no such thing as "git commit -M".  git does not keep track of
+renames.  It generates the rename info on the fly when you ask it for
+patches, log stats, blame annotations or similar.
 
-If I copy the whole mail with headers (I get them with a menu item
-"show original" in gmail web client), paste it into a file ("*p in
-vim) I get the following:
-
-$ git apply junio.mail
-Adds trailing whitespace.
-junio.mail:103:#define LS_CHECK 32
-Adds trailing whitespace.
-junio.mail:112: "git-ls-tree [-d] [-r] [-t] [-l] [-z] [--check]
-[--name-only] [--name-status] [--full-name] [--abbrev[=<n>]] <tree-i
-sh> [path...]";
-Adds trailing whitespace.
-junio.mail:120:         } else if (ls_options & LS_CHECK) {
-Adds trailing whitespace.
-junio.mail:121:                 if (S_ISGITLINK(mode))
-Adds trailing whitespace.
-junio.mail:122:                         /*
-error: patch failed: builtin-ls-tree.c:16
-error: builtin-ls-tree.c: patch does not apply
-
-git am gives me similar behaviour.
-
-$ git am junio.mail
-
-Applying submodule update - don't run git-fetch if sha1 available
-
-Adds trailing whitespace.
-.dotest/patch:14:#define LS_CHECK 32
-Adds trailing whitespace.
-.dotest/patch:23:       "git-ls-tree [-d] [-r] [-t] [-l] [-z]
-[--check] [--name-only] [--name-status] [--full-name] [--abbrev[=<n>]]
- <tree-ish> [path...]";
-Adds trailing whitespace.
-.dotest/patch:31:               } else if (ls_options & LS_CHECK) {
-Adds trailing whitespace.
-.dotest/patch:32:                       if (S_ISGITLINK(mode))
-Adds trailing whitespace.
-.dotest/patch:33:                               /*
-error: patch failed: builtin-ls-tree.c:16
-error: builtin-ls-tree.c: patch does not apply
-Patch failed at 0001.
-When you have resolved this problem run "git-am --resolved".
-If you would prefer to skip this patch, instead run "git-am --skip".
-
-
-
-Is the "-- >8 --" -line something git-apply looks for?
-
-Short of manual patching, abandoning the web-client or switch to
-another mail-account, is there any simple way to get around the above
-issues ?    [I'm trying to do this on windows/msysgit]
-
-
-Thank you for good support on this list!
-
-//Torgil
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
