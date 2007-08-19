@@ -1,99 +1,135 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: How do I manage this setup with git-svn and/or git remotes?
-Date: Sun, 19 Aug 2007 18:04:46 +0200
-Message-ID: <853ayftsrl.fsf@lola.goethe.zz>
-References: <86y7gaxef5.fsf@lola.quinscape.zz>
-	<alpine.LFD.0.999.0708171042570.30176@woody.linux-foundation.org>
-	<86d4xmxbjf.fsf@lola.quinscape.zz> <fa7vrd$afs$1@sea.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC] Clean way to disable pager
+Date: Sun, 19 Aug 2007 19:26:07 +0200
+Message-ID: <vpq1wdz307k.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 18:08:24 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 19 19:27:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMnK9-0005ql-29
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 18:08:21 +0200
+	id 1IMoYM-0002JP-R7
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 19:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753831AbXHSQIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 19 Aug 2007 12:08:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbXHSQIR
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 12:08:17 -0400
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:41219 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753545AbXHSQIQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 12:08:16 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 78814133D8B;
-	Sun, 19 Aug 2007 18:08:12 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 5CAB12130E6;
-	Sun, 19 Aug 2007 18:08:12 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-025-172.pools.arcor-ip.net [84.61.25.172])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 351EA36E861;
-	Sun, 19 Aug 2007 18:08:08 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 2F94F1C36605; Sun, 19 Aug 2007 18:04:46 +0200 (CEST)
-In-Reply-To: <fa7vrd$afs$1@sea.gmane.org> (Jakub Narebski's message of "Sun\, 19 Aug 2007 01\:37\:21 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1754161AbXHSR0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 13:26:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXHSR0g
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 13:26:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:53642 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754089AbXHSR0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 13:26:35 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7JHQ7hr023926
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 19 Aug 2007 19:26:08 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IMoXP-0005xU-Nu; Sun, 19 Aug 2007 19:26:07 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IMoXP-0002TG-Jk; Sun, 19 Aug 2007 19:26:07 +0200
+Mail-Followup-To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 19 Aug 2007 19:26:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56130>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> David Kastrup wrote:
->
->> Linus Torvalds <torvalds@linux-foundation.org> writes:
->>=20
->>> On Fri, 17 Aug 2007, David Kastrup wrote:
->>>>=20
->>>> Now is there any chance to set up a git structure that will me
->>>> allow to let _git_ perform merges between the standalone dsp
->>>> project and the part that has started off as a copy of it in a
->>>> subdirectory from projects/great, so that I have a merge history i=
-n
->>>> my git mirror?
->>>
->>> Yes. That's what git "submodule" support is all about. =A0You could
->>> create that "dsp" project as its own git project, and then include
->>> it within the bigger project as a submodule. Then, that "dsp" thing
->>> is really a totally independent git project in its own right, with
->>> git support for just "tying" it into the superproject.
->>=20
->> But it isn't an independent git project: the superproject has its
->> _own_ copy of dsp, with its _own_ specific commits and fixes that ar=
-e
->> not supposed to ever end up in the dsp "mothership". =A0There are
->> sometimes cross merges, but the stuff in the "dsp" subdirectory of
->> "great" is maintained completely together with the branches of
->> "great": tags, branches and all.
->
-> Independent git project means independent clone of "dsp" repository,
-> perhaps a fork of "dsp" repository with some (superproject) specific
-> commits. Which is attached as subritectory of superproject.
+The man page for git documents the -p option to _enable_ the paginated
+output for git, which isn't very usefull since the commands that might
+actually need paging have it enabled by default.
 
-Well, the point I was trying to make is that as a subdirectory of the
-superproject (in Subversion), the tagging and branching structure is
-supposed to follow that of the superproject.  I don't understand
-submodules well enough to see how much this is the case.
+What I can't find is a clean way to _disable_ the pager. A hacky way
+is to run "git whatever | cat", or "GIT_PAGER=cat git whatever". From
+the code, it seems that git doesn't even launch the pager if it's set
+to "cat".
 
-To be fair: merging will only happen on the trunk of the superproject,
-but possibly with different branches of the dsp project.  So this is
-likely not going to be much of an issue.
+I think that deserves an less-hacky, and documented way. I'd suggest a
+--no-pager, or --dont-paginate, that would do the opposite of -p as a
+global option for git.
 
-On the other hand, it is unclear what git-svn would think about that
-sort of setup.  Since a submodule setup would imply creating
-appropriate branches in the dsp module, anyway, I can just import the
-superproject dsp as one remote branch into the dsp git repository and
-do the merging there.  There is no need to make dsp an actual
-submodule of the superproject for that as long as I am working with
-git-svn.
+Below is a patch that does this:
 
---=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+
+
+
+>From 2148c2564ca6480feaec9a9d091259032257918d Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Sun, 19 Aug 2007 19:24:36 +0200
+Subject: [PATCH] Add and document a global --no-pager option for git.
+
+To keep the change small, this is done by setting GIT_PAGER to "cat". I'd
+prefer not using global/environment variables for that, but it would
+require a complete refactoring of options handling in git.
+---
+ Documentation/git.txt |    6 +++++-
+ git.c                 |    6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 8017997..707a756 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,8 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate]
++'git' [--version] [--exec-path[=GIT_EXEC_PATH]] 
++    [-p|--paginate] [--no-pager]
+     [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
+     [--help] COMMAND [ARGS]
+ 
+@@ -103,6 +104,9 @@ OPTIONS
+ -p|--paginate::
+        Pipe all output into 'less' (or if set, $PAGER).
+ 
++--no-pager::
++       Do not pipe git output into a pager.
++
+ --git-dir=<path>::
+        Set the path to the repository. This can also be controlled by
+        setting the GIT_DIR environment variable.
+diff --git a/git.c b/git.c
+index cab0e72..f280e7d 100644
+--- a/git.c
++++ b/git.c
+@@ -4,7 +4,7 @@
+ #include "quote.h"
+ 
+ const char git_usage_string[] =
+-       "git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
++       "git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND
+ [ARGS]";                                                                                                                                                   
+ 
+ static void prepend_to_path(const char *dir, int len)
+ {
+@@ -58,6 +58,10 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+                        }
+                } else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+                        setup_pager();
++               } else if (!strcmp(cmd, "--no-pager")) {
++                       setenv("GIT_PAGER", "cat", 1);
++                       if (envchanged)
++                               *envchanged = 1;
+                } else if (!strcmp(cmd, "--git-dir")) {
+                        if (*argc < 2) {
+                                fprintf(stderr, "No directory given for --git-dir.\n" );
+-- 
+1.5.3.rc0.64.gf4f4a-dirty
+
+
+
+-- 
+Matthieu
