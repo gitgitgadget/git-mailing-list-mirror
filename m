@@ -1,63 +1,70 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: [PATCH] Add the word reflog to Documentation/config.txt:core.logAllRefUpdates
-Date: Sun, 19 Aug 2007 23:38:57 +0200
-Message-ID: <46C8B871.9030408@etek.chalmers.se>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] Clean way to disable pager
+Date: Mon, 20 Aug 2007 00:37:10 +0200
+Message-ID: <85ps1jp2w9.fsf@lola.goethe.zz>
+References: <vpq1wdz307k.fsf@bauges.imag.fr>
+	<7vodh3bbmx.fsf@gitster.siamese.dyndns.org>
+	<vpq643bz4vx.fsf@bauges.imag.fr>
+	<325563A3-050A-4830-9ACB-9ED15322F038@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 00:03:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 00:37:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMsrW-0006De-J3
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 00:03:10 +0200
+	id 1IMtOi-0005H5-Kb
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 00:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbXHSWDH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 19 Aug 2007 18:03:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbXHSWDG
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 18:03:06 -0400
-Received: from anubis.medic.chalmers.se ([129.16.30.218]:43060 "EHLO
-	anubis.medic.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671AbXHSWDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 18:03:05 -0400
-X-Greylist: delayed 1444 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Aug 2007 18:03:05 EDT
-Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
-	(Authenticated sender: lukass)
-	by anubis.medic.chalmers.se (Postfix) with ESMTP id C1C38E523;
-	Sun, 19 Aug 2007 23:38:58 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.6) Gecko/20070804 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+	id S1753268AbXHSWhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 18:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751581AbXHSWhX
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 18:37:23 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:55853 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751188AbXHSWhX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2007 18:37:23 -0400
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id C5AA497BA4;
+	Mon, 20 Aug 2007 00:37:21 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 7BAF32DABE0;
+	Mon, 20 Aug 2007 00:37:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-025-172.pools.arcor-ip.net [84.61.25.172])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 48E66312764;
+	Mon, 20 Aug 2007 00:37:13 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id E610A1C36605; Mon, 20 Aug 2007 00:37:10 +0200 (CEST)
+In-Reply-To: <325563A3-050A-4830-9ACB-9ED15322F038@apple.com> (Adam Roben's message of "Sun\, 19 Aug 2007 14\:59\:16 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4004/Sun Aug 19 22:38:24 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56157>
 
-This makes it easier to find out how to enable the reflog
-for a bare repository by searching the documentation for
-"reflog".
+Adam Roben <aroben@apple.com> writes:
 
-Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
----
+> On Aug 19, 2007, at 12:44 PM, Matthieu Moy wrote:
+>
+>> +    [-p|--paginate] [--no-pager]
+>
+>   I think that [-p|--[no-]paginate] would be more consistent with the
+> way negatable options are normally specified.
 
-I had to read config.c before I found the variable.
+Disregard previously existing code, I'd vote for using an option set
+like the following:
 
- Documentation/config.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+--pager
+--pager=less
+--pager=cat
+--no-pager
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index de9e72b..46f40ad 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -192,7 +192,7 @@ core.worktree::
- 	variable and the '--work-tree' command line option.
-=20
- core.logAllRefUpdates::
--	Updates to a ref <ref> is logged to the file
-+	Enable the reflog. Updates to a ref <ref> is logged to the file
- 	"$GIT_DIR/logs/<ref>", by appending the new and old
- 	SHA1, the date/time and the reason of the update, but
- 	only when the file exists.  If this configuration
---=20
-1.5.3.rc5
+"--paginate" is rather artificial in contrast.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
