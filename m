@@ -1,59 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule update - don't run git-fetch if sha1 available
-Date: Sun, 19 Aug 2007 13:56:28 -0700
-Message-ID: <7v8x87b5vn.fsf@gitster.siamese.dyndns.org>
-References: <e7bda7770708111048s77fbf416k9d0352486aee6b4a@mail.gmail.com>
-	<7vfy2pn9eb.fsf@assigned-by-dhcp.cox.net>
-	<e7bda7770708111703u40f89c1fx17bfac4b9aed9d2e@mail.gmail.com>
-	<7vfy2plfb4.fsf@assigned-by-dhcp.cox.net>
-	<e7bda7770708191157v54c2c2a3k8e17208a1d5b6dc9@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Properly force listingblocks to be monospaced in manpages
+Date: Sun, 19 Aug 2007 23:03:17 +0200
+Organization: glandium.org
+Message-ID: <20070819210317.GA3202@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Torgil Svensson" <torgil.svensson@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 22:56:57 2007
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 19 23:04:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMrpH-0005jV-Im
-	for gcvg-git@gmane.org; Sun, 19 Aug 2007 22:56:47 +0200
+	id 1IMrwR-0008At-3x
+	for gcvg-git@gmane.org; Sun, 19 Aug 2007 23:04:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555AbXHSU4k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 16:56:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754024AbXHSU4k
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 16:56:40 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752923AbXHSU4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 16:56:39 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9FBF8124785;
-	Sun, 19 Aug 2007 16:56:56 -0400 (EDT)
-In-Reply-To: <e7bda7770708191157v54c2c2a3k8e17208a1d5b6dc9@mail.gmail.com>
-	(Torgil Svensson's message of "Sun, 19 Aug 2007 20:57:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754386AbXHSVDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 17:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752923AbXHSVDp
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 17:03:45 -0400
+Received: from vawad.err.no ([85.19.200.177]:43445 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752487AbXHSVDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 17:03:44 -0400
+Received: from aputeaux-153-1-37-169.w82-124.abo.wanadoo.fr ([82.124.129.169] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IMrw0-0002dm-N8
+	for git@vger.kernel.org; Sun, 19 Aug 2007 23:03:45 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IMrvZ-0000q8-1H
+	for git@vger.kernel.org; Sun, 19 Aug 2007 23:03:17 +0200
+Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56147>
 
-"Torgil Svensson" <torgil.svensson@gmail.com> writes:
+Still insert a ".ft C" before and ".ft" after, but do it in a way as to
+avoid them to get escaped with "\&", which makes the manpages look pretty
+bad. Do it in a more docbook-xsl'ish way.
 
-> $ git apply junio.mail
+Reverts 281a53bb79786a6d7e54f9715cc8ad46fc2bdb0e.
 
-I have no idea how you saved the junio.mail file.  "git am"
-knows how to grok e-mails in mbox and maildir formats.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ Documentation/asciidoc.conf |    6 ------
+ Documentation/callouts.xsl  |    7 +++++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-> ...
-> Is the "-- >8 --" -line something git-apply looks for?
-
-git-apply does not have anything to do with any of this.  You
-are looking for "git am".
-
-"git-am" does not currently pay attention to the "-- >8 --"
-marker, either.  It is there primarily so that you can do the
-interactive "git am -i" so that you know up to which point you
-would want to remove with its [e]dit subcommand.
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index af5b155..6b6220d 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -27,13 +27,7 @@ ifdef::backend-docbook[]
+ [listingblock]
+ <example><title>{title}</title>
+ <literallayout>
+-ifdef::doctype-manpage[]
+-&#10;.ft C&#10;
+-endif::doctype-manpage[]
+ |
+-ifdef::doctype-manpage[]
+-&#10;.ft&#10;
+-endif::doctype-manpage[]
+ </literallayout>
+ {title#}</example>
+ endif::backend-docbook[]
+diff --git a/Documentation/callouts.xsl b/Documentation/callouts.xsl
+index 6a361a2..e188f5e 100644
+--- a/Documentation/callouts.xsl
++++ b/Documentation/callouts.xsl
+@@ -27,4 +27,11 @@
+   </xsl:if>
+ </xsl:template>
+ 
++<!-- Force listingblocks to be monospaced in manpages -->
++<xsl:template match="literallayout">
++  <xsl:text>&#x2302;ft C&#10;</xsl:text>
++  <xsl:apply-templates/>
++  <xsl:text>&#x2302;ft&#10;</xsl:text>
++</xsl:template>
++
+ </xsl:stylesheet>
+-- 
+1.5.3.rc4
