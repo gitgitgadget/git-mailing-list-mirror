@@ -1,141 +1,73 @@
-From: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [StGit PATCH 4/6] Added a test case to check what happens when push finds a conflict
-Date: Mon, 20 Aug 2007 10:12:01 +0200
-Message-ID: <1187597523884-git-send-email-davidk@lysator.liu.se>
-References: <11875975232619-git-send-email-davidk@lysator.liu.se>
- <1187597523433-git-send-email-davidk@lysator.liu.se>
- <11875975232734-git-send-email-davidk@lysator.liu.se>
- <11875975232606-git-send-email-davidk@lysator.liu.se>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Make git-prune submodule aware (and fix a SEGFAULT in the process)
+Date: Mon, 20 Aug 2007 09:39:50 +0100
+Message-ID: <200708200939.50955.andyparkins@gmail.com>
+References: <200707021356.58553.andyparkins@gmail.com> <alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org> <7vtzqxen8b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
-To: catalin.marinas@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 10:37:11 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 10:40:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN2l1-0000t4-U5
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:37:08 +0200
+	id 1IN2o4-0001ol-Hf
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049AbXHTIgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 04:36:41 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756034AbXHTIgl
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:36:41 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:52187 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755692AbXHTIge (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 04:36:34 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id A71C1200A1F4;
-	Mon, 20 Aug 2007 10:12:05 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 18059-01; Mon, 20 Aug 2007 10:12:04 +0200 (CEST)
-Received: from morpheus (c83-253-22-183.bredband.comhem.se [83.253.22.183])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 362DA200A205;
-	Mon, 20 Aug 2007 10:12:04 +0200 (CEST)
-Received: by morpheus (Postfix, from userid 1000)
-	id 64059BFC92; Mon, 20 Aug 2007 10:12:03 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc3.119.g1812
-In-Reply-To: <11875975232606-git-send-email-davidk@lysator.liu.se>
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1754773AbXHTIkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 04:40:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754512AbXHTIkA
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:40:00 -0400
+Received: from mu-out-0910.google.com ([209.85.134.186]:37244 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753689AbXHTIj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 04:39:59 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so1764207mue
+        for <git@vger.kernel.org>; Mon, 20 Aug 2007 01:39:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tu3iBUwTA2/jRPI1qRgp50wMEXHIChAW+4+k+EaURFrllVFJ+rGEbnKoP0RHkLl4rUicv07eAm9qpbfWVxlZa2HRkXMRKu+gfftJgJMSBMG9YhKhNbSUyDMdjS3LBTCKrJGWFzLuGDAcKIdzTZFeUR8NgzaW//kgfV9amyUt5q4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WS1ii9PXv6yA7JcGls5dnx2HaeeDbCfUH40qALah4ZO08Oo4E9PHW7MkXeBLLZs8jthBNWuVObiylf9ruviZHXyMk7kUogP1ff3j/anBa3kd8AfDRefoLwxIUXV2NqTwqBHhrgLJ2jgcZO2JJtROxsLkFQ2p/l/KZ+hw2najN+4=
+Received: by 10.82.186.5 with SMTP id j5mr7233181buf.1187599197215;
+        Mon, 20 Aug 2007 01:39:57 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id b33sm9454491ika.2007.08.20.01.39.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 20 Aug 2007 01:39:55 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vtzqxen8b.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56198>
 
-=46rom: David K=C3=A5gedal <davidk@lysator.liu.se>
+On Saturday 2007 August 18, Junio C Hamano wrote:
+
+> Andy, in the repository your fetch fails, if a fetch-pack
+> without "--thin" before Linus's patch does not barf, that
+> strongly suggests that the breakage you are seeing is related to
+> this codepath.  And with Linus's patch, "fetch-pack --thin"
+> would also be fixed.
+
+I'm really sorry, somehow during my attempts to find the fault, the fault went 
+away.  I think it's because I managed to get the fetch to work in some way, 
+and from then on fetch completed perfectly.
+
+The upshot of this is that I have no way to test this patch, until I manage to 
+get myself in a similar state.  I'll wait until it happens again though and 
+then try this patch.
 
 
-Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
----
- t/t1203-push-conflict.sh |   64 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 64 insertions(+), 0 deletions(-)
-
-diff --git a/t/t1203-push-conflict.sh b/t/t1203-push-conflict.sh
-new file mode 100755
-index 0000000..57fb477
---- /dev/null
-+++ b/t/t1203-push-conflict.sh
-@@ -0,0 +1,64 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 David K=C3=A5gedal
-+#
-+
-+test_description=3D'Exercise push conflicts.
-+
-+Test that the index has no modifications after a push with conflicts.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'Initialize the StGIT repository' \
-+	'stg init
-+'
-+
-+test_expect_success \
-+	'Create the first patch' \
-+	'
-+	stg new foo -m foo &&
-+	echo foo > test &&
-+	echo fie > test2 &&
-+	stg add test test2 &&
-+	stg refresh &&
-+        stg pop
-+	'
-+
-+test_expect_success \
-+	'Create the second patch' \
-+	'
-+	stg new bar -m bar &&
-+	echo bar > test &&
-+	stg add test &&
-+	stg refresh
-+	'
-+
-+test_expect_failure \
-+	'Push the first patch with conflict' \
-+	'
-+	stg push foo
-+	'
-+
-+test_expect_failure \
-+	'Show the, now empty, first patch' \
-+	'
-+	stg show foo | grep -q -e "^diff "
-+	'
-+
-+test_expect_success \
-+	'Check that the index has the non-conflict updates' \
-+	'
-+	git diff --cached --stat | grep -q -e "^ test2 | *1 "
-+	'
-+
-+test_expect_success \
-+	'Resolve the conflict' \
-+	'
-+	echo resolved > test &&
-+	git add test &&
-+	stg refresh
-+	'
-+
-+test_done
---=20
-1.5.3.rc3.119.g1812
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
