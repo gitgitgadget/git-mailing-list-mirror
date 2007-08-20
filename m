@@ -1,73 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] git-mergetool: show original branch names when possible
-Date: Mon, 20 Aug 2007 01:28:31 -0700
-Message-ID: <7vabsmtxsg.fsf@gitster.siamese.dyndns.org>
-References: <20070820075318.GA12478@coredump.intra.peff.net>
+From: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [StGit PATCH 0/6] Use git conflict handling on push
+Date: Mon, 20 Aug 2007 10:11:57 +0200
+Message-ID: <11875975232619-git-send-email-davidk@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 10:28:43 2007
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: catalin.marinas@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 10:36:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN2ct-0006uB-DH
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:28:43 +0200
+	id 1IN2ka-0000iq-DW
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755533AbXHTI2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 04:28:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbXHTI2k
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:28:40 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55252 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754401AbXHTI2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 04:28:39 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S1755910AbXHTIgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 04:36:35 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755063AbXHTIge
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:36:34 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:52181 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755460AbXHTIgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 04:36:33 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 386FF200A21D;
+	Mon, 20 Aug 2007 10:12:05 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 17409-01-6; Mon, 20 Aug 2007 10:12:03 +0200 (CEST)
+Received: from morpheus (c83-253-22-183.bredband.comhem.se [83.253.22.183])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 96A04124B8D;
-	Mon, 20 Aug 2007 04:28:57 -0400 (EDT)
-In-Reply-To: <20070820075318.GA12478@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 20 Aug 2007 03:53:18 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	by mail.lysator.liu.se (Postfix) with ESMTP id A7E9E200A1F4;
+	Mon, 20 Aug 2007 10:12:03 +0200 (CEST)
+Received: by morpheus (Postfix, from userid 1000)
+	id 41045BFC8A; Mon, 20 Aug 2007 10:12:03 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc3.119.g1812
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56191>
 
-Jeff King <peff@peff.net> writes:
+This series of patches updates "stg push" to leave conflicts in the
+index, in the normal git fashion.
 
-> 1. Is it OK to place the extra branch name information in MERGE_HEAD
-> after the SHA1?
+This means that conflict handling and resolution are handled by git
+and not stg, which should make it possible to simplify stg quite a
+bit.  For instance, the 'conflicts' file should go away.
 
-I do not think of anything that would barf offhand (we already
-do that in FETCH_HEAD), but this would definitely be carefully
-audited.
+Unfortunately, this patch series isn't complete, since it doesn't
+remove all uses of the stg merge code.  The remaining client of that
+code is the "sync" command, which I have never used, and haven't
+studied very much.  But if that command is changed somehow, then most
+of the code in gitmergeonefile.py will go simply away. And the
+'conflicts' file will not be used.
 
-> 2. It looks like doing an anonymous 'git-pull' leaves GITHEAD_* as the
-> commit sha1, which means you will end up with that sha1 rather than
-> 'REMOTE', which is less nice than the current behavior.
 
-Much less nice indeed.
+See also previous discussions:
 
-> It would be _really_ convenient in this case if we had a "git is in the
-> middle of something" file, which has been discussed before.
-> ...
-> there are some operations that persist across multiple command
-> invocations, and it would be nice rather than every command knowing
-> about every other command's implementation patterns ("Oh, you have a
-> .dotest file? You must be in the middle of...") to have a single place
-> with something like:
->
->   $ cat .git/STATE
->   operation: merge
->   remote: git://git.kernel.org/pub/scm/git/git.git
->   branch: master
->   branch: octopus
+https://gna.org/task/?5140
+http://thread.gmane.org/gmane.comp.version-control.git/48271
 
-It would be very nice, and I would encourage any wannabe
-Porcelain writers to go wild on this.  One worry I have is if we
-would need to support nested states.  "I was in the middle of
-'foo' and then had to go sideways to do 'bar' which I am now in
-the middle of" kind of thing.
+--=20
+David K=C3=A5gedal
