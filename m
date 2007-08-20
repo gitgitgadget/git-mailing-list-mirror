@@ -1,80 +1,91 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git tree for old kernels from before the current tree
-Date: Mon, 20 Aug 2007 16:46:49 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708201643450.16727@xanadu.home>
-References: <20070722211314.GA13850@linux-sh.org>
- <Pine.LNX.4.64.0707222344540.32367@fbirervta.pbzchgretzou.qr>
- <Pine.LNX.4.64.0707230000170.32367@fbirervta.pbzchgretzou.qr>
- <46A3D5EA.2050600@zytor.com>
- <alpine.LFD.0.999.0707230950340.3607@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707231343350.6355@xanadu.home>
- <alpine.LFD.0.999.0707231057480.3607@woody.linux-foundation.org>
- <alpine.LFD.0.999.0707231432560.6355@xanadu.home>
- <20070723234628.GN21668@ftp.linux.org.uk>
- <alpine.LFD.0.999.0707231957450.6355@xanadu.home>
- <20070820200914.GB11718@lug-owl.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-stash segfaults ...
+Date: Mon, 20 Aug 2007 22:50:38 +0200
+Message-ID: <20070820205038.GA9024@artemis.corp>
+References: <20070820174427.GC7206@artemis.corp> <7vmywmrl5l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Al Viro <viro@ftp.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jan Engelhardt <jengelh@computergmbh.de>,
-	Paul Mundt <lethal@linux-sh.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-X-From: git-owner@vger.kernel.org Mon Aug 20 22:47:01 2007
+Content-Type: multipart/signed; boundary="OXfL5xGRrasGEqWY";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 22:50:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INE9L-0004dr-B1
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:46:59 +0200
+	id 1INED0-00062J-9C
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbXHTUqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 16:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752441AbXHTUqw
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:46:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46347 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401AbXHTUqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 16:46:51 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JN3004ICB21KB20@VL-MO-MR002.ip.videotron.ca>; Mon,
- 20 Aug 2007 16:46:50 -0400 (EDT)
-In-reply-to: <20070820200914.GB11718@lug-owl.de>
-X-X-Sender: nico@xanadu.home
+	id S1755115AbXHTUul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 16:50:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754232AbXHTUul
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:50:41 -0400
+Received: from pan.madism.org ([88.191.52.104]:46202 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751964AbXHTUuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 16:50:40 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 8F37D1B30B;
+	Mon, 20 Aug 2007 22:50:39 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id CE2B7430F; Mon, 20 Aug 2007 22:50:38 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vmywmrl5l.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56258>
-
-On Mon, 20 Aug 2007, Jan-Benedict Glaw wrote:
-
-> On Mon, 2007-07-23 20:10:23 -0400, Nicolas Pitre <nico@cam.org> wrote:
-> > 
-> > I have sanitized .tgz files that I use to stuff a Git repo with.  I 
-> > recall that some of them were reconstructed through patching an earlier 
-> > or later kernel version because the original ones were corrupted. Some 
-> > patches were retrieved from other archival sites, etc.  Then the result 
-> > was 
-> > cross checked with summary lists like this one: 
-> > 
-> > http://www.uwsg.iu.edu/hypermail/linux/kernel/0110.1/1684.html
-> > 
-> > This was a while ago so I don't remember the exact steps, but that 
-> > wasn't always trivial.
-> 
-> Some years ago, I also worked on old Linux releases. Have you found
-> the tarballs in my directory at kernel.org?
-
-No, I didn't know about them.
-
->From a quick look, I think I already captured everything you have prior 
-v1.0 though.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56259>
 
 
-Nicolas
+--OXfL5xGRrasGEqWY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Aug 20, 2007 at 08:44:22PM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >   When you don't use it from the root of the tree: I was in a subdir of
+> > my git tree, trying to do:
+> >
+> >   git stash apply
+> >
+> >   and I had:
+> >
+> >   $ git stash apply
+> >   error: missing object referenced by
+> >   '0ca54c1fba7fea7dca8a1cc59bce2b2849f26d20' Segmentation fault
+> >
+> >   going in the root of the repository (where .git is), all went fine.
+>=20
+> I think this was fixed on Jul 25 with ceff079b and 1.5.3-rc4
+> should have it.
+
+  Oh ok, sorry for the noise then, I was using rc3 indeed, debian does
+not has rc4 packaged yet :)
+
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--OXfL5xGRrasGEqWY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGyf6evGr7W6HudhwRAnZ9AJ9+vYD9CJltmA8ehuGJdLjLK5DYOwCggGCs
+tO2ogf3CfY56uj86qM33mk0=
+=g3IY
+-----END PGP SIGNATURE-----
+
+--OXfL5xGRrasGEqWY--
