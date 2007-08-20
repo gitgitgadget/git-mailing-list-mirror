@@ -1,64 +1,80 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] A more sensible error message why 'git rebase --continue'
- failed
-Date: Mon, 20 Aug 2007 21:59:02 +0800
-Message-ID: <46C99E26.2020009@midwinter.com>
-References: <11875724181583-git-send-email-evan@fallingsnow.net> <7vzm0m90ye.fsf@gitster.siamese.dyndns.org> <2D8BF484-7990-4DDC-9E52-69143D4BA413@fallingsnow.net>
+From: Michael Poole <mdpoole@troilus.org>
+Subject: Re: va_copy is not available on all systems.
+Date: Mon, 20 Aug 2007 09:39:34 -0400
+Message-ID: <87y7g6wcix.fsf@graviton.dyn.troilus.org>
+References: <46C99448.2AB33DFF@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Evan Phoenix <evan@fallingsnow.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 15:59:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 16:10:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN7mq-0003vN-Hs
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 15:59:20 +0200
+	id 1IN7xO-0007zm-Of
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 16:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756177AbXHTN7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 09:59:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbXHTN7L
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 09:59:11 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:38613 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1755452AbXHTN7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 09:59:10 -0400
-Received: (qmail 4634 invoked from network); 20 Aug 2007 13:59:10 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=rzW4FMnx+eSQzN7L/Tww8TIzJKUf4QpuCXq8buhNws+J2Ga2nuXcG/3z489mtGMP  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 20 Aug 2007 13:59:09 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <2D8BF484-7990-4DDC-9E52-69143D4BA413@fallingsnow.net>
+	id S1756312AbXHTOKK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 10:10:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756382AbXHTOKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 10:10:10 -0400
+Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:45173
+	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755705AbXHTOKJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Aug 2007 10:10:09 -0400
+X-Greylist: delayed 1833 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Aug 2007 10:10:09 EDT
+Received: by sanosuke.troilus.org (Postfix, from userid 1000)
+	id 9261789C04D; Mon, 20 Aug 2007 09:39:34 -0400 (EDT)
+In-Reply-To: <46C99448.2AB33DFF@eudaptics.com> (Johannes Sixt's message of
+	"Mon, 20 Aug 2007 15:16:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56219>
 
-Evan Phoenix wrote:
-> How about something like
+Johannes Sixt writes:
+
+> This is just too ugly to be included...
 >
-> "Please verify all merge conflicts in all modified files, then run
-> 'git add' to resolve them."
+> die_nicely() uses the variable argument list twice. The recent fix for
+> this in 7e5dcea8311 uses va_copy. However, on older systems this function
+> is not available. This fix assumes that those systems that do have
+> the function actually implement it as macro, and we use it to remove
+> the entire nicely() functionality.
+>
+> Since va_copy() must be provided by the compiler, we don't have a
+> reasonable chance to provide a working definition in git_compat_util.h.
 
-Since we're nitpicking language here... "git add" doesn't resolve 
-anything. *You* resolve the conflicts (by editing the file and removing 
-the conflict markers and editing the code, by running git mergetool, 
-etc.) then you run "git add" to tell git that you're done resolving.
+Some older (pre-C99) versions of gcc name it __va_copy() instead.  Is
+there any guarantee that va_copy() will be a macro on systems that
+provide it?  If neither va_copy() nor __va_copy() are available,
+memcpy(&(DEST), &(SRC), sizeof(DEST)) should work for any va_list
+type.  It's what I use on one project:
 
-If I literally followed the above, I would run "less" on a file, say, 
-"Yep, git flagged all the merge conflicts correctly," then run "git add" 
-figuring it would pop me into some kind of conflict resolution UI. 
-Actually it's worse than that -- the above implies that all modified 
-files will have merge conflicts, which is certainly not true in many cases.
+#ifdef HAVE_VA_COPY
+#define VA_COPY(DEST, SRC) va_copy(DEST, SRC)
+#elif HAVE___VA_COPY
+#define VA_COPY(DEST, SRC) __va_copy(DEST, SRC)
+#else
+#define VA_COPY(DEST, SRC) memcpy(&(DEST), &(SRC), sizeof(DEST))
+#endif
 
-How about:
+with appropriate autoconf tests, basically two copies of this:
 
-"Please resolve all merge conflicts, then run 'git add' to tell git you've
-finished resolving each file."
+dnl How to copy one va_list to another?
+AC_CACHE_CHECK([for va_copy], ac_cv_c_va_copy, [AC_LINK_IFELSE(
+  [AC_LANG_PROGRAM([#include <stdarg.h>], [va_list ap1, ap2; va_copy(ap1, ap2);])],
+  [ac_cv_c_va_copy="yes"],
+  [ac_cv_c_va_copy="no"]
+)])
+if test "$ac_cv_c_va_copy" = "yes" ; then
+  AC_DEFINE(HAVE_VA_COPY, 1, [Define if we have va_copy])
+fi
 
--Steve
+I'm not sure how to translate the tests to git's coding style most
+easily.
+
+Michael Poole
