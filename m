@@ -1,74 +1,84 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: renaming question
-Date: Mon, 20 Aug 2007 08:45:21 +0800
-Message-ID: <46C8E421.8000408@midwinter.com>
-References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm>	<87vebbo0f1.fsf@mid.deneb.enyo.de>	<03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>	<85sl6fqr9n.fsf@lola.goethe.zz>	<03bd01c7e295$976a2970$0600a8c0@ze4427wm>	<85odh3qp8j.fsf@lola.goethe.zz> <87mywn8dm0.fsf@mid.deneb.enyo.de>
+From: "jungseung lee" <lkml.js@gmail.com>
+Subject: gitstat 0.1: kernel development statistics / monitoring system
+Date: Mon, 20 Aug 2007 09:57:10 +0900
+Message-ID: <82ab508a0708191757q5da6ac96g8f8992c6123ab557@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, angray@beeb.net
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Mon Aug 20 02:45:28 2007
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 02:57:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMvOZ-0006eL-RM
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 02:45:28 +0200
+	id 1IMva3-0000PO-Ij
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 02:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753616AbXHTApZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 20:45:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659AbXHTApY
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 20:45:24 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:59707 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752246AbXHTApY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 20:45:24 -0400
-Received: (qmail 20608 invoked from network); 20 Aug 2007 00:45:23 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=e5/ZMQ9945KKxMmIY+o4DqA83gyM+AOkepP0JURFHd7kN1ieKmT+AM3L8UVzx3eX  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 20 Aug 2007 00:45:23 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <87mywn8dm0.fsf@mid.deneb.enyo.de>
+	id S1754622AbXHTA5P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 19 Aug 2007 20:57:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754475AbXHTA5P
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 20:57:15 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:20214 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbXHTA5O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2007 20:57:14 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so532546nfb
+        for <git@vger.kernel.org>; Sun, 19 Aug 2007 17:57:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=a9G9IM4jeo/ZHze7aWcg90rPP+eI13cHtfzxHYMbx3oHagU03OWFEZDNv7EvLpvaN+cSJ3b+94LTFGUGvU0pZfnDH6BFoKfvaxFiUaXvDEm/Chx/qyVZgcduLQgH+HtDqYwG8w1167VWJ3OcCBnyVaFxFFT5byO3G+iQMOSP9jM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mdxyn8eddS5rOhYohjdxdSdPertqyoCp7qkcSzYbxQIwRDzFq4+ELpA/SotYFUdTxyetF9011TldbJFslwS+nU3l9lIgO0p/zMY+Ev84XT8e+pa/3p3xBmRmsYe6/eBoiGwHpbHBrFrgOW2puVqKflvedjGU5Xi6Zbdi9pHq7Ls=
+Received: by 10.78.183.15 with SMTP id g15mr1655617huf.1187571430834;
+        Sun, 19 Aug 2007 17:57:10 -0700 (PDT)
+Received: by 10.78.120.19 with HTTP; Sun, 19 Aug 2007 17:57:10 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56161>
 
-Florian Weimer wrote:
-> Or, for more control about what gets put into patch, git-diff -M.
-> (As I wrote, most of the relevant commands accept an -M switch.)
->   
+We are pleased to announce the release of gitstat 0.1.
 
-The key point, and where the original writer is probably confused, is 
-that in git, renames are inferred from information in the repository. 
-You do not ever need to explicitly tell git about a rename. There is a 
-"git mv" command which is simply a convenience command; it is equivalent to
+Gitstat is a GPL'd, web-based git statistics/monitoring system.
 
-mv a b
-git add b
-git rm a
+It retrieves a specified git tree, analyzes changesets,
+and shows graphical information like the number of changesets per day, =
+the
+number of people who submitted changesets for a specific version(tag)=85=
+etc.
 
-When you query history with the -M flag or do merges, git will notice 
-that the contents of the new file "b" are very similar to the old file 
-"a" and will treat it as a rename. (The contents don't have to match 
-exactly; they just have to be substantially similar.)
+Users may subscribe to gitstat so that they automatically receive
+an email notification if any change is applied to a specified
+directory. Currently, gitstat is mainly for linux kernel developers
+to monitor kernel development more conveniently with email notification=
+s.
 
-This is not a perfect system -- there are known cases where it fails -- 
-but it has major advantages too. For example, you can unpack a 
-third-party tarfile into a git repository, commit it, then unpack the 
-next version's tarfile and commit that. Since you are using tar, nothing 
-will have told git about files that the upstream people renamed in 
-between versions, but git will detect them after the fact just as if 
-you'd done "git mv".
+It also shows each changset that users can search
+through with a specified title, content or developer.
 
-Not only that, git can detect movement of content *within* files. Try 
-moving some code from one file to another and running "git blame -M -C 
--C" on the target file; you will see git tell you that the content 
-originally came from the first file. Pretty sweet. (It's not the default 
-since it makes "git blame" slower.)
+Gitstat was originally developed for internal use with minimal function=
+alities
+and therefore has much room for improvement. We hope more people
+join us to make this system a better one.
 
--Steve
+gitstat was derived from kfm(kernel feature monitor) which
+was originally developed by Keun-Sik Lim and Sang-Bae Lee of
+Samsung Electronics and currently maintained and developed by
+Jeong-Seung Lee and Soon-Son Kwon(Shawn) of Samsung Electronics.
+
+kfm was inspired from Jon Corbet of lwn.net when he analyzed the
+git tree and Greg KH when he presented similar status report at OLS2007=
+=2E
+We thought it would be interesting those information every day.
+
+You are welcome to try gitstat at http://tree.celinuxforum.org/gitstat
+
+=46or any suggestion, bug report, or patches, please visit
+http://sourceforge.net/projects/gitstat
+
+The developers would like to thank Samsung for sponsoring the
+work and CE Linux Forum for providing the hosting space
