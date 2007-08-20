@@ -1,99 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: "David Tweed" <david.tweed@gmail.com>
 Subject: Re: Git Questions
-Date: Mon, 20 Aug 2007 14:53:55 +0200
-Message-ID: <vpqlkc6nz8c.fsf@bauges.imag.fr>
+Date: Mon, 20 Aug 2007 13:59:41 +0100
+Message-ID: <e1dab3980708200559v3f1def4ft85e31afb08394790@mail.gmail.com>
 References: <1187603749.11595.10.camel@tom-desktop>
-	<87bqd2bgb0.fsf@morpheus.local>
-	<1187612156.11595.17.camel@tom-desktop>
+	 <87bqd2bgb0.fsf@morpheus.local>
+	 <1187612156.11595.17.camel@tom-desktop>
+	 <200708201346.21557.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Tom Schinckel <gunny01@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 14:54:42 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Tom Schinckel" <gunny01@gmail.com>,
+	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 14:59:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN6mH-00056A-PM
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 14:54:42 +0200
+	id 1IN6rF-0007Re-Lo
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 14:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbXHTMyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 08:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbXHTMyW
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 08:54:22 -0400
-Received: from imag.imag.fr ([129.88.30.1]:49140 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751476AbXHTMyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 08:54:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7KCruC3003525
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 20 Aug 2007 14:53:56 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IN6lY-0004GI-0K; Mon, 20 Aug 2007 14:53:56 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IN6lX-0003uX-U0; Mon, 20 Aug 2007 14:53:55 +0200
-Mail-Followup-To: Tom Schinckel <gunny01@gmail.com>, David
- =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,  git@vger.kernel.org
-In-Reply-To: <1187612156.11595.17.camel@tom-desktop> (Tom Schinckel's message of "Mon\, 20 Aug 2007 21\:45\:56 +0930")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Aug 2007 14:53:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752712AbXHTM7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 08:59:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbXHTM7p
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 08:59:45 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:36037 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752045AbXHTM7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 08:59:44 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1227810wxd
+        for <git@vger.kernel.org>; Mon, 20 Aug 2007 05:59:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=W/1YXgpzEagFlwgK94y0Yj1ccLFdla76nHAjqJBB++Z91363H1FHElQKFu+W4bifCzLuU1w7q/ESrmf2M4xW4gvBPAB5AXX5GSBFDTek6SCDb+dAD4zaHbc0ZxgZ3Res3dmO0Pbg9BI53i1oc1B/gTQd9PD9JFvtmndrAapPySw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DX6MuUYPU0pEUmHWfROf54TNFh2jLe8Mgr4v2QvjXlFakNKklixNgjmSBFSmhWTbFEVgDa3hHOU75omrZdm4AT+/b4hV2em7D52Kxdy9RVQSaaNo5CS1UOhzCsDJbU1CvehDTVET4OZGWCyrRv1G0CY5voE9CoJ4QsYxksiByyE=
+Received: by 10.70.65.8 with SMTP id n8mr10646374wxa.1187614781491;
+        Mon, 20 Aug 2007 05:59:41 -0700 (PDT)
+Received: by 10.70.26.12 with HTTP; Mon, 20 Aug 2007 05:59:41 -0700 (PDT)
+In-Reply-To: <200708201346.21557.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56213>
 
-Tom Schinckel <gunny01@gmail.com> writes:
-
-> The reason I want to do that is so I can set up blind commits that I can
-> add in a anacron job or something. The information about the files isn't
-> really important
+> On Monday 2007 August 20, Tom Schinckel wrote:
 >
-> Thanks for the help: I'm using git in a uncoventional way. 
+> > The reason I want to do that is so I can set up blind commits that I can
+> > add in a anacron job or something. The information about the files isn't
+> > really important
 
-OK. AAUI, you're abusing git as a backup system.
+Regarding your basic intention, I've worked on something _similar_
+using git and put it up on the web (although not got around to editing
+the git wiki) at
 
-That's definitely not what git (and other VCS) is meant for. What git
-is good at is to create clean "changesets" (i.e. _you_ tell git when
-you have something worth recording in history), and merging. But since
-git is fast and disk-efficient (if you run git-gc from time to time),
-it can probably be a good backup tool too.
+http://www.personal.rdg.ac.uk/~sis05dst/chronoversion.htm
 
-If you want to run "git commit" each time you save a file, you can
-probably program your editor to do so, or use something like
-fam/inotify. But it's probably not reasonable, you'll quickly end-up
-with thousands of file revisions (imagine the result if you run a
-script like "for i in $(whatever big thing); do echo $i >> file; done").
-If I were you, I'd set up a cron job to do the commit once every (few)
-minute(s). If the project is not too big, it will take less than a
-second, and commit will fail silently if you have no modification to
-commit.
+(with a minor update is going to go up when 1.5.3 gets released & I
+test it works.) There are two important differences with what you want
+to do:
 
-You'll want git to automatically add any new file, so you'll run
-something like
+1. As I recall someone else saying when talking about using SCM
+on their home directory (Joey Hess?), if you blanket record
+everything you then end up being careful about, eg, piping a
+grep search into a temporary file for some purpose, etc. So
+chronoversion takes a python function that decides if a file
+is "worth recording" (which can be by suffix or more general
+analysis).
 
-git add .
+2. As I've got a nervous tick of saving every couple of minutes
+(in case the editor or network I'm on dies), recording on save
+is too fine a granularity for me, so the script is designed to
+run from a cron job (I have it at once an hour) and not make
+a commit if it finds nothing has changed.
 
-# Remove deleted files.
-# There's probably a better way, but I don't find it.
-git-ls-files --deleted -z | git-update-index --remove -z --stdin
-
-git commit -m backup
-
-
-I don't think your idea of taking the output of git-status as a commit
-message is necessarily relevant: this information is anyway in the
-commit, git-show and friends will show it. I'd say the commit message
-is irrelevant, and you can provide a dummy one. Otherwise, someone
-answered in the thread.
+As I say, not exactly what you're looking for but it might be
+in the right direction.
 
 -- 
-Matthieu
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
