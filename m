@@ -1,80 +1,65 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: renaming question
-Date: Mon, 20 Aug 2007 04:11:09 +0200
-Message-ID: <20070820021109.GB768@genesis.frugalware.org>
-References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> <87vebbo0f1.fsf@mid.deneb.enyo.de> <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GID0FwUMdk1T2AWN"
-Cc: git@vger.kernel.org
-To: Aaron Gray <angray@beeb.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 04:11:25 2007
+From: Dave Watson <dwatson@mimvista.com>
+Subject: [PATCH] Fix misspelling of 'suppress' in docs
+Date: Sun, 19 Aug 2007 22:27:52 -0400
+Message-ID: <1187576872427-git-send-email-dwatson@mimvista.com>
+Cc: Dave Watson <dwatson@mimvista.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 04:26:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMwjj-00060h-T7
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 04:11:24 +0200
+	id 1IMwyZ-0000NA-Ft
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 04:26:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622AbXHTCLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 22:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXHTCLU
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 22:11:20 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:46132 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753241AbXHTCLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 22:11:20 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IMwjb-0007ao-NJ
-	from <vmiklos@frugalware.org>; Mon, 20 Aug 2007 04:11:18 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 44ED413A4022; Mon, 20 Aug 2007 04:11:09 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4999]
+	id S1754426AbXHTC0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 22:26:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753241AbXHTC0k
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 22:26:40 -0400
+Received: from ms-smtp-05.ohiordc.rr.com ([65.24.5.139]:40940 "EHLO
+	ms-smtp-05.ohiordc.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750824AbXHTC0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 22:26:39 -0400
+Received: from localhost.localdomain (cpe-66-61-71-72.neo.res.rr.com [66.61.71.72])
+	by ms-smtp-05.ohiordc.rr.com (8.13.6/8.13.6) with ESMTP id l7K2Qbx5018519;
+	Sun, 19 Aug 2007 22:26:38 -0400 (EDT)
+X-Mailer: git-send-email 1.5.3.rc4
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56166>
 
+---
+ Documentation/git-checkout.txt   |    2 +-
+ Documentation/git-send-email.txt |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---GID0FwUMdk1T2AWN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hello,
-
-Na Sun, Aug 19, 2007 at 07:32:01PM +0100, Aaron Gray <angray@beeb.net> pisal(a):
->    rename test.c test.cpp *
->    vi test.cpp
-
->    git rm test.c
->    git add test.cpp
-
-or just git mv test.c test.cpp
-
-- VMiklos
-
---GID0FwUMdk1T2AWN
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGyPg9e81tAgORUJYRAg6gAJ909Nd/NShS87hoNvZYD4pko1+H3wCgjsCP
-LCU/EMQPbSXHoVdCFlH8Hww=
-=mz6T
------END PGP SIGNATURE-----
-
---GID0FwUMdk1T2AWN--
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 818b720..734928b 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -35,7 +35,7 @@ working tree.
+ OPTIONS
+ -------
+ -q::
+-	Quiet, supress feedback messages.
++	Quiet, suppress feedback messages.
+ 
+ -f::
+ 	Proceed even if the index or the working tree differs
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index d243ed1..ff12158 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -88,7 +88,7 @@ The --cc option must be repeated for each user you want on the cc list.
+         If this is set, do not add the From: address to the cc: list, if it
+         shows up in a From: line.
+         Default is the value of 'sendemail.suppressfrom' configuration value;
+-        if that is unspecified, default to --no-supress-from.
++        if that is unspecified, default to --no-suppress-from.
+ 
+ --thread, --no-thread::
+ 	If this is set, the In-Reply-To header will be set on each email sent.
+-- 
+1.5.3.rc4
