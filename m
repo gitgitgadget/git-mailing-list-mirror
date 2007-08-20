@@ -1,84 +1,47 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [RFC] git-mergetool: show original branch names when possible
-Date: Mon, 20 Aug 2007 20:17:25 +0200
-Message-ID: <20070820181725.GB8542@efreet.light.src>
-References: <20070820075318.GA12478@coredump.intra.peff.net> <7vabsmtxsg.fsf@gitster.siamese.dyndns.org> <20070820085246.GA23764@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Y7xTucakfITjPcLV"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Theodore Ts'o <tytso@mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 20:17:36 2007
+From: Robert Boone <robert@rlb3.com>
+Subject: Centralized processes in git
+Date: Mon, 20 Aug 2007 13:30:47 -0500
+Message-ID: <31FEEAE6-58A6-4A74-9DB7-E6F9D56D1C48@rlb3.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 20:31:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INBol-0006rQ-Lr
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 20:17:36 +0200
+	id 1INC1j-0003e9-8S
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 20:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307AbXHTSRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 14:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbXHTSRc
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 14:17:32 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:39829 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751183AbXHTSRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 14:17:32 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 0BC9C5736A;
-	Mon, 20 Aug 2007 20:17:31 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id O+XvFOE6F0J8; Mon, 20 Aug 2007 20:17:26 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 5E219572A2;
-	Mon, 20 Aug 2007 20:17:26 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1INBob-0006af-Dy; Mon, 20 Aug 2007 20:17:25 +0200
-Content-Disposition: inline
-In-Reply-To: <20070820085246.GA23764@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1752773AbXHTSax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 14:30:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbXHTSax
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 14:30:53 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:32324 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751312AbXHTSaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 14:30:52 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so494372nze
+        for <git@vger.kernel.org>; Mon, 20 Aug 2007 11:30:51 -0700 (PDT)
+Received: by 10.142.154.20 with SMTP id b20mr600338wfe.1187634650764;
+        Mon, 20 Aug 2007 11:30:50 -0700 (PDT)
+Received: from ?192.168.90.77? ( [198.66.78.2])
+        by mx.google.com with ESMTPS id 3sm7312489wrh.2007.08.20.11.30.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 20 Aug 2007 11:30:49 -0700 (PDT)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56235>
 
-
---Y7xTucakfITjPcLV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Aug 20, 2007 at 04:52:47 -0400, Jeff King wrote:
-> On Mon, Aug 20, 2007 at 01:28:31AM -0700, Junio C Hamano wrote:
-> > > 2. It looks like doing an anonymous 'git-pull' leaves GITHEAD_* as the
-> > > commit sha1, which means you will end up with that sha1 rather than
-> > > 'REMOTE', which is less nice than the current behavior.
-> >=20
-> > Much less nice indeed.
->=20
-> I think this is a failing of git-merge, though, for not including that
-> nice human-readable information. We can fix it with something like this:
-
-Maybe you could call git-name-rev on it if it does not come with
-a human-readable name.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---Y7xTucakfITjPcLV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGydq1Rel1vVwhjGURAqaTAJ9AMUN2OSh2Dl9fvvDntHLQdNg7bQCgs9Nf
-JPNCI5cEe8/gB6pl78T/0DU=
-=oXQy
------END PGP SIGNATURE-----
-
---Y7xTucakfITjPcLV--
+Hello,
+     My company is looking at git to replace subversion as our scm.  
+We have a small team of developers which need to publish to a  
+centralized repository. One thing we would like is to have an  
+automated bug fix merge ability. So if I make a bug fix to master we  
+want that fix to be merged into other branches that we set. If there  
+is a conflict we want that person  to be notified by email or some  
+other way. I would like to know if anyone on the list has a good way  
+to implement this?
