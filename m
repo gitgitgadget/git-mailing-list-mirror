@@ -1,73 +1,98 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Make git-prune submodule aware (and fix a SEGFAULT in the process)
-Date: Mon, 20 Aug 2007 09:39:50 +0100
-Message-ID: <200708200939.50955.andyparkins@gmail.com>
-References: <200707021356.58553.andyparkins@gmail.com> <alpine.LFD.0.999.0708170956140.30176@woody.linux-foundation.org> <7vtzqxen8b.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] git-mergetool: show original branch names when possible
+Date: Mon, 20 Aug 2007 04:52:47 -0400
+Message-ID: <20070820085246.GA23764@coredump.intra.peff.net>
+References: <20070820075318.GA12478@coredump.intra.peff.net> <7vabsmtxsg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 10:40:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 10:52:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN2o4-0001ol-Hf
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:40:16 +0200
+	id 1IN30I-0005pZ-Ps
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773AbXHTIkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 04:40:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754512AbXHTIkA
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:40:00 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:37244 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753689AbXHTIj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 04:39:59 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so1764207mue
-        for <git@vger.kernel.org>; Mon, 20 Aug 2007 01:39:57 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tu3iBUwTA2/jRPI1qRgp50wMEXHIChAW+4+k+EaURFrllVFJ+rGEbnKoP0RHkLl4rUicv07eAm9qpbfWVxlZa2HRkXMRKu+gfftJgJMSBMG9YhKhNbSUyDMdjS3LBTCKrJGWFzLuGDAcKIdzTZFeUR8NgzaW//kgfV9amyUt5q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WS1ii9PXv6yA7JcGls5dnx2HaeeDbCfUH40qALah4ZO08Oo4E9PHW7MkXeBLLZs8jthBNWuVObiylf9ruviZHXyMk7kUogP1ff3j/anBa3kd8AfDRefoLwxIUXV2NqTwqBHhrgLJ2jgcZO2JJtROxsLkFQ2p/l/KZ+hw2najN+4=
-Received: by 10.82.186.5 with SMTP id j5mr7233181buf.1187599197215;
-        Mon, 20 Aug 2007 01:39:57 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id b33sm9454491ika.2007.08.20.01.39.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2007 01:39:55 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vtzqxen8b.fsf@gitster.siamese.dyndns.org>
+	id S1753207AbXHTIwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 04:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbXHTIwv
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:52:51 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1335 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751775AbXHTIwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 04:52:51 -0400
+Received: (qmail 18524 invoked by uid 111); 20 Aug 2007 08:53:01 -0000
+X-Spam-Status: No, hits=-1.4 required=15.0
+	tests=ALL_TRUSTED
+X-Spam-Check-By: peff.net
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Aug 2007 04:53:00 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2007 04:52:47 -0400
 Content-Disposition: inline
+In-Reply-To: <7vabsmtxsg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56199>
 
-On Saturday 2007 August 18, Junio C Hamano wrote:
+On Mon, Aug 20, 2007 at 01:28:31AM -0700, Junio C Hamano wrote:
 
-> Andy, in the repository your fetch fails, if a fetch-pack
-> without "--thin" before Linus's patch does not barf, that
-> strongly suggests that the breakage you are seeing is related to
-> this codepath.  And with Linus's patch, "fetch-pack --thin"
-> would also be fixed.
+> I do not think of anything that would barf offhand (we already
+> do that in FETCH_HEAD), but this would definitely be carefully
+> audited.
 
-I'm really sorry, somehow during my attempts to find the fault, the fault went 
-away.  I think it's because I managed to get the fetch to work in some way, 
-and from then on fetch completed perfectly.
+I didn't say it up front, but I think this is definitely post-1.5.3
+material. :)
 
-The upshot of this is that I have no way to test this patch, until I manage to 
-get myself in a similar state.  I'll wait until it happens again though and 
-then try this patch.
+> > 2. It looks like doing an anonymous 'git-pull' leaves GITHEAD_* as the
+> > commit sha1, which means you will end up with that sha1 rather than
+> > 'REMOTE', which is less nice than the current behavior.
+> 
+> Much less nice indeed.
 
+I think this is a failing of git-merge, though, for not including that
+nice human-readable information. We can fix it with something like this:
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-- >8 --
+
+diff --git a/git-merge.sh b/git-merge.sh
+index e899801..742e15d 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -477,7 +477,14 @@ then
+ else
+ 	for remote
+ 	do
+-		echo $remote $(eval echo \$GITHEAD_$remote)
++		friendly_name=$(eval echo \$GITHEAD_$remote)
++		if echo $friendly_name | egrep -q '[0-9a-f]{40}'; then
++			friendly_name=$(
++			  sed -ne "s/$friendly_name	//p" \
++			  <"$GIT_DIR/FETCH_HEAD" 2>/dev/null
++			)
++		fi
++		echo $remote "$friendly_name"
+ 	done >"$GIT_DIR/MERGE_HEAD"
+ 	printf '%s\n' "$merge_msg" >"$GIT_DIR/MERGE_MSG"
+ fi
+
+-- 8< --
+
+But probably it should wait for a better communications channel for
+cross-command state.
+
+> It would be very nice, and I would encourage any wannabe
+> Porcelain writers to go wild on this.  One worry I have is if we
+> would need to support nested states.  "I was in the middle of
+> 'foo' and then had to go sideways to do 'bar' which I am now in
+> the middle of" kind of thing.
+
+It's just a stack, so I think you could implement it as a linked
+list, with STATE being the head of the list, and each STATE file you
+write pointing to the previous one (which you rename when pushing).
+
+I might try to work on this, but definitely not tonight.
+
+-Peff
