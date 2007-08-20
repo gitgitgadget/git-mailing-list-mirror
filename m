@@ -1,91 +1,89 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] Clarify role of init command in git-submodules
- documentation
-Date: Mon, 20 Aug 2007 09:54:59 +0200
-Message-ID: <20070820075459.GY1070MdfPADPa@greensroom.kotnet.org>
-References: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
- <11875937841178-git-send-email-madduck@madduck.net>
-Reply-To: skimo@liacs.nl
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Document what the stage numbers in the :$n:path syntax
+	mean.
+Date: Mon, 20 Aug 2007 04:04:53 -0400
+Message-ID: <20070820080453.GA13233@coredump.intra.peff.net>
+References: <7v1we5bvbw.fsf@assigned-by-dhcp.cox.net> <20070814231422.GA10662@pe.Belkin> <7vps1paceh.fsf@assigned-by-dhcp.cox.net> <46C90C46.1030000@midwinter.com> <20070820055221.GA22993@coredump.intra.peff.net> <20070820060522.GA27913@spearce.org> <20070820061330.GB27913@spearce.org> <828x86ad8q.fsf@mid.bfk.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, hjemli@gmail.com
-To: "martin f. krafft" <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Mon Aug 20 09:55:36 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Steven Grimm <koreth@midwinter.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Florian Weimer <fweimer@bfk.de>
+X-From: git-owner@vger.kernel.org Mon Aug 20 10:05:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN26o-0005ny-0f
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 09:55:34 +0200
+	id 1IN2Fz-00006b-Fm
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756034AbXHTHzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 03:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755533AbXHTHzF
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 03:55:05 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:60214 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751563AbXHTHzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 03:55:01 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JN2007YGBBN02@psmtp09.wxs.nl> for git@vger.kernel.org; Mon,
- 20 Aug 2007 09:55:00 +0200 (MEST)
-Received: (qmail 31971 invoked by uid 500); Mon, 20 Aug 2007 07:54:59 +0000
-In-reply-to: <11875937841178-git-send-email-madduck@madduck.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752154AbXHTIE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 04:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXHTIE5
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:04:57 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3406 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751448AbXHTIE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 04:04:56 -0400
+Received: (qmail 18007 invoked by uid 111); 20 Aug 2007 08:05:06 -0000
+X-Spam-Status: No, hits=-1.4 required=15.0
+	tests=ALL_TRUSTED,AWL
+X-Spam-Check-By: peff.net
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Aug 2007 04:05:05 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2007 04:04:53 -0400
+Content-Disposition: inline
+In-Reply-To: <828x86ad8q.fsf@mid.bfk.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56188>
 
-On Mon, Aug 20, 2007 at 09:09:44AM +0200, martin f. krafft wrote:
->  FILES
->  -----
-> -When initializing submodules, a .gitmodules file in the top-level directory
-> -of the containing repository is used to find the url of each submodule.
-> -This file should be formatted in the same way as $GIR_DIR/config. The key
-> -to each submodule url is "submodule.$name.url".
-> +To work with submodules, a user has to prepare a repository clone with the
+On Mon, Aug 20, 2007 at 09:15:01AM +0200, Florian Weimer wrote:
 
-I think this is a bit ambiguous.
+> > Actually, what's wrong with the following:
+> >
+> > 	git show HEAD:foo.c
+> > 	git show MERGE_HEAD:foo.c
+> 
+> I think that in the staged versions, the non-conflicting parts of the
+> merge are in fact merged.  For the HEAD/MERGE_HEAD versions, this
+> isn't the case, obviously.
 
-> +command `git-submodule init`. This command copies the url of each submodule
+No, the stage versions are not merged at all (but the working tree copy
+has all non-conflicting parts merged).
 
-As you can see in the "init" section of the man pages, the url is only
-copied if it's not there already.
+Here's a script that creates a conflicted file with one easily resolved
+part and one conflict. You can see the staged hashes at the end (and
+check the working tree copy to see that only the one conflict is
+marked).
 
-> +listed in the .gitmodules file in the top-level directory of the containing
-> +repository to $GIT_DIR/config. The key to each submodule url is
-> +"submodule.$name.url".
-> +
-> +The .gitmodules file then specifies the location of each submodule with
-> +respect to the repository (and is shared among all contributors), while the
-> +url of each submodule comes from the local configuration in $GIT_DIR/config
-> +and can thus be modified independently of all other users.
+-Peff
 
-This is better than the previous version, but in my mind still a bit confusing.
-Let me have a go:
+-- >8 --
+mkdir repo && cd repo && git-init
 
-.gitmodules::
-	This file specifies the location of each submodule with respect
-	to the top-level directory of the git working tree as well as
-	the default url of each submodule.  This default url is ignored
-	by all git submodule subcommands, except init.  The latter can
-	be used to initialize the url in $GIR_DIR/config, which is the
-	url used by the other subcommands.  This file is typically
-	tracked as it contains information that is shared by all
-	contributors.  See also: gitlink:gitmodules[5].
+head -n 100 </usr/share/dict/words >words
+git-add words
+git-commit -m words
 
-$GIT_DIR/config::
-	This files contains the url of each submodule in "submodule.$name.url".
-	These urls are required by git submodule subcommands such as update
-	and can be initialized by calling "git submodule init".
-	The urls are specified in the local $GIT_DIR/config as the most
-	appropriate url to get updates from may by different for different users
-	and should not depend on the particular revision of the superproject
-	that is currently checked out.
+sed '10d' <words >words.tmp
+mv words.tmp words
+git-commit -a -m 'remove 10'
 
-skimo
+git-checkout -b other HEAD^
+sed '9d
+     90d' <words >words.tmp
+mv words.tmp words
+git-commit -a -m 'remove 9 and 90'
+
+git-merge master
+
+echo "stage 2 `git-rev-parse :2:words`"
+echo "HEAD    `git-rev-parse HEAD:words`"
+echo "stage 3    `git-rev-parse :3:words`"
+echo "MERGE_HEAD `git-rev-parse MERGE_HEAD:words`"
