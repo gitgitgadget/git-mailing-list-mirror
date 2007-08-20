@@ -1,118 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Don't allow combination of -g and --reverse as it doesn't work
-Date: Sun, 19 Aug 2007 22:33:43 -0400
-Message-ID: <20070820023343.GA16229@spearce.org>
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: renaming question
+Date: Mon, 20 Aug 2007 03:40:24 +0100
+Message-ID: <04a501c7e2d3$75c26740$0600a8c0@ze4427wm>
+References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> <87vebbo0f1.fsf@mid.deneb.enyo.de> <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm> <20070820021109.GB768@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 04:33:51 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "VMiklos" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Aug 20 04:40:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMx5T-0001aB-Bb
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 04:33:51 +0200
+	id 1IMxCM-0002yc-I3
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 04:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbXHTCds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 22:33:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755058AbXHTCds
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 22:33:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34712 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753689AbXHTCdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 22:33:47 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IMx5C-0008Sg-Dg; Sun, 19 Aug 2007 22:33:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4687320FBAE; Sun, 19 Aug 2007 22:33:44 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754622AbXHTCk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 22:40:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754426AbXHTCk3
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 22:40:29 -0400
+Received: from lon1-mail-1.visp.demon.net ([193.195.70.4]:2325 "ehlo
+	lon1-mail-1.visp.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753241AbXHTCk2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2007 22:40:28 -0400
+Received: from mwgray.force9.co.uk (EHLO ze4427wm) ([212.159.110.144])
+	by lon1-mail-1.visp.demon.net (MOS 3.7.5a-GA FastPath)
+	with ESMTP id FKT82331 (AUTH angray);
+	Mon, 20 Aug 2007 03:40:27 +0100 (BST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.3138
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56168>
 
-The --walk-reflogs logic and the --reverse logic are completely
-incompatible with one another.  Attempting to use both at the same
-time leads to confusing results that sometimes violates the user's
-formatting options or ignores the user's request to see the reflog
-message and timestamp.
+Hello,
 
-Unfortunately the implementation of both of these features is glued
-onto the side of the revision walking machinary in such a way that
-they are probably not going to be easy to make them compatible with
-each other.  Rather than offering the user confusing results we are
-better off bailing out with an error message until such a time as
-the implementations can be refactored to be compatible.
+>Na Sun, Aug 19, 2007 at 07:32:01PM +0100, Aaron Gray <angray@beeb.net> 
+>pisal(a):
+>>    rename test.c test.cpp *
+>>    vi test.cpp
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+>>    git rm test.c
+>>    git add test.cpp
 
- This addresses the "log -g --reverse horribly insane" issue I posted
- about earlier today.  Based on Junio's reply I'm not trying to fix
- it for 1.5.3 but instead just tell the user it is not currently
- supported by the implementation.
+>or just git mv test.c test.cpp
 
+Yes I gathered that.
 
- Documentation/git-log.txt      |    1 +
- Documentation/git-rev-list.txt |    3 +++
- revision.c                     |    3 +++
- 3 files changed, 7 insertions(+), 0 deletions(-)
+followed by 'vi test.cpp' :)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 5a90f65..1e6dbd9 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -49,6 +49,7 @@ include::pretty-options.txt[]
- -g, \--walk-reflogs::
- 	Show commits as they were recorded in the reflog. The log contains
- 	a record about how the tip of a reference was changed.
-+	Cannot be combined with --reverse.
- 	See also gitlink:git-reflog[1].
- 
- --decorate::
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 1c19781..cbbc234 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -298,6 +298,8 @@ used in the output.  When the starting commit is specified as
- 'commit@{now}', output also uses 'commit@\{timestamp}' notation
- instead.  Under '\--pretty=oneline', the commit message is
- prefixed with this information on the same line.
-++
-+Cannot be combined with --reverse.
- 
- --merge::
- 
-@@ -373,6 +375,7 @@ By default, the commits are shown in reverse chronological order.
- --reverse::
- 
- 	Output the commits in reverse order.
-+	Cannot be combined with --walk-reflogs.
- 
- Object Traversal
- ~~~~~~~~~~~~~~~~
-diff --git a/revision.c b/revision.c
-index 7d32a89..51fff0e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1277,6 +1277,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 		compile_grep_patterns(revs->grep_filter);
- 	}
- 
-+	if (revs->reverse && revs->reflog_info)
-+		die("cannot combine --reverse with --walk-reflogs");
-+
- 	return left;
- }
- 
--- 
-1.5.3.rc5.40.g2f82
+GIT's looking great, cannot wait to really start using it.
+
+Aaron
