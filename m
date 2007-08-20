@@ -1,72 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document what the stage numbers in the :$n:path syntax mean.
-Date: Mon, 20 Aug 2007 12:55:36 -0700
-Message-ID: <7vy7g6rnev.fsf@gitster.siamese.dyndns.org>
-References: <7v1we5bvbw.fsf@assigned-by-dhcp.cox.net>
-	<20070814231422.GA10662@pe.Belkin>
-	<7vps1paceh.fsf@assigned-by-dhcp.cox.net>
-	<46C90C46.1030000@midwinter.com>
-	<7v4piuafqy.fsf@gitster.siamese.dyndns.org>
-	<20070820180809.GA8542@efreet.light.src>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git-stash segfaults ...
+Date: Mon, 20 Aug 2007 22:02:55 +0200
+Message-ID: <20070820200255.GD5544@steel.home>
+References: <20070820174427.GC7206@artemis.corp>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Aug 20 21:55:56 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 22:03:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INDLq-0002SU-2l
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 21:55:50 +0200
+	id 1INDSv-00059I-8R
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761136AbXHTTzr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 15:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755768AbXHTTzr
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 15:55:47 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756828AbXHTTzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 15:55:46 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4714D1250CD;
-	Mon, 20 Aug 2007 15:56:00 -0400 (EDT)
-In-Reply-To: <20070820180809.GA8542@efreet.light.src> (Jan Hudec's message of
-	"Mon, 20 Aug 2007 20:08:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751218AbXHTUDF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 16:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754170AbXHTUDE
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:03:04 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:55908 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724AbXHTUDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 16:03:02 -0400
+Received: from tigra.home (Fab03.f.strato-dslnet.de [195.4.171.3])
+	by post.webmailer.de (fruni mo34) (RZmta 10.3)
+	with ESMTP id j01b6ej7KK1r00 for <git@vger.kernel.org>;
+	Mon, 20 Aug 2007 22:02:56 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 20A08277BD
+	for <git@vger.kernel.org>; Mon, 20 Aug 2007 22:02:56 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 04367BDFC; Mon, 20 Aug 2007 22:02:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070820174427.GC7206@artemis.corp>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJAI
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56247>
 
-Jan Hudec <bulb@ucw.cz> writes:
+Pierre Habouzit, Mon, Aug 20, 2007 19:44:27 +0200:
+>   When you don't use it from the root of the tree: I was in a subdir of
+> my git tree, trying to do:
+> 
+>   git stash apply
+> 
+>   and I had:
+> 
+>   $ git stash apply
+>   error: missing object referenced by
+>   '0ca54c1fba7fea7dca8a1cc59bce2b2849f26d20' Segmentation fault
+> 
+>   going in the root of the repository (where .git is), all went fine.
 
->> These days, all the merge strategies and other non-merge
->> programs such as "git am" that can record conflicts as
->> multi-stage index entries consistently use stage #2 as our
->> version, and stages #2 and #3 are not equals anymore.
->
-> Pardon me? In what are they not equal?
+Can't reproduce, but... There are places where the result of the
+function which gives this message (deref_tag from tag.c) is not
+checked for NULL and used. merge-recursive (used by git-stash) is one
+of them (and sha1_name is another).
 
-The version left in the worktree always corresponds to stage #2.
-There is no way to say "please use stage #2 for their version
-and use stage #3 for our version" (that is not necessary, so
-don't take this as if I am complaining about a lack of feature).
-"git-read-tree -m" knows that stage #2 corresopnds to the index
-and the worktree and performs up-to-date check on them to make
-sure you do not lose local changes.
+Pierre, could you please try the patch below and see if the crash is
+replaced with a failure?
 
-Merge parent order does not matter --- they are more equal than
-stages between #2 and #3.  But that's not what we are discussing
-here.
+BTW, is there something unusual happening to that repo? Like manual
+object removing, or removal of repo your repo was cloned from, using
+something like "git clone -l -s", maybe?
 
-In some minor corners merge parents are not exactly equal --
-history simplification and other places that wants to pick one
-parent iterates from the first to the last parent and pick the
-first one, so strictly speaking earlier parents have a slight
-edge over later ones.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 16f6a0f..464fc4e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1701,6 +1701,8 @@ static struct commit *get_ref(const char *ref)
+ 	if (get_sha1(ref, sha1))
+ 		die("Could not resolve ref '%s'", ref);
+ 	object = deref_tag(parse_object(sha1), ref, strlen(ref));
++	if (!object)
++		die("Could not resolve ref '%s' down to object", ref);
+ 	if (object->type == OBJ_TREE)
+ 		return make_virtual_commit((struct tree*)object,
+ 			better_branch_name(ref));
