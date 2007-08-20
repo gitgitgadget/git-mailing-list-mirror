@@ -1,69 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Document what the stage numbers in the :$n:path syntax
-	mean.
-Date: Mon, 20 Aug 2007 02:44:01 -0400
-Message-ID: <20070820064401.GB31201@coredump.intra.peff.net>
-References: <7v1we5bvbw.fsf@assigned-by-dhcp.cox.net> <20070814231422.GA10662@pe.Belkin> <7vps1paceh.fsf@assigned-by-dhcp.cox.net> <46C90C46.1030000@midwinter.com> <20070820055221.GA22993@coredump.intra.peff.net> <20070820060522.GA27913@spearce.org> <7vveba90qs.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Steven Grimm <koreth@midwinter.com>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 08:44:20 2007
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: [PATCH] Clarify role of init command in git-submodules documentation
+Date: Mon, 20 Aug 2007 09:09:44 +0200
+Message-ID: <11875937841178-git-send-email-madduck@madduck.net>
+References: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
+Cc: hjemli@gmail.com, skimo@liacs.nl
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 09:10:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN0zq-0005Tp-Fr
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 08:44:18 +0200
+	id 1IN1PC-0002rx-P4
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 09:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbXHTGoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 02:44:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbXHTGoI
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 02:44:08 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4105 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751080AbXHTGoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 02:44:07 -0400
-Received: (qmail 17585 invoked by uid 111); 20 Aug 2007 06:44:14 -0000
-X-Spam-Status: No, hits=-1.4 required=15.0
-	tests=ALL_TRUSTED
-X-Spam-Check-By: peff.net
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Aug 2007 02:44:14 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2007 02:44:01 -0400
-Content-Disposition: inline
-In-Reply-To: <7vveba90qs.fsf@gitster.siamese.dyndns.org>
+	id S1751227AbXHTHK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 03:10:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbXHTHK1
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 03:10:27 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:50565 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbXHTHK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 03:10:27 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 2CCE38966EC;
+	Mon, 20 Aug 2007 09:10:20 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 21467-03; Mon, 20 Aug 2007 09:10:20 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 9E11C8966DF;
+	Mon, 20 Aug 2007 09:10:19 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id F259C9F16A;
+	Mon, 20 Aug 2007 09:10:18 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id B54D843F9; Mon, 20 Aug 2007 09:09:44 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc5.40.g2f82
+In-Reply-To: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56181>
 
-On Sun, Aug 19, 2007 at 11:30:19PM -0700, Junio C Hamano wrote:
+As per the discussion in this thread:
 
-> I am not _opposed_ to :ours:$path syntax, but I suspect there is
-> something else that is wrong if you need to use :$n:$path syntax
-> that often.
+  http://marc.info/?t=118721709500008&r=1&w=2
 
-That's the problem: I don't use it that often, so when I do, the numbers
-seem nonsensical.
+this patch updates the git-submodules documentation to make the situation
+a bit clearer and documents the intended workflow.
 
-> I have never been in a situation I had to say :base:$path,
-> unless I am debugging the merge driver.  So it is between :ours:$path
-> and :theirs:$path.
+Signed-off-by: martin f. krafft <madduck@madduck.net>
+---
+ Documentation/git-submodule.txt |   30 +++++++++++++++++++-----------
+ 1 files changed, 19 insertions(+), 11 deletions(-)
 
-I used to need it to look at the 3-way merge, but git-mergetool now does
-a nice job of hiding these details from me.
-
-Thinking about it more, I really _haven't_ used the stages at all since
-git-mergetool came around. This thread just reminded me of all the prior
-times when I had had trouble with it.
-
-So Junio, please consider my patch retracted. What _would_ be useful is
-GITHEAD_* support for git-mergetool, which has been on my 'todo' list
-for some time. I'll see if I can work up a patch for that.
-
--Peff
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 2c48936..8bc818a 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -32,15 +32,17 @@ status::
+ 	repository. This command is the default command for git-submodule.
+ 
+ init::
+-	Initialize the submodules, i.e. register in .git/config each submodule
+-	name and url found in .gitmodules. The key used in .git/config is
+-	`submodule.$name.url`. This command does not alter existing information
+-	in .git/config.
++	Initialize the submodules, i.e. register in $GIT_DIR/config each
++	submodule name and url found in .gitmodules. The key used in
++	$GIT_DIR/config is `submodule.$name.url`. This command does not alter
++	existing information in $GIT_DIR/config, it only serves to initialise
++	the local configuration from the defaults in .gitmodules.
+ 
+ update::
+-	Update the registered submodules, i.e. clone missing submodules and
+-	checkout the commit specified in the index of the containing repository.
+-	This will make the submodules HEAD be detached.
++	Update the submodules registered in $GIT_DIR/config, i.e. clone
++	missing submodules and checkout the commit specified in the index of
++	the containing repository. This will make the submodules HEAD be
++	detached.
+ 
+ 
+ OPTIONS
+@@ -62,10 +64,16 @@ OPTIONS
+ 
+ FILES
+ -----
+-When initializing submodules, a .gitmodules file in the top-level directory
+-of the containing repository is used to find the url of each submodule.
+-This file should be formatted in the same way as $GIR_DIR/config. The key
+-to each submodule url is "submodule.$name.url".
++To work with submodules, a user has to prepare a repository clone with the
++command `git-submodule init`. This command copies the url of each submodule
++listed in the .gitmodules file in the top-level directory of the containing
++repository to $GIT_DIR/config. The key to each submodule url is
++"submodule.$name.url".
++
++The .gitmodules file then specifies the location of each submodule with
++respect to the repository (and is shared among all contributors), while the
++url of each submodule comes from the local configuration in $GIT_DIR/config
++and can thus be modified independently of all other users.
+ 
+ 
+ AUTHOR
+-- 
+1.5.3.rc5.40.g2f82
