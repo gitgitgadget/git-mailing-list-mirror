@@ -1,91 +1,75 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git-stash segfaults ...
-Date: Mon, 20 Aug 2007 22:50:38 +0200
-Message-ID: <20070820205038.GA9024@artemis.corp>
-References: <20070820174427.GC7206@artemis.corp> <7vmywmrl5l.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: confused about preserved permissions
+Date: Mon, 20 Aug 2007 22:50:42 +0200
+Organization: glandium.org
+Message-ID: <20070820205042.GB10173@glandium.org>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <20070820174142.GA7943@glandium.org> <867inqhyuk.fsf@lola.quinscape.zz> <20070820181357.GA8264@glandium.org> <86zm0mgicy.fsf@lola.quinscape.zz> <20070820184829.GA8617@glandium.org> <853ayeos82.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="OXfL5xGRrasGEqWY";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 22:50:49 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 20 22:52:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INED0-00062J-9C
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:50:46 +0200
+	id 1INEEc-0006c8-Rc
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755115AbXHTUul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 16:50:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754232AbXHTUul
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:50:41 -0400
-Received: from pan.madism.org ([88.191.52.104]:46202 "EHLO hermes.madism.org"
+	id S1763511AbXHTUvo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 16:51:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763445AbXHTUvo
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:51:44 -0400
+Received: from vawad.err.no ([85.19.200.177]:54923 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751964AbXHTUuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 16:50:40 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 8F37D1B30B;
-	Mon, 20 Aug 2007 22:50:39 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id CE2B7430F; Mon, 20 Aug 2007 22:50:38 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1761881AbXHTUvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 16:51:42 -0400
+Received: from aputeaux-153-1-3-249.w82-124.abo.wanadoo.fr ([82.124.49.249] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1INEDl-0001Ib-Fn; Mon, 20 Aug 2007 22:51:38 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1INECw-0002eX-4r; Mon, 20 Aug 2007 22:50:42 +0200
 Content-Disposition: inline
-In-Reply-To: <7vmywmrl5l.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <853ayeos82.fsf@lola.goethe.zz>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56260>
 
+On Mon, Aug 20, 2007 at 10:39:57PM +0200, David Kastrup <dak@gnu.org> wrote:
+> > And it has permissions associated with these hashes.
+> 
+> No, with the files.  Think again: the link between file system and
+> repository is the index, and the current index format has no
+> representation for trees or directories.
+> 
+> So git _can't_ store any information about a _directory_, since no
+> information about directories passes through the index.
 
---OXfL5xGRrasGEqWY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If, as Jan suggested in a previous message, you introduce directories in
+the index, I still don't see why you would need two entries in the tree
+object...
 
-On Mon, Aug 20, 2007 at 08:44:22PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   When you don't use it from the root of the tree: I was in a subdir of
-> > my git tree, trying to do:
+> > (...)
+> >> > I think i wasn't clear enough... I just wondered why the format for tree
+> >> > entries is something like (if you'd write it in perl):
+> >> > sprintf "%06o %s\0%s", $mode, $file, pack("H[40]", $sha1)
+> >> 
+> >> Now I am sure I don't get your point.
 > >
-> >   git stash apply
-> >
-> >   and I had:
-> >
-> >   $ git stash apply
-> >   error: missing object referenced by
-> >   '0ca54c1fba7fea7dca8a1cc59bce2b2849f26d20' Segmentation fault
-> >
-> >   going in the root of the repository (where .git is), all went fine.
->=20
-> I think this was fixed on Jul 25 with ceff079b and 1.5.3-rc4
-> should have it.
+> > See what a raw tree object looks like:
+> > git-cat-file tree 708453d64796eb617cb8a1602959e00356693315
+> 
+> Well, a tree is a container for files (which in turn consist of their
+> permissions, file names, and blobs).
 
-  Oh ok, sorry for the noise then, I was using rc3 indeed, debian does
-not has rc4 packaged yet :)
+The question here was why the permissions are encoded with "%06o" while
+the hash is packed. Anyways, it's just a boring detail.
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---OXfL5xGRrasGEqWY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGyf6evGr7W6HudhwRAnZ9AJ9+vYD9CJltmA8ehuGJdLjLK5DYOwCggGCs
-tO2ogf3CfY56uj86qM33mk0=
-=g3IY
------END PGP SIGNATURE-----
-
---OXfL5xGRrasGEqWY--
+Mike
