@@ -1,80 +1,100 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: confused about preserved permissions
-Date: Mon, 20 Aug 2007 20:48:29 +0200
-Organization: glandium.org
-Message-ID: <20070820184829.GA8617@glandium.org>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <20070820174142.GA7943@glandium.org> <867inqhyuk.fsf@lola.quinscape.zz> <20070820181357.GA8264@glandium.org> <86zm0mgicy.fsf@lola.quinscape.zz>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: va_copy is not available on all systems.
+Date: Mon, 20 Aug 2007 21:15:09 +0200
+Message-ID: <20070820191509.GB5544@steel.home>
+References: <46C99448.2AB33DFF@eudaptics.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 20 20:49:27 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 21:15:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INCJa-0001bz-AD
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 20:49:26 +0200
+	id 1INCie-0003SN-NH
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 21:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634AbXHTStX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 14:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751783AbXHTStX
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 14:49:23 -0400
-Received: from vawad.err.no ([85.19.200.177]:43700 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751583AbXHTStW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 14:49:22 -0400
-Received: from aputeaux-153-1-3-249.w82-124.abo.wanadoo.fr ([82.124.49.249] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1INCJT-0003S8-ND; Mon, 20 Aug 2007 20:49:20 +0200
-Received: from mh by namakemono.glandium.org with local (Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1INCIf-0002FK-DW; Mon, 20 Aug 2007 20:48:29 +0200
+	id S1761177AbXHTTPQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 15:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760923AbXHTTPP
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 15:15:15 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:58727 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760663AbXHTTPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 15:15:13 -0400
+Received: from tigra.home (Fab03.f.strato-dslnet.de [195.4.171.3])
+	by post.webmailer.de (mrclete mo4) (RZmta 11.0)
+	with ESMTP id h011fbj7KFk7we ; Mon, 20 Aug 2007 21:15:09 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 842F4277BD;
+	Mon, 20 Aug 2007 21:15:09 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 1F6A0BDFC; Mon, 20 Aug 2007 21:15:08 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <86zm0mgicy.fsf@lola.quinscape.zz>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
+In-Reply-To: <46C99448.2AB33DFF@eudaptics.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJAI
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56240>
 
-On Mon, Aug 20, 2007 at 08:40:13PM +0200, David Kastrup <dak@gnu.org> wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > On Mon, Aug 20, 2007 at 07:58:43PM +0200, David Kastrup <dak@gnu.org> wrote:
-> >> > I also never understood why there were no permissions set on
-> >> > directories in trees...
-> >> 
-> >> Because directories are not actually tracked.  They are created and
-> >> deleted as-needed.
-> >
-> > I don't see why it would prevent to have a permission set to
-> > it... the permission technically can be recorded in the parent tree,
-> > along its sha1. Filesystems are also like this.
-> 
-> No, they aren't.  Filesystems don't create and delete directories on
-> the fly.  If we record any information about a directory, deleting it
-> automagically would not be appropriate since we would lose information
-> that has not been explicitly deleted.
+Johannes Sixt, Mon, Aug 20, 2007 15:16:56 +0200:
+> Since va_copy() must be provided by the compiler, we don't have a
+> reasonable chance to provide a working definition in git_compat_util.h.
 
-git doesn't magically create directories either. It actually stores
-something about them: the hash of the tree object that represents them.
-And it has permissions associated with these hashes.
+Maybe we don't have to:
 
-What it doesn't have, though, is tracking of the directory's history.
+Subject: [PATCH] Avoid using va_copy in fast-import: it seem to be unportable
 
-(...)
-> > I think i wasn't clear enough... I just wondered why the format for tree
-> > entries is something like (if you'd write it in perl):
-> > sprintf "%06o %s\0%s", $mode, $file, pack("H[40]", $sha1)
-> 
-> Now I am sure I don't get your point.
-
-See what a raw tree object looks like:
-git-cat-file tree 708453d64796eb617cb8a1602959e00356693315
-
-Mike
+diff --git a/fast-import.c b/fast-import.c
+index 2d5224c..04948e9 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -375,7 +375,7 @@ static void write_branch_report(FILE *rpt, struct branch *b)
+ 	fputc('\n', rpt);
+ }
+ 
+-static void write_crash_report(const char *err, va_list params)
++static void write_crash_report(const char *err)
+ {
+ 	char *loc = git_path("fast_import_crash_%d", getpid());
+ 	FILE *rpt = fopen(loc, "w");
+@@ -396,9 +396,7 @@ static void write_crash_report(const char *err, va_list params)
+ 	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, DATE_LOCAL));
+ 	fputc('\n', rpt);
+ 
+-	fputs("fatal: ", rpt);
+-	vfprintf(rpt, err, params);
+-	fputc('\n', rpt);
++	fprintf(rpt, "fatal: %s\n", err);
+ 
+ 	fputc('\n', rpt);
+ 	fputs("Most Recent Commands Before Crash\n", rpt);
+@@ -442,18 +440,15 @@ static void write_crash_report(const char *err, va_list params)
+ static NORETURN void die_nicely(const char *err, va_list params)
+ {
+ 	static int zombie;
+-	va_list x_params;
++	char message[BUFSIZ];
+ 
+-	va_copy(x_params, params);
+-	fputs("fatal: ", stderr);
+-	vfprintf(stderr, err, params);
+-	fputc('\n', stderr);
++	vsnprintf(message, sizeof(message), err, params);
++	fprintf(stderr, "fatal: %s\n", message);
+ 
+ 	if (!zombie) {
+ 		zombie = 1;
+-		write_crash_report(err, x_params);
++		write_crash_report(message);
+ 	}
+-	va_end(x_params);
+ 	exit(128);
+ }
+ 
