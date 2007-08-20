@@ -1,79 +1,89 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: git-stash segfaults ...
-Date: Mon, 20 Aug 2007 19:44:27 +0200
-Message-ID: <20070820174427.GC7206@artemis.corp>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: confused about preserved permissions
+Date: Mon, 20 Aug 2007 19:58:43 +0200
+Message-ID: <867inqhyuk.fsf@lola.quinscape.zz>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+	<20070820174142.GA7943@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ncSAzJYg3Aa9+CRW";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 19:44:36 2007
+X-From: git-owner@vger.kernel.org Mon Aug 20 19:59:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INBIm-0002dw-PH
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 19:44:33 +0200
+	id 1INBX7-0007t0-7M
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 19:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036AbXHTRo3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 13:44:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbXHTRo3
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 13:44:29 -0400
-Received: from pan.madism.org ([88.191.52.104]:37162 "EHLO hermes.madism.org"
+	id S1751114AbXHTR7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 13:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbXHTR7A
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 13:59:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:52038 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751036AbXHTRo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 13:44:29 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 229C712812
-	for <git@vger.kernel.org>; Mon, 20 Aug 2007 19:44:28 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id BF60AA9CF; Mon, 20 Aug 2007 19:44:27 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1750895AbXHTR67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 13:58:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INBWe-0006J5-JO
+	for git@vger.kernel.org; Mon, 20 Aug 2007 19:58:52 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Aug 2007 19:58:52 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Aug 2007 19:58:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:Oi9JhozYjAn4MmFBev7/s/t8klo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56230>
 
+Mike Hommey <mh@glandium.org> writes:
 
---ncSAzJYg3Aa9+CRW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, Aug 20, 2007 at 06:44:11PM +0200, martin f krafft <madduck@madduck.net> wrote:
+>> Why does git bother saving a mode when later it never seems to use
+>> it again?
+>
+> Same applies to git-archive, which generates files with mode 666 and
+> directories with 777, while it could follow the modes in the
+> repository... or at least, that's what the manpage claims, but facts
+> seem to be quite different...
 
-  When you don't use it from the root of the tree: I was in a subdir of
-my git tree, trying to do:
+Git had permissions at one point of time.  It makes colloboration with
+other people with different umasks a nuisance.  However, not all uses
+are colloborative.  So it might be nice to be able to specify
+permission/uid/gid policies that do a configurable level of munging
+for stuff passed into and out of the index and/or the repositories.
 
-  git stash apply
+> I also never understood why there were no permissions set on
+> directories in trees...
 
-  and I had:
+Because directories are not actually tracked.  They are created and
+deleted as-needed.
 
-  $ git stash apply
-  error: missing object referenced by
-  '0ca54c1fba7fea7dca8a1cc59bce2b2849f26d20' Segmentation fault
+In my proposal for allowing directories to get tracked, permissions of
+000 would indicate a tree without a corresponding tracked directory.
+Other permissions would correspond to a tracked directory.  I am still
+stuck over the representation in the index.
 
-  going in the root of the repository (where .git is), all went fine.
+One idea is to unconditionally have an entry "dirname" without
+permissions, and optionally "dirname/" with permissions iff the
+directory is supposed to be tracked, both to be sorted in
+alphabetically.  The idea of the first entry is being able to detect
+merge conflicts without extra passes.
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+But I have not worked on the stuff for a while.
 
---ncSAzJYg3Aa9+CRW
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> nor why, while the sha1 for child objects are "packed", the modes
+> aren't...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Because a change of the mode of a file will then not cause different
+sha1 sums at the file level.
 
-iD8DBQBGydL7vGr7W6HudhwRArbUAKCGbmLpcI+vtNuSVZwueVizuhqRQwCdE1ny
-IUmnaEMGKU+h3JikFdxrPeM=
-=zpUE
------END PGP SIGNATURE-----
-
---ncSAzJYg3Aa9+CRW--
+-- 
+David Kastrup
