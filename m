@@ -1,78 +1,101 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: confused about preserved permissions
-Date: Mon, 20 Aug 2007 23:03:36 +0200
-Message-ID: <85k5rpor4n.fsf@lola.goethe.zz>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
-	<20070820174142.GA7943@glandium.org>
-	<867inqhyuk.fsf@lola.quinscape.zz>
-	<20070820181357.GA8264@glandium.org>
-	<86zm0mgicy.fsf@lola.quinscape.zz>
-	<20070820184829.GA8617@glandium.org> <853ayeos82.fsf@lola.goethe.zz>
-	<20070820205042.GB10173@glandium.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Suprising error message from "git clone"
+Date: Mon, 20 Aug 2007 23:13:38 +0200
+Message-ID: <vpqy7g5zz7h.fsf@bauges.imag.fr>
+References: <vpqwsvqmfhw.fsf@bauges.imag.fr>
+	<7vr6lyrlbb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Aug 20 23:03:54 2007
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 23:14:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INEPf-0002FJ-4r
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 23:03:51 +0200
+	id 1INEZb-0005iv-Jx
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 23:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380AbXHTVDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 17:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbXHTVDj
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 17:03:39 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:57734 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751072AbXHTVDi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Aug 2007 17:03:38 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 86E6132E98F;
-	Mon, 20 Aug 2007 23:03:37 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 7A2742D3B6A;
-	Mon, 20 Aug 2007 23:03:37 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-046-034.pools.arcor-ip.net [84.61.46.34])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 4C0902C29E6;
-	Mon, 20 Aug 2007 23:03:37 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id CCA491C36605; Mon, 20 Aug 2007 23:03:36 +0200 (CEST)
-In-Reply-To: <20070820205042.GB10173@glandium.org> (Mike Hommey's message of "Mon\, 20 Aug 2007 22\:50\:42 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4014/Mon Aug 20 21:33:05 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1751283AbXHTVOB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 17:14:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbXHTVOB
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 17:14:01 -0400
+Received: from imag.imag.fr ([129.88.30.1]:44096 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750950AbXHTVOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 17:14:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7KLDcZH008910
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 20 Aug 2007 23:13:38 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1INEZ8-000801-7R; Mon, 20 Aug 2007 23:13:38 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1INEZ8-00060r-5A; Mon, 20 Aug 2007 23:13:38 +0200
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+In-Reply-To: <7vr6lyrlbb.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 20 Aug 2007 13\:40\:56 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Aug 2007 23:13:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56262>
 
-Mike Hommey <mh@glandium.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Mon, Aug 20, 2007 at 10:39:57PM +0200, David Kastrup <dak@gnu.org> wrote:
->> > And it has permissions associated with these hashes.
->> 
->> No, with the files.  Think again: the link between file system and
->> repository is the index, and the current index format has no
->> representation for trees or directories.
->> 
->> So git _can't_ store any information about a _directory_, since no
->> information about directories passes through the index.
+> Untested but something like this should suffice...
+
+Jest tested, it works fine.
+
+> By the way, could you possibly drop Mail-Followup-To: please?
+
+Err, what's the problem with it? I don't wish to receive duplicate,
+and I ask your mailer not to do so. I don't care too much if the
+header is not honnored, but what you have to do is just to followup
+without bothering about it.
+
+>  git-clone.sh |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
 >
-> If, as Jan suggested in a previous message, you introduce
-> directories in the index, I still don't see why you would need two
-> entries in the tree object...
-
-As I already said: you don't.  It may just be _convenient_ in the
-_index_ for doing single pass merge collision detection (when a
-directory is replaced by a file or vice versa).  But there would be no
-additional information stored in the index, and it definitely would
-not be worth to do double entries in the repository: the repository is
-already capable of representing all the desired information and it
-would be wasteful to introduce any complications there when the
-current format already is fine.
+> diff --git a/git-clone.sh b/git-clone.sh
+> index e4a9ac4..18003ab 100755
+> --- a/git-clone.sh
+> +++ b/git-clone.sh
+> @@ -99,6 +99,7 @@ origin_override=
+>  use_separate_remote=t
+>  depth=
+>  no_progress=
+> +local_explicitly_asked_for=
+>  test -t 1 || no_progress=--no-progress
+>  while
+>  	case "$#,$1" in
+> @@ -109,6 +110,7 @@ while
+>  	*,--na|*,--nak|*,--nake|*,--naked|\
+>  	*,-b|*,--b|*,--ba|*,--bar|*,--bare) bare=yes ;;
+>  	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local)
+> +	  local_explicitly_asked_for=yes
+>  	  use_local_hardlink=yes ;;
+>  	*,--no-h|*,--no-ha|*,--no-har|*,--no-hard|*,--no-hardl|\
+>  	*,--no-hardli|*,--no-hardlin|*,--no-hardlink|*,--no-hardlinks)
+> @@ -281,7 +283,8 @@ yes)
+>  			then
+>  				rm -f "$GIT_DIR/objects/sample"
+>  				l=l
+> -			else
+> +			elif test -n "$local_explicitly_asked_for"
+> +			then
+>  				echo >&2 "Warning: -l asked but cannot hardlink to $repo"
+>  			fi
+>  		fi &&
+>
+>
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Matthieu
