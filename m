@@ -1,67 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git Questions
-Date: Mon, 20 Aug 2007 06:06:00 -0400
-Message-ID: <20070820100600.GA26843@coredump.intra.peff.net>
-References: <1187603749.11595.10.camel@tom-desktop>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: linux@horizon.com
+Subject: Re: How to do a reverse rebase?
+Date: 20 Aug 2007 06:39:43 -0400
+Message-ID: <20070820103943.6046.qmail@science.horizon.com>
+References: <20070820055809.GZ27913@spearce.org>
 Cc: git@vger.kernel.org
-To: Tom Schinckel <gunny01@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 12:06:31 2007
+To: linux@horizon.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 12:39:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN49C-0002FH-85
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 12:06:10 +0200
+	id 1IN4fr-0005Tz-KJ
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 12:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbXHTKGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 06:06:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbXHTKGG
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 06:06:06 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1410 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751484AbXHTKGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 06:06:05 -0400
-Received: (qmail 19940 invoked by uid 111); 20 Aug 2007 10:06:13 -0000
-X-Spam-Status: No, hits=-1.4 required=15.0
-	tests=ALL_TRUSTED,AWL
-X-Spam-Check-By: peff.net
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Aug 2007 06:06:13 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2007 06:06:00 -0400
-Content-Disposition: inline
-In-Reply-To: <1187603749.11595.10.camel@tom-desktop>
+	id S1752391AbXHTKjw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 06:39:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbXHTKjw
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 06:39:52 -0400
+Received: from science.horizon.com ([192.35.100.1]:19605 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751503AbXHTKjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 06:39:51 -0400
+Received: (qmail 6047 invoked by uid 1000); 20 Aug 2007 06:39:43 -0400
+In-Reply-To: <20070820055809.GZ27913@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56207>
 
-On Mon, Aug 20, 2007 at 07:25:48PM +0930, Tom Schinckel wrote:
+> I don't think so.  To do the merge of those files we need a working
+> directory to operate in; that working directory is the one you have.
+> It sounds like what you want is this:
 
-> Is it possible to change the revision numbers from long hashes to normal
-> numbers (i.e, 0001 for first, 0002 for the second)
+>	old=`git symbolic-ref HEAD` &&
+>	git checkout HEAD^0 &&
+>	git cherry-pick debug_hack &&
+>	git branch -f debug_hack HEAD &&
+>	git checkout $old
 
-No, they are a fundamental part of the way git works. However, there are
-a few ways you can avoid using the hashes:
+Er, actually, I don't want the messing about with $old.
+At the end of the day, I want to be on the tip of the rebased
+work.
 
- - tag your commits with readable names
- - use git's syntax for relative commits (e.g., "git-show HEAD~20") will
-   show you 20 commits back from the current commit (where back is
-   defined by following the first parent of each commit)
+The problem is that git-cherry-pick only oves a single comit,
+so if I have a stack, it's annoying.
 
-> a) Automatically commit a file to the repository every time it's saved
-
-If you want git to notice when files are changed and commit them, then
-no. You can probably configure your editor (or whatever is saving the
-file) to trigger a 'git-add && git-commit'. But keep in mind this will
-produce a lot of commits with lousy commit messages.
-
-> b) Automatically use the default hashed-out bit:
-
-There isn't an argument to git-commit to do this, but you can get the
-same message from git-status. So you could do something like:
-
-git-status | sed 's/^# //' | git-commit -F -
-
--Peff
+It's more like:
+	git checkout HEAD^0 &&
+	for i in `git-rev-list --reverse ..debug_hack`; do
+		git-cherry-pick $i
+	done &&
+	git branch -D debug_hack &&
+	git checkout -b debug_hack
