@@ -1,103 +1,87 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: confused about preserved permissions
-Date: Mon, 20 Aug 2007 22:39:57 +0200
-Message-ID: <853ayeos82.fsf@lola.goethe.zz>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
-	<20070820174142.GA7943@glandium.org>
-	<867inqhyuk.fsf@lola.quinscape.zz>
-	<20070820181357.GA8264@glandium.org>
-	<86zm0mgicy.fsf@lola.quinscape.zz>
-	<20070820184829.GA8617@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suprising error message from "git clone"
+Date: Mon, 20 Aug 2007 13:40:56 -0700
+Message-ID: <7vr6lyrlbb.fsf@gitster.siamese.dyndns.org>
+References: <vpqwsvqmfhw.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Aug 20 22:41:01 2007
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 20 22:42:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INE3W-0002Hi-7h
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:40:58 +0200
+	id 1INE4n-0002vp-L2
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 22:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763948AbXHTUkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 16:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932153AbXHTUkG
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:40:06 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:48414 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763948AbXHTUkE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Aug 2007 16:40:04 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id DE7561F563B;
-	Mon, 20 Aug 2007 22:40:00 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id CBF7E212FAC;
-	Mon, 20 Aug 2007 22:40:00 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-046-034.pools.arcor-ip.net [84.61.46.34])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id AE4B419B323;
-	Mon, 20 Aug 2007 22:40:00 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id A56C31C36605; Mon, 20 Aug 2007 22:39:57 +0200 (CEST)
-In-Reply-To: <20070820184829.GA8617@glandium.org> (Mike Hommey's message of "Mon\, 20 Aug 2007 20\:48\:29 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4014/Mon Aug 20 21:33:05 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1756377AbXHTUlG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 16:41:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbXHTUlE
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 16:41:04 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38126 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751312AbXHTUlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 16:41:01 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C8376125128;
+	Mon, 20 Aug 2007 16:41:19 -0400 (EDT)
+In-Reply-To: <vpqwsvqmfhw.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
+	20 Aug 2007 16:45:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56254>
 
-Mike Hommey <mh@glandium.org> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> On Mon, Aug 20, 2007 at 08:40:13PM +0200, David Kastrup <dak@gnu.org> wrote:
->> Mike Hommey <mh@glandium.org> writes:
->> 
->> > On Mon, Aug 20, 2007 at 07:58:43PM +0200, David Kastrup <dak@gnu.org> wrote:
->> >> > I also never understood why there were no permissions set on
->> >> > directories in trees...
->> >> 
->> >> Because directories are not actually tracked.  They are created and
->> >> deleted as-needed.
->> >
->> > I don't see why it would prevent to have a permission set to
->> > it... the permission technically can be recorded in the parent tree,
->> > along its sha1. Filesystems are also like this.
->> 
->> No, they aren't.  Filesystems don't create and delete directories on
->> the fly.  If we record any information about a directory, deleting it
->> automagically would not be appropriate since we would lose information
->> that has not been explicitly deleted.
+> I got a suprising error message:
 >
-> git doesn't magically create directories either. It actually stores
-> something about them: the hash of the tree object that represents
-> them.
+> $ cd /tmp/
+> $ git clone ~/some/repository
+> Initialized empty Git repository in /tmp/repository/.git/
+> Warning: -l asked but cannot hardlink to /home/moy/some/repository/.git
 
-The tree object is not a representation of the directory in the file
-system.  It is a hierarchical hash in the repository, stored for
-efficiency reasons.
+Yup, we already discussed when we switched to defaulting to -l,
+but nobody cared enough to get around to patch the warning.
 
-> And it has permissions associated with these hashes.
+Untested but something like this should suffice...
 
-No, with the files.  Think again: the link between file system and
-repository is the index, and the current index format has no
-representation for trees or directories.
+By the way, could you possibly drop Mail-Followup-To: please?
 
-So git _can't_ store any information about a _directory_, since no
-information about directories passes through the index.
+ git-clone.sh |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-> (...)
->> > I think i wasn't clear enough... I just wondered why the format for tree
->> > entries is something like (if you'd write it in perl):
->> > sprintf "%06o %s\0%s", $mode, $file, pack("H[40]", $sha1)
->> 
->> Now I am sure I don't get your point.
->
-> See what a raw tree object looks like:
-> git-cat-file tree 708453d64796eb617cb8a1602959e00356693315
-
-Well, a tree is a container for files (which in turn consist of their
-permissions, file names, and blobs).
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+diff --git a/git-clone.sh b/git-clone.sh
+index e4a9ac4..18003ab 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -99,6 +99,7 @@ origin_override=
+ use_separate_remote=t
+ depth=
+ no_progress=
++local_explicitly_asked_for=
+ test -t 1 || no_progress=--no-progress
+ while
+ 	case "$#,$1" in
+@@ -109,6 +110,7 @@ while
+ 	*,--na|*,--nak|*,--nake|*,--naked|\
+ 	*,-b|*,--b|*,--ba|*,--bar|*,--bare) bare=yes ;;
+ 	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local)
++	  local_explicitly_asked_for=yes
+ 	  use_local_hardlink=yes ;;
+ 	*,--no-h|*,--no-ha|*,--no-har|*,--no-hard|*,--no-hardl|\
+ 	*,--no-hardli|*,--no-hardlin|*,--no-hardlink|*,--no-hardlinks)
+@@ -281,7 +283,8 @@ yes)
+ 			then
+ 				rm -f "$GIT_DIR/objects/sample"
+ 				l=l
+-			else
++			elif test -n "$local_explicitly_asked_for"
++			then
+ 				echo >&2 "Warning: -l asked but cannot hardlink to $repo"
+ 			fi
+ 		fi &&
