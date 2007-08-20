@@ -1,59 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: VMiklos <vmiklos@frugalware.org>
 Subject: Re: renaming question
-Date: Sun, 19 Aug 2007 21:56:21 -0400
-Message-ID: <20070820015621.GX27913@spearce.org>
-References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> <87vebbo0f1.fsf@mid.deneb.enyo.de> <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm> <85sl6fqr9n.fsf@lola.goethe.zz> <03bd01c7e295$976a2970$0600a8c0@ze4427wm> <85odh3qp8j.fsf@lola.goethe.zz> <87mywn8dm0.fsf@mid.deneb.enyo.de> <46C8E421.8000408@midwinter.com>
+Date: Mon, 20 Aug 2007 04:11:09 +0200
+Message-ID: <20070820021109.GB768@genesis.frugalware.org>
+References: <03a701c7e28a$87914fc0$0600a8c0@ze4427wm> <87vebbo0f1.fsf@mid.deneb.enyo.de> <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org,
-	angray@beeb.net
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 03:56:58 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="GID0FwUMdk1T2AWN"
+Cc: git@vger.kernel.org
+To: Aaron Gray <angray@beeb.net>
+X-From: git-owner@vger.kernel.org Mon Aug 20 04:11:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IMwVi-00038a-Ot
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 03:56:55 +0200
+	id 1IMwjj-00060h-T7
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 04:11:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294AbXHTB4d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Aug 2007 21:56:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754199AbXHTB4d
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 21:56:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33775 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600AbXHTB4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2007 21:56:32 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IMwV2-0007ME-0a; Sun, 19 Aug 2007 21:56:12 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AA3D520FBAE; Sun, 19 Aug 2007 21:56:21 -0400 (EDT)
+	id S1754622AbXHTCLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Aug 2007 22:11:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXHTCLU
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Aug 2007 22:11:20 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:46132 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753241AbXHTCLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2007 22:11:20 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1IMwjb-0007ao-NJ
+	from <vmiklos@frugalware.org>; Mon, 20 Aug 2007 04:11:18 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 44ED413A4022; Mon, 20 Aug 2007 04:11:09 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <46C8E421.8000408@midwinter.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <03b401c7e28f$3c7304c0$0600a8c0@ze4427wm>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 1.1
+X-ELTE-SpamLevel: s
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
+	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
+	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
+	[score: 0.4999]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56165>
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> Not only that, git can detect movement of content *within* files. Try 
-> moving some code from one file to another and running "git blame -M -C 
-> -C" on the target file; you will see git tell you that the content 
-> originally came from the first file. Pretty sweet. (It's not the default 
-> since it makes "git blame" slower.)
 
-And if you have a GUI available, try `git gui blame $file`.  It runs
-git-blame twice to show you not only where the content originally
-came from, but also who put it where it is now.  Still needs more
-polish, but its quite useful as it is.
+--GID0FwUMdk1T2AWN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
--- 
-Shawn.
+Hello,
+
+Na Sun, Aug 19, 2007 at 07:32:01PM +0100, Aaron Gray <angray@beeb.net> pisal(a):
+>    rename test.c test.cpp *
+>    vi test.cpp
+
+>    git rm test.c
+>    git add test.cpp
+
+or just git mv test.c test.cpp
+
+- VMiklos
+
+--GID0FwUMdk1T2AWN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFGyPg9e81tAgORUJYRAg6gAJ909Nd/NShS87hoNvZYD4pko1+H3wCgjsCP
+LCU/EMQPbSXHoVdCFlH8Hww=
+=mz6T
+-----END PGP SIGNATURE-----
+
+--GID0FwUMdk1T2AWN--
