@@ -1,75 +1,88 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: Git Questions
-Date: Mon, 20 Aug 2007 14:06:19 +0100
-Message-ID: <e1dab3980708200606l4e26ce8bx45c31eee81f967af@mail.gmail.com>
-References: <1187603749.11595.10.camel@tom-desktop>
-	 <87bqd2bgb0.fsf@morpheus.local>
-	 <1187612156.11595.17.camel@tom-desktop>
-	 <vpqlkc6nz8c.fsf@bauges.imag.fr>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: va_copy is not available on all systems.
+Date: Mon, 20 Aug 2007 15:16:56 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46C99448.2AB33DFF@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "Tom Schinckel" <gunny01@gmail.com>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 15:06:34 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 20 15:16:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN6xc-0001rT-5j
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 15:06:24 +0200
+	id 1IN77E-0005bo-On
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 15:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752925AbXHTNGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 09:06:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbXHTNGV
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 09:06:21 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:39655 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526AbXHTNGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 09:06:20 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1229318wxd
-        for <git@vger.kernel.org>; Mon, 20 Aug 2007 06:06:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AsOEd1FMQMWhlall3mk+Nlxc6V1ykfMjUDyT0DCXd39A/L5WHfV19K5ed9t0dhu8alG1GNZufWzZv8VXRwnNkBIrP6FUqtBCI3N8hyKhDqcIIlxuuVNcwlfIULqX00ef2BI39WNPD4bhYpAI7boUWivzDDu/MHZ8Nl5/sHlJbdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FIYlo6yzGVrEABc/KSCfI3xFh3cwFbAjWbgQHtfgviG9Etged/4K9LzNytdfCujKaGhlXSfrRkyOC5fg5G3vOhf2jAuAPowphLFNmn7dRt/nORSonNcK97iPKDBllsGcW0iLXsYiyeur9iYaE+RtIP1AWhAYjs3Pxq0pqnJ2AVg=
-Received: by 10.70.14.20 with SMTP id 20mr10596599wxn.1187615179401;
-        Mon, 20 Aug 2007 06:06:19 -0700 (PDT)
-Received: by 10.70.26.12 with HTTP; Mon, 20 Aug 2007 06:06:19 -0700 (PDT)
-In-Reply-To: <vpqlkc6nz8c.fsf@bauges.imag.fr>
-Content-Disposition: inline
+	id S1754822AbXHTNQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 09:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbXHTNQP
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 09:16:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:53208 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752856AbXHTNQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 09:16:15 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <J.Sixt@eudaptics.com>)
+	id 1IN773-0001dy-Tn; Mon, 20 Aug 2007 15:16:10 +0200
+Received: from eudaptics.com (unknown [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 808A254D; Mon, 20 Aug 2007 15:16:09 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.378, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56215>
 
-On 8/20/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> OK. AAUI, you're abusing git as a backup system.
+This is just too ugly to be included...
 
-Just as a point, I think a better word is "archive system". (Backups
-are more for replicating current state in the event of a system failure.
-Clearly _if_ you're working on a well defined project, careful repository
-management is a good idea. (One of the key things you lose
-from automatic commits is the ability to reliably bisect stuff.)
+die_nicely() uses the variable argument list twice. The recent fix for
+this in 7e5dcea8311 uses va_copy. However, on older systems this function
+is not available. This fix assumes that those systems that do have
+the function actually implement it as macro, and we use it to remove
+the entire nicely() functionality.
 
-However, not all the work one does on a computer is so
-focussed and well-demarcated, so in other cases keeping
-a history so you can, eg, look at what you're research codebase looked
-like when you generated the results you pasted into a paper
-on July 12 2005 is a useful ability, even if that sort of "looseness"
-wouldn't be appropriate in "product" based development.
+Since va_copy() must be provided by the compiler, we don't have a
+reasonable chance to provide a working definition in git_compat_util.h.
+---
+ fast-import.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-The nice thing about git is that it's so efficient at the low levels
-it can be used for both "proper" SCM and archival storage.
-
+diff --git a/fast-import.c b/fast-import.c
+index 2d5224c..edc76a4 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -349,6 +349,7 @@ static unsigned int cmd_save = 100;
+ static uintmax_t next_mark;
+ static struct dbuf new_data;
+ 
++#ifdef va_copy
+ static void write_branch_report(FILE *rpt, struct branch *b)
+ {
+ 	fprintf(rpt, "%s:\n", b->name);
+@@ -456,6 +457,7 @@ static NORETURN void die_nicely(const char *err, va_list params)
+ 	va_end(x_params);
+ 	exit(128);
+ }
++#endif
+ 
+ static void alloc_objects(unsigned int cnt)
+ {
+@@ -2381,7 +2383,9 @@ int main(int argc, const char **argv)
+ 
+ 	prepare_packed_git();
+ 	start_packfile();
++#ifdef va_copy
+ 	set_die_routine(die_nicely);
++#endif
+ 	for (;;) {
+ 		read_next_command();
+ 		if (command_buf.eof)
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+1.5.3.rc5.15.g8ddb
