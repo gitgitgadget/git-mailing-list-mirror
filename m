@@ -1,55 +1,96 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: Install section 3 manpages to .../share/man for consistency
-Date: Mon, 20 Aug 2007 09:23:14 +0200
-Message-ID: <11875945951398-git-send-email-madduck@madduck.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 09:23:52 2007
+From: Evan Phoenix <evan@fallingsnow.net>
+Subject: Re: [PATCH] A more sensible error message why 'git rebase --continue' failed
+Date: Mon, 20 Aug 2007 00:10:10 -0700
+Message-ID: <2D8BF484-7990-4DDC-9E52-69143D4BA413@fallingsnow.net>
+References: <11875724181583-git-send-email-evan@fallingsnow.net> <7vzm0m90ye.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 09:45:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN1c6-0005sh-Vk
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 09:23:51 +0200
+	id 1IN1wa-0002rm-A4
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 09:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbXHTHXr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 03:23:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXHTHXU
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 03:23:20 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:51538 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbXHTHXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 03:23:18 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 622108966ED
-	for <git@vger.kernel.org>; Mon, 20 Aug 2007 09:23:17 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 21467-04 for <git@vger.kernel.org>;
-	Mon, 20 Aug 2007 09:23:17 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 0FBE08966EC
-	for <git@vger.kernel.org>; Mon, 20 Aug 2007 09:23:16 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id CFE639F16A
-	for <git@vger.kernel.org>; Mon, 20 Aug 2007 09:23:15 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 89F8943F9; Mon, 20 Aug 2007 09:23:15 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc5.40.g2f82
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+	id S1751687AbXHTHop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 03:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751596AbXHTHop
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 03:44:45 -0400
+Received: from [67.43.164.194] ([67.43.164.194]:39764 "EHLO
+	hoshi.fallingsnow.net" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757AbXHTHoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 03:44:44 -0400
+X-Greylist: delayed 2067 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Aug 2007 03:44:44 EDT
+Received: from cpe-76-170-39-112.socal.res.rr.com ([76.170.39.112] helo=[192.168.1.103])
+	by hoshi.fallingsnow.net with esmtpa (Exim 4.61)
+	(envelope-from <evan@fallingsnow.net>)
+	id 1IN1Oy-00055c-A9; Mon, 20 Aug 2007 00:10:16 -0700
+In-Reply-To: <7vzm0m90ye.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56185>
 
-When an admin installs git site-wide, e.g. to /usr/local, perl's makemaker
-decides to use 'site' mode (as opposed to distro or user mode). For whatever
-reason, it then installs all perl-related manpages (those in section 3) to
-.../man, while the rest of git happily installs manpages to .../share/man.
 
-In as such, this is different from the patch proposed in this thread:
-  http://marc.info/?t=117862141100003&r=1&w=2
+On Aug 19, 2007, at 11:25 PM, Junio C Hamano wrote:
 
-My patch should only ever affect site installs and does not cause
-installations to $HOME to go to $HOME/share/...
+> Evan Phoenix <evan@fallingsnow.net> writes:
+>
+>> The current message is a bit cryptic, indicating that only
+>> changes which contained merge conflicts should be added to the
+>> index, but in fact, all outstanding changes must be.
+>
+> That might be true, and we might want a better yet still concise
+> wording for the suggestion.
+>
+>
+> Your wording, however, would lead a new user to run "git add"
+> even before resolving the conflicts, and then make him complain
+> "why doesn't git do that for me", and then again complain "gaah,
+> I followed the suggestion and ended up committing garbage with
+> funny <<< === >>> lines in it".
+
+Hm, a good point.
+
+How about something like
+
+"Please verify all merge conflicts in all modified files, then run
+'git add' to resolve them."
+
+Or perhaps the behavior of rebase needs to be altered a bit
+here. 'git ls-files -u' can detect there exists outstanding, unmerged
+files. If those still exist, it should certainly stop outright. But,
+it seems to me that if there are no unmerged files and still just
+normal modified ones (git ls-files -m), 'git rebase --continue' should
+be able to run 'git add -u' for the user.
+
+Outside that, I do agree that the wording should be more stern about
+checking all modified files before running 'git add'.
+
+>
+> So in that sense, I do not necessarily see _your_ new wording an
+> improvement.
+>
+>> @@ -135,8 +135,12 @@ do
+>>  	case "$1" in
+>>  	--continue)
+>>  		git diff-files --quiet || {
+>> -			echo "You must edit all merge conflicts and then"
+>> -			echo "mark them as resolved using git add"
+>> +                        echo "Unable to continue rebase:"
+>> +                        echo "  All modified files must be added  
+>> to index first."
+>
+> Also I see whitespace breackages here --- did you intend to
+> replace tabs with spaces, and if so why?
+
+A mistake on my part. I sent in a new patch eariler but ended up having
+mail server troubles. I've already got a new version that keeps the
+tabs as they should be. The next version will be proper.
+
+  - Evan Phoenix / evan@fallingsnow.net
