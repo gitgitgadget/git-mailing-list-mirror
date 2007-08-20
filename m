@@ -1,53 +1,67 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Document what the stage numbers in the :$n:path syntaxmean.
-Date: Mon, 20 Aug 2007 11:55:52 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46C96528.67A3FDAE@eudaptics.com>
-References: <7v1we5bvbw.fsf@assigned-by-dhcp.cox.net> <20070814231422.GA10662@pe.Belkin> <7vps1paceh.fsf@assigned-by-dhcp.cox.net> <46C90C46.1030000@midwinter.com> <20070820055221.GA22993@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git Questions
+Date: Mon, 20 Aug 2007 06:06:00 -0400
+Message-ID: <20070820100600.GA26843@coredump.intra.peff.net>
+References: <1187603749.11595.10.camel@tom-desktop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 12:00:39 2007
+Cc: git@vger.kernel.org
+To: Tom Schinckel <gunny01@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 12:06:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN43m-0000KJ-8B
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 12:00:34 +0200
+	id 1IN49C-0002FH-85
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 12:06:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbXHTKAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 06:00:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbXHTKAb
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 06:00:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:45095 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751414AbXHTKAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 06:00:30 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IN43G-0007hs-FU
-	for git@vger.kernel.org; Mon, 20 Aug 2007 12:00:02 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Aug 2007 12:00:02 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Aug 2007 12:00:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1752533AbXHTKGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 06:06:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbXHTKGG
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 06:06:06 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1410 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751484AbXHTKGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 06:06:05 -0400
+Received: (qmail 19940 invoked by uid 111); 20 Aug 2007 10:06:13 -0000
+X-Spam-Status: No, hits=-1.4 required=15.0
+	tests=ALL_TRUSTED,AWL
+X-Spam-Check-By: peff.net
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Aug 2007 06:06:13 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2007 06:06:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1187603749.11595.10.camel@tom-desktop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56206>
 
-Jeff King wrote:
-> +               else if (!strncmp(name+1, "1:", 2)) {
-> [etc.]
+On Mon, Aug 20, 2007 at 07:25:48PM +0930, Tom Schinckel wrote:
 
-prefixcmp()?
+> Is it possible to change the revision numbers from long hashes to normal
+> numbers (i.e, 0001 for first, 0002 for the second)
 
--- Hannes
+No, they are a fundamental part of the way git works. However, there are
+a few ways you can avoid using the hashes:
+
+ - tag your commits with readable names
+ - use git's syntax for relative commits (e.g., "git-show HEAD~20") will
+   show you 20 commits back from the current commit (where back is
+   defined by following the first parent of each commit)
+
+> a) Automatically commit a file to the repository every time it's saved
+
+If you want git to notice when files are changed and commit them, then
+no. You can probably configure your editor (or whatever is saving the
+file) to trigger a 'git-add && git-commit'. But keep in mind this will
+produce a lot of commits with lousy commit messages.
+
+> b) Automatically use the default hashed-out bit:
+
+There isn't an argument to git-commit to do this, but you can get the
+same message from git-status. So you could do something like:
+
+git-status | sed 's/^# //' | git-commit -F -
+
+-Peff
