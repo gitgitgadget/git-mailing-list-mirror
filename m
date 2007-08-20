@@ -1,84 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC] Clean way to disable pager
-Date: Mon, 20 Aug 2007 10:15:15 +0200
-Message-ID: <vpqzm0mvcz0.fsf@bauges.imag.fr>
-References: <vpq1wdz307k.fsf@bauges.imag.fr>
-	<7vodh3bbmx.fsf@gitster.siamese.dyndns.org>
-	<vpq643bz4vx.fsf@bauges.imag.fr>
-	<325563A3-050A-4830-9ACB-9ED15322F038@apple.com>
-	<85ps1jp2w9.fsf@lola.goethe.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] git-mergetool: show original branch names when possible
+Date: Mon, 20 Aug 2007 01:28:31 -0700
+Message-ID: <7vabsmtxsg.fsf@gitster.siamese.dyndns.org>
+References: <20070820075318.GA12478@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Adam Roben <aroben@apple.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 20 10:15:55 2007
+Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 20 10:28:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IN2QV-0003BW-2x
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:15:55 +0200
+	id 1IN2ct-0006uB-DH
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 10:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754112AbXHTIPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 04:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbXHTIPu
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:15:50 -0400
-Received: from imag.imag.fr ([129.88.30.1]:35306 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753995AbXHTIPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 04:15:49 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7K8FFba012758
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 20 Aug 2007 10:15:16 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IN2Pr-0005lI-Oy; Mon, 20 Aug 2007 10:15:15 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IN2Pr-0002iL-La; Mon, 20 Aug 2007 10:15:15 +0200
-Mail-Followup-To: David Kastrup <dak@gnu.org>, Adam Roben <aroben@apple.com>,  Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-In-Reply-To: <85ps1jp2w9.fsf@lola.goethe.zz> (David Kastrup's message of "Mon\, 20 Aug 2007 00\:37\:10 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Aug 2007 10:15:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755533AbXHTI2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 04:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbXHTI2k
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 04:28:40 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55252 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754401AbXHTI2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 04:28:39 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 96A04124B8D;
+	Mon, 20 Aug 2007 04:28:57 -0400 (EDT)
+In-Reply-To: <20070820075318.GA12478@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 20 Aug 2007 03:53:18 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56190>
 
-David Kastrup <dak@gnu.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Adam Roben <aroben@apple.com> writes:
+> 1. Is it OK to place the extra branch name information in MERGE_HEAD
+> after the SHA1?
+
+I do not think of anything that would barf offhand (we already
+do that in FETCH_HEAD), but this would definitely be carefully
+audited.
+
+> 2. It looks like doing an anonymous 'git-pull' leaves GITHEAD_* as the
+> commit sha1, which means you will end up with that sha1 rather than
+> 'REMOTE', which is less nice than the current behavior.
+
+Much less nice indeed.
+
+> It would be _really_ convenient in this case if we had a "git is in the
+> middle of something" file, which has been discussed before.
+> ...
+> there are some operations that persist across multiple command
+> invocations, and it would be nice rather than every command knowing
+> about every other command's implementation patterns ("Oh, you have a
+> .dotest file? You must be in the middle of...") to have a single place
+> with something like:
 >
->> On Aug 19, 2007, at 12:44 PM, Matthieu Moy wrote:
->>
->>> +    [-p|--paginate] [--no-pager]
->>
->>   I think that [-p|--[no-]paginate] would be more consistent with the
->> way negatable options are normally specified.
->
-> Disregard previously existing code, I'd vote for using an option set
-> like the following:
->
-> --pager
-> --pager=less
-> --pager=cat
-> --no-pager
->
-> "--paginate" is rather artificial in contrast.
+>   $ cat .git/STATE
+>   operation: merge
+>   remote: git://git.kernel.org/pub/scm/git/git.git
+>   branch: master
+>   branch: octopus
 
-ACK. I thought of naming the option --no-paginate, but I don't think
-that good english. --dont-paginate would be good english, but doesn't
-match the --[no-]whatever scheme.
-
-Perhaps using David's proposal, and keeping the --paginate as a
-backward compatibility, deprecated switch is the way to go.
-
--- 
-Matthieu
+It would be very nice, and I would encourage any wannabe
+Porcelain writers to go wild on this.  One worry I have is if we
+would need to support nested states.  "I was in the middle of
+'foo' and then had to go sideways to do 'bar' which I am now in
+the middle of" kind of thing.
