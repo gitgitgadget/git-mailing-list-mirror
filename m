@@ -1,74 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git tree for old kernels
-Date: Mon, 20 Aug 2007 13:40:52 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708201334000.16727@xanadu.home>
-References: <9e4733910707221349s462aa11bj714956f7cdc72aac@mail.gmail.com>
- <alpine.LFD.0.999.0708191453030.16727@xanadu.home>
- <20070820171618.GB9869@filer.fsl.cs.sunysb.edu>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: confused about preserved permissions
+Date: Mon, 20 Aug 2007 19:41:42 +0200
+Organization: glandium.org
+Message-ID: <20070820174142.GA7943@glandium.org>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: lkml <linux-kernel@vger.kernel.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Mon Aug 20 19:41:05 2007
+Content-Type: text/plain; charset=us-ascii
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 20 19:42:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INBFQ-0001Od-8p
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 19:41:04 +0200
+	id 1INBGr-0001uE-66
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 19:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbXHTRlA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 13:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXHTRlA
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 13:41:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:41445 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbXHTRk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 13:40:59 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JN300M1O2G4NLU0@VL-MH-MR002.ip.videotron.ca>; Mon,
- 20 Aug 2007 13:40:53 -0400 (EDT)
-In-reply-to: <20070820171618.GB9869@filer.fsl.cs.sunysb.edu>
-X-X-Sender: nico@xanadu.home
+	id S1751061AbXHTRm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 13:42:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbXHTRm3
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 13:42:29 -0400
+Received: from vawad.err.no ([85.19.200.177]:53634 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750765AbXHTRm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 13:42:28 -0400
+Received: from aputeaux-153-1-3-249.w82-124.abo.wanadoo.fr ([82.124.49.249] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1INBGZ-0004Jc-13
+	for git@vger.kernel.org; Mon, 20 Aug 2007 19:42:23 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1INBG2-00026Z-Vj
+	for git@vger.kernel.org; Mon, 20 Aug 2007 19:41:42 +0200
+Content-Disposition: inline
+In-Reply-To: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56228>
 
-On Mon, 20 Aug 2007, Josef Sipek wrote:
+On Mon, Aug 20, 2007 at 06:44:11PM +0200, martin f krafft <madduck@madduck.net> wrote:
+> Why does git bother saving a mode when later it never seems to use
+> it again?
 
-> On Sun, Aug 19, 2007 at 03:24:56PM -0400, Nicolas Pitre wrote:
-> > On Sun, 22 Jul 2007, Jon Smirl wrote:
-> > 
-> > > Continuing on with kernel archeology for embedded systems, any
-> > > interest in making a git tree with all of the kernel versions from the
-> > > beginning up to the start of the current git tree?
-> > 
-> > I just put the archive I've gathered so far in a Git tree on kernel.org:
-> > 
-> >     git://git.kernel.org/pub/scm/linux/kernel/git/nico/archive.git
-> > 
-> > It is also available through gitweb from:
-> > 
-> >     http://git.kernel.org/?p=linux/kernel/git/nico/archive.git
->  
-> I don't mean to nit-pick but, would it be possible to have the timestamps
-> for the commits closer to the release dates?
+Same applies to git-archive, which generates files with mode 666 and
+directories with 777, while it could follow the modes in the
+repository... or at least, that's what the manpage claims, but facts
+seem to be quite different...
 
-Well, the author timestamp already is, based on the date of the 
-announcement message used for the commit log, including the timezone.  
-If you find errors in those please tell me.
+mh@namakemono:~/git/git$ git-archive --format=tar HEAD | tar -tvf -
+-rw-rw-r-- root/root      2365 2007-08-19 20:45 .gitignore
+-rw-rw-r-- root/root      1973 2007-08-19 20:45 .mailmap
+-rw-rw-r-- root/root     18787 2007-08-19 20:45 COPYING
+drwxrwxr-x root/root         0 2007-08-19 20:45 Documentation/
+-rw-rw-r-- root/root        63 2007-08-19 20:45 Documentation/.gitignore
+-rw-rw-r-- root/root      4553 2007-08-19 20:45 Documentation/Makefile
+(...)
+mh@namakemono:~/git/git$ git-ls-tree HEAD
+100644 blob 63c918c667fa005ff12ad89437f2fdc80926e21c    .gitignore
+100644 blob 5529b198e8d14decbe4ad99db3f7fb632de0439d    .mailmap
+100644 blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3    COPYING
+040000 tree 865a32f4b417cbb601524ac2b78ca64ff232302c    Documentation
+100755 blob 3c0032cec592a765692234f1cba47dfdcc3a9200    GIT-VERSION-GEN
+(...)
 
-The commit timestamp, however, is the time when _I_ created the 
-repository, hence it should not be that interesting.
+mh@namakemono:~/git/git$ umask
+0022
 
-> I must say, impressive work.
+And no value is set for umask in git config...
 
-Thanks!
+I also never understood why there were no permissions set on directories
+in trees... nor why, while the sha1 for child objects are "packed", the
+modes aren't...
 
-
-Nicolas
+Mike
