@@ -1,87 +1,72 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Splitting up a changeset
-Date: Mon, 20 Aug 2007 21:53:51 +0200
-Message-ID: <20070820195351.GF8542@efreet.light.src>
-References: <e1bf234c0708200632g3a2282bfr76863555493d513@mail.gmail.com> <20070820193128.GC5544@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document what the stage numbers in the :$n:path syntax mean.
+Date: Mon, 20 Aug 2007 12:55:36 -0700
+Message-ID: <7vy7g6rnev.fsf@gitster.siamese.dyndns.org>
+References: <7v1we5bvbw.fsf@assigned-by-dhcp.cox.net>
+	<20070814231422.GA10662@pe.Belkin>
+	<7vps1paceh.fsf@assigned-by-dhcp.cox.net>
+	<46C90C46.1030000@midwinter.com>
+	<7v4piuafqy.fsf@gitster.siamese.dyndns.org>
+	<20070820180809.GA8542@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iBwuxWUsK/REspAd"
-Cc: Frank Showman <fshowman@googlemail.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 21:54:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Aug 20 21:55:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INDK8-0001iz-E1
-	for gcvg-git@gmane.org; Mon, 20 Aug 2007 21:54:04 +0200
+	id 1INDLq-0002SU-2l
+	for gcvg-git@gmane.org; Mon, 20 Aug 2007 21:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953AbXHTTx7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 15:53:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbXHTTx7
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 15:53:59 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:47504 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbXHTTx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 15:53:58 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id C70A95730E;
-	Mon, 20 Aug 2007 21:53:57 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id ZnQaqBBWtSYA; Mon, 20 Aug 2007 21:53:54 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 539F7573E0;
-	Mon, 20 Aug 2007 21:53:53 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1INDJv-0006yz-Ba; Mon, 20 Aug 2007 21:53:51 +0200
-Content-Disposition: inline
-In-Reply-To: <20070820193128.GC5544@steel.home>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1761136AbXHTTzr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 15:55:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755768AbXHTTzr
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 15:55:47 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37116 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756828AbXHTTzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 15:55:46 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4714D1250CD;
+	Mon, 20 Aug 2007 15:56:00 -0400 (EDT)
+In-Reply-To: <20070820180809.GA8542@efreet.light.src> (Jan Hudec's message of
+	"Mon, 20 Aug 2007 20:08:09 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56246>
 
+Jan Hudec <bulb@ucw.cz> writes:
 
---iBwuxWUsK/REspAd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> These days, all the merge strategies and other non-merge
+>> programs such as "git am" that can record conflicts as
+>> multi-stage index entries consistently use stage #2 as our
+>> version, and stages #2 and #3 are not equals anymore.
+>
+> Pardon me? In what are they not equal?
 
-On Mon, Aug 20, 2007 at 21:31:28 +0200, Alex Riesen wrote:
-> Frank Showman, Mon, Aug 20, 2007 15:32:11 +0200:
-> > What happens to remote repositories that already have the big
-> > original changeset (and possibly changes based on it)?
->=20
-> If someone (or something) has already fetched, pulled, cloned or
-> otherwise copied them, you basically can't do anything anymore.
-> It is a thing you fundamentally cannot do, unless you're prepared to
-> deal with consequences. Not hard, but can be unexpected for some.
+The version left in the worktree always corresponds to stage #2.
+There is no way to say "please use stage #2 for their version
+and use stage #3 for our version" (that is not necessary, so
+don't take this as if I am complaining about a lack of feature).
+"git-read-tree -m" knows that stage #2 corresopnds to the index
+and the worktree and performs up-to-date check on them to make
+sure you do not lose local changes.
 
-If something might already be based on the unsplit change, you probably want
-to make the last commit of the split be a merge from the unsplit. Merge will
-notice that the changes on both sides are the same and resolve them cleanly
-and any further merges won't see them as differences.
+Merge parent order does not matter --- they are more equal than
+stages between #2 and #3.  But that's not what we are discussing
+here.
 
-If only you or only people you know may have changes based on unsplit, you
-can rebase those changes to split for slightly simpler history.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---iBwuxWUsK/REspAd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGyfFPRel1vVwhjGURAtdWAKC35BCCsYNzOcgf0lrxJRxGNrpZbQCdGwuh
-MPB+dG9E6R377li6VOgxSFE=
-=r3eH
------END PGP SIGNATURE-----
-
---iBwuxWUsK/REspAd--
+In some minor corners merge parents are not exactly equal --
+history simplification and other places that wants to pick one
+parent iterates from the first to the last parent and pick the
+first one, so strictly speaking earlier parents have a slight
+edge over later ones.
