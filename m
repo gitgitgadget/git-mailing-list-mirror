@@ -1,51 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [StGit PATCH 1/6] Split git.merge into two functions
-Date: Mon, 20 Aug 2007 16:52:10 -0700
-Message-ID: <7vejhxrcgl.fsf@gitster.siamese.dyndns.org>
-References: <11875975232619-git-send-email-davidk@lysator.liu.se>
-	<1187597523433-git-send-email-davidk@lysator.liu.se>
-	<87odh2d1q7.fsf@morpheus.local>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Centralized processes in git
+Date: Tue, 21 Aug 2007 08:36:40 +0800
+Message-ID: <46CA3398.9060803@midwinter.com>
+References: <31FEEAE6-58A6-4A74-9DB7-E6F9D56D1C48@rlb3.com> <20070820192947.GD8542@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, <ukleinek@informatik.uni-freiburg.de>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Tue Aug 21 01:52:32 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Robert Boone <robert@rlb3.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Aug 21 02:36:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INH2s-0000mA-Pb
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 01:52:31 +0200
+	id 1INHjl-00026o-Dq
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 02:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbXHTXw1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 20 Aug 2007 19:52:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbXHTXw1
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 19:52:27 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:40961 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751048AbXHTXw1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Aug 2007 19:52:27 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 420EA122753;
-	Mon, 20 Aug 2007 19:52:45 -0400 (EDT)
-In-Reply-To: <87odh2d1q7.fsf@morpheus.local> (David =?utf-8?Q?K=C3=A5gedal?=
- =?utf-8?Q?'s?= message of "Mon,
-	20 Aug 2007 10:55:28 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754599AbXHUAgq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 20:36:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbXHUAgp
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 20:36:45 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:44702 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751426AbXHUAgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 20:36:45 -0400
+Received: (qmail 18214 invoked from network); 21 Aug 2007 00:36:44 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=bKkaM2CZ6eT88NltZA/9p1PJsfRCk2rMAqI0owLnzuO/kFjjIcFpugQwaXEqkOPu  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 21 Aug 2007 00:36:44 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <20070820192947.GD8542@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56269>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+Jan Hudec wrote:
+> Commit would undo any changes pushed between checking out a branch and
+> commiting, so you should probably do the merges on a separate repository,
+> that will only be managed by the scripts. You can use the alternates
+> mechanism to avoid duplicating the data if that repository will be on the
+> central server.
+>   
 
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->
-> It seems that git-send-email didn't like me for some reason.  Double
-> UTF-8 encoding is not very pretty.
+That makes this kind of operation ten times more complicated than it 
+ought to be, IMO.
 
-I believe Uwe (CC'ed) had a few patches to deal with this area.
-Do they help?
+I wonder if it makes sense to expose a repository locking mechanism for 
+this kind of application. The builtin git commands would test for the 
+lock and block (waiting up to some configurable timeout) until it went 
+away, but wouldn't necessarily ever actually lock things themselves. Or 
+maybe a shared/exclusive lock (aka an rwlock) would be appropriate here; 
+the repository-altering commands would grab a shared lock.
+
+A lock-and-block primitive eliminates the need for a separate work queue 
+manager for stuff like this: you just make sure you exclusive-lock the 
+repo before you start your postprocessing (and make sure your 
+postprocessing handles the case where another commit landed before you 
+got launched, of course). Then you know that nothing else will screw 
+with the repo while you're working, and that your execution will be 
+serialized. If you don't need serialized operation like that, you just 
+never grab the exclusive lock and things continue to work as today.
+
+Stupid idea? The wrinkle, of course, is that you need to run git 
+commands from within your script, so *those* can't block. I can think of 
+a few easy ways around that, though, e.g., use an environment variable 
+to identify yourself as the holder of the lock, perhaps by putting your 
+PID in the lockfile and setting the variable to your PID.
+
+-Steve
