@@ -1,57 +1,50 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: empty directories
-Date: Tue, 21 Aug 2007 11:14:21 -0600
-Message-ID: <1187716461.5986.71.camel@beauty>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document the -p option for git-show.
+Date: Tue, 21 Aug 2007 10:33:42 -0700
+Message-ID: <7v1wdwpzbd.fsf@gitster.siamese.dyndns.org>
+References: <20070821124949.GH768@genesis.frugalware.org>
+	<200708211901.55687.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:33:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:34:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INXbd-0003Vb-QO
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:33:30 +0200
+	id 1INXc7-0003kk-CV
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754723AbXHURd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 13:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755606AbXHURd0
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:33:26 -0400
-Received: from mm04snlnto.sandia.gov ([132.175.109.21]:3335 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753063AbXHURdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 13:33:25 -0400
-X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Aug 2007 13:33:24 EDT
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Tue, 21 Aug 2007 11:13:35 -0600
-X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
-Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
- by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l7LHDYoJ012034 for
- <git@vger.kernel.org>; Tue, 21 Aug 2007 11:13:34 -0600
-X-Mailer: Evolution 2.10.1
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.311128,
- Antispam-Data: 2007.8.21.94722
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_300_399
- 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
- __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
-X-TMWD-Spam-Summary: TS=20070821172330; SEV=2.2.2; DFV=B2007082115;
- IFV=2.0.4,4.0-9; AIF=B2007082115; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230322E34364342314639322E303030453A53434A535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007082115_5.02.0125_4.0-9
-X-WSS-ID: 6AD5C2B44Q44528403-01-01
+	id S1756482AbXHURd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 13:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755997AbXHURd4
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:33:56 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55081 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753965AbXHURdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 13:33:55 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A66F01259B2;
+	Tue, 21 Aug 2007 13:34:10 -0400 (EDT)
+In-Reply-To: <200708211901.55687.robin.rosenberg.lists@dewire.com> (Robin
+	Rosenberg's message of "Tue, 21 Aug 2007 19:01:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56311>
 
-Hi,
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-Git doesn't seem to allow me to add an empty directory to the index, or
-even nested empty directories.  Is there any way to do this?  What is
-the reasoning?  I've got a use case where having empty directories in my
-git repository would be *very* valuable.  Any information and help is
-greatly appreciated.
+> How about this instead:
+>
+> -- robin
+>
+> Include diff options into git-show command manual
 
--JE
+I think that is probably a good idea but I wonder if placing
+diff-options in between of pretty-options and pretty-formats is
+a good idea.
