@@ -1,55 +1,126 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-stash segfaults ...
-Date: Tue, 21 Aug 2007 03:08:09 -0400
-Message-ID: <20070821070809.GA8545@coredump.intra.peff.net>
-References: <20070820174427.GC7206@artemis.corp> <20070820200255.GD5544@steel.home> <20070821060510.GA7323@coredump.intra.peff.net> <7v6439pecf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 09:08:18 2007
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Replace git --paginate by git --pager[=PAGER_CMD].
+Date: Tue, 21 Aug 2007 10:37:08 +0200
+Message-ID: <11876854283229-git-send-email-Matthieu.Moy@imag.fr>
+References: <fadhkv$amj$2@sea.gmane.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 21 10:37:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INNqa-0000Uj-Ps
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 09:08:17 +0200
+	id 1INPEt-0001MR-BR
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 10:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbXHUHIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 03:08:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbXHUHIN
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 03:08:13 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2499 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751167AbXHUHIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 03:08:12 -0400
-Received: (qmail 670 invoked by uid 111); 21 Aug 2007 07:08:11 -0000
-X-Spam-Status: No, hits=-1.4 required=15.0
-	tests=ALL_TRUSTED
-X-Spam-Check-By: peff.net
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Aug 2007 03:08:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2007 03:08:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7v6439pecf.fsf@gitster.siamese.dyndns.org>
+	id S1752141AbXHUIhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 04:37:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbXHUIhX
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 04:37:23 -0400
+Received: from imag.imag.fr ([129.88.30.1]:48146 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751981AbXHUIhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 04:37:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7L8b9xT016674
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 Aug 2007 10:37:09 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1INPEa-0005Mn-Rd; Tue, 21 Aug 2007 10:37:08 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1INPEa-0006l9-Os; Tue, 21 Aug 2007 10:37:08 +0200
+X-Mailer: git-send-email 1.5.3.rc5.17.g1cd0d-dirty
+In-Reply-To: <fadhkv$amj$2@sea.gmane.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 21 Aug 2007 10:37:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56284>
 
-On Mon, Aug 20, 2007 at 11:54:24PM -0700, Junio C Hamano wrote:
+The previous one was -p|--paginate, but doesn't accept a natural
+negation. This patch changes it to -p|--pager|--pager=PAGER_CMD, which
+makes the negation --no-pager more natural, and provides a simple way to
+override the pager command (git --pager=CMD is equivalent to
+GIT_PAGER=CMD git with most shells).
 
-> I think you were told that your patch was a band-aid for the
-> symptom, and was not the real fix, in the thread you quoted.
+--paginate is kept as a backward-compatibility, deprecated option.
 
-To which I responded that it is still better to report an error than it
-is to segfault. In this case, the error message _isn't_ fixing the main
-problem, but at least it gives a better starting point for tracking
-problems than a segfault.  Not to mention that it _does_ provide the
-correct error message in a variety of other situations (e.g.,
-merge-recursive given bogus arguments).
+Suggested-by: David Kastrup <dak@gnu.org>
+Idea-acked-by: Jakub Narebski <jnareb@gmail.com>
 
-But really, merge-recursive isn't generally called by users, and so it
-shouldn't get bogus input, so perhaps it isn't worth caring about.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git.txt |    8 +++++---
+ git.c                 |   16 ++++++++++++++--
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
--Peff
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 3b0d530..444823d 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git' [--version] [--exec-path[=GIT_EXEC_PATH]]
+-    [-p|--paginate|--no-pager]
++    [-p|--pager[=PAGER_CMD]|--no-pager]
+     [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
+     [--help] COMMAND [ARGS]
+ 
+@@ -101,8 +101,10 @@ OPTIONS
+ 	environment variable. If no path is given 'git' will print
+ 	the current setting and then exit.
+ 
+--p|--paginate::
+-	Pipe all output into 'less' (or if set, $PAGER).
++-p|--pager[=PAGER_CMD]::
++	Pipe all output into 'less' (or if set, PAGER_CMD,
++	`$GIT_PAGER`, or `$PAGER`, in this order of preference).
++	--paginate is provided as a deprecated alias for -p.
+ 
+ --no-pager::
+ 	Do not pipe git output into a pager.
+diff --git a/git.c b/git.c
+index c46691e..4c626b5 100644
+--- a/git.c
++++ b/git.c
+@@ -4,7 +4,9 @@
+ #include "quote.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
++	"git [--version] [--exec-path[=GIT_EXEC_PATH]]\n"
++        "	[-p|--pager[=PAGER_CMD]|--no-pager] [--bare]\n"
++        "	[--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
+ 
+ static void prepend_to_path(const char *dir, int len)
+ {
+@@ -56,8 +58,18 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 				puts(git_exec_path());
+ 				exit(0);
+ 			}
+-		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
++		} else if (!strcmp(cmd, "-p") || 
++                           /* 
++                            * Deprecated, but kept for backward
++                            * compatibility
++                            */
++                           !strcmp(cmd, "--paginate")) {
+ 			setup_pager();
++                } else if (!prefixcmp(cmd, "--pager")) {
++			cmd += 7;
++			if (*cmd == '=')
++				setenv("GIT_PAGER", cmd+1, 1);
++                        setup_pager();
+ 		} else if (!strcmp(cmd, "--no-pager")) {
+ 			setenv("GIT_PAGER", "cat", 1);
+ 			if (envchanged)
+-- 
+1.5.3.rc5.17.g1cd0d-dirty
