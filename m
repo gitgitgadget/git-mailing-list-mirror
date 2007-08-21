@@ -1,178 +1,49 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGIT PATCH] Make use of the get_patch() utility function
-Date: Tue, 21 Aug 2007 22:39:11 +0200
-Message-ID: <20070821203757.9118.30049.stgit@yoghurt>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH 2/2] Don't touch ref files manually
+Date: Tue, 21 Aug 2007 22:48:31 +0200
+Message-ID: <20070821204831.GA20965@diana.vm.bytemark.co.uk>
+References: <20070810031949.19791.54562.stgit@yoghurt> <20070810032318.19791.70483.stgit@yoghurt> <b0943d9e0708210623h112faa42p97bba06bc9fab774@mail.gmail.com> <20070821164629.GB17045@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org,
+	Yann Dirson <ydirson@altern.org>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 22:39:22 2007
+X-From: git-owner@vger.kernel.org Tue Aug 21 22:48:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INaVV-0002N9-Ka
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 22:39:21 +0200
+	id 1INaee-0006PU-NU
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 22:48:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbXHUUjR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Aug 2007 16:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXHUUjR
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 16:39:17 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4947 "EHLO
+	id S1752704AbXHUUsn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Aug 2007 16:48:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752452AbXHUUsn
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 16:48:43 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4334 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbXHUUjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 16:39:16 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1INaVN-0005Pz-00; Tue, 21 Aug 2007 21:39:14 +0100
-User-Agent: StGIT/0.13
+	with ESMTP id S1751930AbXHUUsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 16:48:42 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1INaeN-0005SG-00; Tue, 21 Aug 2007 21:48:31 +0100
+Content-Disposition: inline
+In-Reply-To: <20070821164629.GB17045@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56327>
 
-We already had it, but no one was using it
+On 2007-08-21 18:46:29 +0200, Karl Hasselstr=F6m wrote:
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+>   * The test in your tree has the latin1 form of my name in it,
+>     instead of utf8. (I noticed because I got a conflict when I
+>     rebased onto your master.)
 
----
+That seems to have happened to the other new test too.
 
-Catalin, would you consider taking this cleanup? It was hidden at the
-beginning of my DAG series, so you probably didn't notice it.
-
- stgit/stack.py |   29 ++++++++++++++---------------
- 1 files changed, 14 insertions(+), 15 deletions(-)
-
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 9c15b3f..c7569b2 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -466,7 +466,7 @@ class Series(PatchSet):
-         crt =3D self.get_current()
-         if not crt:
-             return None
--        return Patch(crt, self.__patch_dir, self.__refs_dir)
-+        return self.get_patch(crt)
-=20
-     def get_current(self):
-         """Return the name of the topmost patch, or None if there is
-@@ -684,7 +684,7 @@ class Series(PatchSet):
-                 raise StackException, \
-                       'Cannot delete: the series still contains patche=
-s'
-             for p in patches:
--                Patch(p, self.__patch_dir, self.__refs_dir).delete()
-+                self.get_patch(p).delete()
-=20
-             # remove the trash directory if any
-             if os.path.exists(self.__trash_dir):
-@@ -741,7 +741,7 @@ class Series(PatchSet):
-         if not name:
-             raise StackException, 'No patches applied'
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-=20
-         descr =3D patch.get_description()
-         if not (message or descr):
-@@ -807,7 +807,7 @@ class Series(PatchSet):
-         name =3D self.get_current()
-         assert(name)
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-         old_bottom =3D patch.get_old_bottom()
-         old_top =3D patch.get_old_top()
-=20
-@@ -848,7 +848,7 @@ class Series(PatchSet):
-         if name =3D=3D None:
-             name =3D make_patch_name(descr, self.patch_exists)
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-         patch.create()
-=20
-         if not bottom:
-@@ -903,7 +903,7 @@ class Series(PatchSet):
-         """Deletes a patch
-         """
-         self.__patch_name_valid(name)
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-=20
-         if self.__patch_is_current(patch):
-             self.pop_patch(name)
-@@ -936,7 +936,7 @@ class Series(PatchSet):
-         for name in names:
-             assert(name in unapplied)
-=20
--            patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+            patch =3D self.get_patch(name)
-=20
-             head =3D top
-             bottom =3D patch.get_bottom()
-@@ -1002,8 +1002,7 @@ class Series(PatchSet):
-         patches detected to have been applied. The state of the tree
-         is restored to the original one
-         """
--        patches =3D [Patch(name, self.__patch_dir, self.__refs_dir)
--                   for name in names]
-+        patches =3D [self.get_patch(name) for name in names]
-         patches.reverse()
-=20
-         merged =3D []
-@@ -1022,7 +1021,7 @@ class Series(PatchSet):
-         unapplied =3D self.get_unapplied()
-         assert(name in unapplied)
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-=20
-         head =3D git.get_head()
-         bottom =3D patch.get_bottom()
-@@ -1096,7 +1095,7 @@ class Series(PatchSet):
-         name =3D self.get_current()
-         assert(name)
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-         old_bottom =3D patch.get_old_bottom()
-         old_top =3D patch.get_old_top()
-=20
-@@ -1122,7 +1121,7 @@ class Series(PatchSet):
-         applied.reverse()
-         assert(name in applied)
-=20
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-=20
-         if git.get_head_file() =3D=3D self.get_name():
-             if keep and not git.apply_diff(git.get_head(), patch.get_b=
-ottom()):
-@@ -1148,7 +1147,7 @@ class Series(PatchSet):
-         """Returns True if the patch is empty
-         """
-         self.__patch_name_valid(name)
--        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
-+        patch =3D self.get_patch(name)
-         bottom =3D patch.get_bottom()
-         top =3D patch.get_top()
-=20
-@@ -1173,11 +1172,11 @@ class Series(PatchSet):
-             raise StackException, 'Patch "%s" already exists' % newnam=
-e
-=20
-         if oldname in unapplied:
--            Patch(oldname, self.__patch_dir, self.__refs_dir).rename(n=
-ewname)
-+            self.get_patch(oldname).rename(newname)
-             unapplied[unapplied.index(oldname)] =3D newname
-             write_strings(self.__unapplied_file, unapplied)
-         elif oldname in applied:
--            Patch(oldname, self.__patch_dir, self.__refs_dir).rename(n=
-ewname)
-+            self.get_patch(oldname).rename(newname)
-=20
-             applied[applied.index(oldname)] =3D newname
-             write_strings(self.__applied_file, applied)
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
