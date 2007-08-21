@@ -1,101 +1,84 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: hiding a certain file from gitweb
-Date: Tue, 21 Aug 2007 21:02:25 +0200
-Message-ID: <20070821190225.GA7133@piper.oerlikon.madduck.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [StGit PATCH 1/6] Split git.merge into two functions
+Date: Tue, 21 Aug 2007 21:35:05 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070821193504.GA20823@informatik.uni-freiburg.de>
+References: <11875975232619-git-send-email-davidk@lysator.liu.se> <1187597523433-git-send-email-davidk@lysator.liu.se> <87odh2d1q7.fsf@morpheus.local> <7vejhxrcgl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 21 21:02:35 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 21:35:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INYzq-0005co-RM
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 21:02:35 +0200
+	id 1INZVd-0002hF-4y
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 21:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758187AbXHUTCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 15:02:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755054AbXHUTCa
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 15:02:30 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:52446 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754851AbXHUTC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 15:02:29 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id 48256895D93
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 21:02:28 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 23786-02 for <git@vger.kernel.org>;
-	Tue, 21 Aug 2007 21:02:28 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id DF61D895D82
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 21:02:27 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id C42819F16A
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 21:02:26 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id DEE7B43F4; Tue, 21 Aug 2007 21:02:25 +0200 (CEST)
+	id S1753153AbXHUTfT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Aug 2007 15:35:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753347AbXHUTfT
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 15:35:19 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:39955 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750819AbXHUTfQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2007 15:35:16 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1INZVP-0005Z9-R8; Tue, 21 Aug 2007 21:35:11 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7LJZ9Eb021080;
+	Tue, 21 Aug 2007 21:35:09 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7LJZ5SX021079;
+	Tue, 21 Aug 2007 21:35:05 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git <git@vger.kernel.org>
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+In-Reply-To: <7vejhxrcgl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56324>
 
+Hello David,
 
---bp/iNruPH9dso1Pn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano wrote:
+> David K=E5gedal <davidk@lysator.liu.se> writes:
+>=20
+> > David K=E5gedal <davidk@lysator.liu.se> writes:
+> >
+> > It seems that git-send-email didn't like me for some reason.  Doubl=
+e
+> > UTF-8 encoding is not very pretty.
+>=20
+> I believe Uwe (CC'ed) had a few patches to deal with this area.
+> Do they help?
+My patches are already in next, the relevant being probably
+v1.5.3-rc4-38-g94638f8.
 
-Dear list,
+David, can you retry with a more recent version that includes that
+patch?
 
-one of my colleagues checked a file with thousands of email
-addresses into git and pushed the commit, so now the file is on
-gitweb. This was quite a while ago and we have over 500 commits and
-several branches between now and then. We want to open our gitweb to
-the public, but to do that, I need to somehow ensure that the file's
-content is not available via gitweb, or else the spammers will have
-a feast. Is it possible to somehow hide the file from gitweb but
-keep it in the repo?
+And IIRC send-email expects the patch being encoded in UTF-8, but I'm
+not sure.  If you could send me the patches you sent as a tar-ball or
+something similar, I can look into it.
 
-Alternatively, would a patch against gitweb be considered, which
-obfuscated email addresses? Or would that interfere with the world
-=E2=80=94 I note that e.g. ikiwiki's git configuration requires you to
-specify the gitweb URL (and not a repo URL).
-
-Cheers,
+Best regards
+Uwe
 
 --=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"common sense is the collection of prejudices
- acquired by age eighteen."
-                                                    -- albert einstein
-=20
-spamtraps: madduck.bogus@madduck.net
+Uwe Kleine-K=F6nig
 
---bp/iNruPH9dso1Pn
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGyzbBIgvIgzMMSnURAk10AKCqOvAWj6T+370n0a1zEr5NZstGGQCgqCpc
-Kx36s/nvQs9HNldC9VP97oc=
-=ymzw
------END PGP SIGNATURE-----
-
---bp/iNruPH9dso1Pn--
+$ dc << EOF
+[d1-d1<a]sa99d1<a1[rdn555760928P*pz1<a]salax
+EOF
