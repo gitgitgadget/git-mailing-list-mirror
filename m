@@ -1,79 +1,119 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Clean way to disable pager
-Date: Tue, 21 Aug 2007 04:11:46 +0200
-Organization: At home
-Message-ID: <fadhkv$amj$2@sea.gmane.org>
-References: <vpq1wdz307k.fsf@bauges.imag.fr> <7vodh3bbmx.fsf@gitster.siamese.dyndns.org> <vpq643bz4vx.fsf@bauges.imag.fr> <325563A3-050A-4830-9ACB-9ED15322F038@apple.com> <85ps1jp2w9.fsf@lola.goethe.zz> <vpqzm0mvcz0.fsf@bauges.imag.fr>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: va_copy is not available on all systems.
+Date: Mon, 20 Aug 2007 23:38:14 -0400
+Message-ID: <20070821033813.GF27913@spearce.org>
+References: <46C99448.2AB33DFF@eudaptics.com> <20070820191509.GB5544@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 04:15:17 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 05:38:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INJH2-0005l5-65
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 04:15:16 +0200
+	id 1INKZy-0005s0-Mb
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 05:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbXHUCPN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Aug 2007 22:15:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbXHUCPN
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 22:15:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:44166 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752008AbXHUCPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2007 22:15:11 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1INJGo-0005V7-IG
-	for git@vger.kernel.org; Tue, 21 Aug 2007 04:15:02 +0200
-Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 21 Aug 2007 04:15:02 +0200
-Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 21 Aug 2007 04:15:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752723AbXHUDiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Aug 2007 23:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752405AbXHUDiX
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Aug 2007 23:38:23 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50486 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462AbXHUDiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2007 23:38:22 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1INKZ9-0002e8-Tc; Mon, 20 Aug 2007 23:38:04 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4D79C20FBAE; Mon, 20 Aug 2007 23:38:14 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070820191509.GB5544@steel.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56275>
 
-Matthieu Moy wrote:
-> David Kastrup <dak@gnu.org> writes:
->> Adam Roben <aroben@apple.com> writes:
->>> On Aug 19, 2007, at 12:44 PM, Matthieu Moy wrote:
->>>
->>>> +    [-p|--paginate] [--no-pager]
->>>
->>>   I think that [-p|--[no-]paginate] would be more consistent with the
->>> way negatable options are normally specified.
->>
->> Disregard previously existing code, I'd vote for using an option set
->> like the following:
->>
->> --pager
->> --pager=less
->> --pager=cat
->> --no-pager
->>
->> "--paginate" is rather artificial in contrast.
+Alex Riesen <raa.lkml@gmail.com> wrote:
+> Johannes Sixt, Mon, Aug 20, 2007 15:16:56 +0200:
+> > Since va_copy() must be provided by the compiler, we don't have a
+> > reasonable chance to provide a working definition in git_compat_util.h.
 > 
-> ACK. I thought of naming the option --no-paginate, but I don't think
-> that good english. --dont-paginate would be good english, but doesn't
-> match the --[no-]whatever scheme.
+> Maybe we don't have to:
 > 
-> Perhaps using David's proposal, and keeping the --paginate as a
-> backward compatibility, deprecated switch is the way to go.
+> Subject: [PATCH] Avoid using va_copy in fast-import: it seem to be unportable
 
-I like it too. ACK.
+Thanks Alex.  This feels more like the right solution to the problem.
+I made a few minor edits, any comment?
+ 
+-->8--
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Avoid using va_copy in fast-import: it seems to be unportable.
+
+[sp: minor change to use fputs, thus reducing the patch size]
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ fast-import.c |   13 ++++++-------
+ 1 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 2d5224c..078079d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -375,7 +375,7 @@ static void write_branch_report(FILE *rpt, struct branch *b)
+ 	fputc('\n', rpt);
+ }
+ 
+-static void write_crash_report(const char *err, va_list params)
++static void write_crash_report(const char *err)
+ {
+ 	char *loc = git_path("fast_import_crash_%d", getpid());
+ 	FILE *rpt = fopen(loc, "w");
+@@ -397,7 +397,7 @@ static void write_crash_report(const char *err, va_list params)
+ 	fputc('\n', rpt);
+ 
+ 	fputs("fatal: ", rpt);
+-	vfprintf(rpt, err, params);
++	fputs(err, rpt);
+ 	fputc('\n', rpt);
+ 
+ 	fputc('\n', rpt);
+@@ -442,18 +442,17 @@ static void write_crash_report(const char *err, va_list params)
+ static NORETURN void die_nicely(const char *err, va_list params)
+ {
+ 	static int zombie;
+-	va_list x_params;
++	char message[2 * PATH_MAX];
+ 
+-	va_copy(x_params, params);
++	vsnprintf(message, sizeof(message), err, params);
+ 	fputs("fatal: ", stderr);
+-	vfprintf(stderr, err, params);
++	fputs(message, stderr);
+ 	fputc('\n', stderr);
+ 
+ 	if (!zombie) {
+ 		zombie = 1;
+-		write_crash_report(err, x_params);
++		write_crash_report(message);
+ 	}
+-	va_end(x_params);
+ 	exit(128);
+ }
+ 
+-- 
+1.5.3.rc5.40.g2f82
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
