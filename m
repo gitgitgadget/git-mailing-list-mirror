@@ -1,90 +1,57 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Document the -p option for git-show.
-Date: Tue, 21 Aug 2007 19:01:55 +0200
-Message-ID: <200708211901.55687.robin.rosenberg.lists@dewire.com>
-References: <20070821124949.GH768@genesis.frugalware.org>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: empty directories
+Date: Tue, 21 Aug 2007 11:14:21 -0600
+Message-ID: <1187716461.5986.71.camel@beauty>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:27:48 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:33:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INXW7-0001HJ-Ii
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:27:47 +0200
+	id 1INXbd-0003Vb-QO
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbXHUR1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 13:27:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbXHUR1Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:27:24 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:4665 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751879AbXHUR1X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 13:27:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 459AA80267F;
-	Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 07693-02; Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 149A5800199;
-	Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070821124949.GH768@genesis.frugalware.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1754723AbXHURd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 13:33:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755606AbXHURd0
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:33:26 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:3335 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753063AbXHURdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 13:33:25 -0400
+X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Aug 2007 13:33:24 EDT
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 21 Aug 2007 11:13:35 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l7LHDYoJ012034 for
+ <git@vger.kernel.org>; Tue, 21 Aug 2007 11:13:34 -0600
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.311128,
+ Antispam-Data: 2007.8.21.94722
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_300_399
+ 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
+ __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070821172330; SEV=2.2.2; DFV=B2007082115;
+ IFV=2.0.4,4.0-9; AIF=B2007082115; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230322E34364342314639322E303030453A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007082115_5.02.0125_4.0-9
+X-WSS-ID: 6AD5C2B44Q44528403-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56310>
 
-tisdag 21 augusti 2007 skrev Miklos Vajna:
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  Documentation/git-show.txt |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-> index a42e121..2409389 100644
-> --- a/Documentation/git-show.txt
-> +++ b/Documentation/git-show.txt
-> @@ -33,6 +33,10 @@ This manual page describes only the most frequently used options.
->  
->  OPTIONS
->  -------
-> +
-> +-p::
-> +	For commits, show the change the commit introduces in a patch form.
-> +
->  <object>::
->  	The name of the object to show.
->  	For a more complete list of ways to spell object names, see
-How about this instead:
+Hi,
 
--- robin
+Git doesn't seem to allow me to add an empty directory to the index, or
+even nested empty directories.  Is there any way to do this?  What is
+the reasoning?  I've got a use case where having empty directories in my
+git repository would be *very* valuable.  Any information and help is
+greatly appreciated.
 
-Include diff options into git-show command manual
-
---
- Documentation/git-show.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index a42e121..d4708e0 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -41,6 +41,9 @@ OPTIONS
- include::pretty-options.txt[]
- 
- 
-+include::diff-options.txt[]
-+
-+
- include::pretty-formats.txt[]
- 
- 
+-JE
