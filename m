@@ -1,61 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-stash segfaults ...
-Date: Tue, 21 Aug 2007 02:05:10 -0400
-Message-ID: <20070821060510.GA7323@coredump.intra.peff.net>
-References: <20070820174427.GC7206@artemis.corp> <20070820200255.GD5544@steel.home>
+Subject: Re: [RFC] git-mergetool: show original branch names when possible
+Date: Tue, 21 Aug 2007 02:10:14 -0400
+Message-ID: <20070821061014.GB7323@coredump.intra.peff.net>
+References: <20070820075318.GA12478@coredump.intra.peff.net> <7vabsmtxsg.fsf@gitster.siamese.dyndns.org> <20070820085246.GA23764@coredump.intra.peff.net> <20070820181725.GB8542@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 08:05:46 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Theodore Ts'o <tytso@mit.edu>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Aug 21 08:10:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INMrr-0002kI-QQ
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 08:05:45 +0200
+	id 1INMwY-0003iw-RH
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 08:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922AbXHUGFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 02:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754983AbXHUGFR
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 02:05:17 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1406 "EHLO
+	id S1756217AbXHUGKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 02:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755961AbXHUGKT
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 02:10:19 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1694 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754922AbXHUGFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 02:05:15 -0400
-Received: (qmail 32000 invoked by uid 111); 21 Aug 2007 06:05:14 -0000
+	id S1756114AbXHUGKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 02:10:17 -0400
+Received: (qmail 32135 invoked by uid 111); 21 Aug 2007 06:10:16 -0000
 X-Spam-Status: No, hits=-1.4 required=15.0
 	tests=ALL_TRUSTED
 X-Spam-Check-By: peff.net
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Aug 2007 02:05:12 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2007 02:05:10 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Aug 2007 02:10:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2007 02:10:14 -0400
 Content-Disposition: inline
-In-Reply-To: <20070820200255.GD5544@steel.home>
+In-Reply-To: <20070820181725.GB8542@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56280>
 
-On Mon, Aug 20, 2007 at 10:02:55PM +0200, Alex Riesen wrote:
+On Mon, Aug 20, 2007 at 08:17:25PM +0200, Jan Hudec wrote:
 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 16f6a0f..464fc4e 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1701,6 +1701,8 @@ static struct commit *get_ref(const char *ref)
->  	if (get_sha1(ref, sha1))
->  		die("Could not resolve ref '%s'", ref);
->  	object = deref_tag(parse_object(sha1), ref, strlen(ref));
-> +	if (!object)
-> +		die("Could not resolve ref '%s' down to object", ref);
->  	if (object->type == OBJ_TREE)
->  		return make_virtual_commit((struct tree*)object,
->  			better_branch_name(ref));
+> > I think this is a failing of git-merge, though, for not including that
+> > nice human-readable information. We can fix it with something like this:
+> 
+> Maybe you could call git-name-rev on it if it does not come with
+> a human-readable name.
 
-I posted the exact same patch almost a month ago, but apparently nobody
-was interested in applying it:
+I considered that, but it has two drawbacks:
 
-  http://mid.gmane.org/20070726050726.GC32617@coredump.intra.peff.net
+  1. It does not handle pulls which have no tracking branch (the only
+     ref we have is FETCH_HEAD, which is not a useful name :) ).
+
+  2. In some circumstances, it can come up with counter-intuitive
+     names. If more than one ref points to a given commit, then you can
+     end up with something like "git-merge foo" telling you all about
+     the merge conflicts with "bar". But perhaps that is too obscure a
+     corner case to worry about.
 
 -Peff
