@@ -1,84 +1,178 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] Clarify role of init command in git-submodules
- documentation
-Date: Tue, 21 Aug 2007 22:25:16 +0200
-Message-ID: <20070821202516.GL1070MdfPADPa@greensroom.kotnet.org>
-References: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
- <11875937841178-git-send-email-madduck@madduck.net>
- <7vd4xhsybm.fsf@gitster.siamese.dyndns.org>
- <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org>
- <11875937841178-git-send-email-madduck@madduck.net>
- <20070820075459.GY1070MdfPADPa@greensroom.kotnet.org>
- <20070821180218.GA14739@piper.oerlikon.madduck.net>
-Reply-To: skimo@liacs.nl
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH] Make use of the get_patch() utility function
+Date: Tue, 21 Aug 2007 22:39:11 +0200
+Message-ID: <20070821203757.9118.30049.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, hjemli@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Tue Aug 21 22:25:28 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 22:39:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INaI3-0005Qw-Rk
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 22:25:28 +0200
+	id 1INaVV-0002N9-Ka
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 22:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbXHUUZY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 16:25:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbXHUUZY
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 16:25:24 -0400
-Received: from psmtp08.wxs.nl ([195.121.247.22]:51537 "EHLO psmtp08.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888AbXHUUZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 16:25:22 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp08.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JN5008L24Q5UC@psmtp08.wxs.nl> for git@vger.kernel.org; Tue,
- 21 Aug 2007 22:25:17 +0200 (MEST)
-Received: (qmail 18677 invoked by uid 500); Tue, 21 Aug 2007 20:25:16 +0000
-In-reply-to: <20070821180218.GA14739@piper.oerlikon.madduck.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751422AbXHUUjR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 21 Aug 2007 16:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXHUUjR
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 16:39:17 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4947 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbXHUUjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 16:39:16 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1INaVN-0005Pz-00; Tue, 21 Aug 2007 21:39:14 +0100
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56326>
 
-On Tue, Aug 21, 2007 at 08:02:18PM +0200, martin f krafft wrote:
->   FILES
+We already had it, but no one was using it
 
-I'm not sure this is the most appropriate name for this section.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
->   A repository with submodules is identified by a .gitmodules file
->   in the repository's top level (see gitlink:gitmodules[5]). This
->   file specifies for each submodule its name, the url of the
->   submodule's repository, as well as the location of the submodule
->   within the (super)project's repository. As the .gitmodules file
->   contains information shared by all users of the repository, it is
->   typically tracked.
-> 
->   Users who clone the project's repository need to initialize each
->   submodule before they can work with it. By initializing
+---
 
-I suppose this is implicit in the git submodule man page,
-but this is only true if you actually want to use git submodule
-to work with the submodules.
+Catalin, would you consider taking this cleanup? It was hidden at the
+beginning of my DAG series, so you probably didn't notice it.
 
->   a submodule, the submodule's url is copied from the .gitmodules
+ stgit/stack.py |   29 ++++++++++++++---------------
+ 1 files changed, 14 insertions(+), 15 deletions(-)
 
-As I mentioned before, this is not strictly true.
-(see init::)
-
->   By pulling the submodule urls out of $GIT_DIR/config,
->   git-submodule allows contributors to use different urls (e.g. via
-
-I'm not a native speaker, but to me that sounds like you are _not_
-using the urls in $GIT_DIR/config.  That is, I read that as:
-they are pulled out of $GIT_DIR/config (and then placed somewhere else).
-
-Other than that, it's definitely an improvement.
-
-skimo
+diff --git a/stgit/stack.py b/stgit/stack.py
+index 9c15b3f..c7569b2 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -466,7 +466,7 @@ class Series(PatchSet):
+         crt =3D self.get_current()
+         if not crt:
+             return None
+-        return Patch(crt, self.__patch_dir, self.__refs_dir)
++        return self.get_patch(crt)
+=20
+     def get_current(self):
+         """Return the name of the topmost patch, or None if there is
+@@ -684,7 +684,7 @@ class Series(PatchSet):
+                 raise StackException, \
+                       'Cannot delete: the series still contains patche=
+s'
+             for p in patches:
+-                Patch(p, self.__patch_dir, self.__refs_dir).delete()
++                self.get_patch(p).delete()
+=20
+             # remove the trash directory if any
+             if os.path.exists(self.__trash_dir):
+@@ -741,7 +741,7 @@ class Series(PatchSet):
+         if not name:
+             raise StackException, 'No patches applied'
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+=20
+         descr =3D patch.get_description()
+         if not (message or descr):
+@@ -807,7 +807,7 @@ class Series(PatchSet):
+         name =3D self.get_current()
+         assert(name)
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+         old_bottom =3D patch.get_old_bottom()
+         old_top =3D patch.get_old_top()
+=20
+@@ -848,7 +848,7 @@ class Series(PatchSet):
+         if name =3D=3D None:
+             name =3D make_patch_name(descr, self.patch_exists)
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+         patch.create()
+=20
+         if not bottom:
+@@ -903,7 +903,7 @@ class Series(PatchSet):
+         """Deletes a patch
+         """
+         self.__patch_name_valid(name)
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+=20
+         if self.__patch_is_current(patch):
+             self.pop_patch(name)
+@@ -936,7 +936,7 @@ class Series(PatchSet):
+         for name in names:
+             assert(name in unapplied)
+=20
+-            patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++            patch =3D self.get_patch(name)
+=20
+             head =3D top
+             bottom =3D patch.get_bottom()
+@@ -1002,8 +1002,7 @@ class Series(PatchSet):
+         patches detected to have been applied. The state of the tree
+         is restored to the original one
+         """
+-        patches =3D [Patch(name, self.__patch_dir, self.__refs_dir)
+-                   for name in names]
++        patches =3D [self.get_patch(name) for name in names]
+         patches.reverse()
+=20
+         merged =3D []
+@@ -1022,7 +1021,7 @@ class Series(PatchSet):
+         unapplied =3D self.get_unapplied()
+         assert(name in unapplied)
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+=20
+         head =3D git.get_head()
+         bottom =3D patch.get_bottom()
+@@ -1096,7 +1095,7 @@ class Series(PatchSet):
+         name =3D self.get_current()
+         assert(name)
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+         old_bottom =3D patch.get_old_bottom()
+         old_top =3D patch.get_old_top()
+=20
+@@ -1122,7 +1121,7 @@ class Series(PatchSet):
+         applied.reverse()
+         assert(name in applied)
+=20
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+=20
+         if git.get_head_file() =3D=3D self.get_name():
+             if keep and not git.apply_diff(git.get_head(), patch.get_b=
+ottom()):
+@@ -1148,7 +1147,7 @@ class Series(PatchSet):
+         """Returns True if the patch is empty
+         """
+         self.__patch_name_valid(name)
+-        patch =3D Patch(name, self.__patch_dir, self.__refs_dir)
++        patch =3D self.get_patch(name)
+         bottom =3D patch.get_bottom()
+         top =3D patch.get_top()
+=20
+@@ -1173,11 +1172,11 @@ class Series(PatchSet):
+             raise StackException, 'Patch "%s" already exists' % newnam=
+e
+=20
+         if oldname in unapplied:
+-            Patch(oldname, self.__patch_dir, self.__refs_dir).rename(n=
+ewname)
++            self.get_patch(oldname).rename(newname)
+             unapplied[unapplied.index(oldname)] =3D newname
+             write_strings(self.__unapplied_file, unapplied)
+         elif oldname in applied:
+-            Patch(oldname, self.__patch_dir, self.__refs_dir).rename(n=
+ewname)
++            self.get_patch(oldname).rename(newname)
+=20
+             applied[applied.index(oldname)] =3D newname
+             write_strings(self.__applied_file, applied)
