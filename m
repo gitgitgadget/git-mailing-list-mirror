@@ -1,111 +1,87 @@
-From: David Watson <dwatson@mimvista.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Multiple branches and git-svn
-Date: Tue, 21 Aug 2007 07:56:11 -0400
-Message-ID: <20070821115611.GA21410@mimvista.com>
-References: <864pj16r10.fsf@lola.quinscape.zz> <9FD13095-36B5-4663-B658-082981B1ACD9@lrde.epita.fr> <861wdxgncz.fsf@lola.quinscape.zz>
+Date: Tue, 21 Aug 2007 14:35:52 +0200
+Message-ID: <86wsvpf4k7.fsf@lola.quinscape.zz>
+References: <864pj16r10.fsf@lola.quinscape.zz> <9FD13095-36B5-4663-B658-082981B1ACD9@lrde.epita.fr> <861wdxgncz.fsf@lola.quinscape.zz> <20070821115611.GA21410@mimvista.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 14:21:18 2007
+X-From: git-owner@vger.kernel.org Tue Aug 21 14:36:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INSjV-0008IB-4h
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 14:21:17 +0200
+	id 1INSyO-0005c9-Sb
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 14:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbXHUMVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 08:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751368AbXHUMVJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 08:21:09 -0400
-Received: from net-207-58-228-27.arpa.fidelityaccess.net ([207.58.228.27]:57057
-	"EHLO zimbra.mimvista.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1750815AbXHUMVI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2007 08:21:08 -0400
-X-Greylist: delayed 1566 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Aug 2007 08:21:08 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 33946354E42
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 07:54:02 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -0.007
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.007 tagged_above=-10 required=6.6
-	tests=[AWL=0.646, BAYES_00=-2.599, RCVD_IN_NJABL_DUL=1.946]
-Received: from zimbra.mimvista.com ([127.0.0.1])
-	by localhost (zimbra.mimvista.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uWAte4y-jLFS for <git@vger.kernel.org>;
-	Tue, 21 Aug 2007 07:54:00 -0400 (EDT)
-Received: from localhost (cpe-66-61-71-72.neo.res.rr.com [66.61.71.72])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 0E678354E1F
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 07:53:59 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <861wdxgncz.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1754919AbXHUMgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 08:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbXHUMgQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 08:36:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:40433 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752859AbXHUMgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 08:36:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INSxr-0001Ie-Gr
+	for git@vger.kernel.org; Tue, 21 Aug 2007 14:36:07 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Aug 2007 14:36:07 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Aug 2007 14:36:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:te8FEY7Lgc1Md8K+A4YIjoUq4tM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56291>
 
-Yes, that's quite true. It took me quite a while to figure that out when I
-first started using git-svn, and its non-sensicalness nearly put me off using
-git entirely. My workflow at this point is to use git-cherry-pick -e to pull in
-any changes from other branches, then delete the git-svn-id line. 
+David Watson <dwatson@mimvista.com> writes:
 
-Essentially, merging using git-svn is almost entirely broken, since an
-inconsistent tool is worthless - you spend more time figuring out if it's going
-to break, and working around the breakage, than you save using it.
+> Yes, that's quite true. It took me quite a while to figure that out
+> when I first started using git-svn, and its non-sensicalness nearly
+> put me off using git entirely. My workflow at this point is to use
+> git-cherry-pick -e to pull in any changes from other branches, then
+> delete the git-svn-id line.
+>
+> Essentially, merging using git-svn is almost entirely broken, since
+> an inconsistent tool is worthless - you spend more time figuring out
+> if it's going to break, and working around the breakage, than you
+> save using it.
 
-Now, I'm not sure this is 100% the fault of git-svn. Perhaps keeping its
-metadata about which SVN branch it's connected to isn't the best thing, but
-git-merge is doing exactly what you ask for. Perhaps we need a merge command in
-git-svn that does the right thing? Although what that right thing would be, I'm
-not quite sure.  Either way, there needs to be a BIG GIGANTIC WARNING in the
-git-svn manual that if you actually use git for what it claims to be great at
-(i.e., merging) you may be in for a world of pain, with your coworkers and boss
-coming at you with pitchforks and torches. Especially because there are
-so many git users who need to interoperate with SVN.
+Full agreement.
 
-On Tue, Aug 21, 2007 at 01:04:28PM +0200, David Kastrup wrote:
-> Benoit SIGOURE <tsuna@lrde.epita.fr> writes:
-> 
-> > On Aug 15, 2007, at 12:17 PM, David Kastrup wrote:
-> >
-> >>
-> >> After having had several embarrassing occurences with git-svn dcommit,
-> >> I think it would not be amiss to mention in the docs just how git-svn
-> >> happens to figure out which Subversion remote it is associated with.
-> >>
-> >> One surprising relevation was that this association changed after a
-> >> git-rebase.
-> >>
-> >> It may be a general git thing, or it may be git-svn specific, but it
-> >> was not exactly what I expected.  And the docs were not really that
-> >> helpful.
-> >>
-> >> In particular, man git-svn is completely silent about this.
-> >
-> > What I do usually is that I look in git log until I see a git-svn-id
-> > line:
-> > git-svn-id: https://svn.foo.com/svn/project/branches/bar@<rev-SVN>
-> > <Repository UUID>
-> > AFAIK git-svn dcommit will commit in the branch specified in the last
-> > git-svn-id.  I also dcommitted in the wrong branch after a rebase
-> > because I imported commits from another branch and the topmost commit
-> > in git-log was "pointing to" a different branch.
-> 
-> Sounds insane: apparently one result is that when you do a merge and
-> dcommit, the commit will go to the branch you merged.
-> 
-> The whole point of merging is to stay on one's current branch.
-> 
-> -- 
-> David Kastrup
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Now, I'm not sure this is 100% the fault of git-svn. Perhaps keeping
+> its metadata about which SVN branch it's connected to isn't the best
+> thing, but git-merge is doing exactly what you ask for.  Perhaps we
+> need a merge command in git-svn that does the right thing?
+
+Git svn needs to recognize a merge for what it is, and has to ignore
+the branch which has been merged, looking further for git-svn-id lines
+or whatever.  Cherrypicking is harder to contain.  Basically, I think
+it is a mistake to use something as fragile as the git-svn-id line in
+the log for determining the branch to use for committing.  Instead, a
+fixed association of git branches with git-svn should be established.
+Even if one needs to write this manually into some configuration file.
+Before git-svn does not have reliable information, it should refuse to
+commit.  One could specify this on the command line, too: that is a
+small price to pay for being sure that one commits where one wants to.
+
+> Although what that right thing would be, I'm not quite sure.  Either
+> way, there needs to be a BIG GIGANTIC WARNING in the git-svn manual
+> that if you actually use git for what it claims to be great at
+> (i.e., merging) you may be in for a world of pain, with your
+> coworkers and boss coming at you with pitchforks and
+> torches. Especially because there are so many git users who need to
+> interoperate with SVN.
+
+Yes.
 
 -- 
-Dave Watson
+David Kastrup
