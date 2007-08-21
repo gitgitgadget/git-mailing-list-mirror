@@ -1,57 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: [PATCH] Replace git --paginate by git --pager[=PAGER_CMD].
-Date: Tue, 21 Aug 2007 10:42:21 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0708211041170.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <fadhkv$amj$2@sea.gmane.org> <11876854283229-git-send-email-Matthieu.Moy@imag.fr>
+Date: Tue, 21 Aug 2007 10:51:30 +0200
+Message-ID: <vpqtzqte0dp.fsf@bauges.imag.fr>
+References: <fadhkv$amj$2@sea.gmane.org>
+	<11876854283229-git-send-email-Matthieu.Moy@imag.fr>
+	<Pine.LNX.4.64.0708211041170.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 21 10:42:28 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 21 10:52:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INPJj-0002pX-UH
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 10:42:28 +0200
+	id 1INPTI-0005ut-Iw
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 10:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbXHUImY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 04:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752530AbXHUImY
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 04:42:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54057 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751964AbXHUImX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 04:42:23 -0400
-Received: (qmail invoked by alias); 21 Aug 2007 08:42:21 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp003) with SMTP; 21 Aug 2007 10:42:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18A3NUf8CkAzCwHRdpSfheGHj/Hrkj61ftJ5CKTsI
-	NgSrQuKGjvSOuu
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <11876854283229-git-send-email-Matthieu.Moy@imag.fr>
-X-Y-GMX-Trusted: 0
+	id S1757757AbXHUIwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 04:52:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbXHUIwP
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 04:52:15 -0400
+Received: from imag.imag.fr ([129.88.30.1]:56952 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757456AbXHUIwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 04:52:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7L8pVg5019829
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 Aug 2007 10:51:31 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1INPSU-0005lg-Ij; Tue, 21 Aug 2007 10:51:30 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1INPSU-0006nV-GM; Tue, 21 Aug 2007 10:51:30 +0200
+In-Reply-To: <Pine.LNX.4.64.0708211041170.16728@wbgn129.biozentrum.uni-wuerzburg.de> (Johannes Schindelin's message of "Tue\, 21 Aug 2007 10\:42\:21 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 21 Aug 2007 10:51:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56286>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 21 Aug 2007, Matthieu Moy wrote:
+> Personally, I like to read "git --paginate log" better than to read "git 
+> --pager log".  So I would not unnecessarily deprecate --paginate.  It's 
+> not like it hurts or something.
 
-> The previous one was -p|--paginate, but doesn't accept a natural
-> negation. This patch changes it to -p|--pager|--pager=PAGER_CMD, which
-> makes the negation --no-pager more natural, and provides a simple way to
-> override the pager command (git --pager=CMD is equivalent to
-> GIT_PAGER=CMD git with most shells).
-> 
-> --paginate is kept as a backward-compatibility, deprecated option.
+It doesn't "hurt", but having several options to do the same thing is
+useless and confusing (someone reading here about --paginate and there
+about --pager may not immediately notice that one is an alias for the
+other).
 
-Personally, I like to read "git --paginate log" better than to read "git 
---pager log".  So I would not unnecessarily deprecate --paginate.  It's 
-not like it hurts or something.
+Anyway, how often do you type or read "git --paginate log"?
 
-Ciao,
-Dscho
+-- 
+Matthieu
