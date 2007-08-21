@@ -1,94 +1,90 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: [PATCH] Document -u option in git-svnimport man page
-Date: Tue, 21 Aug 2007 19:15:09 +0200
-Message-ID: <20070821171509.GB1721@jack.stsp.lan>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Document the -p option for git-show.
+Date: Tue, 21 Aug 2007 19:01:55 +0200
+Message-ID: <200708211901.55687.robin.rosenberg.lists@dewire.com>
+References: <20070821124949.GH768@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XOIedfhf+7KOe/yw"
-Cc: subversion@elego.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:17:19 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:27:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INXLz-0005d5-84
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:17:19 +0200
+	id 1INXW7-0001HJ-Ii
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761226AbXHURRO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 13:17:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761015AbXHURRO
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:17:14 -0400
-Received: from fallback-mx.in-berlin.de ([192.109.42.17]:60434 "EHLO
-	hirscho.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758589AbXHURRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 13:17:13 -0400
-Received: from einhorn.in-berlin.de (einhorn.in-berlin.de [192.109.42.8])
-	by fallback-mx.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l7LHHCmp012382
-	for <git@vger.kernel.org>; Tue, 21 Aug 2007 19:17:12 +0200
-X-Envelope-From: stsp@elego.de
-Received: from stsp.lan (stsp2.in-vpn.de [217.197.85.95])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l7LHFoNi009172
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 21 Aug 2007 19:15:50 +0200
-Received: from jack.stsp.lan (stsp@localhost.stsp.lan [127.0.0.1])
-	by stsp.lan (8.14.1/8.14.0) with ESMTP id l7LHFJ1H004913;
-	Tue, 21 Aug 2007 19:15:19 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.lan (8.14.1/8.14.0/Submit) id l7LHF909016098;
-	Tue, 21 Aug 2007 19:15:09 +0200 (CEST)
-X-Authentication-Warning: jack.stsp.lan: stsp set sender to stsp@elego.de using -f
-Mail-Followup-To: git@vger.kernel.org, subversion@elego.de
+	id S1753113AbXHUR1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 13:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbXHUR1Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:27:24 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:4665 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751879AbXHUR1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 13:27:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 459AA80267F;
+	Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 07693-02; Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id 149A5800199;
+	Tue, 21 Aug 2007 19:19:41 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070821124949.GH768@genesis.frugalware.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56309>
 
+tisdag 21 augusti 2007 skrev Miklos Vajna:
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>  Documentation/git-show.txt |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+> index a42e121..2409389 100644
+> --- a/Documentation/git-show.txt
+> +++ b/Documentation/git-show.txt
+> @@ -33,6 +33,10 @@ This manual page describes only the most frequently used options.
+>  
+>  OPTIONS
+>  -------
+> +
+> +-p::
+> +	For commits, show the change the commit introduces in a patch form.
+> +
+>  <object>::
+>  	The name of the object to show.
+>  	For a more complete list of ways to spell object names, see
+How about this instead:
 
---XOIedfhf+7KOe/yw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-- robin
 
+Include diff options into git-show command manual
 
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.=
-txt
-index 2cfc407..c9c8c5d 100644
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -65,6 +65,9 @@ When importing incrementally, you might need to edit the =
-=2Egit/svn2git file.
- 	Prepend 'rX: ' to commit messages, where X is the imported
- 	subversion revision.
-=20
-+-u::
-+	Replace underscores in tag names with periods.
+--
+ Documentation/git-show.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+index a42e121..d4708e0 100644
+--- a/Documentation/git-show.txt
++++ b/Documentation/git-show.txt
+@@ -41,6 +41,9 @@ OPTIONS
+ include::pretty-options.txt[]
+ 
+ 
++include::diff-options.txt[]
 +
- -I <ignorefile_name>::
- 	Import the svn:ignore directory property to files with this
- 	name in each directory. (The Subversion and GIT ignore
-
---=20
-Stefan Sperling <stsp@elego.de>                 Software Developer
-elego Software Solutions GmbH                            HRB 77719
-Gustav-Meyer-Allee 25, Gebaeude 12        Tel:  +49 30 23 45 86 96=20
-13355 Berlin                              Fax:  +49 30 23 45 86 95
-http://www.elego.de                 Geschaeftsfuehrer: Olaf Wagner
-
---XOIedfhf+7KOe/yw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (OpenBSD)
-
-iD8DBQFGyx2d5dMCc/WdJfARAnXOAJ0V/uZq9QF+VJ0iFOHX9kb2/gOcWQCfV5V8
-okkaLrtzOhYTsJUhlT4Y0Sk=
-=CId7
------END PGP SIGNATURE-----
-
---XOIedfhf+7KOe/yw--
++
+ include::pretty-formats.txt[]
+ 
+ 
