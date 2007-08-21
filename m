@@ -1,298 +1,60 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH] Allow multiple tag and branch directories in
-	git-svnimport
-Date: Tue, 21 Aug 2007 19:38:38 +0200
-Message-ID: <20070821173838.GC1721@jack.stsp.lan>
-References: <20070821170858.GA1721@jack.stsp.lan>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: empty directories
+Date: Tue, 21 Aug 2007 13:40:30 -0400
+Message-ID: <20070821134030.b763e9d3.seanlkml@sympatico.ca>
+References: <1187716461.5986.71.camel@beauty>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vOmOzSkFvhd7u8Ms"
-Cc: subversion@elego.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:39:03 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Josh England" <jjengla@sandia.gov>
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:40:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INXgx-0005dU-AV
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:38:59 +0200
+	id 1INXih-0006Z8-JJ
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759074AbXHURiy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 13:38:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758785AbXHURiy
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:38:54 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:46428 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757956AbXHURix (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 13:38:53 -0400
-X-Greylist: delayed 1455 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Aug 2007 13:38:53 EDT
-X-Envelope-From: stsp@elego.de
-Received: from stsp.lan (stsp2.in-vpn.de [217.197.85.95])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l7LHclRW016605
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 21 Aug 2007 19:38:48 +0200
-Received: from jack.stsp.lan (stsp@localhost.stsp.lan [127.0.0.1])
-	by stsp.lan (8.14.1/8.14.0) with ESMTP id l7LHccdX010140;
-	Tue, 21 Aug 2007 19:38:38 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.lan (8.14.1/8.14.0/Submit) id l7LHccZx003054;
-	Tue, 21 Aug 2007 19:38:38 +0200 (CEST)
-X-Authentication-Warning: jack.stsp.lan: stsp set sender to stsp@elego.de using -f
-Mail-Followup-To: git@vger.kernel.org, subversion@elego.de
-Content-Disposition: inline
-In-Reply-To: <20070821170858.GA1721@jack.stsp.lan>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1757702AbXHURko (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 13:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759503AbXHURko
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:40:44 -0400
+Received: from bay0-omc1-s2.bay0.hotmail.com ([65.54.246.74]:31739 "EHLO
+	bay0-omc1-s2.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755033AbXHURkn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2007 13:40:43 -0400
+Received: from BAYC1-PASMTP05.bayc1.hotmail.com ([65.54.191.165]) by bay0-omc1-s2.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Tue, 21 Aug 2007 10:40:43 -0700
+X-Originating-IP: [64.231.205.174]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([64.231.205.174]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Tue, 21 Aug 2007 10:40:42 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1INXib-0004LW-JB; Tue, 21 Aug 2007 13:40:41 -0400
+In-Reply-To: <1187716461.5986.71.camel@beauty>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 21 Aug 2007 17:40:42.0999 (UTC) FILETIME=[65B4F870:01C7E41A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56313>
 
+On Tue, 21 Aug 2007 11:14:21 -0600
+"Josh England" <jjengla@sandia.gov> wrote:
 
---vOmOzSkFvhd7u8Ms
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Git doesn't seem to allow me to add an empty directory to the index, or
+> even nested empty directories.  Is there any way to do this?  What is
+> the reasoning?  I've got a use case where having empty directories in my
+> git repository would be *very* valuable.  Any information and help is
+> greatly appreciated.
 
-On Tue, Aug 21, 2007 at 07:08:58PM +0200, Stefan Sperling wrote:
-> +my @tag_dirs =3D defined $opt_t ? split /:/,$opt_t : "tags";
-      ^                                                ^^^^^
-> +my @branch_dirs =3D defined $opt_b ? split /:/,$opt_b : "branches";
-      ^                                                  ^^^^^^^^^^
+Hi Josh,
 
-Ouch, just noticed it's a bad idea to try to initialise
-an array with a scalar. Sorry :-/
+Git doesn't track empty directories.  There is a brief note about it in
+the FAQ:
 
-Updated diff:
+ http://git.or.cz/gitwiki/GitFaq#head-1fbd4a018d45259c197b169e87dafce2a3c6b5f9
 
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.=
-txt
-index e97d15e..2cfc407 100644
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -12,11 +12,11 @@ SYNOPSIS
- [verse]
- 'git-svnimport' [ -o <branch-for-HEAD> ] [ -h ] [ -v ] [ -d | -D ]
- 		[ -C <GIT_repository> ] [ -i ] [ -u ] [-l limit_rev]
--		[ -b branch_subdir ] [ -T trunk_subdir ] [ -t tag_subdir ]
--		[ -s start_chg ] [ -m ] [ -r ] [ -M regex ]
--		[ -I <ignorefile_name> ] [ -A <author_file> ]
--		[ -R <repack_each_revs>] [ -P <path_from_trunk> ]
--		<SVN_repository_URL> [ <path> ]
-+		[ -b branch_subdir[:branch_subdir:...] ] [ -T trunk_subdir ]
-+		[ -t tag_subdir[:tag_subdir:...] ] [ -s start_chg ] [ -m ]
-+		[ -r ] [ -M regex ] [ -I <ignorefile_name> ]
-+		[ -A <author_file> ] [ -R <repack_each_revs>]
-+		[ -P <path_from_trunk> ] <SVN_repository_URL> [ <path> ]
-=20
-=20
- DESCRIPTION
-@@ -26,11 +26,6 @@ repository, or incrementally import into an existing one.
-=20
- SVN access is done by the SVN::Perl module.
-=20
--git-svnimport assumes that SVN repositories are organized into one
--"trunk" directory where the main development happens, "branches/FOO"
--directories for branches, and "/tags/FOO" directories for tags.
--Other subdirectories are ignored.
--
- git-svnimport creates a file ".git/svn2git", which is required for
- incremental SVN imports.
-=20
-@@ -53,11 +48,13 @@ When importing incrementally, you might need to edit th=
-e .git/svn2git file.
- -T <trunk_subdir>::
- 	Name the SVN trunk. Default "trunk".
-=20
---t <tag_subdir>::
--	Name the SVN subdirectory for tags. Default "tags".
-+-t <tag_subdir[:tag_subdir:..]>::
-+	Colon-seperated list of names of subdirectories containing tags.
-+	Default "tags".
-=20
---b <branch_subdir>::
--	Name the SVN subdirectory for branches. Default "branches".
-+-b <branch_subdir[:branch_subdir:...]>::
-+	Colon-seperated list of names of subdirectories containing branches.
-+	Default "branches".
-=20
- -o <branch-for-HEAD>::
- 	The 'trunk' branch from SVN is imported to the 'origin' branch within
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index fc9ea71..96f0926 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -38,9 +38,10 @@ sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from SVN
-        [-o branch-for-HEAD] [-h] [-v] [-l max_rev] [-R repack_each_revs]
--       [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
--       [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
--       [-m] [-M regex] [-A author_file] [-S] [-F] [-P project_name] [SVN_U=
-RL]
-+       [-C GIT_repository] [-t tag_subdir[:tag_subdir:...]] [-T trunk_subd=
-ir]
-+       [-b branch_subdir[:branch_subdir:...]] [-d|-D] [-i] [-u] [-r]
-+       [-I ignorefilename] [-s start_chg] [-m] [-M regex]
-+       [-A author_file] [-S] [-F] [-P project_name] [SVN_URL]
- END
- 	exit(1);
- }
-@@ -48,9 +49,9 @@ END
- getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:SP:R:uv") or usage();
- usage if $opt_h;
-=20
--my $tag_name =3D $opt_t || "tags";
--my $trunk_name =3D defined $opt_T ? $opt_T : "trunk";
--my $branch_name =3D $opt_b || "branches";
-+my @tag_dirs =3D defined $opt_t ? split /:/,$opt_t : ("tags");
-+my $trunk_dir =3D defined $opt_T ? $opt_T : "trunk";
-+my @branch_dirs =3D defined $opt_b ? split /:/,$opt_b : ("branches");
- my $project_name =3D $opt_P || "";
- $project_name =3D "/" . $project_name if ($project_name);
- my $repack_after =3D $opt_R || 1000;
-@@ -68,14 +69,18 @@ my $svn_dir =3D $ARGV[1];
-=20
- our @mergerx =3D ();
- if ($opt_m) {
--	my $branch_esc =3D quotemeta ($branch_name);
--	my $trunk_esc  =3D quotemeta ($trunk_name);
--	@mergerx =3D
--	(
--		qr!\b(?:merg(?:ed?|ing))\b.*?\b((?:(?<=3D$branch_esc/)[\w\.\-]+)|(?:$tru=
-nk_esc))\b!i,
--		qr!\b(?:from|of)\W+((?:(?<=3D$branch_esc/)[\w\.\-]+)|(?:$trunk_esc))\b!i,
--		qr!\b(?:from|of)\W+(?:the )?([\w\.\-]+)[-\s]branch\b!i
--	);
-+	my @branch_escs;
-+	foreach (@branch_dirs) { push @branch_escs, quotemeta ($_); }
-+	my $trunk_esc  =3D quotemeta ($trunk_dir);
-+
-+	foreach my $branch_esc (@branch_escs) {
-+		push (@mergerx,
-+		(
-+			qr!\b(?:merg(?:ed?|ing))\b.*?\b((?:(?<=3D$branch_esc/)[\w\.\-]+)|(?:$tr=
-unk_esc))\b!i,
-+			qr!\b(?:from|of)\W+((?:(?<=3D$branch_esc/)[\w\.\-]+)|(?:$trunk_esc))\b!=
-i,
-+			qr!\b(?:from|of)\W+(?:the )?([\w\.\-]+)[-\s]branch\b!i
-+		));
-+	}
- }
- if ($opt_M) {
- 	unshift (@mergerx, qr/$opt_M/);
-@@ -452,29 +457,39 @@ sub project_path($$)
-=20
- sub split_path($$) {
- 	my($rev,$path) =3D @_;
--	my $branch;
-+	my $dir; # tag or branch dir
-+
-+	OUTER: foreach my $tag_dir (@tag_dirs) {
-+		foreach my $branch_dir (@branch_dirs) {
-+			if ($path =3D~ s#^/\Q$tag_dir\E/([^/]+)/?##) {
-+				$dir =3D "/$1";
-+			} elsif ($path =3D~ s#^/\Q$trunk_dir\E/?##) {
-+				$dir =3D "/";
-+			} elsif ($path =3D~ s#^/\Q$branch_dir\E/([^/]+)/?##) {
-+				$dir =3D $1;
-+			}
-+			last OUTER if $dir;
-+		}
-+	}
-=20
--	if($path =3D~ s#^/\Q$tag_name\E/([^/]+)/?##) {
--		$branch =3D "/$1";
--	} elsif($path =3D~ s#^/\Q$trunk_name\E/?##) {
--		$branch =3D "/";
--	} elsif($path =3D~ s#^/\Q$branch_name\E/([^/]+)/?##) {
--		$branch =3D $1;
--	} else {
--		my %no_error =3D (
--			"/" =3D> 1,
--			"/$tag_name" =3D> 1,
--			"/$branch_name" =3D> 1
--		);
--		print STDERR "$rev: Unrecognized path: $path\n" unless (defined $no_erro=
-r{$path});
--		return ()
-+	if (! $dir) {
-+		my %no_error =3D ( "/" =3D> 1, "/tags" =3D> 1, "/branches" =3D> 1 );
-+		foreach (@tag_dirs) {
-+			$no_error{"/$_"} =3D 1;
-+		}
-+		foreach (@branch_dirs) {
-+			$no_error{"/$_"} =3D 1;
-+		}
-+		print STDERR "$rev: Could not determine tag or branch ",
-+			"directory for path '$path'\n",
-+			unless (defined $no_error{$path});
- 	}
- 	if ($path eq "") {
- 		$path =3D "/";
- 	} elsif ($project_name) {
- 		$path =3D project_path($path, $project_name);
- 	}
--	return ($branch,$path);
-+	return ($dir,$path);
- }
-=20
- sub branch_rev($$) {
-@@ -874,9 +889,32 @@ sub commit {
-=20
- 		$dest =3D~ tr/_/\./ if $opt_u;
-=20
--		system('git-tag', $dest, $cid) =3D=3D 0
--			or die "Cannot create tag $dest: $!\n";
--
-+		# Since we support multiple directories that host tags we
-+		# must support repositories that contain the same tag name
-+		# in different tag directories for whatever reason,
-+		# e.g. tags/jim/1.0-rc3 and tags/huck/1.0-rc3
-+		#
-+		# Also, because in Subversion a given tag directory could
-+		# exist in revision A, be deleted in revision B and later
-+		# recreated under the same name in revision C, we
-+		# cannot guarantee that a tag is unique simply by
-+		# looking at the tag's path.
-+		#
-+		# So if we fail to create the tag the first time, we try
-+		# to create the tag with the same name except with the
-+		# revision number of the current commit appended.
-+		# Users can rename tags again later after the repository
-+		# has been converted if they don't like this.
-+		# It's still much better than failing to convert the
-+		# repository alltogether.
-+		if (system('git-tag', $dest, $cid) !=3D 0) {
-+			print STDERR "Could not create tag $dest, ",
-+				"trying to create tag $dest-r$revision ",
-+				"instead\n";
-+			$dest =3D "$dest-r$revision";
-+			system('git-tag', $dest, $cid) =3D=3D 0
-+				or die "Cannot create tag $dest: $? $!\n";
-+		}
- 		print "Created tag '$dest' on '$branch'\n" if $opt_v;
- 	}
- 	$branches{$branch}{"LAST"} =3D $cid;
-
---=20
-Stefan Sperling <stsp@elego.de>                 Software Developer
-elego Software Solutions GmbH                            HRB 77719
-Gustav-Meyer-Allee 25, Gebaeude 12        Tel:  +49 30 23 45 86 96=20
-13355 Berlin                              Fax:  +49 30 23 45 86 95
-http://www.elego.de                 Geschaeftsfuehrer: Olaf Wagner
-
---vOmOzSkFvhd7u8Ms
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (OpenBSD)
-
-iD8DBQFGyyMe5dMCc/WdJfARAjfzAKDqNkfIuh88COoomxH530n6yQmagACg8xmX
-cwXfS4OF5jIwUQ2RYlPugkY=
-=Wd8Y
------END PGP SIGNATURE-----
-
---vOmOzSkFvhd7u8Ms--
+Sean
