@@ -1,65 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: va_copy is not available on all systems.
-Date: Tue, 21 Aug 2007 20:37:09 +0200
-Message-ID: <20070821183709.GA22102@steel.home>
-References: <46C99448.2AB33DFF@eudaptics.com> <20070820191509.GB5544@steel.home> <20070821033813.GF27913@spearce.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Document the -p option for git-show.
+Date: Tue, 21 Aug 2007 20:50:36 +0200
+Message-ID: <200708212050.37227.robin.rosenberg.lists@dewire.com>
+References: <20070821124949.GH768@genesis.frugalware.org> <200708211901.55687.robin.rosenberg.lists@dewire.com> <7v1wdwpzbd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 21 20:37:30 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 20:49:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INYbY-0003zg-E4
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 20:37:29 +0200
+	id 1INYn0-0000B6-Nh
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 20:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760924AbXHUShQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 14:37:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761477AbXHUShQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 14:37:16 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:45481 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760924AbXHUShO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 14:37:14 -0400
-Received: from tigra.home (Fad89.f.strato-dslnet.de [195.4.173.137])
-	by post.webmailer.de (klopstock mo59) (RZmta 10.3)
-	with ESMTP id g06367j7LHwPiP ; Tue, 21 Aug 2007 20:37:11 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 21B7B277BD;
-	Tue, 21 Aug 2007 20:37:10 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 875F8BE01; Tue, 21 Aug 2007 20:37:09 +0200 (CEST)
+	id S1760648AbXHUStP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 14:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760548AbXHUStO
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 14:49:14 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:5462 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1760594AbXHUStO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 14:49:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B01A980267F;
+	Tue, 21 Aug 2007 20:41:31 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 09103-03; Tue, 21 Aug 2007 20:41:31 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id 58C9B80264B;
+	Tue, 21 Aug 2007 20:41:31 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7v1wdwpzbd.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20070821033813.GF27913@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFiUp4=
-X-RZG-CLASS-ID: mo07
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56322>
 
-Shawn O. Pearce, Tue, Aug 21, 2007 05:38:14 +0200:
-> Alex Riesen <raa.lkml@gmail.com> wrote:
-> > Johannes Sixt, Mon, Aug 20, 2007 15:16:56 +0200:
-> > > Since va_copy() must be provided by the compiler, we don't have a
-> > > reasonable chance to provide a working definition in git_compat_util.h.
-> > 
-> > Maybe we don't have to:
-> > 
-> > Subject: [PATCH] Avoid using va_copy in fast-import: it seem to be unportable
+tisdag 21 augusti 2007 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 > 
-> Thanks Alex.  This feels more like the right solution to the problem.
-> I made a few minor edits, any comment?
+> > How about this instead:
+> >
+> > -- robin
+> >
+> > Include diff options into git-show command manual
+> 
+> I think that is probably a good idea but I wonder if placing
+> diff-options in between of pretty-options and pretty-formats is
+> a good idea.
 
-Like editing in my sign-off which I didn't provide :)
+Since pretty-formats is a new section in the man page it works out fine. I
+actually ran make and man to verify this patch.
 
-I actually think fprintf was less object code, but thanks to admins(*) of
-my employer, I am too late anyway.
-
-* The admins blocked gmail because of it being virus infected. Ha!
-  Of course it is, it is a mailbox, for gods sake!
+-- robin
