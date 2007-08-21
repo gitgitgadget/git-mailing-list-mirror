@@ -1,60 +1,75 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: empty directories
-Date: Tue, 21 Aug 2007 13:40:30 -0400
-Message-ID: <20070821134030.b763e9d3.seanlkml@sympatico.ca>
-References: <1187716461.5986.71.camel@beauty>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] Allow multiple tag and branch directories in   git-svnimport
+Date: Tue, 21 Aug 2007 10:46:23 -0700
+Message-ID: <86wsvook5s.fsf@blue.stonehenge.com>
+References: <20070821170858.GA1721@jack.stsp.lan>
+	<20070821173838.GC1721@jack.stsp.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Josh England" <jjengla@sandia.gov>
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:40:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: subversion@elego.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:47:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INXih-0006Z8-JJ
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:40:47 +0200
+	id 1INXok-0000hy-B9
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 19:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757702AbXHURko (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 13:40:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759503AbXHURko
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:40:44 -0400
-Received: from bay0-omc1-s2.bay0.hotmail.com ([65.54.246.74]:31739 "EHLO
-	bay0-omc1-s2.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755033AbXHURkn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2007 13:40:43 -0400
-Received: from BAYC1-PASMTP05.bayc1.hotmail.com ([65.54.191.165]) by bay0-omc1-s2.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Tue, 21 Aug 2007 10:40:43 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Tue, 21 Aug 2007 10:40:42 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1INXib-0004LW-JB; Tue, 21 Aug 2007 13:40:41 -0400
-In-Reply-To: <1187716461.5986.71.camel@beauty>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.13; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 21 Aug 2007 17:40:42.0999 (UTC) FILETIME=[65B4F870:01C7E41A]
+	id S1758875AbXHURqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 13:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758393AbXHURqu
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 13:46:50 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:42723 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760596AbXHURqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 13:46:49 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id DD8CC1DE515; Tue, 21 Aug 2007 10:46:23 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.10.11; tzolkin = 5 Chuen; haab = 19 Yaxkin
+In-Reply-To: <20070821173838.GC1721@jack.stsp.lan> (Stefan Sperling's message of "Tue, 21 Aug 2007 19:38:38 +0200")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56314>
 
-On Tue, 21 Aug 2007 11:14:21 -0600
-"Josh England" <jjengla@sandia.gov> wrote:
+>>>>> "Stefan" == Stefan Sperling <stsp@elego.de> writes:
 
-> Git doesn't seem to allow me to add an empty directory to the index, or
-> even nested empty directories.  Is there any way to do this?  What is
-> the reasoning?  I've got a use case where having empty directories in my
-> git repository would be *very* valuable.  Any information and help is
-> greatly appreciated.
+Stefan> On Tue, Aug 21, 2007 at 07:08:58PM +0200, Stefan Sperling wrote:
+>> +my @tag_dirs = defined $opt_t ? split /:/,$opt_t : "tags";
+Stefan>       ^                                                ^^^^^
+>> +my @branch_dirs = defined $opt_b ? split /:/,$opt_b : "branches";
+Stefan>       ^                                                  ^^^^^^^^^^
 
-Hi Josh,
+Stefan> Ouch, just noticed it's a bad idea to try to initialise
+Stefan> an array with a scalar. Sorry :-/
 
-Git doesn't track empty directories.  There is a brief note about it in
-the FAQ:
+That's completely normal.  Perl predictably promotes the single scalar to an
+array of one element.  I wouldn't have even noticed it in a detailed code
+review, since it's so normal to do that.
 
- http://git.or.cz/gitwiki/GitFaq#head-1fbd4a018d45259c197b169e87dafce2a3c6b5f9
+In fact, the parens that you added do *not* make it a list.  The parens
+are purely for precedence in:
 
-Sean
+    @a = (3, 5, 7);
+
+because otherwise, the text:
+
+    @a = 3, 5, 7;
+
+would be parsed as:
+
+    (@a = 3), 5, 7;
+
+which would be pretty pointless.  It's the *comma* in a list context that
+makes it a list.
+
+So, your parens are not only uncommon, they are also completely ineffective,
+similar to replacing 2 + 3 with (2) + (3) :)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
