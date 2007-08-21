@@ -1,62 +1,91 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [msysGit] Re: Need your help with MinGW Issue 17: --color options
- don't work (produce garbage)
-Date: Tue, 21 Aug 2007 16:08:27 +0200
-Message-ID: <46CAF1DB.3080305@dawes.za.net>
-References: <a1bbc6950708142329w4e0e3d7cq573c67dd3b28f03a@mail.gmail.com>	<3f4fd2640708150032l7441b285mc2cc9e22702bce21@mail.gmail.com>	<Pine.LNX.4.64.0708151708570.19222@wbgn129.biozentrum.uni-wuerzburg.de>	<46C36E7C.1080501@dawes.za.net> <7vsl6ko51b.fsf@gitster.siamese.dyndns.org>
+From: VMiklos <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Document the -p option for git-show.
+Date: Tue, 21 Aug 2007 16:29:15 +0200
+Message-ID: <20070821142915.GI768@genesis.frugalware.org>
+References: <46C97D26.9090102@brefemail.com> <20070821124949.GH768@genesis.frugalware.org> <46CAE41C.4614FDF4@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 16:09:31 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUk9VBj82R8Xhb8H"
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 16:46:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INUQF-0001fx-Br
-	for gcvg-git@gmane.org; Tue, 21 Aug 2007 16:09:31 +0200
+	id 1INV0F-00020q-Nz
+	for gcvg-git@gmane.org; Tue, 21 Aug 2007 16:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760340AbXHUOJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 10:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760253AbXHUOJX
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 10:09:23 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:47564 "EHLO
-	spunkymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760340AbXHUOJW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2007 10:09:22 -0400
-Received: from [192.168.201.100] (dsl-146-25-160.telkomadsl.co.za [165.146.25.160])
-	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id 2864AFFDD8;
-	Tue, 21 Aug 2007 07:09:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vsl6ko51b.fsf@gitster.siamese.dyndns.org>
+	id S1758372AbXHUOqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 10:46:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758294AbXHUOqj
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 10:46:39 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:41669 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757253AbXHUOqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 10:46:39 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1INV06-00048y-LH
+	from <vmiklos@frugalware.org>; Tue, 21 Aug 2007 16:46:37 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 1962A13A4050; Tue, 21 Aug 2007 16:29:14 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46CAE41C.4614FDF4@eudaptics.com>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: 1.0
+X-ELTE-SpamLevel: s
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=1.0 required=5.9 tests=BAYES_50 autolearn=no SpamAssassin version=3.0.3
+	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
+	[score: 0.4999]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56297>
 
-Junio C Hamano wrote:
-> Rogan Dawes <lists@dawes.za.net> writes:
-> 
->> Users that *do* need to use rxvt or SSH should simply disable the
->> color mode, or alternatively, use the cygwin version. Color, while
->> useful, is hardly critical functionality.
-> 
-> Heh, that almost suggests that the native Windows command.com
-> support can disable the color without upsetting anybody ;-)
-> 
 
-Following my other comment in this regard, another reason that colour in 
-the cmd line tools is less important, is because my impression of the 
-intent of the Windows port (end goal, that is), is that the user will be 
-able to use a Windows GUI front-end to do whatever it is they want to.
+--SUk9VBj82R8Xhb8H
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And so the GUI front-end will be responsible for implementing the color 
-anyway, most likely through pattern matching and a state machine.
+Hello,
 
-Regards,
+Na Tue, Aug 21, 2007 at 03:09:48PM +0200, Johannes Sixt <J.Sixt@eudaptics.c=
+om> pisal(a):
+> This is already documented by referencing git-diff-tree a few lines
+> above:
+>=20
+> 	The command takes options applicable to the git-diff-tree[1]
+> 	command to control how the changes the commit introduces are
+> 	shown.
+> (..)
+> Side note: -p is the default for git-show (of commits). Nevertheless, it
+> makes sense to specify it in combination with other options:
+>=20
+> 	git show -p --stat
+>=20
+> will show both the patch and the statistics.
 
-Rogan
+Hm, but -p is used by default for git show, right? And this is not
+documented anywhere IMHO. (Maybe other options are used by default,
+too?)
+
+- VMiklos
+
+--SUk9VBj82R8Xhb8H
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFGyva7e81tAgORUJYRAoRdAJ9USiDuXFshcYzyJsorcP5U864FkwCfVKCA
+vsQV2fH7m9GOXKN2k56tuBk=
+=3pt3
+-----END PGP SIGNATURE-----
+
+--SUk9VBj82R8Xhb8H--
