@@ -1,122 +1,69 @@
-From: "Miles Bader" <miles@gnu.org>
-Subject: "git pull REMOTE" question
-Date: Wed, 22 Aug 2007 13:23:52 +0900
-Message-ID: <fc339e4a0708212123p6e922b4cy3f5f19bfafafa395@mail.gmail.com>
+From: Salikh Zakirov <salikh@gmail.com>
+Subject: Re: empty directories
+Date: Wed, 22 Aug 2007 13:31:39 +0900
+Message-ID: <fage86$hui$1@sea.gmane.org>
+References: <1187716461.5986.71.camel@beauty>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=KOI8-R
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 06:24:00 2007
+X-From: git-owner@vger.kernel.org Wed Aug 22 06:32:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INhl7-0004Nn-FT
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 06:23:57 +0200
+	id 1INhtm-00067L-Fc
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 06:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbXHVEXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 00:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbXHVEXy
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 00:23:54 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:61697 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbXHVEXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 00:23:53 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so46080wra
-        for <git@vger.kernel.org>; Tue, 21 Aug 2007 21:23:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=FxnkPiiG9PcZdMbAFVt+nBiqWrTPbau1ibxy2bC/Q7jYK953OQuaF+rGHiiw+eFW2hiRnG+2YTfW9D/3LTPStwWHf7Mk0Y2ycAWUVUzkhQIA4XqeP2MTMNVBj0h4BFfmPyW3kL/hvXBBhUNLU3xv9pkX/+sJv4h2apH6F9adlK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=HvCffg5d3Wksn+yPeulNW8Oppuc/Zp/5Ull61/fn34RW1R88skwXmWFXCa6y8kqg1LjtXyTxg3/b3F0leGfT0E0UHIF5A9Rfjzh9zIAAuMy4XC94lxY53Ros10QiJiGziaLpcsoz0Rbx6i0ExDOETqz+x78pVpT6B2X4b0Wc47w=
-Received: by 10.90.99.20 with SMTP id w20mr3618334agb.1187756632441;
-        Tue, 21 Aug 2007 21:23:52 -0700 (PDT)
-Received: by 10.90.105.17 with HTTP; Tue, 21 Aug 2007 21:23:52 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: 82997e45ce9524ed
+	id S1751454AbXHVEcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 00:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXHVEcZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 00:32:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:49019 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751392AbXHVEcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 00:32:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INhtD-0005UR-BH
+	for git@vger.kernel.org; Wed, 22 Aug 2007 06:32:19 +0200
+Received: from cerberus.is.titech.ac.jp ([131.112.51.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 06:32:19 +0200
+Received: from salikh by cerberus.is.titech.ac.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 06:32:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cerberus.is.titech.ac.jp
+User-Agent: Thunderbird 2.0.0.6 (X11/20070819)
+In-Reply-To: <1187716461.5986.71.camel@beauty>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56348>
 
-Hi,
+Josh England wrote:
+> Git doesn't seem to allow me to add an empty directory to the index, or
+> even nested empty directories.  Is there any way to do this?  What is
+> the reasoning?  I've got a use case where having empty directories in my
+> git repository would be *very* valuable.  Any information and help is
+> greatly appreciated.
 
-I have a .git/config file in my tree that looks like:
+While the the other replies provided a historical background of how exactly
+git handles directories and why it wasn't storing empty directories,
+there is no fundamental reason for empty directories not being stored,
+it's just nobody got to implement it.
 
-   [remote "origin"]
-           url = ssh://HOST.org/home/miles/git/PROJECT.git
-           fetch = +refs/heads/*:refs/remotes/origin/*
-   [remote "usb"]
-           url = /media/usb/git/PROJECT.git
-           fetch = +refs/heads/*:refs/remotes/usb/*
-   [branch "master"]
-           remote = origin
-           merge = refs/heads/master
+Linus Torvalds posted an untested patch in a recent discussion and requested
+that anyone interested in this functionality continued development and testing.
 
-and I'm normally using branch "master".
+Design discussion: http://lists-archives.org/git/624494-empty-directories.html
+Patch: http://marc.info/?l=git&m=118480075313827&w=2
 
-"git pull" or "git push", without arguments, do exactly the right thing for
-interacting with the "origin" remote.
+Johannes Schindelin also posted an alternative implementation, which emulates
+empty dirs by adding empty .gitignore placeholder to the index.
+http://marc.info/?l=git&m=118484785410247&w=2
 
-When I want to push to "usb" (a usb thumbdrive), "git push usb" also does I
-want, but "git pull usb" does not:  the git-fetch phase of the git-pull
-correctly fetches all the proper objects from the usb repository, but the
-git-merge part of the git-pull fails with an error message like:
-
-   Warning: No merge candidate found because value of config option
-            "branch.master.merge" does not match any remote branch fetched.
-   No changes.
-
-[See end of this message for a more complete output of a the pull command.]
-
-After doing the pull, I can manually do the merge I want using a
-command like "git merge remotes/usb/master", but it's kind of annoying
-to have to do this every time.
-
->From my experimentation, it seems that this is because the local
-branch "master" can only ever be associated with one remote ("origin"
-in this case), and the "branch.master.merge" config _only_ applies to
-that remote.
-
-Is there a way to set things up so that "git pull REMOTE"
-automatically merges fetched branches when doing a non-default pull?
-If not, wouldn't this be a good feature to add?
-
-Thanks,
-
--Miles
-
-
-Here's the complete output of the git-pull command:
-
-   $ git pull usb
-   remote: Generating pack...
-   remote: Done counting 59 objects.
-   remote: Result has 38 objects.
-   remote: Deltifying 38 objects...
-   remote:
-   Unpacking 38 objects...
-   remote: Total 38 (delta 21), reused 24 (delta 8)
-     97% (37/38) done 100% (38/38) done
-   * refs/remotes/usb/master: storing branch 'master' of /media/usb/git/PROJECT
-     commit: 243e656
-   * refs/remotes/usb/branch1: storing branch 'branch1' of
-/media/usb/git/PROJECT
-     commit: e08c6ac
-   * refs/remotes/usb/branch2: storing branch 'branch2' of
-/media/usb/git/PROJECT
-     commit: 8ad20e8
-   * refs/remotes/usb/branch3: storing branch 'branch3' of
-/media/usb/git/PROJECT
-     commit: e874f3d
-   Warning: No merge candidate found because value of config option
-            "branch.master.merge" does not match any remote branch fetched.
-   No changes.
-   $
-
-
--- 
-Everywhere is walking distance if you have the time.  -- Steven Wright
+You could also read the long discussion of the subtle semantic issues that storing empty
+directories introduces in the mail thread accessible from above links.
