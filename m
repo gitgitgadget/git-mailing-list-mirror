@@ -1,119 +1,61 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: Re: [PATCH] Fix break in git-rev-list.txt
-Date: Thu, 23 Aug 2007 00:37:55 +1000
-Message-ID: <46CC4A43.9050305@gmail.com>
-References: <11877706831306-git-send-email-qtonthat@gmail.com> <7vbqczkhvb.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Wed, 22 Aug 2007 16:49:43 +0200
+Organization: glandium.org
+Message-ID: <20070822144943.GA25527@glandium.org>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz> <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 16:38:19 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 16:51:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INrLf-0002J7-8T
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 16:38:19 +0200
+	id 1INrY0-0000LX-Mz
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 16:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760250AbXHVOiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 10:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759922AbXHVOiD
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 10:38:03 -0400
-Received: from pecan.exetel.com.au ([220.233.0.17]:48608 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758579AbXHVOiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 10:38:01 -0400
-Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=kingbee.home)
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1INrLI-00032b-EO; Thu, 23 Aug 2007 00:37:57 +1000
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <7vbqczkhvb.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.2
+	id S1759723AbXHVOvB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 10:51:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758949AbXHVOvA
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 10:51:00 -0400
+Received: from vawad.err.no ([85.19.200.177]:36320 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758920AbXHVOvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 10:51:00 -0400
+Received: from aputeaux-153-1-90-235.w86-217.abo.wanadoo.fr ([86.217.52.235] helo=vaio.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1INrXk-0004n5-Gc; Wed, 22 Aug 2007 16:50:55 +0200
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1INrWh-0006eD-IJ; Wed, 22 Aug 2007 16:49:43 +0200
+Content-Disposition: inline
+In-Reply-To: <864pirej6w.fsf@lola.quinscape.zz>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56385>
 
-Junio C Hamano wrote:
-> 
-> Hmph.  Interesting.  The text around this is:
-> 
-> 	-g, --wark-reflogs::
-> 
->         	Indented first paragraph...
-> 	+
->         With '\--pretty' fromat ... second paragraph ...
-> 	prefixed with this information on the same line.
-> 	+
->         Cannot be combined with --reverse.
-> 
-> And its formatted form looks like either (without your patch):
-> 
-> 	<listitem>
->         <simpara>
->         	Indented first paragraph...
-> 	With <emphasis>--pretty</emphasis> format ...
-> 	</simpara>
->         <simpara>Cannot be combined with --reverse.</simpara>
-> 
->         </listitem>	
-> 
-> or (with):
-> 
-> 	<listitem>
->         <simpara>
->         	Indented first paragraph...
-> 	With <emphasis>--pretty</emphasis> format ...
-> 	Cannot be combined with --reverse.
-> 	</simpara>
-> 
->         </listitem>	
-> 
+On Wed, Aug 22, 2007 at 04:29:43PM +0200, David Kastrup <dak@gnu.org> wrote:
+> The problem I see is that C sucks really really bad as a scripting
+> language, and tying together plumbing functionality into porcelain is
+> one of the most powerful, flexible and hack-friendly features of git.
+> Deprecating scripts is making git more opaque.
+(...)
 
-Well, it goes differently on my system here (asciidoc 8.1.0), as shown
-in the diff bellow:
+Having tools being implemented in C rather than shell won't remove the
+tools for you to be able to write scripts and do your plumbing. It might
+remove some examples for you to write your plumbing, though.
 
-	--- git-rev-list.xml.bad	2007-08-23 00:08:58.000000000 +1000
-	+++ git-rev-list.xml.good	2007-08-23 00:10:20.000000000 +1000
-	@@ -509,16 +509,15 @@
-	         When this option is used you cannot specify commits to
-	         exclude (that is, <emphasis>&#94;commit</emphasis>, <emphasis>commit1..commit2</emphasis>,
-	         nor <emphasis>commit1&#8230;commit2</emphasis> notations cannot be used).
-	-<literal>
-	 With <emphasis>--pretty</emphasis> format other than oneline (for obvious reasons),
-	 this causes the output to have two extra lines of information
+So here you are, all you really need is examples of how to do some plumbing.
 
-	 taken from the reflog.  By default, <emphasis>commit@{Nth}</emphasis> notation is
-	 used in the output.  When the starting commit is specified as
-
-	 instead.  Under <emphasis>--pretty=oneline</emphasis>, the commit message is
-
-	 prefixed with this information on the same line.
-
-	-</literal>
-
-	-Cannot be combined with --reverse.
-
-	 </simpara>
-
-	+<simpara>Cannot be combined with --reverse.</simpara>
-
-	+
-
-	 </listitem>
-
-	 </varlistentry>
-
-	 <varlistentry>
-
-
-Note the extra <literal></literal> which what xmlto has problems with as
-in its error messages
-
-/work/devel/git/git.git/Documentation/git-rev-list.xml:512: element literal: validity error : Element emphasis is not declared in literal list of possible children
-
-I'll have a look at asciidoc as soon as I have some time.
-
-Quy
+Mike
