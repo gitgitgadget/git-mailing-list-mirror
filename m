@@ -1,152 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fixed non portable use of expr and removed incorrect use of test -eq for string comparison
-Date: Wed, 22 Aug 2007 14:56:18 -0700
-Message-ID: <7vejhvi67x.fsf@gitster.siamese.dyndns.org>
-References: <20070822132359.GA13750@informatik.uni-freiburg.de>
-	<11878139102715-git-send-email-david@olrik.dk>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: a475e8095aeb898c1ca60673b82df97d2300cc95 broken for docs
+Date: Wed, 22 Aug 2007 07:09:16 +0200
+Message-ID: <857inom9z7.fsf@lola.goethe.zz>
+References: <86odh0ojx4.fsf@blue.stonehenge.com>
+	<7vsl6coahd.fsf@gitster.siamese.dyndns.org>
+	<86hcmso9ga.fsf@blue.stonehenge.com>
+	<7v7inoo38o.fsf@gitster.siamese.dyndns.org>
+	<20070822014140.GK27913@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ukleinek@informatik.uni-freiburg.de
-To: David Jack Olrik <david@olrik.dk>
-X-From: git-owner@vger.kernel.org Wed Aug 22 23:56:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:59:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INyBo-0006qc-SQ
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:56:37 +0200
+	id 1INyEv-0007pz-Is
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933231AbXHVV4d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 17:56:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933125AbXHVV4c
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:56:32 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:51289 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933003AbXHVV4b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 17:56:31 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C5AF512239B;
-	Wed, 22 Aug 2007 17:56:49 -0400 (EDT)
-In-Reply-To: <11878139102715-git-send-email-david@olrik.dk> (David Jack
-	Olrik's message of "Wed, 22 Aug 2007 22:18:30 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932220AbXHVV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 17:59:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764527AbXHVV7o
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:59:44 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:46211 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1764517AbXHVV7m (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 17:59:42 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id B7C8117F655;
+	Wed, 22 Aug 2007 23:59:40 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id A960F28EBD3;
+	Wed, 22 Aug 2007 23:59:40 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-060-116.pools.arcor-ip.net [84.61.60.116])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 56165BBA25;
+	Wed, 22 Aug 2007 23:59:34 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id AD54A1C298A2; Wed, 22 Aug 2007 07:09:16 +0200 (CEST)
+In-Reply-To: <20070822014140.GK27913@spearce.org> (Shawn O. Pearce's message of "Tue\, 21 Aug 2007 21\:41\:40 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-09.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56428>
 
-David Jack Olrik <david@olrik.dk> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> On 22/08/2007, at 15.23, Uwe Kleine-K=C3=83=C2=B6nig wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> merlyn@stonehenge.com (Randal L. Schwartz) writes:
+>> 
+>> >>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+>> >
+>> > Junio> I think we've seen it reported that docbook-xsl 1.72 and/or 1.73
+>> > Junio> are broken.  Is your debug log from either of these versions?
+>> >
+>> > 1.71
+>> 
+>> Interesting.  I use 1.71 here too but it does not break.
+>> 
+>> I wonder what the differences are between our environments
+>> (don't answer that you use OSX and I use Debian and FC -- that
+>> much I already know).
 >
->> > You'd then need to check against 2 instead of 1, which I find less
->> > obvious as we are testing for a '/' at the begining of the string.
->> If I understood the problem right you only need to test for the exit
->> code, that is the program test is not required at all.
+> It broke at day-job on Cygwin today.  I don't know what version
+> of docbook-xsl I'm using there.  But its fine on my OSX system.
+> I had planned on debugging it at home tonight, but I can't reproduce
+> it here.  Cute.  I will look at it again tomorrow and see if I can
+> debug the issue.
 >
-> Ah, yes that's true. The following should make it more clear that we =
-are
-> looking at the first character.
->
->     if expr "$httpd_only" : "\/" >/dev/null
+> I'm pretty sure it was my recent edit to git-rev-list.txt; its
+> one of the only commits that has impacted that manual page since
+> the last time I had built that manual on Cygwin.  And no, nothing
+> else (e.g. docbook, asciidoc, xmlto) has changed since the last
+> successful build.
 
-Then why not avoid the fork with something like:
+Maybe a line end character issue?
 
-	case "$httpd_only" in
-        /*)
-                ... begins with slash ...
-	esac
-
-By the way, I do not know if the use of "which" there is
-portable.  Have Solaris folks tried this program ever?
-
-How about doing it this way?
-
- * No need to use "cut"; just let IFS do its job.
-
- * No need to use "which"; we will need to do a discovery with
-   custom paths anyway, so use the same logic for discovery from
-   the normal $PATH as well.
-
- * The original code wanted to allow the httpd command that
-   comes to the function to have arguments and preserve it but
-   did so only for the case where the command was not specified
-   with a full pathname.  Allow it for full-path case as well
-   for consistency.
-
- * The original code returned without checking for error when
-   httpd was specified without a full path, and checked and
-   complained when it was.  Check the error exit for both cases.
-
----
-
- git-instaweb.sh |   42 ++++++++++++++++++++++++++----------------
- 1 files changed, 26 insertions(+), 16 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index b79c6b6..a17c9b3 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -29,32 +29,42 @@ test -z "$browser" && browser=3D'firefox'
- test -z "$port" && port=3D1234
-=20
- start_httpd () {
--	httpd_only=3D"`echo $httpd | cut -f1 -d' '`"
--	if test "`expr index $httpd_only /`" -eq '1' || \
--				which $httpd_only >/dev/null
--	then
--		$httpd $fqgitdir/gitweb/httpd.conf
--	else
-+	set x $httpd
-+	shift
-+
-+	httpd=3D
-+	case "$1" in
-+	/*)
-+		: full path -- no discovery
-+		httpd=3D"$1"
-+		;;
-+	*)
- 		# many httpds are installed in /usr/sbin or /usr/local/sbin
- 		# these days and those are not in most users $PATHs
--		for i in /usr/local/sbin /usr/sbin
-+		paths=3D"$PATH:/usr/sbin:/usr/local/sbin"
-+		oIFS=3D"$IFS"
-+		IFS=3D:
-+		for p in $paths
- 		do
--			if test -x "$i/$httpd_only"
-+			if test -x "$p/$1"
- 			then
--				# don't quote $httpd, there can be
--				# arguments to it (-f)
--				$i/$httpd "$fqgitdir/gitweb/httpd.conf"
--				return
-+				httpd=3D"$p/$1"
-+				break
- 			fi
- 		done
--		echo "$httpd_only not found. Install $httpd_only or use" \
--		     "--httpd to specify another http daemon."
-+		IFS=3D"$oIFS"
-+		;;
-+	esac
-+	if test -z "$httpd"
-+	then
-+		echo "$1 not found. Install $1 or use --httpd to specify another htt=
-p daemon."
- 		exit 1
- 	fi
--	if test $? !=3D 0; then
-+	shift
-+	"$httpd" "$@" "$fqgitdir/gitweb/httpd.conf" || {
- 		echo "Could not execute http daemon $httpd."
- 		exit 1
--	fi
-+	}
- }
-=20
- stop_httpd () {
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
