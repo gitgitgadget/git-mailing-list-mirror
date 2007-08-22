@@ -1,76 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 13:21:13 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708221313350.16727@xanadu.home>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
- <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
- <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
- <Pine.LNX.4.64.0708221713540.20400@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: empty directories
+Date: Wed, 22 Aug 2007 11:46:15 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708221144160.30176@woody.linux-foundation.org>
+References: <1187716461.5986.71.camel@beauty> <fage86$hui$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:21:22 2007
+To: Salikh Zakirov <salikh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:47:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INttP-00080v-55
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 19:21:19 +0200
+	id 1INvEJ-0000Fd-05
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 20:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933765AbXHVRVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 13:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933751AbXHVRVP
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 13:21:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:20622 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933220AbXHVRVO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 13:21:14 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JN600I43QVDC7Y0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 22 Aug 2007 13:21:13 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0708221713540.20400@racer.site>
-X-X-Sender: nico@xanadu.home
+	id S1763478AbXHVSqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 14:46:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763365AbXHVSqz
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 14:46:55 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:38056 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761917AbXHVSqy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 14:46:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MIkKTE028218
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 22 Aug 2007 11:46:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MIkFGu031107;
+	Wed, 22 Aug 2007 11:46:15 -0700
+In-Reply-To: <fage86$hui$1@sea.gmane.org>
+X-Spam-Status: No, hits=-2.747 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56404>
 
-On Wed, 22 Aug 2007, Johannes Schindelin wrote:
 
-> Hi,
+
+On Wed, 22 Aug 2007, Salikh Zakirov wrote:
 > 
-> On Wed, 22 Aug 2007, Nicolas Pitre wrote:
-> 
-> > On Wed, 22 Aug 2007, David Kastrup wrote:
-> > 
-> > > Personally, I would prefer an approach of using an embedded script 
-> > > interpreter: then language incompatibilities become a non-issue. 
-> > > git-busybox sounded like a great idea for portability.
-> > 
-> > Indeed.  And while the conversion of some script into C was the right 
-> > thing to do performance wise, many other scripts are hardly performance 
-> > critical.
-> 
-> What is wrong with going from shell to C?  C _is_ portable.  Instead of 
-> relying on _yet_ another scripting language, introducing _yet_ another 
-> language that people have to learn to hack git, introducing _yet_ another 
-> place for bugs to hide, why not just admit that shell is nice for 
-> _prototyping_?
+> Linus Torvalds posted an untested patch in a recent discussion and requested
+> that anyone interested in this functionality continued development and testing.
 
-This is a narrow view of the programming world that I don't share.
+That untested patch was seriously broken - it didn't do the sorting of 
+empty directories right. So it would need a lot of other work.
 
-C is portable indeed, which is one of its upsides.  But it has many 
-downsides too for many _users_, that as a Git _developer_ you apparently 
-conveniently ignore.
+So I'm firmly back in the "just add a '.gitignore' file to the directory" 
+camp.
 
-> Why do we have to to have the same discussion over and over and over 
-> again?
+Or you can fake it out entirely by making it an empty subproject, which 
+also gives you an empty directory.
 
-Because, as shown by the recurring nature of this discussion, using C for 
-everything is evidently not the optimal solution.
-
-
-Nicolas
+			Linus
