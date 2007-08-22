@@ -1,74 +1,85 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: "git pull REMOTE" question
-Date: Wed, 22 Aug 2007 11:44:23 -0500
-Message-ID: <1187801063.15321.4.camel@ld0161-tx32>
-References: <fc339e4a0708212123p6e922b4cy3f5f19bfafafa395@mail.gmail.com>
-	 <7vy7g4jids.fsf@gitster.siamese.dyndns.org>
-	 <buo8x84kwkq.fsf@dhapc248.dev.necel.com>
-	 <7vtzqsjgq2.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Wed, 22 Aug 2007 17:51:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708221713540.20400@racer.site>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+ <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
+ <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Miles Bader <miles@gnu.org>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 18:46:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 18:52:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INtLi-00026a-0J
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 18:46:30 +0200
+	id 1INtRF-0004YS-Aj
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 18:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763578AbXHVQqO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 12:46:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763493AbXHVQqO
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 12:46:14 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:43035 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763429AbXHVQqN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 12:46:13 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id l7MGiOaF021256;
-	Wed, 22 Aug 2007 09:44:24 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l7MGiOST020919;
-	Wed, 22 Aug 2007 11:44:24 -0500 (CDT)
-In-Reply-To: <7vtzqsjgq2.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
+	id S932085AbXHVQvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 12:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764364AbXHVQvt
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 12:51:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49979 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1763320AbXHVQvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 12:51:48 -0400
+Received: (qmail invoked by alias); 22 Aug 2007 16:51:46 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
+  by mail.gmx.net (mp052) with SMTP; 22 Aug 2007 18:51:46 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX183C0coac83Z1QORMx/H++4msk04EwsnscID20rKD
+	nO4CiKylgK8ttL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56399>
 
-On Wed, 2007-08-22 at 00:11, Junio C Hamano wrote:
+Hi,
 
-> So, how about extending the syntax for [branch $current_branch]
-> section of the config like this?
+On Wed, 22 Aug 2007, Nicolas Pitre wrote:
+
+> On Wed, 22 Aug 2007, David Kastrup wrote:
 > 
->  ;; traditional -- when on "master", use '[remote "origin"] url'
->  ;; and '[remote "origin"] fetch' to decide where to fetch from,
->  ;; and merge their refs/heads/master to our branch.
->  [branch "master"]
->  	remote = origin
->         merge = refs/heads/master
+> > Personally, I would prefer an approach of using an embedded script 
+> > interpreter: then language incompatibilities become a non-issue. 
+> > git-busybox sounded like a great idea for portability.
 > 
->  ;; new -- when on "master', and the user says to pull from "usb"
->  ;; without saying which branch to merge, use '[remote "usb"] url'
->  ;; and '[remote "usb"] fetch' to decide where to fetch from,
->  ;; and merge their refs/heads/xprm to our branch.
->  [branch "master:usb"]
->  	merge = refs/heads/xprm
+> Indeed.  And while the conversion of some script into C was the right 
+> thing to do performance wise, many other scripts are hardly performance 
+> critical.
+
+What is wrong with going from shell to C?  C _is_ portable.  Instead of 
+relying on _yet_ another scripting language, introducing _yet_ another 
+language that people have to learn to hack git, introducing _yet_ another 
+place for bugs to hide, why not just admit that shell is nice for 
+_prototyping_?
+
+Why do we have to to have the same discussion over and over and over 
+again?
+
+> The current scripting ability will never go away.  But it is less and 
+> less used meaning that scripting could never be a dependable ability on 
+> all platforms if the current trend continues.
+
+That is just not true.  The regular git hackers, you included, will always 
+use scripts (or alias versions of them), so there is not much chance that 
+scriptability will be hurt by builtinification.
+
+> > If the scripting engine of choice for cobbling together prototypes
+> > remains the Unix toolchain outside of git proper, then Windows users
+> > will _always_ remain second class citizens since they will get to work
+> > with and on new porcelain much later than the rest of the world:
+> > namely when somebody bothers porting his new favorite tool for them to
+> > C.
 > 
-> The trick in the new syntax is that you cannot have a colon in
-> refname, so there is no way for existing [branch $name] section
-> to crash with the new style definition.
+> Right.
 
-Wasn't there was a brief alternate notion to add a "for <remote>"
-clause and allowing something like this?:
+And not making the scripts builtins helps Windows users how, exactly?
 
-    [branch "master"]
-        merge = refs/heads/xprm for usb
-        merge = refs/heads/stuff for otherremote
-
-Thanks,
-jdl
+Ciao,
+Dscho
