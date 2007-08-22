@@ -1,63 +1,115 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 15:42:18 +0200
-Message-ID: <vpqlkc34ret.fsf@bauges.imag.fr>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] Clarify role of init command in git-submodules
+	documentation
+Date: Wed, 22 Aug 2007 15:48:25 +0200
+Message-ID: <20070822134825.GA14589@piper.oerlikon.madduck.net>
+References: <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org> <11875937841178-git-send-email-madduck@madduck.net> <7vd4xhsybm.fsf@gitster.siamese.dyndns.org> <20070817103652.GK1070MdfPADPa@greensroom.kotnet.org> <11875937841178-git-send-email-madduck@madduck.net> <20070820075459.GY1070MdfPADPa@greensroom.kotnet.org> <20070821180218.GA14739@piper.oerlikon.madduck.net> <20070821202516.GL1070MdfPADPa@greensroom.kotnet.org> <20070821210349.GA16702@piper.oerlikon.madduck.net> <20070822083032.GN1070MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 15:43:02 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="J/dobhs11T7y2rNN"
+To: Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org,
+	hjemli@gmail.com, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 15:48:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INqU9-0001iN-FZ
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:43:01 +0200
+	id 1INqZV-00046J-AP
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631AbXHVNm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 09:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756571AbXHVNm5
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:42:57 -0400
-Received: from imag.imag.fr ([129.88.30.1]:54343 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755825AbXHVNm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 09:42:56 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7MDgIdH016570
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 22 Aug 2007 15:42:19 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1INqTS-00057A-Oo; Wed, 22 Aug 2007 15:42:18 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1INqTS-0002Zt-MK; Wed, 22 Aug 2007 15:42:18 +0200
-In-Reply-To: <86absjenc3.fsf@lola.quinscape.zz> (David Kastrup's message of "Wed\, 22 Aug 2007 15\:00\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 22 Aug 2007 15:42:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756890AbXHVNsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 09:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756869AbXHVNsa
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:48:30 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:44278 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754581AbXHVNs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 09:48:29 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id 57015895F54;
+	Wed, 22 Aug 2007 15:48:27 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 00771-07; Wed, 22 Aug 2007 15:48:27 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 9DC7B895D92;
+	Wed, 22 Aug 2007 15:48:26 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 0A3599F16A;
+	Wed, 22 Aug 2007 15:48:26 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id CC88343F4; Wed, 22 Aug 2007 15:48:25 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070822083032.GN1070MdfPADPa@greensroom.kotnet.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56380>
 
-David Kastrup <dak@gnu.org> writes:
 
-> Could you be so kind as to give a one-sentence summary what the
-> benefits over using a shell script would be?  I think this work has
-> started before I joined the list, and I'd be interested in the
-> motivation for it.  In general, I find shell scripts more pleasant for
-> hacking on than C code, and there is no long-term plan to replace all
-> of them, is there?
+--J/dobhs11T7y2rNN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's a Google SoC project :
+also sprach Sven Verdoolaege <skimo@kotnet.org> [2007.08.22.1030 +0200]:
+> > > I suppose this is implicit in the git submodule man page,
+> > > but this is only true if you actually want to use git submodule to
+> > > work with the submodules.
+> >
+> I meant that the rest of my sentence could probably be
+> implicitly understood.
 
-http://git.or.cz/gitwiki/SoC2007Projects?highlight=%28soc%29#head-2b49ddde32756b52fde3b9d9ab01e1bff6aa687c
+Ah. Okay, well, I'd say since this is the git-submodule manpage, we
+can assume that they want to work with git-submodule.
 
--- 
-Matthieu
+> > Is it? I tried this and after cloning a repo with submodules, it
+> > created the submodule directories alright, but it did not
+> > actually check them out/populate them, so they were empty.
+>=20
+> Some people have been doing this manually or have homegrown
+> scripts. Not that you should mention those options here.
+
+Ok.
+
+> > You're missing something like "... unless the submodule is already
+> > registered, in which case it won't be overwritten", right?
+>=20
+> Something like that, yes.
+
+Consider it done. Patch forthcoming, though probably not tonight,
+I also want to give others more time to comment.
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"of course the music is a great difficulty.
+ you see, if one plays good music, people don't listen,
+ and if one plays bad music people don't talk."
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--J/dobhs11T7y2rNN
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGzD6pIgvIgzMMSnURApAxAJ9GwQUHuG8exlgkv9iTqcpkR8bXhgCfcHgi
+ndc9L5YFpQvnsQxRUuFbBSQ=
+=AaWV
+-----END PGP SIGNATURE-----
+
+--J/dobhs11T7y2rNN--
