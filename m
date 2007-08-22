@@ -1,97 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git pull REMOTE" question
-Date: Wed, 22 Aug 2007 13:29:36 -0700
-Message-ID: <7vmywjia8f.fsf@gitster.siamese.dyndns.org>
-References: <fc339e4a0708212123p6e922b4cy3f5f19bfafafa395@mail.gmail.com>
-	<7vy7g4jids.fsf@gitster.siamese.dyndns.org>
-	<buo8x84kwkq.fsf@dhapc248.dev.necel.com>
-	<7vtzqsjgq2.fsf@gitster.siamese.dyndns.org>
-	<1187801063.15321.4.camel@ld0161-tx32>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] Fixed non portable use of expr, and incorrect use of
+	test -eq for string comparison.
+Date: Wed, 22 Aug 2007 23:00:01 +0200
+Message-ID: <20070822210001.GA7585@piper.oerlikon.madduck.net>
+References: <11877841633473-git-send-email-david@olrik.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>, Git List <git@vger.kernel.org>
-To: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 22:29:59 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BOKacYhQ+x31HxR3"
+Cc: git@vger.kernel.org
+To: David Jack Olrik <david@olrik.dk>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:00:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INwpx-0008Ev-K0
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 22:29:57 +0200
+	id 1INxJN-0003IB-UU
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760777AbXHVU3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 16:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760093AbXHVU3w
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 16:29:52 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49931 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758709AbXHVU3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 16:29:52 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C8EF126608;
-	Wed, 22 Aug 2007 16:30:10 -0400 (EDT)
-In-Reply-To: <1187801063.15321.4.camel@ld0161-tx32> (Jon Loeliger's message of
-	"Wed, 22 Aug 2007 11:44:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763237AbXHVVAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 17:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763084AbXHVVAR
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:00:17 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:43884 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758834AbXHVVAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 17:00:15 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id D5384895F4E;
+	Wed, 22 Aug 2007 23:00:07 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 22280-10; Wed, 22 Aug 2007 23:00:07 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 37480895F44;
+	Wed, 22 Aug 2007 23:00:03 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 5F1029F16A;
+	Wed, 22 Aug 2007 23:00:02 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id E1B5B43F4; Wed, 22 Aug 2007 23:00:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <11877841633473-git-send-email-david@olrik.dk>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56419>
 
-Jon Loeliger <jdl@freescale.com> writes:
 
-> On Wed, 2007-08-22 at 00:11, Junio C Hamano wrote:
-> ...
->>  ;; new -- when on "master', and the user says to pull from "usb"
->>  ;; without saying which branch to merge, use '[remote "usb"] url'
->>  ;; and '[remote "usb"] fetch' to decide where to fetch from,
->>  ;; and merge their refs/heads/xprm to our branch.
->>  [branch "master:usb"]
->>  	merge = refs/heads/xprm
->> 
->> The trick in the new syntax is that you cannot have a colon in
->> refname, so there is no way for existing [branch $name] section
->> to crash with the new style definition.
->
-> Wasn't there was a brief alternate notion to add a "for <remote>"
-> clause and allowing something like this?:
->
->     [branch "master"]
->         merge = refs/heads/xprm for usb
->         merge = refs/heads/stuff for otherremote
+--BOKacYhQ+x31HxR3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I remember that one (I do not think nobody implemented it,
-though).  Thanks for reminding.
+also sprach David Jack Olrik <david@olrik.dk> [2007.08.22.1402 +0200]:
+> -	if test "`expr index $httpd_only /`" -eq '1' || \
+> +	if test "`echo $httpd_only | cut -c 1`" =3D '/' || \
 
-So...
+how about
 
-	[branch "master"]
-        	remote = origin
-                merge = refs/heads/xprm for usb
-                merge = refs/heads/stuff for otherremote
-                merge = refs/heads/master
+  if [ "$httpd_only" !=3D "${httpd_only#/}" ]; then
 
-and when you are on your "master", 
+that should do the same and does so without external processes.
 
-	$ git fetch
-        $ git pull
+>  				which $httpd_only >/dev/null
 
-goes to "origin" (because you did not even say the remote name).
+This is also not really portable. I suggest the use of
 
-	$ git fetch usb
-        $ git pull usb
+  command -v $http_only
 
-goes to "usb".  And "git pull" from such a nicknamed remote
-looks up merge lines with "for nickname" to find the branch(es)
-to merge.  If there is no merge line with "for nickname" for the
-remote (e.g. "git pull origin" in the above example does not
-have any), and if there is a merge line without "for nickname",
-then that line can be used (e.g. "git pull" which is exactly the
-same as "git pull origin" will use the 'master' branch from the
-remote).
+first, that's shell-internal as well, and second, it's
+/more/ portable than which, but also not entirely.
 
-I think that is much easier to understand and maintain for the
-end users than the [branch "master:usb"].  The latter is wrong
-to begin with -- it is not about branch anymore.
+http://www.debian.org/doc/developers-reference/ch-best-pkging-practices.en.=
+html#s-bpp-debian-maint-scripts
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"of course the music is a great difficulty.
+ you see, if one plays good music, people don't listen,
+ and if one plays bad music people don't talk."
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--BOKacYhQ+x31HxR3
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGzKPRIgvIgzMMSnURAnO2AJ9Kjs8VsUoiKUB2P5WcjKSQQB/21wCg1wQ0
+VhhGelhIdELkuRKjTnjhNC0=
+=m0Kq
+-----END PGP SIGNATURE-----
+
+--BOKacYhQ+x31HxR3--
