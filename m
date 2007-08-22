@@ -1,74 +1,63 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Fixed non portable use of expr, and incorrect use of test -eq for string comparison.
-Date: Wed, 22 Aug 2007 15:23:59 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070822132359.GA13750@informatik.uni-freiburg.de>
-References: <11877841633473-git-send-email-david@olrik.dk> <20070822122140.GB11926@informatik.uni-freiburg.de> <9E40DAA3-69E5-417C-8041-E1980E42DB60@olrik.dk>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Wed, 22 Aug 2007 15:42:18 +0200
+Message-ID: <vpqlkc34ret.fsf@bauges.imag.fr>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: David Jack Olrik <david@olrik.dk>
-X-From: git-owner@vger.kernel.org Wed Aug 22 15:24:15 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 15:43:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INqBy-00012d-VE
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:24:15 +0200
+	id 1INqU9-0001iN-FZ
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbXHVNYH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 09:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbXHVNYF
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:24:05 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:44465 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750747AbXHVNYD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 09:24:03 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1INqBl-0005qJ-2u; Wed, 22 Aug 2007 15:24:01 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7MDO0l9013758;
-	Wed, 22 Aug 2007 15:24:00 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7MDNxsj013757;
-	Wed, 22 Aug 2007 15:23:59 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <9E40DAA3-69E5-417C-8041-E1980E42DB60@olrik.dk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756631AbXHVNm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 09:42:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756571AbXHVNm5
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:42:57 -0400
+Received: from imag.imag.fr ([129.88.30.1]:54343 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755825AbXHVNm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 09:42:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7MDgIdH016570
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 22 Aug 2007 15:42:19 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1INqTS-00057A-Oo; Wed, 22 Aug 2007 15:42:18 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1INqTS-0002Zt-MK; Wed, 22 Aug 2007 15:42:18 +0200
+In-Reply-To: <86absjenc3.fsf@lola.quinscape.zz> (David Kastrup's message of "Wed\, 22 Aug 2007 15\:00\:12 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 22 Aug 2007 15:42:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56379>
 
-David Jack Olrik wrote:
->=20
-> On 22/08/2007, at 14.21, Uwe Kleine-K=F6nig wrote:
->=20
-> >David Jack Olrik wrote:
-> >>-	if test "`expr index $httpd_only /`" -eq '1' || \
-> >>+	if test "`echo $httpd_only | cut -c 1`" =3D '/' || \
-> >> 				which $httpd_only >/dev/null
-> >
-> >I wonder why not use:
-> >
-> >	if expr "z$httpd_only" : "z/" >/dev/null
->=20
-> You'd then need to check against 2 instead of 1, which I find less
-> obvious as we are testing for a '/' at the begining of the string.
-If I understood the problem right you only need to test for the exit
-code, that is the program test is not required at all.
+David Kastrup <dak@gnu.org> writes:
 
-Best regards
-Uwe
+> Could you be so kind as to give a one-sentence summary what the
+> benefits over using a shell script would be?  I think this work has
+> started before I joined the list, and I'd be interested in the
+> motivation for it.  In general, I find shell scripts more pleasant for
+> hacking on than C code, and there is no long-term plan to replace all
+> of them, is there?
 
---=20
-Uwe Kleine-K=F6nig
+That's a Google SoC project :
 
-http://www.google.com/search?q=3D5%2B7
+http://git.or.cz/gitwiki/SoC2007Projects?highlight=%28soc%29#head-2b49ddde32756b52fde3b9d9ab01e1bff6aa687c
+
+-- 
+Matthieu
