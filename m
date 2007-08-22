@@ -1,66 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [StGit PATCH 1/6] Split git.merge into two functions
-Date: Wed, 22 Aug 2007 03:04:37 -0700
-Message-ID: <7v7innkhqi.fsf@gitster.siamese.dyndns.org>
-References: <11875975232619-git-send-email-davidk@lysator.liu.se>
-	<1187597523433-git-send-email-davidk@lysator.liu.se>
-	<87odh2d1q7.fsf@morpheus.local>
-	<7vejhxrcgl.fsf@gitster.siamese.dyndns.org>
-	<20070821193504.GA20823@informatik.uni-freiburg.de>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: git-svn: commit author x commit committer issue
+Date: Wed, 22 Aug 2007 12:07:58 +0200
+Message-ID: <8b65902a0708220307g2cb4b290s9bbf4603af7489fa@mail.gmail.com>
+References: <46B9C92B.3000000@st.com> <20070816092002.GD16849@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-	git <git@vger.kernel.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Wed Aug 22 12:05:01 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Richard MUSIL" <richard.musil@st.com>, git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 22 12:08:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INn5A-0002m3-74
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 12:05:00 +0200
+	id 1INn8B-0003mG-My
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 12:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756078AbXHVKEo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 06:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754583AbXHVKEo
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 06:04:44 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:39768 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754547AbXHVKEn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 06:04:43 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 479D61260FC;
-	Wed, 22 Aug 2007 06:05:02 -0400 (EDT)
-In-Reply-To: <20070821193504.GA20823@informatik.uni-freiburg.de> (Uwe
-	=?utf-8?Q?Kleine-K=C3=B6nig's?= message of "Tue, 21 Aug 2007 21:35:05
- +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756326AbXHVKIC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 06:08:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbXHVKIA
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 06:08:00 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:15086 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751372AbXHVKIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 06:08:00 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so93482wra
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 03:07:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eGL3LWtWCiKir9IxLVWIIXXdeSIO+XDEXQwO1WK0PNiX0EJk0tbihaVbM9W5ZfF5tnp987esVkln9nq8dm1/UrBjXuxLBYxvWE27JwBkWv08FDB0bQT13VrQ6ydwDx6VWHXNuniMvNFj380P5QAEUtaukN3rkP+zGRHI7Oa2iPc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=E5o9s0F1jDK1RnZRz1kdznofePZg1ESVks+JrRMcEfCxET+0RboKfYKg8mT4Wu0589j+ILPcldPxIX4nv8dvUl3e1gfw6SiZyGDyTBQxqVkg3OOTIjEaXiY+Ju6VTEtjCnSKuIkRNzM1rQGBblV/tm+CMyKFd5J8fZBr70Oqvb4=
+Received: by 10.90.120.13 with SMTP id s13mr4104029agc.1187777278822;
+        Wed, 22 Aug 2007 03:07:58 -0700 (PDT)
+Received: by 10.100.46.11 with HTTP; Wed, 22 Aug 2007 03:07:58 -0700 (PDT)
+In-Reply-To: <20070816092002.GD16849@muzzle>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56365>
 
-Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
-
-> Hello David,
+On 8/16/07, Eric Wong <normalperson@yhbt.net> wrote:
+> Richard MUSIL <richard.musil@st.com> wrote:
+> > Normally, when patch is applied, git distinguishes commit author and
+> > commit committer (relying on info from patch).
+> > However, after the patches are committed to svn repository using:
+> > git-svn dcommit
+> > author and committer data are set to same values (or at least time and
+> > date, I cannot verify it for names).
+> > I wonder if there is any reason for this behavior, because I would
+> > definitely like to keep original commit info (which came from patch) in
+> > my git repository.
 >
-> Junio C Hamano wrote:
->> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->>=20
->> > David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->> >
->> > It seems that git-send-email didn't like me for some reason.  Doub=
-le
->> > UTF-8 encoding is not very pretty.
->>=20
->> I believe Uwe (CC'ed) had a few patches to deal with this area.
->> Do they help?
+> I try to keep commits made to SVN using git-svn as much like commits
+> made using other SVN clients as much as possible.
 >
-> My patches are already in next, the relevant being probably
-> v1.5.3-rc4-38-g94638f8.
+> Two people using git-svn (in its recommended fashion and maintaining
+> linear history) can have identical SHA1s in their repository even if
+> those two repositories had never seen each other before.  Consistency
+> is good.
+>
+> I also want to avoid creating extra junk on the SVN repository which I
+> don't personally consider very important.  SVK does stuff like that with
+> merges, and only SVK understands the metadata it uses.  I prefer
+> transparency.
 
-It is in 'master' and in -rc5/-rc6.
+Instead of using SVN metadata, why not store the missing information
+like git-svn store the SVN rev id. (in the commit log as I know).
+
+-- 
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
