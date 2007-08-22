@@ -1,59 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: empty directories
-Date: Wed, 22 Aug 2007 11:46:15 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708221144160.30176@woody.linux-foundation.org>
-References: <1187716461.5986.71.camel@beauty> <fage86$hui$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Salikh Zakirov <salikh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 20:47:00 2007
+From: Erez Zadok <ezk@cs.sunysb.edu>
+Subject: why git-reset needed after "cp -a" of a git repo?
+Date: Wed, 22 Aug 2007 14:57:05 -0400
+Message-ID: <200708221857.l7MIv5tD011053@agora.fsl.cs.sunysb.edu>
+Cc: Erez Zadok <ezk@cs.sunysb.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:57:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INvEJ-0000Fd-05
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 20:46:59 +0200
+	id 1INvOI-0004bW-23
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 20:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763478AbXHVSqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 14:46:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763365AbXHVSqz
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 14:46:55 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38056 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761917AbXHVSqy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 14:46:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MIkKTE028218
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 22 Aug 2007 11:46:21 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MIkFGu031107;
-	Wed, 22 Aug 2007 11:46:15 -0700
-In-Reply-To: <fage86$hui$1@sea.gmane.org>
-X-Spam-Status: No, hits=-2.747 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751792AbXHVS5O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 14:57:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbXHVS5O
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 14:57:14 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:46123 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751750AbXHVS5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 14:57:13 -0400
+Received: from agora.fsl.cs.sunysb.edu (agora.fsl.cs.sunysb.edu [130.245.126.12])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l7MIv6e4030621;
+	Wed, 22 Aug 2007 14:57:06 -0400
+Received: from agora.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by agora.fsl.cs.sunysb.edu (8.13.1/8.13.1) with ESMTP id l7MIv5jt011056;
+	Wed, 22 Aug 2007 14:57:05 -0400
+Received: (from ezk@localhost)
+	by agora.fsl.cs.sunysb.edu (8.13.1/8.12.8/Submit) id l7MIv5tD011053;
+	Wed, 22 Aug 2007 14:57:05 -0400
+X-MailKey: Erez_Zadok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56405>
 
+Apologies if this had been discussed before: I wasn't able to find this in
+the ML archives.
 
+Sometimes I copy a whole git archive using cp -a, for experimental reasons,
+or otherwise; sometimes I rsync several git repos between remote and local
+computers to make access faster (it's often faster to rsync two git repos
+than to re-clone or deal with merge conflicts).
 
-On Wed, 22 Aug 2007, Salikh Zakirov wrote:
-> 
-> Linus Torvalds posted an untested patch in a recent discussion and requested
-> that anyone interested in this functionality continued development and testing.
+However, I noticed that after I copy a git repo (using v1.5.2.2), the index
+entries are all out of sync, and I need to run git-reset.  Why?  What's in
+the index file that changes after a cp -a or rsync that git depends on?  Is
+it atime's and if so, aren't they copied by cp -a or rsync?  If it depends
+on atime's, what happens if I mount my filesystem with noatime?  Or does
+git's index depends on inode numbers which change after a cp -a?  (BTW, I
+tried a variety of rsync options and none helped.)  I also briefly looked at
+the source code and wasn't able to find the answer.
 
-That untested patch was seriously broken - it didn't do the sorting of 
-empty directories right. So it would need a lot of other work.
+So, is there a way to efficiently copy a git repo on a local or remote host
+w/o having to rerun git-reset afterwards?
 
-So I'm firmly back in the "just add a '.gitignore' file to the directory" 
-camp.
-
-Or you can fake it out entirely by making it an empty subproject, which 
-also gives you an empty directory.
-
-			Linus
+Thanks,
+Erez.
