@@ -1,92 +1,49 @@
-From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 22:34:24 +0100
-Message-ID: <3f4fd2640708221434i4f5650e0u9adb523742666f40@mail.gmail.com>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
-	 <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
-	 <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
-	 <Pine.LNX.4.64.0708221713540.20400@racer.site>
-	 <86mywjcwv7.fsf@lola.quinscape.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-svn: commit author x commit committer issue
+Date: Wed, 22 Aug 2007 14:34:51 -0700
+Message-ID: <7vir77i77o.fsf@gitster.siamese.dyndns.org>
+References: <46B9C92B.3000000@st.com> <20070816092002.GD16849@muzzle>
+	<8b65902a0708220307g2cb4b290s9bbf4603af7489fa@mail.gmail.com>
+	<8b65902a0708220317t2b3dd01csef460a943ed2ef37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 23:34:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Eric Wong" <normalperson@yhbt.net>,
+	"Richard MUSIL" <richard.musil@st.com>, git@vger.kernel.org
+To: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:35:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INxqQ-0007aH-Kk
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:34:30 +0200
+	id 1INxrH-0007xI-Uz
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764109AbXHVVe1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 17:34:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763711AbXHVVe1
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:34:27 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:15880 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763556AbXHVVeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 17:34:25 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so321572rvb
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 14:34:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KxvZXmYcldbfRid8hUssx4stUdlIMSBdx7nqXq46NFPALIH4F5c1St4dVYa5tebakXC9RvtyYoqPuLmjW9dEy8ekhhzJEoGbGNZO9zFsyrAaCQbkQh4nfAHiJYhwj9ubwPIgNK+vFuEaSNhib3APK05NYs9G0zhKOj1wM4zT7FI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rcUGZgGo2cG3iXLIcxkZcVi6CqSPBgv8VN+XocHvWOVwV2clg4mNF/bBpj5wYavvk4ovlHYqIS/BDbVzGXtXELYyZ5bPiQbpkibDhhis6mDxPN1cCy5sRjZsmne8UjJxtENJbxDhY5f5QGK3z1mIZ0n6rOw0pLSvYoqirXUOlHc=
-Received: by 10.141.85.13 with SMTP id n13mr530693rvl.1187818464718;
-        Wed, 22 Aug 2007 14:34:24 -0700 (PDT)
-Received: by 10.141.87.20 with HTTP; Wed, 22 Aug 2007 14:34:24 -0700 (PDT)
-In-Reply-To: <86mywjcwv7.fsf@lola.quinscape.zz>
-Content-Disposition: inline
+	id S1764167AbXHVVfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 17:35:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763831AbXHVVfG
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:35:06 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50932 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760460AbXHVVfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 17:35:04 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C926126687;
+	Wed, 22 Aug 2007 17:35:20 -0400 (EDT)
+In-Reply-To: <8b65902a0708220317t2b3dd01csef460a943ed2ef37@mail.gmail.com>
+	(Guilhem Bonnefille's message of "Wed, 22 Aug 2007 12:17:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56424>
 
-On 22/08/07, David Kastrup <dak@gnu.org> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > On Wed, 22 Aug 2007, Nicolas Pitre wrote:
-> >
-> >> On Wed, 22 Aug 2007, David Kastrup wrote:
-> >> > If the scripting engine of choice for cobbling together
-> >> > prototypes remains the Unix toolchain outside of git proper, then
-> >> > Windows users will _always_ remain second class citizens since
-> >> > they will get to work with and on new porcelain much later than
-> >> > the rest of the world: namely when somebody bothers porting his
-> >> > new favorite tool for them to C.
-> >>
-> >> Right.
-> >
-> > And not making the scripts builtins helps Windows users how,
-> > exactly?
->
-> Red herring.  The proposal was not to do nothing, but rather give git
-> a dedicated scripting language internal to it.
+"Guilhem Bonnefille" <guilhem.bonnefille@gmail.com> writes:
 
-That is a really neat idea.
+> Oops, sory, I'm completly wrong: the git-svn-id is put on the commit
+> log in the Git repo, not on the SVN repo.
+> Please, ignore me.
 
-> Two suggestions of
-> mine with different advantages were git-busybox and Lua.  A third one
-> was once proposed by Linus with some code example: starting a
-> scripting language from scratch.
-
-Do you have a link to the proposal?
-
-> So obviously, the need for something
-> like that is recognized, and not having to start from zero for that
-> might be an advantage if a good, workable language can be found.
-
-It would also aid the Windows porting effort by having a single,
-builtin scripting engine that does not have differing behaviours on
-different platforms.
-
-One thing that will need sorting is the binding of the C
-plumbing/builtin command API to the scripting language, but this
-shouldn't be that difficult to do.
-
-- Reece
+I do not think it is wrong to tack that to the commit message
+you push it back to SVN... am I missing something?
