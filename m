@@ -1,68 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 15:00:12 +0200
-Message-ID: <86absjenc3.fsf@lola.quinscape.zz>
-References: <46CC3090.7080500@gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] Fixed non portable use of expr, and incorrect use of test -eq for string comparison.
+Date: Wed, 22 Aug 2007 15:23:59 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070822132359.GA13750@informatik.uni-freiburg.de>
+References: <11877841633473-git-send-email-david@olrik.dk> <20070822122140.GB11926@informatik.uni-freiburg.de> <9E40DAA3-69E5-417C-8041-E1980E42DB60@olrik.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 15:02:31 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David Jack Olrik <david@olrik.dk>
+X-From: git-owner@vger.kernel.org Wed Aug 22 15:24:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INpqw-0007YQ-Ni
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:02:31 +0200
+	id 1INqBy-00012d-VE
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 15:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756869AbXHVNCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 09:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366AbXHVNCJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:02:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:40111 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756800AbXHVNCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 09:02:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1INppw-0002AQ-F7
-	for git@vger.kernel.org; Wed, 22 Aug 2007 15:01:28 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 15:01:28 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 15:01:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:MIIrByR+cy+BIxLmpGCr/rJQCA8=
+	id S1750747AbXHVNYH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 09:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbXHVNYF
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 09:24:05 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:44465 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750747AbXHVNYD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 09:24:03 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1INqBl-0005qJ-2u; Wed, 22 Aug 2007 15:24:01 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7MDO0l9013758;
+	Wed, 22 Aug 2007 15:24:00 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7MDNxsj013757;
+	Wed, 22 Aug 2007 15:23:59 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <9E40DAA3-69E5-417C-8041-E1980E42DB60@olrik.dk>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56378>
 
-Carlos Rica <jasampler@gmail.com> writes:
+David Jack Olrik wrote:
+>=20
+> On 22/08/2007, at 14.21, Uwe Kleine-K=F6nig wrote:
+>=20
+> >David Jack Olrik wrote:
+> >>-	if test "`expr index $httpd_only /`" -eq '1' || \
+> >>+	if test "`echo $httpd_only | cut -c 1`" =3D '/' || \
+> >> 				which $httpd_only >/dev/null
+> >
+> >I wonder why not use:
+> >
+> >	if expr "z$httpd_only" : "z/" >/dev/null
+>=20
+> You'd then need to check against 2 instead of 1, which I find less
+> obvious as we are testing for a '/' at the begining of the string.
+If I understood the problem right you only need to test for the exit
+code, that is the program test is not required at all.
 
-> This is the first version of the program "builtin-reset.c",
-> intended for replacing the script "git-reset.sh".
->
-> The --mixed option with -- paths is not implemented yet.
->
-> The tests I made for it are not finished so they are not included,
-> but it seems to pass the rest of the test suite.
+Best regards
+Uwe
 
-Could you be so kind as to give a one-sentence summary what the
-benefits over using a shell script would be?  I think this work has
-started before I joined the list, and I'd be interested in the
-motivation for it.  In general, I find shell scripts more pleasant for
-hacking on than C code, and there is no long-term plan to replace all
-of them, is there?  So unless there is some issue that can't be
-addressed reliably or efficiently by reverting to other commands for
-everything involving bulk processing, I am not really happy to see
-shell scripts replaced.
+--=20
+Uwe Kleine-K=F6nig
 
-Thanks,
-
--- 
-David Kastrup
+http://www.google.com/search?q=3D5%2B7
