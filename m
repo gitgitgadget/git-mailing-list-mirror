@@ -1,69 +1,64 @@
-From: Salikh Zakirov <salikh@gmail.com>
-Subject: Re: empty directories
-Date: Wed, 22 Aug 2007 13:31:39 +0900
-Message-ID: <fage86$hui$1@sea.gmane.org>
-References: <1187716461.5986.71.camel@beauty>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix new-workdir (again) to work on bare repositories
+Date: Tue, 21 Aug 2007 21:33:57 -0700
+Message-ID: <7v3ayckx1m.fsf@gitster.siamese.dyndns.org>
+References: <20070822015012.GA11085@spearce.org>
+	<7v1wdwntc6.fsf@gitster.siamese.dyndns.org>
+	<20070822033625.GN27913@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 06:32:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 06:34:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INhtm-00067L-Fc
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 06:32:54 +0200
+	id 1INhuy-0006MU-AW
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 06:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbXHVEcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 00:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXHVEcZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 00:32:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:49019 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751392AbXHVEcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 00:32:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1INhtD-0005UR-BH
-	for git@vger.kernel.org; Wed, 22 Aug 2007 06:32:19 +0200
-Received: from cerberus.is.titech.ac.jp ([131.112.51.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 06:32:19 +0200
-Received: from salikh by cerberus.is.titech.ac.jp with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 06:32:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cerberus.is.titech.ac.jp
-User-Agent: Thunderbird 2.0.0.6 (X11/20070819)
-In-Reply-To: <1187716461.5986.71.camel@beauty>
+	id S1751289AbXHVEeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 00:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbXHVEeE
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 00:34:04 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:36841 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbXHVEeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 00:34:03 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8A767124A20;
+	Wed, 22 Aug 2007 00:34:21 -0400 (EDT)
+In-Reply-To: <20070822033625.GN27913@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 21 Aug 2007 23:36:26 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56349>
 
-Josh England wrote:
-> Git doesn't seem to allow me to add an empty directory to the index, or
-> even nested empty directories.  Is there any way to do this?  What is
-> the reasoning?  I've got a use case where having empty directories in my
-> git repository would be *very* valuable.  Any information and help is
-> greatly appreciated.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-While the the other replies provided a historical background of how exactly
-git handles directories and why it wasn't storing empty directories,
-there is no fundamental reason for empty directories not being stored,
-it's just nobody got to implement it.
+>> You may have made the part to create the new directory and make
+>> bunch of symbolic links to work with your patch, but as far as I
+>> know, new-workdir is designed to share the .git/config file with
+>> the borrowed repository, which means the configuration would say
+>> "core.bare = yes" for a bare repository.  So I suspect that the
+>> initial checkout after creating the new directory and populating
+>> its .git would barf, although I haven't tested it.
+>
+> Indeed.  I have a driver script that sets up my bare repos, it
+> removes core.bare from their configs.  So if you go into the bare
+> repo our auto-sensing bare thing gets activated and says "Hmm, it
+> ends in .git but isn't exactly .git so its bare!" (correct answer).
+> If you cd into a workdir created by git-new-workdir the auto-sensing
+> bare thing gets activated and says "Hmm, it is exactly .git so its
+> not-bare!" (correct answer).
+>
+> So removing that core.bare thing makes the magic work.
 
-Linus Torvalds posted an untested patch in a recent discussion and requested
-that anyone interested in this functionality continued development and testing.
-
-Design discussion: http://lists-archives.org/git/624494-empty-directories.html
-Patch: http://marc.info/?l=git&m=118480075313827&w=2
-
-Johannes Schindelin also posted an alternative implementation, which emulates
-empty dirs by adding empty .gitignore placeholder to the index.
-http://marc.info/?l=git&m=118484785410247&w=2
-
-You could also read the long discussion of the subtle semantic issues that storing empty
-directories introduces in the mail thread accessible from above links.
+Ok, that is better than the response I sent (our messages
+crossed).  In that case, perhaps you would want a warning or a
+suggestion at the end of new-workdir script, probably before
+checkout, to teach the user about that magic?
