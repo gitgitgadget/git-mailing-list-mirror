@@ -1,54 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: a475e8095aeb898c1ca60673b82df97d2300cc95 broken for docs
-Date: Tue, 21 Aug 2007 16:51:51 -0700
-Message-ID: <7v7inoo38o.fsf@gitster.siamese.dyndns.org>
-References: <86odh0ojx4.fsf@blue.stonehenge.com>
-	<7vsl6coahd.fsf@gitster.siamese.dyndns.org>
-	<86hcmso9ga.fsf@blue.stonehenge.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: empty directories
+Date: Wed, 22 Aug 2007 02:06:39 +0200
+Organization: At home
+Message-ID: <fafumf$fb4$1@sea.gmane.org>
+References: <1187716461.5986.71.camel@beauty>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-X-From: git-owner@vger.kernel.org Wed Aug 22 01:52:12 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 22 02:06:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INdW7-0005XP-Pk
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 01:52:12 +0200
+	id 1INdkO-0000jB-5f
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 02:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755932AbXHUXwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 19:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754791AbXHUXwF
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 19:52:05 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:32963 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755370AbXHUXwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 19:52:04 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 70F65125CEE;
-	Tue, 21 Aug 2007 19:52:19 -0400 (EDT)
-In-Reply-To: <86hcmso9ga.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "Tue, 21 Aug 2007 14:37:41 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750988AbXHVAGw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 20:06:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbXHVAGw
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 20:06:52 -0400
+Received: from main.gmane.org ([80.91.229.2]:46596 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750885AbXHVAGv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 20:06:51 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INdkH-0007LR-SH
+	for git@vger.kernel.org; Wed, 22 Aug 2007 02:06:49 +0200
+Received: from host-89-229-8-65.torun.mm.pl ([89.229.8.65])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 02:06:49 +0200
+Received: from jnareb by host-89-229-8-65.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 02:06:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-8-65.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56340>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+Josh England wrote:
 
->>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
->
-> Junio> I think we've seen it reported that docbook-xsl 1.72 and/or 1.73
-> Junio> are broken.  Is your debug log from either of these versions?
->
-> 1.71
 
-Interesting.  I use 1.71 here too but it does not break.
+> Git doesn't seem to allow me to add an empty directory to the index, or
+> even nested empty directories.  Is there any way to do this?  What is
+> the reasoning?  I've got a use case where having empty directories in my
+> git repository would be *very* valuable.  Any information and help is
+> greatly appreciated.
 
-I wonder what the differences are between our environments
-(don't answer that you use OSX and I use Debian and FC -- that
-much I already know).
+Git does not track empty directories [yet], but you can use empty .gitignore
+file trick to mark "empty" directories to be added.
+
+There were some discussion about this on git mailing list (see archives),
+and this issue is most probably mentioned on GitFaq page in git wiki.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
