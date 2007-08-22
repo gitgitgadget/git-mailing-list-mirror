@@ -1,81 +1,49 @@
-From: David Kastrup <dak@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: a475e8095aeb898c1ca60673b82df97d2300cc95 broken for docs
-Date: Wed, 22 Aug 2007 09:24:15 +0200
-Message-ID: <86veb8dobk.fsf@lola.quinscape.zz>
-References: <86odh0ojx4.fsf@blue.stonehenge.com> <7vsl6coahd.fsf@gitster.siamese.dyndns.org> <86hcmso9ga.fsf@blue.stonehenge.com> <7v7inoo38o.fsf@gitster.siamese.dyndns.org> <20070822014140.GK27913@spearce.org>
+Date: Wed, 22 Aug 2007 01:13:55 -0700
+Message-ID: <7vir78j8ak.fsf@gitster.siamese.dyndns.org>
+References: <86odh0ojx4.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 09:24:33 2007
+Cc: git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Wed Aug 22 10:14:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INkZt-0006m3-CF
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 09:24:33 +0200
+	id 1INlMH-0006ex-8H
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 10:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755207AbXHVHY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 03:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755182AbXHVHY3
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 03:24:29 -0400
-Received: from main.gmane.org ([80.91.229.2]:41780 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752141AbXHVHY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 03:24:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1INkZj-0002e1-5w
-	for git@vger.kernel.org; Wed, 22 Aug 2007 09:24:23 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 09:24:23 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Aug 2007 09:24:23 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:7yId82jgjwDUOzvkarUoijTFcw4=
+	id S1758722AbXHVIOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 04:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758764AbXHVIOF
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 04:14:05 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38790 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758732AbXHVIOB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 04:14:01 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 241FA125FDC;
+	Wed, 22 Aug 2007 04:14:18 -0400 (EDT)
+In-Reply-To: <86odh0ojx4.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "Tue, 21 Aug 2007 10:51:35 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56355>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Is this only with "make git-rev-list.1"?
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> merlyn@stonehenge.com (Randal L. Schwartz) writes:
->> 
->> >>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
->> >
->> > Junio> I think we've seen it reported that docbook-xsl 1.72 and/or 1.73
->> > Junio> are broken.  Is your debug log from either of these versions?
->> >
->> > 1.71
->> 
->> Interesting.  I use 1.71 here too but it does not break.
->> 
->> I wonder what the differences are between our environments
->> (don't answer that you use OSX and I use Debian and FC -- that
->> much I already know).
->
-> It broke at day-job on Cygwin today.  I don't know what version
-> of docbook-xsl I'm using there.  But its fine on my OSX system.
-> I had planned on debugging it at home tonight, but I can't reproduce
-> it here.  Cute.  I will look at it again tomorrow and see if I can
-> debug the issue.
->
-> I'm pretty sure it was my recent edit to git-rev-list.txt; its
-> one of the only commits that has impacted that manual page since
-> the last time I had built that manual on Cygwin.  And no, nothing
-> else (e.g. docbook, asciidoc, xmlto) has changed since the last
-> successful build.
+Can your setup format d56651c0^ aka 14cd5607 correctly?  IOW, does
 
-Line ending problem?
+	$ git checkout 14cd5607 && cd Documentation && make git-rev-list.1
 
-[P.S.: due to a stuck mail server at home, some message similar to
-this one will appear in the evening]
+work well while
 
--- 
-David Kastrup
+	$ git checkout a475e809 && cd Documentation && make git-rev-list.1
+
+doesn't?
