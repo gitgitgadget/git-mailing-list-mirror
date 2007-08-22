@@ -1,36 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: a475e8095aeb898c1ca60673b82df97d2300cc95 broken for docs
-Date: Tue, 21 Aug 2007 21:41:40 -0400
-Message-ID: <20070822014140.GK27913@spearce.org>
-References: <86odh0ojx4.fsf@blue.stonehenge.com> <7vsl6coahd.fsf@gitster.siamese.dyndns.org> <86hcmso9ga.fsf@blue.stonehenge.com> <7v7inoo38o.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Fix new-workdir (again) to work on bare repositories
+Date: Tue, 21 Aug 2007 21:50:12 -0400
+Message-ID: <20070822015012.GA11085@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 03:42:00 2007
+X-From: git-owner@vger.kernel.org Wed Aug 22 03:50:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INfEJ-0005El-1O
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 03:41:55 +0200
+	id 1INfMU-0006wp-Da
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 03:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbXHVBlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Aug 2007 21:41:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbXHVBlp
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 21:41:45 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33049 "EHLO
+	id S1753473AbXHVBuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Aug 2007 21:50:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbXHVBuR
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Aug 2007 21:50:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33386 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbXHVBlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2007 21:41:45 -0400
+	with ESMTP id S1753437AbXHVBuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2007 21:50:16 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1INfDv-0004Sn-5F; Tue, 21 Aug 2007 21:41:31 -0400
+	id 1INfMB-0004yg-6F; Tue, 21 Aug 2007 21:50:03 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BF9DD20FBAE; Tue, 21 Aug 2007 21:41:40 -0400 (EDT)
+	id E9ADE20FBAE; Tue, 21 Aug 2007 21:50:12 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7v7inoo38o.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,35 +38,45 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56343>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> merlyn@stonehenge.com (Randal L. Schwartz) writes:
-> 
-> >>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > Junio> I think we've seen it reported that docbook-xsl 1.72 and/or 1.73
-> > Junio> are broken.  Is your debug log from either of these versions?
-> >
-> > 1.71
-> 
-> Interesting.  I use 1.71 here too but it does not break.
-> 
-> I wonder what the differences are between our environments
-> (don't answer that you use OSX and I use Debian and FC -- that
-> much I already know).
+My day-job workflow involves using multiple workdirs attached to a
+bunch of bare repositories.  Such repositories are stored inside of
+a directory called "foo.git", which means `git rev-parse --git-dir`
+will return "." and not ".git".  Under such conditions new-workdir
+was getting confused about where the Git repository it was supplied
+is actually located.
 
-It broke at day-job on Cygwin today.  I don't know what version
-of docbook-xsl I'm using there.  But its fine on my OSX system.
-I had planned on debugging it at home tonight, but I can't reproduce
-it here.  Cute.  I will look at it again tomorrow and see if I can
-debug the issue.
+If we get "." for the result of --git-dir query it means we should
+use the user supplied path as-is, and not attempt to perform any
+magic on it, as the path is directly to the repository.
 
-I'm pretty sure it was my recent edit to git-rev-list.txt; its
-one of the only commits that has impacted that manual page since
-the last time I had built that manual on Cygwin.  And no, nothing
-else (e.g. docbook, asciidoc, xmlto) has changed since the last
-successful build.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/workdir/git-new-workdir |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+index 3ff6bd1..119cff9 100755
+--- a/contrib/workdir/git-new-workdir
++++ b/contrib/workdir/git-new-workdir
+@@ -24,10 +24,14 @@ git_dir=$(cd "$orig_git" 2>/dev/null &&
+   git rev-parse --git-dir 2>/dev/null) ||
+   die "\"$orig_git\" is not a git repository!"
+ 
+-if test "$git_dir" = ".git"
+-then
++case "$git_dir" in
++.git)
+ 	git_dir="$orig_git/.git"
+-fi
++	;;
++.)
++	git_dir=$orig_git
++	;;
++esac
+ 
+ # don't link to a workdir
+ if test -L "$git_dir/config"
 -- 
-Shawn.
+1.5.3.rc6
