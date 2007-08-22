@@ -1,57 +1,123 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: why git-reset needed after "cp -a" of a git repo?
-Date: Wed, 22 Aug 2007 14:04:39 -0500
-Message-ID: <1187809479.15321.15.camel@ld0161-tx32>
-References: <200708221857.l7MIv5tD011053@agora.fsl.cs.sunysb.edu>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Wed, 22 Aug 2007 12:05:26 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+ <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
+ <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site>
+ <86mywjcwv7.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Erez Zadok <ezk@cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:04:53 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:06:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INvVd-0007hm-Em
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 21:04:53 +0200
+	id 1INvXE-0008TF-2A
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 21:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764971AbXHVTEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 15:04:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764967AbXHVTEu
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 15:04:50 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:62200 "EHLO
-	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764783AbXHVTEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 15:04:49 -0400
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id l7MJ4eKR022163;
-	Wed, 22 Aug 2007 12:04:40 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l7MJ4dFW016781;
-	Wed, 22 Aug 2007 14:04:40 -0500 (CDT)
-In-Reply-To: <200708221857.l7MIv5tD011053@agora.fsl.cs.sunysb.edu>
-X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
+	id S1764588AbXHVTFn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 15:05:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761735AbXHVTFl
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 15:05:41 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:53856 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759628AbXHVTFj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 15:05:39 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MJ5W40029072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 22 Aug 2007 12:05:33 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MJ5Q0H031883;
+	Wed, 22 Aug 2007 12:05:27 -0700
+In-Reply-To: <86mywjcwv7.fsf@lola.quinscape.zz>
+X-Spam-Status: No, hits=-4.747 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56407>
 
-On Wed, 2007-08-22 at 13:57, Erez Zadok wrote:
 
-> However, I noticed that after I copy a git repo (using v1.5.2.2), the index
-> entries are all out of sync, and I need to run git-reset.  Why?  What's in
-> the index file that changes after a cp -a or rsync that git depends on?  Is
-> it atime's and if so, aren't they copied by cp -a or rsync?  If it depends
-> on atime's, what happens if I mount my filesystem with noatime?  Or does
-> git's index depends on inode numbers which change after a cp -a?  (BTW, I
-> tried a variety of rsync options and none helped.)  I also briefly looked at
-> the source code and wasn't able to find the answer.
+
+On Wed, 22 Aug 2007, David Kastrup wrote:
+> >
+> > What is wrong with going from shell to C?
 > 
-> So, is there a way to efficiently copy a git repo on a local or remote host
-> w/o having to rerun git-reset afterwards?
+> That it is not a script language where cause and effect of tying
+> simple functionality together is apparent, and easy to do.
 
+Why does it have to be a scripting language?
 
-Use "git update-index --refresh" to update time stamps in the index.
+"git reset" is a command, not a scripting language. We can still script 
+git as much as we want, but the fewer dependencies we have on anything 
+external, the better off we are.
 
-jdl
+We ended up writing our own versions (or merging other peoples code) for 
+things like appying patches, generating diffs, three-way merging etc, 
+because not having external dependencies is *so* much more maintainable 
+and portable that it's not even funny.
+
+Was it "simpler" to just depend on external things like GNU patch and 
+diff? Yes. But it was strictly much worse to maintain, and it also limited 
+us - thanks to integrating our own diff/merge/patch, we've been able to 
+make them suit us much better.
+
+I'd love for every single shell-script in git core to be written in C, so 
+that we can drop the dependency on shell *entirely*.
+
+I also dispute your "easy to do". Quite often, shell (or any scripting 
+language) is actually much *more* complicated than C. Yes, the C code may 
+be more lines (in this case, the shell script is 106 lines, and the C code 
+was 216 lines), but from a maintenance standpoint, C has had *much* fewer 
+problems than the shell script stuff has ever had!
+
+So scripting languages are often good for *prototyping*, and a lot of 
+people like scripting languages for that reason. But once something is 
+already prototyped, and if somebody then rewrites it in C, all the 
+advantages of a scripting language have already disappeared!
+
+I don't understand why people consider scripting languages (whether shell, 
+perl, or anything else) "better" than C if there is an alternative. Once 
+the C work has been done (and if you require C _anyway_ for other reasons, 
+like git does), doing it in C is simply superior.
+
+> Red herring.  The proposal was not to do nothing, but rather give git
+> a dedicated scripting language internal to it.  Two suggestions of
+> mine with different advantages were git-busybox and Lua.
+
+Having tried to do internal scripting languages, I can say that it's just 
+easier to do it in C once you get past the hump of getting it written in C 
+in the first place.
+
+The "impedance match" problem between core code (which is inevtiably in C) 
+and the interfaces the scripting language offers is invariably a nasty 
+issue.
+
+So yes, we could just make the shell/etc from busybox _be_ the scripting 
+language, but the fact is, that is *more* C code than just making the 
+commands C code in the first place, and while a lot of the effort is 
+already done for us, "busybox under windows" is actually likely to be more 
+of a maintenance problem than "native git commands under windows" are.
+
+So if we have the choice, and somebody has written a git command in native 
+C code, I think we should *always* take it. Just because it means that 
+_eventually_ we can drop shell entirely, even if it would be a git 
+internal busybox shell.
+
+And LUA may be a nicer scriping thing than most, but you still end up 
+having the impedance match, and quite frankly, I think we'd have much 
+fewer problems with just rewriting all the remaining shell scripts in C, 
+than to integrate LUA and write them in that.
+
+(Quite frankly, havign looked at monotone development, I can say that we 
+should avoid LUA and things like Boost like the plague. If it's not a 
+library that has been around for ten years or more, it's not worth the 
+headache).
+
+			Linus
