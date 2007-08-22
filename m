@@ -1,84 +1,84 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: a475e8095aeb898c1ca60673b82df97d2300cc95 broken for docs
-Date: Wed, 22 Aug 2007 07:09:16 +0200
-Message-ID: <857inom9z7.fsf@lola.goethe.zz>
-References: <86odh0ojx4.fsf@blue.stonehenge.com>
-	<7vsl6coahd.fsf@gitster.siamese.dyndns.org>
-	<86hcmso9ga.fsf@blue.stonehenge.com>
-	<7v7inoo38o.fsf@gitster.siamese.dyndns.org>
-	<20070822014140.GK27913@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: confused about preserved permissions
+Date: Wed, 22 Aug 2007 15:09:17 -0700
+Message-ID: <7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+	<6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 23:59:51 2007
+Cc: martin f krafft <madduck@madduck.net>,
+	git discussion list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 23 00:09:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INyEv-0007pz-Is
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:59:49 +0200
+	id 1INyOV-0002mn-03
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 00:09:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220AbXHVV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 17:59:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764527AbXHVV7o
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:59:44 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:46211 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764517AbXHVV7m (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 17:59:42 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id B7C8117F655;
-	Wed, 22 Aug 2007 23:59:40 +0200 (CEST)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id A960F28EBD3;
-	Wed, 22 Aug 2007 23:59:40 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-060-116.pools.arcor-ip.net [84.61.60.116])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 56165BBA25;
-	Wed, 22 Aug 2007 23:59:34 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id AD54A1C298A2; Wed, 22 Aug 2007 07:09:16 +0200 (CEST)
-In-Reply-To: <20070822014140.GK27913@spearce.org> (Shawn O. Pearce's message of "Tue\, 21 Aug 2007 21\:41\:40 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1758571AbXHVWJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 18:09:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759341AbXHVWJj
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 18:09:39 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:51499 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758547AbXHVWJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 18:09:38 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B7301266A0;
+	Wed, 22 Aug 2007 18:09:56 -0400 (EDT)
+In-Reply-To: <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> (Benoit
+	SIGOURE's message of "Wed, 22 Aug 2007 14:18:19 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56429>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Benoit SIGOURE <tsuna@lrde.epita.fr> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> merlyn@stonehenge.com (Randal L. Schwartz) writes:
->> 
->> >>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
->> >
->> > Junio> I think we've seen it reported that docbook-xsl 1.72 and/or 1.73
->> > Junio> are broken.  Is your debug log from either of these versions?
->> >
->> > 1.71
->> 
->> Interesting.  I use 1.71 here too but it does not break.
->> 
->> I wonder what the differences are between our environments
->> (don't answer that you use OSX and I use Debian and FC -- that
->> much I already know).
+> Someone on IRC pointed me to http://git.or.cz/gitwiki/
+> ContentLimitations which says:
 >
-> It broke at day-job on Cygwin today.  I don't know what version
-> of docbook-xsl I'm using there.  But its fine on my OSX system.
-> I had planned on debugging it at home tonight, but I can't reproduce
-> it here.  Cute.  I will look at it again tomorrow and see if I can
-> debug the issue.
+> "By design, git cannot track other aspects of the filesystem, including:
+>   * File modes (except for the "executable" bit, and being symbolic
+> link)"
 >
-> I'm pretty sure it was my recent edit to git-rev-list.txt; its
-> one of the only commits that has impacted that manual page since
-> the last time I had built that manual on Cygwin.  And no, nothing
-> else (e.g. docbook, asciidoc, xmlto) has changed since the last
-> successful build.
+> That's weird since the file mode is saved in the tree, isn't there a
+> way to ask Git to restore this file mode?
 
-Maybe a line end character issue?
+The wording you quoted is wrong.  By design, we "chose not to"
+track other aspects, even though the underlying data structure
+has enough space to use other bit patterns.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+We deliberately chose not to use that space, and this default is
+very unlikely to change.
+
+In very early days of git, we allowed the work tree modes 0644
+vs 0664 propagated back to the index modes and regular file
+modes recorded in the tree entries.  This caused unnecessary
+pain for poeple merging real projects for no real gain
+whatsoever, and the behaviour was fixed to minimally track,
+hence we do not track anything but executable bits.
+
+I do not oppose to a new per-project configuration option to
+make use of the existing space to record differences vs 0644 vs
+0664 vs 0600.  However, I have already seen the downsides, so:
+
+ (1) I am not interested in implementing that myself;
+
+ (2) the places that canonicalize the mode bits obtained from
+     the filesystem to 0644 is fairly centralized so it would
+     not be too hard to implement (and that is one good reason
+     why I do _not_ have to be the person to do so);
+
+ (3) however, (2) means that everybody calls that
+     canonicalization logic, and the unintended side effects
+     need to be audited for codepaths of all the callers, which
+     means a large test suite is probably needed; and
+
+ (4) to me, reviewing such a patch will be much lower priority
+     than other patches for the above reasons.
