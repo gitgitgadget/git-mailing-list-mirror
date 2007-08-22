@@ -1,53 +1,52 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: Re: [PATCH] Fix break in git-rev-list.txt
-Date: Thu, 23 Aug 2007 01:29:18 +1000
-Message-ID: <46CC564E.10609@gmail.com>
-References: <11877706831306-git-send-email-qtonthat@gmail.com> <7vbqczkhvb.fsf@gitster.siamese.dyndns.org>
+From: Salikh Zakirov <salikh@gmail.com>
+Subject: Re: [packaging] binary Gentoo/x86 ebuild for M2 snapshot
+Date: Thu, 23 Aug 2007 00:34:30 +0900
+Message-ID: <fahl2v$gqo$1@sea.gmane.org>
+References: <fahkjo$esh$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 17:29:36 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 22 17:35:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INs9I-00022F-H1
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 17:29:36 +0200
+	id 1INsEl-0005CE-C5
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 17:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763220AbXHVP3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 11:29:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763414AbXHVP3a
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 11:29:30 -0400
-Received: from pecan.exetel.com.au ([220.233.0.17]:38652 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763313AbXHVP3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 11:29:22 -0400
-Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=kingbee.home)
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1INs91-0004Oj-BW; Thu, 23 Aug 2007 01:29:19 +1000
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <7vbqczkhvb.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.2
+	id S1759541AbXHVPfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 11:35:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759208AbXHVPfM
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 11:35:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:39705 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751978AbXHVPfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 11:35:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INsEd-0001PD-3o
+	for git@vger.kernel.org; Wed, 22 Aug 2007 17:35:07 +0200
+Received: from cerberus.is.titech.ac.jp ([131.112.51.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 17:35:07 +0200
+Received: from salikh by cerberus.is.titech.ac.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 17:35:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cerberus.is.titech.ac.jp
+User-Agent: Thunderbird 2.0.0.6 (X11/20070819)
+In-Reply-To: <fahkjo$esh$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56391>
 
-Junio C Hamano wrote:
-> It was a major plus that the input format is mostly readable as
-> straight text, but this was one of the sore points in our
-> formatting.  In the description part of a definition list, we
-> indent the first paragraph but append the second paragraph and
-> later with '+' without indenting (we would rather keep the
-> second and subsequent paragraphs aligned with the first one).
-> However, it appears that the definition has to be a single
-> paragraph and not any longer in such a list anyway.
+Salikh Zakirov wrote:
+> Hi,
+> 
+> I've tried to create a binary package descriptor of M2 stable snapshot for Gentoo/x86
 
-For your info (not implying what is "wrong" or "right"), without
-the second '+' it will generate new paragraph with correct indentation
-on my system here.
-
-Quy
+I'm badly sorry for posting into the wrong newsgroup.
+Apologies for the noise.
