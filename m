@@ -1,49 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn: commit author x commit committer issue
-Date: Wed, 22 Aug 2007 14:34:51 -0700
-Message-ID: <7vir77i77o.fsf@gitster.siamese.dyndns.org>
-References: <46B9C92B.3000000@st.com> <20070816092002.GD16849@muzzle>
-	<8b65902a0708220307g2cb4b290s9bbf4603af7489fa@mail.gmail.com>
-	<8b65902a0708220317t2b3dd01csef460a943ed2ef37@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: splitting large patch files into smaller ones
+Date: Wed, 22 Aug 2007 23:54:04 +0200
+Message-ID: <46CCB07C.9010200@lsrfire.ath.cx>
+References: <200708221929.l7MJTgiL012452@agora.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Richard MUSIL" <richard.musil@st.com>, git@vger.kernel.org
-To: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 23:35:28 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Erez Zadok <ezk@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:54:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INxrH-0007xI-Uz
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:35:24 +0200
+	id 1INy9J-0005rR-4a
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 23:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764167AbXHVVfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 17:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763831AbXHVVfG
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:35:06 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50932 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760460AbXHVVfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 17:35:04 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C926126687;
-	Wed, 22 Aug 2007 17:35:20 -0400 (EDT)
-In-Reply-To: <8b65902a0708220317t2b3dd01csef460a943ed2ef37@mail.gmail.com>
-	(Guilhem Bonnefille's message of "Wed, 22 Aug 2007 12:17:43 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932723AbXHVVx5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 17:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932719AbXHVVx5
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 17:53:57 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:53009
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932080AbXHVVx4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 17:53:56 -0400
+Received: from [10.0.1.201] (p508ED4CF.dip.t-dialin.net [80.142.212.207])
+	by neapel230.server4you.de (Postfix) with ESMTP id 47D5D8B008;
+	Wed, 22 Aug 2007 23:53:55 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <200708221929.l7MJTgiL012452@agora.fsl.cs.sunysb.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56425>
 
-"Guilhem Bonnefille" <guilhem.bonnefille@gmail.com> writes:
+Erez Zadok schrieb:
+> I recently had an occasion to take a rather large git-diff patch, and=
+ split
+> it into smaller chunks.  This was so I can more easily import the pat=
+ches
+> into guilt, then reorder, rename, shuffle, and join individual patch
+> snippets into logical patches (i.e., one patch per topic).
+>=20
+> I was looking around for a tool that would allow me to split a large =
+patch
+> file into individual snippets and couldn't find one.  So I wrote one =
+in
+> perl.  It takes a patch file and creates individual small files, one =
+for
+> each combination of a filename listed in the patch, and a patch snipp=
+et
+> (starting with an '@@' line).  Each '@@' snippet gets an index number=
+ and a
+> new filename, prefixed with the appropriate header ("diff ...", ---, =
+and +++
+> lines) so it's a valid patch file on its own.
+>=20
+> Questions:
+>=20
+> 1. Does anyone know of such a tool, perhaps written in C for better s=
+peed?
 
-> Oops, sory, I'm completly wrong: the git-svn-id is put on the commit
-> log in the Git repo, not on the SVN repo.
-> Please, ignore me.
+The patchutils collection[1] contains a tool called splitdiff, which
+does something slightly different[2].  It might be a good starting
+point, though.
 
-I do not think it is wrong to tack that to the commit message
-you push it back to SVN... am I missing something?
+Ren=E9
+
+
+[1] http://cyberelk.net/tim/software/patchutils/?page_id=3D10
+[2] http://cyberelk.net/tim/patchutils/man/splitdiff.html
