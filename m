@@ -1,71 +1,59 @@
 From: Erez Zadok <ezk@cs.sunysb.edu>
-Subject: Re: why git-reset needed after "cp -a" of a git repo?
-Date: Wed, 22 Aug 2007 15:19:23 -0400
-Message-ID: <200708221919.l7MJJNkX012184@agora.fsl.cs.sunysb.edu>
-References: <alpine.LFD.0.999.0708221208090.30176@woody.linux-foundation.org>
-Cc: Erez Zadok <ezk@cs.sunysb.edu>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:19:44 2007
+Subject: splitting large patch files into smaller ones
+Date: Wed, 22 Aug 2007 15:29:42 -0400
+Message-ID: <200708221929.l7MJTgiL012452@agora.fsl.cs.sunysb.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:29:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INvjy-00057l-H4
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 21:19:42 +0200
+	id 1INvtk-0000kN-R1
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 21:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760300AbXHVTTf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 15:19:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764891AbXHVTTe
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 15:19:34 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:47335 "EHLO
+	id S1756771AbXHVT3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 15:29:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753623AbXHVT3p
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 15:29:45 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:47771 "EHLO
 	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755759AbXHVTTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 15:19:33 -0400
+	with ESMTP id S1753366AbXHVT3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 15:29:44 -0400
 Received: from agora.fsl.cs.sunysb.edu (agora.fsl.cs.sunysb.edu [130.245.126.12])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l7MJJNER032299;
-	Wed, 22 Aug 2007 15:19:23 -0400
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l7MJTgo4000738
+	for <git@vger.kernel.org>; Wed, 22 Aug 2007 15:29:42 -0400
 Received: from agora.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by agora.fsl.cs.sunysb.edu (8.13.1/8.13.1) with ESMTP id l7MJJNqr012187;
-	Wed, 22 Aug 2007 15:19:23 -0400
+	by agora.fsl.cs.sunysb.edu (8.13.1/8.13.1) with ESMTP id l7MJTgC9012455
+	for <git@vger.kernel.org>; Wed, 22 Aug 2007 15:29:42 -0400
 Received: (from ezk@localhost)
-	by agora.fsl.cs.sunysb.edu (8.13.1/8.12.8/Submit) id l7MJJNkX012184;
-	Wed, 22 Aug 2007 15:19:23 -0400
-In-reply-to: Your message of "Wed, 22 Aug 2007 12:11:14 PDT."
-             <alpine.LFD.0.999.0708221208090.30176@woody.linux-foundation.org> 
+	by agora.fsl.cs.sunysb.edu (8.13.1/8.12.8/Submit) id l7MJTgiL012452;
+	Wed, 22 Aug 2007 15:29:42 -0400
 X-MailKey: Erez_Zadok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56411>
 
-In message <alpine.LFD.0.999.0708221208090.30176@woody.linux-foundation.org>, Linus Torvalds writes:
-> 
-> 
-> On Wed, 22 Aug 2007, Erez Zadok wrote:
-> > 
-> > However, I noticed that after I copy a git repo (using v1.5.2.2), the index
-> > entries are all out of sync, and I need to run git-reset.  Why?  What's in
-> > the index file that changes after a cp -a or rsync that git depends on?  Is
-> > it atime's and if so, aren't they copied by cp -a or rsync?
-> 
-> ctime/mtime and inode numbers too.
-> 
-> If you use hardlinks to copy the working tree, *and* you reset ctime 
-> afterwards, you'd be ok. But basically, git tries to be *really* anal in 
-> noticing any possible change to the inode, so anything it can do to notice 
-> that the index file might be stale, it does.
-> 
-> But you don't need to do a "git reset", you're actually better off just 
-> doing a "git status" instead. That will refresh the index.
-> 
-> 		Linus
+I recently had an occasion to take a rather large git-diff patch, and split
+it into smaller chunks.  This was so I can more easily import the patches
+into guilt, then reorder, rename, shuffle, and join individual patch
+snippets into logical patches (i.e., one patch per topic).
 
-Thanks for the info and tips.  It's a good idea of course to detect any
-possible changes, but I wonder if for those of us who know what they're
-doing (i.e., living on the edge :-), there could be an option to ignore
-inode numbers and just depend on good 'ol ctime/mtime (as other tools like
-make do).
+I was looking around for a tool that would allow me to split a large patch
+file into individual snippets and couldn't find one.  So I wrote one in
+perl.  It takes a patch file and creates individual small files, one for
+each combination of a filename listed in the patch, and a patch snippet
+(starting with an '@@' line).  Each '@@' snippet gets an index number and a
+new filename, prefixed with the appropriate header ("diff ...", ---, and +++
+lines) so it's a valid patch file on its own.
 
-If such an option might be deemed useful, I'm willing to take a crack at it.
+Questions:
 
+1. Does anyone know of such a tool, perhaps written in C for better speed?
+
+2. If not, is there any interest in such a tool?  If there's interest, I'd
+   be happy to cleanup my perl script and contribute it to
+   git/guilt/whatever.
+
+Cheers,
 Erez.
