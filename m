@@ -1,98 +1,114 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH] Allow multiple tag and branch directories in
-	git-svnimport
-Date: Wed, 22 Aug 2007 12:24:15 +0200
-Message-ID: <20070822102415.GA24305@jack.stsp.lan>
-References: <20070821170858.GA1721@jack.stsp.lan> <20070821173838.GC1721@jack.stsp.lan> <86wsvook5s.fsf@blue.stonehenge.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Fix break in git-rev-list.txt
+Date: Wed, 22 Aug 2007 12:58:45 +0200
+Message-ID: <86fy2besyi.fsf@lola.quinscape.zz>
+References: <11877706831306-git-send-email-qtonthat@gmail.com> <7vbqczkhvb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HcAYCG3uE/tztfnV"
-Cc: git@vger.kernel.org, subversion@elego.de
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 12:34:08 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 22 12:59:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INnXL-0003mi-Ht
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 12:34:07 +0200
+	id 1INnvX-0002rH-SZ
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 12:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125AbXHVKeE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 06:34:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752957AbXHVKeD
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 06:34:03 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:34958 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbXHVKeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 06:34:01 -0400
-X-Envelope-From: stsp@elego.de
-Received: from stsp.lan (stsp2.in-vpn.de [217.197.85.95])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l7MAXjgk022838
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 22 Aug 2007 12:33:52 +0200
-Received: from jack.stsp.lan (stsp@localhost.stsp.lan [127.0.0.1])
-	by stsp.lan (8.14.1/8.14.0) with ESMTP id l7MAOGxb001056;
-	Wed, 22 Aug 2007 12:24:16 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.lan (8.14.1/8.14.0/Submit) id l7MAOFJq006875;
-	Wed, 22 Aug 2007 12:24:15 +0200 (CEST)
-X-Authentication-Warning: jack.stsp.lan: stsp set sender to stsp@elego.de using -f
-Mail-Followup-To: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	git@vger.kernel.org, subversion@elego.de
-Content-Disposition: inline
-In-Reply-To: <86wsvook5s.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756481AbXHVK66 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 06:58:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755825AbXHVK66
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 06:58:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:42433 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755820AbXHVK65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 06:58:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1INnvK-0006xC-Ip
+	for git@vger.kernel.org; Wed, 22 Aug 2007 12:58:54 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 12:58:54 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 12:58:54 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:HLyRTIZQOMTAewmBUBe1fjoF1gc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56370>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---HcAYCG3uE/tztfnV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> So it looks as if the only place that needs the ugly '+'
+> continuation marker is between the first and the second
+> paragraph.  And it also appears that the manpage backend does
+> not pay attention to the paragraph break there (HTML backend
+> places a <br /> before "With <em>--pretty</em>").
+>
+> Is it just me, or the more we look at it, everybody doubts if
+> AsciiDoc was such a good choice?
 
-On Tue, Aug 21, 2007 at 10:46:23AM -0700, Randal L. Schwartz wrote:
-> Stefan> Ouch, just noticed it's a bad idea to try to initialise
-> Stefan> an array with a scalar. Sorry :-/
->=20
-> That's completely normal.  Perl predictably promotes the single scalar to=
- an
-> array of one element.  I wouldn't have even noticed it in a detailed code
-> review, since it's so normal to do that.
->=20
-> In fact, the parens that you added do *not* make it a list.  The parens
-> are purely for precedence
+I don't think you should overgeneralize right now.  Every input format
+will need some massaging, possibly resulting in ugliness.
 
-> So, your parens are not only uncommon, they are also completely ineffecti=
-ve,
-> similar to replacing 2 + 3 with (2) + (3) :)
+AsciiDoc _can_ be converted to plain text without markup.  Whether
+this is worth doing depends on just how many people actually access
+the .txt files, and how much they are disturbed by things that are
+just there for leading AsciiDoc on the right path.
 
-Thanks for clarifying. Prior to hacking on git-svnimport
-my perl "skills" (if any) were strictly read-only.
-So I'm quite a noob wrt perl.
-Feel free to nit the patch further :)
+One can also cater for particular patterns in the configuration files
+rather than in the source files.
 
---=20
-Stefan Sperling <stsp@elego.de>                 Software Developer
-elego Software Solutions GmbH                            HRB 77719
-Gustav-Meyer-Allee 25, Gebaeude 12        Tel:  +49 30 23 45 86 96=20
-13355 Berlin                              Fax:  +49 30 23 45 86 95
-http://www.elego.de                 Geschaeftsfuehrer: Olaf Wagner
+However, there are some things which can't be ironed out: adding
+useful indexing information will certainly disturb perusing the .txt
+files as text.  And I consider good indexing important.
 
---HcAYCG3uE/tztfnV
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+There also is the problem that AsciiDoc works with a format _chain_
+that makes it painful to achieve a certain result.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (OpenBSD)
+However, the resulting quality of this format chain is good: proper
+Docbook output, even proper Texinfo output, well-formatted manual
+pages, nice-looking HTML.  In most of those areas, the Texinfo
+toolchain, in contrast, falls on its face.
 
-iD8DBQFGzA7O5dMCc/WdJfARAoCjAJ9YWml7QLxpmWPbpC+qkjdxia6RkQCfXSU1
-3JiHaK7EgiqWRGVCl+HYlZY=
-=sYO5
------END PGP SIGNATURE-----
+If one does not want to sacrifice quality, it might still make sense
+to cut Asciidoc out of the equation and use Docbook instead.
+Markup-free .txt-files can presumably generated from Docbook.  I think
+it should also be possible to generate manpages from it, and it
+converts nicely into Texinfo.
 
---HcAYCG3uE/tztfnV--
+As long as we have no dedicated Asciidoc wizard working for git, this
+might make changing the structure of the documentation or adding new
+features much easier.
+
+But it might frighten people from correcting the straight text of the
+documentation.
+
+It is certainly a multi-edged sword, and without doing an extensive
+poll among those who contribute to documentation, a change in policy
+would not appear appropriate.
+
+I know that the combined Asciidoc/Docbook challenge has kept me up to
+now from succeeding in a restructuring that would include the manual
+pages in the user manual as an appendix.
+
+I have no doubt from the Docbook and Asciidoc documentation I have
+digged through that this is possible, and with not too many lines of
+code, but it is still quite beyond me given the time I can spend on
+it.
+
+The question is how often Asciidoc will keep people from contributing
+useful changes, and how often Docbook would.
+
+I have no idea how the numbers would turn out.  I consider it more
+likely that people will contribute text changes to Asciidoc
+documentation, but structural changes are likely quite easier to do
+with Docbook.
+
+-- 
+David Kastrup
