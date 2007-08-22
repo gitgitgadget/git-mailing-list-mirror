@@ -1,60 +1,101 @@
-From: David Jack Olrik <david@olrik.dk>
-Subject: [PATCH] Fixed non portable use of expr, and incorrect use of test -eq for string comparison.
-Date: Wed, 22 Aug 2007 14:02:43 +0200
-Message-ID: <11877841633473-git-send-email-david@olrik.dk>
-Cc: David Jack Olrik <david@olrik.dk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 14:10:29 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: confused about preserved permissions
+Date: Wed, 22 Aug 2007 14:18:19 +0200
+Message-ID: <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-24--975497953"
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Wed Aug 22 14:18:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INp2Y-0003GG-Kv
-	for gcvg-git@gmane.org; Wed, 22 Aug 2007 14:10:26 +0200
+	id 1INpAg-0006Zr-7z
+	for gcvg-git@gmane.org; Wed, 22 Aug 2007 14:18:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758073AbXHVMKV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 08:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758030AbXHVMKU
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 08:10:20 -0400
-Received: from barcrawl.dk ([149.6.48.213]:64917 "EHLO mail.barcrawl.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758036AbXHVMKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 08:10:18 -0400
-X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Aug 2007 08:10:18 EDT
-Received: from localhost (barcrawl.dk [149.6.48.213])
-	by mail.barcrawl.dk (Postfix) with ESMTP id 9DECE7CB447;
-	Wed, 22 Aug 2007 14:02:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mail.wange.dk
-Received: from mail.barcrawl.dk ([149.6.48.213])
-	by localhost (barcrawl.dk [149.6.48.213]) (amavisd-new, port 10024)
-	with ESMTP id a8GdB3fHSeTP; Wed, 22 Aug 2007 14:02:26 +0200 (CEST)
-Received: from localhost.localdomain (barcrawl.dk [149.6.48.213])
-	by mail.barcrawl.dk (Postfix) with ESMTP id 5BC7E7CB443;
-	Wed, 22 Aug 2007 14:02:26 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc6
+	id S1758187AbXHVMS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 08:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758209AbXHVMS0
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 08:18:26 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:49461 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756622AbXHVMSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 08:18:25 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
+	(Exim 4.50)
+	id 1INpAF-0003uF-RS; Wed, 22 Aug 2007 14:18:23 +0200
+In-Reply-To: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56372>
 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-24--975497953
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Signed-off-by: David Jack Olrik <david@olrik.dk>
----
- git-instaweb.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Aug 20, 2007, at 6:44 PM, martin f krafft wrote:
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index b79c6b6..da8eb3f 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -30,7 +30,7 @@ test -z "$port" && port=1234
- 
- start_httpd () {
- 	httpd_only="`echo $httpd | cut -f1 -d' '`"
--	if test "`expr index $httpd_only /`" -eq '1' || \
-+	if test "`echo $httpd_only | cut -c 1`" = '/' || \
- 				which $httpd_only >/dev/null
- 	then
- 		$httpd $fqgitdir/gitweb/httpd.conf
+> Hello,
+>
+> I am a bit confused about how git stores and restores permissions.
+[...]
+> And is there a way to tell git not to mess with the permissions in
+> the worktree when switching branches? I am not sure what's causing
+> it since the inode of files does not seem to change, so git
+> apparently explicitly fchmod()'s files.
+>
+> I'd be grateful for any documentation to read in addition to the
+> code. I saw core.filemode, but that's only about the x bit, it
+> seems.
+>
+> Thanks,
+
+Hi,
+this thread drifted away and although the discussion is interesting,  
+the original question hasn't been answered so far and I am in a  
+situation where I'd like to know the answer (because my working tree  
+needs to be group-readable for a given project and my umask 066 keeps  
+annoying me although I don't want to change it).
+
+Someone on IRC pointed me to http://git.or.cz/gitwiki/ 
+ContentLimitations which says:
+
+"By design, git cannot track other aspects of the filesystem, including:
+   * File modes (except for the "executable" bit, and being symbolic  
+link)"
+
+That's weird since the file mode is saved in the tree, isn't there a  
+way to ask Git to restore this file mode?
+
+Cheers,
+
 -- 
-1.5.3.rc6
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-24--975497953
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFGzCmLwwE67wC8PUkRAlJyAJkBCQzLVlZrdIIlJJLgbGDYU4qTTACg1Wqe
+jyvebCi/aZ89xj8PLHF7+Sc=
+=pcSR
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-24--975497953--
