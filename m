@@ -1,82 +1,95 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: empty directories
-Date: Wed, 22 Aug 2007 16:25:21 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
-References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca>
- <1187817948.5986.159.camel@beauty>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Thu, 23 Aug 2007 01:39:12 +0200
+Message-ID: <85wsvnjg0v.fsf@lola.goethe.zz>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+	<46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708221154150.16727@xanadu.home>
+	<Pine.LNX.4.64.0708221713540.20400@racer.site>
+	<86mywjcwv7.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org>
+	<86absjcqfq.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708221252040.30176@woody.linux-foundation.org>
+	<85ir77ky0u.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708221607590.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Josh England <jjengla@sandia.gov>
-X-From: git-owner@vger.kernel.org Thu Aug 23 01:26:02 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 01:39:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1INzaL-0000Pz-Ia
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 01:26:01 +0200
+	id 1INznI-00049X-Ed
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 01:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762384AbXHVXZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 19:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760132AbXHVXZc
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 19:25:32 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:45238 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758826AbXHVXZc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 19:25:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MNPR9p008073
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 22 Aug 2007 16:25:28 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7MNPLBA010320;
-	Wed, 22 Aug 2007 16:25:22 -0700
-In-Reply-To: <1187817948.5986.159.camel@beauty>
-X-Spam-Status: No, hits=-2.75 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932293AbXHVXjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 19:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764127AbXHVXjV
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 19:39:21 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:47547 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1763575AbXHVXjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 19:39:20 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id E4A1A183E80;
+	Thu, 23 Aug 2007 01:39:18 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id B67BF12DFF3;
+	Thu, 23 Aug 2007 01:39:18 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-060-116.pools.arcor-ip.net [84.61.60.116])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 92BFB8C463;
+	Thu, 23 Aug 2007 01:39:14 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 2002C1C36605; Thu, 23 Aug 2007 01:39:12 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0708221607590.30176@woody.linux-foundation.org> (Linus Torvalds's message of "Wed\, 22 Aug 2007 16\:10\:30 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56436>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-
-On Wed, 22 Aug 2007, Josh England wrote:
+> On Thu, 23 Aug 2007, David Kastrup wrote:
+>> >
+>> > But your statement is provably wrong. Just *look* at well-maintained
+>> > projects that have extended way past their original design and usage
+>> > model. A lot of them are in C.
+>> 
+>> You mean like Emacs which is mostly scripted in Elisp?  Or the Gimp
+>> which is mainly scripted using script-fu?
 >
-> The main need is for file ownership/permission, which has been touched 
-> on before.  When I clone an image, I really want an *identical* clone, 
-> in every way.  It seems as though git had this functionality but 
-> scrapped it due to issues with umask and merge type problems?
+> No. I mean standard C code projects. Like the kernel. Like a huge
+> class of other projects that are C. Not scripts.
 
-Well, git had all permission bits, but never ownership. And yes, using 
-more than the one user-x-bit ended up being totally unusable for source 
-code, because of different people having different umask, so we 
-effectively dropped the permission bits too (although the data format was 
-retained, so we could re-introduce then with some flag that says "honor 
-all permission bits, not just the x bit").
+By golly, you are right.  Pretty much all projects that are defined by
+not including a script language don't include a script language.
 
-But the ownership thing we've never even tried to support, since it was so 
-obviously not something that was appropriate for a distributed project. So 
-if you want an identical clone with ownership and (full) permissions, you 
-really do need to have some alternate way to fill in the blanks.
+> Big, huge, projects are all done in C, and they are well-maintained.
 
-I've argued that ".gitattributes" may be an acceptable alternate, 
-especially since ownership is often something that is less than "per 
-file", and more often "has certain patterns".
+Ok, so Emacs is a small project.  And Plone is a small project.  And
+Ajax is a small project.  And LaTeX is a small project.  And autoconf
+is a small project.  And gcc is a small project (we can't have RTL in
+a big, huge, project, after all).  And the Linux kernel doesn't
+include Makefiles or any other stuff that would be scripted in
+anything but C.
 
-> So the question is:  would there be any way to bring this functionality 
-> back as a non-default configurable option?  For those of us who need the 
-> functionality, we'd be more than willing to live with some of the 
-> side-effects.
+> Scripting is not the rule at all. And it is silly to say that
+> regular all-C projects need to have scripting.
 
-Full permissions might be easy enough to resurrect, but since it's still 
-pointless without ownership, that really isn't even relevant.
+Actually, if they are defined as all-C, they _can't_ have scripting
+by definition.
 
-But if .gitattributes would work, you probably could introduce both full 
-permissions and ownership rules there. We read git attributes for *other* 
-reasons when checking files out _anyway_, ie we need the CRLF attribute 
-stuff, so adding ownership attributes would not be at all odd.
+I am not really interested in continuing this.  I don't think that
+there is much I can do to make my point clearer than I did, so any
+further amount of "does not" -- "does too" will not make anybody
+including ourselves change his mind.
 
-		Linus
+All the best,
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
