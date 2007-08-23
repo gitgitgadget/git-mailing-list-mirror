@@ -1,94 +1,120 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: confused about preserved permissions
-Date: Thu, 23 Aug 2007 08:00:52 +0200
-Message-ID: <20070823060052.GA25153@piper.oerlikon.madduck.net>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> <7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
+Date: Wed, 22 Aug 2007 23:10:09 -0700
+Message-ID: <20070823061009.GA10547@soma>
+References: <1184405128718-git-send-email-madduck@madduck.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 08:01:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "martin f. krafft" <madduck@madduck.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 08:10:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO5kk-00083O-QY
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:01:11 +0200
+	id 1IO5u4-0001xM-Ll
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752880AbXHWGBH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 02:01:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752753AbXHWGBG
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:01:06 -0400
-Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:54995 "EHLO
-	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbXHWGBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 02:01:04 -0400
-Received: from localhost (albatross.madduck.net [127.0.0.1])
-	by albatross.madduck.net (postfix) with ESMTP id DB036895F6E;
-	Thu, 23 Aug 2007 08:01:02 +0200 (CEST)
-Received: from albatross.madduck.net ([127.0.0.1])
-	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 26310-10; Thu, 23 Aug 2007 08:01:02 +0200 (CEST)
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by albatross.madduck.net (postfix) with ESMTP id 459BC895F61;
-	Thu, 23 Aug 2007 08:00:54 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 8C0D09F16A;
-	Thu, 23 Aug 2007 08:00:53 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 0AFF543F4; Thu, 23 Aug 2007 08:00:52 +0200 (CEST)
+	id S1753287AbXHWGKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 02:10:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXHWGKO
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:10:14 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:37722 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753176AbXHWGKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 02:10:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id B4F2B2DC08D;
+	Wed, 22 Aug 2007 23:10:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
+In-Reply-To: <1184405128718-git-send-email-madduck@madduck.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56458>
 
+Here's a cleaned up version of this patch with my tweaks.
 
---5mCyUwZo2JvN/JJP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>From f5b6da6bc4e2d879ca200993f0d3806486e8fb21 Mon Sep 17 00:00:00 2001
+From: martin f. krafft <madduck@madduck.net>
+Date: Sat, 14 Jul 2007 11:25:28 +0200
+Subject: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
 
-also sprach Junio C Hamano <gitster@pobox.com> [2007.08.23.0009 +0200]:
-> We deliberately chose not to use that space, and this default is
-> very unlikely to change.
+The --stdlayout option to git-svn init/clone initialises the default
+Subversion values of trunk,tags,branches: -T trunk -b branches -t tags.
+If any of the -T/-t/-b options are given in addition, they are given
+preference.
 
-The downsides included change in SHA hash on mode change, as far as
-I can remember. Anything else?
+[ew: fixed whitespace and added "-s" shortcut]
 
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"wickedness is a myth
- invented by good people
- to account for the curious attraction of others."
-                                                        -- oscar wilde
-=20
-spamtraps: madduck.bogus@madduck.net
+Signed-off-by: martin f. krafft <madduck@madduck.net>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/git-svn.txt |    7 ++++++-
+ git-svn.perl              |   11 +++++++++--
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
---5mCyUwZo2JvN/JJP
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGzSKUIgvIgzMMSnURAgnSAKChqFVKVKNx++Q3SfLsyaRYNyZgSgCbBT/J
-no+erDRU7r5KKxBWXnYr834=
-=UHZA
------END PGP SIGNATURE-----
-
---5mCyUwZo2JvN/JJP--
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index fbc5887..3e2a63b 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -44,10 +44,15 @@ COMMANDS
+ --tags=<tags_subdir>;;
+ -b<branches_subdir>;;
+ --branches=<branches_subdir>;;
++-s;;
++--stdlayout;;
+ 	These are optional command-line options for init.  Each of
+ 	these flags can point to a relative repository path
+ 	(--tags=project/tags') or a full url
+-	(--tags=https://foo.org/project/tags)
++	(--tags=https://foo.org/project/tags). The option --stdlayout is
++	a shorthand way of setting trunk,tags,branches as the relative paths,
++	which is the Subversion default. If any of the other options are given
++	as well, they take precedence.
+ --no-metadata;;
+ 	Set the 'noMetadata' option in the [svn-remote] config.
+ --use-svm-props;;
+diff --git a/git-svn.perl b/git-svn.perl
+index 7a8ffd5..4e325b7 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -77,11 +77,12 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+ 		   \$Git::SVN::_repack_flags,
+ 		%remote_opts );
+ 
+-my ($_trunk, $_tags, $_branches);
++my ($_trunk, $_tags, $_branches, $_stdlayout);
+ my %icv;
+ my %init_opts = ( 'template=s' => \$_template, 'shared:s' => \$_shared,
+                   'trunk|T=s' => \$_trunk, 'tags|t=s' => \$_tags,
+                   'branches|b=s' => \$_branches, 'prefix=s' => \$_prefix,
++                  'stdlayout|s' => \$_stdlayout,
+                   'minimize-url|m' => \$Git::SVN::_minimize_url,
+ 		  'no-metadata' => sub { $icv{noMetadata} = 1 },
+ 		  'use-svm-props' => sub { $icv{useSvmProps} = 1 },
+@@ -292,7 +293,8 @@ sub init_subdir {
+ sub cmd_clone {
+ 	my ($url, $path) = @_;
+ 	if (!defined $path &&
+-	    (defined $_trunk || defined $_branches || defined $_tags) &&
++	    (defined $_trunk || defined $_branches || defined $_tags ||
++	     defined $_stdlayout) &&
+ 	    $url !~ m#^[a-z\+]+://#) {
+ 		$path = $url;
+ 	}
+@@ -302,6 +304,11 @@ sub cmd_clone {
+ }
+ 
+ sub cmd_init {
++	if (defined $_stdlayout) {
++		$_trunk = 'trunk' if (!defined $_trunk);
++		$_tags = 'tags' if (!defined $_tags);
++		$_branches = 'branches' if (!defined $_branches);
++	}
+ 	if (defined $_trunk || defined $_branches || defined $_tags) {
+ 		return cmd_multi_init(@_);
+ 	}
+-- 
+Eric Wong
