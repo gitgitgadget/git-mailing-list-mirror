@@ -1,102 +1,90 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: confused about preserved permissions
-Date: Thu, 23 Aug 2007 09:48:23 +0200
-Message-ID: <B38B8F2F-92B0-48F4-9093-54724FA862C2@lrde.epita.fr>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> <7v8x83i5ma.fsf@gitster.siamese.dyndns.org> <20070823060052.GA25153@piper.oerlikon.madduck.net> <85mywiixtp.fsf@lola.goethe.zz>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-29--905293478"
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 09:48:33 2007
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] git-svn: update documentation with CAVEATS section
+Date: Thu, 23 Aug 2007 09:48:51 +0200
+Message-ID: <86odgybsik.fsf@lola.quinscape.zz>
+References: <20070816085645.GA3159@soma>
+	<7v4piri44r.fsf@gitster.siamese.dyndns.org>
+	<853aybkwsc.fsf@lola.goethe.zz> <20070823053009.GC4978@muzzle>
+	<85r6luiydb.fsf@lola.goethe.zz> <20070823062631.GD4417@hand.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 23 09:49:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO7Qe-0005SM-Tb
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 09:48:33 +0200
+	id 1IO7RP-0005fm-Pf
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 09:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755344AbXHWHs3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 03:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755728AbXHWHs3
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 03:48:29 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:38076 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130AbXHWHs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 03:48:29 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.50)
-	id 1IO7QZ-0001CQ-Dn; Thu, 23 Aug 2007 09:48:27 +0200
-In-Reply-To: <85mywiixtp.fsf@lola.goethe.zz>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1755740AbXHWHtR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 03:49:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755868AbXHWHtR
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 03:49:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:54521 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751044AbXHWHtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 03:49:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IO7RC-0002BE-Gn
+	for git@vger.kernel.org; Thu, 23 Aug 2007 09:49:06 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 09:49:06 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 09:49:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+In-Reply-To: <20070823062631.GD4417@hand.yhbt.net> (Eric Wong's message of "Wed\, 22 Aug 2007 23\:26\:31 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:wUUwC7+i/d7h2hKy9436JXOeIlI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56467>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-29--905293478
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Eric Wong <normalperson@yhbt.net> writes:
 
-
-On Aug 23, 2007, at 8:12 AM, David Kastrup wrote:
-
-> martin f krafft <madduck@madduck.net> writes:
+> David Kastrup <dak@gnu.org> wrote:
 >
->> also sprach Junio C Hamano <gitster@pobox.com> [2007.08.23.0009  
->> +0200]:
->>> We deliberately chose not to use that space, and this default is
->>> very unlikely to change.
->>
->> The downsides included change in SHA hash on mode change, as far as
->> I can remember. Anything else?
+>> This is already a _large_ help for avoiding clobbering the central
+>> repository.  But I stress that it would be much better if git-svn
+>> dcommit/rebase stayed exclusively on the branch that is associated
+>> with it/fetching in the "svn" config section, like git does in
+>> general with remotes.  No random branch jumping after merges or (to
+>> be _really_ avoided) rebases and certainly after cherry-picking
+>> within git.
 >
-> The modes are recorded in patches and push/pull, so if you have
-> several people working with different permissions/umasks, you get
-> wagonloads of unnecessary patches and get your local permissions
-> messed up by other contributors.
+> I think I see where you're coming from, now.  git-svn doesn't ever
+> associate remotes with local branches in the .git/config like
+> regular git-clone.
 >
-> For colloborative work, you _really_ don't want to have _personal_
-> preferences distributed.
+> I just cloned git.git from kernel.org again to see that .git/config
+> associates a local branch with a remote branch like this:
 >
-> Any patch offering to optionally track permissions must make very sure
-> that it retains the possibility to have permissions in the directory
-> policed to the values that are actually a property of the source files
-> rather than the personal work environment.
+> ----------------------------------------------------------------
+> [branch "master"]
+>         remote = origin
+>         merge = refs/heads/master
+> ----------------------------------------------------------------
 >
+> I used git before this feature ever existed, and got used to git
+> without ever needing it myself.  I've always had a good idea of
+> where I branched off from last, or I can ask with "gitk --all"
+> otherwise.
 
-Hmm yes, that's right.
+But with -t support, git-svn already has a good notion about what
+branch belongs to what remote.
 
-Let's look at the problem from another point of view then: I want my  
-*working tree* to be group readable even though my umask is 066.   
-Would it be possible to add a local config option in the .git repo to  
-tell git that it should create new file this way (exactly like  
-core.sharedRepository but core.sharedWorkingCopy or whatever).
+> So yes, I'll shamefully admit that I've never used this feature of
+> git and in my very quick (and sleepy) evaluation of it, it seems
+> quite limiting...
 
-WDYT?
+Oh, I don't mind being limited from wreaking havoc on a central
+repository.
 
 -- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-29--905293478
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFGzTvHwwE67wC8PUkRAlLPAKCcCYnLYwyS3DvmDDeAhfoYkt5E3wCgvNNh
-bgyhlvq/wRh78IINp+fIbo0=
-=ivAT
------END PGP SIGNATURE-----
-
---Apple-Mail-29--905293478--
+David Kastrup
