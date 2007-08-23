@@ -1,40 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strange code in diff-delta.c
-Date: Thu, 23 Aug 2007 00:06:26 -0700
-Message-ID: <7vk5rmvifh.fsf@gitster.siamese.dyndns.org>
-References: <85k5rnjcbu.fsf@lola.goethe.zz>
-	<alpine.LFD.0.999.0708222126590.16727@xanadu.home>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: git-svnimport: what to do after -i?
+Date: Thu, 23 Aug 2007 08:29:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708230827440.26254@beast.quantumfyre.co.uk>
+References: <20070822113325.1bihryuk4gko8kgs@intranet.digizenstudio.com>
+ <20070823012836.GA18796@falcon.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 09:06:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 09:30:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO6m5-0000T3-8g
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 09:06:37 +0200
+	id 1IO78i-0007j4-QM
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 09:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889AbXHWHGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 03:06:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754782AbXHWHGe
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 03:06:34 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:57506 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754724AbXHWHGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 03:06:34 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 414DE122DC8;
-	Thu, 23 Aug 2007 03:06:51 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0708222126590.16727@xanadu.home> (Nicolas
-	Pitre's message of "Wed, 22 Aug 2007 21:45:34 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753287AbXHWH35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 03:29:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753642AbXHWH35
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 03:29:57 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:57455 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752917AbXHWH34 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 03:29:56 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 7CFCA740E0
+	for <git@vger.kernel.org>; Thu, 23 Aug 2007 08:29:55 +0100 (BST)
+Received: (qmail 16051 invoked by uid 103); 23 Aug 2007 08:29:55 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91/4032. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.029605 secs); 23 Aug 2007 07:29:55 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 23 Aug 2007 08:29:54 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <20070823012836.GA18796@falcon.digizenstudio.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56465>
 
-Thanks, both.
+On Wed, 22 Aug 2007, Jing Xue wrote:
+
+> OK, got it working. It had more to do with the module/trunk path than
+> the -i.
+>
+> My svn projects are organized like:
+> projectFoo
+>    -trunk
+>    -tags
+>    -branches
+>
+> So I initially used:
+>
+> git svnimport -C projectFoo -r -A svn-authors -I .gitignore -T projectFoo svn://jabba trunk
+>
+> which resulted in the empty working directory - with or without the -i.
+>
+> What ended up working is this:
+>
+> git svnimport -C projectFoo -r -A svn-authors -I .gitignore -T projectFoo -P trunk svn://jabba
+>
+> Cheers.
+
+I haven't used svnimport in a while (and never with subprojects), but you 
+seem to be specifying that projectFoo is your trunk - which doesn't seem 
+right.
+
+I would have expected the command to be:
+
+git svnimport -C projectFoo -r -A svn-authors -I .gitignore svn://jabba projectFoo
+
+-- 
+Julian
+
+  ---
+Everything you know is wrong!
