@@ -1,63 +1,61 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 22:26:47 +0200
-Message-ID: <20070823202647.GA3516@steel.home>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz> <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site> <86mywjcwv7.fsf@lola.quinscape.zz>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: [BUG] git-gui: "Stage Hunk For Commit" doesn't work at all anymore
+Date: Thu, 23 Aug 2007 15:30:24 -0500
+Message-ID: <20070823203024.GF21692@lavos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 22:26:57 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 22:30:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOJGa-0007fx-MJ
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:26:57 +0200
+	id 1IOJKE-00016A-Hg
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677AbXHWU0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 16:26:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758216AbXHWU0x
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:26:53 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:37431 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755878AbXHWU0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 16:26:52 -0400
-Received: from tigra.home (Faaab.f.strato-dslnet.de [195.4.170.171])
-	by post.webmailer.de (fruni mo57) (RZmta 10.3)
-	with ESMTP id w01c0ej7NHWrV1 ; Thu, 23 Aug 2007 22:26:50 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id CCE29277BD;
-	Thu, 23 Aug 2007 22:26:49 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id C8000BE01; Thu, 23 Aug 2007 22:26:48 +0200 (CEST)
+	id S1758216AbXHWUaf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 16:30:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758648AbXHWUaf
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:30:35 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:43797 "EHLO
+	asav01.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757759AbXHWUaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 16:30:35 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAOqKzUZKhvbz/2dsb2JhbAA
+X-IronPort-AV: E=Sophos;i="4.19,301,1183348800"; 
+   d="scan'208";a="72446870"
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav01.insightbb.com with ESMTP; 23 Aug 2007 16:30:34 -0400
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 7E8A9309F21; Thu, 23 Aug 2007 15:30:24 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <86mywjcwv7.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolCoDQ=
-X-RZG-CLASS-ID: mo07
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56525>
 
-David Kastrup, Wed, Aug 22, 2007 19:17:16 +0200:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > And not making the scripts builtins helps Windows users how,
-> > exactly?
-> 
-> Red herring.  The proposal was not to do nothing, but rather give git
-> a dedicated scripting language internal to it.  Two suggestions of
-> mine with different advantages were git-busybox and Lua.
+This commit:
 
-Different "disadvantages". How do you do pipes and safe inter-program
-argument passing in Lua? Portably?
-What do you propose to do about gitbox becoming a dependency for
-others, who inevitably start using it (why not? It promised to be
-portable enough for Git itself!)
+commit a13ee29b975d3a9a012983309e842d942b2bbd44
+Author: Shawn O. Pearce <spearce@spearce.org>
+Date:   Thu Aug 2 22:55:22 2007 -0400
 
-> A third one was once proposed by Linus with some code example:
-> starting a scripting language from scratch.
+    git-gui: Avoid Tcl error in popup menu on diff viewer
 
-It was all about pipes.
+    If there is no path currently shown in the diff viewer then we
+    were getting Tcl errors anytime the user right-clicked on the
+    diff viewer to bring up its popup menu.  The bug here is caused
+    by trying to get the file_state for the empty string; this path
+    is never seen so we never have file_state for it.  In such cases
+    we now disable the Stage Hunk For Commit option.
+
+    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+
+seems to have broken the "Stage Hunk For Commit" option entirely for me
+-- it is now disabled whether or not there is a patch in the viewer.
+
+-bcd
