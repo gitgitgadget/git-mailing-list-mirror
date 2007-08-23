@@ -1,74 +1,111 @@
-From: David Kastrup <dak@gnu.org>
+From: martin f krafft <madduck@madduck.net>
 Subject: Re: confused about preserved permissions
-Date: Thu, 23 Aug 2007 08:12:18 +0200
-Message-ID: <85mywiixtp.fsf@lola.goethe.zz>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
-	<6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr>
-	<7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
-	<20070823060052.GA25153@piper.oerlikon.madduck.net>
+Date: Thu, 23 Aug 2007 08:23:42 +0200
+Message-ID: <20070823062342.GA29172@piper.oerlikon.madduck.net>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> <7v8x83i5ma.fsf@gitster.siamese.dyndns.org> <20070823060052.GA25153@piper.oerlikon.madduck.net> <85mywiixtp.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Aug 23 08:12:26 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	David Kastrup <dak@gnu.org>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 08:24:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO5vb-0002U9-Qc
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:12:24 +0200
+	id 1IO675-0005k3-7P
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbXHWGMV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 02:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbXHWGMV
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:12:21 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:53192 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751123AbXHWGMU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 02:12:20 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 7131D1F593C;
-	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
-Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 5DD6A2C6CB1;
-	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-050-128.pools.arcor-ip.net [84.61.50.128])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 327A01F70CB;
-	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B2E261C36605; Thu, 23 Aug 2007 08:12:18 +0200 (CEST)
-In-Reply-To: <20070823060052.GA25153@piper.oerlikon.madduck.net> (martin f. krafft's message of "Thu\, 23 Aug 2007 08\:00\:52 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-04.arcor-online.net
-X-Virus-Status: Clean
+	id S1751044AbXHWGXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 02:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbXHWGXq
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:23:46 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:56411 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbXHWGXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 02:23:45 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id EE68A895F78;
+	Thu, 23 Aug 2007 08:23:43 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 15509-08; Thu, 23 Aug 2007 08:23:43 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 7B66E895F73;
+	Thu, 23 Aug 2007 08:23:43 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id BDEC99F16A;
+	Thu, 23 Aug 2007 08:23:42 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 81C4043F4; Thu, 23 Aug 2007 08:23:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <85mywiixtp.fsf@lola.goethe.zz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56460>
 
-martin f krafft <madduck@madduck.net> writes:
 
-> also sprach Junio C Hamano <gitster@pobox.com> [2007.08.23.0009 +0200]:
->> We deliberately chose not to use that space, and this default is
->> very unlikely to change.
->
-> The downsides included change in SHA hash on mode change, as far as
-> I can remember. Anything else?
+--cNdxnHkX5QqsyA0e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The modes are recorded in patches and push/pull, so if you have
-several people working with different permissions/umasks, you get
-wagonloads of unnecessary patches and get your local permissions
-messed up by other contributors.
+also sprach David Kastrup <dak@gnu.org> [2007.08.23.0812 +0200]:
+> The modes are recorded in patches and push/pull, so if you have
+> several people working with different permissions/umasks, you get
+> wagonloads of unnecessary patches and get your local permissions
+> messed up by other contributors.
+>=20
+> For colloborative work, you _really_ don't want to have _personal_
+> preferences distributed.
 
-For colloborative work, you _really_ don't want to have _personal_
-preferences distributed.
+How about a patch that
 
-Any patch offering to optionally track permissions must make very sure
-that it retains the possibility to have permissions in the directory
-policed to the values that are actually a property of the source files
-rather than the personal work environment.
+  (a) ensures that modes of existing files are preserved
+      across checkouts and merges?
+  (b) for files it creates (e.g. checkout of a branch introducing
+      a file), it consults the default for this file tracked in the
+      archive and uses that.
+  (c) in order to change the mode recorded for a file, a user has to
+      tell git-add to specifically record the mode change in the
+      index.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+There should be a tri-state policy: mode-from-archive vs. umask, and
+umask could be according to core.umask or if that's set to user,
+then the user's umask.
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"the only difference between shakespeare and you
+ was the size of his idiom list -- not the size of his vocabulary."
+                                                      -- alan perlis
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--cNdxnHkX5QqsyA0e
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGzSfuIgvIgzMMSnURAj8fAKDTCIjr5KEN+wPdsH15aq02/WIfQwCg4E37
+qGqhySuS6IXUyHrH8JErlO4=
+=6K7w
+-----END PGP SIGNATURE-----
+
+--cNdxnHkX5QqsyA0e--
