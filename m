@@ -1,99 +1,85 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: git-svnimport: what to do after -i?
-Date: Thu, 23 Aug 2007 09:00:31 -0400
-Message-ID: <20070823130031.GA17092@falcon.digizenstudio.com>
-References: <20070822113325.1bihryuk4gko8kgs@intranet.digizenstudio.com> <20070823012836.GA18796@falcon.digizenstudio.com> <Pine.LNX.4.64.0708230827440.26254@beast.quantumfyre.co.uk>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH 2/2] Don't touch ref files manually
+Date: Thu, 23 Aug 2007 15:04:02 +0100
+Message-ID: <b0943d9e0708230704k78281ce4jc8dcb7078fea20ed@mail.gmail.com>
+References: <20070810031949.19791.54562.stgit@yoghurt>
+	 <20070810032318.19791.70483.stgit@yoghurt>
+	 <b0943d9e0708210623h112faa42p97bba06bc9fab774@mail.gmail.com>
+	 <20070821164629.GB17045@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Thu Aug 23 15:01:34 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Pavel Roskin" <proski@gnu.org>, git@vger.kernel.org,
+	"Yann Dirson" <ydirson@altern.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 16:04:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOCJa-0008Al-1M
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 15:01:34 +0200
+	id 1IODIG-0003ie-Vs
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 16:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760661AbXHWNBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 09:01:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760594AbXHWNB3
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 09:01:29 -0400
-Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:35401
-	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758182AbXHWNB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 09:01:29 -0400
-Received: (qmail 8020 invoked from network); 23 Aug 2007 13:01:28 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 23 Aug 2007 13:01:28 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id B8629100A0E;
-	Thu, 23 Aug 2007 13:01:28 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xy2nP5Nml6Qa; Thu, 23 Aug 2007 09:01:28 -0400 (EDT)
-Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 0A54D1000A2;
-	Thu, 23 Aug 2007 09:01:28 -0400 (EDT)
-Received: by falcon (Postfix, from userid 1000)
-	id 49A9E7B51B; Thu, 23 Aug 2007 09:00:31 -0400 (EDT)
-Mail-Followup-To: Julian Phillips <julian@quantumfyre.co.uk>,
-	git@vger.kernel.org
+	id S1757462AbXHWOEL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 10:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755764AbXHWOEJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 10:04:09 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:24373 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753169AbXHWOEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 10:04:08 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so379646nfb
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 07:04:02 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UZC6wv8CmaipDuNkz+QMriEmV7OJvlTdvpdxfALIg1sCDWCcZtUM2Fkw/BsS0ueSk+RlGIlmPNC9T17gvV2FLDILkAa4GDzCp1afxD0bCz2s5Rv/MamKnRtnSJhCpW7OOQPe8RqxVkyyMM1cedBUqgOsnVA3lUDgaT48LPtNhew=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=guNKLKWlbUjQkJXVPocVXHNqAs/ZuIdFvtMaTnOuXXEueeNZgHvcISMBw1emrH38qvLYeEOE+lc56KNAZc4r9u179kUJpzQUF6cmM5weEZydcryf1pKXNKmBiJq0PDHDMJbIcnj1UdPQgs8Aw7eGTk8h2jg25BSFI2SDvK8IVvQ=
+Received: by 10.78.166.7 with SMTP id o7mr1235725hue.1187877842311;
+        Thu, 23 Aug 2007 07:04:02 -0700 (PDT)
+Received: by 10.78.151.11 with HTTP; Thu, 23 Aug 2007 07:04:02 -0700 (PDT)
+In-Reply-To: <20070821164629.GB17045@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708230827440.26254@beast.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56499>
 
-On Thu, Aug 23, 2007 at 08:29:54AM +0100, Julian Phillips wrote:
-> 
-> I haven't used svnimport in a while (and never with subprojects), but you 
-> seem to be specifying that projectFoo is your trunk - which doesn't seem 
-> right.
-> 
-> I would have expected the command to be:
-> 
-> git svnimport -C projectFoo -r -A svn-authors -I .gitignore svn://jabba 
-> projectFoo
+On 21/08/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-08-21 14:23:29 +0100, Catalin Marinas wrote:
+>
+> > Thanks for this patch.
+>
+> Two things:
+>
+>   * The test in your tree has the latin1 form of my name in it,
+>     instead of utf8. (I noticed because I got a conflict when I
+>     rebased onto your master.)
 
-Thanks for bringing it up. :)
+I imported it on a different PC (at work) where I think the locale
+support isn't properly set up. Xterm accepted a copy-paste operation
+with your name and I passed it through emacs which probably broke it.
+The From: header had a different encoding and hence the author was
+correct.
 
-My svn structure (see my last email) is somewhat reversed from what
-svnimport assumes, which seems to be more along the lines of:
+I'll try to do it on my home PC only (or just pull from your repo :-)).
 
-repoRoot
-  -trunk
-    -projectFoo
-    -projectBar
-  -tags
-    -projectFoo
-    -projectBar
-  -branches
-    -projectFoo
-    -projectBar
+>   * The test suite now fails on your master (since you've applied jus=
+t
+>     the test and not the fix). Please don't do that; it makes
+>     development needlessly hard. (To be fair, this is partly my fault=
+,
+>     since I posted the fixin a separate patch. I'll change my ways.)
 
-So in my case I had to kind of cheat svnimport into thinking
-'projectFoo' is the name of the "trunk" directory, and 'trunk' is the
-actually project name. And I had to create 'dummytags' and
-'dummybranches' at repoRoot level (following somebody else's tip found
-on this list).
+I think it's OK to send separate patches and I'm OK with a test
+failing in a development stage. The 2nd patch didn't apply cleanly and
+didn't have time to see what was wrong. I'll push it tonight, please
+have a look for things I might have missed.
 
-Of course doing so has two problems:
+Thanks.
 
-1. I can only import one project at one time, but my plan is to have
-separated git repo for each project going forward, so this works out
-just fine.
-
-2. I can't actually import any tags and branches because my real tags
-and branches are under projectFoo/tags and projectFoo/branches. This is
-somewhat a loss, but we can cope with it by having the svn repo around
-as the history book.
-
-But then if there is any better way to achieve this, I would certainly
-be interested and eager to learn. Thanks.
-
--- 
-Jing Xue
+--=20
+Catalin
