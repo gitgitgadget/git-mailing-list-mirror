@@ -1,124 +1,94 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] git-svn: update documentation with CAVEATS section
-Date: Thu, 23 Aug 2007 08:00:32 +0200
-Message-ID: <85r6luiydb.fsf@lola.goethe.zz>
-References: <20070816085645.GA3159@soma>
-	<7v4piri44r.fsf@gitster.siamese.dyndns.org>
-	<853aybkwsc.fsf@lola.goethe.zz> <20070823053009.GC4978@muzzle>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: confused about preserved permissions
+Date: Thu, 23 Aug 2007 08:00:52 +0200
+Message-ID: <20070823060052.GA25153@piper.oerlikon.madduck.net>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> <7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Aug 23 08:00:40 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 08:01:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO5kF-0007xj-C4
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:00:39 +0200
+	id 1IO5kk-00083O-QY
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752450AbXHWGAg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 02:00:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752223AbXHWGAf
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:00:35 -0400
-Received: from mail-in-13.arcor-online.net ([151.189.21.53]:38427 "EHLO
-	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751116AbXHWGAf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 02:00:35 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 3EB5C1E56B8;
-	Thu, 23 Aug 2007 08:00:33 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 281215BF3B;
-	Thu, 23 Aug 2007 08:00:33 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-050-128.pools.arcor-ip.net [84.61.50.128])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id F3F8136E864;
-	Thu, 23 Aug 2007 08:00:32 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9DB001C36605; Thu, 23 Aug 2007 08:00:32 +0200 (CEST)
-In-Reply-To: <20070823053009.GC4978@muzzle> (Eric Wong's message of "Wed\, 22 Aug 2007 22\:30\:09 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1752880AbXHWGBH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 02:01:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752753AbXHWGBG
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:01:06 -0400
+Received: from armagnac.ifi.unizh.ch ([130.60.75.72]:54995 "EHLO
+	albatross.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751116AbXHWGBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 02:01:04 -0400
+Received: from localhost (albatross.madduck.net [127.0.0.1])
+	by albatross.madduck.net (postfix) with ESMTP id DB036895F6E;
+	Thu, 23 Aug 2007 08:01:02 +0200 (CEST)
+Received: from albatross.madduck.net ([127.0.0.1])
+	by localhost (albatross.madduck.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 26310-10; Thu, 23 Aug 2007 08:01:02 +0200 (CEST)
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by albatross.madduck.net (postfix) with ESMTP id 459BC895F61;
+	Thu, 23 Aug 2007 08:00:54 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 8C0D09F16A;
+	Thu, 23 Aug 2007 08:00:53 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 0AFF543F4; Thu, 23 Aug 2007 08:00:52 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at madduck.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56457>
 
-Eric Wong <normalperson@yhbt.net> writes:
 
-> David Kastrup <dak@gnu.org> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > Eric Wong <normalperson@yhbt.net> writes:
->> >
->> >>   I've been meaning to do this for a while, hopefully this cuts
->> >>   down on the redundant mailing list traffic about these subjects.
->> >> ...
->> >> +CAVEATS
->> >> +-------
->> >> +
->> >> +For the sake of simplicity and interoperating with a less-capable system
->> >> +(SVN), it is recommended that all git-svn users clone, fetch and dcommit
->> >> +directly from the SVN server, and avoid all git-clone/pull/merge/push
->> >> +operations between git repositories and branches.  The recommended
->> >> +method of exchanging code between git branches and users is
->> >> +git-format-patch and git-am, or just dcommiting to the SVN repository.
->> >> +
->> >> +Running 'git-merge' or 'git-pull' is NOT recommended on a branch you
->> >> +plan to dcommit from.  Subversion does not represent merges in any
->> >> +reasonable or useful fashion; so users using Subversion cannot see any
->> >> +merges you've made.
->> >
->> > Ok, my ruling before 1.5.3 is to take this patch, and encourage
->> > interested parties to help Eric adding reliable support for the
->> > feature after that, if such is possible.
->> 
->> Couldn't we at least get a _documentation_ of the current behavior
->> when actually using git for branch work?  Knowing what will fail how
->> and when is not as good as things just working as one would expect,
->> but it certainly beats obscure warnings.
->> 
->> For example, I consider it rather unacceptable that nowhere is
->> documented just _how_ git-svn chooses one Subversion branch to commit
->> to.
->
-> dcommit always chooses the last SVN branch it branched off from.
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, it doesn't.  That's the problem.  If I do
-git-merge master
-in a side branch, and do git-svn dcommit afterwards, the commit
-goes to the master branch.
+also sprach Junio C Hamano <gitster@pobox.com> [2007.08.23.0009 +0200]:
+> We deliberately chose not to use that space, and this default is
+> very unlikely to change.
 
-Which is utterly unexpected.
+The downsides included change in SHA hash on mode change, as far as
+I can remember. Anything else?
 
->> It also drastically misrepresents the consequences: the problem is
->> _not_ that users using Subversion cannot see merges.  That is
->> something that one can readily accept.  The problem is that git-svn
->> will dcommit to a seemingly random branch.
->
-> Interesting, I've never considered it a problem (probably because
-> I know and trust the code I wrote :).  Good idea though.
->
-> Junio: could you please apply the following trivial patch?  Thanks.
->
-> From a8ae91019a2ededd0e3d455fdd78655c086ea3b3 Mon Sep 17 00:00:00 2001
-> From: Eric Wong <normalperson@yhbt.net>
-> Date: Wed, 22 Aug 2007 22:14:31 -0700
-> Subject: [PATCH] git-svn: dcommit prints out the URL to be committed to
->
-> This will print out the URL that dcommit will operate on.
-> If used with --dry-run this will print out the URL without
-> making changes to the repository.
->
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-Acked-by: David Kastrup<dak@gnu.org>
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"wickedness is a myth
+ invented by good people
+ to account for the curious attraction of others."
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
 
-This is already a _large_ help for avoiding clobbering the central
-repository.  But I stress that it would be much better if git-svn
-dcommit/rebase stayed exclusively on the branch that is associated
-with it/fetching in the "svn" config section, like git does in general
-with remotes.  No random branch jumping after merges or (to be
-_really_ avoided) rebases and certainly after cherry-picking within
-git.
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGzSKUIgvIgzMMSnURAgnSAKChqFVKVKNx++Q3SfLsyaRYNyZgSgCbBT/J
+no+erDRU7r5KKxBWXnYr834=
+=UHZA
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
