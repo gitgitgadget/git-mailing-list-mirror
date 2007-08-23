@@ -1,58 +1,48 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: stgit 0.13 import mbox problems
-Date: Thu, 23 Aug 2007 14:06:33 -0400
-Message-ID: <20070823180633.GA24530@filer.fsl.cs.sunysb.edu>
-References: <20070823092254.GA5976@kroah.com>
+Date: Thu, 23 Aug 2007 14:31:11 -0400
+Message-ID: <20070823183111.GB15684@fieldses.org>
+References: <20070823092254.GA5976@kroah.com> <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com> <20070823164322.GC5528@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: catalin.marinas@gmail.com, git@vger.kernel.org
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
 To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 20:07:10 2007
+X-From: git-owner@vger.kernel.org Thu Aug 23 20:31:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOH5J-0006P2-GN
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:07:09 +0200
+	id 1IOHSi-00019Z-I5
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759797AbXHWSGj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 14:06:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759618AbXHWSGi
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:06:38 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:44680 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759442AbXHWSGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 14:06:38 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l7NI6XWg001250;
-	Thu, 23 Aug 2007 14:06:33 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l7NI6Xhf001248;
-	Thu, 23 Aug 2007 14:06:33 -0400
-X-Authentication-Warning: filer.fsl.cs.sunysb.edu: jsipek set sender to jsipek@fsl.cs.sunysb.edu using -f
+	id S1764536AbXHWSbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 14:31:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764413AbXHWSbP
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:31:15 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:38066 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763614AbXHWSbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 14:31:14 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IOHSZ-0007J7-SJ; Thu, 23 Aug 2007 14:31:11 -0400
 Content-Disposition: inline
-In-Reply-To: <20070823092254.GA5976@kroah.com>
-User-Agent: Mutt/1.5.16 (2007-07-16)
+In-Reply-To: <20070823164322.GC5528@kroah.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56511>
 
-On Thu, Aug 23, 2007 at 02:22:54AM -0700, Greg KH wrote:
-> Hi,
-> 
-> I wanted to see if I could start using stgit instead of quilt, so I
-> tried to import my current set of kernel patches.
- 
-May I suggest you give guilt [1,2] a spin? It uses the same quilt-like
-patch directory format so things should Just Work(tm).
+On Thu, Aug 23, 2007 at 09:43:22AM -0700, Greg KH wrote:
+> I really do like quilt, but wanted to see how well my current workflow
+> could be by using stgit as I'm constantly rebasing the main kernel
+> version against -git snapshots and sometimes that isn't frequent enough.
 
-Josef 'Jeff' Sipek.
+So just want to be able to rebase more than once a day?  Then why not
+just run quilt on top of git?  Pop off all your quilt patches, git pull,
+push them all back on again....
 
-[1] http://kernel.org/pub/linux/kernel/people/jsipek/guilt/
-[2] git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+Maybe I'm misunderstanding your use case.
 
--- 
-You measure democracy by the freedom it gives its dissidents, not the
-freedom it gives its assimilated conformists.
-		- Abbie Hoffman
+--b.
