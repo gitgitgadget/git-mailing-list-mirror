@@ -1,74 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
-Date: Thu, 23 Aug 2007 22:50:11 +0200
-Message-ID: <vpqabsikmbg.fsf@bauges.imag.fr>
-References: <11878991123605-git-send-email-v@pp.inet.fi>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit 0.13 import mbox problems
+Date: Thu, 23 Aug 2007 21:57:42 +0100
+Message-ID: <b0943d9e0708231357s1ceaa121qd56e3a9c71677c8d@mail.gmail.com>
+References: <20070823092254.GA5976@kroah.com>
+	 <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
+	 <20070823164322.GC5528@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-X-From: git-owner@vger.kernel.org Thu Aug 23 22:51:18 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Greg KH" <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 22:57:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOJe9-0001Us-HU
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:51:17 +0200
+	id 1IOJkS-00041K-Om
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760726AbXHWUvO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 16:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759028AbXHWUvO
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:51:14 -0400
-Received: from imag.imag.fr ([129.88.30.1]:42990 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759954AbXHWUvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 16:51:13 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7NKoBFs026450
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 23 Aug 2007 22:50:13 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IOJd5-0007ZI-9C; Thu, 23 Aug 2007 22:50:11 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IOJd5-00079Z-6l; Thu, 23 Aug 2007 22:50:11 +0200
-In-Reply-To: <11878991123605-git-send-email-v@pp.inet.fi>
- (=?iso-8859-1?Q?=22V=E4in=F6_J=E4rvel=E4=22's?= message of "Thu\, 23 Aug
- 2007 22\:58\:31 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 23 Aug 2007 22:50:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1758914AbXHWU5p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 16:57:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760514AbXHWU5o
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:57:44 -0400
+Received: from ik-out-1112.google.com ([66.249.90.177]:5208 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758397AbXHWU5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 16:57:44 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so277585ika
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 13:57:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=esSrdJhUhvvtCHwNtk6Ky7teAStOmd1tIPjx6qkyh50Xq8bwmYgGLo0dYtnolA+Xo0FjQIBoG5zVTZqRqrQkcOs1Ekoen/djWYy2TmwguhiO4OqC1OWu4N8pbegoEnIX92bCY6ov6yB28yNDLEsQpUnEmeXgqRrWDN0gtV+xLkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OjiPE8Rbu2AA2Y/yqDN1+UnaHTj6Z1DiRRm4pKKjNKb1cPbIj4XAmwlmH/iqKbYNHN6fKo0Jtwzq8vjSRGQMG1gfr/O55q6FhhtaH+r2IE1hPAy63j5ToeXkaOLJbjGeQK/3kTKjSxuPnKe6Ih+7Xji5GesOluAVVkJj154EQb4=
+Received: by 10.78.200.3 with SMTP id x3mr1501852huf.1187902662220;
+        Thu, 23 Aug 2007 13:57:42 -0700 (PDT)
+Received: by 10.78.151.11 with HTTP; Thu, 23 Aug 2007 13:57:42 -0700 (PDT)
+In-Reply-To: <20070823164322.GC5528@kroah.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56532>
 
-V=E4in=F6 J=E4rvel=E4 <v@pp.inet.fi> writes:
+On 23/08/07, Greg KH <greg@kroah.com> wrote:
+> Also, it would import these patches, which are individually in mbox
+> form, with the incorrect author information.  So I thought I would use
+> the mbox form to make sure I wasn't just doing something stupid.
 
-> Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status comman=
-ds.
-                                       ^^
+If the patches have a "From: ..." line after the subject (as described
+in the submitting patches kernel docs), StGIT honours it.
 
-I suppose you meant --only-tracked.
+Yet another way (might be even simpler for you) - use git-applymbox
+(or git-quiltapply) and 'stg uncommit -n 177'. The former generates
+GIT commits and the latter creates StGIT patches (without touching the
+tree, HEAD remains the same and corresponds to the top patch). There
+is also 'stg uncommit --to=commit-id'.
 
->  static const char runstatus_usage[] =3D
-> -"git-runstatus [--color|--nocolor] [--amend] [--verbose] [--untracke=
-d]";
-> +"git-runstatus [--color|--nocolor] [--amend] [--verbose]
-> [--untracked]" "[--only-tracked]";
-               ^^^
+> > After an import failure, you can continue importing from the next
+> > patch using the 'stg import --ignore' option.
+>
+> Ok, will try that, and your patch.
 
-The compiler will concatenate the strings, but won't add a space. That
-results in "... [--untracked][--only-tracked]".
+You can try the tonight snapshot which has this patch included (and
+other fixes) - http://homepage.ntlworld.com/cmarinas/stgit/snapshots/stgit-20070823.tar.gz
 
-Otherwise, the patch sounds fine to me. Not /terribly/ usefull, but
-why not.
+> > One thing you'll notice is the speed difference as stgit has to
+> > generate a git commit during a push operation.
+>
+> Oh yeah, I know that it would be slower, but I use git-quiltapply a lot
+> for sending patches to Linus, and that seems quite fast (actually a lot
+> faster than stgit for some reason...)
 
---=20
-Matthieu
+I should have a look at what git-quiltapply does as most of the StGIT
+waiting time on external GIT invocation.
+
+>         $ stg series -d
+>         + add-my-version-to-the-kernel   | Add my version to the kernel.
+>         + stupid-patch-for-my-laptop-whi | Stupid patch for my laptop which cant get sysrq-u
+>         + gregs-test-driver-core-sysfs-s | Gregs test driver core / sysfs stress test module
+>         > detect-atomic-counter-underflo | detect atomic counter underflows
+>
+> Are those spaces really the name of the patch?
+
+No, the patch name is with the dashes, the rest is the patch subject line.
+
+-- 
+Catalin
