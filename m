@@ -1,71 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 18:30:28 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708221825470.30176@woody.linux-foundation.org>
+Date: Wed, 22 Aug 2007 21:40:05 -0400
+Message-ID: <9e4733910708221840nb28476g3e6789f432e334ac@mail.gmail.com>
 References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
- <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
- <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site>
- <86mywjcwv7.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org>
- <86absjcqfq.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221252040.30176@woody.linux-foundation.org>
- <85ir77ky0u.fsf@lola.goethe.zz> <alpine.LFD.0.999.0708221607590.30176@woody.linux-foundation.org>
- <85wsvnjg0v.fsf@lola.goethe.zz>
+	 <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
+	 <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
+	 <Pine.LNX.4.64.0708221713540.20400@racer.site>
+	 <86mywjcwv7.fsf@lola.quinscape.zz>
+	 <alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0708222033040.16727@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 03:30:43 2007
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 03:40:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO1X0-0005re-Rq
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 03:30:43 +0200
+	id 1IO1gW-0007rU-VG
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 03:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbXHWBaj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 21:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbXHWBaj
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 21:30:39 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43376 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750960AbXHWBai (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 21:30:38 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7N1UXds013165
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 22 Aug 2007 18:30:35 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7N1USgL014748;
-	Wed, 22 Aug 2007 18:30:28 -0700
-In-Reply-To: <85wsvnjg0v.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-4.749 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751673AbXHWBkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 21:40:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbXHWBkJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 21:40:09 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:19733 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbXHWBkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 21:40:06 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so398936wah
+        for <git@vger.kernel.org>; Wed, 22 Aug 2007 18:40:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gVqvwiHJaqCsmfn3GKcNjEQ15/xusGg7wsXQynOxSjc+W7oKMYlN887iaKJbk4g2N/lgtBcZN97EFrq2odC6em93WE05ywkHFWOJNlLycdV83y+YKvRhnXLgZ/9bxVT5R7sgBSMtM6bWzFiFKANg3WhUtskuv8SKHAvwEI6ixPo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CCyHNrVvXJIX5pEoyKoEQOfyrQ7E5sw4nonRcRIQL95iZfSFnQwFSAGlGSrnzRN3OhD5eXE3chPIK+rma1zojKvZMI4x+WE4hzfUreeVf0czddcYWWO8G6Nv7dzzttJRXZoApMO5gydpoCVmbwVl/znh1NFyzeIQZBgMYeoJg/o=
+Received: by 10.114.177.1 with SMTP id z1mr1529257wae.1187833206200;
+        Wed, 22 Aug 2007 18:40:06 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Wed, 22 Aug 2007 18:40:05 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708222033040.16727@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56446>
 
+On 8/22/07, Nicolas Pitre <nico@cam.org> wrote:
+> Indeed. And this is the very same reason why Git should _also_ acquire a
+> script interpreter of its own if we want to continue bragging about
+> Git's easy scriptability.
 
+Last project I was working on that needed a scripting language picked lua.
+http://www.lua.org/about.html
 
-On Thu, 23 Aug 2007, David Kastrup wrote:
-> 
-> By golly, you are right.  Pretty much all projects that are defined by
-> not including a script language don't include a script language.
+I had never heard of it before but after working with it for a while I
+found it to be a very nice package with minimal resource requirements.
 
-The point is, you made a totally bogus and unsubstantiated claim: you 
-claimed that projects that are written in C would be (direct quotes from 
-your *idiotic* claims): "But it would stop being as hackable." and "if you 
-are aiming for a job that gets finished and then no longer touched."
-
-Both of those claims were pure and unadulterated *CRAP*.
-
-Which I pointed out. You just seem to have trouble admitting it.
-
-And both of those claims seemed to be the whole gist of your argument.
-
-If you make your arguments based on stuff that is obviously crap and 
-untrue, don't be surprised when people then consider your arguments to be 
-less than convincing.
-
-		Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
