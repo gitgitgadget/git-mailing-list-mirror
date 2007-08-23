@@ -1,55 +1,58 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
-Date: Thu, 23 Aug 2007 22:32:46 +0200
-Message-ID: <20070823203246.GB3516@steel.home>
-References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit 0.13 import mbox problems
+Date: Thu, 23 Aug 2007 21:36:05 +0100
+Message-ID: <b0943d9e0708231336h3a92de22oc025c69b9209da9a@mail.gmail.com>
+References: <20070823092254.GA5976@kroah.com>
+	 <20070823180633.GA24530@filer.fsl.cs.sunysb.edu>
+	 <20070823184758.GB17601@kroah.com>
+	 <20070823185608.GC1608@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-15?B?VuRpbvYgSuRydmVs5A==?= <v@pp.inet.fi>
-X-From: git-owner@vger.kernel.org Thu Aug 23 22:32:55 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Greg KH" <greg@kroah.com>, git@vger.kernel.org
+To: "Josef Sipek" <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 23 22:36:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOJMK-0001xX-OG
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:32:53 +0200
+	id 1IOJPZ-0003WH-GU
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 22:36:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758772AbXHWUct convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 16:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758743AbXHWUct
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:32:49 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:37906 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757271AbXHWUcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 16:32:48 -0400
-Received: from tigra.home (Faaab.f.strato-dslnet.de [195.4.170.171])
-	by post.webmailer.de (klopstock mo22) (RZmta 10.3)
-	with ESMTP id R0628fj7NISXyw ; Thu, 23 Aug 2007 22:32:47 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id CD9C2277BD;
-	Thu, 23 Aug 2007 22:32:46 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3EFA6BE01; Thu, 23 Aug 2007 22:32:46 +0200 (CEST)
+	id S1755727AbXHWUgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 16:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755568AbXHWUgI
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 16:36:08 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:18845 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754748AbXHWUgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 16:36:07 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so464228nfb
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 13:36:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NYa+50wNCCVRE0iYn2Nz9FECmk2r6flhyX791nDN2VRjguycRo8ztkhTovatP9RyWDCHPXG3lwcQEhoU6ABlVjvZFx5bNEyIb85y2uev05959cVmDeV7XI3u9PCZRJRS1CYmaTVe3l0r9UyDajKxDD6j57cojpe2kQInLrOfmXc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JP9TkIG0Ofrxz/48KVDiLDTa78qs7ozNfowoKDSBXWV+pW2SnHvNQQ8IgIf63Dzh7xaKidFxvIHt522AMZydB8m0hMqTj3V+xLIBMeW4e7YPK2I0OTVKI5xpQstp3Q2A0tUvcDtLe5OgaYy5bczN0q6y6FysJwYXCqYnuzbA5T4=
+Received: by 10.78.183.15 with SMTP id g15mr1472745huf.1187901365943;
+        Thu, 23 Aug 2007 13:36:05 -0700 (PDT)
+Received: by 10.78.151.11 with HTTP; Thu, 23 Aug 2007 13:36:05 -0700 (PDT)
+In-Reply-To: <20070823185608.GC1608@filer.fsl.cs.sunysb.edu>
 Content-Disposition: inline
-In-Reply-To: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolCoDQ=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56527>
 
-V=E4in=F6 J=E4rvel=E4, Thu, Aug 23, 2007 21:58:31 +0200:
-> With this flag, the user can choose to filter untracked files from th=
-e
-> status output. This can be used to either speed up the status output,=
- as
-> the untracked files are not fetched at all, or to just cleanup the
-> output without using gitignore.
+On 23/08/07, Josef Sipek <jsipek@fsl.cs.sunysb.edu> wrote:
+> Yep. Two different projects taking different approaches to storing the
+> patches. I go with the plaintext diff approach ala quilt, while stgit uses
+> git objects to store the data.
 
-"git diff -r --name-status; git diff --cached -r --name-status" is not =
-enough?
+But guilt also generates a commit object when pushing a patch. Or am I wrong?
+
+-- 
+Catalin
