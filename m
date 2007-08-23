@@ -1,84 +1,147 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 12:30:47 -0400
-Message-ID: <9e4733910708230930k3f6d1b4i47d03753bc0d3c1@mail.gmail.com>
-References: <86absjenc3.fsf@lola.quinscape.zz>
-	 <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
-	 <Pine.LNX.4.64.0708221713540.20400@racer.site>
-	 <86mywjcwv7.fsf@lola.quinscape.zz>
-	 <3f4fd2640708221434i4f5650e0u9adb523742666f40@mail.gmail.com>
-	 <Pine.LNX.4.64.0708231006220.20400@racer.site>
-	 <20070823102036.GG7267@thunk.org>
-	 <e1dab3980708230355x1d5d2febw6814e8f24d745ddd@mail.gmail.com>
-	 <Pine.LNX.4.64.0708231122450.20400@racer.site>
-	 <20070823112413.GJ7267@thunk.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: stgit 0.13 import mbox problems
+Date: Thu, 23 Aug 2007 09:43:22 -0700
+Message-ID: <20070823164322.GC5528@kroah.com>
+References: <20070823092254.GA5976@kroah.com> <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"David Tweed" <david.tweed@gmail.com>,
-	"Reece Dunn" <msclrhd@googlemail.com>, git@vger.kernel.org
-To: "Theodore Tso" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 23 18:30:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 18:44:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOFa9-0005pO-Gz
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 18:30:53 +0200
+	id 1IOFnS-0003Gh-JF
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 18:44:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762931AbXHWQat (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 12:30:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762780AbXHWQas
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 12:30:48 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:19954 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849AbXHWQas (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 12:30:48 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so429577rvb
-        for <git@vger.kernel.org>; Thu, 23 Aug 2007 09:30:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UIz4jULCN09V4fBOCk2ijhNOOGh88s9HvpJfr3Xm8Mm2aO9oed16RXbnZoqa7uiV5/F1GRFvq2I50EqJn6cJ5IFl9Wic2uew43lMP3gqSGY6KpVm71LVQ94ZTL4Vs76JSj6S/70+/+Dt0bv3r8xrzeB5F4c1CdA9rCIqFYBzCT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=q3gXkjutG57qiAyoSETkza3A8qJ93EUfreZuwMjasUtXklwoj6DgZtKCts2gf15gGLlPbolIddxFcf9d73kSQ7Td4LYkZxvU1yhc5gUS3BXMqZQDg25ym8g/gyqwZxWUjj0feGz8TEbSCotqSSA+06rEjT5+dae1rUtzY9xAAUg=
-Received: by 10.141.202.12 with SMTP id e12mr908670rvq.1187886647513;
-        Thu, 23 Aug 2007 09:30:47 -0700 (PDT)
-Received: by 10.141.44.16 with HTTP; Thu, 23 Aug 2007 09:30:47 -0700 (PDT)
-In-Reply-To: <20070823112413.GJ7267@thunk.org>
+	id S1753208AbXHWQof (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 12:44:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbXHWQof
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 12:44:35 -0400
+Received: from canuck.infradead.org ([209.217.80.40]:46890 "EHLO
+	canuck.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752426AbXHWQoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 12:44:34 -0400
+Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
+	by canuck.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1IOFnM-0007KS-HV; Thu, 23 Aug 2007 12:44:33 -0400
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56507>
 
-On 8/23/07, Theodore Tso <tytso@mit.edu> wrote:
-> I don't know enough about LUA to say for sure.  Having taken a quick
-> look at lua.org, the implementation looks pleasantly small, and LUA
-> scripts look more comprehensible than say Tcl (which is not saying
-> much, I know).  But part of "show me the code" is people demonstrating
-> that no really, LUA is an appropriate tool for simple scripts that is
-> portable enough that we don't need to have external dependencies on
-> bash and perl, and that it is easier than rewriting all of our shell
-> scripts in C.  Maybe that is a true statement.  I don't know.  My
-> suggestion to "Show us the code" was a way of hoping someone who cared
-> enough about this issue could show us.
+On Thu, Aug 23, 2007 at 11:19:12AM +0100, Catalin Marinas wrote:
+> On 23/08/07, Greg KH <greg@kroah.com> wrote:
+> > I wanted to see if I could start using stgit instead of quilt, so I
+> > tried to import my current set of kernel patches.
+> >
+> > After giving up on the "import a series" option,
+> 
+> Why?
 
-I just threw LUA out as an example of a tiny language in the hope of
-avoiding something giant like mono. LUA is already installed on most
-Linux distributions, liblua50.so on mine. It is 100KB.
+Because it kept dieing too :)
 
-LUA is used as a scripting language in some popular games. Because of
-that it has good ports to Mac/Windows. There are over a dozen books on
-Amazon about using LUA.
+Also, it would import these patches, which are individually in mbox
+form, with the incorrect author information.  So I thought I would use
+the mbox form to make sure I wasn't just doing something stupid.
 
-I only care about the scripting issue in that I don't want git to get
-tied to a giant scripting system. LUA is small enough to package with
-git.
+> > I just created a mbox
+> > of all of them using quilt and tried to import that.  Unfortunately that
+> > didn't work either:
+> >         $ stg import -M ~/linux/patches/mbox
+> >         Checking for changes in the working directory ... done
+> >         Importing patch "add-my-version-to-the-kernel" ... done
+> >         Importing patch "stupid-patch-for-my-laptop-whi" ... done
+> >         Importing patch "gregs-test-driver-core-sysfs-s" ... done
+> >         Importing patch "detect-atomic-counter-underflo" ... done
+> >         Warning: Message does not contain any diff
+> >         stg import: No diff found inside the patch
+> 
+> Maybe I should just leave the warning and let it continue. The reason
+> I added it was that "git-apply --index" fails if there is no diff.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+But there was a diff.  Or it was in the file, I don't know what happened
+to it :)
+
+> In the meantime, you can try the attached patch for StGIT.
+> 
+> Another hint - quilt can apply patches with fuzz but GIT doesn't allow
+> this by default. If a patch fails, the diff is dumped to the
+> .stgit-failed.patch file so that you can apply it manually (with patch
+> or git-apply) and run 'stg refresh' afterwards.
+
+Ah, perhaps this is the problem, I'll check it out later today.  A bit
+more helpful message would be appreciated, especially as I get a lot of
+patches that at first apply, do not go cleanly at all.  I think there's
+an override option for git to ignore fuzz somewhere, right?  Perhaps
+that could be an option for stgit here?
+
+> After an import failure, you can continue importing from the next
+> patch using the 'stg import --ignore' option.
+
+Ok, will try that, and your patch.
+
+> > I'm using the .13 version if that matters.
+> >
+> > The mbox contains 177 kernel patches against Linus's current tree
+> > (2.6.23-rc3-git5), and is available at:
+> >         http://www.kernel.org/pub/linux/kernel/people/gregkh/misc/gregkh-stgit-import-mbox.gz
+> > if anyone wants to test it out and see what I was doing wrong.
+> 
+> I'll give it a try.
+> 
+> One thing you'll notice is the speed difference as stgit has to
+> generate a git commit during a push operation.
+
+Oh yeah, I know that it would be slower, but I use git-quiltapply a lot
+for sending patches to Linus, and that seems quite fast (actually a lot
+faster than stgit for some reason...)
+
+> > Oh, I do have some suggestions as to the naming of the patch from a mail
+> > file, as limiting this to a small number of characters like stgit
+> > currently does will not work out for a lot of my patches, but I'll wait
+> > until I can actually import the thing before I look into that :)
+> 
+> We had the full name in the past but the algorithm cause problems with
+> patches (not e-mails) that didn't have a subject line. It's probably
+> better to have a config option rather than hard-coded 30 characters.
+> Note that 'stg series -d' will display the full subject line.
+
+Hm, that shows:
+	$ stg series -d
+	+ add-my-version-to-the-kernel   | Add my version to the kernel.
+	+ stupid-patch-for-my-laptop-whi | Stupid patch for my laptop which cant get sysrq-u
+	+ gregs-test-driver-core-sysfs-s | Gregs test driver core / sysfs stress test module
+	> detect-atomic-counter-underflo | detect atomic counter underflows
+
+Are those spaces really the name of the patch?
+
+Why not just take the Subject: and mangle it to be the full name of the
+patch (yeah, I can see problems if you don't have the subject).  I have
+a bash script around here from a kernel developer that I use to turn
+mbox files into sane file names that works great.
+
+Ah, it's at:
+	http://www.kernel.org/pub/linux/kernel/people/gregkh/gregkh-2.6/scripts/rename-patch
+if you want to take a look and possibly use the same type of logic.
+Hm, Jean seems to have updated it, use the one at:
+	http://jdelvare.pck.nerim.net/linux/rename-patch
+instead, it's a bit more up to date.
+
+> If you don't give up before importing the files :-), please let us
+> know the user experience, especially related to speed as compared to
+> quilt.
+
+I really don't want to give up :)
+
+I really do like quilt, but wanted to see how well my current workflow
+could be by using stgit as I'm constantly rebasing the main kernel
+version against -git snapshots and sometimes that isn't frequent enough.
+
+thanks,
+
+greg k-h
