@@ -1,112 +1,73 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: update documentation with CAVEATS section
-Date: Wed, 22 Aug 2007 22:30:09 -0700
-Message-ID: <20070823053009.GC4978@muzzle>
-References: <20070816085645.GA3159@soma> <7v4piri44r.fsf@gitster.siamese.dyndns.org> <853aybkwsc.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] diff-delta.c: Fix broken skip calculation.
+Date: Thu, 23 Aug 2007 07:51:45 +0200
+Organization: Organization?!?
+Message-ID: <85veb6iyry.fsf@lola.goethe.zz>
+References: <85k5rnjcbu.fsf@lola.goethe.zz>
+	<alpine.LFD.0.999.0708222126590.16727@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 07:30:18 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 23 07:52:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO5Gr-0000wP-ND
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 07:30:18 +0200
+	id 1IO5bq-0005s3-Qy
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 07:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050AbXHWFaM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 01:30:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbXHWFaM
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 01:30:12 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37587 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750815AbXHWFaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 01:30:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id CDA6A2DC08D;
-	Wed, 22 Aug 2007 22:30:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <853aybkwsc.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752162AbXHWFvz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 01:51:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbXHWFvz
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 01:51:55 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:41310 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751918AbXHWFvy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 01:51:54 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id DBB1D31F2DB
+	for <git@vger.kernel.org>; Thu, 23 Aug 2007 07:51:52 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id D06FD212FB4
+	for <git@vger.kernel.org>; Thu, 23 Aug 2007 07:51:52 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-050-128.pools.arcor-ip.net [84.61.50.128])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id B866C1D7141
+	for <git@vger.kernel.org>; Thu, 23 Aug 2007 07:51:48 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id E01C21C36605; Thu, 23 Aug 2007 07:51:45 +0200 (CEST)
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56454>
 
-David Kastrup <dak@gnu.org> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Eric Wong <normalperson@yhbt.net> writes:
-> >
-> >>   I've been meaning to do this for a while, hopefully this cuts
-> >>   down on the redundant mailing list traffic about these subjects.
-> >> ...
-> >> +CAVEATS
-> >> +-------
-> >> +
-> >> +For the sake of simplicity and interoperating with a less-capable system
-> >> +(SVN), it is recommended that all git-svn users clone, fetch and dcommit
-> >> +directly from the SVN server, and avoid all git-clone/pull/merge/push
-> >> +operations between git repositories and branches.  The recommended
-> >> +method of exchanging code between git branches and users is
-> >> +git-format-patch and git-am, or just dcommiting to the SVN repository.
-> >> +
-> >> +Running 'git-merge' or 'git-pull' is NOT recommended on a branch you
-> >> +plan to dcommit from.  Subversion does not represent merges in any
-> >> +reasonable or useful fashion; so users using Subversion cannot see any
-> >> +merges you've made.
-> >
-> > Ok, my ruling before 1.5.3 is to take this patch, and encourage
-> > interested parties to help Eric adding reliable support for the
-> > feature after that, if such is possible.
-> 
-> Couldn't we at least get a _documentation_ of the current behavior
-> when actually using git for branch work?  Knowing what will fail how
-> and when is not as good as things just working as one would expect,
-> but it certainly beats obscure warnings.
-> 
-> For example, I consider it rather unacceptable that nowhere is
-> documented just _how_ git-svn chooses one Subversion branch to commit
-> to.
+A particularly bad case was HASH_LIMIT <= hash_count[i] < 2*HASH_LIMIT:
+in that case, only a single hash survived.  For larger cases,
+2*HASH_LIMIT was the actual limiting value after pruning.
 
-dcommit always chooses the last SVN branch it branched off from.
-
-> It also drastically misrepresents the consequences: the problem is
-> _not_ that users using Subversion cannot see merges.  That is
-> something that one can readily accept.  The problem is that git-svn
-> will dcommit to a seemingly random branch.
-
-Interesting, I've never considered it a problem (probably because
-I know and trust the code I wrote :).  Good idea though.
-
-Junio: could you please apply the following trivial patch?  Thanks.
-
->From a8ae91019a2ededd0e3d455fdd78655c086ea3b3 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Wed, 22 Aug 2007 22:14:31 -0700
-Subject: [PATCH] git-svn: dcommit prints out the URL to be committed to
-
-This will print out the URL that dcommit will operate on.
-If used with --dry-run this will print out the URL without
-making changes to the repository.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Acked-by: Nicolas Pitre <nico@cam.org>
+Signed-off-by: David Kastrup <dak@gnu.org>
 ---
- git-svn.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ diff-delta.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d162114..7a8ffd5 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -370,6 +370,7 @@ sub cmd_dcommit {
- 	$head ||= 'HEAD';
- 	my @refs;
- 	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
-+	print "Committing to $url ...\n";
- 	unless ($gs) {
- 		die "Unable to determine upstream SVN information from ",
- 		    "$head history\n";
+diff --git a/diff-delta.c b/diff-delta.c
+index 3af5835..0dde2f2 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -213,7 +213,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		entry = hash[i];
+ 		do {
+ 			struct index_entry *keep = entry;
+-			int skip = hash_count[i] / HASH_LIMIT / 2;
++			int skip = hash_count[i] / HASH_LIMIT;
+ 			do {
+ 				entry = entry->next;
+ 			} while(--skip && entry);
 -- 
-Eric Wong
+1.5.3.rc2.257.gd8a21
