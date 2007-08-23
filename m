@@ -1,48 +1,75 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: stgit 0.13 import mbox problems
-Date: Thu, 23 Aug 2007 14:31:11 -0400
-Message-ID: <20070823183111.GB15684@fieldses.org>
-References: <20070823092254.GA5976@kroah.com> <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com> <20070823164322.GC5528@kroah.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Thu, 23 Aug 2007 20:40:56 +0200
+Message-ID: <200708232040.57014.robin.rosenberg.lists@dewire.com>
+References: <46CC3090.7080500@gmail.com> <Pine.LNX.4.64.0708221713540.20400@racer.site> <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 20:31:21 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Reece Dunn" <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 20:41:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOHSi-00019Z-I5
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:31:21 +0200
+	id 1IOHcs-00060U-9A
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764536AbXHWSbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 14:31:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764413AbXHWSbP
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:31:15 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:38066 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763614AbXHWSbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 14:31:14 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IOHSZ-0007J7-SJ; Thu, 23 Aug 2007 14:31:11 -0400
+	id S1764790AbXHWSlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 14:41:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760824AbXHWSlj
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:41:39 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:7728 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1764762AbXHWSlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 14:41:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 6DCEE8027E5;
+	Thu, 23 Aug 2007 20:33:54 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03692-10; Thu, 23 Aug 2007 20:33:54 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 075A28026EE;
+	Thu, 23 Aug 2007 20:33:53 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070823164322.GC5528@kroah.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56512>
 
-On Thu, Aug 23, 2007 at 09:43:22AM -0700, Greg KH wrote:
-> I really do like quilt, but wanted to see how well my current workflow
-> could be by using stgit as I'm constantly rebasing the main kernel
-> version against -git snapshots and sometimes that isn't frequent enough.
+onsdag 22 augusti 2007 skrev Reece Dunn:
+> Given that you have to deal with other Windows issues (line ending,
+> case insensitive file names, path format), why not put the current
+> scripts in a posix porcelain directory and have a Windows porcelain
+> directory where the Windows porcelain is written in C#?
+Splitting effort in one language per platform would be very bad. Windows
+programmers would write porcelains in C# that won't run on Linux.  Even
+when you get the programs to run, C# is a second class citizen on *nix.
 
-So just want to be able to rebase more than once a day?  Then why not
-just run quilt on top of git?  Pop off all your quilt patches, git pull,
-push them all back on again....
+> Alternatively, the porcelain could be unified to use Python and
+> compiled into an executable that is installed on the Windows platform
+> (removing the need to have anything other than git installed to use
+> it).
+We need to attract developers on Windows too and making it hard to
+get started with development (i.e. fix a tiny shitty bug or feature), should not require
+lots of setups. When we speak of dependencies in an OSS project, those
+that are required for development counts too.
 
-Maybe I'm misunderstanding your use case.
+> If not Python, then can you compile perl scripts to an executable
+> form, in which case perl could be standardized on.
 
---b.
+> This way, both camps (posix and Windows) will be happy.
+
+Neither will be happy. Wannabe git hackers will find it hard to get started on
+Windows, *nix users will be unhappy because the stuff written on windows
+will be hard to get running on *nix etc and again windows users won't be 
+unhappy because they don't get help with .NET issues from Linus.
+
+-- robin
