@@ -1,102 +1,76 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Fri, 24 Aug 2007 00:05:12 +0200
-Message-ID: <85r6lthppj.fsf@lola.goethe.zz>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
-	<46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
-	<alpine.LFD.0.999.0708221154150.16727@xanadu.home>
-	<Pine.LNX.4.64.0708221713540.20400@racer.site>
-	<86mywjcwv7.fsf@lola.quinscape.zz> <20070823202647.GA3516@steel.home>
-	<85zm0igdhv.fsf@lola.goethe.zz> <20070823213337.GC3516@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking perms/ownership
+Date: Thu, 23 Aug 2007 15:08:25 -0700
+Message-ID: <7vtzqpsy3q.fsf@gitster.siamese.dyndns.org>
+References: <1187716461.5986.71.camel@beauty>
+	<20070821134030.b763e9d3.seanlkml@sympatico.ca>
+	<1187817948.5986.159.camel@beauty>
+	<alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
+	<1187905879.5986.199.camel@beauty>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 24 00:05:55 2007
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Josh England" <jjengla@sandia.gov>
+X-From: git-owner@vger.kernel.org Fri Aug 24 00:08:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOKnx-0003AC-H3
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 00:05:48 +0200
+	id 1IOKqz-0004EL-4d
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 00:08:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764147AbXHWWFY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 18:05:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762477AbXHWWFY
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 18:05:24 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:58657 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758578AbXHWWFX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 18:05:23 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id C7CC232E84E;
-	Fri, 24 Aug 2007 00:05:21 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id B3B1C13EE03;
-	Fri, 24 Aug 2007 00:05:21 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-002-248.pools.arcor-ip.net [84.61.2.248])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 6C5861B3263;
-	Fri, 24 Aug 2007 00:05:13 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B4F9A1C36605; Fri, 24 Aug 2007 00:05:12 +0200 (CEST)
-In-Reply-To: <20070823213337.GC3516@steel.home> (Alex Riesen's message of "Thu\, 23 Aug 2007 23\:33\:37 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4037/Thu Aug 23 21:08:22 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1762477AbXHWWIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 18:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760262AbXHWWIe
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 18:08:34 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42412 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758578AbXHWWId (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 18:08:33 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C398612710A;
+	Thu, 23 Aug 2007 18:08:49 -0400 (EDT)
+In-Reply-To: <1187905879.5986.199.camel@beauty> (Josh England's message of
+	"Thu, 23 Aug 2007 15:51:19 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56538>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+"Josh England" <jjengla@sandia.gov> writes:
 
-> David Kastrup, Thu, Aug 23, 2007 23:14:20 +0200:
->> Alex Riesen <raa.lkml@gmail.com> writes:
->> 
->> > David Kastrup, Wed, Aug 22, 2007 19:17:16 +0200:
->> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >> > And not making the scripts builtins helps Windows users how,
->> >> > exactly?
->> >> 
->> >> Red herring.  The proposal was not to do nothing, but rather give git
->> >> a dedicated scripting language internal to it.  Two suggestions of
->> >> mine with different advantages were git-busybox and Lua.
->> >
->> > Different "disadvantages". How do you do pipes and safe
->> > inter-program argument passing in Lua? Portably?
->> 
->> Argument quoting would have to depend on the system.  If you implement
->> that, you should be able to use os.popen and os.system.  However, the
->> general Lua approach would be to write wrappers around C routines
->> dealing with the basic git data structures, giving you things like an
->> iterator over the index and similar.  One would usually not call
->> executables, but rather functions from a git-specific library.
->> 
->> Instead of stringing this stuff together with pipes, one would string
->> it together using coroutines (Lua "threads" are strictly synchronous,
->> about as fast as normal function calls, and a yield/resume rendezvous
->> passes a value together with control).
->> 
->> So pipes would not be a natural building block, anyway.
->
-> Now that'll be a mess.
+> Looking at the index struct, it already has fields in it for file mode
+> uid and gid (woohoo!).
 
-Huh?  Stringing executables together with pipes is quite the same
-control flow as stringing coroutines together (except that coroutines
-can pass values bidirectionally).  You just write "resume" instead of
-"write" on the data producing side, and "yield" instead of "read" on
-the data consuming side.
+I can see that storing textual names in gitattributes and having
+the root user run git so that it can chown(), would work.
 
->> > What do you propose to do about gitbox becoming a dependency for
->> > others, who inevitably start using it (why not? It promised to be
->> > portable enough for Git itself!)
->> 
->> I don't understand what you mean here.
->
-> Git gets a script language support. People use the script outside of
-> git and whine when it breaks or gets removed.
+But this is only about checkout.  After you chown a file in the
+work tree and run update-index, next write-tree would not record
+it, as there is no place in tree objects to record uid/gid.
+You would need to arrange so that a matching change is made in
+the gitattributes file if you go that route.
 
-I don't see the problem.
+If you had:
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+	etc/*		owner=root
+        etc/frotz	owner=nobody
+
+in gitattributes, and you did a checkout.  You chown etc/nitfol
+with "chown printer etc/nitfol".  Somebody needs to add a line
+
+	etc/nitfol	owner=printer
+
+to gitattributes before you make the commit.  Maybe the chown
+was not about etc/nitfol but about making etc/frotz owned by
+root.  Then you would, instead of adding the etc/nitfol line,
+remove existing etc/frotz line so that earlier glob would
+capture and express the idea of making everything owned by
+root.  I suspect this would get rather tricky quickly.
+
+Of course, you would need to worry about resolving merge
+conflicts of gitattributes file, too.
