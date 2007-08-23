@@ -1,84 +1,96 @@
-From: moe <moe-git@mbox.bz>
-Subject: Re: git and larger trees, not so fast?
-Date: Thu, 23 Aug 2007 02:30:46 +0200
-Message-ID: <20070823003045.GD27372@mbox.bz>
-References: <20070809163026.GD568@mbox.bz> <alpine.LFD.0.999.0708111137250.30176@woody.linux-foundation.org> <20070811200630.GD19284@mbox.bz>
+From: David Kastrup <dak@gnu.org>
+Subject: Strange code in diff-delta.c
+Date: Thu, 23 Aug 2007 02:59:01 +0200
+Organization: Organization?!?
+Message-ID: <85k5rnjcbu.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 02:56:49 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 23 02:59:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO109-0006R5-Rl
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 02:56:46 +0200
+	id 1IO12l-00070k-KD
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 02:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752419AbXHWA4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Aug 2007 20:56:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbXHWA4i
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 20:56:38 -0400
-Received: from mx01.qsc.de ([213.148.129.14]:37353 "EHLO mx01.qsc.de"
+	id S1753312AbXHWA7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Aug 2007 20:59:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbXHWA7Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 20:59:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:36444 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751450AbXHWA4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2007 20:56:37 -0400
-X-Greylist: delayed 1546 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Aug 2007 20:56:37 EDT
-Received: from x.xxs.cc (port-212-202-38-87.dynamic.qsc.de [212.202.38.87])
-	by mx01.qsc.de (Postfix) with ESMTP id 96283C7988
-	for <git@vger.kernel.org>; Thu, 23 Aug 2007 02:30:46 +0200 (CEST)
-Received: (qmail 9543 invoked by uid 1000); 23 Aug 2007 00:30:46 -0000
-Content-Disposition: inline
-In-Reply-To: <20070811200630.GD19284@mbox.bz>
+	id S1752501AbXHWA7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2007 20:59:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IO12U-0005Kr-EZ
+	for git@vger.kernel.org; Thu, 23 Aug 2007 02:59:10 +0200
+Received: from dslb-084-061-060-116.pools.arcor-ip.net ([84.61.60.116])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 02:59:10 +0200
+Received: from dak by dslb-084-061-060-116.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 02:59:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-060-116.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:zukyME4Xp14v3H3AaixwU8JmA74=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56441>
-
-On Sat, Aug 11, 2007 at 10:06:30PM +0200, moe wrote:
-> On Sat, Aug 11, 2007 at 11:47:42AM -0700, Linus Torvalds wrote:
-> > 
-> > 
-> > On Thu, 9 Aug 2007, moe wrote:
-> > > 
-> > > here's a test-case (should be safe to
-> > > copy/paste on linux, bash):
-> > 
-> > moe: with current git (and thus the 1.5.3 release), the "git status" 
-> > commands now take half a second for me, and the git commit takes just 
-> > under a second.
-> > 
-> > The *initial* commit that adds everything still takes almost 5 seconds, 
-> > but that was due to generating the diffstat summary - with a "-q" on the 
-> > commit line that too drops down to just under a second.
-> > 
-> > In fact, the only thing that took more than a second for me with the 
-> > current git is that initial "git add .", which took 1.791s for me. 
-> > Considering that it had to hash all the 100,000 objects, I'm not 
-> > surprised.
-> > 
-> > Anyway, it would be good if you re-did your real work tree with current 
-> > commit, just to verify. You have slower hardware than I do, but hopefully 
-> > it is now just about as fast as it can be.
->  
-> hi linus,
-> 
-> thx for your efforts, the figures look very promising.
-> i'm out of town right now but will test when i get
-> stationary internet again (sometime tomorrow evening
-> i think).
-
-sorry for late followup, i was blocked on paid work
-for longer than i expected.
-
-i can happily confirm what others have already reported;
-with the patches applied git works well even for my
-bigger repo.
-
-git status              : 0m1.036s
-git commit (single file): 0m1.846s
-
-http://www.gosimpsons.com/ProdImages/krustysealkeychain.jpg
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56442>
 
 
-regards, moe
+I am currently looking what can be done to speed up deltaing.  The
+following code can be found here:
+
+	for (i = 0; i < hsize; i++) {
+		if (hash_count[i] < HASH_LIMIT)
+			continue;
+		entry = hash[i];
+		do {
+			struct index_entry *keep = entry;
+			int skip = hash_count[i] / HASH_LIMIT / 2;
+			do {
+				entry = entry->next;
+			} while(--skip && entry);
+			keep->next = entry;
+		} while(entry);
+	}
+
+If I analyze what happens for various values of hash_count[i], I get
+the following (the first case is by far the worst):
+
+HASH_LIMIT <= hash_count[i] < 2*HASH_LIMIT:
+  skip = 0;
+  do .. while terminates with negative skip and entry == 0, keep->next
+  is set to 0 -> all hashes except the first one get dropped.
+  Result is new_hash_count = 1.  Ugh, ugh, ugh.
+
+2*HASH_LIMIT <= hash_count[i] < 4*HASH_LIMIT
+  skip = 1;
+  do .. while does one iteration, every second value is skipped,
+  result is that HASH_LIMIT <= new_hash_count < 2*HASH_LIMIT
+
+4*HASH_LIMIT <= hash_limit[i] < 6*HASH_LIMIT
+  skip = 2;
+  do .. while does two iterations, two of three values are skipped,
+  result is that 4*HASH_LIMIT/3 <= new_hash_count < 2*HASH_LIMIT
+
+And so on.  It would appear that if HASH_LIMIT is supposed to do what
+it is seemingly intended for, the skip calculation has to be just
+
+			int skip = hash_count[i] / HASH_LIMIT;
+
+Otherwise, there is completely broken behavior for values between
+HASH_LIMIT and 2*HASH_LIMIT (where only a single hash survives), and
+for larger values, the limit will be 2*HASH_LIMIT rather than
+HASH_LIMIT as was probably intended.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
