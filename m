@@ -1,75 +1,86 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 20:40:56 +0200
-Message-ID: <200708232040.57014.robin.rosenberg.lists@dewire.com>
-References: <46CC3090.7080500@gmail.com> <Pine.LNX.4.64.0708221713540.20400@racer.site> <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [TESTCASE] Failing 'git am' when core.autocrlf=true
+Date: Thu, 23 Aug 2007 11:41:34 -0700
+Message-ID: <7vhcmqt7oh.fsf@gitster.siamese.dyndns.org>
+References: <46CD94AB.7070709@trolltech.com>
+	<alpine.LFD.0.999.0708230956190.30176@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Reece Dunn" <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 20:41:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 20:42:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOHcs-00060U-9A
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:41:50 +0200
+	id 1IOHd6-00066G-Qw
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 20:42:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764790AbXHWSlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 14:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760824AbXHWSlj
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:41:39 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:7728 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1764762AbXHWSlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 14:41:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 6DCEE8027E5;
-	Thu, 23 Aug 2007 20:33:54 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 03692-10; Thu, 23 Aug 2007 20:33:54 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 075A28026EE;
-	Thu, 23 Aug 2007 20:33:53 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1764707AbXHWSl5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 14:41:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764672AbXHWSl5
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 14:41:57 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38951 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760824AbXHWSl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 14:41:56 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F0E24126B02;
+	Thu, 23 Aug 2007 14:42:12 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.999.0708230956190.30176@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 23 Aug 2007 10:18:54 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56513>
 
-onsdag 22 augusti 2007 skrev Reece Dunn:
-> Given that you have to deal with other Windows issues (line ending,
-> case insensitive file names, path format), why not put the current
-> scripts in a posix porcelain directory and have a Windows porcelain
-> directory where the Windows porcelain is written in C#?
-Splitting effort in one language per platform would be very bad. Windows
-programmers would write porcelains in C# that won't run on Linux.  Even
-when you get the programs to run, C# is a second class citizen on *nix.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Alternatively, the porcelain could be unified to use Python and
-> compiled into an executable that is installed on the Windows platform
-> (removing the need to have anything other than git installed to use
-> it).
-We need to attract developers on Windows too and making it hard to
-get started with development (i.e. fix a tiny shitty bug or feature), should not require
-lots of setups. When we speak of dependencies in an OSS project, those
-that are required for development counts too.
+> On Thu, 23 Aug 2007, Marius Storm-Olsen wrote:
+>> 
+>> I have an issue with git-rebase failing on a repository using
+>>     core.autocrlf=true
+>> 
+>> I've tracked it down to git-am failing with core.autocrlf=true and passing
+>> with core.autocrlf=false. I've tried digging deeper into the code, but for
+>> some reason ce_match_stat_basic() (read-cache.c:~187) reports the size of the
+>> file in the index to be 0 (when core.autocrlf=true), which is why git-am bails
+>> out on the patch. (ce->ce_size == 0, while st->st_size == the correct size on
+>> disk)
+>
+> Very interesting.
+> ...
+> 	trace: built-in: git 'apply' '--allow-binary-replacement' '--index' '.dotest/patch'
+> 	trace: built-in: git 'diff' '--quiet'
+> 	trace: built-in: git 'diff' '--quiet'
+> 	trace: built-in: git 'write-tree'
+> 	trace: built-in: git 'diff' '--quiet'
+>
+> ie everything was fine after the "apply" phase, but the index and the 
+> working tree went out-of-kilter after "git write-tree".
+>
+> The reason? "git write-tree" doesn't read the config file, so it never 
+> even reads the "core.autocrlf=true" variable. As a result, it seems to 
+> screw up the index matching when it does the cache_tree_fully_valid() 
+> (which will fail due to "git apply --index" having invalidated the tree 
+> SHA1's) followed by cache_tree_update().
+>
+>> Can anyone please enlighten me on why this may happen?
+>
+> This patch should fix it. 
+>
+> Junio - it fixes the test for me, but quite frankly, I don't see why 
+> write-tree would *ever* change any non-tree index entries. But it does. I 
+> think there's another bug somewhere, or I'm missing something.
 
-> If not Python, then can you compile perl scripts to an executable
-> form, in which case perl could be standardized on.
-
-> This way, both camps (posix and Windows) will be happy.
-
-Neither will be happy. Wannabe git hackers will find it hard to get started on
-Windows, *nix users will be unhappy because the stuff written on windows
-will be hard to get running on *nix etc and again windows users won't be 
-unhappy because they don't get help with .NET issues from Linus.
-
--- robin
+As you said, there is something else going on.  write-tree is
+about reading the index entries and writing them out as a set of
+trees, and at that point it should not even matter if you have
+garbage in the work tree or if you do not even have a work tree.
+All the crlf conversions have been done when the object hit the
+index, so its reading or not reading core.autocrlf should not
+change its behaviour.
