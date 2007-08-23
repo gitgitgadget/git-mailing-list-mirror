@@ -1,83 +1,76 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Some ideas for StGIT
-Date: Thu, 23 Aug 2007 16:34:11 +0200
-Message-ID: <20070823143411.GA16051@diana.vm.bytemark.co.uk>
-References: <1186163410.26110.55.camel@dv> <b0943d9e0708060236x19674e4cjf04cec716ae6246c@mail.gmail.com> <20070806095623.GA23349@diana.vm.bytemark.co.uk> <1186404125.10627.30.camel@dv> <20070806135204.GC23349@diana.vm.bytemark.co.uk> <b0943d9e0708230709o6ae16d5dvcfeba2f344f57fa5@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 0/6] Use git conflict handling on push
+Date: Thu, 23 Aug 2007 15:54:51 +0100
+Message-ID: <b0943d9e0708230754r533f7749l63b5e2ba9a5dcfe8@mail.gmail.com>
+References: <11875975232619-git-send-email-davidk@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 16:34:30 2007
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Thu Aug 23 16:54:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IODlT-0001Gt-5h
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 16:34:27 +0200
+	id 1IOE5K-0003AU-AB
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 16:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760649AbXHWOeX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 10:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759972AbXHWOeX
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 10:34:23 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4795 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760532AbXHWOeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 10:34:22 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IODlD-0004Bo-00; Thu, 23 Aug 2007 15:34:11 +0100
+	id S1762314AbXHWOyz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 10:54:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762313AbXHWOyy
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 10:54:54 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:32797 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762289AbXHWOyy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 10:54:54 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so390946nfb
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 07:54:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nd2SwBl8q5dfSltWb8M7LtE1umcIIV3zeL/f+saNZTO4DZvAK3ZTtzq09OL5hoW3OuKlxww97EkbcNQX9IuXHM6gcz0nSfi0Ngjz7MjuxN1HIU4jCZd/5bOVMjDILIShnq/wPnuAVX22+cFz+eX6vbiQlWZHCjY40CJk39nQbAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FN9x8s9rSQwhjqtzAztQvkRHfzt5/mGMVxLyIF63GrgkDqJf8ySWmSXxkjIu3PVUTsWReZugKaX6crzDt01UfkXt991xw4L7HRmItl+97HApta2iZZVU9pvwfgbZyOqh8uIgGyQaHBAVgeQCmBA52UEzv1yRUAe+wneOlezQTG0=
+Received: by 10.78.185.15 with SMTP id i15mr1256389huf.1187880891891;
+        Thu, 23 Aug 2007 07:54:51 -0700 (PDT)
+Received: by 10.78.151.11 with HTTP; Thu, 23 Aug 2007 07:54:51 -0700 (PDT)
+In-Reply-To: <11875975232619-git-send-email-davidk@lysator.liu.se>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0708230709o6ae16d5dvcfeba2f344f57fa5@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56503>
 
-On 2007-08-23 15:09:48 +0100, Catalin Marinas wrote:
+On 20/08/07, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> This series of patches updates "stg push" to leave conflicts in the
+> index, in the normal git fashion.
 
-> On 06/08/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > On 2007-08-06 08:42:05 -0400, Pavel Roskin wrote:
-> >
-> > > Purely from the code standpoint, yes, it should be a separate
-> > > command. But it may be practical to have both in one command,
-> > > since I commonly need to change the description after changing
-> > > the code.
-> >
-> > Sure. I don't have any objection to making
-> >
-> >   stg refresh -e
-> >
-> > be equivalent to
-> >
-> >   stg refresh && stg edit-patch-message <topmost-patch>
->
-> The only objection is the long command name - 'stg edit [<patch>]'
-> would be just fine.
+Thanks for this series. I'll give it a try (importing it from the kha
+branch as it is easier) and check other issues it might break.
 
-Oh, I chose a ridiculously long name on purpose, to make it
-unambiguous while at the same time not implying that I had a good name
-already thought out. :-)
+> This means that conflict handling and resolution are handled by git
+> and not stg, which should make it possible to simplify stg quite a
+> bit.  For instance, the 'conflicts' file should go away.
 
-> It would also be nice to do (with an additional option), the
-> equivalent of export - edit - import in case one wants to also
-> modify the diff.
+Yes, indeed.
 
-Yes. This is probably one of the most asked-for (and least
-implemented) features of StGIT.
+> Unfortunately, this patch series isn't complete, since it doesn't
+> remove all uses of the stg merge code.  The remaining client of that
+> code is the "sync" command, which I have never used, and haven't
+> studied very much.  But if that command is changed somehow, then most
+> of the code in gitmergeonefile.py will go simply away.
 
-> > What I'm objecting to is being forced to refresh when I just want
-> > to edit the message. (And, to a lesser degree, having to manually
-> > push and pop to make the patch topmost before I can edit its
-> > message.)
->
-> Not necessarily - 'stg refresh -e -p <patch>' does the pop/push for
-> you and it even uses the fast-forwarding.
+I still like to keep the interactive merging from that file.
 
-Hmm, that's better. But it shouldn't be a refresh subcommand!
+> https://gna.org/task/?5140
+
+BTW, would you like to be added as a project member at gna.org/projects=
+/stgit?
+
+Regards.
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Catalin
