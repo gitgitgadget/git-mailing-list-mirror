@@ -1,83 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 10:55:03 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708231051210.20400@racer.site>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
- <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
- <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site>
- <alpine.LFD.0.999.0708221313350.16727@xanadu.home>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] Fixed non portable use of expr and removed incorrect use of test -eq for string comparison
+Date: Thu, 23 Aug 2007 12:02:02 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070823100202.GE6573@informatik.uni-freiburg.de>
+References: <20070822132359.GA13750@informatik.uni-freiburg.de> <11878139102715-git-send-email-david@olrik.dk> <7vejhvi67x.fsf@gitster.siamese.dyndns.org> <20070823090600.GB6573@informatik.uni-freiburg.de> <7vveb6txfc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 11:55:40 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 12:02:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO9PY-0005iK-S6
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 11:55:33 +0200
+	id 1IO9Vz-000839-Rm
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758474AbXHWJz1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 05:55:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758437AbXHWJz1
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 05:55:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34699 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757011AbXHWJz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 05:55:26 -0400
-Received: (qmail invoked by alias); 23 Aug 2007 09:55:25 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
-  by mail.gmx.net (mp058) with SMTP; 23 Aug 2007 11:55:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/RuWxskATRveMeo5qAEXiGyE9xI1SfYa2oAJGgiI
-	v9MNQ1iBTw4VEd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0708221313350.16727@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S1758815AbXHWKCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 06:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756739AbXHWKCI
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:02:08 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:49629 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758611AbXHWKCG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 06:02:06 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IO9Vs-0007Tp-B1; Thu, 23 Aug 2007 12:02:04 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7NA222Z008503;
+	Thu, 23 Aug 2007 12:02:02 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7NA22H7008502;
+	Thu, 23 Aug 2007 12:02:02 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vveb6txfc.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56487>
 
-Hi,
+Hello Junio,
 
-On Wed, 22 Aug 2007, Nicolas Pitre wrote:
+Junio C Hamano wrote:
+> Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> writes:
+>=20
+> > Junio C Hamano wrote:
+> >> By the way, I do not know if the use of "which" there is
+> >> portable.  Have Solaris folks tried this program ever?
+> > I don't count myself to "Solaris folks", even though I still use it=
+ to
+> > read and write my email.  But anyhow I know some of the pitfalls...
+> >
+> > 	login@~ > /bin/bash --version
+> > 	GNU bash, version 3.00.16(1)-release (sparc-sun-solaris2.10)
+> > 	Copyright (C) 2004 Free Software Foundation, Inc.
+> >
+> > 	login@~ > /bin/bash
+> >
+> > 	zeisberg@login ~$ which httpd && echo successful
+> > 	no httpd in /home/zeisberg/bin /home/zeisberg/usr/bin /opt/bin
+> > 	/usr/local/graphics/bin /usr/local/gnu/bin /usr/local/bin
+> > 	/usr/local/X11R6/bin /usr/xpg4/bin /usr/bin /usr/ccs/bin /usr/sbin
+> > 	/usr/ucb /usr/openwin/bin
+> > 	successful
+>=20
+> Thanks.  Somebody else tried:
+>=20
+> 	found=3D`which "$command"`
+>         if test -n "$found"
+>         then
+>         	... use $found as the full path to the command
+> 	fi
+>=20
+> and got burned because "no httpd in ..." comes to the stdout!
+That was someting I planed to mention in my email but obviously I
+forgot.
 
-> On Wed, 22 Aug 2007, Johannes Schindelin wrote:
-> 
-> > What is wrong with going from shell to C?  C _is_ portable.  Instead 
-> > of relying on _yet_ another scripting language, introducing _yet_ 
-> > another language that people have to learn to hack git, introducing 
-> > _yet_ another place for bugs to hide, why not just admit that shell is 
-> > nice for _prototyping_?
-> 
-> This is a narrow view of the programming world that I don't share.
+> I did not exactly recall if there was an issue with the exit
+> status, but your demonstration shows that the status is also
+> useless.
+>=20
+> We _could_ do something ugly and pointless like:
+>=20
+> 	test -f `which "$command"`
+>=20
+> but I'd say I prefer the alternative I sent out at that point.
+Ack.
 
-Well, you have to admit that some things are really, really hard to do in 
-shell.  Just from the top of my head: locking, data structures, 
-portability, scalability, process control.  There are a lot more, I guess, 
-but for the _core_ of Git I really prefer C.
+--=20
+Uwe Kleine-K=F6nig
 
-> C is portable indeed, which is one of its upsides.  But it has many 
-> downsides too for many _users_, that as a Git _developer_ you apparently 
-> conveniently ignore.
-
-I do not want to shove C down the throat of every Git user.  You can use 
-_whatever_ scripting language you like.
-
-Nevertheless, this is _different_ from the choice for _core_ Git.  
-Eventually I'd like to be able to run Git on embedded systems, or my 
-digital watch.
-
-> > Why do we have to to have the same discussion over and over and over 
-> > again?
-> 
-> Because, as shown by the recurring nature of this discussion, using C for 
-> everything is evidently not the optimal solution.
-
-I think the reason is different (as shown by the content of the 
-discussion).
-
-Ciao,
-Dscho
+http://www.google.com/search?q=3Dgravity+on+earth%3D
