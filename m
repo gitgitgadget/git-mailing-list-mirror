@@ -1,102 +1,163 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Fixed non portable use of expr and removed incorrect use of test -eq for string comparison
-Date: Thu, 23 Aug 2007 12:02:02 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070823100202.GE6573@informatik.uni-freiburg.de>
-References: <20070822132359.GA13750@informatik.uni-freiburg.de> <11878139102715-git-send-email-david@olrik.dk> <7vejhvi67x.fsf@gitster.siamese.dyndns.org> <20070823090600.GB6573@informatik.uni-freiburg.de> <7vveb6txfc.fsf@gitster.siamese.dyndns.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit 0.13 import mbox problems
+Date: Thu, 23 Aug 2007 11:19:12 +0100
+Message-ID: <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
+References: <20070823092254.GA5976@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 12:02:13 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_100246_1321457.1187864352017"
+Cc: git@vger.kernel.org
+To: "Greg KH" <greg@kroah.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 12:19:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO9Vz-000839-Rm
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:02:12 +0200
+	id 1IO9mY-0005BS-Vx
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758815AbXHWKCI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 06:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756739AbXHWKCI
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:02:08 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:49629 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758611AbXHWKCG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 06:02:06 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IO9Vs-0007Tp-B1; Thu, 23 Aug 2007 12:02:04 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7NA222Z008503;
-	Thu, 23 Aug 2007 12:02:02 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7NA22H7008502;
-	Thu, 23 Aug 2007 12:02:02 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vveb6txfc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758145AbXHWKTP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 06:19:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758036AbXHWKTP
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:19:15 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:37115 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757887AbXHWKTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 06:19:14 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so336450nfb
+        for <git@vger.kernel.org>; Thu, 23 Aug 2007 03:19:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=aivRuCWjT3S91HG3wtc/nHEjT2COY4aotCaRfXbCF5XKpdjhdOMu4NMu2mHuh254VxOhugoDIoQ9bnqKITIUPe5+g4LdvXrwUnybgnZbXT74XwSBxHMrVLho2n9jUWPueVQwPgOw4VDAp7k5gMHl3W2uxMNHjlo5JomMfLGZmcE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=APBH6U6BmdadwdGUyrfeoAsPdEk6TSvE97LSnjBls3taQ/vUrM9BAYiVGGPSkUgeY3NKOVXaHnDDFHWqlwzv3w/pqUvRgObmQcl0GCoOnc17UfYU2LIa0ANssoHwtnQJyNmBZjID+4HyfV++M0uKabS/0cdvKJpstqHiW48l5Dw=
+Received: by 10.78.170.6 with SMTP id s6mr1094325hue.1187864352042;
+        Thu, 23 Aug 2007 03:19:12 -0700 (PDT)
+Received: by 10.78.151.11 with HTTP; Thu, 23 Aug 2007 03:19:12 -0700 (PDT)
+In-Reply-To: <20070823092254.GA5976@kroah.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56488>
 
-Hello Junio,
+------=_Part_100246_1321457.1187864352017
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de> writes:
->=20
-> > Junio C Hamano wrote:
-> >> By the way, I do not know if the use of "which" there is
-> >> portable.  Have Solaris folks tried this program ever?
-> > I don't count myself to "Solaris folks", even though I still use it=
- to
-> > read and write my email.  But anyhow I know some of the pitfalls...
-> >
-> > 	login@~ > /bin/bash --version
-> > 	GNU bash, version 3.00.16(1)-release (sparc-sun-solaris2.10)
-> > 	Copyright (C) 2004 Free Software Foundation, Inc.
-> >
-> > 	login@~ > /bin/bash
-> >
-> > 	zeisberg@login ~$ which httpd && echo successful
-> > 	no httpd in /home/zeisberg/bin /home/zeisberg/usr/bin /opt/bin
-> > 	/usr/local/graphics/bin /usr/local/gnu/bin /usr/local/bin
-> > 	/usr/local/X11R6/bin /usr/xpg4/bin /usr/bin /usr/ccs/bin /usr/sbin
-> > 	/usr/ucb /usr/openwin/bin
-> > 	successful
->=20
-> Thanks.  Somebody else tried:
->=20
-> 	found=3D`which "$command"`
->         if test -n "$found"
->         then
->         	... use $found as the full path to the command
-> 	fi
->=20
-> and got burned because "no httpd in ..." comes to the stdout!
-That was someting I planed to mention in my email but obviously I
-forgot.
+On 23/08/07, Greg KH <greg@kroah.com> wrote:
+> I wanted to see if I could start using stgit instead of quilt, so I
+> tried to import my current set of kernel patches.
+>
+> After giving up on the "import a series" option,
 
-> I did not exactly recall if there was an issue with the exit
-> status, but your demonstration shows that the status is also
-> useless.
->=20
-> We _could_ do something ugly and pointless like:
->=20
-> 	test -f `which "$command"`
->=20
-> but I'd say I prefer the alternative I sent out at that point.
-Ack.
+Why?
 
---=20
-Uwe Kleine-K=F6nig
+> I just created a mbox
+> of all of them using quilt and tried to import that.  Unfortunately that
+> didn't work either:
+>         $ stg import -M ~/linux/patches/mbox
+>         Checking for changes in the working directory ... done
+>         Importing patch "add-my-version-to-the-kernel" ... done
+>         Importing patch "stupid-patch-for-my-laptop-whi" ... done
+>         Importing patch "gregs-test-driver-core-sysfs-s" ... done
+>         Importing patch "detect-atomic-counter-underflo" ... done
+>         Warning: Message does not contain any diff
+>         stg import: No diff found inside the patch
 
-http://www.google.com/search?q=3Dgravity+on+earth%3D
+Maybe I should just leave the warning and let it continue. The reason
+I added it was that "git-apply --index" fails if there is no diff.
+
+In the meantime, you can try the attached patch for StGIT.
+
+Another hint - quilt can apply patches with fuzz but GIT doesn't allow
+this by default. If a patch fails, the diff is dumped to the
+.stgit-failed.patch file so that you can apply it manually (with patch
+or git-apply) and run 'stg refresh' afterwards.
+
+After an import failure, you can continue importing from the next
+patch using the 'stg import --ignore' option.
+
+> I'm using the .13 version if that matters.
+>
+> The mbox contains 177 kernel patches against Linus's current tree
+> (2.6.23-rc3-git5), and is available at:
+>         http://www.kernel.org/pub/linux/kernel/people/gregkh/misc/gregkh-stgit-import-mbox.gz
+> if anyone wants to test it out and see what I was doing wrong.
+
+I'll give it a try.
+
+One thing you'll notice is the speed difference as stgit has to
+generate a git commit during a push operation.
+
+> Oh, I do have some suggestions as to the naming of the patch from a mail
+> file, as limiting this to a small number of characters like stgit
+> currently does will not work out for a lot of my patches, but I'll wait
+> until I can actually import the thing before I look into that :)
+
+We had the full name in the past but the algorithm cause problems with
+patches (not e-mails) that didn't have a subject line. It's probably
+better to have a config option rather than hard-coded 30 characters.
+Note that 'stg series -d' will display the full subject line.
+
+If you don't give up before importing the files :-), please let us
+know the user experience, especially related to speed as compared to
+quilt.
+
+Karl, maybe it's worth trying this series with your DAG patches as well.
+
+Regards.
+
+-- 
+Catalin
+
+------=_Part_100246_1321457.1187864352017
+Content-Type: text/x-patch; name=import-empty.patch; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f5p3i6sk
+Content-Disposition: attachment; filename="import-empty.patch"
+
+QWxsb3cgJ2ltcG9ydCcgdG8gYXBwbHkgZW1wdHkgcGF0Y2hlcwoKRnJvbTogQ2F0YWxpbiBNYXJp
+bmFzIDxjYXRhbGluLm1hcmluYXNAZ21haWwuY29tPgoKU2lnbmVkLW9mZi1ieTogQ2F0YWxpbiBN
+YXJpbmFzIDxjYXRhbGluLm1hcmluYXNAZ21haWwuY29tPgotLS0KCiBzdGdpdC9jb21tYW5kcy9p
+bXBydC5weSB8ICAgMjIgKysrKysrKysrKy0tLS0tLS0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAx
+MCBpbnNlcnRpb25zKCspLCAxMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zdGdpdC9jb21t
+YW5kcy9pbXBydC5weSBiL3N0Z2l0L2NvbW1hbmRzL2ltcHJ0LnB5CmluZGV4IGY5NzJiODkuLjk4
+ZmU3MDggMTAwNjQ0Ci0tLSBhL3N0Z2l0L2NvbW1hbmRzL2ltcHJ0LnB5CisrKyBiL3N0Z2l0L2Nv
+bW1hbmRzL2ltcHJ0LnB5CkBAIC0yMDEsOCArMjAxLDYgQEAgZGVmIF9fcGFyc2VfbWFpbChtc2cp
+OgogICAgIHJlbV9kZXNjciwgZGlmZiA9IF9fc3BsaXRfZGVzY3JfZGlmZihtc2dfdGV4dCkKICAg
+ICBpZiByZW1fZGVzY3I6CiAgICAgICAgIGRlc2NyICs9ICdcblxuJyArIHJlbV9kZXNjcgotICAg
+IGlmIG5vdCBkaWZmOgotICAgICAgICBvdXQud2FybignTWVzc2FnZSBkb2VzIG5vdCBjb250YWlu
+IGFueSBkaWZmJykKIAogICAgICMgcGFyc2UgdGhlIGRlc2NyaXB0aW9uIGZvciBhdXRob3IgaW5m
+b3JtYXRpb24KICAgICBkZXNjciwgZGVzY3JfYXV0aG5hbWUsIGRlc2NyX2F1dGhlbWFpbCwgZGVz
+Y3JfYXV0aGRhdGUgPSBcCkBAIC0yNTAsOSArMjQ4LDYgQEAgZGVmIF9fY3JlYXRlX3BhdGNoKGZp
+bGVuYW1lLCBtZXNzYWdlLCBhdXRob3JfbmFtZSwgYXV0aG9yX2VtYWlsLAogICAgICAgICAjIGZp
+eCBwb3NzaWJsZSBpbnZhbGlkIGNoYXJhY3RlcnMgaW4gdGhlIHBhdGNoIG5hbWUKICAgICAgICAg
+cGF0Y2ggPSByZS5zdWIoJ1teXHcuXSsnLCAnLScsIHBhdGNoKS5zdHJpcCgnLScpCiAKLSAgICBp
+ZiBub3QgZGlmZjoKLSAgICAgICAgcmFpc2UgQ21kRXhjZXB0aW9uLCAnTm8gZGlmZiBmb3VuZCBp
+bnNpZGUgdGhlIHBhdGNoJwotCiAgICAgaWYgb3B0aW9ucy5pZ25vcmUgYW5kIHBhdGNoIGluIGNy
+dF9zZXJpZXMuZ2V0X2FwcGxpZWQoKToKICAgICAgICAgb3V0LmluZm8oJ0lnbm9yaW5nIGFscmVh
+ZHkgYXBwbGllZCBwYXRjaCAiJXMiJyAlIHBhdGNoKQogICAgICAgICByZXR1cm4KQEAgLTI4OCwx
+NCArMjgzLDE3IEBAIGRlZiBfX2NyZWF0ZV9wYXRjaChmaWxlbmFtZSwgbWVzc2FnZSwgYXV0aG9y
+X25hbWUsIGF1dGhvcl9lbWFpbCwKICAgICAgICAgICAgICAgICAgICAgICAgICBjb21taXR0ZXJf
+bmFtZSA9IGNvbW1pdHRlcl9uYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgIGNvbW1pdHRl
+cl9lbWFpbCA9IGNvbW1pdHRlcl9lbWFpbCkKIAotICAgIG91dC5zdGFydCgnSW1wb3J0aW5nIHBh
+dGNoICIlcyInICUgcGF0Y2gpCi0gICAgaWYgb3B0aW9ucy5iYXNlOgotICAgICAgICBnaXQuYXBw
+bHlfcGF0Y2goZGlmZiA9IGRpZmYsIGJhc2UgPSBnaXRfaWQob3B0aW9ucy5iYXNlKSkKKyAgICBp
+ZiBub3QgZGlmZjoKKyAgICAgICAgb3V0Lndhcm4oJ05vIGRpZmYgZm91bmQsIGNyZWF0aW5nIGVt
+cHR5IHBhdGNoJykKICAgICBlbHNlOgotICAgICAgICBnaXQuYXBwbHlfcGF0Y2goZGlmZiA9IGRp
+ZmYpCi0gICAgY3J0X3Nlcmllcy5yZWZyZXNoX3BhdGNoKGVkaXQgPSBvcHRpb25zLmVkaXQsCi0g
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNob3dfcGF0Y2ggPSBvcHRpb25zLnNob3dwYXRj
+aCkKLSAgICBvdXQuZG9uZSgpCisgICAgICAgIG91dC5zdGFydCgnSW1wb3J0aW5nIHBhdGNoICIl
+cyInICUgcGF0Y2gpCisgICAgICAgIGlmIG9wdGlvbnMuYmFzZToKKyAgICAgICAgICAgIGdpdC5h
+cHBseV9wYXRjaChkaWZmID0gZGlmZiwgYmFzZSA9IGdpdF9pZChvcHRpb25zLmJhc2UpKQorICAg
+ICAgICBlbHNlOgorICAgICAgICAgICAgZ2l0LmFwcGx5X3BhdGNoKGRpZmYgPSBkaWZmKQorICAg
+ICAgICBjcnRfc2VyaWVzLnJlZnJlc2hfcGF0Y2goZWRpdCA9IG9wdGlvbnMuZWRpdCwKKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNob3dfcGF0Y2ggPSBvcHRpb25zLnNob3dwYXRj
+aCkKKyAgICAgICAgb3V0LmRvbmUoKQogCiBkZWYgX19pbXBvcnRfZmlsZShmaWxlbmFtZSwgb3B0
+aW9ucywgcGF0Y2ggPSBOb25lKToKICAgICAiIiJJbXBvcnQgYSBwYXRjaCBmcm9tIGEgZmlsZSBv
+ciBzdGFuZGFyZCBpbnB1dAo=
+------=_Part_100246_1321457.1187864352017--
