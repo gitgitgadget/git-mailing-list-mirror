@@ -1,66 +1,146 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 02:24:18 +0200
-Message-ID: <A204C4FE-A3EB-4EB3-8D76-BDC1F30E74C6@wincent.com>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz> <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site> <86mywjcwv7.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org> <86absjcqfq.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0708221252040.30176@woody.linux-foundation.org> <85ir77ky0u.fsf@lola.goethe.zz>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable)
+Date: Wed, 22 Aug 2007 17:37:21 -0700
+Message-ID: <7vejhvw0fy.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 02:25:03 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 23 02:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO0VO-0007nH-3s
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 02:24:58 +0200
+	id 1IO0hk-0002M8-EA
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 02:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264AbXHWAYt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 20:24:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbXHWAYs
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 20:24:48 -0400
-Received: from wincent.com ([72.3.236.74]:60479 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750971AbXHWAYs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 20:24:48 -0400
-Received: from [192.168.1.99] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l7N0Oaaa012212;
-	Wed, 22 Aug 2007 19:24:40 -0500
-In-Reply-To: <85ir77ky0u.fsf@lola.goethe.zz>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751526AbXHWAhl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 22 Aug 2007 20:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbXHWAhl
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Aug 2007 20:37:41 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:53482 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbXHWAhj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2007 20:37:39 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 845AF1264D3
+	for <git@vger.kernel.org>; Wed, 22 Aug 2007 20:38:00 -0400 (EDT)
+X-maint-at: b13ef4916ac5a25cc5897f85ba0b4c5953cff609
+X-master-at: aabb2e515c334cbca9d9ae9873a188cef2c9b3ba
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56440>
 
-El 23/8/2007, a las 0:25, David Kastrup escribi=F3:
+Many documentation updates, fast-import fixes and enhancements,
+updated gitk.
 
-> Pretty much _any_ complex extensible system nowadays comes with a
-> scripting/pattern/macro language of choice, and this language is, for
-> a variety of reasons, rarely C.
+Hopefully we can do the final without another -rc sometime early
+next week.
 
-But Git isn't really a "complex extensible system" relatively =20
-speaking. It's actually a remarkably simple version control system, =20
-both in terms of its design and in the number of lines of code to =20
-implement that design. You already have all the extensibility you =20
-will ever need in the form of the command set (about 144 commands by =20
-my count) and you're free to script them to your heart's content; the =20
-fact that some of these commands are being slowly migrated over to C =20
-is an implementation detail that shouldn't really affect you as a =20
-user at all, except indirectly in the sense that:
+----------------------------------------------------------------
 
-- it should run more quickly
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-- it should compile and work correctly more easily and with fewer =20
-dependencies on more platforms
+Alex Riesen (3):
+  Fix whitespace in "Format of STDIN stream" of fast-import
+  Avoid using va_copy in fast-import: it seems to be unportable.
+  Fix git-remote for ActiveState Perl
 
-And if you accept Linus' point about the maintainability of C projects:
+Alexandre Julliard (1):
+  git.el: Avoid a lisp error when there's no current branch (detached
+      HEAD).
 
-- the overall quality of the code should be higher because fewer =20
-cycles will be burnt in maintenance
+Arjen Laarhoven (2):
+  gitk: Make the date/time display configurable
+  t1301-shared-repo.sh: fix 'stat' portability issue
 
-Cheers,
-Wincent
+Brian Downing (1):
+  Clarify actual behavior of 'git add' and ignored files
+
+Brian Gernhardt (1):
+  Minor clarifications to git-filter-branch usage and doc
+
+Dave Watson (1):
+  Fix misspelling of 'suppress' in docs
+
+Eric Wong (1):
+  git-svn: update documentation with CAVEATS section
+
+Johannes Sixt (1):
+  gitk: Handle 'copy from' and 'copy to' in diff headers.
+
+Junio C Hamano (5):
+  Documentation/git-rebase: fix an example
+  Clean-up read-tree error condition.
+  fast-import pull request
+  git clone: do not issue warning while cloning locally across
+      filesystems
+  GIT 1.5.3-rc6
+
+Lars Hjemli (1):
+  git-submodule: re-enable 'status' as the default subcommand
+
+Linus Torvalds (2):
+  Make thin-pack generation subproject aware.
+  Take binary diffs into account for "git rebase"
+
+Lukas Sandstr=C3=B6m (1):
+  Add the word reflog to
+      Documentation/config.txt:core.logAllRefUpdates
+
+Mark Levedahl (1):
+  git-completion.bash - add support for git-bundle
+
+Matthieu Moy (1):
+  Add and document a global --no-pager option for git.
+
+Mike Hommey (1):
+  Clarify commit-tree documentation
+
+Paul Mackerras (3):
+  gitk: Fix warning when removing a branch
+  gitk: Fix bug in fix for warning when removing a branch
+  gitk: Add a window to list branches, tags and other references
+
+Quy Tonthat (1):
+  Fix breakage in git-rev-list.txt
+
+Ren=C3=A9 Scharfe (1):
+  Documentation: update tar.umask default
+
+Sean Estabrooks (2):
+  Fix small typo in git send-email man page.
+  Reset terminal attributes when terminating git send-email
+
+Shawn O. Pearce (13):
+  git-gui: Avoid Tcl error in popup menu on diff viewer
+  Actually allow TAG_FIXUP branches in fast-import
+  Use handy ALLOC_GROW macro in fast-import when possible
+  Teach fast-import to ignore lines starting with '#'
+  Make trailing LF following fast-import `data` commands optional
+  Make trailing LF optional for all fast-import commands
+  Allow frontends to bidirectionally communicate with fast-import
+  Generate crash reports on die in fast-import
+  Include recent command history in fast-import crash reports
+  Correct documentation of 'reflog show' to explain it shows HEAD
+  Don't allow combination of -g and --reverse as it doesn't work
+  Fix new-workdir (again) to work on bare repositories
+  Suggest unsetting core.bare when using new-workdir on a bare
+      repository
+
+Stefan Sperling (1):
+  Document -u option in git-svnimport man page
+
+Steffen Prohaska (1):
+  gitk: Let user easily specify lines of context in diff view
+
+Steven Grimm (1):
+  Document what the stage numbers in the :$n:path syntax mean.
+
+V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4 (1):
+  git-gui: Added support for OS X right click
