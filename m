@@ -1,105 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 11:31:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708231122450.20400@racer.site>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
- <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
- <alpine.LFD.0.999.0708221154150.16727@xanadu.home> <Pine.LNX.4.64.0708221713540.20400@racer.site>
- <86mywjcwv7.fsf@lola.quinscape.zz> <3f4fd2640708221434i4f5650e0u9adb523742666f40@mail.gmail.com>
- <Pine.LNX.4.64.0708231006220.20400@racer.site> <20070823102036.GG7267@thunk.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: name-rev does not show the shortest path
+Date: Thu, 23 Aug 2007 12:38:17 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070823103817.GF6573@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 23 12:32:47 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 23 12:38:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO9zZ-0001Cq-Bs
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:32:45 +0200
+	id 1IOA5Q-0002w0-95
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759240AbXHWKcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 06:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758250AbXHWKcV
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:32:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42321 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755879AbXHWKcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 06:32:20 -0400
-Received: (qmail invoked by alias); 23 Aug 2007 10:32:18 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
-  by mail.gmx.net (mp020) with SMTP; 23 Aug 2007 12:32:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BPKtgOU3BfLR+Uwht1lTOGU9ddnf7cgYyThxWP/
-	KE46of7EpxrL6b
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070823102036.GG7267@thunk.org>
-X-Y-GMX-Trusted: 0
+	id S1758145AbXHWKiU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 06:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758815AbXHWKiU
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:38:20 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:49863 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757011AbXHWKiT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 06:38:19 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IOA4w-00004L-IP
+	for git@vger.kernel.org; Thu, 23 Aug 2007 12:38:18 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7NAcHS8009254
+	for <git@vger.kernel.org>; Thu, 23 Aug 2007 12:38:17 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7NAcHF6009253
+	for git@vger.kernel.org; Thu, 23 Aug 2007 12:38:17 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56492>
 
-Hi,
+Hello,
 
-On Thu, 23 Aug 2007, Theodore Tso wrote:
+I want to check to which kernel version I need to upgrade to get a
+certain feature.  For my case it was introduced in 0567a0c022d5b.
 
-> On Thu, Aug 23, 2007 at 10:10:20AM +0100, Johannes Schindelin wrote:
-> > > > Red herring.  The proposal was not to do nothing, but rather give git
-> > > > a dedicated scripting language internal to it.
-> > > 
-> > > That is a really neat idea.
-> > 
-> > Why?  Why should just _having_ a dedicated scripting language _per se_ be 
-> > a neat idea?  We do not _need_ it!  We script git in bash, perl, other 
-> > people in Python, Ruby, and even Haskell.  So why should we _take away_ 
-> > that freedom from others to script Git in whatever language they like 
-> > most?  There is no good reason.
-> 
-> Users should be able to script in whatever language they want; that's
-> clear.  However, what some people were talking about was an internal
-> scripting language that would be used for writing git commands, as an
-> alternative to an alternative future where everything gets moved to C.
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ rev=3D0567a0c022d5b343370a343121=
+f38fd89925de55
 
-And that is _exactly_ where I fail to see benefits from.  You only get the 
-full power of C by using C.  You only get the full power of all open 
-source C programmers by using C.  And you only get the full flexibility, 
-speed, name-your-own-pet-peeve using C.
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --tags $rev
+	0567a0c022d5b343370a343121f38fd89925de55 tags/v2.6.22~1686^2~1^3~5
 
-Mind you, I use scripts a lot.  I even have some projects where I 
-git-added a script to add aliases which are so large as to fit half a 
-terminal.
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --refs=3D*-rc1 $rev
+	0567a0c022d5b343370a343121f38fd89925de55 tags/v2.6.22-rc1~1009^2~1^3~5
 
-But we should not _force_ people to have bash or perl when they do not 
-plan to use it themselves.
+I don't now the underlaying algorithm, maybe it's to get a short string=
+?
 
-> (To accomodate those Windows users who for some silly reason refuse to 
-> install Cygwin, bash, and perl on their Windows development box.  :-)
+Anyhow I want to know the earliest tag that includes this patch?  Is
+there something I missed?
 
-I have seen boxes where the administrators locked down everything.  And 
-Cygwin _does_ need to write the registry, and there is _no_ easy way to 
-have two independent Cygwin installs on the same machine.  This is where 
-MinGW/MSys really shines.
+I remember there was a similar discussion regarding describe.
 
-> So for those people who think an internal scripting language would be a 
-> worthwhile way of implementing certain git commands, instead of 
-> converting them all to C, my suggestion would be to "show us the code".  
-> Actually create the git to LUA bindings, and then show how easily it 
-> would be to rewrite a bunch of the existing git commands which are 
-> currently implemented in shell in LUA instead.
+BTW: gitk does the right thing, it says:
 
-And force everybody who wants to contribute to _those_ parts of Git to 
-learn LUA?  It is not about languages.  It is about people.  Choosing an 
-obscure language automatically limits your most valuable resource: people.
+	Follows: v2.6.21-rc7
+	Precedes: v2.6.22-rc1
 
-We saw that already with filter-branch (which saw some duplicate efforts, 
-because one developer was not comfortable with shell; we had two different 
-programs with different suboptimal behaviours).
+(called with=20
 
-> But if people are just gushing over the glories of elisp and saying 
-> things like *someone* should create a scripting language for git, it's 
-> just going to be a waste of everyone's time.
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ gitk 0567a0c022d5b343370a343121f=
+38fd89925de55^..0567a0c022d5b343370a343121f38fd89925de55
+)
 
-Amen,
-Dscho
+I didn't check how it does that though.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+exit vi, lesson I:
+: q ! <CR>
