@@ -1,89 +1,91 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Fixed non portable use of expr and removed incorrect use of test -eq for string comparison
-Date: Thu, 23 Aug 2007 11:06:00 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070823090600.GB6573@informatik.uni-freiburg.de>
-References: <20070822132359.GA13750@informatik.uni-freiburg.de> <11878139102715-git-send-email-david@olrik.dk> <7vejhvi67x.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Thu, 23 Aug 2007 10:05:58 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708231003430.20400@racer.site>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+  <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz> 
+ <alpine.LFD.0.999.0708221154150.16727@xanadu.home> 
+ <Pine.LNX.4.64.0708221713540.20400@racer.site>
+ <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 11:06:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 11:06:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO8dr-0006QV-Et
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 11:06:15 +0200
+	id 1IO8e4-0006UT-GG
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 11:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580AbXHWJGM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 23 Aug 2007 05:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbXHWJGM
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 05:06:12 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:49153 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751340AbXHWJGL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 05:06:11 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IO8dm-0006V1-Iv; Thu, 23 Aug 2007 11:06:10 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7N965KY007320;
-	Thu, 23 Aug 2007 11:06:05 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7N9603q007319;
-	Thu, 23 Aug 2007 11:06:00 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Jack Olrik <david@olrik.dk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vejhvi67x.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756972AbXHWJGY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 05:06:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756763AbXHWJGY
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 05:06:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39047 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756703AbXHWJGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 05:06:23 -0400
+Received: (qmail invoked by alias); 23 Aug 2007 09:06:22 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
+  by mail.gmx.net (mp047) with SMTP; 23 Aug 2007 11:06:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UhG8AxZ9UmM989FMXnQ9JmE0QkDQF+db7XeamQC
+	4cHrWvakilEv+V
+X-X-Sender: gene099@racer.site
+In-Reply-To: <3f4fd2640708221419w624a9920o5dc9a9fcbd680be2@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56479>
 
-Hello Junio,
+Hi,
 
-Junio C Hamano wrote:
-> By the way, I do not know if the use of "which" there is
-> portable.  Have Solaris folks tried this program ever?
-I don't count myself to "Solaris folks", even though I still use it to
-read and write my email.  But anyhow I know some of the pitfalls...
+On Wed, 22 Aug 2007, Reece Dunn wrote:
 
-	login@~ > /bin/bash --version
-	GNU bash, version 3.00.16(1)-release (sparc-sun-solaris2.10)
-	Copyright (C) 2004 Free Software Foundation, Inc.
+> On 22/08/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Wed, 22 Aug 2007, Nicolas Pitre wrote:
+> >
+> > > On Wed, 22 Aug 2007, David Kastrup wrote:
+> > >
+> > > > If the scripting engine of choice for cobbling together prototypes
+> > > > remains the Unix toolchain outside of git proper, then Windows users
+> > > > will _always_ remain second class citizens since they will get to work
+> > > > with and on new porcelain much later than the rest of the world:
+> > > > namely when somebody bothers porting his new favorite tool for them to
+> > > > C.
+> > >
+> > > Right.
+> >
+> > And not making the scripts builtins helps Windows users how, exactly?
+> 
+> IIUC, the plumbing is all (or mostly) ported to C code, whereas the
+> remaining scripts are on the porcelain side.
 
-	login@~ > /bin/bash
+Well, I know.  And guess three times why _I_ know.
 
-	zeisberg@login ~$ which httpd && echo successful
-	no httpd in /home/zeisberg/bin /home/zeisberg/usr/bin /opt/bin
-	/usr/local/graphics/bin /usr/local/gnu/bin /usr/local/bin
-	/usr/local/X11R6/bin /usr/xpg4/bin /usr/bin /usr/ccs/bin /usr/sbin
-	/usr/ucb /usr/openwin/bin
-	successful
+> Given that you have to deal with other Windows issues (line ending,
+> case insensitive file names, path format), why not put the current
+> scripts in a posix porcelain directory and have a Windows porcelain
+> directory where the Windows porcelain is written in C#?
 
-That is, with httpd_only=3Dhttpd I get:
+Isn't C# yet another dependency?  Worse yet, a dependency that you plan to 
+have on _one_ platform, and that is utterly unusable on other platforms?  
+And don't give me the Mono talk.  I happen to be _very_ unhappy with the 
+Mono dependency that SuSE introduced, because it is _slow_ _as_ _magma_.
 
-	$ if expr "z$httpd_only" : "z/" >/dev/null || \
-		which $httpd_only >/dev/null
-	then
-		$httpd_only arg1 arg2
-	fi
-	bash: httpd: command not found
+> Alternatively, the porcelain could be unified to use Python and compiled 
+> into an executable that is installed on the Windows platform (removing 
+> the need to have anything other than git installed to use it).
 
-Best regards
-Uwe
+Mentioning Python in this context is not even funny.
 
---=20
-Uwe Kleine-K=F6nig
+> This way, both camps (posix and Windows) will be happy.
 
-If a lawyer and an IRS agent were both drowning, and you could only sav=
-e
-one of them, would you go to lunch or read the paper?
+No.  I would be _very_ unhappy should your plans come true.
+
+Ciao,
+Dscho
