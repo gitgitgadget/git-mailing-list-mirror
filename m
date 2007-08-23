@@ -1,60 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Wed, 22 Aug 2007 21:21:53 -0700
-Message-ID: <7v8x82x4m6.fsf@gitster.siamese.dyndns.org>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
-	<46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
-	<alpine.LFD.0.999.0708221154150.16727@xanadu.home>
-	<Pine.LNX.4.64.0708221713540.20400@racer.site>
-	<86mywjcwv7.fsf@lola.quinscape.zz>
-	<alpine.LFD.0.999.0708221149440.30176@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0708222033040.16727@xanadu.home>
-	<alpine.LFD.0.999.0708222006110.30176@woody.linux-foundation.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: commit author x commit committer issue
+Date: Wed, 22 Aug 2007 22:05:55 -0700
+Message-ID: <20070823050555.GB4978@muzzle>
+References: <46B9C92B.3000000@st.com> <20070816092002.GD16849@muzzle> <8b65902a0708220307g2cb4b290s9bbf4603af7489fa@mail.gmail.com> <8b65902a0708220317t2b3dd01csef460a943ed2ef37@mail.gmail.com> <7vir77i77o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 06:22:34 2007
+Cc: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	Richard MUSIL <richard.musil@st.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 07:06:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO4DJ-00021y-5P
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 06:22:33 +0200
+	id 1IO4u3-0004AN-FA
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 07:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbXHWEWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 00:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbXHWEWN
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 00:22:13 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:56152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147AbXHWEWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 00:22:12 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B8E0125316;
-	Thu, 23 Aug 2007 00:22:27 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0708222006110.30176@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 22 Aug 2007 20:23:46 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757644AbXHWFGQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 01:06:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757727AbXHWFGQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 01:06:16 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:37526 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757631AbXHWFF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 01:05:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 6902F2DC08D;
+	Wed, 22 Aug 2007 22:05:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vir77i77o.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56452>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com> writes:
+> 
+> > Oops, sory, I'm completly wrong: the git-svn-id is put on the commit
+> > log in the Git repo, not on the SVN repo.
+> > Please, ignore me.
+> 
+> I do not think it is wrong to tack that to the commit message
+> you push it back to SVN... am I missing something?
 
->> > I'd love for every single shell-script in git core to be written in C, so 
->> > that we can drop the dependency on shell *entirely*.
->> 
->> What about the test suite?
->
-> The test suite is indeed special. But I think that's a "build requiement", 
-> and if we require something like shell for *building*, that's different 
-> from requiring normal users to have it.
+It's actually possible to add a revprop in SVN that is not immediately
+visible to SVN users.
 
-Also it is a good test for the kind of scriptability you (and I)
-seek.  We should not drop shell from the test suite for that
-reason.
+-- 
+Eric Wong
