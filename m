@@ -1,95 +1,191 @@
-From: "David Tweed" <david.tweed@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
-Date: Thu, 23 Aug 2007 11:55:41 +0100
-Message-ID: <e1dab3980708230355x1d5d2febw6814e8f24d745ddd@mail.gmail.com>
-References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
-	 <46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
-	 <alpine.LFD.0.999.0708221154150.16727@xanadu.home>
-	 <Pine.LNX.4.64.0708221713540.20400@racer.site>
-	 <86mywjcwv7.fsf@lola.quinscape.zz>
-	 <3f4fd2640708221434i4f5650e0u9adb523742666f40@mail.gmail.com>
-	 <Pine.LNX.4.64.0708231006220.20400@racer.site>
-	 <20070823102036.GG7267@thunk.org>
+Date: Thu, 23 Aug 2007 12:14:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708231158120.20400@racer.site>
+References: <46CC3090.7080500@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Reece Dunn" <msclrhd@googlemail.com>, git@vger.kernel.org
-To: "Theodore Tso" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 23 12:55:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 13:15:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOALu-0000IT-Jw
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 12:55:50 +0200
+	id 1IOAer-00078s-3a
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 13:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbXHWKzr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 06:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbXHWKzr
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 06:55:47 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:4074 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750971AbXHWKzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 06:55:46 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so435595wxd
-        for <git@vger.kernel.org>; Thu, 23 Aug 2007 03:55:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=imW07Ntx7ioTlsxG7m3rUgyZWLsGA5HEFhnPc43t3WMVJzQgUsFitl/BGIcVu5fyI6rG8m6SIMCdCq0kuwU86Nbw8FHUWlYBgVn0V+3qlAhBIgM5HZp5o1m9JOVOw3nCS65Q9TIn74xRYQyuegzFwjyX7K0Q/kEUggOE6ghMrDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YcgwipD3f6pzBg29KdQW/+qdf6VRjrHVX2PSIPaIyEPFYW+6A2zQQtfIvpzg1wCI6mQAF6jq1Cq6MGhapgtU0L33YXASpTs2IGoTryV666UnUBedZYgYeOQELE2ZfzYwbpUmfvHhlVkJ/gRWkDxgJlvKEqRI5LMUOusEF3dNRI8=
-Received: by 10.70.32.2 with SMTP id f2mr2865900wxf.1187866542224;
-        Thu, 23 Aug 2007 03:55:42 -0700 (PDT)
-Received: by 10.70.26.12 with HTTP; Thu, 23 Aug 2007 03:55:41 -0700 (PDT)
-In-Reply-To: <20070823102036.GG7267@thunk.org>
-Content-Disposition: inline
+	id S1756117AbXHWLPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 07:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbXHWLPT
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 07:15:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45137 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751290AbXHWLPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 07:15:18 -0400
+Received: (qmail invoked by alias); 23 Aug 2007 11:15:16 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO [192.168.0.57]) [132.187.25.128]
+  by mail.gmx.net (mp019) with SMTP; 23 Aug 2007 13:15:16 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3GsFQ86P3bphHUc1+/vz+oL0//VyEWifcWgsfTD
+	o436WfVejPLNR8
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46CC3090.7080500@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56494>
 
-On 8/23/07, Theodore Tso <tytso@mit.edu> wrote:
-> (To accomodate those Windows users who for some silly reason refuse to
-> install Cygwin, bash, and perl on their Windows development box.  :-)
+Hi,
 
-I know I'm really going to regret entering this discussion but...
+[I thought that it was high time in this thread to review the code]
 
-_If_ your goal is widening git usage (and you could validly argue it should
-stay a system for "code hackers"), the big worry is if you want to
-accomodate on projects that you (as an upstanding traditional *nix person)
-run where you've pushed for using git and are working with people
-who work prefer working on windows and they only want to use your git
-as the SCM for and don't care about git beyond that. The scenario goes:
+On Wed, 22 Aug 2007, Carlos Rica wrote:
 
-Windows user: "You want me to use your git repo for development.
-Ok. Install all those pre-requisites for me if you want me to use SCM
-regularly."
-...
-Windows user: "Git isn't working. Come here and tell me what's wrong?"
+> The tests I made for it are not finished so they are not included, but 
+> it seems to pass the rest of the test suite.
 
-*nix person: "Dunno, I've never seen that before. I wonder what's
-causing it: is it a git thing I've never seen, is it a bash/Perl-on-Windows
-weirdness, is it something implemented not as expected in the cygwin
-libraries, is it native Windows behaviour that's actually "right"?
-Or is it some mixture of the four? And given that I've never
-used cygwin and other tools on windows, I'm ******** if I know...."
+AFAICS there are only "reset --hard"s in the test suite.
 
-Windows user: "That's ok, I don't need to commit in this work-in-progress
-so I won't commit until you've solved the problem."
+> diff --git a/builtin-reset.c b/builtin-reset.c
+> [...]
+> +
+> +static int unmerged_files(void)
+> +{
+> +	char b;
+> +	ssize_t len;
+> +	struct child_process cmd;
+> +	const char *argv_ls_files[] = {"ls-files", "--unmerged", NULL};
+> +
+> +	memset(&cmd, 0, sizeof(cmd));
+> +	cmd.argv = argv_ls_files;
+> +	cmd.git_cmd = 1;
+> +	cmd.out = -1;
+> +
+> +	if (start_command(&cmd))
+> +		die("Could not run sub-command: git ls-files");
+> +
+> +	len = xread(cmd.out, &b, 1);
+> +	if (len < 0)
+> +		die("Could not read output from git ls-files: %s",
+> +						strerror(errno));
+> +	finish_command(&cmd);
+> +
+> +	return len;
+> +}
 
-I personally don't care exactly what's used implementing git on non-unix
-platforms, but I get nervous as more and more "layers" are added so
-it becomes more and more difficult to figure which layer a user problem
-is occurring at. If it looks to difficult to "help out with" issues on Windows,
-that would be a big enough reason for me not to use git on such projects.
+I think it is a good idea to start out using run_command, and if we ever 
+run into performance issues, we can always switch to calling the functions 
+directly.
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+> +static int print_line_current_head(void)
+> +{
+> +	const char *argv_log[] = {"log", "--max-count=1", "--pretty=oneline",
+> +					"--abbrev-commit", "HEAD", NULL};
+> +	printf("HEAD is now at ");
+> +	unsetenv("GIT_PAGER");
+> +	return run_command_v_opt(argv_log, RUN_GIT_CMD);
+> +}
+
+This is a candidate to refactoring, using commit.c's get_one_line() 
+function.
+
+> +int cmd_reset(int argc, const char **argv, const char *prefix)
+> +{
+> +	int i = 1, reset_type = MIXED, update_ref_status = 0;
+> +	const char *rev = "HEAD";
+> +	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
+> +				*old_orig = NULL, sha1_old_orig[20];
+> +	struct object *obj;
+> +	char *reflog_action;
+> +
+> +	git_config(git_default_config);
+> +
+> +	reflog_action = args_to_str(argv);
+> +	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
+> +
+> +	if (i < argc) {
+> +		if (!strcmp(argv[i], "--mixed")) {
+> +			reset_type = MIXED;
+> +			i++;
+> +		}
+> +		else if (!strcmp(argv[i], "--soft")) {
+> +			reset_type = SOFT;
+> +			i++;
+> +		}
+> +		else if (!strcmp(argv[i], "--hard")) {
+> +			reset_type = HARD;
+> +			i++;
+> +		}
+> +	}
+> +
+> +	if (i < argc && argv[i][0] != '-')
+> +		rev = argv[i++];
+> +
+> +	if (get_sha1(rev, sha1))
+> +		die("Failed to resolve '%s' as a valid ref.", rev);
+> +
+> +	obj = deref_tag(parse_object(sha1), sha1_to_hex(sha1), 40);
+
+IMHO it would be better to use "..., rev, strlen(rev));" instead.
+
+> +	if (!obj)
+> +		die("Could not parse object '%s'.", rev);
+> +	memcpy(sha1, obj->sha1, sizeof(sha1));
+> +
+> +	if (i < argc && argv[i][0] == '-') {
+> +		if (strcmp(argv[i], "--"))
+> +			usage(builtin_reset_usage);
+> +		else
+> +			i++;
+> +	}
+
+IMHO this would be clearer:
+
+	if (i < argc && !strcmp(argv[i], "--"))
+		i++;
+	else if (i < argc && argv[i][0] == '-')
+		usage(builtin_reset_usage);
+
+but I do not care _that_ deeply.
+
+> +	/* git reset --mixed tree [--] paths... can be used to
+> +	 * load chosen paths from the tree into the index without
+> +	 * affecting the working tree nor HEAD. */
+> +	if (i < argc) {
+> +		if (reset_type != MIXED)
+> +			die("Cannot do partial %s reset.", argv[1]);
+
+Hmm.  Maybe use a static const array of "hard", "mixed" and "soft"?
+
+> +		/*
+> +		git diff-index --cached $rev -- "$@" |
+> +		sed -e 's/^:\([0-7][0-7]*\) [0-7][0-7]* \([0-9a-f][0-9a-f]*\) [0-9a-f][0-9a-f]* [A-Z]	\(.*\)$/\1 \2	\3/' |
+> +		git update-index --add --remove --index-info || exit
+> +		*/
+> +		update_index_refresh();
+
+AFAICT this code misses out on added files, i.e. files which are in $rev, 
+but not in the index.
+
+> +	/* Any resets update HEAD to the head being switched to,
+> +	 * saving the previous head in ORIG_HEAD before. */
+> +	if (!get_sha1("ORIG_HEAD", sha1_old_orig))
+> +		old_orig = sha1_old_orig;
+> +	if (!get_sha1("HEAD", sha1_orig)) {
+> +		orig = sha1_orig;
+> +		update_ref("updating ORIG_HEAD", "ORIG_HEAD", orig, old_orig);
+> +	}
+> +	else if (old_orig)
+> +		delete_ref("ORIG_HEAD", old_orig);
+
+Why not put the get_sha1() into the else if()?  You spare a variable and a 
+few lines there.
+
+Otherwise it looks good to me.  It would be good if you could post your 
+test script, though, so that people can get a feel what works and what 
+needs work.
+
+Ciao,
+Dscho
