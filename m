@@ -1,74 +1,102 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: tracking perms/ownership [was: empty directories]
-Date: Thu, 23 Aug 2007 15:51:19 -0600
-Message-ID: <1187905879.5986.199.camel@beauty>
-References: <1187716461.5986.71.camel@beauty>
- <20070821134030.b763e9d3.seanlkml@sympatico.ca>
- <1187817948.5986.159.camel@beauty>
- <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Make "git reset" a builtin. (incomplete)
+Date: Fri, 24 Aug 2007 00:05:12 +0200
+Message-ID: <85r6lthppj.fsf@lola.goethe.zz>
+References: <46CC3090.7080500@gmail.com> <86absjenc3.fsf@lola.quinscape.zz>
+	<46CC3C17.8040901@op5.se> <864pirej6w.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0708221154150.16727@xanadu.home>
+	<Pine.LNX.4.64.0708221713540.20400@racer.site>
+	<86mywjcwv7.fsf@lola.quinscape.zz> <20070823202647.GA3516@steel.home>
+	<85zm0igdhv.fsf@lola.goethe.zz> <20070823213337.GC3516@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 23 23:50:42 2007
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 00:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOKZd-0006oD-Gx
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 23:50:41 +0200
+	id 1IOKnx-0003AC-H3
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 00:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761474AbXHWVui (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 17:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760979AbXHWVui
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 17:50:38 -0400
-Received: from mm03snlnto.sandia.gov ([132.175.109.20]:4078 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760074AbXHWVug (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 17:50:36 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Thu, 23 Aug 2007 15:50:24 -0600
-X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
-Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
- by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l7NLoNtL025662;
- Thu, 23 Aug 2007 15:50:23 -0600
-In-Reply-To: <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
-X-Mailer: Evolution 2.10.1
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.311128,
- Antispam-Data: 2007.8.23.142624
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0,
- __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0,
- __MIME_VERSION 0, __SANE_MSGID 0'
-X-TMWD-Spam-Summary: TS=20070823215024; SEV=2.2.2; DFV=B2007082316;
- IFV=2.0.4,4.0-9; AIF=B2007082316; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230322E34364345303131462E303033413A53434A535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007082316_5.02.0125_4.0-9
-X-WSS-ID: 6AD0DEAA3HO172389-01-01
+	id S1764147AbXHWWFY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 18:05:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762477AbXHWWFY
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 18:05:24 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:58657 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758578AbXHWWFX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 18:05:23 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id C7CC232E84E;
+	Fri, 24 Aug 2007 00:05:21 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id B3B1C13EE03;
+	Fri, 24 Aug 2007 00:05:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-002-248.pools.arcor-ip.net [84.61.2.248])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 6C5861B3263;
+	Fri, 24 Aug 2007 00:05:13 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id B4F9A1C36605; Fri, 24 Aug 2007 00:05:12 +0200 (CEST)
+In-Reply-To: <20070823213337.GC3516@steel.home> (Alex Riesen's message of "Thu\, 23 Aug 2007 23\:33\:37 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4037/Thu Aug 23 21:08:22 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56537>
 
-On Wed, 2007-08-22 at 16:25 -0700, Linus Torvalds wrote:
-> But if .gitattributes would work, you probably could introduce both full 
-> permissions and ownership rules there. We read git attributes for *other* 
-> reasons when checking files out _anyway_, ie we need the CRLF attribute 
-> stuff, so adding ownership attributes would not be at all odd.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-So here's the initial thought.  Create two new gitattributes, 'perms'
-and 'ownership', which will track perms/ownership for files matching the
-given pattern.
+> David Kastrup, Thu, Aug 23, 2007 23:14:20 +0200:
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>> 
+>> > David Kastrup, Wed, Aug 22, 2007 19:17:16 +0200:
+>> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> >> > And not making the scripts builtins helps Windows users how,
+>> >> > exactly?
+>> >> 
+>> >> Red herring.  The proposal was not to do nothing, but rather give git
+>> >> a dedicated scripting language internal to it.  Two suggestions of
+>> >> mine with different advantages were git-busybox and Lua.
+>> >
+>> > Different "disadvantages". How do you do pipes and safe
+>> > inter-program argument passing in Lua? Portably?
+>> 
+>> Argument quoting would have to depend on the system.  If you implement
+>> that, you should be able to use os.popen and os.system.  However, the
+>> general Lua approach would be to write wrappers around C routines
+>> dealing with the basic git data structures, giving you things like an
+>> iterator over the index and similar.  One would usually not call
+>> executables, but rather functions from a git-specific library.
+>> 
+>> Instead of stringing this stuff together with pipes, one would string
+>> it together using coroutines (Lua "threads" are strictly synchronous,
+>> about as fast as normal function calls, and a yield/resume rendezvous
+>> passes a value together with control).
+>> 
+>> So pipes would not be a natural building block, anyway.
+>
+> Now that'll be a mess.
 
-Looking at the index struct, it already has fields in it for file mode
-uid and gid (woohoo!).  It looks like an addition to
-builtin-update-index.c could set those fields (if the gitattribute is
-set) the same way as how the execute bit is flipped with chmod_path().
-I haven't found where the chmod is done at checkout/clone time, but the
-question is:  If the mode, uid, and gid are stuffed in the index, will
-git diff simply just work to recognize permission/ownership changes?  Is
-this the right approach? What kind of merging issues will need to be
-worried about?
+Huh?  Stringing executables together with pipes is quite the same
+control flow as stringing coroutines together (except that coroutines
+can pass values bidirectionally).  You just write "resume" instead of
+"write" on the data producing side, and "yield" instead of "read" on
+the data consuming side.
 
--JE
+>> > What do you propose to do about gitbox becoming a dependency for
+>> > others, who inevitably start using it (why not? It promised to be
+>> > portable enough for Git itself!)
+>> 
+>> I don't understand what you mean here.
+>
+> Git gets a script language support. People use the script outside of
+> git and whine when it breaks or gets removed.
+
+I don't see the problem.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
