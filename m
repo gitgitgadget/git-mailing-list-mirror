@@ -1,147 +1,113 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: stgit 0.13 import mbox problems
-Date: Thu, 23 Aug 2007 09:43:22 -0700
-Message-ID: <20070823164322.GC5528@kroah.com>
-References: <20070823092254.GA5976@kroah.com> <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [TESTCASE] Failing 'git am' when core.autocrlf=true
+Date: Thu, 23 Aug 2007 10:18:54 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708230956190.30176@woody.linux-foundation.org>
+References: <46CD94AB.7070709@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 18:44:41 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Aug 23 19:19:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOFnS-0003Gh-JF
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 18:44:38 +0200
+	id 1IOGKm-00015N-90
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 19:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208AbXHWQof (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 12:44:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbXHWQof
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 12:44:35 -0400
-Received: from canuck.infradead.org ([209.217.80.40]:46890 "EHLO
-	canuck.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426AbXHWQoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 12:44:34 -0400
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
-	by canuck.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1IOFnM-0007KS-HV; Thu, 23 Aug 2007 12:44:33 -0400
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0708230319m3242f4a7yb4db1505f0d2e3@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1758780AbXHWRTB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 13:19:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758707AbXHWRTA
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 13:19:00 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59079 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751272AbXHWRTA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 13:19:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7NHIthT018256
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 23 Aug 2007 10:18:56 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7NHIsQ7018908;
+	Thu, 23 Aug 2007 10:18:55 -0700
+In-Reply-To: <46CD94AB.7070709@trolltech.com>
+X-Spam-Status: No, hits=-3.251 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56508>
 
-On Thu, Aug 23, 2007 at 11:19:12AM +0100, Catalin Marinas wrote:
-> On 23/08/07, Greg KH <greg@kroah.com> wrote:
-> > I wanted to see if I could start using stgit instead of quilt, so I
-> > tried to import my current set of kernel patches.
-> >
-> > After giving up on the "import a series" option,
+
+
+On Thu, 23 Aug 2007, Marius Storm-Olsen wrote:
 > 
-> Why?
-
-Because it kept dieing too :)
-
-Also, it would import these patches, which are individually in mbox
-form, with the incorrect author information.  So I thought I would use
-the mbox form to make sure I wasn't just doing something stupid.
-
-> > I just created a mbox
-> > of all of them using quilt and tried to import that.  Unfortunately that
-> > didn't work either:
-> >         $ stg import -M ~/linux/patches/mbox
-> >         Checking for changes in the working directory ... done
-> >         Importing patch "add-my-version-to-the-kernel" ... done
-> >         Importing patch "stupid-patch-for-my-laptop-whi" ... done
-> >         Importing patch "gregs-test-driver-core-sysfs-s" ... done
-> >         Importing patch "detect-atomic-counter-underflo" ... done
-> >         Warning: Message does not contain any diff
-> >         stg import: No diff found inside the patch
+> I have an issue with git-rebase failing on a repository using
+>     core.autocrlf=true
 > 
-> Maybe I should just leave the warning and let it continue. The reason
-> I added it was that "git-apply --index" fails if there is no diff.
+> I've tracked it down to git-am failing with core.autocrlf=true and passing
+> with core.autocrlf=false. I've tried digging deeper into the code, but for
+> some reason ce_match_stat_basic() (read-cache.c:~187) reports the size of the
+> file in the index to be 0 (when core.autocrlf=true), which is why git-am bails
+> out on the patch. (ce->ce_size == 0, while st->st_size == the correct size on
+> disk)
 
-But there was a diff.  Or it was in the file, I don't know what happened
-to it :)
+Very interesting.
 
-> In the meantime, you can try the attached patch for StGIT.
-> 
-> Another hint - quilt can apply patches with fuzz but GIT doesn't allow
-> this by default. If a patch fails, the diff is dumped to the
-> .stgit-failed.patch file so that you can apply it manually (with patch
-> or git-apply) and run 'stg refresh' afterwards.
+Adding some instrumentation to "git-am.sh" (namely a lot of
 
-Ah, perhaps this is the problem, I'll check it out later today.  A bit
-more helpful message would be appreciated, especially as I get a lot of
-patches that at first apply, do not go cleanly at all.  I think there's
-an override option for git to ignore fuzz somewhere, right?  Perhaps
-that could be an option for stgit here?
+	git diff --quiet || exit
 
-> After an import failure, you can continue importing from the next
-> patch using the 'stg import --ignore' option.
+lines to figure out exactly *where* the index gets out of sync with the 
+working tree), I get this trace:
 
-Ok, will try that, and your patch.
+	trace: built-in: git 'mailsplit' '-d4' '-o.dotest' '-b' '--'
+	trace: built-in: git 'diff-index' '--cached' '--name-only' 'HEAD'
+	trace: built-in: git 'diff' '--quiet'
+	trace: built-in: git 'mailinfo' '-u' '.dotest/msg' '.dotest/patch'
+	trace: built-in: git 'stripspace'
+	trace: built-in: git 'diff' '--quiet'
+	trace: built-in: git 'apply' '--allow-binary-replacement' '--index' '.dotest/patch'
+	trace: built-in: git 'diff' '--quiet'
+	trace: built-in: git 'diff' '--quiet'
+	trace: built-in: git 'write-tree'
+	trace: built-in: git 'diff' '--quiet'
 
-> > I'm using the .13 version if that matters.
-> >
-> > The mbox contains 177 kernel patches against Linus's current tree
-> > (2.6.23-rc3-git5), and is available at:
-> >         http://www.kernel.org/pub/linux/kernel/people/gregkh/misc/gregkh-stgit-import-mbox.gz
-> > if anyone wants to test it out and see what I was doing wrong.
-> 
-> I'll give it a try.
-> 
-> One thing you'll notice is the speed difference as stgit has to
-> generate a git commit during a push operation.
+ie everything was fine after the "apply" phase, but the index and the 
+working tree went out-of-kilter after "git write-tree".
 
-Oh yeah, I know that it would be slower, but I use git-quiltapply a lot
-for sending patches to Linus, and that seems quite fast (actually a lot
-faster than stgit for some reason...)
+The reason? "git write-tree" doesn't read the config file, so it never 
+even reads the "core.autocrlf=true" variable. As a result, it seems to 
+screw up the index matching when it does the cache_tree_fully_valid() 
+(which will fail due to "git apply --index" having invalidated the tree 
+SHA1's) followed by cache_tree_update().
 
-> > Oh, I do have some suggestions as to the naming of the patch from a mail
-> > file, as limiting this to a small number of characters like stgit
-> > currently does will not work out for a lot of my patches, but I'll wait
-> > until I can actually import the thing before I look into that :)
-> 
-> We had the full name in the past but the algorithm cause problems with
-> patches (not e-mails) that didn't have a subject line. It's probably
-> better to have a config option rather than hard-coded 30 characters.
-> Note that 'stg series -d' will display the full subject line.
+> Can anyone please enlighten me on why this may happen?
 
-Hm, that shows:
-	$ stg series -d
-	+ add-my-version-to-the-kernel   | Add my version to the kernel.
-	+ stupid-patch-for-my-laptop-whi | Stupid patch for my laptop which cant get sysrq-u
-	+ gregs-test-driver-core-sysfs-s | Gregs test driver core / sysfs stress test module
-	> detect-atomic-counter-underflo | detect atomic counter underflows
+This patch should fix it. 
 
-Are those spaces really the name of the patch?
+Junio - it fixes the test for me, but quite frankly, I don't see why 
+write-tree would *ever* change any non-tree index entries. But it does. I 
+think there's another bug somewhere, or I'm missing something.
 
-Why not just take the Subject: and mangle it to be the full name of the
-patch (yeah, I can see problems if you don't have the subject).  I have
-a bash script around here from a kernel developer that I use to turn
-mbox files into sane file names that works great.
+		Linus
 
-Ah, it's at:
-	http://www.kernel.org/pub/linux/kernel/people/gregkh/gregkh-2.6/scripts/rename-patch
-if you want to take a look and possibly use the same type of logic.
-Hm, Jean seems to have updated it, use the one at:
-	http://jdelvare.pck.nerim.net/linux/rename-patch
-instead, it's a bit more up to date.
+---
+ builtin-write-tree.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> If you don't give up before importing the files :-), please let us
-> know the user experience, especially related to speed as compared to
-> quilt.
-
-I really don't want to give up :)
-
-I really do like quilt, but wanted to see how well my current workflow
-could be by using stgit as I'm constantly rebasing the main kernel
-version against -git snapshots and sometimes that isn't frequent enough.
-
-thanks,
-
-greg k-h
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index 88f34ba..b89d02e 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -72,6 +72,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	const char *prefix = NULL;
+ 	unsigned char sha1[20];
+ 
++	git_config(git_default_config);
+ 	while (1 < argc) {
+ 		const char *arg = argv[1];
+ 		if (!strcmp(arg, "--missing-ok"))
