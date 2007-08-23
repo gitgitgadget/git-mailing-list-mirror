@@ -1,120 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
-Date: Wed, 22 Aug 2007 23:10:09 -0700
-Message-ID: <20070823061009.GA10547@soma>
-References: <1184405128718-git-send-email-madduck@madduck.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: confused about preserved permissions
+Date: Thu, 23 Aug 2007 08:12:18 +0200
+Message-ID: <85mywiixtp.fsf@lola.goethe.zz>
+References: <20070820164411.GA15637@piper.oerlikon.madduck.net>
+	<6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr>
+	<7v8x83i5ma.fsf@gitster.siamese.dyndns.org>
+	<20070823060052.GA25153@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "martin f. krafft" <madduck@madduck.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 08:10:49 2007
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Aug 23 08:12:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IO5u4-0001xM-Ll
-	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:10:49 +0200
+	id 1IO5vb-0002U9-Qc
+	for gcvg-git@gmane.org; Thu, 23 Aug 2007 08:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbXHWGKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 02:10:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXHWGKO
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:10:14 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37722 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753176AbXHWGKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 02:10:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id B4F2B2DC08D;
-	Wed, 22 Aug 2007 23:10:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1184405128718-git-send-email-madduck@madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752024AbXHWGMV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 02:12:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbXHWGMV
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 02:12:21 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:53192 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751123AbXHWGMU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2007 02:12:20 -0400
+Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 7131D1F593C;
+	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id 5DD6A2C6CB1;
+	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-050-128.pools.arcor-ip.net [84.61.50.128])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 327A01F70CB;
+	Thu, 23 Aug 2007 08:12:19 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id B2E261C36605; Thu, 23 Aug 2007 08:12:18 +0200 (CEST)
+In-Reply-To: <20070823060052.GA25153@piper.oerlikon.madduck.net> (martin f. krafft's message of "Thu\, 23 Aug 2007 08\:00\:52 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4032/Wed Aug 22 22:15:27 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56459>
 
-Here's a cleaned up version of this patch with my tweaks.
+martin f krafft <madduck@madduck.net> writes:
 
->From f5b6da6bc4e2d879ca200993f0d3806486e8fb21 Mon Sep 17 00:00:00 2001
-From: martin f. krafft <madduck@madduck.net>
-Date: Sat, 14 Jul 2007 11:25:28 +0200
-Subject: [PATCH] git-svn init/clone --stdlayout option to default-init trunk/tags/branches
+> also sprach Junio C Hamano <gitster@pobox.com> [2007.08.23.0009 +0200]:
+>> We deliberately chose not to use that space, and this default is
+>> very unlikely to change.
+>
+> The downsides included change in SHA hash on mode change, as far as
+> I can remember. Anything else?
 
-The --stdlayout option to git-svn init/clone initialises the default
-Subversion values of trunk,tags,branches: -T trunk -b branches -t tags.
-If any of the -T/-t/-b options are given in addition, they are given
-preference.
+The modes are recorded in patches and push/pull, so if you have
+several people working with different permissions/umasks, you get
+wagonloads of unnecessary patches and get your local permissions
+messed up by other contributors.
 
-[ew: fixed whitespace and added "-s" shortcut]
+For colloborative work, you _really_ don't want to have _personal_
+preferences distributed.
 
-Signed-off-by: martin f. krafft <madduck@madduck.net>
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Documentation/git-svn.txt |    7 ++++++-
- git-svn.perl              |   11 +++++++++--
- 2 files changed, 15 insertions(+), 3 deletions(-)
+Any patch offering to optionally track permissions must make very sure
+that it retains the possibility to have permissions in the directory
+policed to the values that are actually a property of the source files
+rather than the personal work environment.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index fbc5887..3e2a63b 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -44,10 +44,15 @@ COMMANDS
- --tags=<tags_subdir>;;
- -b<branches_subdir>;;
- --branches=<branches_subdir>;;
-+-s;;
-+--stdlayout;;
- 	These are optional command-line options for init.  Each of
- 	these flags can point to a relative repository path
- 	(--tags=project/tags') or a full url
--	(--tags=https://foo.org/project/tags)
-+	(--tags=https://foo.org/project/tags). The option --stdlayout is
-+	a shorthand way of setting trunk,tags,branches as the relative paths,
-+	which is the Subversion default. If any of the other options are given
-+	as well, they take precedence.
- --no-metadata;;
- 	Set the 'noMetadata' option in the [svn-remote] config.
- --use-svm-props;;
-diff --git a/git-svn.perl b/git-svn.perl
-index 7a8ffd5..4e325b7 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -77,11 +77,12 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		   \$Git::SVN::_repack_flags,
- 		%remote_opts );
- 
--my ($_trunk, $_tags, $_branches);
-+my ($_trunk, $_tags, $_branches, $_stdlayout);
- my %icv;
- my %init_opts = ( 'template=s' => \$_template, 'shared:s' => \$_shared,
-                   'trunk|T=s' => \$_trunk, 'tags|t=s' => \$_tags,
-                   'branches|b=s' => \$_branches, 'prefix=s' => \$_prefix,
-+                  'stdlayout|s' => \$_stdlayout,
-                   'minimize-url|m' => \$Git::SVN::_minimize_url,
- 		  'no-metadata' => sub { $icv{noMetadata} = 1 },
- 		  'use-svm-props' => sub { $icv{useSvmProps} = 1 },
-@@ -292,7 +293,8 @@ sub init_subdir {
- sub cmd_clone {
- 	my ($url, $path) = @_;
- 	if (!defined $path &&
--	    (defined $_trunk || defined $_branches || defined $_tags) &&
-+	    (defined $_trunk || defined $_branches || defined $_tags ||
-+	     defined $_stdlayout) &&
- 	    $url !~ m#^[a-z\+]+://#) {
- 		$path = $url;
- 	}
-@@ -302,6 +304,11 @@ sub cmd_clone {
- }
- 
- sub cmd_init {
-+	if (defined $_stdlayout) {
-+		$_trunk = 'trunk' if (!defined $_trunk);
-+		$_tags = 'tags' if (!defined $_tags);
-+		$_branches = 'branches' if (!defined $_branches);
-+	}
- 	if (defined $_trunk || defined $_branches || defined $_tags) {
- 		return cmd_multi_init(@_);
- 	}
 -- 
-Eric Wong
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
