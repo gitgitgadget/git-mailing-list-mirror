@@ -1,80 +1,75 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: git-svnimport: what to do after -i?
-Date: Thu, 23 Aug 2007 21:06:19 -0400
-Message-ID: <20070824010619.GA18265@falcon.digizenstudio.com>
-References: <20070822113325.1bihryuk4gko8kgs@intranet.digizenstudio.com> <20070823012836.GA18796@falcon.digizenstudio.com> <Pine.LNX.4.64.0708230827440.26254@beast.quantumfyre.co.uk> <20070823130031.GA17092@falcon.digizenstudio.com> <Pine.LNX.4.64.0708240113360.32194@beast.quantumfyre.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [BUG] git-gui: "Stage Hunk For Commit" doesn't work at all anymore
+Date: Thu, 23 Aug 2007 23:08:08 -0400
+Message-ID: <20070824030808.GT27913@spearce.org>
+References: <20070823203024.GF21692@lavos.net> <20070823203818.GG21692@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Aug 24 03:06:29 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Fri Aug 24 05:08:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IONd4-0002uT-Bw
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 03:06:26 +0200
+	id 1IOPXU-0004Ah-3Y
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 05:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765503AbXHXBGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Aug 2007 21:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765446AbXHXBGW
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 21:06:22 -0400
-Received: from k2smtpout02-01.prod.mesa1.secureserver.net ([64.202.189.90]:58420
-	"HELO k2smtpout02-01.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1764958AbXHXBGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2007 21:06:22 -0400
-Received: (qmail 25129 invoked from network); 24 Aug 2007 01:06:21 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout02-01.prod.mesa1.secureserver.net (64.202.189.90) with ESMTP; 24 Aug 2007 01:06:21 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 97B96100A0B;
-	Fri, 24 Aug 2007 01:06:21 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5m328dHzEH21; Thu, 23 Aug 2007 21:06:21 -0400 (EDT)
-Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id E37361000A2;
-	Thu, 23 Aug 2007 21:06:20 -0400 (EDT)
-Received: by falcon (Postfix, from userid 1000)
-	id ADA587B51B; Thu, 23 Aug 2007 21:06:19 -0400 (EDT)
-Mail-Followup-To: Julian Phillips <julian@quantumfyre.co.uk>,
-	git@vger.kernel.org
+	id S964800AbXHXDIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Aug 2007 23:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933717AbXHXDIS
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Aug 2007 23:08:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38625 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933635AbXHXDIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2007 23:08:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IOPWg-0006FM-2Y; Thu, 23 Aug 2007 23:07:58 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AEAB420FBAE; Thu, 23 Aug 2007 23:08:08 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708240113360.32194@beast.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070823203818.GG21692@lavos.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56546>
 
-On Fri, Aug 24, 2007 at 01:18:49AM +0100, Julian Phillips wrote:
-> On Thu, 23 Aug 2007, Jing Xue wrote:
+Brian Downing <bdowning@lavos.net> wrote:
+> On Thu, Aug 23, 2007 at 03:30:24PM -0500, Brian Downing wrote:
+> > This commit:
+> > 
+> > commit a13ee29b975d3a9a012983309e842d942b2bbd44
+> > 
+> > seems to have broken the "Stage Hunk For Commit" option entirely for me
+> > -- it is now disabled whether or not there is a patch in the viewer.
+
+Yea, that commit was a dud.  I noticed it myself a few days ago
+and fixed the dang thing.  I don't know what I was thinking when
+I made that commit...
+ 
+> Sorry, I just saw the following commit in the git-gui tree:
 > 
-> >So in my case I had to kind of cheat svnimport into thinking
-> >'projectFoo' is the name of the "trunk" directory, and 'trunk' is the
-> >actually project name. And I had to create 'dummytags' and
-> >'dummybranches' at repoRoot level (following somebody else's tip found
-> >on this list).
+> ce015c213fbef39140b6192db28110bc666dc6c8 
+> git-gui: Paper bag fix "Stage Hunk For Commit" in diff context menu
 > 
-> Ah, yes ... sorry.  I've actually ended up using a homebrew script for 
-> parsing svn dump files and feeding git-fast-import for a number of 
-> reasons, so I'm a bit rusty with svnimport, and never looked at multiple 
-> projects in one repo anyway.  (One of which was that svnimport wasn't 
-> creating a correct import actually - some files and directories were 
-> simply missing).
+> So it appears this issue is known.  Sorry about the noise.
 
-That's... not good to hear about. I should probably look at svn dump as
-well.
+No problem.  Better that someone raises an issue than just pretend
+like its not there...
+ 
+> (Though this will be merged before 1.5.3, right?)
 
-> I guess you've tried including projectFoo in the url?  Other than that, 
-> perhaps git-svn may have better luck?
+Yes.  It will be in git-gui 0.8.2, which Junio has agreed to merge
+into 1.5.3 before it goes final.  I'll likely tag git-gui 0.8.2
+tomorrow, then ask him to pull when he has the chance.
 
-I tried that too but decided against it as it's relatively OK to lose
-some ancient history, but messing up ongoing development due to any
-possible issues in the git-svn layer would be quite different a story.
-(and from what you just mentioned, that's not entirely a paranoia 8-)
-
-Thanks.
 -- 
-Jing
+Shawn.
