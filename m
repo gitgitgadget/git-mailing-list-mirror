@@ -1,63 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: tracking perms/ownership [was: empty directories]
-Date: Fri, 24 Aug 2007 16:58:20 -0400
-Message-ID: <20070824205820.GA19152@coredump.intra.peff.net>
-References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca> <1187817948.5986.159.camel@beauty> <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org> <1187905879.5986.199.camel@beauty> <Pine.LNX.4.64.0708241136301.16728@wbgn129.biozentrum.uni-wuerzburg.de> <20070824095217.GB16853@coredump.intra.peff.net> <1187970632.6357.108.camel@beauty>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: git-daemon on NSLU2
+Date: Fri, 24 Aug 2007 17:17:42 -0400
+Message-ID: <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
+References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
+	 <20070824062106.GV27913@spearce.org>
+	 <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+	 <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Josh England <jjengla@sandia.gov>
-X-From: git-owner@vger.kernel.org Fri Aug 24 22:58:28 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Aug 24 23:17:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOgEd-0004rO-9l
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 22:58:27 +0200
+	id 1IOgXL-0003aS-7d
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 23:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756992AbXHXU6Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 16:58:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756999AbXHXU6Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 16:58:24 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2271 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756978AbXHXU6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 16:58:23 -0400
-Received: (qmail 17280 invoked by uid 111); 24 Aug 2007 20:58:22 -0000
-X-Spam-Status: No, hits=-1.4 required=15.0
-	tests=ALL_TRUSTED,AWL
-X-Spam-Check-By: peff.net
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 24 Aug 2007 16:58:22 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2007 16:58:21 -0400
+	id S1756034AbXHXVRn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 17:17:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756120AbXHXVRn
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 17:17:43 -0400
+Received: from rv-out-0910.google.com ([209.85.198.185]:7990 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755680AbXHXVRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 17:17:42 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so740339rvb
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 14:17:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fKUhkV43yNUGcUNKZ4w/+qKz7TckUE4n5PTimiWaCJlr1iR1FhAtMUXNF/pGbnCkM0bGTJadhGEiV3fnXz05L+SvIFBNPrVg6SbZq0ooalRF13fZq8BqVT4j8CbI3Ufc4MT7uMi09vQ9cnVAC6453NP3VEz/5vzD4MRmL0QVJGs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JPjSY4IP96uSQPtJPoNE3m+WzGgb7EV4+hdLTMEWaMbJT9UBLw3U01/pZE/z9GlvuaXuVw9R1zZSWBiCCAu/vWSW6FtGt4mR6nBaCpsVuREDEbiMDQkhXIEMXOfZ03a6mw6ByibVHMkkpYqsl6iTOOo8+bO1RBQIgiRQ92pYL/0=
+Received: by 10.114.177.1 with SMTP id z1mr131307wae.1187990262319;
+        Fri, 24 Aug 2007 14:17:42 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Fri, 24 Aug 2007 14:17:42 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <1187970632.6357.108.camel@beauty>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56602>
 
-On Fri, Aug 24, 2007 at 09:50:32AM -0600, Josh England wrote:
+On 8/24/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Fri, 24 Aug 2007, Jon Smirl wrote:
+>
+> > I'm still trying to debug git-daemon
+> >
+> > I do find it surprising that git-index-pack can't be happy with in
+> > 20MB of RAM and it has to continuously swap it's 30MB of virtual. My
+> > disk is chattering itself to death. It stayed that way for 40 minutes.
+> >
+> > I'm practicing on the kernel tree.
+>
+> You hope for miracles, do you?  ;-)
 
-> > direction and not at least consider people storing actual ACLs (or even
-> > other extended attributes). An already-standard format like that
-> 
-> Do you mean using acls through contrib/hooks/update-paranoid?  That is
-> the only place I see any mention of them.  clean and smudge seem out
-> because they are passed blob objects and have no notion of pathname.  I
-> don't see how to use this for automatic storing/restoring of
-> perms/ownership.
+We're going something wrong in git-daemon. I can clone the tree in
+five minutes using the http protocol. Using the git protocol would
+take 24hrs if I let it finish.
 
-No, I mean filesystem ACLs. Your complaint is that git stores only the
-file _content_, not some specific metadata that you want (owner, group,
-permissions). My point is that there is _other_ metadata, too (such as
-POSIX ACLs) that could be stored. Even if you don't want to store them,
-if you are extending git's capabilities, it makes sense to at least
-consider how to handle those cases, too.
 
-But yes, clean and smudge don't get the pathname. It would be a fairly
-trivial patch, though, so maybe I'll play with it.
+> Please stop hammering that poor little NSLU2 with such a workset, or
+> hack some additional 224MB of RAM into it.  There is no magical
+> solution.
+>
+>
+> Nicolas
+>
 
--Peff
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
