@@ -1,102 +1,191 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: name-rev does not show the shortest path
-Date: Fri, 24 Aug 2007 16:21:46 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk>
-References: <20070823103817.GF6573@informatik.uni-freiburg.de>
- <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
- <20070824125230.GA12030@informatik.uni-freiburg.de>
+From: Simon Hausmann <simon@lst.de>
+Subject: [PATCH] git-p4: Make 'git-p4 branches' work after an initial clone with git clone from an origin-updated repository.
+Date: Fri, 24 Aug 2007 17:44:16 +0200
+Message-ID: <200708241744.19063.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811584-1330084439-1187968906=:7313"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Fri Aug 24 17:22:40 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 17:41:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOaze-00029x-0O
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 17:22:38 +0200
+	id 1IObHy-0002Wp-PK
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 17:41:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757169AbXHXPVv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 11:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757139AbXHXPVu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 11:21:50 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:58163 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757063AbXHXPVs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 11:21:48 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 4AAE9C6921
-	for <git@vger.kernel.org>; Fri, 24 Aug 2007 16:21:47 +0100 (BST)
-Received: (qmail 2583 invoked by uid 103); 24 Aug 2007 16:21:46 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91/4047. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.03161 secs); 24 Aug 2007 15:21:46 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 24 Aug 2007 16:21:46 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20070824125230.GA12030@informatik.uni-freiburg.de>
+	id S1752261AbXHXPla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 11:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbXHXPla
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 11:41:30 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:44354 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbXHXPl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 11:41:29 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 2D537741C5; Fri, 24 Aug 2007 17:41:27 +0200 (CEST)
+Received: from rhea.troll.no (rhea.troll.no [10.3.4.5])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 190EF741BC; Fri, 24 Aug 2007 17:41:27 +0200 (CEST)
+X-Length: 6880
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56577>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+After a clone with "git clone" of a repository the p4 branches are only in remotes/origin/p4/* and not in remotes/p4/*.
+Separate the code for detection and creation out of the P4Sync command class into standalone methods and use them
+from the P4Branches command.
 
----1463811584-1330084439-1187968906=:7313
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Signed-off-by: Simon Hausmann <simon@lst.de>
+---
+ contrib/fast-import/git-p4 |  104 +++++++++++++++++++++++---------------------
+ 1 files changed, 55 insertions(+), 49 deletions(-)
 
-On Fri, 24 Aug 2007, Uwe Kleine-K=F6nig wrote:
-
-> Hello Julian,
->
-> Julian Phillips wrote:
->> On Thu, 23 Aug 2007, Uwe Kleine-K=F6nig wrote:
->>> I want to check to which kernel version I need to upgrade to get a
->>> certain feature.  For my case it was introduced in 0567a0c022d5b.
->>>
->>> =09zeisberg@cassiopeia:~/gsrc/linux-2.6$
->>> =09rev=3D0567a0c022d5b343370a343121f38fd89925de55
->>>
->>> =09zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --tags $rev
->>> =090567a0c022d5b343370a343121f38fd89925de55 tags/v2.6.22~1686^2~1^3~5
->>>
->>> =09zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --refs=3D*-rc1 $r=
-ev
->>> =090567a0c022d5b343370a343121f38fd89925de55
->>> =09tags/v2.6.22-rc1~1009^2~1^3~5
->>>
->>> I don't now the underlaying algorithm, maybe it's to get a short string=
-?
->>>
->>> Anyhow I want to know the earliest tag that includes this patch?  Is
->>> there something I missed?
->>>
->>> I remember there was a similar discussion regarding describe.
->>
->> git describe --contains 0567a0c022d5b
->>
->> probably a 1.5.3 feature? (certainly doesn't exist in 1.5.2.2)
-> That command says v2.6.22~1686^2~1^3~5, too.  That is, it doesn't use
-> the "older" v2.6.22-rc1 tag as a basis.
-
-From=20a quick look at the code, that's not surprising, it runs "git=20
-name-rev --name-only --tags" under the bonnet - so not helpful at all,=20
-sorry.
-
-So now I wonder how useful --contains really is ... I would have expected=
-=20
-to always get the "closest" tag.  ~1009^2~1^3~5 seems closer than=20
-~1686^2~1^3~5 to me ... ho hum.
-
---=20
-Julian
-
-  ---
-And that's the way it is...
- =09=09-- Walter Cronkite
----1463811584-1330084439-1187968906=:7313--
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 6d01062..b571e30 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -231,6 +231,56 @@ def findUpstreamBranchPoint(head = "HEAD"):
+ 
+     return ["", settings]
+ 
++def createOrUpdateBranchesFromOrigin(localRefPrefix = "refs/remotes/p4/", silent=True):
++    if not silent:
++        print ("Creating/updating branch(es) in %s based on origin branch(es)"
++               % localRefPrefix)
++
++    originPrefix = "origin/p4/"
++
++    for line in read_pipe_lines("git rev-parse --symbolic --remotes"):
++        line = line.strip()
++        if (not line.startswith(originPrefix)) or line.endswith("HEAD"):
++            continue
++
++        headName = line[len(originPrefix):]
++        remoteHead = localRefPrefix + headName
++        originHead = line
++
++        original = extractSettingsGitLog(extractLogMessageFromGitCommit(originHead))
++        if (not original.has_key('depot-paths')
++            or not original.has_key('change')):
++            continue
++
++        update = False
++        if not gitBranchExists(remoteHead):
++            if verbose:
++                print "creating %s" % remoteHead
++            update = True
++        else:
++            settings = extractSettingsGitLog(extractLogMessageFromGitCommit(remoteHead))
++            if settings.has_key('change') > 0:
++                if settings['depot-paths'] == original['depot-paths']:
++                    originP4Change = int(original['change'])
++                    p4Change = int(settings['change'])
++                    if originP4Change > p4Change:
++                        print ("%s (%s) is newer than %s (%s). "
++                               "Updating p4 branch from origin."
++                               % (originHead, originP4Change,
++                                  remoteHead, p4Change))
++                        update = True
++                else:
++                    print ("Ignoring: %s was imported from %s while "
++                           "%s was imported from %s"
++                           % (originHead, ','.join(original['depot-paths']),
++                              remoteHead, ','.join(settings['depot-paths'])))
++
++        if update:
++            system("git update-ref %s %s" % (remoteHead, originHead))
++
++def originP4BranchesExist():
++        return gitBranchExists("origin") or gitBranchExists("origin/p4") or gitBranchExists("origin/p4/master")
++
+ class Command:
+     def __init__(self):
+         self.usage = "usage: %prog [options]"
+@@ -1041,53 +1091,6 @@ class P4Sync(Command):
+         for branch in branches.keys():
+             self.initialParents[self.refPrefix + branch] = branches[branch]
+ 
+-    def createOrUpdateBranchesFromOrigin(self):
+-        if not self.silent:
+-            print ("Creating/updating branch(es) in %s based on origin branch(es)"
+-                   % self.refPrefix)
+-
+-        originPrefix = "origin/p4/"
+-
+-        for line in read_pipe_lines("git rev-parse --symbolic --remotes"):
+-            line = line.strip()
+-            if (not line.startswith(originPrefix)) or line.endswith("HEAD"):
+-                continue
+-
+-            headName = line[len(originPrefix):]
+-            remoteHead = self.refPrefix + headName
+-            originHead = line
+-
+-            original = extractSettingsGitLog(extractLogMessageFromGitCommit(originHead))
+-            if (not original.has_key('depot-paths')
+-                or not original.has_key('change')):
+-                continue
+-
+-            update = False
+-            if not gitBranchExists(remoteHead):
+-                if self.verbose:
+-                    print "creating %s" % remoteHead
+-                update = True
+-            else:
+-                settings = extractSettingsGitLog(extractLogMessageFromGitCommit(remoteHead))
+-                if settings.has_key('change') > 0:
+-                    if settings['depot-paths'] == original['depot-paths']:
+-                        originP4Change = int(original['change'])
+-                        p4Change = int(settings['change'])
+-                        if originP4Change > p4Change:
+-                            print ("%s (%s) is newer than %s (%s). "
+-                                   "Updating p4 branch from origin."
+-                                   % (originHead, originP4Change,
+-                                      remoteHead, p4Change))
+-                            update = True
+-                    else:
+-                        print ("Ignoring: %s was imported from %s while "
+-                               "%s was imported from %s"
+-                               % (originHead, ','.join(original['depot-paths']),
+-                                  remoteHead, ','.join(settings['depot-paths'])))
+-
+-            if update:
+-                system("git update-ref %s %s" % (remoteHead, originHead))
+-
+     def updateOptionDict(self, d):
+         option_keys = {}
+         if self.keepRepoPath:
+@@ -1108,7 +1111,7 @@ class P4Sync(Command):
+         # map from branch depot path to parent branch
+         self.knownBranches = {}
+         self.initialParents = {}
+-        self.hasOrigin = gitBranchExists("origin") or gitBranchExists("origin/p4") or gitBranchExists("origin/p4/master")
++        self.hasOrigin = originP4BranchesExist()
+         if not self.syncWithOrigin:
+             self.hasOrigin = False
+ 
+@@ -1135,7 +1138,7 @@ class P4Sync(Command):
+         # merge with previous imports, if possible.
+         if args == []:
+             if self.hasOrigin:
+-                self.createOrUpdateBranchesFromOrigin()
++                createOrUpdateBranchesFromOrigin(self.refPrefix, self.silent)
+             self.listExistingP4GitBranches()
+ 
+             if len(self.p4BranchesInGit) > 1:
+@@ -1518,6 +1521,9 @@ class P4Branches(Command):
+         self.verbose = False
+ 
+     def run(self, args):
++        if originP4BranchesExist():
++            createOrUpdateBranchesFromOrigin()
++
+         cmdline = "git rev-parse --symbolic "
+         cmdline += " --remotes"
+ 
+-- 
+1.5.3.rc6.1.ge31f
