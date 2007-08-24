@@ -1,61 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: tracking perms/ownership [was: empty directories]
-Date: Fri, 24 Aug 2007 06:05:24 -0400
-Message-ID: <20070824100524.GA17348@coredump.intra.peff.net>
-References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca> <1187817948.5986.159.camel@beauty> <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org> <1187905879.5986.199.camel@beauty> <Pine.LNX.4.64.0708241136301.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
+Date: Fri, 24 Aug 2007 13:52:38 +0300
+Message-ID: <0748D6C4-C72F-4271-9372-3EBFC249FFE2@pp.inet.fi>
+References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi>
+ <20070823203246.GB3516@steel.home>
+ <6D8BA2E0-50CD-4B7B-84D3-3D9A61421131@pp.inet.fi>
+ <7v8x81s7d1.fsf@gitster.siamese.dyndns.org>
+ <9B94A29F-AF61-46C0-8497-C7372DF73250@pp.inet.fi>
+ <Pine.LNX.4.64.0708241154410.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh England <jjengla@sandia.gov>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 24 12:06:10 2007
+X-From: git-owner@vger.kernel.org Fri Aug 24 12:58:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOW3D-0002s7-Pg
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 12:06:04 +0200
+	id 1IOWrn-0002Uk-3z
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 12:58:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765009AbXHXKF2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 06:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764827AbXHXKF2
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 06:05:28 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1664 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764681AbXHXKF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 06:05:27 -0400
-Received: (qmail 10948 invoked by uid 111); 24 Aug 2007 10:05:25 -0000
-X-Spam-Status: No, hits=-1.4 required=15.0
-	tests=ALL_TRUSTED
-X-Spam-Check-By: peff.net
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 24 Aug 2007 06:05:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2007 06:05:24 -0400
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708241136301.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+	id S1755845AbXHXK6J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 24 Aug 2007 06:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755533AbXHXK6H
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 06:58:07 -0400
+Received: from astana.suomi.net ([82.128.152.18]:45242 "EHLO astana.suomi.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754763AbXHXK6G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 06:58:06 -0400
+Received: from tiku.suomi.net ([82.128.154.67])
+ by astana.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JN9004O8YGFGN00@astana.suomi.net> for
+ git@vger.kernel.org; Fri, 24 Aug 2007 13:57:51 +0300 (EEST)
+Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
+ with ESMTP id <0JN900MLIYGSF1H0@mailstore.suomi.net> for git@vger.kernel.org;
+ Fri, 24 Aug 2007 13:58:05 +0300 (EEST)
+Received: from [192.168.0.138]
+ (addr-213-139-166-27.baananet.fi [213.139.166.27])
+	by spam1.suomi.net (Postfix) with ESMTP id 1B354241F3D; Fri,
+ 24 Aug 2007 13:53:15 +0300 (EEST)
+In-reply-to: <Pine.LNX.4.64.0708241154410.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=-1,
+	required 5, autolearn=not spam, BAYES_00 -1.00)
+X-OPOY-MailScanner-From: v@pp.inet.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56570>
 
-On Fri, Aug 24, 2007 at 11:38:13AM +0200, Johannes Schindelin wrote:
+On Aug 24, 2007, at 12:55, Johannes Schindelin wrote:
+> On Fri, 24 Aug 2007, V?in? J?rvel wrote:
+>> I also think that maintaining a proper .gitignore is imporant, and =20
+>> more
+>> productive than using --only-tracked instead. But when I have =20
+>> cruft that can't
+>> be put in .gitignore, or it would ignore files that are supposed =20
+>> to be shown
+>> and tracked, I use --only-tracked.
+>
+> Would it not be better to imitate the "-x" and "-X" options of ls-=20
+> files,
+> then?  You could achieve the effect you desire by "git status -x =20
+> \*" then.
+>
+> Ciao,
+> Dscho
 
-> I wonder why you do not just use the "smudge" and "clean" attributes, and 
-> store the ownership _and_ the permissions in .gitacls.
+I haven't used that option, do I understand correctly, that with that =20
+option, you should provide another exclusion file? That would remove =20
+the dynamic ability of --only-tracked.
 
-Thinking about this more, are you proposing:
-
-1. Clean and smudge every file, looking up the attributes in .gitacls.
-In that case, I think they are not sufficient because the filter script
-receives only the blob content on stdin, but never sees the filename.
-
-or
-
-2. Clean and smudge .gitacls, munging the file permissions as a side
-effect. In this case, won't some git operations that write the files
-break your permissions (i.e., if I update "foo" but not .gitacls, then
-the .gitacls filter won't be run and I will be left with git's default
-permissions).
-
--Peff
+--
+V=E4in=F6
