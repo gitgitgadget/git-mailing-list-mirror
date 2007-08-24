@@ -1,74 +1,64 @@
-From: "Jason Garber" <jgarber@ionzoft.com>
-Subject: RE: empty directories
-Date: Fri, 24 Aug 2007 12:10:10 -0500
-Message-ID: <E7DE807861E8474E8AC3DC7AC2C75EE50329676F@34093-EVS2C1.exchange.rackspace.com>
-References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca> <1187817948.5986.159.camel@beauty> <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Tags of non-commits
+Date: Fri, 24 Aug 2007 15:13:16 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0708241506300.5774@iabervon.org>
+References: <Pine.LNX.4.64.0708241337560.5774@iabervon.org>
+ <7vwsvkdaz0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 24 21:10:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 21:13:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOeYZ-0005q6-Kt
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 21:10:55 +0200
+	id 1IOeaw-0006oB-WA
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 21:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763829AbXHXTKe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 15:10:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764824AbXHXTKd
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 15:10:33 -0400
-Received: from server107b.exghost.com ([207.97.244.177]:1544 "EHLO
-	server107.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814AbXHXTKa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 15:10:30 -0400
-X-Greylist: delayed 7201 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Aug 2007 15:10:30 EDT
-Received: by server107.appriver.com (CommuniGate Pro PIPE 5.1.11)
-  with PIPE id 88297554; Fri, 24 Aug 2007 13:10:27 -0400
-Received: from [72.32.49.6] (HELO FE2.exchange.rackspace.com)
-  by server107.appriver.com (CommuniGate Pro SMTP 5.1.11)
-  with ESMTP id 88297448 for git@vger.kernel.org; Fri, 24 Aug 2007 13:10:13 -0400
-Received: from 34093-EVS2C1.exchange.rackspace.com ([192.168.1.18]) by FE2.exchange.rackspace.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 24 Aug 2007 12:10:12 -0500
-x-mimeole: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: empty directories
-Thread-Index: AcflE86QojIh6mT+T22bUvJpHvhzoABXYHDg
-X-OriginalArrivalTime: 24 Aug 2007 17:10:12.0895 (UTC) FILETIME=[A21E82F0:01C7E671]
-X-Policy: GLOBAL
-X-Primary: jgarber@ionzoft.com
-X-Note: This Email was scanned by AppRiver SecureTide
-X-ALLOW: jgarber@ionzoft.com ALLOWED
-X-Note: Spam Tests Failed: 
-X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
-X-Note-Sending-IP: 72.32.49.6
-X-Note-Reverse-DNS: fe2.exchange.rackspace.com
-X-Note-WHTLIST: jgarber@ionzoft.com
-X-Note: User Rule Hits: 
-X-Note: Global Rule Hits: 70 80 
-X-Note: Mail Class: ALLOWEDSENDER
+	id S1751117AbXHXTNS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 15:13:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbXHXTNS
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 15:13:18 -0400
+Received: from iabervon.org ([66.92.72.58]:3954 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751078AbXHXTNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 15:13:17 -0400
+Received: (qmail 29419 invoked by uid 1000); 24 Aug 2007 19:13:16 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Aug 2007 19:13:16 -0000
+In-Reply-To: <7vwsvkdaz0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56593>
 
-> But if .gitattributes would work, you probably could introduce both
-full 
-> permissions and ownership rules there. We read git attributes for
-*other* 
-> reasons when checking files out _anyway_, ie we need the CRLF
-attribute 
-> stuff, so adding ownership attributes would not be at all odd.
->
-> 		Linus
+On Fri, 24 Aug 2007, Junio C Hamano wrote:
 
-And as a side-note, it would be quite trivial to write a script to
-initially populate a .gitattributes file cleanly (and regen when
-needed).
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > There seems to be an inconsistency between the fetch and tag over whether 
+> > lightweight tags of non-commits are allowed. Fetch doesn't like them, but 
+> > tag creates them without any particular fuss.
+> 
+> Is your "fetch does not like them" about the automated
+> following?  If you say "git fetch $remote tag $that_tag" there
+> shouldn't be any difference.
+> 
+> And the difference in the automated following behaviour is
+> deliberate.  Lightweight ones tend to be private "anchor point"
+> during development (these days we need that less often, thanks
+> to reflogs), and annotated ones, especially the signed kinds are
+> meant for public consumption.
 
-~ JasonG
+I get a bunch of:
+
+error: Object 0938d5832b4e40e6f440fa5c424c77b70714fb59 is a blob, not a commit
+
+lines. I think it's either in trying to decide whether they should be put 
+in FETCH_HEAD or in trying to determine reachability through them. The 
+server also seems to be unable to tell that I already have the blobs, and 
+sends a pack of all of them each time I pull with tags.
+
+	-Daniel
+*This .sig left intentionally blank*
