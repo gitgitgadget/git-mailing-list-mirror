@@ -1,100 +1,98 @@
-From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
-Date: Fri, 24 Aug 2007 09:35:13 +0300
-Message-ID: <6D8BA2E0-50CD-4B7B-84D3-3D9A61421131@pp.inet.fi>
-References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi>
- <20070823203246.GB3516@steel.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: tracking perms/ownership
+Date: Thu, 23 Aug 2007 23:37:17 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708232327100.25853@woody.linux-foundation.org>
+References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca>
+ <1187817948.5986.159.camel@beauty> <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
+ <1187905879.5986.199.camel@beauty> <7vtzqpsy3q.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.999.0708231626580.30176@woody.linux-foundation.org>
+ <85ir75h2zb.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 24 08:36:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Josh England <jjengla@sandia.gov>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 24 08:37:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOSmK-0000Fs-R4
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 08:36:21 +0200
+	id 1IOSnZ-0000aZ-D4
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 08:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760459AbXHXGgN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 24 Aug 2007 02:36:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763569AbXHXGgM
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 02:36:12 -0400
-Received: from hyatt.suomi.net ([82.128.152.22]:47700 "EHLO hyatt.suomi.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763721AbXHXGgL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 02:36:11 -0400
-Received: from tiku.suomi.net ([82.128.154.67])
- by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
- 2005)) with ESMTP id <0JN900DKEMC1VL00@hyatt.suomi.net> for
- git@vger.kernel.org; Fri, 24 Aug 2007 09:36:01 +0300 (EEST)
-Received: from spam3.suomi.net (spam3.suomi.net [212.50.131.167])
- by mailstore.suomi.net
- (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
- with ESMTP id <0JN900GPBMC99C90@mailstore.suomi.net> for git@vger.kernel.org;
- Fri, 24 Aug 2007 09:36:09 +0300 (EEST)
-Received: from [192.168.0.138]
- (addr-213-139-166-27.baananet.fi [213.139.166.27])
-	by spam3.suomi.net (Postfix) with ESMTP id F213A1FB3DB; Fri,
- 24 Aug 2007 09:35:49 +0300 (EEST)
-In-reply-to: <20070823203246.GB3516@steel.home>
-X-Mailer: Apple Mail (2.752.3)
-X-OPOY-MailScanner-Information: Please contact OPOY for more information
-X-OPOY-MailScanner: Found to be clean
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.784,
- required 5, autolearn=not spam, AWL 0.22,	BAYES_00 -1.00)
-X-OPOY-MailScanner-From: v@pp.inet.fi
-X-Spam-Status: No
+	id S1760319AbXHXGhd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 02:37:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759033AbXHXGhd
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 02:37:33 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:38291 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760121AbXHXGhc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 02:37:32 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7O6bI00023681
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 23 Aug 2007 23:37:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7O6bH5x014347;
+	Thu, 23 Aug 2007 23:37:17 -0700
+In-Reply-To: <85ir75h2zb.fsf@lola.goethe.zz>
+X-Spam-Status: No, hits=-2.75 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56553>
 
-On Aug 23, 2007, at 23:32, Alex Riesen wrote:
 
-> V=E4in=F6 J=E4rvel=E4, Thu, Aug 23, 2007 21:58:31 +0200:
->> With this flag, the user can choose to filter untracked files from =20
->> the
->> status output. This can be used to either speed up the status =20
->> output, as
->> the untracked files are not fetched at all, or to just cleanup the
->> output without using gitignore.
->
-> "git diff -r --name-status; git diff --cached -r --name-status" is =20
-> not enough?
 
-That line will result in duplicate entries, if files are staged, and =20
-the output of git-status is neater (but longer) in my opinion.
+On Fri, 24 Aug 2007, David Kastrup wrote:
+> >
+> > So handling ownership outside of the actual filesystem, in a
+> > separate file that git tracks, actually allows you to do things that
+> > you couldn't otherwise sanely do.
+> 
+> Well, about that "sane" bit: I don't see an application for tracking
+> unrestorable ownership values.
 
-"""
-M       Makefile
-M       Makefile
-"""
-vs.
-"""
-# On branch entity_class
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   Makefile
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   Makefile
-#
-# Untracked files were filtered by "--only-tracked"
-"""
+Umm. Like an RPM spec file?
 
-Sure you could remove duplicate entries with "sort|uniq", or =20
-something, but just running "git status --only-tracked", is cleaner, =20
-and more user friendly.
+The thing you "don't see an application" for is exactly the kind of things 
+that people very much ALREADY DO. 
 
-The way I see the flag used is: A user runs "git status", sees that =20
-there is too much untracked files and not enough scrollback, so he =20
-runs "git status --only-tracked" to filter the results.
+There are tons of different setups for setting up user and group ownership 
+(and things like permission) in almost any project. And I can pretty much 
+*guarantee* you that none of them depend on actually having ownership on 
+the files themselves.
 
---
-V=E4in=F6
+In git, just for fun, do
+
+	git grep defattr
+
+or even just look into the Makefile, and think about what lines like that
+
+	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(bindir_SQ)'
+
+thing means, and why it has a "755" there, and why other Makefiles quite 
+often have things like "-o bin" etc on such lines!
+
+See? Those ownership things are restorable *as*root*, but that doesn't 
+mean that everybody should do development as root. In fact, I'd argue that 
+any system that is set up so that you have to develop and merge things 
+while being root is pretty damn broken.
+
+Which means that any such environment *has* to encode the owndership 
+*separately* from the actual filesystem ownership. Because doing it in the 
+filesystem simply isn't sane.
+
+So yes, you could have an insane piece of crap that actually tracks file 
+ownership in the filesystem, and requires people to be root.
+
+Or you could use a ".gitattributes" file or similar _external_ tracking 
+method that allows even people who cannot actually set ownership to work 
+with it.
+
+Your choice. But I know which one I'd choose.
+
+			Linus
