@@ -1,70 +1,58 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: tracking perms/ownership
-Date: Fri, 24 Aug 2007 21:33:26 +0200
-Message-ID: <200708242133.27324.robin.rosenberg.lists@dewire.com>
-References: <1187716461.5986.71.camel@beauty> <alpine.LFD.0.999.0708241039250.25853@woody.linux-foundation.org> <1187979317.6357.155.camel@beauty>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: git-daemon on NSLU2
+Date: Fri, 24 Aug 2007 15:38:32 -0400
+Message-ID: <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
+	 <20070824062106.GV27913@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"David Kastrup" <dak@gnu.org>, git@vger.kernel.org
-To: "Josh England" <jjengla@sandia.gov>
-X-From: git-owner@vger.kernel.org Fri Aug 24 21:32:18 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 24 21:39:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOetF-00064o-Ud
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 21:32:18 +0200
+	id 1IOezj-0000UH-TW
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 21:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181AbXHXTcK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 15:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755338AbXHXTcJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 15:32:09 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:22063 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912AbXHXTcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 15:32:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C547880264D;
-	Fri, 24 Aug 2007 21:24:22 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 18085-01; Fri, 24 Aug 2007 21:24:22 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 6D3B080264B;
-	Fri, 24 Aug 2007 21:24:22 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <1187979317.6357.155.camel@beauty>
+	id S1750908AbXHXTie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 15:38:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755868AbXHXTie
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 15:38:34 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:58201 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181AbXHXTid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 15:38:33 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so722883rvb
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 12:38:32 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ehCUIgYp4fw8jFrhw4dqJLOmMbCIFRzps5kc69jC4gqa51nvlhbZdd8vbhZUus1YjpSl6Isel6IkJDPXw2/YpLlLHbStCRZ38aOQv9Hcs9BDMRCAM0+B9w5Td5RxnL39vwn7sgQ4HFTYKKD/YBor4vgnKjTZbwr8xEad5aZ+CDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TFMvuTVF80MkSR6eLz5gZBRhjXkpr1+BGmFCK2DBijpPR/ZF0P5yE6HP1HE+7vovNgJFKvxqhKBV8MBG/0TyUlUT6q8ScGtlOHtcvTAr10YgLWjnpR5ioXC12joRsyJhiIhWIn9Vw0nxcOpkmptFFT1pJLQZ3OR4IfGbKFDHh/8=
+Received: by 10.114.178.1 with SMTP id a1mr742533waf.1187984312542;
+        Fri, 24 Aug 2007 12:38:32 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Fri, 24 Aug 2007 12:38:32 -0700 (PDT)
+In-Reply-To: <20070824062106.GV27913@spearce.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56595>
 
-fredag 24 augusti 2007 skrev Josh England:
-> punt  :)   Simple unix ownership and perms are a good first cut.  ACL's
-> could probably be handled in much the same way, but converting between
-> unix perms and ACLs might have to be a separate attribute/filter
-> entirely.
+I'm still trying to debug git-daemon
 
-You cannot convert between traditional unix permissisons and ACL:s. Either you
-manage ACL:s or not. The traditional form is fortunately just a special case of posix
-ACL:s. Here is a getfacl example. Just feed it to setfacl to set permissions according
-to the dump.
+I do find it surprising that git-index-pack can't be happy with in
+20MB of RAM and it has to continuously swap it's 30MB of virtual. My
+disk is chattering itself to death. It stayed that way for 40 minutes.
 
-$ getfacl README
-# file: README
-# owner: me
-# group: me
-user::rw-
-group::r--
-group:apache:rwx
-mask::rwx
-other::r--
+I'm practicing on the kernel tree.
 
-Windows ACL.s are different though. 
-
--- robin
+-- 
+Jon Smirl
+jonsmirl@gmail.com
