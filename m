@@ -1,89 +1,69 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: name-rev does not show the shortest path
-Date: Fri, 24 Aug 2007 14:52:30 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070824125230.GA12030@informatik.uni-freiburg.de>
-References: <20070823103817.GF6573@informatik.uni-freiburg.de> <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
+From: Brian Hetro <whee@smaertness.net>
+Subject: Re: [PATCH] Documentation: For consistency, use CVS instead of cvs.
+Date: Fri, 24 Aug 2007 09:16:30 -0400
+Message-ID: <20070824131630.GA5409@ruiner>
+References: <20070824004008.GA21778@ruiner> <7vhcmps9a2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Aug 24 14:53:12 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 15:16:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOYex-0004C8-SO
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 14:53:08 +0200
+	id 1IOZ1x-0005ex-0b
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 15:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765418AbXHXMwi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 24 Aug 2007 08:52:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764848AbXHXMwh
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 08:52:37 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:58030 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932898AbXHXMwd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 08:52:33 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1IOYeO-0006vI-Jr; Fri, 24 Aug 2007 14:52:32 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l7OCqVZu012247;
-	Fri, 24 Aug 2007 14:52:31 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l7OCqUor012246;
-	Fri, 24 Aug 2007 14:52:30 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
+	id S1757393AbXHXNQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 09:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758194AbXHXNQl
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 09:16:41 -0400
+Received: from ag-out-0708.google.com ([72.14.246.251]:25246 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757355AbXHXNQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 09:16:40 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so1706188aga
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 06:16:39 -0700 (PDT)
+Received: by 10.90.90.3 with SMTP id n3mr3793229agb.1187961399154;
+        Fri, 24 Aug 2007 06:16:39 -0700 (PDT)
+Received: from smaertness.net ( [66.67.48.108])
+        by mx.google.com with ESMTPS id 7sm8886771agc.2007.08.24.06.16.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 24 Aug 2007 06:16:32 -0700 (PDT)
+Received: by smaertness.net (nbSMTP-1.00) for uid 1000
+	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
+	whee@smaertness.net; Fri, 24 Aug 2007 09:16:31 -0400 (EDT)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vhcmps9a2.fsf@gitster.siamese.dyndns.org>
+X-PGP-Key: http://whee.smaertness.net/pubkey.asc
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56574>
 
-Hello Julian,
+On Fri, Aug 24, 2007 at 00:04:37 -0700, Junio C Hamano wrote:
+> Brian Hetro <whee@smaertness.net> writes:
+> 
+> > When not referring to the cvs command, CVS makes more sense.
+> 
+> I wonder if you would also want to upcase this one:
+> 
+> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+> index 60d0bcf..258a62f 100644
+> --- a/Documentation/git-cvsserver.txt
+> +++ b/Documentation/git-cvsserver.txt
+> @@ -102,7 +102,7 @@ No special setup is needed for SSH access, other than having GIT tools
+>  in the PATH. If you have clients that do not accept the CVS_SERVER
+>  environment variable, you can rename git-cvsserver to cvs.
+>  
+> -Note: Newer cvs versions (>= 1.12.11) also support specifying
+> +Note: Newer CVS versions (>= 1.12.11) also support specifying
+>  CVS_SERVER directly in CVSROOT like
+>  
+>  ------
 
-Julian Phillips wrote:
-> On Thu, 23 Aug 2007, Uwe Kleine-K=F6nig wrote:
-> >I want to check to which kernel version I need to upgrade to get a
-> >certain feature.  For my case it was introduced in 0567a0c022d5b.
-> >
-> >	zeisberg@cassiopeia:~/gsrc/linux-2.6$=20
-> >	rev=3D0567a0c022d5b343370a343121f38fd89925de55
-> >
-> >	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --tags $rev
-> >	0567a0c022d5b343370a343121f38fd89925de55 tags/v2.6.22~1686^2~1^3~5
-> >
-> >	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git name-rev --refs=3D*-rc1 $=
-rev
-> >	0567a0c022d5b343370a343121f38fd89925de55=20
-> >	tags/v2.6.22-rc1~1009^2~1^3~5
-> >
-> >I don't now the underlaying algorithm, maybe it's to get a short str=
-ing?
-> >
-> >Anyhow I want to know the earliest tag that includes this patch?  Is
-> >there something I missed?
-> >
-> >I remember there was a similar discussion regarding describe.
->=20
-> git describe --contains 0567a0c022d5b
->=20
-> probably a 1.5.3 feature? (certainly doesn't exist in 1.5.2.2)
-That command says v2.6.22~1686^2~1^3~5, too.  That is, it doesn't use
-the "older" v2.6.22-rc1 tag as a basis.
-
-Best regards
-Uwe
-
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+degree+celsius+in+kelvin
+This one probably should also be uppercase.  (I think I debated
+whether or not it referred to the GNU CVS command or CVS in general)
