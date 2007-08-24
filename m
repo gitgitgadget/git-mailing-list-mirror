@@ -1,69 +1,63 @@
-From: Brian Hetro <whee@smaertness.net>
-Subject: Re: [PATCH] Documentation: For consistency, use CVS instead of cvs.
-Date: Fri, 24 Aug 2007 09:16:30 -0400
-Message-ID: <20070824131630.GA5409@ruiner>
-References: <20070824004008.GA21778@ruiner> <7vhcmps9a2.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Problem with git-gui and relative directories
+Date: Fri, 24 Aug 2007 15:40:31 +0200
+Message-ID: <868x81vynk.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 24 15:16:53 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 24 15:41:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOZ1x-0005ex-0b
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 15:16:53 +0200
+	id 1IOZPh-00084o-8w
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 15:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757393AbXHXNQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 09:16:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758194AbXHXNQl
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 09:16:41 -0400
-Received: from ag-out-0708.google.com ([72.14.246.251]:25246 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757355AbXHXNQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 09:16:40 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so1706188aga
-        for <git@vger.kernel.org>; Fri, 24 Aug 2007 06:16:39 -0700 (PDT)
-Received: by 10.90.90.3 with SMTP id n3mr3793229agb.1187961399154;
-        Fri, 24 Aug 2007 06:16:39 -0700 (PDT)
-Received: from smaertness.net ( [66.67.48.108])
-        by mx.google.com with ESMTPS id 7sm8886771agc.2007.08.24.06.16.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 24 Aug 2007 06:16:32 -0700 (PDT)
-Received: by smaertness.net (nbSMTP-1.00) for uid 1000
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	whee@smaertness.net; Fri, 24 Aug 2007 09:16:31 -0400 (EDT)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vhcmps9a2.fsf@gitster.siamese.dyndns.org>
-X-PGP-Key: http://whee.smaertness.net/pubkey.asc
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756169AbXHXNlO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 09:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbXHXNlN
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 09:41:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:56895 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752403AbXHXNlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 09:41:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IOZPG-0002zK-Hz
+	for git@vger.kernel.org; Fri, 24 Aug 2007 15:40:58 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 15:40:58 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 15:40:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:PoqukNz9prfeRfXSlDipmI7QZrU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56575>
 
-On Fri, Aug 24, 2007 at 00:04:37 -0700, Junio C Hamano wrote:
-> Brian Hetro <whee@smaertness.net> writes:
-> 
-> > When not referring to the cvs command, CVS makes more sense.
-> 
-> I wonder if you would also want to upcase this one:
-> 
-> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-> index 60d0bcf..258a62f 100644
-> --- a/Documentation/git-cvsserver.txt
-> +++ b/Documentation/git-cvsserver.txt
-> @@ -102,7 +102,7 @@ No special setup is needed for SSH access, other than having GIT tools
->  in the PATH. If you have clients that do not accept the CVS_SERVER
->  environment variable, you can rename git-cvsserver to cvs.
->  
-> -Note: Newer cvs versions (>= 1.12.11) also support specifying
-> +Note: Newer CVS versions (>= 1.12.11) also support specifying
->  CVS_SERVER directly in CVSROOT like
->  
->  ------
 
-This one probably should also be uppercase.  (I think I debated
-whether or not it referred to the GNU CVS command or CVS in general)
+Doing something like
+
+mkdir -p junk/woozle
+cd junk
+git-init
+cd woozle
+echo "hooray" > plop
+git add plop
+git commit -m "x"
+git gui blame plop
+
+errors out with
+
+fatal: cannot stat path woozle/plop: No such file or directory
+
+Obviously, git-gui is confused about relative paths here.
+
+-- 
+David Kastrup
