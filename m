@@ -1,64 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
-Date: Fri, 24 Aug 2007 16:06:23 -0700
-Message-ID: <7v7inkcz2o.fsf@gitster.siamese.dyndns.org>
-References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi>
-	<20070823203246.GB3516@steel.home>
-	<6D8BA2E0-50CD-4B7B-84D3-3D9A61421131@pp.inet.fi>
-	<7v8x81s7d1.fsf@gitster.siamese.dyndns.org>
-	<fann62$f5q$2@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-daemon on NSLU2
+Date: Sat, 25 Aug 2007 01:21:33 +0200
+Message-ID: <200708250121.33924.jnareb@gmail.com>
+References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com> <fanmmk$f5q$1@sea.gmane.org> <7vbqcwcze3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 01:06:58 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 01:21:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOiEz-0001pt-6s
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 01:06:57 +0200
+	id 1IOiTL-0005E5-Sp
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 01:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756922AbXHXXG1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 24 Aug 2007 19:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754057AbXHXXG1
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 19:06:27 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:34092 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755902AbXHXXG0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2007 19:06:26 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D7E5F127C53;
-	Fri, 24 Aug 2007 19:06:46 -0400 (EDT)
-In-Reply-To: <fann62$f5q$2@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	25 Aug 2007 00:47:30 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761683AbXHXXVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 19:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbXHXXVm
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 19:21:42 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:47148 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759388AbXHXXVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 19:21:41 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so734234nfb
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 16:21:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=SaeJ4GxOZH18zwXGK/Kdfc/pqHydcHazBiL5q7v6rs94VYs167MIfADjWNSwsVP2EV6dAVcZ1KkjF6JnGpJ8B1kTNRX1zCJUAXT3H0nkzUFChMAGxC4bPGv3c+zPdzpfEbk20Rsh/n5IQnypKgU89gOB0eE2yD9zJND/Rk6GdeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=VKcq9OjUSuUL8yzMwFJcJdVLNNp+Ne5Hz6/SDoWH8dxVtvjTqNK1vlRfytPis+x0jrAEUF4DK7xHM8qno2PDkSMvw3O7N/CTuMYOmJW6rosAhJ4Etj1jduAZzBKEcFPZjM1U6ZyaW7UmGFiY982YWncjkNIpM9qCNsNjg9G6+/I=
+Received: by 10.86.23.17 with SMTP id 17mr2626920fgw.1187997699265;
+        Fri, 24 Aug 2007 16:21:39 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id 28sm7015585fkx.2007.08.24.16.21.37
+        (version=SSLv3 cipher=OTHER);
+        Fri, 24 Aug 2007 16:21:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vbqcwcze3.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56612>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> There was idea to special case clone (just concatenate the packs, the
+>> receiving side as someone told there can detect pack boundaries; do not
+>> forget to pack loose objects, first), instead of using generic fetch --all
+>> for clone, bnut no code. Code speaks louder than words (although if someone
+>> would provide details of pack boundary detection...)
+> 
+> I have to say that "although ..." part of that statement
+> disqualifies this to be called an "idea".
 
-> Junio C Hamano wrote:
->
->> I think the latter is more important point. =C2=A0If you train a
->> naive user to use --only-tracked to ignore "Untracked" list, you
->> are doing him or her a great disservice. =C2=A0Mistake to forget "gi=
-t
->> add" a new file before commiting will bound to happen.
->
-> If it won't acquire short version, nor tab completion, mosts users wh=
-en
-> confronted with such a mothful of option-name wouldn't use it unless
-> necessary, I think...
+Ermm... if I remember correctly during discussion (single subthread)
+there were provided details, or at least idea, of how to separate
+concatented packs into individual packs. Unfortunately I haven't
+saved the message, and do not remember enogh of it to search archives...
 
-Yeah, but if we accept that --only-tracked patch, I know from
-the past experience that people would send a "shorter synonym"
-patch, arguing that the capability is already there.
+I should have wrote "remind" instead of "provide" there...
 
-I really think we should resist temptation to add misfeatures
-that would encourage bad workflows and new user mistakes.
+> Really, I find that you (yes, in this case I am not generalizing
+> but talking specifically about you) tend to overuse the word
+> "idea" when you talk things that are not yet even at that stage
+> yet.
+
+I'm not native English speaker... ;-)
+
+Seriously, it's a fault of mine...
+
+-- 
+Jakub Narebski
+Poland
