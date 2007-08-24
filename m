@@ -1,119 +1,145 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: Re: tracking perms/ownership
-Date: Fri, 24 Aug 2007 01:22:51 -0600
-Message-ID: <1187940171.6357.59.camel@beauty>
-References: <1187716461.5986.71.camel@beauty>
- <20070821134030.b763e9d3.seanlkml@sympatico.ca>
- <1187817948.5986.159.camel@beauty>
- <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
- <1187905879.5986.199.camel@beauty>
- <7vtzqpsy3q.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb-projects
+Date: Fri, 24 Aug 2007 09:35:57 +0200
+Message-ID: <200708240935.59089.jnareb@gmail.com>
+References: <9e4733910708231438q4c454686p55cef622e61d6a2a@mail.gmail.com> <fal7gn$2vf$1@sea.gmane.org> <9e4733910708231711o71aa3953i349bce96c5eee8f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 24 09:22:30 2007
+Cc: Junio Hamano <gitster@pobox.com>
+To: "Jon Smirl" <jonsmirl@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 24 09:36:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOTUw-000501-1A
-	for gcvg-git@gmane.org; Fri, 24 Aug 2007 09:22:26 +0200
+	id 1IOTiL-00015r-Kg
+	for gcvg-git@gmane.org; Fri, 24 Aug 2007 09:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378AbXHXHWL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 03:22:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756645AbXHXHWK
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 03:22:10 -0400
-Received: from mm03snlnto.sandia.gov ([132.175.109.20]:3152 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755219AbXHXHWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 03:22:07 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Fri, 24 Aug 2007 01:21:55 -0600
-X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
-Received: from [134.253.112.50] (sacv8030ay.sandia.gov [134.253.112.50])
- by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l7O7LsNX003648;
- Fri, 24 Aug 2007 01:21:54 -0600
-In-Reply-To: <7vtzqpsy3q.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.10.1
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.311128,
- Antispam-Data: 2007.8.23.235223
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CP_MEDIA_BODY 0,
- __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
- __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
-X-TMWD-Spam-Summary: TS=20070824072155; SEV=2.2.2; DFV=B2007082407;
- IFV=2.0.4,4.0-9; AIF=B2007082407; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230362E34364345383731332E303041443A53434A535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007082407_5.02.0125_4.0-9
-X-WSS-ID: 6AD058992E0208084-01-01
+	id S1752683AbXHXHgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 03:36:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755113AbXHXHgK
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 03:36:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:16101 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912AbXHXHgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 03:36:09 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so563480nfb
+        for <git@vger.kernel.org>; Fri, 24 Aug 2007 00:36:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PKAEV9jk21sIvgmszd0iY1Jk50NHhkTB55wfe3NepmMl4ZRoJ1Qs+DLT7tlLyBWh4+Ttrr3ji9d97UL7OS9ljwhINhF+EW6/Ab4T81IBUpCeMMzhcz+Z5YwC04WDFmIqHfKBCrRpLjibzBY3M816fxrx+xQU6hQWRXWxjVZmNPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RuVVa1VvWT9ZQiNj3txVHQGa06MdNtIzGiI8cb/fINlGgySV13vPxxNMLou2Jdbs6Fnnmo95FKWWVuOwUGjQolT2E6Rvobh0QhZAp8iyto6bxcKdUKHzuB3urJsWB16UziK+60gglTMSR91N7rXm4H+o2yTg/F95I3UT9W5BytM=
+Received: by 10.86.28.5 with SMTP id b5mr2038778fgb.1187940967128;
+        Fri, 24 Aug 2007 00:36:07 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id c28sm5323661fka.2007.08.24.00.36.01
+        (version=SSLv3 cipher=OTHER);
+        Fri, 24 Aug 2007 00:36:02 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <9e4733910708231711o71aa3953i349bce96c5eee8f0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56557>
 
-On Thu, 2007-08-23 at 15:08 -0700, Junio C Hamano wrote: 
-> "Josh England" <jjengla@sandia.gov> writes:
+On Fri, 24 August 2007, Jon Smirl wrote:
+> On 8/23/07, Jakub Narebski <jnareb@gmail.com> wrote:
+>> [Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org]
+>>
+>> Jon Smirl wrote:
+>>
+>>> What is the magic incantation for encoding an email address along with
+>>> the project owner name? From the source I see these strings need to be
+>>> URL encoded (it doesn't seem to be in the doc)
+>>
+>> It is mentioned in gitweb/INSTALL, in the "Gitweb repositories" section
+
+...and in the same file it is mentioned how to generate this file
+from directory structure of repositories using gitweb, BTW.
+
+>>> but now I'm getting XML errors.
+>>>
+>>> I tried this:
+>>> mpc5200b.git Jon+Smirl+%3Cjonsmirl%2664%3Bgmail.com%3E
+
+I think you don't need to escape '<', '>' and '@' here. The problem
+was not with URL-escaping (or unescaping) the source, i.e. projects
+list (projects index) file, but with proper HTML escaping when writing
+it out: see patch below.
+
+It would be enough to use
+
+mpc5200b.git Jon+Smirl+<jonsmirl@gmail.com>
+
+>> I guess that this might have nothing to do with URL-encoding of projects
+>> index file, but with proper escaping in the gitweb, i.e. the string is
+>> not wrapped in esc_html.
+>>
+>> In other words, it is a bug in the gitweb.
+
+Please check if the patch below fixes your problem.
+
+>>> Does this string really need to be URL encoded? Couldn't you split on
+>>> the first space and then url encode it in the perl code? That would
+>>> let me write the string in English instead of geek.
+>>>
+>>> mpc5200b.git Jon Smirl <jonsmirl@gmail.com>
+>>
+>> Not possible, as path to repository can contain spaces.
 > 
-> > Looking at the index struct, it already has fields in it for file mode
-> > uid and gid (woohoo!).
-> 
-> I can see that storing textual names in gitattributes and having
-> the root user run git so that it can chown(), would work.
-> 
-> But this is only about checkout.  After you chown a file in the
-> work tree and run update-index, next write-tree would not record
-> it, as there is no place in tree objects to record uid/gid.
-> You would need to arrange so that a matching change is made in
-> the gitattributes file if you go that route.
+> How about using a comma to separate them? Or let me quote the string?
 
-That's ok.  Any place to store the data is fine by me.  I'm just
-concerned about some comments I saw in attrs.c <line13>:
-/*
-The basic design decision here is that we are not going to have insanely
-large number of attributes.
-This is a randomly chosen prime.
-*/
-#define HASHSIZE 257
+The problem is that path to repository part can contain _any_ characters
+except '\0'. The quoting would work, but splitting into path part (which
+might need quoting) and owner part (which might also need quoting) is
+non-trivial.
 
-Using a brute force perm/ownership attribute set for every file,
-assuming a modestly populated linux distribution image having upwards of
-150,000 files/directories in it, thats sticking over 100,000 attributes
-into some .gitattributes file somewhere.  Do you think the gitattributes
-system can handle this kind of abuse?
+BTW. the URL-escaping is from original gitweb...
 
-> If you had:
-> 
-> 	etc/*		owner=root
->         etc/frotz	owner=nobody
-> 
-> in gitattributes, and you did a checkout.  You chown etc/nitfol
-> with "chown printer etc/nitfol".  Somebody needs to add a line
-> 
-> 	etc/nitfol	owner=printer
-> 
-> to gitattributes before you make the commit.
+-- >8 --
+From: Jakub Narebski <jnareb@gmail.com>
+Date: Fri, 24 Aug 2007 09:12:16 +0200
+Subject: [PATCH] gitweb: Fix escaping HTML of project owner in 'projects_list' and 'summary' views
 
-Unless this 'somebody' is an automated process that will never fly. I
-want git to do it for me when the right config/attr is set (maybe at
-update_index time).  Thats where my concern about the gitattributes
-system comes from.  What's going to happen when I stick 150,000 (est)
-attributes in there?
+This for example allows to put email address in the project owner
+field in the projects index file (when $projects_list points to
+file, and not directory), in the form of:
 
-> Maybe the chown
-> was not about etc/nitfol but about making etc/frotz owned by
-> root.  Then you would, instead of adding the etc/nitfol line,
-> remove existing etc/frotz line so that earlier glob would
-> capture and express the idea of making everything owned by
-> root.  I suspect this would get rather tricky quickly.
+path/to/repo.git Random+J+Developer+<random@developer.example.org>
 
-Maybe doable though.  Starting from the root of the tree, traverse
-downwards and only add new attributes when a file or dir's ownership
-has changed from the parent, maybe.  This could optimize away many of
-the attributes needed.  I think a good place might be right in
-index_path() because the lstat data is fresh and accessible.  Writing
-attrs out to file if necessary should hopefully not add too much overhead.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
--JE
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f282a67..9bee68e 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3422,7 +3422,7 @@ sub git_project_list_body {
+ 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
+ 		                        -class => "list", -title => $pr->{'descr_long'}},
+ 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+-		      "<td><i>" . chop_str($pr->{'owner'}, 15) . "</i></td>\n";
++		      "<td><i>" . esc_html(chop_str($pr->{'owner'}, 15)) . "</i></td>\n";
+ 		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
+ 		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
+ 		      "<td class=\"link\">" .
+@@ -3798,7 +3798,7 @@ sub git_summary {
+ 	print "<div class=\"title\">&nbsp;</div>\n";
+ 	print "<table cellspacing=\"0\">\n" .
+ 	      "<tr><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+-	      "<tr><td>owner</td><td>$owner</td></tr>\n";
++	      "<tr><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+ 	if (defined $cd{'rfc2822'}) {
+ 		print "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
+ 	}
+-- 
+1.5.2.5
