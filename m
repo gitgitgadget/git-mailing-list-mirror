@@ -1,94 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Problem with git-gui and relative directories
-Date: Sat, 25 Aug 2007 04:15:25 -0400
-Message-ID: <20070825081525.GB18160@spearce.org>
-References: <868x81vynk.fsf@lola.quinscape.zz> <20070825031834.GW27913@spearce.org> <85veb4dqhv.fsf@lola.goethe.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] pack-objects: check return value from read_sha1_file()
+Date: Sat, 25 Aug 2007 01:30:27 -0700
+Message-ID: <7v3ay86mos.fsf@gitster.siamese.dyndns.org>
+References: <20070825072604.GA20155@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Aug 25 10:15:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 25 10:30:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOqoF-0000gM-FG
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 10:15:55 +0200
+	id 1IOr2Z-0003jA-Tw
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 10:30:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761487AbXHYIPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 04:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761482AbXHYIPb
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 04:15:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58286 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760939AbXHYIP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 04:15:28 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IOqnk-0006zs-I8; Sat, 25 Aug 2007 04:15:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3AB2220FBAE; Sat, 25 Aug 2007 04:15:25 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <85veb4dqhv.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S933570AbXHYIae (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 04:30:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765602AbXHYIad
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 04:30:33 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38942 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933355AbXHYIab (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 04:30:31 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 73ECB127FB3;
+	Sat, 25 Aug 2007 04:30:51 -0400 (EDT)
+In-Reply-To: <20070825072604.GA20155@spearce.org> (Shawn O. Pearce's message
+	of "Sat, 25 Aug 2007 03:26:04 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56628>
 
-David Kastrup <dak@gnu.org> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > +if {$_prefix ne {}} {
-> > +	regsub -all {[^/]+/} $_prefix ../ cdup
-> 
-> I don't like this approach.  It assumes too much about the file system
-> and cleanliness of paths.  It does all of the following:
-> 
-> /somedir/ -> /../
-> /somedir -> /somedir
-> //server/somedir -> //../somedir
-> /somedir//someother -> /..//someother
+(Trivial #2).
 
-OK, well, uh.  Go read the manpage for `git-rev-parse` and focus
-in particular on the `--show-prefix` option of that command.
-Its output is what we are using here.  Its very well defined within
-Git, and should have the same definition on all operating systems,
-including MinGW.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-pack-objects.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-And if the MinGW folks did something funny its only a translation
-of / to \, in which case its easy enough for git-gui to make that
-decision on its own based on what type of git it is running on.
- 
-> and so on.  It can't deal with directory symlinks properly.
-
-Depends on your definition of properly.  Here git-gui does exactly
-what the C programs in core Git do, which is counter to what the
-shell scripts do.  And people prefer the C behavior of going up
-through the real parents, ignoring the symlinks that were used to
-get to the directory the user started git-gui within.
-
-> And the
-> approach does not scale to Windows and other systems with diverging
-> path syntaxes at all.
-
-Yes, it does.  Because the format of --show-prefix is defined.
-
-> Isn't it possible to move to the workdir root for the purpose of
-> interpreting workdir root relative filenames?
-
-Because I have always disagreed with the GIT_WORK_TREE mess.
-I think its insane to say "I'm here in A, my repository is over
-there in B and my files are here in C... now go run status!".
-But apparently its a use case.
-
-I guess I could use `git rev-parse --show-cdup` and that would just
-handle this case.  But that's YAFAE (Yet Another Fork And Exec).
-
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 77481df..9b3ef94 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1356,6 +1356,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	/* Load data if not already done */
+ 	if (!trg->data) {
+ 		trg->data = read_sha1_file(trg_entry->idx.sha1, &type, &sz);
++		if (!trg->data)
++			die("object %s cannot be read",
++			    sha1_to_hex(trg_entry->idx.sha1));
+ 		if (sz != trg_size)
+ 			die("object %s inconsistent object length (%lu vs %lu)",
+ 			    sha1_to_hex(trg_entry->idx.sha1), sz, trg_size);
+@@ -1363,6 +1366,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	}
+ 	if (!src->data) {
+ 		src->data = read_sha1_file(src_entry->idx.sha1, &type, &sz);
++		if (!src->data)
++			die("object %s cannot be read",
++			    sha1_to_hex(src_entry->idx.sha1));
+ 		if (sz != src_size)
+ 			die("object %s inconsistent object length (%lu vs %lu)",
+ 			    sha1_to_hex(src_entry->idx.sha1), sz, src_size);
 -- 
-Shawn.
+1.5.3.rc6.23.g0058
