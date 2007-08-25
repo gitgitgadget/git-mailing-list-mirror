@@ -1,65 +1,84 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: how do you "force a pull"?
-Date: Sat, 25 Aug 2007 07:19:46 -0400
-Message-ID: <20070825111946.GA7122@falcon.digizenstudio.com>
+From: "Dan Chokola" <dan@chokola.com>
+Subject: Re: how do you "force a pull"?
+Date: Sat, 25 Aug 2007 07:31:45 -0400
+Message-ID: <61e816970708250431s1a05a30u992cfcde4f956e85@mail.gmail.com>
+References: <20070825111946.GA7122@falcon.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 25 13:20:01 2007
+X-From: git-owner@vger.kernel.org Sat Aug 25 13:31:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOtgP-0002Dn-4M
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 13:20:01 +0200
+	id 1IOtrq-00058f-Qf
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 13:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933214AbXHYLT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 07:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764295AbXHYLT5
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 07:19:57 -0400
-Received: from k2smtpout02-02.prod.mesa1.secureserver.net ([64.202.189.91]:48275
-	"HELO k2smtpout02-02.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932338AbXHYLT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 07:19:57 -0400
-Received: (qmail 10029 invoked from network); 25 Aug 2007 11:19:55 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout02-02.prod.mesa1.secureserver.net (64.202.189.91) with ESMTP; 25 Aug 2007 11:19:55 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 0E77F100A0F
-	for <git@vger.kernel.org>; Sat, 25 Aug 2007 11:19:55 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aSPDsqbYlmDj for <git@vger.kernel.org>;
-	Sat, 25 Aug 2007 07:19:47 -0400 (EDT)
-Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 650D8100587
-	for <git@vger.kernel.org>; Sat, 25 Aug 2007 07:19:47 -0400 (EDT)
-Received: by falcon (Postfix, from userid 1000)
-	id 3AE4E7B51B; Sat, 25 Aug 2007 07:19:46 -0400 (EDT)
-Mail-Followup-To: git <git@vger.kernel.org>
+	id S933456AbXHYLbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 07:31:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933416AbXHYLbq
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 07:31:46 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:21862 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933298AbXHYLbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 07:31:46 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so1318796wah
+        for <git@vger.kernel.org>; Sat, 25 Aug 2007 04:31:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=cJRnGiPc8igUFkWJ+vycw+fF5JIfw/Ypo00wq0sMsQulQ+cljU2ug9l7ndKRVmwJp4htf5+H2Blz4NgNoj8Zz3jrJOe2OYZQtjLj7kec3jpMr3x6b6SCK79w3ouGDp+iuT3jzCWoJqfP6awNRtPUiUQ6ogYV5MQmiqJj3GWzffE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=EoXTNZVHM5lxmS6liNGtPTp5ODzqqbSTzYYZVyagfaQzrGWu/MDfGMe71R7kxHULHnz7KsZpaE8nWFjWQKZ+8CuUouVPlkt3kzdU+0+C6UvjRoUIa1Ei8J1R8o8kOxYL5OScYTQpQmvc9tlMyPmji1VZ/kYRwcMmJiPTCfJ8XAQ=
+Received: by 10.114.144.1 with SMTP id r1mr687864wad.1188041505492;
+        Sat, 25 Aug 2007 04:31:45 -0700 (PDT)
+Received: by 10.114.208.19 with HTTP; Sat, 25 Aug 2007 04:31:45 -0700 (PDT)
+In-Reply-To: <20070825111946.GA7122@falcon.digizenstudio.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Google-Sender-Auth: 6aa877f64a311c63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56631>
 
-I am working in repo1, and make a savepoint commit and pack up and leave.
+On 8/25/07, Jing Xue <jingxue@digizenstudio.com> wrote:
+> I am working in repo1, and make a savepoint commit and pack up and leave.
+>
+> On another machine, I have a clone of repo1 (repo2). So I pull from
+> repo1, "git reset --soft HEAD" to get rid of the savepoint commit, and start working in repo2.
+>
+> A while later I realize the earlier commit was actually a good commit
+> point. But I can no longer pull it again from repo1. It keeps giving me
+> the "Cannot merge" fatal error. "-f" doesn't help.
+>
+> So in general my question is "how do you force pulling from a remote
+> repository?"  (short of, you know, recloning the repo...)
+>
+> I have a feeling that either I'm still stuck in the traditional central-repository
+> mentality, or missing something real simple.
+>
+> Thanks.
+> --
+> Jing Xue
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-On another machine, I have a clone of repo1 (repo2). So I pull from
-repo1, "git reset --soft HEAD" to get rid of the savepoint commit, and start working in repo2.
+I've had the same trouble and it also brings up the question, why
+can't one fetch into the current branch? To work around git pull's
+behavior, I generally either:
+- git reset --hard HEAD^^^^^^^ && git pull
+ or
+- git checkout someotherbranch && git fetch -f origin master
 
-A while later I realize the earlier commit was actually a good commit
-point. But I can no longer pull it again from repo1. It keeps giving me
-the "Cannot merge" fatal error. "-f" doesn't help.
+So why doesn't pull -f understand that it should force an update to
+the history? And is there some reason I'm missing for why fetch won't
+fetch on the current branch?
 
-So in general my question is "how do you force pulling from a remote
-repository?"  (short of, you know, recloning the repo...)
-
-I have a feeling that either I'm still stuck in the traditional central-repository
-mentality, or missing something real simple.
-
-Thanks.
 -- 
-Jing Xue
+Dan Chokola
