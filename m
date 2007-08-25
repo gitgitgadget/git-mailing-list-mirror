@@ -1,65 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: name-rev does not show the shortest path
-Date: Sat, 25 Aug 2007 17:04:33 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0708251701150.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20070823103817.GF6573@informatik.uni-freiburg.de>
- <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
- <20070824125230.GA12030@informatik.uni-freiburg.de>
- <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk>
- <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Don't segfault if we failed to inflate a packed delta
+Date: Sat, 25 Aug 2007 08:19:17 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708250815150.25853@woody.linux-foundation.org>
+References: <20070825072604.GA20155@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 17:05:47 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Aug 25 17:20:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOxCD-0007dw-Ff
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 17:05:19 +0200
+	id 1IOxR8-0003mp-P8
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 17:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760767AbXHYPEh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 11:04:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761511AbXHYPEh
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 11:04:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35906 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759153AbXHYPEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 11:04:36 -0400
-Received: (qmail invoked by alias); 25 Aug 2007 15:04:34 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp056) with SMTP; 25 Aug 2007 17:04:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/sPABUSWrsXHMi1ruuDSfHggsg7y5LoHLNkVyIxw
-	uIcrjeDZrREnvp
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1751049AbXHYPT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 11:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbXHYPT4
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 11:19:56 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47944 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751049AbXHYPT4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2007 11:19:56 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7PFJIq0004191
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 25 Aug 2007 08:19:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7PFJHSH018986;
+	Sat, 25 Aug 2007 08:19:18 -0700
+In-Reply-To: <20070825072604.GA20155@spearce.org>
+X-Spam-Status: No, hits=-4.75 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56641>
 
-Hi,
 
-On Fri, 24 Aug 2007, Junio C Hamano wrote:
 
-> I _think_ name-rev goes for shorter-to-type tags and does not have any 
-> other heuristics.  Dscho?
+On Sat, 25 Aug 2007, Shawn O. Pearce wrote:
+> 
+> cate on #git noticed this failure in `git fsck --full` where the
+> call to verify_pack() first noticed that the packfile was corrupt
+> by finding that the packfile's SHA-1 did not match the raw data of
+> the file.  After finding this fsck went ahead and tried to verify
+> every object within the packfile, even though the packfile was
+> already known to be bad.  If we are going to shovel bad data at
+> the delta unpacking code, we better handle it correctly.
 
-I briefly looked into this, and did not find out why it is behaving that 
-way.  It _should_ pick the closer one with this code:
+Hmm. We should actually make "unpack_entry()" return print an error and 
+return NULL for these cases, rather than die, I think.
 
-        } else if (name->merge_traversals > merge_traversals ||
-                        (name->merge_traversals == merge_traversals &&
-                         name->generation > generation)) {
+Most of the callers seem to already check for NULL (not "load_tree()" in 
+fast-import.c), but for something like fsck, while "die()" is obviously 
+better than a SIGSEGV, we should probably continue and try to see what 
+else we find.
 
-However, it did not even get to that code in my tests.  I'll have to look 
-at that problem closer in a quiet moment (which I will not have for at 
-least another 24 hours).
+(Although, to be honest, it might not matter. If your pack-file is corrupt 
+enough for this to trigger, there's seldom anything interesting fsck will 
+tell, so in practical terms this probably isn't a big deal).
 
-Ciao,
-Dscho
+		Linus
