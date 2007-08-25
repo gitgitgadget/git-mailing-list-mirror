@@ -1,86 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-daemon on NSLU2
-Date: Sat, 25 Aug 2007 09:12:08 +0200
-Message-ID: <85zm0gdr5j.fsf@lola.goethe.zz>
-References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
-	<20070824062106.GV27913@spearce.org>
-	<9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
-	<alpine.LFD.0.999.0708241618070.16727@xanadu.home>
-	<9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
-	<9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
-	<fanmmk$f5q$1@sea.gmane.org>
-	<9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
-	<7v1wdscwd4.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Don't segfault if we failed to inflate a packed delta
+Date: Sat, 25 Aug 2007 03:26:04 -0400
+Message-ID: <20070825072604.GA20155@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jon Smirl" <jonsmirl@gmail.com>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 09:12:44 2007
+X-From: git-owner@vger.kernel.org Sat Aug 25 09:26:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOpp5-00036P-1F
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 09:12:43 +0200
+	id 1IOq2c-0005z4-EH
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 09:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273AbXHYHMM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 03:12:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754620AbXHYHMM
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 03:12:12 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:36360 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899AbXHYHML (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 03:12:11 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IOpoV-0008Rt-Sv; Sat, 25 Aug 2007 03:12:08 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 1636C1C39500; Sat, 25 Aug 2007 09:12:08 +0200 (CEST)
-In-Reply-To: <7v1wdscwd4.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 24 Aug 2007 17\:04\:55 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1755749AbXHYH0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 03:26:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbXHYH0J
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 03:26:09 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:57159 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754620AbXHYH0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 03:26:08 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IOq20-0005P1-5V; Sat, 25 Aug 2007 03:26:04 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3E07320FBAE; Sat, 25 Aug 2007 03:26:04 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56624>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Under some types of packfile corruption the zlib stream holding the
+data for a delta within a packfile may fail to inflate, due to say
+a CRC failure within the compressed data itself.  When this occurs
+the unpack_compressed_entry function will return NULL as a signal to
+the caller that the data is not available.  Unfortunately we then
+tried to use that NULL as though it referenced a memory location
+where a delta was stored and tried to apply it to the delta base.
+Loading a byte from the NULL address typically causes a SIGSEGV.
 
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
->> On 8/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
->>> There was idea to special case clone (just concatenate the packs, the
->>> receiving side as someone told there can detect pack boundaries; do not
->>> forget to pack loose objects, first), instead of using generic fetch --all
->>> for clone, bnut no code. Code speaks louder than words (although if someone
->>> would provide details of pack boundary detection...)
->>
->> A related concept, initial clone of a repository does the equivalent
->> of repack -a on the repo before transmitting it. Why aren't we saving
->> those results by switching the repo onto the new pack file? Then the
->> next clone that comes along won't have to do anything but send the
->> file.
->
-> If the majority of the access to your repository is the initial
-> clone request, then it might be a worthwhile thing to do.  In fact
-> didn't we use to have such a "pre-prepared pack" support?
->
-> But I do not think "majority is initial clone" is the norm.
+cate on #git noticed this failure in `git fsck --full` where the
+call to verify_pack() first noticed that the packfile was corrupt
+by finding that the packfile's SHA-1 did not match the raw data of
+the file.  After finding this fsck went ahead and tried to verify
+every object within the packfile, even though the packfile was
+already known to be bad.  If we are going to shovel bad data at
+the delta unpacking code, we better handle it correctly.
 
-Well, as long as the majority is not affected negatively, catering for
-a minority better is a strict improvement.  Most repositories will
-never get cloned and won't be affected.  But there are some
-repositories with a non-trivial amount of cloning.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ sha1_file.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-> Even among the people who does an "initial clone" (from the
-> end-user perspective), what they do may not be the initial full
-> clone your special hack helps (and that was one of the reasons
-> we dropped the pre-prepared pack support --- "been there, done
-> that" to some extent).
-
-If it doesn't get used, its presence does no harm, of course except
-from having to be maintained and tested.
-
+diff --git a/sha1_file.c b/sha1_file.c
+index b219d4d..9978a58 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1570,6 +1570,10 @@ static void *unpack_delta_entry(struct packed_git *p,
+ 		    (uintmax_t)base_offset, p->pack_name);
+ 
+ 	delta_data = unpack_compressed_entry(p, w_curs, curpos, delta_size);
++	if (!delta_data)
++		die("failed to unpack compressed delta"
++		    " at %"PRIuMAX" from %s",
++		    (uintmax_t)curpos, p->pack_name);
+ 	result = patch_delta(base, base_size,
+ 			     delta_data, delta_size,
+ 			     sizep);
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.rc6.17.g1911
