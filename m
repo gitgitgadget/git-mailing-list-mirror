@@ -1,59 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: tracking perms/ownership
-Date: Sat, 25 Aug 2007 07:46:39 -0700
-Message-ID: <7vy7fz659s.fsf@gitster.siamese.dyndns.org>
-References: <1187716461.5986.71.camel@beauty>
-	<20070821134030.b763e9d3.seanlkml@sympatico.ca>
-	<1187817948.5986.159.camel@beauty>
-	<alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
-	<1187905879.5986.199.camel@beauty>
-	<Pine.LNX.4.64.0708241136301.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-	<20070824095217.GB16853@coredump.intra.peff.net>
-	<1187970632.6357.108.camel@beauty>
-	<20070824205820.GA19152@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0708251630460.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: name-rev does not show the shortest path
+Date: Sat, 25 Aug 2007 17:04:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0708251701150.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <20070823103817.GF6573@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
+ <20070824125230.GA12030@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk>
+ <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Josh England <jjengla@sandia.gov>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 25 16:46:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 17:05:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOwuZ-0001vH-2m
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 16:46:51 +0200
+	id 1IOxCD-0007dw-Ff
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 17:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759500AbXHYOqs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 10:46:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759145AbXHYOqs
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 10:46:48 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:41712 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757460AbXHYOqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 10:46:47 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C3E81282B8;
-	Sat, 25 Aug 2007 10:47:03 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0708251630460.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 25 Aug 2007 16:31:36 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760767AbXHYPEh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 11:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761511AbXHYPEh
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 11:04:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35906 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759153AbXHYPEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 11:04:36 -0400
+Received: (qmail invoked by alias); 25 Aug 2007 15:04:34 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp056) with SMTP; 25 Aug 2007 17:04:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sPABUSWrsXHMi1ruuDSfHggsg7y5LoHLNkVyIxw
+	uIcrjeDZrREnvp
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56640>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Yes, please do.  Even if you do not end up implementing the perms/owner 
-> tracking using the clean/smudge filter, it seems odd that the filter 
-> should not get the filename.
+On Fri, 24 Aug 2007, Junio C Hamano wrote:
 
-Please don't.  Go back to the list discussion and recall why any
-filters that depends on nothing but contents are bad ("crlf good,
-keyword bad").  Don't feed paths to filters.
+> I _think_ name-rev goes for shorter-to-type tags and does not have any 
+> other heuristics.  Dscho?
+
+I briefly looked into this, and did not find out why it is behaving that 
+way.  It _should_ pick the closer one with this code:
+
+        } else if (name->merge_traversals > merge_traversals ||
+                        (name->merge_traversals == merge_traversals &&
+                         name->generation > generation)) {
+
+However, it did not even get to that code in my tests.  I'll have to look 
+at that problem closer in a quiet moment (which I will not have for at 
+least another 24 hours).
+
+Ciao,
+Dscho
