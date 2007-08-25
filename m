@@ -1,90 +1,86 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-daemon on NSLU2
-Date: Fri, 24 Aug 2007 19:46:50 -0400
-Message-ID: <9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
+Date: Fri, 24 Aug 2007 17:04:55 -0700
+Message-ID: <7v1wdscwd4.fsf@gitster.siamese.dyndns.org>
 References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
-	 <20070824062106.GV27913@spearce.org>
-	 <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
-	 <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
-	 <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
-	 <9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
-	 <fanmmk$f5q$1@sea.gmane.org>
+	<20070824062106.GV27913@spearce.org>
+	<9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+	<alpine.LFD.0.999.0708241618070.16727@xanadu.home>
+	<9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
+	<9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
+	<fanmmk$f5q$1@sea.gmane.org>
+	<9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 01:47:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 02:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOirw-0002Ft-M7
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 01:47:13 +0200
+	id 1IOj9E-0006H8-Nn
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 02:05:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756172AbXHXXqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 19:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755806AbXHXXqw
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 19:46:52 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:15340 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755948AbXHXXqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 19:46:51 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so1102160wah
-        for <git@vger.kernel.org>; Fri, 24 Aug 2007 16:46:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FWHi3YTscKILVRlrxmTtCHCtU2XpmlpFE5IS6IOtKChzzvtumPbn4ChqAA3yKxjVlTVQrwaB3ONM9iuk5EsbKA4XgBbGX7VunbqPfJ3U34/H/SWhBjP77TRYz1nw7iuKD+NK8lg8uLCRFa5MZf1THfEA1TWCc6PRy19PDtvxo9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VDfTqhF7DAO5J3TIGaevfrphSVUywziVevWgMmknTdT060PMVIdaig/1EUOYOgdKlia2gLVmIxUtuIBq9fhqkdnisblAd9NspUomMvacPXYWqRU2O+mFlg+hg087Y/VEdvB/jUn0iptjYWBZhQ190OK9kqGpCntHXc3UBJfB44E=
-Received: by 10.114.201.1 with SMTP id y1mr1432734waf.1187999210797;
-        Fri, 24 Aug 2007 16:46:50 -0700 (PDT)
-Received: by 10.114.195.5 with HTTP; Fri, 24 Aug 2007 16:46:50 -0700 (PDT)
-In-Reply-To: <fanmmk$f5q$1@sea.gmane.org>
-Content-Disposition: inline
+	id S1754654AbXHYAFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 20:05:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755177AbXHYAFA
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 20:05:00 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:34652 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752955AbXHYAFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 20:05:00 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BE701127C09;
+	Fri, 24 Aug 2007 20:05:18 -0400 (EDT)
+In-Reply-To: <9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
+	(Jon Smirl's message of "Fri, 24 Aug 2007 19:46:50 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56615>
 
-On 8/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> There was idea to special case clone (just concatenate the packs, the
-> receiving side as someone told there can detect pack boundaries; do not
-> forget to pack loose objects, first), instead of using generic fetch --all
-> for clone, bnut no code. Code speaks louder than words (although if someone
-> would provide details of pack boundary detection...)
+"Jon Smirl" <jonsmirl@gmail.com> writes:
 
-A related concept, initial clone of a repository does the equivalent
-of repack -a on the repo before transmitting it. Why aren't we saving
-those results by switching the repo onto the new pack file? Then the
-next clone that comes along won't have to do anything but send the
-file.
+> On 8/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
+>> There was idea to special case clone (just concatenate the packs, the
+>> receiving side as someone told there can detect pack boundaries; do not
+>> forget to pack loose objects, first), instead of using generic fetch --all
+>> for clone, bnut no code. Code speaks louder than words (although if someone
+>> would provide details of pack boundary detection...)
+>
+> A related concept, initial clone of a repository does the equivalent
+> of repack -a on the repo before transmitting it. Why aren't we saving
+> those results by switching the repo onto the new pack file? Then the
+> next clone that comes along won't have to do anything but send the
+> file.
 
-But this logic can be flipped around, if the remote needs any object
-from the pack file, just send them the whole pack file and let the
-remote sort it out. Using this logic you can still minimize the IO
-statistically.
+If the majority of the access to your repository is the initial
+clone request, then it might be a worthwhile thing to do.  In
+fact didn't we use to have such a "pre-prepared pack" support?
 
-When a remote does a fetch you have to pack all of the loose objects.
-When the loose object pile reaches 20MB or so, the fetch can trigger a
-repack of the oldest half into a pack that is kept by the tree and
-replaces those older loose objects. For future fetches simply apply
-the rule of sending the whole pack if any object is needed.
+But I do not think "majority is initial clone" is the norm.
+Even among the people who does an "initial clone" (from the
+end-user perspective), what they do may not be the initial full
+clone your special hack helps (and that was one of the reasons
+we dropped the pre-prepared pack support --- "been there, done
+that" to some extent).
 
-The repack of the 10MB of older objects can be kicked out to another
-process and copied into the tree when it is finished. At that point
-the loose objects can be deleted. The git db can tolerate a process
-copying in a new packfile and deleting the old objects while other
-processes may be using the database, right?
+ - If your client "clone"s only a single branch by doing:
 
-This model shouldn't statistically change the amount of data very
-much. If you haven't synced your tree in a month a few too many
-objects may get sent to you. However, it should dramatically reduce
-the IO load on the server cause by git protocol initial clones.
+	$ git init
+	$ git remote add origin $remote_url
+        $ git pull origin master
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+   the set of objects you need to send would be different
+   (slightly smaller) than the normal clone.
+
+ - Another example would be a client that uses --reference:
+
+	$ git clone --reference neigh.git git://yourbox/repo.git
+
+   which would give you a request that is different from the
+   usual initial full clone request.
