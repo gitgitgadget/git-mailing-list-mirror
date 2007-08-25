@@ -1,81 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-daemon on NSLU2
-Date: Fri, 24 Aug 2007 20:10:46 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708241951100.16727@xanadu.home>
-References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
- <20070824062106.GV27913@spearce.org>
- <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
- <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
- <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
- <9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
+From: Jean-Marc Valin <jean-marc.valin@csiro.au>
+Subject: Re: git-kompare
+Date: Sat, 25 Aug 2007 10:17:13 +1000
+Message-ID: <46CF7509.5080206@csiro.au>
+References: <46CE6F56.70803@csiro.au> <200708241813.48012.andyparkins@gmail.com> <200708242152.09176.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 02:11:08 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 02:43:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOjF5-0007ab-MF
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 02:11:08 +0200
+	id 1IOjkh-0005ow-9v
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 02:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754024AbXHYAKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 20:10:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757169AbXHYAKu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 20:10:50 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44565 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754024AbXHYAKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 20:10:49 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JNA009ZZZ609313@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 24 Aug 2007 20:10:48 -0400 (EDT)
-In-reply-to: <9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1756921AbXHYAnn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 20:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756917AbXHYAnn
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 20:43:43 -0400
+Received: from 142.163.233.220.exetel.com.au ([220.233.163.142]:37841 "EHLO
+	nemesis.dnsalias.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751247AbXHYAnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 20:43:42 -0400
+X-Greylist: delayed 1579 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Aug 2007 20:43:42 EDT
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by nemesis.dnsalias.com (Postfix) with ESMTP id 95501200148;
+	Sat, 25 Aug 2007 10:17:13 +1000 (EST)
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <200708242152.09176.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56617>
 
-On Fri, 24 Aug 2007, Jon Smirl wrote:
+> Adding the patch to your version isn't hard. Just download the source package
+> and add the patch in the patches section and rebuild. That's how I lived with
+> the fix until Mandriva delivered a newer KDE version. Thanks to the kdesdk src
+> rpm I could rebuild the package fairly easily without dowloading, configuring
+> and builing most of KDE. The src rpm declare the dependencies I need. My 
+> guess is that is about as easy with dpkg, ebuilds or ports.
 
-> On 8/24/07, Nicolas Pitre <nico@cam.org> wrote:
-> > Try running "git repack -a" directly on the NSLU2.  You should have the
-> > same performance problems as with a clone.
-> 
-> This is true, it would take over 24hrs to finish.
-> 
-> Is their a reason why initial clone hasn't been special cased? Why
-> can't initial clone just blast over the pack file already sitting on
-> the disk?
+Unless I missed something, there are more things to work around than the
+one that was fixed in your patch, no? For example, the fact that kompare
+doesn't understand when the filename is /dev/null. As for upgrading
+kompare, I'm all for the idea, but the KDE folks aren't making that
+easy. The only link in the Kompare download section is for www.kde.org,
+which isn't making the source code any easier to find (including a 404
+link for "Source code" on the front page!). Any direct link?
 
-What is the gain?  You'll get back to the same performance problem 
-eventually with some fetch operation, unless you intend to serve clients 
-with the whole pack everytime just like the http protocol does.
+BTW, I'm running the latest Ubuntu (Feisty) that ships with kompare 3.4.
 
-Also you don't want people cloning from you getting stuff that sits in 
-your reflog.  The native protocol makes sure that only the needed 
-objects are sent over and no more.
-
-> I also wonder if a little application of some sorting to in-memory
-> data structures could help with the random IO patterns. I'm getting
-> the same data out of a stupid HTTP server and it doesn't go all IO
-> bound on me so a solution has to be possible.
-
-The http application is, indeed, stupid.  It performs no reachability 
-analysis, no repacking, no nothing except copying the bits over.
-
-And yes I did add some sorting optimizations in this round, so if you 
-try 2.5.3-* you should have them.  But there is a limit to what can be 
-done.
-
-Point is, if you want serious Git serving, and not only _dumb_ protocols 
-(http is one of them) then you need more RAM.  The NSLU2 is cool, but 
-maybe not appropriate for serving the Linux kernel natively with Git.
-
-
-Nicolas
+	Jean-Marc
