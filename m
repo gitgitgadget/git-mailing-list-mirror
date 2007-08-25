@@ -1,86 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: git-daemon on NSLU2
-Date: Fri, 24 Aug 2007 17:04:55 -0700
-Message-ID: <7v1wdscwd4.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 24 Aug 2007 20:10:46 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0708241951100.16727@xanadu.home>
 References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
-	<20070824062106.GV27913@spearce.org>
-	<9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
-	<alpine.LFD.0.999.0708241618070.16727@xanadu.home>
-	<9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
-	<9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
-	<fanmmk$f5q$1@sea.gmane.org>
-	<9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
+ <20070824062106.GV27913@spearce.org>
+ <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+ <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
+ <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
+ <9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 02:05:57 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 02:11:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOj9E-0006H8-Nn
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 02:05:16 +0200
+	id 1IOjF5-0007ab-MF
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 02:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654AbXHYAFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Aug 2007 20:05:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755177AbXHYAFA
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 20:05:00 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:34652 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752955AbXHYAFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2007 20:05:00 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BE701127C09;
-	Fri, 24 Aug 2007 20:05:18 -0400 (EDT)
-In-Reply-To: <9e4733910708241646x7b285574t94c3d7eb32bb60c9@mail.gmail.com>
-	(Jon Smirl's message of "Fri, 24 Aug 2007 19:46:50 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754024AbXHYAKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Aug 2007 20:10:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757169AbXHYAKu
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Aug 2007 20:10:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:44565 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754024AbXHYAKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2007 20:10:49 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JNA009ZZZ609313@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 24 Aug 2007 20:10:48 -0400 (EDT)
+In-reply-to: <9e4733910708241506h6eecc11ge41b1dc313022b4b@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56616>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+On Fri, 24 Aug 2007, Jon Smirl wrote:
 
-> On 8/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
->> There was idea to special case clone (just concatenate the packs, the
->> receiving side as someone told there can detect pack boundaries; do not
->> forget to pack loose objects, first), instead of using generic fetch --all
->> for clone, bnut no code. Code speaks louder than words (although if someone
->> would provide details of pack boundary detection...)
->
-> A related concept, initial clone of a repository does the equivalent
-> of repack -a on the repo before transmitting it. Why aren't we saving
-> those results by switching the repo onto the new pack file? Then the
-> next clone that comes along won't have to do anything but send the
-> file.
+> On 8/24/07, Nicolas Pitre <nico@cam.org> wrote:
+> > Try running "git repack -a" directly on the NSLU2.  You should have the
+> > same performance problems as with a clone.
+> 
+> This is true, it would take over 24hrs to finish.
+> 
+> Is their a reason why initial clone hasn't been special cased? Why
+> can't initial clone just blast over the pack file already sitting on
+> the disk?
 
-If the majority of the access to your repository is the initial
-clone request, then it might be a worthwhile thing to do.  In
-fact didn't we use to have such a "pre-prepared pack" support?
+What is the gain?  You'll get back to the same performance problem 
+eventually with some fetch operation, unless you intend to serve clients 
+with the whole pack everytime just like the http protocol does.
 
-But I do not think "majority is initial clone" is the norm.
-Even among the people who does an "initial clone" (from the
-end-user perspective), what they do may not be the initial full
-clone your special hack helps (and that was one of the reasons
-we dropped the pre-prepared pack support --- "been there, done
-that" to some extent).
+Also you don't want people cloning from you getting stuff that sits in 
+your reflog.  The native protocol makes sure that only the needed 
+objects are sent over and no more.
 
- - If your client "clone"s only a single branch by doing:
+> I also wonder if a little application of some sorting to in-memory
+> data structures could help with the random IO patterns. I'm getting
+> the same data out of a stupid HTTP server and it doesn't go all IO
+> bound on me so a solution has to be possible.
 
-	$ git init
-	$ git remote add origin $remote_url
-        $ git pull origin master
+The http application is, indeed, stupid.  It performs no reachability 
+analysis, no repacking, no nothing except copying the bits over.
 
-   the set of objects you need to send would be different
-   (slightly smaller) than the normal clone.
+And yes I did add some sorting optimizations in this round, so if you 
+try 2.5.3-* you should have them.  But there is a limit to what can be 
+done.
 
- - Another example would be a client that uses --reference:
+Point is, if you want serious Git serving, and not only _dumb_ protocols 
+(http is one of them) then you need more RAM.  The NSLU2 is cool, but 
+maybe not appropriate for serving the Linux kernel natively with Git.
 
-	$ git clone --reference neigh.git git://yourbox/repo.git
 
-   which would give you a request that is different from the
-   usual initial full clone request.
+Nicolas
