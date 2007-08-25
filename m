@@ -1,134 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bisect / history preserving on rename + update
-Date: Fri, 24 Aug 2007 21:59:43 -0700
-Message-ID: <7vmywgb45c.fsf@gitster.siamese.dyndns.org>
-References: <1187080681.12828.174.camel@chaos>
-	<alpine.LFD.0.999.0708140853500.30176@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 25 07:00:03 2007
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
+Date: Sat, 25 Aug 2007 08:37:36 +0300
+Message-ID: <133074BD-C29D-437A-8533-96A601AFC294@pp.inet.fi>
+References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi> <20070823203246.GB3516@steel.home> <6D8BA2E0-50CD-4B7B-84D3-3D9A61421131@pp.inet.fi> <20070824223338.GA13209@steel.home>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 07:38:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOnkg-0001kJ-Vx
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 07:00:03 +0200
+	id 1IOoLu-0008UR-4h
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 07:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbXHYE7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 00:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbXHYE7u
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 00:59:50 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37431 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301AbXHYE7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 00:59:50 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 17C44126887;
-	Sat, 25 Aug 2007 01:00:06 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0708140853500.30176@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 14 Aug 2007 09:14:30 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756493AbXHYFi1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 25 Aug 2007 01:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756558AbXHYFi0
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 01:38:26 -0400
+Received: from gw01.mail.saunalahti.fi ([195.197.172.115]:59971 "EHLO
+	gw01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756387AbXHYFi0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2007 01:38:26 -0400
+Received: from [10.0.1.2] (GYKMMMCCXVII.dsl.saunalahti.fi [85.77.38.118])
+	by gw01.mail.saunalahti.fi (Postfix) with ESMTP id 44F2B15155A;
+	Sat, 25 Aug 2007 08:38:21 +0300 (EEST)
+In-Reply-To: <20070824223338.GA13209@steel.home>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56620>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> [ However, there does seem to be a bug in the "-B" logic, so it doesn't 
->   actually work as well as it should! See below ]
+On Aug 25, 2007, at 01:33, Alex Riesen wrote:
 
-I finally had a bit of time to follow this through.  After
-running your set-up using revision.c and Makefile to emulate the
-situation, you can try running:
+> V=E4in=F6 J=E4rvel=E4, Fri, Aug 24, 2007 08:35:13 +0200:
+>> On Aug 23, 2007, at 23:32, Alex Riesen wrote:
+>>
+>>> V=E4in=F6 J=E4rvel=E4, Thu, Aug 23, 2007 21:58:31 +0200:
+>>>> With this flag, the user can choose to filter untracked files from
+>>>> the
+>>>> status output. This can be used to either speed up the status
+>>>> output, as
+>>>> the untracked files are not fetched at all, or to just cleanup the
+>>>> output without using gitignore.
+>>>
+>>> "git diff -r --name-status; git diff --cached -r --name-status" is
+>>> not enough?
+>>
+>> That line will result in duplicate entries, if files are staged, and
+>> the output of git-status is neater (but longer) in my opinion.
+>
+> That is because it _is_ two times different: between working director=
+y
+> and the index, and between index and HEAD. git-status _will_ show you
+> the same for the same reason.
+>
+> Besides, why do you want to hide this "duplication"? It shows how the
+> matters really are.
 
-	$ git diff-tree -B -C --numstat --summary HEAD
+git status --only-tracked, does not hide the fact that there are =20
+files staged for commit, and modified files relative to the index. =20
+The difference is, that it shows them in a clean way. Sure you could =20
+make a script like:
 
-or
+echo "Changes to be committed:"; git diff --cached -r --name-status; =20
+echo "Changed but not updates:"; git diff -r --name-status
 
-	$ git diff-tree -B -M --numstat --summary HEAD
+But that is quite long, for a quick look at the state, without any =20
+untracked files.
 
-which would say:
+>
+> Besides, it looks like you are using "friendly" where you actually
+> wanted to say "I consider you too dumb to know what happens". Someone
+> may feel offended
 
-        90028d007986de4db8c3af30a2d5e5c00e5a2c8b
-        0       0       revision.c => old-revision.c
-        1117    1579    revision.c
-         rename revision.c => old-revision.c (100%)
-         rewrite revision.c (98%)
+I don't see where I consider users dumb, but hey, I'm sorry if I made =20
+someone feel offended.
 
-The code is working as intended (it is a different discussion if
-"as intended" is actually the desired behaviour).
-
-We take the preimage tree as a whole, and express postimage in
-terms of series of patches, _however_ we do not interpret the
-series of patches as _incremental_.  IOW, when we talk about the
-effect of the second patch that describes the postimage of
-revision.c, we pretend as if nothing happened with the first
-patch (which renamed away revision.c).  So "rewrite revision.c"
-is what we say, not "create revision.c anew, because the first
-one renamed it away".
-
-This behaviour actually was a bit counterintuitive to me.  I did
-not implement the very original rename/copy the way we currently
-operate.  It was corrected into the current behaviour, following
-the guiding principle described in this message:
-
-	http://thread.gmane.org/gmane.comp.version-control.git/3807
-
-which is reproduced below.
-
-From: Linus Torvalds <torvalds@osdl.org>
-Date: Mon, 23 May 2005 07:49:01 -0700 (PDT)
-Subject: Re: [PATCH] Make sure diff-helper can tell rename/copy in the new
- diff-raw format.
-Message-ID: <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
-
-    On Mon, 23 May 2005, Junio C Hamano wrote:
-    >
-    > This adds tests to make sure that diff-helper can tell renames
-    > from copies using the same "everything but the last one are
-    > copies and the last one is either rename or stay" logic.
-
-    Btw, I still disagree...
-    ...
-    For example, let's say that you have modified "fileA" _and_ you have 
-    created a "fileB" that is a copy of the original "fileA" with some _other_ 
-    slight modifications. We'll call the SHA1's involved "sha_A", "sha_A'" and 
-    "sha_B"
-
-    I think it's perfectly valid to say
-
-            :100644 100644 <sha_A> <sha_A'> M	fileA	fileA
-            :100644 100644 <sha_A> <sha_B> C89	fileA	fileB
-
-    which says "fileA" was modified from orig-A to new-A, and "fileB" is a 
-    copy based on orig-A.
-
-    Now, when the above is turned into a "diff", that diff is no longer
-    something you can apply "incrementally" - you have to apply it as if
-    you're applying all differences to the "original tree". But the thing is,
-    that's actually what I _want_, because I was planning on writing a tool
-    that applies patches that applies them all-or-nothing.
-
-    Also, it turns out that this kind of "non-incremental" diff is the kind
-    that I personally want to see as a _human_, because quite frankly, my
-    brain-capacity is that of a demented ocelot, and I can't _remember_ what
-    happened in other parts of the diff. I much prefer the stateless "oh, this
-    file X is in that relation Y to the previous version of file Z".
-
-    I do that partly because I actually routinely edit patches. If you have 
-    the incremental format, that's practically impossible, while the stateless 
-    version is fine.
-
-    See?
-
-    So I think all the clever "don't re-use files we have modified" etc is 
-    actually wrong. If you want to make a traditional diff that can be applied 
-    with normal "patch", you just don't use the -M or -C flags.
-
-                    Linus
+--
+V=E4in=F6
