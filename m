@@ -1,195 +1,169 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 2/3] gitweb: Extra columns in blame
-Date: Sun, 26 Aug 2007 00:24:10 +0200
-Message-ID: <20070825222409.16967.16960.stgit@rover>
+Subject: [PATCH 3/3] gitweb: Remove git_blame (superseded by git_blame2)
+Date: Sun, 26 Aug 2007 00:24:15 +0200
+Message-ID: <20070825222415.16967.28292.stgit@rover>
 References: <20070825222404.16967.9402.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Aug 26 00:24:31 2007
+X-From: git-owner@vger.kernel.org Sun Aug 26 00:24:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IP43S-00023Z-Mp
+	id 1IP43T-00023Z-7l
 	for gcvg-git@gmane.org; Sun, 26 Aug 2007 00:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757308AbXHYWYO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 18:24:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757085AbXHYWYM
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 18:24:12 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:45741 "EHLO rover.dkm.cz"
+	id S1757215AbXHYWYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 18:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757532AbXHYWYR
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 18:24:17 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:45744 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756111AbXHYWYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 18:24:11 -0400
+	id S1757085AbXHYWYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 18:24:16 -0400
 Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 316978B594;
-	Sun, 26 Aug 2007 00:24:10 +0200 (CEST)
+	by rover.dkm.cz (Postfix) with ESMTP id 70A658B594;
+	Sun, 26 Aug 2007 00:24:15 +0200 (CEST)
 In-Reply-To: <20070825222404.16967.9402.stgit@rover>
 User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56659>
 
-This patch adds extra columns to blame output, containing
-line author and creation date. These columns are by default hidden by
-display: none but by clicking on the expansion "button" you can display
-them (and hide again). I think seeing this information without tooltips
-fishing can give much better overview of the content evolution.
-
-This patch depends on the interactive blame patch (but can be factored out;
-the common required parts are just the blame.js infrastructure).
+This patch definitely removes git_blame() from the source and renames
+git_blame2() to git_blame(); it was already the default handler for the
+blame action for a long time and it has been actually broken for some time
+now (I'm not sure how long), so noone probably cares about it much (I have
+an alternative trivial patch to fix it too). All the information listing is
+already included in git_blame2() output now.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
-
 ---
 
-This version is updated for the new version of incremental blame and
-features updated javascript code based on a friend's suggestions that
-should improve MSIE compatibility and performance.
----
+ gitweb/gitweb.perl |  101 +---------------------------------------------------
+ 1 files changed, 2 insertions(+), 99 deletions(-)
 
- gitweb/blame.js    |   48 +++++++++++++++++++++++++++++++++++++++++++++++-
- gitweb/gitweb.css  |    5 +++++
- gitweb/gitweb.perl |   17 +++++++++++++----
- 3 files changed, 65 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/blame.js b/gitweb/blame.js
-index bd51275..f6d661a 100644
---- a/gitweb/blame.js
-+++ b/gitweb/blame.js
-@@ -1,4 +1,44 @@
- // Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
-+// Copyright (C) 2007, Petr Baudis <pasky@suse.cz>
-+
-+
-+// blame extra columns
-+
-+// I would like to note here that JavaScript is utterly stupid.
-+function findStyleRule(styleName) {
-+	for (i = 0; i < document.styleSheets.length; i++) { 
-+		// MSIE has .rules, Mozilla has .cssRules
-+		var cssRules = document.styleSheets[i].cssRules ? document.styleSheets[i].cssRules : document.styleSheets[i].rules;
-+		for (j = 0; j < cssRules.length; j++) {
-+			var rule = cssRules[j];
-+			if (rule.selectorText.toLowerCase() == styleName) {
-+				return rule;
-+			}
-+		}
-+	}
-+}
-+
-+var isIE = (navigator.appName.toLowerCase().indexOf("microsoft") != -1);
-+var extra_columns = 0;
-+var extra_column_rule = null;
-+function extra_blame_columns() {
-+	if (!extra_column_rule)
-+		extra_column_rule = findStyleRule(".extra_column");
-+
-+	if (!extra_columns) {
-+		document.getElementById("columns_expander").innerHTML = "[-]";
-+		extra_column_rule.style.display = isIE ? "inline" : "table-cell";
-+		extra_columns = 1;
-+	} else {
-+		document.getElementById("columns_expander").innerHTML = "[+]";
-+		extra_column_rule.style.display = "none";
-+		extra_columns = 0;
-+	}
-+}
-+
-+
-+// blame_interactive
-+
- 
- var DEBUG = 0;
- function debug(str)
-@@ -72,14 +112,20 @@ function handleLine(commit)
- 			+ zeroPad(date.getUTCSeconds());
- 		tr.firstChild.title = commit.author + ', ' + dateStr + ' ' + timeStr;
- 		var shaAnchor = tr.firstChild.firstChild;
-+		var authorField = tr.firstChild.nextSibling;
-+		var dateField = tr.firstChild.nextSibling.nextSibling;
- 		if (i == 0) {
- 			shaAnchor.href = baseUrl + ';a=commit;h=' + commit.sha1;
- 			shaAnchor.innerHTML = commit.sha1.substr(0, 8);
-+			authorField.innerHTML = commit.author;
-+			dateField.innerHTML = dateStr + ' ' + timeStr;
- 		} else {
- 			shaAnchor.innerHTML = '';
-+			authorField.innerHTML = '';
-+			dateField.innerHTML = '';
- 		}
- 
--		var lineAnchor = tr.firstChild.nextSibling.firstChild;
-+		var lineAnchor = tr.firstChild.nextSibling.nextSibling.nextSibling.firstChild;
- 		lineAnchor.href = baseUrl + ';a=blame;hb=' + commit.sha1
- 			+ ';f=' + commit.filename + '#l' + commit.srcline;
- 		resline++;
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 096313b..4e93a1a 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -499,3 +499,8 @@ span.match {
- div.binary {
- 	font-style: italic;
- }
-+
-+/* This selector is hardcoded in gitweb.perl */
-+.extra_column {
-+	display: none;
-+}
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7c3073c..8536c50 100755
+index 8536c50..23eaff3 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -4080,11 +4080,16 @@ sub git_blame_common {
- 	my $num_colors = scalar(@rev_color);
- 	my $current_color = 0;
- 	my $last_rev;
--	print "<script type=\"text/javascript\" src=\"$blamejs\"></script>\n" if $type eq 'incremental';
-+	print "<script type=\"text/javascript\" src=\"$blamejs\"></script>\n";
- 	print <<HTML;
-+
- <div class="page_body">
- <table class="blame">
--<tr><th>Commit</th><th>Line</th><th>Data</th></tr>
-+<tr><th>Commit&nbsp;<a href="javascript:extra_blame_columns()" id="columns_expander">[+]</a></th>
-+<th class="extra_column">Author</th>
-+<th class="extra_column">Date</th>
-+<th>Line</th>
-+<th>Data</th></tr>
- HTML
- 	my %metainfo = ();
- 	my $linenr = 0;
-@@ -4095,6 +4100,8 @@ HTML
- 			$linenr += 1;
- 			print "<tr id=\"l$linenr\" class=\"light2\">";
- 			print '<td class="sha1"><a href=""></a></td>';
-+			print "<td class=\"extra_column\"></td>";
-+			print "<td class=\"extra_column\"></td>";
- 			print "<td class=\"linenr\"><a class=\"linenr\" href=\"\">$linenr</a></td><td class=\"pre\">" . esc_html($_) . "</td>\n";
- 			print "</tr>\n";
- 			next;
-@@ -4124,15 +4131,17 @@ HTML
- 		}
- 		print "<tr class=\"$rev_color[$current_color]\">\n";
- 		if ($group_size) {
-+			my $rowspan = $group_size > 1 ? " rowspan=\"$group_size\"" : "";
- 			print "<td class=\"sha1\"";
- 			print " title=\"". esc_html($author) . ", $date\"";
--			print " rowspan=\"$group_size\"" if ($group_size > 1);
--			print ">";
-+			print "$rowspan>";
- 			print $cgi->a({-href => href(action=>"commit",
- 			                             hash=>$full_rev,
- 			                             file_name=>$file_name)},
- 			              esc_html($rev));
- 			print "</td>\n";
-+			print "<td class=\"extra_column\" $rowspan>". esc_html($author) . "</td>";
-+			print "<td class=\"extra_column\" $rowspan>". $date . "</td>";
- 		}
- 		open (my $dd, "-|", git_cmd(), "rev-parse", "$full_rev^")
- 			or die_error(undef, "Open git-rev-parse failed");
+@@ -537,7 +537,7 @@ $git_dir = "$projectroot/$project" if $project;
+ 
+ # dispatch
+ my %actions = (
+-	"blame" => \&git_blame2,
++	"blame" => \&git_blame,
+ 	"blame_incremental" => \&git_blame_incremental,
+ 	"blame_data" => \&git_blame_data,
+ 	"blobdiff" => \&git_blobdiff,
+@@ -4180,105 +4180,8 @@ sub git_blame_incremental {
+ 	git_blame_common('incremental');
+ }
+ 
+-sub git_blame2 {
+-	git_blame_common('oneshot');
+-}
+-
+ sub git_blame {
+-	my $fd;
+-
+-	my ($have_blame) = gitweb_check_feature('blame');
+-	if (!$have_blame) {
+-		die_error('403 Permission denied', "Permission denied");
+-	}
+-	die_error('404 Not Found', "File name not defined") if (!$file_name);
+-	$hash_base ||= git_get_head_hash($project);
+-	die_error(undef, "Couldn't find base commit") unless ($hash_base);
+-	my %co = parse_commit($hash_base)
+-		or die_error(undef, "Reading commit failed");
+-	if (!defined $hash) {
+-		$hash = git_get_hash_by_path($hash_base, $file_name, "blob")
+-			or die_error(undef, "Error lookup file");
+-	}
+-	open ($fd, "-|", git_cmd(), "annotate", '-l', '-t', '-r', $file_name, $hash_base)
+-		or die_error(undef, "Open git-annotate failed");
+-	git_header_html();
+-	my $formats_nav =
+-		$cgi->a({-href => href(action=>"blob", hash=>$hash, hash_base=>$hash_base, file_name=>$file_name)},
+-		        "blob") .
+-		" | " .
+-		$cgi->a({-href => href(action=>"history", hash=>$hash, hash_base=>$hash_base, file_name=>$file_name)},
+-			"history") .
+-		" | " .
+-		$cgi->a({-href => href(action=>"blame", file_name=>$file_name), -class => "blamelink"},
+-		        "HEAD");
+-	git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
+-	git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
+-	git_print_page_path($file_name, 'blob', $hash_base);
+-	print "<div class=\"page_body\">\n";
+-	print <<HTML;
+-<table class="blame">
+-  <tr>
+-    <th>Commit</th>
+-    <th>Age</th>
+-    <th>Author</th>
+-    <th>Line</th>
+-    <th>Data</th>
+-  </tr>
+-HTML
+-	my @line_class = (qw(light dark));
+-	my $line_class_len = scalar (@line_class);
+-	my $line_class_num = $#line_class;
+-	while (my $line = <$fd>) {
+-		my $long_rev;
+-		my $short_rev;
+-		my $author;
+-		my $time;
+-		my $lineno;
+-		my $data;
+-		my $age;
+-		my $age_str;
+-		my $age_class;
+-
+-		chomp $line;
+-		$line_class_num = ($line_class_num + 1) % $line_class_len;
+-
+-		if ($line =~ m/^([0-9a-fA-F]{40})\t\(\s*([^\t]+)\t(\d+) [+-]\d\d\d\d\t(\d+)\)(.*)$/) {
+-			$long_rev = $1;
+-			$author   = $2;
+-			$time     = $3;
+-			$lineno   = $4;
+-			$data     = $5;
+-		} else {
+-			print qq(  <tr><td colspan="5" class="error">Unable to parse: $line</td></tr>\n);
+-			next;
+-		}
+-		$short_rev  = substr ($long_rev, 0, 8);
+-		$age        = time () - $time;
+-		$age_str    = age_string ($age);
+-		$age_str    =~ s/ /&nbsp;/g;
+-		$age_class  = age_class($age);
+-		$author     = esc_html ($author);
+-		$author     =~ s/ /&nbsp;/g;
+-
+-		$data = untabify($data);
+-		$data = esc_html ($data);
+-
+-		print <<HTML;
+-  <tr class="$line_class[$line_class_num]">
+-    <td class="sha1"><a href="${\href (action=>"commit", hash=>$long_rev)}" class="text">$short_rev..</a></td>
+-    <td class="$age_class">$age_str</td>
+-    <td>$author</td>
+-    <td class="linenr"><a id="$lineno" href="#$lineno" class="linenr">$lineno</a></td>
+-    <td class="pre">$data</td>
+-  </tr>
+-HTML
+-	} # while (my $line = <$fd>)
+-	print "</table>\n\n";
+-	close $fd
+-		or print "Reading blob failed.\n";
+-	print "</div>";
+-	git_footer_html();
++	git_blame_common('oneshot');
+ }
+ 
+ sub git_tags {
