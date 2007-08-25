@@ -1,173 +1,142 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: bisect / history preserving on rename + update
-Date: Sat, 25 Aug 2007 08:38:32 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708250819360.25853@woody.linux-foundation.org>
-References: <1187080681.12828.174.camel@chaos>
- <alpine.LFD.0.999.0708140853500.30176@woody.linux-foundation.org>
- <7vmywgb45c.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: git-daemon on NSLU2
+Date: Sat, 25 Aug 2007 11:44:07 -0400
+Message-ID: <9e4733910708250844n7074cb8coa5844fa6c46b40f0@mail.gmail.com>
+References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
+	 <20070824062106.GV27913@spearce.org>
+	 <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+	 <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
+	 <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
+	 <alpine.LFD.0.999.0708241616390.25853@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 17:39:47 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>, jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Sat Aug 25 17:44:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOxjl-00015N-Cg
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 17:39:45 +0200
+	id 1IOxo6-0002VQ-CF
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 17:44:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbXHYPjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 11:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbXHYPji
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 11:39:38 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:37278 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751462AbXHYPjh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2007 11:39:37 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7PFcXK9005159
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 25 Aug 2007 08:38:34 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7PFcWfS019584;
-	Sat, 25 Aug 2007 08:38:32 -0700
-In-Reply-To: <7vmywgb45c.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-2.75 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751712AbXHYPoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 11:44:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbXHYPoJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 11:44:09 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:20789 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462AbXHYPoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 11:44:08 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so1400250wah
+        for <git@vger.kernel.org>; Sat, 25 Aug 2007 08:44:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AbDyBLeUUD90O4SG136+wk6qe+m665Uk9znVqo663J4QcaZ9iicgKGfqlGWtlu23omBFTVIdeen2EmcFZtbXtYNRPPEHbcVY3XWzyEWKn11KBmNBMDbMAjF84npyVtcZqmHrSbM8Det7w3fjhGaoGgkeTxrLs0mh3VuKA1d0Zqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tcQ0vX6kGU2TWKxF4Cbw/gzAcsQIQpA3RvPJi5pJ0qD8v0OyrceryGJUZL6ckb8T6qQigSmQjRIDqUtiPDTICat5v/SAYHb8hnLXWLYtXuPfPlVavfKJScpSjRCfjYis9+d3K3BpIwZcVdVB+Uctm9HO60JP2gkcylYQQazTIwQ=
+Received: by 10.114.60.19 with SMTP id i19mr2358193waa.1188056647446;
+        Sat, 25 Aug 2007 08:44:07 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Sat, 25 Aug 2007 08:44:07 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708241616390.25853@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56643>
+
+On 8/24/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > I can clone the tree in five minutes using the http protocol. Using the
+> > git protocol would take 24hrs if I let it finish.
+>
+> The http side doesn't actually do any global verification, the way
+> git-daemon does. So to it, everything is just temporary buffers, and you
+> don't need any memory at all, really.
+>
+> git-daemon will create a packfile. That means that it has to generate the
+> *global* object reachability, and will then optimize the object packing
+> etc etc. That's a minimum of something like 48 bytes per object for just
+> the object chains, and the kernel has a *lot* of objects (over half a
+> million).
+
+A large, repeating work load is created in this process when you take
+a 200MB pack, repack it to add a few loose objects and then don't save
+the results. This model makes the NSLU2 unusable, but I also see it at
+my shared hosting provider. Initial clones of a repo that take 3min
+from kernel.org take 25min on a shared host since the RAM is not
+dedicated.
+
+There are three categories of fetches:
+1) initial clone, fetch all
+2) fetch recent
+3) I haven't fetched in three months
+
+99% of fetches fall in the first two categories.
+
+A very simple solution is to sendfile() existing packs if they contain
+any objects that the client wants and let the client deal with the
+unwanted objects. Yes this does send extra traffic over the net, but
+the only group significantly impacted is #2 which is the most
+infrequent group.
+
+Loose objects are handled as they are currently. To optimize this
+scheme you need to let the loose objects build up at the server and
+then periodically sweep only the older ones into a pack. Packing the
+entire repo into a single pack would cause recent fetches to retrieve
+the entire pack.
+
+Initial clone can be optimized further by recognizing that the
+receiving repository is empty and sending them everything; no need to
+compute which objects are missing at the server. This method will
+speed up initial clone since the existing pack can be immediately sent
+instead of waiting on a pack file to be built. Build the loose object
+pack in parallel with sending the existing packs.
+
+I recognize that in the case of cloning a single branch or --reference
+too many objects will also be transmitted but I believe the benefits
+of reducing the server load outweigh the overhead of transmitting
+extra objects in this case. You can always remove the extra objects on
+the client side.
+
+On 8/24/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> There was idea to special case clone (just concatenate the packs, the
+> receiving side as someone told there can detect pack boundaries; do not
+> forget to pack loose objects, first), instead of using generic fetch --all
+> for clone, bnut no code. Code speaks louder than words (although if someone
+> would provide details of pack boundary detection...)
+
+Write the file name and length into the socket before sending the
+pack. Use sendfile() or it's current incarnation to actually send the
+pack. Insert these header lines between packs.
+
+> In addition to the object chains yourself, the native protocol will also
+> obviously have to actually *look* at and parse all the tree and commit
+> objects while it does all this, so while it doesn't necessarily keep all
+> of those in memory all the time, it will need to access them, and if you
+> don't have enough memory to cache them, that will add its own set of IO.
+>
+> So I haven't checked exactly how much memory you really want to have to
+> serve big projects, but with some handwavy guesstimate, if you actually
+> want to do a good job I'd guess that you really want to have at least as
+> much memory as the size of largest project you are serving, and probably
+> add at least 10-20% on top of that.
+>
+> So for the kernel, at a guess, you'd probably want to have at least 256MB
+> of RAM to do a half-way good job. 512MB is likely nicer and allows you to
+> actually cache the stuff over multiple accesses.
+>
+> But I haven't actually tested. Maybe it might be bearable at 128M.
+>
+>                         Linus
+>
 
 
-
-On Fri, 24 Aug 2007, Junio C Hamano wrote:
-> 
-> I finally had a bit of time to follow this through.  After
-> running your set-up using revision.c and Makefile to emulate the
-> situation, you can try running:
-> 
-> 	$ git diff-tree -B -C --numstat --summary HEAD
-> 
-> or
-> 
-> 	$ git diff-tree -B -M --numstat --summary HEAD
-> 
-> which would say:
-> 
->         90028d007986de4db8c3af30a2d5e5c00e5a2c8b
->         0       0       revision.c => old-revision.c
->         1117    1579    revision.c
->          rename revision.c => old-revision.c (100%)
->          rewrite revision.c (98%)
-
-Yeah, in that format, git behaviour actually looks really nice.
-
-> The code is working as intended (it is a different discussion if
-> "as intended" is actually the desired behaviour).
-
-I think it may be at times.
-
-> We take the preimage tree as a whole, and express postimage in
-> terms of series of patches, _however_ we do not interpret the
-> series of patches as _incremental_.
-
-IIRC, that's not strictly true. We do have logic to make sure that the 
-difference between "copy" and "rename" is that the rename happens only 
-once, ie I just tested this sequence:
-
-	mkdir test-rename
-	cd test-rename/
-	cp /home/torvalds/git/revision.c .
-	git init
-	git add .
-	git commit -m "add revision.c"
-	cp revision.c rev1.c
-	cp revision.c rev2.c
-	rm revision.c
-	em rev1.c
-	em rev2.c
-	git add .
-	git commit -a -m "rename revision.c twice"
-
-(the two "em" calls are just me in an editor, adding a line to the top 
-of the file saying "This is rev[12].c")
-
-After that, doing a "git show -C" shows:
-
-	diff --git a/revision.c b/rev1.c
-	similarity index 99%
-	copy from revision.c
-	copy to rev1.c
-	...
-	diff --git a/revision.c b/rev2.c
-	similarity index 99%
-	rename from revision.c
-	rename to rev2.c
-	...
-
-so we do have a notion of "incremental" in that the first is a copy, the 
-second is a rename, and that the rename is expected to remove the file.
-
-(Doing a "--stat" doesn't show the difference between copy and rename, so 
-we'll just see it as
-
-	 revision.c => rev1.c |    1 +
-	 revision.c => rev2.c |    1 +
-
-which looks pretty).
-
-> IOW, when we talk about the effect of the second patch that describes 
-> the postimage of revision.c, we pretend as if nothing happened with the 
-> first patch (which renamed away revision.c).  So "rewrite revision.c" is 
-> what we say, not "create revision.c anew, because the first one renamed 
-> it away".
-
-If that was consistent, then we'd have used "rename" in both cases above..
-
-> It was corrected into the current behaviour, following the guiding 
-> principle described in this message:
-> 
-> 	http://thread.gmane.org/gmane.comp.version-control.git/3807
-
-Ahh, you're a wily one. Using my own words against me.
-
-But that earlier Linus was obviously a fake impostor, since he was wrong 
-(and could thus by definition not _possibly_ be the true Linus!). So your 
-judo mindtrick fails.
-
-That said, I actually think that the earlier Linus might actually be me, 
-and he's right in the case he mentions: we should *not* break the 
-association if it results in a good diff!
-
-Ie, the true "guiding principle" should be the principle of minizing the 
-final diff - that's how diff is supposed to act within a single file, and 
-I think it's how the rename/copy detection is supposed to act too.
-
-So:
-
->     I think it's perfectly valid to say
-> 
->             :100644 100644 <sha_A> <sha_A'> M	fileA	fileA
->             :100644 100644 <sha_A> <sha_B> C89	fileA	fileB
-> 
->     which says "fileA" was modified from orig-A to new-A, and "fileB" is a 
->     copy based on orig-A.
-
-This is 100% consistent with "how do I minimally show the differences 
-between the original and the result": we decide that we can show it as a 
-"copy" and a "modification" of the original file.
-
-But it makes sense to "copy and modify the original", but it does *not* 
-make sense to "rename and modify the original". That is, after all, the 
-*only* difference between copying and renaming. A copy will leave the 
-original around (so that it can be modified), while a rename will not.
-
-So, by the very definition of "rename", doing a "rename and modify the 
-original" would appear to be somewhat senseless, no?
-
-			Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
