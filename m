@@ -1,103 +1,94 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: bisect / history preserving on rename + update
-Date: Sat, 25 Aug 2007 09:35:48 +0200
-Message-ID: <85r6lsdq23.fsf@lola.goethe.zz>
-References: <1187080681.12828.174.camel@chaos>
-	<alpine.LFD.0.999.0708140853500.30176@woody.linux-foundation.org>
-	<7vmywgb45c.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Problem with git-gui and relative directories
+Date: Sat, 25 Aug 2007 04:15:25 -0400
+Message-ID: <20070825081525.GB18160@spearce.org>
+References: <868x81vynk.fsf@lola.quinscape.zz> <20070825031834.GW27913@spearce.org> <85veb4dqhv.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 09:36:21 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 25 10:15:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOqBt-0008D2-TH
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 09:36:18 +0200
+	id 1IOqoF-0000gM-FG
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 10:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491AbXHYHfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 03:35:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbXHYHfv
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 03:35:51 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:45032 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899AbXHYHfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 03:35:50 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IOqBO-00075e-ER; Sat, 25 Aug 2007 03:35:46 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 549F71C39500; Sat, 25 Aug 2007 09:35:48 +0200 (CEST)
-In-Reply-To: <7vmywgb45c.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 24 Aug 2007 21\:59\:43 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1761487AbXHYIPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 04:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761482AbXHYIPb
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 04:15:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58286 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760939AbXHYIP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 04:15:28 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IOqnk-0006zs-I8; Sat, 25 Aug 2007 04:15:24 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3AB2220FBAE; Sat, 25 Aug 2007 04:15:25 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <85veb4dqhv.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56627>
 
-Junio C Hamano <gitster@pobox.com> writes:
+David Kastrup <dak@gnu.org> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > +if {$_prefix ne {}} {
+> > +	regsub -all {[^/]+/} $_prefix ../ cdup
+> 
+> I don't like this approach.  It assumes too much about the file system
+> and cleanliness of paths.  It does all of the following:
+> 
+> /somedir/ -> /../
+> /somedir -> /somedir
+> //server/somedir -> //../somedir
+> /somedir//someother -> /..//someother
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> [ However, there does seem to be a bug in the "-B" logic, so it doesn't 
->>   actually work as well as it should! See below ]
->
-> I finally had a bit of time to follow this through.  After
-> running your set-up using revision.c and Makefile to emulate the
-> situation, you can try running:
->
-> 	$ git diff-tree -B -C --numstat --summary HEAD
->
-> or
->
-> 	$ git diff-tree -B -M --numstat --summary HEAD
->
-> which would say:
->
->         90028d007986de4db8c3af30a2d5e5c00e5a2c8b
->         0       0       revision.c => old-revision.c
->         1117    1579    revision.c
->          rename revision.c => old-revision.c (100%)
->          rewrite revision.c (98%)
->
-> The code is working as intended (it is a different discussion if
-> "as intended" is actually the desired behaviour).
+OK, well, uh.  Go read the manpage for `git-rev-parse` and focus
+in particular on the `--show-prefix` option of that command.
+Its output is what we are using here.  Its very well defined within
+Git, and should have the same definition on all operating systems,
+including MinGW.
 
->From reading the argument of Linus, I would say that this "stateless,
-not applicable by patch" behavior is desirable in some application.
-And the "sequential, applicable by patch" behavior also is desirable
-in a number of applications.
+And if the MinGW folks did something funny its only a translation
+of / to \, in which case its easy enough for git-gui to make that
+decision on its own based on what type of git it is running on.
+ 
+> and so on.  It can't deal with directory symlinks properly.
 
-So there should be an option to select those behaviors.  This has the
-added advantage that the manual page will explain that option, and so
-the user gets to actively pick what he wants, and gets to _think_
-about this choice.
+Depends on your definition of properly.  Here git-gui does exactly
+what the C programs in core Git do, which is counter to what the
+shell scripts do.  And people prefer the C behavior of going up
+through the real parents, ignoring the symlinks that were used to
+get to the directory the user started git-gui within.
 
-This would be strictly better than "at some point of time, we figured
-that this particular way suited Linus' personal workflow best, so we
-obliterated all traces of other applications from code, documentation,
-discussion and thought".
+> And the
+> approach does not scale to Windows and other systems with diverging
+> path syntaxes at all.
 
-> This behaviour actually was a bit counterintuitive to me.  I did
-> not implement the very original rename/copy the way we currently
-> operate.  It was corrected into the current behaviour, following
-> the guiding principle described in this message:
->
-> 	http://thread.gmane.org/gmane.comp.version-control.git/3807
->
-> which is reproduced below.
+Yes, it does.  Because the format of --show-prefix is defined.
 
-I think this is a case where restricting git's operation to a single
-way of doing it is limiting the range of its applications.  And having
-_neither_ an option _nor_ an explanation but rather pretending that
-this is the only valid way one could want this feature to work is not
-going to help even those users who would, in the end, decide to choose
-that behavior after all.
+> Isn't it possible to move to the workdir root for the purpose of
+> interpreting workdir root relative filenames?
+
+Because I have always disagreed with the GIT_WORK_TREE mess.
+I think its insane to say "I'm here in A, my repository is over
+there in B and my files are here in C... now go run status!".
+But apparently its a use case.
+
+I guess I could use `git rev-parse --show-cdup` and that would just
+handle this case.  But that's YAFAE (Yet Another Fork And Exec).
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Shawn.
