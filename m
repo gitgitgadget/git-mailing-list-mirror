@@ -1,66 +1,64 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: how do you "force a pull"?
-Date: Sat, 25 Aug 2007 06:19:15 -0700
-Message-ID: <86odgveoq4.fsf@blue.stonehenge.com>
-References: <20070825111946.GA7122@falcon.digizenstudio.com>
-	<20070825113747.GA21030@mimvista.com>
-	<20070825115326.GB7122@falcon.digizenstudio.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: tracking perms/ownership [was: empty directories]
+Date: Sat, 25 Aug 2007 16:30:41 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0708251629320.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <1187716461.5986.71.camel@beauty> <20070821134030.b763e9d3.seanlkml@sympatico.ca>
+ <1187817948.5986.159.camel@beauty> <alpine.LFD.0.999.0708221618510.30176@woody.linux-foundation.org>
+ <1187905879.5986.199.camel@beauty> <Pine.LNX.4.64.0708241136301.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+ <20070824100524.GA17348@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>, Jing Xue <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 15:19:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Josh England <jjengla@sandia.gov>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 25 16:31:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IOvYK-00017R-Mr
-	for gcvg-git@gmane.org; Sat, 25 Aug 2007 15:19:49 +0200
+	id 1IOwfG-00057O-OL
+	for gcvg-git@gmane.org; Sat, 25 Aug 2007 16:31:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576AbXHYNTR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 09:19:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbXHYNTR
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 09:19:17 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:44431 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754309AbXHYNTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 09:19:16 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 0CF6F1DF010; Sat, 25 Aug 2007 06:19:16 -0700 (PDT)
-x-mayan-date: Long count = 12.19.14.10.15; tzolkin = 9 Men; haab = 3 Mol
-In-Reply-To: <20070825115326.GB7122@falcon.digizenstudio.com> (Jing Xue's message of "Sat, 25 Aug 2007 07:53:26 -0400")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1759251AbXHYOap (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 10:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759145AbXHYOao
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 10:30:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45381 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757460AbXHYOao (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 10:30:44 -0400
+Received: (qmail invoked by alias); 25 Aug 2007 14:30:42 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp042) with SMTP; 25 Aug 2007 16:30:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ilhVzmY3idiYLdpZxTRp3gq7HRYGA6cwaxgVNPA
+	GQszz+eiHB8QsS
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070824100524.GA17348@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56635>
 
->>>>> "Jing" == Jing Xue <jingxue@digizenstudio.com> writes:
+Hi,
 
-Jing> Ah, this is what I was looking for. Not very intuitive, but works like a
-Jing> charm!
+On Fri, 24 Aug 2007, Jeff King wrote:
 
-I find the word "intuitive" is like "common sense", which apparently isn't
-very common. :)
+> On Fri, Aug 24, 2007 at 11:38:13AM +0200, Johannes Schindelin wrote:
+> 
+> > I wonder why you do not just use the "smudge" and "clean" attributes, and 
+> > store the ownership _and_ the permissions in .gitacls.
+> 
+> Thinking about this more, are you proposing:
+> 
+> 1. Clean and smudge every file, looking up the attributes in .gitacls.
 
-"Not very intuitive" can be translated as "I don't yet share the mental model
-from which this observation would be obvious".
+Yes, this is what I thought about.  And I'd just have looked up the file 
+name by sha1.
 
-I would suggest that to make such observations more intuitive, you stop
-thinking of git as you would SVN or (gasp!) CVS, and start paying attention to
-what git-fetch is really doing to the local object tree, and git-merge on top
-of that, collectively known as git-pull.
+The clean/smudge filter would update .gitacls in the index, too...
 
-The concept of keeping track of a directed graph of commits is not present in
-"classic" source code managers... and once you make the mental leap, you'll
-wonder why it was ever done differently.  It's revolutionary, not just
-evolutionary.
-
-(And if this sounds meta, it's because I'm rewriting my "intro to git" slides
-because I just confirmed where my next presentation will be, and want them to
-be even better.)
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Ciao,
+Dscho
