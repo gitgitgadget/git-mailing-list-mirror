@@ -1,67 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git-rev-parse master` not referred to by any ref?
+Subject: Re: [PATCH] Improve error message: not a valid branch name
 Date: Sun, 26 Aug 2007 14:26:28 -0700
-Message-ID: <7vir72ng1n.fsf@gitster.siamese.dyndns.org>
-References: <20070826134521.GA20243@fieldses.org>
-	<20070826135251.GB20243@fieldses.org>
-	<20070826140645.GC20243@fieldses.org>
+Message-ID: <7vd4xang1n.fsf@gitster.siamese.dyndns.org>
+References: <y7fyfh7x.fsf@cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sun Aug 26 23:26:35 2007
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sun Aug 26 23:26:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPPcw-0005Ak-NZ
+	id 1IPPcx-0005Ak-92
 	for gcvg-git@gmane.org; Sun, 26 Aug 2007 23:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbXHZV0c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 17:26:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbXHZV0a
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 17:26:30 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38288 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822AbXHZV03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 17:26:29 -0400
+	id S1751838AbXHZV0d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 17:26:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbXHZV0c
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 17:26:32 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64508 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751834AbXHZV0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 17:26:30 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070826212629.QHKH11280.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          id <20070826212629.TOXY9971.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
           Sun, 26 Aug 2007 17:26:29 -0400
 Received: from localhost ([68.225.240.77])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id glSU1X00S1gtr5g0000000; Sun, 26 Aug 2007 17:26:28 -0400
+	id glSV1X0021gtr5g0000000; Sun, 26 Aug 2007 17:26:29 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56738>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Jari Aalto <jari.aalto@cante.net> writes:
 
->> Oops, found it:
->> 
->> 	git$ cat .git/master
->> 	407c0c87e15b3cf60347f4fc0bcdb4d239de4163
+> (create_branch): Extend die message from 'is not a valid branch name'
+> to '...(see git-check-ref-format)'.
 
-It _might_ make it safer to refuse creating anything outside
-refs/ if the name does not contain or ends with "HEAD" (or
-perhaps names that have chars outside "[_A-Z]"), but that would
-restrict future tools that might want to have HEAD-like files,
-so I am a bit hesitant.
+I think you meant to say "see git-check-ref-format(1)" as you
+meant the manual page.
 
-OTOH, a random file under .git/ does not count as a ref for the
-purposes of fsck/prune, so it may make sense to teach 
-check_ref_format() about the same set of "special" names that
-can appear directly under .git without being in refs/ hierarchy
-(currently I think only "HEAD" and possibly "ORIG_HEAD" are in
-that set).
+I am a bit torn on this.  git-check-ref-format.1 is where we
+currently _happen_ to describe what valid refnames should look
+like, but it could be argued that it is a bug in the manual.
 
-BTW, git-merge.sh and git-reset.sh should use "git update-ref ORIG_HEAD"
-instead of doing it by hand using "echo >$GIT_DIR/ORIG_HEAD".
+Two possible improvements that are mutually incompatible would
+be:
 
-Also, I *think* objects that are only reachable via ORIG_HEAD
-are not considered as reachable by fsck/prune --- we probably
-would want to fix this.
+ - refactor that part of the manual to be included in the pages
+   for any and all commands that can take refname from the user;
+   this is inpractical as almost all command would be affected.
+
+ - move that to more central place, say git(7), and everybody
+   refer to that page;
+
+I'd personally prefer the latter, as "naming things" is such a
+central thing for the use of the system (this applies to the
+description of "SHA-1 expression" that we curently have in
+git-rev-parse(1) as well) and it is better for users to have
+understanding of such fundamental syntaxes and concepts before
+even using any individual commands.
