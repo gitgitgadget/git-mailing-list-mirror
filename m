@@ -1,63 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-daemon on NSLU2
-Date: Sun, 26 Aug 2007 05:33:31 -0400
-Message-ID: <20070826093331.GC30474@coredump.intra.peff.net>
-References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com> <20070824062106.GV27913@spearce.org> <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com> <alpine.LFD.0.999.0708241618070.16727@xanadu.home> <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com> <alpine.LFD.0.999.0708241616390.25853@woody.linux-foundation.org> <9e4733910708250844n7074cb8coa5844fa6c46b40f0@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Git.pm: Add remote_refs() git-ls-remote frontend
+Date: Sun, 26 Aug 2007 11:58:36 +0200
+Message-ID: <20070826095836.GG1219@pasky.or.cz>
+References: <20070825221143.6514.22516.stgit@rover> <7v6432udje.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, jnareb@gmail.com,
-	Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 11:34:06 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 26 11:59:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPEVR-0006oE-Qh
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 11:34:06 +0200
+	id 1IPEtg-0003ZX-5x
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 11:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877AbXHZJde (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 05:33:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbXHZJde
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 05:33:34 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3774 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754AbXHZJdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 05:33:33 -0400
-Received: (qmail 19749 invoked by uid 111); 26 Aug 2007 09:33:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 26 Aug 2007 05:33:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Aug 2007 05:33:31 -0400
+	id S1751219AbXHZJ6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 05:58:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbXHZJ6i
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 05:58:38 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43596 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751200AbXHZJ6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 05:58:37 -0400
+Received: (qmail 24752 invoked by uid 2001); 26 Aug 2007 11:58:36 +0200
 Content-Disposition: inline
-In-Reply-To: <9e4733910708250844n7074cb8coa5844fa6c46b40f0@mail.gmail.com>
+In-Reply-To: <7v6432udje.fsf@gitster.siamese.dyndns.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56682>
 
-On Sat, Aug 25, 2007 at 11:44:07AM -0400, Jon Smirl wrote:
+On Sun, Aug 26, 2007 at 06:26:29AM CEST, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > diff --git a/git-remote.perl b/git-remote.perl
+> > index 01cf480..8ce8418 100755
+> > --- a/git-remote.perl
+> > +++ b/git-remote.perl
+> > @@ -128,10 +128,7 @@ sub update_ls_remote {
+> >  	return if (($harder == 0) ||
+> >  		   (($harder == 1) && exists $info->{'LS_REMOTE'}));
+> >  
+> > -	my @ref = map {
+> > -		s|^[0-9a-f]{40}\s+refs/heads/||;
+> > -		$_;
+> > -	} $git->command(qw(ls-remote --heads), $info->{'URL'});
+> > +	my @ref = keys %{$git->remote_refs($info->{'URL'}, [ 'heads' ])};
+> >  	$info->{'LS_REMOTE'} = \@ref;
+> >  }
+> 
+> IIRC, ls-remote returns refs sorted and this function returns
+> them as it receives.
+> 
+> Doesn't this change make @ref randomly ordered?  
 
-> A very simple solution is to sendfile() existing packs if they contain
-> any objects that the client wants and let the client deal with the
-> unwanted objects. Yes this does send extra traffic over the net, but
-> the only group significantly impacted is #2 which is the most
-> infrequent group.
->
-> Loose objects are handled as they are currently. To optimize this
-> scheme you need to let the loose objects build up at the server and
-> then periodically sweep only the older ones into a pack. Packing the
-> entire repo into a single pack would cause recent fetches to retrieve
-> the entire pack.
+Yes, but I couldn't find any place in git-remote.perl where we rely on
+the @ref ordering - maybe I'm blind...
 
-I was about to write "but then 'fetch recent' clients will have to get
-the entire repo after the upstream does a 'git-repack -a -d'" but you
-seem to have figured that out already.
-
-I'm unclear: are you proposing new behavior for git-daemon in general,
-or a special mode for resource-constrained servers? If general behavior,
-are you suggesting that we never use 'git-repack -a' on repos which
-might be cloned?
-
--Peff
+-- 
+				Petr "Pasky" Baudis
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
