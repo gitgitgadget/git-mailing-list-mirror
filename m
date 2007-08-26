@@ -1,64 +1,80 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: `git-rev-parse master` not referred to by any ref?
-Date: Sun, 26 Aug 2007 10:06:45 -0400
-Message-ID: <20070826140645.GC20243@fieldses.org>
-References: <20070826134521.GA20243@fieldses.org> <20070826135251.GB20243@fieldses.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?, .gitacls?
+ etc.
+Date: Sun, 26 Aug 2007 17:05:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0708261656500.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com>
+ <7v1wdqud0z.fsf@gitster.siamese.dyndns.org> <52E107D8068148B795FB4279B6272B8E@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 26 16:07:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 26 17:05:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPIlq-0001ND-Jr
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 16:07:18 +0200
+	id 1IPJgW-00080c-Up
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 17:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751732AbXHZOGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 10:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbXHZOGq
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 10:06:46 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:60825 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751634AbXHZOGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 10:06:46 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IPIlJ-0005rl-DK
-	for git@vger.kernel.org; Sun, 26 Aug 2007 10:06:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20070826135251.GB20243@fieldses.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1751135AbXHZPFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 11:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbXHZPFX
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 11:05:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60331 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750772AbXHZPFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 11:05:22 -0400
+Received: (qmail invoked by alias); 26 Aug 2007 15:05:20 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp050) with SMTP; 26 Aug 2007 17:05:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/MY290T/LMN2oxUY6kVleqHP223xMPEhCQFVIkyZ
+	Pnqfv4QA4IGy8+
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <52E107D8068148B795FB4279B6272B8E@ntdev.corp.microsoft.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56688>
 
-On Sun, Aug 26, 2007 at 09:52:51AM -0400, J. Bruce Fields wrote:
-> On Sun, Aug 26, 2007 at 09:45:21AM -0400, J. Bruce Fields wrote:
-> > Any idea how I got into this situation?:
-> > 
-> > 	git$ git rev-parse master
-> > 	warning: refname 'master' is ambiguous.
-> > 	407c0c87e15b3cf60347f4fc0bcdb4d239de4163
-> > 	~/local/git$ git for-each-ref | grep master
-> > 	32ebe844c689d6e13e9875a0feefedca8dc1c6eb commit refs/heads/master
-> > 	e413074f1293e907d94af99330f0dd632a78b01f commit refs/remotes/linux-nfs/master
-> > 	0058a33a8eb5a8bfcfc5f5e769a2517cff4b73f1 commit refs/remotes/origin/master
-> > 	git$ git for-each-ref | grep 407c0
-> > 	git$ 
+Hi,
+
+On Sat, 25 Aug 2007, Dmitry Kakurin wrote:
+
+> ----- Original Message ----- From: "Junio C Hamano" <gitster@pobox.com>
+> >> 2. Storing metadata in regular source-controlled files feels wrong to 
+> >> me.
+> > You are free to _feel_ whatever you want without thinking, but
 > 
-> Oops, found it:
-> 
-> 	git$ cat .git/master
-> 	407c0c87e15b3cf60347f4fc0bcdb4d239de4163
+> I did quite a bit of thinking before posting it. Not sure what made you 
+> think otherwise.
 
-(Somebody on irc pointed out that
+Well, it certainly appears to me that your proposal to move metadata from 
+the working tree (where it is visible, and easily editable with the editor 
+of _your_ choice) to the index (where it is hidden, and could only be 
+edited with _yet another_ git command) is not well thought through.
 
-	git update-ref master 407c0c87e15b3cf60347f4fc0bcdb4d239de4163
+It certainly would make some common operation much more complicated, for 
+no gain at all.
 
-The file's dated a couple weeks ago, so I don't remember, but I can
-easily imagine that I could have typed that assuming it'd update
-.git/refs/heads/master.  OK!)
+Should you still not be convinced, please find some convincing mails by 
+Linus (which are  much longer than I would have the patience to write) 
+where he goes into detail _why_ it is _wrong_ to _hide_ things away from 
+the working tree.
 
---b.
+(Just a small hint: git is much more powerful _because_ it keeps metadata 
+visibly in the filesystem.)
+
+As for your proposal to munge the different metadata files into sections 
+of _one_ file: I doubt that this is "cleaner" or "more elegant" than what 
+we have now.  For one, if a script fscks up one file, it does not fsck up 
+the others.
+
+For another, scripts do not have to jump through hoops to edit the 
+metadata files, as long as they do not have sections (containing 
+completely independent informations).
+
+Ciao,
+Dscho
