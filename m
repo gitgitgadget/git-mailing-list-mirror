@@ -1,100 +1,130 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 4/5] gitweb: Selecting diffs in JavaScript
-Date: Sun, 26 Aug 2007 19:21:29 +0200
-Message-ID: <20070826172129.GK1219@pasky.or.cz>
-References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at> <20070826011742.GF1219@pasky.or.cz> <20070826161701.GA3300@auto.tuwien.ac.at>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: git-daemon on NSLU2
+Date: Sun, 26 Aug 2007 14:06:25 -0400
+Message-ID: <9e4733910708261106u3fecde67m8045ddba3aa57650@mail.gmail.com>
+References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com>
+	 <20070824062106.GV27913@spearce.org>
+	 <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
+	 <alpine.LFD.0.999.0708241618070.16727@xanadu.home>
+	 <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com>
+	 <alpine.LFD.0.999.0708241616390.25853@woody.linux-foundation.org>
+	 <9e4733910708250844n7074cb8coa5844fa6c46b40f0@mail.gmail.com>
+	 <20070826093331.GC30474@coredump.intra.peff.net>
+	 <9e4733910708260934i1381e73ftb31c7de0d23f6cae@mail.gmail.com>
+	 <alpine.LFD.0.999.0708260959050.25853@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Sun Aug 26 19:21:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, jnareb@gmail.com,
+	"Nicolas Pitre" <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 26 20:06:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPLnt-0003Sb-CP
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 19:21:37 +0200
+	id 1IPMVW-0007Sn-4h
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 20:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052AbXHZRVe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 13:21:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbXHZRVd
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 13:21:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55207 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753963AbXHZRVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 13:21:33 -0400
-Received: (qmail 17827 invoked by uid 2001); 26 Aug 2007 19:21:29 +0200
+	id S1754579AbXHZSG2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 14:06:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754323AbXHZSG1
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 14:06:27 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:15785 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754554AbXHZSG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 14:06:26 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1773711wah
+        for <git@vger.kernel.org>; Sun, 26 Aug 2007 11:06:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=W91pVwvYZIRi+hKSfTtPH7mGiGmepQJbcaE0tpLYXfCS11S6sEcXG9Fgktns4Va/7hpUhXP611VN7nNiup53ADNmFy8S6BGjokInD1ewwnsMEGw91WU9kfUoahRxQE0BjeHZJASkfbQE1FzChkNk8KVYquT/9D0WBhEtg8WtmRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bi9PLbpuRtIXWC5q9FOiCh9uGna3SNdenKj88axS3ZV1V4PzEb68aM+/10+ZvzbP5hWqdcafh+7gJUUsW6Ait1+F5d5uawgBX0U5LT42hWNPs7aFea43XWFL389lYSg2EflEcNPFG31fpEKKjs4JUdz25sh6aUlR51BGIgMy1fs=
+Received: by 10.115.79.1 with SMTP id g1mr5471022wal.1188151585381;
+        Sun, 26 Aug 2007 11:06:25 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Sun, 26 Aug 2007 11:06:25 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0708260959050.25853@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <20070826161701.GA3300@auto.tuwien.ac.at>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56706>
 
-On Sun, Aug 26, 2007 at 06:17:01PM CEST, Martin Koegler wrote:
-> http://repo.or.cz/w/git/repo.git?a=search&h=HEAD&st=grep&s=GitAddLinks
-> reveals, that the function GitAddLinks is never called.
-> You should add a call to GitAddLinks in fixBlameLinks or call
-> both functions in <body onload="...">.
+On 8/26/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> And there's actually a deeper problem: the current native protocol
+> guarantees that the objects sent over are only those that are reachable.
+> That matters. It matters for subtle security issues (maybe you are
+> exporting some repository that was rebased, and has objects that you
+> didn't *intend* to make public!), but it also matters for issues like git
+> "alternates" files.
 
-Whoops, sorry - I already had that in, but must have accidentally
-removed it again.
+Are these objects visible through the other protocols? It seems
+dangerous to leave something on an open server that you want to keep
+hidden.
 
-> > One thing for certain is that I would get rid of GitAddLinks and instead
-> > have href() add the extra links there, by default display: none and
-> > javascript code making it show.
-> 
-> display: none will only work in CSS capable browses, but not text
-> browsers. Also why do we want do increase the size of each generated
-> page?
-
-These are both good points. The only thing I'm worried about is browser
-performance; at least my Firefox can take noticeable few hundreds of
-milliseconds to insert the links to only moderately sized pages.
-
-> > Also, there are obvious UI bugs, like
-> > commit and tree entries for commits having redundant base/diff links;
-> 
-> Is this really a bug? I think it makes the interface more consistent.
-> 
-> Would it be clear for a (new) user, why some tree entries have the
-> base/diff links and some not?
-
-My aim is rather to have every single _entry_ to have a single base/diff
-linkpair. Having two linkpairs seems more confusing to me.
-
-> > But maybe it needs more general overhaul and the links added explicitly
-> > in the views, because it really makes sense to have only a single
-> > linkpair per entry and it would be good to have this always at the same
-> > place, and perhaps in a different color. Hmm. And it seems that it's
-> > getting in the way, overally.
-> 
-> Unless this should be come part of the official gitweb, adding each
-> link explicitly would be a maintaince nightmare.
-
-This should become part of the official gitweb, what's the point
-otherwise. :-)
-
-> Changing the color of the base/diff links is no problem. If somebody
-> is interessed in this (and tells me, which colors I should use), I can
-> adapt my patch.
+> If you only ever look at a single repo, you'll never see the alternates
+> issue, but if you're seriously looking at serving git repositories, I
+> don't really see the "single repo" case as being at all the most common or
+> interesting case.
 >
-> > What about having another item in the main action menu, 'diff'?
-> > Base/diff links are by default display: none but show up when you click
-> > at 'diff', in green. They will keep showing up until you click 'diff'
-> > again. When you click 'base', both the selected base link and main
-> > 'diff' link changes color to red.
-> 
-> We could call GitAddLinks, if the user clicks on the diff link instead
-> of calling GitAddLinks at page load time.
-> 
-> I could rewrite the JavaScript for this, if you think it is so more useful.
+> And if you look at something like kernel.org, the "alternates" thing is
+> *much* more important than how much memory git-daemon uses! Yes,
+> kernel.org would probably be much happier if git-daemon wasn't such a
+> memory pig occasionally, but on the other hand, the win from using
+> alternates and being able to share 99% of all objects in all the various
+> related kernel repositories is actually likely to be a *bigger* memory win
+> than any git-daemon memory usage, because now the disk caching works a
+> hell of a lot better!
 
-That would be awesome.
+Doesn't kernel.org use alternates or something equivalent for serving
+up all those nearly identical kernel trees?
+
+I've been handling the problem locally by using remotes and fetching
+all the repos I'm interested in into a single git db.
+
+>
+> So it's not actually clear how the initial clone thing can be optimized on
+> the server side.
+>
+> It's easier to optimize on the *client* side: just do the initial clone
+> with rsync/http (and "git gc" it on the client afterwards), and then
+> change it to the git native protocol after the clone.
+
+Even better, get them to clone from kernel.org and then just fetch in
+the differences from my server. It's an educational problem.
+
+How about changing initial clone to refuse to use the git protocol?
+
+>
+> That may not sound very user-friendly, but let's face it, I think there is
+> exactly one person in the whole universe that tries to use an NSLU2 as a
+> git server. So the "client-side workaround" is likely to affect a very
+> limited number of clients ;)
+
+I'll send you one and double the size of the user base. I have this
+fancy new 20Mb FIOS connection and I can't come up with anything to
+use the bandwidth on.
+
+Anyway, I already gave up and moved on to a hosting provider. Repo is
+here: http://git.digispeaker.com/ There's nothing there yet but a
+clone of the 2.6 tree.
+I don't  think there is a solution for running a git daemon on a shared host.
+
+Petr pointed out to me that an NSLU2 is late 90's equivalent not early
+so my memory if faulty too.
+
+
+>
+>                 Linus
+>
+
 
 -- 
-				Petr "Pasky" Baudis
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Jon Smirl
+jonsmirl@gmail.com
