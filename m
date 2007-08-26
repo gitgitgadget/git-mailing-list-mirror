@@ -1,74 +1,132 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] [RED] git-init: Cannot setup bare repository
-Date: Sun, 26 Aug 2007 22:45:31 +0200
-Message-ID: <20070826204531.11592.36481.stgit@rover>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGIT experimental branch updated
+Date: Sun, 26 Aug 2007 22:46:50 +0200
+Message-ID: <20070826204650.GA22528@diana.vm.bytemark.co.uk>
+References: <20070823022958.GA9323@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Aug 26 22:45:38 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 26 22:47:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPOzJ-0003AB-B6
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 22:45:37 +0200
+	id 1IPP0b-0003g3-G2
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 22:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbXHZUpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 16:45:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbXHZUpd
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 16:45:33 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:49496 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751264AbXHZUpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 16:45:33 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 9DAD68B3C9;
-	Sun, 26 Aug 2007 22:45:31 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1751007AbXHZUqy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 26 Aug 2007 16:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbXHZUqy
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 16:46:54 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2372 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbXHZUqx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 16:46:53 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IPP0U-00064r-00; Sun, 26 Aug 2007 21:46:50 +0100
+Content-Disposition: inline
+In-Reply-To: <20070823022958.GA9323@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56732>
 
-git-init is totally broken wrt. setting up bare repository - it thinks no
-repository is bare (maybe I could coerce it to think some repositories
-indeed are bare, but I have my doubts). This patch is more like a cry for
-help, not something to be applied, though it works as a crude workaround if
-you're hit by the same problem as me. Unfortunately it's hard to make sense
-of the tangled git_working_tree_cfg, work_tree, is_bare_tree_cfg etc.
-network of variables, so I don't have any clear idea about a proper fix nor
-the time to figure it out. :-(
+Updated again. It has all the patches I just mailed out, as well as
+the DAG series.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+The following changes since commit 5f1629be6d0d10aa2acb253c89c6f6c38fdf=
+3cf2:
+  Catalin Marinas (1):
+        Allow 'import' to apply empty patches
 
- builtin-init-db.c |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
+are available in the git repository at:
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 0d9b1e0..3718355 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -299,11 +299,15 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 			usage(init_db_usage);
- 	}
- 
--	git_work_tree_cfg = xcalloc(PATH_MAX, 1);
--	if (!getcwd(git_work_tree_cfg, PATH_MAX))
--		die ("Cannot access current working directory.");
--	if (access(get_git_work_tree(), X_OK))
--		die ("Cannot access work tree '%s'", get_git_work_tree());
-+	if (!strcmp(get_git_dir(), ".git")) {
-+		git_work_tree_cfg = xcalloc(PATH_MAX, 1);
-+		if (!getcwd(git_work_tree_cfg, PATH_MAX))
-+			die ("Cannot access current working directory.");
-+		if (access(get_git_work_tree(), X_OK))
-+			die ("Cannot access work tree '%s'", get_git_work_tree());
-+	} else {
-+		git_work_tree_cfg = NULL;
-+	}
- 
- 	/*
- 	 * Set up the default .git directory contents
+  git://repo.or.cz/stgit/kha.git master
+
+David K=E5gedal (5):
+      Split git.merge into two functions
+      Leave working dir and index alone after failed (conflicting) push
+      Added a test case to check what happens when push finds a conflic=
+t
+      Simplify merge_recursive
+      Use the output from merge-recursive to list conflicts
+
+Karl Hasselstr=F6m (19):
+      Don't use test_expect_failure when more than one thing could fail
+      Don't write None to the conf file
+      Replace "git repo-config" with "git config" in help texts
+      Compile regexp just once
+      Refactor output handling to break circular dependency
+      Refactor subprocess creation
+      Assert that the argument to Run is a sequence of strings
+      Add optional logging of subprocess execution
+      Better error message if merge fails
+      Compute patch appliedness from commit DAG
+      Test the new DAG appliedness machinery
+      Fix bash completion after the DAG appliedness patch
+      Speed up the appliedness test
+      Speed up the discovery of uninteresting commits
+      Speed up appliedness check during patch creation
+      Don't traverse the whole DAG when looking for uninteresting commi=
+ts
+      Find uninteresting commits faster for special cases
+      Optimize uninterestingness checks for rebase
+      Merge branch 'conflict-run'
+
+ contrib/stgit-completion.bash |   15 +-
+ examples/gitconfig            |    2 +-
+ stgit/basedir.py              |   13 +-
+ stgit/commands/applied.py     |    1 +
+ stgit/commands/assimilate.py  |    1 +
+ stgit/commands/branch.py      |    1 +
+ stgit/commands/clean.py       |    1 +
+ stgit/commands/commit.py      |    9 +-
+ stgit/commands/common.py      |    1 +
+ stgit/commands/delete.py      |    1 +
+ stgit/commands/diff.py        |    1 +
+ stgit/commands/export.py      |   10 +-
+ stgit/commands/files.py       |    1 +
+ stgit/commands/float.py       |    2 +-
+ stgit/commands/fold.py        |    1 +
+ stgit/commands/hide.py        |    1 +
+ stgit/commands/id.py          |    1 +
+ stgit/commands/imprt.py       |    3 +-
+ stgit/commands/log.py         |    1 +
+ stgit/commands/mail.py        |    1 +
+ stgit/commands/patches.py     |    1 +
+ stgit/commands/pick.py        |    3 +-
+ stgit/commands/pull.py        |    1 +
+ stgit/commands/push.py        |    1 +
+ stgit/commands/refresh.py     |    3 +-
+ stgit/commands/rename.py      |    1 +
+ stgit/commands/series.py      |    1 +
+ stgit/commands/sync.py        |    3 +-
+ stgit/commands/top.py         |    1 +
+ stgit/commands/unapplied.py   |    1 +
+ stgit/commands/uncommit.py    |    1 +
+ stgit/commands/unhide.py      |    1 +
+ stgit/config.py               |   56 +---
+ stgit/git.py                  |  374 +++++++++++---------------
+ stgit/gitmergeonefile.py      |   21 +-
+ stgit/main.py                 |    2 +-
+ stgit/out.py                  |  100 +++++++
+ stgit/run.py                  |  141 ++++++++++
+ stgit/stack.py                |  583 +++++++++++++++++++++++++++++++++=
+--------
+ stgit/utils.py                |   81 +------
+ t/t1203-push-conflict.sh      |   64 +++++
+ t/t2101-pull-policy-pull.sh   |    4 +-
+ t/t3000-git-interop.sh        |   60 +++++
+ t/t4000-upgrade.sh            |    6 +
+ 44 files changed, 1082 insertions(+), 495 deletions(-)
+ create mode 100644 stgit/out.py
+ create mode 100644 stgit/run.py
+ create mode 100755 t/t1203-push-conflict.sh
+ create mode 100755 t/t3000-git-interop.sh
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
