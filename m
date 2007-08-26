@@ -1,84 +1,66 @@
-From: Jari Aalto <jari.aalto@cante.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: [PATCH] Improve error message: not a valid branch name
-Date: Mon, 27 Aug 2007 01:09:20 +0300
-Organization: Private
-Message-ID: <ejhqeynj.fsf@cante.net>
-References: <y7fyfh7x.fsf@cante.net>
-	<7vd4xang1n.fsf@gitster.siamese.dyndns.org>
+Date: Sun, 26 Aug 2007 18:25:00 -0400
+Message-ID: <20070826222500.GA9116@fieldses.org>
+References: <y7fyfh7x.fsf@cante.net> <7vd4xang1n.fsf@gitster.siamese.dyndns.org> <ejhqeynj.fsf@cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 00:05:59 2007
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Mon Aug 27 00:25:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPQEZ-0005pD-TK
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 00:05:51 +0200
+	id 1IPQXc-0001wx-El
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 00:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbXHZWFW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 18:05:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbXHZWFW
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 18:05:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:46088 "EHLO ciao.gmane.org"
+	id S1752387AbXHZWZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 18:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbXHZWZE
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 18:25:04 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:50357 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752046AbXHZWFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 18:05:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPQEN-00038F-7Y
-	for git@vger.kernel.org; Mon, 27 Aug 2007 00:05:15 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 00:05:15 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 00:05:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:PNLOfsjrVD+MeUcDQV08EZy9P+Y=
+	id S1752387AbXHZWZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 18:25:03 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IPQXU-0003yX-Vu; Sun, 26 Aug 2007 18:25:00 -0400
+Content-Disposition: inline
+In-Reply-To: <ejhqeynj.fsf@cante.net>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56740>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 27, 2007 at 01:09:20AM +0300, Jari Aalto wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Two possible improvements that are mutually incompatible would
+> > be:
+> >
+> >  - refactor that part of the manual to be included in the pages
+> >    for any and all commands that can take refname from the user;
+> >    this is inpractical as almost all command would be affected.
+> >
+> >  - move that to more central place, say git(7), and everybody
+> >    refer to that page;
+> >
+> > I'd personally prefer the latter, as "naming things" is such a
+> > central thing for the use of the system (this applies to the
+> > description of "SHA-1 expression" that we curently have in
+> > git-rev-parse(1) as well) and it is better for users to have
+> > understanding of such fundamental syntaxes and concepts before
+> > even using any individual commands.
+> 
+> Wholeheartedly concur.
 
-> Jari Aalto <jari.aalto@cante.net> writes:
->
->> (create_branch): Extend die message from 'is not a valid branch name'
->> to '...(see git-check-ref-format)'.
->
-> I think you meant to say "see git-check-ref-format(1)" as you
-> meant the manual page.
+Sounds good to me too, but...
 
-Yes.
+> Should I re-submit the patch to refer to git(7) instead?
 
-> I am a bit torn on this.  git-check-ref-format.1 is where we
-> currently _happen_ to describe what valid refnames should look
-> like, but it could be argued that it is a bug in the manual.
->
-> Two possible improvements that are mutually incompatible would
-> be:
->
->  - refactor that part of the manual to be included in the pages
->    for any and all commands that can take refname from the user;
->    this is inpractical as almost all command would be affected.
->
->  - move that to more central place, say git(7), and everybody
->    refer to that page;
->
-> I'd personally prefer the latter, as "naming things" is such a
-> central thing for the use of the system (this applies to the
-> description of "SHA-1 expression" that we curently have in
-> git-rev-parse(1) as well) and it is better for users to have
-> understanding of such fundamental syntaxes and concepts before
-> even using any individual commands.
+... git(7) is pretty long, so finding the referred-to information in
+that man page might take a while.  Would it be possible to put this in a
+(section 7?) man page of its own?
 
-Wholeheartedly concur.
-
-Should I re-submit the patch to refer to git(7) instead?
-
-Jari
+--b.
