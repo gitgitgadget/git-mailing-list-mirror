@@ -1,54 +1,81 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: `git-rev-parse master` not referred to by any ref?
-Date: Sun, 26 Aug 2007 18:36:10 -0400
-Message-ID: <20070826223610.GB9116@fieldses.org>
-References: <20070826134521.GA20243@fieldses.org> <20070826135251.GB20243@fieldses.org> <20070826140645.GC20243@fieldses.org> <7vir72ng1n.fsf@gitster.siamese.dyndns.org>
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: Confusion about diffing branches
+Date: Sun, 26 Aug 2007 18:35:55 -0500
+Message-ID: <20070826233555.GA7422@mediacenter.austin.rr.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 00:36:23 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 01:34:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPQiU-0004Xb-Ak
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 00:36:22 +0200
+	id 1IPRdB-0000Wc-S0
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 01:34:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbXHZWgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 18:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbXHZWgQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 18:36:16 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:33142 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752654AbXHZWgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 18:36:15 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IPQiI-00048C-Ho; Sun, 26 Aug 2007 18:36:10 -0400
+	id S1751520AbXHZXex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 19:34:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbXHZXex
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 19:34:53 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:51681 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516AbXHZXew (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 19:34:52 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1447499wxd
+        for <git@vger.kernel.org>; Sun, 26 Aug 2007 16:34:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=cVev6cxEH0W8ssmG2ZeXockPY6LWAkYAAkZUOrlJ0BoLS8eUBVe7/HS54bLPjr3qw539z9G7Dp2lZUspcRp7x4mE0FSy1w8JFwAEgUQw6uxCDwSiX7+ESsQsQ7GlXET9R5wNPdTQMfPqBVUR5ffyoMI3iKleLalmG9/g03/dZHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=jvuQkVhyLim472rQLPqR0C1vEospQdITVtPTJvyYaIiR42Mch0Tvo/b1onUKrOS9Yr24xoplZmEDSuNd0i74ycVzRMFfx7VeOHGnzrRnt5kN38WpS/s80Wq/z60zKEhbgKU9rCwDxoYK7j8m5SAs1Xcq0fPfCp5VsFq7Vl/3/9U=
+Received: by 10.70.91.16 with SMTP id o16mr9183215wxb.1188171291757;
+        Sun, 26 Aug 2007 16:34:51 -0700 (PDT)
+Received: from mediacenter.austin.rr.com ( [70.112.123.114])
+        by mx.google.com with ESMTPS id 62sm6993700wri.2007.08.26.16.34.50
+        (version=SSLv3 cipher=OTHER);
+        Sun, 26 Aug 2007 16:34:51 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vir72ng1n.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56743>
 
-On Sun, Aug 26, 2007 at 02:26:28PM -0700, Junio C Hamano wrote:
-> It _might_ make it safer to refuse creating anything outside
-> refs/ if the name does not contain or ends with "HEAD" (or
-> perhaps names that have chars outside "[_A-Z]"), but that would
-> restrict future tools that might want to have HEAD-like files,
-> so I am a bit hesitant.
+So I imagine I'm missing something, or perhaps I'm just looking at this
+from the wrong perspective, but here is what I'm seeing.  Lets say I
+have something like:
 
-Sure.
+         A---B topic
+        /
+   C---D---E master
 
-I would have recovered faster if I'd known had a simple way to get a
-list of all the refs that git-rev-parse finds.  Is there an easy way?  I
-assume "find .git -name .." will miss packed refs.  Both git-show-ref
-and git-for-each-ref seem to ignore top-level references.
+If I want to see a diff of all of the changes between the two branches I
+can say:
 
-Maybe the "refname 'master' is ambiguous" warning could be modified to
-list the choices?  I don't know if that would be overkill.
+   git diff master topic
 
---b.
+Which shows me the combined diff of commits A, B and E.  That is exactly
+what I would expect however, I would expect that equivalently I could
+say:
+
+   git diff master...topic
+
+to see all commits reachable from topic and master but not both.
+However, this doesn't do what I expect but instead only shows me the
+combined diff of A and B.  Likewise:
+
+   git diff topic...master
+
+Shows me the diff of E.  Am I crazy or isn't this supposed to be the
+behavior of the topic..master notation?  Strangely enough running either
+
+   git diff master..topic
+   git diff topic..master
+
+both show me the diff of A, B and E, which is what I would expect from
+the master...topic notation.  Am I the only one who thinks this is
+backwards?  The same experiment using git log shows me what I would
+expect so somehow I think I'm missing something.
