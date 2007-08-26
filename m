@@ -1,80 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?, .gitacls?
- etc.
-Date: Sun, 26 Aug 2007 17:05:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0708261656500.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com>
- <7v1wdqud0z.fsf@gitster.siamese.dyndns.org> <52E107D8068148B795FB4279B6272B8E@ntdev.corp.microsoft.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Improve error message: not a valid branch name
+Date: Sun, 26 Aug 2007 18:28:18 +0300
+Organization: Private
+Message-ID: <y7fyfh7x.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 17:05:58 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 26 17:24:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPJgW-00080c-Up
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 17:05:53 +0200
+	id 1IPJyZ-0004y9-NO
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 17:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbXHZPFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 11:05:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbXHZPFX
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 11:05:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60331 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750772AbXHZPFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 11:05:22 -0400
-Received: (qmail invoked by alias); 26 Aug 2007 15:05:20 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp050) with SMTP; 26 Aug 2007 17:05:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/MY290T/LMN2oxUY6kVleqHP223xMPEhCQFVIkyZ
-	Pnqfv4QA4IGy8+
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <52E107D8068148B795FB4279B6272B8E@ntdev.corp.microsoft.com>
-X-Y-GMX-Trusted: 0
+	id S1751275AbXHZPY1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 11:24:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbXHZPY1
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 11:24:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:55369 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750924AbXHZPY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 11:24:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IPJyL-0006qc-GC
+	for git@vger.kernel.org; Sun, 26 Aug 2007 17:24:17 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Aug 2007 17:24:17 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Aug 2007 17:24:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:BoeAx/xMB++yGyFgN9E8T2ii5bE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56689>
 
-Hi,
 
-On Sat, 25 Aug 2007, Dmitry Kakurin wrote:
+(create_branch): Extend die message from 'is not a valid branch name'
+to '...(see git-check-ref-format)'.
 
-> ----- Original Message ----- From: "Junio C Hamano" <gitster@pobox.com>
-> >> 2. Storing metadata in regular source-controlled files feels wrong to 
-> >> me.
-> > You are free to _feel_ whatever you want without thinking, but
-> 
-> I did quite a bit of thinking before posting it. Not sure what made you 
-> think otherwise.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ builtin-branch.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-Well, it certainly appears to me that your proposal to move metadata from 
-the working tree (where it is visible, and easily editable with the editor 
-of _your_ choice) to the index (where it is hidden, and could only be 
-edited with _yet another_ git command) is not well thought through.
-
-It certainly would make some common operation much more complicated, for 
-no gain at all.
-
-Should you still not be convinced, please find some convincing mails by 
-Linus (which are  much longer than I would have the patience to write) 
-where he goes into detail _why_ it is _wrong_ to _hide_ things away from 
-the working tree.
-
-(Just a small hint: git is much more powerful _because_ it keeps metadata 
-visibly in the filesystem.)
-
-As for your proposal to munge the different metadata files into sections 
-of _one_ file: I doubt that this is "cleaner" or "more elegant" than what 
-we have now.  For one, if a script fscks up one file, it does not fsck up 
-the others.
-
-For another, scripts do not have to jump through hoops to edit the 
-metadata files, as long as they do not have sections (containing 
-completely independent informations).
-
-Ciao,
-Dscho
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 7408285..1006a85 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -431,7 +431,8 @@ static void create_branch(const char *name, const char *start_name,
+ 
+ 	snprintf(ref, sizeof ref, "refs/heads/%s", name);
+ 	if (check_ref_format(ref))
+-		die("'%s' is not a valid branch name.", name);
++		die("'%s' is not a valid branch name "
++                    "(see git-check-ref-format)", name);
+ 
+ 	if (resolve_ref(ref, sha1, 1, NULL)) {
+ 		if (!force)
+@@ -502,13 +503,15 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 		die("Old branchname too long");
+ 
+ 	if (check_ref_format(oldref))
+-		die("Invalid branch name: %s", oldref);
++		die("Invalid branch name: %s "
++                    "(see git-check-ref-format)", oldref);
+ 
+ 	if (snprintf(newref, sizeof(newref), "refs/heads/%s", newname) > sizeof(newref))
+ 		die("New branchname too long");
+ 
+ 	if (check_ref_format(newref))
+-		die("Invalid branch name: %s", newref);
++		die("Invalid branch name: %s "
++                    "(see git-check-ref-format)", newref);
+ 
+ 	if (resolve_ref(newref, sha1, 1, NULL) && !force)
+ 		die("A branch named '%s' already exists.", newname);
+-- 
+1.5.3.rc5
