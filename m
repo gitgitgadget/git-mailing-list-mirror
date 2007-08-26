@@ -1,65 +1,79 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: gitweb-projects
-Date: Sat, 25 Aug 2007 20:20:11 -0400
-Message-ID: <9e4733910708251720x79e54ae3m69d8e4d1e5532a02@mail.gmail.com>
-References: <9e4733910708231438q4c454686p55cef622e61d6a2a@mail.gmail.com>
-	 <fal7gn$2vf$1@sea.gmane.org>
-	 <9e4733910708231711o71aa3953i349bce96c5eee8f0@mail.gmail.com>
-	 <200708240935.59089.jnareb@gmail.com>
-	 <9e4733910708251716r1c131b0aka3014a6011b9ebd4@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 4/5] gitweb: Selecting diffs in JavaScript
+Date: Sun, 26 Aug 2007 03:17:43 +0200
+Message-ID: <20070826011742.GF1219@pasky.or.cz>
+References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 02:20:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Sun Aug 26 03:18:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IP5rV-0000nn-Og
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 02:20:18 +0200
+	id 1IP6lc-0002hP-1w
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 03:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759125AbXHZAUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 20:20:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756111AbXHZAUO
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 20:20:14 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:42291 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752454AbXHZAUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 20:20:12 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so1519459wah
-        for <git@vger.kernel.org>; Sat, 25 Aug 2007 17:20:11 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lg2AX9dD097JIF4jJDHJUqPIK5dhFOHVTJZgfAGVzIkJharFq5hxiZzvCRAYbfjgsNBESgJCHEwFZB4xW/D5cNDWahTHBbTLT6XCaIvuLVF+1oPN8tDtRC0XGeSJ8EytYITppFLn3xKNf6hmPZifYS8wdr1JoAp7K4+qQTId/Wg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ouAd2B8AeOwZON1p69wVRt0W1DQQm4lxg0ntXavqI3m6FqqI3FDULjy83Ew3cfZ+HrC5kH6jHqmfpNfJBBiKv1BvnhXJ1DnwlEIrabyj41Hwx5dtUxK7qmHMEJEbIe6885QMYYz1MT2jBGXAFj0E/c8H+zJXeKBLtVR/+Wn0OZE=
-Received: by 10.114.196.1 with SMTP id t1mr3031025waf.1188087611581;
-        Sat, 25 Aug 2007 17:20:11 -0700 (PDT)
-Received: by 10.114.195.5 with HTTP; Sat, 25 Aug 2007 17:20:11 -0700 (PDT)
-In-Reply-To: <9e4733910708251716r1c131b0aka3014a6011b9ebd4@mail.gmail.com>
+	id S1765028AbXHZBRp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 21:17:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756916AbXHZBRp
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 21:17:45 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59744 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752570AbXHZBRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 21:17:44 -0400
+Received: (qmail 17959 invoked by uid 2001); 26 Aug 2007 03:17:43 +0200
 Content-Disposition: inline
+In-Reply-To: <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56665>
 
-On 8/25/07, Jon Smirl <jonsmirl@gmail.com> wrote:
-> Another HTML escaping problem, I can't use an @ sign in the hometext.html file.
+On Sun, May 20, 2007 at 10:23:31PM CEST, Martin Koegler wrote:
+> The adds support for selecting arbitrary diffs, if the client browser supports
+> JavaScript.
+> 
+> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 
-hometext.html is really a misnomer, it needs XHTML syntax, not HTML.
+JFYI, I've just enabled it on repo.or.cz experimentally. Please anyone
+tell me what you think.
 
->
-> --
-> Jon Smirl
-> jonsmirl@gmail.com
->
+(Just click at almost any view in gitweb and marvel at the extra base
+and diff links smiling everywhere.)
 
+I'll dump my mind state here, horribly sleepy. Sorry for the
+incomprehensible rant. :-)
+
+One thing for certain is that I would get rid of GitAddLinks and instead
+have href() add the extra links there, by default display: none and
+javascript code making it show. Also, there are obvious UI bugs, like
+commit and tree entries for commits having redundant base/diff links;
+and Firefox doesn't expand table cells properly for the additional
+links. None of these bugs is easily fixable I think.
+
+But maybe it needs more general overhaul and the links added explicitly
+in the views, because it really makes sense to have only a single
+linkpair per entry and it would be good to have this always at the same
+place, and perhaps in a different color. Hmm. And it seems that it's
+getting in the way, overally.
+
+Hmm.
+
+What about having another item in the main action menu, 'diff'?
+Base/diff links are by default display: none but show up when you click
+at 'diff', in green. They will keep showing up until you click 'diff'
+again. When you click 'base', both the selected base link and main
+'diff' link changes color to red.
+
+
+Oh the naivity that I've already lost about that someone might make a
+patch while I'm sleeping... ;-)
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+				Petr "Pasky" Baudis
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
