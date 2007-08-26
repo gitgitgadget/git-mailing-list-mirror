@@ -1,235 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Clearly distinguish regexp / exact match searches
-Date: Sun, 26 Aug 2007 03:38:31 +0200
-Message-ID: <20070826013831.17924.75365.stgit@rover>
-References: <20070825221852.11739.6955.stgit@rover>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: .gitignore, .gitattributes, .gitmodules, .gitprecious?, .gitacls? etc.
+Date: Sat, 25 Aug 2007 19:59:26 -0700
+Message-ID: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain;
+	format=flowed;
+	charset="koi8-r";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Aug 26 03:39:04 2007
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 26 05:00:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IP75i-0005tv-Fw
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 03:39:03 +0200
+	id 1IP8MN-0003uj-F2
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 05:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756916AbXHZBie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Aug 2007 21:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765401AbXHZBid
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 21:38:33 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:56129 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752324AbXHZBid (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2007 21:38:33 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 940AE8B794;
-	Sun, 26 Aug 2007 03:38:31 +0200 (CEST)
-In-Reply-To: <20070825221852.11739.6955.stgit@rover>
-User-Agent: StGIT/0.12
+	id S933980AbXHZC7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Aug 2007 22:59:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933724AbXHZC7p
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Aug 2007 22:59:45 -0400
+Received: from ag-out-0708.google.com ([72.14.246.244]:53932 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757321AbXHZC7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2007 22:59:44 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so2219002aga
+        for <git@vger.kernel.org>; Sat, 25 Aug 2007 19:59:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=ON9nvyzVsoco8DsegeVQKYrr1y9wbXAKrHm7bn8/hu7cjTonp5VvVFBSRdAvt7tt8hPQ35Pbd1ZGohIsdtuy/cwcljvSecD3i1pKmkpjTAIl+XTEu7D8+aHVgGQrBYVLRx4HXE0nVyK+33KezEdtcV814ouR9c6T7V6XATVVDo4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=pHf9vleDGfNZGBxX9J0wy38KmcEjQUFkDqrkV4EI7yVzyAbDr1CDI+xkA+EXpMUXAPdsVKnsHZVNsTPMonctmg0irTi2X+bsrzaeCNJw/Q8PJF5QFc4OL06Zzp/tUw4h7kTaop8BfroPToJcg3U2bk2UKv8kUZQyVgo/wbq7iQU=
+Received: by 10.115.109.1 with SMTP id l1mr1438262wam.1188097183470;
+        Sat, 25 Aug 2007 19:59:43 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id v25sm5101003wah.2007.08.25.19.59.42
+        (version=SSLv3 cipher=OTHER);
+        Sat, 25 Aug 2007 19:59:43 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56667>
 
-This patch does a couple of things:
+Git is using more and more .git* files to store metadata.
+I have two comments on this:
+1. It may be better to combine all these files into one (.gitmeta) with different sections
+2. Storing metadata in regular source-controlled files feels wrong to me. I cannot be very specific why (call it intuition), but 
+something inside me screams "bad design" :-). We've already seen some chicken-and-the-egg problems with crlf and .gitattributes. So, 
+may be it would be better to keep this metadata only in repository (and index). One option would be to associate such a META object 
+with every TREE (an make it optional). Then allow editing this object with something like 'git meta'.
 
-* Makes commit/author/committer search case insensitive
-
-	To be consistent with the grep search; I see no convincing
-	reason for the search to be case sensitive, and you might
-	get in trouble especially with contributors e.g. from Japan
-	or France where they sometimes like to uppercase their last
-	name.
-
-* Makes grep search by default grep for fixed strings
-
-	Since we will have a checkbox.
-
-* Introduces 're' checkbox that enables POSIX extended regexp searches
-
-	This works for all the search types. The idea comes from Jakub.
-
-It does not make much sense (and is not easy at all) to untangle most of
-these changes from each other, thus they all go in a single patch.
-
-Cc: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
-Sorry, previous version kept git_feed() the user of parse_commits() with
-unchanged usage.
----
-
- gitweb/gitweb.perl |   52 ++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 34 insertions(+), 18 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1ac4523..bdb0b1f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -473,13 +473,15 @@ if (defined $searchtype) {
- 	}
- }
- 
-+our $search_use_regexp = $cgi->param('sr');
-+
- our $searchtext = $cgi->param('s');
- our $search_regexp;
- if (defined $searchtext) {
- 	if (length($searchtext) < 2) {
- 		die_error(undef, "At least two characters are required for search parameter");
- 	}
--	$search_regexp = quotemeta $searchtext;
-+	$search_regexp = $search_use_regexp ? $searchtext : quotemeta $searchtext;
- }
- 
- # now read PATH_INFO and use it as alternative to parameters
-@@ -609,6 +611,7 @@ sub href(%) {
- 		searchtype => "st",
- 		snapshot_format => "sf",
- 		extra_options => "opt",
-+		search_use_regexp => "sr",
- 	);
- 	my %mapping = @mapping;
- 
-@@ -1937,7 +1940,7 @@ sub parse_commit {
- }
- 
- sub parse_commits {
--	my ($commit_id, $maxcount, $skip, $arg, $filename) = @_;
-+	my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
- 	my @cos;
- 
- 	$maxcount ||= 1;
-@@ -1947,7 +1950,7 @@ sub parse_commits {
- 
- 	open my $fd, "-|", git_cmd(), "rev-list",
- 		"--header",
--		($arg ? ($arg) : ()),
-+		@args,
- 		("--max-count=" . $maxcount),
- 		("--skip=" . $skip),
- 		@extra_options,
-@@ -2422,6 +2425,9 @@ EOF
- 		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
- 		      " search:\n",
- 		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
-+		      "<span title=\"Extended regular expression\">" .
-+		      $cgi->checkbox(-name => 'sr', -value => 1, -checked => $search_use_regexp, -label => 're') .
-+		      "</span>" .
- 		      "</div>" .
- 		      $cgi->end_form() . "\n";
- 	}
-@@ -5095,7 +5101,7 @@ sub git_history {
- 		$ftype = git_get_type($hash);
- 	}
- 
--	my @commitlist = parse_commits($hash_base, 101, (100 * $page), "--full-history", $file_name);
-+	my @commitlist = parse_commits($hash_base, 101, (100 * $page), $file_name, "--full-history");
- 
- 	my $paging_nav = '';
- 	if ($page > 0) {
-@@ -5185,7 +5191,9 @@ sub git_search {
- 			$greptype = "--committer=";
- 		}
- 		$greptype .= $search_regexp;
--		my @commitlist = parse_commits($hash, 101, (100 * $page), $greptype);
-+		my @commitlist = parse_commits($hash, 101, (100 * $page), undef,
-+		                               $greptype, $search_use_regexp ? ('--extended-regexp') : (),
-+					       '--regexp-ignore-case');
- 
- 		my $paging_nav = '';
- 		if ($page > 0) {
-@@ -5235,8 +5243,9 @@ sub git_search {
- 		my $git_command = git_cmd_str();
- 		my $searchqtext = $searchtext;
- 		$searchqtext =~ s/'/'\\''/;
-+		my $pickaxe_flags = $search_use_regexp ? '--pickaxe-regex' : '';
- 		open my $fd, "-|", "$git_command rev-list $hash | " .
--			"$git_command diff-tree -r --stdin -S\'$searchqtext\'";
-+			"$git_command diff-tree -r --stdin -S\'$searchqtext\' $pickaxe_flags";
- 		undef %co;
- 		my @files;
- 		while (my $line = <$fd>) {
-@@ -5299,7 +5308,9 @@ sub git_search {
- 		my $alternate = 1;
- 		my $matches = 0;
- 		$/ = "\n";
--		open my $fd, "-|", git_cmd(), 'grep', '-n', '-i', '-E', $searchtext, $co{'tree'};
-+		open my $fd, "-|", git_cmd(), 'grep', '-n',
-+			$search_use_regexp ? ('-E', '-i') : '-F',
-+			$searchtext, $co{'tree'};
- 		my $lastfile = '';
- 		while (my $line = <$fd>) {
- 			chomp $line;
-@@ -5329,7 +5340,7 @@ sub git_search {
- 				print "<div class=\"binary\">Binary file</div>\n";
- 			} else {
- 				$ltext = untabify($ltext);
--				if ($ltext =~ m/^(.*)($searchtext)(.*)$/i) {
-+				if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
- 					$ltext = esc_html($1, -nbsp=>1);
- 					$ltext .= '<span class="match">';
- 					$ltext .= esc_html($2, -nbsp=>1);
-@@ -5364,27 +5375,31 @@ sub git_search_help {
- 	git_header_html();
- 	git_print_page_nav('','', $hash,$hash,$hash);
- 	print <<EOT;
-+<p><strong>Pattern</strong> is by default a normal string that is matched precisely (but without
-+regard to case, except in the case of pickaxe). However, when you check the <em>re</em> checkbox,
-+the pattern entered is recognized as the POSIX extended
-+<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a> (also case
-+insensitive).</p>
- <dl>
- <dt><b>commit</b></dt>
--<dd>The commit messages and authorship information will be scanned for the given string.</dd>
-+<dd>The commit messages and authorship information will be scanned for the given pattern.</dd>
- EOT
- 	my ($have_grep) = gitweb_check_feature('grep');
- 	if ($have_grep) {
- 		print <<EOT;
- <dt><b>grep</b></dt>
- <dd>All files in the currently selected tree (HEAD unless you are explicitly browsing
--    a different one) are searched for the given
--<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a>
--(POSIX extended) and the matches are listed. On large
--trees, this search can take a while and put some strain on the server, so please use it with
--some consideration.</dd>
-+    a different one) are searched for the given pattern. On large trees, this search can take
-+a while and put some strain on the server, so please use it with some consideration. Note that
-+due to git-grep peculiarity, currently if regexp mode is turned off, the matches are
-+case-sensitive.</dd>
- EOT
- 	}
- 	print <<EOT;
- <dt><b>author</b></dt>
--<dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given string.</dd>
-+<dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given pattern.</dd>
- <dt><b>committer</b></dt>
--<dd>Name and e-mail of the committer and date of commit will be scanned for the given string.</dd>
-+<dd>Name and e-mail of the committer and date of commit will be scanned for the given pattern.</dd>
- EOT
- 	my ($have_pickaxe) = gitweb_check_feature('pickaxe');
- 	if ($have_pickaxe) {
-@@ -5392,7 +5407,8 @@ EOT
- <dt><b>pickaxe</b></dt>
- <dd>All commits that caused the string to appear or disappear from any file (changes that
- added, removed or "modified" the string) will be listed. This search can take a while and
--takes a lot of strain on the server, so please use it wisely.</dd>
-+takes a lot of strain on the server, so please use it wisely. Note that since you may be
-+interested even in changes just changing the case as well, this search is case sensitive.</dd>
- EOT
- 	}
- 	print "</dl>\n";
-@@ -5443,7 +5459,7 @@ sub git_feed {
- 
- 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
- 	my $head = $hash || 'HEAD';
--	my @commitlist = parse_commits($head, 150, 0, undef, $file_name);
-+	my @commitlist = parse_commits($head, 150, 0, $file_name);
- 
- 	my %latest_commit;
- 	my %latest_date;
+- Dmitry 
