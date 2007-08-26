@@ -1,78 +1,73 @@
 From: "J. Bruce Fields" <bfields@citi.umich.edu>
-Subject: [PATCH 2/6] user-manual: minor editing for conciseness
-Date: Sun, 26 Aug 2007 12:16:58 -0400
-Message-ID: <47129.6697076925$1188145040@news.gmane.org>
+Subject: [PATCH 3/6] user-manual: introduce the word "commit" earlier
+Date: Sun, 26 Aug 2007 12:16:59 -0400
+Message-ID: <10992.4252414659$1188145046@news.gmane.org>
 References: <11881450221019-git-send-email->
  <11881450231606-git-send-email->
-Cc: git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@puzzle.fieldses.org>,
-	"J. Bruce Fields" <bfields@citi.umich.edu>
+ <11881450231010-git-send-email->
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Aug 26 18:17:18 2007
+X-From: git-owner@vger.kernel.org Sun Aug 26 18:17:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPKnb-00030a-Ew
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 18:17:15 +0200
+	id 1IPKnc-00030a-2K
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 18:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbXHZQRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 12:17:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbXHZQRL
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 12:17:11 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:57984 "EHLO fieldses.org"
+	id S1753234AbXHZQRO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 12:17:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753237AbXHZQRN
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 12:17:13 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:57981 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753153AbXHZQRF (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753144AbXHZQRF (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 26 Aug 2007 12:17:05 -0400
 Received: from bfields by fieldses.org with local (Exim 4.67)
 	(envelope-from <bfields@fieldses.org>)
-	id 1IPKnP-0007Tw-4t; Sun, 26 Aug 2007 12:17:03 -0400
+	id 1IPKnP-0007Ty-6l; Sun, 26 Aug 2007 12:17:03 -0400
 X-Mailer: git-send-email 1.5.2.2.238.g7cbf2f2
-In-Reply-To: <11881450231606-git-send-email->
-Message-Id: <a5f90f31302eb47cb1aa2f12447376ff9332abef.1188139206.git.bfields@citi.umich.edu>
+In-Reply-To: <11881450231010-git-send-email->
+Message-Id: <a2ef9d633f67edc227b00209d5b72ec388388877.1188139206.git.bfields@citi.umich.edu>
 In-Reply-To: <464a8a7a15fc70efbcf56c4569f0f7275a9c76fe.1188139206.git.bfields@citi.umich.edu>
 References: <464a8a7a15fc70efbcf56c4569f0f7275a9c76fe.1188139206.git.bfields@citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56698>
 
-From: J. Bruce Fields <bfields@puzzle.fieldses.org>
+From: J. Bruce Fields <bfields@citi.umich.edu>
 
-Just cutting out a few unnecessary words.
+Use the word "commit" as a synonym for "version" from the start.
 
 Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 ---
- Documentation/user-manual.txt |   10 +++-------
- 1 files changed, 3 insertions(+), 7 deletions(-)
+ Documentation/user-manual.txt |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 0331bad..933177a 100644
+index 933177a..6d35a1f 100644
 --- a/Documentation/user-manual.txt
 +++ b/Documentation/user-manual.txt
-@@ -42,10 +42,9 @@ How to get a git repository
- It will be useful to have a git repository to experiment with as you
- read this manual.
- 
--The best way to get one is by using the gitlink:git-clone[1] command
--to download a copy of an existing repository for a project that you
--are interested in.  If you don't already have a project in mind, here
--are some interesting examples:
-+The best way to get one is by using the gitlink:git-clone[1] command to
-+download a copy of an existing repository.  If you don't already have a
-+project in mind, here are some interesting examples:
- 
- ------------------------------------------------
- 	# git itself (approx. 10MB download):
-@@ -63,9 +62,6 @@ directory, you will see that it contains a copy of the project files,
- together with a special top-level directory named ".git", which
- contains all the information about the history of the project.
- 
--In most of the following, examples will be taken from one of the two
--repositories above.
--
- [[how-to-check-out]]
+@@ -66,14 +66,14 @@ contains all the information about the history of the project.
  How to check out a different version of a project
  -------------------------------------------------
+ 
+-Git is best thought of as a tool for storing the history of a
+-collection of files.  It stores the history as a compressed
+-collection of interrelated snapshots (versions) of the project's
+-contents.
++Git is best thought of as a tool for storing the history of a collection
++of files.  It stores the history as a compressed collection of
++interrelated snapshots of the project's contents.  In git each such
++version is called a <<def_commit,commit>>.
+ 
+ A single git repository may contain multiple branches.  It keeps track
+ of them by keeping a list of <<def_head,heads>> which reference the
+-latest version on each branch; the gitlink:git-branch[1] command shows
++latest commit on each branch; the gitlink:git-branch[1] command shows
+ you the list of branch heads:
+ 
+ ------------------------------------------------
 -- 
 1.5.3.rc5.19.g0734d
