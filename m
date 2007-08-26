@@ -1,116 +1,100 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-daemon on NSLU2
-Date: Sun, 26 Aug 2007 10:15:24 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0708260959050.25853@woody.linux-foundation.org>
-References: <9e4733910708232254w4e74ca72o917c7cadae4ee0f4@mail.gmail.com> 
- <20070824062106.GV27913@spearce.org>  <9e4733910708241238n1899f332j4fafbd6d7ccc48b9@mail.gmail.com>
-  <alpine.LFD.0.999.0708241618070.16727@xanadu.home> 
- <9e4733910708241417l44c55306xaa322afda69c6beb@mail.gmail.com> 
- <alpine.LFD.0.999.0708241616390.25853@woody.linux-foundation.org> 
- <9e4733910708250844n7074cb8coa5844fa6c46b40f0@mail.gmail.com> 
- <20070826093331.GC30474@coredump.intra.peff.net>
- <9e4733910708260934i1381e73ftb31c7de0d23f6cae@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 4/5] gitweb: Selecting diffs in JavaScript
+Date: Sun, 26 Aug 2007 19:21:29 +0200
+Message-ID: <20070826172129.GK1219@pasky.or.cz>
+References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at> <20070826011742.GF1219@pasky.or.cz> <20070826161701.GA3300@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, jnareb@gmail.com,
-	Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 19:16:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Sun Aug 26 19:21:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPLiS-0001pL-Fq
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 19:16:00 +0200
+	id 1IPLnt-0003Sb-CP
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 19:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754018AbXHZRP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 13:15:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbXHZRP4
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 13:15:56 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:52568 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753505AbXHZRPz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Aug 2007 13:15:55 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7QHFPcH000376
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 26 Aug 2007 10:15:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7QHFOo8003592;
-	Sun, 26 Aug 2007 10:15:24 -0700
-In-Reply-To: <9e4733910708260934i1381e73ftb31c7de0d23f6cae@mail.gmail.com>
-X-Spam-Status: No, hits=-2.75 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.28__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754052AbXHZRVe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 13:21:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbXHZRVd
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 13:21:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:55207 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753963AbXHZRVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 13:21:33 -0400
+Received: (qmail 17827 invoked by uid 2001); 26 Aug 2007 19:21:29 +0200
+Content-Disposition: inline
+In-Reply-To: <20070826161701.GA3300@auto.tuwien.ac.at>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56705>
 
+On Sun, Aug 26, 2007 at 06:17:01PM CEST, Martin Koegler wrote:
+> http://repo.or.cz/w/git/repo.git?a=search&h=HEAD&st=grep&s=GitAddLinks
+> reveals, that the function GitAddLinks is never called.
+> You should add a call to GitAddLinks in fixBlameLinks or call
+> both functions in <body onload="...">.
 
+Whoops, sorry - I already had that in, but must have accidentally
+removed it again.
 
-On Sun, 26 Aug 2007, Jon Smirl wrote:
+> > One thing for certain is that I would get rid of GitAddLinks and instead
+> > have href() add the extra links there, by default display: none and
+> > javascript code making it show.
 > 
-> Changing git-daemon only for the initial clone case also means that
-> people don't need to change the way they manage packs.
+> display: none will only work in CSS capable browses, but not text
+> browsers. Also why do we want do increase the size of each generated
+> page?
 
-I do agree that we might want to do some special-case handling for the 
-initial clone (because it *is* kind of special), but it's not necessarily 
-as easy as just re-using an existing pack.
+These are both good points. The only thing I'm worried about is browser
+performance; at least my Firefox can take noticeable few hundreds of
+milliseconds to insert the links to only moderately sized pages.
 
-At a minimum, we'd need to have something that knows how to make a single 
-pack out of several packs and some loose objects. That shouldn't be 
-*hard*, but it's certainly nontrivial, especially in the presense of the 
-same objects possibly being available more than once in different packs.
+> > Also, there are obvious UI bugs, like
+> > commit and tree entries for commits having redundant base/diff links;
+> 
+> Is this really a bug? I think it makes the interface more consistent.
+> 
+> Would it be clear for a (new) user, why some tree entries have the
+> base/diff links and some not?
 
-[ The "duplicate object" thing does actually happen: even if you use only 
-  "git native" protocols, you can get duplicate objects because a file was 
-  changed back to an earlier version. The incremental packs you get from 
-  push/pull'ing between two repositories try to send the minimal 
-  incremental changes, but the keyword here is _try_: they will 
-  potentially send objects that the receiver already has, if it's not 
-  obvious that the receiver has them from the "commit boundary" cases ]
+My aim is rather to have every single _entry_ to have a single base/diff
+linkpair. Having two linkpairs seems more confusing to me.
 
-Maybe the client side will handle a pack with duplicate objects perfectly 
-fine, and it's not an issue. Maybe. It might even be likely (I can't think 
-of anything that would obviously break). But at a minimum, it would be 
-something that needs some code on the sending side, and a lot of 
-verification that the end result works ok on the receiving side.
+> > But maybe it needs more general overhaul and the links added explicitly
+> > in the views, because it really makes sense to have only a single
+> > linkpair per entry and it would be good to have this always at the same
+> > place, and perhaps in a different color. Hmm. And it seems that it's
+> > getting in the way, overally.
+> 
+> Unless this should be come part of the official gitweb, adding each
+> link explicitly would be a maintaince nightmare.
 
-And there's actually a deeper problem: the current native protocol 
-guarantees that the objects sent over are only those that are reachable. 
-That matters. It matters for subtle security issues (maybe you are 
-exporting some repository that was rebased, and has objects that you 
-didn't *intend* to make public!), but it also matters for issues like git 
-"alternates" files.
+This should become part of the official gitweb, what's the point
+otherwise. :-)
 
-If you only ever look at a single repo, you'll never see the alternates 
-issue, but if you're seriously looking at serving git repositories, I 
-don't really see the "single repo" case as being at all the most common or 
-interesting case. 
+> Changing the color of the base/diff links is no problem. If somebody
+> is interessed in this (and tells me, which colors I should use), I can
+> adapt my patch.
+>
+> > What about having another item in the main action menu, 'diff'?
+> > Base/diff links are by default display: none but show up when you click
+> > at 'diff', in green. They will keep showing up until you click 'diff'
+> > again. When you click 'base', both the selected base link and main
+> > 'diff' link changes color to red.
+> 
+> We could call GitAddLinks, if the user clicks on the diff link instead
+> of calling GitAddLinks at page load time.
+> 
+> I could rewrite the JavaScript for this, if you think it is so more useful.
 
-And if you look at something like kernel.org, the "alternates" thing is 
-*much* more important than how much memory git-daemon uses! Yes, 
-kernel.org would probably be much happier if git-daemon wasn't such a 
-memory pig occasionally, but on the other hand, the win from using 
-alternates and being able to share 99% of all objects in all the various 
-related kernel repositories is actually likely to be a *bigger* memory win 
-than any git-daemon memory usage, because now the disk caching works a 
-hell of a lot better!
+That would be awesome.
 
-So it's not actually clear how the initial clone thing can be optimized on 
-the server side.
-
-It's easier to optimize on the *client* side: just do the initial clone 
-with rsync/http (and "git gc" it on the client afterwards), and then 
-change it to the git native protocol after the clone.
-
-That may not sound very user-friendly, but let's face it, I think there is 
-exactly one person in the whole universe that tries to use an NSLU2 as a 
-git server. So the "client-side workaround" is likely to affect a very 
-limited number of clients ;)
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
