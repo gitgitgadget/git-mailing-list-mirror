@@ -1,62 +1,61 @@
-From: Fredrik Tolf <fredrik@dolda2000.com>
-Subject: Re: how do you "force a pull"?
-Date: Sun, 26 Aug 2007 21:02:54 +0200
-Message-ID: <m34pimdspt.fsf@pc7.dolda2000.com>
-References: <20070825111946.GA7122@falcon.digizenstudio.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] gitweb: Fix searchbox positioning
+Date: Sun, 26 Aug 2007 21:31:32 +0200
+Message-ID: <20070826193131.27412.66843.stgit@rover>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 26 21:03:25 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Aug 26 21:32:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPNOO-0007Ep-5G
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 21:03:24 +0200
+	id 1IPNq8-0007Xz-37
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 21:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbXHZTDV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 15:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbXHZTDU
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 15:03:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:40812 "EHLO ciao.gmane.org"
+	id S1751716AbXHZTbe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 15:31:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751804AbXHZTbe
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 15:31:34 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:59090 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096AbXHZTDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 15:03:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPNOC-0004Wt-Ms
-	for git@vger.kernel.org; Sun, 26 Aug 2007 21:03:12 +0200
-Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 26 Aug 2007 21:03:12 +0200
-Received: from fredrik by 1-1-3-7a.rny.sth.bostream.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 26 Aug 2007 21:03:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 1-1-3-7a.rny.sth.bostream.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:qk7vWXVMYMejdLK9f7Ua5yHPa6M=
+	id S1751570AbXHZTbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 15:31:33 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id B45118B487;
+	Sun, 26 Aug 2007 21:31:32 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56711>
 
-Jing Xue <jingxue@digizenstudio.com> writes:
+Currently, searchbox is CSS'd to have position: absolute, which has the
+unfortunate consequence that if the viewport is too small and can't fit
+into the page width together with the navbar, it gets overlapped and part
+of the navbar gets obscured. This makes searchbox float: right instead,
+thus the navbar simply gets wrapped.
 
-> I am working in repo1, and make a savepoint commit and pack up and leave.
->
-> On another machine, I have a clone of repo1 (repo2). So I pull from
-> repo1, "git reset --soft HEAD" to get rid of the savepoint commit, and start working in repo2.
->
-> A while later I realize the earlier commit was actually a good commit
-> point. But I can no longer pull it again from repo1. It keeps giving me
-> the "Cannot merge" fatal error. "-f" doesn't help.
+Discovered and fix pointed out by Michael Olson <mwolson@gnu.org>.
 
-This is probably not as good an answer as David Watson's suggestion,
-but if what you want is to commit your current code while still having
-your savepoint commit in the history, shouldn't you be able to commit
-your current code and then use git-rebase to rebase it onto the
-savepoint commit?
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Fredrik Tolf
+ gitweb/gitweb.css |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 4e93a1a..f3a468e 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -430,7 +430,7 @@ div.search {
+ 	font-size: 100%;
+ 	font-weight: normal;
+ 	margin: 4px 8px;
+-	position: absolute;
++	float: right;
+ 	top: 56px;
+ 	right: 12px
+ }
