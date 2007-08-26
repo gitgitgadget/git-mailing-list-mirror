@@ -1,60 +1,78 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?,
-	.gitacls? etc.
-Date: Sun, 26 Aug 2007 12:06:47 +0200
-Message-ID: <20070826100647.GH1219@pasky.or.cz>
-References: <7vhcmmpxed.fsf@gitster.siamese.dyndns.org> <B4A2AE9980774365B5D14B442A7A22F6@ntdev.corp.microsoft.com>
+Subject: Re: [RFC] Branch naming -- allowed characters?
+Date: Sun, 26 Aug 2007 12:17:35 +0200
+Message-ID: <20070826101735.GI1219@pasky.or.cz>
+References: <bqcuhe0c.fsf@cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 12:06:52 2007
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sun Aug 26 12:17:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPF1A-00055a-B0
-	for gcvg-git@gmane.org; Sun, 26 Aug 2007 12:06:52 +0200
+	id 1IPFBk-0007OW-3C
+	for gcvg-git@gmane.org; Sun, 26 Aug 2007 12:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbXHZKGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 06:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbXHZKGt
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 06:06:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:40329 "EHLO machine.or.cz"
+	id S1751310AbXHZKRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Aug 2007 06:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbXHZKRh
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 06:17:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49427 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751225AbXHZKGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 06:06:48 -0400
-Received: (qmail 25180 invoked by uid 2001); 26 Aug 2007 12:06:47 +0200
+	id S1751283AbXHZKRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2007 06:17:37 -0400
+Received: (qmail 26714 invoked by uid 2001); 26 Aug 2007 12:17:35 +0200
 Content-Disposition: inline
-In-Reply-To: <B4A2AE9980774365B5D14B442A7A22F6@ntdev.corp.microsoft.com>
+In-Reply-To: <bqcuhe0c.fsf@cante.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56684>
 
-On Sun, Aug 26, 2007 at 10:02:50AM CEST, Dmitry Kakurin wrote:
->>> My knowledge of Git internals is quite limited, but if *I* were to do
->>> it right now, I'd introduce a META entry in every TREE object that
->>> would point to a BLOB that contains combined content of
->>> .gitattributes, .gitignore etc.
->> A tree that has .gitattributes (and I am assuming in the longer
->> term you can use "ignore" and "precious" in .gitattributes
->> instead of using .gitignore) POINTS TO A BLOB already, so what
->> you are saying does not add anything to what we already have,
->> other than that you are renaming .gitattributes to "META ENTRY".
->
-> Almost true! The difference is: META BLOBS are not created as files in the 
-> workspace (not during checkout, not ever).
-> In order to edit it you'd have to use 'git meta' command.
-> So once again, there is only one place to check for metadata - the index.
+On Sun, Aug 26, 2007 at 10:54:43AM CEST, Jari Aalto wrote:
+> I just noticed this while trying to track quilt project and making a
+> local branch with name '.pc':
+> 
+>     'fatal: '.pc' is not a valid branch name.'
+> 
+> Would it be possible to allow using arbitrary names with branches in
+> future git, even UTF-8?
+> 
+> If that is not possible, would it be possible to at least broaden the
+> charcter set with regular typeable US ascii letters, excluding the
+> control ones. Something found in filenames/URLs. Like regexp:
+> 
+>     [][{}()_=+%!&@#~*.:;,/A-Za-z-]
 
-That sounds so incredibly ugly, I really would hate to see that.
+I think UTF-8 might be possible, though I'd be careful because of legacy
+systems (my main home system could be still considered "legacy", for
+example; BTW, does Linux fbcon already support reasonable utf8 _and_
+16*16 colors?). If legacy system cannot display commit message properly,
+it's not that big deal and besides the message is usually still mostly
+legible. If you cannot properly refer a branch because you live on a
+legacy system, that makes for a showstopper.
 
-It's still not clear to me how this would help anything, though I didn't
-watch late Git development. Can you explain some particular scenario
-where this would improve the current situation?
+About extending the allowed characters, one issue is caring whether we
+and all the procelain make sure to quote branch name properly
+everywhere. Hopefully so, but is anybode sure?
+
+Bigger issue is that some of these characters have special meaning in
+revids. For example ':' is special for Git, meaning "blob of given
+filename in given tree". We want to keep some room for further grow and
+possible added semantics. (For example, I still haven't completely given
+up the idea of using dot-starting names for "autoprivate" refs. ;-)
+
+Compared to this, the benefit of _allowing_ the special characters
+doesn't seem to be very large and I can't really imagine many people
+wanting to use = or + in their refnames.
+
+> [*] Emacs even saves with names like: *Messages*
+
+I'm sure vim can too. ;-)
 
 -- 
 				Petr "Pasky" Baudis
