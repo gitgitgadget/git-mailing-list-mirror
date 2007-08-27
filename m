@@ -1,85 +1,78 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?, .gitacls? etc.
-Date: Mon, 27 Aug 2007 17:07:34 +0000 (UTC)
-Message-ID: <loom.20070827T185519-641@post.gmane.org>
-References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com> <7v1wdqud0z.fsf@gitster.siamese.dyndns.org> <loom.20070827T172150-191@post.gmane.org> <86odgtou5p.fsf@lola.quinscape.zz>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: git-svn tags and branches
+Date: Mon, 27 Aug 2007 19:08:47 +0200
+Message-ID: <fav0e9$bbh$1@sea.gmane.org>
+References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz> <20070827153138.GA12936@glandium.org> <A0329662-9C87-44C2-84E4-4F60DCC1E95F@lrde.epita.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 19:09:27 2007
+X-From: git-owner@vger.kernel.org Mon Aug 27 19:10:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPi4H-0004xj-Sv
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 19:08:02 +0200
+	id 1IPi5M-0005Js-2e
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 19:09:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756369AbXH0RH6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 13:07:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753733AbXH0RH6
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 13:07:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:43952 "EHLO ciao.gmane.org"
+	id S1756507AbXH0RJD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 13:09:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753195AbXH0RJD
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 13:09:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:44026 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752684AbXH0RH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 13:07:57 -0400
+	id S1753733AbXH0RJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 13:09:01 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPi42-00072I-4x
-	for git@vger.kernel.org; Mon, 27 Aug 2007 19:07:46 +0200
-Received: from 99.Red-80-58-205.staticIP.rima-tde.net ([80.58.205.99])
+	id 1IPi54-0007Cs-PA
+	for git@vger.kernel.org; Mon, 27 Aug 2007 19:08:50 +0200
+Received: from host-62-10-78-152.cust-adsl.tiscali.it ([62.10.78.152])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 19:07:46 +0200
-Received: from scallegari by 99.Red-80-58-205.staticIP.rima-tde.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 19:08:50 +0200
+Received: from giuseppe.bilotta by host-62-10-78-152.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 19:07:46 +0200
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 19:08:50 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.58.205.99 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20061201 Firefox/2.0.0.6 (Ubuntu-feisty))
+X-Gmane-NNTP-Posting-Host: host-62-10-78-152.cust-adsl.tiscali.it
+User-Agent: KNode/0.10.5
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56862>
 
-David Kastrup <dak <at> gnu.org> writes:
+On Monday 27 August 2007 17:36, Benoit SIGOURE wrote:
 
+> On Aug 27, 2007, at 5:31 PM, Mike Hommey wrote:
 > 
-> Sergio Callegari <scallegari <at> arces.unibo.it> writes:
+>> On Mon, Aug 27, 2007 at 05:09:30PM +0200, David Kastrup  
+>> <dak@gnu.org> wrote:
+>>> I actually don't see how one can safely make them tags at all (rather
+>>> than branches) since Subversion does not enforce the members of a
+>>> "tags" subdirectory to remain unchanged after the initial copy.
+>>> Basically, tags are not different from branches in Subversion from
+>>> what you can do with them.
+>>
+>> Well, git-svn could make tags when the tag/branch is created in  
+>> subversion,
+>> and then create a branch on the first commit on top of that tag/ 
+>> branch in
+>> svn.
 > 
-> > Couldn't all this directory/ownership/permission tracing be easily
-> > done by using hooks?  E.g. Having a pre-status and pre-commit hook
-> > one could fire up a program/script to collect all the extra info he
-> > wants to trace and store it somewhere (typically in some traced
-> > file).  The other way round one could have a post-checkout hook and
-> > he could arrange it to fire up some program to look into the
-> > extra-info file to set up all the meta-data he wants.
-> >
-> > This would be very flexible and would permit to manage absolutely
-> > /any/ kind of the metadata leaving absolute freedom about how to do
-> > so.
-> >
-> > Am I missing something here?
-> 
-> Merging.
-> 
+> Or update the tag ref in Git so that it points to the new "HEAD" of  
+> the SVN tag.But all in all, it's more consistent to have it look  
+> like a branch from the Git point of view, because that's really what  
+> it is after all.
 
-Sorry, maybe I am really missing something, since merging does not look to me
-as an issue.
+Yes and no. By making it just a branch you lose the tag POV on that
+particular commit, and this is, in a way, a loss of information: yes, it
+can behave like a branch but most projects use it as a tag.
 
-Why cannot git simply do the merging in the working tree as it normally
-does, including merging of the traced metadata file generated by the metadata
-helpers invoked via the hooks?
-Only, again more hooks are needed and likely a post-merge hook, so that at
-the end of the merge, the metadata can be applied.
+I think the best approach is to have an annotated tag 'tagname'
+corresponding to the tags/tagname copy on the svn side in addition
+to the 'tags/tagname' branch that is currently used to track its head.
 
-Only, to have things going on smoothly, one should be so wise to assure that
-the metadata helpers save metadata as nice, sorted text files in order to
-minimize the burden of manual intervention if there are conflicts in
-metadata merging.
-
-BTW.  Having a post-checkout hook could also help getting rid of unwanted
-empty directories, couldn't it?
- 
-Sergio
+-- 
+Giuseppe "Oblomov" Bilotta
