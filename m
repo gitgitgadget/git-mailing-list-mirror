@@ -1,82 +1,67 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Git User's Survey 2007 partial summary
-Date: Mon, 27 Aug 2007 10:07:35 +0200
-Message-ID: <2EFBBC8B-E785-4205-A7AA-7F03C3E92E1D@lrde.epita.fr>
-References: <200708190128.43515.jnareb@gmail.com> <200708270251.05762.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-83--558541785"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 10:07:55 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] In Examples, explain option -r and refer to git-rev-list[1]
+Date: Mon, 27 Aug 2007 01:14:02 -0700
+Message-ID: <7vy7fxl7hx.fsf@gitster.siamese.dyndns.org>
+References: <r6lqfgnp.fsf@cante.net> <46D28502.3030003@etek.chalmers.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Lukas =?utf-8?Q?Sandstr=C3=B6m?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Mon Aug 27 10:14:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPZdV-0006C6-Sm
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:07:50 +0200
+	id 1IPZjg-0007no-EW
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:14:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972AbXH0IHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 04:07:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXH0IHq
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:07:46 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:34951 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751968AbXH0IHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 04:07:45 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.50)
-	id 1IPZdQ-0007V0-3G; Mon, 27 Aug 2007 10:07:44 +0200
-In-Reply-To: <200708270251.05762.jnareb@gmail.com>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1751294AbXH0IOI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Aug 2007 04:14:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbXH0IOH
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:14:07 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:36045 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbXH0IOG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2007 04:14:06 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 28EE11292A9;
+	Mon, 27 Aug 2007 04:14:26 -0400 (EDT)
+In-Reply-To: <46D28502.3030003@etek.chalmers.se> (Lukas =?utf-8?Q?Sandstr?=
+ =?utf-8?Q?=C3=B6m's?= message of
+	"Mon, 27 Aug 2007 10:02:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56774>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-83--558541785
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se> writes:
 
-On Aug 27, 2007, at 2:51 AM, Jakub Narebski wrote:
+> Jari Aalto wrote:
+>> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+>> ---
+>>  Documentation/git-log.txt |    3 ++-
+>>  1 files changed, 2 insertions(+), 1 deletions(-)
+>>=20
+>> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+>> index 49bb539..aa42f0e 100644
+>> --- a/Documentation/git-log.txt
+>> +++ b/Documentation/git-log.txt
+>> @@ -76,7 +76,8 @@ git log -r --name-status release..test::
+>> =20
+>>  	Show the commits that are in the "test" branch but not yet
+>>  	in the "release" branch, along with the list of paths
+>> -	each commit modifies.
+>> +	each commit modifies. Opton -r (see gitlink:git-rev-list[1])
+> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ spelling mistake (option)
 
-> 28. Which (main) git web interface do you use for your projects?
->
-> Most use gitweb (which is distributed with git), 7 use cgit, 1 wit
-> (Ruby), most probably XMMS2 project, 1 git-php (I wonder who...), and
-> there are 20 "other" answers, which I am most curious about. What are
-> they?
->
+I think it makes more sense to make Porcelain including "git
+log" to always recurse in its diff operations (when diff output
+is asked for), in which case the example should simply lose
+the "-r" option.
 
-I replied "other" because I didn't know whether all questions were  
-mandatory or not :D
-I don't use a git web interface...  for now.
-
-So maybe 19 other people have been as dumb as me and replied "other"  
-for a similar reason :)
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-83--558541785
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFG0oZHwwE67wC8PUkRAtZ6AKCEvEa5UpfHZjStnckLLuiloWeCgwCgsR/e
-anJaWYad3jx/HojXKHfpMNc=
-=plZA
------END PGP SIGNATURE-----
-
---Apple-Mail-83--558541785--
+But that is a post-1.5.3 change.  That's why I am planning to
+drop this patch for now.
