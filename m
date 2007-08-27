@@ -1,99 +1,74 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] builtin-push: New long option --verbose
-Date: Mon, 27 Aug 2007 09:49:11 +0300
-Organization: Private
-Message-ID: <y7fxeal4.fsf@cante.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Confusion about diffing branches
+Date: Mon, 27 Aug 2007 00:07:39 -0700
+Message-ID: <7vlkbxmp50.fsf@gitster.siamese.dyndns.org>
+References: <20070826233555.GA7422@mediacenter.austin.rr.com>
+	<7v6431omn8.fsf@gitster.siamese.dyndns.org>
+	<20070827014056.GB7422@mediacenter.austin.rr.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 08:45:45 2007
+Cc: git@vger.kernel.org
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 09:07:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPYM2-00039o-RE
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 08:45:43 +0200
+	id 1IPYhP-0007gS-4U
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 09:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751066AbXH0GpM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 02:45:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbXH0GpM
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 02:45:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:57777 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026AbXH0GpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 02:45:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPYLU-0001QD-67
-	for git@vger.kernel.org; Mon, 27 Aug 2007 08:45:08 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 08:45:08 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 08:45:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:6ETSLA2MwCVcYw1uxN+heExEyyg=
+	id S1751718AbXH0HHn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 03:07:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbXH0HHn
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 03:07:43 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:57310 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbXH0HHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 03:07:41 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070827070741.YNSB2916.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 27 Aug 2007 03:07:41 -0400
+Received: from localhost ([68.225.240.77])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id gv7g1X0031gtr5g0000000; Mon, 27 Aug 2007 03:07:40 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56769>
 
-Implemented and documented new option.
+Shawn Bohrer <shawn.bohrer@gmail.com> writes:
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-push.txt |    4 ++--
- builtin-push.c             |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+> So if I understand you correctly people in the git world are simply more
+> used to typing two dots (instead of three) so that is why the two dot
+> notation shows the more common use case (show me the difference between
+> the tip of the master branch and the tip of the topic branch).
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index f8cc2b5..fb9dc7f 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -8,7 +8,7 @@ git-push - Update remote refs along with associated objects
- 
- SYNOPSIS
- --------
--'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
-+'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
- 
- DESCRIPTION
- -----------
-@@ -91,7 +91,7 @@ the remote repository.
- 	transfer spends extra cycles to minimize the number of
- 	objects to be sent and meant to be used on slower connection.
- 
---v::
-+-v, \--verbose::
- 	Run verbosely.
- 
- include::urls.txt[]
-diff --git a/builtin-push.c b/builtin-push.c
-index cb78401..613f6c2 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -8,7 +8,7 @@
- 
- #define MAX_URI (16)
- 
--static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
-+static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]";
- 
- static int all, tags, force, thin = 1, verbose;
- static const char *receivepack;
-@@ -372,7 +372,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 			i++;
- 			break;
- 		}
--		if (!strcmp(arg, "-v")) {
-+		if (!strcmp(arg, "-v") ||
-+                    !strcmp(arg, "--verbose")) {
- 			verbose=1;
- 			continue;
- 		}
--- 
-1.5.3.rc5
+No, what I said was that two dot form is merely there to avoid
+saying 'if you want to diff two trees, do not say "diff a..b"
+but say "diff a b", dummy!'.  Instead of giving such an error
+message, we just say "oh, you want difference between a and b?
+here it is".
+
+As to which is common between "diff a..b" and "diff a...b", that
+really depends.  You seem to be hinting that you think a...b is
+more useful but that is not always the case.  Comparing two
+arbitrary trees _is_ the base form of diff, and that is what
+"diff a b" gives you.  It does not require two trees to be
+related in ancestry relationships in _any_ way.  For example,
+you can say "git diff v2.6.20 v2.6.21" or "git diff v2.6.20.4
+v2.6.21.2".
+
+On the other hand, when you are into topic branch development
+workflow, "diff a...b" is often useful but that does not mean
+people using topic branch development does not need "diff a b"
+form.  You can say either "diff a b" if you want straight diff
+between two trees, or "diff a...b" if you want "what happened in
+b, since it forked from the history leading to a"; if the
+two-dot form confuses you, you do not have to use that synonym.
+
+Both semantics of two-dot form and three-dot form are useful,
+and choice between the two depends on what you want out of the
+command.  You just need to know which one you want.
