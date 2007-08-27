@@ -1,64 +1,64 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] git-svn.txt: fix an obvious misspelling.
-Date: Fri, 17 Aug 2007 17:48:53 +0200
-Message-ID: <868x7xv015.fsf@lola.quinscape.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 09:48:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708270946280.28586@racer.site>
+References: <200708190128.43515.jnareb@gmail.com>  <200708270251.05762.jnareb@gmail.com>
+ <61e816970708262024m1cbbfd4dxfeb10b56397670b8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 10:45:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Dan Chokola <dan@chokola.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 10:46:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPaEK-0001Eq-JU
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:45:52 +0200
+	id 1IPaF7-0001Sc-Vl
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbXH0Ipt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 04:45:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbXH0Ips
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:45:48 -0400
-Received: from main.gmane.org ([80.91.229.2]:40583 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751935AbXH0Ipr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 04:45:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPaE0-0007aQ-Vm
-	for git@vger.kernel.org; Mon, 27 Aug 2007 10:45:32 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 10:45:32 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 10:45:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:MDA5PHI1GiMGIW7oJsunN1jVHA0=
+	id S1751305AbXH0Iqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 04:46:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbXH0Iqi
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:46:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44246 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750988AbXH0Iqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 04:46:38 -0400
+Received: (qmail invoked by alias); 27 Aug 2007 08:46:36 -0000
+Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
+  by mail.gmx.net (mp032) with SMTP; 27 Aug 2007 10:46:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/yXiMOO9/yYogkqXEP5wDM2Fr6STTEZ2N3L2bVIe
+	kTCftSuv/Zn4Je
+X-X-Sender: gene099@racer.site
+In-Reply-To: <61e816970708262024m1cbbfd4dxfeb10b56397670b8@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56787>
 
+Hi,
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- Documentation/git-svn.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Sun, 26 Aug 2007, Dan Chokola wrote:
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 3420c5c..be2e34e 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -549,7 +549,7 @@ listed below are allowed:
- ------------------------------------------------------------------------
- 
- Keep in mind that the '*' (asterisk) wildcard of the local ref
--(left of the ':') *must* be the farthest right path component;
-+(right of the ':') *must* be the farthest right path component;
- however the remote wildcard may be anywhere as long as it's own
- independent path component (surrounded by '/' or EOL).   This
- type of configuration is not automatically created by 'init' and
--- 
-1.5.3.GIT
+> On 8/26/07, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> > 55. Would commerical (paid) support from a support vendor be of 
+> > interest to you/your organization?
+> >
+> > Only 44 answers yes, 217 no, 126 not applicable (which was menat to 
+> > encompass people who do not use git for work).
+> 
+> Are questions like this at all indicative of where Git is looking 
+> towards going?
+
+No.  These questions are just questions.  Git is GPLv2, and it will 
+probably stay that forever, so you are _free_ to start a commercial 
+support scheme for Git, but others are free not to choose it.
+
+I for one could imagine training people, and giving technical support for 
+companies needing that support.
+
+Ciao,
+Dscho
