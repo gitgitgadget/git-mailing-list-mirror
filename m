@@ -1,57 +1,65 @@
-From: "Wink Saville" <wink@saville.com>
-Subject: Setting up remote repository --bare
-Date: Sun, 26 Aug 2007 22:03:12 -0700
-Message-ID: <d4cf37a60708262203j1cdd6e88u82f65f7a435c5dc2@mail.gmail.com>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: how do you "force a pull"?
+Date: Mon, 27 Aug 2007 01:26:31 -0400
+Message-ID: <20070827052631.GA3580@falcon.digizenstudio.com>
+References: <20070825111946.GA7122@falcon.digizenstudio.com> <m34pimdspt.fsf@pc7.dolda2000.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 07:03:46 2007
+X-From: git-owner@vger.kernel.org Mon Aug 27 07:27:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPWlN-00012B-AF
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 07:03:45 +0200
+	id 1IPX7l-0005LN-Da
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 07:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbXH0FDP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 01:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbXH0FDP
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 01:03:15 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:29841 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022AbXH0FDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 01:03:14 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so1928818wah
-        for <git@vger.kernel.org>; Sun, 26 Aug 2007 22:03:13 -0700 (PDT)
-Received: by 10.114.14.1 with SMTP id 1mr495634wan.1188190993032;
-        Sun, 26 Aug 2007 22:03:13 -0700 (PDT)
-Received: by 10.114.149.15 with HTTP; Sun, 26 Aug 2007 22:03:12 -0700 (PDT)
+	id S1751379AbXH0F0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 01:26:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbXH0F0k
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 01:26:40 -0400
+Received: from k2smtpout04-01.prod.mesa1.secureserver.net ([64.202.189.166]:51000
+	"HELO k2smtpout04-01.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751247AbXH0F0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 01:26:39 -0400
+Received: (qmail 871 invoked from network); 27 Aug 2007 05:26:39 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout04-01.prod.mesa1.secureserver.net (64.202.189.166) with ESMTP; 27 Aug 2007 05:26:39 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 5A993100A0B
+	for <git@vger.kernel.org>; Mon, 27 Aug 2007 05:26:39 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 70LMMqhsfeJQ for <git@vger.kernel.org>;
+	Mon, 27 Aug 2007 01:26:33 -0400 (EDT)
+Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id F2406100587
+	for <git@vger.kernel.org>; Mon, 27 Aug 2007 01:26:32 -0400 (EDT)
+Received: by falcon (Postfix, from userid 1000)
+	id EEC2C7B51B; Mon, 27 Aug 2007 01:26:31 -0400 (EDT)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <m34pimdspt.fsf@pc7.dolda2000.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56762>
 
-It seems that the "--bare" option has been removed, I now using 1.5.2.5.
-This makes the documentation in
-http://www.kernel.org/pub/software/scm/git/docs/cvs-migration.html
-incorrect. I was able to manually create a bare directory using the following:
+On Sun, Aug 26, 2007 at 09:02:54PM +0200, Fredrik Tolf wrote:
+> 
+> This is probably not as good an answer as David Watson's suggestion,
+> but if what you want is to commit your current code while still having
+> your savepoint commit in the history, shouldn't you be able to commit
+> your current code and then use git-rebase to rebase it onto the
+> savepoint commit?
 
-$ git-init --shared
-$ git-config core.bare true
-$ mv .git/* .
-$ rmdir .git
-$ git-fetch ~/git-repos/my-repo master:master
+Yep, I tried and it works too. A bit more verbose than a hard reset -
+involved some manual merging in my case, had to update-index and then
+--continue the rebase. But then I think this approach is semantically
+different and probably safer than a hard reset in some cases.
 
-Things seem to be working I can pull and push to the repo after using:
-
-$ git-daemon --enable=receive-pack --reuseaddr
---base-path=/home/wink/git-repos \
---export-all --verbose
-
-But this seems arduous, I suspect I'm missing something.
-
-Cheers,
-
-Wink Saville
+All this is interesting and good to know. Thanks, Fredrik!
+-- 
+Jing Xue
