@@ -1,144 +1,118 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Keep last used delta base in the delta window
-Date: Mon, 27 Aug 2007 23:04:20 +0200
-Message-ID: <8564308zaj.fsf@lola.goethe.zz>
-References: <11881617934179-git-send-email-mkoegler@auto.tuwien.ac.at>
-	<7v3ay5l5wq.fsf@gitster.siamese.dyndns.org>
-	<86veb1thmp.fsf@lola.quinscape.zz>
-	<20070827204320.GA17126@auto.tuwien.ac.at>
+From: "Jason Garber" <jgarber@ionzoft.com>
+Subject: Advise Requested: Branching, Merging, and Deployment
+Date: Mon, 27 Aug 2007 15:59:47 -0500
+Message-ID: <E7DE807861E8474E8AC3DC7AC2C75EE5032F00E3@34093-EVS2C1.exchange.rackspace.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-X-From: git-owner@vger.kernel.org Tue Aug 28 00:17:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 28 00:19:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPllE-0003Rq-Et
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 23:04:36 +0200
+	id 1IPmt0-0003tf-V8
+	for gcvg-git@gmane.org; Tue, 28 Aug 2007 00:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760205AbXH0VEZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 17:04:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762833AbXH0VEY
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 17:04:24 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:50454 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758308AbXH0VEW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2007 17:04:22 -0400
-Received: from mail-in-06-z2.arcor-online.net (mail-in-06-z2.arcor-online.net [151.189.8.18])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 8BFD231EA26;
-	Mon, 27 Aug 2007 23:04:21 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-06-z2.arcor-online.net (Postfix) with ESMTP id 64947ABAA2;
-	Mon, 27 Aug 2007 23:04:21 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-058-178.pools.arcor-ip.net [84.61.58.178])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 1FBFD2351AF;
-	Mon, 27 Aug 2007 23:04:21 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id A63421C3C7A6; Mon, 27 Aug 2007 23:04:20 +0200 (CEST)
-In-Reply-To: <20070827204320.GA17126@auto.tuwien.ac.at> (Martin Koegler's message of "Mon\, 27 Aug 2007 22\:43\:20 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4077/Mon Aug 27 20:40:44 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S1758224AbXH0WLs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Aug 2007 18:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbXH0WLs
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 18:11:48 -0400
+Received: from server107a.exghost.com ([207.97.204.37]:3588 "EHLO
+	server107.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758266AbXH0WLq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2007 18:11:46 -0400
+X-Greylist: delayed 3604 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Aug 2007 18:11:46 EDT
+Received: by server107.appriver.com (CommuniGate Pro PIPE 5.1.11)
+  with PIPE id 89547496; Mon, 27 Aug 2007 17:04:47 -0400
+Received: from [72.32.49.6] (HELO FE2.exchange.rackspace.com)
+  by server107.appriver.com (CommuniGate Pro SMTP 5.1.11)
+  with ESMTP id 89543132 for git@vger.kernel.org; Mon, 27 Aug 2007 16:59:56 -0400
+Received: from 34093-EVS2C1.exchange.rackspace.com ([192.168.1.18]) by FE2.exchange.rackspace.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 27 Aug 2007 15:59:53 -0500
+x-mimeole: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Advise Requested: Branching, Merging, and Deployment
+Thread-Index: Acfo7TPgW8EsAqDLRke4FomQ9hCnvA==
+X-OriginalArrivalTime: 27 Aug 2007 20:59:53.0259 (UTC) FILETIME=[37186FB0:01C7E8ED]
+X-Policy: GLOBAL
+X-Primary: jgarber@ionzoft.com
+X-Note: This Email was scanned by AppRiver SecureTide
+X-ALLOW: jgarber@ionzoft.com ALLOWED
+X-Note: Spam Tests Failed: 
+X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
+X-Note-Sending-IP: 72.32.49.6
+X-Note-Reverse-DNS: fe2.exchange.rackspace.com
+X-Note-WHTLIST: jgarber@ionzoft.com
+X-Note: User Rule Hits: 
+X-Note: Global Rule Hits: 70 80 
+X-Note: Mail Class: ALLOWEDSENDER
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56884>
 
-mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+Hello,
 
-> On Mon, Aug 27, 2007 at 12:07:58PM +0200, David Kastrup wrote:
->> Well, given the little amount of spare time I have for personal
->> projects, I should not go flaunting them too much, but anyway...
->> 
->> I am just drafting implementing a delta-diff size estimator: for every
->> hash value it does not store hash chains or pointers to memory images,
->> but just a bit map of at most 32 (possibly 64 where ulong delivers it,
->> possibly even just 16 bits when one restricts oneself to 16 element
->> windows in order to save memory) delta window files, telling which of
->> the files show such a hash value anywhere. 
->
-> How do you want to select these few hash values?
+Time is valuable, so any of it is appreciated.  I'm looking for sound a=
+dvice on a good strategy for maximizing git's branching and merging cap=
+abilities to assist us in frequent web-app deployments.
 
-Hm?  Are you familiar with diff-delta.c?  I was not going to change
-the hash value computation in there.  It is a 32bit CRC over 16byte
-passages: the delta source is checksummed with a stride of 16 bytes
-and the resulting CRC values are masked to a convenient number of bits
-and used as index into a hash table with disambiguation to actual code
-passages using linked lists.  Then the destination delta is
-checksummed in the same manner but with a stride of 1, and the sums
-are looked up in the hash until a matching prefix is found.
+--
+I am running a project (in git) that has ~20,000 source files and sever=
+al full-time developers making changes constantly.  The project is a we=
+b-app, so the files are a mix of textual source code and (usually) smal=
+l binary files.
 
-So I was going to do the same calculation, but look up a bit mask
-rather than a linked list (namely calculating under the assumption
-that a hash hit implies an actual match).
+We were using Subversion for some time, but eventually the deficiencies=
+ (like "svn status =3D=3D 90 seconds" and no merge tracking) caused me =
+to look for a better solution.  After a lot of research, I ended up her=
+e, and we are in the process of moving all of our projects to git.  Tha=
+nks, by the way!
 
-> I eg. dump database tables as SQL statements in per table files and
-> commit all changes. All lines in each file share a common prefix
-> (INSERT INTO tablename (COL1, COL2, ...) VALUES). Statistics showed,
-> that up to 50% of the hash elements of the delta index were dropped,
-> because they had equal hash values.
+We have always maintained three copies of each project - [Development, =
+Preview, Production].  Changes were typically made in Development sites=
+ and tested.  Then (manually) copied to the Preview sites and tested.  =
+=46inally, they would be manually copied to the Production site.
 
-Yes, I am aware of that.  One somewhat crazy consequence of that is
-that git's deltaing works better on Linux style indentation than on
-GNU style indentation.
+It becomes very difficult to tell (manually) who changed what line of w=
+hat file for each task that needs to be moved into Production.  Some ta=
+sks are long-running, some are short, but in general, it's a mess.
 
-> With you apropach:
->
-> If rare used values are selected as the 32 hash values, you will
-> probably regard files, which contain different tables (and therefore
-> a different prefix), as "similar", although the files have not very
-> much similarity otherwise.
+This is quite different from traditional software development where rel=
+eases are done on a more "predictable" basis.  Unfortunately in our cas=
+e, releases are done on a sub-daily basis (yes, I'm working on that).  =
+We need a lot of agility in whatever strategy we choose.
 
-It's statistics.  Random matches will tend to level out.
+--
+Here are some requirements:
+- Separate change-sets.  Keep track of the changes introduced by each t=
+ask separately.
+- Have changeset ABC stay in the Preview level for a variable amount of=
+ time.
+- Create, Preview, and move to Production changeset DEF while changeset=
+ ABC sits in the Preview level.
+- Developer sanity :)
 
-> If you select the hash values of the prefixes, you will create for
-> each table one cluster (if the table count is < 32/64). This already
-> happens by using the hash value of the path name in the sorting.
->
-> I don't belive, that your idea will improve very much in this case.
-> I fear, that it will be even worser than the current algorithm.
+Here are some intents:
+- To maintain a branch called "Production" which represents what is in =
+production
+- To maintain a branch called "Preview" which represents what is being =
+previewed
 
-Huh?  I am not replacing the current algorithm.  I am doing some
-upfront estimates for getting a good order for doing the current
-algorithm, so that I might abort parts of it early when I know they
-can't improve things.  If the estimates are completely random and/or
-useless, it will mean that you get a slowdown by a comparatively small
-constant factor.
 
->> When a file is considered for deltaing, it is run once against this
->> delta-diff estimator which does not even look at the files again.
->> This delivers a lower bound for the size a delta towards each of
->> the delta candidates can take.  The candidates are then sorted in
->> increasing size of expected delta size and are considered in turn.
->> Once a delta has a lower size than the lowest bound for further
->> delta candidates, no further candidates need to get considered.
->
-> So this means, that we have to hash the target entry too (which
-> could be merged with creating the delta index).
+Any help is greatly appreciated.
 
-Huh?  I don't see what you are getting at.
-
-> We currently only hash an entry, if it is really needed as source in
-> a delta-diff.
-
-Why would you want to hash a non-candidate?
-
->> Also the calculation of a delta can get aborted once it exceeds the
->> size of a previous delta.
->
-> This already happens.
-
-Ah yes.  Overlooked this.  Presorting the candidates should be helpful
-right away then.
-
-> Do you want to do your estimations only against a small window of
-> objects or all objects?
-
-The estimates are made against the candidates in the window.  When a
-candidate leaves the window, its bit in the bit masks gets reused for
-the next candidate entering the window.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+--
+Best Regards,
+=A0
+Jason Garber
+Senior Systems Engineer
+IonZoft, Inc.
+=A0
+(814) 941-2390
+jgarber@ionzoft.com
+=A0
+=A0
