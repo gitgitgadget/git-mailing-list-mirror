@@ -1,86 +1,59 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: Git and OpenDocument (OpenOffice.org) files
-Date: Mon, 27 Aug 2007 15:16:28 +0000 (UTC)
-Message-ID: <loom.20070827T170518-603@post.gmane.org>
-References: <vpqk5rh5mp5.fsf@bauges.imag.fr> <7vps19jnm1.fsf@gitster.siamese.dyndns.org> <vpqtzql17gd.fsf@bauges.imag.fr> <20070827130346.GA8821@glandium.org> <Pine.LNX.4.64.0708271440500.28586@racer.site> <866431rser.fsf@lola.quinscape.zz> <20070827141600.GA11000@glandium.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git-svn tags and branches
+Date: Mon, 27 Aug 2007 17:31:38 +0200
+Organization: glandium.org
+Message-ID: <20070827153138.GA12936@glandium.org>
+References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 17:16:51 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 27 17:33:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPgKg-0002wz-ST
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:16:51 +0200
+	id 1IPgaf-0001EH-Sm
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847AbXH0PQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 11:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbXH0PQr
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:16:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:58755 "EHLO ciao.gmane.org"
+	id S1755196AbXH0PdS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 11:33:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755352AbXH0PdR
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:33:17 -0400
+Received: from vawad.err.no ([85.19.200.177]:54601 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754471AbXH0PQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 11:16:46 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPgKT-0003fA-Qc
-	for git@vger.kernel.org; Mon, 27 Aug 2007 17:16:40 +0200
-Received: from creinus-web.us.es ([150.214.9.245])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:16:37 +0200
-Received: from scallegari by creinus-web.us.es with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:16:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 150.214.9.245 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20061201 Firefox/2.0.0.6 (Ubuntu-feisty))
+	id S1751020AbXH0PdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 11:33:17 -0400
+Received: from aputeaux-153-1-29-74.w82-124.abo.wanadoo.fr ([82.124.191.74] helo=vaio.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IPgZu-0003e2-GW; Mon, 27 Aug 2007 17:33:03 +0200
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1IPgZ0-0003NX-AE; Mon, 27 Aug 2007 17:31:38 +0200
+Content-Disposition: inline
+In-Reply-To: <867inhqaj9.fsf@lola.quinscape.zz>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56848>
 
-Mike Hommey <mh <at> glandium.org> writes:
+On Mon, Aug 27, 2007 at 05:09:30PM +0200, David Kastrup <dak@gnu.org> wrote:
+> I actually don't see how one can safely make them tags at all (rather
+> than branches) since Subversion does not enforce the members of a
+> "tags" subdirectory to remain unchanged after the initial copy.
+> Basically, tags are not different from branches in Subversion from
+> what you can do with them.
 
+Well, git-svn could make tags when the tag/branch is created in subversion,
+and then create a branch on the first commit on top of that tag/branch in
+svn.
 
-> 
-> A zipped file will be 100% different at each revision.
-> The unzipped counterpart may be similar for 90% or more between revisions.
-> 
-> Mike
-> 
-
-In my (modest) experience, not really:
-
-in fact, odf files are a zip collection of many individual files (for instance
-if you have an impress presentation, the zip collection will contain all
-the images that appear in the presentation...)
-
-Now: zip is different from .tar.gz in that tar.gz first concatenates the
-files and then compresses the overall thing, while zip compresses or stores
-the individual files and then concatenates and indexes the result.
-
-The difference is that in a tar.gz file, changing a single byte in one of
-the internal files can lead to a completely different compressed stream,
-while in a zip file, changing an internal file only affects the relevant
-part of the zipped file.
-
-This means that:
-- if you have an odf document containing lots of internal objects (e.g.
-images) that do not change very much from version to version, git can make
-very good deltas.
-- conversely if you have an odf document whose size is dominated by proper
-content, then git will not be able to make good deltas.
-
-As an example, I am finding that impress presentations (dominated by images)
-can delta very well, while calc spreadsheets (dominated by content) do not.
-
-Probably it could be nice to make a filter that takes an odf file and 
-re-zips it so that the content.xml inner file is only stored, rather
-than deflated.  Then this could be used with the git file filtering
-machinery.
-
-Sergio
+Mike
