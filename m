@@ -1,87 +1,83 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 Subject: Re: git-svn tags and branches
-Date: Mon, 27 Aug 2007 17:36:20 +0200
-Message-ID: <A0329662-9C87-44C2-84E4-4F60DCC1E95F@lrde.epita.fr>
-References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz> <20070827153138.GA12936@glandium.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-95--531617166"
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 17:36:41 2007
+Date: Mon, 27 Aug 2007 17:42:36 +0200
+Message-ID: <faurcl$p0o$1@sea.gmane.org>
+References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 17:42:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPgds-0002kT-JM
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:36:40 +0200
+	id 1IPgjU-00054v-V7
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757914AbXH0Pgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 11:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757904AbXH0Pgc
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:36:32 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:42528 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757891AbXH0Pga (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 11:36:30 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
-	(Exim 4.50)
-	id 1IPgdg-0004vm-O8; Mon, 27 Aug 2007 17:36:28 +0200
-In-Reply-To: <20070827153138.GA12936@glandium.org>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1756319AbXH0Pm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 11:42:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756039AbXH0Pm1
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:42:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:56716 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756007AbXH0Pm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 11:42:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IPgjO-0007AP-Up
+	for git@vger.kernel.org; Mon, 27 Aug 2007 17:42:22 +0200
+Received: from host-62-10-78-152.cust-adsl.tiscali.it ([62.10.78.152])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:42:22 +0200
+Received: from giuseppe.bilotta by host-62-10-78-152.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:42:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-62-10-78-152.cust-adsl.tiscali.it
+User-Agent: KNode/0.10.5
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56851>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-95--531617166
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+On Monday 27 August 2007 17:09, David Kastrup wrote:
 
-On Aug 27, 2007, at 5:31 PM, Mike Hommey wrote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>>
+>> Currently, git-svn imports svn tags as lightweight git tags.
+> 
+> It does?  I see them as branches.
 
-> On Mon, Aug 27, 2007 at 05:09:30PM +0200, David Kastrup  
-> <dak@gnu.org> wrote:
->> I actually don't see how one can safely make them tags at all (rather
->> than branches) since Subversion does not enforce the members of a
->> "tags" subdirectory to remain unchanged after the initial copy.
->> Basically, tags are not different from branches in Subversion from
->> what you can do with them.
->
-> Well, git-svn could make tags when the tag/branch is created in  
-> subversion,
-> and then create a branch on the first commit on top of that tag/ 
-> branch in
-> svn.
->
+Oh, I thought that them being in refs/remote/tags meant they
+were remote tags. But yes, I had noticed them appearing with
+git branch -r
 
-Or update the tag ref in Git so that it points to the new "HEAD" of  
-the SVN tag.  But all in all, it's more consistent to have it look  
-like a branch from the Git point of view, because that's really what  
-it is after all.
+>> I was susprised when I discovered this (from 'git describe'
+>> failing and some helpful assistance on the IRC channel), so
+>> I'm now wondering: is there a technical reason why they
+>> aren't converted to annotated tags? If not, would it be
+>> possible to implement this in git-svn, possibly with some
+>> way to 'fix' existing git-svn repository?
+> 
+> I actually don't see how one can safely make them tags at all (rather
+> than branches) since Subversion does not enforce the members of a
+> "tags" subdirectory to remain unchanged after the initial copy.
+> Basically, tags are not different from branches in Subversion from
+> what you can do with them.
+
+Although this is technically true, I doubt there are many Subversion
+projects which alter the members of a tags subdirectory. So the fact
+that it's technically possible doesn't really mean it happens.
+
+I mean, even in git you can do some pretty dirty tag stuff. It may
+not be as straightforward as in svn, but still ...
+
+So yes, I still think that an option to convert svn tags to annotated
+tags would be appropriate. Wether or not it should be default, it's
+a different matter, of course.
 
 -- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-95--531617166
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFG0u90wwE67wC8PUkRAiDvAJ97YjHLgLqJsZO5Q9ZDeTkMfxCiBACfRUm5
-tHTVo0lY39FC+6heSfHLQRI=
-=dvLE
------END PGP SIGNATURE-----
-
---Apple-Mail-95--531617166--
+Giuseppe "Oblomov" Bilotta
