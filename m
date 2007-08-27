@@ -1,73 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: name-rev does not show the shortest path
-Date: Mon, 27 Aug 2007 10:57:22 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708271049000.28586@racer.site>
-References: <20070823103817.GF6573@informatik.uni-freiburg.de>
- <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
- <20070824125230.GA12030@informatik.uni-freiburg.de>
- <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk>
- <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0708251701150.16728@wbgn129.biozentrum.uni-wuerzburg.de>
- <20070826092323.GB30474@coredump.intra.peff.net>
- <Pine.LNX.4.64.0708261733400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
- <20070827092422.GA20340@coredump.intra.peff.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] [RED] git-init: Cannot setup bare repository
+Date: Mon, 27 Aug 2007 11:55:23 +0200
+Message-ID: <20070827095523.GQ1219@pasky.or.cz>
+References: <20070826204531.11592.36481.stgit@rover> <Pine.LNX.4.64.0708270949590.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 27 11:55:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 27 11:55:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPbJd-0004zw-8M
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:55:25 +0200
+	id 1IPbJi-00051b-Eq
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388AbXH0JzR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 05:55:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753349AbXH0JzR
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:55:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42448 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753378AbXH0JzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 05:55:14 -0400
-Received: (qmail invoked by alias); 27 Aug 2007 09:55:12 -0000
-Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
-  by mail.gmx.net (mp010) with SMTP; 27 Aug 2007 11:55:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+QyHwUX+2QSAgLUz9n93kgqct23tgRd15yPWOunZ
-	h/RuH3QtQsUrVk
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070827092422.GA20340@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1753454AbXH0Jz0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 05:55:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753422AbXH0Jz0
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:55:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56907 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753349AbXH0JzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 05:55:25 -0400
+Received: (qmail 19834 invoked by uid 2001); 27 Aug 2007 11:55:23 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708270949590.28586@racer.site>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56801>
 
-Hi,
+  Hi,
 
-On Mon, 27 Aug 2007, Jeff King wrote:
-
-> On Sun, Aug 26, 2007 at 05:38:22PM +0200, Johannes Schindelin wrote:
+On Mon, Aug 27, 2007 at 10:51:04AM CEST, Johannes Schindelin wrote:
+> On Sun, 26 Aug 2007, Petr Baudis wrote:
 > 
-> > The old code _should_ have worked; it is more likely that your 
-> > different metric just hides the bug.  The old metric tried to favour 
-> > less merge traversals over more traversals, but at the same time, it 
-> > favoured smaller numbers over larger ones (but as you found out, only 
-> > in the last component).
+> > git-init is totally broken wrt. setting up bare repository - it thinks 
+> > no repository is bare (maybe I could coerce it to think some 
+> > repositories indeed are bare, but I have my doubts).
 > 
-> Right, the problem is that we have effectively _thrown away_ the
-> "smaller numbers over larger ones" information for components other than
-> the last.
+> You were too busy playing Go, probably, so you missed my patch which tried 
+> to fix this issue.  Alas, it broke more than it fixed, so it was just 
+> worked around for git-clone --bare.
 
-You're right.  I misremembered name-rev to use a fifo instead of stupid 
-recursion.
+  AFAICS that patch is already applied as well; I tried to ask on IRC
+for more fixes but seemed there is none and Junio almost threatened to
+even release 1.5.3 with this bug. ;-) Well, I just needed something that
+would fix this on repo.or.cz which totally broke after upgrade to new
+Git version.
 
-Will fix.
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
