@@ -1,58 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 1/2] gitweb: Lift any characters restriction on
-	searched strings
-Date: Mon, 27 Aug 2007 05:35:05 +0200
-Message-ID: <20070827033505.GP1219@pasky.or.cz>
-References: <20070825221847.11739.46741.stgit@rover> <fat7s1$t4a$1@sea.gmane.org>
+From: "Wink Saville" <wink@saville.com>
+Subject: Setting up remote repository --bare
+Date: Sun, 26 Aug 2007 22:03:12 -0700
+Message-ID: <d4cf37a60708262203j1cdd6e88u82f65f7a435c5dc2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 05:35:46 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 07:03:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPVOA-0003CR-RK
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 05:35:43 +0200
+	id 1IPWlN-00012B-AF
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 07:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028AbXH0DfK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Aug 2007 23:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752743AbXH0DfJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Aug 2007 23:35:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55939 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754018AbXH0DfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2007 23:35:08 -0400
-Received: (qmail 13327 invoked by uid 2001); 27 Aug 2007 05:35:05 +0200
+	id S1751182AbXH0FDP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 01:03:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbXH0FDP
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 01:03:15 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:29841 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbXH0FDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 01:03:14 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so1928818wah
+        for <git@vger.kernel.org>; Sun, 26 Aug 2007 22:03:13 -0700 (PDT)
+Received: by 10.114.14.1 with SMTP id 1mr495634wan.1188190993032;
+        Sun, 26 Aug 2007 22:03:13 -0700 (PDT)
+Received: by 10.114.149.15 with HTTP; Sun, 26 Aug 2007 22:03:12 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <fat7s1$t4a$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56761>
 
-On Mon, Aug 27, 2007 at 03:02:59AM CEST, Jakub Narebski wrote:
-> Petr Baudis wrote:
-> 
-> > Everything is already fully quoted along the way so I believe this to be
-> > unnecessary at this point. It would pose trouble for regexp searches.
-> 
-> Ack. It looks correct.
->  
-> > Cc: Jakub Narebski <jnareb@gmail.com>
-> > Signed-off-by: Petr Baudis <pasky@suse.cz>
-> 
-> Actually I have not received it by the mail, so "Cc:" in the body didn't
-> work. Did you use git-send-mail?
+It seems that the "--bare" option has been removed, I now using 1.5.2.5.
+This makes the documentation in
+http://www.kernel.org/pub/software/scm/git/docs/cvs-migration.html
+incorrect. I was able to manually create a bare directory using the following:
 
-No, I use StGIT. The last time I've sent this patch it had the Cc' so I
-thought "cool, stg mail can do this automagically", but apparently I
-probably added that to its commandline manually...
+$ git-init --shared
+$ git-config core.bare true
+$ mv .git/* .
+$ rmdir .git
+$ git-fetch ~/git-repos/my-repo master:master
 
--- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+Things seem to be working I can pull and push to the repo after using:
+
+$ git-daemon --enable=receive-pack --reuseaddr
+--base-path=/home/wink/git-repos \
+--export-all --verbose
+
+But this seems arduous, I suspect I'm missing something.
+
+Cheers,
+
+Wink Saville
