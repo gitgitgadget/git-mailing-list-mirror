@@ -1,83 +1,62 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: git-svn tags and branches
-Date: Mon, 27 Aug 2007 17:42:36 +0200
-Message-ID: <faurcl$p0o$1@sea.gmane.org>
-References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 17:42:21 +0200
+Message-ID: <e7bda7770708270842s57eea8a3jcc52e2e7e8464b75@mail.gmail.com>
+References: <200708190128.43515.jnareb@gmail.com>
+	 <200708270251.05762.jnareb@gmail.com>
+	 <20070827014034.GD18160@spearce.org>
+	 <200708271315.07919.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
 X-From: git-owner@vger.kernel.org Mon Aug 27 17:42:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPgjU-00054v-V7
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:42:29 +0200
+	id 1IPgjU-00054v-Bk
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756319AbXH0Pm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 11:42:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756039AbXH0Pm1
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:42:27 -0400
-Received: from main.gmane.org ([80.91.229.2]:56716 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756007AbXH0Pm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 11:42:27 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPgjO-0007AP-Up
-	for git@vger.kernel.org; Mon, 27 Aug 2007 17:42:22 +0200
-Received: from host-62-10-78-152.cust-adsl.tiscali.it ([62.10.78.152])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:42:22 +0200
-Received: from giuseppe.bilotta by host-62-10-78-152.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:42:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-62-10-78-152.cust-adsl.tiscali.it
-User-Agent: KNode/0.10.5
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1755928AbXH0PmX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 11:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755941AbXH0PmX
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:42:23 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:22654 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755708AbXH0PmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 11:42:22 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so2096476wah
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 08:42:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WWLoIqoBDqkUqjfd4qsEsMHre4BZxVmtnkdWwqqaKbJj/7zyMW3TIKVMCNPYKMfEGBi1unNjFn4PQaCaIAQfJC/eHWwWIp8ig9vGcp8fOQuZGIXXk9AcHclpk2GodeBUUqfCzfqQbLd82PThHyUnaKmXEh8ja68pc6WQ47WNZA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Cb8vEXfjvxTa3XsHW77fnN/iMkUz9fwqLJsm9IPJ8KsiJVed/3XSPenBTNvL3SzLnlc1Rcn+IPHqKBKLUmNUgRg/tSk/wU1/V3RdgL0KHq+2aFmgO2F9M6oHDh5HQLevNV0POYMi45wAp+Hutza8pV8vSp0e+udhFsO75VHaq/s=
+Received: by 10.114.154.1 with SMTP id b1mr1623823wae.1188229341886;
+        Mon, 27 Aug 2007 08:42:21 -0700 (PDT)
+Received: by 10.114.180.20 with HTTP; Mon, 27 Aug 2007 08:42:21 -0700 (PDT)
+In-Reply-To: <200708271315.07919.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56852>
 
-On Monday 27 August 2007 17:09, David Kastrup wrote:
+On 8/27/07, Jakub Narebski <jnareb@gmail.com> wrote:
 
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>
->> Currently, git-svn imports svn tags as lightweight git tags.
-> 
-> It does?  I see them as branches.
+> I wonder if PyGTK is as portable as Tcl/Tk...
 
-Oh, I thought that them being in refs/remote/tags meant they
-were remote tags. But yes, I had noticed them appearing with
-git branch -r
+Tk is integrated in the official Python library while PyGTK is not so
+I guess Tk wins even on Python (Idle [included editor] and matplotlib
+uses it as default).
 
->> I was susprised when I discovered this (from 'git describe'
->> failing and some helpful assistance on the IRC channel), so
->> I'm now wondering: is there a technical reason why they
->> aren't converted to annotated tags? If not, would it be
->> possible to implement this in git-svn, possibly with some
->> way to 'fix' existing git-svn repository?
-> 
-> I actually don't see how one can safely make them tags at all (rather
-> than branches) since Subversion does not enforce the members of a
-> "tags" subdirectory to remain unchanged after the initial copy.
-> Basically, tags are not different from branches in Subversion from
-> what you can do with them.
+PyGTK works pretty well though even on win32 (after installing a
+handful dependencies). I haven't tried to compile any of these myself
+though, compiling these things on win32 is usually a PITA.
 
-Although this is technically true, I doubt there are many Subversion
-projects which alter the members of a tags subdirectory. So the fact
-that it's technically possible doesn't really mean it happens.
-
-I mean, even in git you can do some pretty dirty tag stuff. It may
-not be as straightforward as in svn, but still ...
-
-So yes, I still think that an option to convert svn tags to annotated
-tags would be appropriate. Wether or not it should be default, it's
-a different matter, of course.
-
--- 
-Giuseppe "Oblomov" Bilotta
+//Torgil
