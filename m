@@ -1,68 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] In Examples, explain option -r and refer to git-rev-list[1]
-Date: Mon, 27 Aug 2007 02:55:07 -0700
-Message-ID: <7vy7fxjo90.fsf@gitster.siamese.dyndns.org>
-References: <r6lqfgnp.fsf@cante.net> <46D28502.3030003@etek.chalmers.se>
-	<7vy7fxl7hx.fsf@gitster.siamese.dyndns.org>
-	<7vbqctl6ky.fsf@gitster.siamese.dyndns.org>
-	<20070827084423.GA19230@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: name-rev does not show the shortest path
+Date: Mon, 27 Aug 2007 10:57:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708271049000.28586@racer.site>
+References: <20070823103817.GF6573@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk>
+ <20070824125230.GA12030@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk>
+ <7v6434eq9o.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0708251701150.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+ <20070826092323.GB30474@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0708261733400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+ <20070827092422.GA20340@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jari Aalto <jari.aalto@cante.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Lukas =?utf-8?Q?Sandstr=C3=B6m?= <lukass@etek.chalmers.se>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 27 11:55:18 2007
+X-From: git-owner@vger.kernel.org Mon Aug 27 11:55:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPbJV-0004xp-He
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:55:17 +0200
+	id 1IPbJd-0004zw-8M
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbXH0JzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1753388AbXH0JzR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 05:55:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753349AbXH0JzR
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:55:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42448 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753378AbXH0JzO (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 27 Aug 2007 05:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753388AbXH0JzO
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:55:14 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:36996 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195AbXH0JzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 05:55:13 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 00FA812936A;
-	Mon, 27 Aug 2007 05:55:30 -0400 (EDT)
-In-Reply-To: <20070827084423.GA19230@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 27 Aug 2007 04:44:23 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Received: (qmail invoked by alias); 27 Aug 2007 09:55:12 -0000
+Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
+  by mail.gmx.net (mp010) with SMTP; 27 Aug 2007 11:55:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+QyHwUX+2QSAgLUz9n93kgqct23tgRd15yPWOunZ
+	h/RuH3QtQsUrVk
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070827092422.GA20340@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56800>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Mon, Aug 27, 2007 at 01:33:49AM -0700, Junio C Hamano wrote:
->
->> --- a/builtin-log.c
->> +++ b/builtin-log.c
->> @@ -258,6 +258,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
->>  	git_config(git_log_config);
->>  	init_revisions(&rev, prefix);
->>  	rev.always_show_header = 1;
->> +	rev.diffopt.recursive = 1;
->>  	cmd_log_init(argc, argv, prefix, &rev);
->>  	return cmd_log_walk(&rev);
->>  }
->
-> This should perhaps rather go in cmd_log_init (and be removed from
-> cmd_show and cmd_whatchanged). I think this is semantically a little
-> more clear, and the change will affect other log porcelains (right now
-> just "git-reflog --name-status", but also new ones if they are added).
->
-> But yes, this is post-1.5.3, so I will shut up rather than nitpicking
-> your "not meant to be applied now" patches.
+On Mon, 27 Aug 2007, Jeff King wrote:
 
-Thanks for your comments; rather than shutting up, could you
-send an improvement after 1.5.3 happens?
+> On Sun, Aug 26, 2007 at 05:38:22PM +0200, Johannes Schindelin wrote:
+> 
+> > The old code _should_ have worked; it is more likely that your 
+> > different metric just hides the bug.  The old metric tried to favour 
+> > less merge traversals over more traversals, but at the same time, it 
+> > favoured smaller numbers over larger ones (but as you found out, only 
+> > in the last component).
+> 
+> Right, the problem is that we have effectively _thrown away_ the
+> "smaller numbers over larger ones" information for components other than
+> the last.
+
+You're right.  I misremembered name-rev to use a fifo instead of stupid 
+recursion.
+
+Will fix.
+
+Ciao,
+Dscho
