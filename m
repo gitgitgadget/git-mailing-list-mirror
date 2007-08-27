@@ -1,92 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Git and OpenDocument (OpenOffice.org) files
-Date: Mon, 27 Aug 2007 11:52:22 +0200
-Message-ID: <vpqk5rh5mp5.fsf@bauges.imag.fr>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 11:54:40 +0200
+Message-ID: <46D29F60.9080708@op5.se>
+References: <200708190128.43515.jnareb@gmail.com>	 <200708270251.05762.jnareb@gmail.com> <61e816970708262024m1cbbfd4dxfeb10b56397670b8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 11:52:39 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Dan Chokola <dan@chokola.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 11:54:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPbGx-0004D9-8Z
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:52:39 +0200
+	id 1IPbJ2-0004pO-A7
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbXH0Jwg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 05:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbXH0Jwg
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:52:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:63087 "EHLO imag.imag.fr"
+	id S1753299AbXH0Jyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 05:54:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752909AbXH0Jyp
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:54:45 -0400
+Received: from mail.op5.se ([193.201.96.20]:34493 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753195AbXH0Jwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 05:52:35 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7R9qMAp003915
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 27 Aug 2007 11:52:23 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IPbGg-0005C9-Op; Mon, 27 Aug 2007 11:52:22 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IPbGg-0005MF-Kb; Mon, 27 Aug 2007 11:52:22 +0200
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 27 Aug 2007 11:52:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752535AbXH0Jyo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 05:54:44 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id DAD6B1943F6;
+	Mon, 27 Aug 2007 11:54:42 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id W67nyH1DMBzO; Mon, 27 Aug 2007 11:54:42 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id CA0D419433E;
+	Mon, 27 Aug 2007 11:54:41 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <61e816970708262024m1cbbfd4dxfeb10b56397670b8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56798>
 
-Hi,
+Dan Chokola wrote:
+> On 8/26/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+>> 55. Would commerical (paid) support from a support vendor be of interest
+>> to you/your organization?
+>>
+>> Only 44 answers yes, 217 no, 126 not applicable (which was menat to
+>> encompass people who do not use git for work).
+>>
+> 
+> Are questions like this at all indicative of where Git is looking towards going?
+> 
 
-I found a way to use git comfortably with OpenDocument files (that is,
-what OpenOffice.org and Koffice produce. Text, Presentations and
-Spreadsheets).
+As Dscho wrote, I should think not, but having a company basing its business
+around an opensource product usually means a lot of company-like features
+get implemented, such as various forms of reporting, documentation, integration
+with bugtrackers and trouble-ticket systems, etc, etc...
 
-Briefly, you have to install odf2txt ( http://stosberg.net/odt2txt/ )
-and the script below, together with GIT_EXTERNAL_DIFF and/or diff
-drivers in .gitattributes. That give you the text diff you're used to.
+It is the way of companies to throw money rather than competence at temporary
+problems, while more altruistic organizations such as opensource projects do
+the exact opposite.
 
-Everything is documented here:
+I for one would love if some support company could give git courses in sweden,
+since that'd mean I wouldn't have to. ;-)
 
-  http://www-verimag.imag.fr/~moy/opendocument/
-
-Remarks are welcome (I'll post some remarks about Git's custom diff
-driver in a separate thread).
-
-
-Script available from
-http://www-verimag.imag.fr/~moy/opendocument/git-oodiff and reproduced
-here :
-
-#! /bin/sh
-
-# Script acceptable as a value for GIT_EXTERNAL_DIFF.
-# For example, you can see the changes in your working tree with
-# 
-# $ GIT_EXTERNAL_DIFF=git-oodiff diff
-
-echo $0 "$@"
-
-if odt2txt "$2"  > /tmp/oodiff.$$.1  && \
-    odt2txt "$5" > /tmp/oodiff.$$.2 ; then
-    if diff -L "a/$1" -L "b/$1" -u /tmp/oodiff.$$.{1,2}; then
-        # no text change
-        if diff -q "$2" "$5"; then
-            : # no change at all
-        else
-            echo "OpenDocument files a/$1 and b/$1 files differ (same text content)"
-        fi
-    fi
-else
-    # conversion failed. Fall back to plain diff.
-    diff -L "a/$1" -L "b/$1" -u "$2" "$5"
-fi
-
-rm -f /tmp/oodiff.$$.{1,2}
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
