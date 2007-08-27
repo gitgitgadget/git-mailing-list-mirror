@@ -1,62 +1,60 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: git-import.sh using git-fast-import
-Date: Mon, 27 Aug 2007 19:44:44 +0200
-Message-ID: <46D30D8C.204@hackvalue.de>
-References: <fcaeb9bf0708270913o37b2dbdfw2f5f7d89d9ab1d21@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: repo.or.cz wishes?
+Date: Mon, 27 Aug 2007 11:58:57 -0700
+Message-ID: <7vir70ztvy.fsf@gitster.siamese.dyndns.org>
+References: <20070826235944.GM1219@pasky.or.cz>
+	<20070827001634.GB1976MdfPADPa@greensroom.kotnet.org>
+	<20070827004153.GN1219@pasky.or.cz>
+	<alpine.LFD.0.999.0708271114470.25853@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 20:39:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, skimo@liacs.nl, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Aug 27 21:08:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPjJZ-0005LN-3T
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 20:27:53 +0200
+	id 1IPjoD-0007cm-BJ
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 20:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757507AbXH0S1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 14:27:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757812AbXH0S1t
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 14:27:49 -0400
-Received: from avalon.gnuzifer.de ([85.10.199.84]:53444 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756858AbXH0S1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 14:27:48 -0400
-X-Greylist: delayed 2606 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Aug 2007 14:27:48 EDT
-Received: from 0-063.vpn.rwth-aachen.de ([134.130.240.63]:52282)
-	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1IPidR-0007FL-Js
-	for git@vger.kernel.org; Mon, 27 Aug 2007 19:44:21 +0200
-User-Agent: Thunderbird 2.0.0.6 (X11/20070803)
-In-Reply-To: <fcaeb9bf0708270913o37b2dbdfw2f5f7d89d9ab1d21@mail.gmail.com>
-X-Enigmail-Version: 0.95.2
-OpenPGP: id=42F6DE81;
-	url=http://pgpkeys.pca.dfn.de/pks/lookup?op=get&search=0x58EEB17842F6DE81
-X-SA-Exim-Connect-IP: 134.130.240.63
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1753959AbXH0S7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 14:59:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906AbXH0S7I
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 14:59:08 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:45388 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753143AbXH0S7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 14:59:07 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A63B91296E4;
+	Mon, 27 Aug 2007 14:59:21 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.999.0708271114470.25853@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 27 Aug 2007 11:23:52 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56868>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-nice of you to share, but i think the policy on this mailing list is to
-include patches (and probably shellscripts like your's) in the message
-itself rather than create a file attachment. I for one find it much more
-convenient.
-
-regards, jojo
-
-Nguyen Thai Ngoc Duy wrote:
-> It is not really good. It does not run as fast as git-add &&
-> git-commit. But it can swallow big directories that git-add &&
-> git-commit can't. So I think I would share. It's also simpler than
-> those in contrib/fast-import, making it a good start for
-> git-fast-import's new users.
+> On Mon, 27 Aug 2007, Petr Baudis wrote:
+> ...
+> It's as stupid as it would be to require people to say
 >
-> To run it, move inside the directory you want to import then type
-> ./git-import.sh master 'your import message'
+> 	scp cp+ssh://host/filename .
+>
+> and nobody sane would *ever* advocate something that stupid. It's not how 
+> it's done.
+>
+> So why do you continue to advocate "git+ssh://", when nobody else does, 
+> and several people have asked you not to.
+
+Chuckles...
+
+I'd rather see hostname:/path/to/file on the page as it tends to
+be even shorter.
