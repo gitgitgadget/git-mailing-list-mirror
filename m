@@ -1,176 +1,99 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: new to git
-Date: Mon, 27 Aug 2007 22:22:40 +0200
-Message-ID: <46D33290.20405@op5.se>
-References: <46D32973.8030104@krose.org>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: .gitignore, .gitattributes, .gitmodules, .gitprecious?,.gitacls? etc.
+Date: Mon, 27 Aug 2007 13:27:48 -0700
+Message-ID: <a1bbc6950708271327x4dd948d4m8e9e35f757a7d92e@mail.gmail.com>
+References: <7vhcmmpxed.fsf@gitster.siamese.dyndns.org>
+	 <B4A2AE9980774365B5D14B442A7A22F6@ntdev.corp.microsoft.com>
+	 <20070826100647.GH1219@pasky.or.cz>
+	 <4C603F7C51884DF8AFAEC3F6E263798D@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>
-To: Kyle Rose <krose@krose.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 22:28:42 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Aug 27 22:30:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPl79-0004aC-TB
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 22:23:12 +0200
+	id 1IPlCL-0006U7-HW
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 22:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758565AbXH0UWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 16:22:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758305AbXH0UWx
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 16:22:53 -0400
-Received: from mail.op5.se ([193.201.96.20]:50880 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755624AbXH0UWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 16:22:51 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2A3ED1943F2;
-	Mon, 27 Aug 2007 22:22:43 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.000, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UgZ5PBLdxP2D; Mon, 27 Aug 2007 22:22:42 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 17BF4194020;
-	Mon, 27 Aug 2007 22:22:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <46D32973.8030104@krose.org>
+	id S1763521AbXH0U1w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 16:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763519AbXH0U1v
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 16:27:51 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:38995 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763511AbXH0U1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 16:27:50 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1192785nze
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 13:27:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XCV84uYPokFsO9oroOO/H7zlkKlnruvW930HejYilHcd3pqwwhipBdEqihUGVZZjIx5J8PCdwSxrSKsBmhcqE2lP0B7eXZKoA7kgml83AJkrerLlw7Iv28eH+ybjQRhZHhQGmAMm8KpnkVF/uo6oEsrPodD2KxrA23O81zojq2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MyH/cIVlnlEFQKkifo78K0gWmL0Kv4dZ0Y/iXlNjoPxo2Ng0Ly+h+NvwI/tuu0azEAgujPKVfc2uhU5R2MyyK5x1XFLysHkmz8L0A7ulCWe9X0YvMz12YHOi2d7Zz9NSQy66WG+4qnAumso8ISYYaHgGtt/Y5Bz1D/WuE/bGMVY=
+Received: by 10.140.144.4 with SMTP id r4mr3024725rvd.1188246468786;
+        Mon, 27 Aug 2007 13:27:48 -0700 (PDT)
+Received: by 10.141.2.18 with HTTP; Mon, 27 Aug 2007 13:27:48 -0700 (PDT)
+In-Reply-To: <4C603F7C51884DF8AFAEC3F6E263798D@ntdev.corp.microsoft.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56877>
 
-First of all, welcome to git :)
+----- Original Message -----
+From: "Petr Baudis" <pasky@suse.cz>
+> On Sun, Aug 26, 2007 at 10:02:50AM CEST, Dmitry Kakurin wrote:
+>>>> My knowledge of Git internals is quite limited, but if *I* were to do
+>>>> it right now, I'd introduce a META entry in every TREE object that
+>>>> would point to a BLOB that contains combined content of
+>>>> .gitattributes, .gitignore etc.
+>>> A tree that has .gitattributes (and I am assuming in the longer
+>>> term you can use "ignore" and "precious" in .gitattributes
+>>> instead of using .gitignore) POINTS TO A BLOB already, so what
+>>> you are saying does not add anything to what we already have,
+>>> other than that you are renaming .gitattributes to "META ENTRY".
+>>
+>> Almost true! The difference is: META BLOBS are not created as files in the
+>> workspace (not during checkout, not ever).
+>> In order to edit it you'd have to use 'git meta' command.
+>> So once again, there is only one place to check for metadata - the index.
+>
+> It's still not clear to me how this would help anything, though I didn't
+> watch late Git development. Can you explain some particular scenario
+> where this would improve the current situation?
 
-Having been away from the mailing list for too long, I can't answer all
-your questions. I'll take a stab at the ones I've got a clue about though.
+Here is the problem: we need to apply crlf attributes to a file. We
+could have .gitattributes both in the index and in the worktree.
+Which one do we use?
+In general .gitattributes file could be (U)nchanged, (C)hanged, (NP)
+NotPresent in each place.
+This gives us 3x3 matrix = 9 special cases to handle. When you think
+about this a little more you realize that even that
+is not enough and we need to take into account direction of data
+movement (index -> filesystem or vice versa).
+This doubles the matrix to 18 cases. Even if we come up with a very
+good choice for every case (which is doubtful)
+there is no way this could be *easily* explained to end user, or even memorized.
+This leads to a simple idea that mostly works:
+1. when files are moved from index to filesystem, then only
+.gitattributes in the index is used, if it's not there == no special
+attributes.
+2. when files are moved from filesystem to index, then only
+.gitattributes in filesystem is used, again if it's not there == no
+special attributes.
 
-I also recommend that you upgrade your git installation to at least 1.5.3,
-as most of the people figuring on this list will most likely give advice
-that matches that version.
+Then, in any operation, only one .gitattributes is taken into account.
+We could stop here, but to me this redundancy still has some room for
+confusion and looks unnecessary.
+Plus there is still room for unintentional abuse (by mistake).
 
-For reference, the git documentation can be found at
-http://www.kernel.org/pub/software/scm/git/docs/
+That's why I think it's a good idea to always have only one .gitattributes.
 
-J. Bruce Fields et al have written some really excellent introductory
-documents which are a must to anyone who wishes to flatten the initial
-learning curve a bit.
-
-Kyle Rose wrote:
-> After many years of dissatisfaction with the limitations of CVS, and
-> after getting fed up with the complexity of configuring and maintaining
-> a SVN setup, I just started using git for my own personal projects.  I
-> have to say it's quite nice and fits the UNIX philosophy well: fast,
-> simple, powerful.
-> 
-> I've been playing with it for a few weeks and generally understand what
-> is going on, but I do have a few usage questions that I couldn't find
-> answered in the docs:
-> 
-> (1) Let's say I:
-> 
-> git clone something
-> git branch foo
-> git checkout foo
-> <make some changes>
-> git commit -a
-> git checkout master
-> git pull . foo
-> git push
-> git pull
-> 
-> what is actually happening?  The pull appears to do something (i.e., I get:
-> 
-
-git pull = git fetch + git merge. The notation you use above is obsoleted
-and no longer works in git 1.5.3. Instead you'd have to replace
-
-	git pull . foo
-
-with
-
-	git merge foo
-
-which will most likely clear up some confusion.
-
-> * refs/remotes/origin/master: fast forward to branch 'master' of
-> /home/krose/git-repository/baz/
->   old..new: 7cf088c..d344f98
-> 
-> ), but makes no changes locally since I have the latest revision. 
-> Another subsequent git pull does, in fact, say everything is up to date.
-> 
-
-It should have made changes to your local tree, namely the ones you added
-to branch foo that weren't in master before you merged.
-
-The fact that it turned out to be a fast forward only means that you had
-no additional commits on top of master, so the history in foo could be
-applied on top of master without any file-level merging taking place.
-
-> (2) Any way to disable this warning:
-> 
-> Warning: No merge candidate found because value of config option
->          "branch.local.merge" does not match any remote branch fetched.
-> 
-
-Yes. Edit your .git/config file to add a merge candidate for your local
-branch.
-
-> (3) I notice I can't reset --hard a single file.  So, if I want to
-> revert a single file to some revision, blowing away my changes, what is
-> the accepted way of doing this?  Is there a way to do the equivalent of
-> a p4 print foo@some_revision?
-> 
-
-	git checkout treeish path/to/file
-
-according to the man-page at least. "treeish" here can be substituted
-for a revision, which in git is represented by a 40 byte SHA1 hash, but
-also has a lot of short-hand options. See "git help rev-list" for more
-info on that.
-
-> (4) I'm still not clear on when a dst should and should not be used in a
-> refspec.  It appears that one can only do non-fast forward updates to
-> the branch that is checked out (which makes sense, since you may need to
-> resolve), but other than that, what is the difference between
-> 
-> git checkout foo
-> git pull . master
-> 
-> and
-> 
-> git checkout master
-> git push . master:foo
-> 
-> ?
-> 
-
-Here I'm clueless, except that this matches old syntax which is no longer
-valid. I'd recommend you to upgrade to 1.5.3 so that you get to use
-git-merge for local merges. The "use push/pull for merging" has caused
-enough confusion, I think.
-
-> (5) Are there any tools for managing some of the metadata (e.g., the
-> origin URL) or is it expected that one edit it directly?
-> 
-
-See the git-remote man page. It's available online if you don't have it.
-
-> Thanks for all your work on this: git fills a need I didn't know I had
-> until I actually found myself using it: a completely decentralized patch
-> management system.
-> 
-
-It's more than that, but many of us share your feeling about it filling
-a need we didn't know we had.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+- Dmitry
