@@ -1,66 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/2] Add "--only-untracked" flag to status commands.
-Date: Mon, 27 Aug 2007 15:18:18 +0200
-Message-ID: <46D2CF1A.9020303@op5.se>
-References: <4fcfda4a654b003f3ae3dc8d56424b5f59f48093.1187897406.git.v@pp.inet.fi> <20070823203246.GB3516@steel.home> <6D8BA2E0-50CD-4B7B-84D3-3D9A61421131@pp.inet.fi> <fam221$oj$1@sea.gmane.org>
+From: =?ISO-8859-1?Q?G=E1bor_Farkas?= <gabor@nekomancer.net>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 15:19:47 +0200
+Message-ID: <46D2CF73.4060903@nekomancer.net>
+References: <200708190128.43515.jnareb@gmail.com> <200708270251.05762.jnareb@gmail.com> <20070827014034.GD18160@spearce.org> <200708271315.07919.jnareb@gmail.com> <46D2B567.4000005@nekomancer.net> <86wsvhrwsd.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
+Content-Type: text/plain; charset=ISO-8859-1;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 15:18:29 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 27 15:20:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPeU9-00082w-5j
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 15:18:29 +0200
+	id 1IPeVY-0008US-6J
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 15:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbXH0NSW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Aug 2007 09:18:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbXH0NSW
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 09:18:22 -0400
-Received: from mail.op5.se ([193.201.96.20]:39889 "EHLO mail.op5.se"
+	id S1753100AbXH0NTx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Aug 2007 09:19:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbXH0NTx
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 09:19:53 -0400
+Received: from realtime.sk ([217.67.16.60]:40956 "EHLO core.realtime.sk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752421AbXH0NSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 09:18:21 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E269B1943F3;
-	Mon, 27 Aug 2007 15:18:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
+	id S1752121AbXH0NTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 09:19:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by core.realtime.sk (Postfix) with ESMTP id D1BF14BA56;
+	Mon, 27 Aug 2007 15:19:51 +0200 (CEST)
+Received: from core.realtime.sk ([127.0.0.1])
+ by localhost (core [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 12254-11; Mon, 27 Aug 2007 15:19:49 +0200 (CEST)
+Received: from [192.168.1.120] (ns1.ba.uptime.at [195.46.69.54])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by core.realtime.sk (Postfix) with ESMTP id 3B4624B282;
+	Mon, 27 Aug 2007 15:19:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070802)
+In-Reply-To: <86wsvhrwsd.fsf@lola.quinscape.zz>
+X-Virus-Scanned: amavisd-new at core.realtime.sk
+X-Spam-Status: No, hits=-0.891 tagged_above=-999 required=5 tests=[AWL=-0.891]
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QsRujS2nT5FE; Mon, 27 Aug 2007 15:18:19 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 499E4194020;
-	Mon, 27 Aug 2007 15:18:19 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <fam221$oj$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56828>
 
-Jakub Narebski wrote:
-> V=E4in=F6 J=E4rvel=E4 wrote:
+David Kastrup wrote:
+> G=E1bor Farkas <gabor@nekomancer.net> writes:
 >=20
->> The way I see the flag used is: A user runs "git status", sees that =
-=20
->> there is too much untracked files and not enough scrollback, so he =20
->> runs "git status --only-tracked" to filter the results.
+>> Jakub Narebski wrote:
+>>> I wonder if PyGTK is as portable as Tcl/Tk...
+>> GTK does not run natively on osx, tcl/tk does.
+>>
+>>
+>> p.s: there are some ways to make GTK run on osx, like running it usi=
+ng
+>> the apple x11-server, but then it looks ugly and does not have the
+>> native' feeling,
 >=20
-> I like it.
+> Doesn't Tcl/Tk also look ugly and does not have the native feeling?
+> But at least a user does not have to invest much work to get there.
 >=20
 
-Ack on that. It's happened to me a bunch of times, usually followed by
-<identical command> | sed '/Untracked/,$d'
+hmm.. he at least needs the X11 server installed (which is not=20
+by-default installed). but that's probably installed for a developer.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+gabor
