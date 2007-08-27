@@ -1,72 +1,118 @@
-From: Brian Hetro <whee@smaertness.net>
-Subject: Re: [PATCH] When nothing to git-commit, honor the git-status color
-	setting.
-Date: Mon, 27 Aug 2007 05:45:43 -0400
-Message-ID: <20070827094543.GA8014@ruiner>
-References: <20070826183526.GA16359@ruiner> <20070827082550.GC17373@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 11:45:55 2007
+From: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] git.el: Added colors for dark background
+Date: Mon, 27 Aug 2007 11:50:12 +0200
+Message-ID: <11882082123581-git-send-email-davidk@lysator.liu.se>
+Cc: =?utf-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 11:50:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPbAQ-0002Ln-5g
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:45:54 +0200
+	id 1IPbEi-0003dG-8X
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbXH0Jpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 05:45:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbXH0Jpu
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:45:50 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:8909 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752737AbXH0Jpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 05:45:49 -0400
-Received: by an-out-0708.google.com with SMTP id d31so193991and
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 02:45:49 -0700 (PDT)
-Received: by 10.100.44.13 with SMTP id r13mr1366196anr.1188207948867;
-        Mon, 27 Aug 2007 02:45:48 -0700 (PDT)
-Received: from smaertness.net ( [66.67.48.108])
-        by mx.google.com with ESMTPS id c1sm4557611ana.2007.08.27.02.45.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 27 Aug 2007 02:45:46 -0700 (PDT)
-Received: by smaertness.net (nbSMTP-1.00) for uid 1000
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	whee@smaertness.net; Mon, 27 Aug 2007 05:45:45 -0400 (EDT)
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070827082550.GC17373@coredump.intra.peff.net>
-X-PGP-Key: http://whee.smaertness.net/pubkey.asc
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753275AbXH0JuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 05:50:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753195AbXH0JuQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:50:16 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:56033 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752770AbXH0JuP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 05:50:15 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id E53A4200A1AA
+	for <git@vger.kernel.org>; Mon, 27 Aug 2007 11:50:13 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 23325-01-45; Mon, 27 Aug 2007 11:50:13 +0200 (CEST)
+Received: from morpheus (oden.vtab.com [62.20.90.195])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 29B7C200A20A;
+	Mon, 27 Aug 2007 11:50:13 +0200 (CEST)
+Received: by morpheus (Postfix, from userid 1000)
+	id C4F2EBFC7D; Mon, 27 Aug 2007 11:50:12 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc6.31.g3c3b
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56796>
 
-On Mon, Aug 27, 2007 at 04:25:50 -0400, Jeff King wrote:
-> On Sun, Aug 26, 2007 at 02:35:26PM -0400, Brian Hetro wrote:
-> 
-> > Instead of disabling color all of the time during a git-commit, allow
-> > the user's config preference in the situation where there is nothing
-> > to commit.  In this situation, the status is printed to the terminal
-> > and not sent to COMMIT_EDITMSG, so honoring the status color setting
-> > is expected.
+---
+ contrib/emacs/git.el |   27 ++++++++++++++++++---------
+ 1 files changed, 18 insertions(+), 9 deletions(-)
 
-> A minor nit on the implementation:
-> 
-> > +	if test "$status_only" = "t" -o "$use_status_color" = "t"; then
-> > +		color=
-> > +	else
-> > +		color=--nocolor
-> > +	fi
-> 
-> This variable doesn't really say "use color"; it says "don't explicitly
-> turn off color". So perhaps there is a better name (respect_color or
-> similar)?
-
-I was thinking more along the lines of "use color as if you had run
-git-status" when I decided on $use_status_color.  Perhaps there is a
-better name.
-
-Brian
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 3375549..b0faa48 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -100,47 +100,56 @@ if there is already one that displays the same directory."
+ 
+ 
+ (defface git-status-face
+-  '((((class color) (background light)) (:foreground "purple")))
++  '((((class color) (background light)) (:foreground "purple"))
++    (((class color) (background dark)) (:foreground "salmon")))
+   "Git mode face used to highlight added and modified files."
+   :group 'git)
+ 
+ (defface git-unmerged-face
+-  '((((class color) (background light)) (:foreground "red" :bold t)))
++  '((((class color) (background light)) (:foreground "red" :bold t))
++    (((class color) (background dark)) (:foreground "red" :bold t)))
+   "Git mode face used to highlight unmerged files."
+   :group 'git)
+ 
+ (defface git-unknown-face
+-  '((((class color) (background light)) (:foreground "goldenrod" :bold t)))
++  '((((class color) (background light)) (:foreground "goldenrod" :bold t))
++    (((class color) (background dark)) (:foreground "goldenrod" :bold t)))
+   "Git mode face used to highlight unknown files."
+   :group 'git)
+ 
+ (defface git-uptodate-face
+-  '((((class color) (background light)) (:foreground "grey60")))
++  '((((class color) (background light)) (:foreground "grey60"))
++    (((class color) (background dark)) (:foreground "grey40")))
+   "Git mode face used to highlight up-to-date files."
+   :group 'git)
+ 
+ (defface git-ignored-face
+-  '((((class color) (background light)) (:foreground "grey60")))
++  '((((class color) (background light)) (:foreground "grey60"))
++    (((class color) (background dark)) (:foreground "grey40")))
+   "Git mode face used to highlight ignored files."
+   :group 'git)
+ 
+ (defface git-mark-face
+-  '((((class color) (background light)) (:foreground "red" :bold t)))
++  '((((class color) (background light)) (:foreground "red" :bold t))
++    (((class color) (background dark)) (:foreground "tomato" :bold t)))
+   "Git mode face used for the file marks."
+   :group 'git)
+ 
+ (defface git-header-face
+-  '((((class color) (background light)) (:foreground "blue")))
++  '((((class color) (background light)) (:foreground "blue"))
++    (((class color) (background dark)) (:foreground "blue")))
+   "Git mode face used for commit headers."
+   :group 'git)
+ 
+ (defface git-separator-face
+-  '((((class color) (background light)) (:foreground "brown")))
++  '((((class color) (background light)) (:foreground "brown"))
++    (((class color) (background dark)) (:foreground "brown")))
+   "Git mode face used for commit separator."
+   :group 'git)
+ 
+ (defface git-permission-face
+-  '((((class color) (background light)) (:foreground "green" :bold t)))
++  '((((class color) (background light)) (:foreground "green" :bold t))
++    (((class color) (background dark)) (:foreground "green" :bold t)))
+   "Git mode face used for permission changes."
+   :group 'git)
+ 
+-- 
+1.5.3.rc6.31.g3c3b
