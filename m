@@ -1,64 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git User's Survey 2007 partial summary
-Date: Mon, 27 Aug 2007 10:01:07 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708270959290.28586@racer.site>
-References: <200708190128.43515.jnareb@gmail.com> <200708270251.05762.jnareb@gmail.com>
- <20070827014034.GD18160@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: name-rev does not show the shortest path
+Date: Mon, 27 Aug 2007 05:24:23 -0400
+Message-ID: <20070827092422.GA20340@coredump.intra.peff.net>
+References: <20070823103817.GF6573@informatik.uni-freiburg.de> <Pine.LNX.4.64.0708241253050.8987@reaper.quantumfyre.co.uk> <20070824125230.GA12030@informatik.uni-freiburg.de> <Pine.LNX.4.64.0708241615040.7313@reaper.quantumfyre.co.uk> <7v6434eq9o.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0708251701150.16728@wbgn129.biozentrum.uni-wuerzburg.de> <20070826092323.GB30474@coredump.intra.peff.net> <Pine.LNX.4.64.0708261733400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 10:59:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 27 11:24:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPaR4-0005R3-An
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:59:02 +0200
+	id 1IPaph-00049B-Al
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 11:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413AbXH0I66 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 04:58:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752310AbXH0I66
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:58:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42305 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752275AbXH0I66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 04:58:58 -0400
-Received: (qmail invoked by alias); 27 Aug 2007 08:58:56 -0000
-Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
-  by mail.gmx.net (mp051) with SMTP; 27 Aug 2007 10:58:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19oesshb1pozjZ/FL87u02BmVSQ37n8xZ/X2SKn3j
-	Vk8D9VcKJfyDI9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070827014034.GD18160@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1752325AbXH0JY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 05:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbXH0JY0
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 05:24:26 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4867 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752535AbXH0JYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 05:24:25 -0400
+Received: (qmail 29814 invoked by uid 111); 27 Aug 2007 09:24:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 27 Aug 2007 05:24:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2007 05:24:23 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0708261733400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56793>
 
-Hi,
+On Sun, Aug 26, 2007 at 05:38:22PM +0200, Johannes Schindelin wrote:
 
-On Sun, 26 Aug 2007, Shawn O. Pearce wrote:
-
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > 04. Which programming languages are you proficient with?
-> > 
-> > It losk like there is only 3/4 people proficient in Perl as compared to 
-> > Python; it looks like Python is more popular. C is most popular, with 
-> > only a few (if everything is all right with the results page) people 
-> > proficient in Tcl/Tk. I'm sorry, git-gui and gitk guys; it looks like
-> > not many developers...
+> > that is no longer taken into account, so you end up with things like
+> > "foo~999" with generation "3" is better than "bar~10" with generation
+> > "5".
 > 
-> Rather sad given their user base.
+> But this did not happen here, right?  Just the first part was different...
 
-Not only their user base, but also their portability.  Tcl/Tk compile _out 
-of the box_ on MinGW, for example.  That is much more than can be said 
-about GTK, Python amongst others.
+Yes, in this case, I think the process is stopping because the
+generations and merge traversals are the same for two paths, but the
+'tip_name' information is indicating a much larger generational
+difference from a ref. For example, "tags/v2.6.22-rc1~1131^2" loses out
+to "tags/v2.6.22~1808^2", which seems very wrong.
 
-But then, Tcl is not _that_ difficult, and we're doing pretty fine, 
-methinks.
+I found it informative to instrument the code like this:
 
-Ciao,
-Dscho
+diff --git a/builtin-name-rev.c b/builtin-name-rev.c
+index 61eba34..9830595 100644
+--- a/builtin-name-rev.c
++++ b/builtin-name-rev.c
+@@ -41,19 +41,26 @@ static void name_rev(struct commit *commit,
+ 			die("generation: %d, but deref?", generation);
+ 	}
+ 
++	printf("considering %s~%d\n", tip_name, generation);
+ 	if (name == NULL) {
+ 		name = xmalloc(sizeof(rev_name));
+ 		commit->util = name;
++		printf("  better than NULL\n");
+ 		goto copy_data;
+ 	} else if (name->merge_traversals > merge_traversals ||
+ 			(name->merge_traversals == merge_traversals &&
+ 			 name->generation > generation)) {
++		printf("  better than %s~%d\n",
++				name->tip_name, name->generation);
+ copy_data:
+ 		name->tip_name = tip_name;
+ 		name->merge_traversals = merge_traversals;
+ 		name->generation = generation;
+-	} else
++	} else {
++		printf("  not as good as %s~%d\n",
++				name->tip_name, name->generation);
+ 		return;
++	}
+ 
+ 	for (parents = commit->parents;
+ 			parents;
+
+
+> The old code _should_ have worked; it is more likely that your different 
+> metric just hides the bug.  The old metric tried to favour less merge 
+> traversals over more traversals, but at the same time, it favoured smaller 
+> numbers over larger ones (but as you found out, only in the last 
+> component).
+
+Right, the problem is that we have effectively _thrown away_ the
+"smaller numbers over larger ones" information for components other than
+the last. I wonder if what we really want is to maintain a list of
+generations, one per merge traversal.
+
+So that foo~500^2~20 and bar~499^2~20 would be represented as:
+
+  [500, 21]
+  [499, 21]
+
+And then you could compare names by favoring smaller numbers in earlier
+traversals (you could still use "fewer merge traversals" as a metric
+before that, as well).
+
+> I guess there is something else going on, such as the tag v2.6.22-rc1 
+> being marked uninteresting because v2.6.22 and its ancestors being 
+> traversed already.
+
+I don't think that is the case; it tries to name quite a few revs based
+on v2.6.22-rc1, but they lose out to existing names given when
+traversing from v2.6.22.
+
+-Peff
