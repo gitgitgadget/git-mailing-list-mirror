@@ -1,59 +1,72 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: git-svn tags and branches
-Date: Mon, 27 Aug 2007 17:31:38 +0200
-Organization: glandium.org
-Message-ID: <20070827153138.GA12936@glandium.org>
-References: <faulrb$483$1@sea.gmane.org> <867inhqaj9.fsf@lola.quinscape.zz>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?, .gitacls? etc.
+Date: Mon, 27 Aug 2007 15:34:09 +0000 (UTC)
+Message-ID: <loom.20070827T172150-191@post.gmane.org>
+References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com> <7v1wdqud0z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 17:33:25 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 17:34:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPgaf-0001EH-Sm
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:33:22 +0200
+	id 1IPgbr-0001k0-Uv
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196AbXH0PdS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 11:33:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755352AbXH0PdR
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:33:17 -0400
-Received: from vawad.err.no ([85.19.200.177]:54601 "EHLO vawad.err.no"
+	id S1755686AbXH0Pec (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 11:34:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755763AbXH0Pec
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:34:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:37825 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751020AbXH0PdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 11:33:17 -0400
-Received: from aputeaux-153-1-29-74.w82-124.abo.wanadoo.fr ([82.124.191.74] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IPgZu-0003e2-GW; Mon, 27 Aug 2007 17:33:03 +0200
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1IPgZ0-0003NX-AE; Mon, 27 Aug 2007 17:31:38 +0200
-Content-Disposition: inline
-In-Reply-To: <867inhqaj9.fsf@lola.quinscape.zz>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
+	id S1755686AbXH0Peb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 11:34:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IPgbc-0006JT-Io
+	for git@vger.kernel.org; Mon, 27 Aug 2007 17:34:20 +0200
+Received: from creinus-web.us.es ([150.214.9.245])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:34:20 +0200
+Received: from scallegari by creinus-web.us.es with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 17:34:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 150.214.9.245 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20061201 Firefox/2.0.0.6 (Ubuntu-feisty))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56849>
 
-On Mon, Aug 27, 2007 at 05:09:30PM +0200, David Kastrup <dak@gnu.org> wrote:
-> I actually don't see how one can safely make them tags at all (rather
-> than branches) since Subversion does not enforce the members of a
-> "tags" subdirectory to remain unchanged after the initial copy.
-> Basically, tags are not different from branches in Subversion from
-> what you can do with them.
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-Well, git-svn could make tags when the tag/branch is created in subversion,
-and then create a branch on the first commit on top of that tag/branch in
-svn.
+> 
+> Dmitry Kakurin <dmitry.kakurin <at> gmail.com> writes:
+> 
+> > 1. It may be better to combine all these files into one (.gitmeta) with
+different sections
+> 
 
-Mike
+Sorry about entering this discussion so late.
+I am just wondering about one thing.
+
+Couldn't all this directory/ownership/permission tracing be easily done by
+using hooks?
+E.g. Having a pre-status and pre-commit hook one could fire up a program/script
+to collect all the extra info he wants to trace and store it somewhere
+(typically in some traced file).
+The other way round one could have a post-checkout hook and he could arrange
+it to fire up some program to look into the extra-info file to set up
+all the meta-data he wants.
+
+This would be very flexible and would permit to manage absolutely /any/ kind
+of the metadata leaving absolute freedom about how to do so.
+
+Am I missing something here?
+
+Sergio
