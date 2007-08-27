@@ -1,55 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] [RED] git-init: Cannot setup bare repository
-Date: Mon, 27 Aug 2007 09:51:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708270949590.28586@racer.site>
-References: <20070826204531.11592.36481.stgit@rover>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] builtin-push: New long option --verbose
+Date: Mon, 27 Aug 2007 10:51:20 +0200
+Message-ID: <878x7xjr7b.fsf@morpheus.local>
+References: <y7fxeal4.fsf@cante.net> <7vtzqll7hf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Aug 27 10:49:01 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 27 10:52:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPaHL-00024r-Nd
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:49:00 +0200
+	id 1IPaKg-0003CU-En
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215AbXH0Isz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 04:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbXH0Isz
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:48:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34804 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751245AbXH0Isy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 04:48:54 -0400
-Received: (qmail invoked by alias); 27 Aug 2007 08:48:53 -0000
-Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
-  by mail.gmx.net (mp022) with SMTP; 27 Aug 2007 10:48:53 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188cidAGNw8JgNot0Ol7PwrKKA41VT3D/XH7lvwlB
-	JZQpQ7s+h4ZsDt
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070826204531.11592.36481.stgit@rover>
-X-Y-GMX-Trusted: 0
+	id S1751972AbXH0IwX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 27 Aug 2007 04:52:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbXH0IwW
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:52:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:51549 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751210AbXH0IwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 04:52:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IPaKA-0008SG-58
+	for git@vger.kernel.org; Mon, 27 Aug 2007 10:51:54 +0200
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 10:51:54 +0200
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Aug 2007 10:51:54 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:sm2YR384wQkCDIRfOuGtYc/sfWg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56790>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sun, 26 Aug 2007, Petr Baudis wrote:
+> Why?
 
-> git-init is totally broken wrt. setting up bare repository - it thinks 
-> no repository is bare (maybe I could coerce it to think some 
-> repositories indeed are bare, but I have my doubts).
+One reason is that I often don't know if the program I want to run
+(git or something sles) uses -v as the "verbose" flag, or if it's the
+"version" flag or something else.  But if there is a --verbose flag, I
+can be sure what it is, so I often try that first if I'm unsure.  If
+that faild, I'll probably look in the man page.
 
-You were too busy playing Go, probably, so you missed my patch which tried 
-to fix this issue.  Alas, it broke more than it fixed, so it was just 
-worked around for git-clone --bare.
-
-I'll have a more thorough go at it today.
-
-Ciao,
-Dscho
+--=20
+David K=C3=A5gedal
