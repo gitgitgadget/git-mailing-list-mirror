@@ -1,58 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] remarks about custom diff driver
-Date: Mon, 27 Aug 2007 06:45:29 -0400
-Message-ID: <20070827104529.GA25685@coredump.intra.peff.net>
-References: <vpq8x7x5knh.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFH] Fix initialization of a bare repository
+Date: Mon, 27 Aug 2007 11:54:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708271154020.28586@racer.site>
+References: <7v643hrnh1.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0708151821260.19496@wbgn129.biozentrum.uni-wuerzburg.de>
+ <7vhcn0pm3h.fsf@gitster.siamese.dyndns.org> <7v7inhmmsx.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 27 12:46:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 12:52:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPc6a-00025Y-6X
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 12:46:00 +0200
+	id 1IPcDA-00059g-EO
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 12:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273AbXH0Kpc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 06:45:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbXH0Kpc
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 06:45:32 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2135 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753054AbXH0Kpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 06:45:31 -0400
-Received: (qmail 30628 invoked by uid 111); 27 Aug 2007 10:45:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 27 Aug 2007 06:45:30 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2007 06:45:29 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq8x7x5knh.fsf@bauges.imag.fr>
+	id S1753807AbXH0Kwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 06:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753856AbXH0Kwl
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 06:52:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54242 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753733AbXH0Kwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 06:52:40 -0400
+Received: (qmail invoked by alias); 27 Aug 2007 10:52:38 -0000
+Received: from ppp-82-135-74-69.dynamic.mnet-online.de (EHLO [192.168.1.4]) [82.135.74.69]
+  by mail.gmx.net (mp055) with SMTP; 27 Aug 2007 12:52:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18b9a9KzRkb5REkgCg3ivTeMlBXEbbMm5sb+G4wJT
+	cU+609eT7qwDZQ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v7inhmmsx.fsf_-_@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56810>
 
-On Mon, Aug 27, 2007 at 12:36:34PM +0200, Matthieu Moy wrote:
+Hi,
 
-> Indeed, what I would have needed is a custum text converter. In my
-> case, I would have said something like
-> 
-> [...]
->
-> Any opinion? Do you think that's overkill? Anyone else have a
-> particuliar experience with custom diff engine?
+how about this on top (or squashed):
 
-Interestingly enough, I tried using a custom diff for the first time
-earlier today and came to the exact same conclusion (I was diff'ing
-photos that were tagged with exif keywords). I suspect a large number of
-diff engines will simply want to convert content into a canonical text
-format.
+-- snipsnap --
 
-I wonder if you could simply use a "diff-filter" attribute that would
-clean and smudge in the same way as "filter", except it would only do so
-when creating or applying diffs. In most cases, you wouldn't have a
-"clean" component (since the conversion to text is lossy).
+ builtin-init-db.c |    4 +++-
+ t/t0001-init.sh   |   11 +++++++++++
+ 2 files changed, 14 insertions(+), 1 deletions(-)
 
--Peff
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index ec90b66..af15cb2 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -288,8 +288,10 @@ static void guess_repository_type(const char *git_dir)
+ 	if (!strcmp(git_dir, cwd))
+ 		goto force_bare;
+ 	/*
+-	 * "GIT_DIR=something/.git is usually not.
++	 * "GIT_DIR=.git or GIT_DIR=something/.git is usually not.
+ 	 */
++	if (!strcmp(git_dir, ".git"))
++		return;
+ 	slash = strrchr(git_dir, '/');
+ 	if (slash && !strcmp(slash, "/.git"))
+ 		return;
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 333abb2..b14b3ec 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -79,6 +79,17 @@ test_expect_success 'GIT_DIR bare' '
+ 	check_config git-dir-bare.git true unset
+ '
+ 
++test_expect_success 'GIT_DIR non-bare' '
++
++	(
++		unset GIT_CONFIG &&
++		mkdir non-bare &&
++		cd non-bare &&
++		GIT_DIR=.git git init
++	) &&
++	check_config non-bare/.git false unset
++'
++
+ test_expect_success 'GIT_DIR & GIT_WORK_TREE (1)' '
+ 
+ 	(
