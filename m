@@ -1,90 +1,54 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: new to git
-Date: Mon, 27 Aug 2007 23:14:04 +0200
-Message-ID: <46D33E9C.8000000@op5.se>
-References: <46D32973.8030104@krose.org> <46D33290.20405@op5.se> <7vabsczp94.fsf@gitster.siamese.dyndns.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: gitweb and remote branches
+Date: Tue, 28 Aug 2007 00:24:04 +0200
+Message-ID: <favitd$3ff$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Kyle Rose <krose@krose.org>, git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 28 00:46:07 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 28 01:22:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPm4r-0003tf-SE
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 23:26:29 +0200
+	id 1IPn0J-0000q7-FC
+	for gcvg-git@gmane.org; Tue, 28 Aug 2007 00:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759607AbXH0VOK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 17:14:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759315AbXH0VOK
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 17:14:10 -0400
-Received: from mail.op5.se ([193.201.96.20]:52039 "EHLO mail.op5.se"
+	id S1758089AbXH0WYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 18:24:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbXH0WYE
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 18:24:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:37603 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758107AbXH0VOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 17:14:07 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A84F81943E5;
-	Mon, 27 Aug 2007 23:14:06 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.000, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QPnN23KjDIjS; Mon, 27 Aug 2007 23:14:06 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id DA166194014;
-	Mon, 27 Aug 2007 23:14:05 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <7vabsczp94.fsf@gitster.siamese.dyndns.org>
+	id S1757717AbXH0WYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 18:24:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IPmzz-0004gj-1M
+	for git@vger.kernel.org; Tue, 28 Aug 2007 00:23:55 +0200
+Received: from host-62-10-78-152.cust-adsl.tiscali.it ([62.10.78.152])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Aug 2007 00:23:55 +0200
+Received: from giuseppe.bilotta by host-62-10-78-152.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Aug 2007 00:23:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-62-10-78-152.cust-adsl.tiscali.it
+User-Agent: KNode/0.10.5
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56888>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
-> 
->> git pull = git fetch + git merge. The notation you use above is obsoleted
->> and no longer works in git 1.5.3. Instead you'd have to replace
->>
->> 	git pull . foo
->>
->> with
->>
->> 	git merge foo
->>
->> which will most likely clear up some confusion.
-> 
-> Huh?  "git pull . foo" has always been the same as "git merge
-> foo", I thought...  Have we broken anything?
-> 
+Hello all,
 
-Possibly. I noticed some weeks ago that "pull . branch" no longer
-worked and used merge instead. I shrugged it off as being of no
-moment, and can't recall if there were any real reasons for
-the merge to fail.
-
->>>
->> Here I'm clueless, except that this matches old syntax which is no longer
->> valid.
-> 
-> Huh again about "no longer valid" part.
-> 
-> In any case, the former says "I am on foo branch, and I want to
-> merge 'master' from _MY_ local repository".  The latter says "I
-> want to update the local branch 'foo' with what is in my
-> 'master' branch, both local".  They are totally different.
-> 
-> Please do _not_ spread backward incompatibility FUD.
-
-My apologies. I'll have to see if I can find what caused my own
-confusion in the first place.
+Currently, remote branch heads are only shown in the
+shortlog, but I would like them to appear in the heads list,
+together with the local branches. Is there some option for it?
+I've browsed the gitweb source but I haven't found anything
+that looked like it.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Giuseppe "Oblomov" Bilotta
