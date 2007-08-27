@@ -1,62 +1,58 @@
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: Git User's Survey 2007 partial summary
-Date: Mon, 27 Aug 2007 17:42:21 +0200
-Message-ID: <e7bda7770708270842s57eea8a3jcc52e2e7e8464b75@mail.gmail.com>
-References: <200708190128.43515.jnareb@gmail.com>
-	 <200708270251.05762.jnareb@gmail.com>
-	 <20070827014034.GD18160@spearce.org>
-	 <200708271315.07919.jnareb@gmail.com>
+Date: Mon, 27 Aug 2007 11:43:51 -0400
+Message-ID: <20070827154351.GG4680@thunk.org>
+References: <200708190128.43515.jnareb@gmail.com> <200708270251.05762.jnareb@gmail.com> <85tzqla5tn.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 17:42:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 27 17:43:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPgjU-00054v-Bk
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:42:28 +0200
+	id 1IPgkw-0005bU-Ra
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 17:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755928AbXH0PmX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 11:42:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755941AbXH0PmX
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:42:23 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:22654 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755708AbXH0PmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 11:42:22 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so2096476wah
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 08:42:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WWLoIqoBDqkUqjfd4qsEsMHre4BZxVmtnkdWwqqaKbJj/7zyMW3TIKVMCNPYKMfEGBi1unNjFn4PQaCaIAQfJC/eHWwWIp8ig9vGcp8fOQuZGIXXk9AcHclpk2GodeBUUqfCzfqQbLd82PThHyUnaKmXEh8ja68pc6WQ47WNZA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Cb8vEXfjvxTa3XsHW77fnN/iMkUz9fwqLJsm9IPJ8KsiJVed/3XSPenBTNvL3SzLnlc1Rcn+IPHqKBKLUmNUgRg/tSk/wU1/V3RdgL0KHq+2aFmgO2F9M6oHDh5HQLevNV0POYMi45wAp+Hutza8pV8vSp0e+udhFsO75VHaq/s=
-Received: by 10.114.154.1 with SMTP id b1mr1623823wae.1188229341886;
-        Mon, 27 Aug 2007 08:42:21 -0700 (PDT)
-Received: by 10.114.180.20 with HTTP; Mon, 27 Aug 2007 08:42:21 -0700 (PDT)
-In-Reply-To: <200708271315.07919.jnareb@gmail.com>
+	id S1756065AbXH0Pn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 11:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755936AbXH0Pnz
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 11:43:55 -0400
+Received: from THUNK.ORG ([69.25.196.29]:51210 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755754AbXH0Pnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 11:43:55 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1IPgtk-0008Az-2u; Mon, 27 Aug 2007 11:53:04 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1IPgkp-0006qn-AJ; Mon, 27 Aug 2007 11:43:51 -0400
 Content-Disposition: inline
+In-Reply-To: <85tzqla5tn.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56853>
 
-On 8/27/07, Jakub Narebski <jnareb@gmail.com> wrote:
+On Mon, Aug 27, 2007 at 07:45:40AM +0200, David Kastrup wrote:
+> I found guilt essentially unusable for me due to its documentation.
+> There is only man-page level documentation for the various commands
+> comprising it, but the overall design is just "this is just like patch
+> sets in ..." uh, Monotone?  Don't remember which it was.  Anyway, the
+> docs were quite useless to me as someone who did _not_ previously use
+> the system mentioned as reference.
 
-> I wonder if PyGTK is as portable as Tcl/Tk...
+The system guilt is more like is "quilt".  For people who are using
+pure patches to maintain changes against mainline, quilt is the "rcs"
+of that particular problem domain.  It would probably be a good idea
+to have a pointer to Andreas Gruenbacher's, "How To Surive With Many
+Patches or Introduction to Quilt" paper.
 
-Tk is integrated in the official Python library while PyGTK is not so
-I guess Tk wins even on Python (Idle [included editor] and matplotlib
-uses it as default).
-
-PyGTK works pretty well though even on win32 (after installing a
-handful dependencies). I haven't tried to compile any of these myself
-though, compiling these things on win32 is usually a PITA.
-
-//Torgil
+						- Ted
