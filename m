@@ -1,71 +1,89 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] Remove duplicate text
-Date: Mon, 27 Aug 2007 08:54:32 +0300
-Organization: Private
-Message-ID: <absdfron.fsf@cante.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 07:45:40 +0200
+Message-ID: <85tzqla5tn.fsf@lola.goethe.zz>
+References: <200708190128.43515.jnareb@gmail.com>
+	<200708270251.05762.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 27 07:51:08 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 07:54:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPXVD-0001Dm-7n
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 07:51:07 +0200
+	id 1IPXYP-0001tE-39
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 07:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329AbXH0Fuh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 01:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbXH0Fuh
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 01:50:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:47810 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751192AbXH0Fuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 01:50:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IPXUZ-0001eL-17
-	for git@vger.kernel.org; Mon, 27 Aug 2007 07:50:27 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 07:50:27 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Aug 2007 07:50:27 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:Nya9WCcmaQZQh/PJt+RH/b+gV0M=
+	id S1751711AbXH0FyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 01:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbXH0FyV
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 01:54:21 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:44700 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751373AbXH0FyU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2007 01:54:20 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id DB26331EDBA;
+	Mon, 27 Aug 2007 07:54:18 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id CA220279400;
+	Mon, 27 Aug 2007 07:54:18 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-038-115.pools.arcor-ip.net [84.61.38.115])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id A12742BB647;
+	Mon, 27 Aug 2007 07:54:16 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 25C261C1E222; Mon, 27 Aug 2007 07:45:40 +0200 (CEST)
+In-Reply-To: <200708270251.05762.jnareb@gmail.com> (Jakub Narebski's message of "Mon\, 27 Aug 2007 02\:51\:05 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4071/Mon Aug 27 02:27:44 2007 on mail-in-08.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56764>
 
-Options -d, -l, -v have already been explained in OPTIONS below.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-tag.txt |    7 -------
- 1 files changed, 0 insertions(+), 7 deletions(-)
+> This is partail summary of Git User's Survey 2007 after 1 week of 
+> running. It is based on "View Text Results" page:
+>   http://www.survey.net.nz/members.php?page=results&qn=1304
+>
+> We have around 445 individual responses, as compared to (I think) 115 
+> answers (Base = 115) for previous survey. That is quite a bit.
+>
+>
+> 04. Which programming languages are you proficient with?
+>
+> It losk like there is only 3/4 people proficient in Perl as compared
+> to Python; it looks like Python is more popular. C is most popular,
+> with only a few (if everything is all right with the results page)
+> people proficient in Tcl/Tk. I'm sorry, git-gui and gitk guys; it
+> looks like not many developers...
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 70235e8..74a7e2e 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -33,13 +33,6 @@ A GnuPG signed tag object will be created when `-s` or `-u
- committer identity for the current user is used to find the
- GnuPG key for signing.
- 
--`-d <tag>` deletes the tag.
--
--`-v <tag>` verifies the gpg signature of the tag.
--
--`-l <pattern>` lists tags that match the given pattern (or all
--if no pattern is given).
--
- OPTIONS
- -------
- -a::
+If the few developers are efficient and responsive due to their choice
+of programming language, the net result might still work out fine.
+But it might make the the project more susceptible to discontinuation
+if existing developers can't sustain their involvement for some
+reason.  On the other hand, code being inscrutable because of not
+being expressible well in a more common language also carries its
+dangers.
+
+> 26. Which porcelains do you use?
+>
+> Most people use core-git, some use cogito (the fact that it was
+> lately deprecated and is no longer developed notwithstanding), some
+> use StGIT, 3 even use pg (despite it is unmaintained). More people
+> use StGIT than Guilt, but this can be cause by the fact that Guilt
+> (formerly gq) is younger.
+
+I found guilt essentially unusable for me due to its documentation.
+There is only man-page level documentation for the various commands
+comprising it, but the overall design is just "this is just like patch
+sets in ..." uh, Monotone?  Don't remember which it was.  Anyway, the
+docs were quite useless to me as someone who did _not_ previously use
+the system mentioned as reference.
+
 -- 
-1.5.3.rc5
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
