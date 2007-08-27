@@ -1,55 +1,82 @@
-From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
-Subject: Re: [PATCH] In Examples, explain option -r and refer to git-rev-list[1]
-Date: Mon, 27 Aug 2007 10:02:10 +0200
-Message-ID: <46D28502.3030003@etek.chalmers.se>
-References: <r6lqfgnp.fsf@cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: Git User's Survey 2007 partial summary
+Date: Mon, 27 Aug 2007 10:07:35 +0200
+Message-ID: <2EFBBC8B-E785-4205-A7AA-7F03C3E92E1D@lrde.epita.fr>
+References: <200708190128.43515.jnareb@gmail.com> <200708270251.05762.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-83--558541785"
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 10:02:26 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 10:07:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IPZYC-0003wH-4h
-	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:02:20 +0200
+	id 1IPZdV-0006C6-Sm
+	for gcvg-git@gmane.org; Mon, 27 Aug 2007 10:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbXH0ICP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Aug 2007 04:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbXH0ICP
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:02:15 -0400
-Received: from anubis.medic.chalmers.se ([129.16.30.218]:58114 "EHLO
-	anubis.medic.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbXH0ICN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2007 04:02:13 -0400
-Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
-	(Authenticated sender: lukass)
-	by anubis.medic.chalmers.se (Postfix) with ESMTP id D9420E33E
-	for <git@vger.kernel.org>; Mon, 27 Aug 2007 10:02:11 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.6) Gecko/20070804 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <r6lqfgnp.fsf@cante.net>
+	id S1751972AbXH0IHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Aug 2007 04:07:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXH0IHq
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Aug 2007 04:07:46 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:34951 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968AbXH0IHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2007 04:07:45 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA:16)
+	(Exim 4.50)
+	id 1IPZdQ-0007V0-3G; Mon, 27 Aug 2007 10:07:44 +0200
+In-Reply-To: <200708270251.05762.jnareb@gmail.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56773>
 
-Jari Aalto wrote:
-> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
-> ---
->  Documentation/git-log.txt |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> index 49bb539..aa42f0e 100644
-> --- a/Documentation/git-log.txt
-> +++ b/Documentation/git-log.txt
-> @@ -76,7 +76,8 @@ git log -r --name-status release..test::
->  
->  	Show the commits that are in the "test" branch but not yet
->  	in the "release" branch, along with the list of paths
-> -	each commit modifies.
-> +	each commit modifies. Opton -r (see gitlink:git-rev-list[1])
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ spelling mistake (option)
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-83--558541785
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-/Lukas
+On Aug 27, 2007, at 2:51 AM, Jakub Narebski wrote:
+
+> 28. Which (main) git web interface do you use for your projects?
+>
+> Most use gitweb (which is distributed with git), 7 use cgit, 1 wit
+> (Ruby), most probably XMMS2 project, 1 git-php (I wonder who...), and
+> there are 20 "other" answers, which I am most curious about. What are
+> they?
+>
+
+I replied "other" because I didn't know whether all questions were  
+mandatory or not :D
+I don't use a git web interface...  for now.
+
+So maybe 19 other people have been as dumb as me and replied "other"  
+for a similar reason :)
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-83--558541785
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFG0oZHwwE67wC8PUkRAtZ6AKCEvEa5UpfHZjStnckLLuiloWeCgwCgsR/e
+anJaWYad3jx/HojXKHfpMNc=
+=plZA
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-83--558541785--
