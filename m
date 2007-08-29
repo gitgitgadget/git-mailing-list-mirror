@@ -1,72 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] t5701: "wc -l" may add whitespace
-Date: Wed, 29 Aug 2007 17:52:45 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708291752050.28586@racer.site>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] t5701: "wc -l" may add whitespace
+Date: Wed, 29 Aug 2007 18:55:53 +0200
+Message-ID: <vpqbqcqi8km.fsf@bauges.imag.fr>
+References: <Pine.LNX.4.64.0708291752050.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 29 18:53:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 29 18:57:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQQmk-0002bZ-V4
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 18:52:55 +0200
+	id 1IQQqq-0003oc-NL
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 18:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbXH2Qwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 12:52:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752835AbXH2Qwt
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 12:52:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35619 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751575AbXH2Qwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 12:52:49 -0400
-Received: (qmail invoked by alias); 29 Aug 2007 16:52:47 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp039) with SMTP; 29 Aug 2007 18:52:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18q72EYCiMqY0nPfu+LZ2jgrjGlAec7VzSoiBH2jn
-	imDLy1tMffrYCB
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1752131AbXH2Q5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 12:57:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbXH2Q5E
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 12:57:04 -0400
+Received: from imag.imag.fr ([129.88.30.1]:39363 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753049AbXH2Q5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 12:57:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7TGtr6R021065
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 Aug 2007 18:55:53 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IQQpd-0004JP-CW; Wed, 29 Aug 2007 18:55:53 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IQQpd-0008Mj-AB; Wed, 29 Aug 2007 18:55:53 +0200
+In-Reply-To: <Pine.LNX.4.64.0708291752050.28586@racer.site> (Johannes Schindelin's message of "Wed\, 29 Aug 2007 17\:52\:45 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 29 Aug 2007 18:55:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56966>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> -	linked=$(find objects -type f ! -links 1 | wc -l) &&
+> -	test "$linked" = 0
+> +	test $(find objects -type f ! -links 1 | wc -l) = 0
 
-	Found in msysGit... MSys' wc seems to suffer the same defect that 
-	OSX' wc has...
+You can also use "test x -eq y" to compare integers.
 
- t/t5701-clone-local.sh |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
+I don't know which one is the most portable.
 
-diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
-index d2f55eb..7e7019f 100755
---- a/t/t5701-clone-local.sh
-+++ b/t/t5701-clone-local.sh
-@@ -54,8 +54,7 @@ test_expect_success 'With -no-hardlinks, local will make a copy' '
- 	cd "$D" &&
- 	git clone --bare --no-hardlinks x w &&
- 	cd w &&
--	linked=$(find objects -type f ! -links 1 | wc -l) &&
--	test "$linked" = 0
-+	test $(find objects -type f ! -links 1 | wc -l) = 0
- '
- 
- test_expect_success 'Even without -l, local will make a hardlink' '
-@@ -63,8 +62,7 @@ test_expect_success 'Even without -l, local will make a hardlink' '
- 	rm -fr w &&
- 	git clone -l --bare x w &&
- 	cd w &&
--	copied=$(find objects -type f -links 1 | wc -l) &&
--	test "$copied" = 0
-+	test $(find objects -type f -links 1 | wc -l) = 0
- '
- 
- test_done
 -- 
-1.5.3.rc7.2.g2d7f
+Matthieu
