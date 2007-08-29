@@ -1,77 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Explain in --pid-file that using --inetd implies it automatically
-Date: Wed, 29 Aug 2007 01:17:17 -0700
-Message-ID: <7vabsasqk2.fsf@gitster.siamese.dyndns.org>
-References: <ejhm3gs6.fsf@cante.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Git cheat sheet
+Date: Wed, 29 Aug 2007 10:32:24 +0200
+Message-ID: <vpqk5repwpz.fsf@bauges.imag.fr>
+References: <200708290348.02853.zack@kde.org>
+	<7vfy22squc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Aug 29 10:17:31 2007
+Cc: Zack Rusin <zack@kde.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 10:34:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQIjy-0004sm-KF
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:17:30 +0200
+	id 1IQJ0T-0006rM-Io
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbXH2IRX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 04:17:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbXH2IRW
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:17:22 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48586 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751007AbXH2IRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 04:17:21 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id EA23912A533;
-	Wed, 29 Aug 2007 04:17:40 -0400 (EDT)
-In-Reply-To: <ejhm3gs6.fsf@cante.net> (Jari Aalto's message of "Wed, 29 Aug
-	2007 11:07:37 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754985AbXH2Iea (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 04:34:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754917AbXH2Iea
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:34:30 -0400
+Received: from imag.imag.fr ([129.88.30.1]:39517 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754798AbXH2Ie3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 04:34:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l7T8WPeh028702
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 Aug 2007 10:32:25 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IQIyO-0005rA-Gj; Wed, 29 Aug 2007 10:32:24 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IQIyO-0007AD-C8; Wed, 29 Aug 2007 10:32:24 +0200
+In-Reply-To: <7vfy22squc.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 29 Aug 2007 01\:11\:07 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 29 Aug 2007 10:32:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56909>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-> index f902161..687deb2 100644
-> --- a/Documentation/git-daemon.txt
-> +++ b/Documentation/git-daemon.txt
-> @@ -124,7 +124,8 @@ OPTIONS
->  	Detach from the shell. Implies --syslog.
->  
->  --pid-file=file::
-> -	Save the process id in 'file'.
-> +	Save the process id in 'file'. When `--inetd` is in use, this
-> +        option is not needed.
+> Zack Rusin <zack@kde.org> writes:
+>
+>> http://ktown.kde.org/~zrusin/git/git-cheat-sheet.svg
+>
+> Nice drawing 
 
-Is it "is not needed"?  I think you meant to say "is ignored",
-IOW, no pid file is written.
+True!
 
-Which unfortunately makes the title of your patch wrong as
-well X-<. 
+> and no typo.
 
-I am not seriously suggesting to apply the following patch at
-this point, but I think this is what we should have done from
-the beginning.
+Except for the blue closing parenthesis for (git-config --help), while
+the opening one is black ;-).
 
-diff --git a/daemon.c b/daemon.c
-index 9cf22fe..a7b7990 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1143,8 +1143,8 @@ int main(int argc, char **argv)
- 		usage(daemon_usage);
- 	}
- 
--	if (inetd_mode && (group_name || user_name))
--		die("--user and --group are incompatible with --inetd");
-+	if (inetd_mode && (group_name || user_name || pid_file))
-+		die("--user, --group and --pid-file are incompatible with --inetd");
- 
- 	if (inetd_mode && (listen_port || listen_addr))
- 		die("--listen= and --port= are incompatible with --inetd");
+> + "git commit" is not about publishing at all.
+
+It does not publish in itself, but it's mostly necessary in order to
+publish. For a short summary, I think it's OK to have it in the
+publishing section, as long as it's just before "format-patch" and
+"push".
+
+otherwise, about the suggested flow on the top right, I'd move
+"commit" to the left. Most of the time, "commit" comes before pull or
+fetch. It normally comes before "revert", but after "reset" (revert
+creates a new commit, you want to do it from a clean tree, so either
+reset or commit before).
+
+-- 
+Matthieu
