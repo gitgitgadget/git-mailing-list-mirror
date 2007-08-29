@@ -1,62 +1,58 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 15:39:00 +0200
-Message-ID: <20070829133900.GH1219@pasky.or.cz>
-References: <1188319608.6106.63.camel@beauty> <20070828172709.GB1219@pasky.or.cz> <200708291005.08795.andyparkins@gmail.com> <20070829095202.GE1219@pasky.or.cz> <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
+From: "Dan Chokola" <dan@chokola.com>
+Subject: Re: Git cheat sheet
+Date: Wed, 29 Aug 2007 09:47:42 -0400
+Message-ID: <61e816970708290647r50f4d079k8e0984527bcdbe2e@mail.gmail.com>
+References: <200708290348.02853.zack@kde.org>
+	 <7vfy22squc.fsf@gitster.siamese.dyndns.org>
+	 <200708290855.39505.zack@kde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Benjamin Collins <aggieben@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 15:39:14 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Zack Rusin" <zack@kde.org>
+X-From: git-owner@vger.kernel.org Wed Aug 29 15:47:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQNlH-0000Ol-Du
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 15:39:11 +0200
+	id 1IQNtc-0001uF-DD
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 15:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757766AbXH2NjF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 09:39:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757398AbXH2NjE
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 09:39:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44302 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756896AbXH2NjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 09:39:01 -0400
-Received: (qmail 6718 invoked by uid 2001); 29 Aug 2007 15:39:00 +0200
+	id S1757859AbXH2Nro (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 09:47:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757766AbXH2Nro
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 09:47:44 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:35659 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756364AbXH2Nrn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 09:47:43 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so196025wah
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 06:47:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=axmaK+PkeDxx/+wm+EnlqbgUfoiUk4E92gY0EPUWrea0Op87YB0SBIt//dEFHad3AUCTDpa0D46lyKiyymWQq66mbDUZU3jlyVX27l8QLdVUOos7OyrnsXHFKwO23jut0ymirn3Dz2gfhhbmS0jx3vvDfK1ylNgOlzthMNLaFec=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=D6jq+E/xw0AYf24JAWFT5EC4qiZCh8W0nRD3rEy5orCtLVlTcttjZiYc2XG/oalQV2cHtcRBzIjmT+N96OOhn+bzBWBqzF8H8go0lEjkt2BCmZvgy4h0xUsD7mtQUaPNGNI3qipzzOP+2C1DucZBG4cQ2LS1JnfnDEicKoDkKn4=
+Received: by 10.114.77.1 with SMTP id z1mr514008waa.1188395262730;
+        Wed, 29 Aug 2007 06:47:42 -0700 (PDT)
+Received: by 10.114.208.19 with HTTP; Wed, 29 Aug 2007 06:47:42 -0700 (PDT)
+In-Reply-To: <200708290855.39505.zack@kde.org>
 Content-Disposition: inline
-In-Reply-To: <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Google-Sender-Auth: a9b385363f091d06
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56948>
 
-On Wed, Aug 29, 2007 at 03:18:47PM CEST, Benjamin Collins wrote:
-> On 8/29/07, Petr Baudis <pasky@suse.cz> wrote:
-> > But overally, I'm still not convinced that there is a feasible use-case
-> > for the cloned hooks at all. Someone has a particular example?
-> >
-> > --
-> >                                 Petr "Pasky" Baudis
-> 
-> My group at work would like this capability.  We have a homogeneous
-> environment with well-known NFS shares, and some scripts that do
-> things in this common environment (e.g., release scripts).  It would
-> be nice if when we do a clone, all the hook scripts (that would be
-> valid on any machine, in any directory, for any user) would come with
-> it.
+On 8/29/07, Zack Rusin <zack@kde.org> wrote:
+> Thanks a lot for the comments.
+>
 
-Unfortunately, you didn't really describe a use-case, you just said that
-you would like them - not what you would use them to. The thing is, so
-far almost all the use cases would be better off with either using the
-hooks only at the central repository hub and keeping the developers'
-freedom locally, or would work better simply somewhere else than in hook
-files. I'm not saying that this must be the case every time, that is why
-I'm asking for more input data.
+One more. You might want to add git apply to the "Change" part of the
+command sequence.
 
 -- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+Dan Chokola
