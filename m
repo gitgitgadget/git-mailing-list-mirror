@@ -1,100 +1,90 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: double occurrence of filenames on command lines
-Date: Wed, 29 Aug 2007 10:11:22 +0200
-Message-ID: <20070829081122.GA604@piper.oerlikon.madduck.net>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: git-svn tags and branches
+Date: Wed, 29 Aug 2007 10:41:07 +0200
+Message-ID: <cb7bb73a0708290141y159d6bbfj2bac23af5e86bb15@mail.gmail.com>
+References: <faulrb$483$1@sea.gmane.org> <faurcl$p0o$1@sea.gmane.org>
+	 <46D38B3D.6070809@vilain.net> <85absc6we7.fsf@lola.goethe.zz>
+	 <cb7bb73a0708280209r36136128x7bce310bf4fd4f66@mail.gmail.com>
+	 <86sl64nhc1.fsf@lola.quinscape.zz>
+	 <cb7bb73a0708280237v6f248517h183174bc41296df3@mail.gmail.com>
+	 <46D4A664.4070007@vilain.net>
+	 <cb7bb73a0708281620v41383ed8w728af0112d2a6360@mail.gmail.com>
+	 <46D4ECE2.9020806@vilain.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Cc: 439992-quiet@bugs.debian.org
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 29 10:34:52 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org,
+	"Eric Wong" <normalperson@yhbt.net>
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Aug 29 10:41:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQJ0h-0006tD-Mw
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:34:48 +0200
+	id 1IQJ7E-0007ga-0m
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077AbXH2Ief (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 04:34:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbXH2Iee
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:34:34 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:42343 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754929AbXH2Ied (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 04:34:33 -0400
-X-Greylist: delayed 1382 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Aug 2007 04:34:33 EDT
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 7510BBF73;
-	Wed, 29 Aug 2007 10:11:23 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 064539F161;
-	Wed, 29 Aug 2007 10:11:22 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id BF64943F4; Wed, 29 Aug 2007 10:11:22 +0200 (CEST)
+	id S1755799AbXH2IlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 04:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754543AbXH2IlK
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:41:10 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:19507 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755804AbXH2IlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 04:41:08 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so112270wah
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 01:41:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h6N+HNi7PFgh61PWztCbuSZOyju6jiTZ6S5peuX6hexbBup9CXnPLk5vEt7kb3qNtgecfXyVa2LcYA+02JoBsTqA7fe+x4vKyZ2FQBjH6abJpT+q45rtz7nxRb/VrCunAKs/P/+XJqlIe9139NKY/sX/kcRH6q9hvuQdnUJ9GY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UOuWgKAZDsgz9vw6O8j96LuS+Jy8l6sSqhfB6XTsNYOfYzswNQ7xK6E/nOp9670EW8L1mrjBml79SwNt7Uag0cD/jamA2m7Ygsyy4IDp34xhUYP1RHzwToQRF6sZaesW/lEpyQ0VTfaqUi0BsTX+lxKU4DsWOT/Vr7tttqLJ76Y=
+Received: by 10.114.75.1 with SMTP id x1mr183800waa.1188376867161;
+        Wed, 29 Aug 2007 01:41:07 -0700 (PDT)
+Received: by 10.114.58.14 with HTTP; Wed, 29 Aug 2007 01:41:07 -0700 (PDT)
+In-Reply-To: <46D4ECE2.9020806@vilain.net>
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4099/Wed Aug 29 05:14:54 2007 on clegg.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56911>
 
+On 8/29/07, Sam Vilain <sam@vilain.net> wrote:
+> Giuseppe Bilotta wrote:
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > I gather from the man page that doing this is highly frowned upon, and
+> > requires manual intervention from all the poor souls that pulled in
+> > the mean time.
+>
+> Right, but I think the bad practice should be propagated anyway.  It
+> will affect virtually no-one, and serves to make it the case that even
+> if such a thing happened, then just fetching the tag gives the expected
+> behaviour.
+>
+> However I'd be prepared to accept that perhaps new tags should be made,
+> eg "tags/svntagname.r1234", to reflect the fact there are there multiple
+> tags with the same name but different contents.
 
-Dear list,
+Urgh. I think I like this idea even less. just use the tag 'tagname'
+and move it around then :)
 
-While I can say something like
+BTW can git have a tag and a branch with the same name? If not, I
+would recomment the use of 'name' for the tag, 'name-branch' for the
+branch, and 'tag-name-branch' for the branch under the tag.
 
-  git add foo bar foo
-  (note the doubled foo)
+> > I've been looking through the git-svn code to see if I could try an
+> > implementation myself, but I must confess that the task seems way over
+> > me ... I can't really wrap my mind around the git-svn code enough to
+> > implement it.
+>
+> Coming up with agreed test cases is half (indeed sometimes most of) the
+> work.
 
-when using git-add from a script, the following fails:
+The only two svn projects I cooperate with don't have this particular
+situation. IIRC David mentioned the case?
 
-  $ git commit -m. foo foo
-  error: pathspec 'foo' did not match any file(s) known to git.
-  Did you forget to 'git add'?
-
-I am bringing this up in the context of
-http://bugs.debian.org/439992, where debcommit.pl would duplicate
-a file argument under certain conditions. It's since been fixed, but
-I wonder whether git-commit could be made more robust in the
-presence of duplicate arguments? Or is this behaviour by choice?
-
-PS: please keep 439992-quiet@bugs.debian.org on Cc.
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-an egg has the shortest sex-life of all: if gets laid once; it gets
-eaten once. it also has to come in a box with 11 others, and the
-only person who will sit on its face is its mother.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG1SoqIgvIgzMMSnURAqfEAKDieu28n3kAmdLV7atWz/CD+DQhcgCgtI3d
-sDfiKypuZxTEpRIxqfDdiKA=
-=/wMt
------END PGP SIGNATURE-----
-
---k1lZvvs/B4yU6o8G--
+-- 
+Giuseppe "Oblomov" Bilotta
