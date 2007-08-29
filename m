@@ -1,72 +1,125 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 22:35:43 +0200
-Message-ID: <20070829203543.GD11824@steel.home>
-References: <200708291005.08795.andyparkins@gmail.com> <20070829095202.GE1219@pasky.or.cz> <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com> <Pine.LNX.4.64.0708291446011.28586@racer.site> <20070829135441.GI10749@pasky.or.cz> <Pine.LNX.4.64.0708291502340.28586@racer.site> <20070829141948.GJ10749@pasky.or.cz> <Pine.LNX.4.64.0708291529010.28586@racer.site> <20070829144135.GI1219@pasky.or.cz> <Pine.LNX.4.64.0708291555450.28586@racer.site>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove duplicate pathspecs from ls-files command line
+Date: Wed, 29 Aug 2007 13:44:22 -0700
+Message-ID: <7v4piioyu1.fsf@gitster.siamese.dyndns.org>
+References: <20070829081122.GA604@piper.oerlikon.madduck.net>
+	<20070829194410.GA11824@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Benjamin Collins <aggieben@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 29 22:36:55 2007
+Cc: martin f krafft <madduck@madduck.net>,
+	git discussion list <git@vger.kernel.org>,
+	439992-quiet@bugs.debian.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 22:44:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQUHV-0002FJ-9A
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 22:36:53 +0200
+	id 1IQUOu-0004BX-H5
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 22:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338AbXH2UgM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 16:36:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759070AbXH2Ufx
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 16:35:53 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:9063 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756918AbXH2Ufp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 16:35:45 -0400
-Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
-	by post.webmailer.de (fruni mo10) (RZmta 12.1)
-	with ESMTP id 906adaj7TJVfmk ; Wed, 29 Aug 2007 22:35:43 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 98EBF277BD;
-	Wed, 29 Aug 2007 22:35:43 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 6F343BE06; Wed, 29 Aug 2007 22:35:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708291555450.28586@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
-X-RZG-CLASS-ID: mo07
+	id S1751142AbXH2Uo3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 16:44:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbXH2Uo3
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 16:44:29 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:60724 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbXH2Uo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 16:44:28 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2970012AA81;
+	Wed, 29 Aug 2007 16:44:46 -0400 (EDT)
+In-Reply-To: <20070829194410.GA11824@steel.home> (Alex Riesen's message of
+	"Wed, 29 Aug 2007 21:44:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56980>
 
-Johannes Schindelin, Wed, Aug 29, 2007 16:56:32 +0200:
-> > > > Your company has certain rules on how all the source on the public 
-> > > > branches should look like, etc. It's not quite clear to me how can 
-> > > > build system enforce these rules.
-> > > 
-> > > The same as a hook.  You just put the check into the Makefile.
-> > 
-> > How exactly does the Makefile affect what does and what does not get 
-> > checked in?
-> 
-> By refusing to compile when something's not right?
-> 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-How do I "compile" that pile of .docs which they called "project
-documentation"?
+> The first entry wins, all the subsequent entries will be discarded.
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>
+> martin f krafft, Wed, Aug 29, 2007 10:11:22 +0200:
+>> when using git-add from a script, the following fails:
+>> 
+>>   $ git commit -m. foo foo
+>>   error: pathspec 'foo' did not match any file(s) known to git.
+>>   Did you forget to 'git add'?
+>> 
+>> I am bringing this up in the context of
+>> http://bugs.debian.org/439992, where debcommit.pl would duplicate
+>> a file argument under certain conditions. It's since been fixed, but
+>> I wonder whether git-commit could be made more robust in the
+>> presence of duplicate arguments? Or is this behaviour by choice?
+>
+> Don't think so. Looks like accident. The patch below fixes it,
+> by introducing a costly argument duplication check. Shouldn't
+> be a problem for a normal use (git-ls-files expects globs, not
+> pathnames).
 
-I really do feel for people working for corporate projects: the rules
-are strict (and often stupid) and there are mistakes and punishment
-for them. You really don't want to make a merge of a branch containing
-commits where description is in wrong format (or wrong content,
-because the customer may see it, and one of the greate rules of
-bussiness seem to be "hide and obscure").
+Thanks both for your attention to the detail.  It was to catch
 
-People prefer to avoid mistakes from happening, then having to correct
-them (and yes, they do and will commit without doing sanity check).
+	git commit Makefiel
 
-So I think Pasky has a valid point
+and did not mean to warn about listing the same thing twice (it
+is still a mistaken usage in the sense that it is unnecessary to
+list things twice, not in the sense that it instructs the
+command to commit the same file twice).
+
+The patch is not wrong per-se from correctness standpoint, but I
+must say that it is a horrible thing to do from both performance
+and principle point of view.
+
+That loop is plain old O(n^2) that penalizes everybody.
+
+Please do not penalize sane callers when you try to improve
+support of mistaken usage.  Move expensive error recovery in the
+error path when possible, and have _only_ mistaken users pay the
+price.
+
+Like this perhaps.
+
+---
+ builtin-ls-files.c |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index d36181a..cce17b5 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -511,8 +511,28 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		int num, errors = 0;
+ 		for (num = 0; pathspec[num]; num++) {
++			int other, found_dup;
++
+ 			if (ps_matched[num])
+ 				continue;
++			/*
++			 * The caller might have fed identical pathspec
++			 * twice.  Do not barf on such a mistake.
++			 */
++			for (found_dup = other = 0;
++			     !found_dup && pathspec[other];
++			     other++) {
++				if (other == num || !ps_matched[other])
++					continue;
++				if (!strcmp(pathspec[other], pathspec[num]))
++					/*
++					 * Ok, we have a match already.
++					 */
++					found_dup = 1;
++			}
++			if (found_dup)
++				continue;
++
+ 			error("pathspec '%s' did not match any file(s) known to git.",
+ 			      pathspec[num] + prefix_offset);
+ 			errors++;
