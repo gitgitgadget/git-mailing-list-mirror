@@ -1,45 +1,60 @@
-From: Johannes Sixt <j.sixt@eudaptics.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.3-rc7
-Date: Wed, 29 Aug 2007 16:12:31 +0200
-Message-ID: <46D57ECF.2050209@eudaptics.com>
-References: <7vbqcqr6cz.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] completion: also complete git-log's --left-right and
+ --cherry-pick option
+Date: Wed, 29 Aug 2007 15:15:34 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708291514430.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Wed Aug 29 16:13:40 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: "Shawn O.Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 16:16:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQOIN-0006ON-87
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 16:13:23 +0200
+	id 1IQOKd-0006vt-5F
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 16:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbXH2ONS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 10:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbXH2ONS
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 10:13:18 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:31779 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751906AbXH2ONR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 10:13:17 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1IQOIF-0003HX-Mo; Wed, 29 Aug 2007 16:13:15 +0200
-Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3057D6B7; Wed, 29 Aug 2007 16:13:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vbqcqr6cz.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.1 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.138, BAYES_95=3
+	id S1752163AbXH2OPj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 10:15:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbXH2OPj
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 10:15:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55581 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751499AbXH2OPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 10:15:38 -0400
+Received: (qmail invoked by alias); 29 Aug 2007 14:15:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 29 Aug 2007 16:15:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18H1yAPBzMHyyZoDYggN9yOeTEA+irXKErPGW5nCX
+	yWzne1tM4zq5G5
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56953>
 
-The MinGW port is now at 1.5.3-rc7, too.
 
--- Hannes
+Both --left-right and --cherry-pick are particularly long to type, so
+help the user there.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ contrib/completion/git-completion.bash |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a652c88..5ed1821 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -641,6 +641,7 @@ _git_log ()
+ 			--all-match
+ 			--pretty= --name-status --name-only --raw
+ 			--not --all
++			--left-right --cherry-pick
+ 			"
+ 		return
+ 		;;
+-- 
+1.5.3.rc7.2.g2d7f
