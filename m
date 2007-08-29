@@ -1,73 +1,53 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH 0/4] Miscellaneous fixes
-Date: Wed, 29 Aug 2007 11:18:34 +0100
-Message-ID: <b0943d9e0708290318k715cb94eidfa38a97825511ca@mail.gmail.com>
-References: <20070826202309.15933.54183.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.5.3-rc7
+Date: Wed, 29 Aug 2007 03:18:52 -0700
+Message-ID: <7vbqcqr6cz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 12:18:47 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 12:19:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQKdD-0003Tq-RV
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:18:40 +0200
+	id 1IQKdk-0003Y1-6S
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbXH2KSh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 06:18:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753455AbXH2KSg
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:18:36 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:16501 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753473AbXH2KSg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Aug 2007 06:18:36 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so165344wra
-        for <git@vger.kernel.org>; Wed, 29 Aug 2007 03:18:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TIz7s9hYFfBJZld7ntGurSgMjxNLHHmTsIKlO5ry6LfvLBZaiNXQ/8N7vG8RWs6pEJh3v1vjybYJUhwh0xZq4lIEfoF/wNFhP0f30F/bT4UQj4e3Mf6j69e9vAy5XjBMRTCcSKoNEwgvN6cD7nFOAPxAxBZNNA4SrS5eiSDnpQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R3Wf0N0NIOJWDdzlJRfsH3xSNEij/YoUrw6b6S0jla6TkIzNTiArow5BLh+oQCUWNz47XfuI+GuuaYlhtBx9tT9Apl/qVPknXl43xLx0Ah1HppRXjNMZ8Q2JEAdVe8ImJyYA0bhKAsptFtl5ZLgxAVRhFR2AKYjt4e7meelW4KA=
-Received: by 10.141.185.3 with SMTP id m3mr253261rvp.1188382714522;
-        Wed, 29 Aug 2007 03:18:34 -0700 (PDT)
-Received: by 10.140.187.15 with HTTP; Wed, 29 Aug 2007 03:18:34 -0700 (PDT)
-In-Reply-To: <20070826202309.15933.54183.stgit@yoghurt>
-Content-Disposition: inline
+	id S932372AbXH2KTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 06:19:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbXH2KS7
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:18:59 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49730 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932100AbXH2KSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 06:18:55 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 65EEE128F8E
+	for <git@vger.kernel.org>; Wed, 29 Aug 2007 06:19:16 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56929>
 
-On 26/08/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> This is a few miscellaneous fixes. Also available here:
+(oops, sent one out before finishing --- I am sitting in front
+of a wrong machine and a wrong keyboard).
 
-Thanks.
+So I've tagged it, and this time have tarball and testing RPM at
+the usual places.
 
->
->   git://repo.or.cz/stgit/kha.git fixes
->
-> Karl Hasselstr=F6m (4):
->       Don't use test_expect_failure when more than one thing could fa=
-il
->       Don't write None to the conf file
->       Replace "git repo-config" with "git config" in help texts
->       Compile regexp just once
->
->  examples/gitconfig          |    2 +-
->  stgit/git.py                |    3 ++-
->  stgit/stack.py              |    7 ++++---
->  t/t2101-pull-policy-pull.sh |    4 ++--
->  4 files changed, 9 insertions(+), 7 deletions(-)
+  http://www.kernel.org/pub/software/scm/git/
 
-BTW, did you generate the above text by hand and copied it to the
-e-mail? People asked in the past for this kind of text to be
-automatically generated by 'stg mail'.
+  git-1.5.3.rc7.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.3.rc7.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.3.rc7.tar.{gz,bz2}		(preformatted docs)
+  testing/*-1.5.3.rc7-1.$arch.rpm		(RPM)
 
---=20
-Catalin
+This time, hopefully it should be very close to final.  I still
+have to help Jari whipping his last minute documentation patches
+into shape, but other than that, I do not think there is
+anything else that I want to delay the 1.5.3 final because of.
+
+Please give it a gentle beating ;-).
