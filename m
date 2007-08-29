@@ -1,66 +1,141 @@
-From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-Subject: New to git, related multi-projects
-Date: Wed, 29 Aug 2007 14:18:14 -0400
-Message-ID: <7F6E024B-253E-40C6-9012-9CF1B2F374D8@yahoo.ca>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 29 20:18:28 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Keep last used delta base in the delta window
+Date: Wed, 29 Aug 2007 14:21:33 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0708291339580.16727@xanadu.home>
+References: <11881617934179-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <7v3ay5l5wq.fsf@gitster.siamese.dyndns.org>
+ <7vy7fxyy52.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 20:21:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQS7W-0003uS-3X
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 20:18:26 +0200
+	id 1IQSAf-00054P-DI
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 20:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbXH2SSU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 14:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbXH2SSU
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 14:18:20 -0400
-Received: from smtp110.mail.mud.yahoo.com ([209.191.85.220]:48239 "HELO
-	smtp110.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752057AbXH2SSU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Aug 2007 14:18:20 -0400
-Received: (qmail 81808 invoked from network); 29 Aug 2007 18:18:19 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.ca;
-  h=Received:X-YMail-OSG:Mime-Version:Content-Type:Message-Id:Content-Transfer-Encoding:From:Subject:Date:To:X-Mailer;
-  b=vu0W3YfY0/BC9+WH/WhEXUH18YQwZOJHF6RcX1V3oG5icETz2lZMZTMBhJTTr+Rnh2zNuQGEzIPcoooFPvlv2JoT6VV9WMkTx97FNE+5RePAEfgW6zst4oQFPrpv7ai8fwG2O9QT9Z6vilgswt1zJsZliEqWvBCNT9Nl5gyCJyA=  ;
-Received: from unknown (HELO ?192.168.3.33?) (jean_francois_veillette@207.96.147.134 with plain)
-  by smtp110.mail.mud.yahoo.com with SMTP; 29 Aug 2007 18:18:18 -0000
-X-YMail-OSG: exmnqNAVM1mzFBp3ZJnAw2OwxBAAIR3pAodI5JdixJh7GUNpjEja5RpU7yoVZo5kU6eXLJJM9Q--
-X-Mailer: Apple Mail (2.752.2)
+	id S1750747AbXH2SVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 14:21:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758830AbXH2SVg
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 14:21:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:23069 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752317AbXH2SVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 14:21:35 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JNJ00GEQSBXQQC0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 29 Aug 2007 14:21:34 -0400 (EDT)
+In-reply-to: <7vy7fxyy52.fsf@gitster.siamese.dyndns.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56971>
 
-Here is my setup, please briefly tell me what would be the suggested  
-git configuration.
+On Mon, 27 Aug 2007, Junio C Hamano wrote:
 
-The company currently use cvs, it has a cvs tree where the first  
-directory level is per client, the second directory level is the  
-project, then inside it we have the many artifacts, like :
-cvsserver/Shared/Documentation/PresentationTemplate.doc
-cvsserver/Shared/Documentation/AnalysisTemplate.doc
-cvsserver/Shared/Devel/CommonLib/*
-cvsserver/ClientA/ProjectA/Doc/Presentation.doc
-cvsserver/ClientA/ProjectA/Doc/Analysis.doc
-cvsserver/ClientA/ProjectA/Dev/ApplicationA/*
-cvsserver/ClientA/ProjectA/Dev/ApplicationB/*
-cvsserver/ClientA/ProjectA/Dev/ApplicationC/*
-cvsserver/ClientA/ProjectA/Dev/LibraryA/*
-cvsserver/ClientA/ProjectA/Dev/LibraryB/*
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Instead of treating the "the last used one happened to be on the
+> > horizon -- try not to drop it" special case, I wonder if it
+> > makes sense to float the last used delta base object early in
+> > the window _after_ it is used.  Wouldn't we keep more than one
+> > very recently used delta base objects in the window that way?
+> 
+> The attached is my quick-and-dirty one.  
 
-What would be the best way to represent a similar setup in git ?
-I was thinking of having a repository at the project level, and add  
-atomic  subdirectories (code for applications and libraries for  
-example)  as submodules.
-If submodule are the right way to go, can a submodule, include a  
-submodule, for example, ApplicationA use LibraryA and CommonLib ?
 
-Thanks,
+I like this.  A LRU sorting of base objects is obviously a good thing to 
+do.  Some comments below.
 
-- jfv
+[...]
+
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index 9b3ef94..2a5ea29 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -1439,6 +1439,61 @@ static void free_unpacked(struct unpacked *n)
+>  	n->depth = 0;
+>  }
+>  
+> +static void shift_base(int idx, int window, struct unpacked *array, struct object_entry *delta_base)
+> +{
+> +	/*
+> +	 * The delta_base was a useful one to deltify the object at
+> +	 * idx (circular).  Shift the contents of array (circular
+> +	 * buffer) so that it will be evicted last.
+> +	 */
+> +	int good_base, good_at;
+> +	struct unpacked swap;
+> +
+> +	for (good_base = 0; good_base < window; good_base++)
+> +		if (array[good_base].entry == delta_base)
+> +			break;
+> +	if (window <= good_base)
+> +		die("Junio is an idiot");
+> +
+> +	if (window <= ++idx)
+> +		idx = 0;
+
+<ranting again>
+I cannot do otherwise but hate this notation.  Just for this one I had 
+to spend at least 5 seconds thinking about it before I could convince 
+myself it is OK.  It annoyed me so much that I switched the condition 
+around in my local copy.  I acknowledge your maintainer priviledges, but 
+I couldn't stop myself making noise about this again anyway.
+</ranting again>
+
+> +	/*
+> +	 * The entry at idx modulo window will be evicted first during
+> +	 * the next round.  Where in the next window is the good_base
+> +	 * found?
+> +	 */
+> +	good_at = (good_base + window - idx) % window;
+> +
+> +	/*
+> +	 * If it is already at the furthest edge, nothing needs to be done.
+> +	 */
+> +	if (good_at == window - 1)
+> +		return;
+
+This condition will never occur because, upon entering this function, 
+idx points to the _current_ 
+object which is never considered as a base (can't deltify against self).  
+So you probably should avoid increasing idx.
+
+Yet I think it would be clearer if you had this instead (assuming idx 
+unchanged):
+
+	/* How far is the good base from the front of the window? */
+	good_dist = (window + idx - good_base) % window;
+
+	/* If it is already at the furthest edge, nothing needs to be done. */
+	if (good_dist <= 1)
+		return;
+
+	/* Otherwise, stash it away, shift the others down and swap it in. */
+	swap = array[good_base];
+	dst = good_base;
+	while (--good_dist > 0) {
+		src = (dst + 1) % window;
+		array[dst] = array[src];
+		dst = src;
+	}
+	array[dst] = swap;
+
+> +	swap = array[good_base];
+> +
+> +	while (good_at < window) {
+
+This also had the effect of moving down the current object, i.e. the one 
+that was just deltified.  Maybe this is a good thing, in which case the 
+"if (good_dist <= 1)" above can be deleted and "while (good_dist-- > 0)" 
+used instead.
+
+
+Nicolas
