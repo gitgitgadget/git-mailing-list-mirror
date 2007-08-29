@@ -1,78 +1,84 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: repo.or.cz wishes?
-Date: Thu, 30 Aug 2007 01:12:51 +0200
-Message-ID: <200708300112.51666.jnareb@gmail.com>
-References: <20070826235944.GM1219@pasky.or.cz> <200708282356.10605.jnareb@gmail.com> <20070829073212.GQ1976MdfPADPa@greensroom.kotnet.org>
+Subject: GitWiki: GUI editing and Wikipedia-like syntax incompatibile
+Date: Thu, 30 Aug 2007 01:37:34 +0200
+Message-ID: <200708300137.35000.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Thu Aug 30 01:13:20 2007
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 30 01:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQWiq-0004fx-8D
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 01:13:16 +0200
+	id 1IQX6T-0000Fx-Un
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 01:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757030AbXH2XM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 19:12:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755639AbXH2XM4
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 19:12:56 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:56230 "EHLO
+	id S1755682AbXH2Xhi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 19:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755792AbXH2Xhi
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 19:37:38 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:19940 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751746AbXH2XM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 19:12:56 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so315164nfb
-        for <git@vger.kernel.org>; Wed, 29 Aug 2007 16:12:54 -0700 (PDT)
+	with ESMTP id S1755682AbXH2Xhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 19:37:37 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so319221nfb
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 16:37:36 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=U/zsVdL0i7TjAHaia04RNYOWd9CY4IiOSRMyv287KQLkxZrKxYPf5TdVVqym8wh65l5JZG3solg/XruLiJfpNLp0GCGbxO4bzqPf6/Hg/Mo53oTTdIMucxB1SwunO8X8zg47Nqr7SMxDqTj/CBwxfTmhKO7O2CtvPcVtpeuId88=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FF0xs5lIbYOPSWxbM3cHvNCY6crR/f/4PxLwzleTzWOKrIkBYwMoDoeJmGtWJT4Z+u23bwxzBKEQqcTAqDu9uKSBjPxk1TTA9EWjNJuAHzlOzCHMaNS1wZ2ejX+j5I08Pvy6vgkHzTnpS6St55lMyZJ6AqnxXXkl2MjXO1/Fr/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LDWrW6KpfggamBgE/OjPC/DfncCsQyR2PfoQAcw8/3oMAKNPWKqmcdT7c3XiVTRJzIMTErKBsU0mbtO3nyfvCZKJznUDHSJhfwbVR6HdenFMNqvjb9sZqIxCMr++mDWFhJCewJq96CbxSG/tRzTdV7XxmbEIAUq8wBNmBhkIJCI=
-Received: by 10.86.97.7 with SMTP id u7mr895472fgb.1188429174145;
-        Wed, 29 Aug 2007 16:12:54 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PT4fbnQCf5xmCfm+0jS86stvPNv6H6r8IfUsP45pHDIhLrZ43GqSVBzpri8Py71n8b8dpJD8sPoO2OKydyQvt23SZJn7cMYxRyx2jePdku0luRkyqfSILQ1dLjSvONrVS0rW5lJUS9UAdJmn2SUsPrJoH6LH+ZigdGJIr/ddxe8=
+Received: by 10.86.58.3 with SMTP id g3mr912864fga.1188430656066;
+        Wed, 29 Aug 2007 16:37:36 -0700 (PDT)
 Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
-        by mx.google.com with ESMTPS id 13sm10091631fks.2007.08.29.16.12.50
+        by mx.google.com with ESMTPS id 13sm10119849fks.2007.08.29.16.37.33
         (version=SSLv3 cipher=OTHER);
-        Wed, 29 Aug 2007 16:12:51 -0700 (PDT)
+        Wed, 29 Aug 2007 16:37:34 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20070829073212.GQ1976MdfPADPa@greensroom.kotnet.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56990>
 
-On Wed, Aug 29, 2007, Sven Verdoolaege wrote:
-> On Tue, Aug 28, 2007 at 11:56:10PM +0200, Jakub Narebski wrote:
->> On Tue, 28 August 2007, Sven Verdoolaege wrote:
->>> On Mon, Aug 27, 2007 at 11:58:42PM +0200, Jakub Narebski wrote:
->>>>
->>>> The problem is that repo.or.cz needs support for that in gitweb, while
->>>> gitweb in turn needs support for that in git. This needs git consensus
->>>> on how to specify object database location (or just gitdir) for
->>>> submodules, to have later submodule support in gitweb.
->>> 
->>> What would be the use of that (outside of gitweb) ?
->> 
->> For the hypothetical (planned?) future '--recurse-submodules' option
->> to git-diff family, git-ls-tree and git-ls-files, git-fetch and git-push
->> (but I think not git-pull), perhaps git-log (besides what it supports
->> by the way of git-diff-tree), maybe even git-status and git-commit.
-> 
-> Ah... you're talking about bare repositories, right?
-> For non-bare repos, I'd assume you would only recurse for those
-> submodules that you have actually checked out in your working tree.
+Pasky, could you please either turn off GUI editing on GitWiki, or make 
+it compatibile with Wikipedia-like syntax.
 
-For bare repositories, and for repositories which move around (at least
-once change path). Gitweb uses repository like it is bare...
+With Wikipedia-like syntax we denote links by [[link]], and macros by 
+{{macro}} (for example {{BR}} and {{TableOfContents(2)}}). In default 
+MoinMoin syntax _macros_ use [[macro]] syntax, and you use ["link"] to 
+force non-CamelCase link.
 
+Editing page which uses Wikipedia-like syntax with GUI editing makes the 
+following changes:
+
+  [[CamelCase]]         -->   CamelCase
+  [[Link]]              -->   ["Link"]
+
+(this is not much trouble, beside fact that everyone is used to 
+Wikipedia syntax)
+
+  [[Link|the link]]     -->   [:Link:the link]
+
+(much less people understand MoinMoin notation that Wikipedia pipe link)
+
+  {{Macro}}             -->   [[Macro]]
+
+(which causes macro to be displayed as link to nowehere and DO NOT 
+WORK!!!)
+
+  Camel``Case           -->   Camel{{{}}}Case
+
+(a bit harder to read).
+
+
+To everybody else: please avoid GUI editing till it is corrected. TIA.
 -- 
 Jakub Narebski
 Poland
