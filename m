@@ -1,75 +1,50 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 22:27:26 +0200
-Message-ID: <20070829202726.GC11824@steel.home>
-References: <1188319608.6106.63.camel@beauty> <200708291005.08795.andyparkins@gmail.com> <20070829095202.GE1219@pasky.or.cz> <200708291356.33126.andyparkins@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gitk: cherry-pick issue
+Date: Wed, 29 Aug 2007 13:28:04 -0700
+Message-ID: <7vabsaozl7.fsf@gitster.siamese.dyndns.org>
+References: <46D44C4A.90204@eudaptics.com>
+	<18132.45162.604130.618577@cargo.ozlabs.ibm.com>
+	<46D517B9.1070906@eudaptics.com>
+	<18133.27107.374857.698184@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Josh England <jjengla@sandia.gov>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 22:27:38 2007
+Cc: Johannes Sixt <j.sixt@eudaptics.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Aug 29 22:28:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQU8V-0008OV-Ja
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 22:27:35 +0200
+	id 1IQU9C-0000AQ-9C
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 22:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755532AbXH2U13 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 16:27:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754923AbXH2U13
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 16:27:29 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:64980 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402AbXH2U12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 16:27:28 -0400
-Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
-	by post.webmailer.de (klopstock mo33) (RZmta 12.1)
-	with ESMTP id c0349cj7TI2U5r ; Wed, 29 Aug 2007 22:27:26 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 84FB8277BD;
-	Wed, 29 Aug 2007 22:27:26 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 599A3BE06; Wed, 29 Aug 2007 22:27:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200708291356.33126.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
-X-RZG-CLASS-ID: mo07
+	id S1755340AbXH2U2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 16:28:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536AbXH2U2N
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 16:28:13 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:60493 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754923AbXH2U2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 16:28:12 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C6DB012A7FA;
+	Wed, 29 Aug 2007 16:28:28 -0400 (EDT)
+In-Reply-To: <18133.27107.374857.698184@cargo.ozlabs.ibm.com> (Paul
+	Mackerras's message of "Wed, 29 Aug 2007 22:43:15 +1000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56978>
 
-Andy Parkins, Wed, Aug 29, 2007 14:56:32 +0200:
-> On Wednesday 2007 August 29, Petr Baudis wrote:
-> 
-> > But overally, I'm still not convinced that there is a feasible use-case
-> > for the cloned hooks at all. Someone has a particular example?
-> 
-> Hits me all the time.
-> 
-> 1) Start a new project
-> 2) Install a pre-commit hook that checks that every patch meets some
->    arbitrary coding standard
-> 3) Clone to laptop
-> 4) Kick self the first time you make a commit that doesn't adhere to coding
->    standards that would have been enforced by the hook script.
-> 
-> The problem is that my brain thinks that cloning gets me the same 
-> configuration as the source, but obviously it doesn't and I forget that I 
-> need to clone _then_ scp .git/config and .git/hooks/*.
-> 
-> I understand that these things are a security risk to do automatically, and I 
-> don't think I'd advocate that.  However, it would be useful to be able to 
-> grab those files as well.
+Paul Mackerras <paulus@samba.org> writes:
 
-It is just a case for "git clone --clone-templates" (which does not
-exist yet), not for a clone hook.
+> Johannes Sixt writes:
+>
+>> Yes, indeed, I had this option turned off.
+>
+> I just pushed out a fix.
 
-Sometimes, I miss the cloning of .git/description, it probably should
-be something like: "git clone --clone=templates,config,description".
-Where config could include a predefined set of harmless config options
-(like colors or i18n).
+Thanks, pulled.
