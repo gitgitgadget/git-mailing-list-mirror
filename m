@@ -1,76 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 11:52:02 +0200
-Message-ID: <20070829095202.GE1219@pasky.or.cz>
-References: <1188319608.6106.63.camel@beauty> <20070828172709.GB1219@pasky.or.cz> <200708291005.08795.andyparkins@gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Document service option receive-pack
+Date: Wed, 29 Aug 2007 12:57:06 +0300
+Organization: Private
+Message-ID: <4pii3bpp.fsf@cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Josh England <jjengla@sandia.gov>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 11:52:10 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 11:53:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQKDa-0008RK-1M
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 11:52:10 +0200
+	id 1IQKEe-00009A-01
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 11:53:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590AbXH2JwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 05:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755456AbXH2JwF
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 05:52:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58237 "EHLO machine.or.cz"
+	id S1754985AbXH2JxN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 05:53:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755560AbXH2JxN
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 05:53:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:44334 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755492AbXH2JwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 05:52:04 -0400
-Received: (qmail 32673 invoked by uid 2001); 29 Aug 2007 11:52:02 +0200
-Content-Disposition: inline
-In-Reply-To: <200708291005.08795.andyparkins@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754959AbXH2JxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 05:53:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IQKET-0008Ur-Tr
+	for git@vger.kernel.org; Wed, 29 Aug 2007 11:53:05 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 11:53:05 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 11:53:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:IbfGt70xWaRftA9h8Dzwoo8mCKg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56921>
 
-On Wed, Aug 29, 2007 at 11:05:07AM CEST, Andy Parkins wrote:
-> On Tuesday 2007 August 28, Petr Baudis wrote:
-> 
-> > On Tue, Aug 28, 2007 at 06:46:48PM CEST, Josh England wrote:
-> > > When cloning an existing repository, is there any way to grab
-> > > the .git/hooks files as part of the clone (or pull)?
-> >
-> >   No. You can add the appropriate instructions to instructions how to
-> > clone the repository, users have to install the hooks manually.
-> >
-> >   Now I went on with a large writeup on considerations for implementing
-> > such a feature (including security), but then I scrapped it. What would
-> > you like to use these hooks for? Really, perhaps it's best to instead do
-> > any "post-commit" etc. checks at the push time instead of the commit
-> > time, so that developers can still freely commit locally, e.g. I
-> > sometimes do temporary commits on side branches of various work in
-> > progress changes, then randomly merge them together etc. before I come
-> > up with the final sequence of commits that I push out.
-> 
-> I've not done it for myself yet, but I had an idea about making an independent 
-> branch in the repository itself containing the hook scripts for that project.  
-> That way, the cloners get the scripts but still have to knowingly install 
-> them themselves.
-> 
-> If you were feeling particularly brave, you could check that branch out 
-> in .git/hooks.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-daemon.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-Yes, that was one of my ideas as well; but one thing is that you may
-want different hooks scripts for different branches or even different
-times in a particular branch. So maybe .git-hooks/, with each change
-printing a bit fat warning and setting -x. On the other hand maybe it
-might be simpler to do the tests for which branch/commit are you working
-on in the hooks themselves.
-
-But overally, I'm still not convinced that there is a feasible use-case
-for the cloned hooks at all. Someone has a particular example?
-
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index f902161..91ce5f3 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -157,6 +157,13 @@ the facility of inet daemon to achieve the same before spawning
+ SERVICES
+ --------
+ 
++receive-pack::
++        Allow anonymous push to the repository. Use with caution.
++        Anyone can do anything in there: push to the repository,
++        delete content and branches or even add malicious code. This
++        kind of public pushable repository content needs peer review
++        and cannot be trusted.
++
+ upload-pack::
+ 	This serves `git-fetch-pack` and `git-peek-remote`
+ 	clients.  It is enabled by default, but a repository can
 -- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+1.5.3.rc5
+
+    Available from git repository http://cante.net/~jaalto/git/git
+    Branch: Documentation/git-daemon.txt+document-service-option--receive-pack
