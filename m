@@ -1,78 +1,82 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: New to git, related multi-projects
-Date: Wed, 29 Aug 2007 21:52:16 +0200
-Message-ID: <20070829195216.GB11824@steel.home>
-References: <7F6E024B-253E-40C6-9012-9CF1B2F374D8@yahoo.ca>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-svn tags and branches
+Date: Wed, 29 Aug 2007 13:15:55 -0700
+Message-ID: <7vhcmip05g.fsf@gitster.siamese.dyndns.org>
+References: <faulrb$483$1@sea.gmane.org> <85absc6we7.fsf@lola.goethe.zz>
+	<cb7bb73a0708280209r36136128x7bce310bf4fd4f66@mail.gmail.com>
+	<86sl64nhc1.fsf@lola.quinscape.zz>
+	<cb7bb73a0708280237v6f248517h183174bc41296df3@mail.gmail.com>
+	<46D4A664.4070007@vilain.net>
+	<cb7bb73a0708281620v41383ed8w728af0112d2a6360@mail.gmail.com>
+	<46D4ECE2.9020806@vilain.net>
+	<cb7bb73a0708290141y159d6bbfj2bac23af5e86bb15@mail.gmail.com>
+	<7v4piisolb.fsf@gitster.siamese.dyndns.org>
+	<cb7bb73a0708290353iba0bdefl81a4a4e158be2fbf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-15?Q?Jean-Fran=E7ois?= Veillette 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Wed Aug 29 21:52:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Sam Vilain" <sam@vilain.net>, "David Kastrup" <dak@gnu.org>,
+	git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 22:16:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQTaR-0006Om-8k
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 21:52:23 +0200
+	id 1IQTxV-0004ld-KH
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 22:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbXH2TwU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 15:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbXH2TwU
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 15:52:20 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:12712 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752871AbXH2TwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 15:52:19 -0400
-Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
-	by post.webmailer.de (klopstock mo33) (RZmta 12.1)
-	with ESMTP id c0349cj7TI2Uth ; Wed, 29 Aug 2007 21:52:16 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 9FD83277BD;
-	Wed, 29 Aug 2007 21:52:16 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 73D65BE06; Wed, 29 Aug 2007 21:52:16 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7F6E024B-253E-40C6-9012-9CF1B2F374D8@yahoo.ca>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
-X-RZG-CLASS-ID: mo07
+	id S1754923AbXH2UQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 16:16:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754914AbXH2UQG
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 16:16:06 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:60308 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462AbXH2UQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 16:16:04 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 477CE12AA61;
+	Wed, 29 Aug 2007 16:16:19 -0400 (EDT)
+In-Reply-To: <cb7bb73a0708290353iba0bdefl81a4a4e158be2fbf@mail.gmail.com>
+	(Giuseppe Bilotta's message of "Wed, 29 Aug 2007 12:53:15 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56976>
 
-Jean-Fran=E7ois Veillette, Wed, Aug 29, 2007 20:18:14 +0200:
-> The company currently use cvs, it has a cvs tree where the first =20
-> directory level is per client, the second directory level is the =20
-> project, then inside it we have the many artifacts, like :
-> cvsserver/Shared/Documentation/PresentationTemplate.doc
-> cvsserver/Shared/Documentation/AnalysisTemplate.doc
-> cvsserver/Shared/Devel/CommonLib/*
-> cvsserver/ClientA/ProjectA/Doc/Presentation.doc
-> cvsserver/ClientA/ProjectA/Doc/Analysis.doc
-> cvsserver/ClientA/ProjectA/Dev/ApplicationA/*
-> cvsserver/ClientA/ProjectA/Dev/ApplicationB/*
-> cvsserver/ClientA/ProjectA/Dev/ApplicationC/*
-> cvsserver/ClientA/ProjectA/Dev/LibraryA/*
-> cvsserver/ClientA/ProjectA/Dev/LibraryB/*
->=20
-> What would be the best way to represent a similar setup in git ?
-> I was thinking of having a repository at the project level, and add =20
-> atomic  subdirectories (code for applications and libraries for =20
-> example)  as submodules.
-> If submodule are the right way to go, ...
+"Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
 
-not necessarily. I'd try plain branches first, unless the client's
-projects have lots of applications (or libraries, IOW, modules) and
-many of them are optional for your development process. "Optional"
-better fits what submodules are: their presence is supermodule is
-optional too. Many fixes after introduction of the submodules was just
-ignoring them :)
+> On 8/29/07, Junio C Hamano <gitster@pobox.com> wrote:
+>> "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+>>
+>> > BTW can git have a tag and a branch with the same name? If
+>> > not,...
+>>
+>> This is "Yes but".
+>>
+>> You can have a tag foo and branch foo.
+>
+> [snip]
+>
+>>  You can clarify yourself to avoid ambiguity like so:
+>>
+>>   . git branch newbranch heads/foo ;# I mean "branch from foo branch"
+>>   . git log tags/foo ;# "show history starting at that tag"
+>
+> Ok. So assuming we import a svn repo which has a tag and a branch
+> called 'name', and that there are post-tag commits in tags/name, how
+> do we call the stuff?
+>
+> We could call 'name' both the (annotated) tag and the branch, but what
+> name would we use for the branch created by post-tag commits?
 
-> ... can a submodule, include a   submodule, for example,
-> ApplicationA use LibraryA and CommonLib ?
+That's the "Yes but" part.  You need to know what you are doing.
 
-yes.
+As I said in the part you quoted, if you have branch foo and tag
+foo, and if you are interested in talking about the tag 'foo',
+you say "tag/foo".  When you want to talk about the branch, you
+say "heads/foo".  Replace "foo" with "name" and I think you get
+your answer.
