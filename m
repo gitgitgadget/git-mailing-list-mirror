@@ -1,56 +1,69 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: Re: Git cheat sheet
-Date: Wed, 29 Aug 2007 09:46:07 +0200
-Message-ID: <46D5243F.3040007@gmail.com>
-References: <200708290348.02853.zack@kde.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Explain in --pid-file that using --inetd implies it automatically
+Date: Wed, 29 Aug 2007 11:07:37 +0300
+Organization: Private
+Message-ID: <ejhm3gs6.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Zack Rusin <zack@kde.org>
-X-From: git-owner@vger.kernel.org Wed Aug 29 09:52:19 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 10:04:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQILX-0002QT-PV
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 09:52:16 +0200
+	id 1IQIX1-0003bu-0U
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbXH2Hvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 03:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbXH2Hvt
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 03:51:49 -0400
-Received: from smtpq2.groni1.gr.home.nl ([213.51.130.201]:59514 "EHLO
-	smtpq2.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbXH2Hvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 03:51:48 -0400
-Received: from [213.51.130.188] (port=34573 helo=smtp3.groni1.gr.home.nl)
-	by smtpq2.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1IQIL5-00022o-5c; Wed, 29 Aug 2007 09:51:47 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:48929 helo=[192.168.0.3])
-	by smtp3.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1IQIL2-0004Ia-TO; Wed, 29 Aug 2007 09:51:44 +0200
-User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-In-Reply-To: <200708290348.02853.zack@kde.org>
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
+	id S1754522AbXH2IEB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 04:04:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbXH2IEB
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:04:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:41035 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754124AbXH2ID7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 04:03:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IQIWh-0003oj-CM
+	for git@vger.kernel.org; Wed, 29 Aug 2007 10:03:47 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 10:03:47 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 10:03:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:6xo/QVKvIjQqwfBX+YlV4Va0BcY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56906>
 
-On 08/29/2007 09:48 AM, Zack Rusin wrote:
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-daemon.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-> I took a short break from being insanely handsome (which takes a lot of my 
-> time - gorgeous doesn't just happen) and based on similar work for Mercurial 
-> created a little SVG cheat sheet for Git.
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index f902161..687deb2 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -124,7 +124,8 @@ OPTIONS
+ 	Detach from the shell. Implies --syslog.
+ 
+ --pid-file=file::
+-	Save the process id in 'file'.
++	Save the process id in 'file'. When `--inetd` is in use, this
++        option is not needed.
+ 
+ --user=user, --group=group::
+ 	Change daemon's uid and gid before entering the service loop.
+-- 
+1.5.3.rc5
 
-[ ... ]
+Available also from git repository http://cante.net/~jaalto/git/git
 
-> Sample png's are here:
-> http://ktown.kde.org/~zrusin/git/git-cheat-sheet-medium.png
-> http://ktown.kde.org/~zrusin/git/git-cheat-sheet-large.png
-
-Yes, well, screw those, it's pictures of _you_ we want!
-
-Rene.
+    Branch: Documentation/git-daemon.txt+option--pid-file
