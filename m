@@ -1,75 +1,68 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 15:28:30 +0100
-Message-ID: <200708291528.31599.andyparkins@gmail.com>
-References: <1188319608.6106.63.camel@beauty> <200708291356.33126.andyparkins@gmail.com> <Pine.LNX.4.64.0708291421060.28586@racer.site>
+Date: Wed, 29 Aug 2007 15:31:29 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708291529010.28586@racer.site>
+References: <1188319608.6106.63.camel@beauty> <20070828172709.GB1219@pasky.or.cz>
+ <200708291005.08795.andyparkins@gmail.com> <20070829095202.GE1219@pasky.or.cz>
+ <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
+ <Pine.LNX.4.64.0708291446011.28586@racer.site> <20070829135441.GI10749@pasky.or.cz>
+ <Pine.LNX.4.64.0708291502340.28586@racer.site> <20070829141948.GJ10749@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, Josh England <jjengla@sandia.gov>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 29 16:28:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Benjamin Collins <aggieben@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Aug 29 16:31:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQOXG-0001gZ-Ix
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 16:28:46 +0200
+	id 1IQOa4-0002T3-QV
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 16:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbXH2O2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 10:28:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXH2O2k
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 10:28:40 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:58476 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752045AbXH2O2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 10:28:39 -0400
-Received: by an-out-0708.google.com with SMTP id d31so40810and
-        for <git@vger.kernel.org>; Wed, 29 Aug 2007 07:28:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=G22WaJKeT6p2zDSCgtLh8/pDUao4FlAAWhKxirD3xB0HNgmuCYvvRAFt1J/buAIRY+kqj6Ez0Xf+/GEscK4t41QD3g86cOh45v+xpTnW6ukSxaVofTrlzPeZo2FHx6pLwinUxfr7f6VYhKiy+obtUbzX5tnR0P5lIHAt4VfirVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=VqgT7X4rYH42BPy6ERWDdhulNHz1ro6Sw2u805OD7+9vlQgINg6mLFuBh06ogg99ZyaQEN4zpFAfs9HOP0Kuoi13O71KdQLhw0btK2UFUjef4nfVMiPk0Skaw3eBKT+XnPTJMGzUp1lN/orIGwK3pa8Ga4t1kDFI5xnQOA5jCuU=
-Received: by 10.100.96.9 with SMTP id t9mr574186anb.1188397716000;
-        Wed, 29 Aug 2007 07:28:36 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id d24sm8783738and.2007.08.29.07.28.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Aug 2007 07:28:35 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0708291421060.28586@racer.site>
-Content-Disposition: inline
+	id S1755893AbXH2Obe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 10:31:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755871AbXH2Obe
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 10:31:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47640 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755132AbXH2Obd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 10:31:33 -0400
+Received: (qmail invoked by alias); 29 Aug 2007 14:31:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 29 Aug 2007 16:31:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18WLJN7PioWIDRi6TeGDAqYpXfEzOR58GacoXFJ0n
+	5tH10KB840rGd4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070829141948.GJ10749@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56957>
 
-On Wednesday 2007 August 29, Johannes Schindelin wrote:
+Hi,
 
-> > 1) Start a new project
-> > 2) Install a pre-commit hook that checks that every patch meets some
-> >    arbitrary coding standard
-> > 3) Clone to laptop
-> > 4) Kick self the first time you make a commit that doesn't adhere to
-> > coding standards that would have been enforced by the hook script.
->
-> For me it is
->
-> 4) put the check into the Makefile where it belongs.
+On Wed, 29 Aug 2007, Petr Baudis wrote:
 
-I suppose you are right, the reason I pick the hook is because I don't mind 
-having untidy code in the working tree but don't want it in the repository. 
+> On Wed, Aug 29, 2007 at 04:06:17PM CEST, Johannes Schindelin wrote:
+> > I think that they are way more than just technical issues: the 
+> > chicken-and-egg problem is certainly _not_ a technical issue.
+> 
+> What do you mean by the chicken-and-egg problem? I think I missed that.
 
-Also, it was given as an example hook so I enabled it :-)
+What if hooks/update is in your set?  It _does not_ run before it is 
+checked out, but of course, some ref is updated before it is checked out.
 
+> > _All_ of the arguments I read are along the lines "we want to enforce 
+> > some coding styles" or similar.  These issues are _orthogonal_ to the 
+> > question which SCM is used.
+> 
+> Your company has certain rules on how all the source on the public 
+> branches should look like, etc. It's not quite clear to me how can build 
+> system enforce these rules.
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+The same as a hook.  You just put the check into the Makefile.
+
+Ciao,
+Dscho
