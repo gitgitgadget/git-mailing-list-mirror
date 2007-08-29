@@ -1,118 +1,85 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Remove duplicate pathspecs from ls-files command line
-Date: Wed, 29 Aug 2007 21:44:10 +0200
-Message-ID: <20070829194410.GA11824@steel.home>
-References: <20070829081122.GA604@piper.oerlikon.madduck.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: cloning/pulling hooks
+Date: Wed, 29 Aug 2007 12:45:18 -0700
+Message-ID: <7vlkbup1kh.fsf@gitster.siamese.dyndns.org>
+References: <1188319608.6106.63.camel@beauty>
+	<20070828172709.GB1219@pasky.or.cz>
+	<200708291005.08795.andyparkins@gmail.com>
+	<20070829095202.GE1219@pasky.or.cz>
+	<b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	439992-quiet@bugs.debian.org, Junio C Hamano <junkio@cox.net>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Aug 29 21:44:32 2007
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Benjamin Collins" <aggieben@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 21:45:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQTSf-0004EB-4U
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 21:44:21 +0200
+	id 1IQTU3-0004fO-8Z
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 21:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985AbXH2ToO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 15:44:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754260AbXH2ToO
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 15:44:14 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:58752 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753721AbXH2ToN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 15:44:13 -0400
-Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
-	by post.webmailer.de (klopstock mo64) (RZmta 12.1)
-	with ESMTP id t03533j7TFg8V1 ; Wed, 29 Aug 2007 21:44:10 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 868A7277BD;
-	Wed, 29 Aug 2007 21:44:10 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 45021BE06; Wed, 29 Aug 2007 21:44:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070829081122.GA604@piper.oerlikon.madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
-X-RZG-CLASS-ID: mo07
+	id S1760370AbXH2Tpf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 15:45:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760373AbXH2Tpf
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 15:45:35 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59612 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754962AbXH2Tpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 15:45:33 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DA434128C83;
+	Wed, 29 Aug 2007 15:45:51 -0400 (EDT)
+In-Reply-To: <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
+	(Benjamin Collins's message of "Wed, 29 Aug 2007 08:18:47 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56974>
 
-The first entry wins, all the subsequent entries will be discarded.
+"Benjamin Collins" <aggieben@gmail.com> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> On 8/29/07, Petr Baudis <pasky@suse.cz> wrote:
+>> But overally, I'm still not convinced that there is a feasible use-case
+>> for the cloned hooks at all. Someone has a particular example?
+>>
+>> --
+>>                                 Petr "Pasky" Baudis
+>
+> My group at work would like this capability.  We have a homogeneous
+> environment with well-known NFS shares, and some scripts that do
+> things in this common environment (e.g., release scripts).  It would
+> be nice if when we do a clone, all the hook scripts (that would be
+> valid on any machine, in any directory, for any user) would come with
+> it.
+>
+> Of course, I understand why it's not already like that, particularly
+> given the context of Linux development practices.  Still - there are
+> those of us that think this would be a great convenience.  Having an
+> option to git-clone to retrieve the parent's hook scripts would be
+> preferable, and have git-clone just disable them by default.
+> 'git-clone -t repo' or some such.
 
-martin f krafft, Wed, Aug 29, 2007 10:11:22 +0200:
-> when using git-add from a script, the following fails:
-> 
->   $ git commit -m. foo foo
->   error: pathspec 'foo' did not match any file(s) known to git.
->   Did you forget to 'git add'?
-> 
-> I am bringing this up in the context of
-> http://bugs.debian.org/439992, where debcommit.pl would duplicate
-> a file argument under certain conditions. It's since been fixed, but
-> I wonder whether git-commit could be made more robust in the
-> presence of duplicate arguments? Or is this behaviour by choice?
-> 
+I do think this is project specific, as such:
 
-Don't think so. Looks like accident. The patch below fixes it,
-by introducing a costly argument duplication check. Shouldn't
-be a problem for a normal use (git-ls-files expects globs, not
-pathnames).
+ - you can have .git/hooks be a symlink to ../git-hooks/
+   (i.e. the project toplevel "git-hooks" directory, or
+   whereever the project finds convenient);
 
- setup.c |   21 +++++++++++++++++----
- 1 files changed, 17 insertions(+), 4 deletions(-)
+ - have "git-hooks" tracked
 
-diff --git a/setup.c b/setup.c
-index 06004f1..b13b628 100644
---- a/setup.c
-+++ b/setup.c
-@@ -111,10 +111,19 @@ void verify_non_filename(const char *prefix, const char *arg)
- 		die("'%s': %s", arg, strerror(errno));
- }
- 
-+static const char **has_pathspec(const char **start, const char **end, const char *spec)
-+{
-+	const char **p;
-+	for (p = start; p != end; ++p)
-+		if (!strcmp(*p, spec))
-+			return p;
-+	return NULL;
-+}
-+
- const char **get_pathspec(const char *prefix, const char **pathspec)
- {
- 	const char *entry = *pathspec;
--	const char **p;
-+	const char **in, **out;
- 	int prefixlen;
- 
- 	if (!prefix && !entry)
-@@ -128,11 +137,15 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- 	}
- 
- 	/* Otherwise we have to re-write the entries.. */
--	p = pathspec;
-+	in = out = pathspec;
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 	do {
--		*p = prefix_path(prefix, prefixlen, entry);
--	} while ((entry = *++p) != NULL);
-+		const char *spec = prefix_path(prefix, prefixlen, entry);
-+		if (!has_pathspec(pathspec, out, spec))
-+			*out++ = spec;
-+	} while ((entry = *++in) != NULL);
-+	if (in != out)
-+		*out = NULL;
- 	return (const char **) pathspec;
- }
- 
--- 
-1.5.3.rc7.24.g0e57
+The latter will take care of the distribution issue.  Now, we
+would need a generic and convenient way to make sure that the
+new repository "clone" makes has .git/hooks as a symlink to
+whereever in-tree that follows the project convention.  I think
+you could use the existing templates mechanism.  Allow "git
+clone" to take 'template=' parameter and pass it down to "git
+init" it invokes.  You use project specific template that
+arranges the .git/hooks/ symlink when you clone.  We could even
+support "[clone] template = this/template/file" variable in your
+$HOME/.gitconfig if we go this route.
+
+   
