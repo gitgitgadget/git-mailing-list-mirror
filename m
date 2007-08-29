@@ -1,72 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn tags and branches
-Date: Wed, 29 Aug 2007 01:59:44 -0700
-Message-ID: <7v4piisolb.fsf@gitster.siamese.dyndns.org>
-References: <faulrb$483$1@sea.gmane.org> <faurcl$p0o$1@sea.gmane.org>
-	<46D38B3D.6070809@vilain.net> <85absc6we7.fsf@lola.goethe.zz>
-	<cb7bb73a0708280209r36136128x7bce310bf4fd4f66@mail.gmail.com>
-	<86sl64nhc1.fsf@lola.quinscape.zz>
-	<cb7bb73a0708280237v6f248517h183174bc41296df3@mail.gmail.com>
-	<46D4A664.4070007@vilain.net>
-	<cb7bb73a0708281620v41383ed8w728af0112d2a6360@mail.gmail.com>
-	<46D4ECE2.9020806@vilain.net>
-	<cb7bb73a0708290141y159d6bbfj2bac23af5e86bb15@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: cloning/pulling hooks
+Date: Wed, 29 Aug 2007 10:05:07 +0100
+Message-ID: <200708291005.08795.andyparkins@gmail.com>
+References: <1188319608.6106.63.camel@beauty> <20070828172709.GB1219@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Sam Vilain" <sam@vilain.net>, "David Kastrup" <dak@gnu.org>,
-	git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 11:00:01 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Josh England <jjengla@sandia.gov>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 11:05:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQJP1-0001dJ-Gj
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 10:59:55 +0200
+	id 1IQJUI-0002Mq-JX
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 11:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336AbXH2I7x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 04:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbXH2I7w
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 04:59:52 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974AbXH2I7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 04:59:52 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2ED7912A5C5;
-	Wed, 29 Aug 2007 05:00:08 -0400 (EDT)
-In-Reply-To: <cb7bb73a0708290141y159d6bbfj2bac23af5e86bb15@mail.gmail.com>
-	(Giuseppe Bilotta's message of "Wed, 29 Aug 2007 10:41:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753407AbXH2JFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 05:05:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbXH2JFR
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 05:05:17 -0400
+Received: from mu-out-0910.google.com ([209.85.134.190]:6888 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752886AbXH2JFO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 05:05:14 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so175244mue
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 02:05:13 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Z5+KTjbez4fUMhXQHwUvInzz/h+f5nLFMmIPb2kWypmFVp2Eq4mp5jBo7F2DDbYrD4M6bsfrUzmCZxSxnK3OJYeepkhKy5DZbLo8y2HZqXnR0wmgjj2c0iH5tGB+INZ8yxapCxnu5L/zj8BCdi0ZriuWrh92uuA//K2YosyoJc0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=eyb2Jk30/5EMGQrIjjaJB59hhV8DL//uTnbP+2Pgzwlp0l/xn8ck0hZrzSdnLE6CbTTMhIMcXV3x0C13sM1e1tN15hSUY4EQYp3+C/f8FKCOXtdBYfXCGZqOvWAjnDr1g8Pt6X2U3+wCJXKog2g5AOkrEdjCHy7YobFGuqxRc84=
+Received: by 10.86.58.3 with SMTP id g3mr396183fga.1188378312943;
+        Wed, 29 Aug 2007 02:05:12 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id 6sm4797814nfv.2007.08.29.02.05.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Aug 2007 02:05:11 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070828172709.GB1219@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56914>
 
-"Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+On Tuesday 2007 August 28, Petr Baudis wrote:
 
-> BTW can git have a tag and a branch with the same name? If
-> not,...
+> On Tue, Aug 28, 2007 at 06:46:48PM CEST, Josh England wrote:
+> > When cloning an existing repository, is there any way to grab
+> > the .git/hooks files as part of the clone (or pull)?
+>
+>   No. You can add the appropriate instructions to instructions how to
+> clone the repository, users have to install the hooks manually.
+>
+>   Now I went on with a large writeup on considerations for implementing
+> such a feature (including security), but then I scrapped it. What would
+> you like to use these hooks for? Really, perhaps it's best to instead do
+> any "post-commit" etc. checks at the push time instead of the commit
+> time, so that developers can still freely commit locally, e.g. I
+> sometimes do temporary commits on side branches of various work in
+> progress changes, then randomly merge them together etc. before I come
+> up with the final sequence of commits that I push out.
 
-This is "Yes but".
+I've not done it for myself yet, but I had an idea about making an independent 
+branch in the repository itself containing the hook scripts for that project.  
+That way, the cloners get the scripts but still have to knowingly install 
+them themselves.
 
-You can have a tag foo and branch foo.
+If you were feeling particularly brave, you could check that branch out 
+in .git/hooks.
 
-- "git checkout foo" would switch you to foo branch
 
-- Anything else that lets you use an abbreviated refname 'foo',
-  e.g.
+Andy
 
-  . git branch newbranch foo
-  . git log foo
-  . git diff foo
 
-  will scold you that 'foo' is ambiguous, while it does not
-  outright fail, and takes the first match from the list defined
-  in sha1_name.c (ref_fmt[]), so a tag wins over a branch.  You
-  can clarify yourself to avoid ambiguity like so:
-
-  . git branch newbranch heads/foo ;# I mean "branch from foo branch"
-  . git log tags/foo ;# "show history starting at that tag"
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
