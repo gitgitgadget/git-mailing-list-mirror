@@ -1,61 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Mixing cherry-pick and merge
-Date: Wed, 29 Aug 2007 14:22:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708291422020.28586@racer.site>
-References: <46D56123.4030307@objectxp.com> <20070829131439.GA31212@diana.vm.bytemark.co.uk>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cloning/pulling hooks
+Date: Wed, 29 Aug 2007 15:39:00 +0200
+Message-ID: <20070829133900.GH1219@pasky.or.cz>
+References: <1188319608.6106.63.camel@beauty> <20070828172709.GB1219@pasky.or.cz> <200708291005.08795.andyparkins@gmail.com> <20070829095202.GE1219@pasky.or.cz> <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michel Marti <mma@objectxp.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 15:22:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benjamin Collins <aggieben@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 15:39:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQNVH-0005jG-Ga
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 15:22:39 +0200
+	id 1IQNlH-0000Ol-Du
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 15:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757192AbXH2NWh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 09:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756896AbXH2NWg
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 09:22:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54534 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757063AbXH2NWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 09:22:36 -0400
-Received: (qmail invoked by alias); 29 Aug 2007 13:22:34 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp044) with SMTP; 29 Aug 2007 15:22:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18nZAwhQaEnsLQJh2lSndvibczSF05oesPRkA+PoH
-	zPRpEA5IhY3Hz1
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070829131439.GA31212@diana.vm.bytemark.co.uk>
-X-Y-GMX-Trusted: 0
+	id S1757766AbXH2NjF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 09:39:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757398AbXH2NjE
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 09:39:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44302 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756896AbXH2NjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 09:39:01 -0400
+Received: (qmail 6718 invoked by uid 2001); 29 Aug 2007 15:39:00 +0200
+Content-Disposition: inline
+In-Reply-To: <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56947>
 
-Hi,
-
-On Wed, 29 Aug 2007, Karl Hasselstr?m wrote:
-
-> On 2007-08-29 14:05:55 +0200, Michel Marti wrote:
+On Wed, Aug 29, 2007 at 03:18:47PM CEST, Benjamin Collins wrote:
+> On 8/29/07, Petr Baudis <pasky@suse.cz> wrote:
+> > But overally, I'm still not convinced that there is a feasible use-case
+> > for the cloned hooks at all. Someone has a particular example?
+> >
+> > --
+> >                                 Petr "Pasky" Baudis
 > 
-> > I just merged from a branch from which I previously cherry-picked some 
-> > commits and now the log contains the already cherry-picked commits 
-> > twice (which is rather confusing). Is this a bug or a feature?
-> 
-> It's an inevitable consequence of git's design. When you cherry-pick a 
-> commit, you create a (maybe slightly modified) copy of it with different 
-> ancestry. If you then merge a branch that contains the original commit, 
-> you will get both the original and the copy as ancestors of your new 
-> merge commit.
+> My group at work would like this capability.  We have a homogeneous
+> environment with well-known NFS shares, and some scripts that do
+> things in this common environment (e.g., release scripts).  It would
+> be nice if when we do a clone, all the hook scripts (that would be
+> valid on any machine, in any directory, for any user) would come with
+> it.
 
-I guess that people are not even aware that they can rebase with Git.  
-Sounds like a perfect use case to me.
+Unfortunately, you didn't really describe a use-case, you just said that
+you would like them - not what you would use them to. The thing is, so
+far almost all the use cases would be better off with either using the
+hooks only at the central repository hub and keeping the developers'
+freedom locally, or would work better simply somewhere else than in hook
+files. I'm not saying that this must be the case every time, that is why
+I'm asking for more input data.
 
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
