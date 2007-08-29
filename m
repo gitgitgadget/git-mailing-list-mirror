@@ -1,71 +1,77 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: repo.or.cz wishes?
-Date: Wed, 29 Aug 2007 07:13:45 -0400
-Message-ID: <20070829111345.GD29615@thunk.org>
-References: <20070826235944.GM1219@pasky.or.cz> <Pine.LNX.4.64.0708270933450.28586@racer.site> <20070828041059.GK18160@spearce.org> <20070828111913.GA31120@thunk.org> <20070829041523.GS18160@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH 0/4] Miscellaneous fixes
+Date: Wed, 29 Aug 2007 13:17:59 +0200
+Message-ID: <20070829111759.GB29980@diana.vm.bytemark.co.uk>
+References: <20070826202309.15933.54183.stgit@yoghurt> <b0943d9e0708290318k715cb94eidfa38a97825511ca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 29 13:14:00 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 13:18:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQLUh-0002Vj-O2
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 13:13:56 +0200
+	id 1IQLYn-00037J-8Z
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 13:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754930AbXH2LNv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 07:13:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbXH2LNv
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 07:13:51 -0400
-Received: from thunk.org ([69.25.196.29]:52844 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754112AbXH2LNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 07:13:50 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IQLdU-0005M5-32; Wed, 29 Aug 2007 07:23:00 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1IQLUX-0003By-6x; Wed, 29 Aug 2007 07:13:45 -0400
+	id S1755364AbXH2LSG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 07:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755361AbXH2LSF
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 07:18:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3559 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753399AbXH2LSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 07:18:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IQLYd-0007qE-00; Wed, 29 Aug 2007 12:17:59 +0100
 Content-Disposition: inline
-In-Reply-To: <20070829041523.GS18160@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <b0943d9e0708290318k715cb94eidfa38a97825511ca@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56937>
 
-On Wed, Aug 29, 2007 at 12:15:23AM -0400, Shawn O. Pearce wrote:
-> > This is morally the same, but it makes the hardlink step easier (only
-> > one pack to link from A to B), and by using git-gc mit makes it
-> > conceptually easier for people to understand what's going on.
-> > 
-> > git --git-dir=A gc
-> > ln A/.git/objects/pack/* B/.git/objects/pack
-> > git --git-dir=B gc --prune
-> > git --git-dir=A prune
-> 
-> No, it won't work.
-> 
-> The problem is that during the first `git --git-dir=A gc` call
-> you are deleting packfiles that may contain objects that B needs.
-> *poof*.  
+On 2007-08-29 11:18:34 +0100, Catalin Marinas wrote:
 
-But "git-gc" without the --prune doesn't delete any objects.  So it
-should always be safe to use git-gc even if there are repositories
-that are relying on that repo's ODB.  It's only if you use git-gc
---prune that you could get in troudble.  It might delete some
-packfiles containing objects needed by B, but only after consolidating
-all of the objects into a single packfile that contains all of the
-objects that had always been in A's ODB.
+> On 26/08/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> >   git://repo.or.cz/stgit/kha.git fixes
+> >
+> > Karl Hasselstr=F6m (4):
+> >       Don't use test_expect_failure when more than one thing could =
+fail
+> >       Don't write None to the conf file
+> >       Replace "git repo-config" with "git config" in help texts
+> >       Compile regexp just once
+> >
+> >  examples/gitconfig          |    2 +-
+> >  stgit/git.py                |    3 ++-
+> >  stgit/stack.py              |    7 ++++---
+> >  t/t2101-pull-policy-pull.sh |    4 ++--
+> >  4 files changed, 9 insertions(+), 7 deletions(-)
+>
+> BTW, did you generate the above text by hand and copied it to the
+> e-mail?
 
-So I don't see why this wouldn't work.
+Yes. It's the output of git-request-pull.
 
-						- Ted
+> People asked in the past for this kind of text to be automatically
+> generated by 'stg mail'.
+
+I might very well have been one of them.
+
+Adding cover message template support for shortlog and aggregate
+diffstat should be straightforward. I might get to it some time in the
+not too distant future if no one else beats me to it. As for the pull
+line, that's another story; git-request-pull actually seems to connect
+to that repository and check its contents, and I'm not convinced
+that's a good thing for stg-mail to be doing. But that's the least
+wanted item of the three anyway, I guess.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
