@@ -1,85 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cloning/pulling hooks
-Date: Wed, 29 Aug 2007 12:45:18 -0700
-Message-ID: <7vlkbup1kh.fsf@gitster.siamese.dyndns.org>
-References: <1188319608.6106.63.camel@beauty>
-	<20070828172709.GB1219@pasky.or.cz>
-	<200708291005.08795.andyparkins@gmail.com>
-	<20070829095202.GE1219@pasky.or.cz>
-	<b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: New to git, related multi-projects
+Date: Wed, 29 Aug 2007 21:52:16 +0200
+Message-ID: <20070829195216.GB11824@steel.home>
+References: <7F6E024B-253E-40C6-9012-9CF1B2F374D8@yahoo.ca>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
-To: "Benjamin Collins" <aggieben@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 21:45:50 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?Q?Jean-Fran=E7ois?= Veillette 
+	<jean_francois_veillette@yahoo.ca>
+X-From: git-owner@vger.kernel.org Wed Aug 29 21:52:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQTU3-0004fO-8Z
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 21:45:47 +0200
+	id 1IQTaR-0006Om-8k
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 21:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760370AbXH2Tpf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 15:45:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760373AbXH2Tpf
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 15:45:35 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59612 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754962AbXH2Tpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 15:45:33 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DA434128C83;
-	Wed, 29 Aug 2007 15:45:51 -0400 (EDT)
-In-Reply-To: <b3889dff0708290618s79cffdb5nb6cc69d14efa8b9@mail.gmail.com>
-	(Benjamin Collins's message of "Wed, 29 Aug 2007 08:18:47 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752969AbXH2TwU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 15:52:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbXH2TwU
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 15:52:20 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:12712 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871AbXH2TwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 15:52:19 -0400
+Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
+	by post.webmailer.de (klopstock mo33) (RZmta 12.1)
+	with ESMTP id c0349cj7TI2Uth ; Wed, 29 Aug 2007 21:52:16 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9FD83277BD;
+	Wed, 29 Aug 2007 21:52:16 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 73D65BE06; Wed, 29 Aug 2007 21:52:16 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7F6E024B-253E-40C6-9012-9CF1B2F374D8@yahoo.ca>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56975>
 
-"Benjamin Collins" <aggieben@gmail.com> writes:
+Jean-Fran=E7ois Veillette, Wed, Aug 29, 2007 20:18:14 +0200:
+> The company currently use cvs, it has a cvs tree where the first =20
+> directory level is per client, the second directory level is the =20
+> project, then inside it we have the many artifacts, like :
+> cvsserver/Shared/Documentation/PresentationTemplate.doc
+> cvsserver/Shared/Documentation/AnalysisTemplate.doc
+> cvsserver/Shared/Devel/CommonLib/*
+> cvsserver/ClientA/ProjectA/Doc/Presentation.doc
+> cvsserver/ClientA/ProjectA/Doc/Analysis.doc
+> cvsserver/ClientA/ProjectA/Dev/ApplicationA/*
+> cvsserver/ClientA/ProjectA/Dev/ApplicationB/*
+> cvsserver/ClientA/ProjectA/Dev/ApplicationC/*
+> cvsserver/ClientA/ProjectA/Dev/LibraryA/*
+> cvsserver/ClientA/ProjectA/Dev/LibraryB/*
+>=20
+> What would be the best way to represent a similar setup in git ?
+> I was thinking of having a repository at the project level, and add =20
+> atomic  subdirectories (code for applications and libraries for =20
+> example)  as submodules.
+> If submodule are the right way to go, ...
 
-> On 8/29/07, Petr Baudis <pasky@suse.cz> wrote:
->> But overally, I'm still not convinced that there is a feasible use-case
->> for the cloned hooks at all. Someone has a particular example?
->>
->> --
->>                                 Petr "Pasky" Baudis
->
-> My group at work would like this capability.  We have a homogeneous
-> environment with well-known NFS shares, and some scripts that do
-> things in this common environment (e.g., release scripts).  It would
-> be nice if when we do a clone, all the hook scripts (that would be
-> valid on any machine, in any directory, for any user) would come with
-> it.
->
-> Of course, I understand why it's not already like that, particularly
-> given the context of Linux development practices.  Still - there are
-> those of us that think this would be a great convenience.  Having an
-> option to git-clone to retrieve the parent's hook scripts would be
-> preferable, and have git-clone just disable them by default.
-> 'git-clone -t repo' or some such.
+not necessarily. I'd try plain branches first, unless the client's
+projects have lots of applications (or libraries, IOW, modules) and
+many of them are optional for your development process. "Optional"
+better fits what submodules are: their presence is supermodule is
+optional too. Many fixes after introduction of the submodules was just
+ignoring them :)
 
-I do think this is project specific, as such:
+> ... can a submodule, include a   submodule, for example,
+> ApplicationA use LibraryA and CommonLib ?
 
- - you can have .git/hooks be a symlink to ../git-hooks/
-   (i.e. the project toplevel "git-hooks" directory, or
-   whereever the project finds convenient);
-
- - have "git-hooks" tracked
-
-The latter will take care of the distribution issue.  Now, we
-would need a generic and convenient way to make sure that the
-new repository "clone" makes has .git/hooks as a symlink to
-whereever in-tree that follows the project convention.  I think
-you could use the existing templates mechanism.  Allow "git
-clone" to take 'template=' parameter and pass it down to "git
-init" it invokes.  You use project specific template that
-arranges the .git/hooks/ symlink when you clone.  We could even
-support "[clone] template = this/template/file" variable in your
-$HOME/.gitconfig if we go this route.
-
-   
+yes.
