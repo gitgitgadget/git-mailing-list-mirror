@@ -1,65 +1,65 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: repo.or.cz wishes?
-Date: Wed, 29 Aug 2007 09:32:12 +0200
-Message-ID: <20070829073212.GQ1976MdfPADPa@greensroom.kotnet.org>
-References: <20070826235944.GM1219@pasky.or.cz>
- <200708272358.43021.jnareb@gmail.com>
- <20070828084939.GF1976MdfPADPa@greensroom.kotnet.org>
- <200708282356.10605.jnareb@gmail.com>
-Reply-To: skimo@liacs.nl
+From: Zack Rusin <zack@kde.org>
+Subject: Git cheat sheet
+Date: Wed, 29 Aug 2007 03:48:02 -0400
+Message-ID: <200708290348.02853.zack@kde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 09:32:24 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 09:45:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQI2D-0008U0-Tc
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 09:32:18 +0200
+	id 1IQIEW-0001UV-Bf
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 09:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbXH2HcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 03:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbXH2HcO
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 03:32:14 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:41439 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751712AbXH2HcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 03:32:14 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JNI0047ZY9OW1@psmtp09.wxs.nl> for git@vger.kernel.org; Wed,
- 29 Aug 2007 09:32:12 +0200 (MEST)
-Received: (qmail 14281 invoked by uid 500); Wed, 29 Aug 2007 07:32:12 +0000
-In-reply-to: <200708282356.10605.jnareb@gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751117AbXH2Ho4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 03:44:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbXH2Ho4
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 03:44:56 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:51241 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877AbXH2Hoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 03:44:55 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 4252F743C9
+	for <git@vger.kernel.org>; Wed, 29 Aug 2007 09:44:54 +0200 (CEST)
+Received: from pixel.local (unknown [10.3.5.243])
+	by esparsett.troll.no (Postfix) with ESMTP id 36EC974191
+	for <git@vger.kernel.org>; Wed, 29 Aug 2007 09:44:54 +0200 (CEST)
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56904>
 
-On Tue, Aug 28, 2007 at 11:56:10PM +0200, Jakub Narebski wrote:
-> On Tue, 28 August 2007, Sven Verdoolaege wrote:
-> > On Mon, Aug 27, 2007 at 11:58:42PM +0200, Jakub Narebski wrote:
-> >>
-> >> The problem is that repo.or.cz needs support for that in gitweb, while
-> >> gitweb in turn needs support for that in git. This needs git consensus
-> >> on how to specify object database location (or just gitdir) for
-> >> submodules, to have later submodule support in gitweb.
-> > 
-> > What would be the use of that (outside of gitweb) ?
-> 
-> For the hypothetical (planned?) future '--recurse-submodules' option
-> to git-diff family, git-ls-tree and git-ls-files, git-fetch and git-push
-> (but I think not git-pull), perhaps git-log (besides what it supports
-> by the way of git-diff-tree), maybe even git-status and git-commit.
+Hey, 
 
-Ah... you're talking about bare repositories, right?
-For non-bare repos, I'd assume you would only recurse for those
-submodules that you have actually checked out in your working tree.
+I took a short break from being insanely handsome (which takes a lot of my 
+time - gorgeous doesn't just happen) and based on similar work for Mercurial 
+created a little SVG cheat sheet for Git. I'm not sure if it's going to be 
+useful for anyone else (the target audience was composed of engineers who 
+agreed to move to and work from Norway so you know right of the bat that 
+historically they already made some bad decisions), but the times when I do 
+art are so rare that I feel the need to share.
 
-skimo
+The thing that I took from the Mercurial sheet, besides the idea, is the 
+flow-chart (people dig icecream and flow-charts, the first one is really hard 
+to get into a SVG rendering so I went with the second) so the license is the 
+same as of the Mercurial sheet which was Creative Commons.
+There's likely a few errors in it and if you have any suggestions or if you 
+sport latex pants and a fancy green hairdo that goes with those pants (which 
+equals the fact that you're an artist) and would like to pimp the sheet out, 
+it would be my pleasure to help you. 
+
+The SVG is at:
+http://ktown.kde.org/~zrusin/git/git-cheat-sheet.svg
+Sample png's are here:
+http://ktown.kde.org/~zrusin/git/git-cheat-sheet-medium.png
+http://ktown.kde.org/~zrusin/git/git-cheat-sheet-large.png
+
+with much (platonic) love,
+z
