@@ -1,128 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-daemon(1): assorted improvements.
-Date: Wed, 29 Aug 2007 03:33:11 -0700
-Message-ID: <7v3ay2r5p4.fsf_-_@gitster.siamese.dyndns.org>
-References: <ejhm3gs6.fsf@cante.net>
-	<7vabsasqk2.fsf@gitster.siamese.dyndns.org> <zm0a1vw9.fsf@cante.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH 4/4] Add optional logging of subprocess execution
+Date: Wed, 29 Aug 2007 11:50:11 +0100
+Message-ID: <b0943d9e0708290350rbadfe08g9bbab7888723980e@mail.gmail.com>
+References: <20070826202724.16265.85821.stgit@yoghurt>
+	 <20070826203344.16265.66280.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Aug 29 12:33:28 2007
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 12:50:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQKrQ-0005jx-9J
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:33:20 +0200
+	id 1IQL8F-0007on-T5
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303AbXH2KdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 06:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbXH2KdQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:33:16 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49850 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750765AbXH2KdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 06:33:15 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D3DDC12923C;
-	Wed, 29 Aug 2007 06:33:34 -0400 (EDT)
-In-Reply-To: <zm0a1vw9.fsf@cante.net> (Jari Aalto's message of "Wed, 29 Aug
-	2007 13:24:06 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755986AbXH2KuQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 06:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753242AbXH2KuP
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:50:15 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:29090 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbXH2KuN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Aug 2007 06:50:13 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so121821nze
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 03:50:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=l8zWft8aB+Evf54Ez74mMaoFeKmo06wFVf8EwJvDfOwkBI4eIrbMNSSvESj8UtSxViniMduua+aRj/7U00GXWc6DjfCql9rRS5w8eD7VjAwd8SdMfCxBy0iq/wtFnCkDmSGjogUAsedYKGGqsrg+nHBYw5dQD8+nlgCuC8i6Gao=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=F2qXtGqSF/yjfF4R4iMlpCBtQLGC6fOZVkb710gwxzOu/21TZ812Oq3YTX8Fpjoj9feHZdEmUHJ8ZQBiavrc8lMR0502Cu0lgL9nsgILKX3cXdgDorF/CBvbVRViO8qUqf4rq04C2STX9m5MlB0fXUsNsFO0XtlV9VgEeAOxbUw=
+Received: by 10.141.79.12 with SMTP id g12mr272144rvl.1188384611519;
+        Wed, 29 Aug 2007 03:50:11 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Wed, 29 Aug 2007 03:50:11 -0700 (PDT)
+In-Reply-To: <20070826203344.16265.66280.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56933>
 
-Jari Aalto noticed a handful places in git-daemon documentation
-that need to be improved.
+On 26/08/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> Now that the subprocess calling has been refactored and is in a nice
+> shape, it's quite simple to add some logging facilities. This patch
+> adds two separate log modes, switched by the STG_SUBPROCESS_LOG
+> environment variable:
 
- * --inetd makes --pid-file to be ignored, in addition to --user
-   and --group
+Any objection to calling this variable STGIT_SUBPROCESS_LOG? We
+already have STGIT_DEBUG_LEVEL (used in stgit.main). I can do it in my
+tree before pushing as I already merged your branches.
 
- * receive-pack service was not described at all.  We should, if
-   only to warn about the security implications of it.
+BTW, thanks for refactoring the subprocess calling.
 
- * There was no example of per repository configuration.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * I'm planning to commit this one.
-
- Documentation/git-daemon.txt |   36 ++++++++++++++++++++++++++++++++++--
- 1 files changed, 34 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index f902161..efdcdad 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -124,7 +124,8 @@ OPTIONS
- 	Detach from the shell. Implies --syslog.
- 
- --pid-file=file::
--	Save the process id in 'file'.
-+	Save the process id in 'file'.  Ignored when the daemon
-+	is run under `--inetd`.
- 
- --user=user, --group=group::
- 	Change daemon's uid and gid before entering the service loop.
-@@ -157,6 +158,13 @@ the facility of inet daemon to achieve the same before spawning
- SERVICES
- --------
- 
-+These services can be globally enabled/disabled using the
-+command line options of this command.  If a finer-grained
-+control is desired (e.g. to allow `git-archive` to be run
-+against only in a few selected repositories the daemon serves),
-+the per-repository configuration file can be used to enable or
-+disable them.
-+
- upload-pack::
- 	This serves `git-fetch-pack` and `git-peek-remote`
- 	clients.  It is enabled by default, but a repository can
-@@ -164,7 +172,19 @@ upload-pack::
- 	item to `false`.
- 
- upload-archive::
--	This serves `git-archive --remote`.
-+	This serves `git-archive --remote`.  It is disabled by
-+	default, but a repository can enable it by setting
-+	`daemon.uploadarchive` configuration item to `true`.
-+
-+receive-pack::
-+	This serves `git-send-pack` clients, allowing anonymous
-+	push.  It is disabled by default, as there is _no_
-+	authentication in the protocol (in other words, anybody
-+	can push anything into the repository, including removal
-+	of refs).  This is solely meant for a closed LAN setting
-+	where everybody is friendly.  This service can be
-+	enabled by `daemon.receivepack` configuration item to
-+	`true`.
- 
- EXAMPLES
- --------
-@@ -229,6 +249,18 @@ Repositories can still be accessed by hostname though, assuming
- they correspond to these IP addresses.
- 
- 
-+To enable `git-archive --remote` and disable `git-fetch` against
-+a repository, have the following in the configuration file in the
-+repository (that is the file 'config' next to 'HEAD', 'refs' and
-+'objects').
-++
-+----------------------------------------------------------------
-+[daemon]
-+	uploadpack = false
-+	uploadarchive = true
-+----------------------------------------------------------------
-+
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>, YOSHIFUJI Hideaki
--- 
-1.5.3.rc7
+--=20
+Catalin
