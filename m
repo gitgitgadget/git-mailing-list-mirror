@@ -1,47 +1,46 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Git cheat sheet
-Date: Wed, 29 Aug 2007 12:04:07 +0200
-Message-ID: <20070829100407.GA28853@diana.vm.bytemark.co.uk>
-References: <200708290348.02853.zack@kde.org> <7vfy22squc.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.5.3-rc7
+Date: Wed, 29 Aug 2007 03:14:59 -0700
+Message-ID: <7vir6yr6jg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Zack Rusin <zack@kde.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 12:05:10 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 12:15:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQKQ2-0001lu-3E
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:05:02 +0200
+	id 1IQKZy-000339-6K
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 12:15:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755761AbXH2KE7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 29 Aug 2007 06:04:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755822AbXH2KE6
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:04:58 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4694 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755590AbXH2KE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 06:04:58 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IQKP9-0007cC-00; Wed, 29 Aug 2007 11:04:07 +0100
-Content-Disposition: inline
-In-Reply-To: <7vfy22squc.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756289AbXH2KPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 06:15:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756274AbXH2KPD
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 06:15:03 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49649 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756187AbXH2KPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 06:15:01 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DCAE8128BB2
+	for <git@vger.kernel.org>; Wed, 29 Aug 2007 06:15:22 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56927>
 
-On 2007-08-29 01:11:07 -0700, Junio C Hamano wrote:
+So I've tagged it, and this time have tarball and testing RPM at
+the usual places
 
-> - "git reset --hard HEAD"; you do not have to write HEAD there.
+The latest feature release GIT 1.5.3-rc7 is available at the
+usual places:
 
-There should also probably be a warning about any local changes being
-irretrievably lost. (The existing warning is kind of vague.)
+  http://www.kernel.org/pub/software/scm/git/
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+  git-1.5.3.rc7.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.3.rc7.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.3.rc7.tar.{gz,bz2}		(preformatted docs)
+  testing/git-*-1.5.3.                          rc7-1.$arch.rpm	(RPM)
