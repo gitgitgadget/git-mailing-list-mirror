@@ -1,75 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <j.sixt@eudaptics.com>
 Subject: Re: [ANNOUNCE] GIT 1.5.3-rc7
-Date: Wed, 29 Aug 2007 16:23:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708291621120.28586@racer.site>
-References: <7vbqcqr6cz.fsf@gitster.siamese.dyndns.org> <46D57ECF.2050209@eudaptics.com>
- <Pine.LNX.4.64.0708291516020.28586@racer.site> <46D58C02.2070203@eudaptics.com>
+Date: Wed, 29 Aug 2007 17:42:58 +0200
+Message-ID: <46D59402.2060807@eudaptics.com>
+References: <7vbqcqr6cz.fsf@gitster.siamese.dyndns.org> <46D57ECF.2050209@eudaptics.com> <Pine.LNX.4.64.0708291516020.28586@racer.site> <46D58C02.2070203@eudaptics.com> <Pine.LNX.4.64.0708291621120.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 17:24:20 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 29 17:44:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQPOz-0007qu-IS
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 17:24:17 +0200
+	id 1IQPhr-0005o0-R9
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 17:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532AbXH2PYO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 11:24:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbXH2PYO
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 11:24:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53190 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752691AbXH2PYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 11:24:13 -0400
-Received: (qmail invoked by alias); 29 Aug 2007 15:23:26 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp004) with SMTP; 29 Aug 2007 17:23:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NYlV7pVgNmhR07jHIHhcm95os/m7ZfRpHC27uRQ
-	D0ZZ/dbCcOd3no
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46D58C02.2070203@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S1753749AbXH2Pnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 11:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbXH2Pnp
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 11:43:45 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:37604 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753702AbXH2Pnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 11:43:45 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1IQPhn-0005pY-AA; Wed, 29 Aug 2007 17:43:43 +0200
+Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C056B6B7; Wed, 29 Aug 2007 17:43:42 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0708291621120.28586@racer.site>
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.382, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56963>
 
-Hi,
+Johannes Schindelin schrieb:
+> To refresh my memory, could you please describe how mingw.git's master and 
+> devel branches are handled?
 
-On Wed, 29 Aug 2007, Johannes Sixt wrote:
+'master' merges git.git's tagged releases, i.e. the 'maint' branch, but 
+also the -rc series of a new feature release (like in the past weeks).
 
-> Johannes Schindelin schrieb:
-> > On Wed, 29 Aug 2007, Johannes Sixt wrote:
-> > 
-> > > The MinGW port is now at 1.5.3-rc7, too.
-> > 
-> > Should we switch from  4msysgit.git's devel branch to your master branch?
-> 
-> No. There are still too many differences.
+'devel' contains additional commits that make a "flawless" test suite, 
+i.e. mostly disables tests that trigger bugs. This branch is always 
+rebased onto of 'master'.
 
-Right.  And I see that there are many more tests failing with mingw.git's 
-master, too.  Should have tested that first.
+Originally 'devel' contained code changes without which MinGW git would 
+have been unusable, but currently it really only disables tests that 
+trigger exotic bugs[*] that I cannot fix right away and so is basically 
+just for my own convenience. I could very well get rid of the branch - 
+if only to raise the incentive for others to help fix the bugs. ;)
 
-> But I think it is time to rebase 4msysgit on top of 'devel' - without 
-> the old devel commits, i.e.
-> 
-> 	git rebase --onto mingw/devel 382210f715
-> 
-> There is a lot of stuff in 4msysgit.git that is no longer needed or 
-> superceded by mingw.git.
-> 
-> Side note: If you can live with a test suite does not complete without 
-> failures you can rebase on top of master and avoid the devel branch. 
-> (Think of broken repo when I rebase devel again.)
+[*] bugs that I do not encounter in may daily workflow.
 
-Hmm.  I really want to avoid that breakage...
-
-To refresh my memory, could you please describe how mingw.git's master and 
-devel branches are handled?
-
-Ciao,
-Dscho
+-- Hannes
