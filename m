@@ -1,100 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Remove duplicate pathspecs from ls-files command line
-Date: Wed, 29 Aug 2007 23:15:19 +0200
-Message-ID: <20070829211519.GE11824@steel.home>
-References: <20070829081122.GA604@piper.oerlikon.madduck.net> <20070829194410.GA11824@steel.home> <7v4piioyu1.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: git-svn tags and branches
+Date: Wed, 29 Aug 2007 23:27:07 +0200
+Message-ID: <cb7bb73a0708291427k7b3a5de8y61b5562f45c73069@mail.gmail.com>
+References: <faulrb$483$1@sea.gmane.org> <46D4A664.4070007@vilain.net>
+	 <cb7bb73a0708281620v41383ed8w728af0112d2a6360@mail.gmail.com>
+	 <46D4ECE2.9020806@vilain.net>
+	 <cb7bb73a0708290141y159d6bbfj2bac23af5e86bb15@mail.gmail.com>
+	 <7v4piisolb.fsf@gitster.siamese.dyndns.org>
+	 <cb7bb73a0708290353iba0bdefl81a4a4e158be2fbf@mail.gmail.com>
+	 <7vhcmip05g.fsf@gitster.siamese.dyndns.org>
+	 <cb7bb73a0708291402r3e9dfdeeh85bcc47ef9eba782@mail.gmail.com>
+	 <7vy7fu9h9n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>,
-	git discussion list <git@vger.kernel.org>,
-	439992-quiet@bugs.debian.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 23:15:45 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 23:27:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQUss-00036a-2W
-	for gcvg-git@gmane.org; Wed, 29 Aug 2007 23:15:30 +0200
+	id 1IQV4G-0006FF-Ni
+	for gcvg-git@gmane.org; Wed, 29 Aug 2007 23:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbXH2VP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 17:15:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbXH2VP0
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 17:15:26 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:24796 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330AbXH2VP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 17:15:26 -0400
-Received: from tigra.home (Fc9fa.f.strato-dslnet.de [195.4.201.250])
-	by post.webmailer.de (klopstock mo62) (RZmta 12.1)
-	with ESMTP id v03534j7TGvxQv ; Wed, 29 Aug 2007 23:15:20 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id B98D3277BD;
-	Wed, 29 Aug 2007 23:15:19 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2FD28BE06; Wed, 29 Aug 2007 23:15:19 +0200 (CEST)
+	id S1752165AbXH2V1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 17:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756910AbXH2V1K
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 17:27:10 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:30694 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752165AbXH2V1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 17:27:08 -0400
+Received: by py-out-1112.google.com with SMTP id u77so2461720pyb
+        for <git@vger.kernel.org>; Wed, 29 Aug 2007 14:27:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OWlpDmB4aNEs1gvxy5WZ2kR3bdshhTpdtNRwE1jUyHl+1+9RzAnZBfWO+X7J4nm69mXbiTP+jRaGxN03n6jpbK17oEmG9vseum8WpMVkHpzCX+MLLeXhlClX8Nv7XUsp9D452109jVzrHc7mziV3WG9aAm8rBGRZTtfwQIWx8jw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m9KPKeXR9VDOBAOHVovD2CTvaVX+/U60Sif32GaGlVkHfOK6NwNbJaQ9iP6qbCzBHioOc8gX7MTd2r8ux75xpZKsQliSyXK0a2/zCUbYl7+/KJiRUOefDJP9X3ue7gcSoVYkQRgvDtfX56rYwd6DCmYy+8vdFD1QJho07vrN5dQ=
+Received: by 10.35.70.17 with SMTP id x17mr1270498pyk.1188422827548;
+        Wed, 29 Aug 2007 14:27:07 -0700 (PDT)
+Received: by 10.35.43.11 with HTTP; Wed, 29 Aug 2007 14:27:07 -0700 (PDT)
+In-Reply-To: <7vy7fu9h9n.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7v4piioyu1.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAciAx4=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56986>
 
-Junio C Hamano, Wed, Aug 29, 2007 22:44:22 +0200:
-> 
-> That loop is plain old O(n^2) that penalizes everybody.
-> 
+On 8/29/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+>
+> > On 8/29/07, Junio C Hamano <gitster@pobox.com> wrote:
+> >> As I said in the part you quoted, if you have branch foo and tag
+> >> foo, and if you are interested in talking about the tag 'foo',
+> >> you say "tag/foo".  When you want to talk about the branch, you
+> >> say "heads/foo".  Replace "foo" with "name" and I think you get
+> >> your answer.
+> >
+> > The problem here is that you can have THREE things: the tag foo, the
+> > branch foo, and the 'branch' under the tag foo, which is not the
+> > branch foo.
+>
+> What do you mean?  "refs/tags/foo", "refs/heads/foo" and ...?
+>
+> You cannot have "refs/tags/foo/bar" if you have "refs/tags/foo".
+>
 
-Maybe something in pathspec matching code could be reused to notice
-the duplications? It has to go through all of them anyway...
 
-> Please do not penalize sane callers when you try to improve
-> support of mistaken usage.  Move expensive error recovery in the
-> error path when possible, and have _only_ mistaken users pay the
-> price.
-> 
-> Like this perhaps.
-> 
-
-I just would write it shorter (except for that ugly label before
-closing brace).
-
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index d36181a..258868e 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -511,11 +511,28 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		 */
- 		int num, errors = 0;
- 		for (num = 0; pathspec[num]; num++) {
-+			int other;
-+
- 			if (ps_matched[num])
- 				continue;
-+			/*
-+			 * The caller might have fed identical pathspec
-+			 * twice.  Do not barf on such a mistake.
-+			 */
-+			for (other = 0; pathspec[other]; other++) {
-+				if (other == num || !ps_matched[other])
-+					continue;
-+				if (!strcmp(pathspec[other], pathspec[num]))
-+					/*
-+					 * Ok, we have a match already.
-+					 */
-+					goto found_dup;
-+			}
-+
- 			error("pathspec '%s' did not match any file(s) known to git.",
- 			      pathspec[num] + prefix_offset);
- 			errors++;
-+		found_dup:;
- 		}
- 
- 		if (errors)
 -- 
-1.5.3.rc7.26.g5f7e4
+Giuseppe "Oblomov" Bilotta
