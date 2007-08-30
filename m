@@ -1,81 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add commands that git-gc runs underneath
-Date: Thu, 30 Aug 2007 12:13:33 +0200
-Message-ID: <46D6984D.9040802@op5.se>
-References: <lkbtwek0.fsf@cante.net> <Pine.LNX.4.64.0708301107320.28586@racer.site>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn tags and branches
+Date: Thu, 30 Aug 2007 03:21:15 -0700
+Message-ID: <20070830102115.GA17620@muzzle>
+References: <faulrb$483$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 30 12:13:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 12:21:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQh1v-00021B-SN
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 12:13:40 +0200
+	id 1IQh9j-0003ed-R1
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 12:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755478AbXH3KNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 06:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbXH3KNg
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 06:13:36 -0400
-Received: from mail.op5.se ([193.201.96.20]:38707 "EHLO mail.op5.se"
+	id S1755560AbXH3KVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 06:21:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbXH3KVR
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 06:21:17 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:60841 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755266AbXH3KNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 06:13:35 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E545719441D;
-	Thu, 30 Aug 2007 12:13:34 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id S7fWHCBHV1uB; Thu, 30 Aug 2007 12:13:34 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 5CF481943F7;
-	Thu, 30 Aug 2007 12:13:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <Pine.LNX.4.64.0708301107320.28586@racer.site>
+	id S1751025AbXH3KVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 06:21:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id BAF652DC08D;
+	Thu, 30 Aug 2007 03:21:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <faulrb$483$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57019>
 
-Johannes Schindelin wrote:
-> Hi,
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
+> Currently, git-svn imports svn tags as lightweight git tags.
+> I was susprised when I discovered this (from 'git describe'
+> failing and some helpful assistance on the IRC channel), so
+> I'm now wondering: is there a technical reason why they
+> aren't converted to annotated tags? If not, would it be
+> possible to implement this in git-svn, possibly with some
+> way to 'fix' existing git-svn repository?
+
+As noted by other repliers, SVN tags can be moving targets just like
+branches, and are treated as such by git-svn.
+
+I should note that tags in git can actually be updated like a branch
+just the same way, too, it's just not as easy to "accidentally" do.
+
+So I'll add the ability to modify refs under the refs/tags/ namespace to
+my git-svn TODO list (which is getting rather large).  I also plan to
+support branches outside of the refs/remotes/ namespace so it's easier
+to use (clone, browse from gitweb) from bare repositories.
+
+> My second question concerns the uses of branche in git-svn,
+> but it might come from a not perfect understanding of the
+> branching mechanism in git (and yes, I've read the
+> documentation and Wiki pages).
 > 
-> On Thu, 30 Aug 2007, Jari Aalto wrote:
+> If I understand correctly, svn branches are imported in
+> git-svn as remote branches (refs/remote/*) and are
+> automatically updated on git-svn fetch or git-svn fetch-all.
 > 
->> git-gc is a higher level utility to "do the right thing". However there 
->> are many other lower level utilities for the house keeping and it is not 
->> clear what git-gc actually does. Adding the actual lower level command 
->> and their parameters explain "what's going on".x
+> In my experiments, however, I've noticed the following
+> behaviour.
 > 
-> Isn't the whole purpose of git-gc to make it _unnecessary_ to know which 
-> lowlevel commands are run?
+> git branch --track trunk remote/trunk
+> <do some changes and git commit them, while still on branch master>
+> git svn dcommit
 > 
-> NACK.
+> Now, master and remote/trunk point to the new roundtripped
+> changes, but the branch 'trunk' (in git) remains pointing to
+> the old remote/trunk head. I would have expected the --track
+> option to keep trunk in sync with remote/trunk ...
 > 
+> Or am I missing something obvious?
 
-I think of it as a handy way of doing all those tasks in the correct order
-without having to remember more than a single command.
+The author of git-svn (myself) hasn't gotten around to supporting
+(or even looking at) git branch --track.
 
-I kinda like it, and it might be helpful if someone's got a large repo and
-one part of gc for some reason didn't complete so they want to start at
-whatever step it broke off on.
+Right now, dcommit only knows about HEAD and the remote it's committing
+to, nothing else.  The config set by --track doesn't do anything
+for git-svn.
 
-When gc was a shell-script, it was fairly easy to find out the command-
-sequence. Now it's a built-in and that deduction actually takes some
-time and brainpower, so...
-
-Acked-by: Andreas Ericsson <ae@op5.se>
-
+I really have a lot of catching up to do with all the new(er) things
+happening in git.  I learned git (what seems like) aeons ago have been
+more or less content with what the plumbing offered back then.  The past
+six months of my life hasn't exactly left me with a lot of time or
+energy for git, either; hopefully I'll have more time soon...
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Eric Wong
