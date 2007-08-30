@@ -1,114 +1,71 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: publishing a forked^W cloned directory with ancestry
-Date: Thu, 30 Aug 2007 15:49:47 -0400
-Message-ID: <20070830194947.GB10808@fieldses.org>
-References: <20070830192533.GA18751@piper.oerlikon.madduck.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Adding rebase merge strategy
+Date: Thu, 30 Aug 2007 20:53:10 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708302051090.28586@racer.site>
+References: <11885023904126-git-send-email-tom@u2i.com>
+ <550f9510708301236y65a9952dofbd69417dc1310ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	mdadm development team 
-	<pkg-mdadm-devel@lists.alioth.debian.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Aug 30 21:50:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 21:53:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQq1s-0002Gg-HQ
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 21:50:12 +0200
+	id 1IQq5A-0003Ol-MY
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 21:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932721AbXH3Ttu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 15:49:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932708AbXH3Ttu
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 15:49:50 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:45106 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932719AbXH3Ttt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 15:49:49 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IQq1T-00044F-2f; Thu, 30 Aug 2007 15:49:47 -0400
-Content-Disposition: inline
-In-Reply-To: <20070830192533.GA18751@piper.oerlikon.madduck.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S932641AbXH3TxR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 15:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757537AbXH3TxR
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 15:53:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40986 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755033AbXH3TxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 15:53:16 -0400
+Received: (qmail invoked by alias); 30 Aug 2007 19:53:14 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp020) with SMTP; 30 Aug 2007 21:53:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18+FRh+kb0+bbbb7PE6H0hExibS+8E6L07aKx1Ww6
+	Okgdq8AzmPly8b
+X-X-Sender: gene099@racer.site
+In-Reply-To: <550f9510708301236y65a9952dofbd69417dc1310ee@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57062>
 
-On Thu, Aug 30, 2007 at 09:25:33PM +0200, martin f krafft wrote:
-> So I clone upstream and find that git-branch -r includes
-> upstream/master (s/origin/upstream/ for clarity). I then branch
-> 'debian' off upstream/master and make some required changes. With
-> utter enjoyment of git, I wrap it up and package a new mdadm.deb.
-> Yay.
+Hi,
+
+On Thu, 30 Aug 2007, Tom Clarke wrote:
+
+> On 8/30/07, Tom Clarke <tom@u2i.com> wrote:
+> > +               ( git log --pretty=format:"%s" ) >actual &&
+> > +       (
+> > +               echo "onbranch"
+> > +               echo "update"
+> > +               echo -n "initial"
+> > +       ) >expected &&
+> > +       git diff -w -u expected actual
 > 
-> And then I wonder: how do I now publish this result of my work? I'd
-> like to push my repository to git.debian.org so that others can
-> clone it and help or submit patches against the debianised upstream.
+> One issue that I'm curious about. Is it expected that the git log
+> format above doesn't finish with a new line? I couldn't get this test
+> to work otherwise.
 
-So in the setup you describe if they clone your repo then they'll get a
-single branch called 'debian' with your work in it.  That sounds fine to
-me, actually.
+Indeed, it does not end in a newline.  However, I'd solve the issue 
+differently:
 
-> But the remote branch upstream/master only really exists in
-> $GIT_DIR, which is local and can't be pushed. Or well, even if
-> I tried, the people cloning from the push location wouldn't see it
+- I'd use --pretty=oneline (and use test_tick before every commit, to 
+  guarantee consistent object names).
 
-They can always just fetch from upstream as well if they'd like.  They
-could do something like:
+- If you _have_ to keep your way, please use "printf", since "echo -n" is 
+  not portable AFAIK.
 
-	git clone git://coolproject.org/cool.git
-	cd cool
-	git remote add debian git://git.debian.org/cool.git
-	git fetch debian
+- Or just do "echo > actual".  And use "cat << EOF" like in most of the 
+  other tests.
 
-Then they have a repository where git-branch -r reports something like
-
-	origin/master
-	debian/debian
-
-Or they could do it the other way around, with "origin" pointing to you
-and an "upstream" remote pointing to coolproject.org.  The naming's
-obviously up to them.
-
-> 1. I could tell my $GIT_DIR/config that upstream/* comes from mdadm
-> upstream and debian/* comes from git.debian.org and then merge
-> happily across branches locally and be done with it. However, John
-> Doe, who on a rainy Saturday afternoon has two hours to spend and
-> wants to fix some mdadm bugs would have to jump through hoops to
-> replicate the setup: all the ties between upstream and the
-> git.debian.org repo are local to my machine and can't be pushed
-> anywhere (except to verbose documentation).
-
-Maybe the one extra "git remote add ...; git remote fetch" isn't such a
-big deal?
-
-> I guess the cleanest solution I can come up with is to branch off
-> upstream/master into branch "upstream" whenever *I* decide it's time
-> to snapshot. Then, people using my repo would basically be confined
-> to the state of the tree as it was the last time I rebased
-> "upstream", but could work freely on the Debian-specific stuff.
-> I think this is actually quite okay, but I am still interested in
-> any comments you may have.
-
-Sure, you can do that.  I don't think it's really necessary.
-
-My local kernel repository, for example, currently knows about five
-other repos:
-
-	$ git remote
-	labiaga		# server pnfs work
-	linux-nfs	# my public repo
-	origin		# Linus's repo
-	richterd	# a coworker's nfs work
-	trond		# Trond's nfs stuff
-
-Sure, each of those could add a "linus" branch that tracked upstream, so
-I could still get some idea what Linus's tree was even if I didn't
-happen to already have it.  But then I'd end up with 4 different
-slightly-out-of-date pointers to the head of linus's repo in each of
-those trees, which would end up being just be a bunch of cruft that I'd
-have to ignore whenever I looked at them.
-
---b.
+Ciao,
+Dscho
