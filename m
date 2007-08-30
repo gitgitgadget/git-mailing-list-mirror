@@ -1,56 +1,60 @@
 From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
 Subject: Re: [StGit PATCH 1/1] Add basic test for stg status
-Date: Thu, 30 Aug 2007 13:14:17 +0200
-Message-ID: <87lkbtgtpy.fsf@morpheus.local>
-References: <11884722703161-git-send-email-davidk@lysator.liu.se>
+Date: Thu, 30 Aug 2007 13:34:19 +0200
+Message-ID: <87ir6xgssk.fsf@morpheus.local>
+References: <11884722703161-git-send-email-davidk@lysator.liu.se> <87lkbtgtpy.fsf@morpheus.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: catalin marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 13:14:25 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 13:42:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQhyi-0006au-01
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 13:14:24 +0200
+	id 1IQiPV-0004bT-Lm
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 13:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742AbXH3LOU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 30 Aug 2007 07:14:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752355AbXH3LOU
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 07:14:20 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:46902 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbXH3LOT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2007 07:14:19 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 7EB27200A243;
-	Thu, 30 Aug 2007 13:14:18 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 04641-01-75; Thu, 30 Aug 2007 13:14:18 +0200 (CEST)
-Received: from morpheus (dns.vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id EDF37200A21C;
-	Thu, 30 Aug 2007 13:14:17 +0200 (CEST)
-Received: by morpheus (Postfix, from userid 1000)
-	id 726C8BFA58; Thu, 30 Aug 2007 13:14:17 +0200 (CEST)
-In-Reply-To: <11884722703161-git-send-email-davidk@lysator.liu.se> (David
- =?utf-8?Q?K=C3=A5gedal's?= message of "Thu, 30 Aug 2007 13:11:09 +0200")
+	id S1751472AbXH3Llj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 30 Aug 2007 07:41:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbXH3Llj
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 07:41:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:34836 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbXH3Llj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 07:41:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IQiLY-0004ob-JO
+	for git@vger.kernel.org; Thu, 30 Aug 2007 13:38:00 +0200
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 13:38:00 +0200
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 13:38:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
 User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+Cancel-Lock: sha1:qdQTwRtTM9zrM5p2qTzJo+Wk2HQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57025>
 
 David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-> Signed-off-by: David K=C3=83=C2=A5gedal <davidk@lysator.liu.se>
+> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>
+>> Signed-off-by: David K=C3=83=C2=A5gedal <davidk@lysator.liu.se>
+>
+> This was probably confused by the fact that the patch itself containe=
+d
+> my name in latin1 encoding.
 
-This was probably confused by the fact that the patch itself contained
-my name in latin1 encoding.
+Or not.  It's the same problem as before.  I'll stop using
+git-send-email until I or someone else fixes it.
 
 --=20
 David K=C3=A5gedal
