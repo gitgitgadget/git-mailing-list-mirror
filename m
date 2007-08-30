@@ -1,56 +1,62 @@
-From: "Tom Clarke" <tom@u2i.com>
-Subject: Re: [PATCH] Add commands that git-gc runs underneath
-Date: Thu, 30 Aug 2007 14:15:30 +0200
-Message-ID: <550f9510708300515s2069d680y1a02d95d517ec705@mail.gmail.com>
-References: <lkbtwek0.fsf@cante.net>
-	 <Pine.LNX.4.64.0708301107320.28586@racer.site>
-	 <46D6984D.9040802@op5.se>
-	 <Pine.LNX.4.64.0708301254420.28586@racer.site>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git-svn tags and branches
+Date: Thu, 30 Aug 2007 14:25:14 +0200
+Message-ID: <20070830122514.GF5050@xp.machine.xx>
+References: <faulrb$483$1@sea.gmane.org> <20070830102115.GA17620@muzzle> <cb7bb73a0708300444q73e12d72o665a8266c2a90f61@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Jari Aalto" <jari.aalto@cante.net>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 30 14:15:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 14:26:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQivw-0005wj-L6
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 14:15:36 +0200
+	id 1IQj5t-0000Qu-39
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 14:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756155AbXH3MPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 08:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756063AbXH3MPc
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 08:15:32 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:54827 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752554AbXH3MPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 08:15:31 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2831625pyb
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 05:15:31 -0700 (PDT)
-Received: by 10.35.62.19 with SMTP id p19mr589021pyk.1188476130784;
-        Thu, 30 Aug 2007 05:15:30 -0700 (PDT)
-Received: by 10.35.86.2 with HTTP; Thu, 30 Aug 2007 05:15:30 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0708301254420.28586@racer.site>
+	id S1752985AbXH3MZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 08:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbXH3MZs
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 08:25:48 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:36104 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752929AbXH3MZs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2007 08:25:48 -0400
+Received: (qmail 32313 invoked by uid 0); 30 Aug 2007 12:25:45 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 30 Aug 2007 12:25:45 -0000
+Mail-Followup-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <cb7bb73a0708300444q73e12d72o665a8266c2a90f61@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57034>
 
-On 8/30/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I have nothing against listing the commands per se.  But the man page is
-> too exposed IMHO.  (Or would you like to add the original shell script to
-> git-log's man page, too?)
+On Thu, Aug 30, 2007 at 01:44:35PM +0200, Giuseppe Bilotta wrote:
+> On 8/30/07, Eric Wong <normalperson@yhbt.net> wrote:
+> > As noted by other repliers, SVN tags can be moving targets just like
+> > branches, and are treated as such by git-svn.
+> >
+> > I should note that tags in git can actually be updated like a branch
+> > just the same way, too, it's just not as easy to "accidentally" do.
+> >
+> > So I'll add the ability to modify refs under the refs/tags/ namespace to
+> > my git-svn TODO list (which is getting rather large).  I also plan to
+> > support branches outside of the refs/remotes/ namespace so it's easier
+> > to use (clone, browse from gitweb) from bare repositories.
+> 
+> Thank you very much, that would be very appreciated.
+> 
+> While we're at it: could you consider putting the svn-imported refs
+> not directly under remote? something like refs/remote/svn would be
+> rather cleaner.
+> 
 
-Perhaps the man pages for the lower level commands should reference
-git-gc as the command that - unless you have special circumstances -
-you probably want. As a new git user it was only reading this thread
-that made me realise that git-gc is the command I want most of the
-time - a number of the tutorials I had read referenced the low level
-commands, and I didn't realise they had been superseded for normal
-use.
+Did you have a look at the --prefix option mentioned in the manpage? I
+think it does what you want.
 
--Tom
+-Peter
