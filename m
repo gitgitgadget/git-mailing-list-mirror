@@ -1,68 +1,81 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH 1/1] Add basic test for stg status
-Date: Thu, 30 Aug 2007 14:45:29 +0200
-Message-ID: <87abs9gphy.fsf@morpheus.local>
-References: <11884722703161-git-send-email-davidk@lysator.liu.se> <87lkbtgtpy.fsf@morpheus.local> <87ir6xgssk.fsf@morpheus.local> <20070830120755.GA14181@diana.vm.bytemark.co.uk>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Add --rebase option to git-pull?
+Date: Thu, 30 Aug 2007 15:07:54 +0200
+Message-ID: <46D6C12A.5090705@op5.se>
+References: <550f9510708300540u13c77201oe7cbe599c6773364@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 14:45:54 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 15:08:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQjPA-0005lQ-Ix
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 14:45:48 +0200
+	id 1IQjko-00035m-J3
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 15:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756387AbXH3Mpo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 30 Aug 2007 08:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbXH3Mpo
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 08:45:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:39957 "EHLO ciao.gmane.org"
+	id S1752721AbXH3NIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 09:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbXH3NIF
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 09:08:05 -0400
+Received: from mail.op5.se ([193.201.96.20]:44921 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752057AbXH3Mpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 08:45:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IQjOz-0001HX-00
-	for git@vger.kernel.org; Thu, 30 Aug 2007 14:45:37 +0200
-Received: from vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 14:45:36 +0200
-Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 14:45:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:ISm+HQHGhAkUfuuRU1BhjBfqRo0=
+	id S1751303AbXH3NID (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 09:08:03 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id BA0D41943F7;
+	Thu, 30 Aug 2007 15:08:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EGB6+62mJCpd; Thu, 30 Aug 2007 15:07:57 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id ADE5D19435F;
+	Thu, 30 Aug 2007 15:07:57 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <550f9510708300540u13c77201oe7cbe599c6773364@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57039>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Tom Clarke wrote:
+> Hi,
+> 
+> I'm in the process of setting up a git environment with a number of
+> shared branches. To avoid putting unnecessary merges into the trunk,
+> we'd like to normally use rebase when updating private branches. I
+> wondered if it would be possible to automatically determine the
+> correct remote branch to rebase against.
+> 
+> The most logical place to do this seemed to be in git-pull, so I
+> experimented with adding a '--rebase' option, per the (rough) diff
+> below.
+> 
+> I'm quite new to git, so is this a good strategy?
+> 
 
-> On 2007-08-30 13:34:19 +0200, David K=C3=A5gedal wrote:
->
->> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->>
->> > David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->> >
->> > > Signed-off-by: David K=C3=83=C2=A5gedal <davidk@lysator.liu.se>
->> >
->> > This was probably confused by the fact that the patch itself
->> > contained my name in latin1 encoding.
->>
->> Or not. It's the same problem as before. I'll stop using
->> git-send-email until I or someone else fixes it.
->
-> Try "stg mail", since you are already using StGIT. It used to have
-> this kind of problem, but it doesn't anymore (at least for me).
+If I read the patch correctly (which I may not, ofcourse), you're
+rebasing the upstream changes to on top of your own work. That's
+not something you can readily do, since the parentage chain in
+git is supposed to be immutable, so mutating the one you get from
+an already published source would be a horribly bad idea indeed.
 
-Yes, much better. Thank you.
+You need to do it the other way around, so that you rebase your
+local changes onto the upstream HEAD prior to pushing.
 
---=20
-David K=C3=A5gedal
+If that's what the patch does, then I guess all is fine and dandy,
+although I think it'd be better to add the merge-strategy rebase
+or possibly rebase-ours or rebase-theirs, which can be given as
+arguments to git-pull.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
