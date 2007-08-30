@@ -1,92 +1,68 @@
-From: "Tom Clarke" <tom@u2i.com>
-Subject: Add --rebase option to git-pull?
-Date: Thu, 30 Aug 2007 14:40:54 +0200
-Message-ID: <550f9510708300540u13c77201oe7cbe599c6773364@mail.gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH 1/1] Add basic test for stg status
+Date: Thu, 30 Aug 2007 14:45:29 +0200
+Message-ID: <87abs9gphy.fsf@morpheus.local>
+References: <11884722703161-git-send-email-davidk@lysator.liu.se> <87lkbtgtpy.fsf@morpheus.local> <87ir6xgssk.fsf@morpheus.local> <20070830120755.GA14181@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 14:41:05 2007
+X-From: git-owner@vger.kernel.org Thu Aug 30 14:45:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQjKW-0004Pj-2U
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 14:41:00 +0200
+	id 1IQjPA-0005lQ-Ix
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 14:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754219AbXH3Mk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 08:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754234AbXH3Mk4
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 08:40:56 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:16557 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbXH3Mkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 08:40:55 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2842777pyb
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 05:40:54 -0700 (PDT)
-Received: by 10.35.49.1 with SMTP id b1mr570267pyk.1188477654348;
-        Thu, 30 Aug 2007 05:40:54 -0700 (PDT)
-Received: by 10.35.86.2 with HTTP; Thu, 30 Aug 2007 05:40:54 -0700 (PDT)
-Content-Disposition: inline
+	id S1756387AbXH3Mpo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 30 Aug 2007 08:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbXH3Mpo
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 08:45:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:39957 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752057AbXH3Mpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 08:45:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IQjOz-0001HX-00
+	for git@vger.kernel.org; Thu, 30 Aug 2007 14:45:37 +0200
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 14:45:36 +0200
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 14:45:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:ISm+HQHGhAkUfuuRU1BhjBfqRo0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57038>
 
-Hi,
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-I'm in the process of setting up a git environment with a number of
-shared branches. To avoid putting unnecessary merges into the trunk,
-we'd like to normally use rebase when updating private branches. I
-wondered if it would be possible to automatically determine the
-correct remote branch to rebase against.
+> On 2007-08-30 13:34:19 +0200, David K=C3=A5gedal wrote:
+>
+>> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>>
+>> > David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>> >
+>> > > Signed-off-by: David K=C3=83=C2=A5gedal <davidk@lysator.liu.se>
+>> >
+>> > This was probably confused by the fact that the patch itself
+>> > contained my name in latin1 encoding.
+>>
+>> Or not. It's the same problem as before. I'll stop using
+>> git-send-email until I or someone else fixes it.
+>
+> Try "stg mail", since you are already using StGIT. It used to have
+> this kind of problem, but it doesn't anymore (at least for me).
 
-The most logical place to do this seemed to be in git-pull, so I
-experimented with adding a '--rebase' option, per the (rough) diff
-below.
+Yes, much better. Thank you.
 
-I'm quite new to git, so is this a good strategy?
-
--Tom
-
-
-commit 60b7318c2ebb7ee2bd1afb02f1fc925a29e1b214
-Author: Tom Clarke <tom@u2i.com>
-Date:   Thu Aug 30 14:39:34 2007 +0200
-
-    Added --rebase option to pull
-
-diff --git a/git-pull.sh b/git-pull.sh
-index 5e96d1f..233a1d9 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -15,7 +15,7 @@ cd_to_toplevel
- test -z "$(git ls-files -u)" ||
-        die "You are in the middle of a conflicted merge."
-
--strategy_args= no_summary= no_commit= squash=
-+strategy_args= no_summary= no_commit= squash= rebase=false
- while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
- do
-        case "$1" in
-@@ -29,6 +29,8 @@ do
-                no_commit=--no-commit ;;
-        --sq|--squ|--squa|--squas|--squash)
-                squash=--squash ;;
-+       --re|--reb|--reba|--rebase)
-+               rebase=true ;;
-        -s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
-                --strateg=*|--strategy=*|\
-        -s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -119,5 +121,10 @@ then
- fi
-
- merge_name=$(git fmt-merge-msg <"$GIT_DIR/FETCH_HEAD") || exit
--exec git-merge $no_summary $no_commit $squash $strategy_args \
-+if test $rebase != "false"
-+then
-+    exec git-rebase $strategy_args $merge_head
-+else
-+    exec git-merge $no_summary $no_commit $squash $strategy_args \
-        "$merge_name" HEAD $merge_head
-+fi
+--=20
+David K=C3=A5gedal
