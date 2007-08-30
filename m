@@ -1,72 +1,88 @@
-From: Bernt Hansen <bernt@alumni.uwaterloo.ca>
-Subject: Re: Git cheat sheet
-Date: Thu, 30 Aug 2007 00:05:47 -0400
-Message-ID: <87k5rdbrat.fsf@totally-fudged-out-message-id>
-References: <200708290348.02853.zack@kde.org>
-	<7vfy22squc.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make git-archimport log entries more consistent
+Date: Wed, 29 Aug 2007 21:10:57 -0700
+Message-ID: <7vir6xacha.fsf@gitster.siamese.dyndns.org>
+References: <617indss2f.fsf@fencepost.gnu.org>
+	<7vmyw9af3q.fsf@gitster.siamese.dyndns.org>
+	<fc339e4a0708292019s3d4f6914h4f9efe6f1172c380@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Zack Rusin <zack@kde.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 06:06:25 2007
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Miles Bader" <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 30 06:11:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQbIT-0000C4-Uo
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 06:06:22 +0200
+	id 1IQbNA-0000qB-N1
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 06:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750845AbXH3EF5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 00:05:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750790AbXH3EF5
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 00:05:57 -0400
-Received: from outbound.mailhop.org ([63.208.196.171]:1470 "EHLO
-	outbound.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbXH3EF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 00:05:56 -0400
-X-Greylist: delayed 16095 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Aug 2007 00:05:56 EDT
-Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([74.119.210.211] helo=mail.norang.ca)
-	by outbound.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.63)
-	(envelope-from <bernt@norang.ca>)
-	id 1IQbI2-0002WW-U1; Thu, 30 Aug 2007 00:05:55 -0400
-X-MHO-User: U2FsdGVkX18aFtn9sizd0DZTJXxmOorA
-X-MHO-User: U2FsdGVkX1/zFvuLM9Mhx6LWENoTjBdB
-X-Mail-Handler: MailHop Outbound by DynDNS
-X-Originating-IP: 74.119.210.211
-X-Report-Abuse-To: abuse@dyndns.com (see http://www.mailhop.org/outbound/abuse.html for abuse reporting information)
-X-MHO-User: U2FsdGVkX18YC0uSbtIxfrBQ4TSvAEop
-Received-SPF: none (mail.norang.ca: bernt@gollum.intra.norang.ca does not designate permitted sender hosts) receiver=mail.norang.ca; client-ip=192.168.1.5; helo=gollum.intra.norang.ca; envelope-from=bernt@gollum.intra.norang.ca; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
-Received: from gollum.intra.norang.ca (gollum.intra.norang.ca [192.168.1.5])
-	by mail.norang.ca (8.13.8/8.13.8/Debian-3) with ESMTP id l7U45qXh007687
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 Aug 2007 00:05:53 -0400
-Received: from gollum.intra.norang.ca (localhost [127.0.0.1])
-	by gollum.intra.norang.ca (8.13.8/8.13.8/Debian-3) with ESMTP id l7U45lKL005495;
-	Thu, 30 Aug 2007 00:05:47 -0400
-Received: (from bernt@localhost)
-	by gollum.intra.norang.ca (8.13.8/8.13.8/Submit) id l7U45lv7005494;
-	Thu, 30 Aug 2007 00:05:47 -0400
-In-Reply-To: <7vfy22squc.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 29 Aug 2007 01\:11\:07 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1751298AbXH3ELK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 00:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbXH3ELI
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 00:11:08 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:39305 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751100AbXH3ELH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 00:11:07 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9DEE61296BC;
+	Thu, 30 Aug 2007 00:11:25 -0400 (EDT)
+In-Reply-To: <fc339e4a0708292019s3d4f6914h4f9efe6f1172c380@mail.gmail.com>
+	(Miles Bader's message of "Thu, 30 Aug 2007 12:19:00 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56998>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Miles Bader" <miles@gnu.org> writes:
 
-> Zack Rusin <zack@kde.org> writes:
+> On 8/30/07, Junio C Hamano <gitster@pobox.com> wrote:
+>> > This patch makes git-archimport generate one blank line as a separator in all
+>> > cases.
+>>
+>> I would not have any problem with what the result of this patch
+>> would record in the commits, if it was what it did from the very
+>> beginning.  But this is a change in behaviour; I'd like to know
+>> if people who use archimport _rely_ on the current behaviour...
 >
->> http://ktown.kde.org/~zrusin/git/git-cheat-sheet.svg
->
-> Nice drawing and no typo.  Very nicely done.
->
+> Good point, though it seems pretty unlikely -- the most notable thing
+> about the old behavior was that the results were inconsistent... :-)
 
-One typo:
+I think the "consistency" is debatable.  If somebody was parsing
+them mechanically, the original code did:
 
-Title "To view the merge conclicts" under Resolve Merge Conflicts.
+     print WRITER $ps->{summary},"\n\n";
+-    print WRITER $ps->{message},"\n";
+     print WRITER 'git-archimport-id: ',$ps->{id},"\n";
 
-Nice job :)
+which means the program can read the last line to get id, go
+back to find "\n\n" and treat the one before it as summary, and
+take the rest which could be empty as message.  That's also
+consistent.
 
--Bernt
+After your change, 
+
+     print WRITER $ps->{summary},"\n\n";
++    print WRITER $ps->{message},"\n\n" if ($ps->{message} ne "");
+     print WRITER 'git-archimport-id: ',$ps->{id},"\n";
+
+the last line is id, go back to find "\n\n" and use the one
+before it as summary, and take the rest as message but (1) if
+the message is not empty, it is followed by "\n\n" so the last
+"\n" needs to be stripped, (2) otherwise it is not.
+
+I do not think anybody would doubt that the updated one is nicer
+to the eye.  That's why I said it would have been nicer if the
+message was formatted like that from the beginning.  But I do
+not think you can claim it is _more_ consistent.  It just
+formats under a rule different from the original.  The issue is
+if the "nicer-to-the-eye" outweighs potential breakage the
+reformatting can cause to existing parsers, if any.
+
+That's why I wanted to know if people _rely_ on the current
+behaviour, because I was hoping that everybody would answer "yes
+nicer-to-the-eye is more important and there is no drawback".
