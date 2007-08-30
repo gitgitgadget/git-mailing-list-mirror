@@ -1,145 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Git.pm: Add remote_refs() git-ls-remote frontend
-Date: Fri, 31 Aug 2007 01:37:49 +0200
-Message-ID: <20070830233749.4480.72281.stgit@rover>
-References: <20070825221143.6514.22516.stgit@rover>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: Git cheat sheet
+Date: Thu, 30 Aug 2007 19:49:43 -0400
+Message-ID: <46D75797.8010007@gmail.com>
+References: <200708290348.02853.zack@kde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Aug 31 01:37:59 2007
+Cc: Zack Rusin <zack@kde.org>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:50:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQtaE-00031j-Le
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:37:55 +0200
+	id 1IQtlw-0004pd-Qv
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758795AbXH3Xhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 19:37:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758753AbXH3Xhv
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:37:51 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:41109 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758115AbXH3Xhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 19:37:51 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 8F2698B4C4;
-	Fri, 31 Aug 2007 01:37:49 +0200 (CEST)
-In-Reply-To: <20070825221143.6514.22516.stgit@rover>
-User-Agent: StGIT/0.13
+	id S1762148AbXH3Xtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 19:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755270AbXH3Xtv
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:49:51 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:39981 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760843AbXH3Xtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 19:49:50 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so633187wxd
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 16:49:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=T4HOgwROJYUlLibPC+11sJkZYhRfydLmhC2GYkZRk8LUp0zFvVpsJfwPvggkmtJHI0c0VvphtnPKgqAe23AjITa6P0xKPFuPyPa17S8zb2+79LrJyTbo/pMJu9+0khp/byLeETbnnaNv12MD/NZjLsbRyHk8UGBD4sNjLkXJ3RA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=HYsp6f+qzoVikVsCK2g1VraRh4yy/AsrlFugy9tEqw1p8xwyErThbw0Eeu/9ARz0z7dxt6nErpwHaJpEvqAAen3uSvDpHq/vOJmgo137V3vXjDjcLy0+ReOWDmPXkZffPXm+/pIu+HLe7JVCgg9HVGYrskf7UPBc5BQC6FZaDc8=
+Received: by 10.70.31.18 with SMTP id e18mr1714093wxe.1188517788590;
+        Thu, 30 Aug 2007 16:49:48 -0700 (PDT)
+Received: from ?192.168.2.6? ( [69.140.50.44])
+        by mx.google.com with ESMTPS id 74sm149997wra.2007.08.30.16.49.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 30 Aug 2007 16:49:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+In-Reply-To: <200708290348.02853.zack@kde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57093>
 
-Should support all the important features, I guess. Too bad that
-	git-ls-remote --heads .
-	
-is subtly different from
+Zack Rusin wrote:
+> Hey, 
+> 
+> I took a short break from being insanely handsome (which takes a lot of my 
+> time - gorgeous doesn't just happen) and based on similar work for Mercurial 
+> created a little SVG cheat sheet for Git.
+...
+> The SVG is at:
+> http://ktown.kde.org/~zrusin/git/git-cheat-sheet.svg
+> Sample png's are here:
+> http://ktown.kde.org/~zrusin/git/git-cheat-sheet-medium.png
+> http://ktown.kde.org/~zrusin/git/git-cheat-sheet-large.png
+> 
 
-	git-ls-remote . refs/heads/
+I noticed that the cheat sheet listed the options "--theirs", "--ours", 
+and "--base" for git-diff. These aren't in git-diff's manpage. A little 
+grep-fu showed me that these are options of git-diff-files, but 
+shouldn't they be documented with the porcelain, if the porcelain 
+accepts them as options? (I normally use a text editor to view and 
+resolve conflicts, but the presence of these options on a cheat sheet 
+indicates that they are somewhat important.)
 
-so we have to provide the interface for specifying both.
-
-This patch also converts git-remote.perl to use it.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-This version re-adds missed out stripping of refs/heads/ in git-remote.perl.
----
-
- git-remote.perl |    5 +----
- perl/Git.pm     |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 5 deletions(-)
-
-diff --git a/git-remote.perl b/git-remote.perl
-index 01cf480..1948c5c 100755
---- a/git-remote.perl
-+++ b/git-remote.perl
-@@ -128,10 +128,7 @@ sub update_ls_remote {
- 	return if (($harder == 0) ||
- 		   (($harder == 1) && exists $info->{'LS_REMOTE'}));
- 
--	my @ref = map {
--		s|^[0-9a-f]{40}\s+refs/heads/||;
--		$_;
--	} $git->command(qw(ls-remote --heads), $info->{'URL'});
-+	my @ref = map { s|refs/heads/||; $_; } keys %{$git->remote_refs($info->{'URL'}, [ 'heads' ])};
- 	$info->{'LS_REMOTE'} = \@ref;
- }
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 3f4080c..3bce733 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -51,7 +51,7 @@ require Exporter;
- # Methods which can be called as standalone functions as well:
- @EXPORT_OK = qw(command command_oneline command_noisy
-                 command_output_pipe command_input_pipe command_close_pipe
--                version exec_path hash_object git_cmd_try);
-+                version exec_path hash_object git_cmd_try remote_refs);
- 
- 
- =head1 DESCRIPTION
-@@ -550,6 +550,59 @@ sub config_bool {
- }
- 
- 
-+=item remote_refs ( REPOSITORY [, GROUPS [, REFGLOBS ] ] )
-+
-+This function returns a hashref of refs stored in a given remote repository.
-+The hash is in the format C<refname =\> hash>. For tags, the C<refname> entry
-+contains the tag object while a C<refname^{}> entry gives the tagged objects.
-+
-+C<REPOSITORY> has the same meaning as the appropriate C<git-ls-remote>
-+argument; either an URL or a remote name (if called on a repository instance).
-+C<GROUPS> is an optional arrayref that can contain 'tags' to return all the
-+tags and/or 'heads' to return all the heads. C<REFGLOB> is an optional array
-+of strings containing a shell-like glob to further limit the refs returned in
-+the hash; the meaning is again the same as the appropriate C<git-ls-remote>
-+argument.
-+
-+This function may or may not be called on a repository instance. In the former
-+case, remote names as defined in the repository are recognized as repository
-+specifiers.
-+
-+=cut
-+
-+sub remote_refs {
-+	my ($self, $repo, $groups, $refglobs) = _maybe_self(@_);
-+	my @args;
-+	if (ref $groups eq 'ARRAY') {
-+		foreach (@$groups) {
-+			if ($_ eq 'heads') {
-+				push (@args, '--heads');
-+			} elsif ($_ eq 'tags') {
-+				push (@args, '--tags');
-+			} else {
-+				# Ignore unknown groups for future
-+				# compatibility
-+			}
-+		}
-+	}
-+	push (@args, $repo);
-+	if (ref $refglobs eq 'ARRAY') {
-+		push (@args, @$refglobs);
-+	}
-+
-+	my @self = $self ? ($self) : (); # Ultra trickery
-+	my ($fh, $ctx) = Git::command_output_pipe(@self, 'ls-remote', @args);
-+	my %refs;
-+	while (<$fh>) {
-+		chomp;
-+		my ($hash, $ref) = split(/\t/, $_, 2);
-+		$refs{$ref} = $hash;
-+	}
-+	Git::command_close_pipe(@self, $fh, $ctx);
-+	return \%refs;
-+}
-+
-+
- =item ident ( TYPE | IDENTSTR )
- 
- =item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
+Thanks,
+Dan
