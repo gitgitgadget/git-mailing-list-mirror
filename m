@@ -1,68 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-filter-branch: document --original option
-Date: Fri, 31 Aug 2007 00:04:52 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708310004130.28586@racer.site>
-References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
- <1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
- <11884938431525-git-send-email-giuseppe.bilotta@gmail.com>
- <7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add post-merge hook.
+Date: Thu, 30 Aug 2007 16:07:27 -0700
+Message-ID: <7v7inc7hao.fsf@gitster.siamese.dyndns.org>
+References: <11885136172952-git-send-email-jjengla@sandia.gov>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 01:05:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: jjengla@sandia.gov
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:07:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQt4c-0005on-AM
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:05:14 +0200
+	id 1IQt6u-0006MC-9c
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762400AbXH3XFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 19:05:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762428AbXH3XFA
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:05:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53862 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762400AbXH3XE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 19:04:59 -0400
-Received: (qmail invoked by alias); 30 Aug 2007 23:04:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 31 Aug 2007 01:04:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Rd/lXjAYR//9uiUQOLUEVfe2Y0gzbSMiTSlrxGG
-	nsUFn7dleuty3b
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1762335AbXH3XHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 19:07:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759965AbXH3XHc
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:07:32 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55641 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759548AbXH3XHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 19:07:31 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6BB4D12B6B3;
+	Thu, 30 Aug 2007 19:07:51 -0400 (EDT)
+In-Reply-To: <11885136172952-git-send-email-jjengla@sandia.gov>
+	(jjengla@sandia.gov's message of "Thu, 30 Aug 2007 16:40:17 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57088>
 
-Hi,
+jjengla@sandia.gov writes:
 
-On Thu, 30 Aug 2007, Junio C Hamano wrote:
+> From: Josh England <jjengla@sandia.gov>
+>
+> This adds a post-merge hook that will run after `git pull` operations
+> if enabled.  The hook is passed no arguments and cannot affect the
+> outcome of a merge.
+>
+> Signed-off-by: Josh England <jjengla@sandia.gov>
 
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
-> 
-> > +--original <namespace>::
-> > +	Use this option to set the namespace where the original commits
-> > +	will be stored. The default value is 'refs/original'.
-> > +
-> 
-> The default seems to be "refs/original/".
-> 
-> Even worse.
-> 
-> I think if you say --force --original refs/head (notice the lack
-> of "s" nor slash at the end), the code will get you in a *lot*
-> of trouble.
-> 
-> Dscho, don't we want to do something like this?
+Thanks for your patch.
 
-Yes, I think so, too.  The --original option is probably the least tested 
-option of filter-branch :-(
+Two questions.
 
-Ciao,
-Dscho
+ * Do you want to run the post-merge hook even for a squash
+   merge?
+
+ * After resolving a conflicted merge, you would conclude it
+   with "git commit"; don't you want to have the same hook apply
+   at the commit time, or is that what you expect the user to
+   deal with with post-commit hook?
+
+
+And two requests and a half.
+
+ - We would want a new test in the test suite for this, to make
+   sure that later changes by others would not break this new
+   feature you would depend upon.
+
+ - You described _what_ the patch and the new feature do in the
+   log message and in the documentation.
+
+   You need to also explain _why_ somebody might want to have
+   such a hook in his repository.
+
+   . In the documentation, you would want to make the reader
+     realize "aha, this is something that would help me" with an
+     example.
+
+   . In the log message, you would want to make sure other
+     people understand why this new feature was added, what the
+     design consideration were at the point of the feature was
+     added.
+
+   The latter is important to me personally.  I want to have
+   something better than "this change does not break anything
+   existing, and it is something somebody wants to get added, so
+   while I can not image the exact use scenario why anybody
+   would want to use such a hook I'd apply the change" to
+   convince myself.
+
+ - We are deep in feature-freeze for 1.5.3; I'd appreciate a
+   resend for any patch that is not a bugfix / documentation
+   update after 1.5.3 final.
