@@ -1,103 +1,81 @@
-From: jjengla@sandia.gov
-Subject: [PATCH] Add post-merge hook.
-Date: Thu, 30 Aug 2007 16:40:17 -0600
-Message-ID: <11885136172952-git-send-email-jjengla@sandia.gov>
+From: Junio C Hamano <junkio@pobox.com>
+Subject: Re: [PATCH] Temporary fix for stack smashing in mailinfo
+Date: Thu, 30 Aug 2007 15:53:06 -0700
+Message-ID: <7vir6w7hyl.fsf@gitster.siamese.dyndns.org>
+References: <1188502009.29782.874.camel@hurina>
+	<20070830214824.GC15405@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Josh England" <jjengla@sandia.gov>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 00:42:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Timo Sirainen <tss@iki.fi>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 00:53:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQsi6-0001qk-6B
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 00:41:58 +0200
+	id 1IQst4-0003g0-Dy
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 00:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762996AbXH3Wly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 18:41:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762891AbXH3Wly
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 18:41:54 -0400
-Received: from mm04snlnto.sandia.gov ([132.175.109.21]:3995 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762756AbXH3Wlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 18:41:53 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Thu, 30 Aug 2007 16:41:32 -0600
-X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
-Received: from ES23SNLNT.srn.sandia.gov (ec04snlnt.sandia.gov
- [134.253.164.156] (may be forged)) by mailgate.sandia.gov (
- 8.14.0/8.14.0) with ESMTP id l7UMfVQn028708 for <git@vger.kernel.org>;
- Thu, 30 Aug 2007 16:41:31 -0600
-Received: from ef01snlnt.srn.sandia.gov ([134.253.164.107]) by
- ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Thu, 30
- Aug 2007 16:41:31 -0600
-Received: from truth ([134.253.45.6]) by ef01snlnt.srn.sandia.gov with
- Microsoft SMTPSVC(6.0.3790.3959); Thu, 30 Aug 2007 16:41:31 -0600
-Received: by truth (sSMTP sendmail emulation); Thu, 30 Aug 2007 16:40:17
- -0600
-X-Mailer: git-send-email 1.5.3.rc7-dirty
-X-OriginalArrivalTime: 30 Aug 2007 22:41:31.0629 (UTC)
- FILETIME=[E93F19D0:01C7EB56]
-X-TMWD-Spam-Summary: TS=20070830224134; SEV=2.2.2; DFV=B2007083020;
- IFV=2.0.4,4.0-9; AIF=B2007083020; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230332E34364437343739442E303036423A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007083020_5.02.0125_4.0-9
-X-WSS-ID: 6AC998162E0914806-01-01
+	id S1763577AbXH3WxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 18:53:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763532AbXH3WxO
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 18:53:14 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38735 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763473AbXH3WxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 18:53:13 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070830225313.XQYS10742.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 30 Aug 2007 18:53:13 -0400
+Received: from localhost ([68.225.240.77])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id iNtB1X00W1gtr5g0000000; Thu, 30 Aug 2007 18:53:12 -0400
+In-Reply-To: <20070830214824.GC15405@steel.home> (Alex Riesen's message of
+	"Thu, 30 Aug 2007 23:48:24 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57086>
 
-From: Josh England <jjengla@sandia.gov>
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-This adds a post-merge hook that will run after `git pull` operations
-if enabled.  The hook is passed no arguments and cannot affect the
-outcome of a merge.
+> Junio, I cannot have time to fix the code nice and proper, but as
+> heavy user of git-am just have to have it fixed at least a like this.
+> And this is ugly (and definitely incomplete), everyone be warned.
+>
+> Checked with valgrind, looks good (except for iconv_open reading past
+> one of its arguments):
 
-Signed-off-by: Josh England <jjengla@sandia.gov>
----
- Documentation/hooks.txt |    8 ++++++++
- git-merge.sh            |    6 ++++++
- 2 files changed, 14 insertions(+), 0 deletions(-)
+On the top of your patch, I think decode_header_bq() needs to
+make sure that a string with more than one pieces, each of which
+decodes well within piecebuf, cannot overflow outbuf[] in the
+while loop.
 
-diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
-index c39edc5..841b37f 100644
---- a/Documentation/hooks.txt
-+++ b/Documentation/hooks.txt
-@@ -87,6 +87,14 @@ parameter, and is invoked after a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of `git-commit`.
- 
-+post-merge
-+-----------
-+
-+This hook is invoked by `git-merge`, which happens when a `git pull`
-+is done on a local repository.
-+
-+The hook takes no parameters, and cannot affect the outcome of `git-merge`.
-+
- [[pre-receive]]
- pre-receive
- -----------
-diff --git a/git-merge.sh b/git-merge.sh
-index 3a01db0..0a77bfb 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -97,6 +97,12 @@ finish () {
- 		fi
- 		;;
- 	esac
-+
-+	# Run a post-merge hook
-+        if test -x "$GIT_DIR"/hooks/post-merge
-+        then
-+                "$GIT_DIR"/hooks/post-merge
-+        fi
- }
- 
- merge_name () {
--- 
-1.5.3.rc7-dirty
+> @@ -578,56 +588,56 @@ static int decode_header_bq(char *it)
+>  		default:
+>  			return rfc2047; /* no munging */
+>  		case 'b':
+> -			sz = decode_b_segment(cp + 3, piecebuf, ep);
+> +			sz = decode_b_segment(cp + 3, piecebuf, sizeof(piecebuf), ep);
+>  			break;
+>  		case 'q':
+> -			sz = decode_q_segment(cp + 3, piecebuf, ep, 1);
+> +			sz = decode_q_segment(cp + 3, piecebuf, sizeof(piecebuf), ep, 1);
+>  			break;
+>  		}
+>  		if (sz < 0)
+>  			return rfc2047;
+>  		if (metainfo_charset)
+> -			convert_to_utf8(piecebuf, charset_q);
+> +			convert_to_utf8(piecebuf, sizeof(piecebuf), charset_q);
+>  		strcpy(out, piecebuf);
+>  		out += strlen(out);
+>  		in = ep + 2;
+>  	}
+
+It might also make sense to redo the lower level decoding
+functions using existing strbuf interface to build string
+without pre-set bounds.
