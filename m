@@ -1,75 +1,53 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix same sized delta logic
-Date: Wed, 29 Aug 2007 21:17:17 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0708292107520.16727@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove duplicate pathspecs from ls-files command line
+Date: Wed, 29 Aug 2007 18:25:50 -0700
+Message-ID: <7vr6llak4h.fsf@gitster.siamese.dyndns.org>
+References: <20070829081122.GA604@piper.oerlikon.madduck.net>
+	<20070829194410.GA11824@steel.home>
+	<7v4piioyu1.fsf@gitster.siamese.dyndns.org>
+	<20070829211519.GE11824@steel.home> <85tzqic9bf.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Aug 30 03:17:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	martin f krafft <madduck@madduck.net>,
+	git discussion list <git@vger.kernel.org>,
+	439992-quiet@bugs.debian.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 30 03:26:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQYfI-00061v-75
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 03:17:44 +0200
+	id 1IQYna-00076t-73
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 03:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522AbXH3BRU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Aug 2007 21:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754466AbXH3BRU
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 21:17:20 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49268 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974AbXH3BRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2007 21:17:19 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JNK00FQ9BKTLQ70@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 29 Aug 2007 21:17:18 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1754559AbXH3B0O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Aug 2007 21:26:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757887AbXH3B0N
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Aug 2007 21:26:13 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37049 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754288AbXH3B0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2007 21:26:13 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8FC9512AD65;
+	Wed, 29 Aug 2007 21:26:29 -0400 (EDT)
+In-Reply-To: <85tzqic9bf.fsf@lola.goethe.zz> (David Kastrup's message of "Wed,
+	29 Aug 2007 23:36:20 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/56993>
 
-The code favoring shallower deltas when size is equal was triggered 
-only when previous delta was also cached.  There should be no relation 
-between cached deltas and same sized deltas.
+David Kastrup <dak@gnu.org> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 9b3ef94..12509fa 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1389,21 +1389,25 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	if (!delta_buf)
- 		return 0;
- 
--	if (trg_entry->delta_data) {
-+	if (trg_entry->delta) {
- 		/* Prefer only shallower same-sized deltas. */
- 		if (delta_size == trg_entry->delta_size &&
- 		    src->depth + 1 >= trg->depth) {
- 			free(delta_buf);
- 			return 0;
- 		}
--		delta_cache_size -= trg_entry->delta_size;
--		free(trg_entry->delta_data);
--		trg_entry->delta_data = NULL;
- 	}
-+
- 	trg_entry->delta = src_entry;
- 	trg_entry->delta_size = delta_size;
- 	trg->depth = src->depth + 1;
- 
-+	if (trg_entry->delta_data) {
-+		delta_cache_size -= trg_entry->delta_size;
-+		free(trg_entry->delta_data);
-+		trg_entry->delta_data = NULL;
-+	}
-+
- 	if (delta_cacheable(src_size, trg_size, delta_size)) {
- 		trg_entry->delta_data = xrealloc(delta_buf, delta_size);
- 		delta_cache_size += trg_entry->delta_size;
+> Does anything speak against sorting the pathspecs?  That is an O(n log
+> n) operation,
+
+Not sorting is O(0) operation without losing cycles for the
+normal case.  I think you can sort first in that error handling
+path to avoid O(n^2) but sorting upfront to remove duplicates
+for every case is unnecessary bloat that penalizes sane callers.
