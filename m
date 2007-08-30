@@ -1,370 +1,121 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Temporary fix for stack smashing in mailinfo
-Date: Thu, 30 Aug 2007 23:48:24 +0200
-Message-ID: <20070830214824.GC15405@steel.home>
-References: <1188502009.29782.874.camel@hurina>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Timo Sirainen <tss@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Aug 30 23:48:33 2007
+From: Timo Sirainen <tss@iki.fi>
+Subject: Re: Buffer overflows
+Date: Fri, 31 Aug 2007 00:51:24 +0300
+Message-ID: <6F219888-6F48-4D56-8FA9-BE63EB6E1D95@iki.fi>
+References: <1188502009.29782.874.camel@hurina> <alpine.LFD.0.999.0708301340470.25853@woody.linux-foundation.org> <7D84F3C7-129D-4197-AAF1-46298E5D0136@iki.fi> <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-4--249912982"
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Reece Dunn" <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 23:51:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQrsN-0007bN-01
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 23:48:31 +0200
+	id 1IQrvE-0008Iy-Vq
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 23:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760862AbXH3Vs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 17:48:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760808AbXH3Vs1
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 17:48:27 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:61736 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758538AbXH3Vs0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 17:48:26 -0400
-Received: from tigra.home (Fc93c.f.strato-dslnet.de [195.4.201.60])
-	by post.webmailer.de (klopstock mo10) (RZmta 12.1)
-	with ESMTP id 903422j7UJNWzn ; Thu, 30 Aug 2007 23:48:24 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 90FC2277BD;
-	Thu, 30 Aug 2007 23:48:24 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 73D5DBE2A; Thu, 30 Aug 2007 23:48:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1188502009.29782.874.camel@hurina>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPiog==
-X-RZG-CLASS-ID: mo07
+	id S1760847AbXH3VvY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 17:51:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760679AbXH3VvY
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 17:51:24 -0400
+Received: from dovecot.org ([82.118.211.50]:36775 "EHLO dovecot.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760562AbXH3VvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 17:51:23 -0400
+Received: from [192.168.10.217] (82-203-162-146.dsl.gohome.fi [82.203.162.146])
+	by dovecot.org (Postfix) with ESMTP id 69C2C16471E6;
+	Fri, 31 Aug 2007 00:51:22 +0300 (EEST)
+In-Reply-To: <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57077>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-Timo Sirainen, Thu, Aug 30, 2007 21:26:49 +0200:
-> Attached once again beginnings of safer string handling functions, which
-> should be easy to use to replace the existing string handling code. ...
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-4--249912982
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Lots of code. And the bug you mentioned still not fixed.
-No gain for anyone. You are right, but you are also useless.
+On 31.8.2007, at 0.35, Reece Dunn wrote:
 
-Junio, I cannot have time to fix the code nice and proper, but as
-heavy user of git-am just have to have it fixed at least a like this.
-And this is ugly (and definitely incomplete), everyone be warned.
+>> The problem is that the git code is full of these random cases. It's
+>> simply a huge job to even try to verify the correctness of it. Even
+>> if someone did that and fixed all the problems, tomorrow there would
+>> be new ones because noone bothers to even try to avoid them. So there
+>> really isn't any point in trying to make git secure until the coding
+>> style changes.
+>
+> You don't want a manual check to do these kinds of checks. Not only is
+> it a huge job, you have the human factor: people make mistakes. This
+> is (in part) what the review process is for, but understanding how to
+> identify code that is safe from buffer overruns, integer overflows and
+> the like is a complex task. Also, it may work on 32-bit which has been
+> verified, but not on 64-bit.
+>
+> It would be far better to specify the rules on how to detect these
+> issues into a static analysis tool and have that do the checking for
+> you. Therefore, it is possible to detect when new problems have been
+> added into the codebase. Does sparse support identifying these issues?
 
-Checked with valgrind, looks good (except for iconv_open reading past
-one of its arguments):
+Yes, it is a complex task. But if there did exist such a static  
+analyzer tool already, it would probably show that half of the strcpy 
+() calls (and others) in git are currently unsafe. Wouldn't help all  
+that much I think.
 
-==22856== Invalid read of size 4
-...
-==22856==  Address 0x42D3D9C is 52 bytes inside a block of size 53 alloc'd
-==22856==    at 0x4021620: malloc (vg_replace_malloc.c:149)
-==22856==    by 0x41AD12F: (within /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x41AC56A: (within /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x41ACC63: (within /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x41A552B: (within /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x41A4093: (within /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x41A3CF9: iconv_open (in /lib/tls/i686/cmov/libc-2.5.so)
-==22856==    by 0x80BEFFE: reencode_string (utf8.c:317)
-==22856==    by 0x806A9D4: convert_to_utf8 (builtin-mailinfo.c:543)
-==22856==    by 0x806AB8F: decode_header (builtin-mailinfo.c:600)
-==22856==    by 0x806AF57: check_header (builtin-mailinfo.c:308)
-==22856==    by 0x806B70B: cmd_mailinfo (builtin-mailinfo.c:936)
+>> The code should be easy to verify to be secure, and with some kind of
+>> a safe string API it's a lot easier than trying to figure out corner
+>> cases where strcpy() calls break.
+>
+> Why is it easier? If you have a fixed-size buffer, why not use
+> strncpy, which is what a safe string API is essentially doing anyway?
 
- builtin-mailinfo.c |   79 +++++++++++++++++++++++++++++----------------------
- 1 files changed, 45 insertions(+), 34 deletions(-)
+Well, strncpy() is a pretty good example actually. A lot of people  
+use it wrong, because they don't realize that it doesn't necessarily  
+NUL-terminate the strings. So it's another example of a bad API that  
+can be easily used wrong. And besides that, it also fills the rest of  
+the buffer with NULs, which is almost always pointless waste of CPU.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index b558754..57699eb 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -287,12 +287,12 @@ static void cleanup_space(char *buf)
- 	}
- }
- 
--static void decode_header(char *it);
-+static void decode_header(char *it, unsigned itsize);
- static char *header[MAX_HDR_PARSED] = {
- 	"From","Subject","Date",
- };
- 
--static int check_header(char *line, char **hdr_data, int overwrite)
-+static int check_header(char *line, unsigned linesize, char **hdr_data, int overwrite)
- {
- 	int i;
- 
-@@ -305,7 +305,7 @@ static int check_header(char *line, char **hdr_data, int overwrite)
- 			/* Unwrap inline B and Q encoding, and optionally
- 			 * normalize the meta information to utf8.
- 			 */
--			decode_header(line + len + 2);
-+			decode_header(line + len + 2, linesize - len - 2);
- 			hdr_data[i] = xmalloc(1000 * sizeof(char));
- 			if (! handle_header(line, hdr_data[i], len + 2)) {
- 				return 1;
-@@ -316,14 +316,14 @@ static int check_header(char *line, char **hdr_data, int overwrite)
- 	/* Content stuff */
- 	if (!strncasecmp(line, "Content-Type", 12) &&
- 		line[12] == ':' && isspace(line[12 + 1])) {
--		decode_header(line + 12 + 2);
-+		decode_header(line + 12 + 2, linesize - 12 - 2);
- 		if (! handle_content_type(line)) {
- 			return 1;
- 		}
- 	}
- 	if (!strncasecmp(line, "Content-Transfer-Encoding", 25) &&
- 		line[25] == ':' && isspace(line[25 + 1])) {
--		decode_header(line + 25 + 2);
-+		decode_header(line + 25 + 2, linesize - 25 - 2);
- 		if (! handle_content_transfer_encoding(line)) {
- 			return 1;
- 		}
-@@ -432,10 +432,15 @@ static int read_one_header_line(char *line, int sz, FILE *in)
- 	return 1;
- }
- 
--static int decode_q_segment(char *in, char *ot, char *ep, int rfc2047)
-+static int decode_q_segment(char *in, char *ot, unsigned otsize, char *ep, int rfc2047)
- {
-+	char *otend = ot + otsize;
- 	int c;
- 	while ((c = *in++) != 0 && (in <= ep)) {
-+		if (ot == otend) {
-+			*--ot = '\0';
-+			return -1;
-+		}
- 		if (c == '=') {
- 			int d = *in++;
- 			if (d == '\n' || !d)
-@@ -451,12 +456,17 @@ static int decode_q_segment(char *in, char *ot, char *ep, int rfc2047)
- 	return 0;
- }
- 
--static int decode_b_segment(char *in, char *ot, char *ep)
-+static int decode_b_segment(char *in, char *ot, unsigned otsize, char *ep)
- {
- 	/* Decode in..ep, possibly in-place to ot */
- 	int c, pos = 0, acc = 0;
-+	char *otend = ot + otsize;
- 
- 	while ((c = *in++) != 0 && (in <= ep)) {
-+		if (ot == otend) {
-+			*--ot = '\0';
-+			return -1;
-+		}
- 		if (c == '+')
- 			c = 62;
- 		else if (c == '/')
-@@ -518,7 +528,7 @@ static const char *guess_charset(const char *line, const char *target_charset)
- 	return "latin1";
- }
- 
--static void convert_to_utf8(char *line, const char *charset)
-+static void convert_to_utf8(char *line, unsigned linesize, const char *charset)
- {
- 	char *out;
- 
-@@ -534,11 +544,11 @@ static void convert_to_utf8(char *line, const char *charset)
- 	if (!out)
- 		die("cannot convert from %s to %s\n",
- 		    charset, metainfo_charset);
--	strcpy(line, out);
-+	strlcpy(line, out, linesize);
- 	free(out);
- }
- 
--static int decode_header_bq(char *it)
-+static int decode_header_bq(char *it, unsigned itsize)
- {
- 	char *in, *out, *ep, *cp, *sp;
- 	char outbuf[1000];
-@@ -578,56 +588,56 @@ static int decode_header_bq(char *it)
- 		default:
- 			return rfc2047; /* no munging */
- 		case 'b':
--			sz = decode_b_segment(cp + 3, piecebuf, ep);
-+			sz = decode_b_segment(cp + 3, piecebuf, sizeof(piecebuf), ep);
- 			break;
- 		case 'q':
--			sz = decode_q_segment(cp + 3, piecebuf, ep, 1);
-+			sz = decode_q_segment(cp + 3, piecebuf, sizeof(piecebuf), ep, 1);
- 			break;
- 		}
- 		if (sz < 0)
- 			return rfc2047;
- 		if (metainfo_charset)
--			convert_to_utf8(piecebuf, charset_q);
-+			convert_to_utf8(piecebuf, sizeof(piecebuf), charset_q);
- 		strcpy(out, piecebuf);
- 		out += strlen(out);
- 		in = ep + 2;
- 	}
- 	strcpy(out, in);
--	strcpy(it, outbuf);
-+	strlcpy(it, outbuf, itsize);
- 	return rfc2047;
- }
- 
--static void decode_header(char *it)
-+static void decode_header(char *it, unsigned itsize)
- {
- 
--	if (decode_header_bq(it))
-+	if (decode_header_bq(it, itsize))
- 		return;
- 	/* otherwise "it" is a straight copy of the input.
- 	 * This can be binary guck but there is no charset specified.
- 	 */
- 	if (metainfo_charset)
--		convert_to_utf8(it, "");
-+		convert_to_utf8(it, itsize, "");
- }
- 
--static void decode_transfer_encoding(char *line)
-+static void decode_transfer_encoding(char *line, unsigned linesize)
- {
- 	char *ep;
- 
- 	switch (transfer_encoding) {
- 	case TE_QP:
- 		ep = line + strlen(line);
--		decode_q_segment(line, line, ep, 0);
-+		decode_q_segment(line, line, linesize, ep, 0);
- 		break;
- 	case TE_BASE64:
- 		ep = line + strlen(line);
--		decode_b_segment(line, line, ep);
-+		decode_b_segment(line, line, linesize, ep);
- 		break;
- 	case TE_DONTCARE:
- 		break;
- 	}
- }
- 
--static int handle_filter(char *line);
-+static int handle_filter(char *line, unsigned linesize);
- 
- static int find_boundary(void)
- {
-@@ -655,7 +665,7 @@ again:
- 					"can't recover\n");
- 			exit(1);
- 		}
--		handle_filter(newline);
-+		handle_filter(newline, sizeof(newline));
- 
- 		/* skip to the next boundary */
- 		if (!find_boundary())
-@@ -670,7 +680,7 @@ again:
- 
- 	/* slurp in this section's info */
- 	while (read_one_header_line(line, sizeof(line), fin))
--		check_header(line, p_hdr_data, 0);
-+		check_header(line, sizeof(line), p_hdr_data, 0);
- 
- 	/* eat the blank line after section info */
- 	return (fgets(line, sizeof(line), fin) != NULL);
-@@ -709,9 +719,10 @@ static inline int patchbreak(const char *line)
- }
- 
- 
--static int handle_commit_msg(char *line)
-+static int handle_commit_msg(char *line, unsigned linesize)
- {
- 	static int still_looking = 1;
-+	char *endline = line + linesize;
- 
- 	if (!cmitmsg)
- 		return 0;
-@@ -726,13 +737,13 @@ static int handle_commit_msg(char *line)
- 			if (!*cp)
- 				return 0;
- 		}
--		if ((still_looking = check_header(cp, s_hdr_data, 0)) != 0)
-+		if ((still_looking = check_header(cp, endline - cp, s_hdr_data, 0)) != 0)
- 			return 0;
- 	}
- 
- 	/* normalize the log message to UTF-8. */
- 	if (metainfo_charset)
--		convert_to_utf8(line, charset);
-+		convert_to_utf8(line, endline - line, charset);
- 
- 	if (patchbreak(line)) {
- 		fclose(cmitmsg);
-@@ -751,7 +762,7 @@ static int handle_patch(char *line)
- 	return 0;
- }
- 
--static int handle_filter(char *line)
-+static int handle_filter(char *line, unsigned linesize)
- {
- 	static int filter = 0;
- 
-@@ -760,7 +771,7 @@ static int handle_filter(char *line)
- 	 */
- 	switch (filter) {
- 	case 0:
--		if (!handle_commit_msg(line))
-+		if (!handle_commit_msg(line, linesize))
- 			break;
- 		filter++;
- 	case 1:
-@@ -792,14 +803,14 @@ static void handle_body(void)
- 			/* flush any leftover */
- 			if ((transfer_encoding == TE_BASE64)  &&
- 			    (np != newline)) {
--				handle_filter(newline);
-+				handle_filter(newline, sizeof(newline));
- 			}
- 			if (!handle_boundary())
- 				return;
- 		}
- 
- 		/* Unwrap transfer encoding */
--		decode_transfer_encoding(line);
-+		decode_transfer_encoding(line, sizeof(line));
- 
- 		switch (transfer_encoding) {
- 		case TE_BASE64:
-@@ -808,7 +819,7 @@ static void handle_body(void)
- 
- 			/* binary data most likely doesn't have newlines */
- 			if (message_type != TYPE_TEXT) {
--				rc = handle_filter(line);
-+				rc = handle_filter(line, sizeof(newline));
- 				break;
- 			}
- 
-@@ -825,7 +836,7 @@ static void handle_body(void)
- 					/* should be sitting on a new line */
- 					*(++np) = 0;
- 					op++;
--					rc = handle_filter(newline);
-+					rc = handle_filter(newline, sizeof(newline));
- 					np = newline;
- 				}
- 			} while (*op != 0);
-@@ -835,7 +846,7 @@ static void handle_body(void)
- 			break;
- 		}
- 		default:
--			rc = handle_filter(line);
-+			rc = handle_filter(line, sizeof(newline));
- 		}
- 		if (rc)
- 			/* nothing left to filter */
-@@ -922,7 +933,7 @@ static int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
- 
- 	/* process the email header */
- 	while (read_one_header_line(line, sizeof(line), fin))
--		check_header(line, p_hdr_data, 1);
-+		check_header(line, sizeof(line), p_hdr_data, 1);
- 
- 	handle_body();
- 	handle_info();
--- 
-1.5.3.rc7.26.g5f7e4
+And why is safe string API easier to verify? Here's an example:
+
+// see how easily you can use strncpy() to cause a buffer overflow:
+char buf[1024];
+strncpy(buf, input, 2048);
+
+// see how impossible it is to cause a buffer overflow with my static  
+string API:
+STR_STATIC(str, 1024);
+sstr_append(str, input);
+
+Of course the above example is a simple one, but often when using  
+libc string handling functions for building strings the code gets  
+complex and there are all kinds of "is the buffer full already? what  
+about now? and now? and now?" and with all of those checks it's easy  
+to make mistakes.
+
+The point is that if the APIs are (nearly) impossible to use  
+insecurely, it's very easy to verify that the code is safe. The code  
+doesn't get safe by lots of checks everywhere, it gets safe by  
+placing a minimal amount of checks to small area of the code. The  
+correctness of a few checks is a lot easier to verify.
+
+--Apple-Mail-4--249912982
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (Darwin)
+
+iD8DBQFG1zvcyUhSUUBViskRAvO/AKCi6X9TSfN63vYpX0py91iDPYwBWACfSYRK
+mMxTxu72oT9sZgTIqwenaro=
+=589l
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-4--249912982--
