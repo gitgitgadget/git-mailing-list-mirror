@@ -1,57 +1,58 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] git-filter-branch: more detailed USAGE
-Date: Thu, 30 Aug 2007 19:11:11 +0200
-Message-ID: <cb7bb73a0708301011s3aa3dffaxa75d8fcee320d143@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] git-filter-branch: more detailed USAGE
+Date: Thu, 30 Aug 2007 19:10:41 +0200
+Message-ID: <1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
 References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
-	 <46D6EE65.3040503@telecom.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Thu Aug 30 19:11:28 2007
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 19:12:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQnY8-0008Oj-2Y
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 19:11:20 +0200
+	id 1IQnZD-0000EQ-3j
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 19:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756074AbXH3RLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 13:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755862AbXH3RLN
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 13:11:13 -0400
-Received: from wx-out-0506.google.com ([66.249.82.237]:25459 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198AbXH3RLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 13:11:12 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so546276wxd
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 10:11:11 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fGq5d0wxml0vd3ydSg/w1IzNRIxJNwTqeczxMGbwSBooylgQTM47nNE9+s8waSVuWFyaNX4WRlN7rbD8n/e2C07S1U8icjXYDskbDiIcwmxsEj/u9CA25xZpeWl6s6PF5O0POp/pBOzBvvfOe9EzLux46NDka1mVeRMT/cf408k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qlU0wdUMwRGis/4680HYukIHyWlnPuJYLrn4iEPQpcKMabiT/X3s4CKUGczqLyFh0uxeen0IrWImtoU4PsNSCYJNJRhPbPLXeuMGvNI2NnH4ljgpJ2HXK0EIcoriUQbGC0DG68X9BS0j0hJ6xTtIQW12jpf6dQseO5S7c160h7Y=
-Received: by 10.90.120.13 with SMTP id s13mr835577agc.1188493871606;
-        Thu, 30 Aug 2007 10:11:11 -0700 (PDT)
-Received: by 10.35.43.11 with HTTP; Thu, 30 Aug 2007 10:11:11 -0700 (PDT)
-In-Reply-To: <46D6EE65.3040503@telecom.at>
-Content-Disposition: inline
+	id S1757539AbXH3RMX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 13:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932138AbXH3RMX
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 13:12:23 -0400
+Received: from averell.tiscali.it ([213.205.33.55]:32932 "EHLO
+	averell.tiscali.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757460AbXH3RMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 13:12:22 -0400
+Received: from localhost.localdomain (84.221.55.162) by averell.tiscali.it (7.3.122)
+        id 468D1A8000670722; Thu, 30 Aug 2007 19:12:20 +0200
+X-Mailer: git-send-email 1.5.2.5
+In-Reply-To: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57055>
 
-On 8/30/07, Johannes Sixt <j.sixt@telecom.at> wrote:
-> Giuseppe Bilotta schrieb:
-> > +[--subdirectory-filter <command>] \
->
-> +[--subdirectory-filter <directory>] \
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ git-filter-branch.sh |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-Doh. I'll resend.
-
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 0190060..ec2f75d 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -8,7 +8,13 @@
+ # a new branch. You can specify a number of filters to modify the commits,
+ # files and trees.
+ 
+-USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] [REV-RANGE]"
++USAGE="[--env-filter <command>] [--tree-filter <command>] \
++[--index-filter <command>] [--parent-filter <command>] \
++[--msg-filter <command>] [--commit-filter <command>] \
++[--tag-name-filter <command>] [--subdirectory-filter <directory>] \
++[--original <namespace>] [-d <directory>] [-f | --force] \
++[<rev-list options>...]"
++
+ . git-sh-setup
+ 
+ warn () {
 -- 
-Giuseppe "Oblomov" Bilotta
+1.5.2.5
