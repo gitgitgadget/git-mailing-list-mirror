@@ -1,101 +1,71 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: [PATCH] fix parallel make problem
-Date: Thu, 30 Aug 2007 10:27:48 +0300
-Message-ID: <20070830072748.GF16312@mellanox.co.il>
-References: <20070830063810.GD16312@mellanox.co.il> <7v7inda5ar.fsf@gitster.siamese.dyndns.org>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Make git-archimport log entries more consistent
+Date: Thu, 30 Aug 2007 09:47:01 +0200
+Message-ID: <86myw9jwga.fsf@lola.quinscape.zz>
+References: <617indss2f.fsf@fencepost.gnu.org> <7vmyw9af3q.fsf@gitster.siamese.dyndns.org> <fc339e4a0708292019s3d4f6914h4f9efe6f1172c380@mail.gmail.com> <7vir6xacha.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 09:28:04 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 09:47:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQeRc-000660-8W
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 09:28:00 +0200
+	id 1IQeki-0001dr-7T
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 09:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755469AbXH3H15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 03:27:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755240AbXH3H15
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 03:27:57 -0400
-Received: from p02c11o141.mxlogic.net ([208.65.144.74]:34780 "EHLO
-	p02c11o141.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752045AbXH3H14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 03:27:56 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o141.mxlogic.net (mxl_mta-5.1.0-1)
-	with ESMTP id b7176d64.2600733616.166961.00-001.p02c11o141.mxlogic.net (envelope-from <mst@dev.mellanox.co.il>);
-	Thu, 30 Aug 2007 01:27:55 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.4.50]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 30 Aug 2007 10:30:40 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Thu, 30 Aug 2007 10:27:03 +0300
-Content-Disposition: inline
-In-Reply-To: <7v7inda5ar.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 30 Aug 2007 07:30:40.0627 (UTC) FILETIME=[AAB5FC30:01C7EAD7]
-X-Spam: [F=0.0372558498; S=0.037(2007082901); SS=0.500]
-X-MAIL-FROM: <mst@dev.mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1753855AbXH3HrR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 03:47:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbXH3HrR
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 03:47:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:57711 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753101AbXH3HrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 03:47:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IQekD-0001xt-3y
+	for git@vger.kernel.org; Thu, 30 Aug 2007 09:47:13 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 09:47:13 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Aug 2007 09:47:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:X5UpD1pAPtVOhn7EEUiGWk5LPPM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57010>
 
-There seems to be a bug in parallel build with GNU Make 3.81beta4
-which ships with Ubuntu Dapper:
-$touch revision.c
-$make -j 4
-fails with
-	LINK test-chmtime
-	gcc: test-chmtime.o: No such file or directory
-	make: *** [test-chmtime] Error 1
+Junio C Hamano <gitster@pobox.com> writes:
 
-Even though test-chmtime depends on test-chmtime.o
-Work around this by building test-* executables directly
-from the appropriate .c file.
+> I do not think anybody would doubt that the updated one is nicer
+> to the eye.  That's why I said it would have been nicer if the
+> message was formatted like that from the beginning.  But I do
+> not think you can claim it is _more_ consistent.  It just
+> formats under a rule different from the original.  The issue is
+> if the "nicer-to-the-eye" outweighs potential breakage the
+> reformatting can cause to existing parsers, if any.
+>
+> That's why I wanted to know if people _rely_ on the current
+> behaviour, because I was hoping that everybody would answer "yes
+> nicer-to-the-eye is more important and there is no drawback".
 
-Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+There are basically two ways to go forward:
 
----
-> Quoting Junio C Hamano <gitster@pobox.com>:
-> Subject: Re: parallel make problem with git
-> 
-> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
-> 
-> >     LINK test-chmtime
-> > gcc: test-chmtime.o: No such file or directory
-> > make: *** [test-chmtime] Error 1
-> > make: *** Waiting for unfinished jobs....
-> >
-> > Any ideas?
-> 
-> Some missing dependencies, apparently.
+a) keep the ugly behavior for all eternity
+b) change it and have people adapt dependent tools
 
-Looks more like bug in make, to me: test-chmtime.o should have been
-built by implicit rule, but isn't.
-
-> make --version
-GNU Make 3.81beta4
-
-The following patch helps by building the test directly from .c file:
-
-diff --git a/Makefile b/Makefile
-index 4eb4637..d6b38b5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -969,8 +969,8 @@ test-date$X: date.o ctype.o
- 
- test-delta$X: diff-delta.o patch-delta.o
- 
--test-%$X: test-%.o $(GITLIBS)
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
-+test-%$X: test-%.c $(GITLIBS) GIT-CFLAGS
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.c,$^) $(LIBS)
- 
- check-sha1:: test-sha1$X
- 	./test-sha1.sh
+If it is point b), there is not really a migration strategy worth
+noting.  One can formally announce one's intent of changing it for a
+while before actually doing it, but given that the previous format was
+not declared canonical at any point of time, the question is whether
+anyone will indeed notice before things break.
 
 -- 
-MST
+David Kastrup
