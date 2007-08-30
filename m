@@ -1,61 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-filter-branch: document --original option
-Date: Thu, 30 Aug 2007 16:13:34 -0700
-Message-ID: <7v3ay07h0h.fsf@gitster.siamese.dyndns.org>
-References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
-	<1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
-	<11884938431525-git-send-email-giuseppe.bilotta@gmail.com>
-	<7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
-	<85d4x4d6oi.fsf@lola.goethe.zz>
-	<7vodgo7jbn.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Git.pm: Add remote_refs() git-ls-remote frontend
+Date: Fri, 31 Aug 2007 01:37:15 +0200
+Message-ID: <20070830233714.GJ1219@pasky.or.cz>
+References: <20070825221143.6514.22516.stgit@rover> <fb5vod$vvc$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Aug 31 01:14:11 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:37:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQtD8-0007Uf-Eb
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:14:02 +0200
+	id 1IQtZi-0002xU-7b
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755655AbXH3XNr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 19:13:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755974AbXH3XNr
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:13:47 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55716 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755034AbXH3XNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 19:13:46 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CB63212B64D;
-	Thu, 30 Aug 2007 19:14:02 -0400 (EDT)
-In-Reply-To: <7vodgo7jbn.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 30 Aug 2007 15:23:40 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758541AbXH3XhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 19:37:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757787AbXH3XhS
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:37:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40970 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754650AbXH3XhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 19:37:16 -0400
+Received: (qmail 20491 invoked by uid 2001); 31 Aug 2007 01:37:15 +0200
+Content-Disposition: inline
+In-Reply-To: <fb5vod$vvc$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57091>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Aug 30, 2007 at 10:39:41AM CEST, Jakub Narebski wrote:
+> [Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org]
+> 
+> Petr Baudis wrote:
+> 
+> > Should support all the important features, I guess. Too bad that
+> >       git-ls-remote --heads .
+> >       
+> > is subtly different from
+> > 
+> >       git-ls-remote . refs/heads/
+> > 
+> > so we have to provide the interface for specifying both.
+> 
+> Why do not use git-for-each-ref or git-show-refs? If I remember correctly
+> they _were_ faster than git-ls-remote or git-peek-remote...
 
-> I agree we do not give the "portable to version 7" prize
-> anymore.  But you made me realize another thing.
->
-> I think it should make sure orig_namespace has one and only one
-> trailing slash, because otherwise "--original refs/heads//"
-> would lead you to the same disaster.
+But we want to typically list refs in a remote repository.
 
-Perhaps,
-
-	orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
-
-Well, I know people hate colon-expr, but we earlier ruled out
-(and we still do) ${parameter//pattern/string} as bashism beyond
-the portability line, and I do not see an alternative easier to
-read than this...
+-- 
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
