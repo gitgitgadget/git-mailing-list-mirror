@@ -1,81 +1,68 @@
-From: Junio C Hamano <junkio@pobox.com>
-Subject: Re: [PATCH] Temporary fix for stack smashing in mailinfo
-Date: Thu, 30 Aug 2007 15:53:06 -0700
-Message-ID: <7vir6w7hyl.fsf@gitster.siamese.dyndns.org>
-References: <1188502009.29782.874.camel@hurina>
-	<20070830214824.GC15405@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-filter-branch: document --original option
+Date: Fri, 31 Aug 2007 00:04:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708310004130.28586@racer.site>
+References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
+ <1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
+ <11884938431525-git-send-email-giuseppe.bilotta@gmail.com>
+ <7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Timo Sirainen <tss@iki.fi>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 00:53:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:05:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQst4-0003g0-Dy
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 00:53:18 +0200
+	id 1IQt4c-0005on-AM
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763577AbXH3WxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 18:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763532AbXH3WxO
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 18:53:14 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38735 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763473AbXH3WxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 18:53:13 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070830225313.XQYS10742.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 30 Aug 2007 18:53:13 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id iNtB1X00W1gtr5g0000000; Thu, 30 Aug 2007 18:53:12 -0400
-In-Reply-To: <20070830214824.GC15405@steel.home> (Alex Riesen's message of
-	"Thu, 30 Aug 2007 23:48:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762400AbXH3XFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 19:05:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762428AbXH3XFA
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:05:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53862 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762400AbXH3XE7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 19:04:59 -0400
+Received: (qmail invoked by alias); 30 Aug 2007 23:04:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 31 Aug 2007 01:04:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Rd/lXjAYR//9uiUQOLUEVfe2Y0gzbSMiTSlrxGG
+	nsUFn7dleuty3b
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57087>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Hi,
 
-> Junio, I cannot have time to fix the code nice and proper, but as
-> heavy user of git-am just have to have it fixed at least a like this.
-> And this is ugly (and definitely incomplete), everyone be warned.
->
-> Checked with valgrind, looks good (except for iconv_open reading past
-> one of its arguments):
+On Thu, 30 Aug 2007, Junio C Hamano wrote:
 
-On the top of your patch, I think decode_header_bq() needs to
-make sure that a string with more than one pieces, each of which
-decodes well within piecebuf, cannot overflow outbuf[] in the
-while loop.
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+> 
+> > +--original <namespace>::
+> > +	Use this option to set the namespace where the original commits
+> > +	will be stored. The default value is 'refs/original'.
+> > +
+> 
+> The default seems to be "refs/original/".
+> 
+> Even worse.
+> 
+> I think if you say --force --original refs/head (notice the lack
+> of "s" nor slash at the end), the code will get you in a *lot*
+> of trouble.
+> 
+> Dscho, don't we want to do something like this?
 
-> @@ -578,56 +588,56 @@ static int decode_header_bq(char *it)
->  		default:
->  			return rfc2047; /* no munging */
->  		case 'b':
-> -			sz = decode_b_segment(cp + 3, piecebuf, ep);
-> +			sz = decode_b_segment(cp + 3, piecebuf, sizeof(piecebuf), ep);
->  			break;
->  		case 'q':
-> -			sz = decode_q_segment(cp + 3, piecebuf, ep, 1);
-> +			sz = decode_q_segment(cp + 3, piecebuf, sizeof(piecebuf), ep, 1);
->  			break;
->  		}
->  		if (sz < 0)
->  			return rfc2047;
->  		if (metainfo_charset)
-> -			convert_to_utf8(piecebuf, charset_q);
-> +			convert_to_utf8(piecebuf, sizeof(piecebuf), charset_q);
->  		strcpy(out, piecebuf);
->  		out += strlen(out);
->  		in = ep + 2;
->  	}
+Yes, I think so, too.  The --original option is probably the least tested 
+option of filter-branch :-(
 
-It might also make sense to redo the lower level decoding
-functions using existing strbuf interface to build string
-without pre-set bounds.
+Ciao,
+Dscho
