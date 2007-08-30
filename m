@@ -1,85 +1,61 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: gitweb and remote branches
-Date: Fri, 31 Aug 2007 01:09:28 +0200
-Message-ID: <cb7bb73a0708301609s330f8d6fna3755bff346452ab@mail.gmail.com>
-References: <favitd$3ff$1@sea.gmane.org> <200708300001.39203.jnareb@gmail.com>
-	 <cb7bb73a0708300018u37f5c465u5d87eae0eb23543c@mail.gmail.com>
-	 <200708301016.17552.jnareb@gmail.com>
-	 <7vbqco91fi.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-filter-branch: document --original option
+Date: Thu, 30 Aug 2007 16:13:34 -0700
+Message-ID: <7v3ay07h0h.fsf@gitster.siamese.dyndns.org>
+References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
+	<1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
+	<11884938431525-git-send-email-giuseppe.bilotta@gmail.com>
+	<7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
+	<85d4x4d6oi.fsf@lola.goethe.zz>
+	<7vodgo7jbn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 01:09:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:14:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQt8n-0006dc-KH
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:09:33 +0200
+	id 1IQtD8-0007Uf-Eb
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 01:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762812AbXH3XJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 19:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762772AbXH3XJa
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:09:30 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:21447 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762710AbXH3XJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 19:09:29 -0400
-Received: by py-out-1112.google.com with SMTP id u77so3132998pyb
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 16:09:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iTOTnnKvX16vcQBUqfxUI4eUtr66MEIPWwZXxhWkNaj/SaCNZVeMcwa4ojrraf5RIMichHvgwhUPxK5Fopjskcynlpsk1sMyo3U0Cbp3HAMW4lnQRvc4ydzUe7hbdTKN/fZUmKFNFYGNFzt5xsnMxLPem5f7joX/vNjTScJVe3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g+tzdMwQcGVFt1Jh/qWMhsEBUU37xiduDZmQ8ZVIhIEcYRlkwOzQVCtjpzB8eAwFrup72Ea4ynTrsqIY2o1noRYDRYoJcKH16165kyDVCSKQ1mlmhv8dGEnYKzzngulXvKj7NpABGB/5ZhbzMF5/dNCVrm7BopW+RN9885UHGdY=
-Received: by 10.35.85.16 with SMTP id n16mr1193616pyl.1188515368684;
-        Thu, 30 Aug 2007 16:09:28 -0700 (PDT)
-Received: by 10.35.43.11 with HTTP; Thu, 30 Aug 2007 16:09:28 -0700 (PDT)
-In-Reply-To: <7vbqco91fi.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755655AbXH3XNr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 19:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755974AbXH3XNr
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 19:13:47 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55716 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755034AbXH3XNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 19:13:46 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CB63212B64D;
+	Thu, 30 Aug 2007 19:14:02 -0400 (EDT)
+In-Reply-To: <7vodgo7jbn.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 30 Aug 2007 15:23:40 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57090>
 
-On 8/30/07, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I agree we do not give the "portable to version 7" prize
+> anymore.  But you made me realize another thing.
 >
-> > That reminds me that gitweb has no support for detached HEAD as of yet,
-> > although I don't think we want to encourage detached HEAD in public
-> > repo.
->
-> That logic is flawed, I am afraid.  If you have been talking
-> only about serving public repository via gitweb, then the topic
-> of the thread becomes totally moot.  Exposing or even having
-> remotes/ in public distribution point repository would be even
-> more wrong than using detached HEAD in public repository.  Other
-> people who interact with you should not have any business what
-> you happened to have fetched from _your_ upstream --- if you
-> want to publish them and act as a relay for your downstream,
-> then they should be fetched from your branch namespace.
+> I think it should make sure orig_namespace has one and only one
+> trailing slash, because otherwise "--original refs/heads//"
+> would lead you to the same disaster.
 
-OTOH, having 'origin' exposed, and knowing the 'origin' URL, would
-open lots of interesting fields of research, such as distributed git
-mirroring to download large repositories from more than a client etc.
+Perhaps,
 
-Anyway, making visible remotes an option that defaults to disabled
-would address both the issue above and the one below:
+	orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
 
-> But obviously people use gitweb/instaweb as a way to view their
-> own live repository, and I think it makes sense to show and
-> support remotes/ in such a case.  It also would make sense to
-> support detached HEAD there as well.
-
-If I understand correctly, a detached HEAD is simply a checkout in the
-middle of a branch, and thus not named. So what exactly are we looking
-for when we talk about supporting a detached HEAD? Would it be enough
-to display HEAD in the list of heads?
-
--- 
-Giuseppe "Oblomov" Bilotta
+Well, I know people hate colon-expr, but we earlier ruled out
+(and we still do) ${parameter//pattern/string} as bashism beyond
+the portability line, and I do not see an alternative easier to
+read than this...
