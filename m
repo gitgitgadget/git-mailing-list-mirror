@@ -1,53 +1,69 @@
-From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
-Subject: Re: Buffer overflows
-Date: Thu, 30 Aug 2007 22:26:14 +0200
-Message-ID: <46D727E6.1060006@etek.chalmers.se>
-References: <1188502009.29782.874.camel@hurina>
+From: Bart Trojanowski <bart@jukie.net>
+Subject: Re: publishing a forked^W cloned directory with ancestry
+Date: Thu, 30 Aug 2007 16:27:47 -0400
+Message-ID: <20070830202747.GT10772@jukie.net>
+References: <20070830192533.GA18751@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Timo Sirainen <tss@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Aug 30 22:26:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>,
+	mdadm development team 
+	<pkg-mdadm-devel@lists.alioth.debian.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Aug 30 22:28:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQqaq-0003Ig-Pe
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 22:26:21 +0200
+	id 1IQqcg-0003jE-KU
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 22:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758171AbXH3U0S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 16:26:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758733AbXH3U0S
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 16:26:18 -0400
-Received: from anubis.medic.chalmers.se ([129.16.30.218]:37739 "EHLO
-	anubis.medic.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754248AbXH3U0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 16:26:17 -0400
-Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
-	(Authenticated sender: lukass)
-	by anubis.medic.chalmers.se (Postfix) with ESMTP id 95438E3F6;
-	Thu, 30 Aug 2007 22:26:15 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.6) Gecko/20070804 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <1188502009.29782.874.camel@hurina>
+	id S1751603AbXH3U2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 16:28:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbXH3U2K
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 16:28:10 -0400
+Received: from tachyon.jukie.net ([205.150.199.214]:57549 "EHLO jukie.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751603AbXH3U2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 16:28:09 -0400
+Received: from tau.jukie.net ([10.10.10.211]:57356)
+	by jukie.net with esmtp (Exim 4.50)
+	id 1IQqcK-0002b7-F4; Thu, 30 Aug 2007 16:27:52 -0400
+Received: by tau.jukie.net (Postfix, from userid 1000)
+	id C425BA74ABF; Thu, 30 Aug 2007 16:27:47 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070830192533.GA18751@piper.oerlikon.madduck.net>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57066>
 
-Timo Sirainen wrote:
-> Attached once again beginnings of safer string handling functions, which
-> should be easy to use to replace the existing string handling code. I
-> even thought about creating some kind of an automated tool to do this,
-> but that's a bit too much trouble with no gain for myself.
+* martin f krafft <madduck@madduck.net> [070830 15:25]:
+> [1] I tried cloning B from A, then cloning C from B. Within C, there
+>     is no reference to A's master branch, so unless B pulled changes
+>     from A and C pulled changes from B, C could not be updated.
 
-How about using an existing string handling library instead of
-creating another one from scratch?
+I think a .git/config like this will do what you want:
 
-One library worth looking at might be "The Better String Library"[1].
+[remote "upstream"]
+        url = git://mdadm-upstream-repo
+        fetch = +refs/heads/*:refs/remotes/upstream/*
 
-It claims to be both portable, stable, secure and have high performance.
+[remote "debian"]
+        url = git://debian-repo-you-want-to-publish-to
+        fetch = +refs/heads/*:refs/remotes/debian/*
+        push = refs/remotes/upstream/master:refs/heads/upstream
+        push = refs/heads/master:refs/heads/master
 
-/Lukas
+Now when you 'git push debian' it will populate the 'upstream' and
+'master' branches properly.
 
-[1] http://bstring.sourceforge.net/
+When someone clones your repo, they will get origin/master (your branch)
+and origin/upstream (the official mdadm branch).
+
+Did I understand the problem correctly?
+
+-Bart
+
+-- 
+				WebSig: http://www.jukie.net/~bart/sig/
