@@ -1,213 +1,53 @@
-From: Timo Sirainen <tss@iki.fi>
-Subject: Buffer overflows
-Date: Thu, 30 Aug 2007 22:26:49 +0300
-Message-ID: <1188502009.29782.874.camel@hurina>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Add --rebase option to git-pull?
+Date: Thu, 30 Aug 2007 22:22:51 +0200
+Message-ID: <20070830202251.GA15405@steel.home>
+References: <550f9510708300540u13c77201oe7cbe599c6773364@mail.gmail.com> <Pine.LNX.4.64.0708301415150.28586@racer.site> <550f9510708300810y1ca84e8dt4d0bab8fc99deb3c@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-ZDQ72KYbMw1ENqHoKdlY"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 22:02:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 22:23:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQqDK-0005Um-8s
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 22:02:02 +0200
+	id 1IQqXe-0002Tt-K9
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 22:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758009AbXH3UBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 16:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759273AbXH3UBi
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 16:01:38 -0400
-Received: from dovecot.org ([82.118.211.50]:57296 "EHLO dovecot.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754971AbXH3UBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 16:01:37 -0400
-X-Greylist: delayed 2084 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Aug 2007 16:01:36 EDT
-Received: from [192.168.10.2] (82-203-162-146.dsl.gohome.fi [82.203.162.146])
-	by dovecot.org (Postfix) with ESMTP id F0E2B16471E6
-	for <git@vger.kernel.org>; Thu, 30 Aug 2007 22:26:49 +0300 (EEST)
-X-Mailer: Evolution 2.10.2 
+	id S1759500AbXH3UW4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 16:22:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757309AbXH3UW4
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 16:22:56 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:45181 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172AbXH3UWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 16:22:55 -0400
+Received: from tigra.home (Fc93c.f.strato-dslnet.de [195.4.201.60])
+	by post.webmailer.de (mrclete mo15) (RZmta 12.1)
+	with ESMTP id U065a2j7UGUhLw ; Thu, 30 Aug 2007 22:22:52 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 8EEA9277BD;
+	Thu, 30 Aug 2007 22:22:52 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 0D7A9BE2A; Thu, 30 Aug 2007 22:22:52 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <550f9510708300810y1ca84e8dt4d0bab8fc99deb3c@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPiog==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57064>
 
+Tom Clarke, Thu, Aug 30, 2007 17:10:31 +0200:
+> +# Give up if we are given more than two remotes -- not handling octopus.
+> +case "$remotes" in
+> +?*' '?*)
+> +       exit 2 ;;
+> +esac
 
---=-ZDQ72KYbMw1ENqHoKdlY
-Content-Type: multipart/mixed; boundary="=-JvloJxDooOnM0/equFK8"
-
-
---=-JvloJxDooOnM0/equFK8
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-Looks like nothing has happened since my last mail about this
-(http://marc.info/?l=3Dgit&m=3D117962988804430&w=3D2).
-
-I sure hope no-one's using git-mailinfo to do any kind of automated mail
-processing from untrusted users. Here's one way to cause it to overflow
-a buffer in stack:
-
-Subject: =3D?iso-8859-15?b?pKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSk=
-pKSkpKSkpKSkpKSkpKSkpKSkpKSk
- pKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpK=
-Sk
- pKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpK=
-Sk
- pKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKQ=3D?=3D
-
-It's not the only way. I just accidentally hit that when trying to
-verify another buffer overflow. Just look for strcpy()s in the file.
-
-Libc string handling functions are broken and should not be used for
-anything. It's annoying when such a large project as Git is still
-repeating the same old mistakes. I guess security doesn't matter to
-anyone.
-
-Attached once again beginnings of safer string handling functions, which
-should be easy to use to replace the existing string handling code. I
-even thought about creating some kind of an automated tool to do this,
-but that's a bit too much trouble with no gain for myself.
-
-Usage goes like:
-
-STATIC_STRING(str, 1024);
-sstr_append(str, "hello ");
-sstr_printfa(str, "%d", 5);
-
-struct string *str;
-str =3D str_alloc(1024); // initial malloc size, grows when needed
-str_append(str, "hello ");
-str_printfa(str, "%d", 5);
-str_free(&str);
-
-
---=-JvloJxDooOnM0/equFK8
-Content-Disposition: attachment; filename=git-strings.diff
-Content-Type: text/x-patch; name=git-strings.diff; charset=ISO-8859-15
-Content-Transfer-Encoding: base64
-
-ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUNCmluZGV4IDRlYjQ2MzcuLmM3OWVjZWQg
-MTAwNjQ0DQotLS0gYS9NYWtlZmlsZQ0KKysrIGIvTWFrZWZpbGUNCkBAIC0xMzUsNyArMTM1LDcg
-QEAgdW5hbWVfUCA6PSAkKHNoZWxsIHNoIC1jICd1bmFtZSAtcCAyPi9kZXYvbnVsbCB8fCBlY2hv
-IG5vdCcpDQogDQogIyBDRkxBR1MgYW5kIExERkxBR1MgYXJlIGZvciB0aGUgdXNlcnMgdG8gb3Zl
-cnJpZGUgZnJvbSB0aGUgY29tbWFuZCBsaW5lLg0KIA0KLUNGTEFHUyA9IC1nIC1PMiAtV2FsbA0K
-K0NGTEFHUyA9IC1nIC1XYWxsDQogTERGTEFHUyA9DQogQUxMX0NGTEFHUyA9ICQoQ0ZMQUdTKQ0K
-IEFMTF9MREZMQUdTID0gJChMREZMQUdTKQ0KQEAgLTI4Myw3ICsyODMsNyBAQCBYRElGRl9MSUI9
-eGRpZmYvbGliLmENCiBMSUJfSCA9IFwNCiAJYXJjaGl2ZS5oIGJsb2IuaCBjYWNoZS5oIGNvbW1p
-dC5oIGNzdW0tZmlsZS5oIGRlbHRhLmggZ3JlcC5oIFwNCiAJZGlmZi5oIG9iamVjdC5oIHBhY2su
-aCBwa3QtbGluZS5oIHF1b3RlLmggcmVmcy5oIGxpc3Qtb2JqZWN0cy5oIHNpZGViYW5kLmggXA0K
-LQlydW4tY29tbWFuZC5oIHN0cmJ1Zi5oIHRhZy5oIHRyZWUuaCBnaXQtY29tcGF0LXV0aWwuaCBy
-ZXZpc2lvbi5oIFwNCisJcnVuLWNvbW1hbmQuaCBzdHJidWYuaCBzdHIuaCBzdHItc3RhdGljLmgg
-dGFnLmggdHJlZS5oIGdpdC1jb21wYXQtdXRpbC5oIHJldmlzaW9uLmggXA0KIAl0cmVlLXdhbGsu
-aCBsb2ctdHJlZS5oIGRpci5oIHBhdGgtbGlzdC5oIHVucGFjay10cmVlcy5oIGJ1aWx0aW4uaCBc
-DQogCXV0ZjguaCByZWZsb2ctd2Fsay5oIHBhdGNoLWlkcy5oIGF0dHIuaCBkZWNvcmF0ZS5oIHBy
-b2dyZXNzLmggXA0KIAltYWlsbWFwLmggcmVtb3RlLmgNCkBAIC0zMDIsNyArMzAyLDcgQEAgTElC
-X09CSlMgPSBcDQogCW9iamVjdC5vIHBhY2stY2hlY2subyBwYWNrLXdyaXRlLm8gcGF0Y2gtZGVs
-dGEubyBwYXRoLm8gcGt0LWxpbmUubyBcDQogCXNpZGViYW5kLm8gcmVhY2hhYmxlLm8gcmVmbG9n
-LXdhbGsubyBcDQogCXF1b3RlLm8gcmVhZC1jYWNoZS5vIHJlZnMubyBydW4tY29tbWFuZC5vIGRp
-ci5vIG9iamVjdC1yZWZzLm8gXA0KLQlzZXJ2ZXItaW5mby5vIHNldHVwLm8gc2hhMV9maWxlLm8g
-c2hhMV9uYW1lLm8gc3RyYnVmLm8gXA0KKwlzZXJ2ZXItaW5mby5vIHNldHVwLm8gc2hhMV9maWxl
-Lm8gc2hhMV9uYW1lLm8gc3RyYnVmLm8gc3RyLm8gc3RyLXN0YXRpYy5vIFwNCiAJdGFnLm8gdHJl
-ZS5vIHVzYWdlLm8gY29uZmlnLm8gZW52aXJvbm1lbnQubyBjdHlwZS5vIGNvcHkubyBcDQogCXJl
-dmlzaW9uLm8gcGFnZXIubyB0cmVlLXdhbGsubyB4ZGlmZi1pbnRlcmZhY2UubyBcDQogCXdyaXRl
-X29yX2RpZS5vIHRyYWNlLm8gbGlzdC1vYmplY3RzLm8gZ3JlcC5vIG1hdGNoLXRyZWVzLm8gXA0K
-ZGlmZiAtLWdpdCBhL3N0ci1zdGF0aWMuYyBiL3N0ci1zdGF0aWMuYw0KbmV3IGZpbGUgbW9kZSAx
-MDA2NDQNCmluZGV4IDAwMDAwMDAuLmEzZjQ4ZjgNCi0tLSAvZGV2L251bGwNCisrKyBiL3N0ci1z
-dGF0aWMuYw0KQEAgLTAsMCArMSw0MCBAQA0KKyNpbmNsdWRlICJzdHItc3RhdGljLmgiDQorDQor
-dm9pZCBzdHJfc3RhdGljX2FwcGVuZChzdHJ1Y3Qgc3RyaW5nX3N0YXRpYyAqc3RyLCBjb25zdCBj
-aGFyICpjc3RyKQ0KK3sNCisJdW5zaWduZWQgaW50IGF2YWlsID0gc3RyLT5zaXplIC0gc3RyLT5s
-ZW47DQorCXVuc2lnbmVkIGludCBsZW4gPSBzdHJsZW4oY3N0cik7DQorDQorCWlmIChsZW4gPj0g
-YXZhaWwpIHsNCisJCWxlbiA9IGF2YWlsIC0gMTsNCisJCXN0ci0+b3ZlcmZsb3dlZCA9IDE7DQor
-CX0NCisJbWVtY3B5KHN0ci0+YnVmICsgc3RyLT5sZW4sIGNzdHIsIGxlbik7DQorCXN0ci0+bGVu
-ICs9IGxlbjsNCisJc3RyLT5idWZbc3RyLT5sZW5dID0gJ1wwJzsNCit9DQorDQordm9pZCBzdHJf
-c3RhdGljX3ByaW50ZmEoc3RydWN0IHN0cmluZ19zdGF0aWMgKnN0ciwgY29uc3QgY2hhciAqZm10
-LCAuLi4pDQorew0KKwl1bnNpZ25lZCBpbnQgYXZhaWwgPSBzdHItPnNpemUgLSBzdHItPmxlbjsN
-CisJdmFfbGlzdCB2YTsNCisJaW50IHJldDsNCisNCisJdmFfc3RhcnQodmEsIGZtdCk7DQorCXJl
-dCA9IHZzbnByaW50ZihzdHItPmJ1ZiArIHN0ci0+bGVuLCBhdmFpbCwgZm10LCB2YSk7DQorCWlm
-IChyZXQgPCAoaW50KWF2YWlsKQ0KKwkJc3RyLT5sZW4gKz0gcmV0Ow0KKwllbHNlIHsNCisJCXN0
-ci0+bGVuICs9IGF2YWlsIC0gMTsNCisJCXN0ci0+b3ZlcmZsb3dlZCA9IDE7DQorCX0NCisJdmFf
-ZW5kKHZhKTsNCit9DQorDQordm9pZCBzdHJfc3RhdGljX3RydW5jYXRlKHN0cnVjdCBzdHJpbmdf
-c3RhdGljICpzdHIsIHVuc2lnbmVkIGludCBsZW4pDQorew0KKwlpZiAobGVuID49IHN0ci0+c2l6
-ZSkNCisJCWxlbiA9IHN0ci0+c2l6ZSAtIDE7DQorCXN0ci0+bGVuID0gbGVuOw0KKwlzdHItPmJ1
-ZltsZW5dID0gJ1wwJzsNCit9DQpkaWZmIC0tZ2l0IGEvc3RyLXN0YXRpYy5oIGIvc3RyLXN0YXRp
-Yy5oDQpuZXcgZmlsZSBtb2RlIDEwMDY0NA0KaW5kZXggMDAwMDAwMC4uMTljYjI4Zg0KLS0tIC9k
-ZXYvbnVsbA0KKysrIGIvc3RyLXN0YXRpYy5oDQpAQCAtMCwwICsxLDMzIEBADQorI2lmbmRlZiBT
-VFJfU1RBVElDX0gNCisjZGVmaW5lIFNUUl9TVEFUSUNfSA0KKw0KKyNpbmNsdWRlICJnaXQtY29t
-cGF0LXV0aWwuaCINCisNCitzdHJ1Y3Qgc3RyaW5nX3N0YXRpYyB7DQorCXVuc2lnbmVkIGludCBz
-aXplOw0KKwl1bnNpZ25lZCBpbnQgbGVuOjMxOw0KKwl1bnNpZ25lZCBpbnQgb3ZlcmZsb3dlZDox
-Ow0KKwljaGFyIGJ1ZltdOw0KK307DQorDQorI2RlZmluZSBTVFJfU1RBVElDKG5hbWUsIHNpemUp
-IFwNCisJdW5pb24geyBcDQorCSAgc3RydWN0IHN0cmluZ19zdGF0aWMgc3RyaW5nOyBcDQorCSAg
-Y2hhciBzdHJpbmdfYnVmW3NpemVvZihzdHJ1Y3Qgc3RyaW5nX3N0YXRpYykgKyAoc2l6ZSkgKyAx
-XTsgXA0KKwl9IG5hbWUgPSB7IHsgKHNpemUpKzEsIDAsIDAgfSB9DQorDQorZXh0ZXJuIHZvaWQg
-c3RyX3N0YXRpY19hcHBlbmQoc3RydWN0IHN0cmluZ19zdGF0aWMgKnN0ciwgY29uc3QgY2hhciAq
-Y3N0cik7DQorZXh0ZXJuIHZvaWQgc3RyX3N0YXRpY19wcmludGZhKHN0cnVjdCBzdHJpbmdfc3Rh
-dGljICpzdHIsIGNvbnN0IGNoYXIgKmZtdCwgLi4uKQ0KKwlfX2F0dHJpYnV0ZV9fKChmb3JtYXQg
-KHByaW50ZiwgMiwgMykpKTsNCitleHRlcm4gdm9pZCBzdHJfc3RhdGljX3RydW5jYXRlKHN0cnVj
-dCBzdHJpbmdfc3RhdGljICpzdHIsIHVuc2lnbmVkIGludCBsZW4pOw0KKw0KKyNkZWZpbmUgc3N0
-cl9hcHBlbmQoc3RyLCBjc3RyKSBzdHJfc3RhdGljX2FwcGVuZCgmKHN0cikuc3RyaW5nLCBjc3Ry
-KQ0KKyNkZWZpbmUgc3N0cl9wcmludGZhKHN0ciwgZm10LCAuLi4pIFwNCisJc3RyX3N0YXRpY19w
-cmludGZhKCYoc3RyKS5zdHJpbmcsIGZtdCwgX19WQV9BUkdTX18pDQorI2RlZmluZSBzc3RyX3Ry
-dW5jYXRlKHN0ciwgbGVuKSBzdHJfc3RhdGljX3RydW5jYXRlKCYoc3RyKS5zdHJpbmcsIGxlbikN
-CisNCisjZGVmaW5lIHNzdHJfYyhzdHIpICgoc3RyKS5zdHJpbmcuYnVmKQ0KKyNkZWZpbmUgc3N0
-cl9sZW4oc3RyKSAoKHN0cikuc3RyaW5nLmxlbikNCisjZGVmaW5lIHNzdHJfb3ZlcmZsb3dlZChz
-dHIpICgoc3RyKS5zdHJpbmcub3ZlcmZsb3dlZCkNCisNCisjZW5kaWYNCmRpZmYgLS1naXQgYS9z
-dHIuYyBiL3N0ci5jDQpuZXcgZmlsZSBtb2RlIDEwMDY0NA0KaW5kZXggMDAwMDAwMC4uNzUzMDA3
-Mw0KLS0tIC9kZXYvbnVsbA0KKysrIGIvc3RyLmMNCkBAIC0wLDAgKzEsNzUgQEANCisjaW5jbHVk
-ZSAic3RyLmgiDQorI2luY2x1ZGUgImdpdC1jb21wYXQtdXRpbC5oIg0KKw0KK2V4dGVybiBzdHJ1
-Y3Qgc3RyaW5nICpzdHJfYWxsb2ModW5zaWduZWQgaW50IGluaXRpYWxfc2l6ZSkNCit7DQorCXN0
-cnVjdCBzdHJpbmcgKnN0cjsNCisNCisJc3RyID0geG1hbGxvYyhzaXplb2YoKnN0cikpOw0KKwlz
-dHItPmxlbiA9IDA7DQorCXN0ci0+c2l6ZSA9IGluaXRpYWxfc2l6ZSArIDE7DQorCXN0ci0+YnVm
-ID0geG1hbGxvYyhzdHItPnNpemUpOw0KKwlzdHItPmJ1ZlswXSA9ICdcMCc7DQorCXJldHVybiBz
-dHI7DQorfQ0KKw0KK3ZvaWQgc3RyX2ZyZWUoc3RydWN0IHN0cmluZyAqKl9zdHIpDQorew0KKwlz
-dHJ1Y3Qgc3RyaW5nICpzdHIgPSAqX3N0cjsNCisNCisJZnJlZShzdHItPmJ1Zik7DQorCXN0ci0+
-YnVmID0gTlVMTDsNCisJZnJlZShzdHIpOw0KKw0KKwkqX3N0ciA9IE5VTEw7DQorfQ0KKw0KK3N0
-YXRpYyB2b2lkIHN0cl9ncm93X2lmX25lZWRlZChzdHJ1Y3Qgc3RyaW5nICpzdHIsIHVuc2lnbmVk
-IGludCBsZW4pDQorew0KKwl1bnNpZ25lZCBpbnQgYXZhaWwgPSBzdHItPnNpemUgLSBzdHItPmxl
-bjsNCisNCisJaWYgKGxlbiA+PSBhdmFpbCkgew0KKwkJc3RyLT5zaXplID0gKHN0ci0+bGVuICsg
-bGVuKSAqIDI7DQorCQlzdHItPmJ1ZiA9IHhyZWFsbG9jKHN0ci0+YnVmLCBzdHItPnNpemUpOw0K
-Kwl9DQorfQ0KKw0KK3ZvaWQgc3RyX2FwcGVuZChzdHJ1Y3Qgc3RyaW5nICpzdHIsIGNvbnN0IGNo
-YXIgKmNzdHIpDQorew0KKwl1bnNpZ25lZCBpbnQgbGVuID0gc3RybGVuKGNzdHIpOw0KKw0KKwlz
-dHJfZ3Jvd19pZl9uZWVkZWQoc3RyLCBsZW4pOw0KKwltZW1jcHkoc3RyLT5idWYgKyBzdHItPmxl
-biwgY3N0ciwgbGVuKTsNCisJc3RyLT5sZW4gKz0gbGVuOw0KKwlzdHItPmJ1ZltzdHItPmxlbl0g
-PSAnXDAnOw0KK30NCisNCit2b2lkIHN0cl9wcmludGZhKHN0cnVjdCBzdHJpbmcgKnN0ciwgY29u
-c3QgY2hhciAqZm10LCAuLi4pDQorew0KKwl1bnNpZ25lZCBpbnQgYXZhaWwgPSBzdHItPnNpemUg
-LSBzdHItPmxlbjsNCisJdmFfbGlzdCB2YSwgdmEyOw0KKwlpbnQgcmV0Ow0KKw0KKwl2YV9zdGFy
-dCh2YSwgZm10KTsNCisJdmFfY29weSh2YTIsIHZhKTsNCisJcmV0ID0gdnNucHJpbnRmKHN0ci0+
-YnVmICsgc3RyLT5sZW4sIGF2YWlsLCBmbXQsIHZhKTsNCisJYXNzZXJ0KHJldCA+PSAwKTsNCisN
-CisJaWYgKCh1bnNpZ25lZCBpbnQpcmV0ID49IGF2YWlsKSB7DQorCQlzdHJfZ3Jvd19pZl9uZWVk
-ZWQoc3RyLCByZXQpOw0KKwkJYXZhaWwgPSBzdHItPnNpemUgLSBzdHItPmxlbjsNCisNCisJCXJl
-dCA9IHZzbnByaW50ZihzdHItPmJ1ZiArIHN0ci0+bGVuLCBhdmFpbCwgZm10LCB2YTIpOw0KKwkJ
-YXNzZXJ0KHJldCA+PSAwICYmICh1bnNpZ25lZCBpbnQpcmV0IDwgYXZhaWwpOw0KKwl9DQorCXN0
-ci0+bGVuICs9IHJldDsNCisJdmFfZW5kKHZhKTsNCit9DQorDQordm9pZCBzdHJfdHJ1bmNhdGUo
-c3RydWN0IHN0cmluZyAqc3RyLCB1bnNpZ25lZCBpbnQgbGVuKQ0KK3sNCisJaWYgKGxlbiA+PSBz
-dHItPnNpemUpDQorCQlsZW4gPSBzdHItPnNpemUgLSAxOw0KKwlzdHItPmxlbiA9IGxlbjsNCisJ
-c3RyLT5idWZbbGVuXSA9ICdcMCc7DQorfQ0KZGlmZiAtLWdpdCBhL3N0ci5oIGIvc3RyLmgNCm5l
-dyBmaWxlIG1vZGUgMTAwNjQ0DQppbmRleCAwMDAwMDAwLi4zMjlhYWQ0DQotLS0gL2Rldi9udWxs
-DQorKysgYi9zdHIuaA0KQEAgLTAsMCArMSwyMCBAQA0KKyNpZm5kZWYgU1RSX0gNCisjZGVmaW5l
-IFNUUl9IDQorDQorc3RydWN0IHN0cmluZyB7DQorCXVuc2lnbmVkIGludCBsZW4sIHNpemU7DQor
-CWNoYXIgKmJ1ZjsNCit9Ow0KKw0KK2V4dGVybiBzdHJ1Y3Qgc3RyaW5nICpzdHJfYWxsb2ModW5z
-aWduZWQgaW50IGluaXRpYWxfc2l6ZSk7DQorZXh0ZXJuIHZvaWQgc3RyX2ZyZWUoc3RydWN0IHN0
-cmluZyAqKnN0cik7DQorDQorZXh0ZXJuIHZvaWQgc3RyX2FwcGVuZChzdHJ1Y3Qgc3RyaW5nICpz
-dHIsIGNvbnN0IGNoYXIgKmNzdHIpOw0KK2V4dGVybiB2b2lkIHN0cl9wcmludGZhKHN0cnVjdCBz
-dHJpbmcgKnN0ciwgY29uc3QgY2hhciAqZm10LCAuLi4pDQorCV9fYXR0cmlidXRlX18oKGZvcm1h
-dCAocHJpbnRmLCAyLCAzKSkpOw0KK2V4dGVybiB2b2lkIHN0cl90cnVuY2F0ZShzdHJ1Y3Qgc3Ry
-aW5nICpzdHIsIHVuc2lnbmVkIGludCBsZW4pOw0KKw0KKyNkZWZpbmUgc3RyX2Moc3RyKSAoKHN0
-ciktPmJ1ZikNCisjZGVmaW5lIHN0cl9sZW4oc3RyKSAoKHN0ciktPmxlbikNCisNCisjZW5kaWYN
-Cg==
-
-
---=-JvloJxDooOnM0/equFK8--
-
---=-ZDQ72KYbMw1ENqHoKdlY
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG1xn5yUhSUUBViskRAjqmAJoD8WeIORkZ4FSFyYoGl/H7bfNDNwCfR+Bk
-3VrWRq7sBXTMZjEf+URm2/E=
-=39uA
------END PGP SIGNATURE-----
-
---=-ZDQ72KYbMw1ENqHoKdlY--
+Isn't it "given two and more remotes"?
