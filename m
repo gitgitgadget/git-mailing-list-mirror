@@ -1,131 +1,110 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: gitweb and remote branches
-Date: Thu, 30 Aug 2007 09:18:09 +0200
-Message-ID: <cb7bb73a0708300018u37f5c465u5d87eae0eb23543c@mail.gmail.com>
-References: <favitd$3ff$1@sea.gmane.org>
-	 <cb7bb73a0708280253y7d31f347yb84a40982d59d9d2@mail.gmail.com>
-	 <cb7bb73a0708280453k4315e80ej170238a52e66dcb6@mail.gmail.com>
-	 <200708300001.39203.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] simplify history by default
+Date: Thu, 30 Aug 2007 00:25:49 -0700
+Message-ID: <7vir6x8ow2.fsf@gitster.siamese.dyndns.org>
+References: <20070830062512.GB16312@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 09:18:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Thu Aug 30 09:26:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQeIC-0004D3-89
-	for gcvg-git@gmane.org; Thu, 30 Aug 2007 09:18:16 +0200
+	id 1IQePq-0005oJ-TH
+	for gcvg-git@gmane.org; Thu, 30 Aug 2007 09:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754292AbXH3HSM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Aug 2007 03:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754831AbXH3HSL
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 03:18:11 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:2786 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754269AbXH3HSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2007 03:18:10 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2701929pyb
-        for <git@vger.kernel.org>; Thu, 30 Aug 2007 00:18:10 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pwAw3te2EvBTcTcvNs1JmRdOFkpnE5B0/XCJxpChorzkJAejq0jxayRNJyUODdrIoE8ntQmxv2k7NV1yFFMW4aTN9px5djP5CL4WCbqvmekQhP3ZT+Qfi99Vz3eUGE0twm3YOzgJBn+axb4yBd9r2lPYGBzXZk+NPp1xhUdYcmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PLGnvZoHfZrW/7wFdAIGHZkxM0Udu+1CRxLAqjPVZLRYLPEryngEqf/1RcqXG/PpimfQSPqY4rY9CNz4Us+Go+vzZARZer0T+04vSK8vmGRZ8OCchAfxt7tlyxzTkJLO0r+QppZiuBO3cQfpgYdW5m+mkHlvn51UKtgkeKZIcq0=
-Received: by 10.35.63.2 with SMTP id q2mr270107pyk.1188458289572;
-        Thu, 30 Aug 2007 00:18:09 -0700 (PDT)
-Received: by 10.35.43.11 with HTTP; Thu, 30 Aug 2007 00:18:09 -0700 (PDT)
-In-Reply-To: <200708300001.39203.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1755455AbXH3H0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Aug 2007 03:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755407AbXH3H0F
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Aug 2007 03:26:05 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:41086 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755450AbXH3H0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2007 03:26:03 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DFC0A12AEE1;
+	Thu, 30 Aug 2007 03:26:19 -0400 (EDT)
+In-Reply-To: <20070830062512.GB16312@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Thu, 30 Aug 2007 09:25:12 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57008>
 
-On 8/30/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> For quick'n'dirty solution this might be enough. For proper patch to
-> be accepted I don't think so.
+"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
 
-That's fine, it wasn't meant to be :)
+> Which is better IMO, because the a branch is actually ignored.
+> But, is this behaviour documented?
 
-> First, in the idea to show also remote branches (from refs/remotes),
-> I wanted to separate heads list from remotes list in the 'summary'
-> view, and add 'remotes' view or modify 'heads' view to accept some
-> parameter specyfying kind of refs.
+Formal documentation is probably lacking.  Both Linus and I have
+explained this "history simplification" countless times here and
+on #git.  As a matter of fact, I think I did my latest round of
+explanation on #git just a few days ago.
 
-What I had in mind was a way to modify 'heads' view with a boolean
-option that enable/disabled remotes view. For their visualizations, I
-had in mind a split 'heads' secion, with the lhs being as it is now,
-and the rhs having the remotes.
+The thing is, neither of us is very good at documention --- we
+tend to offer explanation on demand _in context_.
 
-However, I wasn't sure if such a view would have been appreciated, so
-I went for the merged view and used the spans to make the heads appear
-as they do in the shortlog, as a clear way to mark which ones were
-local and which ones were remote.
-
-> Second, what was stopping me from implementing that was an idea to
-> separate remote branches into categories (like gitwbe-xmms2 categories
-> of projects) defined by the remote it belongs to. And this is not so
-> easy if we want to respect old .git/branches/ and .git/remotes/ remote
-> config in addition to new config based remote config.
-
-I don't know what gitweb-xmms2 does, but I think I understand what you
-mean, and I like the idea. However, it's even harder if you consider
-that even the latest git-svn plops all the svn-converted refs straight
-into refs/remotes and not in a subdir such as refs/remotes/svn.
-
-OTOH, we have to start from somewhere so we can build the feature step by step.
-
-> > Giuseppe "Oblomov" Bilotta
-> >
-> > --- gitweb.cgi        2007-08-26 12:41:13.000000000 +0200
-> > +++ gitweb.cgi-my     2007-08-28 13:47:15.000000000 +0200
+> Further, man git-rev-list says
+> --full-history::
 >
-> It is better to use git to manage source and to generate patches
-> (use git-format-patch, check Documentation/SubmittingPatches),
-> and use gitweb/gitweb.perl and not installed version.
-
-Oh, I know, this was just a very quick hack on the thing installed by
-my Debian distribution. I've since checkoued out the git.git
-repository and I'll be working on that now.
-
-> > @@ -3237,8 +3238,10 @@ sub git_heads_body {
-> >               $alternate ^= 1;
-> >               print "<td><i>$ref{'age'}</i></td>\n" .
-> >                     ($curr ? "<td class=\"current_head\">" : "<td>") .
-> > +                   "<span class=\"refs\"><span class=\"$ref{'class'}\">" .
-> >                     $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'}),
-> >                              -class => "list name"},esc_html($ref{'name'})) .
-> > +                   "</span></span>" .
-> >                     "</td>\n" .
-> >                     "<td class=\"link\">" .
-> >                     $cgi->a({-href => href(action=>"shortlog",
-> > hash=>$ref{'name'})}, "shortlog") . " | " .
-> >
+> 	Show also parts of history irrelevant to current state of a given path.
+> 		This turns off history simplification, which removed merges
+> 		which didn't change anything at all at some child. It will still
+> 		actually simplify away merges that didn't change anything at all
+> 		into either child.
 >
-> I don't understand this double span. First, you can set multiple
-> classes for HTML element by separating them by space, e.g.
->
->                 "<span class=\"refs\ $ref{'class'}\">"
->
-> And you could have given appropriate class to <td> or <a> element
+> which makes it seem like the default should be to do history simplification, but
+> what actually happens is that the default is not to do simplification
+> unless you give a path, in which case the default is to do simplification,
 
-Actually, that was just a quick hack to make the heads appear in the
-heads list in the same way as they appear in the shortlog, to
-differentiate between them. And that requires the double span ;)
+I would agree around the part you quoted is a good place to add
+descriptions we gave in the past, and it is a good idea to do so
+at the very technical level.
 
-Of course, I'd rather hack the CSS now that I've got the git repository.
+At the same time, I think section #2 of the user manual
+"Exploring git history" should talk about path limited,
+simplified history, in its "Browsing revisions" subsection, when
+it gives the example
 
-I'll be working on it here
+	$ git log v2.5.. Makefile fs/
 
-http://oblomov.dnsalias.org/git?p=git.git;a=shortlog;h=gitweb-allheads
+As the previous section has already introduced the history
+diagram, it would help to draw a merge graph and how the history
+is simplified.
 
-and keep you posted on my progress.
+Slides #116, #117 and #118 from
 
--- 
-Giuseppe "Oblomov" Bilotta
+	http://members.cox.net/junkio/200607-ols.pdf
+
+talk about history simplification, which may be a good starting
+point to steal from.
+
+As to your patch, I am a bit reluctant to make the history
+simplification for the "whole tree" history traversal default,
+even with --no-merges.  One thing we often use --no-merges is
+for shortlog and I do want to see commits from both branches,
+when I have something like this:
+
+ ... maint ...----o----A----B---C'
+                             \   \
+                              \   \
+ ... master ... -----o----C----M---N
+
+where I first made a fix C on the 'master' branch, later
+backported it to 'maint' as C' to fix the same issue (but
+applicable for the context of 'maint').  The merge made at N
+will most likely result as if 'maint' was merged using 'ours'
+strategy to 'master' because at point M, the master branch is
+supposed to be in sync with and contain everything from 'maint',
+including the effect C' would bring to 'maint'.  I feel somewhat
+uneasy to drop C' when I am preparing to write release notes for
+N (or later).  Maybe this is just superstition, but when not
+using path-limiting, I am really interested in who contributed
+in the whole system, whether the fruits of their efforts
+survived at the end or not.  The use case is quite different
+when looking at history with path limiters.
