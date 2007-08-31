@@ -1,107 +1,54 @@
-From: =?UTF-8?B?QWRhbSBQacSFdHlzemVr?= <ediap@ET.PUT.Poznan.PL>
-Subject: Regression in gitk from git-1.5.3-rc7
-Date: Fri, 31 Aug 2007 08:26:20 +0200
-Message-ID: <46D7B48C.9020206@et.put.poznan.pl>
+From: Johannes Sixt <j.sixt@eudaptics.com>
+Subject: Re: [PATCH] Test for windows format absolute paths on cygwin too
+Date: Fri, 31 Aug 2007 11:31:12 +0200
+Message-ID: <46D7DFE0.6040606@eudaptics.com>
+References: <xMhwifY1.1188551240.4001640.roro@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 11:26:50 2007
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 11:32:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR2m6-00010q-B1
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 11:26:46 +0200
+	id 1IR2rc-0002KK-2g
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 11:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754744AbXHaJ0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 05:26:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbXHaJ0R
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 05:26:17 -0400
-Received: from pisces.et.put.poznan.pl ([150.254.29.122]:59428 "EHLO
-	pisces.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753651AbXHaJ0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 05:26:16 -0400
-X-Greylist: delayed 614 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Aug 2007 05:26:16 EDT
-Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
-	by pisces.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id l7V906tY007395
-	for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:10:36 +0200 (CEST)
-	(envelope-from ediap@ET.PUT.Poznan.PL)
-Received: from [150.254.11.74] (pc1074.et.put.poznan.pl [150.254.11.74])
-	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id l7V6QLw01693
-	for <git@vger.kernel.org>; Fri, 31 Aug 2007 08:26:21 +0200 (MET DST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-X-Enigmail-Version: 0.95.3
-OpenPGP: id=1F115CCB
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2007.8.31.10729
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __STOCK_PHRASE_24 0, __USER_AGENT 0'
+	id S1758655AbXHaJcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 05:32:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbXHaJcB
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 05:32:01 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:62700 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756608AbXHaJcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 05:32:00 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1IR2r8-0005iz-PF; Fri, 31 Aug 2007 11:31:59 +0200
+Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 47D114E4; Fri, 31 Aug 2007 11:31:58 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <xMhwifY1.1188551240.4001640.roro@localhost>
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.368, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57142>
 
-Hi!
+Robin Rosenberg schrieb:
+> ---
+> 
+> Requires cherry-picking 6397c3119ecaa258b5185315c64062bec29bcd86
 
-First of all thanks for this great piece of software you are providing
-for the community! I am a refugee from the SVN camp, BTW. ;-)
+... which you find in mingw.git.
 
-To the point...
+However, that commit is not signed-off for a reason: It is going to be 
+rewritten mostly because it doesn't yet use the is_absolute_path() from 
+git-compat-util.h.
 
-Today I noticed a problem in gitk from git-1.5.3-rc7 package, which I
-think did not exist in rc5. The problem is as follows:
-
-I am working with two parallel branches (master and stable). And I often
-use the cherry-pick option from gitk context menu to pick some patches
-from the master branch to the stable one (I cannot merge, because stable
-is a tracking branch of some remote SVN repository).
-If the picked patch does not apply cleanly on stable, I fix the problem
-in editor, then switch to git-gui to update the index and commit this
-conflicted commit to the stable branch.
-
-Now, I go back to gitk, and *without* updating the view (using <F5> for
-instance), I try to cherry pick another patch from my master branch.
-And in such a situation I got this error from git-gui:
-
-===== cut here =====
-
-can't read "arcnos(6e9a6c5fdabddeac2717d810997a1c4787ec72a2)": no such
-element in array
-can't read "arcnos(6e9a6c5fdabddeac2717d810997a1c4787ec72a2)": no such
-element in array
-    while executing
-"set a $arcnos($p)"
-    (procedure "splitarc" line 5)
-    invoked from within
-"splitarc $p"
-    (procedure "addnewchild" line 20)
-    invoked from within
-"addnewchild $newhead $oldhead"
-    (procedure "cherrypick" line 26)
-    invoked from within
-"cherrypick"
-    invoked from within
-".rowctxmenu invoke active"
-    ("uplevel" body line 1)
-    invoked from within
-"uplevel #0 [list $w invoke active]"
-    (procedure "tk::MenuInvoke" line 50)
-    invoked from within
-"tk::MenuInvoke .rowctxmenu 1"
-    (command bound to event)
-
-===== cut here =====
-
-BTW, the patch which I am trying to cherry-pick to stable is correctly
-committed, but gitk is not usable any more (I need to close it and start
-again).
-
-The above described problem does not occur when I refresh the gitk tree
-manually before cherry-picking another commit.
-
-Best regards,
-/Adam
-
-
--- 
-.:.  Adam Piatyszek - "ediap"       .:.  JID: ediap(at)jabber.org .:.
-.:.  ediap(at)users.sourceforge.net .:.  PGP key ID: 0x1F115CCB   .:.
+-- Hannes
