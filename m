@@ -1,69 +1,57 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] diff: resurrect the traditional empty "diff --git" behaviour
-Date: Fri, 31 Aug 2007 23:32:37 +0200
-Message-ID: <20070831213237.GA4753@steel.home>
-References: <20070830072748.GF16312@mellanox.co.il> <7vmyw85uml.fsf@gitster.siamese.dyndns.org> <20070831080651.GA17637@mellanox.co.il> <7vabs82kcq.fsf@gitster.siamese.dyndns.org> <20070831081517.GB17637@mellanox.co.il> <7v4pig2j91.fsf@gitster.siamese.dyndns.org> <20070831152120.GC17637@mellanox.co.il> <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org> <20070831160335.GA17761@coredump.intra.peff.net> <7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-svn: Protect against "diff.color = true".
+Date: Fri, 31 Aug 2007 22:38:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708312237340.28586@racer.site>
+References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
+ <7vveav21uv.fsf@gitster.siamese.dyndns.org> <20070831152153.GA30745@muzzle>
+ <7v4pifzawc.fsf@gitster.siamese.dyndns.org> <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Jeff King <peff@peff.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 23:33:28 2007
+X-From: git-owner@vger.kernel.org Fri Aug 31 23:38:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRE73-0005J5-Oq
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:33:10 +0200
+	id 1IRECR-0006Tx-0m
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761124AbXHaVcr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 17:32:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966515AbXHaVcp
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:32:45 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:36962 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966477AbXHaVcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 17:32:41 -0400
-Received: from tigra.home (Fc93c.f.strato-dslnet.de [195.4.201.60])
-	by post.webmailer.de (mrclete mo21) (RZmta 12.3)
-	with ESMTP id 601f33j7VHIvuw ; Fri, 31 Aug 2007 23:32:38 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 2C51B277BD;
-	Fri, 31 Aug 2007 23:32:38 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id B3768BE2A; Fri, 31 Aug 2007 23:32:37 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPiog==
-X-RZG-CLASS-ID: mo07
+	id S1761184AbXHaVik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 17:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761173AbXHaVij
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:38:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35050 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759609AbXHaVij (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 17:38:39 -0400
+Received: (qmail invoked by alias); 31 Aug 2007 21:38:37 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp029) with SMTP; 31 Aug 2007 23:38:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18jC5tUoEcj03QpGgmPkeRFtGNVwc9GeHr5XIHXg0
+	jL9OusneSLvHZr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57221>
 
-Junio C Hamano, Fri, Aug 31, 2007 22:13:42 +0200:
-> The "Consier running git-status" warning message we experimented
-> during the 1.5.3 cycle turns out to be a bad idea.  It robbed
-> cache-dirty information from people who valued it, while still
-> asking users to run "update-index --refresh".  It was hoped that
-> the new behaviour would at least have some educational value,
-> but not showing the cache-dirty paths like before means the user
-> would not even know easily which paths are cache-dirty.
-> 
-> This commit reinstates the traditional behaviour as the default,
-> but with a twist.
-> 
-> If you set diff.autorefreshindex configuration variable, it
-> squelches the empty "diff --git" output, and at the end of the
-> command, it automatically runs "update-index --refresh" without
-> even bothering the user.  In other words, with the configuration
-> variable set, people who do not care about the cache-dirtyness
-> do not even have to see the warning.
+Hi,
 
-I like this change.
+On Fri, 31 Aug 2007, Junio C Hamano wrote:
 
-So far my attempts to explain that warning to myself always left an
-uneasy feeling of me having tricked myself into believing in its
-usefullness.
+>   I do not have an easy access to SVN repo
+>   to interoperate with, so a testing by real-world users and an
+>   Ack is appreciated.
+
+I just tested on a busybox clone: Works as expected.  Without your patch, 
+I get the uninitialised values, with your patch it is fine.
+
+ACK.
+
+Ciao,
+Dscho
