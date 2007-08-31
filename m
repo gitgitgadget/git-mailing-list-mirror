@@ -1,76 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fix parallel make problem
-Date: Fri, 31 Aug 2007 17:11:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708311711210.28586@racer.site>
-References: <20070830063810.GD16312@mellanox.co.il> <7v7inda5ar.fsf@gitster.siamese.dyndns.org>
- <20070830072748.GF16312@mellanox.co.il> <7vmyw85uml.fsf@gitster.siamese.dyndns.org>
- <20070831080651.GA17637@mellanox.co.il> <7vabs82kcq.fsf@gitster.siamese.dyndns.org>
- <20070831081517.GB17637@mellanox.co.il> <7v4pig2j91.fsf@gitster.siamese.dyndns.org>
- <20070831152120.GC17637@mellanox.co.il> <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
- <20070831160043.GA1973@mellanox.co.il>
+From: "Robert Newson" <robert.newson@gmail.com>
+Subject: Re: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
+Date: Fri, 31 Aug 2007 17:18:26 +0100
+Message-ID: <46aeb24f0708310918u29fa5d17r9878658e68702fca@mail.gmail.com>
+References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
+	 <7vveav21uv.fsf@gitster.siamese.dyndns.org>
+	 <20070831152153.GA30745@muzzle>
+	 <7vfy1z1y9u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri Aug 31 18:11:58 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 18:19:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR96D-0007Ec-Mw
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:11:58 +0200
+	id 1IR9D3-0000nH-R1
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757278AbXHaQLw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 12:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758042AbXHaQLw
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:11:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45020 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756346AbXHaQLv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 12:11:51 -0400
-Received: (qmail invoked by alias); 31 Aug 2007 16:11:50 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp031) with SMTP; 31 Aug 2007 18:11:50 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/zCIwg3TzztLrakICiRRSTsPBgVjfHV8vAimbgZ7
-	I05FLESf6+dbv4
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070831160043.GA1973@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S932779AbXHaQSb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 12:18:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932687AbXHaQSa
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:18:30 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:57234 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965537AbXHaQS3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 12:18:29 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so648881nze
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 09:18:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b+oNxi5qwKwsAcaVZPrjiwOhPViLLaZZEuU7Y9KNf7fK8YYK/GNouWXP3NKo+vGAZKWlpePFgCb0atTZcrkHSfPMhVkIzuYbAwkKF6snzLVFy7dPu5DgBk4LSfmLrrfux1sFBiDCfFiSMhveDlZfdirg0UyKz51zPyAeh9/aIJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Rzf8Z4AIGbVy9+RTpnMVRYLkdkODe7TG4+wPC3tmqXXUfkExm9umY+XjT63Y67R+VqoKcDKcE4XvY3gqCdL9ggqO6FOVcOx6t8ZngqckcmLBVySXdn0r13708A79SH2bdKBqQ/z+BekqkvD4NbXBqkFdFdGo/Akf+ZMmrkmlwmQ=
+Received: by 10.115.95.1 with SMTP id x1mr856722wal.1188577106928;
+        Fri, 31 Aug 2007 09:18:26 -0700 (PDT)
+Received: by 10.115.19.3 with HTTP; Fri, 31 Aug 2007 09:18:26 -0700 (PDT)
+In-Reply-To: <7vfy1z1y9u.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57181>
 
-Hi,
+I have these settings in ~/.gitconfig;
 
-On Fri, 31 Aug 2007, Michael S. Tsirkin wrote:
+[color]
+        branch = true
+        diff = true
+        pager = true
+        status = true
 
-> > Quoting Junio C Hamano <gitster@pobox.com>:
-> > Subject: Re: [PATCH] fix parallel make problem
-> > 
-> > "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
-> > 
-> > >> > So how did this end up in your mail?
-> > >> 
-> > >> Because it is not a format-patch output.
-> > >> 
-> > >> I often run "git diff --stat -p HEAD" from inside MUA in order
-> > >> to get the patch from my work tree, write a proposed commit
-> > >> message, and then reset the change away without committing after
-> > >> sending that message (yes I do not need "git stash" --- gmane
-> > >> and vger are my stashes, Mwhhhaaaa).
-> > >
-> > > So maybe we can suppress the warning when the output is not a tty?
-> > 
-> > What's your point?
-> 
-> Well, git diff currently says "consider running git-status", and one
-> wanders why doesn't it just go ahead and run git status instead
-> of asking the user to do it.
+not a problem in 1.5.2.4.
 
-I knew why I was opposed to that change.  But others shouted louder, I 
-guess.
-
-Ciao,
-Dscho
+On 8/31/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+>
+> > This could be a sign of a bigger problem.
+> >
+> > Does git-log read .git/config and that could potentially change
+> > its default output format?  A quick scan of the docs say "no".
+>
+> "diff.color = always" could break it I would imagine...
+>
