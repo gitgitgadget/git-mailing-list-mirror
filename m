@@ -1,77 +1,70 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] git-filter-branch: document --original option
-Date: Fri, 31 Aug 2007 08:16:39 +0200
-Message-ID: <851wdkcjp4.fsf@lola.goethe.zz>
-References: <11884893671845-git-send-email-giuseppe.bilotta@gmail.com>
-	<1188493842963-git-send-email-giuseppe.bilotta@gmail.com>
-	<11884938431525-git-send-email-giuseppe.bilotta@gmail.com>
-	<7vy7fs7kmc.fsf@gitster.siamese.dyndns.org>
-	<85d4x4d6oi.fsf@lola.goethe.zz>
-	<7vodgo7jbn.fsf@gitster.siamese.dyndns.org>
-	<7v3ay07h0h.fsf@gitster.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@bluebottle.com>
+Subject: Re: [RFC] Change handling of RelNotes
+Date: Fri, 31 Aug 2007 15:44:58 +0900
+Message-ID: <200708310645.l7V6jKJk009287@mi0.bluebottle.com>
+References: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 08:16:55 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: "Stephen Cuppett" <cuppett@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 08:45:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IQzoD-0007b0-A3
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 08:16:45 +0200
+	id 1IR0Fx-0004Th-Jh
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 08:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929AbXHaGQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 02:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbXHaGQm
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 02:16:42 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:53500 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750903AbXHaGQl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 02:16:41 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 2A4072CAEDE;
-	Fri, 31 Aug 2007 08:16:40 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 1A2952D3B30;
-	Fri, 31 Aug 2007 08:16:40 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-055-068.pools.arcor-ip.net [84.61.55.68])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id EB9E530A9F3;
-	Fri, 31 Aug 2007 08:16:39 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B86AB1D3DB8A; Fri, 31 Aug 2007 08:16:39 +0200 (CEST)
-In-Reply-To: <7v3ay07h0h.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 30 Aug 2007 16\:13\:34 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4110/Fri Aug 31 01:49:40 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1759340AbXHaGpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 02:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758772AbXHaGpV
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 02:45:21 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:49424 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758513AbXHaGpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 02:45:21 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V6jKJk009287
+	for <git@vger.kernel.org>; Thu, 30 Aug 2007 23:45:20 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=ybHdlrNRCY5sHwR458dEUqauoM6QrhCRpUYnuClTHVOJ/1wQphQOTDKzsoroYAeJe
+	OXQ+lzd3AF0xFfWC61+s5F3m4hZLlPlbIbKZYVoe3SqNGSP2yWr/YoPjEKxulxK
+Received: from nanako3.mail.bluebottle.com (NK210-201-54-212.cl.static.apol.com.tw [210.201.54.212])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V6jDIT020701
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Aug 2007 23:45:18 -0700
+In-Reply-To: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
+X-Trusted-Delivery: <916891d552e20d7c2939b14fad0f3c66>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57122>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Quoting "Stephen Cuppett" <cuppett@gmail.com>:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I agree we do not give the "portable to version 7" prize
->> anymore.  But you made me realize another thing.
->>
->> I think it should make sure orig_namespace has one and only one
->> trailing slash, because otherwise "--original refs/heads//"
->> would lead you to the same disaster.
->
-> Perhaps,
->
-> 	orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
->
+> I propose we eliminate this symlink.
 
-See separate proposal which I find still prettier (and which does not
-fork).
+Maybe it is just me, but you do not sound like you are proposing to do
+anything yourself.  You are simply demanding Junio to change the way he
+works.  Instead of being able to edit RelNotes at the toplevel, relying
+on the symbolic link to let him edit the right file, you are forcing him
+to edit the appropriate file in Documentation/ directory.
 
-But I really don't think we should bend over backwards: multiple end
-slashes have explicit manual origin.  People deserve what they get
-then.
+Shouldn't you have at least said "I request" instead?
+
+I sometimes have a checkout on a filesystem that does not support
+symbolic links, but I set core.symlink configuration variable to false
+in such a case.  Would it make sense to update "git init" to autodetect
+lack of symbolic link support in the filesystem?
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Free pop3 email with a spam filter.
+http://www.bluebottle.com/tag/5
