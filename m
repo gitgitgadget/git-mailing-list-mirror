@@ -1,60 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gitk from subdirectory
-Date: Fri, 31 Aug 2007 00:40:03 -0700
-Message-ID: <7vk5rc2lv0.fsf@gitster.siamese.dyndns.org>
-References: <7vabs85ntg.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.999.0708302200160.25853@woody.linux-foundation.org>
-	<7vejhk45q5.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.999.0708310038080.25853@woody.linux-foundation.org>
+From: Nanako Shiraishi <nanako3@bluebottle.com>
+Subject: Re: [PATCH] autodetect core.symlinks in git-init
+Date: Fri, 31 Aug 2007 17:00:37 +0900
+Message-ID: <200708310800.l7V80k7L005962@mi1.bluebottle.com>
+References: <7vodgo2moe.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 31 09:40:15 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git mailing list <git@vger.kernel.org>,
+	"Stephen Cuppett" <cuppett@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 10:00:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR16z-0000C7-Cs
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 09:40:13 +0200
+	id 1IR1Qy-0005AQ-Sb
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 10:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852AbXHaHkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 03:40:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbXHaHkJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 03:40:09 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:60932 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752852AbXHaHkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 03:40:08 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 812F412B984;
-	Fri, 31 Aug 2007 03:40:26 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0708310038080.25853@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 31 Aug 2007 00:38:50 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754359AbXHaIAs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 04:00:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754311AbXHaIAs
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 04:00:48 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:47771 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754065AbXHaIAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 04:00:47 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V80k7L005962
+	for <git@vger.kernel.org>; Fri, 31 Aug 2007 01:00:46 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=FfqW5IC8DdGI06fC8nMLvnzc8WhzrMbk4t10qh4Oun6OP7RHljCkll7M4UvM3d0ka
+	WD92aB40VdA6CbU/NFJ7RT0lGgETj58sQ2SBfhYY8kxCOs/MNznN+zglJxOuHrZ
+Received: from nanako3.mail.bluebottle.com (88-199-30-2.tktelekom.pl [88.199.30.2])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V80dTb008548
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 31 Aug 2007 01:00:43 -0700
+In-Reply-To: <7vodgo2moe.fsf_-_@gitster.siamese.dyndns.org>
+X-Trusted-Delivery: <4c3ced7658fa7cc34ac35758ec82ee8c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57127>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-> On Thu, 30 Aug 2007, Junio C Hamano wrote:
+> We already autodetect if filemode is reliable on the filesystem
+> to deal with VFAT and friends.  Do the same for symbolic link
+> support.
 >
->> "git log" family of commands, even when run from a subdirectory,
->> do not limit the revision range with the current directory as
->> the path limiter, but with double-dash without any paths after
->> it, i.e. "git log --" do so.  It was a mistake to have a
->> difference between "git log --" and "git log" introduced in
->> commit ae563542bf10fa8c33abd2a354e4b28aca4264d7 (First cut at
->> libifying revlist generation).
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 >
-> Looks obviously correct.
+>  * The earlier one left the test symlink behind after testing is
+>    complete.  Embarrassing...
 >
-> Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+>  builtin-init-db.c |   15 +++++++++++++++
+>  1 files changed, 15 insertions(+), 0 deletions(-)
 
-Thanks.
+Thank you for a quick patch.  I was about to report that leftover test
+file as a bug.  Do you ever sleep?  I am always amazed how quickly any
+potential issue raised on the mailing list is resolved.
+
+With this patch my "git init" in a pendrive correctly says "[core]
+symlinks = false".
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email account with anti spam protection.
+http://www.bluebottle.com/tag/2
