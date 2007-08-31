@@ -1,69 +1,69 @@
-From: "Robert Newson" <robert.newson@gmail.com>
-Subject: Re: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
-Date: Fri, 31 Aug 2007 16:31:39 +0100
-Message-ID: <46aeb24f0708310831n3c16dbbeke173b6f0cdfa7792@mail.gmail.com>
-References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
-	 <7vveav21uv.fsf@gitster.siamese.dyndns.org>
-	 <20070831152153.GA30745@muzzle>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix parallel make problem
+Date: Fri, 31 Aug 2007 08:44:12 -0700
+Message-ID: <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
+References: <20070830063810.GD16312@mellanox.co.il>
+	<7v7inda5ar.fsf@gitster.siamese.dyndns.org>
+	<20070830072748.GF16312@mellanox.co.il>
+	<7vmyw85uml.fsf@gitster.siamese.dyndns.org>
+	<20070831080651.GA17637@mellanox.co.il>
+	<7vabs82kcq.fsf@gitster.siamese.dyndns.org>
+	<20070831081517.GB17637@mellanox.co.il>
+	<7v4pig2j91.fsf@gitster.siamese.dyndns.org>
+	<20070831152120.GC17637@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 31 17:32:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Fri Aug 31 17:44:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR8TP-0002TT-TA
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 17:31:52 +0200
+	id 1IR8fn-0006sX-V7
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 17:44:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755711AbXHaPbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 11:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756852AbXHaPbl
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 11:31:41 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:41069 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755638AbXHaPbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 11:31:40 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so444261rvb
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 08:31:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dXus0uW+PNAHY+TFRoDsqPvRXU2+kWWZYxU+WQj+No0maDSnTKUgAZoiNGLmwpTijwtAxjn5apFW4BJ5Fy/Ds40UecwN0LaX6TRN/jsVGamEyv9rTVKwLYzhkq/lvOmXfuWx59GTo/u/RhWUzNAdqLj64WhQF607opylYI14/CU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fdjtZgbhJeQ3fnNT9rDmpQQcWbUxIiD9YB4eH+i3rA/mttEPXRN3dplNCOhNPulbI971lGdDmbsshIVzpnDRmfxcrcCUAfIlY9HyJm4hITrFYSY1HHhEXkfj7QX/kwQFBG8VNr3i6FTIoNnsSJ4puecydANTCAmnW1ItFeVylls=
-Received: by 10.115.89.1 with SMTP id r1mr1591914wal.1188574299432;
-        Fri, 31 Aug 2007 08:31:39 -0700 (PDT)
-Received: by 10.115.19.3 with HTTP; Fri, 31 Aug 2007 08:31:39 -0700 (PDT)
-In-Reply-To: <20070831152153.GA30745@muzzle>
-Content-Disposition: inline
+	id S965291AbXHaPoT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 11:44:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758175AbXHaPoS
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 11:44:18 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38440 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757947AbXHaPoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 11:44:18 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D058A12BD2F;
+	Fri, 31 Aug 2007 11:44:35 -0400 (EDT)
+In-Reply-To: <20070831152120.GC17637@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Fri, 31 Aug 2007 18:21:20 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57175>
 
-The difference between the version I'm using (1.5.2.4) and this broken
-version shows us what's happened. The $hash value was initialised in
-the loop, and now it isn't.
+"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
 
-Running 'git-svn log' in my git-svn'ed repo shows this up every time,
-it's easy to reproduce.
+>> > So how did this end up in your mail?
+>> 
+>> Because it is not a format-patch output.
+>> 
+>> I often run "git diff --stat -p HEAD" from inside MUA in order
+>> to get the patch from my work tree, write a proposed commit
+>> message, and then reset the change away without committing after
+>> sending that message (yes I do not need "git stash" --- gmane
+>> and vger are my stashes, Mwhhhaaaa).
+>
+> So maybe we can suppress the warning when the output is not a tty?
 
-        my ($head, $refs) = @_;
--       my ($fh, $ctx) = command_output_pipe('rev-list', $head);
--       while (my $hash = <$fh>) {
--               chomp($hash);
--               my ($url, $rev, $uuid) = cmt_metadata($hash);
-+       my ($fh, $ctx) = command_output_pipe('log', $head);
-+       my $hash = "";
-+       my %max;
-+       while (<$fh>) {
-+               if ( m{^commit ($::sha1)$} ) {
-+                       unshift @$refs, $hash if $hash and $refs;
-+                       $hash = $1;
-+                       next;
-+               }
+What's your point?
+
+I did not even want to apply that "empty diff --git removal"
+patch.  I certainly do _NOT_ want to suppress that replacement
+warning anywhere.
+
+You are seriously tempting me to revert the commit
+fb13227e089f22dc31a3b1624559153821056848 (git-diff: squelch
+"empty" diffs)...
