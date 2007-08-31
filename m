@@ -1,57 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-svn: Protect against "diff.color = true".
-Date: Fri, 31 Aug 2007 22:38:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708312237340.28586@racer.site>
-References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
- <7vveav21uv.fsf@gitster.siamese.dyndns.org> <20070831152153.GA30745@muzzle>
- <7v4pifzawc.fsf@gitster.siamese.dyndns.org> <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/2] filter-branch: introduce convenience function
+ "skip_commit"
+Date: Fri, 31 Aug 2007 22:39:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708312238430.28586@racer.site>
+References: <Pine.LNX.4.64.0708312005420.28586@racer.site>
+ <20070831191921.GB2151@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0708312204490.28586@racer.site>
+ <7vzm07wftf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
+Cc: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 23:38:48 2007
+X-From: git-owner@vger.kernel.org Fri Aug 31 23:39:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRECR-0006Tx-0m
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:38:43 +0200
+	id 1IRED2-0006eh-Ec
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761184AbXHaVik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 17:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761173AbXHaVij
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:38:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35050 "HELO mail.gmx.net"
+	id S965954AbXHaVjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 17:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965888AbXHaVjQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:39:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38244 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759609AbXHaVij (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 17:38:39 -0400
-Received: (qmail invoked by alias); 31 Aug 2007 21:38:37 -0000
+	id S965473AbXHaVjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 17:39:16 -0400
+Received: (qmail invoked by alias); 31 Aug 2007 21:39:15 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp029) with SMTP; 31 Aug 2007 23:38:37 +0200
+  by mail.gmx.net (mp018) with SMTP; 31 Aug 2007 23:39:15 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18jC5tUoEcj03QpGgmPkeRFtGNVwc9GeHr5XIHXg0
-	jL9OusneSLvHZr
+X-Provags-ID: V01U2FsdGVkX1/NlZsLfkrN5ff8PPYs0XYrMNT5pr3TDTc7/B/RxD
+	RsDhw9ZUBAeIfI
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
+In-Reply-To: <7vzm07wftf.fsf@gitster.siamese.dyndns.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57222>
 
 Hi,
 
 On Fri, 31 Aug 2007, Junio C Hamano wrote:
 
->   I do not have an easy access to SVN repo
->   to interoperate with, so a testing by real-world users and an
->   Ack is appreciated.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Fri, 31 Aug 2007, Karl Hasselstr?m wrote:
+> >
+> >> On 2007-08-31 20:06:27 +0100, Johannes Schindelin wrote:
+> >> 
+> >> > It does _not_ undo the changeset corresponding to that commit, but
+> >> > it _skips_ the revision. IOW its ancestors' tree objects remain the
+> >> > same.
+> >> 
+> >> While this is true too, I'm guessing you intended to say that its
+> >> _descendants'_ tree objects remain the same. Right?
+> >
+> > Right.  So how about:
+> >
+> > IOW no tree objects are changed by this.
+> 
+> Ok, will amend.
 
-I just tested on a busybox clone: Works as expected.  Without your patch, 
-I get the uninitialised values, with your patch it is fine.
-
-ACK.
+Thanks; this was the next mail I wanted to send ;-)
 
 Ciao,
 Dscho
