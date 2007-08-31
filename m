@@ -1,95 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: repo.or.cz wishes?
-Date: Fri, 31 Aug 2007 17:09:39 -0400
-Message-ID: <20070831210938.GC18160@spearce.org>
-References: <20070826235944.GM1219@pasky.or.cz> <Pine.LNX.4.64.0708270933450.28586@racer.site> <20070828041059.GK18160@spearce.org> <20070828111913.GA31120@thunk.org> <20070829041523.GS18160@spearce.org> <20070829111345.GD29615@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] filter-branch: provide the convenience functions
+ also for commit filters
+Date: Fri, 31 Aug 2007 22:10:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708312209480.28586@racer.site>
+References: <Pine.LNX.4.64.0708312005070.28586@racer.site>
+ <7vzm07xvwa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 31 23:09:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 23:11:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRDkT-0007PF-Pf
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:09:50 +0200
+	id 1IRDlZ-0007sV-DC
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761017AbXHaVJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 17:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760438AbXHaVJq
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:09:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49248 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759927AbXHaVJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 17:09:45 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IRDkC-00068U-Io; Fri, 31 Aug 2007 17:09:32 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 84C8520FBAE; Fri, 31 Aug 2007 17:09:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070829111345.GD29615@thunk.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1760438AbXHaVKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 17:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760154AbXHaVKx
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:10:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50597 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759927AbXHaVKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 17:10:53 -0400
+Received: (qmail invoked by alias); 31 Aug 2007 21:10:51 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp019) with SMTP; 31 Aug 2007 23:10:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/dRPILtjXdoJ9lF/8EIc+6bkuDIJV71yDppx3EbJ
+	kvwGiUetbS67Oa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vzm07xvwa.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57211>
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Wed, Aug 29, 2007 at 12:15:23AM -0400, Shawn O. Pearce wrote:
-> > > 
-> > > git --git-dir=A gc
-> > > ln A/.git/objects/pack/* B/.git/objects/pack
-> > > git --git-dir=B gc --prune
-> > > git --git-dir=A prune
-> > 
-> > No, it won't work.
-> > 
-> > The problem is that during the first `git --git-dir=A gc` call
-> > you are deleting packfiles that may contain objects that B needs.
-> > *poof*.  
+Hi,
+
+On Fri, 31 Aug 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> But "git-gc" without the --prune doesn't delete any objects.
+> > 	Obviously, I think that these two changes are simple enough to be
+> > 	included even this late in the game for 1.5.3.  But I understand
+> > 	completely when people shout at me: "What exactly does deep
+> > 	feature freeze mean to you *knocks on Dscho's head*?"
+> 
+> My response to those people who might shout is that this is merely a 
+> step to complete a _new_ program that was not in _any_ released version 
+> to make it feature complete.  You do not have to even pretend that 
+> filter-branch did not exist before -- it actually didn't.  The new part 
+> might be buggier than other parts, but that's the same way as any other 
+> software development process.  If the new 'map' does not work as 
+> advertised there is always 1.5.3.1.
 
-Yes, it does delete objects.  Even without --prune.  That is
-because git-gc is running `git-repack -a -d -l`.  repack -a means
-repack all objects reachable from the current refs.  The -d means
-delete the packfiles that existed when the repack started, as it
-is assumed that all needed (reachable) objects were copied into
-the new output packfile(s).  The -d also means delete any loose
-objects that are now packed (git-prune-packed).
+Thank you for your encouraging words.
 
-Yet there may be objects in A that A cannot reach anymore (deleted
-or rewound branch) but that B needs and B does not have a copy of.
-If these objects were in one of the prior packfiles of A and is
-not in the new packfile(s) of A then those objects are gone.  *poof*.
+And yes, if there are bugs, I will be more than happy to fix them; and a 
+released version always gets more eyes than an unreleased one.
 
-> So it
-> should always be safe to use git-gc even if there are repositories
-> that are relying on that repo's ODB.  It's only if you use git-gc
-> --prune that you could get in troudble.  It might delete some
-> packfiles containing objects needed by B, but only after consolidating
-> all of the objects into a single packfile that contains all of the
-> objects that had always been in A's ODB.
-
-But when we repack we don't repack everything in A's ODB, we only
-repack the things that A can reach.  If A cannot reach something
-because a branch was rewound or deleted it won't survive the repack.
-Then the repack is behaving like at least partially like gc --prune.
- 
-> So I don't see why this wouldn't work.
-
-It only works if A cannot delete a branch or rewind a branch.
-In other words, once an object is stored in A's ODB it must always
-be reachable from A's refs.
-
--- 
-Shawn.
+Thanks,
+Dscho
