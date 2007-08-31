@@ -1,68 +1,67 @@
-From: "Stephen Cuppett" <cuppett@gmail.com>
-Subject: Re: [RFC] Change handling of RelNotes
-Date: Fri, 31 Aug 2007 08:52:38 -0400
-Message-ID: <316a20a40708310552r3d445d03h2ab44508a0608f0c@mail.gmail.com>
-References: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
-	 <200708310645.l7V6jKJk009287@mi0.bluebottle.com>
-	 <7vveaw2na9.fsf@gitster.siamese.dyndns.org>
-	 <316a20a40708310539w1d20c391w8566a042c7a8679a@mail.gmail.com>
+From: "Robert Newson" <robert.newson@gmail.com>
+Subject: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
+Date: Fri, 31 Aug 2007 13:58:43 +0100
+Message-ID: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 14:52:57 2007
+X-From: git-owner@vger.kernel.org Fri Aug 31 14:58:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR5zT-0001Qm-ED
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 14:52:47 +0200
+	id 1IR65I-0003Cb-3X
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 14:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965006AbXHaMwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 08:52:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbXHaMwm
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 08:52:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:60679 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964955AbXHaMwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 08:52:41 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so46814ugc
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 05:52:40 -0700 (PDT)
+	id S964998AbXHaM6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 08:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964997AbXHaM6o
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 08:58:44 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:6546 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964990AbXHaM6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 08:58:43 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so944186wah
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VVfBvrifmMH6AYks1MxeUAAdX+ujz8JL/V+DNOPc4GlMr2m4Pe9gkP6lONbt2ctml/oHP6kBxpGPJX76wXGmoMumz8RajGFVjn+EzY825RcwE4hAkRD1PQX+2xL5x2DR1OsFpbVfsS6NOVqAaBxnhDxp31JpYNBFoukx0Sh/NWU=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=BweHRbY0uCaXAeXJmtuVQRFFotvLNXqtZBrwvVvhv3X2QyeMxGODLuhxviurnvpJGU/FGzrtYgEsPltZSunEqaNqKDjOJ8pTd2yUz7Dh2YPBP43ydxLHZ4RFBRbRHPvrVib2m5N+w0FCorJG8bklkJlJi1r1iy1ep9rN0bGBIrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X+vGKrJJGQ7nV8Ix076IiY4nUAzgPtiiiL+8i5k3JyvWOIBPx6vM+MbyxqIbkYn3hS0HLTKW6mImtOkSZRcaewHLKiG8CoYvGzrOQ4eQhmqKmZBiqj6un/UvMtTdzp7XF01Sd9BDFJ90lBH+iN3KhJclX9/AJ5S/JTotNJKkWtY=
-Received: by 10.142.222.21 with SMTP id u21mr74013wfg.1188564758928;
-        Fri, 31 Aug 2007 05:52:38 -0700 (PDT)
-Received: by 10.142.111.8 with HTTP; Fri, 31 Aug 2007 05:52:38 -0700 (PDT)
-In-Reply-To: <316a20a40708310539w1d20c391w8566a042c7a8679a@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dUBJtNeM3YkCNhXPoNKtjuKZVBm6QHupeWtw3zVsamDnzbvPh4e4gKOMLgreklqKWgb8Lt37V6d/cgmuKE516EnsfAGxwJYkHgjLwL1Vw6aGwR/afR5Gcmpw+gmHm6PQQ3H4A6AgL0e8FbRtss4bz+5AVMw+wujRw/sHyO7+e1Q=
+Received: by 10.114.190.6 with SMTP id n6mr762796waf.1188565123410;
+        Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
+Received: by 10.115.19.3 with HTTP; Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57167>
 
-Sorry, I didn't mean to imply a demand on anybody, or mandate anybody
-change their workflow if really awkward or inconvenient.  Just new to
-git and was trying some things and noticed this oddity.  In software
-test, so I typically file reports for usability nits as well as big
-things, and never expect to fix them myself.  Used to my
-"recommendations" getting rejected too.  ;)
+Hi,
 
-Just trying to lower a barrier to entry in a weird case....
+The latest head of git gives me this when doing most operations, this
+also happens with the rc7 experimental Debian package. It's annoying
+because it prints this line hundreds of times for each call to 'log',
+for example
 
-I tested out the patch on Linux with a regular filesystem and with a
-memory stick.  It picked it up and did the right thing with RelNotes
-in both cases, leaving the symlink alone on ext3 and changing it to a
-regular file on the memory stick.
+"Use of uninitialized value in string eq at blah/git/git-svn line 826."
 
-I tried compiling it on Windows (cygwin), but ended up with:
+and this fixes it;
 
-/home/stcupp/git/builtin-init-db.c:305: undefined reference to `_xmkstemp'
-
-I tried including git-compat-util.h and some other things to resolve
-it, but was unable with my limited knowledge of their toolchain.
+diff --git a/git-svn.perl b/git-svn.perl
+index 4e325b7..3d0c76d 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -808,7 +808,7 @@ sub cmt_metadata {
+ sub working_head_info {
+        my ($head, $refs) = @_;
+        my ($fh, $ctx) = command_output_pipe('log', $head);
+-       my $hash;
++       my $hash = "";
+        my %max;
+        while (<$fh>) {
+                if ( m{^commit ($::sha1)$} ) {
