@@ -1,76 +1,79 @@
-From: Nanako Shiraishi <nanako3@bluebottle.com>
-Subject: Re: [PATCH] autodetect core.symlinks in git-init
-Date: Fri, 31 Aug 2007 17:00:37 +0900
-Message-ID: <200708310800.l7V80k7L005962@mi1.bluebottle.com>
-References: <7vodgo2moe.fsf_-_@gitster.siamese.dyndns.org>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: Re: [PATCH] fix parallel make problem
+Date: Fri, 31 Aug 2007 11:06:51 +0300
+Message-ID: <20070831080651.GA17637@mellanox.co.il>
+References: <20070830063810.GD16312@mellanox.co.il>
+	<7v7inda5ar.fsf@gitster.siamese.dyndns.org>
+	<20070830072748.GF16312@mellanox.co.il>
+	<7vmyw85uml.fsf@gitster.siamese.dyndns.org>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Git mailing list <git@vger.kernel.org>,
-	"Stephen Cuppett" <cuppett@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 10:00:57 2007
+X-From: git-owner@vger.kernel.org Fri Aug 31 10:07:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR1Qy-0005AQ-Sb
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 10:00:53 +0200
+	id 1IR1XB-0006d3-Rh
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 10:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754359AbXHaIAs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 04:00:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754311AbXHaIAs
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 04:00:48 -0400
-Received: from mi1.bluebottle.com ([206.188.25.14]:47771 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754065AbXHaIAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 04:00:47 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V80k7L005962
-	for <git@vger.kernel.org>; Fri, 31 Aug 2007 01:00:46 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=FfqW5IC8DdGI06fC8nMLvnzc8WhzrMbk4t10qh4Oun6OP7RHljCkll7M4UvM3d0ka
-	WD92aB40VdA6CbU/NFJ7RT0lGgETj58sQ2SBfhYY8kxCOs/MNznN+zglJxOuHrZ
-Received: from nanako3.mail.bluebottle.com (88-199-30-2.tktelekom.pl [88.199.30.2])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l7V80dTb008548
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 31 Aug 2007 01:00:43 -0700
-In-Reply-To: <7vodgo2moe.fsf_-_@gitster.siamese.dyndns.org>
-X-Trusted-Delivery: <4c3ced7658fa7cc34ac35758ec82ee8c>
+	id S1755462AbXHaIHM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 04:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbXHaIHM
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 04:07:12 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:44603 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871AbXHaIHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 04:07:08 -0400
+Received: by nf-out-0910.google.com with SMTP id f5so653903nfh
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 01:07:06 -0700 (PDT)
+Received: by 10.78.146.11 with SMTP id t11mr1009296hud.1188547625331;
+        Fri, 31 Aug 2007 01:07:05 -0700 (PDT)
+Received: from ?127.0.0.1? ( [217.132.35.163])
+        by mx.google.com with ESMTPS id q1sm2822130uge.2007.08.31.01.06.57
+        (version=SSLv3 cipher=OTHER);
+        Fri, 31 Aug 2007 01:06:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vmyw85uml.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57128>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+> Quoting Junio C Hamano <gitster@pobox.com>:
+> Subject: Re: [PATCH] fix parallel make problem
+> 
+> How about this as a replacement?  I notice that after a
+> successful build all the test-*.o files are removed by make, and
+> somehow make seems to believe it is Ok not to recreate them.
 
-> We already autodetect if filemode is reliable on the filesystem
-> to deal with VFAT and friends.  Do the same for symbolic link
-> support.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Yea. this works for me.
+
 > ---
->
->  * The earlier one left the test symlink behind after testing is
->    complete.  Embarrassing...
->
->  builtin-init-db.c |   15 +++++++++++++++
->  1 files changed, 15 insertions(+), 0 deletions(-)
+>  Makefile |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 4eb4637..51af531 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -969,6 +969,8 @@ test-date$X: date.o ctype.o
+>  
+>  test-delta$X: diff-delta.o patch-delta.o
+>  
+> +.PRECIOUS: $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
+> +
+>  test-%$X: test-%.o $(GITLIBS)
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
 
-Thank you for a quick patch.  I was about to report that leftover test
-file as a bug.  Do you ever sleep?  I am always amazed how quickly any
-potential issue raised on the mailing list is resolved.
+Add a comment here?
+	
+> Warning: 1 path touched but unmodified. Consider running git-status.
 
-With this patch my "git init" in a pendrive correctly says "[core]
-symlinks = false".
+BTW, shouldn't the warning go to standard error?
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
-
-----------------------------------------------------------------------
-Get a free email account with anti spam protection.
-http://www.bluebottle.com/tag/2
+MST
