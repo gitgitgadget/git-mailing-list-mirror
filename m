@@ -1,72 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Change handling of RelNotes
-Date: Fri, 31 Aug 2007 13:25:46 -0700
-Message-ID: <7vhcmfzc1h.fsf@gitster.siamese.dyndns.org>
-References: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
-	<200708310645.l7V6jKJk009287@mi0.bluebottle.com>
-	<7vveaw2na9.fsf@gitster.siamese.dyndns.org>
-	<316a20a40708310539w1d20c391w8566a042c7a8679a@mail.gmail.com>
-	<316a20a40708310552r3d445d03h2ab44508a0608f0c@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff: resurrect the traditional empty "diff --git"
+	behaviour
+Date: Fri, 31 Aug 2007 16:32:50 -0400
+Message-ID: <20070831203250.GA19340@coredump.intra.peff.net>
+References: <20070830072748.GF16312@mellanox.co.il> <7vmyw85uml.fsf@gitster.siamese.dyndns.org> <20070831080651.GA17637@mellanox.co.il> <7vabs82kcq.fsf@gitster.siamese.dyndns.org> <20070831081517.GB17637@mellanox.co.il> <7v4pig2j91.fsf@gitster.siamese.dyndns.org> <20070831152120.GC17637@mellanox.co.il> <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org> <20070831160335.GA17761@coredump.intra.peff.net> <7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen Cuppett" <cuppett@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 22:26:09 2007
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 22:33:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRD44-0004Nb-6a
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 22:26:00 +0200
+	id 1IRDAm-000689-Rr
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 22:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938AbXHaUZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 16:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753710AbXHaUZy
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 16:25:54 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42821 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072AbXHaUZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 16:25:53 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A1097129D3F;
-	Fri, 31 Aug 2007 16:26:09 -0400 (EDT)
-In-Reply-To: <316a20a40708310552r3d445d03h2ab44508a0608f0c@mail.gmail.com>
-	(Stephen Cuppett's message of "Fri, 31 Aug 2007 08:52:38 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759712AbXHaUcx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 16:32:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757947AbXHaUcx
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 16:32:53 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4561 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754116AbXHaUcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 16:32:52 -0400
+Received: (qmail 32695 invoked by uid 111); 31 Aug 2007 20:32:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 31 Aug 2007 16:32:52 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Aug 2007 16:32:50 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57203>
 
-"Stephen Cuppett" <cuppett@gmail.com> writes:
+On Fri, Aug 31, 2007 at 01:13:42PM -0700, Junio C Hamano wrote:
 
-> Sorry, I didn't mean to imply a demand on anybody, or mandate anybody
-> change their workflow...
+> If you set diff.autorefreshindex configuration variable, it
+> squelches the empty "diff --git" output, and at the end of the
+> command, it automatically runs "update-index --refresh" without
+> even bothering the user.  In other words, with the configuration
+> variable set, people who do not care about the cache-dirtyness
+> do not even have to see the warning.
 
-I have to admit that your "I propose" phrase did raise my
-eyebrow, but it's not a big deal.  I've grown thicker skins ;-)
+Nice. This is much more sane behavior, IMHO, and I think it should make
+everyone happy.
 
-As a general principle, I agree it is a good idea to keep
-git.git easily accessible by people on different platforms and
-environments.  After all, you would need to get git.git in order
-to obtain newer repository features, so there is a chicken and
-egg problem involved that is more severe than other projects.
+>  Same here.  This patch saw only very light testing, but I
+>  personally think is a sane thing to do before 1.5.3 final.
 
-That is exactly the reason why I do not use subprojects to bind
-gitk and git-gui into git.git.  It needs to wait until everybody
-has 1.5.2 or newer --- otherwise peole cannot clone or fetch
-from git.git to get the feature that allows such a fetch to
-begin with.
+Passes my light testing as well, but I have a feeling we just tested the
+same things...;)
 
-It would have been a different issue if the build procedure
-depended on having a tracked symlink foo.h pointing at cache.h
-and some source file included foo.h.  You cannot build such a
-thing on a filesystem without symbolic links.  But the RelNotes
-symlink is there for people to easily find the notes for the
-latest to be released, and that symlink appears as a text file
-that records the name of the Documentation file in a checkout
-with "core.symlinks = false"; I do not think it is such a big
-show stopper, even for people on a filesystem without symbolic
-links.
+One question on the implementation (and remember that I am somewhat
+ignorant of the structure of this part of the code, so the answer may be
+"it's too ugly"): is there a good reason to refresh _after_ the diff? It
+seems like when we are looking through the working tree and index the
+first time, we notice that the stat information doesn't match; why can't
+we update it then? That would save an extra working tree traversal.
+
+-Peff
