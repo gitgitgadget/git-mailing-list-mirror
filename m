@@ -1,57 +1,65 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 01/14] gitweb: get remotes too when getting heads list
-Date: Fri, 31 Aug 2007 11:10:40 +0200
-Message-ID: <fb8lte$8rk$1@sea.gmane.org>
-References: <favitdff@sea.gmane.org> <11885491241529-git-send-email-giuseppe.bilotta@gmail.com>
+From: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+Subject: [PATCH] Test for windows format absolute paths on cygwin too
+Date: Fri, 31 Aug 2007 09:07:20 +0000
+Message-ID: <xMhwifY1.1188551240.4001640.roro@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 11:10:59 2007
+X-From: git-owner@vger.kernel.org Fri Aug 31 11:15:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR2Wf-0005Ty-Cf
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 11:10:49 +0200
+	id 1IR2bK-0006mG-Uu
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 11:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932073AbXHaJKn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 05:10:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755721AbXHaJKn
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 05:10:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:41586 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754443AbXHaJKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 05:10:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IR2WJ-0008UE-36
-	for git@vger.kernel.org; Fri, 31 Aug 2007 11:10:27 +0200
-Received: from host-84-221-55-162.cust-adsl.tiscali.it ([84.221.55.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:10:27 +0200
-Received: from giuseppe.bilotta by host-84-221-55-162.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:10:27 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-84-221-55-162.cust-adsl.tiscali.it
-User-Agent: KNode/0.10.5
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1758586AbXHaJPT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 05:15:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757929AbXHaJPS
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 05:15:18 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:20195 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753871AbXHaJPQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 05:15:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C6D4880288D
+	for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:07:23 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03477-01 for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:07:21 +0200 (CEST)
+Received: from dewire.com (torino.dewire.com [10.1.2.98])
+	by dewire.com (Postfix) with SMTP id 841F7802866
+	for <git@vger.kernel.org>; Fri, 31 Aug 2007 11:07:20 +0200 (CEST)
+Received: from 194.68.126.35 (auth. user roro@localhost)
+          by dewire.com with HTTP; Fri, 31 Aug 2007 09:07:20 +0000
+X-Mailer: IlohaMail/0.8.14 (On: dewire.com)
+Bounce-To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57140>
 
-On Friday 31 August 2007 10:32, Giuseppe Bilotta wrote:
+---
 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Requires cherry-picking 6397c3119ecaa258b5185315c64062bec29bcd86
 
-A-hem, sorry, I think I've done something seriously wrong with the
-patch sending. It should have been threaded under the previous thread,
-and my smtp server decided to throttle me after the second.
+ sha1_file.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Let me see if I can get this right.
-
--- 
-Giuseppe "Oblomov" Bilotta
+diff --git a/sha1_file.c b/sha1_file.c
+index 97ea448..fa867b8 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -84,7 +84,7 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
+ /* returns the number of chars to skip to first component */
+ static inline int is_path_absolute(const char *path)
+ {
+-#ifdef __MINGW32__
++#if defined(__MINGW32__) || defined(__CYGWIN__)
+ 	if (isalpha(path[0]) && path[1] == ':')
+ 		return 2 + (path[2] == '/');
+ 	/* TODO: C:dir/file 'relative' paths are not catered for */
+--
+1.5.3.rc7.25.g5389f-dirty
