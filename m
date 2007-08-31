@@ -1,80 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] autodetect core.symlinks in git-init
-Date: Fri, 31 Aug 2007 00:22:25 -0700
-Message-ID: <7vodgo2moe.fsf_-_@gitster.siamese.dyndns.org>
-References: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
-	<200708310645.l7V6jKJk009287@mi0.bluebottle.com>
-	<7vveaw2na9.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: gitk from subdirectory
+Date: Fri, 31 Aug 2007 00:38:50 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0708310038080.25853@woody.linux-foundation.org>
+References: <7vabs85ntg.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.999.0708302200160.25853@woody.linux-foundation.org>
+ <7vejhk45q5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stephen Cuppett" <cuppett@gmail.com>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 31 09:22:43 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 09:39:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR0q2-0004h6-9H
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 09:22:42 +0200
+	id 1IR15n-0008OZ-DP
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 09:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbXHaHWi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 03:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbXHaHWi
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 03:22:38 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:60827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750721AbXHaHWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 03:22:37 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7420112A248;
-	Fri, 31 Aug 2007 03:22:54 -0400 (EDT)
-Cc: Nanako Shiraishi <nanako3@bluebottle.com>
-In-Reply-To: <7vveaw2na9.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 31 Aug 2007 00:09:18 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752844AbXHaHi5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 03:38:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXHaHi5
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 03:38:57 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:35272 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752834AbXHaHi4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 03:38:56 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7V7coB7009358
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 31 Aug 2007 00:38:52 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l7V7coDF029907;
+	Fri, 31 Aug 2007 00:38:50 -0700
+In-Reply-To: <7vejhk45q5.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-2.746 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.30__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57125>
 
-We already autodetect if filemode is reliable on the filesystem
-to deal with VFAT and friends.  Do the same for symbolic link
-support.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
 
- * The earlier one left the test symlink behind after testing is
-   complete.  Embarrassing...
+On Thu, 30 Aug 2007, Junio C Hamano wrote:
 
- builtin-init-db.c |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+> "git log" family of commands, even when run from a subdirectory,
+> do not limit the revision range with the current directory as
+> the path limiter, but with double-dash without any paths after
+> it, i.e. "git log --" do so.  It was a mistake to have a
+> difference between "git log --" and "git log" introduced in
+> commit ae563542bf10fa8c33abd2a354e4b28aca4264d7 (First cut at
+> libifying revlist generation).
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index af15cb2..763fa55 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -264,6 +264,21 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 		if (work_tree != git_work_tree_cfg)
- 			git_config_set("core.worktree", work_tree);
- 	}
-+
-+	/* Check if symlink is supported in the work tree */
-+	if (!reinit) {
-+		path[len] = 0;
-+		strcpy(path + len, "tXXXXXX");
-+		if (!close(xmkstemp(path)) &&
-+		    !unlink(path) &&
-+		    !symlink("testing", path) &&
-+		    !lstat(path, &st1) &&
-+		    S_ISLNK(st1.st_mode))
-+			unlink(path); /* good */
-+		else
-+			git_config_set("core.symlinks", "false");
-+	}
-+
- 	return reinit;
- }
- 
+Looks obviously correct.
+
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+
+		Linus
