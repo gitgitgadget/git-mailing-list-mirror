@@ -1,89 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-svn: Protect against "diff.color = true".
-Date: Fri, 31 Aug 2007 14:58:21 -0700
-Message-ID: <20070831215752.GA31033@untitled>
-References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com> <7vveav21uv.fsf@gitster.siamese.dyndns.org> <20070831152153.GA30745@muzzle> <7v4pifzawc.fsf@gitster.siamese.dyndns.org> <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
+Date: Fri, 31 Aug 2007 15:14:06 -0700
+Message-ID: <7vps13wdw1.fsf@gitster.siamese.dyndns.org>
+References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
+	<7vveav21uv.fsf@gitster.siamese.dyndns.org>
+	<20070831152153.GA30745@muzzle>
+	<7v4pifzawc.fsf@gitster.siamese.dyndns.org>
+	<7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0708312237340.28586@racer.site>
+	<7vtzqfwf5c.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0708312251510.28586@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 23:59:03 2007
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Sep 01 00:14:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IREW4-0002sH-Pb
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:59:01 +0200
+	id 1IREl8-0006Br-UD
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 00:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753500AbXHaV65 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 17:58:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbXHaV65
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:58:57 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38523 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752532AbXHaV65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 17:58:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 61B562DC08D;
-	Fri, 31 Aug 2007 14:58:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v4pifxuia.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751008AbXHaWON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 18:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbXHaWOM
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 18:14:12 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44380 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbXHaWOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 18:14:12 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B110812C019;
+	Fri, 31 Aug 2007 18:14:29 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0708312251510.28586@racer.site> (Johannes
+	Schindelin's message of "Fri, 31 Aug 2007 22:53:08 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57227>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> If the configuration of the user has "diff.color = true", the
-> output from "log" we invoke internally added color codes, which
-> broke the parser.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->   Junio C Hamano <gitster@pobox.com> writes:
-> 
->   > We probably should do two things to resolve this.
->   >
->   >  * Protect our scripts.  When parsing from "git log" and any
->   >    other Porcelain, explicitly give --no-color.
-> 
->   Here is my attempt -- I do not have an easy access to SVN repo
->   to interoperate with, so a testing by real-world users and an
->   Ack is appreciated.  I think some fix for this issue (not
->   necessarily this patch) should be in 1.5.3 final.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Works for me here, although switching back to git-rev-list
-(--pretty=raw) would make me more comfortable.
+> On Fri, 31 Aug 2007, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> ...
+>> > I just tested on a busybox clone: Works as expected.  Without your patch, 
+>> > I get the uninitialised values, with your patch it is fine.
+>> >
+>> > ACK.
+>> 
+>> Thanks.
+>> 
+>> It's customary that the privilege to issue Ack is reserved to
+>> the primary owner of the code.  We are a relatively small
+>> friendly community and it is not a big deal, but if you ever
+>> work on the kernel, be somewhat more careful.  People are picky
+>> over there on such details.
+>
+> Happily, we are a much friendlier bunch here ;-)
+>
+> Besides, since I feel we're really close to 1.5.3 now, I thought that you 
+> might want to here as many positive votes as you can get.
+>
+> But yes, I'll keep that in mind ;-)
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+Oh, I did not mean to sound like your testing does not count.  I
+was just cautioning about using the word "Ack".
 
->  git-svn.perl |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 4e325b7..98218da 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -807,7 +807,7 @@ sub cmt_metadata {
->  
->  sub working_head_info {
->  	my ($head, $refs) = @_;
-> -	my ($fh, $ctx) = command_output_pipe('log', $head);
-> +	my ($fh, $ctx) = command_output_pipe('log', '--no-color', $head);
->  	my $hash;
->  	my %max;
->  	while (<$fh>) {
-> @@ -2072,7 +2072,7 @@ sub rebuild {
->  		return;
->  	}
->  	print "Rebuilding $db_path ...\n";
-> -	my ($log, $ctx) = command_output_pipe("log", $self->refname);
-> +	my ($log, $ctx) = command_output_pipe("log", '--no-color', $self->refname);
->  	my $latest;
->  	my $full_url = $self->full_url;
->  	remove_username($full_url);
-
--- 
-Eric Wong
+I will have a "Tested-by: " line with your name on it, and I am
+hoping I can get an Ack from Eric but it is such an "obviously
+correct" looking change, so ...
