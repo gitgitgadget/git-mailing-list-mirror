@@ -1,83 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix parallel make problem
-Date: Fri, 31 Aug 2007 01:36:26 -0700
-Message-ID: <7v4pig2j91.fsf@gitster.siamese.dyndns.org>
-References: <20070830063810.GD16312@mellanox.co.il>
-	<7v7inda5ar.fsf@gitster.siamese.dyndns.org>
-	<20070830072748.GF16312@mellanox.co.il>
-	<7vmyw85uml.fsf@gitster.siamese.dyndns.org>
-	<20070831080651.GA17637@mellanox.co.il>
-	<7vabs82kcq.fsf@gitster.siamese.dyndns.org>
-	<20070831081517.GB17637@mellanox.co.il>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH 1/2] Introduces xmkstemp()
+Date: Fri, 31 Aug 2007 10:42:53 +0200
+Message-ID: <46D7D48D.6000503@trolltech.com>
+References: <20070814164453.400b9c55@localhost> <46D7D0F7.1050302@trolltech.com> <46D7D284.30004@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri Aug 31 10:37:02 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig6CFF817B7B5EFD7D56702045"
+Cc: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Fri Aug 31 10:43:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR1zt-00056m-Ii
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 10:36:57 +0200
+	id 1IR25u-0006ke-WB
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 10:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084AbXHaIgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 04:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752399AbXHaIgb
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 04:36:31 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33129 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752763AbXHaIga (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 04:36:30 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E195B129EB4;
-	Fri, 31 Aug 2007 04:36:49 -0400 (EDT)
-In-Reply-To: <20070831081517.GB17637@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Fri, 31 Aug 2007 11:15:17 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753487AbXHaImx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 04:42:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755142AbXHaImw
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 04:42:52 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:39429 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752974AbXHaImv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 04:42:51 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 8D4B77427B; Fri, 31 Aug 2007 10:42:50 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 815947424D; Fri, 31 Aug 2007 10:42:50 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <46D7D284.30004@telecom.at>
+X-Enigmail-Version: 0.95.3
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57136>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig6CFF817B7B5EFD7D56702045
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
->> Quoting Junio C Hamano <gitster@pobox.com>:
->> Subject: Re: [PATCH] fix parallel make problem
->> 
->> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
->> 
->> >> +.PRECIOUS: $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
->> >> +
->> >>  test-%$X: test-%.o $(GITLIBS)
->> >>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
->> >
->> > Add a comment here?
->> 
->> I did not see a particular need for that.  What would you say
->> there?
->
-> That it's a work-around for make bug.
+Johannes Sixt said the following on 31.08.2007 10:34:
+> Marius Storm-Olsen schrieb:
+>> This functions needs to be further down in the file for MinGW
+>> builds, since mkstemp() is forward declared later in the file.
+>> So, something like this:
+>=20
+> Please consider using the lates MinGW port. It's already fixed
+> there.
 
-I would agree it is a make bug to barf like what we saw.  Even
-though we allowed it to treat test-%.o files as intermediate
-products and allowed them to be removed, it is not a good excuse
-for make to forget rebuilding them.
+Right. (That's the whole 4msysgit.git mingw.git discussion on the=20
+msysgit mailinglist these days)
 
-But I also happen to think not marking test-%.o as precious was
-a bug on our side.  We would want to keep the build by-product
-to avoid recompilation, don't we?  And this additional line is
-primarily about fixing that bug, which works the bug around as a
-side effect.
+Just wanted to let the original author know, so he would be aware of=20
+it, and we wouldn't have to go the extra round-trips with patches to=20
+fix patches. (And for MinGW awareness when adding code to=20
+git-compat-util.h)
 
-> So how did this end up in your mail?
+--=20
+=2Emarius
 
-Because it is not a format-patch output.
 
-I often run "git diff --stat -p HEAD" from inside MUA in order
-to get the patch from my work tree, write a proposed commit
-message, and then reset the change away without committing after
-sending that message (yes I do not need "git stash" --- gmane
-and vger are my stashes, Mwhhhaaaa).
+--------------enig6CFF817B7B5EFD7D56702045
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFG19SNKzzXl/njVP8RAmLiAJ9oKtFg7W8ADvc+aEyfhl0IhPnbbACg9tfl
+4cyraUGWeNf5CuseDL75ORY=
+=z7FC
+-----END PGP SIGNATURE-----
+
+--------------enig6CFF817B7B5EFD7D56702045--
