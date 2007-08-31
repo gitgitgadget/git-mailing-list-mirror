@@ -1,67 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] filter-branch: provide the convenience functions
- also for commit filters
-Date: Fri, 31 Aug 2007 22:10:46 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708312209480.28586@racer.site>
-References: <Pine.LNX.4.64.0708312005070.28586@racer.site>
- <7vzm07xvwa.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add commands that git-gc runs underneath
+Date: Fri, 31 Aug 2007 14:12:13 -0700
+Message-ID: <7vlkbrxvbm.fsf@gitster.siamese.dyndns.org>
+References: <lkbtwek0.fsf@cante.net>
+	<Pine.LNX.4.64.0708301107320.28586@racer.site>
+	<46D6984D.9040802@op5.se> <7v7inc907e.fsf@gitster.siamese.dyndns.org>
+	<46D7E058.9050001@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 23:11:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Aug 31 23:12:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRDlZ-0007sV-DC
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:10:57 +0200
+	id 1IRDmy-0008Ui-38
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 23:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760438AbXHaVKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 17:10:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760154AbXHaVKx
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:10:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50597 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759927AbXHaVKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 17:10:53 -0400
-Received: (qmail invoked by alias); 31 Aug 2007 21:10:51 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp019) with SMTP; 31 Aug 2007 23:10:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/dRPILtjXdoJ9lF/8EIc+6bkuDIJV71yDppx3EbJ
-	kvwGiUetbS67Oa
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzm07xvwa.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1761216AbXHaVMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 17:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761190AbXHaVMU
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 17:12:20 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43520 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761092AbXHaVMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 17:12:19 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 540DA12BBBE;
+	Fri, 31 Aug 2007 17:12:37 -0400 (EDT)
+In-Reply-To: <46D7E058.9050001@op5.se> (Andreas Ericsson's message of "Fri, 31
+	Aug 2007 11:33:12 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57212>
 
-Hi,
+Andreas Ericsson <ae@op5.se> writes:
 
-On Fri, 31 Aug 2007, Junio C Hamano wrote:
+> Junio C Hamano wrote:
+>> Andreas Ericsson <ae@op5.se> writes:
+>>
+>>> When gc was a shell-script, it was fairly easy to find out the command-
+>>> sequence...
+>>
+>> Maybe referring more advanced/curious users to contrib/examples/
+>> directory is a good idea, but not necessarily from manpages of
+>> the commands that have been rewritten in C.
+>>
+>> I think contrib/examples/ needs a README file that effectively
+>> say "these are the last versions of shell script implementation
+>> of the commands before they were rewritten in C.  New features
+>> may have been added to the built-in ones but these example
+>> scripts are not kept up to date.  They are here to serve as
+>> examples to show you how you would pipeline the plumbing level
+>> commands."
+>
+> Sensible, and also avoids the possible bitrot problem with the
+> man-page should there be additional actions added to standard
+> git-gc operations.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > 	Obviously, I think that these two changes are simple enough to be
-> > 	included even this late in the game for 1.5.3.  But I understand
-> > 	completely when people shout at me: "What exactly does deep
-> > 	feature freeze mean to you *knocks on Dscho's head*?"
-> 
-> My response to those people who might shout is that this is merely a 
-> step to complete a _new_ program that was not in _any_ released version 
-> to make it feature complete.  You do not have to even pretend that 
-> filter-branch did not exist before -- it actually didn't.  The new part 
-> might be buggier than other parts, but that's the same way as any other 
-> software development process.  If the new 'map' does not work as 
-> advertised there is always 1.5.3.1.
+Oh, I did not mean to address bit-rot issue.  I was addressing
+"ah, in good old days we had tons of example scripts" issue.
 
-Thank you for your encouraging words.
+If we want the manual to be explicit about what exactly happens
+when you run "git-gc" (and I think we do), that needs to be done
+independently.  But my feeling is that we do not want to
+describe what happens solely in terms of what other individual
+commands do.  Referring to other manual pages for more details
+is fine, but that should not be the sole description.
 
-And yes, if there are bugs, I will be more than happy to fix them; and a 
-released version always gets more eyes than an unreleased one.
+In other words, instead of saying:
 
-Thanks,
-Dscho
+ - runs "git pack-refs", "git reflog expire --all", "git repack
+   -a -d -l", ...
+
+I think we would want to say it this way:
+
+ * Under such-and-such condition, loose refs are packed for
+   quicker access in $GIT_DIR/packed-refs file (runs "git
+   pack-refs --prune");
+
+ * Old reflog entries that record how tips of each branches were
+   moved are expired (runs "git-reflog expire --all");
+
+ * Packfiles are repacked along with loose object files, while
+   exclusing objects that are available from the alternates
+   (runs "git repack -a -d -l");
+
+ * Unreferenced loose objects are removed if --prune is given
+   (runs "git prune");
+  
+ * Old rerere records that record resolutions to previously
+   conflicted merges are expired (runs "git rerere gc").
