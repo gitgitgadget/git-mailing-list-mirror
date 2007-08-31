@@ -1,130 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] filter-branch: fix remnants of old syntax in documentation
-Date: Fri, 31 Aug 2007 17:42:33 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0708311742150.28586@racer.site>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: [PATCH 1/2] Introduces xmkstemp()
+Date: Fri, 31 Aug 2007 13:57:26 -0300
+Organization: Mandriva
+Message-ID: <20070831135726.783305e5@localhost>
+References: <20070814164453.400b9c55@localhost>
+	<46D7D0F7.1050302@trolltech.com>
+	<46D7D284.30004@telecom.at>
+	<46D7D48D.6000503@trolltech.com>
+	<46D7D60C.8090608@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 31 18:42:49 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Fri Aug 31 18:57:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR9a1-0007zj-Hw
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:42:45 +0200
+	id 1IR9oV-0004EJ-OV
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760576AbXHaQml (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 12:42:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760503AbXHaQml
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:42:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48963 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760467AbXHaQmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 12:42:40 -0400
-Received: (qmail invoked by alias); 31 Aug 2007 16:42:38 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp019) with SMTP; 31 Aug 2007 18:42:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+dNOMYdXedQBBCT5yV0IHJfI+YBCuKZtXvQJrbkE
-	owTI8TTd97DQwQ
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1760814AbXHaQ5j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 12:57:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760827AbXHaQ5i
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:57:38 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:45883 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760814AbXHaQ5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 12:57:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 764621A5EC;
+	Fri, 31 Aug 2007 13:57:35 -0300 (BRT)
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 6yyjkRb7FFrd; Fri, 31 Aug 2007 13:57:27 -0300 (BRT)
+Received: from fox.conectiva (fox.conectiva [10.0.2.195])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id E5C9D1A55E;
+	Fri, 31 Aug 2007 13:57:26 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by fox.conectiva (Postfix) with ESMTP id BED1A2F584;
+	Fri, 31 Aug 2007 13:57:26 -0300 (BRT)
+In-Reply-To: <46D7D60C.8090608@telecom.at>
+X-Mailer: Claws Mail 2.10.0 (GTK+ 2.11.6; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57188>
 
+Em Fri, 31 Aug 2007 10:49:16 +0200
+Johannes Sixt <j.sixt@telecom.at> escreveu:
 
-Some time ago, filter-branch's syntax changed so that more than one
-ref can be rewritten at the same time.  This involved the removal of
-the ref name for the result; instead, the refs are rewritten in-place.
+| Marius Storm-Olsen schrieb:
+| > Just wanted to let the original author know, so he would be aware of it, 
+| > and we wouldn't have to go the extra round-trips with patches to fix 
+| > patches. (And for MinGW awareness when adding code to git-compat-util.h)
+| 
+| You can't expect a lot of MinGW awareness from non-MinGW users when they 
+| make changes to git-compat-util.h since upstream does not have _any_ 
+| references to MinGW there, yet.
 
-This updates the last leftovers in the documentation to reflect the
-new behavior.
+ Droping people from the CC doesn't help either.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-filter-branch.txt |   32 ++++++++++++++++++--------------
- 1 files changed, 18 insertions(+), 14 deletions(-)
+ Please, do not do that.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index ae03514..4f89c04 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -17,19 +17,19 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Lets you rewrite git revision history by creating a new branch from
--your current branch, applying custom filters on each revision.
-+Lets you rewrite git revision history by rewriting the branches mentioned
-+in the <rev-list options>, applying custom filters on each revision.
- Those filters can modify each tree (e.g. removing a file or running
- a perl rewrite on all files) or information about each commit.
- Otherwise, all information (including original commit times or merge
- information) will be preserved.
- 
--The command takes the new branch name as a mandatory argument and
--the filters as optional arguments.  If you specify no filters, the
--commits will be recommitted without any changes, which would normally
--have no effect.  Nevertheless, this may be useful in the future for
--compensating for some git bugs or such, therefore such a usage is
--permitted.
-+The command will only rewrite the _positive_ refs mentioned in the
-+command line (i.e. if you pass 'a..b', only 'b' will be rewritten).
-+If you specify no filters, the commits will be recommitted without any
-+changes, which would normally have no effect.  Nevertheless, this may be
-+useful in the future for compensating for some git bugs or such,
-+therefore such a usage is permitted.
- 
- *WARNING*! The rewritten history will have different object names for all
- the objects and will not converge with the original branch.  You will not
-@@ -43,8 +43,8 @@ if different from the rewritten ones, will be stored in the namespace
- 'refs/original/'.
- 
- Note that since this operation is extensively I/O expensive, it might
--be a good idea to redirect the temporary directory off-disk, e.g. on
--tmpfs.  Reportedly the speedup is very noticeable.
-+be a good idea to redirect the temporary directory off-disk with the
-+'-d' option, e.g. on tmpfs.  Reportedly the speedup is very noticeable.
- 
- 
- Filters
-@@ -112,6 +112,9 @@ OPTIONS
- As a special extension, the commit filter may emit multiple
- commit ids; in that case, ancestors of the original commit will
- have all of them as parents.
-++
-+Note that the 'map' function is not available in the commit filter yet.
-+This will be changed in a future version.
- 
- --tag-name-filter <command>::
- 	This is the filter for rewriting tag names. When passed,
-@@ -186,8 +189,8 @@ order to paste the other history behind the current history:
- git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' HEAD
- -------------------------------------------------------------------
- 
--(if the parent string is empty - therefore we are dealing with the
--initial commit - add graftcommit as a parent).  Note that this assumes
-+(if the parent string is empty - which happens when we are dealing with
-+the initial commit - add graftcommit as a parent).  Note that this assumes
- history with a single root (that is, no merge without common ancestors
- happened).  If this is not the case, use:
- 
-@@ -232,11 +235,12 @@ range in addition to the new branch name.  The new branch name will
- point to the top-most revision that a 'git rev-list' of this range
- will print.
- 
--Note that the changes introduced by the commits, and not reverted by
--subsequent commits, will still be in the rewritten branch. If you want
-+*NOTE* the changes introduced by the commits, and which are not reverted
-+by subsequent commits, will still be in the rewritten branch. If you want
- to throw out _changes_ together with the commits, you should use the
- interactive mode of gitlink:git-rebase[1].
- 
-+
- Consider this history:
- 
- ------------------
 -- 
-1.5.3.rc7.18.gc9b59
+Luiz Fernando N. Capitulino
