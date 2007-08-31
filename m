@@ -1,72 +1,68 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: Buffer overflows
-Date: Fri, 31 Aug 2007 14:48:57 +0200
-Message-ID: <46D80E39.8060106@fs.ei.tum.de>
-References: <1188502009.29782.874.camel@hurina> <alpine.LFD.0.999.0708301340470.25853@woody.linux-foundation.org> <7D84F3C7-129D-4197-AAF1-46298E5D0136@iki.fi> <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com> <6F219888-6F48-4D56-8FA9-BE63EB6E1D95@iki.fi> <3f4fd2640708301534k40f07a1cva90a59d12ace6138@mail.gmail.com> <BD9F3FD0-94EF-4182-A03B-B26B18544894@wincent.com>
+From: "Stephen Cuppett" <cuppett@gmail.com>
+Subject: Re: [RFC] Change handling of RelNotes
+Date: Fri, 31 Aug 2007 08:52:38 -0400
+Message-ID: <316a20a40708310552r3d445d03h2ab44508a0608f0c@mail.gmail.com>
+References: <316a20a40708301835hc4236d4tdb289b6f705ab86@mail.gmail.com>
+	 <200708310645.l7V6jKJk009287@mi0.bluebottle.com>
+	 <7vveaw2na9.fsf@gitster.siamese.dyndns.org>
+	 <316a20a40708310539w1d20c391w8566a042c7a8679a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Reece Dunn <msclrhd@googlemail.com>, Timo Sirainen <tss@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 14:49:19 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 31 14:52:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR5w2-0000Dw-P9
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 14:49:15 +0200
+	id 1IR5zT-0001Qm-ED
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 14:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964868AbXHaMtN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 08:49:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932694AbXHaMtM
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 08:49:12 -0400
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:43043 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964898AbXHaMs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 08:48:59 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id F22192876D;
-	Fri, 31 Aug 2007 14:48:57 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id AxyDdxwNK7Wb; Fri, 31 Aug 2007 14:48:57 +0200 (CEST)
-Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 9B69A2876A;
-	Fri, 31 Aug 2007 14:48:57 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <BD9F3FD0-94EF-4182-A03B-B26B18544894@wincent.com>
+	id S965006AbXHaMwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 08:52:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbXHaMwm
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 08:52:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:60679 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964955AbXHaMwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 08:52:41 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so46814ugc
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 05:52:40 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VVfBvrifmMH6AYks1MxeUAAdX+ujz8JL/V+DNOPc4GlMr2m4Pe9gkP6lONbt2ctml/oHP6kBxpGPJX76wXGmoMumz8RajGFVjn+EzY825RcwE4hAkRD1PQX+2xL5x2DR1OsFpbVfsS6NOVqAaBxnhDxp31JpYNBFoukx0Sh/NWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X+vGKrJJGQ7nV8Ix076IiY4nUAzgPtiiiL+8i5k3JyvWOIBPx6vM+MbyxqIbkYn3hS0HLTKW6mImtOkSZRcaewHLKiG8CoYvGzrOQ4eQhmqKmZBiqj6un/UvMtTdzp7XF01Sd9BDFJ90lBH+iN3KhJclX9/AJ5S/JTotNJKkWtY=
+Received: by 10.142.222.21 with SMTP id u21mr74013wfg.1188564758928;
+        Fri, 31 Aug 2007 05:52:38 -0700 (PDT)
+Received: by 10.142.111.8 with HTTP; Fri, 31 Aug 2007 05:52:38 -0700 (PDT)
+In-Reply-To: <316a20a40708310539w1d20c391w8566a042c7a8679a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57166>
 
-Wincent Colaiuta wrote:
->> As an example, do your safe API do null pointer checks. This is
->> because strcpy, strlen and the like don't, which is one of the reasons
->> why they are considered unsafe. But then, if you guarantee that you
->> are not passing a null pointer to one of these API, why take the hit
->> of the additional checks when you know that these are safe.
-> Do you really think that comparing a pointer to NULL is going to be a 
-> speed hit? I would imagine that on most architectures it boils down to 
-> one or two machine code instructions.
+Sorry, I didn't mean to imply a demand on anybody, or mandate anybody
+change their workflow if really awkward or inconvenient.  Just new to
+git and was trying some things and noticed this oddity.  In software
+test, so I typically file reports for usability nits as well as big
+things, and never expect to fix them myself.  Used to my
+"recommendations" getting rejected too.  ;)
 
-The question rather is, why should you bother comparing to a NULL pointer?  To return an error (EINVAL?)?  I'd rather have either a) the caller check or b) the process segfault.  A segfault gives me a nice core file which I can use to hunt the bug.
+Just trying to lower a barrier to entry in a weird case....
 
-I also don't see why not checking for NULL pointers is unsafe.  Okay, maybe there are platforms out there which do not crash on a NULL pointer derefence, but I doubt these are consumers of git.  All other platforms are safe by the implicit check of the MMU.
+I tested out the patch on Linux with a regular filesystem and with a
+memory stick.  It picked it up and did the right thing with RelNotes
+in both cases, leaving the symlink alone on ext3 and changing it to a
+regular file on the memory stick.
 
-The worst thing is something like
+I tried compiling it on Windows (cygwin), but ended up with:
 
-if (ptr == NULL)
-	abort();
+/home/stcupp/git/builtin-init-db.c:305: undefined reference to `_xmkstemp'
 
-which only adds code (and thus needs maintenance), but no value whatsoever.  Either the following code tolerates NULL pointers or it will crash and segfault, so why bother panicing before.
-
-Of course I might be totally of track...
-
-cheers
-  simon
+I tried including git-compat-util.h and some other things to resolve
+it, but was unable with my limited knowledge of their toolchain.
