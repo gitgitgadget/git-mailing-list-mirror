@@ -1,61 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fix parallel make problem
-Date: Fri, 31 Aug 2007 12:03:35 -0400
-Message-ID: <20070831160335.GA17761@coredump.intra.peff.net>
-References: <20070830063810.GD16312@mellanox.co.il> <7v7inda5ar.fsf@gitster.siamese.dyndns.org> <20070830072748.GF16312@mellanox.co.il> <7vmyw85uml.fsf@gitster.siamese.dyndns.org> <20070831080651.GA17637@mellanox.co.il> <7vabs82kcq.fsf@gitster.siamese.dyndns.org> <20070831081517.GB17637@mellanox.co.il> <7v4pig2j91.fsf@gitster.siamese.dyndns.org> <20070831152120.GC17637@mellanox.co.il> <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
+Date: Fri, 31 Aug 2007 09:09:33 -0700
+Message-ID: <7vfy1z1y9u.fsf@gitster.siamese.dyndns.org>
+References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
+	<7vveav21uv.fsf@gitster.siamese.dyndns.org>
+	<20070831152153.GA30745@muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 18:03:44 2007
+Cc: Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Aug 31 18:09:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR8yD-0004iK-RR
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:03:42 +0200
+	id 1IR948-0006YW-Jq
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 18:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758555AbXHaQDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 12:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758551AbXHaQDi
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:03:38 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2735 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758175AbXHaQDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 12:03:37 -0400
-Received: (qmail 30915 invoked by uid 111); 31 Aug 2007 16:03:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 31 Aug 2007 12:03:36 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Aug 2007 12:03:35 -0400
-Content-Disposition: inline
-In-Reply-To: <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
+	id S1757451AbXHaQJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 12:09:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757278AbXHaQJi
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 12:09:38 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:38825 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbXHaQJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 12:09:38 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A48312BD61;
+	Fri, 31 Aug 2007 12:09:56 -0400 (EDT)
+In-Reply-To: <20070831152153.GA30745@muzzle> (Eric Wong's message of "Fri, 31
+	Aug 2007 08:21:53 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57179>
 
-On Fri, Aug 31, 2007 at 08:44:12AM -0700, Junio C Hamano wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> I did not even want to apply that "empty diff --git removal"
-> patch.  I certainly do _NOT_ want to suppress that replacement
-> warning anywhere.
-> 
-> You are seriously tempting me to revert the commit
-> fb13227e089f22dc31a3b1624559153821056848 (git-diff: squelch
-> "empty" diffs)...
+> This could be a sign of a bigger problem.
+>
+> Does git-log read .git/config and that could potentially change
+> its default output format?  A quick scan of the docs say "no".
 
-FWIW, I find the new message terribly ugly compared to the old behavior.
-There have been many output changes that I didn't like at first, but for
-which I held my tongue and eventually grew to like when they became more
-familiar (e.g., the 'subject' line after git-commit).
-
-But I just can't seem to find this one anything but ugly; everytime I
-see it, I involuntarily cringe. Perhaps because it really looks like an
-error message that accidentally got stuck in the diff output through
-incompetent redirection of stdout/stderr.
-
-I say this not to start a flame war (which is perhaps inevitable), but I
-just wonder if others feel the same, now that they have had a chance to
-get used to it.
-
--Peff
+"diff.color = always" could break it I would imagine...
