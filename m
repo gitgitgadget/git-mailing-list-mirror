@@ -1,105 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
-Date: Fri, 31 Aug 2007 13:50:27 -0700
-Message-ID: <7v4pifzawc.fsf@gitster.siamese.dyndns.org>
-References: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
-	<7vveav21uv.fsf@gitster.siamese.dyndns.org>
-	<20070831152153.GA30745@muzzle>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] diff: resurrect the traditional empty "diff --git"
+ behaviour
+Date: Fri, 31 Aug 2007 21:57:29 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0708312154530.28586@racer.site>
+References: <20070830072748.GF16312@mellanox.co.il> <7vmyw85uml.fsf@gitster.siamese.dyndns.org>
+ <20070831080651.GA17637@mellanox.co.il> <7vabs82kcq.fsf@gitster.siamese.dyndns.org>
+ <20070831081517.GB17637@mellanox.co.il> <7v4pig2j91.fsf@gitster.siamese.dyndns.org>
+ <20070831152120.GC17637@mellanox.co.il> <7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
+ <20070831160335.GA17761@coredump.intra.peff.net> <7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
+ <20070831203250.GA19340@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Newson <robert.newson@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 31 22:50:40 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 31 22:57:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRDRv-0002mi-I8
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 22:50:39 +0200
+	id 1IRDYk-0004aK-3y
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 22:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759045AbXHaUue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 16:50:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759064AbXHaUue
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 16:50:34 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43205 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753710AbXHaUue (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 16:50:34 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DA8D812BF8E;
-	Fri, 31 Aug 2007 16:50:51 -0400 (EDT)
-In-Reply-To: <20070831152153.GA30745@muzzle> (Eric Wong's message of "Fri, 31
-	Aug 2007 08:21:53 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760843AbXHaU5i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 16:57:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760664AbXHaU5i
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 16:57:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41801 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756620AbXHaU5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 16:57:37 -0400
+Received: (qmail invoked by alias); 31 Aug 2007 20:57:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 31 Aug 2007 22:57:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/m5TtC6nLmGce/R/7LAXbfcPQpb6wj9HRHKmWL/0
+	Cgwln24V8WA0lT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070831203250.GA19340@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57205>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> Curious.  I wonder how can it trigger.
->> 
->> Presimably, that while (<$fh>) loop is reading from git-log, and
->> the first line would look like "commit [0-9a-f]{40}" and will
->> set $hash, do "next".  Which means the variable should have been
->> initialized by the time the part that complains about string eq
->> (which I think is "if ($c && $c eq $hash)" comparison) is
->> reached.
->
-> This could be a sign of a bigger problem.
->
-> Does git-log read .git/config and that could potentially change
-> its default output format?  A quick scan of the docs say "no".
->
-> I remember using git-rev-list in the original code because git-log was
-> (is still?) considered porcelain and less suitable for automated
-> parsing...
+On Fri, 31 Aug 2007, Jeff King wrote:
 
-Yes, git-log is Porcelain, and it is subject to this kind of
-breakage.
+> On Fri, Aug 31, 2007 at 01:13:42PM -0700, Junio C Hamano wrote:
+> 
+> > If you set diff.autorefreshindex configuration variable, it
+> > squelches the empty "diff --git" output, and at the end of the
+> > command, it automatically runs "update-index --refresh" without
+> > even bothering the user.  In other words, with the configuration
+> > variable set, people who do not care about the cache-dirtyness
+> > do not even have to see the warning.
+> 
+> Nice. This is much more sane behavior, IMHO, and I think it should make 
+> everyone happy.
 
-I was almost going to suggest us to change "*.color = true" to
-mean 'auto'.  Because git can internally use pager and has a way
-for the user to control enabling/disabling colors when the pager
-is used, there is no _logical_ reason to enable pager when the
-output is not going to a tty.
+I could even imagine that this will eventually become the standard 
+behaviour.
 
-However, people from CVS/SVN background are used to type:
+> >  Same here.  This patch saw only very light testing, but I
+> >  personally think is a sane thing to do before 1.5.3 final.
+> 
+> Passes my light testing as well, but I have a feeling we just tested the
+> same things...;)
+> 
+> One question on the implementation (and remember that I am somewhat
+> ignorant of the structure of this part of the code, so the answer may be
+> "it's too ugly"): is there a good reason to refresh _after_ the diff?
 
-	$ scm log | less
+We do not need to do it always.  After the diff, we know if the index 
+needs refreshing.  Before, we don't.
 
-because they are not used to our "by default we page" setup, and
-it is very understandable that they would want "*.color = true"
-in their configuration honored in such a usage.
+> It seems like when we are looking through the working tree and index the 
+> first time, we notice that the stat information doesn't match; why can't 
+> we update it then? That would save an extra working tree traversal.
 
-We probably should do two things to resolve this.
+But that would be intrusive in the diff machinery IMHO.  It should stay as 
+read-only as possible.
 
- * Protect our scripts.  When parsing from "git log" and any
-   other Porcelain, explicitly give --no-color.
+BTW I was a little concerned that the locking would fail in a read-only 
+setup, and that git would die(), but that has been taken care of, so I 
+have no objections left.
 
- * Educate users.  Tool output, even from Porcelain, are not to
-   be colored or molested in any other way, when going to
-   anywhere other than a tty.
+Thanks, Junio.
 
-   Say in the FAQ "if you are tempted to say *.color = true,
-   stop.  Learn not to type the extra '| less' and let the
-   internal pager take care of paging for you and you will be
-   much happier".
-
-Additionally we could do the following, but if we do the above
-two properly, there should be no need to:
-
- * Declare "*.color = true" will mean "*.color = auto" in the
-   next version, now.
-
- * Actually switch "*.color = true" to mean "*.color = auto"
-   in the next version (not 1.5.3 but the one after that).
-
- * Perhaps introduce "*.color = always" at the same time we do
-   the above switch, but I think that has the same issue as the
-   current "true" has, so I doubt this step is needed.
+Ciao,
+Dscho
