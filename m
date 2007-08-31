@@ -1,12 +1,11 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 14/14] gitweb: minor whitespace cleanups
-Date: Fri, 31 Aug 2007 13:19:14 +0200
-Message-ID: <11885591742917-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH 13/14] gitweb: CSS style and refs mark for detached HEAD
+Date: Fri, 31 Aug 2007 13:19:13 +0200
+Message-ID: <1188559169764-git-send-email-giuseppe.bilotta@gmail.com>
 References: <cb7bb73a0708301915y47ca4a05nf511889b2bb2eaec@mail.gmail.com>
  <11885591542097-git-send-email-giuseppe.bilotta@gmail.com>
  <11885591601143-git-send-email-giuseppe.bilotta@gmail.com>
  <11885591653402-git-send-email-giuseppe.bilotta@gmail.com>
- <1188559169764-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Aug 31 13:21:41 2007
@@ -14,71 +13,74 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR4ZH-0002oW-1X
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 13:21:39 +0200
+	id 1IR4ZF-0002oW-Tp
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 13:21:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964845AbXHaLV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 07:21:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932657AbXHaLV1
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 07:21:27 -0400
-Received: from qb-out-0506.google.com ([72.14.204.238]:31584 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964969AbXHaLVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 07:21:23 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so1069542qbe
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 04:21:22 -0700 (PDT)
+	id S964947AbXHaLVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 07:21:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964940AbXHaLVQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 07:21:16 -0400
+Received: from hu-out-0506.google.com ([72.14.214.230]:32010 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964922AbXHaLVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 07:21:14 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so593548hue
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 04:21:13 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UyQNofZpRubtNoJa7auO5aBvfWbIkJgaLuLR1nb/LkkBcEB2R6o4sGuqEUYhpjSXSI+0xy4KLzGjSJtEOyxFPaxojA/5lHyizuHdZuSP2BtMFynijXTvfH/ryiK+8hSmi3ZxpPNPmVCI4juSDQnpMPKCZD11q/5qS398RSbV+3U=
+        b=VjM5pgEh4HHH1eaSSyRUqIOqNB0rfH9U+IuZhVPOf2f86WMLsWHCxe62FvuV3Dd4B5KEv609lEINDAdMA9OqAb0EzyY+OBrWrZJGQBGwGVS5r0yHCHs58CTOvNCVLGGlKedA/McjKtB0fvho1MZzCrPBP9I4mqZ63SjI364/pOs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=QhxnID2CQ5ChusGrWQDOdqEpyYukG5kPG5ORHXlHZRRNi5WoESZmSE0uk5JpfVfxpEzqAyQoCokGPcoJwp0pE6aJT4ufLGtgdrcencZmclWjyVuMZgQe9RQLdSaCVl06QUn9qazdr1+LZdydnC56fIVrZC0w77BNN0619d+ze8Q=
-Received: by 10.64.27.13 with SMTP id a13mr3141978qba.1188559282255;
-        Fri, 31 Aug 2007 04:21:22 -0700 (PDT)
+        b=p14N6chJ6EFJMG0yyjwAJPymAN65EphLInnKjYW4qRxtqQYsf5icd6vyDTSqu3yf15/lkag29/AvmYbHWqQrfpe+KCo+5ryfGkKtF5Ha/aBe0b5vsRzPsRTu9jJyP5lBOWEK9TSg/DdpuUVYwG3xgNeJfgI9+F5H5PprSVprhKM=
+Received: by 10.82.134.12 with SMTP id h12mr3470219bud.1188559272713;
+        Fri, 31 Aug 2007 04:21:12 -0700 (PDT)
 Received: from localhost ( [84.221.55.162])
-        by mx.google.com with ESMTPS id 34sm3837122nfu.2007.08.31.04.21.15
+        by mx.google.com with ESMTPS id k9sm951015nfh.2007.08.31.04.21.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 31 Aug 2007 04:21:16 -0700 (PDT)
+        Fri, 31 Aug 2007 04:21:11 -0700 (PDT)
 X-Mailer: git-send-email 1.5.2.5
-In-Reply-To: <1188559169764-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <11885591653402-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57161>
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ gitweb/gitweb.css  |    5 +++++
+ gitweb/gitweb.perl |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
 
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index c36b20a..59ca071 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -498,6 +498,11 @@ span.refs span.head {
+ 	border-color: #ccffcc #00cc33 #00cc33 #ccffcc;
+ }
+ 
++span.refs span.detached {
++	background-color: #ffaaaa;
++	border-color: #ccffcc #00cc33 #00cc33 #ccffcc;
++}
++
+ span.atnight {
+ 	color: #cc0000;
+ }
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2c8a665..a767763 100755
+index 4f7b7da..2c8a665 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -2098,11 +2098,11 @@ sub git_get_heads_list {
- 		my ($remote_heads) = gitweb_check_feature('remote_heads');
- 		@class = ('heads', $remote_heads ? 'remotes' : undef);
+@@ -1690,7 +1690,7 @@ sub git_get_references {
+ 	my %refs;
+ 	if (git_is_head_detached()) {
+ 		my $hash = git_get_head_hash($project);
+-		$refs{$hash} = [ 'HEAD' ];
++		$refs{$hash} = [ 'detached/HEAD' ];
  	}
--	my @refs = map { "refs/$_" } @class ;
-+	my @refs = map { "refs/$_" } @class;
- 	my @headslist;
- 
- 	if (grep { $_ eq 'heads' } @class) {
--		if (git_is_head_detached()) { ;
-+		if (git_is_head_detached()) {
- 			my %ref_item;
- 			my @x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
- 			my ($hash, $epoch, $title) = split("\n", qx(@x), 3);
-@@ -2449,7 +2449,7 @@ sub git_footer_html {
- 		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
- 		              -class => "rss_logo"}, "TXT") . "\n";
- 	}
--	print "</div>\n" ;
-+	print "</div>\n";
- 
- 	if (-f $site_footer) {
- 		open (my $fd, $site_footer);
+ 	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
+ 	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
 -- 
 1.5.2.5
