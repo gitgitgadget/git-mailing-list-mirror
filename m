@@ -1,67 +1,68 @@
-From: "Robert Newson" <robert.newson@gmail.com>
-Subject: Perl warning in git-svn (git v1.5.3-rc7-16-ge340d7d)
-Date: Fri, 31 Aug 2007 13:58:43 +0100
-Message-ID: <46aeb24f0708310558t2defc547v483586f116d8b8ac@mail.gmail.com>
+From: Johannes Sixt <j.sixt@eudaptics.com>
+Subject: Re: MinGW merge plans, was Re: [PATCH 1/2] Introduces xmkstemp()
+Date: Fri, 31 Aug 2007 15:13:54 +0200
+Message-ID: <46D81412.6060407@eudaptics.com>
+References: <20070814164453.400b9c55@localhost> <46D7D0F7.1050302@trolltech.com> <46D7D284.30004@telecom.at> <46D7D48D.6000503@trolltech.com> <46D7D60C.8090608@telecom.at> <46D7D8A4.1060800@trolltech.com> <Pine.LNX.4.64.0708311123140.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 14:58:59 2007
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 31 15:14:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IR65I-0003Cb-3X
-	for gcvg-git@gmane.org; Fri, 31 Aug 2007 14:58:48 +0200
+	id 1IR6Kr-0007f4-9o
+	for gcvg-git@gmane.org; Fri, 31 Aug 2007 15:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964998AbXHaM6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 08:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964997AbXHaM6o
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 08:58:44 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:6546 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964990AbXHaM6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 08:58:43 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so944186wah
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=BweHRbY0uCaXAeXJmtuVQRFFotvLNXqtZBrwvVvhv3X2QyeMxGODLuhxviurnvpJGU/FGzrtYgEsPltZSunEqaNqKDjOJ8pTd2yUz7Dh2YPBP43ydxLHZ4RFBRbRHPvrVib2m5N+w0FCorJG8bklkJlJi1r1iy1ep9rN0bGBIrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dUBJtNeM3YkCNhXPoNKtjuKZVBm6QHupeWtw3zVsamDnzbvPh4e4gKOMLgreklqKWgb8Lt37V6d/cgmuKE516EnsfAGxwJYkHgjLwL1Vw6aGwR/afR5Gcmpw+gmHm6PQQ3H4A6AgL0e8FbRtss4bz+5AVMw+wujRw/sHyO7+e1Q=
-Received: by 10.114.190.6 with SMTP id n6mr762796waf.1188565123410;
-        Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
-Received: by 10.115.19.3 with HTTP; Fri, 31 Aug 2007 05:58:43 -0700 (PDT)
-Content-Disposition: inline
+	id S1758194AbXHaNOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 09:14:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758136AbXHaNOo
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 09:14:44 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:11271 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757860AbXHaNOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 09:14:43 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1IR6Kf-0007qS-5Z; Fri, 31 Aug 2007 15:14:42 +0200
+Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 827BA4E4; Fri, 31 Aug 2007 15:14:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0708311123140.28586@racer.site>
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.366, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57168>
 
-Hi,
+[I fscked up my email address in my news reader setup. This mail is sent 
+from a correct one. Sorry to all who might have received bounces.]
 
-The latest head of git gives me this when doing most operations, this
-also happens with the rc7 experimental Debian package. It's annoying
-because it prints this line hundreds of times for each call to 'log',
-for example
+Johannes Schindelin schrieb:
+> Hi,
+> 
+> On Fri, 31 Aug 2007, Marius Storm-Olsen wrote:
+> 
+>> We really need to streamline the patches needed for MinGW, and get
+>> those merged into upstream when 1.5.3 is released.
+> 
+> Okay, with 1.5.3 just about to break free, I think we can think about
+> what to do to flood the mailing list with MinGW compatibility
+> patches.
 
-"Use of uninitialized value in string eq at blah/git/git-svn line 826."
+Thanks for summarizing the changes and things to do. I'll respond to
+this with more details later this evening, but only to the msysgit list.
+(Interested parties are encouraged to join the list - see
+http://groups.google.com/group/msysgit).
 
-and this fixes it;
+I've started to rearrange patches and separate out stuff that is not
+MinGW specific, but this effort has stalled. I'm waiting for a new
+notebook to arrive so that I can continue it during off-work hours.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 4e325b7..3d0c76d 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -808,7 +808,7 @@ sub cmt_metadata {
- sub working_head_info {
-        my ($head, $refs) = @_;
-        my ($fh, $ctx) = command_output_pipe('log', $head);
--       my $hash;
-+       my $hash = "";
-        my %max;
-        while (<$fh>) {
-                if ( m{^commit ($::sha1)$} ) {
+-- Hannes
