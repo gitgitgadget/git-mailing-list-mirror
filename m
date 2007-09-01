@@ -1,61 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-svn: fix dcommit clobbering upstream when committing
- multiple changes
-Date: Sat, 1 Sep 2007 02:32:51 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709010232260.28586@racer.site>
-References: <Pine.LNX.4.64.0708312200480.28586@racer.site>
- <20070831221814.GB31033@untitled> <Pine.LNX.4.64.0709010017250.28586@racer.site>
- <20070831234854.GA6451@mimvista.com> <20070901002501.GA11591@mimvista.com>
- <20070901011612.GA3407@untitled>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] git/gitweb.git repository
+Date: Fri, 31 Aug 2007 18:44:20 -0700
+Message-ID: <7v4pifw45n.fsf@gitster.siamese.dyndns.org>
+References: <767502.77573.qm@web31812.mail.mud.yahoo.com>
+	<Pine.LNX.4.64.0709010224410.28586@racer.site>
+	<20070901013159.GP1219@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Sep 01 03:33:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
+	jnareb@gmail.com
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Sep 01 03:46:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRHrG-00031x-U1
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 03:33:07 +0200
+	id 1IRI3u-0004l8-Az
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 03:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbXIABdD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 21:33:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIABdB
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 21:33:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37013 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751150AbXIABdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 21:33:00 -0400
-Received: (qmail invoked by alias); 01 Sep 2007 01:32:59 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp021) with SMTP; 01 Sep 2007 03:32:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WARoD5uXWzU+A3PfEzwfaNPo5ATLlXGaeLIX3RT
-	QahkSrSYwvYsrc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070901011612.GA3407@untitled>
-X-Y-GMX-Trusted: 0
+	id S1750919AbXIABoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 21:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbXIABob
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 21:44:31 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46498 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753514AbXIABo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 21:44:29 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 88D02129D6D;
+	Fri, 31 Aug 2007 21:44:45 -0400 (EDT)
+In-Reply-To: <20070901013159.GP1219@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 1 Sep 2007 03:31:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57244>
 
-Hi,
+Petr Baudis <pasky@suse.cz> writes:
 
-On Fri, 31 Aug 2007, Eric Wong wrote:
+> On Sat, Sep 01, 2007 at 03:25:16AM CEST, Johannes Schindelin wrote:
+>> On Fri, 31 Aug 2007, Luben Tuikov wrote:
+>> 
+>> > So what's the review process now?
+>> 
+>> Umm.  Pasky set it up, so it's Pasky who decides what goes in and what 
+>> not.  What exactly is your problem?
+>
+>   Junio will pull from it, so he has full right to ask. :-)
 
-> Although dcommit could detect if the first commit in the series
-> would conflict with the HEAD revision in SVN, it could not
-> detect conflicts in further commits it made.
-> 
-> Now we rebase each uncommitted change after each revision is
-> committed to SVN to ensure that we are up-to-date.  git-rebase
-> will bail out on conflict errors if our next change cannot be
-> applied and committed to SVN cleanly, preventing accidental
-> clobbering of changes on the SVN-side.
+Well, I won't blindly pull from it, but honestly when it comes
+to gitweb I trust Pasky's judgement as much as I trust myself,
+if not even more.  And I think the review process Pasky
+described is good --- people will see both the patches on the
+list and code in action at repo.or.cz/.
 
-Thanks for the quick fix; will play with it on Sunday...
-
-Ciao,
-Dscho
+I am a bit worried about the 'master' being a "StGIT stack",
+though.  Playgrounds to be cherry-picked from (aka 'pu') would
+make *perfect* sense to be managed that way (and the topics that
+go only 'pu' of git.git itself are managed the same except that
+I do not do so using StGIT), but I think we need a stable
+history for the branch git.git will eventually pull from.
