@@ -1,98 +1,64 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Sun, 02 Sep 2007 10:06:00 +0200
-Message-ID: <85odgltrtj.fsf@lola.goethe.zz>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
-	<46DA5F33.2020005@zytor.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] git/gitweb.git repository
+Date: Sat, 1 Sep 2007 19:54:23 +0200
+Message-ID: <200709011954.23771.jnareb@gmail.com>
+References: <20070831000149.GK1219@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S933904AbXIBIGa@vger.kernel.org Sun Sep 02 10:06:56 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S933904AbXIBIGa@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Sep 02 10:33:40 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRkTw-0002Qb-FJ
-	for glk-linux-kernel-3@gmane.org; Sun, 02 Sep 2007 10:06:56 +0200
+	id 1IRktk-00065c-He
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 10:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933904AbXIBIGa (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 2 Sep 2007 04:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754229AbXIBIGO
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 2 Sep 2007 04:06:14 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:37149 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750886AbXIBIGL (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 2 Sep 2007 04:06:11 -0400
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 86CFD2E2952;
-	Sun,  2 Sep 2007 10:06:10 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 7B65FABE0E;
-	Sun,  2 Sep 2007 10:06:10 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-038-061.pools.arcor-ip.net [84.61.38.61])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 479C236E866;
-	Sun,  2 Sep 2007 10:06:02 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 532B61C15372; Sun,  2 Sep 2007 10:06:00 +0200 (CEST)
-In-Reply-To: <46DA5F33.2020005@zytor.com> (H. Peter Anvin's message of "Sun\, 02 Sep 2007 07\:58\:59 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1754246AbXIBIdc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 04:33:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753946AbXIBIdc
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 04:33:32 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:32577 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbXIBIdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 04:33:31 -0400
+Received: by nf-out-0910.google.com with SMTP id f5so992441nfh
+        for <git@vger.kernel.org>; Sun, 02 Sep 2007 01:33:30 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=awiipFiKGsxlIHmDjYrCYaDlPTK3zm9Y0BCsMEl5xUEOaGFZ7ZY53zQ5amLVRwlrow53aUHpxKZt0ATtb2x7gJg51rFxGoQ6/7YgEUTanmSQn9jvk6E/jXB5fhWHoMfPoYuLD1kMVFLtyiQromooOj1PKrCQDZRIFqtvArfWxGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fAoG7hWy78X9ZsET0flIXSr2dIL8WePLjibgRoPQxuL2tmQH8GF2ELLQjB/EqLppt3PhbDGVq8J59PIhFdyIuUZ5tjOPoFNt0ufFHVy4hUsFyz4a1noviISIiOQzWXeIZ6TPfRWT+8rOrBHgxTrpNRqMJoET1yAtD89+eCTXcY8=
+Received: by 10.86.77.5 with SMTP id z5mr2347369fga.1188722009532;
+        Sun, 02 Sep 2007 01:33:29 -0700 (PDT)
+Received: from host-89-229-8-65.torun.mm.pl ( [89.229.8.65])
+        by mx.google.com with ESMTPS id 28sm3215742fkx.2007.09.02.01.33.24
+        (version=SSLv3 cipher=OTHER);
+        Sun, 02 Sep 2007 01:33:25 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070831000149.GK1219@pasky.or.cz>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57305>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57306>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On Friday, 31 August 2007, Petr Baudis wrote:
 
-> Junio C Hamano wrote:
->>
->> * For people who need to import from Perforce, a front-end for
->>   fast-import is in contrib/fast-import/.
->>
->
-> There seems to be an issue with this and RPMS.
->
-> In particular, there is no longer a git-p4 RPMS, which prevents git
-> from getting upgraded at all by yum.
->
-> Anyone who knows yum well enough to explain what needs to be done so
-> that yum knows this is obsolete?
+>   Please feel encouraged to make random forks for your development
+> efforts, or push your random patches (preferrably just bugfixes,
+> something possibly controversial should be kept in safe containment
+> like a fork or separate branch) to the mob branch.
 
-Probably a matter of the correct spec file.  In auctex.spec, we have
-
-Summary: 	Enhanced TeX modes for Emacsen
-Name: 		auctex
-Version: 	11.84
-Release: 	1%{distri}
-License: 	GPL
-Group: 		%{commongroup}
-URL: 		http://www.gnu.org/software/auctex/
-Source0:        ftp://ftp.gnu.org/pub/gnu/auctex/%{name}-%{version}.tar.gz
-BuildArchitectures: noarch
-BuildRoot: 	%{_tmppath}/%{name}-root
-
-%description
-AUCTeX is [...]
-
-%package emacs
-Summary: 	Enhanced TeX modes for GNU Emacs
-Group:          %{commongroup}
-Requires: 	emacs >= 21
-Obsoletes:      ge_auc emacs-auctex auctex preview-latex-emacs
-Conflicts:      emacspeak < 18
-Provides:       auctex
-
-
-So auctex-emacs obsoletes the previous "auctex" package and some other
-packages.  It also provides "auctex" since some other packages might
-require it.
-
-Basically, you need to provide everything that a third-party package
-might have asked for, and you need to obsolete everything that you
-intend to replace.
+What are the rules of pushing to the mob branch? Fetch, rebase, push?
+Does mob branch allows non fast-forward pushes?
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Jakub Narebski
+Poland
