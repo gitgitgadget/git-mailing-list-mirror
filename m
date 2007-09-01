@@ -1,174 +1,65 @@
-From: Carlos Rica <jasampler@gmail.com>
-Subject: [PATCH] git-tag: Fix -l option to use better shell style globs.
-Date: Sat, 01 Sep 2007 07:10:09 +0200
-Message-ID: <46D8F431.70801@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-tag: Fix -l option to use better shell style globs.
+Date: Sat, 1 Sep 2007 01:31:58 -0400
+Message-ID: <20070901053158.GF18160@spearce.org>
+References: <46D8F431.70801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 01 07:10:53 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 01 07:32:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRLFy-0003i8-Ua
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:10:51 +0200
+	id 1IRLae-0006KD-VG
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965AbXIAFKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 01:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbXIAFKS
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:10:18 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:43343 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751947AbXIAFKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 01:10:17 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so781970fkz
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 22:10:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=E8fscRk16t/AVfVoRQoUWQDNk6YHgNnC5q3OUm4fzFHno1pFkQfFggM5SnIYlu1IfbUMmRsoi2hQPfk1C9LlTJ70sL0BRGjdW0TKTMfeoOFAWA4c0DixjQciTAM8yYzyGO9dmeA/T8h13DOWdx6gXiCr766jJbSAkUD2kr2uil4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=m63U5DUcPQnlw27Yh6HwU31SqZQpymimRRG9Ly5HFqLP8uy6Ddxov+sk3qUzDyOYbr1Wk0aKI/BRbR2CfkfaJdwicLlP9DB0j6PBrHTs5XhzWVXnLt51aOEKZV8nHzGrGPq0AbIh0dPn5LyASYI4XsQT+GFvoLf8S35j1JFBOT8=
-Received: by 10.82.178.11 with SMTP id a11mr5338481buf.1188623415136;
-        Fri, 31 Aug 2007 22:10:15 -0700 (PDT)
-Received: from ?192.168.0.192? ( [212.145.102.186])
-        by mx.google.com with ESMTPS id e1sm111067ugf.2007.08.31.22.10.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Aug 2007 22:10:13 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+	id S1751913AbXIAFcH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 01:32:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbXIAFcH
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:32:07 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33201 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751670AbXIAFcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 01:32:06 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IRLaR-0001o8-P6; Sat, 01 Sep 2007 01:31:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CF75A20FBAE; Sat,  1 Sep 2007 01:31:58 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <46D8F431.70801@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57253>
 
-This patch removes certain behaviour of "git tag -l foo", currently
-listing every tag name having "foo" as a substring.  The same
-thing now could be achieved doing "git tag -l '*foo*'".
+Carlos Rica <jasampler@gmail.com> wrote:
+> This patch removes certain behaviour of "git tag -l foo", currently
+> listing every tag name having "foo" as a substring.  The same
+> thing now could be achieved doing "git tag -l '*foo*'".
 
-This feature was added recently when git-tag.sh got the -n option
-for showing tag annotations, because that commit also replaced the
-old "grep pattern" behaviour with a more preferable "shell pattern"
-behaviour (although slightly modified as you can see).
-Thus, the following builtin-tag.c implemented it in order to
-ensure that tests were passing unchanged with both programs.
+Even though this is a behavior change, I think its the right thing
+to do.  The current behavior of searching "*$arg*" is downright
+annoying and not what most users would expect I think, especially
+when tools like for-each-ref don't do that.
 
-Since common "shell patterns" match names with a given substring
-_only_ when * is inserted before and after (as in "*substring*"), and
-the "plain" behaviour cannot be achieved easily with the current
-implementation, this is mostly the right thing to do, in order to
-make it more flexible and consistent.
+Then again, I do "*$arg*" in git-gui's revision selection widget.
+But there its immediately obvious what is happening and anyone I
+have talked[*1*] to prefers it that way.
 
-Tests for "git tag" were also changed to reflect this.
 
-Signed-off-by: Carlos Rica <jasampler@gmail.com>
----
- builtin-tag.c  |   11 ++---------
- t/t7004-tag.sh |   20 +++++++++-----------
- 2 files changed, 11 insertions(+), 20 deletions(-)
-
-diff --git a/builtin-tag.c b/builtin-tag.c
-index d6d38ad..348919c 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -123,22 +123,15 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- static int list_tags(const char *pattern, int lines)
- {
- 	struct tag_filter filter;
--	char *newpattern;
-
- 	if (pattern == NULL)
--		pattern = "";
-+		pattern = "*";
-
--	/* prepend/append * to the shell pattern: */
--	newpattern = xmalloc(strlen(pattern) + 3);
--	sprintf(newpattern, "*%s*", pattern);
--
--	filter.pattern = newpattern;
-+	filter.pattern = pattern;
- 	filter.lines = lines;
-
- 	for_each_tag_ref(show_reference, (void *) &filter);
-
--	free(newpattern);
--
- 	return 0;
- }
-
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index c4fa446..606d4f2 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -185,18 +185,17 @@ cba
- EOF
- test_expect_success \
- 	'listing tags with substring as pattern must print those matching' '
--	git-tag -l a > actual &&
-+	git-tag -l "*a*" > actual &&
- 	git diff expect actual
- '
-
- cat >expect <<EOF
- v0.2.1
- v1.0.1
--v1.1.3
- EOF
- test_expect_success \
--	'listing tags with substring as pattern must print those matching' '
--	git-tag -l .1 > actual &&
-+	'listing tags with a suffix as pattern must print those matching' '
-+	git-tag -l "*.1" > actual &&
- 	git diff expect actual
- '
-
-@@ -205,37 +204,36 @@ t210
- t211
- EOF
- test_expect_success \
--	'listing tags with substring as pattern must print those matching' '
--	git-tag -l t21 > actual &&
-+	'listing tags with a prefix as pattern must print those matching' '
-+	git-tag -l "t21*" > actual &&
- 	git diff expect actual
- '
-
- cat >expect <<EOF
- a1
--aa1
- EOF
- test_expect_success \
--	'listing tags using a name as pattern must print those matching' '
-+	'listing tags using a name as pattern must print that one matching' '
- 	git-tag -l a1 > actual &&
- 	git diff expect actual
- '
-
- cat >expect <<EOF
- v1.0
--v1.0.1
- EOF
- test_expect_success \
--	'listing tags using a name as pattern must print those matching' '
-+	'listing tags using a name as pattern must print that one matching' '
- 	git-tag -l v1.0 > actual &&
- 	git diff expect actual
- '
-
- cat >expect <<EOF
-+v1.0.1
- v1.1.3
- EOF
- test_expect_success \
- 	'listing tags with ? in the pattern should print those matching' '
--	git-tag -l "1.1?" > actual &&
-+	git-tag -l "v1.?.?" > actual &&
- 	git diff expect actual
- '
-
+*1*: Disclaimer: people I talked to has thus far been limited to
+     day-job coworkers.
+ 
 -- 
-1.5.0
+Shawn.
