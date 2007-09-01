@@ -1,46 +1,91 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] URL: allow port specification in ssh:// URLs
-Date: Sat, 1 Sep 2007 04:13:01 -0700 (PDT)
-Message-ID: <377758.23919.qm@web31802.mail.mud.yahoo.com>
-References: <7v1wdiu1x2.fsf@gitster.siamese.dyndns.org>
-Reply-To: ltuikov@yahoo.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 01 13:13:25 2007
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Improve bash prompt to detect merge / rebase in progress
+Date: Sat,  1 Sep 2007 12:22:37 +0200
+Message-ID: <11886421573285-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Sep 01 13:25:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRQur-0001gi-Em
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 13:13:25 +0200
+	id 1IRR5y-00042h-9T
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 13:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427AbXIALNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 07:13:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbXIALNE
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 07:13:04 -0400
-Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:47667 "HELO
-	web31802.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752991AbXIALND (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Sep 2007 07:13:03 -0400
-Received: (qmail 24099 invoked by uid 60001); 1 Sep 2007 11:13:01 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=S3+uUNSW3dHu7CIwz6vL6DDTQsTapzL1l4Jdy2LIrPouX/4Id9JyYaH1YkeTfXtsgnCm5nxZkbENH9Av9Lumu5nUvzO7s2EulfbTYDAWDo7vsm60j7JEdlFPN4rT3p54AUY6/1qWvCZFFei/keBCycBEUXcBXEsvj+JmBXUt+6c=;
-X-YMail-OSG: g4KxQsQVM1lxfhr42cJEEznzHfJ.Dz.bBcTvN8HctQOSkQX_iXQudCZ.E7UnYjmnu3hnuwCzvQ--
-Received: from [71.84.13.248] by web31802.mail.mud.yahoo.com via HTTP; Sat, 01 Sep 2007 04:13:01 PDT
-In-Reply-To: <7v1wdiu1x2.fsf@gitster.siamese.dyndns.org>
+	id S1753413AbXIALYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 07:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753484AbXIALYt
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 07:24:49 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:4974 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752868AbXIALYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 07:24:48 -0400
+X-Greylist: delayed 1988 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Sep 2007 07:24:48 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 15F1D802849;
+	Sat,  1 Sep 2007 12:43:48 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 16989-03; Sat,  1 Sep 2007 12:43:24 +0200 (CEST)
+Received: from lathund.dewire.com (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 6BB2380264D;
+	Sat,  1 Sep 2007 12:43:24 +0200 (CEST)
+Received: by lathund.dewire.com (Postfix, from userid 500)
+	id 45AD4293CF; Sat,  1 Sep 2007 12:22:38 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc7.844.gfd3c5
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57271>
 
---- Junio C Hamano <gitster@pobox.com> wrote:
-> Nicely done.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ contrib/completion/git-completion.bash |   30 ++++++++++++++++++++++++++----
+ 1 files changed, 26 insertions(+), 4 deletions(-)
 
-Thanks!
-
-    Luben
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 5ed1821..1fef857 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -64,12 +64,34 @@ __gitdir ()
+ 
+ __git_ps1 ()
+ {
+-	local b="$(git symbolic-ref HEAD 2>/dev/null)"
+-	if [ -n "$b" ]; then
++	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	if [ -n "$g" ]; then
++		local r
++		local b
++		if [ -d "$g/../.dotest" ]
++		then
++			local b="$(git symbolic-ref HEAD 2>/dev/null)"
++			r="|REBASEING"
++		else
++			if [ -d "$g/.dotest-merge" ]
++			then
++				r="|REBASING"
++				b="$(cat $g/.dotest-merge/head-name)"
++			else
++				if [ -f "$g/MERGE_HEAD" ]
++				then
++					r="|MERGING"
++					b="$(git symbolic-ref HEAD 2>/dev/null)"
++				else
++					b="$(git symbolic-ref HEAD 2>/dev/null)"
++				fi
++			fi
++		fi
++
+ 		if [ -n "$1" ]; then
+-			printf "$1" "${b##refs/heads/}"
++			printf "$1" "${b##refs/heads/}$r"
+ 		else
+-			printf " (%s)" "${b##refs/heads/}"
++			printf " (%s)" "${b##refs/heads/}$r"
+ 		fi
+ 	fi
+ }
+-- 
+1.5.3.rc7.844.gfd3c5
