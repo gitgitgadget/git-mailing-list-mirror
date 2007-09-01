@@ -1,127 +1,174 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] git/gitweb.git repository
-Date: Fri, 31 Aug 2007 21:57:17 -0700
-Message-ID: <7vhcmfugnm.fsf@gitster.siamese.dyndns.org>
-References: <400762.26134.qm@web31810.mail.mud.yahoo.com>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] git-tag: Fix -l option to use better shell style globs.
+Date: Sat, 01 Sep 2007 07:10:09 +0200
+Message-ID: <46D8F431.70801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, jnareb@gmail.com
-To: ltuikov@yahoo.com
-X-From: git-owner@vger.kernel.org Sat Sep 01 06:57:39 2007
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Sep 01 07:10:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRL3A-00020O-0J
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 06:57:36 +0200
+	id 1IRLFy-0003i8-Ua
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbXIAE5Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 00:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbXIAE5Z
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 00:57:25 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48356 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbXIAE5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 00:57:24 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F1CC2129BE6;
-	Sat,  1 Sep 2007 00:57:40 -0400 (EDT)
-In-Reply-To: <400762.26134.qm@web31810.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Fri, 31 Aug 2007 19:15:23 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751965AbXIAFKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 01:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbXIAFKS
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:10:18 -0400
+Received: from fk-out-0910.google.com ([209.85.128.189]:43343 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751947AbXIAFKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 01:10:17 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so781970fkz
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 22:10:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=E8fscRk16t/AVfVoRQoUWQDNk6YHgNnC5q3OUm4fzFHno1pFkQfFggM5SnIYlu1IfbUMmRsoi2hQPfk1C9LlTJ70sL0BRGjdW0TKTMfeoOFAWA4c0DixjQciTAM8yYzyGO9dmeA/T8h13DOWdx6gXiCr766jJbSAkUD2kr2uil4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=m63U5DUcPQnlw27Yh6HwU31SqZQpymimRRG9Ly5HFqLP8uy6Ddxov+sk3qUzDyOYbr1Wk0aKI/BRbR2CfkfaJdwicLlP9DB0j6PBrHTs5XhzWVXnLt51aOEKZV8nHzGrGPq0AbIh0dPn5LyASYI4XsQT+GFvoLf8S35j1JFBOT8=
+Received: by 10.82.178.11 with SMTP id a11mr5338481buf.1188623415136;
+        Fri, 31 Aug 2007 22:10:15 -0700 (PDT)
+Received: from ?192.168.0.192? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id e1sm111067ugf.2007.08.31.22.10.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 31 Aug 2007 22:10:13 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57252>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+This patch removes certain behaviour of "git tag -l foo", currently
+listing every tag name having "foo" as a substring.  The same
+thing now could be achieved doing "git tag -l '*foo*'".
 
-> --- Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> I am a bit worried about the 'master' being a "StGIT stack",
->> though.  Playgrounds to be cherry-picked from (aka 'pu') would
->> make *perfect* sense to be managed that way (and the topics that
->> go only 'pu' of git.git itself are managed the same except that
->> I do not do so using StGIT), but I think we need a stable
->> history for the branch git.git will eventually pull from.
->
-> That was my concern too, but seeing the immediate hostility
-> I got about asking about the review process I decided not
-> to mention it.
+This feature was added recently when git-tag.sh got the -n option
+for showing tag annotations, because that commit also replaced the
+old "grep pattern" behaviour with a more preferable "shell pattern"
+behaviour (although slightly modified as you can see).
+Thus, the following builtin-tag.c implemented it in order to
+ensure that tests were passing unchanged with both programs.
 
-I do not think Johannes meant any hostility against you by
-mentioning the obvious "person A sets up a repository, he gets
-to decide rule for _his_ repository", implication of which is
-that anobody else can do the same.
+Since common "shell patterns" match names with a given substring
+_only_ when * is inserted before and after (as in "*substring*"), and
+the "plain" behaviour cannot be achieved easily with the current
+implementation, this is mostly the right thing to do, in order to
+make it more flexible and consistent.
 
-It is a completely different matter how the bits of the results
-are decided to be good and bad and merged as part of git.git,
-and that will be done with community input as always.
+Tests for "git tag" were also changed to reflect this.
 
-I asked Pasky to host series of patches for various reasons.
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
+ builtin-tag.c  |   11 ++---------
+ t/t7004-tag.sh |   20 +++++++++-----------
+ 2 files changed, 11 insertions(+), 20 deletions(-)
 
- (1) I know I am less qualified than Pasky, you nor Jakub (the
-     three people I publicly said I consider more interested in
-     and have experience with gitweb than I am).  If I were to
-     sift through the patches, I am sure many patches will rot
-     because of indecision.  I wanted to make sure people more
-     interested in gitweb than myself play more active role in
-     its development and maintenance.
+diff --git a/builtin-tag.c b/builtin-tag.c
+index d6d38ad..348919c 100644
+--- a/builtin-tag.c
++++ b/builtin-tag.c
+@@ -123,22 +123,15 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+ static int list_tags(const char *pattern, int lines)
+ {
+ 	struct tag_filter filter;
+-	char *newpattern;
 
- (2) It would make it easier to view and judge the impact of
-     pending patches if the code is used on to show various real
-     repositories to the public.  repo.or.cz is an ideal place,
-     and Pasky has shown competence managing that service to the
-     community.  A change to gitweb may look obviously correct
-     with just minor performance impact while code inspection,
-     but may have scaling issues in the real world --- he will
-     have the first hand experience to catch that.  Anybody
-     could set something like that up, but I trust the three
-     gitweb gang more or less equally, so why not utilize the
-     infrastructure we already have, especially Pasky agreed to
-     help?
+ 	if (pattern == NULL)
+-		pattern = "";
++		pattern = "*";
 
- (3) I have disagreed on a handful technical issues with Pasky,
-     you and Jakub, but I do not expect all of us to always
-     agree something is good or bad unanimously, nor I expect it
-     would satisfy everybody in the community even if we agree
-     on something unanimously, if we acted as a Cabal.  One
-     thing that is important is that the process is transparent.
+-	/* prepend/append * to the shell pattern: */
+-	newpattern = xmalloc(strlen(pattern) + 3);
+-	sprintf(newpattern, "*%s*", pattern);
+-
+-	filter.pattern = newpattern;
++	filter.pattern = pattern;
+ 	filter.lines = lines;
 
-     I trust Pasky to be open-minded as any of us would be.  I
-     do not expect him to start acting as a dictator on gitweb
-     issues and force bad technical decisions without listening
-     to others.  I trust him at least that much.  I would
-     probably trust you or Jakub the same way, but I do not have
-     to pick one single person that I trust _most_.  As long as
-     the person who maintains the gitweb patch queue is trusted
-     and respected _enough_ by the community, I think that is
-     good enough.  And this is all volunteer work.  Good
-     maintainers are hard to find.
+ 	for_each_tag_ref(show_reference, (void *) &filter);
 
-> I'd be interesting to see how gitweb support pans out
-> given this initial hostility to inquiry of accountability.
->
-> Over the years I've seen that the best support and accountability
-> has been had when the maintainer is not the main contributor/developer,
-> especially for shared development. Otherwise personal preferences over
-> feature X and Y come into play and then things get ugly.
+-	free(newpattern);
+-
+ 	return 0;
+ }
 
-I understand your concern, and I think that is where you can
-help the most.  If you see questionable patches queued, spot
-them and raise issues.  We've been a friendly community, and
-luckily we haven't had too many burnt bridges over personality
-differences.
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index c4fa446..606d4f2 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -185,18 +185,17 @@ cba
+ EOF
+ test_expect_success \
+ 	'listing tags with substring as pattern must print those matching' '
+-	git-tag -l a > actual &&
++	git-tag -l "*a*" > actual &&
+ 	git diff expect actual
+ '
 
-We have a _LOT_ of work ahead of us in gitweb area.  You may
-remember that there was a call-for-help from k.org gitweb master
-(J. H. "warthog9", with comments from HPA) some time ago.  The
-installation there is heavily modified to support a large and
-heavily-hit site better than the stock gitweb, but the codebase
-has diverged quite a bit.  We need to fold that effort back so
-that (1) they do not have to keep maintaining their fork, and
-(2) everybody else will benefit from their scalability work.
+ cat >expect <<EOF
+ v0.2.1
+ v1.0.1
+-v1.1.3
+ EOF
+ test_expect_success \
+-	'listing tags with substring as pattern must print those matching' '
+-	git-tag -l .1 > actual &&
++	'listing tags with a suffix as pattern must print those matching' '
++	git-tag -l "*.1" > actual &&
+ 	git diff expect actual
+ '
+
+@@ -205,37 +204,36 @@ t210
+ t211
+ EOF
+ test_expect_success \
+-	'listing tags with substring as pattern must print those matching' '
+-	git-tag -l t21 > actual &&
++	'listing tags with a prefix as pattern must print those matching' '
++	git-tag -l "t21*" > actual &&
+ 	git diff expect actual
+ '
+
+ cat >expect <<EOF
+ a1
+-aa1
+ EOF
+ test_expect_success \
+-	'listing tags using a name as pattern must print those matching' '
++	'listing tags using a name as pattern must print that one matching' '
+ 	git-tag -l a1 > actual &&
+ 	git diff expect actual
+ '
+
+ cat >expect <<EOF
+ v1.0
+-v1.0.1
+ EOF
+ test_expect_success \
+-	'listing tags using a name as pattern must print those matching' '
++	'listing tags using a name as pattern must print that one matching' '
+ 	git-tag -l v1.0 > actual &&
+ 	git diff expect actual
+ '
+
+ cat >expect <<EOF
++v1.0.1
+ v1.1.3
+ EOF
+ test_expect_success \
+ 	'listing tags with ? in the pattern should print those matching' '
+-	git-tag -l "1.1?" > actual &&
++	git-tag -l "v1.?.?" > actual &&
+ 	git diff expect actual
+ '
+
+-- 
+1.5.0
