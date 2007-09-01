@@ -1,93 +1,75 @@
-From: David Watson <dwatson@mimvista.com>
-Subject: [PATCH] Test for git-svn dcommit clobbering changes
-Date: Fri, 31 Aug 2007 20:25:01 -0400
-Message-ID: <20070901002501.GA11591@mimvista.com>
-References: <Pine.LNX.4.64.0708312200480.28586@racer.site> <20070831221814.GB31033@untitled> <Pine.LNX.4.64.0709010017250.28586@racer.site> <20070831234854.GA6451@mimvista.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [ANNOUNCE] git/gitweb.git repository
+Date: Fri, 31 Aug 2007 18:06:02 -0700 (PDT)
+Message-ID: <767502.77573.qm@web31812.mail.mud.yahoo.com>
+References: <20070831000149.GK1219@pasky.or.cz>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 01 02:24:33 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: jnareb@gmail.com, ltuikov@yahoo.com
+To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 01 03:12:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRGmn-0002ld-SE
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 02:24:26 +0200
+	id 1IRHXk-0000Vv-JR
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 03:12:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974AbXIAAYA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 20:24:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbXIAAYA
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 20:24:00 -0400
-Received: from net-207-58-228-27.arpa.fidelityaccess.net ([207.58.228.27]:44333
-	"EHLO zimbra.mimvista.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1750856AbXIAAX7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 20:23:59 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 49443355DC9;
-	Fri, 31 Aug 2007 20:22:09 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: 1.06
-X-Spam-Level: *
-X-Spam-Status: No, score=1.06 tagged_above=-10 required=6.6 tests=[AWL=-0.333,
-	BAYES_00=-2.599, RCVD_IN_NJABL_DUL=1.946, RCVD_IN_SORBS_DUL=2.046]
-Received: from zimbra.mimvista.com ([127.0.0.1])
-	by localhost (zimbra.mimvista.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RNoP6IVKk0Ml; Fri, 31 Aug 2007 20:22:02 -0400 (EDT)
-Received: from localhost (cpe-66-61-71-72.neo.res.rr.com [66.61.71.72])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 936C1355C9B;
-	Fri, 31 Aug 2007 20:22:02 -0400 (EDT)
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070831234854.GA6451@mimvista.com>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1751431AbXIABMp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 21:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXIABMp
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 21:12:45 -0400
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:35093 "HELO
+	web31812.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751306AbXIABMo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 21:12:44 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Aug 2007 21:12:44 EDT
+Received: (qmail 93570 invoked by uid 60001); 1 Sep 2007 01:06:02 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=N6LR4SAmywIlzwlMeO+ofKN6CXd3LI0NCPIzK+q4sluuEuQoQ6lNTxiFxFYCcWlOS7Z8hwOzMTfDb5QcFhxzEt3ATPyjP7XbUvN12zo8seg7+4q6XMUUs99gRNpCMJJzza4sTz7L9aNKLHMIWJqeUeGB+yHyPH2ZX65JIqI1+Eg=;
+X-YMail-OSG: WR59W9oVM1m_baRziCbZUKrtaUuG_Io2Y3l0gasd1YYbCb68DrviqG9xYO9nBFH5ig--
+Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Fri, 31 Aug 2007 18:06:02 PDT
+In-Reply-To: <20070831000149.GK1219@pasky.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57236>
 
-If you make multiple commits, and a commit other than the first applies
-to the same file as a new change in the SVN repository, git-svn will blow
-away the other commit's changes.
-
----
-
-
-On Fri, Aug 31, 2007 at 07:48:55PM -0400, David Watson wrote:
-> I just reproduced this one in a live repository. Here's what you do:
+--- Petr Baudis <pasky@suse.cz> wrote:
+>   Hi,
 > 
-> $ git checkout -b breakme trunk
-> $ vi file1.txt
-> $ git-commit -a -m 'first change'
-> $ vi file2.txt
-> $ git-commit -a -m 'second change'
-> ..... Full moon, become a werewolf ......
-> C:\svnrepo> edit file2.txt
-> C:\svnrepo> svn commit -m 'this will be gone'
-> ..... Become yourself again ....
-> $ git svn fetch --all # (not sure if this is necessary)
-> $ git svn dcommit
-> $ git log -p
+>   due to popular (Junio's) demand, I have set up a gitweb-oriented fork
+> of git at repo.or.cz:
+> 
+> 	http://repo.or.cz/w/git/gitweb.git
+> 
+>   It is meant as a hub for various gitweb-related patches and
+> development efforts. So far it is pre-seeded by the patches repo.or.cz's
+> gitweb uses.
 
- t/t9106-git-svn-commit-diff-clobber.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Is this right?
 
-diff --git a/t/t9106-git-svn-commit-diff-clobber.sh b/t/t9106-git-svn-commit-diff-clobber.sh
-index 6f132f2..2706153 100755
---- a/t/t9106-git-svn-commit-diff-clobber.sh
-+++ b/t/t9106-git-svn-commit-diff-clobber.sh
-@@ -50,6 +50,9 @@ test_expect_failure 'dcommit fails to commit because of conflict' "
- 	svn commit -m 'fourth line from svn' &&
- 	cd .. &&
- 	rm -rf t.svn &&
-+	echo another file from git >> file2 &&
-+	git add file2 &&
-+	git commit -m 'another file here' &&
- 	echo 'fourth line from git' >> file &&
- 	git commit -a -m 'fourth line from git' &&
- 	git-svn dcommit
--- 
-1.5.3.rc4
+So what's the review process now?  "Because it is part of repo.or.cz's
+gitweb" seems to be a weak argument.
 
-Dave Watson
+   Luben
+
+> It is divided to three main branches (StGIT patchstacks in
+> reality), where master is what Junio is gonna pull to git's master.
+> 
+>   Please feel encouraged to make random forks for your development
+> efforts, or push your random patches (preferrably just bugfixes,
+> something possibly controversial should be kept in safe containment like
+> a fork or separate branch) to the mob branch.
+> 
+>   Have fun,
+> 
+> -- 
+> 				Petr "Pasky" Baudis
+> Early to rise and early to bed makes a male healthy and wealthy and dead.
+>                 -- James Thurber
+> 
