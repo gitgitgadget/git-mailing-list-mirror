@@ -1,65 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-tag: Fix -l option to use better shell style globs.
-Date: Fri, 31 Aug 2007 23:16:21 -0700
-Message-ID: <7v8x7qvrka.fsf@gitster.siamese.dyndns.org>
-References: <46D8F431.70801@gmail.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] rebase -m: Fix incorrect short-logs of already applied commits.
+Date: Sat, 1 Sep 2007 09:25:27 +0200
+Message-ID: <200709010925.27926.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 01 08:16:34 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 01 10:00:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRMHX-0002b2-Ol
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 08:16:32 +0200
+	id 1IRNti-0000G3-2w
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 10:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbXIAGQ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 02:16:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398AbXIAGQ1
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 02:16:27 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751383AbXIAGQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 02:16:26 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 88BD612AC64;
-	Sat,  1 Sep 2007 02:16:44 -0400 (EDT)
-In-Reply-To: <46D8F431.70801@gmail.com> (Carlos Rica's message of "Sat, 01 Sep
-	2007 07:10:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751024AbXIAH7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 03:59:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIAH7c
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 03:59:32 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:42620 "EHLO
+	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750909AbXIAH7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 03:59:31 -0400
+X-Greylist: delayed 1982 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Sep 2007 03:59:31 EDT
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id D7F4735AB3;
+	Sat,  1 Sep 2007 09:25:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 867E55765B;
+	Sat,  1 Sep 2007 09:25:28 +0200 (CEST)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57258>
 
-Carlos Rica <jasampler@gmail.com> writes:
+When a topic branch is rebased, some of whose commits are already
+cherry-picked upstream:
 
->  	if (pattern == NULL)
-> -		pattern = "";
-> +		pattern = "*";
->
-> -	/* prepend/append * to the shell pattern: */
-> -	newpattern = xmalloc(strlen(pattern) + 3);
-> -	sprintf(newpattern, "*%s*", pattern);
-> -
-> -	filter.pattern = newpattern;
-> +	filter.pattern = pattern;
->  	filter.lines = lines;
->
->  	for_each_tag_ref(show_reference, (void *) &filter);
+    o--X--A--B--Y    <- master
+     \
+      A--B--Z        <- topic
 
-I think it is conceptually simpler on the show_reference side to
-allow (filter.pattern == NULL) and say:
+then 'git rebase -m master' would report:
 
-	if (!filter->pattern || !fnmatch(filter->pattern, refname, 0)) {
-        	... show that ref ...
-	}
+    Already applied: 0001 Y
+    Already applied: 0002 Y
 
-It is not such a big deal now you do not do newpattern
-allocation anymore, so I'll apply the patch as is.
+With this fix it reports the expected:
+
+    Already applied: 0001 A
+    Already applied: 0002 B
+
+As an added bonus, this change also avoids 'echo' of a commit message,
+which might contain escapements.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ git-rebase.sh |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index cbafa14..9cf0056 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -59,20 +59,23 @@ continue_merge () {
+ 		die "$RESOLVEMSG"
+ 	fi
+ 
++	cmt=`cat $dotest/current`
+ 	if ! git diff-index --quiet HEAD
+ 	then
+-		if ! git-commit -C "`cat $dotest/current`"
++		if ! git-commit -C "$cmt"
+ 		then
+ 			echo "Commit failed, please do not call \"git commit\""
+ 			echo "directly, but instead do one of the following: "
+ 			die "$RESOLVEMSG"
+ 		fi
+-		printf "Committed: %0${prec}d" $msgnum
++		printf "Committed: %0${prec}d " $msgnum
++		git rev-list --pretty=oneline -1 HEAD | \
++			sed 's/^[a-f0-9]\+ //'
+ 	else
+-		printf "Already applied: %0${prec}d" $msgnum
++		printf "Already applied: %0${prec}d " $msgnum
++		git rev-list --pretty=oneline -1 "$cmt" | \
++			sed 's/^[a-f0-9]\+ //'
+ 	fi
+-	echo ' '`git rev-list --pretty=oneline -1 HEAD | \
+-				sed 's/^[a-f0-9]\+ //'`
+ 
+ 	prev_head=`git rev-parse HEAD^0`
+ 	# save the resulting commit so we can read-tree on it later
+-- 
+1.5.3.rc6.55.ga005
