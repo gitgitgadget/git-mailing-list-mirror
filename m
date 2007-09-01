@@ -1,65 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-tag: Fix -l option to use better shell style globs.
-Date: Sat, 1 Sep 2007 01:31:58 -0400
-Message-ID: <20070901053158.GF18160@spearce.org>
-References: <46D8F431.70801@gmail.com>
+Date: Fri, 31 Aug 2007 22:39:32 -0700
+Message-ID: <7vd4x3uep7.fsf@gitster.siamese.dyndns.org>
+References: <46D8F431.70801@gmail.com> <20070901053158.GF18160@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 01 07:32:13 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Sep 01 07:40:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRLae-0006KD-VG
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:32:13 +0200
+	id 1IRLiM-00077q-0E
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbXIAFcH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 01:32:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbXIAFcH
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:32:07 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33201 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbXIAFcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 01:32:06 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IRLaR-0001o8-P6; Sat, 01 Sep 2007 01:31:59 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CF75A20FBAE; Sat,  1 Sep 2007 01:31:58 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <46D8F431.70801@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752028AbXIAFjl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 01:39:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbXIAFjl
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:39:41 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48850 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966AbXIAFjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 01:39:40 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3DAE212AA5C;
+	Sat,  1 Sep 2007 01:39:56 -0400 (EDT)
+In-Reply-To: <20070901053158.GF18160@spearce.org> (Shawn O. Pearce's message
+	of "Sat, 1 Sep 2007 01:31:58 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57254>
 
-Carlos Rica <jasampler@gmail.com> wrote:
-> This patch removes certain behaviour of "git tag -l foo", currently
-> listing every tag name having "foo" as a substring.  The same
-> thing now could be achieved doing "git tag -l '*foo*'".
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Even though this is a behavior change, I think its the right thing
-to do.  The current behavior of searching "*$arg*" is downright
-annoying and not what most users would expect I think, especially
-when tools like for-each-ref don't do that.
+> Carlos Rica <jasampler@gmail.com> wrote:
+>> This patch removes certain behaviour of "git tag -l foo", currently
+>> listing every tag name having "foo" as a substring.  The same
+>> thing now could be achieved doing "git tag -l '*foo*'".
+>
+> Even though this is a behavior change, I think its the right thing
+> to do.  The current behavior of searching "*$arg*" is downright
+> annoying.
 
-Then again, I do "*$arg*" in git-gui's revision selection widget.
-But there its immediately obvious what is happening and anyone I
-have talked[*1*] to prefers it that way.
+Yes, I concur.  It is very annoying that "git tag -l gui"
+matches "gitgui-0.7.0".
 
-
-*1*: Disclaimer: people I talked to has thus far been limited to
-     day-job coworkers.
- 
--- 
-Shawn.
+Let's fix this.
