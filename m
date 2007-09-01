@@ -1,152 +1,165 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-gui i18n status?
-Date: Sun, 2 Sep 2007 00:42:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709020003480.28586@racer.site>
-References: <20070901042924.GE18160@spearce.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Improve bash prompt to detect merge / rebase in progress
+Date: Sun, 2 Sep 2007 01:52:28 +0200
+Message-ID: <200709020152.30070.robin.rosenberg@dewire.com>
+References: <11886421573285-git-send-email-robin.rosenberg@dewire.com> <7vir6us1ia.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Stimming <stimming@tuhh.de>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Nanako Shiraishi <nanako3@bluebottle.com>,
-	Michele Ballabio <barra_cuda@katamail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Xudong Guan <xudong.guan@gmail.com>,
-	Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>,
-	Junio C Hamano <gitster@pobox.com>,
-	Irina Riesen <irina.riesen@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Sep 02 01:42:42 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 02:11:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRcbw-0006f3-HV
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 01:42:40 +0200
+	id 1IRd3z-0001to-Uj
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 02:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757617AbXIAXmN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 19:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757547AbXIAXmN
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 19:42:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39752 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756228AbXIAXmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 19:42:12 -0400
-Received: (qmail invoked by alias); 01 Sep 2007 23:42:10 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp017) with SMTP; 02 Sep 2007 01:42:10 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19lVL8QWUxlUIhDdwYc9FHmSu1KQ4RA0Rfjj5AYwb
-	hBGsaLeG/Mjo/7
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070901042924.GE18160@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S933567AbXIBALa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 1 Sep 2007 20:11:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933459AbXIBALa
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 20:11:30 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:10720 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932509AbXIBAL3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Sep 2007 20:11:29 -0400
+X-Greylist: delayed 1230 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Sep 2007 20:11:29 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 943D2802849;
+	Sun,  2 Sep 2007 01:43:04 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23813-06; Sun,  2 Sep 2007 01:43:04 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 0AF748003E1;
+	Sun,  2 Sep 2007 01:43:03 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vir6us1ia.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57287>
 
-Hi,
+l=F6rdag 01 september 2007 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+>=20
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/compl=
+etion/git-completion.bash
+> > index 5ed1821..1fef857 100755
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -64,12 +64,34 @@ __gitdir ()
+> > =20
+> >  __git_ps1 ()
+> >  {
+> > -	local b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
+> > -	if [ -n "$b" ]; then
+> > +	local g=3D"$(git rev-parse --git-dir 2>/dev/null)"
+> > +	if [ -n "$g" ]; then
+> > +		local r
+> > +		local b
+> > +		if [ -d "$g/../.dotest" ]
+> > +		then
+> > +			local b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
+> > +			r=3D"|REBASEING"
+>=20
+> I might be in the middle of resolving a conflicted "git am".
+>=20
+> But I love the idea.  We need to think about cleaning up our
+> "state machine" mechanism to make this kind of thing easier to
+> do.  We've had a few suggestions on the list in the past but
+> they never passed the suggestion/speculation stage.
 
-[Cc'ed all contributors.  I mean, the real contributors, not just those 
-with cheap talk ;-)]
+I'd love to see that. The Eclipse plugin needs to know about such thing=
+s
+in order to prevent the user from making errors he wouldn't like to do.=
+ We do
+commit and checkouts without looking for these states now. Not too good=
+=2E
 
-On Sat, 1 Sep 2007, Shawn O. Pearce wrote:
+The downside of improving the state machine is that we'll have to detec=
+t
+the old AND the new states.
 
-> Now that git-gui 0.8.2 is out and git 1.5.3 is just around the corner I 
-> am starting to think about bringing the git-gui i18n work into the main 
-> git-gui tree, so we can start working from a common codebase.
+Here's an ever better version which handles bisect and detached heads.
 
-Yes.
+-- robin
 
-> Looking at the repository on repo.or.cz it looks like it needs to be 
-> merged/rebased onto 0.8.2.  There is a trivial merge conflict, but there 
-> are some more subtle ones caused by the movement of the library 
-> directory initialization down lower in git-gui.sh. For example 
-> translations won't be initialized if we have an issue with the output of 
-> git-version and want to prompt the user.
+=46rom e5b2b9833786f13d729b7fead74297580b03f775 Mon Sep 17 00:00:00 200=
+1
+=46rom: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Sat, 1 Sep 2007 12:20:48 +0200
+Subject: [PATCH] Improve bash prompt to detect various states like an u=
+nfinished merge
 
-Hmm.  I am not enough involved in i18n stuff to form a proper opinion 
-here...  Do you suggest to move the initialisation earlier?
+This patch makes the git prompt (when enabled) show if a merge or a
+rebase is unfinished. It also detects if a bisect is being done as
+well as detached checkouts.
 
-> What is the current plan?  Should I be looking at the master branch of 
-> git://repo.or.cz/git-gui/git-gui-i18n.git for pulling?  Or are folks 
-> expecting that this series will be cleaned up before I pull it?
+An uncompleted git-am cannot be distinguised from a rebase (the
+non-interactive version). Instead of having an even longer prompt
+we simply ignore that and hope the power users that use git-am knows
+the difference.
 
-My plan is to put out a cleaned up patch series:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ contrib/completion/git-completion.bash |   37 ++++++++++++++++++++++++=
+++++---
+ 1 files changed, 33 insertions(+), 4 deletions(-)
 
-- Christian's patches, consolidated, to
-
-	- Makefile rules for translation
-	- Infrastructure in the source (basically adding [mc ...] 
-	  everywhere, and initialising msgcat)
-	- po/git-gui.pot
-	- glossary
-
-Then I'd like to prepare consolidated patches for the individual 
-languages, attributed to the author where unique, and to Nanako for 
-Japanese (mentioning help from Junio), and to Paolo (mentioning help from 
-Michele).
-
-Junio, Michele, is that attribution enough for you?
-
-All these patches will go through the mailing list, so that people can 
-comment and suggest improvements.
-
-I'll also try to bug Christian into looking through the output of
-
-	git grep \" -- \*.sh \*.tcl | grep -vwe mc -e bind | less
-
-to make sure that we did not forget a string.  ATM the output consists of 
-300+ lines, so it is a bit boring.  Maybe I can improve that command, 
-too...
-
-(I see
-
-	"Invalid arguments to git-version",
-	"Last arm of $type $name must be default",
-	"git-version >= x", "git-gui: fatal error",
-	"Cannot move to top of working directory:\n\n$err",
-	"error: no icon for $w state={$state} $path",
-	"error: no desc for state={$state} $path",
-	"Unstaging [short_path $path] from commit",
-	"Adding [short_path $path]",
-	"fatal: cannot stat path $path: No such file or directory",
-	"Possible environment issues exist.[...]",
-	"Loading$cur_s annotations...",
-	"Loading annotation...",
-	"Author:\t",
-	"Committer:\t",
-	"Original File:\t",
-	"Originally By:\n",
-	"In File: ",
-	"Copied Or Moved Here By:\n",
-	"fatal: Cannot resolve $l_trck",
-	"branch: Created from $new_expr",
-	"merge $new_expr: Fast-forward",
-	"Updating working directory to '[_name $this]'...",
-	"Checked out '$name'.",
-	"class $class already declared",
-	"wrong # args: field name value?",
-	"class $class is sealed (cannot add new fields)",
-	"field $name already declared",
-	"wrong # args: method name args body (ifdeleted body)?",
-	"make_toplevel topvar winvar {options}",
-	"unsupported option $name",
-	"Commit $PARENT appears to be corrupt",
-	"warning: Tcl does not support encoding '$enc'.",
-	"This repository currently has approximately [...]",
-	"Loading diff of [escape_path $path]...",
-	"Unable to display [escape_path $path]",
-	"* Binary file (not showing content).",
-	"Unable to display [escape_path $path]",
-	"error: Unhandled 3 way diff marker: {$op}",
-	"error: Unhandled 2 way diff marker: {$op}",
-	"Unstaging [short_path $current_diff_path] from commit",
-	"Adding [short_path $current_diff_path]", and
-	"The following branches are not completely merged into [...]",
-
-but I could have missed some, and it is possible some do not need [mc 
-...].)
-
-Ciao,
-Dscho
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 5ed1821..048a715 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -64,12 +64,41 @@ __gitdir ()
+=20
+ __git_ps1 ()
+ {
+-	local b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
+-	if [ -n "$b" ]; then
++	local g=3D"$(git rev-parse --git-dir 2>/dev/null)"
++	if [ -n "$g" ]; then
++		local r
++		local b
++		if [ -d "$g/../.dotest" ]
++		then
++			local b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
++			r=3D"|REBASING"
++		else
++			if [ -d "$g/.dotest-merge" ]
++			then
++				r=3D"|REBASING"
++				b=3D"$(cat $g/.dotest-merge/head-name)"
++			else
++				if [ -f "$g/MERGE_HEAD" ]
++				then
++					r=3D"|MERGING"
++					b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
++				else
++					if [ -f $g/BISECT_LOG ]
++					then
++						r=3D"|BISECTING"
++					fi
++					if ! b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
++					then
++						b=3D"$(cut -c1-7 $g/HEAD)..."
++					fi
++				fi
++			fi
++		fi
++
+ 		if [ -n "$1" ]; then
+-			printf "$1" "${b##refs/heads/}"
++			printf "$1" "${b##refs/heads/}$r"
+ 		else
+-			printf " (%s)" "${b##refs/heads/}"
++			printf " (%s)" "${b##refs/heads/}$r"
+ 		fi
+ 	fi
+ }
+--=20
+1.5.3.rc7.844.gfd3c5
