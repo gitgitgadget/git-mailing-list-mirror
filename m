@@ -1,64 +1,65 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [ANNOUNCE] git/gitweb.git repository
-Date: Sat, 1 Sep 2007 15:46:51 +1000
-Message-ID: <ee77f5c20708312246u37f9c1bahe2211117abd05790@mail.gmail.com>
-References: <20070831000149.GK1219@pasky.or.cz>
-	 <ee77f5c20708301756k60b4d295j907da463af477982@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-tag: Fix -l option to use better shell style globs.
+Date: Fri, 31 Aug 2007 23:16:21 -0700
+Message-ID: <7v8x7qvrka.fsf@gitster.siamese.dyndns.org>
+References: <46D8F431.70801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jnareb@gmail.com, ltuikov@yahoo.com
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 01 07:46:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 01 08:16:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRLou-0007pS-20
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:46:56 +0200
+	id 1IRMHX-0002b2-Ol
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 08:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbXIAFqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 01:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbXIAFqw
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:46:52 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:39227 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054AbXIAFqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 01:46:52 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so569060rvb
-        for <git@vger.kernel.org>; Fri, 31 Aug 2007 22:46:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MFq+OCq2xWO5Nk3qTLrw4TmKhoe0GPHPrMl7bEf4Iwwj9lpkYGhRMGA9OzM3iu2ysCfKkgghJ8N11egpCXrJM6zozS3P5W3/6Yk+GEqwfLuqUUjHAU7jmYdrebcEa860wdqAr+WHYbyJrZLAWNrQrxDNbTF40GmNXJOm5qrRPvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SBhj2THQp1I2QN6h+zMTvI4ntLYB2Irn7K6PZFizM1vwODUEWiFOSw71pX6fF0VSueJbukjpiqWfN66ZaB0e9KSYdca+7MaD7VpLiHPi84qD8+Fbmj/knRKpEMch/AUk80Hi0VwYXErzxkOb90OTbDT8iABJ85f9j8ftc2hiwDw=
-Received: by 10.140.128.3 with SMTP id a3mr1028540rvd.1188625611356;
-        Fri, 31 Aug 2007 22:46:51 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Fri, 31 Aug 2007 22:46:51 -0700 (PDT)
-In-Reply-To: <ee77f5c20708301756k60b4d295j907da463af477982@mail.gmail.com>
-Content-Disposition: inline
+	id S1751445AbXIAGQ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 02:16:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398AbXIAGQ1
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 02:16:27 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49105 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbXIAGQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 02:16:26 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 88BD612AC64;
+	Sat,  1 Sep 2007 02:16:44 -0400 (EDT)
+In-Reply-To: <46D8F431.70801@gmail.com> (Carlos Rica's message of "Sat, 01 Sep
+	2007 07:10:09 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57257>
 
-On 31/08/07, David Symonds <dsymonds@gmail.com> wrote:
-> On 31/08/2007, Petr Baudis <pasky@suse.cz> wrote:
-> >   Please feel encouraged to make random forks for your development
-> > efforts, or push your random patches (preferrably just bugfixes,
-> > something possibly controversial should be kept in safe containment like
-> > a fork or separate branch) to the mob branch.
+Carlos Rica <jasampler@gmail.com> writes:
+
+>  	if (pattern == NULL)
+> -		pattern = "";
+> +		pattern = "*";
 >
-> Sorry, I'm still relatively new to git, and couldn't work out how to
-> push to the mob branch, so it's inline below. It's fairly minor, just
-> adding <span title="foo">..</span> around author names when they get
-> abbreviated.
+> -	/* prepend/append * to the shell pattern: */
+> -	newpattern = xmalloc(strlen(pattern) + 3);
+> -	sprintf(newpattern, "*%s*", pattern);
+> -
+> -	filter.pattern = newpattern;
+> +	filter.pattern = pattern;
+>  	filter.lines = lines;
+>
+>  	for_each_tag_ref(show_reference, (void *) &filter);
 
-Okay, I worked out how to push to the mob branch: it's commit 37c8546.
-I can refactor this somewhat if that's an issue.
+I think it is conceptually simpler on the show_reference side to
+allow (filter.pattern == NULL) and say:
 
+	if (!filter->pattern || !fnmatch(filter->pattern, refname, 0)) {
+        	... show that ref ...
+	}
 
-Dave.
+It is not such a big deal now you do not do newpattern
+allocation anymore, so I'll apply the patch as is.
