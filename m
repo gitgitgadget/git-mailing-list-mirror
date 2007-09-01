@@ -1,103 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: repo.or.cz wishes?
-Date: Fri, 31 Aug 2007 22:58:57 -0400
-Message-ID: <20070901025857.GD18160@spearce.org>
-References: <20070826235944.GM1219@pasky.or.cz> <Pine.LNX.4.64.0708270933450.28586@racer.site> <20070828041059.GK18160@spearce.org> <20070828111913.GA31120@thunk.org> <20070829041523.GS18160@spearce.org> <alpine.LFD.0.999.0708291009570.25853@woody.linux-foundation.org>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] course/svn: Fix a link pointing to a .txt instead of its
+ .html page
+Date: Sat, 01 Sep 2007 05:41:40 +0200
+Message-ID: <46D8DF74.6020704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Sep 01 04:59:34 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Sep 01 05:42:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRJCw-00050k-8q
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 04:59:34 +0200
+	id 1IRJsL-0002EF-56
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 05:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbXIAC7I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 22:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbXIAC7H
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 22:59:07 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58462 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751519AbXIAC7G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 22:59:06 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IRJCB-0001X2-Sk; Fri, 31 Aug 2007 22:58:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E690920FBAE; Fri, 31 Aug 2007 22:58:57 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0708291009570.25853@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751686AbXIADly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 23:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbXIADly
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 23:41:54 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:45765 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbXIADlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 23:41:53 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so765457fkz
+        for <git@vger.kernel.org>; Fri, 31 Aug 2007 20:41:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=amPH9b3FMv0jcKocDk5o1yFX7O7QROJJebDtNk6Qu81WnCFFtIn/TAAl7gqgXrGegc+pduZoWoD2jdIEmUguBqIe0VbT+6PbGdE83W8N54sOjQSaFNs2C4f7LiQgGdSuOohUSPxxfTTw8cB+PwRZp6f5Hy+Ki5XZSGfMHjOmWv4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=hrcdN9cMQSB8jLoRppx5+Qp1qzHOCNfugZVj3QlQfTkOWtcIh9TEIWDmSWYoTXwOdfn9Sud/a5PPvoJNbBupPyglMs2KpMDattAJ22BYWiKM/k9fdopfe7i1lG+3aMfNbdkRTulOnTIwTvPHF5bhxak81Qv916QUM90ZO72zNrM=
+Received: by 10.82.111.8 with SMTP id j8mr5294888buc.1188618111470;
+        Fri, 31 Aug 2007 20:41:51 -0700 (PDT)
+Received: from ?192.168.0.192? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id t38sm172215ugc.2007.08.31.20.41.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 31 Aug 2007 20:41:49 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57248>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Wed, 29 Aug 2007, Shawn O. Pearce wrote:
-> > 
-> > Not if I already have a pointer from B to A's refs.  repo.or.cz
-> > also has this same pointer:
-> > 
-> > 	git clone --shared A B
-> > 	ln -s A/refs B/refs/forkee
-> 
-> Now, this doesn't work well with packed refs, I'm afraid.
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
+ course/svn.html |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-No, it doesn't work well.  So I actually also avoid packing A's refs.
-Which is yet another reason why my A's don't allow pushing, that
-way nobody goes nuts and creates a ton of refs in there.  With only
-refs/heads/master and it being unpacked its not a big deal.
- 
-> So I suspect that if we really want to support something like this, we'd 
-> need to do more than just avoid the recursion when you cross-link.
+diff --git a/course/svn.html b/course/svn.html
+index ccadfac..fbb9d91 100644
+--- a/course/svn.html
++++ b/course/svn.html
+@@ -514,7 +514,7 @@ repositories with no working copy at all - so called <em>bare</em>
+ repositories which are commonly used for public access or developers'
+ meeting point - just for exchange of history where a checked out copy
+ would be a waste of space anyway. You can create such a repository.
+-See <a href="http://www.kernel.org/pub/software/scm/git/docs/user-manual.txt#setting-up-a-public-repository">Setting up a public repository</a> for details.</p>
++See <a href="http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#setting-up-a-public-repository">Setting up a public repository</a> for details.</p>
 
-Yes.  I've been thinking about trying to better share the ODB and
-the ref database between repositories, but it has been low priority
-for me.
-
-I rely on this ref symlinking/alternate ODB trick a lot at day-job
-to help me cope with an ugly situation I created across a number of
-repositories.  Most of our codebase came from one Git repository,
-but has been refactored and split into about 10 different Git
-repositories.  I did that refactoring by just cloning and deleting
-the uninteresting content, so each repository actually has a huge
-block of its history in common with the other 9.
-
-One such A is "common-crap.git" that is the shared common history.
-Since its strictly history nobody changes that repository, and
-everyone borrows objects from it.  This reduces my common working
-set by about 900MiB, as the history lives in only one packfile and
-not in 10.
-
-There are obviously other ways to deal with this:
-
- - start the 10 repositories over again and use info/grafts to
-   reinsert the old history when/if required;
-
- - just hardlink the same .keep'd packfile into the 10 repositories,
-   since it is held by .keep it won't be touched during repack.
-
-So one reason it has been low priority for me to improve upon is
-because there's more than one way to solve the problem, and the
-particular solution I have settled upon may not be the best solution
-for anyone.
-
-Though I think we can all agree that repo.or.cz's use of forks
-is increasingly more popular, and one of the more powerful social
-features of git.  Better supporting it out of the box by making it
-easier to setup and manage can only be a good thing for our users.
-
+ <p>Git can work with the same workflow as Subversion, with a group of developers
+ using a single repository for exchange of their work. The only change
 -- 
-Shawn.
+1.5.0
