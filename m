@@ -1,82 +1,103 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [ANNOUNCE] git/gitweb.git repository
-Date: Fri, 31 Aug 2007 19:15:23 -0700 (PDT)
-Message-ID: <400762.26134.qm@web31810.mail.mud.yahoo.com>
-References: <7v4pifw45n.fsf@gitster.siamese.dyndns.org>
-Reply-To: ltuikov@yahoo.com
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: repo.or.cz wishes?
+Date: Fri, 31 Aug 2007 22:58:57 -0400
+Message-ID: <20070901025857.GD18160@spearce.org>
+References: <20070826235944.GM1219@pasky.or.cz> <Pine.LNX.4.64.0708270933450.28586@racer.site> <20070828041059.GK18160@spearce.org> <20070828111913.GA31120@thunk.org> <20070829041523.GS18160@spearce.org> <alpine.LFD.0.999.0708291009570.25853@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
-	jnareb@gmail.com
-To: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 01 04:15:31 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Theodore Tso <tytso@mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Sep 01 04:59:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRIWJ-0008Oa-36
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 04:15:31 +0200
+	id 1IRJCw-00050k-8q
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 04:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751262AbXIACPY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 22:15:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbXIACPY
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 22:15:24 -0400
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:40795 "HELO
-	web31810.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751225AbXIACPY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2007 22:15:24 -0400
-Received: (qmail 26742 invoked by uid 60001); 1 Sep 2007 02:15:23 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=wxx6yTk6yocVUI/gR0uKxHES1vN+7ZG663uBNtmAlo5VMGdqEeUnQOSb3bZi8243TOdGPiY5laBQNDxNajc94oPTmM73daAATisKb9/S9Qkds13NMvrnxK6xY3qGgcQzNe8PoXRwxoLPFUAeI33cVVJFKYi5y0h/INWtMCGjdrU=;
-X-YMail-OSG: 6P9JpPUVM1kxHrFMo1aA2tXy5QFnqSFBvEnECP0f88z4B97_pKk_gX2.4HK9JW8TovDgkW6.aOEH1M5vZVrIneidB4Ugc7zqtU7sWCSC2dZ01x8-
-Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Fri, 31 Aug 2007 19:15:23 PDT
-In-Reply-To: <7v4pifw45n.fsf@gitster.siamese.dyndns.org>
+	id S1751520AbXIAC7I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 22:59:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbXIAC7H
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 22:59:07 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58462 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751519AbXIAC7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 22:59:06 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IRJCB-0001X2-Sk; Fri, 31 Aug 2007 22:58:48 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E690920FBAE; Fri, 31 Aug 2007 22:58:57 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0708291009570.25853@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57247>
 
---- Junio C Hamano <gitster@pobox.com> wrote:
-> Petr Baudis <pasky@suse.cz> writes:
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Wed, 29 Aug 2007, Shawn O. Pearce wrote:
+> > 
+> > Not if I already have a pointer from B to A's refs.  repo.or.cz
+> > also has this same pointer:
+> > 
+> > 	git clone --shared A B
+> > 	ln -s A/refs B/refs/forkee
 > 
-> > On Sat, Sep 01, 2007 at 03:25:16AM CEST, Johannes Schindelin wrote:
-> >> On Fri, 31 Aug 2007, Luben Tuikov wrote:
-> >> 
-> >> > So what's the review process now?
-> >> 
-> >> Umm.  Pasky set it up, so it's Pasky who decides what goes in and what 
-> >> not.  What exactly is your problem?
-> >
-> >   Junio will pull from it, so he has full right to ask. :-)
-> 
-> Well, I won't blindly pull from it, but honestly when it comes
-> to gitweb I trust Pasky's judgement as much as I trust myself,
-> if not even more.  And I think the review process Pasky
-> described is good --- people will see both the patches on the
-> list and code in action at repo.or.cz/.
-> 
-> I am a bit worried about the 'master' being a "StGIT stack",
-> though.  Playgrounds to be cherry-picked from (aka 'pu') would
-> make *perfect* sense to be managed that way (and the topics that
-> go only 'pu' of git.git itself are managed the same except that
-> I do not do so using StGIT), but I think we need a stable
-> history for the branch git.git will eventually pull from.
+> Now, this doesn't work well with packed refs, I'm afraid.
 
-That was my concern too, but seeing the immediate hostility
-I got about asking about the review process I decided not
-to mention it.
+No, it doesn't work well.  So I actually also avoid packing A's refs.
+Which is yet another reason why my A's don't allow pushing, that
+way nobody goes nuts and creates a ton of refs in there.  With only
+refs/heads/master and it being unpacked its not a big deal.
+ 
+> So I suspect that if we really want to support something like this, we'd 
+> need to do more than just avoid the recursion when you cross-link.
 
-I'd be interesting to see how gitweb support pans out
-given this initial hostility to inquiry of accountability.
+Yes.  I've been thinking about trying to better share the ODB and
+the ref database between repositories, but it has been low priority
+for me.
 
-Over the years I've seen that the best support and accountability
-has been had when the maintainer is not the main contributor/developer,
-especially for shared development. Otherwise personal preferences over
-feature X and Y come into play and then things get ugly.  This is
-why you were such a good maintainer of gitweb.
+I rely on this ref symlinking/alternate ODB trick a lot at day-job
+to help me cope with an ugly situation I created across a number of
+repositories.  Most of our codebase came from one Git repository,
+but has been refactored and split into about 10 different Git
+repositories.  I did that refactoring by just cloning and deleting
+the uninteresting content, so each repository actually has a huge
+block of its history in common with the other 9.
 
-   Luben
+One such A is "common-crap.git" that is the shared common history.
+Since its strictly history nobody changes that repository, and
+everyone borrows objects from it.  This reduces my common working
+set by about 900MiB, as the history lives in only one packfile and
+not in 10.
+
+There are obviously other ways to deal with this:
+
+ - start the 10 repositories over again and use info/grafts to
+   reinsert the old history when/if required;
+
+ - just hardlink the same .keep'd packfile into the 10 repositories,
+   since it is held by .keep it won't be touched during repack.
+
+So one reason it has been low priority for me to improve upon is
+because there's more than one way to solve the problem, and the
+particular solution I have settled upon may not be the best solution
+for anyone.
+
+Though I think we can all agree that repo.or.cz's use of forks
+is increasingly more popular, and one of the more powerful social
+features of git.  Better supporting it out of the box by making it
+easier to setup and manage can only be a good thing for our users.
+
+-- 
+Shawn.
