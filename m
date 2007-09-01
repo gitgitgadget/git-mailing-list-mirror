@@ -1,54 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-tag: Fix -l option to use better shell style globs.
-Date: Fri, 31 Aug 2007 22:39:32 -0700
-Message-ID: <7vd4x3uep7.fsf@gitster.siamese.dyndns.org>
-References: <46D8F431.70801@gmail.com> <20070901053158.GF18160@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] git-svn: fix dcommit clobbering upstream when committing multiple changes
+Date: Sat, 1 Sep 2007 07:43:21 +0200
+Message-ID: <20070901054321.GA8021@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.64.0708312200480.28586@racer.site> <20070831221814.GB31033@untitled> <Pine.LNX.4.64.0709010017250.28586@racer.site> <20070831234854.GA6451@mimvista.com> <20070901002501.GA11591@mimvista.com> <20070901011612.GA3407@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 01 07:40:10 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Sep 01 07:44:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRLiM-00077q-0E
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:40:10 +0200
+	id 1IRLmH-0007X8-Px
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 07:44:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028AbXIAFjl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 01:39:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbXIAFjl
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:39:41 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48850 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751966AbXIAFjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 01:39:40 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3DAE212AA5C;
-	Sat,  1 Sep 2007 01:39:56 -0400 (EDT)
-In-Reply-To: <20070901053158.GF18160@spearce.org> (Shawn O. Pearce's message
-	of "Sat, 1 Sep 2007 01:31:58 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752059AbXIAFoJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 1 Sep 2007 01:44:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbXIAFoI
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 01:44:08 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3273 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752021AbXIAFoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 01:44:07 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IRLlR-0002Bc-00; Sat, 01 Sep 2007 06:43:21 +0100
+Content-Disposition: inline
+In-Reply-To: <20070901011612.GA3407@untitled>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57255>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 2007-08-31 18:16:12 -0700, Eric Wong wrote:
 
-> Carlos Rica <jasampler@gmail.com> wrote:
->> This patch removes certain behaviour of "git tag -l foo", currently
->> listing every tag name having "foo" as a substring.  The same
->> thing now could be achieved doing "git tag -l '*foo*'".
+> Although dcommit could detect if the first commit in the series
+> would conflict with the HEAD revision in SVN, it could not detect
+> conflicts in further commits it made.
 >
-> Even though this is a behavior change, I think its the right thing
-> to do.  The current behavior of searching "*$arg*" is downright
-> annoying.
+> Now we rebase each uncommitted change after each revision is
+> committed to SVN to ensure that we are up-to-date. git-rebase will
+> bail out on conflict errors if our next change cannot be applied and
+> committed to SVN cleanly, preventing accidental clobbering of
+> changes on the SVN-side.
+>
+> --no-rebase users will have trouble with this, and are thus warned
+> if they are committing more than one commit. Fixing this for
+> (hopefully uncommon) --no-rebase users would be more complex and
+> will probably happen at a later date.
 
-Yes, I concur.  It is very annoying that "git tag -l gui"
-matches "gitgui-0.7.0".
+Shouldn't it be a simple matter of checking if the total diff over the
+whole series would conflict with the SVN HEAD?
 
-Let's fix this.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
