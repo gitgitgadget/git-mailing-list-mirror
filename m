@@ -1,71 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] git/gitweb.git repository
-Date: Sat, 1 Sep 2007 03:31:59 +0200
-Message-ID: <20070901013159.GP1219@pasky.or.cz>
-References: <767502.77573.qm@web31812.mail.mud.yahoo.com> <Pine.LNX.4.64.0709010224410.28586@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-svn: fix dcommit clobbering upstream when committing
+ multiple changes
+Date: Sat, 1 Sep 2007 02:32:51 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709010232260.28586@racer.site>
+References: <Pine.LNX.4.64.0708312200480.28586@racer.site>
+ <20070831221814.GB31033@untitled> <Pine.LNX.4.64.0709010017250.28586@racer.site>
+ <20070831234854.GA6451@mimvista.com> <20070901002501.GA11591@mimvista.com>
+ <20070901011612.GA3407@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
-	jnareb@gmail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Sep 01 03:32:13 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Sep 01 03:33:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRHqL-0002tb-Gg
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 03:32:09 +0200
+	id 1IRHrG-00031x-U1
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 03:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbXIABcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 31 Aug 2007 21:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbXIABcF
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 21:32:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53413 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751106AbXIABcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2007 21:32:04 -0400
-Received: (qmail 3870 invoked by uid 2001); 1 Sep 2007 03:31:59 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709010224410.28586@racer.site>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751498AbXIABdD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 31 Aug 2007 21:33:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIABdB
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Aug 2007 21:33:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37013 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751150AbXIABdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2007 21:33:00 -0400
+Received: (qmail invoked by alias); 01 Sep 2007 01:32:59 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp021) with SMTP; 01 Sep 2007 03:32:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/WARoD5uXWzU+A3PfEzwfaNPo5ATLlXGaeLIX3RT
+	QahkSrSYwvYsrc
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070901011612.GA3407@untitled>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57243>
 
-  Hi,
+Hi,
 
-On Sat, Sep 01, 2007 at 03:25:16AM CEST, Johannes Schindelin wrote:
-> On Fri, 31 Aug 2007, Luben Tuikov wrote:
+On Fri, 31 Aug 2007, Eric Wong wrote:
+
+> Although dcommit could detect if the first commit in the series
+> would conflict with the HEAD revision in SVN, it could not
+> detect conflicts in further commits it made.
 > 
-> > --- Petr Baudis <pasky@suse.cz> wrote:
-> > >   Hi,
-> > > 
-> > >   due to popular (Junio's) demand, I have set up a gitweb-oriented fork
-> > > of git at repo.or.cz:
-> > > 
-> > > 	http://repo.or.cz/w/git/gitweb.git
-> > > 
-> > >   It is meant as a hub for various gitweb-related patches and
-> > > development efforts. So far it is pre-seeded by the patches repo.or.cz's
-> > > gitweb uses.
-> > 
-> > Is this right?
-> > 
-> > So what's the review process now?
-> 
-> Umm.  Pasky set it up, so it's Pasky who decides what goes in and what 
-> not.  What exactly is your problem?
+> Now we rebase each uncommitted change after each revision is
+> committed to SVN to ensure that we are up-to-date.  git-rebase
+> will bail out on conflict errors if our next change cannot be
+> applied and committed to SVN cleanly, preventing accidental
+> clobbering of changes on the SVN-side.
 
-  Junio will pull from it, so he has full right to ask. :-) As I wrote
-in the web README, to enter #next your patch should see some git@ review;
-that holds for repo.or.cz patches as well as for any other patches. I
-suppose we will sort out the exact distinction between #next and #master
-on the fly; the general idea is that patches that go on #master have
-more or less approached perfectness. ;-)
+Thanks for the quick fix; will play with it on Sunday...
 
--- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+Ciao,
+Dscho
