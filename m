@@ -1,96 +1,158 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] git-reset.txt: Use uniform HEAD~N notation in all examples
-Date: Sat, 01 Sep 2007 11:39:45 +0300
-Organization: Private
-Message-ID: <hcmesrse.fsf@cante.net>
-References: <tzqfsijk.fsf@cante.net>
-	<7vy7frzfzg.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -m: Fix incorrect short-logs of already applied commits.
+Date: Sat, 01 Sep 2007 02:01:41 -0700
+Message-ID: <7vmyw6u5ca.fsf@gitster.siamese.dyndns.org>
+References: <200709010925.27926.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 01 10:38:44 2007
+Cc: git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Sep 01 11:01:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IROV6-00073u-R5
-	for gcvg-git@gmane.org; Sat, 01 Sep 2007 10:38:41 +0200
+	id 1IROrW-0002wN-Tj
+	for gcvg-git@gmane.org; Sat, 01 Sep 2007 11:01:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378AbXIAIh5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 04:37:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbXIAIh5
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 04:37:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:46959 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753378AbXIAIhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 04:37:39 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IROTb-0004aS-CB
-	for git@vger.kernel.org; Sat, 01 Sep 2007 10:37:07 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Sep 2007 10:37:07 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 01 Sep 2007 10:37:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:h5Mowr9LpEXD5B5d0Q4nZ5FOWwg=
+	id S1752159AbXIAJBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 05:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbXIAJBq
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 05:01:46 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50367 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbXIAJBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 05:01:45 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9C1BB12AC5F;
+	Sat,  1 Sep 2007 05:02:05 -0400 (EDT)
+In-Reply-To: <200709010925.27926.johannes.sixt@telecom.at> (Johannes Sixt's
+	message of "Sat, 1 Sep 2007 09:25:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57260>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> Jari Aalto <jari.aalto@cante.net> writes:
+> When a topic branch is rebased, some of whose commits are already
+> cherry-picked upstream:
 >
->> The manual mixed both caret(HEAD^) and tilde (HEAD~N) notation in
->> examples. This may be xconfusing to new users. The "counting" notation
->> HEAD~N likely to be grasped more easily because it allow successive
->> numbering 1, 2, 3 etc.
+>     o--X--A--B--Y    <- master
+>      \
+>       A--B--Z        <- topic
 >
-> I am mildly negative on this change.
+> then 'git rebase -m master' would report:
 >
-> Referring to (rather, "having to refer to" to fix mistakes) the
-> previous commit happens far more often than referring to an
-> ancestor of an arbitrary generation away (i.e. HEAD~$n).  I
-> think it is a better idea to expose users early on that HEAD^
-> notation which is shorter to type.
+>     Already applied: 0001 Y
+>     Already applied: 0002 Y
+>
+> With this fix it reports the expected:
+>
+>     Already applied: 0001 A
+>     Already applied: 0002 B
 
-If the page contains/combines many different ways of doing things,
-this creates confusion, especially if the distictions are not explained.
-And it would be unnecessary to explain the HEAD^ and HEAD~1 similarities
-in every page where these two get mixed.
+Well, good eyes.  A new test script would have been nice.
 
-PRICPLES:
+> +		printf "Already applied: %0${prec}d " $msgnum
+> +		git rev-list --pretty=oneline -1 "$cmt" | \
+> +			sed 's/^[a-f0-9]\+ //'
 
-1. The novice user is best served by making things simple and uniform.
+This is not your fault but I just noticed this sed script that
+steps outside BRE [*1*, *2*].  In this case we do not even need
+to use '\+', as we know what we are reading.
 
-2. Utilize concepts that may already be familar. E.g. other VCS/SCM tools
-   have concept of counting back revisions with negative numbers: -1,
-   -2, -3; so following this same idea in git manual pages would 
-   already rang associated bells.
+A few "sed" disciplines to keep things portable I tried to
+follow so far are:
 
-Like:
+ - Always use '-e' to introduce expression;
+ - Don't use two expressions concatenated with ';' in a single
+   string; multi-line scripts tend to be more portable;
+ - Do not use one-or-more "\+", that's not BRE.
 
-    HEAD, HEAD~1, HEAD~2
+I would propose doing the attached patch on top of yours.
+Opinion?
 
-If the syntax is changed in the middle (as it was in manual page),
-that interrupts the kognitive flow of reading.
+[Footnotes] 
 
-    HEAD, HEAD^, HEAD~2
+*1* http://www.opengroup.org/onlinepubs/000095399/utilities/sed.html
+*2* http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap09.html#tag_09_03
 
-I'm sure when user progresses with his learning, the differences or
-similarities of the notations become no-op.
+---
 
-But manual pages are served for wide audience. They are most
-important to new users.
+ git-rebase.sh             |    5 +----
+ t/t3406-rebase-message.sh |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 4 deletions(-)
 
-I hope we could strive for KISS is possible.
-
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 9cf0056..3bd66b0 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -69,13 +69,10 @@ continue_merge () {
+ 			die "$RESOLVEMSG"
+ 		fi
+ 		printf "Committed: %0${prec}d " $msgnum
+-		git rev-list --pretty=oneline -1 HEAD | \
+-			sed 's/^[a-f0-9]\+ //'
+ 	else
+ 		printf "Already applied: %0${prec}d " $msgnum
+-		git rev-list --pretty=oneline -1 "$cmt" | \
+-			sed 's/^[a-f0-9]\+ //'
+ 	fi
++	git rev-list --pretty=oneline -1 "$cmt" | sed -e 's/^[^ ]* //'
+ 
+ 	prev_head=`git rev-parse HEAD^0`
+ 	# save the resulting commit so we can read-tree on it later
+diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+new file mode 100755
+index 0000000..332b2b2
+--- /dev/null
++++ b/t/t3406-rebase-message.sh
+@@ -0,0 +1,44 @@
++#!/bin/sh
++
++test_description='messages from rebase operation'
++
++. ./test-lib.sh
++
++quick_one () {
++	echo "$1" >"file$1" &&
++	git add "file$1" &&
++	test_tick &&
++	git commit -m "$1"
++}
++
++test_expect_success setup '
++	quick_one O &&
++	git branch topic &&
++	quick_one X &&
++	quick_one A &&
++	quick_one B &&
++	quick_one Y &&
++
++	git checkout topic &&
++	quick_one A &&
++	quick_one B &&
++	quick_one Z
++
++'
++
++cat >expect <<\EOF
++Already applied: 0001 A
++Already applied: 0002 B
++Committed: 0003 Z
++EOF
++
++test_expect_success 'rebase -m' '
++
++	git rebase -m master >report &&
++	sed -n -e "/^Already applied: /p" \
++		-e "/^Committed: /p" report >actual &&
++	diff -u expect actual
++
++'
++
++test_done
