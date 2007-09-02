@@ -1,62 +1,72 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: problem with git cvsimport
-Date: Sun, 02 Sep 2007 08:37:06 +0200
-Message-ID: <46DA5A12.2090506@alum.mit.edu>
-References: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
+Date: Sun, 02 Sep 2007 08:53:58 +0200
+Message-ID: <85abs5v9q1.fsf@lola.goethe.zz>
+References: <200709010925.27926.johannes.sixt@telecom.at>
+	<7vmyw6u5ca.fsf@gitster.siamese.dyndns.org>
+	<7vejhiu565.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean.francois.veillette@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 08:37:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 08:54:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRj5E-0007ZO-IS
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:37:20 +0200
+	id 1IRjM3-00017P-Uc
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbXIBGhQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 02:37:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXIBGhQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:37:16 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:53038 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751467AbXIBGhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 02:37:14 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.131] (kaiserty.in-dsl.de [217.197.85.174])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l826b8gh000895
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 2 Sep 2007 08:37:08 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13) Gecko/20070824 Thunderbird/1.5.0.13 Mnenhy/0.7.5.666
-In-Reply-To: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753181AbXIBGyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 02:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXIBGyV
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:54:21 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:40793 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752840AbXIBGyU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 02:54:20 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 9EE4E1E5334;
+	Sun,  2 Sep 2007 08:54:18 +0200 (CEST)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 88C3B28EE1C;
+	Sun,  2 Sep 2007 08:54:18 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-038-061.pools.arcor-ip.net [84.61.38.61])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 175B91C331F;
+	Sun,  2 Sep 2007 08:54:01 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id ACD171C15372; Sun,  2 Sep 2007 08:53:58 +0200 (CEST)
+In-Reply-To: <7vejhiu565.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 01 Sep 2007 02\:05\:22 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4127/Sun Sep  2 06:35:44 2007 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57298>
 
-Jean-Fran=E7ois Veillette wrote:
-> I can't get git-cvsimport to convert a cvs project to git (full log
-> bellow).
-> I always get :
->     fatal: Not a valid object name refs/heads/HEAD
->     read-tree failed: 32768
->=20
-> I'm a relatively new to git. I would like to convert my project and
-> track external projects with git.
-> But cvsimport seem to fail.  Any pointer to help me resolve the issue=
- is
-> welcome !
+Junio C Hamano <gitster@pobox.com> writes:
 
-I suggest you try the experimental support in cvs2svn for converting to
-git.  cvs2svn is very good about understanding strange CVS histories.
-See the following thread for more information:
+> This is a continuation of the other one to avoid one-or-more operator
+> in sed.  At the same time, it actually tightens error checking,
+> because the numbers in the squash messages are not padded with
+> leading zero and cannot begin with 0.
+>
+> With this, I think we do not have any more use of one-or-more
+> (\+) in sed scripts.
 
-    http://marc.info/?l=3Dgit&m=3D118592701426175&w=3D4
+Just for the record: I believe that \{1,\} might be portable.
 
-Michael
+As usual, <URL:info:autoconf#Limitations%20of%20Usual%20Tools> (aka as
+(info "(autoconf) Limitations of Usual Tools")
+) provides a real horror show of sed variants.
+
+Actually, one can get the cursor right on the spot by typing
+info autoconf      (or the respective Emacs command C-h i g (autoconf))
+i sed RET
+
+There is something to be said for well-indexed documentation...
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
