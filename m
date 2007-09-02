@@ -1,45 +1,49 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach "git remote add" a mirror mode
-Date: Sun, 02 Sep 2007 12:52:36 -0700
-Message-ID: <7vk5r8q1yz.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709021245040.28586@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Stats in Git
+Date: Sun, 2 Sep 2007 22:02:18 +0200
+Message-ID: <20070902200218.GA2756@steel.home>
+References: <46DACD93.9000509@trolltech.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 02 21:52:48 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 22:03:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRvV0-0001rf-6F
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 21:52:46 +0200
+	id 1IRvep-0003lQ-DY
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 22:02:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbXIBTwm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 15:52:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXIBTwm
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 15:52:42 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:40704 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003AbXIBTwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 15:52:41 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CC9BE12D2FB;
-	Sun,  2 Sep 2007 15:53:00 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0709021245040.28586@racer.site> (Johannes
-	Schindelin's message of "Sun, 2 Sep 2007 12:45:22 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752696AbXIBUCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 16:02:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbXIBUCW
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 16:02:22 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:50203 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752413AbXIBUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 16:02:21 -0400
+Received: from tigra.home (Fc92a.f.strato-dslnet.de [195.4.201.42])
+	by post.webmailer.de (mrclete mo11) (RZmta 12.3)
+	with ESMTP id 001ef8j82IowfP ; Sun, 2 Sep 2007 22:02:19 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 2ABEE277BD;
+	Sun,  2 Sep 2007 22:02:19 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BEAC4BEAC; Sun,  2 Sep 2007 22:02:18 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46DACD93.9000509@trolltech.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAFvMw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57382>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Marius Storm-Olsen, Sun, Sep 02, 2007 16:49:55 +0200:
+> By applying the diff below, you can see for yourself what happens when
 
-> When using the "--mirror" option to "git remote add", the refs will not
-> be stored in the refs/remotes/ namespace, but in refs/heads/.
-
-I suspect people'd prefer "+refs/*:refs/*" for a repo truly
-mirroring another.
+just use "strace -e fstat,stat,lstat,stat64,lstat64 -f git-status"
+on sane platform.
