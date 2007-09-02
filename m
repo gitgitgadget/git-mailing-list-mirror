@@ -1,199 +1,546 @@
-From: Douglas Stockwell <douglas.stockwell@gmail.com>
-Subject: [PATCH] send-email: Add support for SSL and SMTP-AUTH
-Date: Sun,  2 Sep 2007 12:14:45 +0900
-Message-ID: <11887028854022-git-send-email-doug@11011.net>
-Cc: Douglas Stockwell <doug@11011.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.5.3
+Date: Sat, 01 Sep 2007 23:31:17 -0700
+Message-ID: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 05:15:16 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 08:32:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRfvf-00052d-LB
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 05:15:16 +0200
+	id 1IRj04-00070Z-3F
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbXIBDOp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 23:14:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752142AbXIBDOo
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 23:14:44 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:18360 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903AbXIBDOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 23:14:43 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1458539wah
-        for <git@vger.kernel.org>; Sat, 01 Sep 2007 20:14:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:date:message-id:x-mailer:from;
-        b=S4UdqBYwtA+dMF2Ux1sMBSnc8jHkbwqLmaAAqHdNmOKycetoSOh5tHKa0+7iLCcWn1vgbZkdUeYBGyvXSfZqXVesD+O+OlRaDH0e14RlBLbXYsP8x0PRUMYwCiiTu26KlwQv5EVkSuQQ8hv6KoklBpxYZQRzSqJnC0kNPYh+gYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:date:message-id:x-mailer:from;
-        b=UUnTve+B5HuOhQo/pqN2xNBOztkvUsXvzJk8gRd4RHrK3+BU9/E/0v2N/Zi3fjWyNxquu4N+amf4689/8tkmQsiskLvtkd2XFU3wWrqmxU0cZtqnOLGO48OawoXmSHcOhJYA87IapfCYKTTDe9RMmTgsQ7OQruQ9eT40l4t4KfQ=
-Received: by 10.114.175.16 with SMTP id x16mr464065wae.1188702883227;
-        Sat, 01 Sep 2007 20:14:43 -0700 (PDT)
-Received: from localhost.localdomain ( [210.235.203.21])
-        by mx.google.com with ESMTPS id m5sm1937492wag.2007.09.01.20.14.41
-        (version=SSLv3 cipher=OTHER);
-        Sat, 01 Sep 2007 20:14:42 -0700 (PDT)
-X-Mailer: git-send-email 1.5.3.rc7.17.gd77cc
+	id S932160AbXIBGbb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 02:31:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbXIBGba
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:31:30 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33679 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753769AbXIBGbZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 02:31:25 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CD7DD12C838;
+	Sun,  2 Sep 2007 02:31:41 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57295>
 
-Allows username and password to be given using --smtp-authuser
-and --smtp-authpass. SSL use is flagged by --smtp-ssl. These are
-backed by corresponding defaults in the git configuration file.
+The latest feature release GIT 1.5.3 is available at the usual
+places:
 
-Signed-off-by: Douglas Stockwell <doug@11011.net>
----
- Documentation/git-send-email.txt |   21 +++++++++++++++-
- git-send-email.perl              |   50 ++++++++++++++++++++++++++++++-------
- 2 files changed, 60 insertions(+), 11 deletions(-)
+  http://www.kernel.org/pub/software/scm/git/
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 8231286..471c268 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -79,6 +79,16 @@ The --cc option must be repeated for each user you want on the cc list.
- 	`/usr/lib/sendmail` if such program is available, or
- 	`localhost` otherwise.
- 
-+--smtp-authuser, --smtp-authpass::
-+	Username and password for SMTP-AUTH. Defaults are the values of
-+	the configuration values 'sendemail.smtpauthuser' and
-+	'sendemail.smtpauthpass'. If not set, authentication is not attempted.
-+
-+--smtp-ssl::
-+	If set, connects to the SMTP server using SSL.
-+	Default is the value of the 'sendemail.smtpssl' configuration value;
-+	if that is unspecified, does not use SSL.
-+
- --subject::
- 	Specify the initial subject of the email thread.
- 	Only necessary if --compose is also set.  If --compose
-@@ -132,7 +142,16 @@ sendemail.chainreplyto::
- 	parameter.
- 
- sendemail.smtpserver::
--	Default smtp server to use.
-+	Default SMTP server to use.
-+
-+sendemail.smtpauthuser::
-+	Default SMTP-AUTH username.
-+
-+sendemail.smtpauthpass::
-+	Default SMTP-AUTH password.
-+
-+sendemail.smtpssl::
-+	Boolean value specifying the default to the '--smtp-ssl' parameter.
- 
- Author
- ------
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f1a8855..38e8395 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -73,6 +73,12 @@ Options:
-    --smtp-server  If set, specifies the outgoing SMTP server to use.
-                   Defaults to localhost.
- 
-+   --smtp-authuser The username for SMTP-AUTH.
-+
-+   --smtp-authpass The password for SMTP-AUTH.
-+
-+   --smtp-ssl     If set, connects to the SMTP server using SSL.
-+
-    --suppress-from Suppress sending emails to yourself if your address
-                   appears in a From: line. Defaults to off.
- 
-@@ -142,7 +148,6 @@ my $compose_filename = ".msg.$$";
- my (@to,@cc,@initial_cc,@bcclist,@xh,
- 	$initial_reply_to,$initial_subject,@files,$author,$sender,$compose,$time);
- 
--my $smtp_server;
- my $envelope_sender;
- 
- # Example reply to:
-@@ -161,17 +166,34 @@ my ($quiet, $dry_run) = (0, 0);
- 
- # Variables with corresponding config settings
- my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc);
-+my ($smtp_server, $smtp_authuser, $smtp_authpass, $smtp_ssl);
- 
--my %config_settings = (
-+my %config_bool_settings = (
-     "thread" => [\$thread, 1],
-     "chainreplyto" => [\$chain_reply_to, 1],
-     "suppressfrom" => [\$suppress_from, 0],
-     "signedoffcc" => [\$signed_off_cc, 1],
-+    "smtpssl" => [\$smtp_ssl, 0]
-+);
-+
-+my %config_string_settings = (
-+    "smtpserver" => [\$smtp_server, undef],
-+    "smtpauthuser" => [\$smtp_authuser, undef],
-+    "smtpauthpass" => [\$smtp_authpass, undef],
- );
- 
--foreach my $setting (keys %config_settings) {
-+foreach my $setting (keys %config_bool_settings) {
-     my $config = $repo->config_bool("sendemail.$setting");
--    ${$config_settings{$setting}->[0]} = (defined $config) ? $config : $config_settings{$setting}->[1];
-+    ${$config_bool_settings{$setting}->[0]} = (defined $config)
-+        ? $config
-+        : $config_bool_settings{$setting}->[1];
-+}
-+
-+foreach my $setting (keys %config_string_settings) {
-+    my $config = $repo->config("sendemail.$setting");
-+    ${$config_string_settings{$setting}->[0]} = (defined $config)
-+        ? $config
-+        : $config_string_settings{$setting}->[1];
- }
- 
- @bcclist = $repo->config('sendemail.bcc');
-@@ -190,6 +212,9 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "bcc=s" => \@bcclist,
- 		    "chain-reply-to!" => \$chain_reply_to,
- 		    "smtp-server=s" => \$smtp_server,
-+		    "smtp-authuser=s" => \$smtp_authuser,
-+		    "smtp-authpass=s" => \$smtp_authpass,
-+		    "smtp-ssl!" => \$smtp_ssl,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
- 		    "suppress-from!" => \$suppress_from,
-@@ -315,10 +340,7 @@ if ($thread && !defined $initial_reply_to && $prompting) {
- 	$initial_reply_to =~ s/(^\s+|\s+$)//g;
- }
- 
--if (!$smtp_server) {
--	$smtp_server = $repo->config('sendemail.smtpserver');
--}
--if (!$smtp_server) {
-+if (!defined $smtp_server) {
- 	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
- 		if (-x $_) {
- 			$smtp_server = $_;
-@@ -548,8 +570,16 @@ X-Mailer: git-send-email $gitversion
- 		print $sm "$header\n$message";
- 		close $sm or die $?;
- 	} else {
--		require Net::SMTP;
--		$smtp ||= Net::SMTP->new( $smtp_server );
-+		if ($smtp_ssl) {
-+			require Net::SMTP::SSL;
-+			$smtp ||= Net::SMTP::SSL->new( $smtp_server, Port => 465 );
-+		}
-+		else {
-+			require Net::SMTP;
-+			$smtp ||= Net::SMTP->new( $smtp_server );
-+		}
-+		$smtp->auth( $smtp_authuser, $smtp_authpass )
-+			or die $smtp->message if (defined $smtp_authuser);
- 		$smtp->mail( $raw_from ) or die $smtp->message;
- 		$smtp->to( @recipients ) or die $smtp->message;
- 		$smtp->data or die $smtp->message;
--- 
-1.5.3.rc7.17.gd77cc
+  git-1.5.3.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.3.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.3.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.5.3-1.$arch.rpm	(RPM)
+
+GIT v1.5.3 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Updates since v1.5.2
+--------------------
+
+* The commit walkers other than http are officially deprecated,
+  but still supported for now.
+
+* The submodule support has Porcelain layer.
+
+  Note that the current submodule support is minimal and this is
+  deliberately so.  A design decision we made is that operations
+  at the supermodule level do not recurse into submodules by
+  default.  The expectation is that later we would add a
+  mechanism to tell git which submodules the user is interested
+  in, and this information might be used to determine the
+  recursive behaviour of certain commands (e.g. "git checkout"
+  and "git diff"), but currently we haven't agreed on what that
+  mechanism should look like.  Therefore, if you use submodules,
+  you would probably need "git submodule update" on the
+  submodules you care about after running a "git checkout" at
+  the supermodule level.
+
+* There are a handful pack-objects changes to help you cope better
+  with repositories with pathologically large blobs in them.
+
+* For people who need to import from Perforce, a front-end for
+  fast-import is in contrib/fast-import/.
+
+* Comes with git-gui 0.8.2.
+
+* Comes with updated gitk.
+
+* New commands and options.
+
+  - "git log --date=3D<format>" can use more formats: iso8601, rfc2822.
+
+  - The hunk header output from "git diff" family can be customized
+    with the attributes mechanism.  See gitattributes(5) for details.
+
+  - "git stash" allows you to quickly save away your work in
+    progress and replay it later on an updated state.
+
+  - "git rebase" learned an "interactive" mode that let you
+    pick and reorder which commits to rebuild.
+
+  - "git fsck" can save its findings in $GIT_DIR/lost-found, without a
+    separate invocation of "git lost-found" command.  The blobs stored =
+by
+    lost-found are stored in plain format to allow you to grep in them.
+
+  - $GIT_WORK_TREE environment variable can be used together with
+    $GIT_DIR to work in a subdirectory of a working tree that is
+    not located at "$GIT_DIR/..".
+
+  - Giving "--file=3D<file>" option to "git config" is the same as
+    running the command with GIT_CONFIG=3D<file> environment.
+
+  - "git log" learned a new option "--follow", to follow
+    renaming history of a single file.
+
+  - "git filter-branch" lets you rewrite the revision history of
+    specified branches. You can specify a number of filters to
+    modify the commits, files and trees.
+
+  - "git cvsserver" learned new options (--base-path, --export-all,
+    --strict-paths) inspired by "git daemon".
+
+  - "git daemon --base-path-relaxed" can help migrating a repository UR=
+L
+    that did not use to use --base-path to use --base-path.
+
+  - "git commit" can use "-t templatefile" option and commit.template
+    configuration variable to prime the commit message given to you in =
+the
+    editor.
+
+  - "git submodule" command helps you manage the projects from
+    the superproject that contain them.
+
+  - In addition to core.compression configuration option,
+    core.loosecompression and pack.compression options can
+    independently tweak zlib compression levels used for loose
+    and packed objects.
+
+  - "git ls-tree -l" shows size of blobs pointed at by the
+    tree entries, similar to "/bin/ls -l".
+
+  - "git rev-list" learned --regexp-ignore-case and
+    --extended-regexp options to tweak its matching logic used
+    for --grep fitering.
+
+  - "git describe --contains" is a handier way to call more
+    obscure command "git name-rev --tags".
+
+  - "git gc --aggressive" tells the command to spend more cycles
+    to optimize the repository harder.
+
+  - "git repack" learned a "window-memory" limit which
+    dynamically reduces the window size to stay within the
+    specified memory usage.
+
+  - "git repack" can be told to split resulting packs to avoid
+    exceeding limit specified with "--max-pack-size".
+
+  - "git fsck" gained --verbose option.  This is really really
+    verbose but it might help you identify exact commit that is
+    corrupt in your repository.
+
+  - "git format-patch" learned --numbered-files option.  This
+    may be useful for MH users.
+
+  - "git format-patch" learned format.subjectprefix configuration
+    variable, which serves the same purpose as "--subject-prefix"
+    option.
+
+  - "git tag -n -l" shows tag annotations while listing tags.
+
+  - "git cvsimport" can optionally use the separate-remote layout.
+
+  - "git blame" can be told to see through commits that change
+    whitespaces and indentation levels with "-w" option.
+
+  - "git send-email" can be told not to thread the messages when
+    sending out more than one patches.
+
+  - "git send-email" can also be told how to find whom to cc the
+    message to for each message via --cc-cmd.
+
+  - "git config" learned NUL terminated output format via -z to
+    help scripts.
+
+  - "git add" learned "--refresh <paths>..." option to selectively refr=
+esh
+    the cached stat information.
+
+  - "git init -q" makes the command quieter.
+
+  - "git -p command" now has a cousin of opposite sex, "git --no-pager
+    command".
+
+* Updated behavior of existing commands.
+
+  - "gitweb" can offer multiple snapshot formats.
+
+    ***NOTE*** Unfortunately, this changes the format of the
+    $feature{snapshot}{default} entry in the per-site
+    configuration file 'gitweb_config.perl'.  It used to be a
+    three-element tuple that describe a single format; with the
+    new configuration item format, you only have to say the name
+    of the format ('tgz', 'tbz2' or 'zip').  Please update the
+    your configuration file accordingly.
+
+  - "git clone" uses -l (hardlink files under .git) by default when
+    cloning locally.
+
+  - URL used for "git clone" and friends can specify nonstandard SSH po=
+rt
+    by using sh://host:port/path/to/repo syntax.
+
+  - "git bundle create" can now create a bundle without negative refs,
+    i.e. "everything since the beginning up to certain points".
+
+  - "git diff" (but not the plumbing level "git diff-tree") now
+    recursively descends into trees by default.
+
+  - "git diff" does not show differences that come only from
+    stat-dirtiness in the form of "diff --git" header anymore.
+    It runs "update-index --refresh" silently as needed.
+
+  - "git tag -l" used to match tags by globbing its parameter as if it
+    has wildcard '*' on both ends, which made "git tag -l gui" to match
+    tag 'gitgui-0.7.0'; this was very annoying.  You now have to add
+    asterisk on the sides you want to wildcard yourself.
+
+  - The editor to use with many interactive commands can be
+    overridden with GIT_EDITOR environment variable, or if it
+    does not exist, with core.editor configuration variable.  As
+    before, if you have neither, environment variables VISUAL
+    and EDITOR are consulted in this order, and then finally we
+    fall back on "vi".
+
+  - "git rm --cached" does not complain when removing a newly
+    added file from the index anymore.
+
+  - Options to "git log" to affect how --grep/--author options look for
+    given strings now have shorter abbreviations.  -i is for ignore cas=
+e,
+    and -E is for extended regexp.
+
+  - "git log" learned --log-size to show the number of bytes in
+    the log message part of the output to help qgit.
+
+  - "git log --name-status" does not require you to give "-r" anymore.
+    As a general rule, Porcelain commands should recurse when showing
+    diff.
+
+  - "git format-patch --root A" can be used to format everything
+    since the beginning up to A.  This was supported with
+    "git format-patch --root A A" for a long time, but was not
+    properly documented.
+
+  - "git svn dcommit" retains local merge information.
+
+  - "git svnimport" allows an empty string to be specified as the
+    trunk/ directory.  This is necessary to suck data from a SVN
+    repository that doe not have trunk/ branches/ and tags/ organizatio=
+n
+    at all.
+
+  - "git config" to set values also honors type flags like --bool
+    and --int.
+
+  - core.quotepath configuration can be used to make textual git
+    output to emit most of the characters in the path literally.
+
+  - "git mergetool" chooses its backend more wisely, taking
+    notice of its environment such as use of X, Gnome/KDE, etc.
+
+  - "gitweb" shows merge commits a lot nicer than before.  The
+    default view uses more compact --cc format, while the UI
+    allows to choose normal diff with any parent.
+
+  - snapshot files "gitweb" creates from a repository at
+    $path/$project/.git are more useful.  We use $project part
+    in the filename, which we used to discard.
+
+  - "git cvsimport" creates lightweight tags; there is no
+    interesting information we can record in an annotated tag,
+    and the handcrafted ones the old code created was not
+    properly formed anyway.
+
+  - "git push" pretends that you immediately fetched back from
+    the remote by updating corresponding remote tracking
+    branches if you have any.
+
+  - The diffstat given after a merge (or a pull) honors the
+    color.diff configuration.
+
+  - "git commit --amend" is now compatible with various message source
+    options such as -m/-C/-c/-F.
+
+  - "git apply --whitespace=3Dstrip" removes blank lines added at
+    the end of the file.
+
+  - "git fetch" over git native protocols with "-v" option shows
+    connection status, and the IP address of the other end, to
+    help diagnosing problems.
+
+  - We used to have core.legacyheaders configuration, when
+    set to false, allowed git to write loose objects in a format
+    that mimicks the format used by objects stored in packs.  It
+    turns out that this was not so useful.  Although we will
+    continue to read objects written in that format, we do not
+    honor that configuration anymore and create loose objects in
+    the legacy/traditional format.
+
+  - "--find-copies-harder" option to diff family can now be
+    spelled as "-C -C" for brevity.
+
+  - "git mailsplit" (hence "git am") can read from Maildir
+    formatted mailboxes.
+
+  - "git cvsserver" does not barf upon seeing "cvs login"
+    request.
+
+  - "pack-objects" honors "delta" attribute set in
+    .gitattributes.  It does not attempt to deltify blobs that
+    come from paths with delta attribute set to false.
+
+  - "new-workdir" script (in contrib) can now be used with a
+    bare repository.
+
+  - "git mergetool" learned to use gvimdiff.
+
+  - "gitview" (in contrib) has a better blame interface.
+
+  - "git log" and friends did not handle a commit log message
+    that is larger than 16kB; they do now.
+
+  - "--pretty=3Doneline" output format for "git log" and friends
+    deals with "malformed" commit log messages that have more
+    than one lines in the first paragraph better.  We used to
+    show the first line, cutting the title at mid-sentence; we
+    concatenate them into a single line and treat the result as
+    "oneline".
+
+  - "git p4import" has been demoted to contrib status.  For
+    a superior option, checkout the "git p4" front end to
+    "git fast-import" (also in contrib).  The man page and p4
+    rpm have been removed as well.
+
+  - "git mailinfo" (hence "am") now tries to see if the message
+    is in utf-8 first, instead of assuming iso-8859-1, if
+    incoming e-mail does not say what encoding it is in.
+
+* Builds
+
+  - old-style function definitions (most notably, a function
+    without parameter defined with "func()", not "func(void)")
+    have been eradicated.
+
+  - "git tag" and "git verify-tag" have been rewritten in C.
+
+* Performance Tweaks
+
+  - "git pack-objects" avoids re-deltification cost by caching
+    small enough delta results it creates while looking for the
+    best delta candidates.
+
+  - "git pack-objects" learned a new heuristcs to prefer delta
+    that is shallower in depth over the smallest delta
+    possible.  This improves both overall packfile access
+    performance and packfile density.
+
+  - diff-delta code that is used for packing has been improved
+    to work better on big files.
+
+  - when there are more than one pack files in the repository,
+    the runtime used to try finding an object always from the
+    newest packfile; it now tries the same packfile as we found
+    the object requested the last time, which exploits the
+    locality of references.
+
+  - verifying pack contents done by "git fsck --full" got boost
+    by carefully choosing the order to verify objects in them.
+
+  - "git read-tree -m" to read into an already populated index
+    has been optimized vastly.  The effect of this can be seen
+    when switching branches that have differences in only a
+    handful paths.
+
+  - "git add paths..." and "git commit paths..." has also been
+    heavily optimized.
+
+=46ixes since v1.5.2
+------------------
+
+All of the fixes in v1.5.2 maintenance series are included in
+this release, unless otherwise noted.
+
+* Bugfixes
+
+  - "gitweb" had trouble handling non UTF-8 text with older
+    Encode.pm Perl module.
+
+  - "git svn" misparsed the data from the commits in the repository whe=
+n
+    the user had "color.diff =3D true" in the configuration.  This has =
+been
+    fixed.
+
+  - There was a case where "git svn dcommit" clobbered changes made on =
+the
+    SVN side while committing multiple changes.
+
+  - "git-write-tree" had a bad interaction with racy-git avoidance and
+    gitattributes mechanisms.
+
+  - "git --bare command" overrode existing GIT_DIR setting and always
+    made it treat the current working directory as GIT_DIR.
+
+  - "git ls-files --error-unmatch" does not complain if you give the
+    same path pattern twice by mistake.
+
+  - "git init" autodetected core.filemode but not core.symlinks, which
+    made a new directory created automatically by "git clone" cumbersom=
+e
+    to use on filesystems that require these configurations to be set.
+
+  - "git log" family of commands behaved differently when run as "git
+    log" (no pathspec) and as "git log --" (again, no pathspec).  This
+    inconsistency was introduced somewhere in v1.3.0 series but now has
+    been corrected.
+
+  - "git rebase -m" incorrectly displayed commits that were skipped.
+
+----------------------------------------------------------------
+
+Shortlog since v1.5.2.5 is too long, so I'll list just the names
+of contributors here and thank everybody.
+
+Adam Roben: 5
+Alberto Bertogli: 1
+Alecs King: 1
+Alexandre Julliard: 9
+Alexandre Vassalotti: 1
+Alex Riesen: 27
+Andrew Ruder: 2
+Andy Whitcroft: 3
+Aneesh Kumar K.V: 2
+Arjen Laarhoven: 2
+Benjamin Sergeant: 1
+Bradford C. Smith: 2
+Brian Downing: 13
+Brian Gernhardt: 5
+Brian Hetro: 5
+Carlos Rica: 13
+Christian Stimming: 1
+CJ van den Berg: 1
+Dana L. How: 8
+Daniel Barkalow: 8
+Dan McGee: 1
+Dave O'Neill: 1
+Dave Watson: 1
+David K=C3=A5gedal: 1
+David Kastrup: 16
+David Soria Parra: 1
+David Symonds: 1
+Elvis Pranskevichus: 1
+Emil Medve: 2
+Eric Wong: 11
+=46ernando J. Pereda: 1
+=46rancis Moreau: 1
+=46rank Lichtenheld: 12
+Geert Bosch: 1
+Gerrit Pape: 5
+Giuseppe Bilotta: 2
+Greg KH: 1
+Han-Wen Nienhuys: 30
+Ismail D=C3=B6nmez: 1
+Jakub Narebski: 27
+James Bowes: 3
+Jari Aalto: 1
+J. Bruce Fields: 9
+Jeff King: 14
+Jeffrey C. Ollie: 2
+Jens Axboe: 1
+Jim Meyering: 6
+Joe Perches: 1
+Johan Herland: 1
+Johannes Schindelin: 77
+Johannes Sixt: 14
+Jonas Fonseca: 3
+Jon Loeliger: 1
+Josh Triplett: 2
+Julian Phillips: 3
+Junio C Hamano: 160
+Jyotirmoy Bhattacharya: 1
+Kevin Green: 1
+Kristian H=C3=B8gsberg: 1
+Kumar Gala: 1
+Lars Hjemli: 12
+Linus Torvalds: 21
+Luben Tuikov: 1
+Luiz Fernando N. Capitulino: 3
+Lukas Sandstr=C3=B6m: 1
+Marco Costalba: 3
+Marcus Fritzsch: 1
+Marius Storm-Olsen: 8
+Mark Levedahl: 13
+martin f. krafft: 2
+Martin Koegler: 5
+Martin Waitz: 1
+Matthias Lederhofer: 21
+Matthieu Moy: 2
+Matthijs Melchior: 1
+Matt Kraai: 3
+Matt McCutchen: 4
+Michael Ellerman: 2
+Michael Hendricks: 2
+Michael Krelin: 1
+Michael S. Tsirkin: 1
+Mike Hommey: 2
+Miklos Vajna: 2
+Miles Bader: 1
+Nanako Shiraishi: 5
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy: 1
+Nicolas Pitre: 14
+Paul Mackerras: 37
+Peter Hagervall: 1
+Petr Baudis: 6
+Pierre Habouzit: 3
+Quy Tonthat: 2
+Randal L. Schwartz: 2
+Reece H. Dunn: 1
+Ren=C3=A9 Scharfe: 10
+Richard MUSIL: 1
+Robert Ewald: 1
+Robert Schiele: 2
+Robin Rosenberg: 5
+Sam Vilain: 3
+Scott Lamb: 2
+Sean Estabrooks: 6
+Seth Falcon: 1
+Shawn O. Pearce: 140
+Simon Hausmann: 231
+Stefan Sperling: 1
+Steffen Prohaska: 3
+Stephen Rothwell: 1
+Steve Hoelzer: 3
+Steven Grimm: 4
+Steven Walter: 1
+Sven Verdoolaege: 7
+Theodore Ts'o: 4
+Thomas Schwinge: 2
+Tom Clarke: 1
+Uwe Kleine-K=C3=B6nig: 5
+V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4: 1
