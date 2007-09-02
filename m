@@ -1,78 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gitk fails to parse git log output in 1.5.3
-Date: Sun, 02 Sep 2007 16:16:05 -0700
-Message-ID: <7vzm04odze.fsf@gitster.siamese.dyndns.org>
-References: <20070902223128.GA19198@falcon.digizenstudio.com>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 2 Sep 2007 19:16:44 -0400
+Message-ID: <20070902191644.29d46cd2.seanlkml@sympatico.ca>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com>
+	<85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
+	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Jing Xue <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 01:16:39 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 01:16:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRygA-0003As-7o
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 01:16:30 +0200
+	id 1IRygW-0003HL-Ew
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 01:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753752AbXIBXQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 19:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752679AbXIBXQK
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 19:16:10 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42474 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753376AbXIBXQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 19:16:09 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 19E5612CD51;
-	Sun,  2 Sep 2007 19:16:29 -0400 (EDT)
-In-Reply-To: <20070902223128.GA19198@falcon.digizenstudio.com> (Jing Xue's
-	message of "Sun, 2 Sep 2007 18:31:28 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755006AbXIBXQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 19:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754312AbXIBXQs
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 19:16:48 -0400
+Received: from bay0-omc1-s1.bay0.hotmail.com ([65.54.246.73]:58941 "EHLO
+	bay0-omc1-s1.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754395AbXIBXQr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 19:16:47 -0400
+Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]) by bay0-omc1-s1.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 2 Sep 2007 16:16:46 -0700
+X-Originating-IP: [64.231.205.174]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp06.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 2 Sep 2007 16:17:51 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1IRygO-0003bk-CN; Sun, 02 Sep 2007 19:16:44 -0400
+In-Reply-To: <7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.14; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 02 Sep 2007 23:17:51.0375 (UTC) FILETIME=[7BB731F0:01C7EDB7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57402>
 
-Jing Xue <jingxue@digizenstudio.com> writes:
+On Sun, 02 Sep 2007 15:13:09 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> gitk shows an error "Can't parse git log output: {\x1b[33commit..." at
-> startup and quits.
->
-> Obviously it's because my git-log outputs in color mode. But the same
-> happens (and git-log still outputs in colors) after I set color.pager=false. 
->
-> What am I missing?
+Hi Junio,
 
-This will quickly turn into an FAQ.
+> For majority of general public, I thought the spec file _I_
+> ship, along with RPM files _I_ build, are contrib status
+> already.  Don't distro people do their own RPM packages, instead
+> of using what I placed on k.org?
 
-Please see:
+Didn't know you used RPM yourself, so I guess this is just
+a case of something slipping through rather than the spec file
+needing a maintainer.  Having said that, it seems odd that you
+would say the spec file included with git is "contrib status
+already".   How can something be contrib status unless it
+is in the contrib directory of Git?
+ 
+> Assuming that we do not give the old git-p4import script
+> packaged in "git-p4 package", would the following patch be all
+> that is needed, or do we need other things in the spec file?
 
-	http://thread.gmane.org/gmane.comp.version-control.git/57204
+Given the comment from David, I suspect your patch is all
+that's needed; hopefully Peter can give it a quick test.
 
-for details and a possible future plans.  Making "diff.color =
-true" to always color was a mistake, and if you have such a
-configuration, it would break any script that reads from "git
-log".  In the meantime, do not do "diff.color = true" (or
-"color.diff = true") in your configuration; say "auto" instead
-of "true", and/or apply this patch.
-
----
-
- gitk |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/gitk b/gitk
-index 300fdce..9c21eff 100755
---- a/gitk
-+++ b/gitk
-@@ -93,6 +93,7 @@ proc start_rev_list {view} {
-     }
-     if {[catch {
- 	set fd [open [concat | git log -z --pretty=raw $order --parents \
-+			 --no-color \
- 			 --boundary $viewargs($view) "--" $viewfiles($view)] r]
-     } err]} {
- 	error_popup "Error executing git rev-list: $err"
+Sean
