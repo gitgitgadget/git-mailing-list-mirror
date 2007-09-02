@@ -1,59 +1,72 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] Improve bash prompt to detect merge / rebase in progress
-Date: Sun, 02 Sep 2007 12:18:24 +0200
-Message-ID: <20070902101825.1938C576FA@dx.sixt.local>
-References: <11886421573285-git-send-email-robin.rosenberg@dewire.com> <7vir6us1ia.fsf@gitster.siamese.dyndns.org> <200709020152.30070.robin.rosenberg@dewire.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 2 Sep 2007 12:28:00 +0200
+Message-ID: <20070902102800.GA11473@steel.home>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org> <fbdt3q$lcf$1@sea.gmane.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 12:18:46 2007
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Arkadiusz Miskiewicz <arekm@pld-linux.org>
+X-From: git-owner@vger.kernel.org Sun Sep 02 12:28:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRmXP-00058P-UG
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 12:18:40 +0200
+	id 1IRmgz-0006a2-4h
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 12:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891AbXIBKSa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 06:18:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755792AbXIBKSa
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 06:18:30 -0400
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:52563 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755779AbXIBKS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 06:18:29 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 6782D13A2FE;
-	Sun,  2 Sep 2007 12:18:25 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 1938C576FA;
-	Sun,  2 Sep 2007 12:18:25 +0200 (CEST)
-User-Agent: KNode/0.10.2
+	id S1756059AbXIBK2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 06:28:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756011AbXIBK2F
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 06:28:05 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:44057 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755535AbXIBK2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 06:28:04 -0400
+Received: from tigra.home (Fc93c.f.strato-dslnet.de [195.4.201.60])
+	by post.webmailer.de (klopstock mo22) (RZmta 12.3)
+	with ESMTP id R0151bj82943mQ ; Sun, 2 Sep 2007 12:28:01 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1B174277BD;
+	Sun,  2 Sep 2007 12:28:01 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BE910BEAC; Sun,  2 Sep 2007 12:28:00 +0200 (CEST)
+Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>,
+	Arkadiusz Miskiewicz <arekm@pld-linux.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <fbdt3q$lcf$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPiog==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57313>
 
-Robin Rosenberg wrote:
-> +             if [ -d "$g/../.dotest" ]
-> +             then
-> +                     ...
-> +             else
-> +                     if [ -d "$g/.dotest-merge" ]
-> +                     then
-> +                             ...
-> +                     else
-> +                             if [ -f "$g/MERGE_HEAD" ]
-> +                             then
-> +                                     ...
-> +                             else
-> +                                     ...
-> +                             fi
-> +                     fi
-> +             fi
+Arkadiusz Miskiewicz, Sun, Sep 02, 2007 10:43:38 +0200:
+> *** t0001-init.sh ***
+> * FAIL 1: plain
+> 
+>                 (
+>                         unset GIT_DIR GIT_WORK_TREE &&
+>                         mkdir plain &&
+>                         cd plain &&
+>                         git init
+>                 ) &&
+>                 check_config plain/.git false unset
+> 
+> *   ok 2: plain with GIT_WORK_TREE
+> * FAIL 3: plain bare
+> 
+>                 (
+>                         unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
+>                         mkdir plain-bare-1 &&
+>                         cd plain-bare-1 &&
+>                         git --bare init
+>                 ) &&
+>                 check_config plain-bare-1 true unset
+> 
 
-You can use 'elif' to avoid the increasing indentation.
-
--- Hannes
+Do you have bash-2.05b as /bin/sh ?
