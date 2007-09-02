@@ -1,263 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Sat, 01 Sep 2007 23:34:15 -0700
-Message-ID: <7vk5r9r2xk.fsf@gitster.siamese.dyndns.org>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: problem with git cvsimport
+Date: Sun, 02 Sep 2007 08:37:06 +0200
+Message-ID: <46DA5A12.2090506@alum.mit.edu>
+References: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 08:34:26 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean.francois.veillette@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 08:37:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRj2P-0007FJ-Rj
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:34:26 +0200
+	id 1IRj5E-0007ZO-IS
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119AbXIBGeV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 02:34:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbXIBGeV
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:34:21 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33697 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752842AbXIBGeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 02:34:19 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D850312951A;
-	Sun,  2 Sep 2007 02:34:38 -0400 (EDT)
-In-Reply-To: <7vodglr32i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 01 Sep 2007 23:31:17 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753133AbXIBGhQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 02:37:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXIBGhQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:37:16 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:53038 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751467AbXIBGhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 02:37:14 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.131] (kaiserty.in-dsl.de [217.197.85.174])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l826b8gh000895
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 2 Sep 2007 08:37:08 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13) Gecko/20070824 Thunderbird/1.5.0.13 Mnenhy/0.7.5.666
+In-Reply-To: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
+X-Enigmail-Version: 0.94.2.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57297>
 
-Now a new feature release is out, it's a good time to welcome new
-people to the list.  This message talks about how git.git is managed,
-and how you can work with it.
+Jean-Fran=E7ois Veillette wrote:
+> I can't get git-cvsimport to convert a cvs project to git (full log
+> bellow).
+> I always get :
+>     fatal: Not a valid object name refs/heads/HEAD
+>     read-tree failed: 32768
+>=20
+> I'm a relatively new to git. I would like to convert my project and
+> track external projects with git.
+> But cvsimport seem to fail.  Any pointer to help me resolve the issue=
+ is
+> welcome !
 
-* IRC and Mailing list
+I suggest you try the experimental support in cvs2svn for converting to
+git.  cvs2svn is very good about understanding strange CVS histories.
+See the following thread for more information:
 
-Many active members of development community hang around on #git
-IRC channel on Freenode.  Its log is available at:
+    http://marc.info/?l=3Dgit&m=3D118592701426175&w=3D4
 
-        http://colabti.de/irclogger/irclogger_log/git
-
-The development however is primarily done on this mailing list
-you are reading right now.  If you have patches, please send
-them to the list, following Documentation/SubmittingPatches.
-
-I usually try to read all patches posted to the list, and follow
-almost all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously not
-perfect.  If you sent a patch that you did not hear from anybody for
-three days, that is a very good indication that it was dropped on the
-floor --- please do not hesitate to remind me.
-
-The list archive is available at a few public sites as well:
-
-        http://marc.theaimsgroup.com/?l=git
-        http://news.gmane.org/gmane.comp.version-control.git
-	http://www.spinics.net/lists/git/
-
-and some people seem to prefer to read it over NNTP:
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-
-Immediately after I publish to the primary repository at kernel.org, I
-also push into an alternate here:
-
-        git://repo.or.cz/alt-git.git/
-
-Impatient people might have better luck with the latter one.
-
-Their gitweb interfaces are found at:
-
-	http://git.kernel.org/?p=git/git.git
-	http://repo.or.cz/w/alt-git.git
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one was meant to contain TODO list for me, but I am not
-good at maintaining such a list so it is not as often updated as
-it could/should be.  It also contains some helper scripts I use
-to maintain git.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-        http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use an update hook to automate
-a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".  I may
-add more maintenance branches (e.g. "maint-1.5.1") if we have
-huge backward incompatible feature updates in the future to keep
-an older release alive; I may not, but the distributed nature of
-git means any volunteer can run a stable-tree like that himself.
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was v1.5.3 done on Sep 2nd this year.  You
-can expect that the tip of the "master" branch is always as
-stable as any of the released versions, if not more stable.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was v1.5.2.5.
-New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-I judge the quality of topic branches, taking advices from the
-mailing list discussions.  Some of them start out as "good idea
-but obviously is broken in some areas (e.g. breaks the existing
-testsuite)" and then with some more work (either by the original
-contributor or help from other people on the list) becomes "more
-or less done and can now be tested by wider audience".  Luckily,
-most of them start out in the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-Note that being in "next" does not mean the change will be in
-the next feature release.
-
-The above three branches, "master", "maint" and "next" are never
-rewound, so you should be able to safely track them (this
-automatically means the topics that have been merged into "next"
-are not rebased, and you can find the tip of topic branches you
-are interested in from the output of "git log next").
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.  By the above
-definition of how "next" works, you can tell that this branch
-will contain quite experimental and obviously broken stuff.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-        git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-good and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master" (that's why "master"
-can be expected to stay very stable).  Similarly to the above, I
-do it with this:
-
-        git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-However, being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in any
-future release.  There even were cases that topics needed
-reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" were entirely reverted
-from "next" because fatal flaws were found in them later.
-
-Starting from v1.5.0, "master" and "maint" have release notes
-for the next release in Documentation/RelNotes-* files, so that
-I do not have to run around summarizing what happened just
-before the release.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines who your changes should
-be sent to.  As described in contrib/README, I would delegate
-fixes and enhancements in contrib/ area to primary contributors
-of them.
-
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
-
- git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
-             project, which is found at:
-
-             git://repo.or.cz/git-gui.git
-
- gitk     -- this file is maintained by Paul Mackerras, at:
-
-             git://git.kernel.org/pub/scm/gitk/gitk.git
-
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
-
- - Linus on general design issues.
-
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
-   Rene Scharfe on general implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
-
- - Paul Mackerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
-
- - J. Bruce Fields on documentaton issues.
-
- - Johannes Schindelin and Johannes Sixt for their effort to
-   move things forward on the Windows front.  Although my
-   repository does not have much from the effort of MinGW team,
-   I expect a merge into mainline will happen so that everybody
-   can work from the same codebase.
-
- - People on non-Linux platforms for keeping their eyes on
-   portability; especially, Randal Schwartz, Theodore Ts'o,
-   Jason Riedy, Thomas Glanzmann, but countless others as well.
-
-* This document
-
-The latest copy of this document is found in git.git repository,
-on 'todo' branch, as MaintNotes.
+Michael
