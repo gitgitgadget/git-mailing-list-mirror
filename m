@@ -1,76 +1,65 @@
 From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
-Date: Sun, 2 Sep 2007 16:32:41 +0100
-Message-ID: <3f4fd2640709020832x656fa78djf29117690318ea48@mail.gmail.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
+Subject: Re: Buffer overflows
+Date: Sun, 2 Sep 2007 16:35:32 +0100
+Message-ID: <3f4fd2640709020835w4058c55dqb753613bde7aa533@mail.gmail.com>
+References: <1188502009.29782.874.camel@hurina>
+	 <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com>
+	 <7vtzqg7jrn.fsf@gitster.siamese.dyndns.org>
+	 <200709021542.31100.johan@herland.net>
+	 <3f4fd2640709020811r4ea8f01fw775257859e26af29@mail.gmail.com>
+	 <85veatqelm.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "Marius Storm-Olsen" <marius@trolltech.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Johannes Sixt" <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Sep 02 17:32:53 2007
+To: "David Kastrup" <dak@gnu.org>, "Johan Herland" <johan@herland.net>,
+	git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	"Timo Sirainen" <tss@iki.fi>,
+	"Linus Torvalds" <torvalds
+X-From: git-owner@vger.kernel.org Sun Sep 02 17:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRrRT-0002BA-Jt
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 17:32:51 +0200
+	id 1IRrU8-0002ew-Pf
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 17:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756211AbXIBPcn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 11:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755902AbXIBPcn
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 11:32:43 -0400
-Received: from rv-out-0910.google.com ([209.85.198.187]:59650 "EHLO
+	id S1753982AbXIBPfd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 11:35:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309AbXIBPfd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 11:35:33 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:62599 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756511AbXIBPcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 11:32:42 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so755165rvb
-        for <git@vger.kernel.org>; Sun, 02 Sep 2007 08:32:41 -0700 (PDT)
+	with ESMTP id S1753366AbXIBPfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 11:35:32 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so755458rvb
+        for <git@vger.kernel.org>; Sun, 02 Sep 2007 08:35:32 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=googlemail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PlgUVAjI7nJAo7QXoKOY76/MV3ZaFPMhPYsE1ehbJ/GHKzg28/Qd7ilR7JQSg0bYOzBtTpE13hENrJ0/XLL/VTpZ+B53NpfmrgBDL+cfuEP1Pjl8lTbvUEdPnkFZa7hzyovCMLBurOJ3ej9sxwcTfYy/D5cnRYuQPRU7xYXSEok=
+        b=FcpCIIr3ZoTAEL+VC0dk8Dsk12bFMp22Sr1xXvhFmwf84DLpEnpWWq/3cvUzXB5kzSMfHMZovIL4J9qxgeStxu1d3/ioAUGCmWoGFTXi5PiQsxHaEjBS75O+Cx/xrVONwZIMdokZdbPLv59iav390dwQCSOapc8n5VjzOjQopv4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=beta;
         h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XJOZ4p+/8UxaKZB0B7UyYUyHjUws8y1HKINMPuU0Fal+Q0Vtr8kndhXV2sEGSxJqWXMP61JLUXmkI1ynw0nyoJ/GX4txUCWaCHfOii+xtSdv0RIyIri29SH2EZ7NGfeXh2rHpJ0Ut/u830ihHoyCPKB3dovZCCGlIXJu8o6+qlw=
-Received: by 10.141.52.5 with SMTP id e5mr1603494rvk.1188747161282;
-        Sun, 02 Sep 2007 08:32:41 -0700 (PDT)
-Received: by 10.141.32.14 with HTTP; Sun, 2 Sep 2007 08:32:41 -0700 (PDT)
-In-Reply-To: <46DACE0D.5070501@trolltech.com>
+        b=ejVjHmKWYq0CaZVtTxHh9DrPTWUeuyW5BCarGVmuCQKP5aHGWvuOZzTy8zBe9N6KL+E4bbVicD9jv7VItvDa3RRFMoPkxEbPXcxVtPLcADRf9wQNX7voAua+xgwf0ttLD2Te5Huvsef5xnLFlZ7IraJM6Iu6Y8ypQGVhdzLkAMo=
+Received: by 10.141.76.21 with SMTP id d21mr264048rvl.1188747332075;
+        Sun, 02 Sep 2007 08:35:32 -0700 (PDT)
+Received: by 10.141.32.14 with HTTP; Sun, 2 Sep 2007 08:35:31 -0700 (PDT)
+In-Reply-To: <85veatqelm.fsf@lola.goethe.zz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57343>
 
-On 02/09/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> This gives us a significant speedup when adding, committing and stat'ing files.
-> (Also, since Windows doesn't really handle symlinks, it's fine that stat just uses lstat)
+On 02/09/07, David Kastrup <dak@gnu.org> wrote:
+> "Reece Dunn" <msclrhd@googlemail.com> writes:
 >
-> +               if (ext && (!_stricmp(ext, ".exe") ||
-> +                           !_stricmp(ext, ".com") ||
-> +                           !_stricmp(ext, ".bat") ||
-> +                           !_stricmp(ext, ".cmd")))
-> +                       fMode |= S_IEXEC;
-> +               }
+> > Which is good, as this means that along with the tests in the
+> > library, it will be more stable and less likely to be buggy than
+> > something that is written from scratch.
+>
+> Remember git's history.
 
-This breaks executable mode reporting for things like configure
-scripts and other shell scripts that may, or may not, be executable.
-Also, you may want to turn off the executable state for some of these
-extensions (for example if com or cmd were not actually executable
-files). This makes it impossible to manipulate git repositories
-properly on the MinGW platform.
-
-Would it be possible to use the git tree to manage the executable
-state? That way, all files would not have their executable state set
-by default on Windows. The problem with this is how then to set the
-executable state? Having a git version of chmod may not be a good
-idea, but then how else are you going to reliably and efficiently
-modify the files permissions on Windows?
-
-The rest of the patch looks good on a brief initial scan.
+True!
 
 - Reece
