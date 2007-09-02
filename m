@@ -1,71 +1,55 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Mon, 03 Sep 2007 00:54:21 +0200
-Message-ID: <87d4x0fzky.fsf@morpheus.local>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org> <87hcmcfzo9.fsf@morpheus.local>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and
+ make stat use that implementation too.
+Date: Mon, 3 Sep 2007 00:02:10 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709030001030.28586@racer.site>
+References: <46DACD93.9000509@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com>
+ <Pine.LNX.4.64.0709022133190.28586@racer.site> <200709022342.42733.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 03 00:55:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 01:02:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRyLd-0000IY-KG
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 00:55:18 +0200
+	id 1IRySz-0001Kk-Jh
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 01:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165AbXIBWzN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 18:55:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbXIBWzN
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 18:55:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:42312 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753022AbXIBWzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 18:55:12 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IRyLO-0004nD-F5
-	for git@vger.kernel.org; Mon, 03 Sep 2007 00:55:02 +0200
-Received: from c83-253-22-183.bredband.comhem.se ([83.253.22.183])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Sep 2007 00:55:02 +0200
-Received: from davidk by c83-253-22-183.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Sep 2007 00:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-183.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:y5Gnj498EXFuD25wu+9pDOljkWU=
+	id S932102AbXIBXCY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 19:02:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbXIBXCY
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 19:02:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60497 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752327AbXIBXCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 19:02:23 -0400
+Received: (qmail invoked by alias); 02 Sep 2007 23:02:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 03 Sep 2007 01:02:21 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19L71sdwOZL/8SHfyYLebXGmTxajLPEDxp433/iYv
+	71wecYMXH5bwIs
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200709022342.42733.robin.rosenberg.lists@dewire.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57400>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> GIT v1.5.3 Release Notes
->> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->>
->> Updates since v1.5.2
->> --------------------
->>
->> * The commit walkers other than http are officially deprecated,
->>   but still supported for now.
->
-> As I think I said before, this first bullet point makes no sense to
-> git users.  Only hardcore git developers know what a "commit walker
-> is", and what commit walkers exist (other than html, obviously).  How
+On Sun, 2 Sep 2007, Robin Rosenberg wrote:
 
-I'm not trying to make you even more confused. Make that "http",
-please. :-)
+> You actually need admin privileges too, but I don't know any windows 
+> developer who hasn't got that.
 
-> will they know if they are using one of the things you just
-> deprecated?
+Like almost every developer in the corporate world?
 
---=20
-David K=C3=A5gedal
+Fact is: this support of symlinks is ridiculous.  Why not just admit it?
+
+Ciao,
+Dscho
