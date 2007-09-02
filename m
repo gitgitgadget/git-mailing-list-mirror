@@ -1,106 +1,72 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Buffer overflows
-Date: Sun, 02 Sep 2007 15:42:30 +0200
-Message-ID: <200709021542.31100.johan@herland.net>
-References: <1188502009.29782.874.camel@hurina>
- <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com>
- <7vtzqg7jrn.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
+Date: Sun, 2 Sep 2007 15:20:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709021518260.28586@racer.site>
+References: <200709010925.27926.johannes.sixt@telecom.at>
+ <7vmyw6u5ca.fsf@gitster.siamese.dyndns.org> <7vejhiu565.fsf_-_@gitster.siamese.dyndns.org>
+ <85abs5v9q1.fsf@lola.goethe.zz> <7vfy1xr1lz.fsf@gitster.siamese.dyndns.org>
+ <46DABD15.4030208@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	Timo Sirainen <tss@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 15:43:02 2007
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Sun Sep 02 16:21:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRpj8-0005HD-J5
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 15:42:58 +0200
+	id 1IRqKA-0004Ey-Qa
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 16:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbXIBNmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 09:42:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754952AbXIBNmw
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 09:42:52 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:54884 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755467AbXIBNmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 09:42:51 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JNQ00A03U35LW00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 02 Sep 2007 15:42:41 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JNQ00IUQU2VN650@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 02 Sep 2007 15:42:31 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JNQ004PKU2VP590@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 02 Sep 2007 15:42:31 +0200 (CEST)
-In-reply-to: <7vtzqg7jrn.fsf@gitster.siamese.dyndns.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S932779AbXIBOVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 10:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756695AbXIBOVI
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 10:21:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33407 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756770AbXIBOVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 10:21:07 -0400
+Received: (qmail invoked by alias); 02 Sep 2007 14:21:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 02 Sep 2007 16:21:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19DQasJ73hDfU6HvrI3Tij5Ib4UqpOqQQASD0h6Z2
+	7rSuBOfWta6znz
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46DABD15.4030208@fs.ei.tum.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57326>
 
-On Friday 31 August 2007, Junio C Hamano wrote:
-> It is well and widely understood idiom to use strlcpy to a
-> fixed-sized buffer and checking the resulting length to make
-> sure the result would not have overflowed (and if it would have,
-> issue an error and die).  I would not have anything against a
-> set of patches to follow such a pattern.
+Hi,
+
+On Sun, 2 Sep 2007, Simon 'corecode' Schubert wrote:
+
+> Junio C Hamano wrote:
+> > > Just for the record: I believe that \{1,\} might be portable.
+> > 
+> > Yeah, I obviously looked at the page I quoted that describes
+> > what's in and what's not in BRE definition ;-)
+> > 
+> > But in practice, I do not recall ever seeing an older sed that
+> > did not understand one-or-more \+ *and* understood \{1,\}.  Do
+> > you?
 > 
-> But a patch to add a non-standard API that nobody else uses,
-> without any patch to show the changes to a few places that could
-> use the API to demonstrate that the use of API vastly cleans the
-> code up and makes it infinitely harder to make mistakes?
+> Yes, BSD sed (at least DragonFly's, so probably as well FreeBSD-4 (dunno
+> about later)):
 > 
-> The API needs to justify itself to convince the people who needs
-> to learn and adjust to that the benefit far outweighes deviation
-> from better known patterns, and I do not see that happening in
-> Timo's patch.
+> chlamydia % echo 5ab123x | sed -e 's/[a-z]\+/AAA/' 
+> 5ab123x
+> chlamydia % echo 5ab123x | sed -e 's/[a-z]\{1,\}/AAA/' 
+> 5AAA123x
+> chlamydia % echo 5ab123x | sed -E -e 's/[a-z]+/AAA/' 
+> 5AAA123x
 
-So in general, git people seem to be saying that:
+Thank you for a proper argument.  I usually ignore hand-waving POSIX 
+arguments, but a real-world case changes the situation.
 
-1. Yes, we agree that the C string library suX0rs badly.
-
-2. There are more than 0 string manipulation bugs (e.g. buffer overflows) in 
-git. The number may be small or large, but I have yet to see anyone claim 
-it's _zero_.
-
-3. Timo's patches (in their current form) are not the way to go, because of 
-non-standard API, implementation problems, whatever...
-
-So why does the discussion end there? Lukas proposed an interesting 
-alternative in "The Better String Library" ( 
-http://bstring.sourceforge.net/ ). Why has there been lots of bashing on 
-Timo's efforts, but no critique of bstring? I'd be very keen to know what 
-the git developers think of it. AFAICS, it seems to fulfill at least _some_ 
-of the problems people find in Timo's patches. Specifically, it claims:
-
-- High performance (better than the C string library)
-- Simple usage
-
-I'd also say it's probably more widely used than Timo's patches.
-
-
-If the only response to Timo's highlighting of string manipulation problems 
-in git, is for us to flame his patches and leave it at that, then I have no 
-choice but to agree with him in that security does not seem to matter to 
-us.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Ciao,
+Dscho
