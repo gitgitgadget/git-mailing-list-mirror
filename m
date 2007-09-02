@@ -1,91 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 10/15] Japanese translation of git-gui
-Date: Sun, 2 Sep 2007 17:35:33 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709021735210.28586@racer.site>
+Subject: [PATCH 11/15] Italian translation of git-gui
+Date: Sun, 2 Sep 2007 17:35:50 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709021735400.28586@racer.site>
 References: <Pine.LNX.4.64.0709021719380.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1067707744-1188750933=:28586"
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-155218187-1188750950=:28586"
 To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 18:36:00 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 18:36:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRsQS-0005ib-4q
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 18:35:53 +0200
+	id 1IRsRC-0005q8-Vb
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 18:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933260AbXIBQfq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 12:35:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933229AbXIBQfq
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 12:35:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55569 "HELO mail.gmx.net"
+	id S964778AbXIBQge (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 12:36:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933153AbXIBQgd
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 12:36:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52075 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933051AbXIBQfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 12:35:45 -0400
-Received: (qmail invoked by alias); 02 Sep 2007 16:35:42 -0000
+	id S933229AbXIBQgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 12:36:32 -0400
+Received: (qmail invoked by alias); 02 Sep 2007 16:36:29 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 02 Sep 2007 18:35:42 +0200
+  by mail.gmx.net (mp049) with SMTP; 02 Sep 2007 18:36:29 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/c1IYBVRDc/JYjphvIGPHGfLoDd8xBrdpOyfQ+mg
-	fbl/LQVL4nmwI/
+X-Provags-ID: V01U2FsdGVkX1/xPxY4kLXxk7v+5wf0Y6S2WzVJyl0MVVYs6Q0Iwe
+	kURkLOHlD9KZeO
 X-X-Sender: gene099@racer.site
 In-Reply-To: <Pine.LNX.4.64.0709021719380.28586@racer.site>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57359>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-1067707744-1188750933=:28586
+--8323584-155218187-1188750950=:28586
 Content-Type: TEXT/PLAIN; charset=utf-8
 Content-Transfer-Encoding: 8BIT
 
 
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= <nanako3@bluebottle.com>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 
-[jes: Also includes work from Junio Hamano]
+[jes: includes patches from Michele Ballabio]
 
-Signed-off-by: しらいしななこ <nanako3@bluebottle.com>
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- po/ja.po | 1381 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 1381 insertions(+), 0 deletions(-)
- create mode 100644 po/ja.po
+ po/it.po | 1393 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 1393 insertions(+), 0 deletions(-)
+ create mode 100644 po/it.po
 
-diff --git a/po/ja.po b/po/ja.po
+diff --git a/po/it.po b/po/it.po
 new file mode 100644
-index 0000000..1713908
+index 0000000..17a5c21
 --- /dev/null
-+++ b/po/ja.po
-@@ -0,0 +1,1381 @@
-+# Translation of git-gui to Japanese
++++ b/po/it.po
+@@ -0,0 +1,1393 @@
++# Translation of git-gui to Italian
 +# Copyright (C) 2007 Shawn Pearce
 +# This file is distributed under the same license as the git-gui package.
-+# しらいし ななこ <nanako3@bluebottle.com>, 2007.
-+#
-+#, fuzzy
++# Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, 2007
++# Michele Ballabio <barra_cuda@katamail.com>, 2007.
++# 
++# 
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: git-gui\n"
 +"Report-Msgid-Bugs-To: \n"
 +"POT-Creation-Date: 2007-08-11 17:28+0200\n"
-+"PO-Revision-Date: 2007-08-14 18:49+0900\n"
-+"Last-Translator: しらいし ななこ <nanako3@bluebottle.com>\n"
-+"Language-Team: Japanese\n"
++"PO-Revision-Date: 2007-08-09 00:27+0200\n"
++"Last-Translator: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>\n"
++"Language-Team: Italian <tp@lists.linux.it>\n"
 +"MIME-Version: 1.0\n"
 +"Content-Type: text/plain; charset=UTF-8\n"
-+"Content-Transfer-Encoding: 8bit\n"
++"Content-Transfer-Encoding: 8bit"
 +
 +#: git-gui.sh:531
 +msgid "Cannot find git in PATH."
-+msgstr "PATH 中に git が見つかりません"
++msgstr "Impossibile trovare git nel PATH"
 +
 +#: git-gui.sh:550
 +msgid "Cannot parse Git version string:"
-+msgstr "Git バージョン名が理解できません:"
++msgstr "Impossibile determinare la versione di Git:"
 +
 +#: git-gui.sh:567
 +#, tcl-format
@@ -98,85 +99,85 @@ index 0000000..1713908
 +"\n"
 +"Assume '%s' is version 1.5.0?\n"
 +msgstr ""
-+"Git のバージョンが確認できません。\n"
++"La versione di GIT non può essere determinata.\n"
 +"\n"
-+"%s はバージョン '%s' とのことです。\n"
++"%s sostiene che la versione è '%s'.\n"
 +"\n"
-+"%s は最低でも 1.5.0 かそれ以降の Git が必要です\n"
++"%s richiede almeno Git 1.5.0 o superiore.\n"
 +"\n"
-+"'%s' はバージョン 1.5.0 と思って良いですか？\n"
++"Assumere che '%s' sia alla versione 1.5.0?\n"
 +
 +#: git-gui.sh:689
 +msgid "Cannot find the git directory:"
-+msgstr "git ディレクトリが見つかりません:"
++msgstr "Non posso trovare la directory di git:"
 +
 +#: git-gui.sh:697
 +msgid "Git directory not found:"
-+msgstr "Git ディレクトリが見つかりません:"
++msgstr "Non trovo la directory di git: "
 +
 +#: git-gui.sh:703
 +msgid "Cannot use funny .git directory:"
-+msgstr "変な .git ディレクトリは使えません"
++msgstr "Impossibile usare una .git directory strana:"
 +
 +#: git-gui.sh:708
 +msgid "No working directory"
-+msgstr "作業ディレクトリがありません"
++msgstr "Nessuna directory di lavoro"
 +
 +#: git-gui.sh:854
 +msgid "Refreshing file status..."
-+msgstr "ファイル状態を更新しています…"
++msgstr "Controllo dello stato dei file in corso..."
 +
 +#: git-gui.sh:891
 +msgid "Scanning for modified files ..."
-+msgstr "変更されたファイルをスキャンしています…"
++msgstr "Ricerca di file modificati in corso..."
 +
 +#: git-gui.sh:1057 lib/browser.tcl:247
 +msgid "Ready."
-+msgstr "準備完了"
++msgstr "Pronto."
 +
 +#: git-gui.sh:1322
 +msgid "Unmodified"
-+msgstr "変更無し"
++msgstr "Non modificato"
 +
 +#: git-gui.sh:1324
 +msgid "Modified, not staged"
-+msgstr "変更あり、コミット未予定"
++msgstr "Modificato, non pronto per il commit"
 +
 +#: git-gui.sh:1325 git-gui.sh:1330
 +msgid "Staged for commit"
-+msgstr "コミット予定済"
++msgstr "Pronto per il commit"
 +
 +#: git-gui.sh:1326 git-gui.sh:1331
 +msgid "Portions staged for commit"
-+msgstr "部分的にコミット予定済"
++msgstr "Parti pronte per il commit"
 +
 +#: git-gui.sh:1327 git-gui.sh:1332
 +msgid "Staged for commit, missing"
-+msgstr "コミット予定済、ファイル無し"
++msgstr "Pronto per il commit, mancante"
 +
 +#: git-gui.sh:1329
 +msgid "Untracked, not staged"
-+msgstr "管理外、コミット未予定"
++msgstr "Non tracciato, non pronto per il commit"
 +
 +#: git-gui.sh:1334
 +msgid "Missing"
-+msgstr "ファイル無し"
++msgstr "Mancante"
 +
 +#: git-gui.sh:1335
 +msgid "Staged for removal"
-+msgstr "削除予定済"
++msgstr "Pronto per la rimozione"
 +
 +#: git-gui.sh:1336
 +msgid "Staged for removal, still present"
-+msgstr "削除予定済、ファイル未削除"
++msgstr "Pronto alla rimozione, ancora presente"
 +
 +#: git-gui.sh:1338 git-gui.sh:1339 git-gui.sh:1340 git-gui.sh:1341
 +msgid "Requires merge resolution"
-+msgstr "要マージ解決"
++msgstr "Richiede risoluzione dei conflitti"
 +
 +#: git-gui.sh:1383
 +msgid "Starting gitk... please wait..."
-+msgstr "gitk を起動中…お待ち下さい…"
++msgstr "Avvio di gitk... attendere..."
 +
 +#: git-gui.sh:1392
 +#, tcl-format
@@ -185,436 +186,436 @@ index 0000000..1713908
 +"\n"
 +"%s does not exist"
 +msgstr ""
-+"gitk を起動できません:\n"
++"Impossibile avviare gitk:\n"
 +"\n"
-+"%s がありません"
++"%s non esiste"
 +
 +#: git-gui.sh:1609
 +#, tcl-format
 +msgid "Invalid font specified in gui.%s:"
-+msgstr "gui.%s に無効なフォントが指定されています:"
++msgstr "Caratteri non validi specificati nella gui.%s:"
 +
 +#: git-gui.sh:1634
 +msgid "Main Font"
-+msgstr "主フォント"
++msgstr "Caratteri principali"
 +
 +#: git-gui.sh:1635
 +msgid "Diff/Console Font"
-+msgstr "diff/コンソール・フォント"
++msgstr "Caratteri per confronti e terminale"
 +
 +#: git-gui.sh:1649
 +msgid "Repository"
-+msgstr "リポジトリ"
++msgstr "Archivio"
 +
 +#: git-gui.sh:1650
 +msgid "Edit"
-+msgstr "編集"
++msgstr "Modifica"
 +
 +#: git-gui.sh:1652
 +msgid "Branch"
-+msgstr "ブランチ"
++msgstr "Ramo"
 +
 +#: git-gui.sh:1655 git-gui.sh:1842 git-gui.sh:2152
 +msgid "Commit"
-+msgstr "コミット"
++msgstr "Commit"
 +
 +#: git-gui.sh:1658 lib/merge.tcl:121 lib/merge.tcl:150 lib/merge.tcl:168
 +msgid "Merge"
-+msgstr "マージ"
++msgstr "Fusione (Merge)"
 +
 +#: git-gui.sh:1659
 +msgid "Fetch"
-+msgstr "フェッチ"
++msgstr "Preleva (Fetch)"
 +
 +#: git-gui.sh:1660 git-gui.sh:2158 lib/transport.tcl:88 lib/transport.tcl:172
 +msgid "Push"
-+msgstr "プッシュ"
++msgstr "Propaga (Push)"
 +
 +#: git-gui.sh:1669
 +msgid "Browse Current Branch's Files"
-+msgstr "現在のブランチのファイルを見る"
++msgstr "Esplora i file del ramo corrente"
 +
 +#: git-gui.sh:1673
 +msgid "Browse Branch Files..."
-+msgstr "ブランチのファイルを見る…"
++msgstr "Esplora i file del ramo..."
 +
 +#: git-gui.sh:1678
 +msgid "Visualize Current Branch's History"
-+msgstr "現在のブランチの履歴を見る"
++msgstr "Visualizza la cronologia del ramo corrente"
 +
 +#: git-gui.sh:1682
 +msgid "Visualize All Branch History"
-+msgstr "全てのブランチの履歴を見る"
++msgstr "Visualizza la cronologia di tutti i rami"
 +
 +#: git-gui.sh:1689
 +#, tcl-format
 +msgid "Browse %s's Files"
-+msgstr "ブランチ %s のファイルを見る"
++msgstr "Esplora i file di %s"
 +
 +#: git-gui.sh:1691
 +#, tcl-format
 +msgid "Visualize %s's History"
-+msgstr "ブランチ %s の履歴を見る"
++msgstr "Visualizza la cronologia di %s"
 +
 +#: git-gui.sh:1696 lib/database.tcl:27 lib/database.tcl:67
 +msgid "Database Statistics"
-+msgstr "データベース統計"
++msgstr "Statistiche del database"
 +
 +#: git-gui.sh:1699 lib/database.tcl:34
 +msgid "Compress Database"
-+msgstr "データベース圧縮"
++msgstr "Comprimi il database"
 +
 +#: git-gui.sh:1702
 +msgid "Verify Database"
-+msgstr "データベース検証"
++msgstr "Verifica il database"
 +
 +#: git-gui.sh:1709 git-gui.sh:1713 git-gui.sh:1717 lib/shortcut.tcl:9
 +#: lib/shortcut.tcl:45 lib/shortcut.tcl:84
 +msgid "Create Desktop Icon"
-+msgstr "デスクトップ・アイコンを作る"
++msgstr "Crea icona desktop"
 +
 +#: git-gui.sh:1722
 +msgid "Quit"
-+msgstr "終了"
++msgstr "Esci"
 +
 +#: git-gui.sh:1729
 +msgid "Undo"
-+msgstr "元に戻す"
++msgstr "Annulla"
 +
 +#: git-gui.sh:1732
 +msgid "Redo"
-+msgstr "やり直し"
++msgstr "Ripeti"
 +
 +#: git-gui.sh:1736 git-gui.sh:2222
 +msgid "Cut"
-+msgstr "切り取り"
++msgstr "Taglia"
 +
 +#: git-gui.sh:1739 git-gui.sh:2225 git-gui.sh:2296 git-gui.sh:2368
 +#: lib/console.tcl:69
 +msgid "Copy"
-+msgstr "コピー"
++msgstr "Copia"
 +
 +#: git-gui.sh:1742 git-gui.sh:2228
 +msgid "Paste"
-+msgstr "貼り付け"
++msgstr "Incolla"
 +
 +#: git-gui.sh:1745 git-gui.sh:2231 lib/branch_delete.tcl:26
 +#: lib/remote_branch_delete.tcl:38
 +msgid "Delete"
-+msgstr "削除"
++msgstr "Elimina"
 +
 +#: git-gui.sh:1749 git-gui.sh:2235 git-gui.sh:2372 lib/console.tcl:71
 +msgid "Select All"
-+msgstr "全て選択"
++msgstr "Seleziona tutto"
 +
 +#: git-gui.sh:1758
 +msgid "Create..."
-+msgstr "作成…"
++msgstr "Crea..."
 +
 +#: git-gui.sh:1764
 +msgid "Checkout..."
-+msgstr "チェックアウト"
++msgstr "Checkout..."
 +
 +#: git-gui.sh:1770
 +msgid "Rename..."
-+msgstr "名前変更…"
++msgstr "Rinomina"
 +
 +#: git-gui.sh:1775 git-gui.sh:1873
 +msgid "Delete..."
-+msgstr "削除…"
++msgstr "Elimina..."
 +
 +#: git-gui.sh:1780
 +msgid "Reset..."
-+msgstr "リセット…"
++msgstr "Ripristina..."
 +
 +#: git-gui.sh:1792 git-gui.sh:2169
 +msgid "New Commit"
-+msgstr "新規コミット"
++msgstr "Nuovo commit"
 +
 +#: git-gui.sh:1800 git-gui.sh:2176
 +msgid "Amend Last Commit"
-+msgstr "最新コミットを訂正"
++msgstr "Correggi l'ultimo commit"
 +
 +#: git-gui.sh:1809 git-gui.sh:2136 lib/remote_branch_delete.tcl:99
 +msgid "Rescan"
-+msgstr "再スキャン"
++msgstr "Analizza nuovamente"
 +
 +#: git-gui.sh:1815
 +msgid "Stage To Commit"
-+msgstr "コミット予定する"
++msgstr "Prepara per il commit"
 +
 +#: git-gui.sh:1820
 +msgid "Stage Changed Files To Commit"
-+msgstr "変更されたファイルをコミット予定"
++msgstr "Prepara per il commit i file modificati"
 +
 +#: git-gui.sh:1826
 +msgid "Unstage From Commit"
-+msgstr "コミットから降ろす"
++msgstr "Non pronto per il commit"
 +
 +#: git-gui.sh:1831 lib/index.tcl:376
 +msgid "Revert Changes"
-+msgstr "変更を元に戻す"
++msgstr "Annulla modifiche"
 +
 +#: git-gui.sh:1838 git-gui.sh:2148 git-gui.sh:2246
 +msgid "Sign Off"
-+msgstr "署名"
++msgstr "Sign Off"
 +
 +#: git-gui.sh:1853
 +msgid "Local Merge..."
-+msgstr "ローカル・マージ…"
++msgstr "Fusione locale"
 +
 +#: git-gui.sh:1858
 +msgid "Abort Merge..."
-+msgstr "マージ中止…"
++msgstr "Interrompi fusione"
 +
 +#: git-gui.sh:1870
 +msgid "Push..."
-+msgstr "プッシュ…"
++msgstr "Propaga..."
 +
 +#: git-gui.sh:1880
 +msgid "Apple"
-+msgstr "りんご"
++msgstr "Apple"
 +
 +#: git-gui.sh:1883 git-gui.sh:1901 lib/option.tcl:65
 +#, tcl-format
 +msgid "About %s"
-+msgstr "%s について"
++msgstr "Informazioni su %s"
 +
 +#: git-gui.sh:1885 git-gui.sh:1891 git-gui.sh:2414
 +msgid "Options..."
-+msgstr "オプション…"
++msgstr "Opzioni..."
 +
 +#: git-gui.sh:1897
 +msgid "Help"
-+msgstr "ヘルプ"
++msgstr "Aiuto"
 +
 +#: git-gui.sh:1938
 +msgid "Online Documentation"
-+msgstr "オンライン・ドキュメント"
++msgstr "Documentazione sul web"
 +
 +#: git-gui.sh:2054
 +msgid "Current Branch:"
-+msgstr "現在のブランチ"
++msgstr "Ramo attuale:"
 +
 +#: git-gui.sh:2075
 +msgid "Staged Changes (Will Be Committed)"
-+msgstr "ステージングされた（コミット予定済の）変更"
++msgstr "Modifiche preparate (ne verrà effettuato il commit)"
 +
 +#: git-gui.sh:2095
 +msgid "Unstaged Changes (Will Not Be Committed)"
-+msgstr "ステージングされていない（コミット未予定の）変更"
++msgstr "Modifiche non preparate (non ne verrà effettuato il commit)"
 +
 +#: git-gui.sh:2142
 +msgid "Stage Changed"
-+msgstr "変更をコミット予定に入れる"
++msgstr "Prepara modificati"
 +
 +#: git-gui.sh:2188
 +msgid "Initial Commit Message:"
-+msgstr "最初のコミットメッセージ:"
++msgstr "Messaggio di commit iniziale:"
 +
 +#: git-gui.sh:2189
 +msgid "Amended Commit Message:"
-+msgstr "訂正したコミットメッセージ:"
++msgstr "Messaggio di commit corretto:"
 +
 +#: git-gui.sh:2190
 +msgid "Amended Initial Commit Message:"
-+msgstr "訂正した最初のコミットメッセージ:"
++msgstr "Messaggio iniziale di commit corretto:"
 +
 +#: git-gui.sh:2191
 +msgid "Amended Merge Commit Message:"
-+msgstr "訂正したマージコミットメッセージ:"
++msgstr "Messaggio di fusione corretto:"
 +
 +#: git-gui.sh:2192
 +msgid "Merge Commit Message:"
-+msgstr "マージコミットメッセージ:"
++msgstr "Messaggio di fusione:"
 +
 +#: git-gui.sh:2193
 +msgid "Commit Message:"
-+msgstr "コミットメッセージ:"
++msgstr "Messaggio di commit:"
 +
 +#: git-gui.sh:2238 git-gui.sh:2376 lib/console.tcl:73
 +msgid "Copy All"
-+msgstr "全てコピー"
++msgstr "Copia tutto"
 +
 +#: git-gui.sh:2262 lib/blame.tcl:104
 +msgid "File:"
-+msgstr "ファイル:"
++msgstr "File:"
 +
 +#: git-gui.sh:2364
 +msgid "Refresh"
-+msgstr "再読み込み"
++msgstr "Rinfresca"
 +
 +#: git-gui.sh:2385
 +msgid "Apply/Reverse Hunk"
-+msgstr "パッチを適用/取り消す"
++msgstr "Applica/Inverti sezione"
 +
 +#: git-gui.sh:2391
 +msgid "Decrease Font Size"
-+msgstr "フォントを小さく"
++msgstr "Diminuisci dimensione caratteri"
 +
 +#: git-gui.sh:2395
 +msgid "Increase Font Size"
-+msgstr "フォントを大きく"
++msgstr "Aumenta dimensione caratteri"
 +
 +#: git-gui.sh:2400
 +msgid "Show Less Context"
-+msgstr "文脈を少なく"
++msgstr "Mostra meno contesto"
 +
 +#: git-gui.sh:2407
 +msgid "Show More Context"
-+msgstr "文脈を多く"
++msgstr "Mostra più contesto"
 +
 +#: git-gui.sh:2422
 +msgid "Unstage Hunk From Commit"
-+msgstr "パッチをコミット予定から外す"
++msgstr "Sezione non pronta per il commit"
 +
 +#: git-gui.sh:2426 git-gui.sh:2430
 +msgid "Stage Hunk For Commit"
-+msgstr "パッチをコミット予定に加える"
++msgstr "Prepara sezione per il commit"
 +
 +#: git-gui.sh:2440
 +msgid "Initializing..."
-+msgstr "初期化しています…"
++msgstr "Inizializzazione..."
 +
 +#: lib/blame.tcl:77
 +msgid "File Viewer"
-+msgstr "ファイルピューワ"
++msgstr "Mostra file"
 +
 +#: lib/blame.tcl:81
 +msgid "Commit:"
-+msgstr "コミット:"
++msgstr "Commit:"
 +
 +#: lib/blame.tcl:249
 +msgid "Copy Commit"
-+msgstr "コミットをコピー"
++msgstr "Copia commit"
 +
 +#: lib/blame.tcl:369
 +#, tcl-format
 +msgid "Reading %s..."
-+msgstr "%s を読んでいます…"
++msgstr "Lettura di %s..."
 +
 +#: lib/branch_checkout.tcl:14 lib/branch_checkout.tcl:19
 +msgid "Checkout Branch"
-+msgstr "ブランチをチェックアウト"
++msgstr "Checkout ramo"
 +
 +#: lib/branch_checkout.tcl:23
 +msgid "Checkout"
-+msgstr "チェックアウト"
++msgstr "Checkout"
 +
 +#: lib/branch_checkout.tcl:27 lib/branch_create.tcl:35
 +#: lib/branch_delete.tcl:32 lib/branch_rename.tcl:30 lib/browser.tcl:283
 +#: lib/checkout_op.tcl:522 lib/merge.tcl:172 lib/option.tcl:172
 +#: lib/remote_branch_delete.tcl:42 lib/transport.tcl:92
 +msgid "Cancel"
-+msgstr "中止"
++msgstr "Annulla"
 +
 +#: lib/branch_checkout.tcl:32 lib/browser.tcl:288
 +msgid "Revision"
-+msgstr "リビジョン"
++msgstr "Revisione"
 +
 +#: lib/branch_checkout.tcl:36 lib/branch_create.tcl:69 lib/option.tcl:159
 +#: lib/option.tcl:274
 +msgid "Options"
-+msgstr "オプション"
++msgstr "Opzioni"
 +
 +#: lib/branch_checkout.tcl:39 lib/branch_create.tcl:92
 +msgid "Fetch Tracking Branch"
-+msgstr "トラッキング・ブランチをフェッチ"
++msgstr "Preleva ramo in 'tracking'"
 +
 +#: lib/branch_checkout.tcl:44
 +msgid "Detach From Local Branch"
-+msgstr "ローカル・ブランチから削除"
++msgstr "Stacca da ramo locale"
 +
 +#: lib/branch_create.tcl:22
 +msgid "Create Branch"
-+msgstr "ブランチを作成"
++msgstr "Crea ramo"
 +
 +#: lib/branch_create.tcl:27
 +msgid "Create New Branch"
-+msgstr "ブランチを新規作成"
++msgstr "Crea nuovo ramo"
 +
 +#: lib/branch_create.tcl:31
 +msgid "Create"
-+msgstr "作成"
++msgstr "Crea"
 +
 +#: lib/branch_create.tcl:40
 +msgid "Branch Name"
-+msgstr "ブランチ名"
++msgstr "Nome del ramo"
 +
 +#: lib/branch_create.tcl:43
 +msgid "Name:"
-+msgstr "名前:"
++msgstr "Nome:"
 +
 +#: lib/branch_create.tcl:58
 +msgid "Match Tracking Branch Name"
-+msgstr "トラッキング・ブランチ名を合わせる"
++msgstr "Appaia nome del ramo in 'tracking'"
 +
 +#: lib/branch_create.tcl:66
 +msgid "Starting Revision"
-+msgstr "初期リビジョン"
++msgstr "Revisione iniziale"
 +
 +#: lib/branch_create.tcl:72
 +msgid "Update Existing Branch:"
-+msgstr "既存のブランチを更新:"
++msgstr "Aggiorna ramo esistente:"
 +
 +#: lib/branch_create.tcl:75
 +msgid "No"
-+msgstr "いいえ"
++msgstr "No"
 +
 +#: lib/branch_create.tcl:80
 +msgid "Fast Forward Only"
-+msgstr "早送りのみ"
++msgstr "Solo fast forward"
 +
 +#: lib/branch_create.tcl:85 lib/checkout_op.tcl:514
 +msgid "Reset"
-+msgstr "リセット"
++msgstr "Ripristina"
 +
 +#: lib/branch_create.tcl:97
 +msgid "Checkout After Creation"
-+msgstr "作成してすぐチェックアウト"
++msgstr "Checkout dopo la creazione"
 +
 +#: lib/branch_create.tcl:131
 +msgid "Please select a tracking branch."
-+msgstr "トラッキング・ブランチを選択して下さい。"
++msgstr "Scegliere un ramo in 'tracking'"
 +
 +#: lib/branch_create.tcl:140
 +#, tcl-format
 +msgid "Tracking branch %s is not a branch in the remote repository."
-+msgstr "トラッキング・ブランチ %s は遠隔リポジトリのブランチではありません。"
++msgstr "Il ramo in 'tracking' %s non è un ramo nell'archivio remoto."
 +
 +#: lib/branch_create.tcl:153 lib/branch_rename.tcl:86
 +msgid "Please supply a branch name."
-+msgstr "ブランチ名を指定して下さい。"
++msgstr "Inserire un nome per il ramo."
 +
 +#: lib/branch_create.tcl:164 lib/branch_rename.tcl:106
 +#, tcl-format
 +msgid "'%s' is not an acceptable branch name."
-+msgstr "'%s' はブランチ名に使えません。"
++msgstr "'%s' non è utilizzabile come nome di ramo."
 +
 +#: lib/branch_delete.tcl:15
 +msgid "Delete Branch"
-+msgstr "ブランチ削除"
++msgstr "Elimina ramo"
 +
 +#: lib/branch_delete.tcl:20
 +msgid "Delete Local Branch"
-+msgstr "ローカル・ブランチを削除"
++msgstr "Elimina ramo locale"
 +
 +#: lib/branch_delete.tcl:37
 +msgid "Local Branches"
-+msgstr "ローカル・ブランチ"
++msgstr "Rami locali"
 +
 +#: lib/branch_delete.tcl:52
 +msgid "Delete Only If Merged Into"
-+msgstr "マージ済みの時のみ削除"
++msgstr "Cancella solo se fuso con un altro ramo"
 +
 +#: lib/branch_delete.tcl:54
 +msgid "Always (Do not perform merge test.)"
-+msgstr "無条件(マージテストしない)"
++msgstr "Sempre (Non effettuare controlli durante la fusione)."
 +
 +#: lib/branch_delete.tcl:103
 +#, tcl-format
 +msgid "The following branches are not completely merged into %s:"
-+msgstr "以下のブランチは %s に完全にマージされていません:"
++msgstr "I rami seguenti non sono stati fusi completamente in %s:"
 +
 +#: lib/branch_delete.tcl:115
 +msgid ""
@@ -622,9 +623,9 @@ index 0000000..1713908
 +"\n"
 +" Delete the selected branches?"
 +msgstr ""
-+"ブランチを削除すると元に戻すのは困難です。 \n"
++"Prelevare rami cancellati può essere complicato. \n"
 +"\n"
-+" 選択したブランチを削除しますか？"
++" Eliminare i rami selezionati?"
 +
 +#: lib/branch_delete.tcl:141
 +#, tcl-format
@@ -632,77 +633,77 @@ index 0000000..1713908
 +"Failed to delete branches:\n"
 +"%s"
 +msgstr ""
-+"以下のブランチを削除できません:\n"
++"Cancellazione rami fallita:\n"
 +"%s"
 +
 +#: lib/branch_rename.tcl:14 lib/branch_rename.tcl:22
 +msgid "Rename Branch"
-+msgstr "ブランチの名前変更"
++msgstr "Rinomina ramo"
 +
 +#: lib/branch_rename.tcl:26
 +msgid "Rename"
-+msgstr "名前変更"
++msgstr "Rinomina"
 +
 +#: lib/branch_rename.tcl:36
 +msgid "Branch:"
-+msgstr "ブランチ:"
++msgstr "Ramo:"
 +
 +#: lib/branch_rename.tcl:39
 +msgid "New Name:"
-+msgstr "新しい名前:"
++msgstr "Nuovo Nome:"
 +
 +#: lib/branch_rename.tcl:75
 +msgid "Please select a branch to rename."
-+msgstr "名前を変更するブランチを選んで下さい。"
++msgstr "Scegliere un ramo da rinominare."
 +
 +#: lib/branch_rename.tcl:96 lib/checkout_op.tcl:179
 +#, tcl-format
 +msgid "Branch '%s' already exists."
-+msgstr "'%s'というブランチは既に存在します。"
++msgstr "Il ramo '%s' esiste già"
 +
 +#: lib/branch_rename.tcl:117
 +#, tcl-format
 +msgid "Failed to rename '%s'."
-+msgstr "'%s'の名前変更に失敗しました。"
++msgstr "Cambiamento nome '%s' fallito."
 +
 +#: lib/browser.tcl:17
 +msgid "Starting..."
-+msgstr "起動中…"
++msgstr "Avvio in corso..."
 +
 +#: lib/browser.tcl:26
 +msgid "File Browser"
-+msgstr "ファイル・ブラウザ"
++msgstr "File browser"
 +
 +#: lib/browser.tcl:127 lib/browser.tcl:144
 +#, tcl-format
 +msgid "Loading %s..."
-+msgstr "%s をロード中…"
++msgstr "Caricamento %s..."
 +
 +#: lib/browser.tcl:188
 +msgid "[Up To Parent]"
-+msgstr "[上位フォルダへ]"
++msgstr "[Directory superiore]"
 +
 +#: lib/browser.tcl:268 lib/browser.tcl:274
 +msgid "Browse Branch Files"
-+msgstr "現在のブランチのファイルを見る"
++msgstr "Esplora i file del ramo"
 +
 +#: lib/browser.tcl:279
 +msgid "Browse"
-+msgstr "ブラウズ"
++msgstr "Sfoglia"
 +
 +#: lib/checkout_op.tcl:79
 +#, tcl-format
 +msgid "Fetching %s from %s"
-+msgstr "%s から %s をフェッチしています"
++msgstr "Recupero %s da %s"
 +
 +#: lib/checkout_op.tcl:140 lib/console.tcl:81 lib/database.tcl:31
 +msgid "Close"
-+msgstr "閉じる"
++msgstr "Chiudi"
 +
 +#: lib/checkout_op.tcl:169
 +#, tcl-format
 +msgid "Branch '%s' does not exist."
-+msgstr "ブランチ'%s'は存在しません。"
++msgstr "Il ramo '%s' non esiste."
 +
 +#: lib/checkout_op.tcl:206
 +#, tcl-format
@@ -711,25 +712,24 @@ index 0000000..1713908
 +"\n"
 +"It cannot fast-forward to %s.\n"
 +"A merge is required."
-+msgstr ""
-+"ブランチ '%s' は既に存在します。\n"
++msgstr "Il ramo '%s' esiste già.\n"
 +"\n"
-+"%s に早送りできません。\n"
-+"マージが必要です。"
++"Non può effettuare un 'fast-forward' a %s.\n"
++"E' necessaria una fusione."
 +
 +#: lib/checkout_op.tcl:220
 +#, tcl-format
 +msgid "Merge strategy '%s' not supported."
-+msgstr "'%s' マージ戦略はサポートされていません。"
++msgstr "La strategia di fusione '%s' non è supportata."
 +
 +#: lib/checkout_op.tcl:239
 +#, tcl-format
 +msgid "Failed to update '%s'."
-+msgstr "'%s' の更新に失敗しました。"
++msgstr "Aggiornamento di '%s' fallito."
 +
 +#: lib/checkout_op.tcl:251
 +msgid "Staging area (index) is already locked."
-+msgstr "インデックスは既にロックされています。"
++msgstr "L'area di preparazione per il commit (indice) è già bloccata."
 +
 +#: lib/checkout_op.tcl:266
 +msgid ""
@@ -740,26 +740,27 @@ index 0000000..1713908
 +"\n"
 +"The rescan will be automatically started now.\n"
 +msgstr ""
-+"最後にスキャンした状態はリポジトリの状態と合致しません。\n"
++"L'ultimo stato analizzato non corrisponde allo stato del repository.\n"
 +"\n"
-+"最後にスキャンして以後、別の Git プログラムがリポジトリを変更しています。現在"
-+"のブランチを変更する前に、再スキャンが必要です。\n"
++"Un altro programma Git ha modificato questo repository dall'ultima analisi. "
++"Bisogna effettuare una nuova analisi prima di poter cambiare il ramo "
++"corrente.\n"
 +"\n"
-+"自動的に再スキャンを開始します。\n"
++"La nuova analisi comincerà ora.\n"
 +
 +#: lib/checkout_op.tcl:353
 +#, tcl-format
 +msgid "Aborted checkout of '%s' (file level merging is required)."
-+msgstr "'%s' のチェックアウトを中止しました（ファイル毎のマージが必要です）。"
++msgstr "Checkout di '%s' fallito (richiesta una fusione a livello file)."
 +
 +#: lib/checkout_op.tcl:354
 +msgid "File level merge required."
-+msgstr "ファイル毎のマージが必要です。"
++msgstr "E' richiesta una fusione a livello file."
 +
 +#: lib/checkout_op.tcl:358
 +#, tcl-format
 +msgid "Staying on branch '%s'."
-+msgstr "ブランチ '%s' に滞まります。"
++msgstr "Si rimarrà sul ramo '%s'."
 +
 +#: lib/checkout_op.tcl:429
 +msgid ""
@@ -768,28 +769,28 @@ index 0000000..1713908
 +"If you wanted to be on a branch, create one now starting from 'This Detached "
 +"Checkout'."
 +msgstr ""
-+"ローカル・ブランチから離れます。\n"
++"Non si è più su un ramo locale\n"
 +"\n"
-+"ブランチ上に滞まりたいときは、この「分離されたチェックアウト」から新規ブラン"
-+"チを開始してください。"
++"Se si vuole rimanere su un ramo, crearne uno ora a partire da 'Questo checkout "
++"staccato'."
 +
 +#: lib/checkout_op.tcl:478
 +#, tcl-format
 +msgid "Resetting '%s' to '%s' will lose the following commits:"
-+msgstr "'%s' を '%s' にリセットすると、以下のコミットが失なわれます:"
++msgstr "Ripristinare '%s' a '%s' comporterà la perdita dei seguenti commit:"
 +
 +#: lib/checkout_op.tcl:500
 +msgid "Recovering lost commits may not be easy."
-+msgstr "失なわれたコミットを回復するのは簡単ではありません。"
++msgstr "Prelevare i commit perduti potrebbe non essere semplice."
 +
 +#: lib/checkout_op.tcl:505
 +#, tcl-format
 +msgid "Reset '%s'?"
-+msgstr "'%s' をリセットしますか？"
++msgstr "Ripristinare '%s'?"
 +
 +#: lib/checkout_op.tcl:510 lib/merge.tcl:164
 +msgid "Visualize"
-+msgstr "可視化"
++msgstr "Visualizza"
 +
 +#: lib/checkout_op.tcl:578
 +#, tcl-format
@@ -801,44 +802,46 @@ index 0000000..1713908
 +"\n"
 +"This should not have occurred.  %s will now close and give up."
 +msgstr ""
-+"現在のブランチを設定できません。\n"
++"Preparazione ramo corrente fallita.\n"
 +"\n"
-+"作業ディレクトリは部分的にしか切り替わっていません。ファイルの更新には成功し"
-+"ましたが、 Git の内部データを更新できませんでした。\n"
-+"起こるはずのないエラーです。あきらめて %s を終了します。"
++"Questa directory di lavoro è stata convertita solo parzialmente. I file "
++"sono stati aggiornati correttamente, ma l'aggiornamento di un file di Git ha "
++"prodotto degli errori.\n"
++"\n"
++"Questo non sarebbe dovuto succedere.  %s ora terminerà senza altre azioni."
 +
 +#: lib/choose_rev.tcl:53
 +msgid "This Detached Checkout"
-+msgstr "分離されたチェックアウト"
++msgstr "Questo checkout staccato"
 +
 +#: lib/choose_rev.tcl:60
 +msgid "Revision Expression:"
-+msgstr "リビジョン式:"
++msgstr "Espressione di revisione:"
 +
 +#: lib/choose_rev.tcl:74
 +msgid "Local Branch"
-+msgstr "ローカル・ブランチ"
++msgstr "Ramo locale"
 +
 +#: lib/choose_rev.tcl:79
 +msgid "Tracking Branch"
-+msgstr "トラッキング・ブランチ"
++msgstr "Ramo in 'tracking'"
 +
 +#: lib/choose_rev.tcl:84
 +msgid "Tag"
-+msgstr "タグ"
++msgstr "Etichetta"
 +
 +#: lib/choose_rev.tcl:317
 +#, tcl-format
 +msgid "Invalid revision: %s"
-+msgstr "無効なリビジョン: %s"
++msgstr "Revisione non valida: %s"
 +
 +#: lib/choose_rev.tcl:338
 +msgid "No revision selected."
-+msgstr "リビジョンが未選択です。"
++msgstr "Nessuna revisione selezionata."
 +
 +#: lib/choose_rev.tcl:346
 +msgid "Revision expression is empty."
-+msgstr "リビジョン式が空です。"
++msgstr "L'espressione di revisione è vuota."
 +
 +#: lib/commit.tcl:9
 +msgid ""
@@ -847,10 +850,10 @@ index 0000000..1713908
 +"You are about to create the initial commit.  There is no commit before this "
 +"to amend.\n"
 +msgstr ""
-+"訂正するコミットがそもそもありません。\n"
++"Non c'è niente da correggere.\n"
 +"\n"
-+"これから作るのは最初のコミットです。その前にはまだ訂正するようなコミットはあ"
-+"りません。\n"
++"Stai per creare il commit iniziale. Non esiste un commit precedente da "
++"correggere.\n"
 +
 +#: lib/commit.tcl:18
 +msgid ""
@@ -860,22 +863,23 @@ index 0000000..1713908
 +"completed.  You cannot amend the prior commit unless you first abort the "
 +"current merge activity.\n"
 +msgstr ""
-+"マージ中にコミットの訂正はできません。\n"
++"Non è possibile effettuare una correzione durante una fusione.\n"
 +"\n"
-+"現在はまだマージの途中です。先にこのマージを中止しないと、前のコミットの訂正"
-+"はできません\n"
++"In questo momento si sta effettuando una fusione che non è stata del tutto "
++"completata. Non puoi correggere il commit precedente a meno che prima tu non "
++"interrompa l'operazione di fusione in corso.\n"
 +
 +#: lib/commit.tcl:49
 +msgid "Error loading commit data for amend:"
-+msgstr "訂正するコミットのデータを読めません:"
++msgstr "Errore durante il caricamento dei dati da correggere:"
 +
 +#: lib/commit.tcl:76
 +msgid "Unable to obtain your identity:"
-+msgstr "ユーザの正体を確認できません:"
++msgstr "Impossibile ottenere la tua identità:"
 +
 +#: lib/commit.tcl:81
 +msgid "Invalid GIT_COMMITTER_IDENT:"
-+msgstr "GIT_COMMITTER_IDENT が無効です:"
++msgstr "GIT_COMMITTER_IDENT non valida:"
 +
 +#: lib/commit.tcl:133
 +msgid ""
@@ -886,12 +890,12 @@ index 0000000..1713908
 +"\n"
 +"The rescan will be automatically started now.\n"
 +msgstr ""
-+"最後にスキャンした状態はリポジトリの状態と合致しません。\n"
++"L'ultimo stato analizzato non corrisponde allo stato del repository.\n"
 +"\n"
-+"最後にスキャンして以後、別の Git プログラムがリポジトリを変更しています。新し"
-+"くコミットする前に、再スキャンが必要です。\n"
++"Un altro programma Git ha modificato questo repository dall'ultima analisi. "
++"Bisogna effettuare una nuova analisi prima di poter creare un nuovo commit.\n"
 +"\n"
-+"自動的に再スキャンを開始します。\n"
++"La nuova analisi comincerà ora.\n"
 +
 +#: lib/commit.tcl:154
 +#, tcl-format
@@ -901,10 +905,10 @@ index 0000000..1713908
 +"File %s has merge conflicts.  You must resolve them and stage the file "
 +"before committing.\n"
 +msgstr ""
-+"マージしていないファイルはコミットできません。\n"
++"Non è possibile effettuare il commit di file non sottoposti a fusione.\n"
 +"\n"
-+"ファイル %s にはマージ衝突が残っています。まず解決してコミット予定に加える必"
-+"要があります。\n"
++"Il file %s presenta dei conflitti. Devi risolverli e preparare il file "
++"per il commit prima di effettuare questa azione.\n"
 +
 +#: lib/commit.tcl:162
 +#, tcl-format
@@ -913,9 +917,9 @@ index 0000000..1713908
 +"\n"
 +"File %s cannot be committed by this program.\n"
 +msgstr ""
-+"不明なファイル状態 %s です。\n"
++"Stato di file %s sconosciuto.\n"
 +"\n"
-+"ファイル %s は本プログラムではコミットできません。\n"
++"Non si può effettuare il commit del file %s con questo programma.\n"
 +
 +#: lib/commit.tcl:170
 +msgid ""
@@ -923,9 +927,9 @@ index 0000000..1713908
 +"\n"
 +"You must stage at least 1 file before you can commit.\n"
 +msgstr ""
-+"コミットする変更がありません。\n"
++"Nessuna modifica per la quale effettuare il commit.\n"
 +"\n"
-+"最低一つの変更をコミット予定に加えてからコミットして下さい。\n"
++"Devi preparare per il commit almeno 1 file prima di effettuare questa operazione.\n"
 +
 +#: lib/commit.tcl:183
 +msgid ""
@@ -937,17 +941,17 @@ index 0000000..1713908
 +"- Second line: Blank\n"
 +"- Remaining lines: Describe why this change is good.\n"
 +msgstr ""
-+"コミット・メッセージを入力して下さい。\n"
++"Bisogna fornire un messaggio di commit.\n"
 +"\n"
-+"正しいコミット・メッセージは:\n"
++"Un buon messaggio di commit ha il seguente formato:\n"
 +"\n"
-+"- 第１行: 何をしたか、を１行で要約。\n"
-+"- 第２行: 空白\n"
-+"- 残りの行: なぜ、この変更が良い変更か、の説明。\n"
++"- Prima linea: descrivi in una frase ciò che hai fatto.\n"
++"- Seconda linea: vuota.\n"
++"- Terza linea: spiga a cosa serve la tua modifica.\n"
 +
 +#: lib/commit.tcl:257
 +msgid "write-tree failed:"
-+msgstr "write-tree が失敗しました:"
++msgstr "write-tree fallito:"
 +
 +#: lib/commit.tcl:279
 +msgid ""
@@ -957,76 +961,76 @@ index 0000000..1713908
 +"\n"
 +"A rescan will be automatically started now.\n"
 +msgstr ""
-+"コミットする変更がありません。\n"
++"Nessuna modifica pronta per il commit.\n"
 +"\n"
-+"マージでなく、また、一つも変更点がありません。\n"
++"Questo commit non modifica alcun file e non effettua alcuna fusione.\n"
 +"\n"
-+"自動的に再スキャンを開始します。\n"
++"Si procederà subito ad una nuova analisi.\n"
 +
 +#: lib/commit.tcl:286
 +msgid "No changes to commit."
-+msgstr "コミットする変更がありません。"
++msgstr "Nessuna modifica pronta per il commit."
 +
 +#: lib/commit.tcl:317
 +msgid "commit-tree failed:"
-+msgstr "commit-tree が失敗しました:"
++msgstr "commit-tree fallito:"
 +
 +#: lib/commit.tcl:339
 +msgid "update-ref failed:"
-+msgstr "update-ref が失敗しました:"
++msgstr "update-ref fallito:"
 +
 +#: lib/commit.tcl:430
 +#, tcl-format
 +msgid "Created commit %s: %s"
-+msgstr "コミット %s を作成しました: %s"
++msgstr "Creato commit %s: %s"
 +
 +#: lib/console.tcl:55
 +msgid "Working... please wait..."
-+msgstr "実行中…お待ち下さい…"
++msgstr "Elaborazione in corso... attendere..."
 +
 +#: lib/console.tcl:184
 +msgid "Success"
-+msgstr "成功"
++msgstr "Successo"
 +
 +#: lib/console.tcl:194
 +msgid "Error: Command Failed"
-+msgstr "エラー: コマンドが失敗しました"
++msgstr "Errore: comando fallito"
 +
 +#: lib/database.tcl:43
 +msgid "Number of loose objects"
-+msgstr "ばらばらなオブジェクトの数"
++msgstr "Numero di oggetti slegati"
 +
 +#: lib/database.tcl:44
 +msgid "Disk space used by loose objects"
-+msgstr "ばらばらなオブジェクトの使用するディスク量"
++msgstr "Spazio su disco utilizzato da oggetti slegati"
 +
 +#: lib/database.tcl:45
 +msgid "Number of packed objects"
-+msgstr "パックされたオブジェクトの数"
++msgstr "Numero di oggetti impacchettati"
 +
 +#: lib/database.tcl:46
 +msgid "Number of packs"
-+msgstr "パックの数"
++msgstr "Numero di pacchetti"
 +
 +#: lib/database.tcl:47
 +msgid "Disk space used by packed objects"
-+msgstr "パックされたオブジェクトの使用するディスク量"
++msgstr "Spazio su disco utilizzato da oggetti impacchettati"
 +
 +#: lib/database.tcl:48
 +msgid "Packed objects waiting for pruning"
-+msgstr "パックに存在するので捨てて良いオブジェクトの数"
++msgstr "Oggetti impacchettati che attendono la potatura"
 +
 +#: lib/database.tcl:49
 +msgid "Garbage files"
-+msgstr "ゴミファイル"
++msgstr "File inutili"
 +
 +#: lib/database.tcl:72
 +msgid "Compressing the object database"
-+msgstr "データベース圧縮"
++msgstr "Compressione del database in corso"
 +
 +#: lib/database.tcl:83
 +msgid "Verifying the object database with fsck-objects"
-+msgstr "fsck-objects でオブジェクト・データベースを検証しています"
++msgstr "Verifica dell'archivio con fsck-objects in corso"
 +
 +#: lib/diff.tcl:42
 +#, tcl-format
@@ -1041,60 +1045,61 @@ index 0000000..1713908
 +"A rescan will be automatically started to find other files which may have "
 +"the same state."
 +msgstr ""
-+"変更がありません。\n"
++"Non sono state trovate differenze.\n"
 +"\n"
-+"%s には変更がありません。\n"
++"%s non ha modifiche.\n"
 +"\n"
-+"このファイルの変更時刻は他のアプリケーションによって更新されていますがファイ"
-+"ル内容には変更がありません。\n"
++"La data di modifica di questo file è stata cambiata da un'altra "
++"applicazione, ma il contenuto del file è rimasto invariato.\n"
 +"\n"
-+"同様な状態のファイルを探すために、自動的に再スキャンを開始します。"
++"Si procederà automaticamente ad una nuova analisi per trovare altri file che "
++"potrebbero avere lo stesso stato."
 +
 +#: lib/diff.tcl:97
 +msgid "Error loading file:"
-+msgstr "ファイルを読む際のエラーです:"
++msgstr "Errore nel caricamento del file:"
 +
 +#: lib/diff.tcl:162
 +msgid "Error loading diff:"
-+msgstr "diff を読む際のエラーです:"
++msgstr "Errore nel caricamento delle differenze:"
 +
 +#: lib/diff.tcl:278
 +msgid "Failed to unstage selected hunk."
-+msgstr "選択されたパッチをコミット予定から外せません。"
++msgstr "La sezione scelta è ancora pronta per il commit."
 +
 +#: lib/diff.tcl:285
 +msgid "Failed to stage selected hunk."
-+msgstr "選択されたパッチをコミット予定に加えられません。"
++msgstr "La sezione scelta non è ancora pronta per il commit."
 +
 +#: lib/error.tcl:12 lib/error.tcl:102
 +msgid "error"
-+msgstr "エラー"
++msgstr "errore"
 +
 +#: lib/error.tcl:28
 +msgid "warning"
-+msgstr "警告"
++msgstr "avviso"
 +
 +#: lib/error.tcl:81
 +msgid "You must correct the above errors before committing."
-+msgstr "コミットする前に、以上のエラーを修正して下さい"
++msgstr "Bisogna correggere gli errori suddetti prima di effettuare un commit."
 +
 +#: lib/index.tcl:364
 +#, tcl-format
 +msgid "Revert changes in file %s?"
-+msgstr "ファイル %s にした変更を元に戻しますか？"
++msgstr "Annullare le modifiche nel file %s?"
 +
 +#: lib/index.tcl:366
 +#, tcl-format
 +msgid "Revert changes in these %i files?"
-+msgstr "これら %i 個のファイルにした変更を元に戻しますか？"
++msgstr "Annullare le modifiche in questi %i file?"
 +
 +#: lib/index.tcl:372
 +msgid "Any unstaged changes will be permanently lost by the revert."
-+msgstr "変更を元に戻すとコミット予定していない変更は全て失われます。"
++msgstr "Tutte le modifiche non preparate per il commit saranno perse per sempre."
 +
 +#: lib/index.tcl:375
 +msgid "Do Nothing"
-+msgstr "何もしない"
++msgstr "Non fare niente"
 +
 +#: lib/merge.tcl:13
 +msgid ""
@@ -1102,9 +1107,10 @@ index 0000000..1713908
 +"\n"
 +"You must finish amending this commit before starting any type of merge.\n"
 +msgstr ""
-+"訂正中にはマージできません。\n"
++"Non posso effettuare fusioni durante una correzione.\n"
 +"\n"
-+"訂正処理を完了するまでは新たにマージを開始できません。\n"
++"Bisogna finire di correggere questo commit prima di iniziare una qualunque "
++"fusione.\n"
 +
 +#: lib/merge.tcl:27
 +msgid ""
@@ -1115,12 +1121,12 @@ index 0000000..1713908
 +"\n"
 +"The rescan will be automatically started now.\n"
 +msgstr ""
-+"最後にスキャンした状態はリポジトリの状態と合致しません。\n"
++"L'ultimo stato analizzato non corrisponde allo stato del repository.\n"
 +"\n"
-+"最後にスキャンして以後、別の Git プログラムがリポジトリを変更しています。マー"
-+"ジを開始する前に、再スキャンが必要です。\n"
++"Un altro programma Git ha modificato questo repository dall'ultima analisi."
++"Bisogna effettuare una nuova analisi prima di poter effettuare una fusione.\n"
 +"\n"
-+"自動的に再スキャンを開始します。\n"
++"La nuova analisi comincerà ora.\n"
 +
 +#: lib/merge.tcl:44
 +#, tcl-format
@@ -1132,12 +1138,14 @@ index 0000000..1713908
 +"You must resolve them, stage the file, and commit to complete the current "
 +"merge.  Only then can you begin another merge.\n"
 +msgstr ""
-+"衝突のあったマージの途中です。\n"
++"Sei nel mezzo di una fusione con conflitti.\n"
 +"\n"
-+"ファイル %s にはマージ中の衝突が残っています。\n"
++"Il file %s ha dei conflitti.\n"
 +"\n"
-+"このファイルの衝突を解決し、コミット予定に加えて、コミットすることでマージを"
-+"完了します。そうやって始めて、新たなマージを開始できるようになります。\n"
++"Bisogna risolvere i conflitti, preparare il file per il commit ed infine "
++"effettuare un commit "
++"per completare la fusione corrente. Solo a questo punto potrai iniziare "
++"un'altra fusione.\n"
 +
 +#: lib/merge.tcl:54
 +#, tcl-format
@@ -1149,39 +1157,40 @@ index 0000000..1713908
 +"You should complete the current commit before starting a merge.  Doing so "
 +"will help you abort a failed merge, should the need arise.\n"
 +msgstr ""
-+"変更の途中です。\n"
++"Sei nel mezzo di una modifica.\n"
 +"\n"
-+"ファイル %s は変更中です。\n"
++"Il file %s è stato modificato.\n"
 +"\n"
-+"現在のコミットを完了してからマージを開始して下さい。そうする方がマージに失敗"
-+"したときの回復が楽です。\n"
++"Bisogna completare il commit corrente prima di iniziare una fusione. In "
++"questo modo sarà più facile interrompere una fusione non riuscita, nel caso "
++"ce ne fosse bisogno.\n"
 +
 +#: lib/merge.tcl:106
 +#, tcl-format
 +msgid "%s of %s"
-+msgstr "%s の %s ブランチ"
++msgstr "%s di %s"
 +
 +#: lib/merge.tcl:119
 +#, tcl-format
 +msgid "Merging %s and %s"
-+msgstr "%s と %s をマージします"
++msgstr "Fusione di %s e %s in corso"
 +
 +#: lib/merge.tcl:131
 +msgid "Merge completed successfully."
-+msgstr "マージが完了しました"
++msgstr "Fusione completata con successo."
 +
 +#: lib/merge.tcl:133
 +msgid "Merge failed.  Conflict resolution is required."
-+msgstr "マージが失敗しました。衝突の解決が必要です。"
++msgstr "Fusione fallita. Bisogna risolvere i conflitti."
 +
 +#: lib/merge.tcl:158
 +#, tcl-format
 +msgid "Merge Into %s"
-+msgstr "%s にマージ"
++msgstr "Fusione in %s"
 +
 +#: lib/merge.tcl:177
 +msgid "Revision To Merge"
-+msgstr "マージするリビジョン"
++msgstr "Revisione da fondere"
 +
 +#: lib/merge.tcl:212
 +msgid ""
@@ -1189,9 +1198,9 @@ index 0000000..1713908
 +"\n"
 +"You must finish amending this commit.\n"
 +msgstr ""
-+"訂正中には中止できません。\n"
++"Interruzione impossibile durante una correzione.\n"
 +"\n"
-+"まず今のコミット訂正を完了させて下さい。\n"
++"Bisogna finire di correggere questo commit.\n"
 +
 +#: lib/merge.tcl:222
 +msgid ""
@@ -1201,11 +1210,12 @@ index 0000000..1713908
 +"\n"
 +"Continue with aborting the current merge?"
 +msgstr ""
-+"マージを中断しますか？\n"
++"Interrompere fusione?\n"
 +"\n"
-+"現在のマージを中断すると、コミットしていない全ての変更が失われます。\n"
++"L'interruzione della fusione corrente causerà la perdita di *TUTTE* le "
++"modifiche non ancora presenti nei commit.\n"
 +"\n"
-+"マージを中断してよろしいですか？"
++"Continuare con l'interruzione della fusione corrente?"
 +
 +#: lib/merge.tcl:228
 +msgid ""
@@ -1215,124 +1225,125 @@ index 0000000..1713908
 +"\n"
 +"Continue with resetting the current changes?"
 +msgstr ""
-+"変更点をリセットしますか？\n"
++"Annullare le modifiche?\n"
 +"\n"
-+"変更点をリセットすると、コミットしていない全ての変更が失われます。\n"
++"L'annullamento delle modifiche causerà la perdita di *TUTTE* le "
++"modifiche non ancora presenti nei commit.\n"
 +"\n"
-+"リセットしてよろしいですか？"
++"Continuare con l'annullamento delle modifiche correnti?"
 +
 +#: lib/merge.tcl:239
 +msgid "Aborting"
-+msgstr "中断しています"
++msgstr "Interruzione in corso"
 +
 +#: lib/merge.tcl:266
 +msgid "Abort failed."
-+msgstr "中断に失敗しました。"
++msgstr "Interruzione fallita."
 +
 +#: lib/merge.tcl:268
 +msgid "Abort completed.  Ready."
-+msgstr "中断完了。"
++msgstr "Interruzione completata. Pronto."
 +
 +#: lib/option.tcl:77
 +msgid "git-gui - a graphical user interface for Git."
-+msgstr "Git のグラフィカルUI git-gui"
++msgstr "git-gui - un'interfaccia grafica per Git."
 +
 +#: lib/option.tcl:164
 +msgid "Restore Defaults"
-+msgstr "既定値に戻す"
++msgstr "Ripristina predefiniti"
 +
 +#: lib/option.tcl:168
 +msgid "Save"
-+msgstr "保存"
++msgstr "Salva"
 +
 +#: lib/option.tcl:178
 +#, tcl-format
 +msgid "%s Repository"
-+msgstr "%s リポジトリ"
++msgstr "%s archivio"
 +
 +#: lib/option.tcl:179
 +msgid "Global (All Repositories)"
-+msgstr "大域（全てのリポジトリ）"
++msgstr "Globale (Tutti i repository)"
 +
 +#: lib/option.tcl:185
 +msgid "User Name"
-+msgstr "ユーザ名"
++msgstr "Nome utente"
 +
 +#: lib/option.tcl:186
 +msgid "Email Address"
-+msgstr "電子メールアドレス"
++msgstr "Indirizzo Email"
 +
 +#: lib/option.tcl:188
 +msgid "Summarize Merge Commits"
-+msgstr "マージコミットの要約"
++msgstr "Riepilogo nei commit di fusione"
 +
 +#: lib/option.tcl:189
 +msgid "Merge Verbosity"
-+msgstr "マージの冗長度"
++msgstr "Verbosità della fusione"
 +
 +#: lib/option.tcl:190
 +msgid "Show Diffstat After Merge"
-+msgstr "マージ後に diffstat を表示"
++msgstr "Mostra statistiche delle differenze dopo la fusione"
 +
 +#: lib/option.tcl:192
 +msgid "Trust File Modification Timestamps"
-+msgstr "ファイル変更時刻を信頼する"
++msgstr "Fidati delle date di modifica dei file"
 +
 +#: lib/option.tcl:193
 +msgid "Prune Tracking Branches During Fetch"
-+msgstr "フェッチ中にトラッキングブランチを刈る"
++msgstr "Effettua potatura dei rami in 'tracking' durante il recupero"
 +
 +#: lib/option.tcl:194
 +msgid "Match Tracking Branches"
-+msgstr "トラッキングブランチを合わせる"
++msgstr "Appaia rami in 'tracking'"
 +
 +#: lib/option.tcl:195
 +msgid "Number of Diff Context Lines"
-+msgstr "diff の文脈行数"
++msgstr "Numero di linee di contesto nelle differenze"
 +
 +#: lib/option.tcl:196
 +msgid "New Branch Name Template"
-+msgstr "新しいブランチ名のテンプレート"
++msgstr "Modello per il nome di un nuovo ramo"
 +
 +#: lib/option.tcl:305
 +msgid "Failed to completely save options:"
-+msgstr "完全にオプションを保存できません:"
++msgstr "Fallimento nel salvataggio completo delle opzioni:"
 +
 +#: lib/remote_branch_delete.tcl:29 lib/remote_branch_delete.tcl:34
 +msgid "Delete Remote Branch"
-+msgstr "リモート・ブランチを削除"
++msgstr "Cancella ramo remoto"
 +
 +#: lib/remote_branch_delete.tcl:47
 +msgid "From Repository"
-+msgstr "元のリポジトリ"
++msgstr "Da archivio"
 +
 +#: lib/remote_branch_delete.tcl:50 lib/transport.tcl:118
 +msgid "Remote:"
-+msgstr "リモート:"
++msgstr "Remoto:"
 +
 +#: lib/remote_branch_delete.tcl:66 lib/transport.tcl:133
 +msgid "Arbitrary URL:"
-+msgstr "任意の URL:"
++msgstr "URL arbitrario:"
 +
 +#: lib/remote_branch_delete.tcl:84
 +msgid "Branches"
-+msgstr "ブランチ"
++msgstr "Rami"
 +
 +#: lib/remote_branch_delete.tcl:109
 +msgid "Delete Only If"
-+msgstr "条件付で削除"
++msgstr "Elimina solo se"
 +
 +#: lib/remote_branch_delete.tcl:111
 +msgid "Merged Into:"
-+msgstr "マージ先:"
++msgstr "Fuso in:"
 +
 +#: lib/remote_branch_delete.tcl:119
 +msgid "Always (Do not perform merge checks)"
-+msgstr "無条件（マージ検査をしない）"
++msgstr "Sempre (Non effettuare controlli durante la fusione)"
 +
 +#: lib/remote_branch_delete.tcl:152
 +msgid "A branch is required for 'Merged Into'."
-+msgstr "'マージ先' にはブランチが必要です。"
++msgstr "Si richiede un ramo per 'Fuso in'."
 +
 +#: lib/remote_branch_delete.tcl:189
 +#, tcl-format
@@ -1340,12 +1351,12 @@ index 0000000..1713908
 +"One or more of the merge tests failed because you have not fetched the "
 +"necessary commits.  Try fetching from %s first."
 +msgstr ""
-+"必要なコミットが不足しているために、マージ検査が失敗しました。まず %s から"
-+"フェッチして下さい。"
++"Una o più verifiche di fusione sono fallite perché mancano i commit "
++"necessari. Prova prima a prelevarli da %s."
 +
 +#: lib/remote_branch_delete.tcl:207
 +msgid "Please select one or more branches to delete."
-+msgstr "削除するブランチを選択して下さい。"
++msgstr "Scegliere uno o più rami da cancellare."
 +
 +#: lib/remote_branch_delete.tcl:216
 +msgid ""
@@ -1353,97 +1364,98 @@ index 0000000..1713908
 +"\n"
 +"Delete the selected branches?"
 +msgstr ""
-+"削除したブランチを回復するのは困難です。\n"
++"Prelevare rami cancellati è difficile.\n"
 +"\n"
-+"選択したブランチを削除して良いですか？"
++"Cancellare i rami selezionati?"
 +
 +#: lib/remote_branch_delete.tcl:226
 +#, tcl-format
 +msgid "Deleting branches from %s"
-+msgstr "%s からブランチを削除しています。"
++msgstr "Cancellazione rami da %s"
 +
 +#: lib/remote_branch_delete.tcl:286
 +msgid "No repository selected."
-+msgstr "リポジトリが選択されていません。"
++msgstr "Nessun archivio selezionato."
 +
 +#: lib/remote_branch_delete.tcl:291
 +#, tcl-format
 +msgid "Scanning %s..."
-+msgstr "%s をスキャンしています…"
++msgstr "Analisi in corso %s..."
 +
 +#: lib/remote.tcl:162
 +#, tcl-format
 +msgid "Fetch from %s..."
-+msgstr "%s からフェッチ…"
++msgstr "Preleva da %s..."
 +
 +#: lib/remote.tcl:172
 +#, tcl-format
 +msgid "Prune from %s..."
-+msgstr "%s から刈る…"
++msgstr "Effettua potatura da %s..."
 +
 +#: lib/remote.tcl:206
 +#, tcl-format
 +msgid "Push to %s..."
-+msgstr "%s へプッシュ…"
++msgstr "Propaga verso %s..."
 +
 +#: lib/shortcut.tcl:26 lib/shortcut.tcl:74
 +msgid "Cannot write script:"
-+msgstr "スクリプトが書けません:"
++msgstr "Impossibile scrivere script:"
 +
 +#: lib/shortcut.tcl:149
 +msgid "Cannot write icon:"
-+msgstr "アイコンが書けません:"
++msgstr "Impossibile scrivere icona:"
 +
 +#: lib/status_bar.tcl:58
 +#, tcl-format
 +msgid "%s ... %i of %i %s (%2i%%)"
-+msgstr "%1$s ... %3$i %4$s 中の %$2i (%5$2i%%)"
++msgstr "%s ... %i di %i %s (%2i%%)"
 +
 +#: lib/transport.tcl:7
 +#, tcl-format
 +msgid "Fetching new changes from %s"
-+msgstr "%s から新しい変更をフェッチしています"
++msgstr "Recupero nuove modifiche da %s"
 +
 +#: lib/transport.tcl:19
 +#, tcl-format
 +msgid "Pruning tracking branches deleted from %s"
-+msgstr "%s から削除されたトラッキング・ブランチを刈っています"
++msgstr "Effettua potatura dei rami in 'tracking' cancellati da %s"
 +
 +#: lib/transport.tcl:26
 +#, tcl-format
 +msgid "Pushing changes to %s"
-+msgstr "%s へ変更をプッシュしています"
++msgstr "Propagazione modifiche a %s"
 +
 +#: lib/transport.tcl:68
 +#, tcl-format
 +msgid "Pushing %s %s to %s"
-+msgstr "%3$s へ %1$s %2$s をプッシュしています"
++msgstr "Propagazione %s %s a %s"
 +
 +#: lib/transport.tcl:84
 +msgid "Push Branches"
-+msgstr "ブランチをプッシュ"
++msgstr "Propaga rami"
 +
 +#: lib/transport.tcl:98
 +msgid "Source Branches"
-+msgstr "元のブランチ"
++msgstr "Rami di origine"
 +
 +#: lib/transport.tcl:115
 +msgid "Destination Repository"
-+msgstr "送り先リポジトリ"
++msgstr "Archivio di destinazione"
 +
 +#: lib/transport.tcl:153
 +msgid "Transfer Options"
-+msgstr "通信オプション"
++msgstr "Opzioni di trasferimento"
 +
 +#: lib/transport.tcl:155
 +msgid "Use thin pack (for slow network connections)"
-+msgstr "Thin Pack を使う（遅いネットワーク接続）"
++msgstr "Utilizza 'thin pack' (per connessioni lente)"
 +
 +#: lib/transport.tcl:159
 +msgid "Include tags"
-+msgstr "タグを含める"
++msgstr "Includi etichette"
++
 -- 
 1.5.3.2.g46909
 
 
---8323584-1067707744-1188750933=:28586--
+--8323584-155218187-1188750950=:28586--
