@@ -1,74 +1,119 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
-Date: Sun, 02 Sep 2007 09:20:08 +0200
-Message-ID: <85zm05ttxz.fsf@lola.goethe.zz>
-References: <200709010925.27926.johannes.sixt@telecom.at>
-	<7vmyw6u5ca.fsf@gitster.siamese.dyndns.org>
-	<7vejhiu565.fsf_-_@gitster.siamese.dyndns.org>
-	<85abs5v9q1.fsf@lola.goethe.zz>
-	<7vfy1xr1lz.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: Add support for SSL and SMTP-AUTH
+Date: Sun, 02 Sep 2007 00:55:39 -0700
+Message-ID: <7vveatpklg.fsf@gitster.siamese.dyndns.org>
+References: <11887028854022-git-send-email-doug@11011.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 09:20:45 2007
+Cc: git@vger.kernel.org, Douglas Stockwell <doug@11011.net>
+To: Douglas Stockwell <douglas.stockwell@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 09:56:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRjl9-0004g8-9S
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 09:20:39 +0200
+	id 1IRkJa-0000gA-Ho
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 09:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932819AbXIBHUP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 03:20:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932920AbXIBHUP
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 03:20:15 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:54235 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932309AbXIBHUN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 03:20:13 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 559CF2F28B0;
-	Sun,  2 Sep 2007 09:20:12 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 48BB92D29B9;
-	Sun,  2 Sep 2007 09:20:12 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-038-061.pools.arcor-ip.net [84.61.38.61])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 240E630A9CA;
-	Sun,  2 Sep 2007 09:20:12 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 0CE531C15372; Sun,  2 Sep 2007 09:20:08 +0200 (CEST)
-In-Reply-To: <7vfy1xr1lz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 02 Sep 2007 00\:02\:48 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4128/Sun Sep  2 07:54:56 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S933115AbXIBHzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 03:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXIBHzr
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 03:55:47 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:34177 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932627AbXIBHzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 03:55:46 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2793412CD0E;
+	Sun,  2 Sep 2007 03:56:03 -0400 (EDT)
+In-Reply-To: <11887028854022-git-send-email-doug@11011.net> (Douglas
+	Stockwell's message of "Sun, 2 Sep 2007 12:14:45 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57303>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thanks for the patch.  I think SMTP-AUTH is a worthy addition.
 
-> David Kastrup <dak@gnu.org> writes:
->
->> Just for the record: I believe that \{1,\} might be portable.
->
-> Yeah, I obviously looked at the page I quoted that describes
-> what's in and what's not in BRE definition ;-)
+I however have a bit of reservation about making the password
+itself a configuration variable.  I understand this is good
+enough for the simplest case that you have only single e-mail
+identity and mailserver to talk to.
 
-> As a maintainer of a public project I understand you have to deal
-> with the current set of variations, and you might know better than
-> me about the current portability situation.
+By defining the two "default" variables, you are encouraging
+users who want to use different identity per project to define
+the smtpauthuser and smtpauthpass variables in .git/config of
+each repository.  I see two issues with this.
 
-Don't ask.  That was what "just for the record" was about.  In
-practice, one uses the most simplistic expressions (and then some) and
-prays, and your patches are quite in line with that.
+ (1) Suppose I interact with under one mail identity with
+     projects A and B and under another mail identity with
+     project C and D.  I need to have duplicate variable
+     settings in .git/config of A and B for one and another
+     duplicated sets in C and D.
 
-Basically, one has to bear up under attack from two sides: the Windows
-side with its idiosyncratic file names (and habitual spaces) under the
-Cygwin and MSYS environments (which are quite Posix and GNU), and the
-non-Posix madness from all sorts of Unices all across the utilities.
+ (2) Although the recommended BCP is not to allow other people
+     to interact with your private working repository (iow, you
+     keep a separate "bare" repository you use solely for
+     publishing, you push from your private working repository
+     to that publishing repository, and have others look at only
+     the publishing repository), people often do not follow this
+     BCP and expose their private working repository to their
+     colleages for fetching (or even pushing).  We currently do
+     not allow reading remote repository's configuration over
+     the git protocol, but there were some cases in the past
+     that the ability to do so might lead to their solutions
+     discussed on the list.  We might not keep .git/config in
+     the repository that is accessed by fetch clients private in
+     the future.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+So it might be better to split the configuration variables in this
+way:
+
+ (1) in ~/.gitconfig (that is hopefully readable only by the
+     user):
+
+	[sendemail "default"]
+        	server = mail.isp.com
+                user = junkio
+                pass = junkio-password-for-mail-isp-com
+
+	[sendemail "git"]
+        	server = mail.git.xz
+                user = gitster
+                pass = gitster-password-for-mail-git.xz
+
+     This defines two "mail identities" I could use, depending
+     on which project's repository I run send-email.
+
+ (2) in project/.git/config:
+
+	[sendemail]
+        	identity = git
+
+     This defines which "mail identity" I want to use for this
+     particular project.
+
+This way, you can maintain more than one identity by having
+multiple [sendemail "$identity"] sections in ~/.gitconfig, and
+avoid having to expose and duplicate user/pass in various
+project's .git/config.
+
+The look-up rules by send-email program would be:
+
+ * if anything is given explicitly from the command line, use
+   that; otherwise
+
+ * if sendemail.identity does not exist, pretend
+   "sendemail.identity = default" was given (let's call that
+   identity nickname $identity in the following);
+
+   * if sendemail.$identity.server.exists, use that as the smtp
+     server to contact; otherwise sendemail.smtpserver is used;
+
+   * for user/pass information, use sendemail.$identity.user and
+     sendemail.$identity.pass.
+
+Hmm?
