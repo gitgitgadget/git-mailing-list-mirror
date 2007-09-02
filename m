@@ -1,72 +1,55 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
-Date: Sun, 02 Sep 2007 08:53:58 +0200
-Message-ID: <85abs5v9q1.fsf@lola.goethe.zz>
-References: <200709010925.27926.johannes.sixt@telecom.at>
-	<7vmyw6u5ca.fsf@gitster.siamese.dyndns.org>
-	<7vejhiu565.fsf_-_@gitster.siamese.dyndns.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 02 Sep 2007 07:58:59 +0100
+Message-ID: <46DA5F33.2020005@zytor.com>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 08:54:44 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 09:00:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRjM3-00017P-Uc
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:54:44 +0200
+	id 1IRjRF-0001ea-3x
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 09:00:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181AbXIBGyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 02:54:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXIBGyV
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:54:21 -0400
-Received: from mail-in-13.arcor-online.net ([151.189.21.53]:40793 "EHLO
-	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752840AbXIBGyU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 02:54:20 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 9EE4E1E5334;
-	Sun,  2 Sep 2007 08:54:18 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 88C3B28EE1C;
-	Sun,  2 Sep 2007 08:54:18 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-038-061.pools.arcor-ip.net [84.61.38.61])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 175B91C331F;
-	Sun,  2 Sep 2007 08:54:01 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id ACD171C15372; Sun,  2 Sep 2007 08:53:58 +0200 (CEST)
-In-Reply-To: <7vejhiu565.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 01 Sep 2007 02\:05\:22 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.1/4127/Sun Sep  2 06:35:44 2007 on mail-in-05.arcor-online.net
+	id S933784AbXIBG7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 02:59:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933627AbXIBG7p
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:59:45 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:40853 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752842AbXIBG7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 02:59:43 -0400
+Received: from titan.hos.anvin.org (conf.dow.cam.ac.uk [131.111.195.11])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.8) with ESMTP id l826xJe5023457
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 1 Sep 2007 23:59:22 -0700
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+X-Virus-Scanned: ClamAV 0.88.7/4128/Sat Sep  1 22:54:56 2007 on terminus.zytor.com
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57299>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> 
+> * For people who need to import from Perforce, a front-end for
+>   fast-import is in contrib/fast-import/.
+> 
 
-> This is a continuation of the other one to avoid one-or-more operator
-> in sed.  At the same time, it actually tightens error checking,
-> because the numbers in the squash messages are not padded with
-> leading zero and cannot begin with 0.
->
-> With this, I think we do not have any more use of one-or-more
-> (\+) in sed scripts.
+There seems to be an issue with this and RPMS.
 
-Just for the record: I believe that \{1,\} might be portable.
+In particular, there is no longer a git-p4 RPMS, which prevents git from 
+getting upgraded at all by yum.
 
-As usual, <URL:info:autoconf#Limitations%20of%20Usual%20Tools> (aka as
-(info "(autoconf) Limitations of Usual Tools")
-) provides a real horror show of sed variants.
+Anyone who knows yum well enough to explain what needs to be done so 
+that yum knows this is obsolete?
 
-Actually, one can get the cursor right on the spot by typing
-info autoconf      (or the respective Emacs command C-h i g (autoconf))
-i sed RET
-
-There is something to be said for well-indexed documentation...
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+	-hpa
