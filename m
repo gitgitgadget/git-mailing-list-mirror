@@ -1,65 +1,80 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
-Date: Mon, 3 Sep 2007 00:04:33 +0200
-Message-ID: <200709030004.33963.robin.rosenberg.lists@dewire.com>
-References: <46DACD93.9000509@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com> <20070902213856.GB2756@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 02 Sep 2007 15:13:09 -0700
+Message-ID: <7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 00:03:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Mon Sep 03 00:13:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRxXV-0008Bf-Be
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 00:03:29 +0200
+	id 1IRxh4-0001SF-GD
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 00:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753945AbXIBWDE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 18:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753931AbXIBWDE
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 18:03:04 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:19325 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753323AbXIBWDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 18:03:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B1CC2802866;
-	Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 01860-06; Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 52BE7802849;
-	Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070902213856.GB2756@steel.home>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1754187AbXIBWNR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 18:13:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbXIBWNR
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 18:13:17 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:41956 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467AbXIBWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 18:13:16 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B009012D3C1;
+	Sun,  2 Sep 2007 18:13:32 -0400 (EDT)
+In-Reply-To: <20070902133803.1b46f599.seanlkml@sympatico.ca>
+	(seanlkml@sympatico.ca's message of "Sun, 2 Sep 2007 13:38:03 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57395>
 
-s=F6ndag 02 september 2007 skrev Alex Riesen:
-> Robin Rosenberg, Sun, Sep 02, 2007 22:27:59 +0200:
-> > s=F6ndag 02 september 2007 skrev Marius Storm-Olsen:
-> > > (Also, since Windows doesn't really handle symlinks, it's fine th=
-at stat just uses lstat)
-> >=20
-> > It does now: See http://msdn2.microsoft.com/en-us/library/aa363866.=
-aspx
-> >=20
->=20
-> Except they fscked it up, as usual for microsoft: it 's got a
-> mandatory argument specifying what the target should be, file or
-> directory. And they don't tell what happens when the argument is wron=
-g
-> or the target does not exists. Typical, too.
+Sean <seanlkml@sympatico.ca> writes:
 
-Why would this API be an exception?
+> On Sun, 02 Sep 2007 10:57:03 +0100
+> "H. Peter Anvin" <hpa@zytor.com> wrote:
+>
+>>  From the looks of it, there is still a git-p4, it just moved to contrib 
+>> and uses fast-import, so removing its rpm package was probably broken in 
+>> the first place.
+> ...
+> As an aside, when I sent the patch removing git-p4import from the spec
+> file I mentioned that I had no way to test it and asked for testers.
+> Git needs a spec file maintainer so that issues like this can be caught
+> before release.  Without a maintainer, it should probably be demoted
+> to contrib itself.
 
--- robin
+For majority of general public, I thought the spec file _I_
+ship, along with RPM files _I_ build, are contrib status
+already.  Don't distro people do their own RPM packages, instead
+of using what I placed on k.org?
+
+Assuming that we do not give the old git-p4import script
+packaged in "git-p4 package", would the following patch be all
+that is needed, or do we need other things in the spec file?
+
+-- snipsnap clipcrap --
+
+diff --git a/git.spec.in b/git.spec.in
+index fe7b3d8..3d56e17 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -13,6 +13,7 @@ Source: 	http://kernel.org/pub/software/scm/git/%{name}-%{version}.tar.gz
+ BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel, expat-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
+ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ Requires:	git-core, git-svn, git-cvs, git-arch, git-email, gitk, git-gui, perl-Git
++Obsoletes:	git-p4
+ 
+ %description
+ Git is a fast, scalable, distributed revision control system with an
