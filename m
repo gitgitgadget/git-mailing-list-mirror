@@ -1,546 +1,263 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.3
-Date: Sat, 01 Sep 2007 23:31:17 -0700
-Message-ID: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Sat, 01 Sep 2007 23:34:15 -0700
+Message-ID: <7vk5r9r2xk.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 08:32:01 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 08:34:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRj04-00070Z-3F
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:32:00 +0200
+	id 1IRj2P-0007FJ-Rj
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 08:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbXIBGbb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 02:31:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbXIBGba
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:31:30 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33679 "EHLO
+	id S932119AbXIBGeV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 02:34:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbXIBGeV
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 02:34:21 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33697 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753769AbXIBGbZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 02:31:25 -0400
+	with ESMTP id S1752842AbXIBGeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 02:34:19 -0400
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CD7DD12C838;
-	Sun,  2 Sep 2007 02:31:41 -0400 (EDT)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D850312951A;
+	Sun,  2 Sep 2007 02:34:38 -0400 (EDT)
+In-Reply-To: <7vodglr32i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 01 Sep 2007 23:31:17 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57296>
 
-The latest feature release GIT 1.5.3 is available at the usual
-places:
+Now a new feature release is out, it's a good time to welcome new
+people to the list.  This message talks about how git.git is managed,
+and how you can work with it.
 
-  http://www.kernel.org/pub/software/scm/git/
+* IRC and Mailing list
 
-  git-1.5.3.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.3.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.3-1.$arch.rpm	(RPM)
+Many active members of development community hang around on #git
+IRC channel on Freenode.  Its log is available at:
+
+        http://colabti.de/irclogger/irclogger_log/git
 
-GIT v1.5.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The development however is primarily done on this mailing list
+you are reading right now.  If you have patches, please send
+them to the list, following Documentation/SubmittingPatches.
+
+I usually try to read all patches posted to the list, and follow
+almost all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously not
+perfect.  If you sent a patch that you did not hear from anybody for
+three days, that is a very good indication that it was dropped on the
+floor --- please do not hesitate to remind me.
+
+The list archive is available at a few public sites as well:
+
+        http://marc.theaimsgroup.com/?l=git
+        http://news.gmane.org/gmane.comp.version-control.git
+	http://www.spinics.net/lists/git/
+
+and some people seem to prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
+
+        git://repo.or.cz/alt-git.git/
+
+Impatient people might have better luck with the latter one.
+
+Their gitweb interfaces are found at:
+
+	http://git.kernel.org/?p=git/git.git
+	http://repo.or.cz/w/alt-git.git
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".  I may
+add more maintenance branches (e.g. "maint-1.5.1") if we have
+huge backward incompatible feature updates in the future to keep
+an older release alive; I may not, but the distributed nature of
+git means any volunteer can run a stable-tree like that himself.
+
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.5.3 done on Sep 2nd this year.  You
+can expect that the tip of the "master" branch is always as
+stable as any of the released versions, if not more stable.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was v1.5.2.5.
+New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+Note that being in "next" does not mean the change will be in
+the next feature release.
 
-Updates since v1.5.2
---------------------
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (this
+automatically means the topics that have been merged into "next"
+are not rebased, and you can find the tip of topic branches you
+are interested in from the output of "git log next").
 
-* The commit walkers other than http are officially deprecated,
-  but still supported for now.
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.  By the above
+definition of how "next" works, you can tell that this branch
+will contain quite experimental and obviously broken stuff.
 
-* The submodule support has Porcelain layer.
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
 
-  Note that the current submodule support is minimal and this is
-  deliberately so.  A design decision we made is that operations
-  at the supermodule level do not recurse into submodules by
-  default.  The expectation is that later we would add a
-  mechanism to tell git which submodules the user is interested
-  in, and this information might be used to determine the
-  recursive behaviour of certain commands (e.g. "git checkout"
-  and "git diff"), but currently we haven't agreed on what that
-  mechanism should look like.  Therefore, if you use submodules,
-  you would probably need "git submodule update" on the
-  submodules you care about after running a "git checkout" at
-  the supermodule level.
+        git checkout next
+        git merge that-topic-branch
 
-* There are a handful pack-objects changes to help you cope better
-  with repositories with pathologically large blobs in them.
+Sometimes, an idea that looked promising turns out to be not so
+good and the topic can be dropped from "pu" in such a case.
 
-* For people who need to import from Perforce, a front-end for
-  fast-import is in contrib/fast-import/.
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master" (that's why "master"
+can be expected to stay very stable).  Similarly to the above, I
+do it with this:
 
-* Comes with git-gui 0.8.2.
+        git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
 
-* Comes with updated gitk.
+However, being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), or even in any
+future release.  There even were cases that topics needed
+reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" were entirely reverted
+from "next" because fatal flaws were found in them later.
 
-* New commands and options.
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
 
-  - "git log --date=3D<format>" can use more formats: iso8601, rfc2822.
 
-  - The hunk header output from "git diff" family can be customized
-    with the attributes mechanism.  See gitattributes(5) for details.
+* Other people's trees, trusted lieutenants and credits.
 
-  - "git stash" allows you to quickly save away your work in
-    progress and replay it later on an updated state.
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
 
-  - "git rebase" learned an "interactive" mode that let you
-    pick and reorder which commits to rebuild.
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
 
-  - "git fsck" can save its findings in $GIT_DIR/lost-found, without a
-    separate invocation of "git lost-found" command.  The blobs stored =
-by
-    lost-found are stored in plain format to allow you to grep in them.
+ git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
+             project, which is found at:
 
-  - $GIT_WORK_TREE environment variable can be used together with
-    $GIT_DIR to work in a subdirectory of a working tree that is
-    not located at "$GIT_DIR/..".
+             git://repo.or.cz/git-gui.git
 
-  - Giving "--file=3D<file>" option to "git config" is the same as
-    running the command with GIT_CONFIG=3D<file> environment.
+ gitk     -- this file is maintained by Paul Mackerras, at:
 
-  - "git log" learned a new option "--follow", to follow
-    renaming history of a single file.
+             git://git.kernel.org/pub/scm/gitk/gitk.git
 
-  - "git filter-branch" lets you rewrite the revision history of
-    specified branches. You can specify a number of filters to
-    modify the commits, files and trees.
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
 
-  - "git cvsserver" learned new options (--base-path, --export-all,
-    --strict-paths) inspired by "git daemon".
+ - Linus on general design issues.
 
-  - "git daemon --base-path-relaxed" can help migrating a repository UR=
-L
-    that did not use to use --base-path to use --base-path.
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
+   Rene Scharfe on general implementation issues.
 
-  - "git commit" can use "-t templatefile" option and commit.template
-    configuration variable to prime the commit message given to you in =
-the
-    editor.
+ - Shawn and Nicolas Pitre on pack issues.
 
-  - "git submodule" command helps you manage the projects from
-    the superproject that contain them.
+ - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
 
-  - In addition to core.compression configuration option,
-    core.loosecompression and pack.compression options can
-    independently tweak zlib compression levels used for loose
-    and packed objects.
+ - Paul Mackerras on gitk.
 
-  - "git ls-tree -l" shows size of blobs pointed at by the
-    tree entries, similar to "/bin/ls -l".
+ - Eric Wong on git-svn.
 
-  - "git rev-list" learned --regexp-ignore-case and
-    --extended-regexp options to tweak its matching logic used
-    for --grep fitering.
+ - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
 
-  - "git describe --contains" is a handier way to call more
-    obscure command "git name-rev --tags".
+ - J. Bruce Fields on documentaton issues.
 
-  - "git gc --aggressive" tells the command to spend more cycles
-    to optimize the repository harder.
+ - Johannes Schindelin and Johannes Sixt for their effort to
+   move things forward on the Windows front.  Although my
+   repository does not have much from the effort of MinGW team,
+   I expect a merge into mainline will happen so that everybody
+   can work from the same codebase.
 
-  - "git repack" learned a "window-memory" limit which
-    dynamically reduces the window size to stay within the
-    specified memory usage.
+ - People on non-Linux platforms for keeping their eyes on
+   portability; especially, Randal Schwartz, Theodore Ts'o,
+   Jason Riedy, Thomas Glanzmann, but countless others as well.
 
-  - "git repack" can be told to split resulting packs to avoid
-    exceeding limit specified with "--max-pack-size".
+* This document
 
-  - "git fsck" gained --verbose option.  This is really really
-    verbose but it might help you identify exact commit that is
-    corrupt in your repository.
-
-  - "git format-patch" learned --numbered-files option.  This
-    may be useful for MH users.
-
-  - "git format-patch" learned format.subjectprefix configuration
-    variable, which serves the same purpose as "--subject-prefix"
-    option.
-
-  - "git tag -n -l" shows tag annotations while listing tags.
-
-  - "git cvsimport" can optionally use the separate-remote layout.
-
-  - "git blame" can be told to see through commits that change
-    whitespaces and indentation levels with "-w" option.
-
-  - "git send-email" can be told not to thread the messages when
-    sending out more than one patches.
-
-  - "git send-email" can also be told how to find whom to cc the
-    message to for each message via --cc-cmd.
-
-  - "git config" learned NUL terminated output format via -z to
-    help scripts.
-
-  - "git add" learned "--refresh <paths>..." option to selectively refr=
-esh
-    the cached stat information.
-
-  - "git init -q" makes the command quieter.
-
-  - "git -p command" now has a cousin of opposite sex, "git --no-pager
-    command".
-
-* Updated behavior of existing commands.
-
-  - "gitweb" can offer multiple snapshot formats.
-
-    ***NOTE*** Unfortunately, this changes the format of the
-    $feature{snapshot}{default} entry in the per-site
-    configuration file 'gitweb_config.perl'.  It used to be a
-    three-element tuple that describe a single format; with the
-    new configuration item format, you only have to say the name
-    of the format ('tgz', 'tbz2' or 'zip').  Please update the
-    your configuration file accordingly.
-
-  - "git clone" uses -l (hardlink files under .git) by default when
-    cloning locally.
-
-  - URL used for "git clone" and friends can specify nonstandard SSH po=
-rt
-    by using sh://host:port/path/to/repo syntax.
-
-  - "git bundle create" can now create a bundle without negative refs,
-    i.e. "everything since the beginning up to certain points".
-
-  - "git diff" (but not the plumbing level "git diff-tree") now
-    recursively descends into trees by default.
-
-  - "git diff" does not show differences that come only from
-    stat-dirtiness in the form of "diff --git" header anymore.
-    It runs "update-index --refresh" silently as needed.
-
-  - "git tag -l" used to match tags by globbing its parameter as if it
-    has wildcard '*' on both ends, which made "git tag -l gui" to match
-    tag 'gitgui-0.7.0'; this was very annoying.  You now have to add
-    asterisk on the sides you want to wildcard yourself.
-
-  - The editor to use with many interactive commands can be
-    overridden with GIT_EDITOR environment variable, or if it
-    does not exist, with core.editor configuration variable.  As
-    before, if you have neither, environment variables VISUAL
-    and EDITOR are consulted in this order, and then finally we
-    fall back on "vi".
-
-  - "git rm --cached" does not complain when removing a newly
-    added file from the index anymore.
-
-  - Options to "git log" to affect how --grep/--author options look for
-    given strings now have shorter abbreviations.  -i is for ignore cas=
-e,
-    and -E is for extended regexp.
-
-  - "git log" learned --log-size to show the number of bytes in
-    the log message part of the output to help qgit.
-
-  - "git log --name-status" does not require you to give "-r" anymore.
-    As a general rule, Porcelain commands should recurse when showing
-    diff.
-
-  - "git format-patch --root A" can be used to format everything
-    since the beginning up to A.  This was supported with
-    "git format-patch --root A A" for a long time, but was not
-    properly documented.
-
-  - "git svn dcommit" retains local merge information.
-
-  - "git svnimport" allows an empty string to be specified as the
-    trunk/ directory.  This is necessary to suck data from a SVN
-    repository that doe not have trunk/ branches/ and tags/ organizatio=
-n
-    at all.
-
-  - "git config" to set values also honors type flags like --bool
-    and --int.
-
-  - core.quotepath configuration can be used to make textual git
-    output to emit most of the characters in the path literally.
-
-  - "git mergetool" chooses its backend more wisely, taking
-    notice of its environment such as use of X, Gnome/KDE, etc.
-
-  - "gitweb" shows merge commits a lot nicer than before.  The
-    default view uses more compact --cc format, while the UI
-    allows to choose normal diff with any parent.
-
-  - snapshot files "gitweb" creates from a repository at
-    $path/$project/.git are more useful.  We use $project part
-    in the filename, which we used to discard.
-
-  - "git cvsimport" creates lightweight tags; there is no
-    interesting information we can record in an annotated tag,
-    and the handcrafted ones the old code created was not
-    properly formed anyway.
-
-  - "git push" pretends that you immediately fetched back from
-    the remote by updating corresponding remote tracking
-    branches if you have any.
-
-  - The diffstat given after a merge (or a pull) honors the
-    color.diff configuration.
-
-  - "git commit --amend" is now compatible with various message source
-    options such as -m/-C/-c/-F.
-
-  - "git apply --whitespace=3Dstrip" removes blank lines added at
-    the end of the file.
-
-  - "git fetch" over git native protocols with "-v" option shows
-    connection status, and the IP address of the other end, to
-    help diagnosing problems.
-
-  - We used to have core.legacyheaders configuration, when
-    set to false, allowed git to write loose objects in a format
-    that mimicks the format used by objects stored in packs.  It
-    turns out that this was not so useful.  Although we will
-    continue to read objects written in that format, we do not
-    honor that configuration anymore and create loose objects in
-    the legacy/traditional format.
-
-  - "--find-copies-harder" option to diff family can now be
-    spelled as "-C -C" for brevity.
-
-  - "git mailsplit" (hence "git am") can read from Maildir
-    formatted mailboxes.
-
-  - "git cvsserver" does not barf upon seeing "cvs login"
-    request.
-
-  - "pack-objects" honors "delta" attribute set in
-    .gitattributes.  It does not attempt to deltify blobs that
-    come from paths with delta attribute set to false.
-
-  - "new-workdir" script (in contrib) can now be used with a
-    bare repository.
-
-  - "git mergetool" learned to use gvimdiff.
-
-  - "gitview" (in contrib) has a better blame interface.
-
-  - "git log" and friends did not handle a commit log message
-    that is larger than 16kB; they do now.
-
-  - "--pretty=3Doneline" output format for "git log" and friends
-    deals with "malformed" commit log messages that have more
-    than one lines in the first paragraph better.  We used to
-    show the first line, cutting the title at mid-sentence; we
-    concatenate them into a single line and treat the result as
-    "oneline".
-
-  - "git p4import" has been demoted to contrib status.  For
-    a superior option, checkout the "git p4" front end to
-    "git fast-import" (also in contrib).  The man page and p4
-    rpm have been removed as well.
-
-  - "git mailinfo" (hence "am") now tries to see if the message
-    is in utf-8 first, instead of assuming iso-8859-1, if
-    incoming e-mail does not say what encoding it is in.
-
-* Builds
-
-  - old-style function definitions (most notably, a function
-    without parameter defined with "func()", not "func(void)")
-    have been eradicated.
-
-  - "git tag" and "git verify-tag" have been rewritten in C.
-
-* Performance Tweaks
-
-  - "git pack-objects" avoids re-deltification cost by caching
-    small enough delta results it creates while looking for the
-    best delta candidates.
-
-  - "git pack-objects" learned a new heuristcs to prefer delta
-    that is shallower in depth over the smallest delta
-    possible.  This improves both overall packfile access
-    performance and packfile density.
-
-  - diff-delta code that is used for packing has been improved
-    to work better on big files.
-
-  - when there are more than one pack files in the repository,
-    the runtime used to try finding an object always from the
-    newest packfile; it now tries the same packfile as we found
-    the object requested the last time, which exploits the
-    locality of references.
-
-  - verifying pack contents done by "git fsck --full" got boost
-    by carefully choosing the order to verify objects in them.
-
-  - "git read-tree -m" to read into an already populated index
-    has been optimized vastly.  The effect of this can be seen
-    when switching branches that have differences in only a
-    handful paths.
-
-  - "git add paths..." and "git commit paths..." has also been
-    heavily optimized.
-
-=46ixes since v1.5.2
-------------------
-
-All of the fixes in v1.5.2 maintenance series are included in
-this release, unless otherwise noted.
-
-* Bugfixes
-
-  - "gitweb" had trouble handling non UTF-8 text with older
-    Encode.pm Perl module.
-
-  - "git svn" misparsed the data from the commits in the repository whe=
-n
-    the user had "color.diff =3D true" in the configuration.  This has =
-been
-    fixed.
-
-  - There was a case where "git svn dcommit" clobbered changes made on =
-the
-    SVN side while committing multiple changes.
-
-  - "git-write-tree" had a bad interaction with racy-git avoidance and
-    gitattributes mechanisms.
-
-  - "git --bare command" overrode existing GIT_DIR setting and always
-    made it treat the current working directory as GIT_DIR.
-
-  - "git ls-files --error-unmatch" does not complain if you give the
-    same path pattern twice by mistake.
-
-  - "git init" autodetected core.filemode but not core.symlinks, which
-    made a new directory created automatically by "git clone" cumbersom=
-e
-    to use on filesystems that require these configurations to be set.
-
-  - "git log" family of commands behaved differently when run as "git
-    log" (no pathspec) and as "git log --" (again, no pathspec).  This
-    inconsistency was introduced somewhere in v1.3.0 series but now has
-    been corrected.
-
-  - "git rebase -m" incorrectly displayed commits that were skipped.
-
-----------------------------------------------------------------
-
-Shortlog since v1.5.2.5 is too long, so I'll list just the names
-of contributors here and thank everybody.
-
-Adam Roben: 5
-Alberto Bertogli: 1
-Alecs King: 1
-Alexandre Julliard: 9
-Alexandre Vassalotti: 1
-Alex Riesen: 27
-Andrew Ruder: 2
-Andy Whitcroft: 3
-Aneesh Kumar K.V: 2
-Arjen Laarhoven: 2
-Benjamin Sergeant: 1
-Bradford C. Smith: 2
-Brian Downing: 13
-Brian Gernhardt: 5
-Brian Hetro: 5
-Carlos Rica: 13
-Christian Stimming: 1
-CJ van den Berg: 1
-Dana L. How: 8
-Daniel Barkalow: 8
-Dan McGee: 1
-Dave O'Neill: 1
-Dave Watson: 1
-David K=C3=A5gedal: 1
-David Kastrup: 16
-David Soria Parra: 1
-David Symonds: 1
-Elvis Pranskevichus: 1
-Emil Medve: 2
-Eric Wong: 11
-=46ernando J. Pereda: 1
-=46rancis Moreau: 1
-=46rank Lichtenheld: 12
-Geert Bosch: 1
-Gerrit Pape: 5
-Giuseppe Bilotta: 2
-Greg KH: 1
-Han-Wen Nienhuys: 30
-Ismail D=C3=B6nmez: 1
-Jakub Narebski: 27
-James Bowes: 3
-Jari Aalto: 1
-J. Bruce Fields: 9
-Jeff King: 14
-Jeffrey C. Ollie: 2
-Jens Axboe: 1
-Jim Meyering: 6
-Joe Perches: 1
-Johan Herland: 1
-Johannes Schindelin: 77
-Johannes Sixt: 14
-Jonas Fonseca: 3
-Jon Loeliger: 1
-Josh Triplett: 2
-Julian Phillips: 3
-Junio C Hamano: 160
-Jyotirmoy Bhattacharya: 1
-Kevin Green: 1
-Kristian H=C3=B8gsberg: 1
-Kumar Gala: 1
-Lars Hjemli: 12
-Linus Torvalds: 21
-Luben Tuikov: 1
-Luiz Fernando N. Capitulino: 3
-Lukas Sandstr=C3=B6m: 1
-Marco Costalba: 3
-Marcus Fritzsch: 1
-Marius Storm-Olsen: 8
-Mark Levedahl: 13
-martin f. krafft: 2
-Martin Koegler: 5
-Martin Waitz: 1
-Matthias Lederhofer: 21
-Matthieu Moy: 2
-Matthijs Melchior: 1
-Matt Kraai: 3
-Matt McCutchen: 4
-Michael Ellerman: 2
-Michael Hendricks: 2
-Michael Krelin: 1
-Michael S. Tsirkin: 1
-Mike Hommey: 2
-Miklos Vajna: 2
-Miles Bader: 1
-Nanako Shiraishi: 5
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy: 1
-Nicolas Pitre: 14
-Paul Mackerras: 37
-Peter Hagervall: 1
-Petr Baudis: 6
-Pierre Habouzit: 3
-Quy Tonthat: 2
-Randal L. Schwartz: 2
-Reece H. Dunn: 1
-Ren=C3=A9 Scharfe: 10
-Richard MUSIL: 1
-Robert Ewald: 1
-Robert Schiele: 2
-Robin Rosenberg: 5
-Sam Vilain: 3
-Scott Lamb: 2
-Sean Estabrooks: 6
-Seth Falcon: 1
-Shawn O. Pearce: 140
-Simon Hausmann: 231
-Stefan Sperling: 1
-Steffen Prohaska: 3
-Stephen Rothwell: 1
-Steve Hoelzer: 3
-Steven Grimm: 4
-Steven Walter: 1
-Sven Verdoolaege: 7
-Theodore Ts'o: 4
-Thomas Schwinge: 2
-Tom Clarke: 1
-Uwe Kleine-K=C3=B6nig: 5
-V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4: 1
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
