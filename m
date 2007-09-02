@@ -1,202 +1,199 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui i18n status?
-Date: Sat, 1 Sep 2007 22:24:44 -0400
-Message-ID: <20070902022444.GK18160@spearce.org>
-References: <20070901042924.GE18160@spearce.org> <Pine.LNX.4.64.0709020003480.28586@racer.site> <20070902014242.GJ18160@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Stimming <stimming@tuhh.de>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Nanako Shiraishi <nanako3@bluebottle.com>,
-	Michele Ballabio <barra_cuda@katamail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Xudong Guan <xudong.guan@gmail.com>,
-	Harri Ilari Tapio Liusvaara <hliusvaa@cc.hut.fi>,
-	Junio C Hamano <gitster@pobox.com>,
-	Irina Riesen <irina.riesen@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 02 04:25:53 2007
+From: Douglas Stockwell <douglas.stockwell@gmail.com>
+Subject: [PATCH] send-email: Add support for SSL and SMTP-AUTH
+Date: Sun,  2 Sep 2007 12:14:45 +0900
+Message-ID: <11887028854022-git-send-email-doug@11011.net>
+Cc: Douglas Stockwell <doug@11011.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 02 05:15:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRf9m-0008VH-Rl
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 04:25:47 +0200
+	id 1IRfvf-00052d-LB
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 05:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933519AbXIBCZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 22:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933438AbXIBCZl
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 22:25:41 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37771 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933459AbXIBCZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 22:25:40 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IRf8c-0001FJ-Qy; Sat, 01 Sep 2007 22:24:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 39A1720FBAE; Sat,  1 Sep 2007 22:24:45 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070902014242.GJ18160@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752159AbXIBDOp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 23:14:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752142AbXIBDOo
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 23:14:44 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:18360 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750903AbXIBDOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 23:14:43 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1458539wah
+        for <git@vger.kernel.org>; Sat, 01 Sep 2007 20:14:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        b=S4UdqBYwtA+dMF2Ux1sMBSnc8jHkbwqLmaAAqHdNmOKycetoSOh5tHKa0+7iLCcWn1vgbZkdUeYBGyvXSfZqXVesD+O+OlRaDH0e14RlBLbXYsP8x0PRUMYwCiiTu26KlwQv5EVkSuQQ8hv6KoklBpxYZQRzSqJnC0kNPYh+gYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:date:message-id:x-mailer:from;
+        b=UUnTve+B5HuOhQo/pqN2xNBOztkvUsXvzJk8gRd4RHrK3+BU9/E/0v2N/Zi3fjWyNxquu4N+amf4689/8tkmQsiskLvtkd2XFU3wWrqmxU0cZtqnOLGO48OawoXmSHcOhJYA87IapfCYKTTDe9RMmTgsQ7OQruQ9eT40l4t4KfQ=
+Received: by 10.114.175.16 with SMTP id x16mr464065wae.1188702883227;
+        Sat, 01 Sep 2007 20:14:43 -0700 (PDT)
+Received: from localhost.localdomain ( [210.235.203.21])
+        by mx.google.com with ESMTPS id m5sm1937492wag.2007.09.01.20.14.41
+        (version=SSLv3 cipher=OTHER);
+        Sat, 01 Sep 2007 20:14:42 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.rc7.17.gd77cc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57294>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hmm.  I am not enough involved in i18n stuff to form a proper opinion 
-> > here...  Do you suggest to move the initialisation earlier?
-> 
-> Yea, I think that's what we are going to have to do here.  If we don't
-> setup the directory for the .msg files early enough than we cannot do
-> translations through [mc].  Unfortunately that means we have to also
-> break up the library initialization.
-> 
-> I'll try to work up a patch that does this.
+Allows username and password to be given using --smtp-authuser
+and --smtp-authpass. SSL use is flagged by --smtp-ssl. These are
+backed by corresponding defaults in the git configuration file.
 
-This two patch series is based on my current master (gitgui-0.8.2).
-Its also now in my pu branch.
-
-
->From fc703c209d415fe20ad5551465b5b68b8ab8b046 Mon Sep 17 00:00:00 2001
-From: Shawn O. Pearce <spearce@spearce.org>
-Date: Sat, 1 Sep 2007 21:58:29 -0400
-Subject: [PATCH] git-gui: Locate the library directory early during startup
-
-To support a localized version of git-gui we need to locate the
-library directory early so we can initialize Tcl's msgcat package
-to load translated messages from.  This needs to occur before we
-declare our git-version proc so that errors related to locating
-git or assessing its version can be reported to the end-user in
-their preferred language.  However we have to keep the library
-loading until after git-version has been declared, otherwise we
-will fail to start git-gui if we are using a fake tclIndex that
-was generated by our Makefile.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Douglas Stockwell <doug@11011.net>
 ---
- git-gui.sh |   25 +++++++++++++++----------
- 1 files changed, 15 insertions(+), 10 deletions(-)
+ Documentation/git-send-email.txt |   21 +++++++++++++++-
+ git-send-email.perl              |   50 ++++++++++++++++++++++++++++++-------
+ 2 files changed, 60 insertions(+), 11 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index fa30ccc..4ea6e91 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -44,6 +44,20 @@ if {[catch {package require Tcl 8.4} err]
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 8231286..471c268 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -79,6 +79,16 @@ The --cc option must be repeated for each user you want on the cc list.
+ 	`/usr/lib/sendmail` if such program is available, or
+ 	`localhost` otherwise.
  
- ######################################################################
- ##
-+## locate our library
++--smtp-authuser, --smtp-authpass::
++	Username and password for SMTP-AUTH. Defaults are the values of
++	the configuration values 'sendemail.smtpauthuser' and
++	'sendemail.smtpauthpass'. If not set, authentication is not attempted.
 +
-+set oguilib {@@GITGUI_LIBDIR@@}
-+set oguirel {@@GITGUI_RELATIVE@@}
-+if {$oguirel eq {1}} {
-+	set oguilib [file dirname [file dirname [file normalize $argv0]]]
-+	set oguilib [file join $oguilib share git-gui lib]
-+} elseif {[string match @@* $oguirel]} {
-+	set oguilib [file join [file dirname [file normalize $argv0]] lib]
++--smtp-ssl::
++	If set, connects to the SMTP server using SSL.
++	Default is the value of the 'sendemail.smtpssl' configuration value;
++	if that is unspecified, does not use SSL.
++
+ --subject::
+ 	Specify the initial subject of the email thread.
+ 	Only necessary if --compose is also set.  If --compose
+@@ -132,7 +142,16 @@ sendemail.chainreplyto::
+ 	parameter.
+ 
+ sendemail.smtpserver::
+-	Default smtp server to use.
++	Default SMTP server to use.
++
++sendemail.smtpauthuser::
++	Default SMTP-AUTH username.
++
++sendemail.smtpauthpass::
++	Default SMTP-AUTH password.
++
++sendemail.smtpssl::
++	Boolean value specifying the default to the '--smtp-ssl' parameter.
+ 
+ Author
+ ------
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f1a8855..38e8395 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -73,6 +73,12 @@ Options:
+    --smtp-server  If set, specifies the outgoing SMTP server to use.
+                   Defaults to localhost.
+ 
++   --smtp-authuser The username for SMTP-AUTH.
++
++   --smtp-authpass The password for SMTP-AUTH.
++
++   --smtp-ssl     If set, connects to the SMTP server using SSL.
++
+    --suppress-from Suppress sending emails to yourself if your address
+                   appears in a From: line. Defaults to off.
+ 
+@@ -142,7 +148,6 @@ my $compose_filename = ".msg.$$";
+ my (@to,@cc,@initial_cc,@bcclist,@xh,
+ 	$initial_reply_to,$initial_subject,@files,$author,$sender,$compose,$time);
+ 
+-my $smtp_server;
+ my $envelope_sender;
+ 
+ # Example reply to:
+@@ -161,17 +166,34 @@ my ($quiet, $dry_run) = (0, 0);
+ 
+ # Variables with corresponding config settings
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc);
++my ($smtp_server, $smtp_authuser, $smtp_authpass, $smtp_ssl);
+ 
+-my %config_settings = (
++my %config_bool_settings = (
+     "thread" => [\$thread, 1],
+     "chainreplyto" => [\$chain_reply_to, 1],
+     "suppressfrom" => [\$suppress_from, 0],
+     "signedoffcc" => [\$signed_off_cc, 1],
++    "smtpssl" => [\$smtp_ssl, 0]
++);
++
++my %config_string_settings = (
++    "smtpserver" => [\$smtp_server, undef],
++    "smtpauthuser" => [\$smtp_authuser, undef],
++    "smtpauthpass" => [\$smtp_authpass, undef],
+ );
+ 
+-foreach my $setting (keys %config_settings) {
++foreach my $setting (keys %config_bool_settings) {
+     my $config = $repo->config_bool("sendemail.$setting");
+-    ${$config_settings{$setting}->[0]} = (defined $config) ? $config : $config_settings{$setting}->[1];
++    ${$config_bool_settings{$setting}->[0]} = (defined $config)
++        ? $config
++        : $config_bool_settings{$setting}->[1];
 +}
-+unset oguirel
 +
-+######################################################################
-+##
- ## enable verbose loading?
++foreach my $setting (keys %config_string_settings) {
++    my $config = $repo->config("sendemail.$setting");
++    ${$config_string_settings{$setting}->[0]} = (defined $config)
++        ? $config
++        : $config_string_settings{$setting}->[1];
+ }
  
- if {![catch {set _verbose $env(GITGUI_VERBOSE)}]} {
-@@ -595,15 +609,6 @@ You are using [git-version]:
- ##
- ## configure our library
+ @bcclist = $repo->config('sendemail.bcc');
+@@ -190,6 +212,9 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "bcc=s" => \@bcclist,
+ 		    "chain-reply-to!" => \$chain_reply_to,
+ 		    "smtp-server=s" => \$smtp_server,
++		    "smtp-authuser=s" => \$smtp_authuser,
++		    "smtp-authpass=s" => \$smtp_authpass,
++		    "smtp-ssl!" => \$smtp_ssl,
+ 		    "compose" => \$compose,
+ 		    "quiet" => \$quiet,
+ 		    "suppress-from!" => \$suppress_from,
+@@ -315,10 +340,7 @@ if ($thread && !defined $initial_reply_to && $prompting) {
+ 	$initial_reply_to =~ s/(^\s+|\s+$)//g;
+ }
  
--set oguilib {@@GITGUI_LIBDIR@@}
--set oguirel {@@GITGUI_RELATIVE@@}
--if {$oguirel eq {1}} {
--	set oguilib [file dirname [file dirname [file normalize $argv0]]]
--	set oguilib [file join $oguilib share git-gui lib]
--} elseif {[string match @@* $oguirel]} {
--	set oguilib [file join [file dirname [file normalize $argv0]] lib]
+-if (!$smtp_server) {
+-	$smtp_server = $repo->config('sendemail.smtpserver');
 -}
--
- set idx [file join $oguilib tclIndex]
- if {[catch {set fd [open $idx r]} err]} {
- 	catch {wm withdraw .}
-@@ -637,7 +642,7 @@ if {$idx ne {}} {
- } else {
- 	set auto_path [concat [list $oguilib] $auto_path]
- }
--unset -nocomplain oguirel idx fd
-+unset -nocomplain idx fd
- 
- ######################################################################
- ##
+-if (!$smtp_server) {
++if (!defined $smtp_server) {
+ 	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+ 		if (-x $_) {
+ 			$smtp_server = $_;
+@@ -548,8 +570,16 @@ X-Mailer: git-send-email $gitversion
+ 		print $sm "$header\n$message";
+ 		close $sm or die $?;
+ 	} else {
+-		require Net::SMTP;
+-		$smtp ||= Net::SMTP->new( $smtp_server );
++		if ($smtp_ssl) {
++			require Net::SMTP::SSL;
++			$smtp ||= Net::SMTP::SSL->new( $smtp_server, Port => 465 );
++		}
++		else {
++			require Net::SMTP;
++			$smtp ||= Net::SMTP->new( $smtp_server );
++		}
++		$smtp->auth( $smtp_authuser, $smtp_authpass )
++			or die $smtp->message if (defined $smtp_authuser);
+ 		$smtp->mail( $raw_from ) or die $smtp->message;
+ 		$smtp->to( @recipients ) or die $smtp->message;
+ 		$smtp->data or die $smtp->message;
 -- 
-1.5.3.rc7.30.g947ad2
-
-
->From d4b0ccd931cc29f35e8f8493445af27ea72ed03e Mon Sep 17 00:00:00 2001
-From: Shawn O. Pearce <spearce@spearce.org>
-Date: Sat, 1 Sep 2007 22:22:42 -0400
-Subject: [PATCH] git-gui: Initialize Tcl's msgcat library for internationalization
-
-Tcl's msgcat library and corresponding mc procedure can locate a
-translated string for any user message, provided that it is first
-given a directory where the *.msg files are located containing the
-translations.
-
-During installation we will place the translations in lib/msgs/,
-so we need to inform msgcat of this location once we determine it
-during startup.  Our source code tree however will store all of
-the translations within the po/ directory, so we need to special
-case this variant.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-gui.sh |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 4ea6e91..486d36e 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -51,8 +51,12 @@ set oguirel {@@GITGUI_RELATIVE@@}
- if {$oguirel eq {1}} {
- 	set oguilib [file dirname [file dirname [file normalize $argv0]]]
- 	set oguilib [file join $oguilib share git-gui lib]
-+	set oguimsg [file join $oguilib msgs]
- } elseif {[string match @@* $oguirel]} {
- 	set oguilib [file join [file dirname [file normalize $argv0]] lib]
-+	set oguimsg [file join [file dirname [file normalize $argv0]] po]
-+} else {
-+	set oguimsg [file join $oguilib msgs]
- }
- unset oguirel
- 
-@@ -76,6 +80,16 @@ if {![catch {set _verbose $env(GITGUI_VERBOSE)}]} {
- 
- ######################################################################
- ##
-+## Internationalization (i18n) through msgcat and gettext. See
-+## http://www.gnu.org/software/gettext/manual/html_node/Tcl.html
-+
-+package require msgcat
-+namespace import ::msgcat::mc
-+::msgcat::mcload $oguimsg
-+unset oguimsg
-+
-+######################################################################
-+##
- ## read only globals
- 
- set _appname [lindex [file split $argv0] end]
--- 
-1.5.3.rc7.30.g947ad2
-
--- 
-Shawn.
+1.5.3.rc7.17.gd77cc
