@@ -1,80 +1,72 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Buffer overflows
-Date: Sun, 02 Sep 2007 19:17:45 +0200
-Message-ID: <46DAF039.2000208@lsrfire.ath.cx>
-References: <1188502009.29782.874.camel@hurina> <3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com> <7vtzqg7jrn.fsf@gitster.siamese.dyndns.org> <200709021542.31100.johan@herland.net>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 2 Sep 2007 13:38:03 -0400
+Message-ID: <20070902133803.1b46f599.seanlkml@sympatico.ca>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com>
+	<85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	Timo Sirainen <tss@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Sep 02 19:18:05 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 19:38:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRt5H-0005YL-9E
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 19:18:03 +0200
+	id 1IRtOn-00017Z-BH
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 19:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756962AbXIBRR5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 13:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbXIBRR4
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 13:17:56 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:45176
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754733AbXIBRR4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 13:17:56 -0400
-Received: from [10.0.1.201] (p508EF176.dip.t-dialin.net [80.142.241.118])
-	by neapel230.server4you.de (Postfix) with ESMTP id 7A128873B6;
-	Sun,  2 Sep 2007 19:17:52 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <200709021542.31100.johan@herland.net>
+	id S1752194AbXIBRiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 13:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbXIBRiI
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 13:38:08 -0400
+Received: from bay0-omc1-s2.bay0.hotmail.com ([65.54.246.74]:15619 "EHLO
+	bay0-omc1-s2.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750950AbXIBRiG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 13:38:06 -0400
+Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]) by bay0-omc1-s2.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 2 Sep 2007 10:38:06 -0700
+X-Originating-IP: [64.231.205.174]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 2 Sep 2007 10:38:05 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1 with smtp (Exim 4.43)
+	id 1IRtOe-000350-9R; Sun, 02 Sep 2007 13:38:04 -0400
+In-Reply-To: <46DA88EF.7080103@zytor.com>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.14; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 02 Sep 2007 17:38:05.0585 (UTC) FILETIME=[04D68010:01C7ED88]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57370>
 
-Johan Herland schrieb:
-> So why does the discussion end there? Lukas proposed an interesting=20
-> alternative in "The Better String Library" (=20
-> http://bstring.sourceforge.net/ ). Why has there been lots of bashing=
- on=20
-> Timo's efforts, but no critique of bstring? I'd be very keen to know =
-what=20
-> the git developers think of it. AFAICS, it seems to fulfill at least =
-_some_=20
-> of the problems people find in Timo's patches. Specifically, it claim=
-s:
->=20
-> - High performance (better than the C string library)
-> - Simple usage
->=20
-> I'd also say it's probably more widely used than Timo's patches.
->=20
->=20
-> If the only response to Timo's highlighting of string manipulation pr=
-oblems=20
-> in git, is for us to flame his patches and leave it at that, then I h=
-ave no=20
-> choice but to agree with him in that security does not seem to matter=
- to=20
-> us.
+On Sun, 02 Sep 2007 10:57:03 +0100
+"H. Peter Anvin" <hpa@zytor.com> wrote:
 
-Well, a patch (8dabdfcc) from Alex Riesen has made it into 1.5.3 which
-fixes some of the problems.  That's a start.
+>  From the looks of it, there is still a git-p4, it just moved to contrib 
+> and uses fast-import, so removing its rpm package was probably broken in 
+> the first place.
 
-And don't forget that we have our very own string library, viz.
-strbuf.c, which could see more use.
+Hi Peter,
 
-That said, I agree that bstring looks well thought out.  It's also quit=
-e
-large (lots of functions, lots of code where a bug might lurk).  Hmm.
+Items in contrib aren't officially supported, so it doesn't sound like
+a good idea to offer installs for them.  Of course, it might be a good
+idea to promote git-p4 up out of contrib and add it to the spec file.
 
-Now if only someone could demonstrate the advantages of using bstring i=
-n
-git by posting a nice patch.. :-P
+As things stand now, do you get an error when trying to upgrade Git via
+yum?   I'd have thought things would upgrade fine but leave the old git-p4
+rpm hanging around.  Either way, the obsoletes line mentioned by David
+sounds like the right solution.
 
-Ren=E9
+As an aside, when I sent the patch removing git-p4import from the spec
+file I mentioned that I had no way to test it and asked for testers.
+Git needs a spec file maintainer so that issues like this can be caught
+before release.  Without a maintainer, it should probably be demoted
+to contrib itself.
+
+Sean
