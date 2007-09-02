@@ -1,94 +1,96 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
-Date: Sun, 2 Sep 2007 20:16:54 +0200
-Message-ID: <200709022016.54262.johannes.sixt@telecom.at>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
+From: "Alan M. Feldstein" <alan@alanfeldstein.com>
+Subject: conflict markers not documented
+Date: Sun, 02 Sep 2007 13:32:28 -0500
+Organization: Cosmic Horizon
+Message-ID: <46DB01BC.8030606@alanfeldstein.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 20:19:31 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 20:33:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRu2j-0000ik-0C
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 20:19:29 +0200
+	id 1IRuGe-0003Zy-Mj
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 20:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752910AbXIBSTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 14:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbXIBSTU
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 14:19:20 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:33753 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751606AbXIBSTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 14:19:18 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id B5B4E10B15C;
-	Sun,  2 Sep 2007 20:16:54 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 79B8957CF4;
-	Sun,  2 Sep 2007 20:16:54 +0200 (CEST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <46DACE0D.5070501@trolltech.com>
-Content-Disposition: inline
+	id S1752490AbXIBSds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 14:33:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbXIBSds
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 14:33:48 -0400
+Received: from smtpauth14.prod.mesa1.secureserver.net ([64.202.165.39]:41543
+	"HELO smtpauth14.prod.mesa1.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751457AbXIBSds (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 14:33:48 -0400
+Received: (qmail 21152 invoked from network); 2 Sep 2007 18:33:47 -0000
+Received: from unknown (24.206.104.60)
+  by smtpauth14.prod.mesa1.secureserver.net (64.202.165.39) with ESMTP; 02 Sep 2007 18:33:47 -0000
+User-Agent: Thunderbird 1.5.0.10 (X11/20070303)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57376>
 
-On Sunday 02 September 2007 16:51, Marius Storm-Olsen wrote:
-> This gives us a significant speedup when adding, committing and stat'ing
-> files. (Also, since Windows doesn't really handle symlinks, it's fine that
-> stat just uses lstat)
->
-> Signed-off-by: Marius Storm-Olsen <mstormo_git@storm-olsen.com>
+I can't find Git conflict markers documented anywhere. If I do
 
-Your numbers show an improvement of 50% and more. That is terrific!
+    git pull git://icarus.com/~steve-icarus/verilog v0_8-branch
 
-I'll test it out an put the patch into mingw.git. I hope you don't mind if I 
-also include your analysis and statistics in the commit message. It's worth 
-keeping around! BTW, which of your email addresses would you like registered 
-as author?
+that results in files marked like this, for example
 
-> +		ext = strrchr(file_name, '.');
-> +		if (ext && (!_stricmp(ext, ".exe") ||
-> +			    !_stricmp(ext, ".com") ||
-> +			    !_stricmp(ext, ".bat") ||
-> +			    !_stricmp(ext, ".cmd")))
-> +			fMode |= S_IEXEC;
-> +		}
+    <<<<<<< HEAD:Attrib.cc
+    #ident "$Id: Attrib.cc,v 1.5 2002/08/12 01:34:58 steve Exp $"
+    =======
+    #ident "$Id: Attrib.cc,v 1.6 2004/02/20 18:53:33 steve Exp $"
+     >>>>>>> f600e774d54f14d2cc2848ea5ef663233f8a6f6e:Attrib.cc
 
-I'm slightly negative about this. For a native Windows project the executable 
-bit does not matter, and for a cross-platform project this check is not 
-sufficient, but can even become annoying (think of a file 
-named 'www.google.com'). So we can just as well spare the few cycles.
+The git-pull(1) Manual Page 
+<http://www.kernel.org/pub/software/scm/git/docs/git-pull.html> mentions 
+conflicts in three places, but fails to document the markers or lead me 
+to a page that does. The closest thing I've found is Git User's Manual 
+(for version 1.5.3 or newer) 
+<http://www.kernel.org/pub/software/scm/git/docs/user-manual.html> with
 
-> +		buf->st_size = fdata.nFileSizeLow; /* Can't use nFileSizeHigh, since
-> it's not a stat64 */
+    <<<<<<< HEAD:file.txt
+    Hello world
+    =======
+    Goodbye
+     >>>>>>> 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
 
-Here's an idea for the future: With this self-made stat() implementation it 
-should also be possible to get rid of Windows's native struct stat: Make a 
-private definition of it, too, and use all 64 bits.
+but it fails to explain which is which, only stating that "All you need 
+to do is edit the files to resolve the conflicts ...". That's not enough 
+information.
 
->  		return 0;
-> +	}
-> +	errno = ENOENT;
+In _Essential CVS_ by Jennifer Vesperman, she documents (even more 
+clearly than the Cederqvist) CVS conflict markers like this
 
-Of course we need a bit more detailed error conditions, most importantly 
-EACCES should be distinguished.
+    <<<<<<< filename
+    sandbox content
+    =======
+    repository content
+     >>>>>>> revision
 
-> +/* Make git on Windows use git_lstat and git_stat instead of lstat and
-> stat */ +int git_lstat(const char *file_name, struct stat *buf);
-> +int git_stat(const char *file_name, struct stat *buf);
-> +#define lstat(x,y) git_lstat(x,y)
-> +#define stat(x,y) git_stat(x,y)
+ >From this, I can infer that
 
-I'd go the short route without git_stat() and
+    #ident "$Id: Attrib.cc,v 1.5 2002/08/12 01:34:58 steve Exp $"
 
-#define stat(x,y) git_lstat(x,y)
+was my Git repository content and
 
--- Hannes
+    #ident "$Id: Attrib.cc,v 1.6 2004/02/20 18:53:33 steve Exp $"
+
+was the other repository content (from which I fetched).
+
+But I shouldn't need to refer to a CVS book to understand Git. Git's 
+documentation should have made this clear. So I'm not writing this to 
+ask for confirmation of my inference from the Git mailing list. I'm 
+writing this to ask that the Git documentation be improved to adequately 
+explain conflict markers.
+-- 
+
+Alan Feldstein
+
+Cosmic Horizon logo
+
+http://www.alanfeldstein.com/
+
++1 585 415 6682
