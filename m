@@ -1,99 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Large-scale configuration backup with GIT?
-Date: Sun, 02 Sep 2007 14:49:49 -0700
-Message-ID: <7vd4x0pwjm.fsf@gitster.siamese.dyndns.org>
-References: <20070902201724.GB10567@lug-owl.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
+Date: Mon, 3 Sep 2007 00:04:33 +0200
+Message-ID: <200709030004.33963.robin.rosenberg.lists@dewire.com>
+References: <46DACD93.9000509@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com> <20070902213856.GB2756@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-X-From: git-owner@vger.kernel.org Sun Sep 02 23:50:04 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 00:03:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRxKU-0005jw-Fy
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 23:50:02 +0200
+	id 1IRxXV-0008Bf-Be
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 00:03:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbXIBVt5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 17:49:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbXIBVt4
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 17:49:56 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:41716 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751696AbXIBVt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 17:49:56 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 80C9C12D37F;
-	Sun,  2 Sep 2007 17:50:13 -0400 (EDT)
-In-Reply-To: <20070902201724.GB10567@lug-owl.de> (Jan-Benedict Glaw's message
-	of "Sun, 2 Sep 2007 22:17:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753945AbXIBWDE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 18:03:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753931AbXIBWDE
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 18:03:04 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:19325 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753323AbXIBWDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 18:03:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B1CC2802866;
+	Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 01860-06; Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 52BE7802849;
+	Sun,  2 Sep 2007 23:55:07 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070902213856.GB2756@steel.home>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57394>
 
-Jan-Benedict Glaw <jbglaw@lug-owl.de> writes:
+s=F6ndag 02 september 2007 skrev Alex Riesen:
+> Robin Rosenberg, Sun, Sep 02, 2007 22:27:59 +0200:
+> > s=F6ndag 02 september 2007 skrev Marius Storm-Olsen:
+> > > (Also, since Windows doesn't really handle symlinks, it's fine th=
+at stat just uses lstat)
+> >=20
+> > It does now: See http://msdn2.microsoft.com/en-us/library/aa363866.=
+aspx
+> >=20
+>=20
+> Except they fscked it up, as usual for microsoft: it 's got a
+> mandatory argument specifying what the target should be, file or
+> directory. And they don't tell what happens when the argument is wron=
+g
+> or the target does not exists. Typical, too.
 
-> I'm just thinking about storing our whole company's configuration into
-> GIT, because I'm all too used to it. That is, there are configuration
-> ...
-> In both cases, I'd be left with a good number of GIT repos, which
-> should probably be bound together with the GIT subproject functions.
-> However, one really interesting thing would be to be able to get the
-> diff of two machine's configuration files. (Think of machines that
-> *should* be all identical!)  For this, it probably would be easier to
-> not put each machine into its own GIT repo, but to use a single one
-> with a zillion branches, one for each machine.
->
-> Did anybody already try to do something like that and can help me with
-> some real-life experience on that topic?
+Why would this API be an exception?
 
-This is something similar to what I and others in my group did
-long time before git was even invented.  I'd suggest you go in
-the opposite direction.
-
-If you have 5 configurations, each of which have 20 machines
-that _should_ share that configuration (modulo obvious
-differences that come from hostname, IP address assignment,
-etc), then
-
- - You keep track of 5 configurations; in git, you would
-   probably maintain them as 5 branches.
-
- - You have a build mechanism to create systemic variation among
-   20 machines that shares one configuration; this can be
-   different per branch.  So if you have 20 solaris machines all
-   should share logically the same configuration, you would:
-
-	$ git checkout solarisconf
-
-        ... tweak the config for machine #27, adjusting for
-        ... hostname, IP address variation, etc...
-        $ make target=solaris27 output=../solaris27.expect
-
-   Make that makefile produce the output in named directory;
-
- - You get the config dump from your machines (your "staging
-   area"), as you planned.  Then after running the above, you
-   could:
-
-	$ cd ..
-        $ diff -r solaris27.expect solaris27.actual
-
-   if your "staging area" for machine #27 is "solaris27.actual".
-
-The difference you would see is something done by *hand* on the
-machine, which you would want to propagate back to the solaris
-configuration *source* you keep track in git.  For some changes,
-you may even want to adjust that single manual change done on
-machine #27 so that you do not have to do that on other 19
-solaris boxes manually, by adjusting the build procedure in the
-solarisconf branch.
-
-
-
- 
+-- robin
