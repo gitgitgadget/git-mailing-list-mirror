@@ -1,71 +1,66 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git clone over http
-Date: Sun, 2 Sep 2007 14:54:29 -0400
-Message-ID: <20070902145429.8bf50059.seanlkml@sympatico.ca>
-References: <200709021123.04218.robin.rosenberg.lists@dewire.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
+Date: Sun, 2 Sep 2007 21:07:08 +0200
+Message-ID: <200709022107.08804.johannes.sixt@telecom.at>
+References: <46DACD93.9000509@trolltech.com> <200709022016.54262.johannes.sixt@telecom.at> <46DB0478.8050402@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 20:54:45 2007
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 02 21:07:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRuam-0007R5-He
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 20:54:40 +0200
+	id 1IRumz-0001YV-HD
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 21:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbXIBSyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 14:54:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbXIBSyd
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 14:54:33 -0400
-Received: from bay0-omc3-s24.bay0.hotmail.com ([65.54.246.224]:8542 "EHLO
-	bay0-omc3-s24.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751094AbXIBSyc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 14:54:32 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.184]) by bay0-omc3-s24.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 2 Sep 2007 11:54:32 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp11.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 2 Sep 2007 11:55:48 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IRuac-0003BT-8M; Sun, 02 Sep 2007 14:54:30 -0400
-In-Reply-To: <200709021123.04218.robin.rosenberg.lists@dewire.com>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.14; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 02 Sep 2007 18:55:48.0687 (UTC) FILETIME=[E04365F0:01C7ED92]
+	id S1750998AbXIBTHM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 15:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbXIBTHM
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 15:07:12 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:53560 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbXIBTHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 15:07:11 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 4B2F6977A0;
+	Sun,  2 Sep 2007 21:07:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 0F45E57CDC;
+	Sun,  2 Sep 2007 21:07:09 +0200 (CEST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <46DB0478.8050402@trolltech.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57379>
 
-On Sun, 2 Sep 2007 11:23:03 +0200
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+On Sunday 02 September 2007 20:44, Marius Storm-Olsen wrote:
+> Johannes Sixt wrote:
+> > I'm slightly negative about this. For a native Windows project the
+> > executable bit does not matter, and for a cross-platform project this
+> > check is not sufficient, but can even become annoying (think of a file
+> > named 'www.google.com'). So we can just as well spare the few cycles.
+>
+> Ok, that's fine by me. It was only added for completeness, and with no
+> benefits I'd say we drop it too.
 
-Hi Robin,
+I'll amend the patch accordingly.
 
-> git clone (1.5.3) with http is somewhat unreliable. I've noticed if can actually give
-> me different versions of a branch each time I run it, eventually yielding
-> the one I'm expecting.  And now this:
+> >>  		return 0;
+> >> +	}
+> >> +	errno = ENOENT;
+> >
+> > Of course we need a bit more detailed error conditions, most importantly
+> > EACCES should be distinguished.
+>
+> Right, you want to do that in a second commit?
 
-Hmmm, that's very odd.  Tried it 3 times here and master was always at the
-same commit (0421997bfd5).
+Yes, please. Please don't forget to take care of the trailing-slash annoyance.
 
-> (Using master, just after rc7)
-> $ git clone http://unix.schottelius.org/git/cLinux/cinit.git
-[...]
-> /usr/local/bin/git-clone: line 40: 14823 Segmenteringsfel        git-http-fetch $v -a -w "$tname" "$sha1" "$1"
-> 
-> It doesn't repeat itself, but I cannot clone because it always crashes.
-
-Using 1.5.3 here and it works just fine.  Perhaps it has something to do with
-your version of the Curl library?  This is what is in use here:
-
-$ curl --version
-curl 7.16.4 (i686-pc-linux-gnu) libcurl/7.16.4 OpenSSL/0.9.8e zlib/1.2.3
-Protocols: tftp ftp telnet dict http file https ftps 
-Features: Largefile NTLM SSL libz
-
-Sean
+-- Hannes
