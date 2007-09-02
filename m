@@ -1,64 +1,72 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Fix typo in 1.5.3 release notes
-Date: Sun, 2 Sep 2007 14:46:46 +0200
-Message-ID: <20070902124646.GO24721@genesis.frugalware.org>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
+Date: Sun, 02 Sep 2007 15:39:33 +0200
+Message-ID: <46DABD15.4030208@fs.ei.tum.de>
+References: <200709010925.27926.johannes.sixt@telecom.at>	<7vmyw6u5ca.fsf@gitster.siamese.dyndns.org>	<7vejhiu565.fsf_-_@gitster.siamese.dyndns.org>	<85abs5v9q1.fsf@lola.goethe.zz> <7vfy1xr1lz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Sep 02 14:47:11 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 15:40:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRor8-0003KT-NN
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 14:47:11 +0200
+	id 1IRpgM-0004hT-Jb
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 15:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965578AbXIBMrB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 08:47:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965670AbXIBMrB
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 08:47:01 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:46219 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965114AbXIBMrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 08:47:00 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1IRoqu-0006cs-H3
-	from <vmiklos@frugalware.org>; Sun, 02 Sep 2007 14:46:59 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 812CC13A411A; Sun,  2 Sep 2007 14:46:46 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.0
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.0 required=5.9 tests=BAYES_50 autolearn=no SpamAssassin version=3.0.3
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4974]
+	id S1752910AbXIBNjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 09:39:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbXIBNjg
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 09:39:36 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:42374 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752849AbXIBNjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 09:39:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 33F66288AA;
+	Sun,  2 Sep 2007 15:39:34 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 9+GFDMB0ONvQ; Sun,  2 Sep 2007 15:39:34 +0200 (CEST)
+Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id D5968288A0;
+	Sun,  2 Sep 2007 15:39:33 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <7vfy1xr1lz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57324>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- Documentation/RelNotes-1.5.3.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Junio C Hamano wrote:
+>> Just for the record: I believe that \{1,\} might be portable.
+> 
+> Yeah, I obviously looked at the page I quoted that describes
+> what's in and what's not in BRE definition ;-)
+> 
+> But in practice, I do not recall ever seeing an older sed that
+> did not understand one-or-more \+ *and* understood \{1,\}.  Do
+> you?
 
-diff --git a/Documentation/RelNotes-1.5.3.txt b/Documentation/RelNotes-1.5.3.txt
-index 317c8b9..d03894b 100644
---- a/Documentation/RelNotes-1.5.3.txt
-+++ b/Documentation/RelNotes-1.5.3.txt
-@@ -152,7 +152,7 @@ Updates since v1.5.2
-     cloning locally.
- 
-   - URL used for "git clone" and friends can specify nonstandard SSH port
--    by using sh://host:port/path/to/repo syntax.
-+    by using ssh://host:port/path/to/repo syntax.
- 
-   - "git bundle create" can now create a bundle without negative refs,
-     i.e. "everything since the beginning up to certain points".
--- 
-1.5.2.2
+Yes, BSD sed (at least DragonFly's, so probably as well FreeBSD-4 (dunno 
+about later)):
+
+chlamydia % echo 5ab123x | sed -e 's/[a-z]\+/AAA/' 
+
+5ab123x
+chlamydia % echo 5ab123x | sed -e 's/[a-z]\{1,\}/AAA/' 
+
+5AAA123x
+chlamydia % echo 5ab123x | sed -E -e 's/[a-z]+/AAA/' 
+
+5AAA123x
+
+cheers
+   simon
