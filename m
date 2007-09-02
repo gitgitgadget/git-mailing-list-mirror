@@ -1,131 +1,119 @@
-From: Arkadiusz Miskiewicz <arekm@pld-linux.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Sun, 02 Sep 2007 10:43:38 +0200
-Message-ID: <fbdt3q$lcf$1@sea.gmane.org>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: git clone over http
+Date: Sun, 2 Sep 2007 11:23:03 +0200
+Message-ID: <200709021123.04218.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 10:55:20 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 11:21:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRlEd-0000dG-VY
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 10:55:12 +0200
+	id 1IRleB-0004RQ-J5
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 11:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754834AbXIBIzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 04:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754342AbXIBIzG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 04:55:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:39511 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754702AbXIBIzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 04:55:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IRlEU-0004Xz-DV
-	for git@vger.kernel.org; Sun, 02 Sep 2007 10:55:02 +0200
-Received: from chello089076029142.chello.pl ([89.76.29.142])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Sep 2007 10:55:02 +0200
-Received: from arekm by chello089076029142.chello.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Sep 2007 10:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: chello089076029142.chello.pl
-User-Agent: KNode/0.10.5
+	id S1755081AbXIBJVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 05:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755020AbXIBJVb
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 05:21:31 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:13616 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754001AbXIBJVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 05:21:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id A1D84802849
+	for <git@vger.kernel.org>; Sun,  2 Sep 2007 11:13:36 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 27899-04 for <git@vger.kernel.org>; Sun,  2 Sep 2007 11:13:36 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 27F8E8003E1
+	for <git@vger.kernel.org>; Sun,  2 Sep 2007 11:13:36 +0200 (CEST)
+User-Agent: KMail/1.9.6
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57309>
 
-Junio C Hamano wrote:
 
-> The latest feature release GIT 1.5.3 is available at the usual
-> places:
+git clone (1.5.3) with http is somewhat unreliable. I've noticed if can actually give
+me different versions of a branch each time I run it, eventually yielding
+the one I'm expecting.  And now this:
 
-Hm,
+(Using master, just after rc7)
+$ git clone http://unix.schottelius.org/git/cLinux/cinit.git
+Initialized empty Git repository in /home/me/tmp/cinit/.git/
+got c56b79346e5058762db82cb98647628ddf3d6ebd
+walk c56b79346e5058762db82cb98647628ddf3d6ebd
+got c0d6c3ae3b4999892d7cbc22fd719c0e9797be59
+got 73dc306099bdb21abf22e4a015d3059e8577bb49
+got 6943289356f8431073cb8c7708bb7c9c05888333
+walk 6943289356f8431073cb8c7708bb7c9c05888333
+Getting alternates list for http://unix.schottelius.org/git/cLinux/cinit.git
+got 3912109b5cd65a68039d473c11c9f7ac2303e06d
+got 0fbf76f58b248f6b11421db5aa9c02fe12b0ce7d
+Getting pack list for http://unix.schottelius.org/git/cLinux/cinit.git
+got 3ac57ee54f4c4e350622888c4e37213a7d2337b7
+got a170a50db31947dfae0b27d5dd8bb54b5ac97b20
+got 00f2651b7c63c56fda93d2f94cc2a2b7c28ac86b
+Getting index for pack 119f90491743d6454866ba8761f49757e359cec1
+got eec4105805e9f57b27158f847c9ce1b2b6eb40c7
+got 8a686b4ae9cbb91a74ff71984baee0c944950c05
+Getting index for pack 22000d3bf6fc9fdf439f63c8b33817f5786298f6
+got dc4d9d9a69310c7d4f8e1fdf6517c10e8c6ab227
+Getting index for pack 41850f3f697748a77d37d4d210415031bc6c73c4
 
-/usr/bin/make -C t/ all
-make[1]: Entering directory `/home/users/arekm/rpm/BUILD/git-1.5.3/t'
-*** t0000-basic.sh ***
-*   ok 1: .git/objects should be empty after git init in an empty repo.
-*   ok 2: .git/objects should have 3 subdirectories.
-*   ok 3: git update-index without --add should fail adding.
-*   ok 4: git update-index with --add should succeed.
-*   ok 5: writing tree out with git write-tree
-*   ok 6: validate object ID of a known tree.
-*   ok 7: git update-index without --remove should fail removing.
-*   ok 8: git update-index with --remove should be able to remove.
-*   ok 9: git write-tree should be able to write an empty tree.
-*   ok 10: validate object ID of a known tree.
-*   ok 11: adding various types of objects with git update-index --add.
-*   ok 12: showing stage with git ls-files --stage
-*   ok 13: validate git ls-files output for a known tree.
-*   ok 14: writing tree out with git write-tree.
-*   ok 15: validate object ID for a known tree.
-*   ok 16: showing tree with git ls-tree
-*   ok 17: git ls-tree output for a known tree.
-*   ok 18: showing tree with git ls-tree -r
-*   ok 19: git ls-tree -r output for a known tree.
-*   ok 20: showing tree with git ls-tree -r -t
-*   ok 21: git ls-tree -r output for a known tree.
-*   ok 22: writing partial tree out with git write-tree --prefix.
-*   ok 23: validate object ID for a known tree.
-*   ok 24: writing partial tree out with git write-tree --prefix.
-*   ok 25: validate object ID for a known tree.
-*   ok 26: put invalid objects into the index.
-*   ok 27: writing this tree without --missing-ok.
-*   ok 28: writing this tree with --missing-ok.
-*   ok 29: git read-tree followed by write-tree should be idempotent.
-*   ok 30: validate git diff-files output for a know cache/work tree st=
-ate.
-*   ok 31: git update-index --refresh should succeed.
-*   ok 32: no diff after checkout and git update-index --refresh.
-*   ok 33: git commit-tree records the correct tree in a commit.
-*   ok 34: git commit-tree records the correct parent in a commit.
-*   ok 35: git commit-tree omits duplicated parent in a commit.
-*   ok 36: update-index D/F conflict
-*   ok 37: absolute path works as expected
-* passed all 37 test(s)
-*** t0001-init.sh ***
-* FAIL 1: plain
+/usr/local/bin/git-clone: line 40: 14823 Segmenteringsfel        git-http-fetch $v -a -w "$tname" "$sha1" "$1"
 
-                (
-                        unset GIT_DIR GIT_WORK_TREE &&
-                        mkdir plain &&
-                        cd plain &&
-                        git init
-                ) &&
-                check_config plain/.git false unset
+It doesn't repeat itself, but I cannot clone because it always crashes.
 
-*   ok 2: plain with GIT_WORK_TREE
-* FAIL 3: plain bare
+[me@lathund tmp]$ git clone http://unix.schottelius.org/git/cLinux/cinit.git
+Initialized empty Git repository in /home/me/tmp/cinit/.git/
+got c56b79346e5058762db82cb98647628ddf3d6ebd
+walk c56b79346e5058762db82cb98647628ddf3d6ebd
+got c0d6c3ae3b4999892d7cbc22fd719c0e9797be59
+got 73dc306099bdb21abf22e4a015d3059e8577bb49
+got 6943289356f8431073cb8c7708bb7c9c05888333
+walk 6943289356f8431073cb8c7708bb7c9c05888333
+got 0fbf76f58b248f6b11421db5aa9c02fe12b0ce7d
+Getting alternates list for http://unix.schottelius.org/git/cLinux/cinit.git
+got 3912109b5cd65a68039d473c11c9f7ac2303e06d
 
-                (
-                        unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
-                        mkdir plain-bare-1 &&
-                        cd plain-bare-1 &&
-                        git --bare init
-                ) &&
-                check_config plain-bare-1 true unset
+!! now wait a minute. Why isn't it getting 0fbf76f58b248f6b11421db5aa9c02fe12b0ce7d
+here like it did?
 
-*   ok 4: plain bare with GIT_WORK_TREE
-*   ok 5: GIT_DIR bare
-*   ok 6: GIT_DIR non-bare
-*   ok 7: GIT_DIR & GIT_WORK_TREE (1)
-*   ok 8: GIT_DIR & GIT_WORK_TREE (2)
-* failed 2 among 8 test(s)
-make[1]: *** [t0001-init.sh] Error 1
-make[1]: Leaving directory `/home/users/arekm/rpm/BUILD/git-1.5.3/t'
+Getting pack list for http://unix.schottelius.org/git/cLinux/cinit.git
+got a170a50db31947dfae0b27d5dd8bb54b5ac97b20
+got 00f2651b7c63c56fda93d2f94cc2a2b7c28ac86b
+Getting index for pack 119f90491743d6454866ba8761f49757e359cec1
+got eec4105805e9f57b27158f847c9ce1b2b6eb40c7
 
-verified on 2 machines (so /dev/ is ok this time)
+etc a hundred objects or so:
 
---=20
-Arkadiusz Mi=B6kiewicz        PLD/Linux Team
-arekm / maven.pl            http://ftp.pld-linux.org/
+got f0d2e75fa8247f246aeb8ecdadd94d307481ea78
+got 3b01bfe1a064a4407bd6308cc4f02fcc2ac0d9a7
+got 3c54e71aca555fcfc163809669aa39426cb52421
+got 750e330305676e09479f63532782ce93462e71f5
+*** glibc detected *** git-http-fetch: corrupted double-linked list: 0x080dd9f0 ***
+======= Backtrace: =========
+/lib/i686/libc.so.6[0x44c99516]
+/lib/i686/libc.so.6[0x44c9b728]
+/lib/i686/libc.so.6(__libc_malloc+0x85)[0x44c9d075]
+/lib/libz.so.1(zcalloc+0x20)[0x44d9dfd0]
+git-http-fetch[0x804cb78]
+git-http-fetch[0x804ae2b]
+git-http-fetch[0x804aeab]
+git-http-fetch[0x804d265]
+git-http-fetch[0x804a732]
+git-http-fetch[0x804c240]
+/lib/i686/libc.so.6(__libc_start_main+0xdc)[0x44c4bd8c]
+git-http-fetch[0x804a071]
+
+I'll spare you the detfailt unless you want it.
+
+-- robin
