@@ -1,8 +1,8 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: git-gui i18n status?
-Date: Sat, 1 Sep 2007 21:42:42 -0400
-Message-ID: <20070902014242.GJ18160@spearce.org>
-References: <20070901042924.GE18160@spearce.org> <Pine.LNX.4.64.0709020003480.28586@racer.site>
+Date: Sat, 1 Sep 2007 22:24:44 -0400
+Message-ID: <20070902022444.GK18160@spearce.org>
+References: <20070901042924.GE18160@spearce.org> <Pine.LNX.4.64.0709020003480.28586@racer.site> <20070902014242.GJ18160@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Christian Stimming <stimming@tuhh.de>,
@@ -15,30 +15,30 @@ Cc: Christian Stimming <stimming@tuhh.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Irina Riesen <irina.riesen@gmail.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 02 03:43:38 2007
+X-From: git-owner@vger.kernel.org Sun Sep 02 04:25:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IReUr-00044e-OQ
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 03:43:30 +0200
+	id 1IRf9m-0008VH-Rl
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 04:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933423AbXIBBnY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 21:43:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933428AbXIBBnY
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 21:43:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36718 "EHLO
+	id S933519AbXIBCZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 22:25:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933438AbXIBCZl
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 22:25:41 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:37771 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933407AbXIBBnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 21:43:22 -0400
+	with ESMTP id S933459AbXIBCZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 22:25:40 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1IReTx-00065h-NY; Sat, 01 Sep 2007 21:42:33 -0400
+	id 1IRf8c-0001FJ-Qy; Sat, 01 Sep 2007 22:24:35 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7219320FBAE; Sat,  1 Sep 2007 21:42:43 -0400 (EDT)
+	id 39A1720FBAE; Sat,  1 Sep 2007 22:24:45 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709020003480.28586@racer.site>
+In-Reply-To: <20070902014242.GJ18160@spearce.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -48,113 +48,155 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57293>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sat, 1 Sep 2007, Shawn O. Pearce wrote:
-> > Looking at the repository on repo.or.cz it looks like it needs to be 
-> > merged/rebased onto 0.8.2.  There is a trivial merge conflict, but there 
-> > are some more subtle ones caused by the movement of the library 
-> > directory initialization down lower in git-gui.sh. For example 
-> > translations won't be initialized if we have an issue with the output of 
-> > git-version and want to prompt the user.
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hmm.  I am not enough involved in i18n stuff to form a proper opinion 
+> > here...  Do you suggest to move the initialisation earlier?
 > 
-> Hmm.  I am not enough involved in i18n stuff to form a proper opinion 
-> here...  Do you suggest to move the initialisation earlier?
+> Yea, I think that's what we are going to have to do here.  If we don't
+> setup the directory for the .msg files early enough than we cannot do
+> translations through [mc].  Unfortunately that means we have to also
+> break up the library initialization.
+> 
+> I'll try to work up a patch that does this.
 
-Yea, I think that's what we are going to have to do here.  If we don't
-setup the directory for the .msg files early enough than we cannot do
-translations through [mc].  Unfortunately that means we have to also
-break up the library initialization.
+This two patch series is based on my current master (gitgui-0.8.2).
+Its also now in my pu branch.
 
-I'll try to work up a patch that does this.
+
+>From fc703c209d415fe20ad5551465b5b68b8ab8b046 Mon Sep 17 00:00:00 2001
+From: Shawn O. Pearce <spearce@spearce.org>
+Date: Sat, 1 Sep 2007 21:58:29 -0400
+Subject: [PATCH] git-gui: Locate the library directory early during startup
+
+To support a localized version of git-gui we need to locate the
+library directory early so we can initialize Tcl's msgcat package
+to load translated messages from.  This needs to occur before we
+declare our git-version proc so that errors related to locating
+git or assessing its version can be reported to the end-user in
+their preferred language.  However we have to keep the library
+loading until after git-version has been declared, otherwise we
+will fail to start git-gui if we are using a fake tclIndex that
+was generated by our Makefile.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-gui.sh |   25 +++++++++++++++----------
+ 1 files changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index fa30ccc..4ea6e91 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -44,6 +44,20 @@ if {[catch {package require Tcl 8.4} err]
  
-> > What is the current plan?  Should I be looking at the master branch of 
-> > git://repo.or.cz/git-gui/git-gui-i18n.git for pulling?  Or are folks 
-> > expecting that this series will be cleaned up before I pull it?
-> 
-> My plan is to put out a cleaned up patch series:
-...
-> All these patches will go through the mailing list, so that people can 
-> comment and suggest improvements.
-
-OK, that works well for me.  Nice clean series to apply.
+ ######################################################################
+ ##
++## locate our library
++
++set oguilib {@@GITGUI_LIBDIR@@}
++set oguirel {@@GITGUI_RELATIVE@@}
++if {$oguirel eq {1}} {
++	set oguilib [file dirname [file dirname [file normalize $argv0]]]
++	set oguilib [file join $oguilib share git-gui lib]
++} elseif {[string match @@* $oguirel]} {
++	set oguilib [file join [file dirname [file normalize $argv0]] lib]
++}
++unset oguirel
++
++######################################################################
++##
+ ## enable verbose loading?
  
-> I'll also try to bug Christian into looking through the output of
-> 
-> 	git grep \" -- \*.sh \*.tcl | grep -vwe mc -e bind | less
-> 
-> to make sure that we did not forget a string.  ATM the output consists of 
-> 300+ lines, so it is a bit boring.  Maybe I can improve that command, 
-> too...
+ if {![catch {set _verbose $env(GITGUI_VERBOSE)}]} {
+@@ -595,15 +609,6 @@ You are using [git-version]:
+ ##
+ ## configure our library
+ 
+-set oguilib {@@GITGUI_LIBDIR@@}
+-set oguirel {@@GITGUI_RELATIVE@@}
+-if {$oguirel eq {1}} {
+-	set oguilib [file dirname [file dirname [file normalize $argv0]]]
+-	set oguilib [file join $oguilib share git-gui lib]
+-} elseif {[string match @@* $oguirel]} {
+-	set oguilib [file join [file dirname [file normalize $argv0]] lib]
+-}
+-
+ set idx [file join $oguilib tclIndex]
+ if {[catch {set fd [open $idx r]} err]} {
+ 	catch {wm withdraw .}
+@@ -637,7 +642,7 @@ if {$idx ne {}} {
+ } else {
+ 	set auto_path [concat [list $oguilib] $auto_path]
+ }
+-unset -nocomplain oguirel idx fd
++unset -nocomplain idx fd
+ 
+ ######################################################################
+ ##
+-- 
+1.5.3.rc7.30.g947ad2
 
-Some of these are internal errors that should never be presented to
-an end-user, and some are for reflog entries.   Here's a quick run
-through of these:
 
-      D == internal error message (developer only)
-      R == reflog message
-      T == probably should be translated
+>From d4b0ccd931cc29f35e8f8493445af27ea72ed03e Mon Sep 17 00:00:00 2001
+From: Shawn O. Pearce <spearce@spearce.org>
+Date: Sat, 1 Sep 2007 22:22:42 -0400
+Subject: [PATCH] git-gui: Initialize Tcl's msgcat library for internationalization
 
- D  "Invalid arguments to git-version",
- D  "Last arm of $type $name must be default",
- D  "git-version >= x",
- T  "git-gui: fatal error",
- T  "Cannot move to top of working directory:\n\n$err",
- D  "error: no icon for $w state={$state} $path",
- D  "error: no desc for state={$state} $path",
- T  "Unstaging [short_path $path] from commit",
- T  "Adding [short_path $path]",
- T  "fatal: cannot stat path $path: No such file or directory",
- T  "Possible environment issues exist.[...]",
- T  "Loading$cur_s annotations...",
- T  "Loading annotation...",
- T  "Author:\t",
- T  "Committer:\t",
- T  "Original File:\t",
- T  "Originally By:\n",
- T  "In File: ",
- T  "Copied Or Moved Here By:\n",
- T  "fatal: Cannot resolve $l_trck",
- R  "branch: Created from $new_expr",
- R  "merge $new_expr: Fast-forward",
- T  "Updating working directory to '[_name $this]'...",
- T  "Checked out '$name'.",
- D  "class $class already declared",
- D  "wrong # args: field name value?",
- D  "class $class is sealed (cannot add new fields)",
- D  "field $name already declared",
- D  "wrong # args: method name args body (ifdeleted body)?",
- D  "make_toplevel topvar winvar {options}",
- D  "unsupported option $name",
- T  "Commit $PARENT appears to be corrupt",
- T  "warning: Tcl does not support encoding '$enc'.",
- T  "This repository currently has approximately [...]",
- T  "Loading diff of [escape_path $path]...",
- T  "Unable to display [escape_path $path]",
- T  "* Binary file (not showing content).",
- T  "Unable to display [escape_path $path]",
- D  "error: Unhandled 3 way diff marker: {$op}",
- D  "error: Unhandled 2 way diff marker: {$op}",
- T  "Unstaging [short_path $current_diff_path] from commit",
- T  "Adding [short_path $current_diff_path]", and
- T  "The following branches are not completely merged into [...]",
+Tcl's msgcat library and corresponding mc procedure can locate a
+translated string for any user message, provided that it is first
+given a directory where the *.msg files are located containing the
+translations.
 
-Messages that I marked as 'D' shouldn't ever be shown to an end-user
-as they represent a Tcl error from incorrect usage of an internal
-function.  Translating these is fine but since it should never
-appear unless there is a serious bug in git-gui its probably not
-worth the translation effort.
+During installation we will place the translations in lib/msgs/,
+so we need to inform msgcat of this location once we determine it
+during startup.  Our source code tree however will store all of
+the translations within the po/ directory, so we need to special
+case this variant.
 
-Messages marked as 'R' appear in the reflog for the corresponding
-branch, etc.  These are not currently translated by core Git so I
-am not sure if we should translate them in git-gui.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-gui.sh |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-Messages marked as 'T' above are most definately shown to
-the end-user and should be translated, or at least offered for
-translation.  I realize some terms have been kept in their English
-form even after translation as there isn't a good way to translate
-them into every language.
+diff --git a/git-gui.sh b/git-gui.sh
+index 4ea6e91..486d36e 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -51,8 +51,12 @@ set oguirel {@@GITGUI_RELATIVE@@}
+ if {$oguirel eq {1}} {
+ 	set oguilib [file dirname [file dirname [file normalize $argv0]]]
+ 	set oguilib [file join $oguilib share git-gui lib]
++	set oguimsg [file join $oguilib msgs]
+ } elseif {[string match @@* $oguirel]} {
+ 	set oguilib [file join [file dirname [file normalize $argv0]] lib]
++	set oguimsg [file join [file dirname [file normalize $argv0]] po]
++} else {
++	set oguimsg [file join $oguilib msgs]
+ }
+ unset oguirel
+ 
+@@ -76,6 +80,16 @@ if {![catch {set _verbose $env(GITGUI_VERBOSE)}]} {
+ 
+ ######################################################################
+ ##
++## Internationalization (i18n) through msgcat and gettext. See
++## http://www.gnu.org/software/gettext/manual/html_node/Tcl.html
++
++package require msgcat
++namespace import ::msgcat::mc
++::msgcat::mcload $oguimsg
++unset oguimsg
++
++######################################################################
++##
+ ## read only globals
+ 
+ set _appname [lindex [file split $argv0] end]
+-- 
+1.5.3.rc7.30.g947ad2
 
 -- 
 Shawn.
