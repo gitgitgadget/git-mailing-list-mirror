@@ -1,69 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH] Improve bash prompt to detect merge / rebase in progress
-Date: Sun, 2 Sep 2007 01:35:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709020133540.28586@racer.site>
-References: <11886421573285-git-send-email-robin.rosenberg@dewire.com>
- <7vir6us1ia.fsf@gitster.siamese.dyndns.org> <20070901222036.GH18160@spearce.org>
+Date: Sat, 1 Sep 2007 20:44:07 -0400
+Message-ID: <20070902004407.GI18160@spearce.org>
+References: <11886421573285-git-send-email-robin.rosenberg@dewire.com> <7vir6us1ia.fsf@gitster.siamese.dyndns.org> <20070901222036.GH18160@spearce.org> <Pine.LNX.4.64.0709020133540.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Robin Rosenberg <robin.rosenberg@dewire.com>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Sep 02 02:36:12 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Sep 02 02:44:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRdRh-0004z3-Sn
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 02:36:10 +0200
+	id 1IRdZZ-0005wZ-OM
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 02:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbXIBAfl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 1 Sep 2007 20:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932576AbXIBAfl
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 20:35:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59795 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932475AbXIBAfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2007 20:35:40 -0400
-Received: (qmail invoked by alias); 02 Sep 2007 00:35:38 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 02 Sep 2007 02:35:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18K0BVhgQgKeDp4J6A1LlzBEsYEO9s07NbQEZZi7I
-	LIQ/zRFH/wo5uo
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070901222036.GH18160@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S932684AbXIBAoO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 1 Sep 2007 20:44:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbXIBAoO
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Sep 2007 20:44:14 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35478 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932514AbXIBAoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2007 20:44:13 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IRdZG-0002ZD-Gr; Sat, 01 Sep 2007 20:43:58 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 02CCD20FBAE; Sat,  1 Sep 2007 20:44:07 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709020133540.28586@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57290>
 
-Hi,
-
-On Sat, 1 Sep 2007, Shawn O. Pearce wrote:
-
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Robin Rosenberg <robin.rosenberg@dewire.com> writes:
-> > >
-> > > +	local g="$(git rev-parse --git-dir 2>/dev/null)"
-> > > +	if [ -n "$g" ]; then
-> > > +		local r
-> > > +		local b
-> > > +		if [ -d "$g/../.dotest" ]
-> > > +		then
-> > > +			local b="$(git symbolic-ref HEAD 2>/dev/null)"
-> > > +			r="|REBASEING"
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 1 Sep 2007, Shawn O. Pearce wrote:
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> > > 
+> > > I might be in the middle of resolving a conflicted "git am".
 > > 
-> > I might be in the middle of resolving a conflicted "git am".
+> > And there's no way to tell the difference either.
 > 
-> And there's no way to tell the difference either.
+> AFAICT git-am creates an "info" file in .dotest/.
 
-AFAICT git-am creates an "info" file in .dotest/.
+But git-rebase without -m and -i is defined as format-patch|am.
+So when rebasing it looks identical to git-am.  Hence no way to
+tell the difference between the two.
 
-And interactive rebase is detectable by the "interactive" file in 
-.git/.dotest-merge/.
-
-Ciao,
-Dscho
+I think post 1.5.3 one of the things we should work on is trying
+to better track our current operation state.  Most of that would
+be to refactor how we track state in things like rebase/am/merge.
+ 
+-- 
+Shawn.
