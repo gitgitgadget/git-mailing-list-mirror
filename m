@@ -1,95 +1,119 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: Stats in Git
-Date: Sun, 02 Sep 2007 22:09:31 +0200
-Message-ID: <46DB187B.9060809@trolltech.com>
-References: <46DACD93.9000509@trolltech.com> <20070902200218.GA2756@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Teach "git remote" a mirror mode
+Date: Sun, 2 Sep 2007 21:10:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709022101290.28586@racer.site>
+References: <Pine.LNX.4.64.0709021245040.28586@racer.site>
+ <7vk5r8q1yz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig3300ACE43738747501A02AC9"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 22:10:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 22:10:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRvlf-0005Gz-EM
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 22:09:59 +0200
+	id 1IRvmM-0005RG-O5
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 22:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821AbXIBUJp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 16:09:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbXIBUJp
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 16:09:45 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:60828 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752821AbXIBUJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 16:09:44 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 174F574235; Sun,  2 Sep 2007 22:09:41 +0200 (CEST)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id E1FDB7420B; Sun,  2 Sep 2007 22:09:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <20070902200218.GA2756@steel.home>
-X-Enigmail-Version: 0.95.3
-OpenPGP: id=34EB4437
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1751811AbXIBUKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 16:10:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759104AbXIBUK2
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 16:10:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56104 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759853AbXIBUKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 16:10:25 -0400
+Received: (qmail invoked by alias); 02 Sep 2007 20:10:24 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 02 Sep 2007 22:10:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9z/9OT9z9s85zfk/vtRoUtu7APb4izjUB6ESsL9
+	wSS1jz1swxsFmI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5r8q1yz.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57383>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig3300ACE43738747501A02AC9
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-
-Alex Riesen wrote:
-> Marius Storm-Olsen, Sun, Sep 02, 2007 16:49:55 +0200:
->> By applying the diff below, you can see for yourself what happens when=
-
->=20
-> just use "strace -e fstat,stat,lstat,stat64,lstat64 -f git-status"
-> on sane platform.
-
-Right, I was doing this on Windows, where strace is rather.. limited, so
-I thought I'd just share the code for all to play with :-)
-
-But, on my linux box:
-$ strace -e fstat,stat,lstat,stat64,lstat64 -f git-status 2>&1 | wc -l
-300195
-
-(Slightly more stats there, as expected, due to the listings of the
-shells stats too, and not just the builtins.)
-
---
-=2Emarius
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57384>
 
 
---------------enig3300ACE43738747501A02AC9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+When using the "--mirror" option to "git remote add", the refs will not
+be stored in the refs/remotes/ namespace, but in the same location as
+on the remote side.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+This option probably only makes sense in a bare repository.
 
-iD8DBQFG2xiAKzzXl/njVP8RAtSTAJ9kg/4JvA38/B+HkM/v6xMShCsyMwCgp+2l
-DY62HMlahu61UsdqkNFnCmY=
-=O8qV
------END PGP SIGNATURE-----
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
---------------enig3300ACE43738747501A02AC9--
+	On Sun, 2 Sep 2007, Junio C Hamano wrote:
+
+	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> 
+	> > When using the "--mirror" option to "git remote add", the refs 
+	> > will not be stored in the refs/remotes/ namespace, but in 
+	> > refs/heads/.
+	> 
+	> I suspect people'd prefer "+refs/*:refs/*" for a repo truly
+	> mirroring another.
+
+	Yes, you're right.
+
+ Documentation/git-remote.txt |    6 +++++-
+ git-remote.perl              |    8 +++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 61a6022..94b9f17 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-remote'
+-'git-remote' add [-t <branch>] [-m <branch>] [-f] <name> <url>
++'git-remote' add [-t <branch>] [-m <branch>] [-f] [--mirror] <name> <url>
+ 'git-remote' show <name>
+ 'git-remote' prune <name>
+ 'git-remote' update [group]
+@@ -45,6 +45,10 @@ multiple branches without grabbing all branches.
+ With `-m <master>` option, `$GIT_DIR/remotes/<name>/HEAD` is set
+ up to point at remote's `<master>` branch instead of whatever
+ branch the `HEAD` at the remote repository actually points at.
+++
++In mirror mode, enabled with `--mirror`, the refs will not be stored
++in the 'refs/remotes/' namespace, but in 'refs/heads/'.  This option
++only makes sense in bare repositories.
+ 
+ 'show'::
+ 
+diff --git a/git-remote.perl b/git-remote.perl
+index 01cf480..f6f283e 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -278,7 +278,9 @@ sub add_remote {
+ 
+ 	for (@$track) {
+ 		$git->command('config', '--add', "remote.$name.fetch",
+-			      "+refs/heads/$_:refs/remotes/$name/$_");
++				$opts->{'mirror'} ?
++				"+refs/$_:refs/$_" :
++				"+refs/heads/$_:refs/remotes/$name/$_");
+ 	}
+ 	if ($opts->{'fetch'}) {
+ 		$git->command('fetch', $name);
+@@ -409,6 +411,10 @@ elsif ($ARGV[0] eq 'add') {
+ 			shift @ARGV;
+ 			next;
+ 		}
++		if ($opt eq '--mirror') {
++			$opts{'mirror'} = 1;
++			next;
++		}
+ 		add_usage();
+ 	}
+ 	if (@ARGV != 3) {
+-- 
+1.5.3.2.g46909
