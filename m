@@ -1,51 +1,61 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Sun, 2 Sep 2007 17:12:29 +0200
-Message-ID: <20070902151229.GB6501@amy.inscure.wireless.home.vilz.de>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Buffer overflows
+Date: Sun, 02 Sep 2007 17:19:49 +0200
+Message-ID: <85veatqelm.fsf@lola.goethe.zz>
+References: <1188502009.29782.874.camel@hurina>
+	<3f4fd2640708301435s7067137cp5db6334af844158a@mail.gmail.com>
+	<7vtzqg7jrn.fsf@gitster.siamese.dyndns.org>
+	<200709021542.31100.johan@herland.net>
+	<3f4fd2640709020811r4ea8f01fw775257859e26af29@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 02 17:18:26 2007
+Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>, "Timo Sirainen" <tss@iki.fi>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>
+To: "Reece Dunn" <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 02 17:19:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRrDU-0007rx-PY
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 17:18:25 +0200
+	id 1IRrEz-0008A2-Nr
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 17:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755954AbXIBPST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 11:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756090AbXIBPST
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 11:18:19 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.20.118.28]:39009 "EHLO
-	pandorra.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751059AbXIBPSS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 11:18:18 -0400
-X-Greylist: delayed 317 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Sep 2007 11:18:18 EDT
-Received: from localhost (point-23.secure.wireless.home.vilz.de [::ffff:192.168.151.23])
-  by pandorra.geht-ab-wie-schnitzel.de with esmtp; Sun, 02 Sep 2007 17:12:49 +0200
-  id 0015AEE6.46DAD2F1.00000F3B
-Content-Disposition: inline
-In-Reply-To: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751257AbXIBPTy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 11:19:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbXIBPTx
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 11:19:53 -0400
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:53638 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751257AbXIBPTx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 11:19:53 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 602F42D2AAD;
+	Sun,  2 Sep 2007 17:19:52 +0200 (CEST)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 4DA89201001;
+	Sun,  2 Sep 2007 17:19:52 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-038-061.pools.arcor-ip.net [84.61.38.61])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 30C631C3326;
+	Sun,  2 Sep 2007 17:19:52 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id D8A4A1C15372; Sun,  2 Sep 2007 17:19:49 +0200 (CEST)
+In-Reply-To: <3f4fd2640709020811r4ea8f01fw775257859e26af29@mail.gmail.com> (Reece Dunn's message of "Sun\, 2 Sep 2007 16\:11\:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.1/4132/Sun Sep  2 16:25:59 2007 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57339>
 
-On Sat, Sep 01, 2007 at 11:31:17PM -0700, Junio C Hamano wrote:
->   - URL used for "git clone" and friends can specify nonstandard SSH port
->     by using sh://host:port/path/to/repo syntax.
+"Reece Dunn" <msclrhd@googlemail.com> writes:
 
-Sorry, but could this be a typo and should be 
+> Which is good, as this means that along with the tests in the
+> library, it will be more stable and less likely to be buggy than
+> something that is written from scratch.
 
-     by using ssh://host:port/path/to/repo syntax.
-              ^^^ 
+Remember git's history.
 
-
-Sincerly
-Nicolas
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
