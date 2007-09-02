@@ -1,74 +1,73 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Sun, 2 Sep 2007 19:16:44 -0400
-Message-ID: <20070902191644.29d46cd2.seanlkml@sympatico.ca>
+Date: Sun, 02 Sep 2007 16:28:47 -0700
+Message-ID: <7vveasode8.fsf@gitster.siamese.dyndns.org>
 References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
-	<46DA5F33.2020005@zytor.com>
-	<85odgltrtj.fsf@lola.goethe.zz>
-	<46DA88EF.7080103@zytor.com>
-	<20070902133803.1b46f599.seanlkml@sympatico.ca>
-	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+	<87hcmcfzo9.fsf@morpheus.local> <87d4x0fzky.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 01:16:53 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Mon Sep 03 01:29:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRygW-0003HL-Ew
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 01:16:52 +0200
+	id 1IRysb-0004xa-3D
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 01:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006AbXIBXQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 19:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754312AbXIBXQs
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 19:16:48 -0400
-Received: from bay0-omc1-s1.bay0.hotmail.com ([65.54.246.73]:58941 "EHLO
-	bay0-omc1-s1.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754395AbXIBXQr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 19:16:47 -0400
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]) by bay0-omc1-s1.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 2 Sep 2007 16:16:46 -0700
-X-Originating-IP: [64.231.205.174]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([64.231.205.174]) by bayc1-pasmtp06.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sun, 2 Sep 2007 16:17:51 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1 with smtp (Exim 4.43)
-	id 1IRygO-0003bk-CN; Sun, 02 Sep 2007 19:16:44 -0400
-In-Reply-To: <7v4picpvgq.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.14; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 02 Sep 2007 23:17:51.0375 (UTC) FILETIME=[7BB731F0:01C7EDB7]
+	id S1753181AbXIBX2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 19:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752888AbXIBX2y
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 19:28:54 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42631 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640AbXIBX2y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 19:28:54 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DFC6012D4C2;
+	Sun,  2 Sep 2007 19:29:11 -0400 (EDT)
+In-Reply-To: <87d4x0fzky.fsf@morpheus.local> (David =?utf-8?Q?K=C3=A5gedal?=
+ =?utf-8?Q?'s?= message of "Mon,
+	03 Sep 2007 00:54:21 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57403>
 
-On Sun, 02 Sep 2007 15:13:09 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-Hi Junio,
+> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> GIT v1.5.3 Release Notes
+>>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+>>>
+>>> Updates since v1.5.2
+>>> --------------------
+>>>
+>>> * The commit walkers other than http are officially deprecated,
+>>>   but still supported for now.
+>>
+>> As I think I said before, this first bullet point makes no sense to
+>> git users.  Only hardcore git developers know what a "commit walker
+>> is", and what commit walkers exist (other than html, obviously).  Ho=
+w
+>
+> I'm not trying to make you even more confused. Make that "http",
+> please. :-)
 
-> For majority of general public, I thought the spec file _I_
-> ship, along with RPM files _I_ build, are contrib status
-> already.  Don't distro people do their own RPM packages, instead
-> of using what I placed on k.org?
+Unless you work extremely hard at it, you won't be using the
+local and/or ssh walkers.  The entry is really meant for
+Porcelain writers (aka plumbing users).
 
-Didn't know you used RPM yourself, so I guess this is just
-a case of something slipping through rather than the spec file
-needing a maintainer.  Having said that, it seems odd that you
-would say the spec file included with git is "contrib status
-already".   How can something be contrib status unless it
-is in the contrib directory of Git?
- 
-> Assuming that we do not give the old git-p4import script
-> packaged in "git-p4 package", would the following patch be all
-> that is needed, or do we need other things in the spec file?
-
-Given the comment from David, I suspect your patch is all
-that's needed; hopefully Peter can give it a quick test.
-
-Sean
+It's a tricky balancing act.  Not everybody is the end user who
+is only interested in using Porcelain.  The release note for a
+new release somehow needs to mention changes that would affect
+only plumbing users as well.
