@@ -1,210 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 07/15] Add glossary translation template into git.
-Date: Sun, 2 Sep 2007 17:32:46 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709021732380.28586@racer.site>
-References: <Pine.LNX.4.64.0709021719380.28586@racer.site>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
+Date: Sun, 2 Sep 2007 17:33:42 +0100
+Message-ID: <3f4fd2640709020933sa2bdec0g532500ea49c179b5@mail.gmail.com>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
+	 <3f4fd2640709020832x656fa78djf29117690318ea48@mail.gmail.com>
+	 <46DAE025.900@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 18:33:36 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Marius Storm-Olsen" <marius@trolltech.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Sep 02 18:33:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRsOC-0005D6-CF
-	for gcvg-git@gmane.org; Sun, 02 Sep 2007 18:33:32 +0200
+	id 1IRsOZ-0005Gk-5Q
+	for gcvg-git@gmane.org; Sun, 02 Sep 2007 18:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932930AbXIBQd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 12:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932987AbXIBQd2
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 12:33:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40044 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932773AbXIBQd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 12:33:27 -0400
-Received: (qmail invoked by alias); 02 Sep 2007 16:33:25 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 02 Sep 2007 18:33:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+SwYJPeBOSOc/ErDNDwQmGnSIfzxObiwGt36dakt
-	xkNThAI8Bua76S
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0709021719380.28586@racer.site>
-X-Y-GMX-Trusted: 0
+	id S933169AbXIBQdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 12:33:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933153AbXIBQdv
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 12:33:51 -0400
+Received: from rv-out-0910.google.com ([209.85.198.186]:57460 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932901AbXIBQdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 12:33:50 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so761332rvb
+        for <git@vger.kernel.org>; Sun, 02 Sep 2007 09:33:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=googlemail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jYXEaK5M1Epf7ZqZqMBNFc2oV+/var7XWX2r36s4pW/BUZJII9QzkwCRFdBwX1zPHQPqtL8zxxc6UXnvlpaeBIAEg2QQeriPHBrob7kH4EMwECPqUEU5Z84BBV6sEY2Uj8SIq7A/8tbSNvSRQyIdn9q3T/rlg9SHxJtFSqezW2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=REsAnNzRu4mehrbfe4kIDjNazSOmID0GDJ4vZISFzG589RKrKPZ+4V1XTLzF60Jj4DuLn280yVYq46dNfqKh/ErWkEMHfHarTGb85InHhFAGwZhMJhDLXVb9n7cPH4KPybAN6RGilLDwJAu3XdkSxMZFEJaoYbirDMfPmBAsPTY=
+Received: by 10.141.34.12 with SMTP id m12mr1616195rvj.1188750822261;
+        Sun, 02 Sep 2007 09:33:42 -0700 (PDT)
+Received: by 10.141.32.14 with HTTP; Sun, 2 Sep 2007 09:33:42 -0700 (PDT)
+In-Reply-To: <46DAE025.900@trolltech.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57355>
 
+On 02/09/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> Reece Dunn wrote:
+> > On 02/09/07, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> >> This gives us a significant speedup when adding, committing and stat'ing files.
+> >> (Also, since Windows doesn't really handle symlinks, it's fine that stat just uses lstat)
+> >>
+> >> +               if (ext && (!_stricmp(ext, ".exe") ||
+> >> +                           !_stricmp(ext, ".com") ||
+> >> +                           !_stricmp(ext, ".bat") ||
+> >> +                           !_stricmp(ext, ".cmd")))
+> >> +                       fMode |= S_IEXEC;
+> >> +               }
+> >
+> > This breaks executable mode reporting for things like configure
+> > scripts and other shell scripts that may, or may not, be executable.
+> > Also, you may want to turn off the executable state for some of these
+> > extensions (for example if com or cmd were not actually executable
+> > files). This makes it impossible to manipulate git repositories
+> > properly on the MinGW platform.
+>
+> Actually, you don't really need the EXEC bit for Git to work. I just
+> added it for completeness. (We _could_ remove that too, since it's
+> slowing us down slightly ;-)
+>
+> Remember that Git isn't using MSys for its builtins, so MinGW Git
+> doesn't understand the MSys notion of executable files anyways.
+> The MinGW port actually peeks at the beginning of a file (ignoring exe
+> files), and sees if there's an interpreter there. If there is, it will
+> expand
+>     git-foo args...
+> into
+>     sh git-foo args...
+> and execute the command. So, it's not really affected by this change.
+>
+> I haven't had any problems with this patch on my system, so could you
+> explain what you mean with 'this makes it impossible to manipulate git
+> repositories'?
 
-From: Christian Stimming <stimming@tuhh.de>
+You pull a repository that contains executable scripts that are
+required to work in order to build the system. You then make some
+modifications to the local repository and run the 'git add .' command.
+Since this patch is reporting executable bits differently, the mode
+change is stored as well as the local modifications. Now the changes
+are pushed upstream (along with the file mode changes).
 
-This way, it should be easier for new translators to actually find out
-about the glossary.
+Someone running a Linux machine, pulls your changes. When those files
+are checked out, the executable state of those scripts has now
+changed, preventing the Linux user from running those scripts. _That_
+is what I meant. Or am I misunderstanding how git works in this case?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- po/glossary/git-gui-glossary.pot |  152 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 152 insertions(+), 0 deletions(-)
- create mode 100644 po/glossary/git-gui-glossary.pot
+> > Would it be possible to use the git tree to manage the executable
+> > state? That way, all files would not have their executable state set
+> > by default on Windows. The problem with this is how then to set the
+> > executable state? Having a git version of chmod may not be a good
+> > idea, but then how else are you going to reliably and efficiently
+> > modify the files permissions on Windows?
+>
+> The file-state-in-git-tree belongs in a different discussion. Have a
+> look at the '.gitignore, .gitattributes, .gitmodules, .gitprecious?,
+> .gitacls? etc.' and 'tracking perms/ownership [was: empty directories]'
+> threads. Permissions are not a trivial topic, since systems represent
+> them differently. This patch just tries to reflect the read, write and
+> execute permissions as normal Windows would; and it only cares about
+> file extensions (and the PE header, if it exists).
 
-diff --git a/po/glossary/git-gui-glossary.pot b/po/glossary/git-gui-glossary.pot
-new file mode 100644
-index 0000000..c955b46
---- /dev/null
-+++ b/po/glossary/git-gui-glossary.pot
-@@ -0,0 +1,152 @@
-+# SOME DESCRIPTIVE TITLE.
-+# Copyright (C) YEAR Free Software Foundation, Inc.
-+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-+#
-+#, fuzzy
-+msgid ""
-+msgstr ""
-+"Project-Id-Version: PACKAGE VERSION\n"
-+"POT-Creation-Date: 2007-07-27 19:21+0200\n"
-+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-+"Language-Team: LANGUAGE <LL@li.org>\n"
-+"MIME-Version: 1.0\n"
-+"Content-Type: text/plain; charset=UTF-8\n"
-+"Content-Transfer-Encoding: ENCODING\n"
-+
-+#. "English Definition (Dear translator: This file will never be visible to the user! It should only serve as a tool for you, the translator. Nothing more.)"
-+msgid "English Term (Dear translator: This file will never be visible to the user!)"
-+msgstr ""
-+
-+#. ""
-+msgid "amend"
-+msgstr ""
-+
-+#. ""
-+msgid "annotate"
-+msgstr ""
-+
-+#. "A 'branch' is an active line of development."
-+msgid "branch [noun]"
-+msgstr ""
-+
-+#. ""
-+msgid "branch [verb]"
-+msgstr ""
-+
-+#. ""
-+msgid "checkout [noun]"
-+msgstr ""
-+
-+#. "The action of updating the working tree to a revision which was stored in the object database."
-+msgid "checkout [verb]"
-+msgstr ""
-+
-+#. "A single point in the git history."
-+msgid "commit [noun]"
-+msgstr ""
-+
-+#. "The action of storing a new snapshot of the project's state in the git history."
-+msgid "commit [verb]"
-+msgstr ""
-+
-+#. ""
-+msgid "diff [noun]"
-+msgstr ""
-+
-+#. ""
-+msgid "diff [verb]"
-+msgstr ""
-+
-+#. "A fast-forward is a special type of merge where you have a revision and you are merging another branch's changes that happen to be a descendant of what you have."
-+msgid "fast forward merge"
-+msgstr ""
-+
-+#. "Fetching a branch means to get the branch's head from a remote repository, to find out which objects are missing from the local object database, and to get them, too."
-+msgid "fetch"
-+msgstr ""
-+
-+#. "A collection of files. The index is a stored version of your working tree."
-+msgid "index (in git-gui: staging area)"
-+msgstr ""
-+
-+#. "A successful merge results in the creation of a new commit representing the result of the merge."
-+msgid "merge [noun]"
-+msgstr ""
-+
-+#. "To bring the contents of another branch into the current branch."
-+msgid "merge [verb]"
-+msgstr ""
-+
-+#. ""
-+msgid "message"
-+msgstr ""
-+
-+#. "Pulling a branch means to fetch it and merge it."
-+msgid "pull"
-+msgstr ""
-+
-+#. "Pushing a branch means to get the branch's head ref from a remote repository, and ... (well, can someone please explain it for mere mortals?)"
-+msgid "push"
-+msgstr ""
-+
-+#. ""
-+msgid "redo"
-+msgstr ""
-+
-+#. "A collection of refs (?) together with an object database containing all objects which are reachable from the refs... (oops, you've lost me here. Again, please an explanation for mere mortals?)"
-+msgid "repository"
-+msgstr ""
-+
-+#. ""
-+msgid "reset"
-+msgstr ""
-+
-+#. ""
-+msgid "revert"
-+msgstr ""
-+
-+#. "A particular state of files and directories which was stored in the object database."
-+msgid "revision"
-+msgstr ""
-+
-+#. ""
-+msgid "sign off"
-+msgstr ""
-+
-+#. ""
-+msgid "staging area"
-+msgstr ""
-+
-+#. ""
-+msgid "status"
-+msgstr ""
-+
-+#. "A ref pointing to a tag or commit object"
-+msgid "tag [noun]"
-+msgstr ""
-+
-+#. ""
-+msgid "tag [verb]"
-+msgstr ""
-+
-+#. "A regular git branch that is used to follow changes from another repository."
-+msgid "tracking branch"
-+msgstr ""
-+
-+#. ""
-+msgid "undo"
-+msgstr ""
-+
-+#. ""
-+msgid "update"
-+msgstr ""
-+
-+#. ""
-+msgid "verify"
-+msgstr ""
-+
-+#. "The tree of actual checked out files."
-+msgid "working copy, working tree"
-+msgstr ""
-+
--- 
-1.5.3.2.g46909
+I understand that this is not a trivial topic. I was thinking that
+this different behaviour w.r.t. the executable permission will break
+things when you have developers on both Linux and Windows, such as the
+cairo developers, for current git usage.
+
+I have not really been tracking those threads, but I will take a look at them.
+
+> Also note that my patch totally ignores the Group & Others part of the
+> permission bits. Again, we're on Windows so we don't really care. We
+> _could_ make it reflect the ACLs in Windows, but then we'd have to make
+> it optional, since that's _really_ slow to 'stat'.
+
+Sure. Cygwin does use ACLs to implement stat which is why it is slow.
+So anything that can speed git up here, without any breakage in
+functionality, is a good thing.
+
+- Reece
