@@ -1,106 +1,81 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Mon, 03 Sep 2007 21:21:56 +0200
-Message-ID: <46DC5ED4.8050202@trolltech.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 2/3] archive: specfile support (--pretty=format: in archive files)
+Date: Mon, 03 Sep 2007 22:19:27 +0200
+Message-ID: <85ps0zmrhs.fsf@lola.goethe.zz>
+References: <46DC4D45.4030208@lsrfire.ath.cx>
+	<Pine.LNX.4.64.0709031935540.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigFDAB603452D5A7506B87D82A"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@eudaptics.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Sep 03 21:22:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	Thomas Glanzmann <thomas@glanzmann.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 03 22:19:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISHV2-0001uD-3C
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 21:22:16 +0200
+	id 1ISIOW-0006Bp-IQ
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 22:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbXICTWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 15:22:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbXICTWI
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 15:22:08 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:52594 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753477AbXICTWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 15:22:07 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 38AFB741D7; Mon,  3 Sep 2007 21:22:05 +0200 (CEST)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 03D6B741AE; Mon,  3 Sep 2007 21:22:05 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <Pine.LNX.4.64.0709031428080.28586@racer.site>
-X-Enigmail-Version: 0.95.3
-OpenPGP: id=34EB4437
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1753954AbXICUTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 16:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753891AbXICUTb
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 16:19:31 -0400
+Received: from mail-in-08.arcor-online.net ([151.189.21.48]:37534 "EHLO
+	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753868AbXICUTa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 16:19:30 -0400
+Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 3B0572F28E5;
+	Mon,  3 Sep 2007 22:19:29 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 278F1114372;
+	Mon,  3 Sep 2007 22:19:29 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-037-052.pools.arcor-ip.net [84.61.37.52])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id EF2E8212F62;
+	Mon,  3 Sep 2007 22:19:28 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id D87281C0039C; Mon,  3 Sep 2007 22:19:27 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0709031935540.28586@racer.site> (Johannes Schindelin's message of "Mon\, 3 Sep 2007 19\:40\:04 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4140/Mon Sep  3 19:59:33 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57505>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigFDAB603452D5A7506B87D82A
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Johannes Schindelin wrote:
-> To make it easier on others, I just uploaded it into the "teststat"
-> branch on 4msysgit.git (subject to removal in a few days).
+> On Mon, 3 Sep 2007, Ren? Scharfe wrote:
+>
+>> Add support for a new attribute, specfile.  Files marked as being
+>> specfiles are expanded by git-archive when they are written to an
+>> archive.  It has no effect on worktree files.  The same placeholders
+>> as those for the option --pretty=format: of git-log et al. can be
+>> used.
+>
+> I almost like this approach.  Would it not be a little more useful if you 
+> could mark the placeholders with something like "$Format: xyz %c$"?  
+> Because then we could just shut up all those complainers that want to 
+> insert some revision specific information into the files, without 
+> affecting formats for printf().
+>
+> Of course, the idea to keep the worktree unaffected is brilliant.
 
-Ok, I've updated the patch in the 4msysgit.git repo, 'teststat' branch.
-RFC, and please test.
+I think a bit more layering would be helpful: when using git-svn, one
+would want to have things like $Id$ and $Date$ expanded, so maybe
+attribute specs like
 
-The patch also incorporates some of Hannes local changes, with some
-modifications. Hannes, does it look ok for you? You can add a tag to the
-commit message if you'd like, and just +push it.
+somefile: expandmarkers="$Date: %aD$ $Id: ....$"
 
-On Hannes' request (and to which I fully agree), I've gone back to the
-old implementation of filetime_to_time_t(), since it was a bit 'nasty'.
-(If we want to target CE in the future, it will quite possibly break)
+would be nice having.  In the case of git-svn, I would expect them to
+be generated from git-svn from the respective svn properties, so that
+the user is not bothered with figuring out the awful $Id$ and whatever
+strings.
 
-http://repo.or.cz/w/git/mingw/4msysgit.git?a=3Dcommitdiff;h=3Df4f3fbddf6e=
-0f16f66f94cedf66614e0e3643496
-
-> First comment: it seems git_fstat() is not declared properly, so
-> there are quite a few compiler warnings.
-
-This is also fixed, of course.
-
-Hope this is the final 'cut' :-)
-
-Later!
---
-=2Emarius
-
-
---------------enigFDAB603452D5A7506B87D82A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFG3F7YKzzXl/njVP8RAsuRAJ0RCs1NTxEXnU5dVSAs9qYEVix/fQCgznCx
-ZhaEE7j/WGqlx6syi1H7l+4=
-=a8kK
------END PGP SIGNATURE-----
-
---------------enigFDAB603452D5A7506B87D82A--
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
