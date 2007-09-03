@@ -1,69 +1,97 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGIT experimental branches updated
-Date: Mon, 3 Sep 2007 10:32:47 +0100
-Message-ID: <b0943d9e0709030232r5a98ecdeja936a022bd1646c@mail.gmail.com>
-References: <20070903002029.GA31957@diana.vm.bytemark.co.uk>
-	 <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
-	 <20070903090121.GA5051@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote: add 'rm' subcommand
+Date: Mon, 03 Sep 2007 03:07:51 -0700
+Message-ID: <7vy7fojc3s.fsf@gitster.siamese.dyndns.org>
+References: <11810859232541-git-send-email-jbowes@dangerouslyinc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 11:32:56 2007
+To: James Bowes <jbowes@dangerouslyinc.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 12:08:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS8Ig-0007fx-8I
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:32:54 +0200
+	id 1IS8qm-0006Um-4a
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 12:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370AbXICJct convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 05:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753355AbXICJct
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:32:49 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:27789 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753261AbXICJcs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 05:32:48 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so916113rvb
-        for <git@vger.kernel.org>; Mon, 03 Sep 2007 02:32:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k9pq7vBeC5ZgoeSPyacUsVJMrx6ksNqYpcu1Rv3DLolXC1bv87UJdrLcMjbGJgYoSONI8untT/fpom/8jXtAEMv/HG3Pqb/yfjtDKiaB2DbFvwZ2oSKrAABTYJ2bkZdElem25tGZ4D0QIFsy5C738cI6L9pAxICftqh9c1whQmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CNhd20avBiY81q6EaAq6HZOS9rp4TQQV/WeBYxiqM+Jp+a0lSBvMn5opGovLgP/eB6CFbgNppdOn2lpsgnIG0+oNoi0A42YiKxtVv7ixexHaC17/jYxe6IgpF/GFqsnSlMxBsxdMK+GhQXHIN9sPbG+vDhL6OZiYiTQamQ/2Xas=
-Received: by 10.141.171.6 with SMTP id y6mr1886150rvo.1188811967541;
-        Mon, 03 Sep 2007 02:32:47 -0700 (PDT)
-Received: by 10.140.187.15 with HTTP; Mon, 3 Sep 2007 02:32:47 -0700 (PDT)
-In-Reply-To: <20070903090121.GA5051@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752256AbXICKH5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 06:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753942AbXICKH5
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 06:07:57 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48213 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256AbXICKH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 06:07:56 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D306412D8E7;
+	Mon,  3 Sep 2007 06:08:14 -0400 (EDT)
+In-Reply-To: <11810859232541-git-send-email-jbowes@dangerouslyinc.com> (James
+	Bowes's message of "Tue, 5 Jun 2007 19:25:23 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57462>
 
-On 03/09/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-09-03 09:29:18 +0100, Catalin Marinas wrote:
+James Bowes <jbowes@dangerouslyinc.com> writes:
+
+> Introduce git-remote rm <name> which will:
+>  - Remove the remote config entry for <name>.
+>  - Remove any config entries for tracking branches of <name>.
+>  - Remove any stored remote branches of <name>.
 >
-> > BTW, would an extension to 'stg import' to import patches from
-> > mailing lists (NNTP or maybe just mbox) directly be useful? There i=
-s
-> > support for mbox importing anyway and it would need a procmail
-> > filter to generate the mbox and just a regex filtering in 'import'
-> > to apply the StGIT patches only.
->
-> I don't think I'd use that function -- it's very convenient to just
-> manually copy the patch mails I want to a separate mbox, which I then
-> pipe to git-am. (Yes, I know, I should be using "stg import", but "st=
-g
-> assimilate" is just too useful.)
+> Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
 
-I usually save them to an mbox as well (but use stg import). Until
-recently, when I started merging your 'safe' branch :-).
+Let's continue with this in 1.5.4 cycle.  Together with Dscho's
+"--mirror" patch, this will make "remote" more complete.
 
---=20
-Catalin
+> If there is any interest in this, I'll follow up later with additions
+> to the docs.
+
+This is not a good thing to say here.  If even the original
+author cannot be bothered to perfect it unconditionally (iow
+even when other people do not realize how useful it would be
+initially and nobody seem to be interested), it does not help
+convincing others that it is a good thing for the community to
+take the patch.
+
+> +sub rm_remote {
+> +    my ($name) = @_;
+> +	if (!exists $remote->{$name}) {
+> +		print STDERR "No such remote $name\n";
+> +		return;
+> +	}
+> +
+> +	$git->command('config', '--remove-section', "remote.$name");
+> +
+> +	eval {
+> +	    my @trackers = $git->command('config', '--get-regexp',
+> +			'branch.*.remote', $name);
+
+Is this correct, or should it be '^branch\..*\.remote$'
+
+> +		for (@trackers) {
+> +			/^branch\.(.*)?\.remote/;
+
+And this one.  Why do we have '?' there?  Perhaps...
+
+	if (/^branch\.(.*\)\.remote /) {
+		$git->config('--unset', "branch.$1.remote");
+		$git->config('--unset', "branch.$1.merge");
+	} else {
+        	die "Gaah, why $_ is not branch.<<name>>.remote???"
+	}
+
+We seem to have another subroutine to prune remote tracking
+branches, which does it slightly differently.  Maybe we would
+want to share code with that codepath?
+
+Other than that, I think the patch is sane, with your later
+"documentation patch".
+
+We would want a handful tests, including ones to check error
+conditions, such as trying to remove a remote that does not
+exist.
