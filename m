@@ -1,168 +1,56 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] Test "stg status" more thoroughly
-Date: Mon, 03 Sep 2007 02:00:00 +0200
-Message-ID: <20070902235947.23866.81320.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 02 Sep 2007 17:03:22 -0700
+Message-ID: <7vr6lgobsl.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<87hcmcfzo9.fsf@morpheus.local> <87d4x0fzky.fsf@morpheus.local>
+	<7vveasode8.fsf@gitster.siamese.dyndns.org>
+	<46DB4903.6060100@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 02:00:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 02:03:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRzMy-0000ev-MH
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:00:45 +0200
+	id 1IRzPg-00012T-49
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbXICAAK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 20:00:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbXICAAK
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:00:10 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3530 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755935AbXICAAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 20:00:07 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1IRzMG-0008FL-00; Mon, 03 Sep 2007 01:00:00 +0100
-User-Agent: StGIT/0.13
+	id S1756014AbXICAD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 20:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbXICAD2
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:03:28 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42927 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbXICAD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 20:03:27 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7488812CF99;
+	Sun,  2 Sep 2007 20:03:46 -0400 (EDT)
+In-Reply-To: <46DB4903.6060100@midwinter.com> (Steven Grimm's message of "Sun,
+	02 Sep 2007 16:36:35 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57409>
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Steven Grimm <koreth@midwinter.com> writes:
 
----
+> No argument there, of course; it needs to be documented. But maybe not
+> as the very first item at the top of the release notes, which people
+> might expect to be organized in a "most user-visible first" order. I
+> usually expect to see general descriptions of new features and
+> critical bugfixes at the top of a program's release notes, with the
+> option to keep reading if I want the low-level details.
+>
+> Barring that, or even in addition to that, would it make sense to have
+> separate "porcelain" and "plumbing" sections of the release notes?
 
- t/t0002-status.sh |  114 +++++++++++++++++++++++++++++++++++++++++++++=
-+++++++-
- 1 files changed, 112 insertions(+), 2 deletions(-)
-
-
-diff --git a/t/t0002-status.sh b/t/t0002-status.sh
-index c088d56..ce3b688 100755
---- a/t/t0002-status.sh
-+++ b/t/t0002-status.sh
-@@ -8,8 +8,118 @@ test_description=3D'Basic stg status
- Test that "stg status" works.'
-=20
- . ./test-lib.sh
-+stg init
-=20
--test_expect_success 'Run status on empty' \
--  'stg status'
-+# Ignore our own output files.
-+cat > .git/info/exclude <<EOF
-+/expected.txt
-+/output.txt
-+EOF
-+
-+cat > expected.txt <<EOF
-+EOF
-+test_expect_success 'Run status on empty' '
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+? foo
-+EOF
-+test_expect_success 'Status with an untracked file' '
-+    touch foo &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+rm -f foo
-+
-+cat > expected.txt <<EOF
-+EOF
-+test_expect_success 'Status with an empty directory' '
-+    mkdir foo &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+? foo/
-+EOF
-+test_expect_success 'Status with an untracked file in a subdir' '
-+    touch foo/bar &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+A foo/bar
-+EOF
-+test_expect_success 'Status with an added file' '
-+    stg add foo &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+EOF
-+test_expect_success 'Status after refresh' '
-+    stg new -m "first patch" &&
-+    stg refresh &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+M foo/bar
-+EOF
-+test_expect_success 'Status after modification' '
-+    echo "wee" >> foo/bar &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+EOF
-+test_expect_success 'Status after refresh' '
-+    stg new -m "second patch" && stg refresh &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+test_expect_success 'Make a conflicting patch' '
-+    stg pop &&
-+    stg new -m "third patch" &&
-+    echo "woo" >> foo/bar &&
-+    stg refresh
-+'
-+
-+cat > expected.txt <<EOF
-+? foo/bar.ancestor
-+? foo/bar.current
-+? foo/bar.patched
-+C foo/bar
-+EOF
-+test_expect_success 'Status after conflicting push' '
-+    ! stg push &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+M foo/bar
-+EOF
-+test_expect_success 'Status after resolving the push' '
-+    stg resolved -a &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-+
-+cat > expected.txt <<EOF
-+D foo/bar
-+EOF
-+test_expect_success 'Status after deleting a file' '
-+    rm foo/bar &&
-+    stg status > output.txt &&
-+    diff -u expected.txt output.txt
-+'
-=20
- test_done
+I think that makes sense, as "most user-visible first" order
+will be different what kind of "user" you are.
