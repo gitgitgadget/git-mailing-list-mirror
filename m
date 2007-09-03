@@ -1,79 +1,56 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/3] Remove unused function convert_sha1_file()
-Date: Mon, 03 Sep 2007 20:08:01 +0200
-Message-ID: <46DC4D81.20709@lsrfire.ath.cx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] Export format_commit_message()
+Date: Mon, 3 Sep 2007 19:35:44 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709031934480.28586@racer.site>
+References: <46DC4D2C.8070109@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 20:08:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Sep 03 20:36:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISGLM-0000Ii-OR
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 20:08:13 +0200
+	id 1ISGmN-0007eV-L9
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 20:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753648AbXICSIH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 14:08:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753524AbXICSIG
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 14:08:06 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:49080
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753495AbXICSIF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 14:08:05 -0400
-Received: from [10.0.1.201] (p508EFD82.dip.t-dialin.net [80.142.253.130])
-	by neapel230.server4you.de (Postfix) with ESMTP id 87A72873B5;
-	Mon,  3 Sep 2007 20:08:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+	id S1754279AbXICSf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 14:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbXICSf6
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 14:35:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36108 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752502AbXICSf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 14:35:57 -0400
+Received: (qmail invoked by alias); 03 Sep 2007 18:35:55 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp015) with SMTP; 03 Sep 2007 20:35:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/i/94OpqfiF6uJyKoAUvJddePHOvgHbDhEo2XxFt
+	+0o2RUJi1lQ8XN
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46DC4D2C.8070109@lsrfire.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57500>
 
-convert_sha1_file() became unused by the previous patch -- remove it.
+Hi,
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- cache.h   |    1 -
- convert.c |   15 ---------------
- 2 files changed, 0 insertions(+), 16 deletions(-)
+On Mon, 3 Sep 2007, Ren? Scharfe wrote:
 
-diff --git a/cache.h b/cache.h
-index 70abbd5..493983c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -592,7 +592,6 @@ extern void trace_argv_printf(const char **argv, int count, const char *format,
- /* convert.c */
- extern char *convert_to_git(const char *path, const char *src, unsigned long *sizep);
- extern char *convert_to_working_tree(const char *path, const char *src, unsigned long *sizep);
--extern void *convert_sha1_file(const char *path, const unsigned char *sha1, unsigned int mode, enum object_type *type, unsigned long *size);
- 
- /* diff.c */
- extern int diff_auto_refresh_index;
-diff --git a/convert.c b/convert.c
-index 21908b1..d77c8eb 100644
---- a/convert.c
-+++ b/convert.c
-@@ -687,18 +687,3 @@ char *convert_to_working_tree(const char *path, const char *src, unsigned long *
- 
- 	return buf;
- }
--
--void *convert_sha1_file(const char *path, const unsigned char *sha1,
--                        unsigned int mode, enum object_type *type,
--                        unsigned long *size)
--{
--	void *buffer = read_sha1_file(sha1, type, size);
--	if (S_ISREG(mode) && buffer) {
--		void *converted = convert_to_working_tree(path, buffer, size);
--		if (converted) {
--			free(buffer);
--			buffer = converted;
--		}
--	}
--	return buffer;
--}
--- 
-1.5.3
+> -static long format_commit_message(const struct commit *commit,
+> -		const char *msg, char **buf_p, unsigned long *space_p)
+> +long format_commit_message(const struct commit *commit, const void *template,
+> +                           char **buf_p, unsigned long *space_p)
+
+I am quite sure that this breaks compilation in C++.
+
+Besides, "format" is so much more descriptive here IMHO.  What is so wrong 
+with "format" for you?
+
+Ciao,
+Dscho
