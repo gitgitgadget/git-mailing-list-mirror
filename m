@@ -1,52 +1,90 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Mon, 03 Sep 2007 08:51:28 +0100
-Message-ID: <46DBBD00.5090308@zytor.com>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>	<46DA5F33.2020005@zytor.com>	<85odgltrtj.fsf@lola.goethe.zz>	<46DA88EF.7080103@zytor.com>	<20070902133803.1b46f599.seanlkml@sympatico.ca>	<7v4picpvgq.fsf@gitster.siamese.dyndns.org> <20070902191644.29d46cd2.seanlkml@sympatico.ca>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and
+ make stat use that implementation too.
+Date: Mon, 03 Sep 2007 09:55:54 +0200
+Message-ID: <46DBBE0A.7050200@trolltech.com>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Mon Sep 03 09:52:21 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig75176BB440D41C288B395B63"
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Johannes Sixt <j.sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 09:56:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS6jL-0003VE-16
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 09:52:19 +0200
+	id 1IS6n9-0004F4-GG
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 09:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429AbXICHwN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 03:52:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbXICHwM
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 03:52:12 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:58736 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbXICHwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 03:52:10 -0400
-Received: from titan.hos.anvin.org ([217.206.93.210])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.8) with ESMTP id l837pu8x006195
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Sep 2007 00:52:00 -0700
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <20070902191644.29d46cd2.seanlkml@sympatico.ca>
-X-Virus-Scanned: ClamAV 0.88.7/4134/Sun Sep  2 22:21:40 2007 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1754410AbXICHzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 03:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbXICHzt
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 03:55:49 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:51568 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750809AbXICHzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 03:55:48 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 78664741DA; Mon,  3 Sep 2007 09:55:46 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 6DD447419C; Mon,  3 Sep 2007 09:55:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <46DBBC1E.4010407@eudaptics.com>
+X-Enigmail-Version: 0.95.3
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57437>
 
-Sean wrote:
-> 
-> Given the comment from David, I suspect your patch is all
-> that's needed; hopefully Peter can give it a quick test.
-> 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig75176BB440D41C288B395B63
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-It sounds like it; I don't know how to test it other than placing in the 
-repository and try to upgrade.  It can't be any worse, so I don't see 
-any harm in just doing it.
+Johannes Sixt said the following on 03.09.2007 09:47:
+> Marius Storm-Olsen schrieb:
+>> This gives us a significant speedup when adding, committing and
+>> stat'ing files. (Also, since Windows doesn't really handle
+>> symlinks, it's fine that stat just uses lstat)
+>=20
+> Unfortunately, the patch fails t0010-racy-git.sh. I suspect the
+> filetime conversion:
 
-	-hpa
+Ok, I'll try to get to it later today.
+
+--=20
+=2Emarius
+
+
+--------------enig75176BB440D41C288B395B63
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFG274KKzzXl/njVP8RAnEYAKCucB0B9vOL1y7sGFB7xNcGto1WDQCg4206
+2qfy5Bb/Dkbchz4V1v9ZUMM=
+=xA3V
+-----END PGP SIGNATURE-----
+
+--------------enig75176BB440D41C288B395B63--
