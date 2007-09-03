@@ -1,155 +1,54 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
+From: Johannes Sixt <j.sixt@eudaptics.com>
 Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
  API
-Date: Mon, 03 Sep 2007 15:52:06 +0200
-Message-ID: <46DC1186.2010008@trolltech.com>
+Date: Mon, 03 Sep 2007 15:53:56 +0200
+Message-ID: <46DC11F4.5060406@eudaptics.com>
 References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigAACED90493E3672DD813216B"
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Johannes Sixt <johannes.sixt@telecom.at>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 03 15:52:21 2007
+X-From: git-owner@vger.kernel.org Mon Sep 03 15:54:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISCLZ-0006IL-Ac
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 15:52:09 +0200
+	id 1ISCNP-0006h7-W4
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 15:54:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbXICNwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 09:52:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbXICNwD
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 09:52:03 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:35301 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750754AbXICNwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 09:52:01 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 142B57426B; Mon,  3 Sep 2007 15:51:58 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id F1D2774235; Mon,  3 Sep 2007 15:51:57 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+	id S1750928AbXICNyA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 09:54:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbXICNx7
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 09:53:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:26699 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866AbXICNx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 09:53:59 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1ISCNJ-0008Ex-1k; Mon, 03 Sep 2007 15:53:58 +0200
+Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 412399614; Mon,  3 Sep 2007 15:53:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 In-Reply-To: <Pine.LNX.4.64.0709031428080.28586@racer.site>
-X-Enigmail-Version: 0.95.3
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.368, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57487>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigAACED90493E3672DD813216B
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
-
-Johannes Schindelin said the following on 03.09.2007 15:33:
-> On Mon, 3 Sep 2007, Marius Storm-Olsen wrote:
->> There was a problem with racy conditions, which this revision fixes.
->> The problem was that fstat was using the builtin implementation, which=
- for
->> for some reason is off by some amount of seconds. (This is probably du=
-e to
->> some leap-year issue in one of the implementations. However, Microsoft=
- tells
->> us to use 116444736000000000 in http://support.microsoft.com/kb/167296=
-, so
->> I'll stick with that.)
->> Also, since both stat and lstat proved to be rather slow, having our o=
-wn
->> version of fstat is probably also wise. At least we now control all th=
-e
->> stat'ing, so we _know_ they are compatible.
->> Also note that this revision makes git_lstat call itself after modifyi=
-ng
->> the filename, instead of the builtin stat, for the same reasons.
->=20
-> At least some of these informations should go into the commit message, =
-
-> too.
-
-Sure
-
->> With the our own implementations of lstat & fstat, the following test =
-cases
->> are now fixed:
->>     t4116-apply-reverte.sh
->>         ok 3: apply in reverse
->>     t4200-rerere.sh
->>         ok 17: young records still live
->> However, the following test cases seems to fail now:
->>     t6024-recursive-merge.sh
->>         FAIL 1: setup tests
->>         FAIL 3: result contains a conflict
->>         FAIL 4: virtual trees were processed
->>         FAIL 5: refuse to merge binaries
->>
->> See attached test case logs.
->> Are some of these test cases unstable, so the result will fluctuate on=
-
->> Windows?
->=20
-> I saw some funny stuff on Windows, like test cases succeeding when run =
-
+Johannes Schindelin schrieb:
+> I saw some funny stuff on Windows, like test cases succeeding when run 
 > interactively, but failing when run from "make test".
 
-Ok, I ran 'make test', so maybe that's it? I'll rerun them later.
+That's very likely the issue that we work around by inserting "sleep 1" 
+at strategic points, which is a timing (race condition) issue and does 
+not depend on interactive vs. "make test".
 
-> BTW it would have been way easier to apply your patch, had you followed=
-=20
-> SubmittingPatches...
-
-Heh, I actually tried, using the Thunderbird way. Of course the=20
-attachments are non-conforming :-) What was the problem? Whitespace=20
-issues, Windows EOL, attachments, or all of the above? :-)
-
-> To make it easier on others, I just uploaded it into the "teststat" bra=
-nch=20
-> on 4msysgit.git (subject to removal in a few days).
-
-Cool, thanks
-
-> First comment: it seems git_fstat() is not declared properly, so there =
-are=20
-> quite a few compiler warnings.
-
-/me slaps self. Right, sorry 'bout that. I'll amend the declaration in=20
-git-compat-util.h.
-
-> Running the tests now.
-
-Great, thanks!
---=20
-=2Emarius
-
-
---------------enigAACED90493E3672DD813216B
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFG3BGGKzzXl/njVP8RAhpYAKCiNjjPyholYS/BD0Xb6Qc6HPnZ5ACfc+nD
-B8nSDu2ZTpQoEZCAK7ojWyc=
-=+Rj7
------END PGP SIGNATURE-----
-
---------------enigAACED90493E3672DD813216B--
+-- Hannes
