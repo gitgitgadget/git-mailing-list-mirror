@@ -1,53 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGIT experimental branches updated
-Date: Mon, 3 Sep 2007 11:01:21 +0200
-Message-ID: <20070903090121.GA5051@diana.vm.bytemark.co.uk>
-References: <20070903002029.GA31957@diana.vm.bytemark.co.uk> <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: strbuf API
+Date: Mon, 03 Sep 2007 11:02:26 +0200
+Message-ID: <vpq8x7om89p.fsf@bauges.imag.fr>
+References: <20070902224213.GB431@artemis.corp>
+	<vpqk5r8m9nz.fsf@bauges.imag.fr> <20070903084927.GB21759@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 11:02:41 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 03 11:03:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7ov-0000kT-L9
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:02:09 +0200
+	id 1IS7pc-0000v1-Bl
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753687AbXICJB1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 05:01:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbXICJB1
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:01:27 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1223 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753542AbXICJB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 05:01:26 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IS7o9-0001mA-00; Mon, 03 Sep 2007 10:01:21 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753774AbXICJCq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 05:02:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbXICJCq
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:02:46 -0400
+Received: from imag.imag.fr ([129.88.30.1]:52024 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753236AbXICJCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 05:02:45 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l8392QZX003881
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 3 Sep 2007 11:02:26 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IS7pC-0002Jr-Ok; Mon, 03 Sep 2007 11:02:26 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IS7pC-0005zS-MQ; Mon, 03 Sep 2007 11:02:26 +0200
+In-Reply-To: <20070903084927.GB21759@artemis.corp> (Pierre Habouzit's message of "Mon\, 03 Sep 2007 10\:49\:27 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Sep 2007 11:02:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57456>
 
-On 2007-09-03 09:29:18 +0100, Catalin Marinas wrote:
+Pierre Habouzit <madcoder@debian.org> writes:
 
-> BTW, would an extension to 'stg import' to import patches from
-> mailing lists (NNTP or maybe just mbox) directly be useful? There is
-> support for mbox importing anyway and it would need a procmail
-> filter to generate the mbox and just a regex filtering in 'import'
-> to apply the StGIT patches only.
+>   Indeed, OTHO doing that would be pretty silly, as embending NULs in a
+> strbuf is wrong, it's a _str_buf, not a random-binary-buffer.
 
-I don't think I'd use that function -- it's very convenient to just
-manually copy the patch mails I want to a separate mbox, which I then
-pipe to git-am. (Yes, I know, I should be using "stg import", but "stg
-assimilate" is just too useful.)
+I see nothing in strbuf that prevents you from embedding '\0' in it.
+And the git code calls read_line on stdin, which may well contain
+'\0'. So, either I missed something, or strbuf can contain '\0', or
+the git code is not robust to null-characters on stdin, and should be
+fixed.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Matthieu
