@@ -1,56 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Mon, 3 Sep 2007 17:56:10 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709031755290.28586@racer.site>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
- <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
- <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC1186.2010008@trolltech.com>
- <Pine.LNX.4.64.0709031538320.28586@racer.site> <46DC34A9.8020308@trolltech.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/3] Export format_commit_message()
+Date: Mon, 03 Sep 2007 20:06:36 +0200
+Message-ID: <46DC4D2C.8070109@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 18:56:33 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 20:06:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISFDu-00016k-Lb
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 18:56:27 +0200
+	id 1ISGK3-0008RD-WB
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 20:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752959AbXICQ4W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 12:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbXICQ4W
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 12:56:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58552 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751861AbXICQ4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 12:56:21 -0400
-Received: (qmail invoked by alias); 03 Sep 2007 16:56:20 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp035) with SMTP; 03 Sep 2007 18:56:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zdcpXI0MzIR3QhNzEjQg7fxMf5yXoLZefjIUzAE
-	7jNOYI15cmEBsJ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46DC34A9.8020308@trolltech.com>
-X-Y-GMX-Trusted: 0
+	id S1753494AbXICSGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 14:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbXICSGr
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 14:06:47 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:54591
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751087AbXICSGq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 14:06:46 -0400
+Received: from [10.0.1.201] (p508EFD82.dip.t-dialin.net [80.142.253.130])
+	by neapel230.server4you.de (Postfix) with ESMTP id D70B2873B5;
+	Mon,  3 Sep 2007 20:06:44 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57497>
 
-Hi,
+Drop the parameter "msg" of format_commit_message() (as it can be
+inferred from the parameter "commit"), add a parameter "template"
+in order to avoid accessing the static variable user_format
+directly and export the result.
 
-On Mon, 3 Sep 2007, Marius Storm-Olsen wrote:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ commit.c |    9 +++++----
+ commit.h |    1 +
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-> I'll use the 4msysgit.git repo from now on. I assume it'll be ok if I 
-> +push to the teststat branch?
-
-I should think so.
-
-Ciao,
-Dscho
+diff --git a/commit.c b/commit.c
+index dc5a064..651e904 100644
+--- a/commit.c
++++ b/commit.c
+@@ -787,8 +787,8 @@ static void fill_person(struct interp *table, const char *msg, int len)
+ 	interp_set_entry(table, 6, show_date(date, tz, DATE_ISO8601));
+ }
+ 
+-static long format_commit_message(const struct commit *commit,
+-		const char *msg, char **buf_p, unsigned long *space_p)
++long format_commit_message(const struct commit *commit, const void *template,
++                           char **buf_p, unsigned long *space_p)
+ {
+ 	struct interp table[] = {
+ 		{ "%H" },	/* commit hash */
+@@ -843,6 +843,7 @@ static long format_commit_message(const struct commit *commit,
+ 	char parents[1024];
+ 	int i;
+ 	enum { HEADER, SUBJECT, BODY } state;
++	const char *msg = commit->buffer;
+ 
+ 	if (ILEFT_RIGHT + 1 != ARRAY_SIZE(table))
+ 		die("invalid interp table!");
+@@ -924,7 +925,7 @@ static long format_commit_message(const struct commit *commit,
+ 		char *buf = *buf_p;
+ 		unsigned long space = *space_p;
+ 
+-		space = interpolate(buf, space, user_format,
++		space = interpolate(buf, space, template,
+ 				    table, ARRAY_SIZE(table));
+ 		if (!space)
+ 			break;
+@@ -1165,7 +1166,7 @@ unsigned long pretty_print_commit(enum cmit_fmt fmt,
+ 	char *buf;
+ 
+ 	if (fmt == CMIT_FMT_USERFORMAT)
+-		return format_commit_message(commit, msg, buf_p, space_p);
++		return format_commit_message(commit, user_format, buf_p, space_p);
+ 
+ 	encoding = (git_log_output_encoding
+ 		    ? git_log_output_encoding
+diff --git a/commit.h b/commit.h
+index 467872e..a8d7661 100644
+--- a/commit.h
++++ b/commit.h
+@@ -61,6 +61,7 @@ enum cmit_fmt {
+ };
+ 
+ extern enum cmit_fmt get_commit_format(const char *arg);
++extern long format_commit_message(const struct commit *commit, const void *template, char **buf_p, unsigned long *space_p);
+ extern unsigned long pretty_print_commit(enum cmit_fmt fmt, const struct commit *, unsigned long len, char **buf_p, unsigned long *space_p, int abbrev, const char *subject, const char *after_subject, enum date_mode dmode);
+ 
+ /** Removes the first commit from a list sorted by date, and adds all
+-- 
+1.5.3
