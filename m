@@ -1,61 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: resurrect the traditional empty "diff --git" behaviour
-Date: Mon, 03 Sep 2007 01:36:32 -0700
-Message-ID: <7vbqckm9gv.fsf@gitster.siamese.dyndns.org>
-References: <20070830063810.GD16312@mellanox.co.il>
-	<7v7inda5ar.fsf@gitster.siamese.dyndns.org>
-	<20070830072748.GF16312@mellanox.co.il>
-	<7vmyw85uml.fsf@gitster.siamese.dyndns.org>
-	<20070831080651.GA17637@mellanox.co.il>
-	<7vabs82kcq.fsf@gitster.siamese.dyndns.org>
-	<20070831081517.GB17637@mellanox.co.il>
-	<7v4pig2j91.fsf@gitster.siamese.dyndns.org>
-	<20070831152120.GC17637@mellanox.co.il>
-	<7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
-	<20070831160335.GA17761@coredump.intra.peff.net>
-	<7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
-	<46D89844.8050605@midwinter.com>
-	<7vir6vw4x2.fsf@gitster.siamese.dyndns.org>
-	<vpqveasmaqo.fsf@bauges.imag.fr>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH 0/4] Miscellaneous fixes
+Date: Mon, 3 Sep 2007 09:40:08 +0100
+Message-ID: <b0943d9e0709030140s57beca46j4fc93298744dc9c5@mail.gmail.com>
+References: <20070826202309.15933.54183.stgit@yoghurt>
+	 <b0943d9e0708290318k715cb94eidfa38a97825511ca@mail.gmail.com>
+	 <20070829111759.GB29980@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:36:48 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:40:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7QN-0003tc-AS
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:36:47 +0200
+	id 1IS7Tk-0004fN-8F
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588AbXICIgk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbXICIgk
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:36:40 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47303 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752493AbXICIgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:36:39 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4F01112D862;
-	Mon,  3 Sep 2007 04:36:56 -0400 (EDT)
-In-Reply-To: <vpqveasmaqo.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
-	03 Sep 2007 10:09:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752832AbXICIkL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 04:40:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbXICIkK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:40:10 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:18672 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910AbXICIkJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 04:40:09 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so908067rvb
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 01:40:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Tc+trNixA5Jb3znGvogLPo/e+nbGDrSgd9nd34+AbFVdNb+YXahpOQG9/QGQoGei1NbFHJqk8lALRgCRq7MbUh1l/nIhnqtsx36Vs3d+S+yB7vvcyb6U/XkpbwCMHwEtAsfj3YAehuSWfXQKJVxDDEcFOX0ssAqIamA/+01zRX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B0lSNYQ8/JoxI+eAedlUAhgTjaJFwvNgzinUS3CNNjt07PNGxw7OsfiSNfqunRuGR3IF1IKyhT5rtJrlLPLoycZEu750LqWFC7+2va16AOLXek68HfFlMJRLym5XZ0LngF2cv7sAcsBnlD+DMq+R+jq1wlUAeJqPKv3vDyJ9wxk=
+Received: by 10.141.5.3 with SMTP id h3mr525445rvi.1188808808424;
+        Mon, 03 Sep 2007 01:40:08 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 3 Sep 2007 01:40:08 -0700 (PDT)
+In-Reply-To: <20070829111759.GB29980@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57449>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On 29/08/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-08-29 11:18:34 +0100, Catalin Marinas wrote:
+>
+> > On 26/08/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > >  examples/gitconfig          |    2 +-
+> > >  stgit/git.py                |    3 ++-
+> > >  stgit/stack.py              |    7 ++++---
+> > >  t/t2101-pull-policy-pull.sh |    4 ++--
+> > >  4 files changed, 9 insertions(+), 7 deletions(-)
+> >
+> > BTW, did you generate the above text by hand and copied it to the
+> > e-mail?
+>
+> Yes. It's the output of git-request-pull.
+>
+> > People asked in the past for this kind of text to be automatically
+> > generated by 'stg mail'.
+>
+> I might very well have been one of them.
 
-> I'd rather avoid talking about plumbing in the documentation of
-> porcelain, so I'd say "silently refreshes the index's stat
-> information".
+On a related note, it might make sense for 'stg export' to add (with
+an additional option) a comment line beside each patch in the series
+file containing the short description.
 
-Sounds like a much better wording.
+--=20
+Catalin
