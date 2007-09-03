@@ -1,61 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Fix and simplify "split patch" detection
-Date: Sun, 02 Sep 2007 17:15:44 -0700
-Message-ID: <7vmyw4ob7z.fsf@gitster.siamese.dyndns.org>
-References: <200709022218.43042.jnareb@gmail.com>
+From: Junio C Hamano <junkio@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Sun, 02 Sep 2007 17:19:00 -0700
+Message-ID: <7vejhgob2j.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
+	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+	<20070902191644.29d46cd2.seanlkml@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Yann Dirson <ydirson@altern.org>,
-	Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 02:16:19 2007
+Cc: "H. Peter Anvin" <hpa@zytor.com>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Mon Sep 03 02:19:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRzc2-0002Tw-O6
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:16:19 +0200
+	id 1IRzem-0002nU-9N
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755954AbXICAPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 20:15:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbXICAPv
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:15:51 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbXICAPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 20:15:50 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C717F12D535;
-	Sun,  2 Sep 2007 20:16:07 -0400 (EDT)
-In-Reply-To: <200709022218.43042.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sun, 2 Sep 2007 22:18:42 +0200")
+	id S1756194AbXICATE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 2 Sep 2007 20:19:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbXICATE
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:19:04 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:43779 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbXICATC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2007 20:19:02 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070903001900.CBUD9971.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 2 Sep 2007 20:19:00 -0400
+Received: from localhost ([68.225.240.77])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id jcK01X00F1gtr5g0000000; Sun, 02 Sep 2007 20:19:00 -0400
+In-Reply-To: <20070902191644.29d46cd2.seanlkml@sympatico.ca>
+	(seanlkml@sympatico.ca's message of "Sun, 2 Sep 2007 19:16:44 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57412>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Sean <seanlkml@sympatico.ca> writes:
 
-> Alternate solution, which we did chose, is to check when git splits
-> patches, and do not check if parsed info from current patch corresponds
-> to current or next raw diff format output line.  Git splits patches
-> only for 'T' (typechange) status filepair, and there always two patches
-> corresponding to one raw diff line.
+> On Sun, 02 Sep 2007 15:13:09 -0700
+> Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> For majority of general public, I thought the spec file _I_
+>> ship, along with RPM files _I_ build, are contrib status
+>> already.  Don't distro people do their own RPM packages, instead
+>> of using what I placed on k.org?
+>
+> Didn't know you used RPM yourself, so I guess this is just
+> a case of something slipping through rather than the spec file
+> needing a maintainer.
 
-Not that I can think of a better way offhand than what you
-already mentioned, but I have to say that I am not entirely
-happy with this implementation.  A really old git showed two
-patches (one creation and one deletion) for "complete rewrite",
-which was corrected long time ago.  I do not think we will
-change the typechange output in a similar way in the future, but
-relying on that level of detail feels somewhat ugly.
-
-As you are reading from --patch-with-raw, you already know the
-order of patches that will be given to you when you finished
-reading the "raw" part.  The patches will come in the same
-order.  So it might be possible to keep track of patches to what
-path you are expecting and decide if it is part of what you are
-processing at the point you process "diff --git" line.
+Well, I do not _use_ it, but the RPM I have on k.org and mention
+as part of the announcement are built by me by typing "make
+rpm".  What I meant to say was that these RPM files may not be
+"official" at all from the point of view of distro users, and I
+suspect that distro "package maintainers" for git would not be
+doing just a plain vanilla "make rpm" using the spec file that
+comes as part of git.git repository.
