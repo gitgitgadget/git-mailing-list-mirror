@@ -1,107 +1,106 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: confused about preserved permissions
-Date: Mon, 3 Sep 2007 20:59:16 +0200
-Message-ID: <20070903185916.GA3786@efreet.light.src>
-References: <20070820164411.GA15637@piper.oerlikon.madduck.net> <6031FB22-648E-47DE-92EE-2E7255322C27@lrde.epita.fr> <7v8x83i5ma.fsf@gitster.siamese.dyndns.org> <20070823060052.GA25153@piper.oerlikon.madduck.net> <85mywiixtp.fsf@lola.goethe.zz> <B38B8F2F-92B0-48F4-9093-54724FA862C2@lrde.epita.fr>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
+ API
+Date: Mon, 03 Sep 2007 21:21:56 +0200
+Message-ID: <46DC5ED4.8050202@trolltech.com>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
-Cc: David Kastrup <dak@gnu.org>,
-	git discussion list <git@vger.kernel.org>
-To: Benoit SIGOURE <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 03 21:01:59 2007
+ protocol="application/pgp-signature";
+ boundary="------------enigFDAB603452D5A7506B87D82A"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@eudaptics.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Sep 03 21:22:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISHBI-0004ku-1w
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 21:01:52 +0200
+	id 1ISHV2-0001uD-3C
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 21:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047AbXICTBV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 15:01:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753868AbXICTBV
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 15:01:21 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:50577 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753786AbXICTBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 15:01:20 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 2B67C572C4;
-	Mon,  3 Sep 2007 21:01:19 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id N9CHWUKTIAke; Mon,  3 Sep 2007 21:01:16 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id CA94E572C2;
-	Mon,  3 Sep 2007 21:01:15 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ISH8m-0001Bi-3z; Mon, 03 Sep 2007 20:59:16 +0200
-Content-Disposition: inline
-In-Reply-To: <B38B8F2F-92B0-48F4-9093-54724FA862C2@lrde.epita.fr>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753495AbXICTWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 15:22:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbXICTWI
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 15:22:08 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:52594 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753477AbXICTWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 15:22:07 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 38AFB741D7; Mon,  3 Sep 2007 21:22:05 +0200 (CEST)
+Received: from [172.20.1.78] (unknown [172.20.1.78])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 03D6B741AE; Mon,  3 Sep 2007 21:22:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <Pine.LNX.4.64.0709031428080.28586@racer.site>
+X-Enigmail-Version: 0.95.3
+OpenPGP: id=34EB4437
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57504>
 
-
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigFDAB603452D5A7506B87D82A
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 23, 2007 at 09:48:23 +0200, Benoit SIGOURE wrote:
-> Hmm yes, that's right.
->
-> Let's look at the problem from another point of view then: I want my=20
-> *working tree* to be group readable even though my umask is 066.  Would i=
-t=20
-> be possible to add a local config option in the .git repo to tell git tha=
-t=20
-> it should create new file this way (exactly like core.sharedRepository bu=
-t=20
-> core.sharedWorkingCopy or whatever).
->
-> WDYT?
+Johannes Schindelin wrote:
+> To make it easier on others, I just uploaded it into the "teststat"
+> branch on 4msysgit.git (subject to removal in a few days).
 
-You need to change umask not just for git, but for your editor and compiler
-when you are working in the shared work tree as well, no? So what about
-teaching your *shell* to change it as appropriate?
+Ok, I've updated the patch in the 4msysgit.git repo, 'teststat' branch.
+RFC, and please test.
 
-In zsh if you define a function chpwd, it will be called whenever you change
-current working directory. If you define it as:
+The patch also incorporates some of Hannes local changes, with some
+modifications. Hannes, does it look ok for you? You can add a tag to the
+commit message if you'd like, and just +push it.
 
-chpwd() {
-    # The / at the end is to make foo/* match path foo
-    case `pwd`/ in
-	/path/to/your/worktree/*) umask 002;;
-	*) umask 066;;
-    esac
-}
+On Hannes' request (and to which I fully agree), I've gone back to the
+old implementation of filetime_to_time_t(), since it was a bit 'nasty'.
+(If we want to target CE in the future, it will quite possibly break)
 
-would make any command (ie. git, editor and compiler/make/...) ran from the
-shared worktree run with umask 002 (or whatever depending on permissions you
-want there) and anything ran from anywhere else use your normal umask 066.
+http://repo.or.cz/w/git/mingw/4msysgit.git?a=3Dcommitdiff;h=3Df4f3fbddf6e=
+0f16f66f94cedf66614e0e3643496
 
-I don't use bash, but I am almost sure you can get a suitable hook there as
-well. If nothing else I recall there is a way to run a function from prompt
-expansion, which would do the trick.
+> First comment: it seems git_fstat() is not declared properly, so
+> there are quite a few compiler warnings.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+This is also fixed, of course.
 
---k+w/mQv8wyuph6w0
+Hope this is the final 'cut' :-)
+
+Later!
+--
+=2Emarius
+
+
+--------------enigFDAB603452D5A7506B87D82A
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Version: GnuPG v1.4.6 (MingW32)
 
-iD8DBQFG3FmERel1vVwhjGURAtVtAJ9kxDyGCen3m0oDlFxF19FOQ0ppVgCgqjob
-kVJ+rKuTdsgK3JouNJTRdfM=
-=mFi+
+iD8DBQFG3F7YKzzXl/njVP8RAsuRAJ0RCs1NTxEXnU5dVSAs9qYEVix/fQCgznCx
+ZhaEE7j/WGqlx6syi1H7l+4=
+=a8kK
 -----END PGP SIGNATURE-----
 
---k+w/mQv8wyuph6w0--
+--------------enigFDAB603452D5A7506B87D82A--
