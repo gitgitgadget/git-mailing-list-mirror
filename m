@@ -1,81 +1,115 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Large-scale configuration backup with GIT?
-Date: Mon, 3 Sep 2007 12:35:17 +1200
-Message-ID: <46a038f90709021735n3d82061eh6d8d35989075022f@mail.gmail.com>
-References: <20070902201724.GB10567@lug-owl.de>
-	 <7vd4x0pwjm.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jan-Benedict Glaw" <jbglaw@lug-owl.de>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 02:35:26 2007
+From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+Subject: Re: problem with git cvsimport
+Date: Sun, 2 Sep 2007 20:51:37 -0400
+Message-ID: <5951BCFB-D3EF-4423-86F2-50F1D080721B@yahoo.ca>
+References: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 03 02:52:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IRzuX-0004bu-Ih
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:35:25 +0200
+	id 1IS0Ao-0006Zq-A4
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 02:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376AbXICAfW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 2 Sep 2007 20:35:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbXICAfV
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:35:21 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:4512 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbXICAfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2007 20:35:21 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so1228517fkz
-        for <git@vger.kernel.org>; Sun, 02 Sep 2007 17:35:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n08oIkjstAzD7fXPcrqu23yBSlRGGs1+kr8cn1XDElt7baqBoPYeHinkzEpfRNEN4z2rOADiTHed8VHZS5/5zfuO3/CZ9TdPUz0G9GXmFRVeEmcFMs5jsVEdtwLHCxyhZb/kS3X6ImQezNZ2q4j4TYmOwPxEYwxAOF6QEUlKk7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OpGNdKhshcDO1gh9l8AFeM/IDtRp2YbcMNYfqT67CE3JQODehLvjeKrFX976gB5ZVI69nfvbrwMmN/+hO8LadoS3hgj5u4yqDXOeL9r1wgd3Ef2Axwga3WXeKwXILLt+1bjTDm3S8jXh98s7G1iTdePYnunRuagii7jhPsBtj5E=
-Received: by 10.82.174.20 with SMTP id w20mr2718876bue.1188779717189;
-        Sun, 02 Sep 2007 17:35:17 -0700 (PDT)
-Received: by 10.67.40.9 with HTTP; Sun, 2 Sep 2007 17:35:17 -0700 (PDT)
-In-Reply-To: <7vd4x0pwjm.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751947AbXICAvq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 2 Sep 2007 20:51:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbXICAvq
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Sep 2007 20:51:46 -0400
+Received: from smtp101.mail.mud.yahoo.com ([209.191.85.211]:24438 "HELO
+	smtp101.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750719AbXICAvp convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 2 Sep 2007 20:51:45 -0400
+Received: (qmail 13584 invoked from network); 3 Sep 2007 00:51:42 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.ca;
+  h=Received:X-YMail-OSG:Mime-Version:In-Reply-To:References:Content-Type:Message-Id:Content-Transfer-Encoding:From:Subject:Date:To:X-Mailer;
+  b=rwzlBrHhSn0uqYc39iqshozRlRI/XTKmU9GKs6T3fwc7MRnoTnU1KbWLPleF5KpW1LRradr4p82MPxvNjbMKypgwM0G0057g28QnBGpIaACB1neqNBQUM2arQSaFL8Vqgk1WFQEmS1RWdhlTbOyFrif8p4fa0uKGR9JyHQP7a+M=  ;
+Received: from unknown (HELO ?10.0.1.3?) (jean_francois_veillette@66.130.96.245 with plain)
+  by smtp101.mail.mud.yahoo.com with SMTP; 3 Sep 2007 00:51:42 -0000
+X-YMail-OSG: 7xezLekVM1ldH7.E9uDSD9wY8KZ1DW1_NLbs1dlLyxdtoOFEN70bCGdje6knXU1AtCWkc0efI2swqHNG.Y.sZttNK7G3g.HTfWbVLTg0HKoNpn3Aei8-
+In-Reply-To: <A74F186F-7C25-48D5-9354-C74576439AF1@gmail.com>
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57419>
 
-On 9/3/07, Junio C Hamano <gitster@pobox.com> wrote:
-> This is something similar to what I and others in my group did
-> long time before git was even invented.  I'd suggest you go in
-> the opposite direction.
+Answering to myself ...
+cvsps was the culprit.
+I reverted to the unmodified 2.1 version (tag 2.1 without any patches =20
+from the git repository) and suddently I was able to convert some cvs =20
+projects.
 
-Agreed. The infrustructures.org crowd has been exploring this space
-quite a bit, and developing tools like isconf that allow you to manage
-a huge number of machines across various unixen.
+But other projects are still causing problem.
 
-And recently someone's integrated Debian APT with git tracking config
-files (called IsiSetup http://www.isisetup.ch/ ). I haven't reviewed
-it in detail, but it'd be first on my list.
+- on one project it fail after 2 successful commits with :
+	fatal: Not a valid object name refs/heads/DEV_2_1_1
+	read-tree failed: 32768
 
-> If you have 5 configurations, each of which have 20 machines
-> that _should_ share that configuration (modulo obvious
-> differences that come from hostname, IP address assignment,
-> etc), then
-
-Indeed. I ended up liking the makefile-stanzas approach it is
-incredibly simple and flexible. Add debian/rpm packages, some of the
-tools in the cfengine toolchain, git to track your
-scripts/configuration and you are golden.
-
-For the Windows side of things, see "Real Men Don't Click"
-<http://isg.ee.ethz.ch/tools/realmen/> -- a bunch of unixy sysadmins
-with the "infrastructures.org" background took on Windows
-servers/desktops management -- and succeeded. PG-rated, fun for the
-whole family. ;-)
-
-HTH,
-
+- another is failing on a specific subdirectory (idealy the project =20
+would be one directory up, in .../Wonder/Ajax/Ajax, but the =20
+Components subdirectory importation systematicaly fail) :
+	09:50:26: git cvsimport -v
+	jfveillette@wonder.cvs.sourceforge.net's password:
+	Initialized empty Git repository in /Users/jfv/Developement/=20
+WebObjects/Wonder/Ajax/Ajax/Components/.git/
+	Running cvsps...
+	jfveillette@wonder.cvs.sourceforge.net's password:
+	cvs_direct initialized to CVSROOT /cvsroot/wonder
+	cvs rlog: Logging Wonder/Ajax/Ajax/Components
+	DONE; creating master branch
+	fatal: refs/heads/origin: not a valid SHA1
+	fatal: master: not a valid SHA1
+	warning: You appear to be on a branch yet to be born.
+	warning: Forcing checkout of HEAD.
+	fatal: just how do you expect me to merge 0 trees?
+	checkout failed: 256
 
 
-martin-who-survived-the-sysadmin-wars
+BTW, the output from =AB cvsps -g =BB (generating patches) seem to =20
+succeed even when cvsimport fail.  Is there a tool that will take the =20
+patches from cvsps and directly import them in git ?
+I tried git-am but it failed.
+
+Again, any pointer is welcome to help resolve issues with importing =20
+cvs projects.
+Thanks to Michael for pointing out cvs2svn,I haven't tried it yet.
+
+- jfv
+
+
+Le 07-08-31 =E0 10:31, Jean-Fran=E7ois Veillette a =E9crit :
+
+> I can't get git-cvsimport to convert a cvs project to git (full log =20
+> bellow).
+> I always get :
+> 	fatal: Not a valid object name refs/heads/HEAD
+> 	read-tree failed: 32768
+>
+> I'm a relatively new to git. I would like to convert my project and =20
+> track external projects with git.
+> But cvsimport seem to fail.  Any pointer to help me resolve the =20
+> issue is welcome !
+>
+> thanks,
+>
+> - jfv
+>
+> Detail informations ...
+>
+> host info (uname -a) :
+> Darwin localhost 8.10.0 Darwin Kernel Version 8.10.0: Wed May 23 =20
+> 16:50:59 PDT 2007; root:xnu-792.21.3~1/RELEASE_PPC Power Macintosh =20
+> powerpc
+>
+> git --version
+> git version 1.5.3.rc7.16.ge340d-dirty
+>
+> cvsps version 2.1 (got the git repository, merged 'master' with =20
+> 'multitag')
