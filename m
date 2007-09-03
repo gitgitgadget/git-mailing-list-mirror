@@ -1,62 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: strbuf API
-Date: Mon, 03 Sep 2007 02:18:01 -0700
-Message-ID: <7vejhgksza.fsf@gitster.siamese.dyndns.org>
-References: <20070902224213.GB431@artemis.corp>
-	<vpqk5r8m9nz.fsf@bauges.imag.fr> <20070903084927.GB21759@artemis.corp>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGIT experimental branches updated
+Date: Mon, 3 Sep 2007 10:32:47 +0100
+Message-ID: <b0943d9e0709030232r5a98ecdeja936a022bd1646c@mail.gmail.com>
+References: <20070903002029.GA31957@diana.vm.bytemark.co.uk>
+	 <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
+	 <20070903090121.GA5051@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 03 11:18:30 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 11:32:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS84Z-0004Zx-Bj
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:18:19 +0200
+	id 1IS8Ig-0007fx-8I
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754671AbXICJSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 05:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754668AbXICJSH
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:18:07 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47665 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754483AbXICJSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 05:18:05 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C1FF12D099;
-	Mon,  3 Sep 2007 05:18:24 -0400 (EDT)
-In-Reply-To: <20070903084927.GB21759@artemis.corp> (Pierre Habouzit's message
-	of "Mon, 03 Sep 2007 10:49:27 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753370AbXICJct convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 05:32:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753355AbXICJct
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:32:49 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:27789 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753261AbXICJcs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 05:32:48 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so916113rvb
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 02:32:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=k9pq7vBeC5ZgoeSPyacUsVJMrx6ksNqYpcu1Rv3DLolXC1bv87UJdrLcMjbGJgYoSONI8untT/fpom/8jXtAEMv/HG3Pqb/yfjtDKiaB2DbFvwZ2oSKrAABTYJ2bkZdElem25tGZ4D0QIFsy5C738cI6L9pAxICftqh9c1whQmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CNhd20avBiY81q6EaAq6HZOS9rp4TQQV/WeBYxiqM+Jp+a0lSBvMn5opGovLgP/eB6CFbgNppdOn2lpsgnIG0+oNoi0A42YiKxtVv7ixexHaC17/jYxe6IgpF/GFqsnSlMxBsxdMK+GhQXHIN9sPbG+vDhL6OZiYiTQamQ/2Xas=
+Received: by 10.141.171.6 with SMTP id y6mr1886150rvo.1188811967541;
+        Mon, 03 Sep 2007 02:32:47 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 3 Sep 2007 02:32:47 -0700 (PDT)
+In-Reply-To: <20070903090121.GA5051@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57461>
 
-Pierre Habouzit <madcoder@debian.org> writes:
-
-> On Mon, Sep 03, 2007 at 08:32:16AM +0000, Matthieu Moy wrote:
->>  ...
->> For example, it would be very tempting to compare files with
->> "strcmp(buf1, buf2)", but that would just fail silently when the file
->> contains a '\0' byte.
+On 03/09/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-09-03 09:29:18 +0100, Catalin Marinas wrote:
 >
->   Indeed, OTHO doing that would be pretty silly, as embending NULs in a
-> strbuf is wrong, it's a _str_buf, not a random-binary-buffer. It's meant
-> to make the use of strings easier, not to use as generic purpose byte
-> buffers. Of course they can, but well, it's not what they are designed
-> for in the first place.
+> > BTW, would an extension to 'stg import' to import patches from
+> > mailing lists (NNTP or maybe just mbox) directly be useful? There i=
+s
+> > support for mbox importing anyway and it would need a procmail
+> > filter to generate the mbox and just a regex filtering in 'import'
+> > to apply the StGIT patches only.
+>
+> I don't think I'd use that function -- it's very convenient to just
+> manually copy the patch mails I want to a separate mbox, which I then
+> pipe to git-am. (Yes, I know, I should be using "stg import", but "st=
+g
+> assimilate" is just too useful.)
 
-People, please realize strbuf "API" is not a serious API.  
+I usually save them to an mbox as well (but use stg import). Until
+recently, when I started merging your 'safe' branch :-).
 
-It wasn't even intended to be anything more than just a
-quick-and-dirty implementation of fgets that can grow
-dynamically.  The other callers added by people to have it do
-general string manipulations were just bolted-on, not designed.
-I haven't taken a serious look at bstring nor any of the
-alternatives yet, but defending strbuf as if it was designed to
-be a sane API is just silly.
+--=20
+Catalin
