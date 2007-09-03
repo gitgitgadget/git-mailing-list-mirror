@@ -1,55 +1,68 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] send-email: Add support for SSL and SMTP-AUTH
-Date: Mon, 3 Sep 2007 08:48:09 +0200
-Message-ID: <8C6EBB4A-5E0D-485B-A0C4-E5C0C8038D03@wincent.com>
-References: 7vveatpklg.fsf@gitster.siamese.dyndns.org <11887563853329-git-send-email-doug@11011.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Douglas Stockwell <doug@11011.net>
-X-From: git-owner@vger.kernel.org Mon Sep 03 08:49:07 2007
+From: Johannes Sixt <j.sixt@eudaptics.com>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and
+ make stat use that implementation too.
+Date: Mon, 03 Sep 2007 09:07:42 +0200
+Message-ID: <46DBB2BE.8030505@eudaptics.com>
+References: <46DACD93.9000509@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0709022133190.28586@racer.site> <200709022342.42733.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 03 09:09:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS5k2-0000U9-KZ
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 08:48:58 +0200
+	id 1IS63l-0003gi-2L
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 09:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbXICGsv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 02:48:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbXICGsv
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 02:48:51 -0400
-Received: from wincent.com ([72.3.236.74]:36804 "EHLO s69819.wincent.com"
+	id S1752289AbXICHIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 03:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752281AbXICHIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 03:08:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:48003 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809AbXICGsu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 02:48:50 -0400
-Received: from [192.168.1.99] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l836midQ032498;
-	Mon, 3 Sep 2007 01:48:45 -0500
-In-Reply-To: <11887563853329-git-send-email-doug@11011.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752111AbXICHIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 03:08:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IS636-0004NP-29
+	for git@vger.kernel.org; Mon, 03 Sep 2007 09:08:40 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 09:08:40 +0200
+Received: from j.sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 09:08:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <200709022342.42733.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57433>
 
-El 2/9/2007, a las 20:06, Douglas Stockwell escribi=F3:
+Robin Rosenberg schrieb:
+> $ ln -s Makefile x
+> $ cp x y
+> $ ls -ld x y
+> lrwxrwxrwx 1 me me     8 sep  2 23:36 x -> Makefile
+> -rw-r--r-- 1 me me 32164 sep  2 23:36 y
 
-> Allows username and password to be given using --smtp-user
-> and --smtp-pass. SSL use is flagged by --smtp-ssl. These are
-> backed by corresponding defaults in the git configuration file.
->
-> This implements Junio's 'mail identity' suggestion in a slightly
-> more generalised manner. --identity=3D$identity, backed by
-> sendemail.identity indicates that the configuration subsection
-> [sendemail "$identity"] should take priority over the [sendemail]
-> section for all configuration values.
+And if I understand the documentation correctly, then
 
-This will be really useful to me in my current set-up. I'll test it =20
-here locally and let you know if I can find any problems.
+$ mkdir foo && cd foo
+$ cat ../x
+x: No such file or directory
 
-Cheers,
-Wincent
+Right?
+
+The docs say that symlinks without backslash are relative to the current 
+directory (!!!).
+
+-- Hannes
