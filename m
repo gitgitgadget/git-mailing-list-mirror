@@ -1,85 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] diff: resurrect the traditional empty "diff --git" behaviour
-Date: Mon, 03 Sep 2007 10:09:03 +0200
-Message-ID: <vpqveasmaqo.fsf@bauges.imag.fr>
-References: <20070830063810.GD16312@mellanox.co.il>
-	<7v7inda5ar.fsf@gitster.siamese.dyndns.org>
-	<20070830072748.GF16312@mellanox.co.il>
-	<7vmyw85uml.fsf@gitster.siamese.dyndns.org>
-	<20070831080651.GA17637@mellanox.co.il>
-	<7vabs82kcq.fsf@gitster.siamese.dyndns.org>
-	<20070831081517.GB17637@mellanox.co.il>
-	<7v4pig2j91.fsf@gitster.siamese.dyndns.org>
-	<20070831152120.GC17637@mellanox.co.il>
-	<7vr6lj1zg3.fsf@gitster.siamese.dyndns.org>
-	<20070831160335.GA17761@coredump.intra.peff.net>
-	<7vtzqfzcll.fsf_-_@gitster.siamese.dyndns.org>
-	<46D89844.8050605@midwinter.com>
-	<7vir6vw4x2.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Mon, 03 Sep 2007 01:10:34 -0700
+Message-ID: <7vr6lgmao5.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
+	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+	<20070902191644.29d46cd2.seanlkml@sympatico.ca>
+	<46DBBD00.5090308@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:10:33 2007
+Cc: Sean <seanlkml@sympatico.ca>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:10:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS70u-0007H7-JS
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:10:28 +0200
+	id 1IS71H-0007Le-MW
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438AbXICIKW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:10:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753354AbXICIKV
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:10:21 -0400
-Received: from imag.imag.fr ([129.88.30.1]:54357 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753280AbXICIKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:10:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l83898pa020275
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 3 Sep 2007 10:09:08 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IS6zX-0000Y1-3p; Mon, 03 Sep 2007 10:09:03 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IS6zX-0005od-1V; Mon, 03 Sep 2007 10:09:03 +0200
-In-Reply-To: <7vir6vw4x2.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 31 Aug 2007 18\:27\:53 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Sep 2007 10:09:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754180AbXICIKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 04:10:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbXICIKp
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:10:45 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47045 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752118AbXICIKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 04:10:43 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 31BD712D82D;
+	Mon,  3 Sep 2007 04:10:58 -0400 (EDT)
+In-Reply-To: <46DBBD00.5090308@zytor.com> (H. Peter Anvin's message of "Mon,
+	03 Sep 2007 08:51:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57440>
 
-I fully agree with the two patches (that's what I've been arguing for
-hours last time we talked about it, so no big surprise ;-) ).
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-One documentation nitpick :
+> Sean wrote:
+>>
+>> Given the comment from David, I suspect your patch is all
+>> that's needed; hopefully Peter can give it a quick test.
+>
+> It sounds like it; I don't know how to test it other than placing in
+> the repository and try to upgrade.  It can't be any worse, so I don't
+> see any harm in just doing it.
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> +diff.autorefreshindex::
-> +	When using `git diff` to compare with work tree
-> +	files, do not consider stat-only change as changed.
-> +	Instead, silently run `git update-index --refresh`
-
-I'd rather avoid talking about plumbing in the documentation of
-porcelain, so I'd say "silently refreshes the index's stat
-information".
-
-But I'm arguably wrong on that point, I let you decide.
-
-Thanks,
-
--- 
-Matthieu
+Ok, should I then do that single change, cut 1.5.3.1 with it and
+ping you?
