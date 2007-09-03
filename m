@@ -1,64 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <j.sixt@eudaptics.com>
 Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
  API
-Date: Mon, 3 Sep 2007 14:33:22 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709031428080.28586@racer.site>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
- <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
+Date: Mon, 03 Sep 2007 15:49:50 +0200
+Message-ID: <46DC10FE.1080805@eudaptics.com>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>
 To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 15:33:52 2007
+X-From: git-owner@vger.kernel.org Mon Sep 03 15:50:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISC3i-0001Oj-AV
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 15:33:42 +0200
+	id 1ISCJs-0005nZ-9f
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 15:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbXICNdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 09:33:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbXICNdf
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 09:33:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41306 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751003AbXICNde (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 09:33:34 -0400
-Received: (qmail invoked by alias); 03 Sep 2007 13:33:32 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 03 Sep 2007 15:33:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BhNc7+8fByMpj3mHbI+QiVwgoLWo+RLK7xAwTMl
-	jUyqczLSijLfEl
-X-X-Sender: gene099@racer.site
+	id S1751752AbXICNt4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 09:49:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbXICNt4
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 09:49:56 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:48485 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750777AbXICNtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 09:49:55 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1ISCJK-0007Cx-LJ; Mon, 03 Sep 2007 15:49:52 +0200
+Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id DB69F9614; Mon,  3 Sep 2007 15:49:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 In-Reply-To: <46DBFA2A.7050003@trolltech.com>
-X-Y-GMX-Trusted: 0
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.365, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57485>
 
-Hi,
-
-On Mon, 3 Sep 2007, Marius Storm-Olsen wrote:
-
+Marius Storm-Olsen schrieb:
 > There was a problem with racy conditions, which this revision fixes.
 > The problem was that fstat was using the builtin implementation, which for
 > for some reason is off by some amount of seconds. (This is probably due to
-> some leap-year issue in one of the implementations. However, Microsoft tells
+> some leap-year issue in one of the implementations. However, Microsoft 
+> tells
 > us to use 116444736000000000 in http://support.microsoft.com/kb/167296, so
 > I'll stick with that.)
-> Also, since both stat and lstat proved to be rather slow, having our own
-> version of fstat is probably also wise. At least we now control all the
-> stat'ing, so we _know_ they are compatible.
-> Also note that this revision makes git_lstat call itself after modifying
-> the filename, instead of the builtin stat, for the same reasons.
 
-At least some of these informations should go into the commit message, 
-too.
+Thanks for the analysis and new patch. Indeed, FILETIME is UTC, which is 
+good; the native implementation returns local time, if I read the code 
+(of msvcrt) correctly.
 
 > With the our own implementations of lstat & fstat, the following test cases
 > are now fixed:
@@ -77,19 +73,32 @@ too.
 > Are some of these test cases unstable, so the result will fluctuate on
 > Windows?
 
-I saw some funny stuff on Windows, like test cases succeeding when run 
-interactively, but failing when run from "make test".
+I see many more failures. in:
 
-BTW it would have been way easier to apply your patch, had you followed 
-SubmittingPatches...
+t4001-diff-rename.sh: 5
+t4101-apply-nonl.sh: all
+t4102-apply-rename.sh: 2,3,4
+t4116-apply-reverse.sh: 3
+t4200-rerere.sh: 12,13,17
+t5515-fetch-merge-logic.sh: 54
+etc...
 
-To make it easier on others, I just uploaded it into the "teststat" branch 
-on 4msysgit.git (subject to removal in a few days).
+There is something fishy going on.
 
-First comment: it seems git_fstat() is not declared properly, so there are 
-quite a few compiler warnings.
+But at least the failure in t4116 is easy to work around:
 
-Running the tests now.
+diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
+index fc2f622..f3e0c4a 100755
+--- a/t/t4116-apply-reverse.sh
++++ b/t/t4116-apply-reverse.sh
+@@ -43,7 +43,8 @@ test_expect_success 'apply in reverse' '
+         git reset --hard second &&
+         git apply --reverse --binary --index patch &&
+         git diff >diff &&
+-       git diff /dev/null diff
++       : > empty &&
++       git diff empty diff
 
-Ciao,
-Dscho
+  '
+
+-- Hannes
