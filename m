@@ -1,40 +1,40 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
 Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and
  make stat use that implementation too.
-Date: Mon, 03 Sep 2007 08:12:56 +0200
-Message-ID: <46DBA5E8.105@trolltech.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <200709022016.54262.johannes.sixt@telecom.at> <46DB0478.8050402@trolltech.com> <46DB0F9C.2090306@trolltech.com> <20070902214128.GC2756@steel.home>
+Date: Mon, 03 Sep 2007 08:15:14 +0200
+Message-ID: <46DBA672.9050308@trolltech.com>
+References: <46DACD93.9000509@trolltech.com> <46DB0478.8050402@trolltech.com> <46DB0F9C.2090306@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
  protocol="application/pgp-signature";
- boundary="------------enig8E741EFDFD999FEE11E461FA"
+ boundary="------------enig2449DB18B746076980F8095D"
 Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 08:13:16 2007
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 08:15:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS5BQ-0002xI-9m
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 08:13:12 +0200
+	id 1IS5DO-0003SB-Tm
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 08:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbXICGM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 02:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbXICGM5
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 02:12:57 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:47834 "EHLO
+	id S1751354AbXICGPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 02:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbXICGPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 02:15:09 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:39704 "EHLO
 	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753312AbXICGMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 02:12:50 -0400
+	with ESMTP id S1750977AbXICGPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 02:15:07 -0400
 Received: from esparsett.troll.no (localhost [127.0.0.1])
 	by localhost (Postfix) with SMTP
-	id 9819F741B6; Mon,  3 Sep 2007 08:12:48 +0200 (CEST)
+	id 15861741B3; Mon,  3 Sep 2007 08:15:07 +0200 (CEST)
 Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
 	by esparsett.troll.no (Postfix) with ESMTP
-	id 8AE49741B3; Mon,  3 Sep 2007 08:12:48 +0200 (CEST)
+	id 09A34741AD; Mon,  3 Sep 2007 08:15:07 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <20070902214128.GC2756@steel.home>
+In-Reply-To: <200709022228.00733.robin.rosenberg.lists@dewire.com>
 X-Enigmail-Version: 0.95.3
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
  hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
@@ -51,62 +51,32 @@ Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57431>
 
 This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig8E741EFDFD999FEE11E461FA
+--------------enig2449DB18B746076980F8095D
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: quoted-printable
 
-Alex Riesen said the following on 02.09.2007 23:41:
-> Marius Storm-Olsen, Sun, Sep 02, 2007 21:31:40 +0200:
->> +		buf->st_ino =3D 0;
+Robin Rosenberg said the following on 02.09.2007 22:27:
+> s=F6ndag 02 september 2007 skrev Marius Storm-Olsen:
+>> (Also, since Windows doesn't really handle symlinks, it's fine that st=
+at just uses lstat)
 >=20
-> You sure about that? Ever wondered why it is not so on everywhere else?=
+> It does now: See http://msdn2.microsoft.com/en-us/library/aa363866.aspx=
 
 
-Pretty sure. If you look at Windows' native version of stat, it will
-return you st_ino =3D 0. Or maybe you where referring to something else,
-and I just missed your point?
-
-AFAIK, the ino in the index is only to be _really_ sure that nothing
-has changed with the file, and we can just skip it on Windows. If in
-doubt, try running this on your Windows box:
-
-#include <windows.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-int main(int, char **)
-{
-    wchar_t DirSpec[] =3D L".\\*";
-    WIN32_FIND_DATA FindFileData;
-    HANDLE hFind =3D FindFirstFile(DirSpec, &FindFileData);
-    if (hFind =3D=3D INVALID_HANDLE_VALUE) {
-        printf ("Crap happened: %u\n", GetLastError());
-        return -1;
-    }=20
-
-    struct _stat buf;
-    while (FindNextFile(hFind, &FindFileData) !=3D 0)=20
-    {
-        if (!_wstat(FindFileData.cFileName, &buf))
-            printf("file: %S, ino: %u\n", FindFileData.cFileName, buf.st_=
-ino);
-    }
-
-    FindClose(hFind);
-    return 0;
-}
-
-
+Yeah, I know about Vista's improved support for symbolic links.
+However, I think we can let that lay for a while, until we decide to=20
+make Git generate proper symlinks on Vista. I don't see it as a 1st=20
+priority at the moment, and we can always add the needed functionality=20
+in a separate stat() function later.
 
 --=20
 =2Emarius
 
 
---------------enig8E741EFDFD999FEE11E461FA
+--------------enig2449DB18B746076980F8095D
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -114,9 +84,9 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (MingW32)
 
-iD8DBQFG26XoKzzXl/njVP8RAr3XAKClasbJ7WdlQLlbmGiHkTLPaMww9wCfbmzb
-8qbFaNhKfCmn8PTZ7xurzXk=
-=6rZY
+iD8DBQFG26ZzKzzXl/njVP8RAq1rAJ0eoz0l6RdegVMEEYnXkTlowe2XpwCfSxpZ
+OptYLBoJwwfdmYfbe0Arzo4=
+=13Ba
 -----END PGP SIGNATURE-----
 
---------------enig8E741EFDFD999FEE11E461FA--
+--------------enig2449DB18B746076980F8095D--
