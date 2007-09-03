@@ -1,81 +1,56 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/3] archive: specfile support (--pretty=format: in archive files)
-Date: Mon, 03 Sep 2007 22:19:27 +0200
-Message-ID: <85ps0zmrhs.fsf@lola.goethe.zz>
-References: <46DC4D45.4030208@lsrfire.ath.cx>
-	<Pine.LNX.4.64.0709031935540.28586@racer.site>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 0/2] Break Python 2.3 compatibility
+Date: Mon, 03 Sep 2007 23:48:38 +0200
+Message-ID: <20070903214545.18057.79301.stgit@yoghurt>
+References: <b0943d9e0709030136y4f1f241cge28fb9607ec559c1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	Thomas Glanzmann <thomas@glanzmann.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 03 22:19:39 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 23:48:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISIOW-0006Bp-IQ
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 22:19:36 +0200
+	id 1ISJms-0007vV-3s
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 23:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753954AbXICUTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 16:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753891AbXICUTb
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 16:19:31 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:37534 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753868AbXICUTa (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 16:19:30 -0400
-Received: from mail-in-02-z2.arcor-online.net (mail-in-02-z2.arcor-online.net [151.189.8.14])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 3B0572F28E5;
-	Mon,  3 Sep 2007 22:19:29 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-02-z2.arcor-online.net (Postfix) with ESMTP id 278F1114372;
-	Mon,  3 Sep 2007 22:19:29 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-037-052.pools.arcor-ip.net [84.61.37.52])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id EF2E8212F62;
-	Mon,  3 Sep 2007 22:19:28 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id D87281C0039C; Mon,  3 Sep 2007 22:19:27 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0709031935540.28586@racer.site> (Johannes Schindelin's message of "Mon\, 3 Sep 2007 19\:40\:04 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4140/Mon Sep  3 19:59:33 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1753805AbXICVsp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 17:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbXICVsp
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 17:48:45 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2696 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752349AbXICVso (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 17:48:44 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1ISJmh-0004Jh-00; Mon, 03 Sep 2007 22:48:39 +0100
+In-Reply-To: <b0943d9e0709030136y4f1f241cge28fb9607ec559c1@mail.gmail.com>
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57506>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2007-09-03 09:36:26 +0100, Catalin Marinas wrote:
 
-> On Mon, 3 Sep 2007, Ren? Scharfe wrote:
+> On 29/08/07, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
 >
->> Add support for a new attribute, specfile.  Files marked as being
->> specfiles are expanded by git-archive when they are written to an
->> archive.  It has no effect on worktree files.  The same placeholders
->> as those for the option --pretty=format: of git-log et al. can be
->> used.
->
-> I almost like this approach.  Would it not be a little more useful if you 
-> could mark the placeholders with something like "$Format: xyz %c$"?  
-> Because then we could just shut up all those complainers that want to 
-> insert some revision specific information into the files, without 
-> affecting formats for printf().
->
-> Of course, the idea to keep the worktree unaffected is brilliant.
+> > Any chance we can drop Python 2.3 support any time soon, by the
+> > way? I've confined all the ickyness to one place, but it would
+> > still be good to get rid of it (not to mention being able to use
+> > sets and generator expressions).
+>=20
+> Unless there is no objection, I'm actually OK with this. Feel free
+> to break the 2.3 support from now on. I'll add a note stating the
+> minimum versions for Python and GIT in the 0.14 release.
 
-I think a bit more layering would be helpful: when using git-svn, one
-would want to have things like $Id$ and $Date$ expanded, so maybe
-attribute specs like
+And here it is. We actually used sets in much fewer places than I
+thought -- but then again, there are a number of places where we ought
+to be using them but aren't.
 
-somefile: expandmarkers="$Date: %aD$ $Id: ....$"
-
-would be nice having.  In the case of git-svn, I would expect them to
-be generated from git-svn from the respective svn properties, so that
-the user is not bothered with figuring out the awful $Id$ and whatever
-strings.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
