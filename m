@@ -1,71 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Stats in Git
-Date: Mon, 03 Sep 2007 10:19:22 +0200
-Message-ID: <vpqodgkma9h.fsf@bauges.imag.fr>
-References: <46DACD93.9000509@trolltech.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGIT experimental branches updated
+Date: Mon, 3 Sep 2007 09:29:18 +0100
+Message-ID: <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
+References: <20070903002029.GA31957@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:20:07 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:29:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7A3-0000dR-Sz
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:19:56 +0200
+	id 1IS7JQ-0002Rc-BX
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbXICITu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:19:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbXICITt
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:19:49 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60232 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800AbXICITs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:19:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l838JMJE023056
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 3 Sep 2007 10:19:22 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IS79W-0000vK-Ar; Mon, 03 Sep 2007 10:19:22 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IS79W-0005rH-8a; Mon, 03 Sep 2007 10:19:22 +0200
-In-Reply-To: <46DACD93.9000509@trolltech.com> (Marius Storm-Olsen's message of "Sun\, 02 Sep 2007 16\:49\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Sep 2007 10:19:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751170AbXICI3U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 04:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbXICI3U
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:29:20 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:65446 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704AbXICI3T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 04:29:19 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so906354rvb
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 01:29:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=akdO07Bzu2PoKFHvE4PScng0Gpvvh9VJRKF4cCmyUfiP37H0ngTz5bUOl3cikiNvuTDA+orGSo+x9sReyrS+ZAj1y2uD6d3FqJ+s5cogiiRohYKFcBUrHUrLuBpLsZJQ931p6KftFf8pa90xX10xuuU7XoDu4llfrA77qUm3Iog=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GOrHuwqoDxNrEciipt6ngubnFp0/0WVmHPXJcMts/t4BsERMWD7B0wcFaTm8u/dWE7V2281sAM4Xa+saQ0SGBVwqplg7yD2C536WS+cylcoGMBjLwevS8v+xr1MkjcSpjPBPg+oLqGwbUs6KhWMwQbpSU5tcTTmk/gQMdZA38u0=
+Received: by 10.140.250.14 with SMTP id x14mr1867503rvh.1188808158685;
+        Mon, 03 Sep 2007 01:29:18 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 3 Sep 2007 01:29:18 -0700 (PDT)
+In-Reply-To: <20070903002029.GA31957@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57444>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+On 03/09/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> I've added the three patches I just sent out. That's all, since no on=
+e
+> else seems to be working. :-)
 
-> However, while look at that whole stat'ing situation in git, I saw
-> that doing 'git status' actually stats all the files _thrice_!
-> Yup, that's not 1 time, or 2 times, but actually 3(!) times before
-> 'git status' is content!
+It's Monday (and morning) :-). Thanks, I merged the 'safe' branch
 
-My experiments show 2 stats only:
+> Plus, I've renamed the branches to "safe" and "experimental", since
+> that's what they're all about.
 
-$ strace -f git status |& grep -e execve -e  foo                  
-[...]
-[pid 22492] execve("/home/moy/local/usr//bin/git", ["git", "update-index", "-q", "--unmerged", "--refresh"], [/* 50 vars */]) = 0
-[pid 22492] lstat64("foo", {st_mode=S_IFREG|0755, st_size=0, ...}) = 0
-[pid 22493] execve("/home/moy/local/usr//bin/git", ["git", "runstatus"], [/* 49 vars */]) = 0
-[pid 22493] lstat64("foo", {st_mode=S_IFREG|0755, st_size=0, ...}) = 0
-[...]
+It makes more sense.
 
-Once for "git update-index --refresh" and once more for "git
-runstatus". Obviously, a builtin with one tree traversal only would
-provide a good speedup.
+BTW, would an extension to 'stg import' to import patches from mailing
+lists (NNTP or maybe just mbox) directly be useful? There is support
+for mbox importing anyway and it would need a procmail filter to
+generate the mbox and just a regex filtering in 'import' to apply the
+StGIT patches only.
 
--- 
-Matthieu
+--=20
+Catalin
