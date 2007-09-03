@@ -1,70 +1,150 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH 4/4] Add optional logging of subprocess execution
-Date: Mon, 3 Sep 2007 09:34:32 +0100
-Message-ID: <b0943d9e0709030134g6cf9f69ctc688c27dc705df9@mail.gmail.com>
-References: <20070826202724.16265.85821.stgit@yoghurt>
-	 <20070826203344.16265.66280.stgit@yoghurt>
-	 <b0943d9e0708290350rbadfe08g9bbab7888723980e@mail.gmail.com>
-	 <20070829111102.GA29980@diana.vm.bytemark.co.uk>
-	 <20070829171621.GA2214@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Mon, 03 Sep 2007 01:35:31 -0700
+Message-ID: <7vfy1wm9ik.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
+	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+	<20070902191644.29d46cd2.seanlkml@sympatico.ca>
+	<46DBBD00.5090308@zytor.com>
+	<7vr6lgmao5.fsf@gitster.siamese.dyndns.org>
+	<46DBC1EE.3020009@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:34:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:35:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7OL-0003S1-72
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:34:41 +0200
+	id 1IS7PL-0003g3-5L
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbXICIee convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 04:34:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbXICIee
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:34:34 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:8678 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763AbXICIed convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2007 04:34:33 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so907161rvb
-        for <git@vger.kernel.org>; Mon, 03 Sep 2007 01:34:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r9QODf7qbrs6TZu6K4XHVrpquXdGvH2Ya6hxgx6QiclB+hqbesaq6EYh247lVktuNF+GkxjtKIcDQoaSGHIPFgSgsdLbRcmfIzJ2wlqdWlZUWoSzfB9UbJr7CkGiH/3tvuUbRynGfAxIpxPQ+W3GqVEO+pUK/6tKDwOYP3FoyWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EnNlYdT6W93j/zmGYBWPVQIBCh8g8OKlW9tTjtAJMiJAYymXYQopwpe5v72bVdOwIVq5GNFSHx9pWDN/VXPb8ewhJGcrJLBg5RZBC8eORvZBK0e+u147d7ACrq+Y3myXyCUvl1i6vS1KPe27V24/i3h04KSgCmdX+iwtwZ8UDOI=
-Received: by 10.140.144.4 with SMTP id r4mr1857962rvd.1188808472787;
-        Mon, 03 Sep 2007 01:34:32 -0700 (PDT)
-Received: by 10.140.187.15 with HTTP; Mon, 3 Sep 2007 01:34:32 -0700 (PDT)
-In-Reply-To: <20070829171621.GA2214@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752164AbXICIfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 04:35:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbXICIfi
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:35:38 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47293 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752088AbXICIfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 04:35:37 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C284D12D862;
+	Mon,  3 Sep 2007 04:35:54 -0400 (EDT)
+In-Reply-To: <46DBC1EE.3020009@zytor.com> (H. Peter Anvin's message of "Mon,
+	03 Sep 2007 09:12:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57446>
 
-On 29/08/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-08-29 13:11:02 +0200, Karl Hasselstr=F6m wrote:
+"H. Peter Anvin" <hpa@zytor.com> writes:
+
+>> Ok, should I then do that single change, cut 1.5.3.1 with it and
+>> ping you?
 >
-> > On 2007-08-29 11:50:11 +0100, Catalin Marinas wrote:
-> >
-> > > Any objection to calling this variable STGIT_SUBPROCESS_LOG? We
-> > > already have STGIT_DEBUG_LEVEL (used in stgit.main). I can do it
-> > > in my tree before pushing as I already merged your branches.
-> >
-> > No, no objection at all. I was simply too lazy to actually check
-> > what the existing naming convention was, and misremembered.
->
-> You changed it in the code, but forgot to change it in the commit
-> message. :-P
+> Sounds good to me.
 
-I changed it on my office PC and the locale setup breaks your name
-encoding :-). I tried to avoid it.
+Thanks, and sorry for the trouble.  I am building one on k.org,
+and after placing the result in the RPMS/x86-64 and running the
+yummy script, I'll ping you again.  If it installs fine for you,
+I'll boot my wife's machine to do i386 as well, but it is
+getting a bit late now, so it might have to be tomorrow.
 
---=20
-Catalin
+-- >8 -- snipsnap -- >8 -- clipcrap -- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Sun, 2 Sep 2007 15:16:44 -0700
+Subject: [PATCH] GIT 1.5.3.1: obsolete git-p4 in RPM spec file.
+
+HPA noticed that yum does not like the newer git RPM set; it turns out
+that we do not ship git-p4 anymore but existing installations do not
+realize the package is gone if we do not tell anything about it.
+
+David Kastrup suggests using Obsoletes in the spec file of the new
+RPM to replace the old package, so here is a try.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git.spec.in                        |    1 +
+ Documentation/RelNotes-1.5.3.1.txt |   10 ++++++++++
+ Documentation/git.txt              |    5 ++++-
+ GIT-VERSION-GEN                    |    2 +-
+ RelNotes                           |    2 +-
+ 5 files changed, 17 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/RelNotes-1.5.3.1.txt
+
+diff --git a/git.spec.in b/git.spec.in
+index fe7b3d8..bdb293d 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -25,6 +25,7 @@ This is a dummy package which brings in all subpackages.
+ Summary:	Core git tools
+ Group:		Development/Tools
+ Requires:	zlib >= 1.2, rsync, curl, less, openssh-clients, expat
++Obsoletes:	git-p4
+ %description core
+ Git is a fast, scalable, distributed revision control system with an
+ unusually rich command set that provides both high-level operations
+diff --git a/Documentation/RelNotes-1.5.3.1.txt b/Documentation/RelNotes-1.5.3.1.txt
+new file mode 100644
+index 0000000..7ff546c
+--- /dev/null
++++ b/Documentation/RelNotes-1.5.3.1.txt
+@@ -0,0 +1,10 @@
++GIT v1.5.3.1 Release Notes
++==========================
++
++Fixes since v1.5.3
++------------------
++
++This is solely to fix the generated RPM's dependencies.  We used
++to have git-p4 package but we do not anymore.  As suggested on
++the mailing list, this release makes git-core "Obsolete" git-p4,
++so that yum update would not complain.
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index ceca892..6f7db29 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -43,7 +43,10 @@ unreleased) version of git, that is available from 'master'
+ branch of the `git.git` repository.
+ Documentation for older releases are available here:
+ 
+-* link:v1.5.2.5/git.html[documentation for release 1.5.2.5]
++* link:v1.5.3/git.html[documentation for release 1.5.3]
++
++* release notes for
++  link:RelNotes-1.5.3.1.txt[1.5.3.1].
+ 
+ * release notes for
+   link:RelNotes-1.5.2.5.txt[1.5.2.5],
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 3c0032c..3835fb3 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ 
+ GVF=GIT-VERSION-FILE
+-DEF_VER=v1.5.3.GIT
++DEF_VER=v1.5.3.1.GIT
+ 
+ LF='
+ '
+diff --git a/RelNotes b/RelNotes
+index 0de5e66..ea8f800 120000
+--- a/RelNotes
++++ b/RelNotes
+@@ -1 +1 @@
+-Documentation/RelNotes-1.5.3.txt
+\ No newline at end of file
++Documentation/RelNotes-1.5.3.1.txt
+\ No newline at end of file
+-- 
+1.5.3
