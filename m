@@ -1,69 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.3
-Date: Mon, 03 Sep 2007 01:53:53 -0700
-Message-ID: <7vzm04ku3i.fsf@gitster.siamese.dyndns.org>
-References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
-	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
-	<46DA88EF.7080103@zytor.com>
-	<20070902133803.1b46f599.seanlkml@sympatico.ca>
-	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
-	<20070902191644.29d46cd2.seanlkml@sympatico.ca>
-	<46DBBD00.5090308@zytor.com>
-	<7vr6lgmao5.fsf@gitster.siamese.dyndns.org>
-	<46DBC1EE.3020009@zytor.com>
-	<7vfy1wm9ik.fsf@gitster.siamese.dyndns.org>
-	<46DBCA31.5010607@zytor.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGIT experimental branches updated
+Date: Mon, 3 Sep 2007 11:01:21 +0200
+Message-ID: <20070903090121.GA5051@diana.vm.bytemark.co.uk>
+References: <20070903002029.GA31957@diana.vm.bytemark.co.uk> <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:54:35 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 11:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7hY-0007h4-5c
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:54:32 +0200
+	id 1IS7ov-0000kT-L9
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 11:02:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbXICIyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbXICIyE
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:54:04 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47487 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbXICIyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:54:03 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 59B4E12D883;
-	Mon,  3 Sep 2007 04:54:17 -0400 (EDT)
-In-Reply-To: <46DBCA31.5010607@zytor.com> (H. Peter Anvin's message of "Mon,
-	03 Sep 2007 09:47:45 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753687AbXICJB1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 3 Sep 2007 05:01:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbXICJB1
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 05:01:27 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1223 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753542AbXICJB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 05:01:26 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IS7o9-0001mA-00; Mon, 03 Sep 2007 10:01:21 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0709030129y2ced4f61jaf42c07a7798f47a@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57455>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On 2007-09-03 09:29:18 +0100, Catalin Marinas wrote:
 
-> Junio C Hamano wrote:
->> "H. Peter Anvin" <hpa@zytor.com> writes:
->>
->>>> Ok, should I then do that single change, cut 1.5.3.1 with it and
->>>> ping you?
->>> Sounds good to me.
->>
->> Thanks, and sorry for the trouble.  I am building one on k.org,
->> and after placing the result in the RPMS/x86-64 and running the
->> yummy script, I'll ping you again.  If it installs fine for you,
->> I'll boot my wife's machine to do i386 as well, but it is
->> getting a bit late now, so it might have to be tomorrow.
->>
->
-> git.kernel.org is actually an i386 machine (the only one we have left), too.
+> BTW, would an extension to 'stg import' to import patches from
+> mailing lists (NNTP or maybe just mbox) directly be useful? There is
+> support for mbox importing anyway and it would need a procmail
+> filter to generate the mbox and just a regex filtering in 'import'
+> to apply the StGIT patches only.
 
-I see /usr/bin/git on the other machine is already 1.5.3.1 so I
-take the experiment went well.  I am building the i386 set now.
+I don't think I'd use that function -- it's very convenient to just
+manually copy the patch mails I want to a separate mbox, which I then
+pipe to git-am. (Yes, I know, I should be using "stg import", but "stg
+assimilate" is just too useful.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
