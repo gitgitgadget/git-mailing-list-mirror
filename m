@@ -1,52 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach "git remote" a mirror mode
-Date: Mon, 03 Sep 2007 01:13:26 -0700
-Message-ID: <7vmyw4majd.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709021245040.28586@racer.site>
-	<7vk5r8q1yz.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0709022101290.28586@racer.site>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Stats in Git
+Date: Mon, 03 Sep 2007 10:19:22 +0200
+Message-ID: <vpqodgkma9h.fsf@bauges.imag.fr>
+References: <46DACD93.9000509@trolltech.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:13:50 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:20:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS744-0007rT-OY
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:13:45 +0200
+	id 1IS7A3-0000dR-Sz
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757071AbXICINc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:13:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756926AbXICINc
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:13:32 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47069 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756894AbXICINa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:13:30 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7400012A210;
-	Mon,  3 Sep 2007 04:13:50 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0709022101290.28586@racer.site> (Johannes
-	Schindelin's message of "Sun, 2 Sep 2007 21:10:14 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753769AbXICITu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 04:19:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbXICITt
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:19:49 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60232 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752800AbXICITs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 04:19:48 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l838JMJE023056
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 3 Sep 2007 10:19:22 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IS79W-0000vK-Ar; Mon, 03 Sep 2007 10:19:22 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IS79W-0005rH-8a; Mon, 03 Sep 2007 10:19:22 +0200
+In-Reply-To: <46DACD93.9000509@trolltech.com> (Marius Storm-Olsen's message of "Sun\, 02 Sep 2007 16\:49\:55 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Sep 2007 10:19:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57443>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
-> When using the "--mirror" option to "git remote add", the refs will not
-> be stored in the refs/remotes/ namespace, but in the same location as
-> on the remote side.
+> However, while look at that whole stat'ing situation in git, I saw
+> that doing 'git status' actually stats all the files _thrice_!
+> Yup, that's not 1 time, or 2 times, but actually 3(!) times before
+> 'git status' is content!
 
-Thanks.  With this and the "git remote rm" I think we would be
-in much better shape.  Another thing that would be needed
-further before we can rewriting git-clone would be the "guessing
-where HEAD points at" and we would be in a very good shape.
+My experiments show 2 stats only:
 
-I notice you did not add any tests, though...
+$ strace -f git status |& grep -e execve -e  foo                  
+[...]
+[pid 22492] execve("/home/moy/local/usr//bin/git", ["git", "update-index", "-q", "--unmerged", "--refresh"], [/* 50 vars */]) = 0
+[pid 22492] lstat64("foo", {st_mode=S_IFREG|0755, st_size=0, ...}) = 0
+[pid 22493] execve("/home/moy/local/usr//bin/git", ["git", "runstatus"], [/* 49 vars */]) = 0
+[pid 22493] lstat64("foo", {st_mode=S_IFREG|0755, st_size=0, ...}) = 0
+[...]
+
+Once for "git update-index --refresh" and once more for "git
+runstatus". Obviously, a builtin with one tree traversal only would
+provide a good speedup.
+
+-- 
+Matthieu
