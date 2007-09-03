@@ -1,103 +1,69 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: strbuf API
-Date: Mon, 03 Sep 2007 10:49:27 +0200
-Message-ID: <20070903084927.GB21759@artemis.corp>
-References: <20070902224213.GB431@artemis.corp> <vpqk5r8m9nz.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.3
+Date: Mon, 03 Sep 2007 01:53:53 -0700
+Message-ID: <7vzm04ku3i.fsf@gitster.siamese.dyndns.org>
+References: <7vodglr32i.fsf@gitster.siamese.dyndns.org>
+	<46DA5F33.2020005@zytor.com> <85odgltrtj.fsf@lola.goethe.zz>
+	<46DA88EF.7080103@zytor.com>
+	<20070902133803.1b46f599.seanlkml@sympatico.ca>
+	<7v4picpvgq.fsf@gitster.siamese.dyndns.org>
+	<20070902191644.29d46cd2.seanlkml@sympatico.ca>
+	<46DBBD00.5090308@zytor.com>
+	<7vr6lgmao5.fsf@gitster.siamese.dyndns.org>
+	<46DBC1EE.3020009@zytor.com>
+	<7vfy1wm9ik.fsf@gitster.siamese.dyndns.org>
+	<46DBCA31.5010607@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="eJnRUKwClWJh1Khz";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 03 10:49:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 10:54:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IS7cj-0006bZ-Is
-	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:49:33 +0200
+	id 1IS7hY-0007h4-5c
+	for gcvg-git@gmane.org; Mon, 03 Sep 2007 10:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753051AbXICIt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 04:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbXICIt3
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:49:29 -0400
-Received: from pan.madism.org ([88.191.52.104]:38478 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751363AbXICIt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 04:49:28 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D342A1DA28;
-	Mon,  3 Sep 2007 10:49:27 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 6DDEB2EB2; Mon,  3 Sep 2007 10:49:27 +0200 (CEST)
-Mail-Followup-To: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <vpqk5r8m9nz.fsf@bauges.imag.fr>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752677AbXICIyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 04:54:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbXICIyE
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 04:54:04 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47487 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750714AbXICIyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 04:54:03 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 59B4E12D883;
+	Mon,  3 Sep 2007 04:54:17 -0400 (EDT)
+In-Reply-To: <46DBCA31.5010607@zytor.com> (H. Peter Anvin's message of "Mon,
+	03 Sep 2007 09:47:45 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57454>
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
---eJnRUKwClWJh1Khz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Sep 03, 2007 at 08:32:16AM +0000, Matthieu Moy wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   First, and that's the most important one: the buffer is always NUL
-> > terminated, after its official "len". That means, in terms of strbuf
-> > API, that "alloc" is always greater or equal to len+1 to be able to
-> > store the ending NUL[1]. The advantages are obvious: you can pass the
-> > buffer to any legacy C string function without any fear of read
-> > overflow.
->=20
-> No overflow, but it's still potentially dangerous: if your strbuf
-> contains a '\0', you can't use any standard C string function.
->=20
-> For example, it would be very tempting to compare files with
-> "strcmp(buf1, buf2)", but that would just fail silently when the file
-> contains a '\0' byte.
-
-  Indeed, OTHO doing that would be pretty silly, as embending NULs in a
-strbuf is wrong, it's a _str_buf, not a random-binary-buffer. It's meant
-to make the use of strings easier, not to use as generic purpose byte
-buffers. Of course they can, but well, it's not what they are designed
-for in the first place.
-
-  Also note that it generates bugs, but never crashes if you still do
-that, bugs suck, but security bugs, buffer overflows, ... suck more.
-
-  So I'm tempted to say, it's not really a problem.
-
-> >   The other shortcoming is that you cannot tell the buffer "Hey, it's
-> > very likely that you'll end up being _that_ long.
+> Junio C Hamano wrote:
+>> "H. Peter Anvin" <hpa@zytor.com> writes:
+>>
+>>>> Ok, should I then do that single change, cut 1.5.3.1 with it and
+>>>> ping you?
+>>> Sounds good to me.
+>>
+>> Thanks, and sorry for the trouble.  I am building one on k.org,
+>> and after placing the result in the RPMS/x86-64 and running the
+>> yummy script, I'll ping you again.  If it installs fine for you,
+>> I'll boot my wife's machine to do i386 as well, but it is
+>> getting a bit late now, so it might have to be tomorrow.
+>>
 >
-> 100% ACK on this point.
+> git.kernel.org is actually an i386 machine (the only one we have left), too.
 
-  Also note that it seems that bstring lack this, but maybe I'm wrong.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---eJnRUKwClWJh1Khz
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG28qXvGr7W6HudhwRAtxGAJ9mK7thCuaqNe9stgUcaOTNLu36GwCghKSn
-3xdr7AQEvxC7+qb6stPeHJM=
-=RF2s
------END PGP SIGNATURE-----
-
---eJnRUKwClWJh1Khz--
+I see /usr/bin/git on the other machine is already 1.5.3.1 so I
+take the experiment went well.  I am building the i386 set now.
