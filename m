@@ -1,83 +1,76 @@
-From: Johannes Sixt <j.sixt@eudaptics.com>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 04 Sep 2007 12:53:55 +0200
-Message-ID: <46DD3943.8040403@eudaptics.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com> <46DD3153.8060805@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Rework strbuf API and semantics.
+Date: Tue, 4 Sep 2007 12:11:45 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041209280.28586@racer.site>
+References: <buobqcjrycl.fsf@dhapc248.dev.necel.com>
+ <11888956802504-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 12:54:11 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 13:12:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISW2n-0005Vi-3Z
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 12:54:05 +0200
+	id 1ISWKM-0000Fp-FX
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 13:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbXIDKyA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 06:54:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbXIDKyA
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 06:54:00 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:7153 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225AbXIDKx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 06:53:59 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1ISW2e-00019C-5q; Tue, 04 Sep 2007 12:53:58 +0200
-Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 980B66B7; Tue,  4 Sep 2007 12:53:55 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <46DD3153.8060805@trolltech.com>
-X-Spam-Score: 1.3 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.364, BAYES_99=3.5
+	id S1753027AbXIDLL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 07:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbXIDLL7
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 07:11:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42499 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752931AbXIDLL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 07:11:58 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 11:11:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 04 Sep 2007 13:11:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+hxNoJQG2hwDqi44B4n7/qnYGzp0TVDtLjwvns+9
+	3tLiXyIKSu5xdZ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11888956802504-git-send-email-madcoder@debian.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57551>
 
-Marius Storm-Olsen schrieb:
-> Johannes Sixt said the following on 04.09.2007 09:41:
->> Thanks a lot! I've pushed it out in mingw.git's master.
+Hi,
+
+On Tue, 4 Sep 2007, Pierre Habouzit wrote:
+
+>   A strbuf can be used to store byte arrays, or as an extended string 
+> library. The `buf' member can be passed to any C legacy string function, 
+> because strbuf operations always ensure there is a terminating \0 at the 
+> end of the buffer, not accounted in the `len' field of the structure.
 > 
-> Ops, already in master branch?
+>   A strbuf can be used to generate a string/buffer whose final size is 
+> not really known, and then "strbuf_detach" can be used to get the built 
+> buffer, and keep the wrapping "strbuf" structure usable for further work 
+> again.
+> 
+>   Other interesting feature: buffer_ensure(sb, size) ensure that there 
+> is enough allocated space in `sb' to put `size' new octets of data in 
+> the buffer. It helps avoiding reallocating data for nothing when the 
+> problem the strbuf helps to solve has a known typical size.
 
-Yes, it looked so polished ;)
+I like the general idea of this!
 
-> http://repo.or.cz/w/git/mingw/4msysgit.git?a=commitdiff;h=f15974add93bdfa92775c77c00e7c65aefd42127 
+However, some comments are due:
 
-Looks good, although you should now handle INVALID_HANDLE_VALUE at the 
-beginning of git_fstat() like this:
+- IMHO strbuf_grow() would be more descriptive than buffer_ensure(),
 
-	HANDLE fh = (HANDLE)_get_osfhandle(fd);
-	if (fh == INVALID_HANDLE_VALUE)
-		return -1;	/* errno has been set */
+- IMHO the same goes for strbuf_free() instead of strbuf_wipe(), and
 
-	if (GetFileInformationByHandle(...
+- it would be nice to split this patch into
 
-> Ok, I can give it a performance test, but I tend to agree with David 
-> Kastrup there. It would be better if we rather fix the places where we 
-> check with the local timestamp instead; depending of course on how many 
-> places we actually do this.
-> We'll see how much the timezone conversion in the custom stat functions 
-> actually hurt us performance wise.
+	- the API change (with _minimal_ changes to anything outside of 
+	  strbuf.[ch]), and
 
-I'd make the decision on the grounds of a perfomance test. If it turns out 
-that the penalty is bearable, we should keep this stuff private to the MinGW 
-build. Otherwise, we would need MinGW specific code at the call sites 
-(unless we can hide the opposite conversion in some other wrapper function).
+	- the cleanups in the rest of the code.
 
-... time passes ...
-
-Ok, I just tested FileTimeToLocalFileTime() in a tight loop, and I can run 
-it 100,000,000 times per second. So I'm confident that there won't be any 
-noticable degradation with my proposed change.
-
--- Hannes
+Ciao,
+Dscho
