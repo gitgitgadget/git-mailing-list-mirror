@@ -1,73 +1,62 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/3] archive: specfile support (--pretty=format: in archive
- files)
-Date: Tue, 04 Sep 2007 07:45:19 +0200
-Message-ID: <46DCF0EF.9020604@op5.se>
-References: <46DC4D45.4030208@lsrfire.ath.cx> <7vtzqb8fw2.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	Thomas Glanzmann <thomas@glanzmann.de>
+From: Adam Roben <aroben@apple.com>
+Subject: Re: [ANNOUNCE] git/gitweb.git repository
+Date: Mon, 3 Sep 2007 22:47:54 -0700
+Message-ID: <EFDB3AF7-E250-4816-AD4A-B580E3C902C1@apple.com>
+References: <20070831000149.GK1219@pasky.or.cz> <7v8x7n7zqn.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v902)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org, jnareb@gmail.com,
+	ltuikov@yahoo.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 07:45:29 2007
+X-From: git-owner@vger.kernel.org Tue Sep 04 07:48:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISRE7-0001yU-VD
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 07:45:28 +0200
+	id 1ISRGm-0002Gw-NZ
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 07:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbXIDFpX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Sep 2007 01:45:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbXIDFpX
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 01:45:23 -0400
-Received: from mail.op5.se ([193.201.96.20]:46075 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208AbXIDFpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 01:45:22 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 9AB82194424;
-	Tue,  4 Sep 2007 07:45:21 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fRK9rACYkSSd; Tue,  4 Sep 2007 07:45:21 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id DCE6D1943D3;
-	Tue,  4 Sep 2007 07:45:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <7vtzqb8fw2.fsf@gitster.siamese.dyndns.org>
+	id S1751399AbXIDFsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 01:48:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393AbXIDFsG
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 01:48:06 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:49317 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbXIDFsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 01:48:05 -0400
+Received: from relay14.apple.com (relay14.apple.com [17.128.113.52])
+	by mail-out3.apple.com (Postfix) with ESMTP id 44B34102E2C3;
+	Mon,  3 Sep 2007 22:48:03 -0700 (PDT)
+Received: from relay14.apple.com (unknown [127.0.0.1])
+	by relay14.apple.com (Symantec Mail Security) with ESMTP id 251D628051;
+	Mon,  3 Sep 2007 22:48:03 -0700 (PDT)
+X-AuditID: 11807134-a0b61bb0000066ad-78-46dcf19342e4
+Received: from [17.151.70.3] (unknown [17.151.70.3])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by relay14.apple.com (Symantec Mail Security) with ESMTP id A60822802B;
+	Mon,  3 Sep 2007 22:48:02 -0700 (PDT)
+In-Reply-To: <7v8x7n7zqn.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.902)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57524>
 
-Junio C Hamano wrote:
-> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> The attribute is useful for creating auto-updating specfiles.  It is
->> limited by the underlying function format_commit_message(), though.
->> E.g. currently there is no placeholder for git-describe like output,
->> and expanded specfiles can't contain NUL bytes.  That can be fixed
->> in format_commit_message() later and will then benefit users of
->> git-log, too.
->=20
-> Interesting.  I however wonder if "specfile" is a good name for
-> this attribute, although I admit I do not think of anything
-> better offhand.
->=20
 
-"releasefile", perhaps?
+On Sep 3, 2007, at 10:42 PM, Junio C Hamano wrote:
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> * Incremental blame
+>
+>  It does not seem to break the blame, but at least from where I
+>  sit accessing repo.or.cz this does not look incremental to me.
+>  The entire browser session freezes until the blame page
+>  displays in full.  My local installation behaves the same way.
+
+    For me, [1] loads incrementally as expected in Safari 3.0.3 on OS X.
+
+-Adam
+
+[1] http://repo.or.cz/w/alt-git.git?a=blame_incremental;f=git-svn.perl;h=d3c8cd0b8e3cfb97c6deb2453097c6f2e16e3bcf;hb=1e61b7640d09015213dbcae3564fa27ac6a8c151
