@@ -1,82 +1,125 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Calculating tree nodes
-Date: Wed, 5 Sep 2007 09:02:59 +1200
-Message-ID: <46a038f90709041402k45d72dc6l59f93cd22b8c02e9@mail.gmail.com>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
-	 <20070904025153.GS18160@spearce.org>
-	 <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
-	 <Pine.LNX.4.64.0709040439070.28586@racer.site>
-	 <9e4733910709032054y4407ce62o6b21935502bfacdb@mail.gmail.com>
-	 <46a038f90709032121v54454c6fi500ee15497eec85c@mail.gmail.com>
-	 <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com>
-	 <Pine.LNX.4.64.0709041131030.28586@racer.site>
-	 <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
-	 <46DD7660.2030109@op5.se>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?,
+	.gitacls? etc.
+Date: Tue, 4 Sep 2007 23:03:49 +0200
+Message-ID: <20070904210349.GE3786@efreet.light.src>
+References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com> <7v1wdqud0z.fsf@gitster.siamese.dyndns.org> <loom.20070827T172150-191@post.gmane.org> <86odgtou5p.fsf@lola.quinscape.zz> <loom.20070827T185519-641@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jon Smirl" <jonsmirl@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Sep 04 23:03:19 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AsxXAMtlQ5JHofzM"
+Cc: git@vger.kernel.org
+To: Sergio Callegari <scallegari@arces.unibo.it>
+X-From: git-owner@vger.kernel.org Tue Sep 04 23:04:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISfYF-0001yw-Ci
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:03:11 +0200
+	id 1ISfZ1-0002EA-98
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705AbXIDVDF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 17:03:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754608AbXIDVDE
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:03:04 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:23570 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754212AbXIDVDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 17:03:01 -0400
-Received: by nf-out-0910.google.com with SMTP id f5so1544675nfh
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 14:02:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XUSy9MKtSJAyLZyhbY73Tcard3NZWXNj5/kR6WK04cXbHMsnxpyOjOFVMWj0HnWWMFGrBfQOpRA19MKT4q645L+ZEfiHmG9MSCNUCryT4jA8e8dPnV0+wuW9p2jU3WdZKX48j/An+DMKVB6hSMW/JIx1tTOjqQz4czh96qHSCuU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Si2Khx2H9N0iAt58b/G65E51uuIYD2FEEVeM2xt/rfoc6VSUHApgWiOnZSzKWWH/KsPQ0YpRxFYucklsnsU1GhxDuyo+zcpIKpLPhPGRJT0mYavWIJGVnfkKHL6+mvAZ2WJF+HZLNzSj+LEc52yndQNGSqbSEYbhMv5rJsXWw4o=
-Received: by 10.78.204.7 with SMTP id b7mr4530289hug.1188939779390;
-        Tue, 04 Sep 2007 14:02:59 -0700 (PDT)
-Received: by 10.67.40.9 with HTTP; Tue, 4 Sep 2007 14:02:59 -0700 (PDT)
-In-Reply-To: <46DD7660.2030109@op5.se>
+	id S1754764AbXIDVDz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 17:03:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404AbXIDVDz
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:03:55 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:37116 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754608AbXIDVDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 17:03:54 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 7B9F057264;
+	Tue,  4 Sep 2007 23:03:53 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 3QhCAkgZFpnq; Tue,  4 Sep 2007 23:03:50 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 9F73B57252;
+	Tue,  4 Sep 2007 23:03:50 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1ISfYr-00054y-53; Tue, 04 Sep 2007 23:03:49 +0200
 Content-Disposition: inline
+In-Reply-To: <loom.20070827T185519-641@post.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57645>
-
-On 9/5/07, Andreas Ericsson <ae@op5.se> wrote:
-> Jon Smirl wrote:
-> > The
-> > essential part of the commit is the SHA1 list. The path names belong
-> > to the file objects and should be stored there.
->
-> Sorry, but it'll take code and benchmarks to convince me this is a
-> good idea.
-
-Same here. But I do want to note that adding the pathname to the blob
-(and storing them on the combined SHA1 I assume) is broken, broken,
-broken. It won't support any of the great semantics that git has
-today.
-
-Jon: I think you need to think carefully about the key operations like
-diff and log on paths on projects like linux or mozilla. Even better,
-craft a proof-of-concept patch that shows how that'd work, and why
-it's faster/smaller.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57646>
 
 
+--AsxXAMtlQ5JHofzM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-m
+On Mon, Aug 27, 2007 at 17:07:34 +0000, Sergio Callegari wrote:
+> David Kastrup <dak <at> gnu.org> writes:
+>=20
+> >=20
+> > Sergio Callegari <scallegari <at> arces.unibo.it> writes:
+> >=20
+> > > Couldn't all this directory/ownership/permission tracing be easily
+> > > done by using hooks?  E.g. Having a pre-status and pre-commit hook
+> > > one could fire up a program/script to collect all the extra info he
+> > > wants to trace and store it somewhere (typically in some traced
+> > > file).  The other way round one could have a post-checkout hook and
+> > > he could arrange it to fire up some program to look into the
+> > > extra-info file to set up all the meta-data he wants.
+> > >
+> > > This would be very flexible and would permit to manage absolutely
+> > > /any/ kind of the metadata leaving absolute freedom about how to do
+> > > so.
+> > >
+> > > Am I missing something here?
+> >=20
+> > Merging.
+> >=20
+>=20
+> Sorry, maybe I am really missing something, since merging does not look t=
+o me
+> as an issue.
+>=20
+> Why cannot git simply do the merging in the working tree as it normally
+> does, including merging of the traced metadata file generated by the meta=
+data
+> helpers invoked via the hooks?
+> Only, again more hooks are needed and likely a post-merge hook, so that at
+> the end of the merge, the metadata can be applied.
+>=20
+> Only, to have things going on smoothly, one should be so wise to assure t=
+hat
+> the metadata helpers save metadata as nice, sorted text files in order to
+> minimize the burden of manual intervention if there are conflicts in
+> metadata merging.
+
+The post-checkout (no need for post-merge -- after in-index merge is done,
+the files are checked out to worktree, so post-checkout would run anyway)
+could actually apply any custom merge strategy required to avoid/clean up
+spurious conflicts in the metadata file (eg. adding two files that go after
+each other would be a textual conflict). The relevant versions are stored in
+index stages at that point.
+
+> BTW.  Having a post-checkout hook could also help getting rid of unwanted
+> empty directories, couldn't it?
+
+Probably not. I would imagine it would actually only run for the files being
+checked out -- and there is nothing checked out in empty directories. (Well,
+it would run once or once per directory with list of checked out files on
+standard input).
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--AsxXAMtlQ5JHofzM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG3cg1Rel1vVwhjGURAgohAJ4zt6qwBx4HTQecdksbIHxZTRvPPgCfcB/i
+4llyGZyW5bUbVFDsZr6ehlE=
+=pG8A
+-----END PGP SIGNATURE-----
+
+--AsxXAMtlQ5JHofzM--
