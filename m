@@ -1,71 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git's database structure
-Date: Tue, 4 Sep 2007 13:09:22 -0400
-Message-ID: <20070904170921.GA31300@coredump.intra.peff.net>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com> <46DD7FE4.1060908@op5.se> <9e4733910709040919u3d252b91s2785ed4d20086c88@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:13:47 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Rework strbuf API and semantics.
+Date: Tue, 4 Sep 2007 19:18:46 +0200
+Message-ID: <16188017-44C2-4854-8EF5-23271E8091BA@wincent.com>
+References: <20070904115317.GA3381@artemis.corp> <11889144741644-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0709041642350.28586@racer.site> <20070904161843.GB3381@artemis.corp>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:19:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISbu5-0002gx-1G
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 19:09:29 +0200
+	id 1ISc3q-0006le-DG
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 19:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754618AbXIDRJY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 13:09:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752160AbXIDRJY
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 13:09:24 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4990 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751776AbXIDRJY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 13:09:24 -0400
-Received: (qmail 30362 invoked by uid 111); 4 Sep 2007 17:09:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 04 Sep 2007 13:09:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Sep 2007 13:09:22 -0400
-Content-Disposition: inline
-In-Reply-To: <9e4733910709040919u3d252b91s2785ed4d20086c88@mail.gmail.com>
+	id S1754766AbXIDRT3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Sep 2007 13:19:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754451AbXIDRT3
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 13:19:29 -0400
+Received: from wincent.com ([72.3.236.74]:41222 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751701AbXIDRT3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2007 13:19:29 -0400
+Received: from [192.168.1.99] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l84HJP0s018687;
+	Tue, 4 Sep 2007 12:19:26 -0500
+In-Reply-To: <20070904161843.GB3381@artemis.corp>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57618>
 
-On Tue, Sep 04, 2007 at 12:19:33PM -0400, Jon Smirl wrote:
+El 4/9/2007, a las 18:18, Pierre Habouzit escribi=F3:
 
-> By introducing tree nodes you have blended a specific indexing scheme
-> into the data. There are many other ways the path names could be
-> indexed hash tables, binary trees, etc.
+>   ooooh, now I'm guilty of not knowing all git APIs very well =20
+> yet :) Indeed,
+> this should just be:
+>
+>     void strbuf_grow(struct strbuf *sb, size_t extra) {
+>         if (sb->len + extra + 1 < sb->len)
+>             die("you want to use way to much memory");
+>         ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+>     }
 
-That is correct. However, given that indexing scheme, many of the common
-operations just "fall out" simply and efficiently, without the need to
-keep separate indices. So yes, git is geared towards a particular set of
-operations.
+"too much memory", not "to much memory"
 
-Your complaint seems to be two-fold:
-
- 1. there is an inelegance in the blending of data and indexing. The
-    problem with changing this is:
-      a. we are all already using git, and it would require completely
-         re-vamping the core data structure
-      b. there is some feeling that the blending is necessary for
-         performance. Given the difficulty of (a), I think you would
-         have to provide compelling evidence (i.e., numbers) that a
-         git-like system based around set theory with separate indices
-         would perform as well.
-
- 2. you want perform some operations to which the hierarchy is not
-    well-suited. In this case, I think you can get by with the same
-    solution you have proposed already: indices external to the data
-    structure (in fact, this is exactly what Google is doing: taking
-    hierarchical URLs and indexing them in different ways).
-
-    Have you taken a look at the pack v4 work by Shawn and Nicolas? It
-    is an attempt to build such indices at pack time (but keeping the
-    core git data structure intact).
-
--Peff
+Cheers,
+Wincent
