@@ -1,80 +1,51 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 4 Sep 2007 13:57:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709041356070.28586@racer.site>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
- <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
- <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com>
- <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site>
- <46DD433A.5040604@eudaptics.com> <Pine.LNX.4.64.0709041324420.28586@racer.site>
+Subject: Re: HFS+ Unicode weirdness
+Date: Tue, 4 Sep 2007 14:00:50 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041359310.28586@racer.site>
+References: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 14:58:24 2007
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 15:01:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISXyw-0007tX-KO
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 14:58:15 +0200
+	id 1ISY1z-0000GI-Kw
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbXIDM6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 08:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbXIDM6I
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 08:58:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51514 "HELO mail.gmx.net"
+	id S1752901AbXIDNBT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 09:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbXIDNBT
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:01:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47734 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752267AbXIDM6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 08:58:07 -0400
-Received: (qmail invoked by alias); 04 Sep 2007 12:58:06 -0000
+	id S1752399AbXIDNBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 09:01:19 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 13:01:17 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp033) with SMTP; 04 Sep 2007 14:58:06 +0200
+  by mail.gmx.net (mp027) with SMTP; 04 Sep 2007 15:01:17 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/VVCh0VUDVeCFvkNv+3OJZBRfb4crwHM8YZv6e1m
-	f/zLUqp9SfsMtS
+X-Provags-ID: V01U2FsdGVkX1+lmnUjYAulVk8vw1RmS3Nadp8/X7xHvpAfEuw0dI
+	lvqk3fS37Q48VT
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0709041324420.28586@racer.site>
+In-Reply-To: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57561>
 
 Hi,
 
-On Tue, 4 Sep 2007, Johannes Schindelin wrote:
+On Tue, 4 Sep 2007, Wincent Colaiuta wrote:
 
-> On Tue, 4 Sep 2007, Johannes Sixt wrote:
-> 
-> > Johannes Schindelin schrieb:
-> > > On Tue, 4 Sep 2007, Johannes Sixt wrote:
-> > > > Therefore, I've pushed out a fixup patch at the top of mingw.git's 
-> > > > devel branch that converts mtime to local time
-> > > 
-> > > On Linux, we compare to UTC to begin with, right?  We should do that 
-> > > here, too...  So if time(NULL) does not return UTC on MinGW, we have 
-> > > to wrap that function, too.
-> > 
-> > According to MSDN, time(NULL) returns "the number of seconds elapsed 
-> > since [epoch] according to the system clock". Please don't ask me what 
-> > "the system clock" is.
-> 
-> I think I know.  From my QEmu adventures I know that DOS/Windows expects 
-> the system clock to be set to local time, in contrast to _all_ other 
-> operating systems.
+> On a brand new clone of git.git the file "gitweb/test/M?rchen" is provoking
+> some weird behaviour running on Mac OS X and the toy HFS+ filesystem.
 
-Now I am utterly confused.  MSDN says
-
-	FILETIME
-
-	Contains a 64-bit value representing the number of 100-nanosecond 
-	intervals since January 1, 1601 (UTC).
-
-Hmm.
+Please search the mail archives.  This has come up quite a couple of 
+times.
 
 Ciao,
 Dscho
