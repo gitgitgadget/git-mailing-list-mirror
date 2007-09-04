@@ -1,78 +1,80 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-svn and a nested branches folder
-Date: Tue, 04 Sep 2007 16:46:10 +0200
-Message-ID: <86veaqebf1.fsf@lola.quinscape.zz>
-References: <46DD6EEA.9010304@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
+ API
+Date: Tue, 4 Sep 2007 15:48:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041547240.28586@racer.site>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
+ <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
+ <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com>
+ <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site>
+ <46DD433A.5040604@eudaptics.com> <46DD473A.8010602@trolltech.com>
+ <46DD63F5.5050002@trolltech.com> <Pine.LNX.4.64.0709041529191.28586@racer.site>
+ <46DD6F2B.3060001@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 16:46:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@eudaptics.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 16:48:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZg5-000138-6v
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:46:53 +0200
+	id 1ISZi1-0001WZ-0I
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754238AbXIDOqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 10:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbXIDOqs
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:46:48 -0400
-Received: from main.gmane.org ([80.91.229.2]:39927 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754186AbXIDOqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 10:46:48 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ISZfl-00016L-SD
-	for git@vger.kernel.org; Tue, 04 Sep 2007 16:46:34 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 16:46:33 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 16:46:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:lI0+rX7Mh3Lif1pzIt94+/73nvs=
+	id S1754292AbXIDOsq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 10:48:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754268AbXIDOsq
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:48:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33246 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754030AbXIDOsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 10:48:45 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 14:48:44 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 04 Sep 2007 16:48:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18oUYk0m10oNdsE+XyRqCIj/jHqV8oilrX7PTYkxe
+	JdinpW1eoJbxe4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46DD6F2B.3060001@trolltech.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57585>
 
-Russ Brown <pickscrape@gmail.com> writes:
+Hi,
 
-> I'm having some trouble with using git-svn to fetch a repository, and I
-> think it's because the repository doesn't store branches as a flat list
-> directly under the 'branches' directory.
->
-> Basically, we have a structure like this:
->
-> |
-> +-trunk
-> +-tags
-> +-branches
->   + category-a
->     + branch-a
->     + branch-b
->   + category-b
->     + branch-c
->     + branch-d
->
-> etc. category-a and category-b are simple directories created using svn
-> mkdir. The branches are created using svn cp.
->
-> It helps us to organise the branches better, but the rationale is
-> besides the point. The problem is that git-svn seems to want to
-> treat category-a and category-b as branches, which isn't right at
-> all. As a result, git-svn seems to skip most (if not all) revisions
-> that occur in these directories and creates a lot of entries in
-> unhandled.log.
+On Tue, 4 Sep 2007, Marius Storm-Olsen wrote:
 
-So what did you specify in your .git/config file regarding the svn
-structure?
+> Johannes Schindelin wrote:
+> > On Tue, 4 Sep 2007, Marius Storm-Olsen wrote:
+> >> Neat, with the custom stat() changes cherry-picked on top of
+> >> 4msysgit.git 'devel' branch, I only have one failing testcase 
+> >> t6024-recursive-merge.sh when running $ NO_SYMLINKS=1 make -k
+> >> 
+> >> The rest are passing with flying colors!
+> > 
+> > Bad news.  I do not know if it was the newest version I tried, but I
+> > could no longer fetch... said something about some bad file.
+> 
+> Then you're missing this patch:
+> http://repo.or.cz/w/git/mingw/4msysgit.git?a=commitdiff;h=f15974add93bdfa92775c77c00e7c65aefd42127
+> 
+> I guess the quickest way is to manually apply this patch and recompile.
+> (or add the '#undef fstat', and have git_fstat just 'return fstat(fd, buf)')
+> 
+> The problem is that without this patch fstat(0, buf) would fail with bad
+> filedescriptor instead of returning the st_mode = S_IFIFO.
 
--- 
-David Kastrup
+I guessed as much, but could not fetch the patch, since fetch was broken 
+;-)
+
+For some utterly strange reason, "git fetch" accessed "git-fetch" in the 
+cwd, not in /bin/...  Funny.
+
+Ciao,
+Dscho
