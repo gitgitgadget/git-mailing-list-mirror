@@ -1,82 +1,64 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Git's database structure
-Date: Tue, 4 Sep 2007 12:47:16 -0400
-Message-ID: <9e4733910709040947ia32bda4i6e30efb2d7848308@mail.gmail.com>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
-	 <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
-	 <46DD887D.3090508@op5.se>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: Re: git clone over http
+Date: Tue, 04 Sep 2007 10:54:36 -0600
+Message-ID: <1188924876.6192.21.camel@beauty>
+References: <200709021123.04218.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Sep 04 18:47:42 2007
+Cc: git@vger.kernel.org
+To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:03:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISbYh-0007kD-2x
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 18:47:23 +0200
+	id 1ISbf2-0000N9-Os
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 18:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594AbXIDQrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 12:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbXIDQrS
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 12:47:18 -0400
-Received: from rv-out-0910.google.com ([209.85.198.187]:38246 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754570AbXIDQrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 12:47:17 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1215869rvb
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 09:47:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GWthZA3RH/w9aJmhZ+xkyJEEkQat5JawV80/cJUOR8ufPRQ3raEqThE/0jdD9ofLvKE1PZjyvqoSN2pZEEMsXO7/kDZOOP+8vjl9pX4dGIN1hpCU063gQotjnDUoCzIxJLO0jZPYwSiW0gXpNmpQqrrtOM58EJPmDrE46QnE5q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P7GUBEFzNq1Qt+wkRH/3SNXQuadVJYOvaBdEYdWf3otpwyekSzZJPDHwtcRln87BIotm45rSznLPfQg6uds5VUShokRic+SPFZZUScjtFXLMxstCftHfeeT7bR6DWOFxvBimnwlRiRwmvs7TgpwFO6+zcOtDW+SbYg7fOnOKL9c=
-Received: by 10.141.107.13 with SMTP id j13mr2365146rvm.1188924436989;
-        Tue, 04 Sep 2007 09:47:16 -0700 (PDT)
-Received: by 10.141.44.16 with HTTP; Tue, 4 Sep 2007 09:47:16 -0700 (PDT)
-In-Reply-To: <46DD887D.3090508@op5.se>
-Content-Disposition: inline
+	id S1753464AbXIDQxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 12:53:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXIDQxn
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 12:53:43 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:1927 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752532AbXIDQxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 12:53:42 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 04 Sep 2007 10:53:28 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l84GrRxp001294;
+ Tue, 4 Sep 2007 10:53:27 -0600
+In-Reply-To: <200709021123.04218.robin.rosenberg.lists@dewire.com>
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.4.92322
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_600_699
+ 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
+ __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070904165331; SEV=2.2.2; DFV=B2007090413;
+ IFV=2.0.4,4.0-9; AIF=B2007090413; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230322E34364444384438412E303045373A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007090413_5.02.0125_4.0-9
+X-WSS-ID: 6AC352023HO1226786-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57615>
 
-On 9/4/07, Andreas Ericsson <ae@op5.se> wrote:
-> Jon Smirl wrote:
-> > Another way of looking at the problem,
-> >
-> > Let's build a full-text index for git. You put a string into the index
-> > and it returns the SHAs of all the file nodes that contain the string.
-> > How do I recover the path names of these SHAs?
-> >
->
-> I wouldn't know, but presumably any table can have more than one column.
->
-> Is this a problem you face with git so often that it requires a complete
-> re-design of its very core?
+On Sun, 2007-09-02 at 11:23 +0200, Robin Rosenberg wrote:
+> git clone (1.5.3) with http is somewhat unreliable. I've noticed if
+> can actually give
+> me different versions of a branch each time I run it, eventually yielding
+> the one I'm expecting.  And now this:
 
-That's the whole point. We need to discuss the impact of merging a
-field (path names) with an index (tree nodes) has on future things we
-may want to do with the data stored in git.
+I don't see this behavior, but I do see other wierdness cloning via
+http.  Anytime I clone a repo (any repo) via http from behind the
+firewall/proxy at work I never get any branches.  'git branch' only ever
+shows 'master'.  I can't checkout and work on any other branch.  I can
+work around the problem by cloning on a box that is more open, but was
+wondering if anyone knows how to fix this.
 
-Databases don't usually blend fields/indexes without also duplicating
-the field in the table. You need all the fields in the table so that
-it is possible to create indexes on other fields.
-
-
->
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
->
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+-JE
