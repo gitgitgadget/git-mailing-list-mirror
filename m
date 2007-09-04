@@ -1,128 +1,86 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: .gitignore, .gitattributes, .gitmodules,
-	.gitprecious?,.gitacls? etc.
-Date: Tue, 4 Sep 2007 22:23:26 +0200
-Message-ID: <20070904202326.GC3786@efreet.light.src>
-References: <7vhcmmpxed.fsf@gitster.siamese.dyndns.org> <B4A2AE9980774365B5D14B442A7A22F6@ntdev.corp.microsoft.com> <20070826100647.GH1219@pasky.or.cz> <4C603F7C51884DF8AFAEC3F6E263798D@ntdev.corp.microsoft.com> <a1bbc6950708271327x4dd948d4m8e9e35f757a7d92e@mail.gmail.com> <Pine.LNX.4.64.0708280945350.28586@racer.site>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: Re: [PATCH] Add post-merge hook.
+Date: Tue, 04 Sep 2007 14:32:55 -0600
+Message-ID: <1188937975.6192.59.camel@beauty>
+References: <11885136172952-git-send-email-jjengla@sandia.gov>
+ <7v7inc7hao.fsf@gitster.siamese.dyndns.org>
+ <1188923110.6192.15.camel@beauty>
+ <7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
+ <1188934573.6192.35.camel@beauty>
+ <7vodgimc53.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xesSdrSSBC0PokLI"
-Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Petr Baudis <pasky@suse.cz>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 04 22:23:40 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 22:32:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISevv-0001Sf-I3
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 22:23:36 +0200
+	id 1ISf4I-0003Oy-Vj
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 22:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbXIDUXb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 16:23:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbXIDUXb
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 16:23:31 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:51798 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752798AbXIDUXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 16:23:30 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 6C63757306;
-	Tue,  4 Sep 2007 22:23:29 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 0flZ7mh7ybjf; Tue,  4 Sep 2007 22:23:27 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 347E157264;
-	Tue,  4 Sep 2007 22:23:27 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ISevm-0004zL-JV; Tue, 04 Sep 2007 22:23:26 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0708280945350.28586@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753620AbXIDUcJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 16:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbXIDUcI
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 16:32:08 -0400
+Received: from mm03snlnto.sandia.gov ([132.175.109.20]:4851 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753490AbXIDUcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 16:32:07 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 04 Sep 2007 14:31:46 -0600
+X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l84KVjeW012732;
+ Tue, 4 Sep 2007 14:31:45 -0600
+In-Reply-To: <7vodgimc53.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.4.130324
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0,
+ __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0,
+ __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070904203147; SEV=2.2.2; DFV=B2007090415;
+ IFV=2.0.4,4.0-9; AIF=B2007090415; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230372E34364444433042332E303037303A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007090415_5.02.0125_4.0-9
+X-WSS-ID: 6AC31F382E01264165-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57641>
 
+On Tue, 2007-09-04 at 13:03 -0700, Junio C Hamano wrote:
+> >> >>  * Do you want to run the post-merge hook even for a squash
+> >> >>    merge?
+> >> >
+> >> > Yes.  I'd like to run it at any time that the working tree might be
+> >> > updated.
+> >> 
+> >> If that is the case, perhaps your hook may want to get a
+> >> parameter to tell it what kind of "git-merge" invocation it was?
+> >> Squash merge does not even advance the HEAD and is of a very
+> >> different nature from a normal merge.
+> >
+> > OK.  Should it just pass in a flag (squash or normal), or are there
+> > other merge types it should need to know about.
+> 
+> I suspect you have thought abuot the issues involved longer than
+> I have ;-), so you should take whatever I say with grain of
+> salt, but I think you would also want to know fast-forwards and
+> up-to-dates if the hook wants to be generic, not "for Josh's
+> workflow only".
 
---xesSdrSSBC0PokLI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Generic is great, I'm just trying to figure out when/why someone would
+need to know the exact type of merge operation used.  The hook should be
+generic, yet not require an end user to know any git internals not
+explicitly mentioned in the git-merge man page.  I'm thinking that it
+will be sufficient to pass a flag indicating whether the working tree
+has been modified or not.  The flag can be set for normal merge and
+fast-forward merges, and unset for up-to-dates and squash merges.  I
+don't really know git internals myself.  Am I missing anything?
 
-On Tue, Aug 28, 2007 at 09:49:47 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Mon, 27 Aug 2007, Dmitry Kakurin wrote:
->=20
-> > Here is the problem: we need to apply crlf attributes to a file. We
-> > could have .gitattributes both in the index and in the worktree.
-> > Which one do we use?
-> > In general .gitattributes file could be (U)nchanged, (C)hanged, (NP)
-> > NotPresent in each place.
->=20
-> I do not see these cases.  You can have these cases, basically:
->=20
-> - .gitattributes in worktree (then it does not matter what else we have),
-> - .gitattributes not in the worktree, but in the index (then that is take=
-n)
->=20
-> In the latter case, there could be conflicts _in_ .gitattributes, in whic=
-h=20
-> case those .gitattributes are ignored.
->=20
-> I do not see any problem with that.
-
-I do.
-
-IMNSHO it should be the other way around:
- .gitattributes in index, than index version is used.
- .gitattributes not in index, but in worktree, than that tree version is us=
-ed.
-
-Why? Because when you check out another version, the .gitattributes commited
-in that version need to be applied, since it might be different from whatev=
-er
-is currently in the tree.
-
-In the other direction, the tree version seems to make more sense, but in
-reality it does not. If you do a partial commit of a single file, than the
-index version gets into the commit, so that should better be the version us=
-ed
-to store the file. On the other hand if you change .gitattributes, the norm=
-al
-commit rules are that you need to add it for commit, so needing to add it to
-make it effective goes well together with it. update-index would need to
-always handle .git* before other entries to make add . and commit -a work
-correctly.
-
-The case for worktree only is for cases when you for some reason want to ha=
-ve
-local .gitattributes. Though I am not sure that should actually work, becau=
-se
-you couldn't have local .gitattributes if there is versioned version.
-=2Egit/info/attributes would be better for that. Which gets us back to "alw=
-ays
-use .gitattributes from *index*" (and read it from tree before other files
-when adding it).
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---xesSdrSSBC0PokLI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG3b6+Rel1vVwhjGURApdOAJwPoVDzjHYkn+V5Ow5IWozxYD28WACgpR7d
-xaodvnQwxv0XFsU5ezQ/L74=
-=pTSi
------END PGP SIGNATURE-----
-
---xesSdrSSBC0PokLI--
+-JE
