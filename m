@@ -1,101 +1,82 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-svn and a nested branches folder
-Date: Tue, 04 Sep 2007 17:01:04 +0200
-Message-ID: <86r6leeaq7.fsf@lola.quinscape.zz>
-References: <46DD6EEA.9010304@gmail.com> <86veaqebf1.fsf@lola.quinscape.zz> <46DD718C.7060908@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Calculating tree nodes
+Date: Tue, 4 Sep 2007 16:05:08 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041602230.28586@racer.site>
+References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com> 
+ <20070904025153.GS18160@spearce.org>  <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
+  <Pine.LNX.4.64.0709040439070.28586@racer.site> 
+ <9e4733910709032054y4407ce62o6b21935502bfacdb@mail.gmail.com> 
+ <46a038f90709032121v54454c6fi500ee15497eec85c@mail.gmail.com> 
+ <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com> 
+ <Pine.LNX.4.64.0709041131030.28586@racer.site>
+ <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:01:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 17:05:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZuD-0004lE-CN
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:01:29 +0200
+	id 1ISZyM-0005tb-09
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754367AbXIDPBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 11:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbXIDPBX
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:01:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:41439 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754193AbXIDPBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 11:01:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ISZtz-0002p1-3c
-	for git@vger.kernel.org; Tue, 04 Sep 2007 17:01:15 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 17:01:15 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 17:01:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:oaD0p2AoQewAyDcr4zRgEtOxBgA=
+	id S1754269AbXIDPFi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 11:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754586AbXIDPFi
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:05:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56685 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754542AbXIDPFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 11:05:37 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 15:05:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp021) with SMTP; 04 Sep 2007 17:05:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+48flWapy4pUJ4VxNhIdGFyG9iFK7ftXwAiwae1G
+	xm1L9ofO5YuQI7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57592>
 
-Russ Brown <pickscrape@gmail.com> writes:
+Hi,
 
-> David Kastrup wrote:
->> Russ Brown <pickscrape@gmail.com> writes:
->> 
->>> I'm having some trouble with using git-svn to fetch a repository, and I
->>> think it's because the repository doesn't store branches as a flat list
->>> directly under the 'branches' directory.
->>>
->>> Basically, we have a structure like this:
->>>
->>> |
->>> +-trunk
->>> +-tags
->>> +-branches
->>>   + category-a
->>>     + branch-a
->>>     + branch-b
->>>   + category-b
->>>     + branch-c
->>>     + branch-d
->>>
->>> etc. category-a and category-b are simple directories created using svn
->>> mkdir. The branches are created using svn cp.
->>>
->>> It helps us to organise the branches better, but the rationale is
->>> besides the point. The problem is that git-svn seems to want to
->>> treat category-a and category-b as branches, which isn't right at
->>> all. As a result, git-svn seems to skip most (if not all) revisions
->>> that occur in these directories and creates a lot of entries in
->>> unhandled.log.
->> 
->> So what did you specify in your .git/config file regarding the svn
->> structure?
+On Tue, 4 Sep 2007, Jon Smirl wrote:
+
+> On 9/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> I specified the 'branches' directory, but that's because earlier in
-> the life of the repo we did just do the flat branch layout, but
-> decided to make it more structured once that got unwieldy.
+> > On Tue, 4 Sep 2007, Jon Smirl wrote:
+> >
+> > > In my scheme the path info is moved into the file object nodes and 
+> > > the SHA list is in the commit node.
+> >
+> > And how should this "SHA list" be any different from a single tree 
+> > object, except that you now merge it with the commit object?
+> >
+> > Really, go back to the mail Martin mentioned.  Having all objects in 
+> > one list kills performance.
+> 
+> You are ignoring the fact the in this scheme temp indexes can be
+> created as needed. These temp indexes could look just like tree nodes.
+> 
+> I'm saying that it may be a mistake to be recording the indexes (aka
+> file names) as part of the commit when they really aren't.
 
-Cough, cough.  _What_ did you specify in your .git/config file
-regarding the svn structure?  Please quote the section.
+You still have not acknowledged that you want to do (in essence) _exactly_ 
+the same.  Your "temp indexes" awfully remind me of tree objects.
 
-> Is it possible to specify more than one folder for the branches
-> option?
+And that is no wonder, since you _need_ something like that, however you 
+want to avoid it.  Just admit it that you found -- again -- that flat 
+directory structure does not work, and you therefore need some smaller 
+structures.  We just happen to call them "tree objects", and for ease of 
+concept we wrap directories in them.
 
-It is possible to adapt the config section to the actual layout.  If
-not otherwise, by starting with
-git svn init
-with a clean slate, editing the config file, and only then actually
-fetching stuff.
-
-However, git-svn will not magically start guessing that you changed
-your structure around.  You have to edit the configuration
-appropriately.
-
--- 
-David Kastrup
+Hth,
+Dscho
