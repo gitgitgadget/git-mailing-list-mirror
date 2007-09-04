@@ -1,80 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] git-blame and git-gui blame wishlist
-Date: Mon, 3 Sep 2007 23:25:50 -0400
-Message-ID: <20070904032550.GT18160@spearce.org>
-References: <200709031240.04235.jnareb@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Calculating tree nodes
+Date: Mon, 3 Sep 2007 23:26:30 -0400
+Message-ID: <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
+References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
+	 <20070904025153.GS18160@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marco Costalba <mcostalba@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 05:26:06 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 05:26:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISP3G-0002kf-FT
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 05:26:06 +0200
+	id 1ISP3l-0002np-Ht
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 05:26:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbXIDD0A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 23:26:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751686AbXIDD0A
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 23:26:00 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57167 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbXIDD0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 23:26:00 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1ISP2n-0005Pc-PB; Mon, 03 Sep 2007 23:25:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B32F020FBAE; Mon,  3 Sep 2007 23:25:50 -0400 (EDT)
+	id S1751791AbXIDD0c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 23:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXIDD0c
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 23:26:32 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:45807 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751766AbXIDD0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 23:26:31 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2079830wah
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 20:26:31 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VPO6wgDdUNTZHUSQJLSXCp4+EpCuVb5NjQM6NgAUTmQP5ewGpJR5zU3d9RIUSVgeBxfCQR1N+rKox/oeVBA2bMfSWZ5pFii8QrX89hj2/4XDyQV/bfAK8lxQ0ZsI9ja+MY4duGQF9koBpLj2LhNM1r2gv/hs76MJxNtvl4q8EaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s+NLFy5vbs/sFKAOIgZI0kpoDp+RbLz3VPbvV5DQFmPEdyAv/SzFOJj0kxktFklKa9LRgo9YPd8FEr9B7bU2ojxmGN3mOnSIQpGpkbCo0uKAbg/MJp+rSYhlhEHd0CfAj2y9MA8zfT9T+g4sj4arb0oDpFuLnEM3MnBaD/FHIHs=
+Received: by 10.114.175.16 with SMTP id x16mr163972wae.1188876390563;
+        Mon, 03 Sep 2007 20:26:30 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Mon, 3 Sep 2007 20:26:30 -0700 (PDT)
+In-Reply-To: <20070904025153.GS18160@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <200709031240.04235.jnareb@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57515>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> 1. In git-gui blame viewer you can click on shortened sha1 of a commit
-...
-> 2. Sometimes I'm interested only in part of a file. Thus I'd like
-...
-> 3. Sometimes when reviewing patches I do wonder: why the preimage looks
-...
+Are tree objects really needed?
 
-I've seen this list before... hmm, yea, I have, right here:
+1) Make the path an attribute of the file object.
+2) Commits are simply a list of all the objects that make up the commit.
+Sort the SHAs in the commit and delta them.
 
-	From: Jakub Narebski <jnareb@gmail.com>
-	To: git@vger.kernel.org
-	Subject: git-blame and blame GUI wishlist
-	Date: Mon, 6 Aug 2007 00:09:37 +0200
-	Message-Id: <200708060009.37595.jnareb@gmail.com>
+This is something that has always bugged me about file systems. File
+systems force hierarchical naming due to their directory structure.
+There is no reason they have to work that way. Google is an example of
+a giant file system that works just fine without hierarchical
+directories. The full path should be just another attribute on the
+file. If you want a hierarchical index into the file system you can
+generate it by walking the files or using triggers. But you could also
+delete the hierarchical directory and replace it with something else
+like a full text index. Directories would become a computationally
+generated cache, not a critical part of the file system. But this is a
+git list so I shouldn't go too far off into file system design.
 
-;-)
+Git has picked up the hierarchical storage scheme since it was built
+on a hierarchical file system. I don't this this is necessarily a good
+thing moving forward.
 
-To the extent that I can get around to it, it has been on my todo
-list.  But you have to keep in mind that my todo list for git is
-very, very, very long and my time to work on it is quite limited
-in comparsion.
+If we really need tree objects they could become a new class of
+computationally generated objects that could be deleted out of the
+database at any time and recreated. For example if you think of the
+file objects as being in a table, inserting a new row into this table
+would compute new tree objects (an index).
 
-I certainly would not mind if more folks helped out on git-gui by
-contributing patches to it.  :)
+Index is the key here, we may want other kinds of indexes in the
+future. It was the mail about auto-generating the Maintainers list
+that caused me to think about this. If file objects are a table with
+triggers, building a hierarchical index for the Maintainers field
+doesn't make sense.
 
-Unfortunately the survey results seem to indicate that not many of
-our users know Tcl/Tk.  Yea, it is a somewhat weird language, but
-there's books and other documentation available for free through
-a series tubes that Mr. Gore invented.  Most programmers can pick
-up Tcl.  They just might want to hurt themselves afterwards...
+These are just some initial thoughts on a different way to view the
+data git is storing. Thinking about it as a database with fields and
+indexes built via triggers may change the way we want to structure
+things.
 
 -- 
-Shawn.
+Jon Smirl
+jonsmirl@gmail.com
