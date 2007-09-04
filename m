@@ -1,127 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Calculating tree nodes
-Date: Tue, 04 Sep 2007 16:41:14 +0200
-Message-ID: <46DD6E8A.7000802@op5.se>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>	 <20070904025153.GS18160@spearce.org>	 <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>	 <e1dab3980709032119r381f7a91ia84ba09039c21be1@mail.gmail.com>	 <9e4733910709032252x1fe6f436wdd13bcb1a6f76636@mail.gmail.com>	 <46DCF361.2090402@op5.se> <20070904061611.GY18160@spearce.org> <9e4733910709040719n135a1c2dw3a2d5c470b74791a@mail.gmail.com>
+From: Russ Brown <pickscrape@gmail.com>
+Subject: git-svn and a nested branches folder
+Date: Tue, 04 Sep 2007 09:42:50 -0500
+Message-ID: <46DD6EEA.9010304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Tweed <david.tweed@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 16:41:26 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 16:43:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZam-0007xS-Pw
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:41:25 +0200
+	id 1ISZcU-0008RS-4m
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228AbXIDOlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 10:41:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754120AbXIDOlT
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:41:19 -0400
-Received: from mail.op5.se ([193.201.96.20]:36323 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754195AbXIDOlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 10:41:18 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2B028194438;
-	Tue,  4 Sep 2007 16:41:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LcGJkclOhT1C; Tue,  4 Sep 2007 16:41:16 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 265B7194429;
-	Tue,  4 Sep 2007 16:41:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <9e4733910709040719n135a1c2dw3a2d5c470b74791a@mail.gmail.com>
+	id S1754067AbXIDOnE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 10:43:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbXIDOnE
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:43:04 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:8051 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753779AbXIDOnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 10:43:00 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1818384wxd
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 07:43:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=iap03of8JnGBkcpfda89G/0NZ0cs2UWxpL/cGSXUDVgkCpMGRkFpBDW1cF+4jRtppTNqAXYpCNEvFlq0eIMf1Dsw/lwE5SOEWrd+f17S0LwjQ/gJe64Zx4XpSG/IVfLuHllEiQ4AR6C7ZruUQPPSaig1q23hEqkWCRSVAqrRyew=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=N9jSaAcruzYNy3JtbWxM2U6TD3yLpl7GDjlueWCRNTEwhvwMMgSp6yUej2i6RuKtT5Wx85VbVGu/s3YsDS60WdmbPqaULeInsB5fk8USxnCaS5ToMZrKdZGA2rfQp+HdOvI5wf0y/8YHBLwpJBugvGf7DSDXLkD+Psyg5Qms8x0=
+Received: by 10.90.93.6 with SMTP id q6mr1558187agb.1188916979190;
+        Tue, 04 Sep 2007 07:42:59 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.164.207.197])
+        by mx.google.com with ESMTPS id 7sm5800023aga.2007.09.04.07.42.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 Sep 2007 07:42:58 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57582>
 
-Jon Smirl wrote:
-> On 9/4/07, Shawn O. Pearce <spearce@spearce.org> wrote:
->> Andreas Ericsson <ae@op5.se> wrote:
->>> Jon Smirl wrote:
->>>> On 9/4/07, David Tweed <david.tweed@gmail.com> wrote:
->>>>> On 9/4/07, Jon Smirl <jonsmirl@gmail.com> wrote:
->>>>>> Git has picked up the hierarchical storage scheme since it was built
->>>>>> on a hierarchical file system.
->> ...
->>>>> One of the nice things about tree nodes is that for doing a diff
->>>>> between versions you can, to overwhelming probability, decide
->>>>> equality/inequality of two arbitrarily deep and complicated subtrees
->>>>> by comparing 40 characters, regardless of how remote and convoluted
->>>>> their common ancestry. With delta chains don't you end up having to
->>>>> trace back to a common "entry" in the history? (Of course, I don't
->>>>> know how packs affect this - presumably there's some delta chasing to
->>>>> get to the bare objects as well.)
->>>> While it is a 40 character compare, how many disk accesses were needed
->>>> to get those two SHAs into memory?
->>> One more than there would have been to read only the commit, and one more
->>> per level of recursion, assuming you never ever pack your repository.
->>>
->>> If you *do* pack it, the tree(s) needed to compare are likely already
->>> inside the sliding packfile window. In that case, there are no extra
->>> disk accesses.
->> Even better, lets do some back of the napkin math on the Linux
->> kernel tree.  My local (out of date but close enough) copy has
->> 22,730 files in the tip revision.  Values shown are uncompressed
->> and compressed (gzip -9 | wc -c), but are excluding deltification.
->>
->>                  Current Scheme       Jon's Flat Scheme
->>                  -----------------    -----------------
->> commit raw       932                  932 + 22,730*20 = 455,532
->> (compressed)     521                  456,338
->>
->> root tree raw    876                  0
->> (compressed)     805                  0
-> 
-> This is not a fair comparison. The current scheme is effectively
-> diffed against the previous version. You aren't showing an equivalent
-> diff for the flat scheme. Both schemes are dealing with the same
-> 22,000 SHAs.
-> 
+Hi,
 
-How, with your scheme, would you solve
+I'm having some trouble with using git-svn to fetch a repository, and I
+think it's because the repository doesn't store branches as a flat list
+directly under the 'branches' directory.
 
-	git diff -M master pu
+Basically, we have a structure like this:
 
-in the git repo?
+|
++-trunk
++-tags
++-branches
+  + category-a
+    + branch-a
+    + branch-b
+  + category-b
+    + branch-c
+    + branch-d
 
-You'd have to build both trees completely, utilizing the last known
-complete tree-listing (the root commit, since you propose to do away
-with trees altogether) and then applying diffs on top of that to
-finally generate an in-memory tree-structure in which you will have
-to compare every single file against every single other file to find
-out which code has been moved/copied/renamed/whatever.
+etc. category-a and category-b are simple directories created using svn
+mkdir. The branches are created using svn cp.
 
-That's (n*(n+1))/2 operations for file-level diffs alone. For the
-kernels 22730 files, you're looking at 258337815 file comparisons
-without the tree objects.
+It helps us to organise the branches better, but the rationale is
+besides the point. The problem is that git-svn seems to want to treat
+category-a and category-b as branches, which isn't right at all. As a
+result, git-svn seems to skip most (if not all) revisions that occur in
+these directories and creates a lot of entries in unhandled.log.
 
-Sure, you can probably shave away quite a few of those comparisons
-at the expense of computing the tree-hashes on the fly, but in that
-case, why get rid of them in the first place?
+I've also encountered an index corruption in one of the
+.git/svn/<branch>/index files which I think it probably related.
 
-> The size win is from diffing, not compressing.
-> 
+I've had a quick look at the source myself, but perl isn't my strong
+point. What I think it should do is something like recurse down the tree
+from the directory given looking for folders that copy from trunk (or
+some other branch that already exists). That would work perfectly well
+for the default flat branch storage method as well as the one we use.
 
-It was declared in May 2006 by someone insightful that diskspace
-and bandwidth are cheap, while human time is priceless.
+The only other problem is in branch naming, which could clash if you
+only use the outer-most directory name, so I'd suggest something that
+involves concatenating the folders in the path relative to 'branches' to
+keep them unique (if git can handle slashes in branch names then all the
+better).
 
-IOW, size wins had better be proportionally huge to justify slowing
-git down and thereby taking more than necessary of the users' time.
+Thanks for reading.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Russ
