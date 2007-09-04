@@ -1,98 +1,79 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH 0/5] gitweb: Support for arbitrary diffs
-Date: Tue, 4 Sep 2007 08:31:51 +0200
-Message-ID: <20070904063151.GA17799@auto.tuwien.ac.at>
-References: <11887443682216-git-send-email-mkoegler@auto.tuwien.ac.at> <fbfjtl$7gh$1@sea.gmane.org> <20070903013330.GR1219@pasky.or.cz> <200709031023.42366.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fix memleak from tree pathspec in git-blame
+Date: Mon, 03 Sep 2007 23:54:19 -0700
+Message-ID: <7vir6q7wf8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 08:32:02 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 08:54:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISRxB-00088H-EX
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 08:32:01 +0200
+	id 1ISSIu-0003Jc-ER
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 08:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXIDGb5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Sep 2007 02:31:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbXIDGb4
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 02:31:56 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58009 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751604AbXIDGb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 02:31:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id C8A85680D668;
-	Tue,  4 Sep 2007 08:31:51 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IBo2nk+Pa2nb; Tue,  4 Sep 2007 08:31:51 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 51D81680D42B; Tue,  4 Sep 2007 08:31:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200709031023.42366.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751300AbXIDGyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 02:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbXIDGyX
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 02:54:23 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35359 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751289AbXIDGyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 02:54:23 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D704912C84E;
+	Tue,  4 Sep 2007 02:54:42 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57535>
 
-On Mon, Sep 03, 2007 at 10:23:41AM +0200, Jakub Narebski wrote:
-> On Mon, 3 September 2007, Petr "Pasky" Baudis wrote:
->=20
-> > To hijack this post a bit, another patch in the queue (the incremen=
-tal
-> > blame thingie) introduces blame.js. Do you think that we should kee=
-p the
-> > .js files separate, or instead have one big gitweb.js with everythi=
-ng?
-> > I'm inclined to the second possibility in order to reduce the numbe=
-r of
-> > requests, but it comes at a price of slightly worse maintainability=
-=2E
+We repeatedly run diff-tree while finding code movements.  The
+pathspec data is changed into a list of paths and their lengths
+for quicker access by diff_tree_setup_paths(), and you need to
+release the extra memory when you are done using that pathspec
+data.
 
-Why is the maintainablility reduced?
+Not releasing it is not a problem for "git log -- path" (or its
+plumbing equivalent "git rev-list -- paths"), because the
+pathspec never changes during the traversal, but it was
+noticeable for blame especially with -C -C.
 
-gitweb.perl is also a collection of different function, which are kept
-in one file. Where is the difference to a javascript file?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Keeping everything into one file will make it more likely, that the
-code is not developed totally different (in the terms of code style,
-variable/function names, ...).
+ builtin-blame.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-In the moment, there is the problem, which patch should introduce the
-js file. We need a common base patch, which introduces an empty
-gitweb.js.
-
-Keeping the two functions separate has problems. Every patch need to
-hook into the onload event. To avoid merge conflicts, my current patch
-saves the old handler and overwrite it with its on version, which
-calls back into the saved handler.
-
-If we would have on js file, we can add in the base patch an empty
-JavaScript function for this.
-
-Then Hooking in the onload event would mean, to only add some new
-lines to the function. The resulting merge conflicts are
-easier to resolve (as they affect independet lines) compared to
-the current '<body onload=3D"hook1(); hook2();">'
-
-> On the other hand if we have blame.js separate, we could load it
-> (require it) only for the 'blame' view, it means only when needed.
->=20
-> gitweb.js would contain JavaScript code used by all (or almost all)
-> views, then...
->=20
-> I don't think gitweb.js would be as large as gitweb.perl, if we are
-> talking about maintability ;-)
-
-The size of gitweb.js should not matter. On a modern browser, the
-first request will fetch the whole Javascript file. For subseqent
-request, the webserver returns "not modified". Having two javascript
-file means two checks.
-
-mfg Martin K=F6gler
+diff --git a/builtin-blame.c b/builtin-blame.c
+index dc88a95..aace08c 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -380,6 +380,7 @@ static struct origin *find_origin(struct scoreboard *sb,
+ 		}
+ 	}
+ 	diff_flush(&diff_opts);
++	diff_tree_release_paths(&diff_opts);
+ 	if (porigin) {
+ 		/*
+ 		 * Create a freestanding copy that is not part of
+@@ -436,6 +437,7 @@ static struct origin *find_rename(struct scoreboard *sb,
+ 		}
+ 	}
+ 	diff_flush(&diff_opts);
++	diff_tree_release_paths(&diff_opts);
+ 	return porigin;
+ }
+ 
+@@ -1157,6 +1159,7 @@ static int find_copy_in_parent(struct scoreboard *sb,
+ 		}
+ 	}
+ 	diff_flush(&diff_opts);
++	diff_tree_release_paths(&diff_opts);
+ 
+ 	return retval;
+ }
