@@ -1,134 +1,86 @@
-From: Russ Brown <pickscrape@gmail.com>
-Subject: Re: git-svn and a nested branches folder
-Date: Tue, 04 Sep 2007 13:03:19 -0500
-Message-ID: <46DD9DE7.1060004@gmail.com>
-References: <46DD6EEA.9010304@gmail.com> <86veaqebf1.fsf@lola.quinscape.zz> <46DD718C.7060908@gmail.com> <86r6leeaq7.fsf@lola.quinscape.zz> <46DD77F2.3040000@gmail.com> <20070904174006.GB4538@xp.machine.xx>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Git's database structure
+Date: Tue, 4 Sep 2007 20:04:29 +0200
+Organization: glandium.org
+Message-ID: <20070904180429.GA626@glandium.org>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com> <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com> <7vtzqany0z.fsf@gitster.siamese.dyndns.org> <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 20:03:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 20:06:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISckP-0000bb-4X
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 20:03:33 +0200
+	id 1IScmr-0001BL-4H
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 20:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755166AbXIDSD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 14:03:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXIDSD2
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 14:03:28 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231]:61892 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755093AbXIDSD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 14:03:27 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so899620wra
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 11:03:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=GGJx/Rmyu9KZOY8Y6dkfsZQm2PMqA72IAQO97n8KCNAx/q72bCu78y2YuGgjjRiXoj/PGXPSi5A9tTyMcHzbiUbl8wG/1r0BvkKwo6fDQqxE6g+NyRnGUmxxAwSuvPZhnvDyO8nOgdhTX2Bqwl+RjXSJ/SJE+YAZbBXVY2zFIAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=ua2ttsZr/P7XYmmOKJtlNhS1wlgLL+IFv1jqqKL0XXaJNNfQNDJJz91NbIz3Zh0Fv/3LIYK3m/odka6tE5EW1I8+JqMWPZFq68QutLWXC365NKWPTJt6wNwYx95LDj8OYeqf8NyUbNeoMAg+DnskNalqRekM4Ei0o5/C4nJNwhM=
-Received: by 10.90.25.3 with SMTP id 3mr5817678agy.1188929007101;
-        Tue, 04 Sep 2007 11:03:27 -0700 (PDT)
-Received: from ?192.168.0.100? ( [71.164.207.197])
-        by mx.google.com with ESMTPS id r28sm5733040ele.2007.09.04.11.03.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 04 Sep 2007 11:03:25 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
-In-Reply-To: <20070904174006.GB4538@xp.machine.xx>
+	id S1755225AbXIDSGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 14:06:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755213AbXIDSGA
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 14:06:00 -0400
+Received: from vawad.err.no ([85.19.200.177]:55561 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755206AbXIDSF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 14:05:59 -0400
+Received: from aputeaux-153-1-67-149.w81-249.abo.wanadoo.fr ([81.249.53.149] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IScmW-0008RJ-C8; Tue, 04 Sep 2007 20:05:50 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1ISclJ-0000Al-AI; Tue, 04 Sep 2007 20:04:29 +0200
+Content-Disposition: inline
+In-Reply-To: <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57630>
 
-Peter Baumann wrote:
-> On Tue, Sep 04, 2007 at 10:21:22AM -0500, Russ Brown wrote:
->> David Kastrup wrote:
->>> Russ Brown <pickscrape@gmail.com> writes:
->>>
->>>> David Kastrup wrote:
->>>>> Russ Brown <pickscrape@gmail.com> writes:
->>>>>
->>>>>> I'm having some trouble with using git-svn to fetch a repository, and I
->>>>>> think it's because the repository doesn't store branches as a flat list
->>>>>> directly under the 'branches' directory.
->>>>>>
->>>>>> Basically, we have a structure like this:
->>>>>>
->>>>>> |
->>>>>> +-trunk
->>>>>> +-tags
->>>>>> +-branches
->>>>>>   + category-a
->>>>>>     + branch-a
->>>>>>     + branch-b
->>>>>>   + category-b
->>>>>>     + branch-c
->>>>>>     + branch-d
->>>>>>
->>>>>> etc. category-a and category-b are simple directories created using svn
->>>>>> mkdir. The branches are created using svn cp.
->>>>>>
->>>>>> It helps us to organise the branches better, but the rationale is
->>>>>> besides the point. The problem is that git-svn seems to want to
->>>>>> treat category-a and category-b as branches, which isn't right at
->>>>>> all. As a result, git-svn seems to skip most (if not all) revisions
->>>>>> that occur in these directories and creates a lot of entries in
->>>>>> unhandled.log.
->>>>> So what did you specify in your .git/config file regarding the svn
->>>>> structure?
->>>> I specified the 'branches' directory, but that's because earlier in
->>>> the life of the repo we did just do the flat branch layout, but
->>>> decided to make it more structured once that got unwieldy.
->>> Cough, cough.  _What_ did you specify in your .git/config file
->>> regarding the svn structure?  Please quote the section.
->>>
->> Erm, sorry.
->>
->> [svn-remote "svn"]
->>         url = svn://svn.<name>.com
->>         fetch = trunk:refs/remotes/trunk
->>         branches = branches/*:refs/remotes/*
->>         tags = tags/*:refs/remotes/tags/*
->>
->> (URL changed in case it annoys my employers)
->>
->> I didn't write this by hand: it was generated by git-svn init.
->>
+On Tue, Sep 04, 2007 at 01:44:47PM -0400, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 9/4/07, Junio C Hamano <gitster@pobox.com> wrote:
+> > "Jon Smirl" <jonsmirl@gmail.com> writes:
+> >
+> > > Another way of looking at the problem,
+> > >
+> > > Let's build a full-text index for git. You put a string into the index
+> > > and it returns the SHAs of all the file nodes that contain the string.
+> > > How do I recover the path names of these SHAs?
+> >
+> > That question does not make much sense without specifying "which
+> > commit's path you are talking about".
+> >
+> > If you want to encode such "contextual information" in addition
+> > to "contents", you could do so, but you essentially need to
+> > record commit + pathname + mode bits + contents as "blob" and
+> > hash that to come up with a name.
 > 
-> Try something like this:
+> I left the details out of the full-text example to make it more
+> obvious that we can't recover the path names.
 > 
-> [svn-remote "svn"]
-> 	# trunk
-> 	fetch = trunk:refs/remotes/trunk
+> Doing this type of analysis may point out that even more fields are
+> missing from the blob table such as commit id.
 > 
-> 	# branches
-> 	fetch = branches/category-a/branch_a:refs/remotes/svn/branch_a
-> 	fetch = branches/category-a/branch_b:refs/remotes/svn/branch_b
-> 	fetch = branches/category-b/branch_c:refs/remotes/svn/branch_c
+> The current data store design is not very flexible. Databases solved
+> the flexibility problem long ago. I'm just wondering if we should
+> steal some good ideas out of the database world and apply them to git.
+> Ten years from now we may have 100GB git databases and really wish we
+> had more flexible ways of querying them.
 > 
-> 	# tags
-> 	tags = tags/*:refs/remotes/tags/*
-> 
-> 
-> (Not sure if wildcards will work here, but I'm sure you could experiment and try
->  it out :-)
-> 
+> The reason databases don't encode the fields into the index is that
+> you can only have a single index on the table if you do that.
+> Databases do sometimes duplicate the field in both the index and the
+> table. Databases also have the property that indexes are just a cache
+> and can be dropped at any time.
 
-Thanks a lot! I'll try it out.
+The big difference between a database and git is that a database is a
+general purpose tool. git has a much more restricted scope. As such, it
+doesn't need *that much* flexibility.
 
-I wonder if I'm going to have to fetch in stages here. i.e. configuring
-the branches for the original layout, fetching up the point where the
-layout changed a bit and reconfigure, fetch some more, tweak again etc.
-
-> -Peter
-
-
--- 
-
-Russ
+Mike
