@@ -1,54 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git's database structure
-Date: Tue, 04 Sep 2007 10:25:16 -0700
-Message-ID: <7vtzqany0z.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
-	<9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
+Subject: Re: [PATCH] Add post-merge hook.
+Date: Tue, 04 Sep 2007 10:25:46 -0700
+Message-ID: <7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
+References: <11885136172952-git-send-email-jjengla@sandia.gov>
+	<7v7inc7hao.fsf@gitster.siamese.dyndns.org>
+	<1188923110.6192.15.camel@beauty>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:25:35 2007
+Cc: git@vger.kernel.org
+To: "Josh England" <jjengla@sandia.gov>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:25:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISc9V-0008K7-7P
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 19:25:25 +0200
+	id 1ISc9w-0008Rq-7V
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 19:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754744AbXIDRZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 13:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbXIDRZV
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 13:25:21 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44055 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbXIDRZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 13:25:20 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A34D212E663;
-	Tue,  4 Sep 2007 13:25:39 -0400 (EDT)
-In-Reply-To: <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
-	(Jon Smirl's message of "Tue, 4 Sep 2007 12:28:00 -0400")
+	id S1754787AbXIDRZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 13:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754734AbXIDRZr
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 13:25:47 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62324 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754638AbXIDRZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 13:25:47 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070904172545.VEYE11280.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 4 Sep 2007 13:25:45 -0400
+Received: from localhost ([68.225.240.77])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id kHRm1X00K1gtr5g0000000; Tue, 04 Sep 2007 13:25:46 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57622>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+"Josh England" <jjengla@sandia.gov> writes:
 
-> Another way of looking at the problem,
+>> Two questions.
+>> 
+>>  * Do you want to run the post-merge hook even for a squash
+>>    merge?
 >
-> Let's build a full-text index for git. You put a string into the index
-> and it returns the SHAs of all the file nodes that contain the string.
-> How do I recover the path names of these SHAs?
+> Yes.  I'd like to run it at any time that the working tree might be
+> updated.
 
-That question does not make much sense without specifying "which
-commit's path you are talking about".
+If that is the case, perhaps your hook may want to get a
+parameter to tell it what kind of "git-merge" invocation it was?
+Squash merge does not even advance the HEAD and is of a very
+different nature from a normal merge.
 
-If you want to encode such "contextual information" in addition
-to "contents", you could do so, but you essentially need to
-record commit + pathname + mode bits + contents as "blob" and
-hash that to come up with a name.
+>>  - We would want a new test in the test suite for this, to make
+>>    sure that later changes by others would not break this new
+>>    feature you would depend upon.
+>
+> Can do.  You want me to resubmit the original patch along with tests or
+> submit the tests as a new patch?
+
+I'd like a full resend whenever I reject a patch with a
+comment.  That way the patch will be easier to review with
+context by other people.
+
+Thanks.
