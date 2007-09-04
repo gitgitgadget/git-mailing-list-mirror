@@ -1,125 +1,74 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: .gitignore, .gitattributes, .gitmodules, .gitprecious?,
-	.gitacls? etc.
-Date: Tue, 4 Sep 2007 23:03:49 +0200
-Message-ID: <20070904210349.GE3786@efreet.light.src>
-References: <2646CA4BEA644C9E9089C4A1AC395250@ntdev.corp.microsoft.com> <7v1wdqud0z.fsf@gitster.siamese.dyndns.org> <loom.20070827T172150-191@post.gmane.org> <86odgtou5p.fsf@lola.quinscape.zz> <loom.20070827T185519-641@post.gmane.org>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: Re: [PATCH] Add post-merge hook.
+Date: Tue, 04 Sep 2007 15:23:49 -0600
+Message-ID: <1188941029.6192.73.camel@beauty>
+References: <11885136172952-git-send-email-jjengla@sandia.gov>
+ <7v7inc7hao.fsf@gitster.siamese.dyndns.org>
+ <1188923110.6192.15.camel@beauty>
+ <7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
+ <1188934573.6192.35.camel@beauty>
+ <7vodgimc53.fsf@gitster.siamese.dyndns.org>
+ <1188937975.6192.59.camel@beauty> <46DDC576.3080708@midwinter.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AsxXAMtlQ5JHofzM"
-Cc: git@vger.kernel.org
-To: Sergio Callegari <scallegari@arces.unibo.it>
-X-From: git-owner@vger.kernel.org Tue Sep 04 23:04:14 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Steven Grimm" <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 23:23:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISfZ1-0002EA-98
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:03:59 +0200
+	id 1ISfrR-0006Pv-Dc
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764AbXIDVDz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 17:03:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404AbXIDVDz
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:03:55 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:37116 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754608AbXIDVDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 17:03:54 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 7B9F057264;
-	Tue,  4 Sep 2007 23:03:53 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 3QhCAkgZFpnq; Tue,  4 Sep 2007 23:03:50 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 9F73B57252;
-	Tue,  4 Sep 2007 23:03:50 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ISfYr-00054y-53; Tue, 04 Sep 2007 23:03:49 +0200
-Content-Disposition: inline
-In-Reply-To: <loom.20070827T185519-641@post.gmane.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1755322AbXIDVW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 17:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754346AbXIDVW4
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:22:56 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:2444 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755294AbXIDVW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 17:22:56 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 04 Sep 2007 15:22:43 -0600
+X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l84LMdnG024199;
+ Tue, 4 Sep 2007 15:22:39 -0600
+In-Reply-To: <46DDC576.3080708@midwinter.com>
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.4.135524
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_700_799
+ 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
+ __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0,
+ __pbl.spamhaus.org_TIMEOUT '
+X-TMWD-Spam-Summary: TS=20070904212244; SEV=2.2.2; DFV=B2007090416;
+ IFV=2.0.4,4.0-9; AIF=B2007090416; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230312E34364444434341332E303041413A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007090416_5.02.0125_4.0-9
+X-WSS-ID: 6AC313292E01273503-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57647>
 
+On Tue, 2007-09-04 at 13:52 -0700, Steven Grimm wrote:
+> Josh England wrote:
+> > I'm thinking that it
+> > will be sufficient to pass a flag indicating whether the working tree
+> > has been modified or not.  The flag can be set for normal merge and
+> > fast-forward merges, and unset for up-to-dates and squash merges.
+> >   
+> Squash merges modify the working tree. In fact, that's *all* they do -- 
+> they don't commit anything.
 
---AsxXAMtlQ5JHofzM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+OK.  Looking at it closer, the post-merge hook should only run when
+there has been a real merge (not run for up-to-dates), which seems
+alright with me.  With the immediate data at hand I could pass in a flag
+indicating a squash merge or not, or could simply pass in the current
+HEAD.  I think the first scenario is more appropriate.
 
-On Mon, Aug 27, 2007 at 17:07:34 +0000, Sergio Callegari wrote:
-> David Kastrup <dak <at> gnu.org> writes:
->=20
-> >=20
-> > Sergio Callegari <scallegari <at> arces.unibo.it> writes:
-> >=20
-> > > Couldn't all this directory/ownership/permission tracing be easily
-> > > done by using hooks?  E.g. Having a pre-status and pre-commit hook
-> > > one could fire up a program/script to collect all the extra info he
-> > > wants to trace and store it somewhere (typically in some traced
-> > > file).  The other way round one could have a post-checkout hook and
-> > > he could arrange it to fire up some program to look into the
-> > > extra-info file to set up all the meta-data he wants.
-> > >
-> > > This would be very flexible and would permit to manage absolutely
-> > > /any/ kind of the metadata leaving absolute freedom about how to do
-> > > so.
-> > >
-> > > Am I missing something here?
-> >=20
-> > Merging.
-> >=20
->=20
-> Sorry, maybe I am really missing something, since merging does not look t=
-o me
-> as an issue.
->=20
-> Why cannot git simply do the merging in the working tree as it normally
-> does, including merging of the traced metadata file generated by the meta=
-data
-> helpers invoked via the hooks?
-> Only, again more hooks are needed and likely a post-merge hook, so that at
-> the end of the merge, the metadata can be applied.
->=20
-> Only, to have things going on smoothly, one should be so wise to assure t=
-hat
-> the metadata helpers save metadata as nice, sorted text files in order to
-> minimize the burden of manual intervention if there are conflicts in
-> metadata merging.
-
-The post-checkout (no need for post-merge -- after in-index merge is done,
-the files are checked out to worktree, so post-checkout would run anyway)
-could actually apply any custom merge strategy required to avoid/clean up
-spurious conflicts in the metadata file (eg. adding two files that go after
-each other would be a textual conflict). The relevant versions are stored in
-index stages at that point.
-
-> BTW.  Having a post-checkout hook could also help getting rid of unwanted
-> empty directories, couldn't it?
-
-Probably not. I would imagine it would actually only run for the files being
-checked out -- and there is nothing checked out in empty directories. (Well,
-it would run once or once per directory with list of checked out files on
-standard input).
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---AsxXAMtlQ5JHofzM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG3cg1Rel1vVwhjGURAgohAJ4zt6qwBx4HTQecdksbIHxZTRvPPgCfcB/i
-4llyGZyW5bUbVFDsZr6ehlE=
-=pG8A
------END PGP SIGNATURE-----
-
---AsxXAMtlQ5JHofzM--
+-JE
