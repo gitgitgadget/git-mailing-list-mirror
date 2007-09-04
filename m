@@ -1,121 +1,115 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Git's database structure
-Date: Tue, 4 Sep 2007 17:54:00 -0400
-Message-ID: <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
-	 <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
-	 <7vtzqany0z.fsf@gitster.siamese.dyndns.org>
-	 <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
-	 <20070904212507.GA24434@thunk.org>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32 API
+Date: Tue, 4 Sep 2007 22:54:08 +0100
+Message-ID: <3f4fd2640709041454jcb361d7p7e96ac1cf0062987@mail.gmail.com>
+References: <46DACE0D.5070501@trolltech.com> <46DBFA2A.7050003@trolltech.com>
+	 <Pine.LNX.4.64.0709031428080.28586@racer.site>
+	 <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com>
+	 <Pine.LNX.4.64.0709041145230.28586@racer.site>
+	 <46DD433A.5040604@eudaptics.com>
+	 <Pine.LNX.4.64.0709041324420.28586@racer.site>
+	 <Pine.LNX.4.64.0709041356070.28586@racer.site>
+	 <20070904210200.GA32472@nospam.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Theodore Tso" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 04 23:54:25 2007
+To: git@wingding.demon.nl,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Johannes Sixt" <j.sixt@eudaptics.com>,
+	"Marius Storm-Olsen" <marius@trolltech.com>,
+	"Johannes Sixt" <johan
+X-From: git-owner@vger.kernel.org Tue Sep 04 23:54:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISgLg-0004FP-QZ
+	id 1ISgLh-0004FP-EE
 	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121AbXIDVyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 17:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbXIDVyD
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:54:03 -0400
-Received: from rv-out-0910.google.com ([209.85.198.189]:59748 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908AbXIDVyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 17:54:01 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1280714rvb
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 14:54:00 -0700 (PDT)
+	id S1752403AbXIDVyK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 17:54:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbXIDVyK
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:54:10 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:60816 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbXIDVyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 17:54:08 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2363535wah
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 14:54:08 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ys1i66Uzb0CVj7xWadWvPUk5RcMoAZx1ouv+ZU7UpZDw7+XpbGUe6QGNPNqjPOBgGX7ghTFU4LfCxd7hZWs1OYORJ/tjuJ/4X7zDYG+247JpXSoKYIheTHA914WMWcXhapfMVns1TzS7n6IDNXBRWQYPHyDJxLZoY0uTnLn9iA8=
+        d=googlemail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iv0zxp7Ik0eP1XmgncMc6Q/VjnZR7g/8lsDV3GelnYw4rUYIzT54rHIEe5c1cEsQWI9xUZKDJ4vqwj5titfyihHR5ozNG5mIpG9EdwSIzxnY++ZSdmNRbEnpUJvVyF/g9OVnDtAbNxKkdPhyDMTYX3Kq1vUGoWig65UdOKOlYyY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PSV4nyJy1GMoSmvtXh/6bvyWIbiJWMp3+SNp/O1nCP/fq23dODAEMhUQxZ7ytomWXkHcZCZ4Hp5lB6eGbXhel/Ad4siV6rSywrho8e/4UDMUnXAULcnvBf7G/tLjkWaYKLdrW1OHiDax7z3839CZRxFfEf4Bs1Bfy+XH0IkO38Y=
-Received: by 10.141.211.13 with SMTP id n13mr2489102rvq.1188942840429;
-        Tue, 04 Sep 2007 14:54:00 -0700 (PDT)
-Received: by 10.141.44.16 with HTTP; Tue, 4 Sep 2007 14:54:00 -0700 (PDT)
-In-Reply-To: <20070904212507.GA24434@thunk.org>
+        d=googlemail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s/Tn9N0uJSi68qrtzZrFnUIAZknby3RCW1O1LJr16xU9dmX8bP8dHVxF2pVSIqIhtM/WZ3ygJSJoUxba0FcQDDd7ulB8HUmfp8+foZKdrTK8Xn7knQlEl7qMRU5q0lxrZByT3gQWkLzowtikyKOx3agEolHMhiwOVhrBoyspVqw=
+Received: by 10.140.148.3 with SMTP id v3mr2488195rvd.1188942848201;
+        Tue, 04 Sep 2007 14:54:08 -0700 (PDT)
+Received: by 10.141.32.14 with HTTP; Tue, 4 Sep 2007 14:54:08 -0700 (PDT)
+In-Reply-To: <20070904210200.GA32472@nospam.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57653>
 
-On 9/4/07, Theodore Tso <tytso@mit.edu> wrote:
-> On Tue, Sep 04, 2007 at 01:44:47PM -0400, Jon Smirl wrote:
-> > The current data store design is not very flexible. Databases solved
-> > the flexibility problem long ago. I'm just wondering if we should
-> > steal some good ideas out of the database world and apply them to git.
-> > Ten years from now we may have 100GB git databases and really wish we
-> > had more flexible ways of querying them.
+On 04/09/07, Rutger Nijlunsing <rutger@nospam.com> wrote:
+> On Tue, Sep 04, 2007 at 01:57:38PM +0100, Johannes Schindelin wrote:
+> > Hi,
+> >
+> > On Tue, 4 Sep 2007, Johannes Schindelin wrote:
+> >
+> > > On Tue, 4 Sep 2007, Johannes Sixt wrote:
+> > >
+> > > > Johannes Schindelin schrieb:
+> > > > > On Tue, 4 Sep 2007, Johannes Sixt wrote:
+> > > > > > Therefore, I've pushed out a fixup patch at the top of mingw.git's
+> > > > > > devel branch that converts mtime to local time
+> > > > >
+> > > > > On Linux, we compare to UTC to begin with, right?  We should do that
+> > > > > here, too...  So if time(NULL) does not return UTC on MinGW, we have
+> > > > > to wrap that function, too.
+> > > >
+> > > > According to MSDN, time(NULL) returns "the number of seconds elapsed
+> > > > since [epoch] according to the system clock". Please don't ask me what
+> > > > "the system clock" is.
+> > >
+> > > I think I know.  From my QEmu adventures I know that DOS/Windows expects
+> > > the system clock to be set to local time, in contrast to _all_ other
+> > > operating systems.
+> >
+> > Now I am utterly confused.  MSDN says
+> >
+> >       FILETIME
+> >
+> >       Contains a 64-bit value representing the number of 100-nanosecond
+> >       intervals since January 1, 1601 (UTC).
+> >
+> > Hmm.
 >
-> Databases solved the flexibility problem, at the cost of performance.
-> And if you use full normalized form in your database scheme, it costs
-> you even more in performance, because of all of the joins that you
-> need in order get the information you need to do, you know, useful
-> work as opposed to database wanking.
 >
-> If you take a look at the really big databases with super high
-> performance requirements, say like those used to managed airline
-> tickets/reservation/fares, you will find that they are not normalized,
-> and they are not relational; they can't afford to be.  And if you take
-> a look at some of git competition that use relational databases to
-> store their SCM data, and take a look at how loooooong they they take
-> to do even basic operations, I would say that the onus is on you to
-> prove that normalization is actually a win in terms of real (not
-> theoretical) advantages, and that it doesn't cause performance to go
-> into the toilet.
+> [Warning: war stories ahead...]
 >
-> I think the fundamental disconnect here is that no one is buying your
-> claim that just because the data design is "more flexible" that this
-> is automatically a good thing in and of itself, and we should even for
-> a moment, "put performance aside".
-
-It is very easy to get bogged down in performance arguments on
-database design when the correct answer is that there are always lots
-of different ways to achieve the same goal. I wanted to defer debating
-performance until we closely looked at the relationships between the
-data at an abstract level.
-
-Since git hasn't stored all of the fields in the object table (the
-path is encoded in the index) we are never going to be able to build
-an alternative way of indexing the object table. Not being able to
-build alternative indexes is likely to cause problems when the
-database starts getting really big. Without an index every query that
-can't use the path name index is reduced to doing full table scans.
-
-A few things that could benefit from alternative indexing, blame,
-full-text search, automating the Maintainers file, etc.
-
-I'm just asking if we really want to make full table scans the only
-possible way to implement these types of queries. If the answer is no,
-then let's first explore how to fix things at an abstract level before
-diving into the performance arguments.
-
-An obvious parallel from the file system world is the locate database
-and how it is forced to continuously rescan the file system and store
-full path names.
-
-
+> If you really, really want to know more:
 >
-> I also don't think that attempting to force git's data structures into
-> database terms makes sense; it is much closer to an filesystem using
-> an object based store --- and very few people except for folks like
-> Hans Resiers believes that Filesystems and Database should be
-> unified....
->
->                                                 - Ted
->
+> http://search.cpan.org/~shay/Win32-UTCFileTime-1.45/lib/Win32/UTCFileTime.pm
 
+Hmm, this may explain something that I have been observing on
+Windows+cygwin. When I run `git diff`, I sometimes get it reporting
+that all (from what I can tell) files have changed, like a `find .
+-type f -exec touch {} \;` command was run.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+I was going to report this on a new thread, but this looks like a more
+relevant place to do so.
+
+My Windows machine is currently in Daylight Savings Time mode, and
+from my observations, I have only seen this repeat first thing the
+next day. I am not sure why, but every 24hrs, it looks as if the file
+time reported by and checked from git is different to that reported by
+stat.
+
+I have not had time yet to play around with the mingw port and this
+new stat implementation to see if it addresses this issue.
+
+- Reece
