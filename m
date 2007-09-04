@@ -1,97 +1,68 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: How-to setup an empty remote repository?
-Date: Tue, 4 Sep 2007 21:47:49 +0200
-Message-ID: <20070904194749.GB3786@efreet.light.src>
-References: <d4cf37a60708251400t17b0a097t91f77cbb4e996810@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add post-merge hook.
+Date: Tue, 04 Sep 2007 13:03:20 -0700
+Message-ID: <7vodgimc53.fsf@gitster.siamese.dyndns.org>
+References: <11885136172952-git-send-email-jjengla@sandia.gov>
+	<7v7inc7hao.fsf@gitster.siamese.dyndns.org>
+	<1188923110.6192.15.camel@beauty>
+	<7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
+	<1188934573.6192.35.camel@beauty>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5/uDoXvLw7AC5HRs"
-Cc: git@vger.kernel.org
-To: Wink Saville <wink@saville.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 21:48:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Josh England" <jjengla@sandia.gov>
+X-From: git-owner@vger.kernel.org Tue Sep 04 22:03:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISeNV-0001gU-LL
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 21:48:02 +0200
+	id 1ISecf-0005Ny-Ji
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 22:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752564AbXIDTr5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 15:47:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbXIDTr5
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 15:47:57 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:47455 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752415AbXIDTr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 15:47:56 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 13EE75733F;
-	Tue,  4 Sep 2007 21:47:55 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id kDa1RzAJe3V9; Tue,  4 Sep 2007 21:47:52 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 151AD5724B;
-	Tue,  4 Sep 2007 21:47:51 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ISeNJ-0004u0-TM; Tue, 04 Sep 2007 21:47:49 +0200
-Content-Disposition: inline
-In-Reply-To: <d4cf37a60708251400t17b0a097t91f77cbb4e996810@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753385AbXIDUD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 16:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbXIDUD1
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 16:03:27 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46919 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753384AbXIDUD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 16:03:27 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9AAF112C262;
+	Tue,  4 Sep 2007 16:03:44 -0400 (EDT)
+In-Reply-To: <1188934573.6192.35.camel@beauty> (Josh England's message of
+	"Tue, 04 Sep 2007 13:36:13 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57638>
 
+"Josh England" <jjengla@sandia.gov> writes:
 
---5/uDoXvLw7AC5HRs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, 2007-09-04 at 10:25 -0700, Junio C Hamano wrote:
+>> "Josh England" <jjengla@sandia.gov> writes:
+>> 
+>> >> Two questions.
+>> >> 
+>> >>  * Do you want to run the post-merge hook even for a squash
+>> >>    merge?
+>> >
+>> > Yes.  I'd like to run it at any time that the working tree might be
+>> > updated.
+>> 
+>> If that is the case, perhaps your hook may want to get a
+>> parameter to tell it what kind of "git-merge" invocation it was?
+>> Squash merge does not even advance the HEAD and is of a very
+>> different nature from a normal merge.
+>
+> OK.  Should it just pass in a flag (squash or normal), or are there
+> other merge types it should need to know about.
 
-On Sat, Aug 25, 2007 at 14:00:33 -0700, Wink Saville wrote:
-> Hello,
->=20
-> I thought I'd try to setup a shared "empty" remote repository and then
-> clone it and then push the initial commit from another maching.
-> This failed as shown below:
->=20
->  $ cd ~/git-repos
->  $ mkdir test.git
->  $ cd test.git
->  $ git --bare init --shared
->  Initialized empty shared Git repository in /home/wink/git-repos/test.git/
->  $ git-daemon --reuseaddr --verbose --base-path=3D/home/wink/git-repos \
->     --export-all --enable=3Dreceive-pack
->=20
-> On my other machine:
->=20
-> $ git clone git://192.168.0.8/test.git
-> Initialized empty Git repository in /home/wink/prgs/test/.git/
-> fatal: no matching remote head
-> fetch-pack from 'git://192.168.0.8/test.git' failed.
-> $
-
-Did it configure the repository though? Like setting the url and tracking
-branches for origin? If it did, it actually did all you needed, so you can
-count it as success (and the message should talk about having nothing to do
-rather than failing).
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---5/uDoXvLw7AC5HRs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG3bZlRel1vVwhjGURAnqaAKCYLd+DzBeZN4gqU9ZpigvnKrTdYACgsKaY
-FyhwJjhyMd2YgwkNDItwRQo=
-=miQE
------END PGP SIGNATURE-----
-
---5/uDoXvLw7AC5HRs--
+I suspect you have thought abuot the issues involved longer than
+I have ;-), so you should take whatever I say with grain of
+salt, but I think you would also want to know fast-forwards and
+up-to-dates if the hook wants to be generic, not "for Josh's
+workflow only".
