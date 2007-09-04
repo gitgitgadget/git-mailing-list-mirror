@@ -1,64 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 4 Sep 2007 03:21:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709040319360.28586@racer.site>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
- <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
- <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Calculating tree nodes
+Date: Mon, 3 Sep 2007 22:51:54 -0400
+Message-ID: <20070904025153.GS18160@spearce.org>
+References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 04:22:23 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 04:52:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISO3W-0002Rb-Mo
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 04:22:19 +0200
+	id 1ISOWJ-0006E2-Tc
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 04:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330AbXIDCWO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 22:22:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbXIDCWO
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 22:22:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33748 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751166AbXIDCWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 22:22:13 -0400
-Received: (qmail invoked by alias); 04 Sep 2007 02:22:10 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 04 Sep 2007 04:22:10 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18bWBpl2Q4bRKywxjSE2YyJXKuN3mxtv83paiH6a4
-	XPQXQ5b6jyY6+6
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46DC5ED4.8050202@trolltech.com>
-X-Y-GMX-Trusted: 0
+	id S1751554AbXIDCv6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 22:51:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIDCv6
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 22:51:58 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55628 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750902AbXIDCv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 22:51:57 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1ISOVx-00045O-M3; Mon, 03 Sep 2007 22:51:41 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 38CD220FBAE; Mon,  3 Sep 2007 22:51:54 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57513>
 
-Hi,
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> When I change a file it creates a new object with a new SHA. This new
+> SHA causes the tree node pointing to it to change. Changing the tree
+> node forces its parent to change and so on. Of course git batches all
+> of the changes together into a commit so that this ripple effect
+> doesn't happen for every file. But every commit causes a new root tree
+> node to be created, right?
 
-On Mon, 3 Sep 2007, Marius Storm-Olsen wrote:
+Only if at least one file (or tree) differed.  This may not be the
+case if you do a merge with the ours merge strategy, but these are
+very rare.  So you can pretty much just say that yes, every commit
+causes a new root tree to be created.
 
-> Johannes Schindelin wrote:
-> > To make it easier on others, I just uploaded it into the "teststat"
-> > branch on 4msysgit.git (subject to removal in a few days).
-> 
-> Ok, I've updated the patch in the 4msysgit.git repo, 'teststat' branch.
-> RFC, and please test.
+Usually the smallest number of objects created per commit is 3:
 
-I'm too tired for more, but the first test which fails (consistently) is 
-t4200 here:
+  - the new commit
+  - the new root tree
+  - the new blob for a file in the root directory
 
-* FAIL 17: young records still live
-	test -f .git/rr-cache/08f6c39f296af7e0dd1b3b7d8bba18d0365f605f/preimage
-&& test -f .git/rr-cache/4000000000000000000000000000000000000000/preimage
+The number increases as more files are modified or if they are in
+subdirectories of the root.
 
-Ciao,
-Dscho
+-- 
+Shawn.
