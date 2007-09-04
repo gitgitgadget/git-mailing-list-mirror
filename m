@@ -1,121 +1,108 @@
-From: Jonas Berlin <xkr47@outerspace.dyndns.org>
-Subject: [PATCH] Fix "cvs log" to use UTC timezone instead of local
-Date: Tue,  4 Sep 2007 15:31:33 +0300
-Message-ID: <11889090932256-git-send-email-xkr47@outerspace.dyndns.org>
-Cc: Jonas Berlin <xkr47@outerspace.dyndns.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 14:44:17 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
+ API
+Date: Tue, 4 Sep 2007 13:46:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041324420.28586@racer.site>
+References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
+ <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
+ <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com>
+ <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site>
+ <46DD433A.5040604@eudaptics.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 14:46:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISXlE-0004S0-EX
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 14:44:04 +0200
+	id 1ISXnz-0005Fh-5m
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 14:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243AbXIDMn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 08:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbXIDMn4
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 08:43:56 -0400
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:40966 "EHLO
-	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997AbXIDMnz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 08:43:55 -0400
-X-Greylist: delayed 740 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Sep 2007 08:43:55 EDT
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 6A6451BE91F
-	for <git@vger.kernel.org>; Tue,  4 Sep 2007 15:31:33 +0300 (EEST)
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A04B6B649DC; Tue, 04 Sep 2007 15:31:33 +0300
-Received: from outerspace.dyndns.org (a88-112-29-101.elisa-laajakaista.fi [88.112.29.101])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 3776E2BEE9
-	for <git@vger.kernel.org>; Tue,  4 Sep 2007 15:31:32 +0300 (EEST)
-Received: by outerspace.dyndns.org (Postfix, from userid 501)
-	id 1C48571136; Tue,  4 Sep 2007 15:31:33 +0300 (EEST)
-X-Mailer: git-send-email 1.5.1.6
-X-Antivirus: VAMS
+	id S1753305AbXIDMqv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 08:46:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbXIDMqv
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 08:46:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52781 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753275AbXIDMqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 08:46:50 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 12:46:48 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp048) with SMTP; 04 Sep 2007 14:46:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Tw+1A93jTK9OYNk/kvBlHBTtRjNGTMSWtpB7jry
+	avjFGI15tzGEGD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46DD433A.5040604@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57559>
 
-The timestamp format used in "cvs log" output does not include a
-timezone, and must thus be in UTC timezone. The timestamps from git on
-the other hand contain timezone information for each commit timestamp,
-but git-cvsserver discarded this information and used the timestamps
-without adjusting the time accordingly. The patch adds code to apply
-the timezone offset to produce a UTC timestamp.
+Hi,
 
-Signed-off-by: Jonas Berlin <xkr47@outerspace.dyndns.org>
----
-    Could it perhaps be that git previously reported timestamps in UTC
-    instead of including a timezone?
+On Tue, 4 Sep 2007, Johannes Sixt wrote:
 
- git-cvsserver.perl              |   11 ++++++++++-
- t/t9400-git-cvsserver-server.sh |   24 ++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 1 deletions(-)
+> Johannes Schindelin schrieb:
+> > On Tue, 4 Sep 2007, Johannes Sixt wrote:
+> > > Therefore, I've pushed out a fixup patch at the top of mingw.git's devel
+> > > branch that converts mtime to local time
+> > 
+> > On Linux, we compare to UTC to begin with, right?  We should do that here,
+> > too...  So if time(NULL) does not return UTC on MinGW, we have to wrap that
+> > function, too.
+> 
+> According to MSDN, time(NULL) returns "the number of seconds elapsed since
+> [epoch] according to the system clock". Please don't ask me what "the system
+> clock" is.
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 13dbd27..5ae9933 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -23,6 +23,7 @@ use Fcntl;
- use File::Temp qw/tempdir tempfile/;
- use File::Basename;
- use Getopt::Long qw(:config require_order no_ignore_case);
-+use Time::Local;
- 
- my $VERSION = '@@GIT_VERSION@@';
- 
-@@ -1686,7 +1687,15 @@ sub req_log
-             print "M ----------------------------\n";
-             print "M revision 1.$revision->{revision}\n";
-             # reformat the date for log output
--            $revision->{modified} = sprintf('%04d/%02d/%02d %s', $3, $DATE_LIST->{$2}, $1, $4 ) if ( $revision->{modified} =~ /(\d+)\s+(\w+)\s+(\d+)\s+(\S+)/ and defined($DATE_LIST->{$2}) );
-+            if ( $revision->{modified} =~ /(\d+)\s+(\w+)\s+(\d+)\s+(\d\d):(\d\d):(\d\d) ([-+])(\d\d)(\d\d)/ and defined($DATE_LIST->{$2}) )
-+            {
-+                my $off = $8 * 3600 + $9 * 60;
-+                my $time = timegm($6, $5, $4, $1, $DATE_LIST->{$2}-1, $3 - 1900);
-+                $off = -$off if ( $7 eq "-" );
-+                $time -= $off;
-+                my ( $sec, $min, $hour, $mday, $mon, $year ) = gmtime($time);
-+                $revision->{modified} = sprintf('%04d/%02d/%02d %02d:%02d:%02d', $year + 1900, $mon + 1, $mday, $hour, $min, $sec);
-+            }
-             $revision->{author} =~ s/\s+.*//;
-             $revision->{author} =~ s/^(.{8}).*/$1/;
-             print "M date: $revision->{modified};  author: $revision->{author};  state: " . ( $revision->{filehash} eq "deleted" ? "dead" : "Exp" ) . ";  lines: +2 -3\n";
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 641303e..254eab7 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -405,4 +405,28 @@ test_expect_success 'cvs update (merge no-op)' \
-     GIT_CONFIG="$git_config" cvs -Q update &&
-     diff -q merge ../merge'
- 
-+#------------
-+# CVS LOG
-+#------------
+I think I know.  From my QEmu adventures I know that DOS/Windows expects 
+the system clock to be set to local time, in contrast to _all_ other 
+operating systems.
+
+> Reading the implementation of time(), it starts with GetLocalTime(), 
+> determines whether daylight saving is in effect, and continues with 
+> another round of timezone adjustment - mind you: _not_ a timezone 
+> reversal (!!). Doesn't this look extremely bogus?
+> 
+> It seems we really need a wrapper for time().
+
+I absolutely concur.  Something like this (most of it is blatantly copied 
+from Marius' patch)?
+
+-- snip --
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 172e828..2984319 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -470,6 +470,17 @@ static inline int git_unlink(const char *pathname) 
+{
+ #include <time.h>
+ struct tm *gmtime_r(const time_t *timep, struct tm *result);
+ struct tm *localtime_r(const time_t *timep, struct tm *result);
++static inline time_t mingw_time(void *dummy)
++{
++	FILETIME ft;
++	GetSystemTimeAsFileTime(&ft);
++	long long winTime = ((long long)ft.dwHighDateTime << 32) + 
+ft.dwLowDateTime;
++	winTime -= 116444736000000000LL; /* Windows to Unix Epoch 
+conversion */
++	winTime /= 10000000;		 /* Nano to seconds resolution 
+*/
++	return (time_t)winTime;
 +
-+cd "$WORKDIR"
-+test_expect_success 'cvs log (check that timestamps are in UTC)' \
-+  'echo stamp > stamp &&
-+   git add stamp &&
-+   TZ=GMT-01 git commit -q -m "Add stamp" &&
-+   git push gitcvs.git >/dev/null &&
-+   GIT_STAMP=$(git-show --pretty=format:%ct --name-only stamp | grep -v stamp) &&
-+   [ "$GIT_STAMP" ] &&
-+   cd cvswork &&
-+   GIT_CONFIG="$git_config" cvs -Q update &&
-+   CVS_STAMP=$(GIT_CONFIG="$git_config" cvs log stamp | perl -e '\''
-+      use Time::Local;
-+      while(<>) {
-+        last if(/^date:/);
-+      }
-+      my ($dummy,$y,$m,$d,$H,$M,$S) = split(m!\D+!);
-+      print timegm($S,$M,$H,$d,$m-1,$y-1900);
-+   '\'') &&
-+   test "$CVS_STAMP" = "$GIT_STAMP"'
-+
- test_done
--- 
-1.5.1.6
++}
++#define time mingw_time
+ #define hstrerror strerror
+ 
+ char *mingw_getcwd(char *pointer, int len);
+-- snap --
+
+Ciao,
+Dscho
