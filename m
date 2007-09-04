@@ -1,66 +1,93 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: HFS+ Unicode weirdness
-Date: Tue, 4 Sep 2007 23:07:45 +1000
-Message-ID: <ee77f5c20709040607u163d1336k46c83cfb9e37bfee@mail.gmail.com>
-References: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Fix "cvs log" to use UTC timezone instead of local
+Date: Tue, 4 Sep 2007 06:22:25 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0709040612260.3088@evo.linux-foundation.org>
+References: <11889090932256-git-send-email-xkr47@outerspace.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 15:07:57 2007
+To: Jonas Berlin <xkr47@outerspace.dyndns.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 15:22:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISY8F-0001hL-9s
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:07:51 +0200
+	id 1ISYMa-00050j-MS
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbXIDNHq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Sep 2007 09:07:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbXIDNHq
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:07:46 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:45683 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753311AbXIDNHp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2007 09:07:45 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1164906rvb
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 06:07:45 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QLSyLiVkSaP4zDxVm3g//biSnhf5NXh0WnK3c+P9O7DVKtxvl/wZ30fS7xnnIbqj8S0dkJwAJu39GRTkVZOGDQx/gdT9pNCUVvqeZiY+H4cySHDKbR41Af/6Rtt2ohL6ppd11fhGDDu5W9/CSKl0L5LicUB2Wn3AnQF0BapWcPw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m6gIuZVEkPA4GiwA9/sBpqOPG1paZF060Ccb4Adwx3KSkeeM4lyWgowilvaUO0w+PPzI+1nNmHlP/2p4L0GYm5h4t+EqKMNrUMj+n/PhJEYm2OcppXfuNQ3StwMUv6RHX/Yl0YybVW95KBEIaDnu4H4oHwxINiGiRGmirZsfmCc=
-Received: by 10.141.210.5 with SMTP id m5mr2285495rvq.1188911265177;
-        Tue, 04 Sep 2007 06:07:45 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Tue, 4 Sep 2007 06:07:45 -0700 (PDT)
-In-Reply-To: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
-Content-Disposition: inline
+	id S1752901AbXIDNWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 09:22:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbXIDNWd
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:22:33 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:45482 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752733AbXIDNWc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2007 09:22:32 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l84DMRUu032278
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Sep 2007 06:22:28 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l84DMQZG022390;
+	Tue, 4 Sep 2007 06:22:26 -0700
+In-Reply-To: <11889090932256-git-send-email-xkr47@outerspace.dyndns.org>
+X-Spam-Status: No, hits=-4.442 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_23,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.30__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57564>
 
-On 04/09/07, Wincent Colaiuta <win@wincent.com> wrote:
-> On a brand new clone of git.git the file "gitweb/test/M=E4rchen" is
-> provoking some weird behaviour running on Mac OS X and the toy HFS+
-> filesystem. Note how the unmodified checkout of the file is shown as
-> "untracked" by "git st", but on deleting the file it's shown as
-> "deleted". If I build a copy of Git based on the clean working tree
-> then the resulting build has a version number of "1.5.x-dirty".
+
+
+On Tue, 4 Sep 2007, Jonas Berlin wrote:
 >
-> Any suggestions on where to start investigating the cause of this?
-> About the only lead I have is that if I create a file with that name
-> by typing it's name  it's encoded as "Ma\314\210rchen", but the file
-> in the git.git repo is encoded as "M\303\244rchen".
+> The timestamp format used in "cvs log" output does not include a
+> timezone, and must thus be in UTC timezone. The timestamps from git on
+> the other hand contain timezone information for each commit timestamp,
+> but git-cvsserver discarded this information and used the timestamps
+> without adjusting the time accordingly. The patch adds code to apply
+> the timezone offset to produce a UTC timestamp.
 
-It's because OS X is using composite Unicode encoding (storing "=E4" as
-"a" + umlaut). Git doesn't canonicalise things, since OS X  does its
-jiggery-pokery of that kind of stuff in CoreFramework, which I believe
-Git doesn't use.
+I think this is wrong.
 
+Git *internally* stores things in UTC anyway, so if there are any local 
+date format things, it's because git-cvsserver.perl has read the dates 
+using some format where git has turned its internal date into a local 
+date.
 
-Dave.
+So instead of turning it back into UTC here, I think git-cvsserver should 
+be changed to ask for the date in the native git format in the first 
+place.
+
+That can be done various ways:
+
+ - use the "raw log format" which has dates as seconds-since-UTC (and with 
+   an *informational* timezone thing that should then just be ignored).
+
+   This is likely the best approach, since anything but this will 
+   almost invariably result in some potentially broken TZ conversion
+   back-and-forth..
+
+ - if it really wants to use the pretty-printing support, git-cvsserver 
+   should probably be changed to do something like
+
+	TZ=UTC git rev-list --pretty --date=local
+
+   which will pretty-print the date in local time format rather than in 
+   the timezone that the commit was done in, and then the TZ=UTC obviously 
+   says that the "local" zone is UTC.
+
+Anything else *will* be broken, or will be converting back-and-forth.
+
+For example, I think your patch may fix "cvs log", but I'm seeing some 
+suspiciously similar code in the "cvs annotate" handling, so I suspect 
+that would need it too.
+
+If instead of trying to convert things to UTC on demand, git-cvsserver 
+just asks for the git date stamps in UTC in the first place, none of the 
+places should ever need any timezone conversion.
+
+		Linus
