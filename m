@@ -1,91 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Functions for updating refs.
-Date: Tue, 04 Sep 2007 10:52:44 -0700
-Message-ID: <7v642qnwr7.fsf@gitster.siamese.dyndns.org>
-References: <46DD6020.4050401@gmail.com>
+From: Russ Brown <pickscrape@gmail.com>
+Subject: Re: git-svn and a nested branches folder
+Date: Tue, 04 Sep 2007 13:03:19 -0500
+Message-ID: <46DD9DE7.1060004@gmail.com>
+References: <46DD6EEA.9010304@gmail.com> <86veaqebf1.fsf@lola.quinscape.zz> <46DD718C.7060908@gmail.com> <86r6leeaq7.fsf@lola.quinscape.zz> <46DD77F2.3040000@gmail.com> <20070904174006.GB4538@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:53:07 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 20:03:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IScaA-0006SL-EY
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 19:52:58 +0200
+	id 1ISckP-0000bb-4X
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 20:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755157AbXIDRww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 13:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755093AbXIDRww
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 13:52:52 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44582 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755149AbXIDRwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 13:52:51 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B6FFF12E37F;
-	Tue,  4 Sep 2007 13:53:08 -0400 (EDT)
-In-Reply-To: <46DD6020.4050401@gmail.com> (Carlos Rica's message of "Tue, 04
-	Sep 2007 15:39:44 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755166AbXIDSD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 14:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXIDSD2
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 14:03:28 -0400
+Received: from wr-out-0506.google.com ([64.233.184.231]:61892 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755093AbXIDSD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 14:03:27 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so899620wra
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 11:03:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=GGJx/Rmyu9KZOY8Y6dkfsZQm2PMqA72IAQO97n8KCNAx/q72bCu78y2YuGgjjRiXoj/PGXPSi5A9tTyMcHzbiUbl8wG/1r0BvkKwo6fDQqxE6g+NyRnGUmxxAwSuvPZhnvDyO8nOgdhTX2Bqwl+RjXSJ/SJE+YAZbBXVY2zFIAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=ua2ttsZr/P7XYmmOKJtlNhS1wlgLL+IFv1jqqKL0XXaJNNfQNDJJz91NbIz3Zh0Fv/3LIYK3m/odka6tE5EW1I8+JqMWPZFq68QutLWXC365NKWPTJt6wNwYx95LDj8OYeqf8NyUbNeoMAg+DnskNalqRekM4Ei0o5/C4nJNwhM=
+Received: by 10.90.25.3 with SMTP id 3mr5817678agy.1188929007101;
+        Tue, 04 Sep 2007 11:03:27 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.164.207.197])
+        by mx.google.com with ESMTPS id r28sm5733040ele.2007.09.04.11.03.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 Sep 2007 11:03:25 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
+In-Reply-To: <20070904174006.GB4538@xp.machine.xx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57629>
 
-Carlos Rica <jasampler@gmail.com> writes:
+Peter Baumann wrote:
+> On Tue, Sep 04, 2007 at 10:21:22AM -0500, Russ Brown wrote:
+>> David Kastrup wrote:
+>>> Russ Brown <pickscrape@gmail.com> writes:
+>>>
+>>>> David Kastrup wrote:
+>>>>> Russ Brown <pickscrape@gmail.com> writes:
+>>>>>
+>>>>>> I'm having some trouble with using git-svn to fetch a repository, and I
+>>>>>> think it's because the repository doesn't store branches as a flat list
+>>>>>> directly under the 'branches' directory.
+>>>>>>
+>>>>>> Basically, we have a structure like this:
+>>>>>>
+>>>>>> |
+>>>>>> +-trunk
+>>>>>> +-tags
+>>>>>> +-branches
+>>>>>>   + category-a
+>>>>>>     + branch-a
+>>>>>>     + branch-b
+>>>>>>   + category-b
+>>>>>>     + branch-c
+>>>>>>     + branch-d
+>>>>>>
+>>>>>> etc. category-a and category-b are simple directories created using svn
+>>>>>> mkdir. The branches are created using svn cp.
+>>>>>>
+>>>>>> It helps us to organise the branches better, but the rationale is
+>>>>>> besides the point. The problem is that git-svn seems to want to
+>>>>>> treat category-a and category-b as branches, which isn't right at
+>>>>>> all. As a result, git-svn seems to skip most (if not all) revisions
+>>>>>> that occur in these directories and creates a lot of entries in
+>>>>>> unhandled.log.
+>>>>> So what did you specify in your .git/config file regarding the svn
+>>>>> structure?
+>>>> I specified the 'branches' directory, but that's because earlier in
+>>>> the life of the repo we did just do the flat branch layout, but
+>>>> decided to make it more structured once that got unwieldy.
+>>> Cough, cough.  _What_ did you specify in your .git/config file
+>>> regarding the svn structure?  Please quote the section.
+>>>
+>> Erm, sorry.
+>>
+>> [svn-remote "svn"]
+>>         url = svn://svn.<name>.com
+>>         fetch = trunk:refs/remotes/trunk
+>>         branches = branches/*:refs/remotes/*
+>>         tags = tags/*:refs/remotes/tags/*
+>>
+>> (URL changed in case it annoys my employers)
+>>
+>> I didn't write this by hand: it was generated by git-svn init.
+>>
+> 
+> Try something like this:
+> 
+> [svn-remote "svn"]
+> 	# trunk
+> 	fetch = trunk:refs/remotes/trunk
+> 
+> 	# branches
+> 	fetch = branches/category-a/branch_a:refs/remotes/svn/branch_a
+> 	fetch = branches/category-a/branch_b:refs/remotes/svn/branch_b
+> 	fetch = branches/category-b/branch_c:refs/remotes/svn/branch_c
+> 
+> 	# tags
+> 	tags = tags/*:refs/remotes/tags/*
+> 
+> 
+> (Not sure if wildcards will work here, but I'm sure you could experiment and try
+>  it out :-)
+> 
 
-> diff --git a/refs.c b/refs.c
-> index 09a2c87..4fd5065 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1455,3 +1455,35 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
->  {
->  	return do_for_each_reflog("", fn, cb_data);
->  }
-> +
-> +int update_ref_or_die(const char *action, const char *refname,
-> +				const unsigned char *sha1,
-> +				const unsigned char *oldval, int flags)
-> +{
-> +	static struct ref_lock *lock;
-> +	lock = lock_any_ref_for_update(refname, oldval, flags);
-> +	if (!lock)
-> +		die("Cannot lock the ref '%s'.", refname);
-> +	if (write_ref_sha1(lock, sha1, action) < 0)
-> +		die("Cannot update the ref '%s'.", refname);
-> +	return 0;
-> +}
-> +
-> +int update_ref_or_error(const char *action, const char *refname,
-> +				const unsigned char *sha1,
-> +				const unsigned char *oldval, int quiet)
-> +{
-> +	static struct ref_lock *lock;
-> +	lock = lock_any_ref_for_update(refname, oldval, 0);
-> +	if (!lock) {
-> +		if (!quiet)
-> +			error("Cannot lock the ref '%s'.", refname);
-> +		return 1;
-> +	}
-> +	if (write_ref_sha1(lock, sha1, action) < 0) {
-> +		if (!quiet)
-> +			error("Cannot update the ref '%s'.", refname);
-> +		return 1;
-> +	}
-> +	return 0;
-> +}
+Thanks a lot! I'll try it out.
 
-This makes me wonder three things:
+I wonder if I'm going to have to fetch in stages here. i.e. configuring
+the branches for the original layout, fetching up the point where the
+layout changed a bit and reconfigure, fetch some more, tweak again etc.
 
- - Why doesn't "or_error" side allow "flags" as "or_die" one?
-   Could the 'quiet' option become part of "flags" perhaps?
+> -Peter
 
- - They look quite similar.  Is it a good idea to refactor them
-   further, or they are so small it does not matter?
 
- - Why isn't lock released with unlock_ref()?
+-- 
+
+Russ
