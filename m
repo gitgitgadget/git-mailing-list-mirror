@@ -1,99 +1,159 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Rework strbuf API and semantics.
-Date: Tue, 04 Sep 2007 15:34:44 +0200
-Message-ID: <46DD5EF4.3090309@op5.se>
-References: <buobqcjrycl.fsf@dhapc248.dev.necel.com> <11888956802504-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0709041209280.28586@racer.site> <20070904115317.GA3381@artemis.corp>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] Functions for updating refs.
+Date: Tue, 04 Sep 2007 15:39:44 +0200
+Message-ID: <46DD6020.4050401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 15:34:58 2007
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 04 15:40:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISYYP-0007aN-KQ
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:34:54 +0200
+	id 1ISYdM-0000Cp-Kv
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbXIDNet (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 09:34:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbXIDNet
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:34:49 -0400
-Received: from mail.op5.se ([193.201.96.20]:33764 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752776AbXIDNes (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 09:34:48 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E1578194459;
-	Tue,  4 Sep 2007 15:34:46 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id POiN9eEPPAZC; Tue,  4 Sep 2007 15:34:46 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 128BB194454;
-	Tue,  4 Sep 2007 15:34:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <20070904115317.GA3381@artemis.corp>
+	id S1753310AbXIDNj4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 09:39:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbXIDNj4
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:39:56 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:14954 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329AbXIDNjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 09:39:55 -0400
+Received: by nf-out-0910.google.com with SMTP id f5so1440613nfh
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 06:39:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=GGg+M9jJ/MGtd4twLeJXLAGyzP2Ej3sXQ8KrJs51E1YRmFWzbRlqG7DpLVqrxR0BNf4J2e6Xay/Vau3or6bX6RzQxvsaiwsQYGvoarAi2GK5k74rUuhyJ/TF8HiUg+p7WuSCzftCbaZmt63+9UrrN+8pV43L5VWwbIStWfTfJiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=FbB7HtVTXtycQoTv7rk0XkuA346V6+7hcqIlAc5s9vKv8lzVqu2oVJEQttvl5fPJ1mwJQqo5Lw7cdVC3jAwrOI4ktBcbkqyA3eT5aI9Q5Hwa7XCSjtQCoue4uCsdK3TL0Y9/yUhc7/yHRhPUViwhlm5AYQoYJYf5GmsxMZU/tcw=
+Received: by 10.78.37.7 with SMTP id k7mr4132830huk.1188913193128;
+        Tue, 04 Sep 2007 06:39:53 -0700 (PDT)
+Received: from ?192.168.0.192? ( [212.145.102.186])
+        by mx.google.com with ESMTPS id j2sm3096164ugf.2007.09.04.06.39.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Sep 2007 06:39:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57566>
 
-Pierre Habouzit wrote:
-> On Tue, Sep 04, 2007 at 11:11:45AM +0000, Johannes Schindelin wrote:
->> Hi,
->>
->> On Tue, 4 Sep 2007, Pierre Habouzit wrote:
->>
->> - IMHO the same goes for strbuf_free() instead of strbuf_wipe(), and
-> 
->   Well, I don't like strbuf_free, because it's opposed to
-> strbuf_alloc/new whatever, that would be functions that create and
-> release a struct strbuf * (meaning allocating the struct shell as well).
-> Here you only free the internal buffer, not the shell, so _free() would
-> be a very bad name.
-> 
->   In my own coding rules, I have _new/_delete and _init/_wipe functions,
-> the former acts on pointers, the latter on the structs. Hence the
-> naming. Though, looking at git's code, it seems that the usual name for
-> this operation is _release. So would you go for strbuf_release ?
-> 
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
 
-release is indeed better. To me, "wipe" means zeroing out (possibly after
-an optional number of passes writing trash to the memory area) rather than
-actually freeing any memory.
+   They are designed to be reused also from other builtins,
+   like the recently changed builtin-tag.c and the upcoming
+   builtin-reset.c, and perhaps also from builtin-fetch--tool.c.
 
-> 
->> - it would be nice to split this patch into
->>
->> 	- the API change (with _minimal_ changes to anything outside of 
->> 	  strbuf.[ch]), and
->>
->> 	- the cleanups in the rest of the code.
-> 
->   I'll try to do that, but it's quite hard to achieve knowing that in
-> many places of the current state of master, there are embeded NUL's
-> (accounted in ->len). I'll try to see what I can split, but it's
-> unlikely I'll be able to have an intermediate _working_ state (I mean
-> that would pass the testsuite) with the new API/semantics _and_ without
-> touching a lot less of the rest of the code.
-> 
+ builtin-update-ref.c |    8 ++------
+ refs.c               |   32 ++++++++++++++++++++++++++++++++
+ refs.h               |    8 ++++++++
+ send-pack.c          |   12 ++++--------
+ 4 files changed, 46 insertions(+), 14 deletions(-)
 
-Always having a compilable/operational tree is pretty nice primarily due
-to bisect. If the code turns from working to non-working in between,
-make sure to jot it down in the commit message.
+diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+index 8339cf1..bd7fe4d 100644
+--- a/builtin-update-ref.c
++++ b/builtin-update-ref.c
+@@ -62,10 +62,6 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	if (oldval && *oldval && get_sha1(oldval, oldsha1))
+ 		die("%s: not a valid old SHA1", oldval);
 
-It might even be better to add the embedded NUL handling code in the
-first patch, modify the callers in the second, and remove the embedded
-NUL handling in a third.
+-	lock = lock_any_ref_for_update(refname, oldval ? oldsha1 : NULL, ref_flags);
+-	if (!lock)
+-		die("%s: cannot lock the ref", refname);
+-	if (write_ref_sha1(lock, sha1, msg) < 0)
+-		die("%s: cannot update the ref", refname);
+-	return 0;
++	return update_ref_or_die(msg, refname, sha1,
++				oldval ? oldsha1 : NULL, ref_flags);
+ }
+diff --git a/refs.c b/refs.c
+index 09a2c87..4fd5065 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1455,3 +1455,35 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_reflog("", fn, cb_data);
+ }
++
++int update_ref_or_die(const char *action, const char *refname,
++				const unsigned char *sha1,
++				const unsigned char *oldval, int flags)
++{
++	static struct ref_lock *lock;
++	lock = lock_any_ref_for_update(refname, oldval, flags);
++	if (!lock)
++		die("Cannot lock the ref '%s'.", refname);
++	if (write_ref_sha1(lock, sha1, action) < 0)
++		die("Cannot update the ref '%s'.", refname);
++	return 0;
++}
++
++int update_ref_or_error(const char *action, const char *refname,
++				const unsigned char *sha1,
++				const unsigned char *oldval, int quiet)
++{
++	static struct ref_lock *lock;
++	lock = lock_any_ref_for_update(refname, oldval, 0);
++	if (!lock) {
++		if (!quiet)
++			error("Cannot lock the ref '%s'.", refname);
++		return 1;
++	}
++	if (write_ref_sha1(lock, sha1, action) < 0) {
++		if (!quiet)
++			error("Cannot update the ref '%s'.", refname);
++		return 1;
++	}
++	return 0;
++}
+diff --git a/refs.h b/refs.h
+index f234eb7..3d0100e 100644
+--- a/refs.h
++++ b/refs.h
+@@ -64,4 +64,12 @@ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg
+ /** resolve ref in nested "gitlink" repository */
+ extern int resolve_gitlink_ref(const char *name, const char *refname, unsigned char *result);
 
++/** lock a ref and then write its file */
++int update_ref_or_die(const char *action, const char *refname,
++				const unsigned char *sha1,
++				const unsigned char *oldval, int flags);
++int update_ref_or_error(const char *action, const char *refname,
++				const unsigned char *sha1,
++				const unsigned char *oldval, int quiet);
++
+ #endif /* REFS_H */
+diff --git a/send-pack.c b/send-pack.c
+index 9fc8a81..1907684 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -313,14 +313,10 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 					if (delete_ref(rs.dst, NULL)) {
+ 						error("Failed to delete");
+ 					}
+-				} else {
+-					lock = lock_any_ref_for_update(rs.dst, NULL, 0);
+-					if (!lock)
+-						error("Failed to lock");
+-					else
+-						write_ref_sha1(lock, ref->new_sha1,
+-							       "update by push");
+-				}
++				} else
++					update_ref_or_error("update by push",
++							rs.dst, ref->new_sha1,
++							NULL, 0);
+ 				free(rs.dst);
+ 			}
+ 		}
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.0
