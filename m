@@ -1,148 +1,82 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git's database structure
-Date: Tue, 04 Sep 2007 17:55:16 +0200
-Message-ID: <46DD7FE4.1060908@op5.se>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-commit: if run with <file> arguments, include files removed through git rm
+Date: Tue, 04 Sep 2007 09:00:13 -0700
+Message-ID: <7vabs2pgj6.fsf@gitster.siamese.dyndns.org>
+References: <20070904144304.5920.qmail@42e302a26078dc.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:55:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 18:00:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISakP-00024Z-En
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:55:25 +0200
+	id 1ISapE-0003K1-70
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 18:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbXIDPzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 11:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbXIDPzU
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:55:20 -0400
-Received: from mail.op5.se ([193.201.96.20]:38826 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754515AbXIDPzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 11:55:19 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 12E4419442E;
-	Tue,  4 Sep 2007 17:55:18 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AFzb16BYDoUh; Tue,  4 Sep 2007 17:55:17 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 585AE194424;
-	Tue,  4 Sep 2007 17:55:17 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
+	id S1754678AbXIDQAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 12:00:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbXIDQAU
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 12:00:20 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:42366 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622AbXIDQAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 12:00:19 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 47DA612E52F;
+	Tue,  4 Sep 2007 12:00:37 -0400 (EDT)
+In-Reply-To: <20070904144304.5920.qmail@42e302a26078dc.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Tue, 4 Sep 2007 14:43:04 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57603>
 
-Jon Smirl wrote:
-> Let's back up a little bit from "Caclulating tree node".  What are the
-> elements of git's data structures?
-> 
-> Right now we have an index structure (tree nodes) integrated in to a
-> base table. Integrating indexing into the data is not normally done in
-> a database. Doing a normalization analysis like this may expose flaws
-> in the way the data is structured. Of course we may also decide to
-> leave everything the way it is.
-> 
-> What about the special status of a rename? In the current model we
-> effectively have three tables.
-> 
-> commit - a set of all SHAs in the commit, previous commit, comment, author, etc
+Gerrit Pape <pape@smarden.org> writes:
 
-> blob - a file, permissions, etc.
-> file names - name, SHA
+> This patch lets it additionally use git ls-tree to look for the files in
+> the HEAD tree, but I guess there's a smarter way to fix this.
 
-commit - SHA1 of its parent(s) and its root-tree, along with
-         author info and a free-form field
-blob - content addressable by *multiple trees*
-file names - List of path-names inside a tree object.
+You raised a good issue, but this also needs other parts of the
+system to be adjusted.
 
+>  		commit_only=`git ls-files --error-unmatch -- "$@"` || exit
+> +		commit_only="$commit_only "`git ls-tree -r --name-only HEAD -- "$@"` || exit
 
-To draw some sort of relationship model here, you'd have
+The arguments to git-commit are *NOT* "<file> arguments".  They
+are file patterns and 'ls-files --error-unmatch -- "$@"' is
+there to allow you to say something like:
 
-commit 1<->M roottree
-tree M<->M tree
-tree M<->M blob
+	$ git commit 'p*/*.c'
 
-Assuming SHA1 never collides (collisions rule out any form of storage,
-so we might as well hope it never happens), that leaves us with this:
+Alas, ls-tree does not grok globbing yet.  Try this in git.git
+repository (surrounding quotes are essential):
 
-Each root tree can only ever belong to a single commit, unless you
-intentionally force git to make completely empty commits. git
-won't complain about this, so long as you don't make two in the
-same second, because it relies more heavily on the DAG than on
-developer sanity.
+	$ git ls-files 'p*/*.c'
+        $ git ls-tree -r HEAD 'p*/*.c'
 
-Each root tree can point to multiple sub-trees. The sub-trees can be
-linked to any number of root-trees. 
+Currently we have two semantics of "pathspec", and unifying
+these semantics is one of the items with somewhat higher
+priority on my TODO list for the 1.5.4 cycle (I started looking
+at diff-tree and log last night):
 
-Blobs can be linked to any number of tree objects, or even multiple
-times to the same tree object. This wouldn't be possible if the
-blob objects had their own pathnames stored inside them, so to speak.
+ * ls-files, diff-files, diff-index and grep understand both
+   "leading directory prefix" and "glob pattern"; you can say:
 
-> 
-> The file name table is encoded as an index and it has been
-> intermingled with the commit table.
-> 
-> Looking at this from a set theory angle brings up the question, do we
-> really have three tables and file names are an independent variable
-> from the blobs, or should file names be an attribute of the blob?
-> 
+	$ git ls-files -- arm/ 'p*/*.c'
+	$ git grep int -- arm/ 'p*/*.c'
 
-File names are not independant variables. They belong inside the
-table created for them, which is the tree objects.
+   and they do what you would expect them to do.
 
-> How this gets structured in the db is an independent question about
-> how renames get detected on a commit. The current scheme for detecting
-> renames by comparing diffs is working fine. The question is, once we
-> detect a rename how should it be stored?
-> 
+ * diff-tree, log family and ls-tree understand only "leading
+   directory prefix" and not "glob pattern"; you cannot say:
 
-Do you realize that you're contradicting yourself in two upon each
-other following sentences here?
+	$ git log -- 'p*/*.c'
 
-Detecting renames after the fashion works fine. Not storing them
-is part of the "detect them by comparing diffs".
-
-> Ignoring the performance impacts and looking at the problem from the
-> set theory view point, should:
-> the pathnames be in their own table with a row for each alias
-> the pathnames be stored as an attribute of the blob
-> 
-> Both of these are the same information, we're just looking at how
-> things are normalized.
-> 
-
-Except that
-
-git init
-echo foo > a
-cp -a a b
-git add .
-git commit -m testing
-git count-objects
-
-yields 3 objects at the moment; A commit-object, a tree object and *one*
-blob object. With your scheme the 2 blob objects would differ, and there
-would be 4 of them. If you propose to ignore the path-name you have
-effectively broken support for having two identical files with different
-names in the same directory.
-
-Now, can you please tell me what gains you're hoping to see with this
-new layout of yours?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+So your patch is a definite improvement for normal ("non
+pattern" but "exact pathname") case, but needs the updates to
+pathspec semantics to be the correct fix.
