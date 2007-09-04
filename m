@@ -1,74 +1,77 @@
-From: Richard Purdie <rpurdie@rpsys.net>
-Subject: git pull fails with http urls?
-Date: Tue, 04 Sep 2007 15:10:53 +0100
-Message-ID: <1188915053.5705.12.camel@localhost.localdomain>
+From: Gerrit Pape <pape@smarden.org>
+Subject: git-commit: if run with <file> arguments, include files removed through git rm
+Date: Tue, 4 Sep 2007 14:43:04 +0000
+Message-ID: <20070904144304.5920.qmail@42e302a26078dc.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 04 16:50:14 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 16:51:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZj7-0001ta-5z
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:50:01 +0200
+	id 1ISZkk-0002QC-Ey
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754280AbXIDOt4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 10:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754202AbXIDOt4
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:49:56 -0400
-Received: from tim.rpsys.net ([194.106.48.114]:40040 "EHLO tim.rpsys.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754180AbXIDOtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 10:49:55 -0400
-X-Greylist: delayed 2332 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Sep 2007 10:49:55 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id l84EB2vg015074
-	for <git@vger.kernel.org>; Tue, 4 Sep 2007 15:11:02 +0100
-Received: from tim.rpsys.net ([127.0.0.1])
- by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 14922-03 for <git@vger.kernel.org>; Tue,  4 Sep 2007 15:10:58 +0100 (BST)
-Received: from [192.168.1.15] (max.rpnet.com [192.168.1.15])
-	(authenticated bits=0)
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id l84EAsFJ015068
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO)
-	for <git@vger.kernel.org>; Tue, 4 Sep 2007 15:10:54 +0100
-X-Mailer: Evolution 2.10.1 
-X-Virus-Scanned: amavisd-new at rpsys.net
+	id S1754300AbXIDOvh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 10:51:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754313AbXIDOvh
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:51:37 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:45843 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754299AbXIDOvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 10:51:36 -0400
+Received: (qmail 5921 invoked by uid 1000); 4 Sep 2007 14:43:04 -0000
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57587>
 
-I've noticed a problem with pulling http urls. I can clone them fine:
+If git-commit is given a directory as argument to be included in the
+commit, it uses git ls-files to find out which files to include; this
+misses files previously removed from the working tree and the index
+through git rm:
 
-  git clone http://www.gnome.org/~alexl/git/gio.git/
+  % git init-db
+  Initialized empty Git repository in .git/
+  % mkdir bar baz
+  % touch bar/file1 baz/file1 baz/file2
+  % git add . && git commit -mcommit1
+  Created initial commit 1d7dee4: commit1
+   0 files changed, 0 insertions(+), 0 deletions(-)
+   create mode 100644 bar/file1
+   create mode 100644 baz/file1
+   create mode 100644 baz/file2
+  % git rm baz/file1
+  rm 'baz/file1'
+  % git commit -- baz/
+  # On branch master
+  # Changed but not updated:
+  #   (use "git add/rm <file>..." to update what will be committed)
+  #
+  #       deleted:    baz/file1
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
 
-and I can pull with:
+This patch lets it additionally use git ls-tree to look for the files in
+the HEAD tree, but I guess there's a smarter way to fix this.
+---
+ git-commit.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-  git pull
-
-which works as expected however if I try:
-
-  git pull http://www.gnome.org/~alexl/git/gio.git/
-
-it fails with:
-
-  error: pick-rref: HEAD not found
-  No such ref HEAD at http://www.gnome.org/~alexl/git/gio.git/
-
-The HEAD file is there at http://www.gnome.org/~alexl/git/gio.git/HEAD
-and:
-
-  git pull http://www.gnome.org/~alexl/git/gio.git/ master
-
-works. It seems git just doesn't want to see/understand the HEAD file?
-
-Is the above supposed to work or is something wrong with the above
-commands? I see this with git 1.5.2.3 and 1.5.3, google suggests this
-might have worked with 1.4.x and broke in 1.5...
-
-Regards,
-
-Richard
+diff --git a/git-commit.sh b/git-commit.sh
+index 1d04f1f..3ac7c4f 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -381,6 +381,7 @@ t,)
+ 		fi
+ 		TMP_INDEX="$GIT_DIR/tmp-index$$"
+ 		commit_only=`git ls-files --error-unmatch -- "$@"` || exit
++		commit_only="$commit_only "`git ls-tree -r --name-only HEAD -- "$@"` || exit
+ 
+ 		# Build a temporary index and update the real index
+ 		# the same way.
+-- 
+1.5.3
