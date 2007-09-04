@@ -1,81 +1,66 @@
-From: Johannes Sixt <j.sixt@eudaptics.com>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 04 Sep 2007 15:03:51 +0200
-Message-ID: <46DD57B7.9090206@eudaptics.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site> <46DD433A.5040604@eudaptics.com> <Pine.LNX.4.64.0709041324420.28586@racer.site>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: HFS+ Unicode weirdness
+Date: Tue, 4 Sep 2007 23:07:45 +1000
+Message-ID: <ee77f5c20709040607u163d1336k46c83cfb9e37bfee@mail.gmail.com>
+References: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 04 15:04:34 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 15:07:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISY4X-0000m8-PY
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:04:02 +0200
+	id 1ISY8F-0001hL-9s
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 15:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbXIDND6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 09:03:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXIDND5
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:03:57 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:16016 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753409AbXIDND5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 09:03:57 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1ISY4R-0005wK-Gw; Tue, 04 Sep 2007 15:03:56 +0200
-Received: from [192.168.1.42] (j6t.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 43F906B7; Tue,  4 Sep 2007 15:03:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0709041324420.28586@racer.site>
-X-Spam-Score: 1.3 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.378, BAYES_99=3.5
+	id S1753470AbXIDNHq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 4 Sep 2007 09:07:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbXIDNHq
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 09:07:46 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:45683 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753311AbXIDNHp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2007 09:07:45 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1164906rvb
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 06:07:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QLSyLiVkSaP4zDxVm3g//biSnhf5NXh0WnK3c+P9O7DVKtxvl/wZ30fS7xnnIbqj8S0dkJwAJu39GRTkVZOGDQx/gdT9pNCUVvqeZiY+H4cySHDKbR41Af/6Rtt2ohL6ppd11fhGDDu5W9/CSKl0L5LicUB2Wn3AnQF0BapWcPw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m6gIuZVEkPA4GiwA9/sBpqOPG1paZF060Ccb4Adwx3KSkeeM4lyWgowilvaUO0w+PPzI+1nNmHlP/2p4L0GYm5h4t+EqKMNrUMj+n/PhJEYm2OcppXfuNQ3StwMUv6RHX/Yl0YybVW95KBEIaDnu4H4oHwxINiGiRGmirZsfmCc=
+Received: by 10.141.210.5 with SMTP id m5mr2285495rvq.1188911265177;
+        Tue, 04 Sep 2007 06:07:45 -0700 (PDT)
+Received: by 10.141.115.4 with HTTP; Tue, 4 Sep 2007 06:07:45 -0700 (PDT)
+In-Reply-To: <052099D2-F79B-4063-82D3-BFB5D0102A55@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57563>
 
-Johannes Schindelin schrieb:
-> On Tue, 4 Sep 2007, Johannes Sixt wrote:
->> Reading the implementation of time(), it starts with GetLocalTime(), 
->> determines whether daylight saving is in effect, and continues with 
->> another round of timezone adjustment - mind you: _not_ a timezone 
->> reversal (!!). Doesn't this look extremely bogus?
->>
->> It seems we really need a wrapper for time().
-> 
-> I absolutely concur.  Something like this (most of it is blatantly copied 
-> from Marius' patch)?
+On 04/09/07, Wincent Colaiuta <win@wincent.com> wrote:
+> On a brand new clone of git.git the file "gitweb/test/M=E4rchen" is
+> provoking some weird behaviour running on Mac OS X and the toy HFS+
+> filesystem. Note how the unmodified checkout of the file is shown as
+> "untracked" by "git st", but on deleting the file it's shown as
+> "deleted". If I build a copy of Git based on the clean working tree
+> then the resulting build has a version number of "1.5.x-dirty".
+>
+> Any suggestions on where to start investigating the cause of this?
+> About the only lead I have is that if I create a file with that name
+> by typing it's name  it's encoded as "Ma\314\210rchen", but the file
+> in the git.git repo is encoded as "M\303\244rchen".
 
-Well, I don't think it'll make a difference. The tiny test program below 
-prints twice the same number. My analysis of the time() implementation is 
-obviously flawed.
+It's because OS X is using composite Unicode encoding (storing "=E4" as
+"a" + umlaut). Git doesn't canonicalise things, since OS X  does its
+jiggery-pokery of that kind of stuff in CoreFramework, which I believe
+Git doesn't use.
 
--- Hannes
 
-#include <windows.h>
-#include <stdio.h>
-#include <time.h>
-
-int main()
-{
-	time_t t = time(NULL);
-	FILETIME ft;
-
-	GetSystemTimeAsFileTime(&ft);
-	long long winTime = ((long long)ft.dwHighDateTime << 32)
-		+ ft.dwLowDateTime;
-	winTime -= 116444736000000000LL;
-	winTime /= 10000000;
-
-	printf("%d %d\n", t, (int) winTime);
-	return 0;
-}
+Dave.
