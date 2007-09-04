@@ -1,74 +1,89 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: Re: [PATCH] Add post-merge hook.
-Date: Tue, 04 Sep 2007 13:36:13 -0600
-Message-ID: <1188934573.6192.35.camel@beauty>
-References: <11885136172952-git-send-email-jjengla@sandia.gov>
- <7v7inc7hao.fsf@gitster.siamese.dyndns.org>
- <1188923110.6192.15.camel@beauty>
- <7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: Git's database structure
+Date: Tue, 4 Sep 2007 20:44:49 +0100
+Message-ID: <3f4fd2640709041244s125f5988j1c2d28f06bfbe098@mail.gmail.com>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
+	 <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
+	 <7vtzqany0z.fsf@gitster.siamese.dyndns.org>
+	 <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
+	 <20070904180429.GA626@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 21:35:30 2007
+To: "Mike Hommey" <mh@glandium.org>, "Jon Smirl" <jonsmirl@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 21:45:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISeBJ-00076o-1h
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 21:35:25 +0200
+	id 1ISeKZ-0000z1-7o
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 21:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428AbXIDTfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 15:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752310AbXIDTfU
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 15:35:20 -0400
-Received: from mm03snlnto.sandia.gov ([132.175.109.20]:2802 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070AbXIDTfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 15:35:19 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Tue, 04 Sep 2007 13:35:08 -0600
-X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
-Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
- by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l84JZ3kL000930;
- Tue, 4 Sep 2007 13:35:04 -0600
-In-Reply-To: <7vmyw2ny05.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.10.1
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
- Antispam-Data: 2007.9.4.121723
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_600_699
- 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
- __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0,
- __pbl.spamhaus.org_TIMEOUT '
-X-TMWD-Spam-Summary: TS=20070904193510; SEV=2.2.2; DFV=B2007090415;
- IFV=2.0.4,4.0-9; AIF=B2007090415; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230322E34364444423336442E303046433A53434A535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007090415_5.02.0125_4.0-9
-X-WSS-ID: 6AC36CE63HO1251806-01-01
+	id S1754787AbXIDTov (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 15:44:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404AbXIDTov
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 15:44:51 -0400
+Received: from rv-out-0910.google.com ([209.85.198.186]:63669 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754366AbXIDTou (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 15:44:50 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1256993rvb
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 12:44:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=googlemail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ea6Dxoi15Gbb0806ogADBfVX2KuM0M6B5dhifdkS2A3TeSLc25AAaKUoftcqORemIsDKNdvo5o3phnxWNLeLIc3Cyk3BJT65g5ZOHE4AJDaA4CkhYATXIf9sTxlktw1LpxVnC6iNulOW3KGwd1URF1KZaV0Y7Slu3/FLf2+ogCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VUMbxmtZNtoBWzWE2El6yw5Yq/4E8PsIk3mo98KvAkiJ3NxOnR7q8rRPXgoY0inFKUtiw2l1BDAvRr9+IaoEov88mSCe51OGjQ6W4ADNJlbYLP9SJrlRcUZnaOKinIRhKqJ+XUEUd/VMWB5BEJmYsXh6AJKIB6HCRhtxPKymQ90=
+Received: by 10.141.160.9 with SMTP id m9mr2434924rvo.1188935089324;
+        Tue, 04 Sep 2007 12:44:49 -0700 (PDT)
+Received: by 10.141.32.14 with HTTP; Tue, 4 Sep 2007 12:44:49 -0700 (PDT)
+In-Reply-To: <20070904180429.GA626@glandium.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57636>
 
-On Tue, 2007-09-04 at 10:25 -0700, Junio C Hamano wrote:
-> "Josh England" <jjengla@sandia.gov> writes:
-> 
-> >> Two questions.
-> >> 
-> >>  * Do you want to run the post-merge hook even for a squash
-> >>    merge?
-> >
-> > Yes.  I'd like to run it at any time that the working tree might be
-> > updated.
-> 
-> If that is the case, perhaps your hook may want to get a
-> parameter to tell it what kind of "git-merge" invocation it was?
-> Squash merge does not even advance the HEAD and is of a very
-> different nature from a normal merge.
+On 04/09/07, Mike Hommey <mh@glandium.org> wrote:
+> On Tue, Sep 04, 2007 at 01:44:47PM -0400, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > The reason databases don't encode the fields into the index is that
+> > you can only have a single index on the table if you do that.
+> > Databases do sometimes duplicate the field in both the index and the
+> > table. Databases also have the property that indexes are just a cache
+> > and can be dropped at any time.
+>
+> The big difference between a database and git is that a database is a
+> general purpose tool. git has a much more restricted scope. As such, it
+> doesn't need *that much* flexibility.
 
-OK.  Should it just pass in a flag (squash or normal), or are there
-other merge types it should need to know about.
+Databases are designed to be efficient at storing and accessing large
+amounts of data. The key thing about a database is that it does not
+track the *history* of the data it is storing. This is the main
+problem with using a database as a metadata storage facility.
 
--JE
+Modern source control systems such as Perforce (and possibly
+Subversion), use a database to track metadata such as branch/merge
+history, user data and so on. This, IMHO is a huge weakness of these
+SCM systems. It is impossible to fully roll back to a given point in
+time, because that metadata is stored independently of the file
+content tracking.
+
+Git *is not a database*. This is fundamental to understanding how git
+works. Git stores *all* of its data in a Directed Acyclic Graph (with
+the exception of the pointers to tag and the current head of each
+branch, that it stores locally in the .git directory). Read
+http://eagain.net/articles/git-for-computer-scientists/ for more
+information on this.
+
+What this means is that for any commit, git has all the information it
+needs about the repository at that point in time. It doesn't need
+anything else. If you then store information in a database, you lose
+having the complete picture at any point in the history of the
+repository.
+
+- Reece
