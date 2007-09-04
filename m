@@ -1,80 +1,91 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Git's database structure
-Date: Tue, 4 Sep 2007 17:25:08 -0400
-Message-ID: <20070904212507.GA24434@thunk.org>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com> <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com> <7vtzqany0z.fsf@gitster.siamese.dyndns.org> <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
+From: Rutger Nijlunsing <rutger@nospam.com>
+Subject: Re: [PATCH] Add a new lstat and fstat implementation based on
+	Win32 API
+Date: Tue, 4 Sep 2007 23:02:00 +0200
+Organization: M38c
+Message-ID: <20070904210200.GA32472@nospam.com>
+References: <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site> <46DD433A.5040604@eudaptics.com> <Pine.LNX.4.64.0709041324420.28586@racer.site> <Pine.LNX.4.64.0709041356070.28586@racer.site>
+Reply-To: git@wingding.demon.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Johannes Sixt <j.sixt@eudaptics.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 23:25:30 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 04 23:29:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISftn-0006sI-1v
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:25:27 +0200
+	id 1ISfxc-0007YA-93
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 23:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755177AbXIDVZW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 17:25:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754346AbXIDVZW
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:25:22 -0400
-Received: from THUNK.ORG ([69.25.196.29]:58623 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755225AbXIDVZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 17:25:21 -0400
-Received: from root (helo=tinytim.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1ISg2c-0007bT-As; Tue, 04 Sep 2007 17:34:34 -0400
-Received: from tytso by tinytim.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1ISftU-0000iU-F5; Tue, 04 Sep 2007 17:25:08 -0400
+	id S1755616AbXIDV3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 17:29:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754166AbXIDV3H
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 17:29:07 -0400
+Received: from post-23.mail.nl.demon.net ([194.159.73.193]:57986 "EHLO
+	post-23.mail.nl.demon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754836AbXIDV3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 17:29:05 -0400
+X-Greylist: delayed 1620 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Sep 2007 17:29:05 EDT
+Received: from wingding.demon.nl ([82.161.27.36]:37308)
+	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
+	id 1ISfXA-000OVC-9m; Tue, 04 Sep 2007 21:02:04 +0000
+Received: from rutger by wingding.demon.nl with local (Exim 4.67)
+	(envelope-from <rutger@wingding.demon.nl>)
+	id 1ISfX6-0000R6-JL; Tue, 04 Sep 2007 23:02:00 +0200
 Content-Disposition: inline
-In-Reply-To: <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <Pine.LNX.4.64.0709041356070.28586@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57649>
 
-On Tue, Sep 04, 2007 at 01:44:47PM -0400, Jon Smirl wrote:
-> The current data store design is not very flexible. Databases solved
-> the flexibility problem long ago. I'm just wondering if we should
-> steal some good ideas out of the database world and apply them to git.
-> Ten years from now we may have 100GB git databases and really wish we
-> had more flexible ways of querying them.
+On Tue, Sep 04, 2007 at 01:57:38PM +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 4 Sep 2007, Johannes Schindelin wrote:
+> 
+> > On Tue, 4 Sep 2007, Johannes Sixt wrote:
+> > 
+> > > Johannes Schindelin schrieb:
+> > > > On Tue, 4 Sep 2007, Johannes Sixt wrote:
+> > > > > Therefore, I've pushed out a fixup patch at the top of mingw.git's 
+> > > > > devel branch that converts mtime to local time
+> > > > 
+> > > > On Linux, we compare to UTC to begin with, right?  We should do that 
+> > > > here, too...  So if time(NULL) does not return UTC on MinGW, we have 
+> > > > to wrap that function, too.
+> > > 
+> > > According to MSDN, time(NULL) returns "the number of seconds elapsed 
+> > > since [epoch] according to the system clock". Please don't ask me what 
+> > > "the system clock" is.
+> > 
+> > I think I know.  From my QEmu adventures I know that DOS/Windows expects 
+> > the system clock to be set to local time, in contrast to _all_ other 
+> > operating systems.
+> 
+> Now I am utterly confused.  MSDN says
+> 
+> 	FILETIME
+> 
+> 	Contains a 64-bit value representing the number of 100-nanosecond 
+> 	intervals since January 1, 1601 (UTC).
+> 
+> Hmm.
 
-Databases solved the flexibility problem, at the cost of performance.
-And if you use full normalized form in your database scheme, it costs
-you even more in performance, because of all of the joins that you
-need in order get the information you need to do, you know, useful
-work as opposed to database wanking.
 
-If you take a look at the really big databases with super high
-performance requirements, say like those used to managed airline
-tickets/reservation/fares, you will find that they are not normalized,
-and they are not relational; they can't afford to be.  And if you take
-a look at some of git competition that use relational databases to
-store their SCM data, and take a look at how loooooong they they take
-to do even basic operations, I would say that the onus is on you to
-prove that normalization is actually a win in terms of real (not
-theoretical) advantages, and that it doesn't cause performance to go
-into the toilet.
+[Warning: war stories ahead...]
 
-I think the fundamental disconnect here is that no one is buying your
-claim that just because the data design is "more flexible" that this
-is automatically a good thing in and of itself, and we should even for
-a moment, "put performance aside".  
+If you really, really want to know more:
 
-I also don't think that attempting to force git's data structures into
-database terms makes sense; it is much closer to an filesystem using
-an object based store --- and very few people except for folks like
-Hans Resiers believes that Filesystems and Database should be
-unified....
+http://search.cpan.org/~shay/Win32-UTCFileTime-1.45/lib/Win32/UTCFileTime.pm
 
-						- Ted
+
+-- 
+Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
+never attribute to a conspiracy which can be explained by incompetence
+----------------------------------------------------------------------
