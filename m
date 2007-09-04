@@ -1,125 +1,82 @@
-From: Russ Brown <pickscrape@gmail.com>
-Subject: Re: git-svn and a nested branches folder
-Date: Tue, 04 Sep 2007 10:21:22 -0500
-Message-ID: <46DD77F2.3040000@gmail.com>
-References: <46DD6EEA.9010304@gmail.com> <86veaqebf1.fsf@lola.quinscape.zz> <46DD718C.7060908@gmail.com> <86r6leeaq7.fsf@lola.quinscape.zz>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Git's database structure
+Date: Tue, 4 Sep 2007 11:23:02 -0400
+Message-ID: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:21:44 2007
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 17:23:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISaDl-0001hh-NL
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:21:42 +0200
+	id 1ISaFW-0002AX-E0
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754185AbXIDPVg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 11:21:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbXIDPVg
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:21:36 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:33355 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754167AbXIDPVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 11:21:35 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1828727wxd
-        for <git@vger.kernel.org>; Tue, 04 Sep 2007 08:21:34 -0700 (PDT)
+	id S1754183AbXIDPXG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 11:23:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753668AbXIDPXG
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:23:06 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:27224 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754654AbXIDPXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 11:23:04 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1196853rvb
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 08:23:03 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Zlz2SYupkLQN8JZSvAAw3zvTQMybx4IdVaoljpncx4uZtRSpKWyVCiWYMlpd3zAQhvkswg7Pg5NU9IdCvTk0Ft7BJIVLPta8yxWmhFJmnNUMrLeSqg+/6Wi6hE4Xz5GcTtnssX4d2G823ktwGWax7p7OyTq1vl3/NJqShV7L0pQ=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=blezBjEMD5vhgtsbhU19gauUuoIsZHarsYNezZ7NiNi/PpjOn3s6HZ/yooRdytr662ugSu43sN8dg5TIp1bf0BS2WLM2YHVlvGrgQTXrowzoVBGn3TWXTEAUz+VE7fPBncyODKPTLuFfomfiMgHEs752Up+85BT/6t+tZdzjXkc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=rus9/3QQH8oALHtMftQ1/Vdpv/rnJqDXHOXDzNM53UY9B6cw0PK6o8uzPna7v0ieo6/0qkr2vlv6pFefTIvxwaF34OhmoVHM7T/Xj6uYJJWfUaMSw8HjB/e0tQcLHnXb6+s3e4FFMCNoWqDXa7zz/6h8hbAigzb64jKJi6j7rhg=
-Received: by 10.90.74.1 with SMTP id w1mr1031935aga.1188919293917;
-        Tue, 04 Sep 2007 08:21:33 -0700 (PDT)
-Received: from ?192.168.0.100? ( [71.164.207.197])
-        by mx.google.com with ESMTPS id 7sm5838967agb.2007.09.04.08.21.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 04 Sep 2007 08:21:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
-In-Reply-To: <86r6leeaq7.fsf@lola.quinscape.zz>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZJIe9fTGZ10qAJTtQhI3POvMz+YihOlHSDnAMADzZZ2s+SRYhWD6Uik/DFaSVbxBumKW9OmLuVuRCnMKjZ5JEpYmpTd6Lrm5aCz6tkUTcfWiqJvqnl0HCek51pI/eMfXTdXwEJOpJr14UEosj2HhxYgs/WkRTdRqrt8gkn4uOM0=
+Received: by 10.141.202.12 with SMTP id e12mr2339217rvq.1188919382914;
+        Tue, 04 Sep 2007 08:23:02 -0700 (PDT)
+Received: by 10.141.44.16 with HTTP; Tue, 4 Sep 2007 08:23:02 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57597>
 
-David Kastrup wrote:
-> Russ Brown <pickscrape@gmail.com> writes:
-> 
->> David Kastrup wrote:
->>> Russ Brown <pickscrape@gmail.com> writes:
->>>
->>>> I'm having some trouble with using git-svn to fetch a repository, and I
->>>> think it's because the repository doesn't store branches as a flat list
->>>> directly under the 'branches' directory.
->>>>
->>>> Basically, we have a structure like this:
->>>>
->>>> |
->>>> +-trunk
->>>> +-tags
->>>> +-branches
->>>>   + category-a
->>>>     + branch-a
->>>>     + branch-b
->>>>   + category-b
->>>>     + branch-c
->>>>     + branch-d
->>>>
->>>> etc. category-a and category-b are simple directories created using svn
->>>> mkdir. The branches are created using svn cp.
->>>>
->>>> It helps us to organise the branches better, but the rationale is
->>>> besides the point. The problem is that git-svn seems to want to
->>>> treat category-a and category-b as branches, which isn't right at
->>>> all. As a result, git-svn seems to skip most (if not all) revisions
->>>> that occur in these directories and creates a lot of entries in
->>>> unhandled.log.
->>> So what did you specify in your .git/config file regarding the svn
->>> structure?
->> I specified the 'branches' directory, but that's because earlier in
->> the life of the repo we did just do the flat branch layout, but
->> decided to make it more structured once that got unwieldy.
-> 
-> Cough, cough.  _What_ did you specify in your .git/config file
-> regarding the svn structure?  Please quote the section.
-> 
+Let's back up a little bit from "Caclulating tree node".  What are the
+elements of git's data structures?
 
-Erm, sorry.
+Right now we have an index structure (tree nodes) integrated in to a
+base table. Integrating indexing into the data is not normally done in
+a database. Doing a normalization analysis like this may expose flaws
+in the way the data is structured. Of course we may also decide to
+leave everything the way it is.
 
-[svn-remote "svn"]
-        url = svn://svn.<name>.com
-        fetch = trunk:refs/remotes/trunk
-        branches = branches/*:refs/remotes/*
-        tags = tags/*:refs/remotes/tags/*
+What about the special status of a rename? In the current model we
+effectively have three tables.
 
-(URL changed in case it annoys my employers)
+commit - a set of all SHAs in the commit, previous commit, comment, author, etc
+blob - a file, permissions, etc.
+file names - name, SHA
 
-I didn't write this by hand: it was generated by git-svn init.
+The file name table is encoded as an index and it has been
+intermingled with the commit table.
 
->> Is it possible to specify more than one folder for the branches
->> option?
-> 
-> It is possible to adapt the config section to the actual layout.  If
-> not otherwise, by starting with
-> git svn init
-> with a clean slate, editing the config file, and only then actually
-> fetching stuff.
-> 
-> However, git-svn will not magically start guessing that you changed
-> your structure around.  You have to edit the configuration
-> appropriately.
-> 
+Looking at this from a set theory angle brings up the question, do we
+really have three tables and file names are an independent variable
+from the blobs, or should file names be an attribute of the blob?
 
-That's why I suggested that a method involving detecting branches based
-on whether the directory is a copy of trunk or another branch might
-'magically' work in all scenarios. I've used a similar branch 'scanning'
-technique before for a different reason. But I realise there may be
-technical reasons as to why that might not be possible.
+How this gets structured in the db is an independent question about
+how renames get detected on a commit. The current scheme for detecting
+renames by comparing diffs is working fine. The question is, once we
+detect a rename how should it be stored?
+
+Ignoring the performance impacts and looking at the problem from the
+set theory view point, should:
+the pathnames be in their own table with a row for each alias
+the pathnames be stored as an attribute of the blob
+
+Both of these are the same information, we're just looking at how
+things are normalized.
 
 -- 
-
-Russ
+Jon Smirl
+jonsmirl@gmail.com
