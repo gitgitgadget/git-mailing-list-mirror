@@ -1,80 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git's database structure
-Date: Tue, 04 Sep 2007 11:06:16 -0700
-Message-ID: <7v1wdenw4n.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
-	<9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>
-	<7vtzqany0z.fsf@gitster.siamese.dyndns.org>
-	<9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git clone over http
+Date: Tue, 4 Sep 2007 20:19:54 +0200
+Message-ID: <200709042019.56009.robin.rosenberg.lists@dewire.com>
+References: <200709021123.04218.robin.rosenberg.lists@dewire.com> <1188924876.6192.21.camel@beauty> <7vir6qnxuh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 20:06:33 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Josh England" <jjengla@sandia.gov>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 20:18:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IScnD-0001GN-5o
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 20:06:27 +0200
+	id 1IScym-0004SF-IO
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 20:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754924AbXIDSGW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 14:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755213AbXIDSGW
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 14:06:22 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44814 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754371AbXIDSGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 14:06:21 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3D28812E6D4;
-	Tue,  4 Sep 2007 14:06:40 -0400 (EDT)
-In-Reply-To: <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
-	(Jon Smirl's message of "Tue, 4 Sep 2007 13:44:47 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755008AbXIDSSU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 14:18:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754944AbXIDSST
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 14:18:19 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12597 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754796AbXIDSST (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 14:18:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B38028027E5;
+	Tue,  4 Sep 2007 20:10:22 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 25754-04; Tue,  4 Sep 2007 20:10:22 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id 4AA52802664;
+	Tue,  4 Sep 2007 20:10:22 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vir6qnxuh.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57632>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+tisdag 04 september 2007 skrev Junio C Hamano:
+> "Josh England" <jjengla@sandia.gov> writes:
+> 
+> > On Sun, 2007-09-02 at 11:23 +0200, Robin Rosenberg wrote:
+> >> git clone (1.5.3) with http is somewhat unreliable. I've noticed if
+> >> can actually give
+> >> me different versions of a branch each time I run it, eventually yielding
+> >> the one I'm expecting.  And now this:
+> >
+> > I don't see this behavior, but I do see other wierdness cloning via
+> > http.  Anytime I clone a repo (any repo) via http from behind the
+> > firewall/proxy at work I never get any branches.  'git branch' only ever
+> > shows 'master'.  I can't checkout and work on any other branch.  I can
+> > work around the problem by cloning on a box that is more open, but was
+> > wondering if anyone knows how to fix this.
+> 
+> Well, what does "git branch -r" say?
+> 
+> If you see the remote tracking branches out of your branch (aka
+> "heads/") namespace, that has been the default for quite some
+> time since 1.5.0 days.
+> 
+> Perhaps "more open" one has ancient git that dumped remote
+> tracking branches in your branch namespace, while your "behind
+> firewall" one has not so ancient git?
 
-> On 9/4/07, Junio C Hamano <gitster@pobox.com> wrote:
->> "Jon Smirl" <jonsmirl@gmail.com> writes:
->>
->> > Another way of looking at the problem,
->> >
->> > Let's build a full-text index for git. You put a string into the index
->> > and it returns the SHAs of all the file nodes that contain the string.
->> > How do I recover the path names of these SHAs?
->>
->> That question does not make much sense without specifying "which
->> commit's path you are talking about".
->>
->> If you want to encode such "contextual information" in addition
->> to "contents", you could do so, but you essentially need to
->> record commit + pathname + mode bits + contents as "blob" and
->> hash that to come up with a name.
->
-> I left the details out of the full-text example to make it more
-> obvious that we can't recover the path names.
->
-> Doing this type of analysis may point out that even more fields are
-> missing from the blob table such as commit id.
+The version where I noticed that strange behaviour was 1.5.3-rc6 on the client
+and 1.5.1.4 on the server. The local repo was originally cloned with 1.5.something.
+The interesting branch was a non-fastword one (i.e. "pu") and on the server I
+was running git-update-server-info every 30 minutes. The pu branch on the server
+was stable during the strange period. I'm not sure whether I got the odd behaviour
+within those 30 minutes or not.
 
-Quite the contrary.  You just illustrated why it is wrong to put
-anything but contents in the blob.
+The url to the repo is http: //rosenberg.homelinux.net/repos/EGIT.git
 
-The specialized indexing is a different issue.  If you want to
-have a full text index to answer "what paths in which commits
-had this string?", then your database table would have columns
-such as commit (sha-1), path (string) as values, indexed with
-the search string.
+I cannot http clone myself anymore it seems, but someone else may succeed better.
 
-Now the current set of "git" operation does not need to answer
-that query, so we do not build nor maintain such an index that
-nobody uses.  But your application may benefit from such an
-index, and as others said, nobody prevents you from building
-one.
+My curl is 7.16.0. Haven't tried any other version yet.
+
+-- robin
