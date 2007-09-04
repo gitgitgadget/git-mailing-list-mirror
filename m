@@ -1,115 +1,125 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Calculating tree nodes
-Date: Tue, 04 Sep 2007 17:14:40 +0200
-Message-ID: <46DD7660.2030109@op5.se>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>	 <20070904025153.GS18160@spearce.org>	 <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>	 <Pine.LNX.4.64.0709040439070.28586@racer.site>	 <9e4733910709032054y4407ce62o6b21935502bfacdb@mail.gmail.com>	 <46a038f90709032121v54454c6fi500ee15497eec85c@mail.gmail.com>	 <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com>	 <Pine.LNX.4.64.0709041131030.28586@racer.site> <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
+From: Russ Brown <pickscrape@gmail.com>
+Subject: Re: git-svn and a nested branches folder
+Date: Tue, 04 Sep 2007 10:21:22 -0500
+Message-ID: <46DD77F2.3040000@gmail.com>
+References: <46DD6EEA.9010304@gmail.com> <86veaqebf1.fsf@lola.quinscape.zz> <46DD718C.7060908@gmail.com> <86r6leeaq7.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:15:05 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 17:21:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISa7B-0008Lp-BN
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:14:53 +0200
+	id 1ISaDl-0001hh-NL
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 17:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579AbXIDPOp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 11:14:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754523AbXIDPOp
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:14:45 -0400
-Received: from mail.op5.se ([193.201.96.20]:37418 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754579AbXIDPOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 11:14:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6BAFB194410;
-	Tue,  4 Sep 2007 17:14:42 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zwoPoXIZ6uVr; Tue,  4 Sep 2007 17:14:41 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 6A0EA1943D3;
-	Tue,  4 Sep 2007 17:14:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
+	id S1754185AbXIDPVg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 11:21:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbXIDPVg
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 11:21:36 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:33355 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754167AbXIDPVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 11:21:35 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1828727wxd
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 08:21:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=Zlz2SYupkLQN8JZSvAAw3zvTQMybx4IdVaoljpncx4uZtRSpKWyVCiWYMlpd3zAQhvkswg7Pg5NU9IdCvTk0Ft7BJIVLPta8yxWmhFJmnNUMrLeSqg+/6Wi6hE4Xz5GcTtnssX4d2G823ktwGWax7p7OyTq1vl3/NJqShV7L0pQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=rus9/3QQH8oALHtMftQ1/Vdpv/rnJqDXHOXDzNM53UY9B6cw0PK6o8uzPna7v0ieo6/0qkr2vlv6pFefTIvxwaF34OhmoVHM7T/Xj6uYJJWfUaMSw8HjB/e0tQcLHnXb6+s3e4FFMCNoWqDXa7zz/6h8hbAigzb64jKJi6j7rhg=
+Received: by 10.90.74.1 with SMTP id w1mr1031935aga.1188919293917;
+        Tue, 04 Sep 2007 08:21:33 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.164.207.197])
+        by mx.google.com with ESMTPS id 7sm5838967agb.2007.09.04.08.21.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 Sep 2007 08:21:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
+In-Reply-To: <86r6leeaq7.fsf@lola.quinscape.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57596>
 
-Jon Smirl wrote:
-> On 9/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
->>
->> On Tue, 4 Sep 2007, Jon Smirl wrote:
->>
->>> In my scheme the path info is moved into the file object nodes and the
->>> SHA list is in the commit node.
->> And how should this "SHA list" be any different from a single tree object,
->> except that you now merge it with the commit object?
->>
->> Really, go back to the mail Martin mentioned.  Having all objects in one
->> list kills performance.
+David Kastrup wrote:
+> Russ Brown <pickscrape@gmail.com> writes:
 > 
-> You are ignoring the fact the in this scheme temp indexes can be
-> created as needed. These temp indexes could look just like tree nodes.
+>> David Kastrup wrote:
+>>> Russ Brown <pickscrape@gmail.com> writes:
+>>>
+>>>> I'm having some trouble with using git-svn to fetch a repository, and I
+>>>> think it's because the repository doesn't store branches as a flat list
+>>>> directly under the 'branches' directory.
+>>>>
+>>>> Basically, we have a structure like this:
+>>>>
+>>>> |
+>>>> +-trunk
+>>>> +-tags
+>>>> +-branches
+>>>>   + category-a
+>>>>     + branch-a
+>>>>     + branch-b
+>>>>   + category-b
+>>>>     + branch-c
+>>>>     + branch-d
+>>>>
+>>>> etc. category-a and category-b are simple directories created using svn
+>>>> mkdir. The branches are created using svn cp.
+>>>>
+>>>> It helps us to organise the branches better, but the rationale is
+>>>> besides the point. The problem is that git-svn seems to want to
+>>>> treat category-a and category-b as branches, which isn't right at
+>>>> all. As a result, git-svn seems to skip most (if not all) revisions
+>>>> that occur in these directories and creates a lot of entries in
+>>>> unhandled.log.
+>>> So what did you specify in your .git/config file regarding the svn
+>>> structure?
+>> I specified the 'branches' directory, but that's because earlier in
+>> the life of the repo we did just do the flat branch layout, but
+>> decided to make it more structured once that got unwieldy.
 > 
-
-What's the cost associated with creating such an index?
-What are the estimated savings in size?
-What other performance penalties will git take due to this?
-
-While I'm certainly interested in improving git (well, discussing its
-improvements anyway - I write too shabby code to participate fully),
-I fail to see how this scheme of storing things could help doing that,
-seeing as it's already the fastest SCM out there and does an insanely
-good job at storing large repositories packed up tight.
-
-What you're proposing would effectively shave off ~4kb or so of stored
-data and save a *possible* disk access (note that there will most
-likely be none, as most users pack large repos, and for small ones it
-shouldn't matter much either way). The way you propose to do so
-involves fundamental and backwards-incompatible alterations to the
-very core of the git plumbing.
-
-Yet you haven't shown a single estimate of how much diskspace would
-be saved, or what other gains are to be had, let alone any code to 
-implement even a prototype of this new storage scheme.
-
-Note that I'm currently in a state of mind where I'm feeling inclined
-to whoop and cheer at every small suggestion that sounds even the
-slightest bit of fun. No, I'm not doing drugs, but I just met the 
-possible love of my life, got a big fat raise and my stocks just
-went ballistic. Someone less fortunate than I am right now is probably
-too bored to even argue against it.
-
-> I'm saying that it may be a mistake to be recording the indexes (aka
-> file names) as part of the commit when they really aren't.
-
-But they are, since they're part of the snapshot.
-
-> The
-> essential part of the commit is the SHA1 list. The path names belong
-> to the file objects and should be stored there.
+> Cough, cough.  _What_ did you specify in your .git/config file
+> regarding the svn structure?  Please quote the section.
 > 
 
-Sorry, but it'll take code and benchmarks to convince me this is a
-good idea. Not that it matters much what I think, but I've got an
-inkling Junio will need the same before he's swayed to your point
-of view.
+Erm, sorry.
+
+[svn-remote "svn"]
+        url = svn://svn.<name>.com
+        fetch = trunk:refs/remotes/trunk
+        branches = branches/*:refs/remotes/*
+        tags = tags/*:refs/remotes/tags/*
+
+(URL changed in case it annoys my employers)
+
+I didn't write this by hand: it was generated by git-svn init.
+
+>> Is it possible to specify more than one folder for the branches
+>> option?
+> 
+> It is possible to adapt the config section to the actual layout.  If
+> not otherwise, by starting with
+> git svn init
+> with a clean slate, editing the config file, and only then actually
+> fetching stuff.
+> 
+> However, git-svn will not magically start guessing that you changed
+> your structure around.  You have to edit the configuration
+> appropriately.
+> 
+
+That's why I suggested that a method involving detecting branches based
+on whether the directory is a copy of trunk or another branch might
+'magically' work in all scenarios. I've used a similar branch 'scanning'
+technique before for a different reason. But I realise there may be
+technical reasons as to why that might not be possible.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Russ
