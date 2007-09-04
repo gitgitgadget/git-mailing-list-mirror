@@ -1,67 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Calculating tree nodes
-Date: Tue, 4 Sep 2007 11:33:36 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709041131030.28586@racer.site>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com> 
- <20070904025153.GS18160@spearce.org>  <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
-  <Pine.LNX.4.64.0709040439070.28586@racer.site> 
- <9e4733910709032054y4407ce62o6b21935502bfacdb@mail.gmail.com> 
- <46a038f90709032121v54454c6fi500ee15497eec85c@mail.gmail.com>
- <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com>
+Subject: Re: [PATCH 2/3] archive: specfile support (--pretty=format: in
+ archive files)
+Date: Tue, 4 Sep 2007 11:41:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709041139140.28586@racer.site>
+References: <46DC4D45.4030208@lsrfire.ath.cx> <7vtzqb8fw2.fsf@gitster.siamese.dyndns.org>
+ <46DCF0EF.9020604@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 12:34:02 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	Thomas Glanzmann <thomas@glanzmann.de>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Sep 04 12:41:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISVjG-0002DD-KT
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 12:33:54 +0200
+	id 1ISVqj-0003Q8-Ge
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 12:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752860AbXIDKdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 06:33:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752535AbXIDKdu
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 06:33:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33744 "HELO mail.gmx.net"
+	id S1752772AbXIDKla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 06:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbXIDKla
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 06:41:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55032 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752521AbXIDKdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 06:33:49 -0400
-Received: (qmail invoked by alias); 04 Sep 2007 10:33:48 -0000
+	id S1751820AbXIDKl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 06:41:29 -0400
+Received: (qmail invoked by alias); 04 Sep 2007 10:41:27 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 04 Sep 2007 12:33:48 +0200
+  by mail.gmx.net (mp058) with SMTP; 04 Sep 2007 12:41:27 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dKKsn2x5d3HziRH2fxDWN9XYOcWOSaV41AtaOf7
-	UeDrcOYa6Fm43L
+X-Provags-ID: V01U2FsdGVkX1/OVYEQYnfOPfCfMMLDGDOAciWSxUDSAcZ9D3V8zS
+	XIpVrkf+vxr4TA
 X-X-Sender: gene099@racer.site
-In-Reply-To: <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com>
+In-Reply-To: <46DCF0EF.9020604@op5.se>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57547>
 
 Hi,
 
-On Tue, 4 Sep 2007, Jon Smirl wrote:
+On Tue, 4 Sep 2007, Andreas Ericsson wrote:
 
-> In my scheme the path info is moved into the file object nodes and the 
-> SHA list is in the commit node.
+> Junio C Hamano wrote:
+> > Ren? Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+> > 
+> > > The attribute is useful for creating auto-updating specfiles.  It is 
+> > > limited by the underlying function format_commit_message(), though. 
+> > > E.g. currently there is no placeholder for git-describe like output, 
+> > > and expanded specfiles can't contain NUL bytes.  That can be fixed 
+> > > in format_commit_message() later and will then benefit users of 
+> > > git-log, too.
+> > 
+> > Interesting. I however wonder if "specfile" is a good name for this 
+> > attribute, although I admit I do not think of anything better offhand.
+> 
+> "releasefile", perhaps?
 
-And how should this "SHA list" be any different from a single tree object, 
-except that you now merge it with the commit object?
+Maybe we should not so much name it by purpose, but by function.  How 
+about "substformat" for the attribute name, and replacing any 
+$Format:blablub$ inside those files with something a la 
+--pretty=format:blablub?
 
-Really, go back to the mail Martin mentioned.  Having all objects in one 
-list kills performance.
-
-> Diffing two trees in the scheme is quite fast. Just get their commit
-> objects into RAM and compare the lists of SHAs.
-
-No, it is not fast.  Just loading the complete list into RAM is likely 
-much, much slower than a simple diff _right_ _now_.
-
-Hth,
+Ciao,
 Dscho
