@@ -1,70 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 4 Sep 2007 15:30:08 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709041529191.28586@racer.site>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com>
- <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com>
- <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com>
- <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site>
- <46DD433A.5040604@eudaptics.com> <46DD473A.8010602@trolltech.com>
- <46DD63F5.5050002@trolltech.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Calculating tree nodes
+Date: Tue, 4 Sep 2007 10:31:35 -0400
+Message-ID: <9e4733910709040731s2695ab14kb9750923fcac007@mail.gmail.com>
+References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
+	 <20070904025153.GS18160@spearce.org>
+	 <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
+	 <Pine.LNX.4.64.0709040439070.28586@racer.site>
+	 <9e4733910709032054y4407ce62o6b21935502bfacdb@mail.gmail.com>
+	 <46a038f90709032121v54454c6fi500ee15497eec85c@mail.gmail.com>
+	 <9e4733910709032237y65ccafdai4889078533908fb0@mail.gmail.com>
+	 <Pine.LNX.4.64.0709041131030.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 16:30:50 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 04 16:31:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZQQ-0005Ap-84
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:30:42 +0200
+	id 1ISZRM-0005MT-Ub
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754166AbXIDOai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 10:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753998AbXIDOai
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:30:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38677 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754103AbXIDOah (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 10:30:37 -0400
-Received: (qmail invoked by alias); 04 Sep 2007 14:30:35 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp031) with SMTP; 04 Sep 2007 16:30:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19IikJrpp9InvBe02NAy0003YO23Lfj1SqsYFpr0K
-	zomcm9fO7qYjXM
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46DD63F5.5050002@trolltech.com>
-X-Y-GMX-Trusted: 0
+	id S1753936AbXIDObh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 10:31:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753998AbXIDObh
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:31:37 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:2813 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753852AbXIDObg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 10:31:36 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1184429rvb
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 07:31:35 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bHpjrfC4mIIY/6iAQfDzJdPZCXHkUjefXmyM2dSRwLbztZ0CbfdwPCTwW8jDgLB4zKGkFUdLQEC/WNbhVtmPrLBrNOmjD224mzrinHaW3RdaWOyk/AVxx98t8S/gPzC74IVdobhN/Nw9gF0NB8vnCtZtU/jvP/pdKOWwD0szsWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nQCT+Ez50ZeadLR1CWmbUoCQT0NNsS7olQnybclb85v0uiW4IuaXM0NzzzbdDEl4RHo7tLBZjYYCShVX60VYLmQy5bb3SMp52RphI5lq3oSNuHfJBbvxF+yGF7XIgXfndvkP1ZFY0giLgkeft+MT5im5EIa2E75Yu/eZFpMav7k=
+Received: by 10.141.83.15 with SMTP id k15mr2308369rvl.1188916295616;
+        Tue, 04 Sep 2007 07:31:35 -0700 (PDT)
+Received: by 10.141.44.16 with HTTP; Tue, 4 Sep 2007 07:31:35 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0709041131030.28586@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57579>
 
-Hi,
+On 9/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 4 Sep 2007, Jon Smirl wrote:
+>
+> > In my scheme the path info is moved into the file object nodes and the
+> > SHA list is in the commit node.
+>
+> And how should this "SHA list" be any different from a single tree object,
+> except that you now merge it with the commit object?
+>
+> Really, go back to the mail Martin mentioned.  Having all objects in one
+> list kills performance.
 
-On Tue, 4 Sep 2007, Marius Storm-Olsen wrote:
+You are ignoring the fact the in this scheme temp indexes can be
+created as needed. These temp indexes could look just like tree nodes.
 
-> Marius Storm-Olsen said the following on 04.09.2007 13:53:
-> > In the meantime, I've pushed out a new patch
-> > http://repo.or.cz/w/git/mingw/4msysgit.git?a=commitdiff;h=683775c00d9fb95bcbe4632f95b67a96b902fa59
-> > 
-> > /me starts another test run, to see how our tests are doing now..
-> 
-> Neat, with the custom stat() changes cherry-picked on top of 4msysgit.git
-> 'devel' branch, I only have one failing testcase
->     t6024-recursive-merge.sh
-> when running
->     $ NO_SYMLINKS=1 make -k
-> 
-> The rest are passing with flying colors!
+I'm saying that it may be a mistake to be recording the indexes (aka
+file names) as part of the commit when they really aren't. The
+essential part of the commit is the SHA1 list. The path names belong
+to the file objects and should be stored there.
 
-Bad news.  I do not know if it was the newest version I tried, but I could 
-no longer fetch... said something about some bad file.
 
-Ciao,
-Dscho
+>
+> > Diffing two trees in the scheme is quite fast. Just get their commit
+> > objects into RAM and compare the lists of SHAs.
+>
+> No, it is not fast.  Just loading the complete list into RAM is likely
+> much, much slower than a simple diff _right_ _now_.
+>
+> Hth,
+> Dscho
+>
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
