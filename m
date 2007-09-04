@@ -1,58 +1,53 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: strbuf API
-Date: Tue, 04 Sep 2007 10:52:26 +0900
-Message-ID: <buobqcjrycl.fsf@dhapc248.dev.necel.com>
-References: <20070902224213.GB431@artemis.corp>
-	<200709030743.44188.johan@herland.net>
-	<20070903084610.GA21759@artemis.corp>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Calculating tree nodes
+Date: Mon, 3 Sep 2007 22:13:26 -0400
+Message-ID: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Sep 04 03:52:49 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 04 04:13:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISNau-0007cJ-1i
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 03:52:44 +0200
+	id 1ISNv4-0001Vs-Jw
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 04:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751106AbXIDBwj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 3 Sep 2007 21:52:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbXIDBwj
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 21:52:39 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:33411 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876AbXIDBwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2007 21:52:38 -0400
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l841pboa023256;
-	Tue, 4 Sep 2007 10:52:13 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay31.aps.necel.com with ESMTP; Tue, 4 Sep 2007 10:52:13 +0900
-Received: from dhapc248.dev.necel.com ([10.114.98.116] [10.114.98.116]) by relay21.aps.necel.com with ESMTP; Tue, 4 Sep 2007 10:52:13 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 07CD1476; Tue,  4 Sep 2007 10:52:26 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <20070903084610.GA21759@artemis.corp> (Pierre Habouzit's message of "Mon\, 03 Sep 2007 10\:46\:10 +0200")
+	id S1750879AbXIDCN1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 3 Sep 2007 22:13:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbXIDCN1
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Sep 2007 22:13:27 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:34624 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846AbXIDCN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2007 22:13:27 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2063567wah
+        for <git@vger.kernel.org>; Mon, 03 Sep 2007 19:13:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=V7REVSSBPyBQs6rETm7HI2/q1ULBr7gLcT74wx03yF8c4gB8ewPQw8GoZps1FZv6rFHDMGztrLlQEsG/o5axiUcwMMQ/XnZv6Nt3TAWkPzUzc1fiIjh99dEFthZf+PTZr7th+AJuaftrlK/vGweJqFEHRnynlbyl1eGmhP5uMhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hRlmbn6C78LhxhtcDMIaFDTIThe2xl0MhL4ett1tPu61n0ygVdS+uDgDZ5/SJE6ESZfQn3n1tOJJgF2p7V8ClMnbDmZzppu6JGKTTPGPNkZ87FXyd925e0KmwRSknPEYaLhAkfhg3uzKijNv8kP3W62vNWkln7K91oP7Vd4f3is=
+Received: by 10.114.137.2 with SMTP id k2mr103893wad.1188872006194;
+        Mon, 03 Sep 2007 19:13:26 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Mon, 3 Sep 2007 19:13:26 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57511>
 
-Pierre Habouzit <madcoder@debian.org> writes:
->   For the record, I dislike the fact that bstring pullutes the b*
-> namespace, whereas it should use bstr as a prefix everywhere, and some
-> functions (like bstrcpy, that should definitely be named bstrdup) are
-> really named the _wrong_ way
+When I change a file it creates a new object with a new SHA. This new
+SHA causes the tree node pointing to it to change. Changing the tree
+node forces its parent to change and so on. Of course git batches all
+of the changes together into a commit so that this ripple effect
+doesn't happen for every file. But every commit causes a new root tree
+node to be created, right?
 
-Yeah, I got the same impression.  There's an odd "accumulated
-haphazardly over time" feel to much of it.
-
-[One thing I found especially weird is the way the "core" interface uses
-lowercase names, but the "aux" interfaces all seem to use StUDlyCaPS...]
-
--Miles
 -- 
-Ich bin ein Virus. Mach' mit und kopiere mich in Deine .signature.
+Jon Smirl
+jonsmirl@gmail.com
