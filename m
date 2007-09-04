@@ -1,102 +1,78 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Tue, 04 Sep 2007 16:43:55 +0200
-Message-ID: <46DD6F2B.3060001@trolltech.com>
-References: <46DACD93.9000509@trolltech.com> <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site> <46DD433A.5040604@eudaptics.com> <46DD473A.8010602@trolltech.com> <46DD63F5.5050002@trolltech.com> <Pine.LNX.4.64.0709041529191.28586@racer.site>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-svn and a nested branches folder
+Date: Tue, 04 Sep 2007 16:46:10 +0200
+Message-ID: <86veaqebf1.fsf@lola.quinscape.zz>
+References: <46DD6EEA.9010304@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig0977285A69F9FD02348DA042"
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 04 16:44:20 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 04 16:46:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISZdU-0000HJ-LQ
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:44:13 +0200
+	id 1ISZg5-000138-6v
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 16:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754188AbXIDOoH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 10:44:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753655AbXIDOoG
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:44:06 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:43022 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753820AbXIDOoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 10:44:04 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 551CA7420E; Tue,  4 Sep 2007 16:44:03 +0200 (CEST)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id F1FC5741E5; Tue,  4 Sep 2007 16:44:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <Pine.LNX.4.64.0709041529191.28586@racer.site>
-X-Enigmail-Version: 0.95.3
-OpenPGP: id=34EB4437
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1754238AbXIDOqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 10:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbXIDOqs
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 10:46:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:39927 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754186AbXIDOqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 10:46:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ISZfl-00016L-SD
+	for git@vger.kernel.org; Tue, 04 Sep 2007 16:46:34 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 16:46:33 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Sep 2007 16:46:33 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:lI0+rX7Mh3Lif1pzIt94+/73nvs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57584>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig0977285A69F9FD02348DA042
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Russ Brown <pickscrape@gmail.com> writes:
 
-Johannes Schindelin wrote:
-> On Tue, 4 Sep 2007, Marius Storm-Olsen wrote:
->> Neat, with the custom stat() changes cherry-picked on top of
->> 4msysgit.git 'devel' branch, I only have one failing testcase=20
->> t6024-recursive-merge.sh when running $ NO_SYMLINKS=3D1 make -k
->>=20
->> The rest are passing with flying colors!
->=20
-> Bad news.  I do not know if it was the newest version I tried, but I
-> could no longer fetch... said something about some bad file.
+> I'm having some trouble with using git-svn to fetch a repository, and I
+> think it's because the repository doesn't store branches as a flat list
+> directly under the 'branches' directory.
+>
+> Basically, we have a structure like this:
+>
+> |
+> +-trunk
+> +-tags
+> +-branches
+>   + category-a
+>     + branch-a
+>     + branch-b
+>   + category-b
+>     + branch-c
+>     + branch-d
+>
+> etc. category-a and category-b are simple directories created using svn
+> mkdir. The branches are created using svn cp.
+>
+> It helps us to organise the branches better, but the rationale is
+> besides the point. The problem is that git-svn seems to want to
+> treat category-a and category-b as branches, which isn't right at
+> all. As a result, git-svn seems to skip most (if not all) revisions
+> that occur in these directories and creates a lot of entries in
+> unhandled.log.
 
-Then you're missing this patch:
-http://repo.or.cz/w/git/mingw/4msysgit.git?a=3Dcommitdiff;h=3Df15974add93=
-bdfa92775c77c00e7c65aefd42127
+So what did you specify in your .git/config file regarding the svn
+structure?
 
-I guess the quickest way is to manually apply this patch and recompile.
-(or add the '#undef fstat', and have git_fstat just 'return fstat(fd, buf=
-)')
-
-The problem is that without this patch fstat(0, buf) would fail with bad
-filedescriptor instead of returning the st_mode =3D S_IFIFO.
-
---
-=2Emarius
-
-
---------------enig0977285A69F9FD02348DA042
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFG3W8vKzzXl/njVP8RAvI6AKCbaVwV1AuiQJR6mlj88ZB1/WYSlgCfXD5o
-DLSyJ91xc77IK0sBIEtWy+4=
-=zKGF
------END PGP SIGNATURE-----
-
---------------enig0977285A69F9FD02348DA042--
+-- 
+David Kastrup
