@@ -1,64 +1,79 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: Re: git clone over http
-Date: Tue, 04 Sep 2007 10:54:36 -0600
-Message-ID: <1188924876.6192.21.camel@beauty>
-References: <200709021123.04218.robin.rosenberg.lists@dewire.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git's database structure
+Date: Tue, 04 Sep 2007 18:51:34 +0200
+Message-ID: <46DD8D16.9090104@op5.se>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>	 <9e4733910709040928n6535e49esaf713b2c63ba0831@mail.gmail.com>	 <46DD887D.3090508@op5.se> <9e4733910709040947ia32bda4i6e30efb2d7848308@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:03:23 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:07:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISbf2-0000N9-Os
-	for gcvg-git@gmane.org; Tue, 04 Sep 2007 18:53:57 +0200
+	id 1ISbcr-0000L5-UC
+	for gcvg-git@gmane.org; Tue, 04 Sep 2007 18:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464AbXIDQxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 12:53:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXIDQxn
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 12:53:43 -0400
-Received: from mm04snlnto.sandia.gov ([132.175.109.21]:1927 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752532AbXIDQxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 12:53:42 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Tue, 04 Sep 2007 10:53:28 -0600
-X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
-Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
- by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l84GrRxp001294;
- Tue, 4 Sep 2007 10:53:27 -0600
-In-Reply-To: <200709021123.04218.robin.rosenberg.lists@dewire.com>
-X-Mailer: Evolution 2.10.1
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
- Antispam-Data: 2007.9.4.92322
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_600_699
- 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
- __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
-X-TMWD-Spam-Summary: TS=20070904165331; SEV=2.2.2; DFV=B2007090413;
- IFV=2.0.4,4.0-9; AIF=B2007090413; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230322E34364444384438412E303045373A53434A535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007090413_5.02.0125_4.0-9
-X-WSS-ID: 6AC352023HO1226786-01-01
+	id S1751019AbXIDQvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 12:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbXIDQvh
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 12:51:37 -0400
+Received: from mail.op5.se ([193.201.96.20]:40763 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751019AbXIDQvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 12:51:37 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 42E6D194439;
+	Tue,  4 Sep 2007 18:51:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gRAzS3dXkQ+5; Tue,  4 Sep 2007 18:51:35 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id BDC68194436;
+	Tue,  4 Sep 2007 18:51:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <9e4733910709040947ia32bda4i6e30efb2d7848308@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57616>
 
-On Sun, 2007-09-02 at 11:23 +0200, Robin Rosenberg wrote:
-> git clone (1.5.3) with http is somewhat unreliable. I've noticed if
-> can actually give
-> me different versions of a branch each time I run it, eventually yielding
-> the one I'm expecting.  And now this:
+Jon Smirl wrote:
+> On 9/4/07, Andreas Ericsson <ae@op5.se> wrote:
+>> Jon Smirl wrote:
+>>> Another way of looking at the problem,
+>>>
+>>> Let's build a full-text index for git. You put a string into the index
+>>> and it returns the SHAs of all the file nodes that contain the string.
+>>> How do I recover the path names of these SHAs?
+>>>
+>> I wouldn't know, but presumably any table can have more than one column.
+>>
+>> Is this a problem you face with git so often that it requires a complete
+>> re-design of its very core?
+> 
+> That's the whole point. We need to discuss the impact of merging a
+> field (path names) with an index (tree nodes) has on future things we
+> may want to do with the data stored in git.
+> 
 
-I don't see this behavior, but I do see other wierdness cloning via
-http.  Anytime I clone a repo (any repo) via http from behind the
-firewall/proxy at work I never get any branches.  'git branch' only ever
-shows 'master'.  I can't checkout and work on any other branch.  I can
-work around the problem by cloning on a box that is more open, but was
-wondering if anyone knows how to fix this.
+Yes, but as nobody seems to know what those future things are, it feels
+rather pointless speculating about adding support to git for them. git
+is a tool. It's a great one at that, because it was built to solve a
+particular problem, which it does an amazing job at.
 
--JE
+Other SCM's which had the potential to become amazingly good tools too
+drowned somewhere between prototype and product in a sea of intellectual
+masturbation, which had little to do with solving real-world problems.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
