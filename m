@@ -1,105 +1,77 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Simplify strbuf uses in fast-import.c using the proper  functions.
-Date: Wed, 05 Sep 2007 10:57:20 +0200
-Message-ID: <20070905085720.GD31750@artemis.corp>
-References: <20070904115317.GA3381@artemis.corp> <11889144743483-git-send-email-madcoder@debian.org> <46DDEE73.5020904@lsrfire.ath.cx> <20070905074815.GB31750@artemis.corp> <7vodghk057.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Wed, 05 Sep 2007 11:02:02 +0200
+Message-ID: <86k5r5cwol.fsf@lola.quinscape.zz>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <7vsl5tk1r8.fsf@gitster.siamese.dyndns.org> <200709051013.39910.johan@herland.net> <vpqtzq91p5z.fsf@bauges.imag.fr> <20070905085158.GC31750@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="cHMo6Wbp1wrKhbfi";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 10:57:28 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 05 11:02:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISqhT-0007Kg-Fw
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 10:57:27 +0200
+	id 1ISqmI-0008R5-Ue
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 11:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097AbXIEI5X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 04:57:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756077AbXIEI5X
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 04:57:23 -0400
-Received: from pan.madism.org ([88.191.52.104]:53038 "EHLO hermes.madism.org"
+	id S1756115AbXIEJCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 05:02:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756110AbXIEJCW
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 05:02:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:57344 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754633AbXIEI5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 04:57:22 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 30BC21DAF1;
-	Wed,  5 Sep 2007 10:57:21 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D3E293244EE; Wed,  5 Sep 2007 10:57:20 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Content-Disposition: inline
-In-Reply-To: <7vodghk057.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1756104AbXIEJCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 05:02:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ISqmB-0001m6-NU
+	for git@vger.kernel.org; Wed, 05 Sep 2007 11:02:19 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 11:02:19 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 11:02:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:olXShGrQQddGvqPTzcbNM7jouuo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57694>
 
+Pierre Habouzit <madcoder@debian.org> writes:
 
---cHMo6Wbp1wrKhbfi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, Sep 05, 2007 at 08:39:52AM +0000, Matthieu Moy wrote:
+>> Johan Herland <johan@herland.net> writes:
+>> 
+>> > When git-fetch and git-commit has done its job and is about to exit, it checks 
+>> > the number of loose object, and if too high tells the user something 
+>> > like "There are too many loose objects in the repo, do you want me to repack? 
+>> > (y/N)". If the user answers "n" or simply <Enter>,
+>> 
+>> I don't like commands to be interactive if they don't _need_ to be so.
+>> It kills scripting, it makes it hard for a front-end (git gui or so)
+>> to use the command, ...
+>
+>   There is absolutely no problem here, as it can be avoided if the
+> output is not a tty.
 
-On Wed, Sep 05, 2007 at 08:05:24AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   oh boy, yes I fixed that in my local patch collection. I'm waiting for
-> > a few hours (days ?) to see if there will be some more comments, I've
-> > integrated every single one done here already (and some I had on IRC
-> > too), and I'll repost a new clean series that I intend to be a real
-> > proposal for inclusion.
->=20
-> Ah, I actually did the single trivial fix-up (ALLOC_GROW) and
-> have been looking at it, but I'll discard it.  Thanks.
+Which output?  stdout?  stderr?  Where is the question appearing?
+What if the command has been started in the background?  What if stdin
+(not stdout) is from a pipe, maybe for taking a commit message?  What
+if stdin is from a pseudo-tty because the commit has been started with
+an internal shell command inside of Emacs, and the command/message
+will only get echoed once git-commit completes?
 
-  Yeah I integrated that as well already. I think I'll post the patches
-at the end of the Day (French Timezone so in 5 or 6 hours at least) to
-be sure nobody has any good remarks to do first. If you want I can share
-my branch somewhere if you want to look at it, just ask.
+> It's not _that_ hard to guess if you're currently running in a
+> script or in an interactive shell after all.
 
-> >   And yes, this patch is a perfect example of the gain we have to share
-> > a common buffer API. The code looks (at least to me) way nicer, and if
-> > you look in the details, we perform as many memory allocations, copies,
-> > and so on as in the previous version.
->=20
-> Wait.  What is your point in saying this?  Is that a good thing
-> to do "as many"?  "API is cleaned-up and it is much easier to
-> read but we do not do more than before" is certainly a *BIG*
-> plus, so perhaps that is what you meant, but when I first read
-> it I thought you were saying "we are not optimizing it at all"
-> in a negative sense.
+Oh, it is not hard to _guess_.  Just throw a die.  What is hard is to
+_know_ 100% sure that one is doing the right thing and not breaking
+any legitimate use.
 
-  Sorry if I chose wrong words to say that, it is clearly a big plus ! I
-wrote it having in mind that very often abstractions and high level APIs
-often degrade performance. It does not, and that's a huge win. The point
-is that "despite the somehow higher level API we don't loose an inch of
-performance".
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---cHMo6Wbp1wrKhbfi
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG3m9wvGr7W6HudhwRAolHAKCgCnHFVtlkJCGlh4np7XnhQfA3UwCgi+KN
-iyBftFj/JKlIv/k7GauAWtI=
-=1Mv/
------END PGP SIGNATURE-----
-
---cHMo6Wbp1wrKhbfi--
+-- 
+David Kastrup
