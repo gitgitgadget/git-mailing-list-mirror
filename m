@@ -1,103 +1,125 @@
-From: Eric Wong <normalperson@yhbt.net>
+From: Russ Brown <pickscrape@gmail.com>
 Subject: Re: git-svn and a nested branches folder
-Date: Wed, 5 Sep 2007 03:09:19 -0700
-Message-ID: <20070905100919.GA11074@soma>
-References: <46DD6EEA.9010304@gmail.com> <20070905001513.GA9362@soma> <46DE7D37.9040905@gmail.com>
+Date: Wed, 05 Sep 2007 05:15:17 -0500
+Message-ID: <46DE81B5.7090500@gmail.com>
+References: <46DD6EEA.9010304@gmail.com> <20070905001513.GA9362@soma> <46DE7D37.9040905@gmail.com> <20070905100919.GA11074@soma>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Russ Brown <pickscrape@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 12:09:27 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Sep 05 12:15:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISrp7-00081O-S0
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 12:09:26 +0200
+	id 1ISrvB-00019X-Q4
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 12:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbXIEKJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 06:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755267AbXIEKJV
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 06:09:21 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:56203 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753502AbXIEKJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 06:09:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 8D2437F4110;
-	Wed,  5 Sep 2007 03:09:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <46DE7D37.9040905@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755715AbXIEKP3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 06:15:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755868AbXIEKP3
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 06:15:29 -0400
+Received: from wx-out-0506.google.com ([66.249.82.234]:35139 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755715AbXIEKP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 06:15:28 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2065321wxd
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 03:15:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=GVh52TazqGkxaJg/FxoM9jW5lUpbMpTcPtjcYfdlZhLf++iXBVZQNAGaKfH91GdtimOVC/KK6ZyXZdY7ruB3HaTWgSXYNAZ98WnY53adDBcT1h9XtvnYVZFQRcTrVPwYe5su9wYd6G2Xx999KMIKdAqaWFmsMQqwdNABTBi/AWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=aWrP77CVuS2x8+L+KiCJWmKoIyTPJ5VUpaqs6Olwz9GTVW+ckwF9KlD9eKxw2gQ7G2V5WiEr+GJSANuH2rozL7orBfEcT6eujhWbqHRIcDxTHfli+tgBlBvTjvQxFuEAh3mJRsou/H9gvSqB9+I9Ec/r3ACZguMuDkjVOjylGl4=
+Received: by 10.90.54.4 with SMTP id c4mr6717597aga.1188987327266;
+        Wed, 05 Sep 2007 03:15:27 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.164.207.197])
+        by mx.google.com with ESMTPS id 5sm7161512agc.2007.09.05.03.15.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 05 Sep 2007 03:15:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
+In-Reply-To: <20070905100919.GA11074@soma>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57706>
 
-Russ Brown <pickscrape@gmail.com> wrote:
-> Eric Wong wrote:
-> > Russ Brown <pickscrape@gmail.com> wrote:
-> >> Basically, we have a structure like this:
-> >>
-> >> |
-> >> +-trunk
-> >> +-tags
-> >> +-branches
-> >>   + category-a
-> >>     + branch-a
-> >>     + branch-b
-> >>   + category-b
-> >>     + branch-c
-> >>     + branch-d
+Eric Wong wrote:
+> Russ Brown <pickscrape@gmail.com> wrote:
+>> Eric Wong wrote:
+>>> Russ Brown <pickscrape@gmail.com> wrote:
+>>>> Basically, we have a structure like this:
+>>>>
+>>>> |
+>>>> +-trunk
+>>>> +-tags
+>>>> +-branches
+>>>>   + category-a
+>>>>     + branch-a
+>>>>     + branch-b
+>>>>   + category-b
+>>>>     + branch-c
+>>>>     + branch-d
+> 
+>>>> The only other problem is in branch naming, which could clash if you
+>>>> only use the outer-most directory name, so I'd suggest something that
+>>>> involves concatenating the folders in the path relative to 'branches' to
+>>>> keep them unique (if git can handle slashes in branch names then all the
+>>>> better).
+>>> As Peter suggested, disable globbing for branches and use explicit
+>>> fetch refspecs for now...
+>>>
+>> I've actually knocked up a rough script which generates a list of
+>> refspec lines for you given a repo URL, trunk reference and branches
+>> directory. It uses svn log -v --xml and pipes it through a couple of
+>> XSLT templates, and basically looks for all copies that copy from trunk
+>> (recursively: so it includes branches of branches too). I can post it to
+>> the list if you'd find it useful or interesting.
+>>
+>> It's generating output that looks sensible to me, but the results aren't
+>> quite what I'd expected. I'll paste a sample in here in case there's
+>> anything obvious someone might spot that I've missed
+>>
+>> # This line was generated by git-svn init, and I kept it
+>> fetch = all/trunk:refs/remotes/trunk
+>>
+>> # These lines generated by my tool, dirnames replaced for security reasons:
+>>
+>> fetch = branches/folder/projecta:refs/remotes/svn/folder/projecta
+>> fetch = branches/folder/projectb:refs/remotes/svn/folder/projectb
+>> fetch = branches/folder/projectc:refs/remotes/svn/folder/projectc
+>> fetch = branches/folder/projectd:refs/remotes/svn/folder/projectd
+>> fetch = branches/folder/projecte:refs/remotes/svn/folder/projecte
+>> fetch = branches/folder/projectf:refs/remotes/svn/folder/projectf
+>> fetch = branches/folder/projectg:refs/remotes/svn/folder/projectg
+>>
+>> git branch -a doesn't list any of those branches after fetch completes.
+>> Looking back at the output from fetch, all revisions applied were to trunk.
+>>
+>> Anything wrong with those fetch lines?
+> 
+> From your tree diagram, it seemed that trunk/ and branches/ were at
+> the same depth in your SVN repository.  However, in your generated
+> fetch lines they all started with "branches/" in front, yet your
+> trunk fetch line had "all/" in front of trunk, so maybe prefixing
+> the generated ones with "all/" helps?
+> 
 
-> >> The only other problem is in branch naming, which could clash if you
-> >> only use the outer-most directory name, so I'd suggest something that
-> >> involves concatenating the folders in the path relative to 'branches' to
-> >> keep them unique (if git can handle slashes in branch names then all the
-> >> better).
-> > 
-> > As Peter suggested, disable globbing for branches and use explicit
-> > fetch refspecs for now...
-> > 
-> 
-> I've actually knocked up a rough script which generates a list of
-> refspec lines for you given a repo URL, trunk reference and branches
-> directory. It uses svn log -v --xml and pipes it through a couple of
-> XSLT templates, and basically looks for all copies that copy from trunk
-> (recursively: so it includes branches of branches too). I can post it to
-> the list if you'd find it useful or interesting.
-> 
-> It's generating output that looks sensible to me, but the results aren't
-> quite what I'd expected. I'll paste a sample in here in case there's
-> anything obvious someone might spot that I've missed
-> 
-> # This line was generated by git-svn init, and I kept it
-> fetch = all/trunk:refs/remotes/trunk
-> 
-> # These lines generated by my tool, dirnames replaced for security reasons:
-> 
-> fetch = branches/folder/projecta:refs/remotes/svn/folder/projecta
-> fetch = branches/folder/projectb:refs/remotes/svn/folder/projectb
-> fetch = branches/folder/projectc:refs/remotes/svn/folder/projectc
-> fetch = branches/folder/projectd:refs/remotes/svn/folder/projectd
-> fetch = branches/folder/projecte:refs/remotes/svn/folder/projecte
-> fetch = branches/folder/projectf:refs/remotes/svn/folder/projectf
-> fetch = branches/folder/projectg:refs/remotes/svn/folder/projectg
-> 
-> git branch -a doesn't list any of those branches after fetch completes.
-> Looking back at the output from fetch, all revisions applied were to trunk.
-> 
-> Anything wrong with those fetch lines?
+Ah! I think I know what I've done. I generated the fetch list from the
+svn repository itself, but ran svn-init against an svk mirror (using
+--use-svm-props). Nicely spotted. :)
 
->From your tree diagram, it seemed that trunk/ and branches/ were at
-the same depth in your SVN repository.  However, in your generated
-fetch lines they all started with "branches/" in front, yet your
-trunk fetch line had "all/" in front of trunk, so maybe prefixing
-the generated ones with "all/" helps?
+Thanks again!
 
-> Thanks for your time.
+>> Thanks for your time.
+> 
+> No problem.
+> 
 
-No problem.
 
 -- 
-Eric Wong
+
+Russ
