@@ -1,102 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 11:04:16 +0200
-Message-ID: <vpqbqchxz3j.fsf@bauges.imag.fr>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<7vsl5tk1r8.fsf@gitster.siamese.dyndns.org>
-	<200709051013.39910.johan@herland.net>
-	<vpqtzq91p5z.fsf@bauges.imag.fr> <20070905085158.GC31750@artemis.corp>
+Date: Wed, 05 Sep 2007 02:07:08 -0700
+Message-ID: <46DE71BC.5040008@midwinter.com>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>	<20070905074206.GA31750@artemis.corp> <46DE6DBC.30704@midwinter.com> <86ps0xcwxo.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Sep 05 11:04:58 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Sep 05 11:07:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISqoi-0000X5-UQ
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 11:04:57 +0200
+	id 1ISqqt-00015N-R2
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 11:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977AbXIEJEx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 05:04:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbXIEJEw
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 05:04:52 -0400
-Received: from imag.imag.fr ([129.88.30.1]:49609 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755971AbXIEJEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 05:04:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l8594HfD029962
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Sep 2007 11:04:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1ISqo5-0005ts-1R; Wed, 05 Sep 2007 11:04:17 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1ISqo4-00086V-VE; Wed, 05 Sep 2007 11:04:16 +0200
-In-Reply-To: <20070905085158.GC31750@artemis.corp> (Pierre Habouzit's message of "Wed\, 05 Sep 2007 10\:51\:58 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 05 Sep 2007 11:04:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756112AbXIEJHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 05:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756110AbXIEJHH
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 05:07:07 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:59778 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755970AbXIEJHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 05:07:06 -0400
+Received: (qmail 24671 invoked from network); 5 Sep 2007 09:07:06 -0000
+Received: from c-76-21-16-80.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.16.80)
+  by tater.midwinter.com with SMTP; 5 Sep 2007 09:07:06 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <86ps0xcwxo.fsf@lola.quinscape.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57696>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+David Kastrup wrote:
+> You'll potentially get accumulating unfinished files from
+> aborted/killed repack processes.
 
-> On Wed, Sep 05, 2007 at 08:39:52AM +0000, Matthieu Moy wrote:
->> Johan Herland <johan@herland.net> writes:
->> 
->> > When git-fetch and git-commit has done its job and is about to exit, it checks 
->> > the number of loose object, and if too high tells the user something 
->> > like "There are too many loose objects in the repo, do you want me to repack? 
->> > (y/N)". If the user answers "n" or simply <Enter>,
->> 
->> I don't like commands to be interactive if they don't _need_ to be so.
->> It kills scripting, it makes it hard for a front-end (git gui or so)
->> to use the command, ...
->
->   There is absolutely no problem here, as it can be avoided if the
-> output is not a tty. It's not _that_ hard to guess if you're currently
-> running in a script or in an interactive shell after all.
+Which can get cleaned up when the next repack starts. This is no 
+different from unfinished files accumulating from aborted/killed manual 
+repacks.
 
-I do find it hard to guess _reliably_ if you're running interactively
-or not. For example, I've been bitten recently by "git log" running
-inside a pager while I was launching it non-interactively inside Emacs
-(as part of DVC). I don't know whether this was git's or Emacs's
-fault, and the fix was not too hard (GIT_PAGER=cat), but it took some
-of my time to get it working.
+> If communication fails, you'll get a
+> new repack session for every command you start.
 
-Adding more interactive stuff means adding more opportunities for this
-kind of problems. None will be a huge problem, but each problem will
-take some time to be fixed (I'm pretty sure adding an interactive
-prompt in git-commit will break DVC's commit functionality, and we'll
-have to fix it).
+Git handles this already:
 
->   Really, git commit/fetch/... whatever suggesting to repack/gc when it
-> believes it begins to be critical to performance is not a bad idea.
+$ git-gc
+fatal: unable to create '.git/packed-refs.lock': File exists
+error: failed to run pack-refs
 
-_Suggesting_ is a good idea, definitely. Something like
+Presumably in that case you would simply not fire up a new repack.
 
-if (number_of_unpacked > 1000 && number_of_unpacked < 10000) {
-	printf ("more than 1000 unpacked objects. Think of running git-gc\n");
-} else if (number_of_unpacked >= 10000) {
-	printf ("HEY, WHAT THE HELL ARE YOU DOING WITH >10000 UNPACKED OBJECTS???\n"
-                "I TOLD YOU TO REPACK\n");
-}
+>   If a repository is used by multiple people...
+>   
 
-would be fine with me. The proposal to run git-gc in the background,
-with low priority seems to be a good idea too.
+Then the first one will kick off the repack, and subsequent ones won't.
 
-But please, don't put an interactive prompt where it's not needed.
+> And so on.  The multiuser aspect makes it a bad idea to do any
+> janitorial tasks automatically.  You don't really want every user to
+> start a repack at the same time.
+>   
 
--- 
-Matthieu
+Quite true, but that's already impossible, so not a problem.
+
+One other thing: The heuristics for this can be such that users who are 
+already regularly running git-gc by hand will see no change in behavior. 
+Their repos will never get to a bad enough state that the automatic 
+git-gc is invoked. Old-timers who run git-gc might, in theory, never 
+even notice a change like this.
+
+-Steve
