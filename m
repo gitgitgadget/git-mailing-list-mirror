@@ -1,132 +1,74 @@
-From: "Govind Salinas" <govindsalinas@gmail.com>
-Subject: Fwd: [PATCH] Invoke "git gc --auto" from "git add" and "git fetch"
-Date: Wed, 5 Sep 2007 15:59:17 -0500
-Message-ID: <69b0c0350709051359o343ce517md19bda824d84852b@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Wed, 5 Sep 2007 23:07:41 +0200
+Message-ID: <20070905210741.GA3770@steel.home>
 References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	 <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
-	 <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
-	 <alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-	 <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-	 <7vhcm8j1bp.fsf_-_@gitster.siamese.dyndns.org>
-	 <69b0c0350709051357ifa547aarfe3e0b36cf9be98f@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 22:59:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Sep 05 23:07:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT1y9-0006lU-Ac
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 22:59:25 +0200
+	id 1IT26H-0000gd-Bh
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753055AbXIEU7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 16:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbXIEU7U
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 16:59:20 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:25919 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752220AbXIEU7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 16:59:19 -0400
-Received: by py-out-1112.google.com with SMTP id u77so6288327pyb
-        for <git@vger.kernel.org>; Wed, 05 Sep 2007 13:59:18 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SyiQsMxiDoycltZUOGDrvwFcfGaBLbrFjYvykO4syxSd8OOXz7ebF2TySGCHj+8JKCsoCpWzotnk3smzHj/hp5STyWUQvazVheXUQgkPNYIVaZGwks7UQ9CN71PMuldl1/Ag+9cPDhzSoqgHTBB98jxA6jUgIBSnjesutbDerqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lcUynV+ZXr5u70DtppivDyguQF/YP/hlYWt6efupuHxgdlUv0poUHkvd9PYYVeJmVucXtY2sPDINagsF933mw62/x44En0OUqBxX8cP8eEEqHJFP/d5NLbhx1KiYq25DjqBEzqgOqIOEvAY9b8kaP+UV/PK9rfaZf7Jaiq1t0p8=
-Received: by 10.65.59.11 with SMTP id m11mr7931178qbk.1189025957769;
-        Wed, 05 Sep 2007 13:59:17 -0700 (PDT)
-Received: by 10.65.189.16 with HTTP; Wed, 5 Sep 2007 13:59:17 -0700 (PDT)
-In-Reply-To: <69b0c0350709051357ifa547aarfe3e0b36cf9be98f@mail.gmail.com>
+	id S1756305AbXIEVHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 17:07:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756024AbXIEVHo
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:07:44 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:49188 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754669AbXIEVHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 17:07:43 -0400
+Received: from tigra.home (Facc5.f.strato-dslnet.de [195.4.172.197])
+	by post.webmailer.de (klopstock mo19) (RZmta 12.6)
+	with ESMTP id C07133j85JBHvH ; Wed, 5 Sep 2007 23:07:41 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 828FC277BD;
+	Wed,  5 Sep 2007 23:07:41 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 22794BEAC; Wed,  5 Sep 2007 23:07:41 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFz4AZk=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57763>
 
-Forgot to cc the list.
+Linus Torvalds, Wed, Sep 05, 2007 09:09:27 +0200:
+> I personally repack everything way more often than is necessary, and I had 
+> kind of assumed that people did it that way, but I was apparently wrong. 
+> Comments?
 
----------- Forwarded message ----------
-From: Govind Salinas <govindsalinas@gmail.com>
-Date: Sep 5, 2007 3:57 PM
-Subject: Re: [PATCH] Invoke "git gc --auto" from "git add" and "git fetch"
-To: Junio C Hamano <gitster@pobox.com>
+I do it from time to time. Seldom in working repositories, because
+they usually come and go before they have a chance to accumulate
+enough of loose objects. I do a partial repack (git repack -d) after
+every import from p4 repo, because every snapshot of it is an ugly
+mess changing files all over the tree. Sometimes, after I merged a big
+chunk with the p4 repo and sent it over (the process involves rebase).
 
+It is usually concious decision when to do a repack or gc. The repack
+time is seldom a problem: it is fast enough even on windows (and I do
+have big repos and binary objects). The gc causes my machines to swap,
+though. Some of them heavily, so there my repos stay longer partially
+packed. I do use .keep packs for this reason (and because windows or
+cygwin or both have more problems with big files the they have with
+small).
 
-I have a completely uninformed question...
+I used to clone repos with "-s", but quickly stopped after a few
+broken histories.  This also tought me to think before running
+"git gc" or "git repack -a -d".
 
-Can git-add/rm/etc create dangling object or objects that would
-be cleaned up by git-gc --auto?  I would think (and I could be
-completely off base here) that you would only want to call gc
-after an operation that could create stuff that needs to be gc'ed,
-since only then could the threshold be reached.
+On a rare occurance I even use "git repack -a -d -l" and "git
+pack-refs" separately.
 
-Anyways, just curious.  One day I should actually go in and read
-some git code.
-
--Govind
-
-On 9/5/07, Junio C Hamano <gitster@pobox.com> wrote:
-> This makes the two commands to call "git gc --auto" when they
-> are done.
->
-> I earlier said that obvious candidates also include merge and
-> rebase, but these are lot less frequent operations compared to
-> add, and more importantly, in a normal workflow they would
-> almost always happen after "git fetch" is done.
->
-> In other words, if you are downstream developer, the automatic
-> invocation in "git fetch" will take care of things for you, and
-> otherwise if you do not have an upstream, you would be doing
-> your own development, so "git add" to add your changes will take
-> care of the auto invocation for you.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * This is obviously a follow-up to the previous one that allows
->    you to say "git gc --auto".  I somewhat feel dirty about
->    calling cmd_gc() bypassing fork & exec from "git add",
->    though...
->
->  builtin-add.c |    2 ++
->  git-fetch.sh  |    1 +
->  2 files changed, 3 insertions(+), 0 deletions(-)
->
-> diff --git a/builtin-add.c b/builtin-add.c
-> index 105a9f0..8431c16 100644
-> --- a/builtin-add.c
-> +++ b/builtin-add.c
-> @@ -263,9 +263,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->
->   finish:
->         if (active_cache_changed) {
-> +               const char *args[] = { "gc", "--auto", NULL };
->                 if (write_cache(newfd, active_cache, active_nr) ||
->                     close(newfd) || commit_locked_index(&lock_file))
->                         die("Unable to write new index file");
-> +               cmd_gc(2, args, NULL);
->         }
->
->         return 0;
-> diff --git a/git-fetch.sh b/git-fetch.sh
-> index c3a2001..86050eb 100755
-> --- a/git-fetch.sh
-> +++ b/git-fetch.sh
-> @@ -375,3 +375,4 @@ case "$orig_head" in
->         fi
->         ;;
->  esac
-> +git gc --auto
-> --
-> 1.5.3.1.840.g0fedbc
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+This was all specific to my day-job. At home, on linux systems I just
+run git-gc whenever I please, without even thinking why. It finishes
+mostly in less than a minute (the kernel: ~40-50 sec on my P4 2.6GHz, 1Gb).
