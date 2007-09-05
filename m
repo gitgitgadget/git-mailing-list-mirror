@@ -1,103 +1,274 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add a new lstat and fstat implementation based on Win32
- API
-Date: Wed, 05 Sep 2007 08:22:38 +0200
-Message-ID: <46DE4B2E.70105@trolltech.com>
-References: <46DACE0D.5070501@trolltech.com> <46DBBC1E.4010407@eudaptics.com> <46DBFA2A.7050003@trolltech.com> <Pine.LNX.4.64.0709031428080.28586@racer.site> <46DC5ED4.8050202@trolltech.com> <46DD0C16.70101@eudaptics.com> <Pine.LNX.4.64.0709041145230.28586@racer.site> <46DD433A.5040604@eudaptics.com> <Pine.LNX.4.64.0709041324420.28586@racer.site> <Pine.LNX.4.64.0709041356070.28586@racer.site> <20070904210200.GA32472@nospam.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: new to git
+Date: Tue, 04 Sep 2007 23:54:31 -0700
+Message-ID: <7v7in5lhzs.fsf@gitster.siamese.dyndns.org>
+References: <46D32973.8030104@krose.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA2AD9C8CB1D464BDC4EC6EE9"
-Cc: Johannes Sixt <j.sixt@eudaptics.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: git@wingding.demon.nl,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Wed Sep 05 08:22:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git mailing list <git@vger.kernel.org>
+To: Kyle Rose <krose@krose.org>
+X-From: git-owner@vger.kernel.org Wed Sep 05 08:54:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISoHp-0005BN-7D
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 08:22:49 +0200
+	id 1ISomn-0002iT-6Q
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 08:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbXIEGWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 02:22:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbXIEGWn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 02:22:43 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:54104 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751063AbXIEGWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 02:22:42 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 2AAF2741A3; Wed,  5 Sep 2007 08:22:39 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id DB7137419D; Wed,  5 Sep 2007 08:22:38 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <20070904210200.GA32472@nospam.com>
-X-Enigmail-Version: 0.95.3
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1754179AbXIEGyo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 02:54:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754823AbXIEGyo
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 02:54:44 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55739 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754060AbXIEGyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 02:54:43 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D24E012E981;
+	Wed,  5 Sep 2007 02:55:00 -0400 (EDT)
+In-Reply-To: <46D32973.8030104@krose.org> (Kyle Rose's message of "Mon, 27 Aug
+	2007 15:43:47 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57670>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA2AD9C8CB1D464BDC4EC6EE9
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+[jc: I think this is really worth saving somewhere.  Could some
+kind soul make this into a patch to have under Documentation/
+somewhere?]
 
-Rutger Nijlunsing said the following on 04.09.2007 23:02:
-> On Tue, Sep 04, 2007 at 01:57:38PM +0100, Johannes Schindelin wrote:
->> Now I am utterly confused.  MSDN says
->> 	FILETIME
->> 	Contains a 64-bit value representing the number of 100-nanosecond=20
->> 	intervals since January 1, 1601 (UTC).
->> Hmm.
->=20
-> [Warning: war stories ahead...]
-> If you really, really want to know more:
-> http://search.cpan.org/~shay/Win32-UTCFileTime-1.45/lib/Win32/UTCFileTi=
-me.pm
+Kyle Rose <krose@krose.org> writes:
 
-Thanks, seems like it's the right decision then to ensure that we use=20
-UTC throughout Git on Windows
+> (1) Let's say I:
+>
+> git clone something
 
-Hannes & Dscho, looks like we should revert
-http://repo.or.cz/w/git/mingw/4msysgit.git?a=3Dcommitdiff;h=3D683775c00d9=
-fb95bcbe4632f95b67a96b902fa59
-then, and rather apply Dscho's patch for a custom time()=20
-implementation. Dscho, was the custom implementation of time() enough=20
-to fix the issues for you?
+  Origin repository's history is copied and you get their master
+  in remotes/origin/master (aka remotes/origin/HEAD aka
+  remotes/origin), and you can call that 'origin' for brevity.
+  At the same time, you get your own 'master' branch that points
+  at the same commit as the 'origin'.  Your current branch
+  pointed at by your HEAD is 'master'.
 
---=20
-=2Emarius
+     ['origin' repository]
+     ---A---B---C
+                ^master
 
+ ==>
 
---------------enigA2AD9C8CB1D464BDC4EC6EE9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+     [your cloned repository]
+     ---A---B---C
+                ^master = HEAD
+                ^remotes/origin
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+> git branch foo
 
-iD8DBQFG3ksuKzzXl/njVP8RAh6eAKCEpr3H/nMqhXe5yuXWl7tFsj4+SACgz6yH
-B8rj3RBl2kqQjaMbexgD074=
-=RXgP
------END PGP SIGNATURE-----
+  You create a new branch of your own 'foo' in your repository,
+  initially pointing at the same commit as your current commit
+  (i.e. C as you are on 'master' after the clone).
 
---------------enigA2AD9C8CB1D464BDC4EC6EE9--
+ ==>
+
+     [your cloned repository]
+     ---A---B---C
+                ^master = HEAD
+                ^remotes/origin
+                ^foo
+
+> git checkout foo
+
+  You switch from your current branch (i.e. 'master') to the
+  named branch (i.e. 'foo'), making the latter the current
+  branch.  Your work tree will largely match the commit at the
+  tip of the branch you are switching to, except that if you had
+  any local changes (i.e. uncommitted) in your work tree, you
+  take it along (but in this example you do not have any).
+
+ ==>
+
+     [your cloned repository]
+     ---A---B---C
+                ^master
+                ^remotes/origin
+                ^foo = HEAD
+
+> <make some changes>
+> git commit -a
+
+  You build a commit whose parent is the commit your HEAD used
+  to point at; the tip of your current branch advances.
+
+ ==>
+
+     [your cloned repository]
+
+     ---A---B---C---D
+                    ^foo = HEAD
+                ^master
+                ^remotes/origin
+
+> git checkout master
+
+  You switch from your current branch (i.e. 'foo') to the
+  named branch (i.e. 'master'), making the latter the current
+  branch.  Your work tree will largely match the commit at the
+  tip of the branch you are switching to, except that if you had
+  any local changes (i.e. uncommitted) in your work tree, you
+  take it along (but in this example you do not have any).
+
+ ==>
+
+     [your cloned repository]
+
+     ---A---B---C---D
+                    ^foo
+                ^master = HEAD
+                ^remotes/origin
+
+> git pull . foo
+
+  This "git pull" command instructs git to "from the repository
+  '.', grab the commit the repository calls 'foo', and update my
+  current branch by merging that commit".  Because '.' is "the
+  current directory", which in turn means "my repository", you
+  do not have to really "grab the commit" --- you already have
+  it locally.
+
+  "git merge foo" is more natural way to write this since 1.5.0
+  days.  The latter command instructs git "update my current
+  branch by merging commit I call 'foo'".
+
+  Now, looking at the above history graph, your current
+  branch'es tip is at C (you are on 'master', remember?), and
+  'foo' is at D, which is an descendant of C.  By definition, a
+  merge between such commit pair is the descendant D, so your
+  current branch is updated to D (this is called "fast
+  forward").
+
+ ==>
+
+     [your cloned repository]
+
+     ---A---B---C---D
+                    ^foo
+                    ^master = HEAD
+                ^remotes/origin
+
+> git push
+
+  This is kind of "lazy" and "very not-git-like" command I
+  literally *hate*.  What "git push" does, whey you do not say
+  anything about "where to" nor "what", is to "push all
+  corresponding branches and tags to the repository you call
+  'origin'".
+
+  If you recall the very initial picture, the 'origin'
+  repository has 'master' branch but not 'foo'.  The only
+  matching branch is 'master', and that is pointing at C over
+  there, which is replaced by your 'master' which now points at
+  'D'.
+
+     ['origin' repository]
+     ---A---B---C
+                ^master
+
+ ==>
+
+     ['origin' repository]
+     ---A---B---C---D
+                    ^master
+
+  Note that this update *MUST* be fast-forward by default.  IOW,
+  if somebody worked elsewhere and updated the 'master' branch
+  at the 'origin' repository before your push, your 'push' will
+  be prevented with an error message that tells you that remote
+  'master' is not a strict subset of what you are pushing.
+
+> git pull
+
+  Instruct git to "grab the history from the 'origin' repository
+  and update remotes/origin/* with its branch, and then update my
+  current branch by merging its tip".
+
+  The first step of updating the remotes/origin again *MUST* be
+  fast-forward by default.
+
+ ==>
+
+     [your cloned repository]
+
+     ---A---B---C---D
+                    ^foo
+                    ^master = HEAD
+                    ^remotes/origin
+
+  If you recall, you are on 'master' branch whose tip is at D.
+  Now you are telling git to update it by merging what you
+  fetched, which also is D.  So nothing happens.
+
+> (2) Any way to disable this warning:
+>
+> Warning: No merge candidate found because value of config option
+>          "branch.local.merge" does not match any remote branch fetched.
+
+Do as the warning says; I do not think the message can be any
+clearer (see Documentation/config.txt, or even better "The
+User's Manual").  Set branch.local.merge configuration variable
+if you want to always merge specific branch you obtain from the
+remote.
+
+E.g.
+
+     [branch "local"]
+	remote = origin
+        merge = refs/heads/master
+
+if you want "git pull", without saying what to pull from where,
+to fetch from 'origin' and merge its 'master' branch, when you
+are on your 'local' branch.
+
+> (3) I notice I can't reset --hard a single file.  So, if I want to
+> revert a single file to some revision, blowing away my changes, what is
+> the accepted way of doing this?  Is there a way to do the equivalent of
+> a p4 print foo@some_revision?
+
+I have no idea what p4 does, but:
+
+	git checkout -- path
+
+updates the work tree file with the last version of paths you
+did "git add path",
+
+	git checkout HEAD -- path
+
+updates the work tree file with the version of paths in the HEAD
+commit, and
+
+	git checkout some_version -- path
+
+updates the work tree file with the version of paths in the
+named commit.  For various ways to name commits, see
+git-rev-parse(1).
+
+> (4) I'm still not clear on when a dst should and should not be used in a
+> refspec.  It appears that one can only do non-fast forward updates to
+> the branch that is checked out (which makes sense, since you may need to
+> resolve), but other than that, what is the difference between
+>
+> git checkout foo
+> git pull . master
+>
+> and
+>
+> git checkout master
+> git push . master:foo
+
+The obvious difference is which branch you end up with.
+
+> (5) Are there any tools for managing some of the metadata (e.g., the
+> origin URL) or is it expected that one edit it directly?
+
+git-remote(1).
