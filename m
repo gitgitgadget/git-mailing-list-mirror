@@ -1,68 +1,76 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Significant performance waste in git-svn and friends
-Date: Wed, 05 Sep 2007 23:19:18 +0200
-Message-ID: <85bqcghktl.fsf@lola.goethe.zz>
-References: <20070905184710.GA3632@glandium.org>
-	<7vd4wwj16d.fsf@gitster.siamese.dyndns.org>
+From: Jonas Berlin <xkr47@outerspace.dyndns.org>
+Subject: Re: [PATCH] Fix "cvs log" to use UTC timezone instead of local
+Date: Wed, 05 Sep 2007 21:32:08 +0000
+Organization: Helsinki University of Technology
+Message-ID: <46DF2058.7060405@outerspace.dyndns.org>
+References: <11889090932256-git-send-email-xkr47@outerspace.dyndns.org> <alpine.LFD.0.999.0709040612260.3088@evo.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 23:19:30 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Sep 05 23:32:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT2HV-0003ed-Ps
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:19:26 +0200
+	id 1IT2Tt-0006u9-I8
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755051AbXIEVTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 17:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754949AbXIEVTU
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:19:20 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:39726 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752966AbXIEVTU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2007 17:19:20 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 41660302EC6;
-	Wed,  5 Sep 2007 23:19:19 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 3336421300A;
-	Wed,  5 Sep 2007 23:19:19 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-072-218.pools.arcor-ip.net [84.61.72.218])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id D767C23D1E3;
-	Wed,  5 Sep 2007 23:19:18 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 770061CAD71B; Wed,  5 Sep 2007 23:19:18 +0200 (CEST)
-In-Reply-To: <7vd4wwj16d.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 05 Sep 2007 13\:40\:42 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4166/Wed Sep  5 17:20:22 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S1756908AbXIEVcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 17:32:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbXIEVcI
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:32:08 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:51936 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754296AbXIEVcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 17:32:06 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 9DD31C8B1A;
+	Thu,  6 Sep 2007 00:32:03 +0300 (EEST)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A028099AAA2; Thu, 06 Sep 2007 00:32:03 +0300
+Received: from outerspace.dyndns.org (a88-112-29-101.elisa-laajakaista.fi [88.112.29.101])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 699AA41BFB;
+	Thu,  6 Sep 2007 00:32:00 +0300 (EEST)
+Received: from [IPv6:2001:14b8:141::] (outerspace [IPv6:2001:14b8:141::])
+	by outerspace.dyndns.org (Postfix) with ESMTP id 8148770F57;
+	Thu,  6 Sep 2007 00:32:09 +0300 (EEST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
+In-Reply-To: <alpine.LFD.0.999.0709040612260.3088@evo.linux-foundation.org>
+X-Enigmail-Version: 0.95.3
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57767>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Quoting Linus Torvalds on 09/04/2007 01:22 PM UTC:
+> So instead of turning it back into UTC here, I think git-cvsserver should 
+> be changed to ask for the date in the native git format in the first 
+> place.
 
-> Mike Hommey <mh@glandium.org> writes:
->
->> The same things obviously apply to git-cvsimport and other scripts
->> calling git-hash-object a lot.
->
-> I *obviously* hate this patch, as it makes this Porcelain
-> command to be aware of the internal representation too much.
->
-> I wonder if letting fast-import handle the object creation is an
-> option, though.
+I agree.
 
-I think it would be saner to give git-hash-object an operation mode
-that makes it usable as a pipe-controlled daemon, so that one needs
-not fork and exec for interning another object.  That way, porcelain
-commands could keep one bidirectional pipe (feed object type and
-source and whether to use -w into git-hash-project, receive object id)
-to git-hash-object around until they finish.
+My first patch was a minimal-intrusion one to avoid unnecessarily breaking stuff.
+
+I guess at this point it's good to mention that current cvs implementations (at least 1.12.12) produce timestamps of format "yyyy-mm-dd HH:MM:SS +ZZZZ" (i.e. they do include timezone information) while older versions (at least 1.11.22) produce the UTC-only format "yyyy/mm/dd HH:MM:SS" which is currently used by git-cvsserver. Backwards compatibility generally being a good thing, while at the expense of timezone information, I chose to keep the older UTC-only format. Should you prefer to keep the timezone information, I'll update the cvs log format instead. Heck, I could even support both through some configuration option if you really wanted :)
+
+> That can be done various ways:
+> 
+>  - use the "raw log format" which has dates as seconds-since-UTC (and with 
+>    an *informational* timezone thing that should then just be ignored).
+> 
+>    This is likely the best approach, since anything but this will 
+
+This seems straightforward to implement, so I will go with this.
+
+> For example, I think your patch may fix "cvs log", but I'm seeing some 
+> suspiciously similar code in the "cvs annotate" handling, so I suspect 
+> that would need it too.
+
+I will make sure this works as well.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+- xkr47
