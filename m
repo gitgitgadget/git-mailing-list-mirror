@@ -1,76 +1,124 @@
-From: David Kastrup <dak@gnu.org>
+From: Johan Herland <johan@herland.net>
 Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 10:16:49 +0200
-Message-ID: <861wddedce.fsf@lola.quinscape.zz>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+Date: Wed, 5 Sep 2007 10:13:31 +0200
+Message-ID: <200709051013.39910.johan@herland.net>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <7vsl5tk1r8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed;
+  boundary="nextPart1758000.XtXdatS5Ly";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 05 10:17:18 2007
+X-From: git-owner@vger.kernel.org Wed Sep 05 10:19:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISq4a-0004lN-GU
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 10:17:16 +0200
+	id 1ISq6h-0005D7-LQ
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 10:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755941AbXIEIRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 04:17:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755913AbXIEIRL
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 04:17:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:58598 "EHLO ciao.gmane.org"
+	id S1755942AbXIEITX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 04:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755930AbXIEITX
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 04:19:23 -0400
+Received: from sam.opera.com ([213.236.208.81]:34345 "EHLO sam.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755820AbXIEIRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 04:17:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ISq4L-0004KI-AK
-	for git@vger.kernel.org; Wed, 05 Sep 2007 10:17:01 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Sep 2007 10:17:01 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Sep 2007 10:17:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-In-Reply-To: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> (Linus Torvalds's message of "Wed\, 5 Sep 2007 00\:09\:27 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-Cancel-Lock: sha1:1Iv+tf/Nd3EJbsNAy8LCk0zlSAc=
+	id S1755913AbXIEITW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 04:19:22 -0400
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Sep 2007 04:19:17 EDT
+Received: from pc085.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l858De4W007724
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 5 Sep 2007 08:13:44 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vsl5tk1r8.fsf@gitster.siamese.dyndns.org>
+X-Virus-Scanned: ClamAV 0.91.1/4159/Wed Sep  5 06:09:35 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57685>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+--nextPart1758000.XtXdatS5Ly
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Now, it may be that James didn't realize how important the
-> occasional garbage collect is exactly *because* he is an old-timer
-> and used BK long before he used git, and just continued using git
-> simply as a BK replacement, but it did make me wonder whether maybe
-> this lack of repacking awareness is fairly common.
->
-> I've been against automatic repacking, but that was really based on
-> what appears to be potentially a very wrong assumption, namely that
-> people would do the manual repack on their own. If it turns out that
-> people don't do it, maybe the right thing for git to do really is to
-> at least notify people when they have way too many pack-files and/or
-> loose objects.
->
-> I personally repack everything way more often than is necessary, and
-> I had kind of assumed that people did it that way, but I was
-> apparently wrong.  Comments?
+On Wednesday 05 September 2007, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>=20
+> > I personally repack everything way more often than is necessary, and I =
+had=20
+> > kind of assumed that people did it that way, but I was apparently wrong=
+=2E=20
+> > Comments?
+>=20
+> I am as old timer as you are so I am not qualified to add much
+> variety to the discussion, but I agree that excessive cruft is
+> something we should warn the user about.
+>=20
+> I personally was _extremely_ annoyed by git-cvsimport
+> occassionary deciding to repack whenever it finds more than
+> certain number of loose objects, not because it is a big import,
+> but because I happened to start the command to start a very
+> small import after doing my own development for a while to
+> accumulate loose objects, and I really hate automatic repacking
+> for any operation (or tool that thinks it knows better than I do
+> in general).
+>=20
+> Perhaps _exiting_ "git-commit" and "git-fetch" before doing
+> anything, when the repository has more than 5000 loose objects
+> with a LOUD bang that instructs an immediate repack would be
+> good?
+>=20
+> I really do not like the idea of automatically running a repack
+> after first interrupting the original command and then resuming.
+> For one thing it would make a horribly difficult situation to
+> debug if anything goes wrong.  You cannot reproduce such a
+> situation easily.
 
-Can it be that getting rid of unused objects is harder once they are
-packed?  If that is the case, an automatic pack while mucking about
-with temporary branches and/or confidential files would be quite a
-nuisance.
+What about some sort of middle ground:
 
-Automatic packing maybe would be acceptable if packing was really
-transparent to what you do with your repo (including janitoring work).
-And it would be nice if automatic packing could be done in an
-incremental manner, not bogging down normal work.
+When git-fetch and git-commit has done its job and is about to exit, it che=
+cks=20
+the number of loose object, and if too high tells the user something=20
+like "There are too many loose objects in the repo, do you want me to repac=
+k?=20
+(y/N)". If the user answers "n" or simply <Enter>, it exits immediately=20
+without doing anything, but if the user answers "y", or if there is no=20
+response, say, within a minute (i.e. the user went to lunch), the repack is=
+=20
+initiated. (Of course, the user should be told that a Ctrl-C will abort the=
+=20
+repack and not be harmful in any way.)
 
--- 
-David Kastrup
+If the user answers "n" (or aborts the repack), the question will keep popp=
+ing=20
+up on the next git-{commit,fetch} to remind/annoy the user until a repack i=
+s=20
+done.
+
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart1758000.XtXdatS5Ly
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7-ecc0.1.6 (GNU/Linux)
+
+iD8DBQBG3mUrBHj4kl4fT1wRAhQlAJ9ulLwRkaVFGaZGdynJb8ZrvXKxbQCgp3ss
+RrKK3LkiWyn234DrioUXJU8=
+=zilX
+-----END PGP SIGNATURE-----
+
+--nextPart1758000.XtXdatS5Ly--
