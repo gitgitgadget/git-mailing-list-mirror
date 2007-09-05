@@ -1,100 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn and a nested branches folder
-Date: Tue, 4 Sep 2007 17:15:13 -0700
-Message-ID: <20070905001513.GA9362@soma>
-References: <46DD6EEA.9010304@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Functions for updating refs.
+Date: Tue, 04 Sep 2007 17:16:59 -0700
+Message-ID: <7vd4wym0ec.fsf@gitster.siamese.dyndns.org>
+References: <46DD6020.4050401@gmail.com>
+	<7v642qnwr7.fsf@gitster.siamese.dyndns.org>
+	<1b46aba20709041632x60ee4d3eweae9f5217d2f3b86@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Russ Brown <pickscrape@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 02:15:30 2007
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Carlos Rica" <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 02:17:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISiYE-0003ow-IC
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 02:15:22 +0200
+	id 1ISiZz-00046r-K8
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 02:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755486AbXIEAPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 4 Sep 2007 20:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754959AbXIEAPQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 20:15:16 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:54440 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755455AbXIEAPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2007 20:15:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id E1FAD7F4110;
-	Tue,  4 Sep 2007 17:15:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <46DD6EEA.9010304@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755501AbXIEARH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 4 Sep 2007 20:17:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755497AbXIEARG
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Sep 2007 20:17:06 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:51090 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755415AbXIEARG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2007 20:17:06 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 81B0012E9B2;
+	Tue,  4 Sep 2007 20:17:23 -0400 (EDT)
+In-Reply-To: <1b46aba20709041632x60ee4d3eweae9f5217d2f3b86@mail.gmail.com>
+	(Carlos Rica's message of "Wed, 5 Sep 2007 01:32:32 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57662>
 
-Russ Brown <pickscrape@gmail.com> wrote:
-> Hi,
+"Carlos Rica" <jasampler@gmail.com> writes:
+>>  - Why doesn't "or_error" side allow "flags" as "or_die" one?
+>>    Could the 'quiet' option become part of "flags" perhaps?
+>
+> I saw that the only code that needed the flags was the
+> builtin-update-ref.c, and it also needed to die(). The
+> others I saw only want that parameter set to 0.
+> builtin-tag.c was doing die() also, not using flags, though.
 
-Hi Russ,
+Ok, when other built-ins start using these functions, they might
+want to pass different flags, but it is easy enough for us to
+extend the interface later.
 
-> I'm having some trouble with using git-svn to fetch a repository, and I
-> think it's because the repository doesn't store branches as a flat list
-> directly under the 'branches' directory.
-> 
-> Basically, we have a structure like this:
-> 
-> |
-> +-trunk
-> +-tags
-> +-branches
->   + category-a
->     + branch-a
->     + branch-b
->   + category-b
->     + branch-c
->     + branch-d
-> 
-> etc. category-a and category-b are simple directories created using svn
-> mkdir. The branches are created using svn cp.
-> 
-> It helps us to organise the branches better, but the rationale is
-> besides the point. The problem is that git-svn seems to want to treat
-> category-a and category-b as branches, which isn't right at all. As a
-> result, git-svn seems to skip most (if not all) revisions that occur in
-> these directories and creates a lot of entries in unhandled.log.
+>>  - They look quite similar.  Is it a good idea to refactor them
+>>    further, or they are so small it does not matter?
+>
+> The function die() returns 128 and terminates the program,
+> prepending "fatal: " in the message, while error() doesn't exit
+> and prepend "error: ", so they were very different and I
+> resolved to separate them.
 
-This is a known problem with the way git-svn handles branches and tags.
-Nested branch (and tags) structures aren't supported with globbing and
-so you can't have more than one branches/tags specification in your
-config.
+Fair enough.
 
-> I've also encountered an index corruption in one of the
-> .git/svn/<branch>/index files which I think it probably related.
+>>  - Why isn't lock released with unlock_ref()?
+>
+> I inspected this some weeks ago, and I finally came to think
+> that it is released in the write_ref_sha1 call after the lock.
 
-Not sure about that.  git-svn should detect and attempt to fix index
-corruptions (which happened for me since I interrupt git-svn quite
-often when working on it).
-
-> I've had a quick look at the source myself, but perl isn't my strong
-> point. What I think it should do is something like recurse down the tree
-> from the directory given looking for folders that copy from trunk (or
-> some other branch that already exists). That would work perfectly well
-> for the default flat branch storage method as well as the one we use.
-
-The globbing functionality of branches in git-svn is some of the ugliest
-code I've ever written in my life.  Somehow I got it working for the
-simple general cases but I've been afraid to touch it for a while...
-
-> The only other problem is in branch naming, which could clash if you
-> only use the outer-most directory name, so I'd suggest something that
-> involves concatenating the folders in the path relative to 'branches' to
-> keep them unique (if git can handle slashes in branch names then all the
-> better).
-
-As Peter suggested, disable globbing for branches and use explicit
-fetch refspecs for now...
-
--- 
-Eric Wong
+Ah, that's right!
