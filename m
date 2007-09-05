@@ -1,140 +1,88 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: best practice for a 3 devs team?
-Date: Wed, 5 Sep 2007 21:50:06 +0200
-Message-ID: <20070905195006.GG3786@efreet.light.src>
-References: <6b6419750708281520u12857b4j3e8f1ca0508f7d51@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Git's database structure
+Date: Wed, 5 Sep 2007 20:52:06 +0100
+Message-ID: <200709052052.07597.andyparkins@gmail.com>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com> <46DE5861.4050201@op5.se> <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DNUSDXU7R7AVVM8C"
-Cc: git@vger.kernel.org
-To: Patrick Aljord <patcito@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 21:50:47 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Jon Smirl" <jonsmirl@gmail.com>, "Andreas Ericsson" <ae@op5.se>,
+	"Theodore Tso" <tytso@mit.edu>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 05 21:52:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT0tb-0004kF-M6
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 21:50:40 +0200
+	id 1IT0vF-0005Cn-DD
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 21:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbXIETuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 15:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbXIETuP
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 15:50:15 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:60369 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932127AbXIETuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 15:50:13 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 3A30657606;
-	Wed,  5 Sep 2007 21:50:11 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id LwexBHKWeC0H; Wed,  5 Sep 2007 21:50:08 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id E5D2D57634;
-	Wed,  5 Sep 2007 21:50:07 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IT0t4-0007pg-LS; Wed, 05 Sep 2007 21:50:06 +0200
+	id S1756112AbXIETwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 15:52:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756097AbXIETwQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 15:52:16 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:43086 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756103AbXIETwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 15:52:15 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so96420ugc
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 12:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=vzs8J4IsnEVNI+l5dZS0JZiKSwqPlWMVsUkGw6e0cuk=;
+        b=bkqcysWOnVeB8FwpTiNliH/Yml7xEvy0lmiaXQGjhDR/JeuIkdqPwKyvQ2ePY9lki+LoJEBKo5K8dAQBL59qsbn3KHsquHdqqmQehpEhHU4NaJJM02W7r7qg3iOvD4uI7jV9I90+2JXrtl3pCjeO4xd5IYQsjXUUv+lLo9MnKT8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qmwRfKSmBsgMk/S0D+iZ5Eben5aGZm+8wJ7OoY2ij9gz6xHuzbHy49shxxRt52699v8CSZ02bBSzCEmkc0zmTTXJjrqxITPhETsRZ7p4drH42OP1OuW3aey6ik+ryCscSQECp2KlKyw7ZZ1A02D+gZUR6ndxkGfTGSY93u9sX3k=
+Received: by 10.78.165.16 with SMTP id n16mr2600216hue.1189021930289;
+        Wed, 05 Sep 2007 12:52:10 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTPS id o30sm231191ugd.2007.09.05.12.52.08
+        (version=SSLv3 cipher=OTHER);
+        Wed, 05 Sep 2007 12:52:09 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <6b6419750708281520u12857b4j3e8f1ca0508f7d51@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57756>
+
+On Wednesday 2007, September 05, Jon Smirl wrote:
+
+> The path name field needs to be moved back into the blobs to support
+> alternative indexes. For example I want an index on the Signed-off-by
+> field. I use this index to give me the SHAs for the blobs
+> Signed-off-by a particular person. In the current design I have no way
+> of recovering the path name for these blobs other than a brute force
+> search following every path looking for the right SHA.
+
+Erm, if that's your only way then you designed your index incorrectly.
+
+ 1. Signed-Off-By lines appear in commits, so your index should be an index
+    of SOB name against commit hash
+ 2. Lookup the commit for that commit hash.  As usual this is blindlingly
+    git-fastic.
+ 3. That commit blob contains a tree hash.  Look it up.  As usual this is 
+    blindingly git-fastic
+ 4. Start gathering blobs for that tree.  Fast, fast, fast.
+ 5. Any subtree objects you come across, goto 4.
+
+This is not a brute force lookup and it's stuff that git is really good at 
+anyway.
+
+I'm really not sure I see what problem you're trying to solve.  Whatever 
+index you want, you could keep and maintain if you wanted to without 
+impacting git's core storage at all.
 
 
---DNUSDXU7R7AVVM8C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 28, 2007 at 17:20:25 -0500, Patrick Aljord wrote:
-> Hey all,
-> We are 3 developers working on the same project. I was thinking what
-> would be the best practice for us. We have just switched from svn and
-> for now we are all working on the master branch that we push to a ssh
-> git repository.
-> I was thinking about maybe each of us could create our own branch like
-> 'git branch <dev_name>' but then how would it go? Each one of us would
-> push our own branch to the remote repository and each one of us could
-> cherry pick the change from the remote branch of each developer. Is
-> this the best way to do it? (I guess there is no best way but still :)
->=20
-> any advice welcome
+Andy
 
-I'd vote against 1-to-1 mapping between developers and branches. It's
-either needlessly inflexible or needlessly complicated, depending how quick=
-ly
-the mainline changes and how stable it needs to be.
-
-For project under heavy development (where occasional breakage won't hurt t=
-oo
-much and fast progress is desired), I'd recommend you to just keep pushing =
-to
-master everyone. This makes new changes immediately visible -- and tested --
-by others, so you notice errors quickly. It also makes the workflow easiest,
-since you only rebase on master and push it (I'd recommend rebasing work in
-progress instead of merging to make the history easier to read). You can
-occasionally create a feature branch in the central repository if you want
-someone else to test your work in progress, but making your local
-repositories readable by the others would work just as well.
-
-On the other hand for project that is expected to provide stable releases,
-especially if it's supposed to provide them often, something similar to what
-Junio uses for git seems most reasonable. That is, you'd have a master (or
-stable) branch for the oncoming release, one or more branches for testing a=
-nd
-a lot of feature branches that would come and go (yes -- in git when you
-merge a feature branch for final, you can, and should, just remove it!). Ea=
-ch
-developer could have a prefix assigned to avoid conflicts in feature branch
-names (Junio currently uses initials of author as prefix).
-
-For every logical change you do, you'd push a feature branch to the central
-repository. Than somebody else would pick it up, review it and if it seems
-sane, merge it to the most experimental branch. That branch would than be
-subjected to testing. Junio currently reverts changes from this most
-experimental branch (called 'pu' (proposed updates)) by deleting it,
-branching it from 'next' again and re-merging all the still prospective
-feature branches in again. This (re-creating a branch) is called rewinding
-and you must be careful not to branch of it, or if you do, use rebase rather
-than merge with it, but you should not base work on this experimental branch
-anyway -- it only exists for creating the test build.
-
-Now the individual feature branches that have seen enough testing in this
-experimental branch will go, depending on how careful you need to be, either
-to the master, or to a branch, that will be subjected to system test and
-become next master after current release (this is the 'next' branch in git).
-This branch should now be available for basing further development on, so y=
-ou
-may no longer rewind, so any bugs found here have to be fixed or reverted by
-applying reverse patch to whatever one introduced them.
-
-As I said, I'd in any case avoid having per-developer branches and keep
-strictly per-feature (per-task). In git, commits don't belong to branches.
-Branch is just a pointer to it's head commit. Once further commits are made
-on top of it, it does not need any name to be accessible anymore. Therefore
-once your features make it into 'master' (or even just 'next'), you can
-remove their names -- and reuse them. This way you don't have to think twice
-about the feature names, because they are temporary (besides you can also
-rename them at any time).
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---DNUSDXU7R7AVVM8C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG3whuRel1vVwhjGURAhhcAJoDUIu3VqaHhUM3o4xYHXkXKRBu1QCgzAw0
-VzTolgehM/Am+gHNftEs0J8=
-=z/OO
------END PGP SIGNATURE-----
-
---DNUSDXU7R7AVVM8C--
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
