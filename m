@@ -1,67 +1,74 @@
-From: Jonas Berlin <xkr47@outerspace.dyndns.org>
-Subject: Re: [PATCH] Fix "cvs log" to use UTC timezone instead of local
-Date: Wed, 05 Sep 2007 21:45:21 +0000
-Organization: Helsinki University of Technology
-Message-ID: <46DF2371.5030603@outerspace.dyndns.org>
-References: <11889090932256-git-send-email-xkr47@outerspace.dyndns.org> <alpine.LFD.0.999.0709040612260.3088@evo.linux-foundation.org> <46DF2058.7060405@outerspace.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Wed, 05 Sep 2007 14:46:59 -0700
+Message-ID: <7v1wdciy3w.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+	<20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+	<46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+	<alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
+	<7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.9999.0709051634190.21186@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 23:45:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nix <nix@esperi.org.uk>, Steven Grimm <koreth@midwinter.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Sep 05 23:47:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT2gg-0001yo-U6
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:45:27 +0200
+	id 1IT2iT-0002Oz-78
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbXIEVpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 17:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756726AbXIEVpT
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:45:19 -0400
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:46542 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757022AbXIEVpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 17:45:18 -0400
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 3F1E31B01E;
-	Thu,  6 Sep 2007 00:45:16 +0300 (EEST)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A00A39192D0; Thu, 06 Sep 2007 00:45:16 +0300
-Received: from outerspace.dyndns.org (a88-112-29-101.elisa-laajakaista.fi [88.112.29.101])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 0ED74E51C6;
-	Thu,  6 Sep 2007 00:45:13 +0300 (EEST)
-Received: from [IPv6:2001:14b8:141::] (outerspace [IPv6:2001:14b8:141::])
-	by outerspace.dyndns.org (Postfix) with ESMTP id 7161970F5A;
-	Thu,  6 Sep 2007 00:45:22 +0300 (EEST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-In-Reply-To: <46DF2058.7060405@outerspace.dyndns.org>
-X-Enigmail-Version: 0.95.3
-X-Antivirus: VAMS
+	id S932118AbXIEVrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 17:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbXIEVrM
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:47:12 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:40928 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755560AbXIEVrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 17:47:12 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5523212F1FD;
+	Wed,  5 Sep 2007 17:47:23 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.9999.0709051634190.21186@xanadu.home> (Nicolas
+	Pitre's message of "Wed, 05 Sep 2007 16:35:19 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57769>
 
-Quoting Jonas Berlin on 09/05/2007 09:32 PM UTC:
-> Quoting Linus Torvalds on 09/04/2007 01:22 PM UTC:
->> That can be done various ways:
->>
->>  - use the "raw log format" which has dates as seconds-since-UTC (and with 
->>    an *informational* timezone thing that should then just be ignored).
->>
->>    This is likely the best approach, since anything but this will 
-> 
-> This seems straightforward to implement, so I will go with this.
+Nicolas Pitre <nico@cam.org> writes:
 
-I just realized that since git-cvsserver creates a SQLite database (assumably for keeping track of what cvs revision numbers map to which git commits) AND the "timezonized" timestamps are stored as strings in there, switching to UTC timestamps would either break current SQLite databases or then require backwards compatibility code to handle the pretty-printed timestamp (with the UTC unrolling code from the patch I sent).
+>> This patch does not add invocation of the "auto repacking".  It
+>> is left to key Porcelain commands that could produce tons of
+>> loose objects to add a call to "git gc --auto" after they are
+>> done their work.  Obvious candidates are:
+>> 
+>> 	git add
+>
+> Nope!  'git add' creates loose objects which are not yet reachable from 
+> anywhere.  They won't get repacked until a commit is made.
 
-> I guess at this point it's good to mention that current cvs implementations (at least 1.12.12) produce timestamps of format "yyyy-mm-dd HH:MM:SS +ZZZZ" (i.e. they do include timezone information) while older versions (at least 1.11.22) produce the UTC-only format "yyyy/mm/dd HH:MM:SS" which is currently used by git-cvsserver. Backwards compatibility generally being a good thing, while at the expense of timezone information, I chose to keep the older UTC-only format. Should you prefer to keep the timezone information, I'll update the cvs log format instead. Heck, I could even support both through some configuration option if you really wanted :)
+Bzzt, I am releaved to see you are sometimes wrong ;-)
 
-Another option would be to scrap support for old cvs clients.. I could investigate when the new format was introduced..
+They are reachable from the index and are not subject to
+pruning.
 
--- 
-- xkr47
+>> 	git fetch
+>
+> I think that would be a much better idea to simply decrease the 
+> fetch.unpackLimit default value.
+
+One thing that I find lacking in that auto patch is actually
+that we should sometimes consolidate multiple small packs into a
+single larger one.  Any behaviour change to encourage creation
+of many tiny packs should be avoided until it materializes.
+
+Probably we should introduce a built-in minimum value for a
+positive gc.auto, somewhere around 1000 or so, for this reason.
