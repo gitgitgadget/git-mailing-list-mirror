@@ -1,80 +1,107 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 19:31:44 +0200
-Message-ID: <vpq1wddkohr.fsf@bauges.imag.fr>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<20070905074206.GA31750@artemis.corp> <46DE6DBC.30704@midwinter.com>
-	<7vbqchjx9f.fsf@gitster.siamese.dyndns.org>
-	<46a038f90709050227u777ed7b9w23dc3bab13c7b09b@mail.gmail.com>
-	<vpqzm01v4li.fsf@bauges.imag.fr>
-	<D32A7C27-EAF5-4156-BE0E-99FE3D948AE8@wgaf.org>
+Date: Wed, 05 Sep 2007 10:35:36 -0700
+Message-ID: <46DEE8E8.2000801@midwinter.com>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <69b0c0350709050947k5e32ba7fj38924a0968569d9a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Steven Grimm" <koreth@midwinter.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Johan De Messemaeker <johan.demessemaeker@wgaf.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 19:33:20 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Govind Salinas <govindsalinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 19:35:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISykV-00075l-Fq
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:33:07 +0200
+	id 1ISymz-0007w3-1s
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363AbXIERdB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 13:33:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbXIERdB
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:33:01 -0400
-Received: from imag.imag.fr ([129.88.30.1]:58240 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752363AbXIERc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 13:32:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l85HViIs024465
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Sep 2007 19:31:44 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1ISyjA-0006ns-FK; Wed, 05 Sep 2007 19:31:44 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1ISyjA-0000ef-Cn; Wed, 05 Sep 2007 19:31:44 +0200
-In-Reply-To: <D32A7C27-EAF5-4156-BE0E-99FE3D948AE8@wgaf.org> (Johan De Messemaeker's message of "Wed\, 5 Sep 2007 16\:17\:01 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 05 Sep 2007 19:31:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754623AbXIERfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 13:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbXIERfg
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:35:36 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:58066 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754015AbXIERfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 13:35:34 -0400
+Received: (qmail 6623 invoked from network); 5 Sep 2007 17:35:34 -0000
+Received: from c-76-21-16-80.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.16.80)
+  by tater.midwinter.com with SMTP; 5 Sep 2007 17:35:34 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <69b0c0350709050947k5e32ba7fj38924a0968569d9a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57726>
 
-Johan De Messemaeker <johan.demessemaeker@wgaf.org> writes:
+Govind Salinas wrote:
+> This is one reason why I really think that gc should be *plumbing*
+> and *not* porcelain.
+>   
 
->> Currently, AFAIK, that can only be done with a (trivial) script
->> external to git. I suppose this can easily be added to the core git
->> porcelain. Perhaps a "git gc --recursive" would do.
->>
->> It doesn't solve the problem, but makes it easier to solve it (git gc
->> --recursive in cron for example).
->
-> I'm a git newb so I can be wrong here but ...
->
-> Why --recursive? Why not use the submodule-information ?
+That's a good way to think of it IMO. It's a low-level operation (albeit 
+one that encapsulates other, lower-level ones) that tells git to 
+rearrange its internal data structures. It is not something that has any 
+user-visible effect. Every other porcelain-level git command *does 
+something* from the user's point of view. Running git-gc is basically a 
+no-op, which from the user's point of view makes it a waste of 
+keystrokes and an annoying distraction from focusing on the stuff 
+they're using git to help them build.
 
-all projects are not necessarily subprojects of each others.
+> The user should never have to trigger a gc, they should even be
+> discouraged from doing so.  That is how other gc systems are.  Can you
+> imagine if you had a Java app that had a button on it to do a gc?
+> When should I push it?  Should I wait till the system is getting slow
+> or just start spamming the button whenever I'm bored?  I know that
+> Java/c#/py GC are different than git gc, but they fulfill the same
+> basic purpose as git gc.  IE to clean up unused items and free up
+> resources.  Git additionally may do some re-optimization, but that is
+> not relevant to a user.
+>   
 
-I have ~/teaching/some-course/.git (well, almost) and ~/etc/.git which
-are two unrelated projects, and to "git gc" both of them, I need
-either a script, or two manual invocations.
+I'll play devil's advocate for a moment here, though, and say that, as 
+others have suggested in this thread, git could be made to tell you when 
+it's appropriate to run gc. So the "I don't know when to run it" 
+argument isn't a hard one to address.
 
-(yes, I'm really talking about something trivial)
+With that in mind, here's what the message should look like IMO:
 
--- 
-Matthieu
+---
+Your repository can be optimized for better performance and lower disk 
+usage.
+Please run "git gc" to optimize it now, or run "git config gc.auto true" 
+to tell
+git to automatically optimize it in the future (this will launch 
+processes in the
+background.) For more information, "man git-gc".
+---
+
+And that "gc.auto" config option (just an arbitrary name, call it 
+something else if that's no good) actually has four settings:
+
+warn (the default) - prints the warning message, at most once every N 
+minutes (we can determine a good value for N)
+true - launches git-gc in the background as needed
+false - suppresses the warning and the check that triggers the warning
+foreground - launches git-gc in the foreground as needed (to make it 
+easier to abort)
+
+
+I don't buy the "git gc takes too much memory to run in the background" 
+argument as a reason automatic git-gc is a bad idea. Many of us (me 
+included) work on machines with plenty of memory to launch a background 
+git-gc without hampering our development work, and/or on repositories 
+small enough that it doesn't eat that much memory in the first place. 
+And if you make it an option that the user has to enable, people on 
+low-memory machines can simply not enable it, end of problem.
+
+One big problem with git-gc now is that it's not discoverable. Or 
+rather, the need for it isn't discoverable. So at the very least we 
+should print the warning, IMO -- and if we're already going to all the 
+trouble to determine whether or not git-gc needs to be run, it will 
+reduce the "why are you telling me to run something when you could just 
+do it for me, you stupid machine?" factor if there's an easily 
+discoverable way to just do it as needed.
+
+-Steve
