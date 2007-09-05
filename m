@@ -1,61 +1,68 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 5 Sep 2007 23:18:38 +0200
-Message-ID: <20070905211838.GB3770@steel.home>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix> <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix> <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Significant performance waste in git-svn and friends
+Date: Wed, 05 Sep 2007 23:19:18 +0200
+Message-ID: <85bqcghktl.fsf@lola.goethe.zz>
+References: <20070905184710.GA3632@glandium.org>
+	<7vd4wwj16d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 23:18:56 2007
+X-From: git-owner@vger.kernel.org Wed Sep 05 23:19:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT2Gr-0003WW-VJ
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:18:46 +0200
+	id 1IT2HV-0003ed-Ps
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 23:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754467AbXIEVSl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 17:18:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753772AbXIEVSl
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:18:41 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:35092 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752966AbXIEVSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 17:18:40 -0400
-Received: from tigra.home (Facc5.f.strato-dslnet.de [195.4.172.197])
-	by post.webmailer.de (mrclete mo48) (RZmta 12.6)
-	with ESMTP id R044a9j85J6Zyw ; Wed, 5 Sep 2007 23:18:38 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 478E1277BD;
-	Wed,  5 Sep 2007 23:18:38 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2E513BEAC; Wed,  5 Sep 2007 23:18:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFz4AZk=
-X-RZG-CLASS-ID: mo07
+	id S1755051AbXIEVTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 17:19:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754949AbXIEVTU
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 17:19:20 -0400
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:39726 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752966AbXIEVTU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2007 17:19:20 -0400
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 41660302EC6;
+	Wed,  5 Sep 2007 23:19:19 +0200 (CEST)
+Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 3336421300A;
+	Wed,  5 Sep 2007 23:19:19 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-072-218.pools.arcor-ip.net [84.61.72.218])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id D767C23D1E3;
+	Wed,  5 Sep 2007 23:19:18 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 770061CAD71B; Wed,  5 Sep 2007 23:19:18 +0200 (CEST)
+In-Reply-To: <7vd4wwj16d.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 05 Sep 2007 13\:40\:42 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4166/Wed Sep  5 17:20:22 2007 on mail-in-10.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57766>
 
-Junio C Hamano, Wed, Sep 05, 2007 22:01:37 +0200:
-> +	/*
-> +	 * Quickly check if a "gc" is needed, by estimating how
-> +	 * many loose objects there are.  Because SHA-1 is evenly
-> +	 * distributed, we can check only one and get a reasonable
-> +	 * estimate.
-> +	 */
+Junio C Hamano <gitster@pobox.com> writes:
 
-:))
+> Mike Hommey <mh@glandium.org> writes:
+>
+>> The same things obviously apply to git-cvsimport and other scripts
+>> calling git-hash-object a lot.
+>
+> I *obviously* hate this patch, as it makes this Porcelain
+> command to be aware of the internal representation too much.
+>
+> I wonder if letting fast-import handle the object creation is an
+> option, though.
 
-> +	if (sizeof(path) <= snprintf(path, sizeof(path), "%s/17", objdir)) {
-> +		warning("insanely long object directory %.*s", 50, objdir);
+I think it would be saner to give git-hash-object an operation mode
+that makes it usable as a pipe-controlled daemon, so that one needs
+not fork and exec for interning another object.  That way, porcelain
+commands could keep one bidirectional pipe (feed object type and
+source and whether to use -w into git-hash-project, receive object id)
+to git-hash-object around until they finish.
 
-or a non-POSIX snprintf returning "negative value" (Microsoft)
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
