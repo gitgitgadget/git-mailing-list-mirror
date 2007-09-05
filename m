@@ -1,53 +1,88 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 18:51:09 +0100
-Message-ID: <87odgh0zn6.fsf@hades.wkstn.nix>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<20070905074206.GA31750@artemis.corp>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 19:51:27 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH] rebase--interactive: do not use one-or-more (\+) in sed.
+Date: Wed, 5 Sep 2007 19:54:32 +0200
+Message-ID: <6E4416B2-FA7C-47C3-B5C6-9E94D8ABE17D@lrde.epita.fr>
+References: <200709010925.27926.johannes.sixt@telecom.at> <7vmyw6u5ca.fsf@gitster.siamese.dyndns.org> <7vejhiu565.fsf_-_@gitster.siamese.dyndns.org> <85abs5v9q1.fsf@lola.goethe.zz> <87bqclngh6.fsf@hades.wkstn.nix>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-15-254275268"
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
+To: Nix <nix@esperi.org.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 05 19:54:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISz2D-0004IK-Pu
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:51:26 +0200
+	id 1ISz5R-0005Bs-7b
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837AbXIERvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 13:51:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbXIERvU
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:51:20 -0400
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:48730 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756710AbXIERvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 13:51:18 -0400
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id l85Hp9aY008879;
-	Wed, 5 Sep 2007 18:51:10 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id l85Hp9n0018563;
-	Wed, 5 Sep 2007 18:51:09 +0100
-Emacs: Lovecraft was an optimist.
-In-Reply-To: <20070905074206.GA31750@artemis.corp> (Pierre Habouzit's message of "Wed, 05 Sep 2007 09:42:06 +0200")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.5-b28 (linux)
-X-DCC-INFN-TO-Metrics: hades 1233; Body=2 Fuz1=2 Fuz2=2
+	id S1753225AbXIERyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 13:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754072AbXIERyj
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:54:39 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:46500 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753039AbXIERyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 13:54:38 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1ISz5I-0005FX-Uu; Wed, 05 Sep 2007 19:54:37 +0200
+In-Reply-To: <87bqclngh6.fsf@hades.wkstn.nix>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57730>
 
-On 5 Sep 2007, Pierre Habouzit said:
->   I know I don't really answer the question, but the point I try to make
-> is that yeah, some kind of automated way to run the gc is great, but I'm
-> not sure that _git_ is the tool to automate that, because when *I* use
-> git, I expect it to be just plain fast, and I don't want it to
-> occasionally hang.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-15-254275268
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Indeed. I repack all our git trees in the middle of the night, and our
-incremental backup script drops .keep files corresponding to every
-existing pack before running the backup.
+On Sep 2, 2007, at 7:07 PM, Nix wrote:
 
-This is probably a good job for cron :)
+> On 2 Sep 2007, David Kastrup uttered the following:
+>> As usual, <URL:info:autoconf#Limitations%20of%20Usual%20Tools>  
+>> (aka as
+>> (info "(autoconf) Limitations of Usual Tools")
+>> ) provides a real horror show of sed variants.
+>
+> A goodly number of things in that section of the Autoconf manual are
+> passing on hints and ancient legends that may or may not be accurate:
+> I've found a number of its descriptions of shell limitations to be
+> downright wrong (applying to one build of one shell back in 1981 that
+> was never shipped to anyone, that sort of thing).
+>
+> (Of course it's valuable, even if it *is* a compendium of legends. But
+> confirming any of it is quite hard.)
+
+The autoconf maintainers will be glade to hear about such legends or  
+inaccurate things.
+
+Cheers,
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-15-254275268
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFG3u1YwwE67wC8PUkRAmJOAKCU4mrY5NBZj+x5b3JR5hOKeA/h4gCfQmHj
+CuzkSOyMoOiNCyh2DzpAUlM=
+=VlsI
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-15-254275268--
