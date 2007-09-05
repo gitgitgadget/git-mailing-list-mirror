@@ -1,69 +1,53 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Nix <nix@esperi.org.uk>
 Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 5 Sep 2007 13:44:27 -0400
-Message-ID: <20070905174427.GC13314@fieldses.org>
+Date: Wed, 05 Sep 2007 18:51:09 +0100
+Message-ID: <87odgh0zn6.fsf@hades.wkstn.nix>
 References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+	<20070905074206.GA31750@artemis.corp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 19:44:48 2007
+X-From: git-owner@vger.kernel.org Wed Sep 05 19:51:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISyve-00029B-ID
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:44:38 +0200
+	id 1ISz2D-0004IK-Pu
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753099AbXIERod (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 13:44:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbXIERod
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:44:33 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:36641 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752014AbXIERoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 13:44:32 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1ISyvT-0006J2-Us; Wed, 05 Sep 2007 13:44:27 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1756837AbXIERvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 13:51:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbXIERvU
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:51:20 -0400
+Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:48730 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756710AbXIERvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 13:51:18 -0400
+Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
+	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id l85Hp9aY008879;
+	Wed, 5 Sep 2007 18:51:10 +0100
+Received: (from nix@localhost)
+	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id l85Hp9n0018563;
+	Wed, 5 Sep 2007 18:51:09 +0100
+Emacs: Lovecraft was an optimist.
+In-Reply-To: <20070905074206.GA31750@artemis.corp> (Pierre Habouzit's message of "Wed, 05 Sep 2007 09:42:06 +0200")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.5-b28 (linux)
+X-DCC-INFN-TO-Metrics: hades 1233; Body=2 Fuz1=2 Fuz2=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57729>
 
-On Wed, Sep 05, 2007 at 12:09:27AM -0700, Linus Torvalds wrote:
-> I personally repack everything way more often than is necessary, and I had 
-> kind of assumed that people did it that way, but I was apparently wrong. 
-> Comments?
+On 5 Sep 2007, Pierre Habouzit said:
+>   I know I don't really answer the question, but the point I try to make
+> is that yeah, some kind of automated way to run the gc is great, but I'm
+> not sure that _git_ is the tool to automate that, because when *I* use
+> git, I expect it to be just plain fast, and I don't want it to
+> occasionally hang.
 
-Well, this may just prove I'm an idiot, but one of the reasons I rarely
-run it is that I have trouble remembering exactly what it does; in
-particular,
+Indeed. I repack all our git trees in the middle of the night, and our
+incremental backup script drops .keep files corresponding to every
+existing pack before running the backup.
 
-	- does it prune anything that might be needed by a repo I
-	  cloned with -s?
-	- is there anything that's unsafe to do while the git-gc is
-	  running?
-	- what are the implications for http users if this is a public
-	  repo?
-	- is git-gc enough on its own or should I be running something
-	  more agressive ocassionally too?
-
-No doubt they all have simple answers, which probably amount to "just
-don't worry about it", and which I could have found in less time than
-it'd take to write this email.  But when I've got other work to do,
-reading "man git-gc" is just enough effort for me to postpone the whole
-thing to another day.
-
-So, anyway, your message reminded me to run git-gc on my main working
-repo.  At which point one of my personal scripts immediately started
-failing--it was assuming it could find any ref under .git/refs/, and I
-hadn't realized (or maybe I had once, and I'd forgotten) that git-gc
-packs refs by default now.
-
-Bah.  I don't know what the moral of that story is.
-
---b.
+This is probably a good job for cron :)
