@@ -1,77 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 16:42:37 -0700
-Message-ID: <7v3axshe6q.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
-	<46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
-	<alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-	<7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.9999.0709051634190.21186@xanadu.home>
-	<7v1wdciy3w.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.9999.0709051858060.21186@xanadu.home>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: [PATCH 1/2] git-commit: Disallow unchanged tree in non-merge mode
+Date: Thu, 6 Sep 2007 03:49:41 +0400
+Message-ID: <20070905234941.GA643@nomad.office.altlinux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nix <nix@esperi.org.uk>, Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 01:42:52 2007
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 01:50:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT4WC-0001fz-Pb
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 01:42:45 +0200
+	id 1IT4dS-0002lK-50
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 01:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756535AbXIEXmj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 19:42:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756489AbXIEXmj
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 19:42:39 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41716 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756054AbXIEXmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 19:42:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070905234237.IMBD20651.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 5 Sep 2007 19:42:37 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id knid1X00J1gtr5g0000000; Wed, 05 Sep 2007 19:42:37 -0400
-In-Reply-To: <alpine.LFD.0.9999.0709051858060.21186@xanadu.home> (Nicolas
-	Pitre's message of "Wed, 05 Sep 2007 19:04:27 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757873AbXIEXuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 19:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757867AbXIEXuA
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 19:50:00 -0400
+Received: from vhq.altlinux.org ([194.107.17.3]:47122 "EHLO
+	sendmail.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757789AbXIEXt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 19:49:56 -0400
+Received: from nomad.office.altlinux.org (localhost.localdomain [127.0.0.1])
+	by sendmail.altlinux.org (Postfix) with ESMTP id 315482510737;
+	Thu,  6 Sep 2007 03:49:55 +0400 (MSD)
+Received: by nomad.office.altlinux.org (Postfix, from userid 501)
+	id 93693170DB; Thu,  6 Sep 2007 03:49:41 +0400 (MSD)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57774>
 
-Nicolas Pitre <nico@cam.org> writes:
+Do not commit an unchanged tree in non-merge mode.
 
-> On Wed, 5 Sep 2007, Junio C Hamano wrote:
->
->> Nicolas Pitre <nico@cam.org> writes:
->> 
-> The index?  What's that?  ;-)
+While regular mode is already handled by git-runstatus, this cheap check
+allows to avoid costly git-runstatus later.  Also, amend mode needs
+special attention, because git-runstatus return value is ignored.
+The idea is that amend should not commit an unchanged tree,
+one should just remove the top commit using git-reset instead.
 
-Sorry, my mistake.  You are always more right than I am [tm] ;-)
+Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
+---
+ git-commit.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-> The more I think of it, the less I like automatic repack.  There is 
-> always a bad case for it somewhere.
-
-I tend to agree, but at the same time, I think the long term
-goal should be not to have bad cases.
-
-Old timers like ourselves learned to run "repack -a -d" when not
-doing real work (i.e. beginning of the day while fetching
-coffee, before leaving to lunch break, end of the day before
-leaving) and we have been _trained_ not to feel that a choir,
-but I think that is wrong.  "Sync freezes I/O for and causes my
-real-time databasy job undue latency --- I would want to disable
-swapper/bdflush/whatever machine-wide and prefer typing 'sync'
-from the command line when it is convenient for me" is fine for
-an experienced user working on a single user machine, but it
-still feels wrong (we do not have "multi-user" issues in git
-repository, so this analogy is not quite right, though).
+diff --git a/git-commit.sh b/git-commit.sh
+index 1d04f1f..800f96c 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -629,6 +629,16 @@ then
+ 		tree=$(GIT_INDEX_FILE="$TMP_INDEX" git write-tree) &&
+ 		rm -f "$TMP_INDEX"
+ 	fi &&
++	if test -n "$current" -a ! -f "$GIT_DIR/MERGE_HEAD"
++	then
++		current_tree="$(git cat-file commit "$current${amend:+^}" 2>/dev/null |
++				sed -e '/^tree \+/!d' -e 's///' -e q)"
++		if test "$tree" = "$current_tree"
++		then
++			echo >&2 "nothing to commit${amend:+ (use \"git reset HEAD^\" to remove the top commit)}"
++			false
++		fi
++	fi &&
+ 	commit=$(git commit-tree $tree $PARENTS <"$GIT_DIR/COMMIT_MSG") &&
+ 	rlogm=$(sed -e 1q "$GIT_DIR"/COMMIT_MSG) &&
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $rlogm" HEAD $commit "$current" &&
+-- 
+ldv
