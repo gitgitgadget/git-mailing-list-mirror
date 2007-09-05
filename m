@@ -1,124 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Wed, 05 Sep 2007 19:29:24 +0200
-Message-ID: <vpq642pkoln.fsf@bauges.imag.fr>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<1189004090.20311.12.camel@hinata.boston.redhat.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git's database structure
+Date: Wed, 5 Sep 2007 18:31:43 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709051823470.26016@reaper.quantumfyre.co.uk>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>
+ <7vtzqany0z.fsf@gitster.siamese.dyndns.org>
+ <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>
+ <20070904212507.GA24434@thunk.org> <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com>
+ <46DE5861.4050201@op5.se> <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>
+ <46DEC26E.7030809@op5.se> <9e4733910709050837o61a2dedfpc5f72a239b1cb8e3@mail.gmail.com>
+ <Pine.LNX.4.64.0709051648400.3189@reaper.quantumfyre.co.uk>
+ <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 19:31:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Andreas Ericsson <ae@op5.se>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 19:32:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISyiY-0006X1-Gd
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:31:07 +0200
+	id 1ISyjz-0006vy-6M
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753007AbXIERbB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Sep 2007 13:31:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752803AbXIERbA
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:31:00 -0400
-Received: from imag.imag.fr ([129.88.30.1]:57491 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752700AbXIERa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 13:30:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l85HTOJJ024081
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Sep 2007 19:29:25 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1ISygu-0006mV-Fx; Wed, 05 Sep 2007 19:29:24 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1ISygu-0000eX-DQ; Wed, 05 Sep 2007 19:29:24 +0200
-In-Reply-To: <1189004090.20311.12.camel@hinata.boston.redhat.com> ("Kristian
- =?iso-8859-1?Q?H=F8gsberg=22's?= message of "Wed\, 05 Sep 2007 10\:54\:50
- -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 05 Sep 2007 19:29:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755492AbXIERbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 13:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755383AbXIERbr
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:31:47 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:37289 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754943AbXIERbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2007 13:31:46 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 8A91877B3FD
+	for <git@vger.kernel.org>; Wed,  5 Sep 2007 18:31:44 +0100 (BST)
+Received: (qmail 8431 invoked by uid 103); 5 Sep 2007 18:31:43 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91.2/4156. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.031175 secs); 05 Sep 2007 17:31:43 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 5 Sep 2007 18:31:43 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57724>
 
-Kristian H=F8gsberg <krh@redhat.com> writes:
+On Wed, 5 Sep 2007, Jon Smirl wrote:
 
-> On Tue, 2007-09-04 at 22:50 +0200, Lukas Sandstr=F6m wrote:
->> Hi.
->>=20
->> This is an attempt to use "The Better String Library"[1] in builtin-=
-mailinfo.c
->>=20
->> The patch doesn't pass all the tests in the testsuit yet, but I thou=
-ght I'd
->> send it out so people can decide if they like how the code looks.
->>=20
->> I'm not sending a patch to add the library files at this time. I'll =
-send
->> that patch when this patch is working.
->>=20
->> The changes required to make it pass the tests shouldn't be very lar=
-ge.
+> On 9/5/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
+>> On Wed, 5 Sep 2007, Jon Smirl wrote:
+>>
+>>> On 9/5/07, Andreas Ericsson <ae@op5.se> wrote:
+>>>> Jon Smirl wrote:
+>>>>>
+>>>>> The path name field needs to be moved back into the blobs to support
+>>>>> alternative indexes. For example I want an index on the Signed-off-by
+>>>>> field. I use this index to give me the SHAs for the blobs
+>>>>> Signed-off-by a particular person. In the current design I have no way
+>>>>> of recovering the path name for these blobs other than a brute force
+>>>>> search following every path looking for the right SHA.
+>>>>>
+>>>>
+>>>> Ah, there we go. A use-case at last :)
+>>
+>> But not a brilliant one.  You sign off on commits not blobs.  So you go
+>> from the sign-off to paths, then to blobs.  There is no need to go from
+>> blob to path unless you deliberately introduce such a need.
 >
-> Please, no.  Let's not pull in a dependency for something as simple a=
-s a
-> string library.  How many distros have bstring pcakaged? =20
-> The right version?
+> Use blame for an example. Blame has to crawl every commit to see if it
+> touched the file. It keeps doing this until it figures out the last
+> author for every line in the file. Worse case blame has to crawl every
+> commit in the data store.
 
-That's not a good argument. If dependancy is a problem, bsstring can
-easily be distributed as part of git. It's really small, so it wont
-make git bloated:
+And this is advantaged by having the path in the blob how?  The important 
+information here is knowing which commits touched the file - this 
+information is expensive in git because it is snapshot based.  You have to 
+go back through all the commits looking for changes to the given path. 
+The information you might want to cache is which commits touched the file, 
+which you could do without changing the current data storage. Presumably 
+you are suggesting that such a cache would be cleaner with the filename in 
+the blob?  Or do you think that it would somehow be faster to create?  If 
+so, how?
 
-$ wc -l *.c *.h
-    82 bsafe.c
-  3462 bstest.c
-  1134 bstraux.c
-  2964 bstrlib.c
-   358 testaux.c
-    43 bsafe.h
-   112 bstraux.h
-   302 bstrlib.h
-   442 bstrwrap.h
-  8899 total
+-- 
+Julian
 
-> Does it work on Windows?
-
-The library is totally stand alone, portable (known to work with
-gcc/g++, MSVC++, Intel C++, WATCOM C/C++, Turbo C, Borland C++, IBM's
-native CC compiler on Windows, Linux and Mac OS X)
-
-> We already have strbuf.c, lets just consolidate the string
-> manipulation code already in git under that interface.
-
-The right question is: what does git need. One way to consolidate
-strbuf would be to simply
-
-$ rm strbuf.{c,h}
-$ unzip bsstring.zip
-
-and if people decide that git needs a non-trivial string library,
-writting/testing more code in strbuf.c would probably be more work
-than just reading what bsstring code does to become familiar enough
-with it to even be able to maintain it later.
-
-If people decide that git needs a really trivial string library, then
-a few improvements to stbuf.c can be good.
-
-I'd argue in favor of the first option. C strings are horrible, and I
-think doing something pleasant to use and safe is not completely
-trivial. But I'm not a big contributor enough to really decide in
-spite of others ;-).
-
---=20
-Matthieu
+  ---
+Humor in the Court:
+Q: (Showing man picture.) That's you?
+A: Yes, sir.
+Q: And you were present when the picture was taken, right?
