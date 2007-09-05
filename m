@@ -1,140 +1,155 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [RFC/PATCH] git-svn: add support for --first-parent
-Date: Wed,  5 Sep 2007 11:35:29 +0200
-Message-ID: <1188984929315-git-send-email-hjemli@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 05 11:38:22 2007
+From: Russ Brown <pickscrape@gmail.com>
+Subject: Re: git-svn and a nested branches folder
+Date: Wed, 05 Sep 2007 04:56:07 -0500
+Message-ID: <46DE7D37.9040905@gmail.com>
+References: <46DD6EEA.9010304@gmail.com> <20070905001513.GA9362@soma>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Sep 05 11:56:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISrL1-0000ng-SU
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 11:38:20 +0200
+	id 1ISrcX-00055l-15
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 11:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756214AbXIEJhr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 05:37:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756210AbXIEJhr
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 05:37:47 -0400
-Received: from mail42.e.nsc.no ([193.213.115.42]:59743 "EHLO mail42.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756182AbXIEJhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 05:37:45 -0400
-Received: from localhost.localdomain (ti231210a341-5020.bb.online.no [85.166.63.158])
-	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id l859b1tY024601;
-	Wed, 5 Sep 2007 11:37:02 +0200 (MEST)
-X-Mailer: git-send-email 1.5.3.1.g7e90d-dirty
+	id S1755935AbXIEJ4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 05:56:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbXIEJ4O
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 05:56:14 -0400
+Received: from wx-out-0506.google.com ([66.249.82.230]:23756 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520AbXIEJ4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 05:56:13 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2061040wxd
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 02:56:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=GyZGE28FAygFXqgyn/eqWlnVDyIahHzVJj30a+pu6bO0mt04WNE7ofh+FWRy3mFl3d0lpqJCTb04e38jI32B0bD45UB+IFxKwSE2u/ikuoyo91cTKMrTb0qilrSvJpzreGn/FdGQjW7LnxZ75H0A/RTZGT6tU4NW91x48z5Ak74=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=RW4lY9/1PbLlS0ZaCY1IoFj+EaqhCCzrbdi7igaoUTkdPh1BoeRGXs1TziLIb+rO5WTUFcQtFVJhaQDwyrOvd1a5v6xgfL6uHcAsF45eIAO10WRhDR63QBpmUMgstQUOX+II73etkIoiyY+mz8k9Az3rbji9eT5gtfdQOK04QOA=
+Received: by 10.90.52.18 with SMTP id z18mr6677632agz.1188986172654;
+        Wed, 05 Sep 2007 02:56:12 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.164.207.197])
+        by mx.google.com with ESMTPS id 9sm7167846agc.2007.09.05.02.56.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 05 Sep 2007 02:56:11 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
+In-Reply-To: <20070905001513.GA9362@soma>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57704>
 
-When git-svn uses git-log to find embedded 'git-svn-id'-lines in commit
-messages, it can get confused when local history contains merges with
-other git-svn branches. But if --first-parent is supplied to git-log,
-working_head_info() will only see 'branch-local' commits and thus the
-first commit containing a 'git-svn-id' line should refer to the correct
-subversion branch.
+Eric Wong wrote:
+> Russ Brown <pickscrape@gmail.com> wrote:
+>> Hi,
+> 
+> Hi Russ,
+> 
+>> I'm having some trouble with using git-svn to fetch a repository, and I
+>> think it's because the repository doesn't store branches as a flat list
+>> directly under the 'branches' directory.
+>>
+>> Basically, we have a structure like this:
+>>
+>> |
+>> +-trunk
+>> +-tags
+>> +-branches
+>>   + category-a
+>>     + branch-a
+>>     + branch-b
+>>   + category-b
+>>     + branch-c
+>>     + branch-d
+>>
+>> etc. category-a and category-b are simple directories created using svn
+>> mkdir. The branches are created using svn cp.
+>>
+>> It helps us to organise the branches better, but the rationale is
+>> besides the point. The problem is that git-svn seems to want to treat
+>> category-a and category-b as branches, which isn't right at all. As a
+>> result, git-svn seems to skip most (if not all) revisions that occur in
+>> these directories and creates a lot of entries in unhandled.log.
+> 
+> This is a known problem with the way git-svn handles branches and tags.
+> Nested branch (and tags) structures aren't supported with globbing and
+> so you can't have more than one branches/tags specification in your
+> config.
+> 
+>> I've also encountered an index corruption in one of the
+>> .git/svn/<branch>/index files which I think it probably related.
+> 
+> Not sure about that.  git-svn should detect and attempt to fix index
+> corruptions (which happened for me since I interrupt git-svn quite
+> often when working on it).
+> 
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+I've since trashes that repo and it's not happened again, so it must
+have been cosmic particles or something. :)
 
-This passes the test-suite and I've used it to correctly dcommit against a
-real-life repository after merging subversion-branches in git ('dcommit -n'
-reported the wrong subversion branch while 'dcommit -n --first-parent' got
-it right, so I did 'dcommit --first-parent' and then inspected the logs and
-diffs in the subversion repo and everything looked swell).
+>> I've had a quick look at the source myself, but perl isn't my strong
+>> point. What I think it should do is something like recurse down the tree
+>> from the directory given looking for folders that copy from trunk (or
+>> some other branch that already exists). That would work perfectly well
+>> for the default flat branch storage method as well as the one we use.
+> 
+> The globbing functionality of branches in git-svn is some of the ugliest
+> code I've ever written in my life.  Somehow I got it working for the
+> simple general cases but I've been afraid to touch it for a while...
+> 
 
-But I'm not a perl person, my understanding of git-svn is limited and the
-use of --first-parent may not be the right solution to the problem...
+Yeah, I know what you mean. :) A really nasty thing to get working and
+once you do you don't want to touch it again. :)
 
- Documentation/git-svn.txt |   10 ++++++++++
- git-svn.perl              |   17 +++++++++++++----
- 2 files changed, 23 insertions(+), 4 deletions(-)
+>> The only other problem is in branch naming, which could clash if you
+>> only use the outer-most directory name, so I'd suggest something that
+>> involves concatenating the folders in the path relative to 'branches' to
+>> keep them unique (if git can handle slashes in branch names then all the
+>> better).
+> 
+> As Peter suggested, disable globbing for branches and use explicit
+> fetch refspecs for now...
+> 
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index be2e34e..42d7b82 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -317,6 +317,16 @@ This is only used with the 'dcommit' command.
- Print out the series of git arguments that would show
- which diffs would be committed to SVN.
- 
-+--first-parent::
-+
-+This is only used with the 'dcommit', 'rebase', 'log', 'find-rev' and
-+'show-ignore' commands.
-+
-+These commands tries to detect the upstream subversion branch by means of
-+the embedded 'git-svn-id' line in commit messages. When --first-parent is
-+specified, git-svn only follows the first parent of each commit, effectively
-+ignoring commits brought into the current branch through merge-operations.
-+
- --
- 
- ADVANCED OPTIONS
-diff --git a/git-svn.perl b/git-svn.perl
-index d3c8cd0..d21eb7f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -59,7 +59,7 @@ my ($_stdin, $_help, $_edit,
- 	$_template, $_shared,
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
--	$_prefix, $_no_checkout, $_verbose);
-+	$_prefix, $_no_checkout, $_verbose, $_first_parent);
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-@@ -119,12 +119,15 @@ my %cmd = (
- 			  'dry-run|n' => \$_dry_run,
- 			  'fetch-all|all' => \$_fetch_all,
- 			  'no-rebase' => \$_no_rebase,
-+			  'first-parent' => \$_first_parent,
- 			%cmt_opts, %fc_opts } ],
- 	'set-tree' => [ \&cmd_set_tree,
- 	                "Set an SVN repository to a git tree-ish",
- 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
- 	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
--			{ 'revision|r=i' => \$_revision } ],
-+			{ 'revision|r=i' => \$_revision,
-+			  'first-parent' => \$_first_parent
-+			} ],
- 	'multi-fetch' => [ \&cmd_multi_fetch,
- 	                   "Deprecated alias for $0 fetch --all",
- 			   { 'revision|r=s' => \$_revision, %fc_opts } ],
-@@ -145,15 +148,19 @@ my %cmd = (
- 			  'authors-file|A=s' => \$_authors,
- 			  'color' => \$Git::SVN::Log::color,
- 			  'pager=s' => \$Git::SVN::Log::pager,
-+			  'first-parent' => \$_first_parent
- 			} ],
- 	'find-rev' => [ \&cmd_find_rev, "Translate between SVN revision numbers and tree-ish",
--			{ } ],
-+			{
-+			  'first-parent' => \$_first_parent
-+			} ],
- 	'rebase' => [ \&cmd_rebase, "Fetch and rebase your working directory",
- 			{ 'merge|m|M' => \$_merge,
- 			  'verbose|v' => \$_verbose,
- 			  'strategy|s=s' => \$_strategy,
- 			  'local|l' => \$_local,
- 			  'fetch-all|all' => \$_fetch_all,
-+			  'first-parent' => \$_first_parent,
- 			  %fc_opts } ],
- 	'commit-diff' => [ \&cmd_commit_diff,
- 	                   'Commit a diff between two trees',
-@@ -811,7 +818,9 @@ sub cmt_metadata {
- 
- sub working_head_info {
- 	my ($head, $refs) = @_;
--	my ($fh, $ctx) = command_output_pipe('log', '--no-color', $head);
-+	my @args = ('log', '--no-color');
-+	push @args, '--first-parent' if $_first_parent;
-+	my ($fh, $ctx) = command_output_pipe(@args, $head);
- 	my $hash;
- 	my %max;
- 	while (<$fh>) {
+I've actually knocked up a rough script which generates a list of
+refspec lines for you given a repo URL, trunk reference and branches
+directory. It uses svn log -v --xml and pipes it through a couple of
+XSLT templates, and basically looks for all copies that copy from trunk
+(recursively: so it includes branches of branches too). I can post it to
+the list if you'd find it useful or interesting.
+
+It's generating output that looks sensible to me, but the results aren't
+quite what I'd expected. I'll paste a sample in here in case there's
+anything obvious someone might spot that I've missed
+
+# This line was generated by git-svn init, and I kept it
+fetch = all/trunk:refs/remotes/trunk
+
+# These lines generated by my tool, dirnames replaced for security reasons:
+
+fetch = branches/folder/projecta:refs/remotes/svn/folder/projecta
+fetch = branches/folder/projectb:refs/remotes/svn/folder/projectb
+fetch = branches/folder/projectc:refs/remotes/svn/folder/projectc
+fetch = branches/folder/projectd:refs/remotes/svn/folder/projectd
+fetch = branches/folder/projecte:refs/remotes/svn/folder/projecte
+fetch = branches/folder/projectf:refs/remotes/svn/folder/projectf
+fetch = branches/folder/projectg:refs/remotes/svn/folder/projectg
+
+git branch -a doesn't list any of those branches after fetch completes.
+Looking back at the output from fetch, all revisions applied were to trunk.
+
+Anything wrong with those fetch lines?
+
+Thanks for your time.
+
 -- 
-1.5.3.1.g7e90d-dirty
+
+Russ
