@@ -1,65 +1,125 @@
-From: Nix <nix@esperi.org.uk>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 19:28:13 +0100
-Message-ID: <873axt0xxe.fsf@hades.wkstn.nix>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<69b0c0350709050947k5e32ba7fj38924a0968569d9a@mail.gmail.com>
-	<46DEE8E8.2000801@midwinter.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: .gitignore, .gitattributes, .gitmodules,
+	.gitprecious?,.gitacls? etc.
+Date: Wed, 5 Sep 2007 20:38:31 +0200
+Message-ID: <20070905183831.GA29370@efreet.light.src>
+References: <7vhcmmpxed.fsf@gitster.siamese.dyndns.org> <B4A2AE9980774365B5D14B442A7A22F6@ntdev.corp.microsoft.com> <20070826100647.GH1219@pasky.or.cz> <4C603F7C51884DF8AFAEC3F6E263798D@ntdev.corp.microsoft.com> <a1bbc6950708271327x4dd948d4m8e9e35f757a7d92e@mail.gmail.com> <Pine.LNX.4.64.0708280945350.28586@racer.site> <20070904202326.GC3786@efreet.light.src> <a1bbc6950709050106j137215obd7272b2a77c3b13@mail.gmail.com> <7vk5r5jzpn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Govind Salinas <govindsalinas@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
 	Git Mailing List <git@vger.kernel.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 20:28:35 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 20:38:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISzc9-0006N0-9k
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 20:28:33 +0200
+	id 1ISzm1-0000nW-F3
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 20:38:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672AbXIES22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 14:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbXIES22
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 14:28:28 -0400
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:46854 "EHLO
-	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753672AbXIES21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 14:28:27 -0400
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
-	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id l85ISDPZ009238;
-	Wed, 5 Sep 2007 19:28:13 +0100
-Received: (from nix@localhost)
-	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id l85ISD4w025564;
-	Wed, 5 Sep 2007 19:28:13 +0100
-Emacs: more boundary conditions than the Middle East.
-In-Reply-To: <46DEE8E8.2000801@midwinter.com> (Steven Grimm's message of "Wed, 05 Sep 2007 10:35:36 -0700")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.5-b28 (linux)
-X-DCC-INFN-TO-Metrics: hades 1233; Body=4 Fuz1=4 Fuz2=4
+	id S1753693AbXIESil (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 14:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753903AbXIESil
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 14:38:41 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:56790 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753693AbXIESik (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 14:38:40 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id CF9A4576F6;
+	Wed,  5 Sep 2007 20:38:38 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id AaQcOX0Xs2Ri; Wed,  5 Sep 2007 20:38:35 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 86142576BE;
+	Wed,  5 Sep 2007 20:38:34 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1ISzln-0007fg-FH; Wed, 05 Sep 2007 20:38:31 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk5r5jzpn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57736>
 
-On 5 Sep 2007, Steven Grimm stated:
 
-> Govind Salinas wrote:
->> This is one reason why I really think that gc should be *plumbing*
->> and *not* porcelain.
->
-> That's a good way to think of it IMO. It's a low-level operation
-> (albeit one that encapsulates other, lower-level ones) that tells git
-> to rearrange its internal data structures. It is not something that
-> has any user-visible effect.
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It certainly has a sysadmin-visible effect. Repack a couple of big git
-repositories and that's a backup tape gone if you do incremental
-backups: and you can't *not* back up the pack files, even though a lot
-of the state in them is recoverable from elsewhere on the net: the stuff
-which is not recoverable is tangled up with the stuff which is.
+On Wed, Sep 05, 2007 at 01:14:44 -0700, Junio C Hamano wrote:
+> "Dmitry Kakurin" <dmitry.kakurin@gmail.com> writes:
+>=20
+> > I assert that since index does not have .gitattributes the one from
+> > local directory should not be used.
+> >
+> > Think about dedicated build machine scenario: I have a machine that
+> > always does sync + build. After every sync the local directory should
+> > always be identical to what-was-committed.
+>=20
+> Thinking about the reason _why_ .gitattributes may be updated,
+> one would notice that it is because somebody did this command
+> sequence:
+>=20
+> 	git checkout		;# now work tree is clean
+> 	edit .gitattributes	;# modify the attributes of a file
+> 	edit file		;# edit the file attributes talks about
+> 	git add file		;# this can be affected by .gitattributes
+> 	git add .gitattributes	;# this is changed in the same commit
+> 	git commit
+>=20
+> Now, should we always take .gitattributes from the index?
 
-(of course the solution here was .keep files. I cheered when they were
-introduced and started rolling git out everywhere I could. There's just
-one last vast repository maintained by a horrible shell script layered
-atop SCCS which I have to find some way to convert...)
+Yes, they should:
+
+$ git checkout
+$ edit .gitattributes
+$ edit file
+$ git add file
+$ git commit ;# this does NOT have the changes to .gitattributes
+
+the above case is a user error that can (at some cost) be detected:
+
+$ git checkout
+$ edit .gitattributes
+$ edit file
+$ git add file
+$ git add .gitattributes
+Warning! Changes to gitattributes affects handling of files scheduled for
+commit. Please add following files again before commit:
+  file
+$
+
+It would be possible to special-case .gitattributes in add to:
+ - do diff between the old and new value of .gitattributes in index,
+ - list files changed in index compared to HEAD,
+ - match each of them to all patterns in the diff,
+ - if any matches, print the warning and list of matches.
+It might be even possible to actually inspect the changes and apply those
+that can be automatically (and not ask user to re-add), but some filters
+loose information, so user interaction is needed to add good version.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG3venRel1vVwhjGURArVbAKDmluauHY6dAqMD5QIFsGWaKzTRXACfZO1X
+91F71Rn0yEJspedfzjCSNjM=
+=heD5
+-----END PGP SIGNATURE-----
+
+--AhhlLboLdkugWU4S--
