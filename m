@@ -1,107 +1,83 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Wed, 05 Sep 2007 10:35:36 -0700
-Message-ID: <46DEE8E8.2000801@midwinter.com>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <69b0c0350709050947k5e32ba7fj38924a0968569d9a@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Git's database structure
+Date: Wed, 5 Sep 2007 19:39:12 +0200
+Organization: glandium.org
+Message-ID: <20070905173912.GB3396@glandium.org>
+References: <7vtzqany0z.fsf@gitster.siamese.dyndns.org> <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com> <20070904212507.GA24434@thunk.org> <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com> <46DE5861.4050201@op5.se> <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com> <46DEC26E.7030809@op5.se> <9e4733910709050837o61a2dedfpc5f72a239b1cb8e3@mail.gmail.com> <Pine.LNX.4.64.0709051648400.3189@reaper.quantumfyre.co.uk> <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Andreas Ericsson <ae@op5.se>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Govind Salinas <govindsalinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 19:35:44 2007
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 19:42:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ISymz-0007w3-1s
-	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:35:41 +0200
+	id 1ISytF-0001QZ-Va
+	for gcvg-git@gmane.org; Wed, 05 Sep 2007 19:42:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbXIERfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 13:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbXIERfg
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:35:36 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:58066 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1754015AbXIERfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 13:35:34 -0400
-Received: (qmail 6623 invoked from network); 5 Sep 2007 17:35:34 -0000
-Received: from c-76-21-16-80.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.16.80)
-  by tater.midwinter.com with SMTP; 5 Sep 2007 17:35:34 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <69b0c0350709050947k5e32ba7fj38924a0968569d9a@mail.gmail.com>
+	id S1754841AbXIERmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 13:42:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754550AbXIERmD
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 13:42:03 -0400
+Received: from vawad.err.no ([85.19.200.177]:42997 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752003AbXIERmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 13:42:00 -0400
+Received: from aputeaux-153-1-85-89.w86-205.abo.wanadoo.fr ([86.205.43.89] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1ISysW-000256-Bb; Wed, 05 Sep 2007 19:41:27 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1ISyqO-0000uK-My; Wed, 05 Sep 2007 19:39:13 +0200
+Content-Disposition: inline
+In-Reply-To: <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57727>
 
-Govind Salinas wrote:
-> This is one reason why I really think that gc should be *plumbing*
-> and *not* porcelain.
->   
+On Wed, Sep 05, 2007 at 12:12:28PM -0400, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 9/5/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> > On Wed, 5 Sep 2007, Jon Smirl wrote:
+> >
+> > > On 9/5/07, Andreas Ericsson <ae@op5.se> wrote:
+> > >> Jon Smirl wrote:
+> > >>>
+> > >>> The path name field needs to be moved back into the blobs to support
+> > >>> alternative indexes. For example I want an index on the Signed-off-by
+> > >>> field. I use this index to give me the SHAs for the blobs
+> > >>> Signed-off-by a particular person. In the current design I have no way
+> > >>> of recovering the path name for these blobs other than a brute force
+> > >>> search following every path looking for the right SHA.
+> > >>>
+> > >>
+> > >> Ah, there we go. A use-case at last :)
+> >
+> > But not a brilliant one.  You sign off on commits not blobs.  So you go
+> > from the sign-off to paths, then to blobs.  There is no need to go from
+> > blob to path unless you deliberately introduce such a need.
+> 
+> Use blame for an example. Blame has to crawl every commit to see if it
+> touched the file. It keeps doing this until it figures out the last
+> author for every line in the file. Worse case blame has to crawl every
+> commit in the data store.
 
-That's a good way to think of it IMO. It's a low-level operation (albeit 
-one that encapsulates other, lower-level ones) that tells git to 
-rearrange its internal data structures. It is not something that has any 
-user-visible effect. Every other porcelain-level git command *does 
-something* from the user's point of view. Running git-gc is basically a 
-no-op, which from the user's point of view makes it a waste of 
-keystrokes and an annoying distraction from focusing on the stuff 
-they're using git to help them build.
+And why exactly would you need to change blobs to contain path for blame
+to be faster ?
 
-> The user should never have to trigger a gc, they should even be
-> discouraged from doing so.  That is how other gc systems are.  Can you
-> imagine if you had a Java app that had a button on it to do a gc?
-> When should I push it?  Should I wait till the system is getting slow
-> or just start spamming the button whenever I'm bored?  I know that
-> Java/c#/py GC are different than git gc, but they fulfill the same
-> basic purpose as git gc.  IE to clean up unused items and free up
-> resources.  Git additionally may do some re-optimization, but that is
-> not relevant to a user.
->   
+Or more generally, what, in the current way of git doing things,
+prevents you from adding an index to $THE_DATA_YOU_LIKE, exactly ?
 
-I'll play devil's advocate for a moment here, though, and say that, as 
-others have suggested in this thread, git could be made to tell you when 
-it's appropriate to run gc. So the "I don't know when to run it" 
-argument isn't a hard one to address.
+>From the very few use cases you've given, I see nothing preventing to
+create an additional index from the data git currently uses.
 
-With that in mind, here's what the message should look like IMO:
-
----
-Your repository can be optimized for better performance and lower disk 
-usage.
-Please run "git gc" to optimize it now, or run "git config gc.auto true" 
-to tell
-git to automatically optimize it in the future (this will launch 
-processes in the
-background.) For more information, "man git-gc".
----
-
-And that "gc.auto" config option (just an arbitrary name, call it 
-something else if that's no good) actually has four settings:
-
-warn (the default) - prints the warning message, at most once every N 
-minutes (we can determine a good value for N)
-true - launches git-gc in the background as needed
-false - suppresses the warning and the check that triggers the warning
-foreground - launches git-gc in the foreground as needed (to make it 
-easier to abort)
-
-
-I don't buy the "git gc takes too much memory to run in the background" 
-argument as a reason automatic git-gc is a bad idea. Many of us (me 
-included) work on machines with plenty of memory to launch a background 
-git-gc without hampering our development work, and/or on repositories 
-small enough that it doesn't eat that much memory in the first place. 
-And if you make it an option that the user has to enable, people on 
-low-memory machines can simply not enable it, end of problem.
-
-One big problem with git-gc now is that it's not discoverable. Or 
-rather, the need for it isn't discoverable. So at the very least we 
-should print the warning, IMO -- and if we're already going to all the 
-trouble to determine whether or not git-gc needs to be run, it will 
-reduce the "why are you telling me to run something when you could just 
-do it for me, you stupid machine?" factor if there's an easily 
-discoverable way to just do it as needed.
-
--Steve
+Mike
