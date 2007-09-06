@@ -1,11 +1,14 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 3/7] Use proper strbuf API, and also simplify cmd_data code.
-Date: Thu,  6 Sep 2007 13:20:07 +0200
-Message-ID: <11890776112292-git-send-email-madcoder@debian.org>
+Subject: [PATCH 6/7] Eradicate yet-another-buffer implementation in buitin-rerere.c
+Date: Thu,  6 Sep 2007 13:20:10 +0200
+Message-ID: <11890776112641-git-send-email-madcoder@debian.org>
 References: <20070902224213.GB431@artemis.corp>
  <11890776114037-git-send-email-madcoder@debian.org>
  <118907761140-git-send-email-madcoder@debian.org>
  <11890776111843-git-send-email-madcoder@debian.org>
+ <11890776112292-git-send-email-madcoder@debian.org>
+ <11890776111670-git-send-email-madcoder@debian.org>
+ <11890776112309-git-send-email-madcoder@debian.org>
 Cc: Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Sep 06 13:20:54 2007
@@ -13,111 +16,143 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITFPl-0008PZ-0M
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 13:20:49 +0200
+	id 1ITFPn-0008PZ-3n
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 13:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753228AbXIFLUU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 07:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752839AbXIFLUT
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 07:20:19 -0400
-Received: from pan.madism.org ([88.191.52.104]:52607 "EHLO hermes.madism.org"
+	id S1755489AbXIFLU1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 07:20:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755433AbXIFLU0
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 07:20:26 -0400
+Received: from pan.madism.org ([88.191.52.104]:52614 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751645AbXIFLUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 07:20:13 -0400
+	id S1751903AbXIFLUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 07:20:14 -0400
 Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id DFA251E404;
-	Thu,  6 Sep 2007 13:20:12 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTP id 702CF1E407;
+	Thu,  6 Sep 2007 13:20:13 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id D62661A3BF; Thu,  6 Sep 2007 13:20:11 +0200 (CEST)
+	id E607E1A3C2; Thu,  6 Sep 2007 13:20:11 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <11890776111843-git-send-email-madcoder@debian.org>
+In-Reply-To: <11890776112309-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57866>
 
-  This patch features the use of strbuf_detach, and prevent the programmer
-to mess with allocation directly. The code is as efficent as before, just
-more concise and more straightforward.
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- fast-import.c |   30 +++++++++++++-----------------
- 1 files changed, 13 insertions(+), 17 deletions(-)
+ builtin-rerere.c |   56 +++++++++++++++++------------------------------------
+ 1 files changed, 18 insertions(+), 38 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 2f7baf4..74ff0fd 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -340,7 +340,7 @@ static struct tag *last_tag;
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index 29d057c..7ebf6f1 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "cache.h"
+ #include "path-list.h"
++#include "strbuf.h"
+ #include "xdiff/xdiff.h"
+ #include "xdiff-interface.h"
  
- /* Input stream parsing */
- static whenspec_type whenspec = WHENSPEC_RAW;
--static struct strbuf command_buf;
-+static struct strbuf command_buf = STRBUF_INIT;
- static int unread_command_buf;
- static struct recent_command cmd_hist = {&cmd_hist, &cmd_hist, NULL};
- static struct recent_command *cmd_tail = &cmd_hist;
-@@ -1638,17 +1638,16 @@ static void cmd_mark(void)
- 
- static void *cmd_data (size_t *size)
- {
--	size_t length;
--	char *buffer;
-+	struct strbuf buffer;
- 
-+	strbuf_init(&buffer);
- 	if (prefixcmp(command_buf.buf, "data "))
- 		die("Expected 'data n' command, found: %s", command_buf.buf);
- 
- 	if (!prefixcmp(command_buf.buf + 5, "<<")) {
- 		char *term = xstrdup(command_buf.buf + 5 + 2);
--		size_t sz = 8192, term_len = command_buf.len - 5 - 2;
--		length = 0;
--		buffer = xmalloc(sz);
-+		size_t term_len = command_buf.len - 5 - 2;
-+
- 		for (;;) {
- 			read_line(&command_buf, stdin, '\n');
- 			if (command_buf.eof)
-@@ -1656,21 +1655,18 @@ static void *cmd_data (size_t *size)
- 			if (term_len == command_buf.len
- 				&& !strcmp(term, command_buf.buf))
- 				break;
--			ALLOC_GROW(buffer, length + command_buf.len + 1, sz);
--			memcpy(buffer + length,
--				command_buf.buf,
--				command_buf.len);
--			length += command_buf.len;
--			buffer[length++] = '\n';
-+			strbuf_addbuf(&buffer, &command_buf);
-+			strbuf_addch(&buffer, '\n');
- 		}
- 		free(term);
- 	}
- 	else {
--		size_t n = 0;
-+		size_t n = 0, length;
-+
- 		length = strtoul(command_buf.buf + 5, NULL, 10);
--		buffer = xmalloc(length);
-+
- 		while (n < length) {
--			size_t s = fread(buffer + n, 1, length - n, stdin);
-+			size_t s = strbuf_fread(&buffer, length - n, stdin);
- 			if (!s && feof(stdin))
- 				die("EOF in data (%lu bytes remaining)",
- 					(unsigned long)(length - n));
-@@ -1679,8 +1675,8 @@ static void *cmd_data (size_t *size)
- 	}
- 
- 	skip_optional_lf();
--	*size = length;
--	return buffer;
-+	*size = buffer.len;
-+	return strbuf_detach(&buffer);
+@@ -66,41 +67,20 @@ static int write_rr(struct path_list *rr, int out_fd)
+ 	return commit_lock_file(&write_lock);
  }
  
- static int validate_raw_date(const char *src, char *result, int maxlen)
+-struct buffer {
+-	char *ptr;
+-	int nr, alloc;
+-};
+-
+-static void append_line(struct buffer *buffer, const char *line)
+-{
+-	int len = strlen(line);
+-
+-	if (buffer->nr + len > buffer->alloc) {
+-		buffer->alloc = alloc_nr(buffer->nr + len);
+-		buffer->ptr = xrealloc(buffer->ptr, buffer->alloc);
+-	}
+-	memcpy(buffer->ptr + buffer->nr, line, len);
+-	buffer->nr += len;
+-}
+-
+-static void clear_buffer(struct buffer *buffer)
+-{
+-	free(buffer->ptr);
+-	buffer->ptr = NULL;
+-	buffer->nr = buffer->alloc = 0;
+-}
+-
+ static int handle_file(const char *path,
+ 	 unsigned char *sha1, const char *output)
+ {
+ 	SHA_CTX ctx;
+ 	char buf[1024];
+ 	int hunk = 0, hunk_no = 0;
+-	struct buffer minus = { NULL, 0, 0 }, plus = { NULL, 0, 0 };
+-	struct buffer *one = &minus, *two = &plus;
++	struct strbuf minus, plus;
++	struct strbuf *one = &minus, *two = &plus;
+ 	FILE *f = fopen(path, "r");
+ 	FILE *out;
+ 
++        strbuf_init(&minus);
++        strbuf_init(&plus);
++
+ 	if (!f)
+ 		return error("Could not open %s", path);
+ 
+@@ -122,36 +102,36 @@ static int handle_file(const char *path,
+ 		else if (!prefixcmp(buf, "======="))
+ 			hunk = 2;
+ 		else if (!prefixcmp(buf, ">>>>>>> ")) {
+-			int one_is_longer = (one->nr > two->nr);
+-			int common_len = one_is_longer ? two->nr : one->nr;
+-			int cmp = memcmp(one->ptr, two->ptr, common_len);
++			int one_is_longer = (one->len > two->len);
++			int common_len = one_is_longer ? two->len : one->len;
++			int cmp = memcmp(one->buf, two->buf, common_len);
+ 
+ 			hunk_no++;
+ 			hunk = 0;
+ 			if ((cmp > 0) || ((cmp == 0) && one_is_longer)) {
+-				struct buffer *swap = one;
++				struct strbuf *swap = one;
+ 				one = two;
+ 				two = swap;
+ 			}
+ 			if (out) {
+ 				fputs("<<<<<<<\n", out);
+-				fwrite(one->ptr, one->nr, 1, out);
++				fwrite(one->buf, one->len, 1, out);
+ 				fputs("=======\n", out);
+-				fwrite(two->ptr, two->nr, 1, out);
++				fwrite(two->buf, two->len, 1, out);
+ 				fputs(">>>>>>>\n", out);
+ 			}
+ 			if (sha1) {
+-				SHA1_Update(&ctx, one->ptr, one->nr);
++				SHA1_Update(&ctx, one->buf, one->len);
+ 				SHA1_Update(&ctx, "\0", 1);
+-				SHA1_Update(&ctx, two->ptr, two->nr);
++				SHA1_Update(&ctx, two->buf, two->len);
+ 				SHA1_Update(&ctx, "\0", 1);
+ 			}
+-			clear_buffer(one);
+-			clear_buffer(two);
++			strbuf_release(one);
++			strbuf_release(two);
+ 		} else if (hunk == 1)
+-			append_line(one, buf);
++			strbuf_addstr(one, buf);
+ 		else if (hunk == 2)
+-			append_line(two, buf);
++			strbuf_addstr(two, buf);
+ 		else if (out)
+ 			fputs(buf, out);
+ 	}
 -- 
 1.5.3.1
