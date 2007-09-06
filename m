@@ -1,66 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] basic threaded delta search
-Date: Thu, 06 Sep 2007 00:01:16 -0700
-Message-ID: <7vwsv4cm6b.fsf@gitster.siamese.dyndns.org>
-References: <11890591912193-git-send-email-nico@cam.org>
-	<11890591923123-git-send-email-nico@cam.org>
-	<11890591923270-git-send-email-nico@cam.org>
-	<1189059193250-git-send-email-nico@cam.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Significant performance waste in git-svn and friends
+Date: Thu, 6 Sep 2007 00:04:08 -0700
+Message-ID: <20070906070407.GA19624@soma>
+References: <20070905184710.GA3632@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 09:01:36 2007
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 09:04:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITBMm-0002Xs-Q5
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 09:01:29 +0200
+	id 1ITBPT-0003BY-GV
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 09:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249AbXIFHBW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 03:01:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbXIFHBW
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 03:01:22 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:47371 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756489AbXIFHBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 03:01:21 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2034512D9FA;
-	Thu,  6 Sep 2007 03:01:40 -0400 (EDT)
-In-Reply-To: <1189059193250-git-send-email-nico@cam.org> (Nicolas Pitre's
-	message of "Thu, 06 Sep 2007 02:13:11 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757373AbXIFHEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 03:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757356AbXIFHEK
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 03:04:10 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:58561 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756676AbXIFHEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 03:04:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 997DD2DC08D;
+	Thu,  6 Sep 2007 00:04:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20070905184710.GA3632@glandium.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57835>
 
-Nicolas Pitre <nico@cam.org> writes:
+Mike Hommey <mh@glandium.org> wrote:
+> Hi,
 
-> this is still rough, hence it is disabled by default.  You need to compile
-> with "make THREADED_DELTA_SEARCH=1 ..." at the moment.
->
-> Threading is done on different portions of the object list to be
-> deltified. This is currently done by spliting the list into n parts and
-> then a thread is spawned for each of them.  A better method would consist
-> of spliting the list into more smaller parts and have the n threads
-> pick the next part available.
+Hi Mike,
 
-Hmmm.  I wonder how the result is affected by such a partition;
-aren't you going to have many objects that could have used
-somebody else as a delta but gets stored as base because they
-happen to be a very early part of their partition (and lacking
-delta base candidates in the window)?  You cannot solve it with
-overlapping partitions without busting the depth limit easily
-either, I suspect.  Also how would this interact with the LRU
-delta base window we discussed a week or two ago?
+> Being a pervert abusing the way subversion doesn't deal with branches
+> and tags, I'm actually not a user of git-svn or git-svnimport, because
+> they just can't deal easily with my perversion. So I'm writing a script
+> to do the conversion for me, and since I also like to learn new things
+> when I'm coding, I'm writing it in ruby.
+> 
+> Anyways, one of the things I'm trying to convert is my svk repository
+> for debian packaging of xulrunner (so, a significant subset of the
+> mozilla tree), which doesn't involve a lot of revisions (around 280,
+> because I only imported releases or CVS snapshots), but involves a lot
+> of files (roughly 20k).
+> 
+> The first thing I noticed when twisting around the svk repo so that
+> git-svn could somehow import it a while ago, is that running git-svn
+> was in my case significantly slower than svnadmin dump | svnadmin load
+> (more than 2 times slower).
+> 
+> And now, with my own script, I got the same kind of "slowdown". So I
+> investigated it, and it didn't take long to realize that replacing
+> git-hash-object by a simple reimplementation in ruby was *way* faster.
+> git-hash-object being more than probably what you do the most when you
+> import a remote repository, it is not much of a surprise that forking
+> thousands of times is a huge performance waste.
 
-Separating the list into different object types would not have
-any adverse impact coming from the "horizon" of delta base
-candidates window (because we do not deltify across types), but
-that is not very useful because we cannot gain much parallerism
-from such a partition.
+I haven't looked at the times in a while, but I suspect that exec()
+is the (much bigger) culprit.
+
+Since I usually import off remote repositories, so I notice network
+latency way before I notice local performance problems with git-svn.
+
+> So, just for the record, I did a lame hack of git-svn to see what kind
+> of speedup could happen in git-svn. You can find this lame hack as a
+> patch below. I did some tests (with a 1.5.2.1 release) and here are the
+> results, importing only the trunk (192 revisions), with no checkout, and
+> redirecting stdout to /dev/null:
+> 
+> original git-svn:
+> real    25m1.871s
+> user    8m51.593s
+> sys     12m31.659s
+> 
+> patched git-svn:
+> real    14m45.870s
+> user    7m31.928s
+> sys     4m1.047s
+
+That's awesome.
+
+> - It might be worth testing if git-cat-file is called a lot. If so,
+>   implementing a simple git-cat-file equivalent that would work for
+>   unpacked objects could improve speed.
+
+IIRC git-cat-file is called a lot.  Every modified file needs the
+original cat-ed to make use of the delta.
+
+> The same things obviously apply to git-cvsimport and other scripts
+> calling git-hash-object a lot.
+
+Making git-svn use fast-import would be very nice.  I've got a bunch
+of other git-svn things that I need to work on, but having git-svn
+converted to use fast-import would be nice.  Or allowing Git.pm
+to access more of the git internals...
+
+However, how well/poorly would fast-import work for incremental
+fetches throughout the day?
+
+-- 
+Eric Wong
