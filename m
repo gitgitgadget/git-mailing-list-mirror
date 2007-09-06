@@ -1,109 +1,65 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Significant performance waste in git-svn and friends
-Date: Thu, 6 Sep 2007 00:04:08 -0700
-Message-ID: <20070906070407.GA19624@soma>
-References: <20070905184710.GA3632@glandium.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [RFC/PATCH] git-svn: add support for --first-parent
+Date: Thu, 6 Sep 2007 09:18:30 +0200
+Message-ID: <8c5c35580709060018p50398071s32b271d52f4dc7e3@mail.gmail.com>
+References: <1188984929315-git-send-email-hjemli@gmail.com>
+	 <20070905101929.GB11074@soma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 09:04:22 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Sep 06 09:18:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITBPT-0003BY-GV
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 09:04:15 +0200
+	id 1ITBdN-0006D7-27
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 09:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373AbXIFHEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 03:04:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757356AbXIFHEK
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 03:04:10 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:58561 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756676AbXIFHEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 03:04:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 997DD2DC08D;
-	Thu,  6 Sep 2007 00:04:08 -0700 (PDT)
+	id S1752003AbXIFHSc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 03:18:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbXIFHSc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 03:18:32 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:46046 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbXIFHSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 03:18:31 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so87096wah
+        for <git@vger.kernel.org>; Thu, 06 Sep 2007 00:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=VrukOK1JFZuxod6caueJef2JjsKdF3XxWjzXDalNWn4=;
+        b=RryDv+2rWDpOw7LkQKbyVCwn5v67uLH2JyKK0M+H3h6UFKp0nF0UK1vw5k+EGqcLZxKTuWVR/+a+xZq5Be7kkdxOomty6SPB1fPDlfI74DNzIS7YssSWAuFiYmbf3x2/6ZJmdnOzfwiRz5Gri0ReqA25BfOlF9s6xQ7ltwOThOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=K2XZN3TmeMAGkS/5RxVlsptVNBjtA3hM7+rfSTBqZDw4FmyRMbaNDsCmq0ZbfCoRNKQIw6YBtesoPyHbbaaAcMbvb9jV3RlbKpsHnUsWEAI2bdi5/xvMT62bH3MiuFPWNWYjp369SbB9KD+J4aoGCNOt4X4GfWzP+VfE0Onwb3s=
+Received: by 10.114.169.2 with SMTP id r2mr40246wae.1189063110242;
+        Thu, 06 Sep 2007 00:18:30 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Thu, 6 Sep 2007 00:18:30 -0700 (PDT)
+In-Reply-To: <20070905101929.GB11074@soma>
 Content-Disposition: inline
-In-Reply-To: <20070905184710.GA3632@glandium.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57836>
 
-Mike Hommey <mh@glandium.org> wrote:
-> Hi,
+On 9/5/07, Eric Wong <normalperson@yhbt.net> wrote:
+> Lars Hjemli <hjemli@gmail.com> wrote:
+> > When git-svn uses git-log to find embedded 'git-svn-id'-lines in commit
+> > messages, it can get confused when local history contains merges with
+> > other git-svn branches. But if --first-parent is supplied to git-log,
+> > working_head_info() will only see 'branch-local' commits and thus the
+> > first commit containing a 'git-svn-id' line should refer to the correct
+> > subversion branch.
+>
+> Ideally, we'd probably stop, say something and give the user the choice
+> of branches if multiple parents available.
 
-Hi Mike,
+Could you elaborate? (I don't understand how following the first
+parent of a merge could end up at the wrong svn branch)
 
-> Being a pervert abusing the way subversion doesn't deal with branches
-> and tags, I'm actually not a user of git-svn or git-svnimport, because
-> they just can't deal easily with my perversion. So I'm writing a script
-> to do the conversion for me, and since I also like to learn new things
-> when I'm coding, I'm writing it in ruby.
-> 
-> Anyways, one of the things I'm trying to convert is my svk repository
-> for debian packaging of xulrunner (so, a significant subset of the
-> mozilla tree), which doesn't involve a lot of revisions (around 280,
-> because I only imported releases or CVS snapshots), but involves a lot
-> of files (roughly 20k).
-> 
-> The first thing I noticed when twisting around the svk repo so that
-> git-svn could somehow import it a while ago, is that running git-svn
-> was in my case significantly slower than svnadmin dump | svnadmin load
-> (more than 2 times slower).
-> 
-> And now, with my own script, I got the same kind of "slowdown". So I
-> investigated it, and it didn't take long to realize that replacing
-> git-hash-object by a simple reimplementation in ruby was *way* faster.
-> git-hash-object being more than probably what you do the most when you
-> import a remote repository, it is not much of a surprise that forking
-> thousands of times is a huge performance waste.
-
-I haven't looked at the times in a while, but I suspect that exec()
-is the (much bigger) culprit.
-
-Since I usually import off remote repositories, so I notice network
-latency way before I notice local performance problems with git-svn.
-
-> So, just for the record, I did a lame hack of git-svn to see what kind
-> of speedup could happen in git-svn. You can find this lame hack as a
-> patch below. I did some tests (with a 1.5.2.1 release) and here are the
-> results, importing only the trunk (192 revisions), with no checkout, and
-> redirecting stdout to /dev/null:
-> 
-> original git-svn:
-> real    25m1.871s
-> user    8m51.593s
-> sys     12m31.659s
-> 
-> patched git-svn:
-> real    14m45.870s
-> user    7m31.928s
-> sys     4m1.047s
-
-That's awesome.
-
-> - It might be worth testing if git-cat-file is called a lot. If so,
->   implementing a simple git-cat-file equivalent that would work for
->   unpacked objects could improve speed.
-
-IIRC git-cat-file is called a lot.  Every modified file needs the
-original cat-ed to make use of the delta.
-
-> The same things obviously apply to git-cvsimport and other scripts
-> calling git-hash-object a lot.
-
-Making git-svn use fast-import would be very nice.  I've got a bunch
-of other git-svn things that I need to work on, but having git-svn
-converted to use fast-import would be nice.  Or allowing Git.pm
-to access more of the git internals...
-
-However, how well/poorly would fast-import work for incremental
-fetches throughout the day?
-
--- 
-Eric Wong
+--
+larsh
