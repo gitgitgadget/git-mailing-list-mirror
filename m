@@ -1,74 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Include a git-push example for creating a remote branch
-Date: Thu, 6 Sep 2007 00:44:08 -0400
-Message-ID: <20070906044408.GA588@spearce.org>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Wed, 5 Sep 2007 21:48:47 -0700
+Message-ID: <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 06:44:18 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="ISO-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git" <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 06 06:48:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT9E2-0004Ix-4O
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 06:44:18 +0200
+	id 1IT9IW-00050b-FD
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 06:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbXIFEoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 00:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbXIFEoN
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 00:44:13 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39333 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751465AbXIFEoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 00:44:12 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1IT9Du-00034x-Md; Thu, 06 Sep 2007 00:44:10 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 382A420FBAE; Thu,  6 Sep 2007 00:44:09 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751096AbXIFEsw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 00:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbXIFEsv
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 00:48:51 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:5437 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbXIFEsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 00:48:51 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so43565rvb
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 21:48:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        bh=NT0X9Vi8bEdtcYXCrkhBgtub2zlNMfFz5F9E9YYo1Y8=;
+        b=AyAJCDMbldDhzTLyGNFEm/bKwnANfuhIK8fY7XIUMgbocCEsqItK4mGxZ8r0ynBQFgtUI4fuqo/DYutUxiQoVatw9058QE6eL9CZP7cgOf3fsJ6h5zVZ38M3LuDxFI1fzcT0Ay8kZeqAYSgS3UieTbwuzFnsapP8mSkbE3Dyp9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=r2bqVWe5TcbOtGmuVWyweTOyUpTIQi6VOvi3gCKbAUWV9MpMvIqwo7po2Aikap/weSsMuKpavoHgN+eY60MOdZ/TwQx8zdmq8A8WG94ONFW9MxqQ5sVEBX/ZuUcU/a/IyZ7BeTcQsANbKXJER/3a7avB0DUE/pESIdFDOG2+kV0=
+Received: by 10.141.53.15 with SMTP id f15mr76873rvk.1189054130647;
+        Wed, 05 Sep 2007 21:48:50 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id k14sm11230515rvb.2007.09.05.21.48.49
+        (version=SSLv3 cipher=OTHER);
+        Wed, 05 Sep 2007 21:48:49 -0700 (PDT)
+In-Reply-To: <vpq642pkoln.fsf@bauges.imag.fr>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57815>
 
-Many users get confused when `git push origin master:foo` works
-when foo already exists on the remote repository but are confused
-when foo doesn't exist as a branch and this form does not create
-the branch foo.
+[ snip ]
 
-This new example highlights the trick of including refs/heads/
-in front of the desired branch name to create a branch.
+When I first looked at Git source code two things struck me as odd:
+1. Pure C as opposed to C++. No idea why. Please don't talk about 
+portability, it's BS.
+2. Brute-force, direct string manipulation. It's both verbose and 
+error-prone. This makes it hard to follow high-level code logic.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/git-push.txt |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 0dd9caf..7b8e075 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -117,6 +117,12 @@ git push origin master:satellite/master::
- 	the ref that matches `satellite/master` (most likely, it would
- 	be `refs/remotes/satellite/master`) in `origin` repository with it.
- 
-+git push origin master:refs/heads/experimental::
-+	Create the branch `experimental` in the `origin` repository
-+	by copying the current `master` branch.  This form is usually
-+	needed to create a new branch in the remote repository as
-+	there is no `experimental` branch to match.
-+
- Author
- ------
- Written by Junio C Hamano <junkio@cox.net>, later rewritten in C
--- 
-1.5.3.1.840.g0fedbc
+- Dmitry
