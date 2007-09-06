@@ -1,65 +1,68 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] git.__remotes_from_dir() should only return lists
-Date: Thu, 6 Sep 2007 16:26:49 +0200
-Message-ID: <20070906142649.GA2406@diana.vm.bytemark.co.uk>
-References: <20070905165722.17744.56584.stgit@dv.roinet.com> <20070906112645.GA31888@diana.vm.bytemark.co.uk> <1189082306.3695.5.camel@gx>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/7] Rework strbuf API and semantics.
+Date: Thu, 06 Sep 2007 16:43:36 +0200
+Message-ID: <85bqcfdfc7.fsf@lola.goethe.zz>
+References: <20070902224213.GB431@artemis.corp>
+	<11890776114037-git-send-email-madcoder@debian.org>
+	<118907761140-git-send-email-madcoder@debian.org>
+	<Pine.LNX.4.64.0709061506330.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 16:27:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 06 16:44:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITIK0-00030Z-V7
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 16:27:05 +0200
+	id 1ITIaC-0000ds-87
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 16:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbXIFO1A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 10:27:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbXIFO1A
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 10:27:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3570 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844AbXIFO07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 10:26:59 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1ITIJl-0000eO-00; Thu, 06 Sep 2007 15:26:49 +0100
-Content-Disposition: inline
-In-Reply-To: <1189082306.3695.5.camel@gx>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754159AbXIFOnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 10:43:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbXIFOnl
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 10:43:41 -0400
+Received: from mail-in-10.arcor-online.net ([151.189.21.50]:46680 "EHLO
+	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753876AbXIFOnk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 10:43:40 -0400
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 8B03C1F5BA6;
+	Thu,  6 Sep 2007 16:43:39 +0200 (CEST)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 6CBB123D320;
+	Thu,  6 Sep 2007 16:43:39 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-055-071.pools.arcor-ip.net [84.61.55.71])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 1F3B01C3684;
+	Thu,  6 Sep 2007 16:43:39 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id BBC7C1CAD71B; Thu,  6 Sep 2007 16:43:36 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0709061506330.28586@racer.site> (Johannes Schindelin's message of "Thu\, 6 Sep 2007 15\:09\:28 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4170/Thu Sep  6 06:30:09 2007 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57884>
 
-On 2007-09-06 08:38:26 -0400, Pavel Roskin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, 2007-09-06 at 13:26 +0200, Karl Hasselstr=F6m wrote:
+> let me thank you for this very nicely done patch series.  Except for 5/7, 
+> they look pretty much obvious changes to me.  I'll review that in detail 
+> later.
 >
-> > Thanks. But I guess an even nicer fix would be to make this
-> > function return a set in the first place.
+> On Thu, 6 Sep 2007, Pierre Habouzit wrote:
 >
-> Fine with me. But it was returning a list or None, so the simplest
-> fix was to return a list in all cases.
-
-Oh, your fix is excellent to fix the immediate problem. I was just
-trying to say that making this function (an a heap of others) return
-sets would be a useful refactoring.
-
-> > Hmm. I don't believe I saw t1001 break without this patch (I run
-> > the test suite before I push, but I might have made a mistake of
-> > course). Does the user's environment leak into the test sandbox?
+>> +#define STRBUF_INIT  { 0, 0, 0, NULL }
 >
-> I don't think it's the user environment, at least on my side. I'm
-> using Fedora 7, which has python-2.5-12.fc7. That's the error from
-> the t1001 before my patch:
+> Would not "struct strbuf sb = { 0 };" have the same effect?  (I am not so 
+> standards-keen as other people, who I have no doubt will gladly answer 
+> this one.)
 
-OK. I'll try to reproduce it when I get home, but it certainly looks
-like I only _thought_ I'd run the test suite.
+AFAIR, non-specified static memory areas are initialized to zero bits,
+and NULL resp (void *)0 is not guaranteed to be represented by zero
+bits.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
