@@ -1,94 +1,69 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/7] Rework strbuf API and semantics.
-Date: Thu, 06 Sep 2007 17:53:18 +0200
-Message-ID: <85hcm7bxjl.fsf@lola.goethe.zz>
-References: <20070902224213.GB431@artemis.corp>
-	<11890776114037-git-send-email-madcoder@debian.org>
-	<118907761140-git-send-email-madcoder@debian.org>
-	<Pine.LNX.4.64.0709061506330.28586@racer.site>
-	<20070906142155.GB3002@coredump.intra.peff.net>
-	<857in3dfad.fsf@lola.goethe.zz>
-	<20070906145035.GA3546@coredump.intra.peff.net>
-	<85tzq7bzoz.fsf@lola.goethe.zz>
-	<20070906153613.GA4008@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Thu, 6 Sep 2007 16:54:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709061651550.28586@racer.site>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+ <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+ <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+ <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 06 17:53:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
+	Steven Grimm <koreth@midwinter.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 17:55:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITJfe-0007dC-Vx
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 17:53:31 +0200
+	id 1ITJhR-0008Aj-AU
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 17:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756107AbXIFPx0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 11:53:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756216AbXIFPx0
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 11:53:26 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:36063 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755764AbXIFPxZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 11:53:25 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 3A35F13E01;
-	Thu,  6 Sep 2007 17:53:24 +0200 (CEST)
-Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 24EED13F2FC;
-	Thu,  6 Sep 2007 17:53:24 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-055-071.pools.arcor-ip.net [84.61.55.71])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id CFCF413E17;
-	Thu,  6 Sep 2007 17:53:19 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 16E051CAD71B; Thu,  6 Sep 2007 17:53:18 +0200 (CEST)
-In-Reply-To: <20070906153613.GA4008@coredump.intra.peff.net> (Jeff King's message of "Thu\, 6 Sep 2007 11\:36\:13 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4170/Thu Sep  6 06:30:09 2007 on mail-in-11.arcor-online.net
-X-Virus-Status: Clean
+	id S1755037AbXIFPzN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 11:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755094AbXIFPzN
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 11:55:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42411 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755037AbXIFPzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 11:55:11 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 15:55:10 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp054) with SMTP; 06 Sep 2007 17:55:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX199/yxc1dZ9Yysi7Keiq6BKEz3mY6liTtWvd8jBmG
+	eIw4yanyyKDjIq
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57894>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Thu, Sep 06, 2007 at 05:06:52PM +0200, David Kastrup wrote:
->
->> >   If an object that has automatic storage duration is not initialized
->> >   explicitly, its value is indeterminate. If an object that has static
->> >   storage duration is not initialized explicitly, then:
->> >
->> >   -- if it has pointer type, it is initialized to a null pointer;
->> 
->> That's actually a new one to me.  I don't think that it has been
->> always the case in ANSI C.
->
-> I don't have the C89 standard, so it's hard to be authoritative.
-> However, according to TCOR1 to the C89 standard, the original text of
-> 6.5.7 contained:
->
->   If an object that has static storage duration is not initialized
->   explicitly, it is initialized implicitly as if every member that has
->   arithmetic type were assigned 0 and every member that has pointer type
->   were assigned a null pointer constant.
+On Wed, 5 Sep 2007, Junio C Hamano wrote:
 
-Maybe I am confusing this with the effects of calloc or memset(...,0).
+> @@ -20,6 +20,7 @@ static const char builtin_gc_usage[] = "git-gc [--prune] [--aggressive]";
+>  
+>  static int pack_refs = 1;
+>  static int aggressive_window = -1;
+> +static int gc_auto_threshold = 6700;
 
-> But for the case of pointer initializations, both have the same
-> effect.  So I think it has always been the case. Pre-ANSI, who
-> knows. :)
+Please don't do that.
 
-In the original K&R C, a null pointer likely could have been assumed
-to have zero bits throughout.  The non-zero-bits NULL pointer concept
-just reeks of standard committees...  So maybe this never had been an
-issue, for different reasons.
+When you share objects with another git directory, git-gc --auto can get 
+rid of the objects when some objects go away in the referenced repository.  
 
-> And now I must go get some real work done instead of snooping
-> through standards. :)
+So we need _at least_ check gc.auto not being set in the repo when "git 
+clone --share"ing it (and fail otherwise).
 
-Sorry for the diversion.
+My preferred way would be to set it in "git init" so that existing setups 
+are not affected, and put some big red message on top of the next release 
+notes that people might want to set gc.auto in their existing setups.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Ciao,
+Dscho
