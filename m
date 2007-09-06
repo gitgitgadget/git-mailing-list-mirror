@@ -1,78 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Thu, 06 Sep 2007 07:55:14 +0200
-Message-ID: <85veaofid9.fsf@lola.goethe.zz>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	<20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
-	<46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
-	<alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-	<7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.9999.0709051634190.21186@xanadu.home>
-	<7v1wdciy3w.fsf@gitster.siamese.dyndns.org>
+From: "Miles Bader" <miles@gnu.org>
+Subject: Re: [PATCH] Include a git-push example for creating a remote branch
+Date: Thu, 6 Sep 2007 14:57:26 +0900
+Message-ID: <fc339e4a0709052257m4ddc5784obe64a8b75b79b19@mail.gmail.com>
+References: <20070906044408.GA588@spearce.org>
+	 <buoodggo0l2.fsf@dhapc248.dev.necel.com>
+	 <20070906050127.GS18160@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 07:55:29 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 07:57:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITAKn-0007Df-Nh
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:55:22 +0200
+	id 1ITAMw-0007Xs-1v
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910AbXIFFzR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 01:55:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbXIFFzR
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:55:17 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:32844 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753334AbXIFFzP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 01:55:15 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id B8367302985;
-	Thu,  6 Sep 2007 07:55:14 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id A953E212FB7;
-	Thu,  6 Sep 2007 07:55:14 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-055-071.pools.arcor-ip.net [84.61.55.71])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 7E2D236E868;
-	Thu,  6 Sep 2007 07:55:14 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 263451CAD71B; Thu,  6 Sep 2007 07:55:14 +0200 (CEST)
-In-Reply-To: <7v1wdciy3w.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 05 Sep 2007 14\:46\:59 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1753790AbXIFF5a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 01:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbXIFF5a
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:57:30 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:46938 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753545AbXIFF53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 01:57:29 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so59742wxd
+        for <git@vger.kernel.org>; Wed, 05 Sep 2007 22:57:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=SJB68wnd6/Johf38RV8zQuWwrSQZA7xnKYZ8oc8fEj0=;
+        b=F31jSKFnof8fdaHvE0UehrBYi+7oD9JudPLyvVVt8cCv/tY2s24jemwFjWxNijmPnP1CMFslG46ABfObNAi9KrDOfGRNsZwc8D6ng/J4UeVYrUNhEUAmLTNGl8r614gi4BdTBVeQSBU7zIHk0CD+T1+5bc9GMFW1y3RY/dTCur0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=d3wgdupXqSp0/EwmPaHlwjHNhqVUOS3KRXrdOJm1rsPk5eq8Y5T31Wne4/u36eDMEN+hhXFpLx5JIqiqLM6sXZ/sWCqng2QMZEA2L80LApQuH6hMJYpJMg5gZSe5V1SEzRtKkQl57wSFtxtJKTDkRnHNa4zG7WNJxVkWwgqgiMQ=
+Received: by 10.90.81.14 with SMTP id e14mr423045agb.1189058246439;
+        Wed, 05 Sep 2007 22:57:26 -0700 (PDT)
+Received: by 10.90.68.16 with HTTP; Wed, 5 Sep 2007 22:57:26 -0700 (PDT)
+In-Reply-To: <20070906050127.GS18160@spearce.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: bb76fe5f51fa8990
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57824>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 9/6/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Miles Bader <miles.bader@necel.com> wrote:
+> > > Many users get confused when `git push origin master:foo` works
+> > > when foo already exists on the remote repository but are confused
+> > > when foo doesn't exist as a branch and this form does not create
+> > > the branch foo.
+> >
+> > Hmm, what _does_ it do in that case...?
+>
+> error: dst refspec experimental does not match any existing ref on the remote and does not start with refs/.
 
-> Nicolas Pitre <nico@cam.org> writes:
->
->>> This patch does not add invocation of the "auto repacking".  It
->>> is left to key Porcelain commands that could produce tons of
->>> loose objects to add a call to "git gc --auto" after they are
->>> done their work.  Obvious candidates are:
->>> 
->>> 	git add
->>
->> Nope!  'git add' creates loose objects which are not yet reachable from 
->> anywhere.  They won't get repacked until a commit is made.
->
-> Bzzt, I am releaved to see you are sometimes wrong ;-)
->
-> They are reachable from the index and are not subject to
-> pruning.
+Hmm, I'm assuming people don't want to default to just creating a new
+remote ref ('cause it might be too easy to muck up a remote archive
+that way), but it seems like it would be nice to have a "prettier" way
+to create a remote ref than explicitly giving the whole ref path on
+the remote side.
 
-Hm.  Isn't it possible to work with several index files at once?  I
-seem to remember that even git-add does this itself.  So what is it
-that protects objects in such a temporary index from being garbage
-collected by a different git process running on the same repository?
+Maybe I"m weird, but I tend to think of the refs/... syntax as being
+for "only if you're doing something funny" cases.
+
+I'm thinking of something like:
+
+  ... create new local branch "zoink" ...
+  git push --create origin zoink
+
+-Miles
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Do not taunt Happy Fun Ball.
