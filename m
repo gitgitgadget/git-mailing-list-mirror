@@ -1,82 +1,77 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] git.__remotes_from_dir() should only return lists
-Date: Thu, 06 Sep 2007 08:38:26 -0400
-Message-ID: <1189082306.3695.5.camel@gx>
-References: <20070905165722.17744.56584.stgit@dv.roinet.com>
-	 <20070906112645.GA31888@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git's database structure
+Date: Thu, 6 Sep 2007 13:56:36 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709061354180.28586@racer.site>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com> 
+ <7vtzqany0z.fsf@gitster.siamese.dyndns.org> 
+ <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com> 
+ <20070904212507.GA24434@thunk.org>  <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com>
+  <46DE5861.4050201@op5.se>  <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>
+  <46DEC26E.7030809@op5.se>  <9e4733910709050837o61a2dedfpc5f72a239b1cb8e3@mail.gmail.com>
+  <Pine.LNX.4.64.0709051648400.3189@reaper.quantumfyre.co.uk>
+ <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 14:38:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Andreas Ericsson <ae@op5.se>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:57:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITGd0-0006N1-6s
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 14:38:34 +0200
+	id 1ITGun-0004PA-Tl
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 14:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755866AbXIFMia convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 08:38:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755631AbXIFMia
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 08:38:30 -0400
-Received: from c60.cesmail.net ([216.154.195.49]:64807 "EHLO c60.cesmail.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755488AbXIFMi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 08:38:29 -0400
-Received: from unknown (HELO relay.cesmail.net) ([192.168.1.81])
-  by c60.cesmail.net with ESMTP; 06 Sep 2007 08:38:28 -0400
-Received: from [192.168.15.107] (c-71-230-131-166.hsd1.pa.comcast.net [71.230.131.166])
-	by relay.cesmail.net (Postfix) with ESMTP id 5D437618FE1;
-	Thu,  6 Sep 2007 08:38:27 -0400 (EDT)
-In-Reply-To: <20070906112645.GA31888@diana.vm.bytemark.co.uk>
-X-Mailer: Evolution 2.10.3 (2.10.3-2.fc7) 
+	id S1754831AbXIFM4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 08:56:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbXIFM4w
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 08:56:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33483 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753904AbXIFM4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 08:56:51 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 12:56:50 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp019) with SMTP; 06 Sep 2007 14:56:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18SyMsSmXkS3LoFRabkqs1KCkeIfueGoTvD2MwEQX
+	N2nPKOk36wN1dI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57874>
 
-On Thu, 2007-09-06 at 13:26 +0200, Karl Hasselstr=F6m wrote:
-> On 2007-09-05 12:57:22 -0400, Pavel Roskin wrote:
->=20
-> > If there are no remotes, return empty list, not None. The later
-> > doesn't work with builtin set().
->=20
-> Thanks. But I guess an even nicer fix would be to make this function
-> return a set in the first place.
+Hi,
 
-=46ine with me.  But it was returning a list or None, so the simplest f=
-ix
-was to return a list in all cases.
+On Wed, 5 Sep 2007, Jon Smirl wrote:
 
-> > This fixes t1001-branch-rename.sh
->=20
-> Hmm. I don't believe I saw t1001 break without this patch (I run the
-> test suite before I push, but I might have made a mistake of course).
-> Does the user's environment leak into the test sandbox?
+> On 9/5/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> > On Wed, 5 Sep 2007, Jon Smirl wrote:
+> >
+> > >> Ah, there we go. A use-case at last :)
+> >
+> > But not a brilliant one.  You sign off on commits not blobs.  So you 
+> > go from the sign-off to paths, then to blobs.  There is no need to go 
+> > from blob to path unless you deliberately introduce such a need.
+> 
+> Use blame for an example. Blame has to crawl every commit to see if it 
+> touched the file. It keeps doing this until it figures out the last 
+> author for every line in the file. Worse case blame has to crawl every 
+> commit in the data store.
 
-I don't think it's the user environment, at least on my side.  I'm usin=
-g
-=46edora 7, which has python-2.5-12.fc7.  That's the error from the t10=
-01
-before my patch:
+But you can add _yet another_ index to it, which can be generated on the 
+fly, so that Git only has to generate the information once, and then reuse 
+it later.  As a benefit of this method, the underlying well-tested 
+structure needs no change at all.
 
-Traceback (most recent call last):
-  File "/home/proski/src/stgit/t/../stg", line 43, in <module>
-    main()
-  File "/home/proski/src/stgit/stgit/main.py", line 284, in main
-    command.func(parser, options, args)
-  File "/home/proski/src/stgit/stgit/commands/branch.py", line 163, in =
-func
-    parentremote =3D git.identify_remote(parentbranch)
-  File "/home/proski/src/stgit/stgit/git.py", line 994, in identify_rem=
-ote
-    for remote in remotes_list():
-  File "/home/proski/src/stgit/stgit/git.py", line 963, in remotes_list
-    | set(__remotes_from_dir('branches')))
-TypeError: 'NoneType' object is not iterable
+BTW could you please, please, please cut the quoted message that you are 
+_not_ responding to?  It really _wastes_ my time.
 
---=20
-Regards,
-Pavel Roskin
+Ciao,
+Dscho
