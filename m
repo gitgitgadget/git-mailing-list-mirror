@@ -1,67 +1,98 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: People unaware of the importance of "git gc"?
-Date: Thu, 6 Sep 2007 02:27:05 +0200
-Message-ID: <1b46aba20709051727od0644d7t16eaa348af86952a@mail.gmail.com>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-	 <87odgh0zn6.fsf@hades.wkstn.nix> <46DEF1FA.4050500@midwinter.com>
-	 <877in50y7p.fsf@hades.wkstn.nix>
-	 <alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-	 <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.0.9999.0709051634190.21186@xanadu.home>
-	 <7v1wdciy3w.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.0.9999.0709051858060.21186@xanadu.home>
-	 <7v3axshe6q.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+Subject: [PATCH 5/9] Introduce strbuf_read_fd().
+Date: Wed,  5 Sep 2007 20:23:34 -0400
+Message-ID: <11890382252522-git-send-email-krh@redhat.com>
+References: <11890382183913-git-send-email-krh@redhat.com>
+ <11890382242333-git-send-email-krh@redhat.com>
+ <11890382243290-git-send-email-krh@redhat.com>
+ <11890382253220-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, Nix <nix@esperi.org.uk>,
-	"Steven Grimm" <koreth@midwinter.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 02:27:19 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 06 02:36:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT5DJ-0000ID-W6
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 02:27:18 +0200
+	id 1IT5Lg-0001k6-Bk
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 02:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755686AbXIFA1M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 20:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbXIFA1L
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 20:27:11 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:8946 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754339AbXIFA1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 20:27:09 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2767547wah
-        for <git@vger.kernel.org>; Wed, 05 Sep 2007 17:27:08 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lrXY4hW8twvnpjplKeJlppb6N/m8d6+kTQ6CcBbyzBxVeiXRlABu+j6WNrAWoo62cpTHidC2Y6DkP1dKvWeHStRE3PwLTiUgAtmLNr9ggoncneSFcHnBeoOAe1Ra6UsMhuInzODxjZOlM5rtXiFnOnd+uWl+uMNOcZJ3KkCOLcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CcqcjofZUXxHNO85fPqLGFcDwMrdAxyp0G7I4Q/e7FYPQWfyYZ9hWlLIglLRnFWUYmrPh/9g7XMV4Fi5zSlJ7ZYCZ5QX0WED+NbFvbpJfW2ZDcQeLWF3Ypqfcc6r//xwOjXjWLveP2jYNC9wzNOddFz8VS73Z5lJjax25cPinyM=
-Received: by 10.115.109.1 with SMTP id l1mr1719199wam.1189038425549;
-        Wed, 05 Sep 2007 17:27:05 -0700 (PDT)
-Received: by 10.114.57.10 with HTTP; Wed, 5 Sep 2007 17:27:05 -0700 (PDT)
-In-Reply-To: <7v3axshe6q.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757231AbXIFAfx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 5 Sep 2007 20:35:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbXIFAfw
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 20:35:52 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:43768 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757166AbXIFAfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 20:35:46 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l860Zjox005432
+	for <git@vger.kernel.org>; Wed, 5 Sep 2007 20:35:45 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l860ZjMN032609;
+	Wed, 5 Sep 2007 20:35:45 -0400
+Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l860ZhbZ016503;
+	Wed, 5 Sep 2007 20:35:44 -0400
+X-Mailer: git-send-email 1.5.3.rc5.852.gc119
+In-Reply-To: <11890382253220-git-send-email-krh@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57782>
 
-2007/9/6, Junio C Hamano <gitster@pobox.com>:
-> Nicolas Pitre <nico@cam.org> writes:
-> > The more I think of it, the less I like automatic repack.  There is
-> > always a bad case for it somewhere.
->
-> I tend to agree, but at the same time, I think the long term
-> goal should be not to have bad cases.
+This function reads from a given fd into a strbuf until end of file.
 
-The best solution is make "git gc" unnecessary.
-At the long term, and without loss of efficiency.
+Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+---
+ strbuf.c |   19 +++++++++++++++++++
+ strbuf.h |    1 +
+ 2 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/strbuf.c b/strbuf.c
+index 2805c11..fcfc05e 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -50,6 +50,25 @@ void read_line(struct strbuf *sb, FILE *fp, int term=
+) {
+ 	strbuf_end(sb);
+ }
+=20
++int strbuf_read_fd(struct strbuf *sb, int fd)
++{
++	int len, total =3D 0;
++
++	do {
++		strbuf_grow(sb, 1024);
++		len =3D xread(fd, sb->buf + sb->len, sb->alloc - sb->len);
++		if (len > 0) {
++			total +=3D len;
++			sb->len +=3D len;
++		}
++	} while (len > 0);
++
++	if (len < 0)
++		return len;
++
++	return total;
++}
++
+ void strbuf_printf(struct strbuf *sb, const char *fmt, ...)
+ {
+ 	char buffer[2048];
+diff --git a/strbuf.h b/strbuf.h
+index 1e5d09e..6e630ea 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -12,5 +12,6 @@ extern void read_line(struct strbuf *, FILE *, int);
+ extern void strbuf_add(struct strbuf *sb, const char *data, size_t len=
+);
+ extern void strbuf_add_char(struct strbuf *sb, int ch);
+ extern void strbuf_printf(struct strbuf *sb, const char *fmt, ...);
++extern int strbuf_read_fd(struct strbuf *sb, int fd);
+=20
+ #endif /* STRBUF_H */
+--=20
+1.5.2.GIT
