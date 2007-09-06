@@ -1,100 +1,97 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Git's database structure
-Date: Thu, 06 Sep 2007 11:14:06 -0700
-Message-ID: <46E0436E.9030504@midwinter.com>
-References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>  <7vtzqany0z.fsf@gitster.siamese.dyndns.org>  <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>  <20070904212507.GA24434@thunk.org>  <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com>  <46DE5861.4050201@op5.se>  <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>  <46DEC26E.7030809@op5.se>  <9e4733910709050837o61a2dedfpc5f72a239b1cb8e3@mail.gmail.com>  <Pine.LNX.4.64.0709051648400.3189@reaper.quantumfyre.co.uk> <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com> <Pine.LNX.4.64.0709061354180.28586@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Thu, 6 Sep 2007 19:15:58 +0100 (BST)
+Message-ID: <alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+ <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+ <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+ <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0709061651550.28586@racer.site>
+ <7vk5r3adlx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Andreas Ericsson <ae@op5.se>, Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
+	Steven Grimm <koreth@midwinter.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 06 20:14:32 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:17:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITLrr-0002hm-Bh
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:14:15 +0200
+	id 1ITLv5-0003sw-0H
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755868AbXIFSOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 14:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755803AbXIFSOI
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:14:08 -0400
-Received: from tater2.midwinter.com ([216.32.86.91]:52959 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1755683AbXIFSOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 14:14:07 -0400
-Received: (qmail 8544 invoked from network); 6 Sep 2007 18:14:07 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=j6kh7VPhi0eemKQ9ijMCDGgvNVHp43X62fAUkBY04vzuqe1wqhl0yKI88Z6kxGOb  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 6 Sep 2007 18:14:07 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <Pine.LNX.4.64.0709061354180.28586@racer.site>
+	id S1755803AbXIFSRa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 14:17:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754643AbXIFSRa
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:17:30 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:54308 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752302AbXIFSR3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 14:17:29 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l86IG1J5007598
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Sep 2007 11:16:02 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l86IFxt9002020;
+	Thu, 6 Sep 2007 11:15:59 -0700
+In-Reply-To: <7vk5r3adlx.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-2.742 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.31__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57922>
 
-Johannes Schindelin wrote:
-> But you can add _yet another_ index to it, which can be generated on the 
-> fly, so that Git only has to generate the information once, and then reuse 
-> it later.  As a benefit of this method, the underlying well-tested 
-> structure needs no change at all.
->   
 
-And in fact, you can do this today, without modifying git-blame at all, 
-by (ab)using its "-S" option (which lets you specify a custom ancestry 
-chain to search). By coincidence, I was just showing some people at my 
-office how to do this yesterday. I'll cut-and-paste from the email I 
-sent them. I am not claiming this is nearly as desirable as a built-in, 
-auto-updated secondary index, but it proves the concept, anyway.
 
-Fast-to-generate version:
+On Thu, 6 Sep 2007, Junio C Hamano wrote:
+> 
+> I thought the whole point of "gc --auto" was to have something
+> that does not lose/prune any objects, even the ones that do not
+> seem to be referenced from anywhere.  That is why invocations of
+> "git gc --auto" do not say --prune as you saw the second patch,
+> and the repack command "gc --auto" runs is "repack -d -l"
+> instead of "repack -a -d -l", which means that it does run
+> git-prune-packed after repacking but not git-prune.
 
-git-rev-list HEAD -- main.c | awk '{if (last) print last " " $0; 
-last=$0;}' > /tmp/revlist
+I think "repack -d -l" should be ok from a safety perspective, but I'd 
+also like to say that always running it incrementally is going to largely 
+suck after a time.
 
-This speeds things up a lot, because git blame doesn't have to examine 
-other revisions:
+IOW, if you get lots of small incrmental packs, after a while you really 
+*do* need to do "git gc" to get the real pack generated.
 
-time git blame main.c
-   1.56s user 0.30s system 99% cpu 1.868 total
-time git blame -S /tmp/revlist main.c
-   0.21s user 0.03s system 96% cpu 0.249 total
+In the case I saw, James really had hundreds of pack-files. That makes all 
+our object lookups suck. Yes, not having loose objects at all is a big 
+deal too, and yes, we try to start from the last pack-file we found (for 
+the locality that we hope is there), but it's still pretty bad from a 
+cache usage standpoint, and when we create a new object, we'll first 
+search (in vain) in all the hundreds of pack-files.
 
-The bad news is that generating that revision list is a bit slow, and if 
-you do it the naive way I suggested above, you can't use the rev list 
-with the -M option (to follow renames). The good news is that it's 
-possible to have that too if you generate a list of revisions that 
-includes the renames:
+So would "git gc --auto" have helped James? I'm sure it would have. But he 
+already had lots of pack-files from doing "git fetch/pull", and while 
+doing the "git gc --auto" will likely *delay* the point where you need to 
+do a full repack, it doesn't make it go away.
 
-# Generate a list of all revisions in the right order (only need to do 
-this once, not once per file)
-git rev-list HEAD > /tmp/all-revs
-# Generate a list of the revisions that touched this file, following 
-copies/renames.
-# Could do this in fewer commands but this is hopefully easier to follow.
-git blame --porcelain -M main.c | \
-   egrep '^[0-9a-f]{40}' | \
-   cut -d' ' -f1 | \
-   fgrep -f - /tmp/all-revs | \
-   awk '{if (last) print last " " $0; last=$0;}' > /tmp/revlist
+We still need to tell people to do a full git gc at some point, or do it 
+for them. And the longer you delay doing it, the more expensive it's going 
+to get to do and/or the worse the final packing is going to be (especially 
+if it ends up reusing non-optimal packing decisions from the smaller 
+packs).
 
-Then -M is fast too:
+So I think the --auto stuff is still worth it, but it's really just 
+pushing the pain somewhat further out.
 
-time git blame -M main.c
-   1.72s user 0.27s system 89% cpu 2.219 total
-time git blame -M -S /tmp/revlist main.c
-   0.29s user 0.03s system 93% cpu 0.341 total
+(In the kernel community, if you fetch my tree daily, you really *are* 
+going to have hundreds and hundreds of packfiles just from doing that).
 
-Oddly, if you use the -S option, "git blame -C" actually gets 
-significantly *slower*. I am not sure why.
+So I'd really like us to also remind people to do a *real* and full "git 
+gc", not just the incremental ones.
 
--Steve
+		Linus
