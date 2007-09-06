@@ -1,129 +1,100 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/7] Simplify strbuf uses in archive-tar.c using the  proper functions.
-Date: Thu, 06 Sep 2007 20:08:58 +0200
-Message-ID: <20070906180858.GJ8451@artemis.corp>
-References: <20070902224213.GB431@artemis.corp> <11890776114037-git-send-email-madcoder@debian.org> <118907761140-git-send-email-madcoder@debian.org> <11890776111843-git-send-email-madcoder@debian.org> <1189101569.3423.17.camel@hinata.boston.redhat.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Git's database structure
+Date: Thu, 06 Sep 2007 11:14:06 -0700
+Message-ID: <46E0436E.9030504@midwinter.com>
+References: <9e4733910709040823k731f0ffchba1f93bdb4a8373d@mail.gmail.com>  <7vtzqany0z.fsf@gitster.siamese.dyndns.org>  <9e4733910709041044r71264346n341d178565dd0521@mail.gmail.com>  <20070904212507.GA24434@thunk.org>  <9e4733910709041454i189e6629k78ddeb89797276b3@mail.gmail.com>  <46DE5861.4050201@op5.se>  <9e4733910709050641j34d58683ra72caa52c56cdf0f@mail.gmail.com>  <46DEC26E.7030809@op5.se>  <9e4733910709050837o61a2dedfpc5f72a239b1cb8e3@mail.gmail.com>  <Pine.LNX.4.64.0709051648400.3189@reaper.quantumfyre.co.uk> <9e4733910709050912i57ed7137o6abb02ee741d394b@mail.gmail.com> <Pine.LNX.4.64.0709061354180.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="8jNwmpfkpox/fiJK";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 20:09:06 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Andreas Ericsson <ae@op5.se>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:14:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITLmr-0000f7-US
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:09:06 +0200
+	id 1ITLrr-0002hm-Bh
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbXIFSJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 14:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755690AbXIFSJA
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:09:00 -0400
-Received: from pan.madism.org ([88.191.52.104]:47816 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755672AbXIFSI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 14:08:59 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id DE7441E523;
-	Thu,  6 Sep 2007 20:08:58 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8183128B322; Thu,  6 Sep 2007 20:08:58 +0200 (CEST)
-Mail-Followup-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1189101569.3423.17.camel@hinata.boston.redhat.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755868AbXIFSOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 14:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755803AbXIFSOI
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:14:08 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:52959 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755683AbXIFSOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 14:14:07 -0400
+Received: (qmail 8544 invoked from network); 6 Sep 2007 18:14:07 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=j6kh7VPhi0eemKQ9ijMCDGgvNVHp43X62fAUkBY04vzuqe1wqhl0yKI88Z6kxGOb  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 6 Sep 2007 18:14:07 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <Pine.LNX.4.64.0709061354180.28586@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57921>
 
+Johannes Schindelin wrote:
+> But you can add _yet another_ index to it, which can be generated on the 
+> fly, so that Git only has to generate the information once, and then reuse 
+> it later.  As a benefit of this method, the underlying well-tested 
+> structure needs no change at all.
+>   
 
---8jNwmpfkpox/fiJK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+And in fact, you can do this today, without modifying git-blame at all, 
+by (ab)using its "-S" option (which lets you specify a custom ancestry 
+chain to search). By coincidence, I was just showing some people at my 
+office how to do this yesterday. I'll cut-and-paste from the email I 
+sent them. I am not claiming this is nearly as desirable as a built-in, 
+auto-updated secondary index, but it proves the concept, anyway.
 
-On Thu, Sep 06, 2007 at 05:59:29PM +0000, Kristian H=C3=B8gsberg wrote:
-> On Thu, 2007-09-06 at 13:20 +0200, Pierre Habouzit wrote:
-> > +	strbuf_grow(sb, len);
-> > +	strbuf_addf(sb, "%u %s=3D", len, keyword);
-> > +	strbuf_add(sb, value, valuelen);
-> > +	strbuf_addch(sb, '\n');
-> >  }
->=20
-> This entire function can be collapsed to just:
->=20
-> 	strbuf_addf(sb, "%u %s=3D%.*s\n", len, keyword, valuelen, value);
+Fast-to-generate version:
 
-  yes, but it's less efficient, because %.*s says that sprintf must copy
-at most valuelen bytes from value, but it still has to stop if it finds
-a \0 before. And the strbuf_grow has sense because the extend policy at
-snprintf time is optimistic: we try to write, and if it didn't fit, we
-try again. So there is a huge benefit if we have a clue of the final
-size.
+git-rev-list HEAD -- main.c | awk '{if (last) print last " " $0; 
+last=$0;}' > /tmp/revlist
 
-  I would not change a thing.
+This speeds things up a lot, because git blame doesn't have to examine 
+other revisions:
 
-> > +	strbuf_init(&ext_header);
->=20
-> Just use your STRBUF_INIT macro?
+time git blame main.c
+   1.56s user 0.30s system 99% cpu 1.868 total
+time git blame -S /tmp/revlist main.c
+   0.21s user 0.03s system 96% cpu 0.249 total
 
-  Many people dilike it, I'm not sure it's a good idea either, and the
-performance hit should be negligible, if it's not, then we can still
-make the _init() function an inline.
+The bad news is that generating that revision list is a bit slow, and if 
+you do it the naive way I suggested above, you can't use the rev list 
+with the -M option (to follow renames). The good news is that it's 
+possible to have that too if you generate a list of revisions that 
+includes the renames:
 
-> >  	if (ext_header.len > 0) {
-> >  		write_entry(sha1, NULL, 0, ext_header.buf, ext_header.len);
-> > -		free(ext_header.buf);
-> >  	}
->=20
-> Remove excess braces?
+# Generate a list of all revisions in the right order (only need to do 
+this once, not once per file)
+git rev-list HEAD > /tmp/all-revs
+# Generate a list of the revisions that touched this file, following 
+copies/renames.
+# Could do this in fewer commands but this is hopefully easier to follow.
+git blame --porcelain -M main.c | \
+   egrep '^[0-9a-f]{40}' | \
+   cut -d' ' -f1 | \
+   fgrep -f - /tmp/all-revs | \
+   awk '{if (last) print last " " $0; last=$0;}' > /tmp/revlist
 
-  bah, I don't like to strip braces so I won't do that, else you end up
-with stupidities like:
+Then -M is fast too:
 
-  if (foo)
-    // bar();
+time git blame -M main.c
+   1.72s user 0.27s system 89% cpu 2.219 total
+time git blame -M -S /tmp/revlist main.c
+   0.29s user 0.03s system 93% cpu 0.341 total
 
-  do_some_very_important_stuff();
+Oddly, if you use the -S option, "git blame -C" actually gets 
+significantly *slower*. I am not sure why.
 
-  Call me paranoid but well, it saved me so many times ...
-
-> > -	memcpy(path.buf, base, baselen);
-> > -	memcpy(path.buf + baselen, filename, filenamelen);
-> > -	path.len =3D baselen + filenamelen;
-> > -	path.buf[path.len] =3D '\0';
-> > +	strbuf_grow(&path, MAX(PATH_MAX, baselen + filenamelen + 1));
-> > +	strbuf_reset(&path);
->=20
-> Does strbuf_reset() do anything here?
->=20
-> > +	strbuf_add(&path, base, baselen);
-
-  Yes _reset() sets length to 0. so the add here will write at the start
-of the buffer again. It definitely is important !
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---8jNwmpfkpox/fiJK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG4EI6vGr7W6HudhwRAnLWAJkBdpvRr5mu/6PENisvYNx71akvSQCfVz4N
-ArSEMTktCCwCeKkn85uxUDU=
-=CJpx
------END PGP SIGNATURE-----
-
---8jNwmpfkpox/fiJK--
+-Steve
