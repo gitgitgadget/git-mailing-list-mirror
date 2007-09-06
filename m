@@ -1,53 +1,70 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: [PATCH] Include a git-push example for creating a remote branch
-Date: Thu, 06 Sep 2007 13:54:33 +0900
-Message-ID: <buoodggo0l2.fsf@dhapc248.dev.necel.com>
-References: <20070906044408.GA588@spearce.org>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Thu, 6 Sep 2007 00:59:42 -0400
+Message-ID: <20070906045942.GR18160@spearce.org>
+References: <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 06:55:17 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 07:00:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT9Oe-0005zD-P7
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 06:55:17 +0200
+	id 1IT9T7-0006ea-Vo
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 06:59:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbXIFEzL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 00:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbXIFEzL
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 00:55:11 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:38979 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075AbXIFEzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 00:55:09 -0400
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l864sFuS000744;
-	Thu, 6 Sep 2007 13:54:16 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Thu, 6 Sep 2007 13:54:16 +0900
-Received: from dhapc248.dev.necel.com ([10.114.98.116] [10.114.98.116]) by relay31.aps.necel.com with ESMTP; Thu, 6 Sep 2007 13:54:16 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id C0A0558A; Thu,  6 Sep 2007 13:54:33 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <20070906044408.GA588@spearce.org> (Shawn O. Pearce's message of "Thu\, 6 Sep 2007 00\:44\:08 -0400")
+	id S1751317AbXIFE7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 00:59:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbXIFE7t
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 00:59:49 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39673 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbXIFE7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 00:59:49 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IT9Sy-0003ZW-Kc; Thu, 06 Sep 2007 00:59:44 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3E4B220FBAE; Thu,  6 Sep 2007 00:59:43 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57817>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
-> Many users get confused when `git push origin master:foo` works
-> when foo already exists on the remote repository but are confused
-> when foo doesn't exist as a branch and this form does not create
-> the branch foo.
+Dmitry Kakurin <dmitry.kakurin@gmail.com> wrote:
+> When I first looked at Git source code two things struck me as odd:
+> 1. Pure C as opposed to C++. No idea why. Please don't talk about 
+> portability, it's BS.
 
-Hmm, what _does_ it do in that case...?
+Git's creator (Linus) codes in C, not C++.  He has at various times
+stated reasons why he does not use C++.  I'm sure one can find such
+messages with a bit of searching on mailing lists that he frequents.
+He has his reasons.  I also happen to agree with at least some
+of them.  :)
 
--Miles
+Git evolved from that initial prototype that Linus created.  I'm not
+sure how much code survives from that initial few versions that
+Linus managed before Junio took over, but nobody wanted to rewrite
+things that already work so it just stayed in C.
+"If it works, don't fix it."
+
+C works.  We (now) have 83,215 lines of it.  Its not going away
+anytime soon in Git.  It is also a relatively simple language that
+a large number of open source programmers know.  This makes it easy
+for them to get involved in the project.  Instead of say Haskell,
+which has a smaller community.  Or Tcl/Tk as we recently found out
+in the Git User Survey.  :-\
 
 -- 
-If you can't beat them, arrange to have them beaten.  [George Carlin]
+Shawn.
