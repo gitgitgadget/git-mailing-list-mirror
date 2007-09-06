@@ -1,54 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] git.__remotes_from_dir() should only return lists
-Date: Thu, 6 Sep 2007 13:26:45 +0200
-Message-ID: <20070906112645.GA31888@diana.vm.bytemark.co.uk>
-References: <20070905165722.17744.56584.stgit@dv.roinet.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Invoke "git gc --auto" from "git add" and "git fetch"
+Date: Thu, 6 Sep 2007 13:02:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709061301250.28586@racer.site>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+ <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+ <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+ <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+ <7vhcm8j1bp.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 13:27:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
+	Steven Grimm <koreth@midwinter.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITFVv-0001lO-DI
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 13:27:11 +0200
+	id 1ITG4D-0003i5-43
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 14:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbXIFL1G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 07:27:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbXIFL1F
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 07:27:05 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2128 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751813AbXIFL1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 07:27:04 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1ITFVV-0008Nt-00; Thu, 06 Sep 2007 12:26:45 +0100
-Content-Disposition: inline
-In-Reply-To: <20070905165722.17744.56584.stgit@dv.roinet.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753024AbXIFMCd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 08:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753236AbXIFMCc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 08:02:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43472 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752954AbXIFMCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 08:02:31 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 12:02:29 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp042) with SMTP; 06 Sep 2007 14:02:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lpnZh+KtlGmBPhNr5OmjdyZC64nPtM8IVxRZKQa
+	7gjVZPWvN0O9og
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vhcm8j1bp.fsf_-_@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57871>
 
-On 2007-09-05 12:57:22 -0400, Pavel Roskin wrote:
+Hi,
 
-> If there are no remotes, return empty list, not None. The later
-> doesn't work with builtin set().
+On Wed, 5 Sep 2007, Junio C Hamano wrote:
 
-Thanks. But I guess an even nicer fix would be to make this function
-return a set in the first place.
+>  * This is obviously a follow-up to the previous one that allows
+>    you to say "git gc --auto".  I somewhat feel dirty about
+>    calling cmd_gc() bypassing fork & exec from "git add",
+>    though...
 
-> This fixes t1001-branch-rename.sh
+Since all git-gc seems to do is to fork() and exec() other git programs, 
+this should be fine (have not looked at cmd_gc() in a while, though).
 
-Hmm. I don't believe I saw t1001 break without this patch (I run the
-test suite before I push, but I might have made a mistake of course).
-Does the user's environment leak into the test sandbox?
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
