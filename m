@@ -1,96 +1,65 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/7] Simplify strbuf uses in archive-tar.c using the   proper functions.
-Date: Thu, 06 Sep 2007 20:27:46 +0200
-Message-ID: <20070906182746.GK8451@artemis.corp>
-References: <20070902224213.GB431@artemis.corp> <11890776114037-git-send-email-madcoder@debian.org> <118907761140-git-send-email-madcoder@debian.org> <11890776111843-git-send-email-madcoder@debian.org> <1189101569.3423.17.camel@hinata.boston.redhat.com> <20070906180858.GJ8451@artemis.corp> <1189102714.3423.22.camel@hinata.boston.redhat.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: People unaware of the importance of "git gc"?
+Date: Thu, 06 Sep 2007 11:29:07 -0700
+Message-ID: <46E046F3.9000703@midwinter.com>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix> <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix> <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709061651550.28586@racer.site> <7vk5r3adlx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="sdEQJo40s7ofW8iR";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 20:28:02 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:29:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITM55-000893-G7
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:27:55 +0200
+	id 1ITM6N-0008Ts-Mj
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756253AbXIFS1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 14:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756246AbXIFS1u
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:27:50 -0400
-Received: from pan.madism.org ([88.191.52.104]:49323 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756051AbXIFS1t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 14:27:49 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id BE2E91DE35;
-	Thu,  6 Sep 2007 20:27:47 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id E04EF1A3D2; Thu,  6 Sep 2007 20:27:46 +0200 (CEST)
-Mail-Followup-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1189102714.3423.22.camel@hinata.boston.redhat.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1756345AbXIFS3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 14:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756246AbXIFS3J
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:29:09 -0400
+Received: from tater2.midwinter.com ([216.32.86.91]:54217 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1756253AbXIFS3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 14:29:08 -0400
+Received: (qmail 10252 invoked from network); 6 Sep 2007 18:29:08 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=KgyQDDBTfUCTFMo/MPnutMs5K79bk246Ox+M8illK8AEX+X/wR6LiAFXpgjHNer7  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 6 Sep 2007 18:29:08 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57925>
 
+Linus Torvalds wrote:
+> IOW, if you get lots of small incrmental packs, after a while you really 
+> *do* need to do "git gc" to get the real pack generated.
+>   
 
---sdEQJo40s7ofW8iR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I wonder if it makes sense to repack just the small incremental packs 
+into a large (but still incremental) pack, rather than repacking the 
+entire repository. Presumably that would be a lot faster than a full 
+"git gc", while still giving you reasonably good packing (at least, if 
+the threshold is set to a hugh enough number of small packs) and keeping 
+things fast. That could run as a second phase of "git gc --auto" -- it 
+should be quick enough to not be too terribly annoying since we're not 
+running it in the background.
 
-On Thu, Sep 06, 2007 at 06:18:34PM +0000, Kristian H=C3=B8gsberg wrote:
-> On Thu, 2007-09-06 at 20:08 +0200, Pierre Habouzit wrote:
-> > On Thu, Sep 06, 2007 at 05:59:29PM +0000, Kristian H=C3=B8gsberg wrote:
-> > > On Thu, 2007-09-06 at 13:20 +0200, Pierre Habouzit wrote:
-> > > > -	memcpy(path.buf, base, baselen);
-> > > > -	memcpy(path.buf + baselen, filename, filenamelen);
-> > > > -	path.len =3D baselen + filenamelen;
-> > > > -	path.buf[path.len] =3D '\0';
-> > > > +	strbuf_grow(&path, MAX(PATH_MAX, baselen + filenamelen + 1));
-> > > > +	strbuf_reset(&path);
-> > >=20
-> > > Does strbuf_reset() do anything here?
-> > >=20
-> > > > +	strbuf_add(&path, base, baselen);
-> >=20
-> >   Yes _reset() sets length to 0. so the add here will write at the start
-> > of the buffer again. It definitely is important !
->=20
-> But where was length set to non-zero?  path is initialized on entry to
-> the function, and strbuf_grow() just increases the allocation, not
-> length, right?
+Yeah, if you use the same repo for a long time, you'll accumulate a ton 
+of medium-sized packs this way, but (a) that's much better than the 
+situation we have today, and (b) it puts off the performance degradation 
+for long enough that it becomes more reasonable to expect people to find 
+out about running the full "git gc" in the meantime, or for git to 
+further evolve to not need it.
 
-  The path is static, hence when you reenter the function you have the
-last value in it. The fact that it's static may be questionable, but it
-was like it before, I kept it, I've supposed it was for performance
-reasons.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---sdEQJo40s7ofW8iR
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG4EaivGr7W6HudhwRAjgnAJ93gIbVOKKbk2zTpA7T5RfJRKzANQCfaFsU
-Z7eLqx04ud0vu5H5N4dtW44=
-=oGhU
------END PGP SIGNATURE-----
-
---sdEQJo40s7ofW8iR--
+-Steve
