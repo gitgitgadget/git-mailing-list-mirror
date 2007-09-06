@@ -1,197 +1,129 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 2/7] Simplify strbuf uses in archive-tar.c using the
-	proper functions.
-Date: Thu, 06 Sep 2007 13:59:29 -0400
-Message-ID: <1189101569.3423.17.camel@hinata.boston.redhat.com>
-References: <20070902224213.GB431@artemis.corp>
-	 <11890776114037-git-send-email-madcoder@debian.org>
-	 <118907761140-git-send-email-madcoder@debian.org>
-	 <11890776111843-git-send-email-madcoder@debian.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/7] Simplify strbuf uses in archive-tar.c using the  proper functions.
+Date: Thu, 06 Sep 2007 20:08:58 +0200
+Message-ID: <20070906180858.GJ8451@artemis.corp>
+References: <20070902224213.GB431@artemis.corp> <11890776114037-git-send-email-madcoder@debian.org> <118907761140-git-send-email-madcoder@debian.org> <11890776111843-git-send-email-madcoder@debian.org> <1189101569.3423.17.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="8jNwmpfkpox/fiJK";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 19:59:43 2007
+To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:09:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITLdn-00066M-Gm
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 19:59:43 +0200
+	id 1ITLmr-0000f7-US
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 20:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643AbXIFR7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 13:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755200AbXIFR7i
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 13:59:38 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:35451 "EHLO mx1.redhat.com"
+	id S1755683AbXIFSJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 14:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755690AbXIFSJA
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 14:09:00 -0400
+Received: from pan.madism.org ([88.191.52.104]:47816 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754388AbXIFR7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 13:59:37 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZUv022033;
-	Thu, 6 Sep 2007 13:59:35 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZDn030995;
-	Thu, 6 Sep 2007 13:59:35 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZsi010558;
-	Thu, 6 Sep 2007 13:59:35 -0400
-In-Reply-To: <11890776111843-git-send-email-madcoder@debian.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1755672AbXIFSI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 14:08:59 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id DE7441E523;
+	Thu,  6 Sep 2007 20:08:58 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8183128B322; Thu,  6 Sep 2007 20:08:58 +0200 (CEST)
+Mail-Followup-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1189101569.3423.17.camel@hinata.boston.redhat.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57920>
 
-On Thu, 2007-09-06 at 13:20 +0200, Pierre Habouzit wrote:
-> This is just cleaner way to deal with strbufs, using its API rather than
-> reinventing it in the module (e.g. strbuf_append_string is just the plain
-> strbuf_addstr function, and it was used to perform what strbuf_addch does
-> anyways).
-> ---
->  archive-tar.c |   65 ++++++++++++++-------------------------------------------
->  1 files changed, 16 insertions(+), 49 deletions(-)
-> 
-> diff --git a/archive-tar.c b/archive-tar.c
-> index a0763c5..c84d7c0 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -78,19 +78,6 @@ static void write_trailer(void)
->  	}
->  }
->  
-> -static void strbuf_append_string(struct strbuf *sb, const char *s)
-> -{
-> -	int slen = strlen(s);
-> -	int total = sb->len + slen;
-> -	if (total + 1 > sb->alloc) {
-> -		sb->buf = xrealloc(sb->buf, total + 1);
-> -		sb->alloc = total + 1;
-> -	}
-> -	memcpy(sb->buf + sb->len, s, slen);
-> -	sb->len = total;
-> -	sb->buf[total] = '\0';
-> -}
-> -
->  /*
->   * pax extended header records have the format "%u %s=%s\n".  %u contains
->   * the size of the whole string (including the %u), the first %s is the
-> @@ -100,26 +87,17 @@ static void strbuf_append_string(struct strbuf *sb, const char *s)
->  static void strbuf_append_ext_header(struct strbuf *sb, const char *keyword,
->                                       const char *value, unsigned int valuelen)
->  {
-> -	char *p;
-> -	int len, total, tmp;
-> +	int len, tmp;
->  
->  	/* "%u %s=%s\n" */
->  	len = 1 + 1 + strlen(keyword) + 1 + valuelen + 1;
->  	for (tmp = len; tmp > 9; tmp /= 10)
->  		len++;
->  
-> -	total = sb->len + len;
-> -	if (total > sb->alloc) {
-> -		sb->buf = xrealloc(sb->buf, total);
-> -		sb->alloc = total;
-> -	}
-> -
-> -	p = sb->buf;
-> -	p += sprintf(p, "%u %s=", len, keyword);
-> -	memcpy(p, value, valuelen);
-> -	p += valuelen;
-> -	*p = '\n';
-> -	sb->len = total;
-> +	strbuf_grow(sb, len);
-> +	strbuf_addf(sb, "%u %s=", len, keyword);
-> +	strbuf_add(sb, value, valuelen);
-> +	strbuf_addch(sb, '\n');
->  }
 
-This entire function can be collapsed to just:
+--8jNwmpfkpox/fiJK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	strbuf_addf(sb, "%u %s=%.*s\n", len, keyword, valuelen, value);
+On Thu, Sep 06, 2007 at 05:59:29PM +0000, Kristian H=C3=B8gsberg wrote:
+> On Thu, 2007-09-06 at 13:20 +0200, Pierre Habouzit wrote:
+> > +	strbuf_grow(sb, len);
+> > +	strbuf_addf(sb, "%u %s=3D", len, keyword);
+> > +	strbuf_add(sb, value, valuelen);
+> > +	strbuf_addch(sb, '\n');
+> >  }
+>=20
+> This entire function can be collapsed to just:
+>=20
+> 	strbuf_addf(sb, "%u %s=3D%.*s\n", len, keyword, valuelen, value);
 
->  
->  static unsigned int ustar_header_chksum(const struct ustar_header *header)
-> @@ -153,8 +131,7 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
->  	struct strbuf ext_header;
->  
->  	memset(&header, 0, sizeof(header));
-> -	ext_header.buf = NULL;
-> -	ext_header.len = ext_header.alloc = 0;
-> +	strbuf_init(&ext_header);
+  yes, but it's less efficient, because %.*s says that sprintf must copy
+at most valuelen bytes from value, but it still has to stop if it finds
+a \0 before. And the strbuf_grow has sense because the extend policy at
+snprintf time is optimistic: we try to write, and if it didn't fit, we
+try again. So there is a huge benefit if we have a clue of the final
+size.
 
-Just use your STRBUF_INIT macro?
+  I would not change a thing.
 
->  	if (!sha1) {
->  		*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
-> @@ -225,8 +202,8 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
->  
->  	if (ext_header.len > 0) {
->  		write_entry(sha1, NULL, 0, ext_header.buf, ext_header.len);
-> -		free(ext_header.buf);
->  	}
+> > +	strbuf_init(&ext_header);
+>=20
+> Just use your STRBUF_INIT macro?
 
-Remove excess braces?
+  Many people dilike it, I'm not sure it's a good idea either, and the
+performance hit should be negligible, if it's not, then we can still
+make the _init() function an inline.
 
-> +	strbuf_release(&ext_header);
->  	write_blocked(&header, sizeof(header));
->  	if (S_ISREG(mode) && buffer && size > 0)
->  		write_blocked(buffer, size);
-> @@ -235,11 +212,11 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
->  static void write_global_extended_header(const unsigned char *sha1)
->  {
->  	struct strbuf ext_header;
-> -	ext_header.buf = NULL;
-> -	ext_header.len = ext_header.alloc = 0;
-> +
-> +	strbuf_init(&ext_header);
+> >  	if (ext_header.len > 0) {
+> >  		write_entry(sha1, NULL, 0, ext_header.buf, ext_header.len);
+> > -		free(ext_header.buf);
+> >  	}
+>=20
+> Remove excess braces?
 
-STRBUF_INIT macro?
+  bah, I don't like to strip braces so I won't do that, else you end up
+with stupidities like:
 
->  	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
->  	write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
-> -	free(ext_header.buf);
-> +	strbuf_release(&ext_header);
->  }
->  
->  static int git_tar_config(const char *var, const char *value)
-> @@ -260,28 +237,18 @@ static int write_tar_entry(const unsigned char *sha1,
->                             const char *base, int baselen,
->                             const char *filename, unsigned mode, int stage)
->  {
-> -	static struct strbuf path;
-> +	static struct strbuf path = STRBUF_INIT;
->  	int filenamelen = strlen(filename);
->  	void *buffer;
->  	enum object_type type;
->  	unsigned long size;
->  
-> -	if (!path.alloc) {
-> -		path.buf = xmalloc(PATH_MAX);
-> -		path.alloc = PATH_MAX;
-> -		path.len = path.eof = 0;
-> -	}
-> -	if (path.alloc < baselen + filenamelen + 1) {
-> -		free(path.buf);
-> -		path.buf = xmalloc(baselen + filenamelen + 1);
-> -		path.alloc = baselen + filenamelen + 1;
-> -	}
-> -	memcpy(path.buf, base, baselen);
-> -	memcpy(path.buf + baselen, filename, filenamelen);
-> -	path.len = baselen + filenamelen;
-> -	path.buf[path.len] = '\0';
-> +	strbuf_grow(&path, MAX(PATH_MAX, baselen + filenamelen + 1));
-> +	strbuf_reset(&path);
+  if (foo)
+    // bar();
 
-Does strbuf_reset() do anything here?
+  do_some_very_important_stuff();
 
-> +	strbuf_add(&path, base, baselen);
-> +	strbuf_add(&path, filename, filenamelen);
->  	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
-> -		strbuf_append_string(&path, "/");
-> +		strbuf_addch(&path, '/');
->  		buffer = NULL;
->  		size = 0;
->  	} else {
+  Call me paranoid but well, it saved me so many times ...
+
+> > -	memcpy(path.buf, base, baselen);
+> > -	memcpy(path.buf + baselen, filename, filenamelen);
+> > -	path.len =3D baselen + filenamelen;
+> > -	path.buf[path.len] =3D '\0';
+> > +	strbuf_grow(&path, MAX(PATH_MAX, baselen + filenamelen + 1));
+> > +	strbuf_reset(&path);
+>=20
+> Does strbuf_reset() do anything here?
+>=20
+> > +	strbuf_add(&path, base, baselen);
+
+  Yes _reset() sets length to 0. so the add here will write at the start
+of the buffer again. It definitely is important !
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--8jNwmpfkpox/fiJK
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG4EI6vGr7W6HudhwRAnLWAJkBdpvRr5mu/6PENisvYNx71akvSQCfVz4N
+ArSEMTktCCwCeKkn85uxUDU=
+=CJpx
+-----END PGP SIGNATURE-----
+
+--8jNwmpfkpox/fiJK--
