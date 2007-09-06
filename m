@@ -1,95 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/9] Introduce entry point for launching add--interactive.
-Date: Thu, 6 Sep 2007 17:31:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709061729270.28586@racer.site>
-References: <11890382183913-git-send-email-krh@redhat.com>
- <11890382242333-git-send-email-krh@redhat.com> <11890382243290-git-send-email-krh@redhat.com>
- <11890382253220-git-send-email-krh@redhat.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
+Date: Thu, 06 Sep 2007 18:33:01 +0200
+Organization: Organization?!?
+Message-ID: <85bqcfbvpe.fsf@lola.goethe.zz>
+References: <46DACD93.9000509@trolltech.com> <200709022228.00733.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0709022133190.28586@racer.site> <200709022342.42733.robin.rosenberg.lists@dewire.com> <46DBB2BE.8030505@eudaptics.com>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?20070903112110.G?= =?ISO-8859-1?Q?E148=0453@genesis.?=
+	=?ISO-8859-1?Q?frugalware.org>?= <86y7fohtmw.fsf@lola.quinscape.zz> <20070905160206.GY14853@genesis.frugalware.org> <85abs1hr6t.fsf@lola.goethe.zz> <20070906162657.GF2329@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-442831545-1189096299=:28586"
-Cc: git@vger.kernel.org
-To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 18:32:09 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 06 18:33:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITKGu-0003jS-7n
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 18:32:00 +0200
+	id 1ITKIF-0004A9-9u
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 18:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338AbXIFQbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 12:31:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753672AbXIFQby
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 12:31:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47552 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752182AbXIFQby (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 12:31:54 -0400
-Received: (qmail invoked by alias); 06 Sep 2007 16:31:52 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp032) with SMTP; 06 Sep 2007 18:31:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18HkRcYtwMHnY09cRwJt3FdXNa0hewBB7RlUdp4jp
-	QffU5KcqSHVOjx
-X-X-Sender: gene099@racer.site
-In-Reply-To: <11890382253220-git-send-email-krh@redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1753225AbXIFQdT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 12:33:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753418AbXIFQdS
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 12:33:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:46302 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753007AbXIFQdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 12:33:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ITKI0-0000uB-My
+	for git@vger.kernel.org; Thu, 06 Sep 2007 18:33:08 +0200
+Received: from dslb-084-061-055-071.pools.arcor-ip.net ([84.61.55.71])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Sep 2007 18:33:08 +0200
+Received: from dak by dslb-084-061-055-071.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Sep 2007 18:33:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-084-061-055-071.pools.arcor-ip.net
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+Cancel-Lock: sha1:xTQxXRhq81ImzzaqSy2rx2rkEa4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57901>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
---8323584-442831545-1189096299=:28586
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> On Wed, Sep 05, 2007 at 09:01:46PM +0200, David Kastrup <dak@gnu.org> wrote:
+>> > the situation what triggers the 'no such file' problem is:
+>> >
+>> > ----
+>> > $ touch foo/Makefile
+>> > $ mkdir bar
+>> > $ ln -s foo/Makefile bar
+>> > $ cd bar
+>> > $ cat Makefile
+>> > cat: Makefile: No such file or directory
+>> > ----
+>> 
+>> This is under Vista?  It would be the same under Unix.
+>
+> no, i never stated that this is Vista ;-) this is Linux.
 
-Hi,
+Ok, so now we have established that we have not actually established
+anything with regard to relative links under Vista short of what
+Microsoft claims in its developer information (which has its fair
+share of misleading and wrong information).
 
-On Wed, 5 Sep 2007, Kristian Høgsberg wrote:
+If anybody is as fortunate as to actually have Vista available, it
+would be nice if he corroborated that relative links under Vista are
+indeed (as Microsoft appears to claim) relative with regard to the
+current work directory rather than the directory containing the link.
 
-> diff --git a/builtin-add.c b/builtin-add.c
-> index 3dd4ded..e79e8f7 100644
-> --- a/builtin-add.c
-> +++ b/builtin-add.c
-> @@ -153,6 +154,13 @@ static int git_add_config(const char *var, const char *value)
->  	return git_default_config(var, value);
->  }
->  
-> +int interactive_add(void)
-> +{
-> +	const char *argv[2] = { "add--interactive", NULL };
-> +
-> +	return run_command_v_opt(argv, RUN_GIT_CMD);
-> +}
-
-I'd rather have this in builtin-commit.c, since it is quite funny if 
-builtin-add.c has code to fork() and exec() itself (eventually, that 
-is) ;-)
-
-> diff --git a/commit.h b/commit.h
-> index 467872e..64e1d4b 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -122,4 +122,13 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
->  		int depth, int shallow_flag, int not_shallow_flag);
->  
->  int in_merge_bases(struct commit *, struct commit **, int);
-> +
-> +extern const unsigned char *
-> +create_commit(const unsigned char *tree_sha1,
-> +	      unsigned char parent_sha1[][20], int parents,
-> +	      const char *author_info, const char *committer_info,
-> +	      const char *message, int length);
-> +
-> +extern int interactive_add(void);
-> +
-
-Just a guess: you did not want create_commit() to creep in here, right?
-
-Ciao,
-Dscho
-
---8323584-442831545-1189096299=:28586--
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
