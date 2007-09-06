@@ -1,80 +1,61 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
-Date: Fri, 7 Sep 2007 00:14:30 +0200
-Message-ID: <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com>
-References: <20070906075104.GA10192@hand.yhbt.net>
-	 <1189096669534-git-send-email-hjemli@gmail.com>
-	 <20070906210155.GA20938@soma> <20070906213556.GA21234@soma>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/2] git-commit: Add --no-status option
+Date: Fri, 7 Sep 2007 00:15:57 +0200
+Message-ID: <20070906221557.GA20575@steel.home>
+References: <20070905234953.GB643@nomad.office.altlinux.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Sep 07 00:14:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+X-From: git-owner@vger.kernel.org Fri Sep 07 00:16:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITPcU-0007HW-KO
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 00:14:39 +0200
+	id 1ITPdw-0007j3-Mi
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 00:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294AbXIFWOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 18:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbXIFWOc
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 18:14:32 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:41817 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228AbXIFWOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 18:14:31 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so238023nze
-        for <git@vger.kernel.org>; Thu, 06 Sep 2007 15:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/2Y9qmgBRy9NT3KuUptqVIc4aq6++AJvfmSCxXTjCHI=;
-        b=UcmAY1oIeUjtCYEjE2fUMWTMiTR76AuHJlhldvyTtovBiauAnwLEKF5pwNkV2QoLo1MfkGkmOGxh9+GufBUiIZ+V3l37zsgLZWwpP5DRdJb/PsQTsnD0DVwSSGccKu2UjaHrBzaChr98A8ooDQxhA9ZBdEsSuBKntowTzQnbDWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hsognNW6SDX2BopDxcEuuMI9oBxkCd8+df8UXB6FvPQV5HnH+7soSKj7wN7M4s0t0NyD47TiXCKqxVB5iNZgg37Vya5w8UKNDXtX7FrN5wSnH03Lm6XsCCHVL58L5B6mNiO5dwHnVU5HU9yfJHvdfBOKd0Ja6GlEznrRdESBzuk=
-Received: by 10.114.107.19 with SMTP id f19mr177572wac.1189116870287;
-        Thu, 06 Sep 2007 15:14:30 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Thu, 6 Sep 2007 15:14:30 -0700 (PDT)
-In-Reply-To: <20070906213556.GA21234@soma>
+	id S1754448AbXIFWQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 18:16:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754549AbXIFWQB
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 18:16:01 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:41068 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754437AbXIFWQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 18:16:00 -0400
+Received: from tigra.home (Fcaf2.f.strato-dslnet.de [195.4.202.242])
+	by post.webmailer.de (fruni mo62) (RZmta 12.7)
+	with ESMTP id v023ccj86K7w6V ; Fri, 7 Sep 2007 00:15:58 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 42AC8277BD;
+	Fri,  7 Sep 2007 00:15:58 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BD27DBEB6; Fri,  7 Sep 2007 00:15:57 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20070905234953.GB643@nomad.office.altlinux.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTj5dag=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57936>
 
-On 9/6/07, Eric Wong <normalperson@yhbt.net> wrote:
-> Wait, actually.  --upstream won't ever populate the refs array in
-> working_head_info for dcommit
+Dmitry V. Levin, Thu, Sep 06, 2007 01:49:53 +0200:
+> By default, git-commit runs git-runstatus to print changes between
+> the index and the working tree.  This operation is very costly and
+> is not always necessary.  New option allows user to commit without
+> running git-runstatus when appropriate.
 
-Sorry, I didn't realize that working_head_info() collected commit-ids
-later used by dcommit.  But to implement --upstream we could maybe do
-something like this:
+Not a very good name for the option. Noone, except for a few, knows
+that git-commit runs runstatus. The name makes no sense.
 
-sub working_head_info {
-  my ($head, $refs) = @_;
+"git-commit --index", perhaps (the current state of index to be
+commited). Or "git-commit --prepared" (the commit is prepared and
+there can be stored immediately). Even a dumb "--fast" would be
+better (because it is the purpose of the patch).
 
-  if (defined $_upstream) {
-    working_head_info_traverse($head, \$refs);
-    return working_head_info_traverse($_upstream, undef);
-  }
-
-  return working_head_info_traverse($head, \$refs);
-}
-
-sub working_head_info_traverse {
-  my ($head, $refs) = @_;
-  my ($fh, $ctx) = command_output_pipe('log', '--no-color',
-'--first-parent', $head);
-  ...
-
-
-(This was written straight into firefox, late at night, by a perl
-illiterate. Please be gentle...)
-
--- 
-larsh
+Besides, now when you disabled runstatus, you better check for changes
+in the index with something like "git diff --quiet --cached".
