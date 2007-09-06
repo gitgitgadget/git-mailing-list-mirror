@@ -1,101 +1,197 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String
- Library.
-Date: Thu, 6 Sep 2007 18:50:28 +0100 (BST)
-Message-ID: <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
-References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com>
- <vpq642pkoln.fsf@bauges.imag.fr>
- <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH 2/7] Simplify strbuf uses in archive-tar.c using the
+	proper functions.
+Date: Thu, 06 Sep 2007 13:59:29 -0400
+Message-ID: <1189101569.3423.17.camel@hinata.boston.redhat.com>
+References: <20070902224213.GB431@artemis.corp>
+	 <11890776114037-git-send-email-madcoder@debian.org>
+	 <118907761140-git-send-email-madcoder@debian.org>
+	 <11890776111843-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 19:51:18 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 19:59:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITLVX-0003SQ-BQ
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 19:51:11 +0200
+	id 1ITLdn-00066M-Gm
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 19:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388AbXIFRuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 13:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755198AbXIFRuu
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 13:50:50 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:45893 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751064AbXIFRut (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 13:50:49 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l86HoUip006364
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Sep 2007 10:50:31 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l86HoSvT001164;
-	Thu, 6 Sep 2007 10:50:29 -0700
-In-Reply-To: <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-X-Spam-Status: No, hits=-3.242 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.31__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754643AbXIFR7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 13:59:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755200AbXIFR7i
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 13:59:38 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:35451 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754388AbXIFR7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 13:59:37 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZUv022033;
+	Thu, 6 Sep 2007 13:59:35 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZDn030995;
+	Thu, 6 Sep 2007 13:59:35 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l86HxZsi010558;
+	Thu, 6 Sep 2007 13:59:35 -0400
+In-Reply-To: <11890776111843-git-send-email-madcoder@debian.org>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57919>
 
-
-
-On Wed, 5 Sep 2007, Dmitry Kakurin wrote:
+On Thu, 2007-09-06 at 13:20 +0200, Pierre Habouzit wrote:
+> This is just cleaner way to deal with strbufs, using its API rather than
+> reinventing it in the module (e.g. strbuf_append_string is just the plain
+> strbuf_addstr function, and it was used to perform what strbuf_addch does
+> anyways).
+> ---
+>  archive-tar.c |   65 ++++++++++++++-------------------------------------------
+>  1 files changed, 16 insertions(+), 49 deletions(-)
 > 
-> When I first looked at Git source code two things struck me as odd:
-> 1. Pure C as opposed to C++. No idea why. Please don't talk about portability,
-> it's BS.
+> diff --git a/archive-tar.c b/archive-tar.c
+> index a0763c5..c84d7c0 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -78,19 +78,6 @@ static void write_trailer(void)
+>  	}
+>  }
+>  
+> -static void strbuf_append_string(struct strbuf *sb, const char *s)
+> -{
+> -	int slen = strlen(s);
+> -	int total = sb->len + slen;
+> -	if (total + 1 > sb->alloc) {
+> -		sb->buf = xrealloc(sb->buf, total + 1);
+> -		sb->alloc = total + 1;
+> -	}
+> -	memcpy(sb->buf + sb->len, s, slen);
+> -	sb->len = total;
+> -	sb->buf[total] = '\0';
+> -}
+> -
+>  /*
+>   * pax extended header records have the format "%u %s=%s\n".  %u contains
+>   * the size of the whole string (including the %u), the first %s is the
+> @@ -100,26 +87,17 @@ static void strbuf_append_string(struct strbuf *sb, const char *s)
+>  static void strbuf_append_ext_header(struct strbuf *sb, const char *keyword,
+>                                       const char *value, unsigned int valuelen)
+>  {
+> -	char *p;
+> -	int len, total, tmp;
+> +	int len, tmp;
+>  
+>  	/* "%u %s=%s\n" */
+>  	len = 1 + 1 + strlen(keyword) + 1 + valuelen + 1;
+>  	for (tmp = len; tmp > 9; tmp /= 10)
+>  		len++;
+>  
+> -	total = sb->len + len;
+> -	if (total > sb->alloc) {
+> -		sb->buf = xrealloc(sb->buf, total);
+> -		sb->alloc = total;
+> -	}
+> -
+> -	p = sb->buf;
+> -	p += sprintf(p, "%u %s=", len, keyword);
+> -	memcpy(p, value, valuelen);
+> -	p += valuelen;
+> -	*p = '\n';
+> -	sb->len = total;
+> +	strbuf_grow(sb, len);
+> +	strbuf_addf(sb, "%u %s=", len, keyword);
+> +	strbuf_add(sb, value, valuelen);
+> +	strbuf_addch(sb, '\n');
+>  }
 
-*YOU* are full of bullshit.
+This entire function can be collapsed to just:
 
-C++ is a horrible language. It's made more horrible by the fact that a lot 
-of substandard programmers use it, to the point where it's much much 
-easier to generate total and utter crap with it. Quite frankly, even if 
-the choice of C were to do *nothing* but keep the C++ programmers out, 
-that in itself would be a huge reason to use C.
+	strbuf_addf(sb, "%u %s=%.*s\n", len, keyword, valuelen, value);
 
-In other words: the choice of C is the only sane choice. I know Miles 
-Bader jokingly said "to piss you off", but it's actually true. I've come 
-to the conclusion that any programmer that would prefer the project to be 
-in C++ over C is likely a programmer that I really *would* prefer to piss 
-off, so that he doesn't come and screw up any project I'm involved with.
+>  
+>  static unsigned int ustar_header_chksum(const struct ustar_header *header)
+> @@ -153,8 +131,7 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
+>  	struct strbuf ext_header;
+>  
+>  	memset(&header, 0, sizeof(header));
+> -	ext_header.buf = NULL;
+> -	ext_header.len = ext_header.alloc = 0;
+> +	strbuf_init(&ext_header);
 
-C++ leads to really really bad design choices. You invariably start using 
-the "nice" library features of the language like STL and Boost and other 
-total and utter crap, that may "help" you program, but causes:
+Just use your STRBUF_INIT macro?
 
- - infinite amounts of pain when they don't work (and anybody who tells me 
-   that STL and especially Boost are stable and portable is just so full 
-   of BS that it's not even funny)
+>  	if (!sha1) {
+>  		*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
+> @@ -225,8 +202,8 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
+>  
+>  	if (ext_header.len > 0) {
+>  		write_entry(sha1, NULL, 0, ext_header.buf, ext_header.len);
+> -		free(ext_header.buf);
+>  	}
 
- - inefficient abstracted programming models where two years down the road 
-   you notice that some abstraction wasn't very efficient, but now all 
-   your code depends on all the nice object models around it, and you 
-   cannot fix it without rewriting your app.
+Remove excess braces?
 
-In other words, the only way to do good, efficient, and system-level and 
-portable C++ ends up to limit yourself to all the things that are 
-basically available in C. And limiting your project to C means that people 
-don't screw that up, and also means that you get a lot of programmers that 
-do actually understand low-level issues and don't screw things up with any 
-idiotic "object model" crap.
+> +	strbuf_release(&ext_header);
+>  	write_blocked(&header, sizeof(header));
+>  	if (S_ISREG(mode) && buffer && size > 0)
+>  		write_blocked(buffer, size);
+> @@ -235,11 +212,11 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
+>  static void write_global_extended_header(const unsigned char *sha1)
+>  {
+>  	struct strbuf ext_header;
+> -	ext_header.buf = NULL;
+> -	ext_header.len = ext_header.alloc = 0;
+> +
+> +	strbuf_init(&ext_header);
 
-So I'm sorry, but for something like git, where efficiency was a primary 
-objective, the "advantages" of C++ is just a huge mistake. The fact that 
-we also piss off people who cannot see that is just a big additional 
-advantage.
+STRBUF_INIT macro?
 
-If you want a VCS that is written in C++, go play with Monotone. Really. 
-They use a "real database". They use "nice object-oriented libraries". 
-They use "nice C++ abstractions". And quite frankly, as a result of all 
-these design decisions that sound so appealing to some CS people, the end 
-result is a horrible and unmaintainable mess.
+>  	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
+>  	write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
+> -	free(ext_header.buf);
+> +	strbuf_release(&ext_header);
+>  }
+>  
+>  static int git_tar_config(const char *var, const char *value)
+> @@ -260,28 +237,18 @@ static int write_tar_entry(const unsigned char *sha1,
+>                             const char *base, int baselen,
+>                             const char *filename, unsigned mode, int stage)
+>  {
+> -	static struct strbuf path;
+> +	static struct strbuf path = STRBUF_INIT;
+>  	int filenamelen = strlen(filename);
+>  	void *buffer;
+>  	enum object_type type;
+>  	unsigned long size;
+>  
+> -	if (!path.alloc) {
+> -		path.buf = xmalloc(PATH_MAX);
+> -		path.alloc = PATH_MAX;
+> -		path.len = path.eof = 0;
+> -	}
+> -	if (path.alloc < baselen + filenamelen + 1) {
+> -		free(path.buf);
+> -		path.buf = xmalloc(baselen + filenamelen + 1);
+> -		path.alloc = baselen + filenamelen + 1;
+> -	}
+> -	memcpy(path.buf, base, baselen);
+> -	memcpy(path.buf + baselen, filename, filenamelen);
+> -	path.len = baselen + filenamelen;
+> -	path.buf[path.len] = '\0';
+> +	strbuf_grow(&path, MAX(PATH_MAX, baselen + filenamelen + 1));
+> +	strbuf_reset(&path);
 
-But I'm sure you'd like it more than git.
+Does strbuf_reset() do anything here?
 
-			Linus
+> +	strbuf_add(&path, base, baselen);
+> +	strbuf_add(&path, filename, filenamelen);
+>  	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
+> -		strbuf_append_string(&path, "/");
+> +		strbuf_addch(&path, '/');
+>  		buffer = NULL;
+>  		size = 0;
+>  	} else {
