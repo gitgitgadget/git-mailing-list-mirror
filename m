@@ -1,52 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Thu, 06 Sep 2007 02:35:15 -0700
-Message-ID: <7vhcm8b0h8.fsf@gitster.siamese.dyndns.org>
-References: <vpq642pkoln.fsf@bauges.imag.fr>
-	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-	<20070906045942.GR18160@spearce.org> <46DFC490.3060200@op5.se>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 3/9] Add strbuf_printf() to do formatted printing to a strbuf.
+Date: Thu, 06 Sep 2007 11:43:23 +0200
+Message-ID: <20070906094323.GB8451@artemis.corp>
+References: <11890382183913-git-send-email-krh@redhat.com> <11890382242333-git-send-email-krh@redhat.com> <11890382243290-git-send-email-krh@redhat.com> <7vwsv4b2bl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Sep 06 11:35:33 2007
+Content-Type: multipart/signed; boundary="rJwd6BRFiFCcLxzm";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 11:44:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITDlq-0005ri-4e
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 11:35:30 +0200
+	id 1ITDu8-000802-I8
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 11:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754163AbXIFJfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 05:35:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbXIFJfZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 05:35:25 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48797 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206AbXIFJfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 05:35:24 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BAB4C12F56F;
-	Thu,  6 Sep 2007 05:35:38 -0400 (EDT)
-In-Reply-To: <46DFC490.3060200@op5.se> (Andreas Ericsson's message of "Thu, 06
-	Sep 2007 11:12:48 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756405AbXIFJn1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 05:43:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755402AbXIFJn1
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 05:43:27 -0400
+Received: from pan.madism.org ([88.191.52.104]:44651 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755203AbXIFJn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 05:43:26 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 7A822173DD;
+	Thu,  6 Sep 2007 11:43:24 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 339EB1A3BA; Thu,  6 Sep 2007 11:43:23 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vwsv4b2bl.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57850>
 
-Andreas Ericsson <ae@op5.se> writes:
 
-> Git is cheating a bit though. Its primary audience was (and is) the
-> various integrators working on the Linux kernel, all of whom are fairly
-> competent C programmers.
+--rJwd6BRFiFCcLxzm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do we still have a huge overlap with the kernel people?  I had
-an impression that patches from the kernel folks, with notable
-exception from a handful (you know who you are), have petered
-out rapidly after the first several weeks.
+On Thu, Sep 06, 2007 at 08:55:26AM +0000, Junio C Hamano wrote:
+> As you noted in your follow-up message, this one has overlaps
+> with the other strbuf series.  I could adjust them if I wanted
+> to, but I do not have time for it right now.  I might try over
+> the weekend but no promises.
+
+  This one is exactly the same as the one that follows, I corrected a
+typo in the comment of the commit, and I forgot to cleanse my tree
+before running format-patch again, so you have the "second" patch twice
+(name of the patch changed, hence the new one did not replaced the
+previous, but created a 0002-foo.patch instead of overwriting the
+0002-bar.patch).
+
+  You just must drop the one I followup-ed to.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--rJwd6BRFiFCcLxzm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG38u7vGr7W6HudhwRAph4AJ0SVRSKB+/Yil1g6OzQagKJZ3shmQCfUlxV
+rPgZX9VJRFgEVlgzGSni+qQ=
+=Q68e
+-----END PGP SIGNATURE-----
+
+--rJwd6BRFiFCcLxzm--
