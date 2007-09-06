@@ -1,136 +1,80 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: rebase from ambiguous ref discards changes
-Date: Thu, 06 Sep 2007 14:48:28 -0700
-Message-ID: <1189115308.30308.9.camel@koto.keithp.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
+Date: Fri, 7 Sep 2007 00:14:30 +0200
+Message-ID: <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com>
+References: <20070906075104.GA10192@hand.yhbt.net>
+	 <1189096669534-git-send-email-hjemli@gmail.com>
+	 <20070906210155.GA20938@soma> <20070906213556.GA21234@soma>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-2SO4dfltkxowG92yH9Sb"
-Cc: keithp@keithp.com
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 07 00:00:15 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 07 00:14:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITPOX-0003RL-NV
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 00:00:14 +0200
+	id 1ITPcU-0007HW-KO
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 00:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932536AbXIFWAH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 18:00:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbXIFWAH
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 18:00:07 -0400
-Received: from home.keithp.com ([63.227.221.253]:2700 "EHLO keithp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932489AbXIFWAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 18:00:05 -0400
-X-Greylist: delayed 664 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Sep 2007 18:00:05 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 355401141EA
-	for <git@vger.kernel.org>; Thu,  6 Sep 2007 14:49:01 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at keithp.com
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id jUUVQnVl52aN; Thu,  6 Sep 2007 14:48:58 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 66D161141E6; Thu,  6 Sep 2007 14:48:58 -0700 (PDT)
-Received: from koto.keithp.com (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id D25DB1141E0;
-	Thu,  6 Sep 2007 14:48:57 -0700 (PDT)
-Received: by koto.keithp.com (Postfix, from userid 1488)
-	id 9B3CE76C187; Thu,  6 Sep 2007 14:48:28 -0700 (PDT)
-X-Mailer: Evolution 2.10.3 
+	id S1754294AbXIFWOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 18:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbXIFWOc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 18:14:32 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:41817 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753228AbXIFWOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 18:14:31 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so238023nze
+        for <git@vger.kernel.org>; Thu, 06 Sep 2007 15:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/2Y9qmgBRy9NT3KuUptqVIc4aq6++AJvfmSCxXTjCHI=;
+        b=UcmAY1oIeUjtCYEjE2fUMWTMiTR76AuHJlhldvyTtovBiauAnwLEKF5pwNkV2QoLo1MfkGkmOGxh9+GufBUiIZ+V3l37zsgLZWwpP5DRdJb/PsQTsnD0DVwSSGccKu2UjaHrBzaChr98A8ooDQxhA9ZBdEsSuBKntowTzQnbDWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hsognNW6SDX2BopDxcEuuMI9oBxkCd8+df8UXB6FvPQV5HnH+7soSKj7wN7M4s0t0NyD47TiXCKqxVB5iNZgg37Vya5w8UKNDXtX7FrN5wSnH03Lm6XsCCHVL58L5B6mNiO5dwHnVU5HU9yfJHvdfBOKd0Ja6GlEznrRdESBzuk=
+Received: by 10.114.107.19 with SMTP id f19mr177572wac.1189116870287;
+        Thu, 06 Sep 2007 15:14:30 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Thu, 6 Sep 2007 15:14:30 -0700 (PDT)
+In-Reply-To: <20070906213556.GA21234@soma>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57935>
+
+On 9/6/07, Eric Wong <normalperson@yhbt.net> wrote:
+> Wait, actually.  --upstream won't ever populate the refs array in
+> working_head_info for dcommit
+
+Sorry, I didn't realize that working_head_info() collected commit-ids
+later used by dcommit.  But to implement --upstream we could maybe do
+something like this:
+
+sub working_head_info {
+  my ($head, $refs) = @_;
+
+  if (defined $_upstream) {
+    working_head_info_traverse($head, \$refs);
+    return working_head_info_traverse($_upstream, undef);
+  }
+
+  return working_head_info_traverse($head, \$refs);
+}
+
+sub working_head_info_traverse {
+  my ($head, $refs) = @_;
+  my ($fh, $ctx) = command_output_pipe('log', '--no-color',
+'--first-parent', $head);
+  ...
 
 
---=-2SO4dfltkxowG92yH9Sb
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+(This was written straight into firefox, late at night, by a perl
+illiterate. Please be gentle...)
 
-So, I started with a very simple repository
-
----*--- master
-    \
-     -- origin/master
-
-=46rom master, I did
-
-$ git-rebase origin/master
-warning: refname 'master' is ambiguous.
-First, rewinding head to replay your work on top of it...
-HEAD is now at 2a8592f... Fix G33 GTT stolen mem range
-Fast-forwarded master to origin/master.
-$
-
-Note the lack of the usual 'Applying <patch>' messages.
-
-checking the tree, I now had
-
----*
-    \
-     -- origin/master
-        master
-
-with my patch lost.
-
-recovering my patch (having the ID in my terminal window from the
-commit), I named it 'master-with-fix'
-
----*--- master-with-fix
-    \
-     -- origin/master
-        master
-
-Now the rebase from 'master-with-fix worked as expected:
-
-$ git-rebase origin/master
-First, rewinding head to replay your work on top of it...
-HEAD is now at 2a8592f... Fix G33 GTT stolen mem range
-
-Applying Switch to pci_device_map_range/pci_device_unmap_range APIs.
-
-Adds trailing whitespace.
-.dotest/patch:225:     =20
-Adds trailing whitespace.
-.dotest/patch:226:      if (IS_I965G(pI830))=20
-Adds trailing whitespace.
-.dotest/patch:446:
-dev->regions[mmio_bar].size,=20
-Adds trailing whitespace.
-.dotest/patch:449:   =20
-warning: 4 lines add whitespace errors.
-Wrote tree cd373666254d56a137d282deeb15a2ccaf8da22b
-Committed: 286f5df0b62f571cbb4dbf120679d3af029b8775
-$=20
-
-And the tree looks right too:
-
---- origin/master --- master-with-fix
-    master
-      =20
-Seems like there's something going on when 'master' is ambiguous, or
-perhaps some other problem.
-
-This is all from version 1.5.3, but I think I've seen this on 1.5.2 as
-well.
-
-Git made me sad today; I'm not sure it's ever disappointed like this
-before.
-
---=20
-keith.packard@intel.com
-
---=-2SO4dfltkxowG92yH9Sb
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG4HWsQp8BWwlsTdMRAhskAKCvEvKNpglTfhLOOMnp0W0oqlDhmwCfUX0Z
-WRD/8tcuat3iNz6hINxOCus=
-=WItP
------END PGP SIGNATURE-----
-
---=-2SO4dfltkxowG92yH9Sb--
+-- 
+larsh
