@@ -1,136 +1,88 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] git-svn: always use --first-parent
-Date: Fri,  7 Sep 2007 02:00:08 +0200
-Message-ID: <11891232082570-git-send-email-hjemli@gmail.com>
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 02:03:17 2007
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
+Date: Fri, 7 Sep 2007 01:55:16 +0200
+Message-ID: <20070906235516.GC4538@xp.machine.xx>
+References: <20070906075104.GA10192@hand.yhbt.net> <1189096669534-git-send-email-hjemli@gmail.com> <20070906210155.GA20938@soma> <20070906213556.GA21234@soma> <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 02:07:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITRJW-0001fq-VQ
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 02:03:11 +0200
+	id 1ITRNT-0002I0-1K
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 02:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932674AbXIGACI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 20:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbXIGACH
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 20:02:07 -0400
-Received: from mail43.e.nsc.no ([193.213.115.43]:59984 "EHLO mail43.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932672AbXIGACG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 20:02:06 -0400
-Received: from localhost.localdomain (ti231210a341-5020.bb.online.no [85.166.63.158])
-	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id l8701dna007211;
-	Fri, 7 Sep 2007 02:01:39 +0200 (MEST)
-X-Mailer: git-send-email 1.5.3.1.g0e33-dirty
+	id S932680AbXIGAHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 20:07:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932677AbXIGAHJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 20:07:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32900 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932513AbXIGAHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 20:07:07 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 23:55:19 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp031) with SMTP; 07 Sep 2007 01:55:19 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX19XSS8zsgNXKfgJM9joXRWjpC+0Uu4vt6pz+v++rJ
+	0XMoCRGPCnBvYC
+Mail-Followup-To: Lars Hjemli <hjemli@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57952>
 
-This makes git-svn unconditionally invoke git-log with --first-parent when
-it is trying to discover its upstream subversion branch and collecting the
-commit ids which should be pushed to it with dcommit. The reason for always
-using --first-parent is to make git-svn behave in a predictable way when the
-ancestry chain contains merges with other git-svn branches.
+On Fri, Sep 07, 2007 at 12:14:30AM +0200, Lars Hjemli wrote:
+> On 9/6/07, Eric Wong <normalperson@yhbt.net> wrote:
+> > Wait, actually.  --upstream won't ever populate the refs array in
+> > working_head_info for dcommit
+> 
+> Sorry, I didn't realize that working_head_info() collected commit-ids
+> later used by dcommit.  But to implement --upstream we could maybe do
+> something like this:
+> 
+> sub working_head_info {
+>   my ($head, $refs) = @_;
+> 
+>   if (defined $_upstream) {
+>     working_head_info_traverse($head, \$refs);
+>     return working_head_info_traverse($_upstream, undef);
+>   }
+> 
+>   return working_head_info_traverse($head, \$refs);
+> }
+> 
+> sub working_head_info_traverse {
+>   my ($head, $refs) = @_;
+>   my ($fh, $ctx) = command_output_pipe('log', '--no-color',
+> '--first-parent', $head);
+>   ...
+> 
+> 
+> (This was written straight into firefox, late at night, by a perl
+> illiterate. Please be gentle...)
+> 
 
-Since git-svn now always uses 'git-log --first-parent' there is no longer
-any need for the --first-parent option to git-svn, so this is removed.
+Sorry, but isn't --upstream just the wrong way to do what you want?
+Why should I specify a GIT commit to leat git-svn figure out on what
+upstream SVN branch I want to commit? To me, this seems a little
+backwards. Wouldn't it be much more pleasant to say something like
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+	git-svn dcommit --on the_branch
 
-I'd like to add a '--upstream <revspec>' option, just for completeness, but
-that will also require a new test script and now it's way past my bedtime.
+whereas 'the_branch' is the name of the upstream branch as specified
+in the fetch/branch section in the git config? If I do a dcommit I know
+*exactly* on which svn branch it should go, so why can't I specify it on
+the cmdline? ...  or did I miss something obvious?
 
-
- Documentation/git-svn.txt |   10 ----------
- git-svn.perl              |   17 +++++------------
- 2 files changed, 5 insertions(+), 22 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 42d7b82..be2e34e 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -317,16 +317,6 @@ This is only used with the 'dcommit' command.
- Print out the series of git arguments that would show
- which diffs would be committed to SVN.
- 
----first-parent::
--
--This is only used with the 'dcommit', 'rebase', 'log', 'find-rev' and
--'show-ignore' commands.
--
--These commands tries to detect the upstream subversion branch by means of
--the embedded 'git-svn-id' line in commit messages. When --first-parent is
--specified, git-svn only follows the first parent of each commit, effectively
--ignoring commits brought into the current branch through merge-operations.
--
- --
- 
- ADVANCED OPTIONS
-diff --git a/git-svn.perl b/git-svn.perl
-index d21eb7f..badcd33 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -59,7 +59,7 @@ my ($_stdin, $_help, $_edit,
- 	$_template, $_shared,
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
--	$_prefix, $_no_checkout, $_verbose, $_first_parent);
-+	$_prefix, $_no_checkout, $_verbose);
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-@@ -119,14 +119,12 @@ my %cmd = (
- 			  'dry-run|n' => \$_dry_run,
- 			  'fetch-all|all' => \$_fetch_all,
- 			  'no-rebase' => \$_no_rebase,
--			  'first-parent' => \$_first_parent,
- 			%cmt_opts, %fc_opts } ],
- 	'set-tree' => [ \&cmd_set_tree,
- 	                "Set an SVN repository to a git tree-ish",
- 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
- 	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
--			{ 'revision|r=i' => \$_revision,
--			  'first-parent' => \$_first_parent
-+			{ 'revision|r=i' => \$_revision
- 			} ],
- 	'multi-fetch' => [ \&cmd_multi_fetch,
- 	                   "Deprecated alias for $0 fetch --all",
-@@ -147,20 +145,16 @@ my %cmd = (
- 			  'non-recursive' => \$Git::SVN::Log::non_recursive,
- 			  'authors-file|A=s' => \$_authors,
- 			  'color' => \$Git::SVN::Log::color,
--			  'pager=s' => \$Git::SVN::Log::pager,
--			  'first-parent' => \$_first_parent
-+			  'pager=s' => \$Git::SVN::Log::pager
- 			} ],
- 	'find-rev' => [ \&cmd_find_rev, "Translate between SVN revision numbers and tree-ish",
--			{
--			  'first-parent' => \$_first_parent
--			} ],
-+			{} ],
- 	'rebase' => [ \&cmd_rebase, "Fetch and rebase your working directory",
- 			{ 'merge|m|M' => \$_merge,
- 			  'verbose|v' => \$_verbose,
- 			  'strategy|s=s' => \$_strategy,
- 			  'local|l' => \$_local,
- 			  'fetch-all|all' => \$_fetch_all,
--			  'first-parent' => \$_first_parent,
- 			  %fc_opts } ],
- 	'commit-diff' => [ \&cmd_commit_diff,
- 	                   'Commit a diff between two trees',
-@@ -818,8 +812,7 @@ sub cmt_metadata {
- 
- sub working_head_info {
- 	my ($head, $refs) = @_;
--	my @args = ('log', '--no-color');
--	push @args, '--first-parent' if $_first_parent;
-+	my @args = ('log', '--no-color', '--first-parent');
- 	my ($fh, $ctx) = command_output_pipe(@args, $head);
- 	my $hash;
- 	my %max;
--- 
-1.5.3.1.g0e33-dirty
+-Peter
