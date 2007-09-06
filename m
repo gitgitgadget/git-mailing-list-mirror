@@ -1,92 +1,106 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH 1/3] git-gui/Makefile: Replace libdir with gitgui_libdir
-Date: Thu, 6 Sep 2007 14:00:12 +0400
-Message-ID: <20070906100012.GC6665@basalt.office.altlinux.org>
-References: <20070905232153.GA331@nomad.office.altlinux.org> <20070906023227.GH18160@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rework strbuf API and semantics.
+Date: Thu, 06 Sep 2007 03:03:57 -0700
+Message-ID: <7vtzq89kky.fsf@gitster.siamese.dyndns.org>
+References: <20070905085720.GD31750@artemis.corp>
+	<11890199232110-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TiqCXmo5T1hvSQQg"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 12:00:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 12:04:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITEA2-0003pI-2B
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 12:00:30 +0200
+	id 1ITEDc-0004kw-6s
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 12:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757420AbXIFKAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 06:00:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756759AbXIFKAQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 06:00:16 -0400
-Received: from vhq.altlinux.org ([194.107.17.3]:37724 "EHLO
-	sendmail.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757210AbXIFKAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 06:00:14 -0400
-Received: from basalt.office.altlinux.org (localhost.localdomain [127.0.0.1])
-	by sendmail.altlinux.org (Postfix) with ESMTP id E82391B5801C;
-	Thu,  6 Sep 2007 14:00:12 +0400 (MSD)
-Received: by basalt.office.altlinux.org (Postfix, from userid 501)
-	id D4BE6B0D92; Thu,  6 Sep 2007 14:00:12 +0400 (MSD)
-Content-Disposition: inline
-In-Reply-To: <20070906023227.GH18160@spearce.org>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
+	id S1755508AbXIFKEH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 06:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbXIFKEG
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 06:04:06 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752480AbXIFKEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 06:04:04 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 230B512F510;
+	Thu,  6 Sep 2007 06:04:22 -0400 (EDT)
+In-Reply-To: <11890199232110-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Wed, 5 Sep 2007 21:18:36 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57855>
+
+Pierre Habouzit <madcoder@debian.org> writes:
+
+> diff --git a/strbuf.c b/strbuf.c
+> ...
+> +void strbuf_addvf(struct strbuf *sb, const char *fmt, va_list ap)
+> +{
+> +	size_t len;
+> +	va_list ap2;
+> +
+> +	va_copy(ap2, ap);
+> +
+> +	len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
+> +	if (len < 0) {
+> +		len = 0;
+> +	}
+> +	if (len >= sb->alloc - sb->len) {
+> +		strbuf_grow(sb, len);
+> +		len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap2);
+> +		if (len >= sb->alloc - sb->len) {
+> +			len = sb->alloc - sb->len - 1;
+> +		}
+> +	}
+> +	sb->len = sb->len + len;
+> +	sb->buf[sb->len] = '\0';
+>  }
+
+Hmmmmm...  Didn't we recently had a patch that used va_copy()
+which was not available somewhere and was shot down?
+
+Instead of that nice inline strbuf_addf(), you may have to do
+something like:
+
+	strbuf_addf(..., fmt, ...) {
+                va_list ap;
+
+                va_start(ap, fmt);
+                len = vsnprintf(...);
+                va_end(ap);
+                if (len >= sb_avail(sb)) {
+                        strbuf_grow(sb, len);
+                        va_start(ap, fmt);
+                        len = vsnprintf(...);
+                        va_end(ap);
+                        if (len >= sb_avail(sb))
+                                gaah();
+                }
+		sb->len += len;
+                sb->buf[sb->len] = '\0';
+	}
 
 
---TiqCXmo5T1hvSQQg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +ssize_t strbuf_read(struct strbuf *sb, int fd)
+> +{
+> +	size_t oldlen = sb->len;
+> +
+> +	for (;;) {
+> +		ssize_t cnt;
+> +
+> +		strbuf_grow(sb, 8192);
+> +		cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
+> +		if (cnt < 0) {
+> +			sb->buf[sb->len = oldlen] = '\0';
 
-On Wed, Sep 05, 2007 at 10:32:27PM -0400, Shawn O. Pearce wrote:
-> "Dmitry V. Levin" <ldv@altlinux.org> wrote:
-> > On GNU/Linux, libdir is used to mean "/usr/lib or /usr/lib64"
-> > depending on architecture.  Different libdir meaning breaks
-> > idiomatic expressions like rpm specfile "make libdir=3D%_libdir".
-> >=20
-> > Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
-> > ---
-> >  git-gui/Makefile |   16 ++++++++--------
-> >  1 files changed, 8 insertions(+), 8 deletions(-)
->=20
-> Although I could apply this with `am -3` I'm NACK'ing this right
-> now because...
-[...]
-> git-gui is its own project with its own Makefile.  Junio includes
-> it in git.git to help widen its audience, and because it is quite
-> portable and easy for him to include.   In the future git-gui will
-> become a proper subproject of git.git.
-
-The idea is that git-gui's libdir is not a traditional arch-dependent
-libdir's subdirectory, but rather arch-independent datadir's subdirectory.
-That is, I see no reason to call it libdir even in standalone project.
-
-> If you want to define libdir in git's toplevel Makefile *and*
-> that definition is being exported down into git-gui's Makefile
-
-Yes, that was my first motivation, but the issue appears to be a bit more
-complex.
-
-
---=20
-ldv
-
---TiqCXmo5T1hvSQQg
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFG38+sfKvmrJ41Nh4RAkzOAJ4uXn/y4PGWJLkeaWFZstMiFEhhoQCfYu3g
-qCooF/QSgbdngDJoBVfzN2M=
-=eDpj
------END PGP SIGNATURE-----
-
---TiqCXmo5T1hvSQQg--
+Assignment inside array subscript is very hard to read.
+Besides, what's the error semantics?  On error, this behaves as
+if no bytes are read (i.e. partial read results in the initial
+round is lost forever)?
