@@ -1,106 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rework strbuf API and semantics.
-Date: Thu, 06 Sep 2007 03:03:57 -0700
-Message-ID: <7vtzq89kky.fsf@gitster.siamese.dyndns.org>
-References: <20070905085720.GD31750@artemis.corp>
-	<11890199232110-git-send-email-madcoder@debian.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: [announce] colgit: manage git repository collections
+Date: Thu, 6 Sep 2007 12:11:15 +0200
+Message-ID: <20070906101115.GA29360@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 12:04:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mP3DRpeJDSE+ciuQ"
+Cc: home in vcs discussion list <vcs-home@lists.madduck.net>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 12:11:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITEDc-0004kw-6s
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 12:04:12 +0200
+	id 1ITEKg-0006fh-Kw
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 12:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508AbXIFKEH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 06:04:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbXIFKEG
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 06:04:06 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752480AbXIFKEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 06:04:04 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 230B512F510;
-	Thu,  6 Sep 2007 06:04:22 -0400 (EDT)
-In-Reply-To: <11890199232110-git-send-email-madcoder@debian.org> (Pierre
-	Habouzit's message of "Wed, 5 Sep 2007 21:18:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751898AbXIFKLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 06:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbXIFKLZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 06:11:25 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:47031 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898AbXIFKLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 06:11:24 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 39D38BEC0;
+	Thu,  6 Sep 2007 12:11:16 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id A88039F161;
+	Thu,  6 Sep 2007 12:11:15 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 7A08A43F4; Thu,  6 Sep 2007 12:11:15 +0200 (CEST)
+Content-Disposition: inline
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4170/Thu Sep  6 06:30:09 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57855>
-
-Pierre Habouzit <madcoder@debian.org> writes:
-
-> diff --git a/strbuf.c b/strbuf.c
-> ...
-> +void strbuf_addvf(struct strbuf *sb, const char *fmt, va_list ap)
-> +{
-> +	size_t len;
-> +	va_list ap2;
-> +
-> +	va_copy(ap2, ap);
-> +
-> +	len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
-> +	if (len < 0) {
-> +		len = 0;
-> +	}
-> +	if (len >= sb->alloc - sb->len) {
-> +		strbuf_grow(sb, len);
-> +		len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap2);
-> +		if (len >= sb->alloc - sb->len) {
-> +			len = sb->alloc - sb->len - 1;
-> +		}
-> +	}
-> +	sb->len = sb->len + len;
-> +	sb->buf[sb->len] = '\0';
->  }
-
-Hmmmmm...  Didn't we recently had a patch that used va_copy()
-which was not available somewhere and was shot down?
-
-Instead of that nice inline strbuf_addf(), you may have to do
-something like:
-
-	strbuf_addf(..., fmt, ...) {
-                va_list ap;
-
-                va_start(ap, fmt);
-                len = vsnprintf(...);
-                va_end(ap);
-                if (len >= sb_avail(sb)) {
-                        strbuf_grow(sb, len);
-                        va_start(ap, fmt);
-                        len = vsnprintf(...);
-                        va_end(ap);
-                        if (len >= sb_avail(sb))
-                                gaah();
-                }
-		sb->len += len;
-                sb->buf[sb->len] = '\0';
-	}
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57856>
 
 
-> +ssize_t strbuf_read(struct strbuf *sb, int fd)
-> +{
-> +	size_t oldlen = sb->len;
-> +
-> +	for (;;) {
-> +		ssize_t cnt;
-> +
-> +		strbuf_grow(sb, 8192);
-> +		cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-> +		if (cnt < 0) {
-> +			sb->buf[sb->len = oldlen] = '\0';
+--mP3DRpeJDSE+ciuQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Assignment inside array subscript is very hard to read.
-Besides, what's the error semantics?  On error, this behaves as
-if no bytes are read (i.e. partial read results in the initial
-round is lost forever)?
+[Ob crosspost: please keep vcs-home on Cc all times. Please remove
+git mailing list from Cc when the reply isn't enough about git]
+
+Dear colleagues,
+
+Last night, while Andy Roddick was giving his best against bored
+world champion Roger Federer (and still lost after a game of many
+crazy shots), I reached what I think is a milestone in my attempt to
+let git manage my home directory across several machines. I called
+it colgit, which attempts to hint at "collection of gits", and this
+is the birth announcement of this shell script.
+
+  http://git.madduck.net/v/bin/colgit.git
+
+The problem I am trying to solve is that I maintain different
+projects in different repos, including scripts in ~/.bin and
+configuration files, and that I use multiple computers on a daily
+basis. Moreover, I might happen upon a new computer which I have to
+use for a few days and would like to be able to set up my account
+easily.
+
+With SVN, I'd have a repository for each machine, which existed only
+of svn:externals references pulling in other repos and thus
+assembling my home directory. git-submodule isn't quite designed for
+this sort of stuff, and thus I came up with colgit.
+
+The idea is simple: ~ is a git repository with a .colgit/ directory,
+which hosts a hierarchy of directories holding a selection of files
+=66rom .git directories. For instance, ~/.colgit/.etc/mutt/config is
+the git-config file for the repository that I want to have in
+~/.etc/mutt. Since all of ~/.colgit is checked in to the repo in ~,
+I can easily clone that for another machine, or branch from it and
+add yet other repositories, or remove some.
+
+Each directory in ~/.colgit can also hold hooks, description, and
+info/exclude, which are used to seed the repository in the plain
+~ hierarchy. Right now, the design requires a central repository and
+appropriate remote.origin.*/branch.master.merge entries in the
+config file so that it can initialise repositories on new machines.
+
+colgit currently is still very much a hack, but it already sports
+the following commands:
+
+  update/init: for each leaf directory in ~/.colgit, create the
+  corresponding repository in ~, seed it, and run git-pull. If the
+  respository already exists, just pull.
+
+  register: given an existing repository somewhere under ~, obtain
+  the relevant config files from its $GIT_DIR and populate the
+  corresponding directory under ~/.colgit.
+
+  status: for each leaf directory in ~/.colgit, query the
+  corresponding repository in ~ and note to stdout if it has local
+  changes
+
+I also envision the following commands:
+
+  add: given a repository URL and a local path, clone the repository
+  and run register
+
+  do: run the given git commands over each known repository
+
+The process of initialising an account on a remote machine thus
+becomes:
+
+  git clone -n ssh://.../machines/base temp && mv temp/.git ~
+  cd ~ && git checkout HEAD
+  ...
+  colgit init
+
+This is release early release often, so it's far from perfect and
+and probably buggy. But suggestions and patches are welcome!
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+# vim:tw=3D70
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--mP3DRpeJDSE+ciuQ
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG39JDIgvIgzMMSnURAl/CAKCVmJULatIqlqLshmQSdGNDHX1XfACg11aN
+qSpLrAqKWvrKyky//hqhqro=
+=peiS
+-----END PGP SIGNATURE-----
+
+--mP3DRpeJDSE+ciuQ--
