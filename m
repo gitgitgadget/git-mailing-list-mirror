@@ -1,190 +1,203 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 5/3] archive: rename attribute specfile to export-subst
-Date: Thu, 06 Sep 2007 18:51:11 +0200
-Message-ID: <46E02FFF.8090902@lsrfire.ath.cx>
-References: <46DC4D45.4030208@lsrfire.ath.cx>	<7vtzqb8fw2.fsf@gitster.siamese.dyndns.org> <46DCF0EF.9020604@op5.se>	<Pine.LNX.4.64.0709041139140.28586@racer.site>	<46DDE69C.1080908@lsrfire.ath.cx> <7vzm02klip.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 9/9] Implement git commit as a builtin command.
+Date: Thu, 6 Sep 2007 17:59:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709061741370.28586@racer.site>
+References: <11890382183913-git-send-email-krh@redhat.com>
+ <11890382242333-git-send-email-krh@redhat.com> <11890382243290-git-send-email-krh@redhat.com>
+ <11890382253220-git-send-email-krh@redhat.com> <11890382252522-git-send-email-krh@redhat.com>
+ <1189038225525-git-send-email-krh@redhat.com> <11890382262161-git-send-email-krh@redhat.com>
+ <11890382264046-git-send-email-krh@redhat.com> <11890382271931-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	Thomas Glanzmann <thomas@glanzmann.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 18:51:34 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-252589586-1189096989=:28586"
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 19:01:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITKZg-0001bG-Et
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 18:51:25 +0200
+	id 1ITKiF-0004K5-R9
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 19:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbXIFQvS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 12:51:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbXIFQvS
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 12:51:18 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:49303
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752601AbXIFQvR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 12:51:17 -0400
-Received: from [10.0.1.201] (p508EEF61.dip.t-dialin.net [80.142.239.97])
-	by neapel230.server4you.de (Postfix) with ESMTP id 8D2AE873B5;
-	Thu,  6 Sep 2007 18:51:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vzm02klip.fsf@gitster.siamese.dyndns.org>
+	id S1751365AbXIFRAK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 13:00:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbXIFRAK
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 13:00:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47032 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750832AbXIFRAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 13:00:08 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 17:00:06 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 06 Sep 2007 19:00:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Ndcd7bbkN3XHaU6V8rPiyFkj44o2araenHmJmE/
+	YQ4eliVW89xl7s
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11890382271931-git-send-email-krh@redhat.com>
+Content-ID: <Pine.LNX.4.64.0709061743190.28586@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57907>
 
-Junio C Hamano schrieb:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->>> Maybe we should not so much name it by purpose, but by function.  H=
-ow=20
->>> about "substformat" for the attribute name, and replacing any=20
->>> $Format:blablub$ inside those files with something a la=20
->>> --pretty=3Dformat:blablub?
->> I like the $Format:...$ notation.  How about naming the attribute
->> "template", as that's what a thus marked file is?
->=20
-> Sounds good, although I suspect "template" might confuse newbies
-> that checkout may apply the substitution as well.  How about
-> something with "export" in it?  export-subst, perhaps?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Well, including "export" in the name makes sense, yes.  I can't come up
-with a better name, let's take this.
+--8323584-252589586-1189096989=:28586
+Content-Type: TEXT/PLAIN; CHARSET=utf-8
+Content-Transfer-Encoding: 8BIT
+Content-ID: <Pine.LNX.4.64.0709061743191.28586@racer.site>
 
---- snip! ---
-As suggested by Junio and Johannes, change the name of the former
-attribute specfile to export-subst to indicate its function rather
-than purpose and to make clear that it is not applied to working tree
-files.
+Hi,
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
+On Wed, 5 Sep 2007, Kristian Høgsberg wrote:
 
- Documentation/gitattributes.txt |    6 +++---
- builtin-archive.c               |   14 +++++++-------
- t/t5000-tar-tree.sh             |   18 +++++++++---------
- 3 files changed, 19 insertions(+), 19 deletions(-)
+>  contrib/examples/git-commit.sh |  665 +++++++++++++++++++++++++++++++++++
+>  git-commit.sh                  |  665 -----------------------------------
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index 37b3be8..d0e951e 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -424,10 +424,10 @@ frotz	unspecified
- Creating an archive
- ~~~~~~~~~~~~~~~~~~~
-=20
--`specfile`
--^^^^^^^^^^
-+`export-subst`
-+^^^^^^^^^^^^^^
-=20
--If the attribute `specfile` is set for a file then git will expand
-+If the attribute `export-subst` is set for a file then git will expand
- several placeholders when adding this file to an archive.  The
- expansion depends on the availability of a commit ID, i.e. if
- gitlink:git-archive[1] has been given a tree instead of a commit or a
-diff --git a/builtin-archive.c b/builtin-archive.c
-index a8a0f01..af14837 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -81,8 +81,8 @@ static int run_remote_archiver(const char *remote, in=
-t argc,
- 	return !!rv;
- }
-=20
--static void *format_specfile(const struct commit *commit, const char *=
-format,
--                             unsigned long *sizep)
-+static void *format_subst(const struct commit *commit, const char *for=
-mat,
-+                          unsigned long *sizep)
- {
- 	unsigned long len =3D *sizep, result_len =3D 0;
- 	const char *a =3D format;
-@@ -131,22 +131,22 @@ static void *convert_to_archive(const char *path,
-                                 const void *src, unsigned long *sizep,
-                                 const struct commit *commit)
- {
--	static struct git_attr *attr_specfile;
-+	static struct git_attr *attr_export_subst;
- 	struct git_attr_check check[1];
-=20
- 	if (!commit)
- 		return NULL;
-=20
--        if (!attr_specfile)
--                attr_specfile =3D git_attr("specfile", 8);
-+        if (!attr_export_subst)
-+                attr_export_subst =3D git_attr("export-subst", 12);
-=20
--	check[0].attr =3D attr_specfile;
-+	check[0].attr =3D attr_export_subst;
- 	if (git_checkattr(path, ARRAY_SIZE(check), check))
- 		return NULL;
- 	if (!ATTR_TRUE(check[0].value))
- 		return NULL;
-=20
--	return format_specfile(commit, src, sizep);
-+	return format_subst(commit, src, sizep);
- }
-=20
- void *sha1_file_to_archive(const char *path, const unsigned char *sha1=
-,
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 6e89e07..42e28ab 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -28,7 +28,7 @@ commit id embedding:
- TAR=3D${TAR:-tar}
- UNZIP=3D${UNZIP:-unzip}
-=20
--SPECFILEFORMAT=3D%H%n
-+SUBSTFORMAT=3D%H%n
-=20
- test_expect_success \
-     'populate workdir' \
-@@ -36,7 +36,7 @@ test_expect_success \
-      echo simple textfile >a/a &&
-      mkdir a/bin &&
-      cp /bin/sh a/bin &&
--     printf "A\$Format:%s\$O" "$SPECFILEFORMAT" >a/specfile &&
-+     printf "A\$Format:%s\$O" "$SUBSTFORMAT" >a/substfile &&
-      ln -s a a/l1 &&
-      (p=3Dlong_path_to_a_file && cd a &&
-       for depth in 1 2 3 4 5; do mkdir $p && cd $p; done &&
-@@ -108,20 +108,20 @@ test_expect_success \
-     'diff -r a c/prefix/a'
-=20
- test_expect_success \
--    'create an archive with a specfile' \
--    'echo specfile specfile >a/.gitattributes &&
-+    'create an archive with a substfile' \
-+    'echo substfile export-subst >a/.gitattributes &&
-      git archive HEAD >f.tar &&
-      rm a/.gitattributes'
-=20
- test_expect_success \
--    'extract specfile' \
-+    'extract substfile' \
-     '(mkdir f && cd f && $TAR xf -) <f.tar'
-=20
- test_expect_success \
--     'validate specfile contents' \
--     'git log --max-count=3D1 "--pretty=3Dformat:A${SPECFILEFORMAT}O" =
-HEAD \
--      >f/a/specfile.expected &&
--      diff f/a/specfile.expected f/a/specfile'
-+     'validate substfile contents' \
-+     'git log --max-count=3D1 "--pretty=3Dformat:A${SUBSTFORMAT}O" HEA=
-D \
-+      >f/a/substfile.expected &&
-+      diff f/a/substfile.expected f/a/substfile'
-=20
- test_expect_success \
-     'git archive --format=3Dzip' \
+You might want to use "git format-patch -M" next time ;-)
+
+> @@ -357,7 +358,6 @@ BUILTIN_OBJS = \
+>  	builtin-rev-parse.o \
+>  	builtin-revert.o \
+>  	builtin-rm.o \
+> -	builtin-runstatus.o \
+
+Better keep it; some people's scripts could depend on it.
+
+> +struct option {
+> +    enum option_type type;
+> +    const char *long_name;
+> +    char short_name;
+> +    void *value;
+> +};
+> +
+> +static int scan_options(const char ***argv, struct option *options)
+> +{
+
+I would not (no longer, anyway) be opposed to replacing the option parsing 
+in git with getopt(); I hear that it is small enough to keep a copy in 
+compat/getopt.c.
+
+But let's go forward with builtin-commit; getopt() can come later.
+
+> +static char *
+> +prepare_index(const char **files, const char *prefix)
+> +{
+> +	int fd;
+> +	struct tree *tree;
+> +	struct lock_file *next_index_lock;
+> +
+> +	fd = hold_locked_index(&lock_file, 1);
+> +	if (read_cache() < 0)
+> +		die("index file corrupt");
+> +
+> +	if (all) {
+> +		add_files_to_cache(fd, files, NULL);
+> +		return lock_file.filename;
+> +	} else if (also) {
+> +		add_files_to_cache(fd, files, prefix);
+> +		return lock_file.filename;
+> +	}
+> +
+> +	if (interactive)
+> +		interactive_add();
+> +
+> +	if (*files == NULL) {
+> +		/* Commit index as-is. */
+> +		rollback_lock_file(&lock_file);
+> +		return get_index_file();
+> +	}
+> +
+> +	/*
+> +	 * FIXME: Warn on unknown files.  Shell script does
+> +	 *
+> +	 *   commit_only=`git-ls-files --error-unmatch -- "$@"`
+> +	 */
+> +
+> +	/*
+> +	 * FIXME: shell script does
+> +	 *
+> +	 *   git-read-tree --index-output="$TMP_INDEX" -i -m HEAD
+> +	 *
+> +	 * which warns about unmerged files in the index.
+> +	 */
+> +
+> +	/* update the user index file */
+> +	add_files_to_cache(fd, files, prefix);
+
+I suspect this, or ...
+
+> +
+> +	if (!initial_commit) {
+> +		tree = parse_tree_indirect(head_sha1);
+> +		if (!tree)
+> +			die("failed to unpack HEAD tree object");
+> +		if (read_tree(tree, 0, NULL))
+> +			die("failed to read HEAD tree object");
+> +	}
+> +
+> +	/* Uh oh, abusing lock_file to create a garbage collected file */
+> +	next_index_lock = xmalloc(sizeof(*next_index_lock));
+> +	fd = hold_lock_file_for_update(next_index_lock,
+> +				       git_path("next-index-%d", getpid()), 1);
+> +	add_files_to_cache(fd, files, prefix);
+
+... this, but not both.
+
+> +/* Find out if the message starting at position 'start' in the strbuf
+> + * contains only whitespace and Signed-off-by lines. */
+> +static int message_is_empty(struct strbuf *sb, int start)
+> +{
+> +	static const char signed_off_by[] = "Signed-off-by: ";
+
+I think you already defined that globally earlier.
+
+In the function message_is_empty() you write:
+
+> +	/* See if the template is just a prefix of the message. */
+> +	strbuf_init(&tmpl);
+> +	if (template_file && strbuf_read_path(&tmpl, template_file) > 0) {
+> +		stripspace(&tmpl, 1);
+> +		if (start + tmpl.len <= sb->len &&
+> +		    memcmp(tmpl.buf, sb->buf + start, tmpl.len) == 0)
+> +			start += tmpl.len;
+
+Could we not bail out here, if there is no match?  In that case, the 
+message is clearly not empty...
+
+> +	/* Check if the rest is just whitespace and Signed-of-by's. */
+> +	for (i = start; i < sb->len; i++) {
+> +		nl = memchr(sb->buf + i, '\n', sb->len - i);
+> +		if (nl)
+> +			eol = nl - sb->buf;
+> +		else
+> +			eol = sb->len;
+
+Why not just "if (isspace(sb->buf[i]) || sb->buf[i] == '\n') continue;"? 
+This would also catch the cases where people indent their S-O-Bs.
+
+> +
+> +		if (strlen(signed_off_by) <= eol - i &&
+> +		    !prefixcmp(sb->buf + i, signed_off_by)) {
+> +			i = eol;
+> +			continue;
+> +		}
+> +		while (i < eol)
+> +			if (!isspace(sb->buf[i++]))
+> +				return 0;
+> +	}
+> +
+> +	return 1;
+> +}
+
+I did not review the rest of the code closely yet...
+
+All in all: well done!
+
+Ciao,
+Dscho
+
+--8323584-252589586-1189096989=:28586--
