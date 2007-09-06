@@ -1,139 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-apply: do not read past the end of buffer
-Date: Wed, 05 Sep 2007 22:06:15 -0700
-Message-ID: <7vmyw0e62g.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Calculating tree nodes
+Date: Wed, 05 Sep 2007 22:21:13 -0700
+Message-ID: <7vhcm8e5di.fsf@gitster.siamese.dyndns.org>
+References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
+	<20070904025153.GS18160@spearce.org>
+	<9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
+	<20070904062629.GZ18160@spearce.org>
+	<7vbqcinxdb.fsf@gitster.siamese.dyndns.org>
+	<20070906032026.GO18160@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 07:06:25 2007
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 07:21:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT9ZN-0007iD-Hh
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:06:21 +0200
+	id 1IT9o1-0001nA-5z
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbXIFFGQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 01:06:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbXIFFGQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:06:16 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61137 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448AbXIFFGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 01:06:16 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070906050614.PQVQ20651.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 6 Sep 2007 01:06:14 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id kt6F1X0051gtr5g0000000; Thu, 06 Sep 2007 01:06:15 -0400
+	id S1751588AbXIFFVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 01:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXIFFVX
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:21:23 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbXIFFVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 01:21:22 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F409E12D537;
+	Thu,  6 Sep 2007 01:21:37 -0400 (EDT)
+In-Reply-To: <20070906032026.GO18160@spearce.org> (Shawn O. Pearce's message
+	of "Wed, 5 Sep 2007 23:20:26 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57821>
 
-When the preimage we are patching is shorter than what the patch
-text expects, we tried to match the buffer contents at the
-"original" line with the fragment in full, without checking we
-have enough data to match in the preimage.  This caused the size
-of a later memmove() to wrap around and attempt to scribble
-almost the entire address space.  Not good.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-The code that follows the part this patch touches tries to match
-the fragment with line offsets.  Curiously, that code does not
-have the problem --- it guards against reading past the end of
-the preimage.
+> The latter (build and test log) would generally be very large.
+> We would *not* want to cluster them.  But we might want to store
+> next to the commit a very small pointer to the note itself.  Such
+> as the note's SHA-1.  Or its offset within the packfile's index.
+> This would make locating those notes very cheap, while not having
+> a huge impact on the common case of commit traversal.
+>
+> Likewise we might want to pack a tag's SHA-1 alongside of the commit
+> it points at, as parsing the commit would immediately give us all
+> annotated tags that refer to that commit.  Tags are (usually) few
+> and far between.  But tools like git-describe are commonly used and
+> would benefit from not needing to build the commit->tag hashtable.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I am not so sure.
 
- * This is an ancient part of the code; I am somewhat surprised
-   that nobody has ever reported it earlier.
-
- builtin-apply.c         |    3 +-
- t/t4123-apply-shrink.sh |   58 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 1 deletions(-)
- create mode 100755 t/t4123-apply-shrink.sh
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 25b1447..976ec77 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1514,7 +1514,8 @@ static int find_offset(const char *buf, unsigned long size, const char *fragment
- 	}
- 
- 	/* Exact line number? */
--	if (!memcmp(buf + start, fragment, fragsize))
-+	if ((start + fragsize <= size) &&
-+	    !memcmp(buf + start, fragment, fragsize))
- 		return start;
- 
- 	/*
-diff --git a/t/t4123-apply-shrink.sh b/t/t4123-apply-shrink.sh
-new file mode 100755
-index 0000000..984157f
---- /dev/null
-+++ b/t/t4123-apply-shrink.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='apply a patch that is larger than the preimage'
-+
-+. ./test-lib.sh
-+
-+cat >F  <<\EOF
-+1
-+2
-+3
-+4
-+5
-+6
-+7
-+8
-+999999
-+A
-+B
-+C
-+D
-+E
-+F
-+G
-+H
-+I
-+J
-+
-+EOF
-+
-+test_expect_success setup '
-+
-+	git add F &&
-+	mv F G &&
-+	sed -e "s/1/11/" -e "s/999999/9/" -e "s/H/HH/" <G >F &&
-+	git diff >patch &&
-+	sed -e "/^\$/d" <G >F &&
-+	git add F
-+
-+'
-+
-+test_expect_success 'apply should fail gracefully' '
-+
-+	if git apply --index patch
-+	then
-+		echo Oops, should not have succeeded
-+		false
-+	else
-+		status=$?
-+		echo "Status was $status"
-+		if test -f .git/index.lock
-+		then
-+			echo Oops, should not have crashed
-+			false
-+		fi
-+	fi
-+'
-+
-+test_done
+It is a good idea to have an internal API that takes an object
+and gives back a set of objects (be they notes to commit or tags
+point at object) related to it, but you need to always deal with
+loose objects and v2 packs, so you will have to traverse all the
+tags and find what they point at _anyway_ to implement the API.
+Having a specialized table in v4 does not mean you can look at
+that table and nothing else, so I do not immediately see a gain.
