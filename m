@@ -1,37 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Calculating tree nodes
-Date: Wed, 5 Sep 2007 23:20:26 -0400
-Message-ID: <20070906032026.GO18160@spearce.org>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com> <20070904025153.GS18160@spearce.org> <9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com> <20070904062629.GZ18160@spearce.org> <7vbqcinxdb.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Don't allow contrib/workdir/git-new-workdir to trash existing dirs
+Date: Wed, 5 Sep 2007 23:33:41 -0400
+Message-ID: <20070906033341.GA32447@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 05:20:48 2007
+X-From: git-owner@vger.kernel.org Thu Sep 06 05:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT7v6-00072f-M2
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 05:20:41 +0200
+	id 1IT87s-0000Hd-MD
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 05:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757469AbXIFDUf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 23:20:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757242AbXIFDUf
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 23:20:35 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36976 "EHLO
+	id S1757506AbXIFDdr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 23:33:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757505AbXIFDdr
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 23:33:47 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:37335 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbXIFDUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 23:20:34 -0400
+	with ESMTP id S1757487AbXIFDdq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 23:33:46 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1IT7ul-0007g4-3y; Wed, 05 Sep 2007 23:20:19 -0400
+	id 1IT87X-0008AB-K8; Wed, 05 Sep 2007 23:33:31 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9CA9720FBAE; Wed,  5 Sep 2007 23:20:26 -0400 (EDT)
+	id 4210E20FBAE; Wed,  5 Sep 2007 23:33:42 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vbqcinxdb.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,61 +38,49 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57811>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > There's nothing stopping us from creating additional indexes.
-> > ...
-> > But we can also store the notes alongside the commits in the
-> > packfile, so that if the data for the commit has been paged in
-...
-> 
-> I would agree with your main thrust "nobody prevents you from
-> building additional index", but on a tangent, I am skeptical
-> about adding too much to pack v4.  Especially "clustering the
-> notes" part.
-...
-> Now, hopefully many operations do not need notes either,
-> although notes themselves can store _anything_ so each of them
-> could be large and/or each commit could have large number of
-> them.  I suspect clustering notes along with the commit they
-> annotate would break the locality of access for common case.
+Recently I found that doing a sequence like the following:
 
-I'm inclined to agree.
+  git-new-workdir a b
+  ...
+  git-new-workdir a b
 
-Its something I've thought about doing.  I haven't even prototyped
-code for it.  Let alone shown numbers that say one way or the other.
+by accident will cause a (and now also b) to have an infinite cycle
+in its refs directory.  This is caused by git-new-workdir trying
+to create the "refs" symlink over again, only during the second
+time it is being created within a's refs directory and is now also
+pointing back at a's refs.
 
-One of the notes proposals was talking about having lots of different
-classes of notes.  E.g. a "Signed-off-by" class and a "build and test
-log results" class.
+This causes confusion in git as suddenly branches are named things
+like "refs/refs/refs/refs/refs/refs/refs/heads/foo" instead of the
+more commonly accepted "refs/heads/foo".  Plenty of commands start
+to see ambiguous ref names and others just take ages to compute.
 
-The former would generally be very small and may even want to be
-shown most of the time the commit body is displayed (e.g. in gitk,
-git-log).  These would be good candidates to cluster alongside the
-commit.  Indeed they are clustered there today, just hung inside
-of the commit object itself.  Nobody is bitching about the hit they
-cause on the common case of `pack-objects`.  :)
+git-clone has the same safety check, so git-new-workdir should
+behave just like it.
 
-The latter (build and test log) would generally be very large.
-We would *not* want to cluster them.  But we might want to store
-next to the commit a very small pointer to the note itself.  Such
-as the note's SHA-1.  Or its offset within the packfile's index.
-This would make locating those notes very cheap, while not having
-a huge impact on the common case of commit traversal.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/workdir/git-new-workdir |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-Likewise we might want to pack a tag's SHA-1 alongside of the commit
-it points at, as parsing the commit would immediately give us all
-annotated tags that refer to that commit.  Tags are (usually) few
-and far between.  But tools like git-describe are commonly used and
-would benefit from not needing to build the commit->tag hashtable.
-OK, well, git-describe cheats and uses the struct object hashtable,
-but whatever.
-
-You get my point.  I think.  And I got yours about not making the
-common case worse than it already is today.
-
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+index c6e154a..2838546 100755
+--- a/contrib/workdir/git-new-workdir
++++ b/contrib/workdir/git-new-workdir
+@@ -48,6 +48,12 @@ then
+ 		"a complete repository."
+ fi
+ 
++# don't recreate a workdir over an existing repository
++if test -e "$new_workdir"
++then
++	die "destination directory '$new_workdir' already exists."
++fi
++
+ # make sure the the links use full paths
+ git_dir=$(cd "$git_dir"; pwd)
+ 
 -- 
-Shawn.
+1.5.3.1.840.g0fedbc
