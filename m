@@ -1,62 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/3] archive: specfile syntax change: "$Format:%PLCHLDR$" instead of just "%PLCHLDR"
-Date: Thu, 06 Sep 2007 16:17:17 -0700
-Message-ID: <7vwsv38juq.fsf@gitster.siamese.dyndns.org>
-References: <46DC4D45.4030208@lsrfire.ath.cx>
-	<7vtzqb8fw2.fsf@gitster.siamese.dyndns.org> <46DCF0EF.9020604@op5.se>
-	<Pine.LNX.4.64.0709041139140.28586@racer.site>
-	<46DDE69C.1080908@lsrfire.ath.cx>
-	<7vzm02klip.fsf@gitster.siamese.dyndns.org>
-	<46E028B9.2090908@lsrfire.ath.cx>
-	<Pine.LNX.4.64.0709061803590.28586@racer.site>
-	<46E0647A.10000@lsrfire.ath.cx> <46E068BB.5080202@lsrfire.ath.cx>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: how to access working tree from .git dir?
+Date: Thu, 06 Sep 2007 17:20:00 -0600
+Message-ID: <1189120800.6203.23.camel@beauty>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	Thomas Glanzmann <thomas@glanzmann.de>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Sep 07 01:17:44 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 07 01:19:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITQbM-0002gM-OL
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 01:17:33 +0200
+	id 1ITQcl-0002wI-IF
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 01:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932599AbXIFXR1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 19:17:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932592AbXIFXR1
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 19:17:27 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:33089 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932586AbXIFXR1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 19:17:27 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 085D212F7A8;
-	Thu,  6 Sep 2007 19:17:42 -0400 (EDT)
-In-Reply-To: <46E068BB.5080202@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of
-	"Thu, 06 Sep 2007 22:53:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932581AbXIFXSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 19:18:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXIFXSz
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 19:18:55 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:3198 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932335AbXIFXSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 19:18:54 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Thu, 06 Sep 2007 17:18:43 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l86NIhEg028453 for
+ <git@vger.kernel.org>; Thu, 6 Sep 2007 17:18:43 -0600
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.6.155422
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0,
+ __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0,
+ __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070906231844; SEV=2.2.2; DFV=B2007090620;
+ IFV=2.0.4,4.0-9; AIF=B2007090620; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230362E34364530384144342E303038303A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007090620_5.02.0125_4.0-9
+X-WSS-ID: 6AFE55593HO1571342-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57945>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+In messsing around with hooks, I've discovered that not all hooks are
+run in the same environment.  In particular, the current working
+directory in the post-receive hook (maybe others as well) is the GIT_DIR
+(.git) directory, instead of the root of the working tree (as in
+pre-commit).
 
-> Just noticed: if the memcmp() above finds a difference, the code shou=
-ld
-> *not* break out of the loop.  Ahem.  Perhaps I should first add memme=
-m()
-> after all...
+This wouldn't be so bad, but it seems that `git rev-parse --show-cdup`
+does not show anything valid if your current working directory is inside
+the .git dir.  This creates a scenario where there is no consistent way
+to access the root of the working tree from within a hook.  To make
+things worse, the behavior changes subtly whether $GIT_DIR is defined or
+not.
 
-That sounds like a sensible thing to do. =20
+I've got a patch that changes the current working directory before
+calling the post-receive hook, but that's more of a workaround than a
+fix.  I'd like to be able to run `git rev-parse --show-cdup` from with
+a .git directory and have it produce a valid result.
 
-Will drop this copy and use updated 4/3 and 3.5/3; thanks.
+So:  I'm poking around around and trying to find the right answer but
+some things look weird.  If anyone knows the quick-and-easy answer here
+please let me know.  Otherwise, I'll continue to poke around some more.
+
+Thanks,
+
+-JE
