@@ -1,50 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] allow bulk import to be packed
-Date: Wed, 05 Sep 2007 18:36:01 -0700
-Message-ID: <7vlkbkfuda.fsf@gitster.siamese.dyndns.org>
-References: <7vps0wfv8g.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: builtin commit series sent
+Date: Wed, 5 Sep 2007 22:09:53 -0400
+Message-ID: <20070906020953.GD18160@spearce.org>
+References: <1189039527.20311.24.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 03:36:17 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 04:10:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT6I3-0001bg-JT
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 03:36:15 +0200
+	id 1IT6oo-00069m-Uy
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 04:10:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757335AbXIFBgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 5 Sep 2007 21:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757326AbXIFBgK
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 21:36:10 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43935 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756097AbXIFBgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2007 21:36:09 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DA60C12E53D;
-	Wed,  5 Sep 2007 21:36:26 -0400 (EDT)
-In-Reply-To: <7vps0wfv8g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 05 Sep 2007 18:17:19 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757328AbXIFCKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 5 Sep 2007 22:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757313AbXIFCKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Sep 2007 22:10:00 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35323 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757279AbXIFCJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2007 22:09:59 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1IT6oS-0005KH-NL; Wed, 05 Sep 2007 22:09:44 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 618E220FBAE; Wed,  5 Sep 2007 22:09:54 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1189039527.20311.24.camel@hinata.boston.redhat.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57797>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Kristian Hgsberg <krh@redhat.com> wrote:
+> There's one test that doesn't look right to me:
+> t1400-update-ref.sh.  The 'creating initial files' case does a git
+> commit --amend and apparently expect to commit the changed contents of
+> the file F, even though it hasn't been added to the index.  Similarly,
+> there's a git commit -F M just below it that does the same thing.  I'm
+> not sure how they pass with the shell script commit...
 
-> This will use fast-import as a backend to dump blobs resulting
-> from a huge initial import into a packfile.
+Yea.  It doesn't actually matter in this test.  The following
+patch can be applied and the test will still pass:
 
-This needs major work to be usable.
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index c4c0dfa..ce045b2 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -198,11 +198,9 @@ test_expect_success \
+ 	 GIT_AUTHOR_DATE="2005-05-26 23:41" \
+ 	 GIT_COMMITTER_DATE="2005-05-26 23:41" git-commit -F M -a &&
+ 	 h_OTHER=$(git rev-parse --verify HEAD) &&
+-	 echo FIXED >F &&
+ 	 GIT_AUTHOR_DATE="2005-05-26 23:44" \
+ 	 GIT_COMMITTER_DATE="2005-05-26 23:44" git-commit --amend &&
+ 	 h_FIXED=$(git rev-parse --verify HEAD) &&
+-	 echo TEST+FIXED >F &&
+ 	 echo Merged initial commit and a later commit. >M &&
+ 	 echo $h_TEST >.git/MERGE_HEAD &&
+ 	 GIT_AUTHOR_DATE="2005-05-26 23:45" \
 
-Although fast-import knows object name of each blob, being a
-quick-and-dirty patch, git-add does not ask for it and still
-computes the blob names by itself.  The only thing this
-proof-of-concept patch buys is that the resulting object
-database is packed, and does not get loose objects.
+The reason is the test is looking for a very specific date and
+time in the branch's reflog.  The reflog entry is not impacted by
+editing F.  Since the commit date is different here the --amend
+created a different commit object, which was all that mattered.
+
+Actually I think we probably should just apply the above patch
+to clean up this test case.  I'll submit it under a different
+cover so Junio can more easily apply it.
+
+-- 
+Shawn.
