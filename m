@@ -1,60 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Invoke "git gc --auto" from "git add" and "git fetch"
-Date: Thu, 6 Sep 2007 13:02:09 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709061301250.28586@racer.site>
-References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
- <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
- <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
- <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
- <7vhcm8j1bp.fsf_-_@gitster.siamese.dyndns.org>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Thu, 6 Sep 2007 13:08:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709061308140.28586@racer.site>
+References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com>
+ <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+ <buoir6oo05v.fsf@dhapc248.dev.necel.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 14:02:41 2007
+Cc: Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:09:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITG4D-0003i5-43
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 14:02:37 +0200
+	id 1ITGAr-0005pd-Fw
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 14:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbXIFMCd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 08:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753236AbXIFMCc
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 08:02:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43472 "HELO mail.gmx.net"
+	id S1754739AbXIFMJN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 08:09:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757997AbXIFMJL
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 08:09:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38516 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752954AbXIFMCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 08:02:31 -0400
-Received: (qmail invoked by alias); 06 Sep 2007 12:02:29 -0000
+	id S1757978AbXIFMJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 08:09:09 -0400
+Received: (qmail invoked by alias); 06 Sep 2007 12:09:06 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 06 Sep 2007 14:02:29 +0200
+  by mail.gmx.net (mp036) with SMTP; 06 Sep 2007 14:09:06 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19lpnZh+KtlGmBPhNr5OmjdyZC64nPtM8IVxRZKQa
-	7gjVZPWvN0O9og
+X-Provags-ID: V01U2FsdGVkX19jSf9pqVBjXd+A4anXsyv21IIcdo4I8ocimd/YP+
+	AcLt6suUu9TuQr
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vhcm8j1bp.fsf_-_@gitster.siamese.dyndns.org>
+In-Reply-To: <buoir6oo05v.fsf@dhapc248.dev.necel.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57872>
 
 Hi,
 
-On Wed, 5 Sep 2007, Junio C Hamano wrote:
+On Thu, 6 Sep 2007, Miles Bader wrote:
 
->  * This is obviously a follow-up to the previous one that allows
->    you to say "git gc --auto".  I somewhat feel dirty about
->    calling cmd_gc() bypassing fork & exec from "git add",
->    though...
+> Dmitry Kakurin <dmitry.kakurin@gmail.com> writes:
+> > When I first looked at Git source code two things struck me as odd:
+> > 1. Pure C as opposed to C++. No idea why. Please don't talk about
+> > portability, it's BS.
+> 
+> Just to piss you off.
 
-Since all git-gc seems to do is to fork() and exec() other git programs, 
-this should be fine (have not looked at cmd_gc() in a while, though).
+Hehe.
+
+FWIW I strongly disagree that it's BS.  As others have stated, the reasons 
+are easily found, and they are no weak arguments.
 
 Ciao,
 Dscho
