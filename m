@@ -1,68 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Calculating tree nodes
-Date: Wed, 05 Sep 2007 22:21:13 -0700
-Message-ID: <7vhcm8e5di.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910709031913q278cb9dbp441756afb28607c6@mail.gmail.com>
-	<20070904025153.GS18160@spearce.org>
-	<9e4733910709032026s7f94eed9h25d5165840cc38d2@mail.gmail.com>
-	<20070904062629.GZ18160@spearce.org>
-	<7vbqcinxdb.fsf@gitster.siamese.dyndns.org>
-	<20070906032026.GO18160@spearce.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Significant performance waste in git-svn and friends
+Date: Thu, 6 Sep 2007 07:52:11 +0200
+Organization: glandium.org
+Message-ID: <20070906055211.GC5741@glandium.org>
+References: <20070905184710.GA3632@glandium.org> <7vd4wwj16d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 07:21:30 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 07:53:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IT9o1-0001nA-5z
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:21:29 +0200
+	id 1ITAIn-0006te-VR
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 07:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588AbXIFFVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 01:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXIFFVX
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:21:23 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46572 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbXIFFVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 01:21:22 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F409E12D537;
-	Thu,  6 Sep 2007 01:21:37 -0400 (EDT)
-In-Reply-To: <20070906032026.GO18160@spearce.org> (Shawn O. Pearce's message
-	of "Wed, 5 Sep 2007 23:20:26 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753614AbXIFFxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 6 Sep 2007 01:53:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbXIFFxN
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 01:53:13 -0400
+Received: from vawad.err.no ([85.19.200.177]:42703 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752895AbXIFFxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2007 01:53:13 -0400
+Received: from aputeaux-153-1-83-91.w86-205.abo.wanadoo.fr ([86.205.41.91] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1ITAIZ-0002d7-Oa; Thu, 06 Sep 2007 07:53:05 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1ITAHj-0001bD-Jw; Thu, 06 Sep 2007 07:52:11 +0200
+Content-Disposition: inline
+In-Reply-To: <7vd4wwj16d.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57822>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Wed, Sep 05, 2007 at 01:40:42PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > The same things obviously apply to git-cvsimport and other scripts
+> > calling git-hash-object a lot.
+> 
+> I *obviously* hate this patch, as it makes this Porcelain
+> command to be aware of the internal representation too much.
 
-> The latter (build and test log) would generally be very large.
-> We would *not* want to cluster them.  But we might want to store
-> next to the commit a very small pointer to the note itself.  Such
-> as the note's SHA-1.  Or its offset within the packfile's index.
-> This would make locating those notes very cheap, while not having
-> a huge impact on the common case of commit traversal.
->
-> Likewise we might want to pack a tag's SHA-1 alongside of the commit
-> it points at, as parsing the commit would immediately give us all
-> annotated tags that refer to that commit.  Tags are (usually) few
-> and far between.  But tools like git-describe are commonly used and
-> would benefit from not needing to build the commit->tag hashtable.
+The patch was not supposed to be applied. I said it was lame ;)
+It was more of a proof of concept.
 
-I am not so sure.
+Anyways, thinking a bit more about it, I was wondering if it wouldn't be
+a good idea to have Git.pm have a "native" implementation (by native I
+mean a .so module) for low-level plumbing tools such as hash-object,
+cat-file and such.
 
-It is a good idea to have an internal API that takes an object
-and gives back a set of objects (be they notes to commit or tags
-point at object) related to it, but you need to always deal with
-loose objects and v2 packs, so you will have to traverse all the
-tags and find what they point at _anyway_ to implement the API.
-Having a specialized table in v4 does not mean you can look at
-that table and nothing else, so I do not immediately see a gain.
+Obviously, reinventing the wheel is not good, so this native
+implementation would be using a "git library" API, such as what has
+been done under SoC (though I don't know if this API exposes low-level
+plumbing functions)
+
+> I wonder if letting fast-import handle the object creation is an
+> option, though.
+
+It could, probably. The reason I didn't use it is that it was way
+quicker to hack a 10 lines patch to create the blobs by hand than it
+would have been to fork a fast-import object at the correct place during
+git-svn initialization and piping to it at the appropriate times.
+
+My goal was only to check how faster this would make it not to fork a
+git-hash-object per blob.
+
+Mike
