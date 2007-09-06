@@ -1,71 +1,100 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 6/7] Eradicate yet-another-buffer implementation in  buitin-rerere.c
-Date: Thu, 06 Sep 2007 22:16:07 +0200
-Message-ID: <85hcm7a6t4.fsf@lola.goethe.zz>
-References: <20070902224213.GB431@artemis.corp>
-	<11890776114037-git-send-email-madcoder@debian.org>
-	<118907761140-git-send-email-madcoder@debian.org>
-	<11890776111843-git-send-email-madcoder@debian.org>
-	<11890776112292-git-send-email-madcoder@debian.org>
-	<11890776111670-git-send-email-madcoder@debian.org>
-	<11890776112309-git-send-email-madcoder@debian.org>
-	<11890776112641-git-send-email-madcoder@debian.org>
-	<Pine.LNX.4.64.0709061504521.28586@racer.site>
-	<20070906171734.GG8451@artemis.corp>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 4/3] archive: specfile syntax change: "$Format:%PLCHLDR$"
+ instead of just "%PLCHLDR"
+Date: Thu, 06 Sep 2007 22:35:06 +0200
+Message-ID: <46E0647A.10000@lsrfire.ath.cx>
+References: <46DC4D45.4030208@lsrfire.ath.cx> <7vtzqb8fw2.fsf@gitster.siamese.dyndns.org> <46DCF0EF.9020604@op5.se> <Pine.LNX.4.64.0709041139140.28586@racer.site> <46DDE69C.1080908@lsrfire.ath.cx> <7vzm02klip.fsf@gitster.siamese.dyndns.org> <46E028B9.2090908@lsrfire.ath.cx> <Pine.LNX.4.64.0709061803590.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	Thomas Glanzmann <thomas@glanzmann.de>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 06 22:16:22 2007
+X-From: git-owner@vger.kernel.org Thu Sep 06 22:35:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITNlz-0007Ti-NI
-	for gcvg-git@gmane.org; Thu, 06 Sep 2007 22:16:20 +0200
+	id 1ITO4P-0004Xk-MJ
+	for gcvg-git@gmane.org; Thu, 06 Sep 2007 22:35:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757390AbXIFUQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 16:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbXIFUQN
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 16:16:13 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:36750 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754831AbXIFUQM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 16:16:12 -0400
-Received: from mail-in-07-z2.arcor-online.net (mail-in-07-z2.arcor-online.net [151.189.8.19])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 0666A18008D;
-	Thu,  6 Sep 2007 22:16:08 +0200 (CEST)
-Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
-	by mail-in-07-z2.arcor-online.net (Postfix) with ESMTP id E57BD2C6B7D;
-	Thu,  6 Sep 2007 22:16:07 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-057-134.pools.arcor-ip.net [84.61.57.134])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id ACCC53664CA;
-	Thu,  6 Sep 2007 22:16:07 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 515221CAD71B; Thu,  6 Sep 2007 22:16:07 +0200 (CEST)
-In-Reply-To: <20070906171734.GG8451@artemis.corp> (Pierre Habouzit's message of "Thu\, 06 Sep 2007 19\:17\:34 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4173/Thu Sep  6 20:35:28 2007 on mail-in-06.arcor-online.net
-X-Virus-Status: Clean
+	id S1756851AbXIFUfP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 6 Sep 2007 16:35:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757533AbXIFUfO
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 16:35:14 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:55504
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755682AbXIFUfN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2007 16:35:13 -0400
+Received: from [10.0.1.201] (p508EE2E4.dip.t-dialin.net [80.142.226.228])
+	by neapel230.server4you.de (Postfix) with ESMTP id ADC91873B5;
+	Thu,  6 Sep 2007 22:35:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0709061803590.28586@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57927>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Johannes Schindelin schrieb:
+>> +static void *format_specfile(const struct commit *commit, const cha=
+r *format,
+>> +                             unsigned long *sizep)
+>=20
+> Should this not be "char *buffer" instead of "const char *format"?  O=
+r=20
+> even better: a "struct strbuf *"?
 
-> On Thu, Sep 06, 2007 at 02:05:36PM +0000, Johannes Schindelin wrote:
+const is correct, because the data in the buffer shouldn't be (and
+isn't) modified.
 
->> You used spaces instead of tabs here.
->
->   crap, and I did that in the 5th patch as well. well, I'll maybe send
-> privately a "fixed" version of the patch to junio then, to avoid
-> flooding the list with spacing issues.
->
->   And I'll also set my vim to use tabs when I'm hacking on git.
+"buffer" is a generic term; "format" on the other hand indicates the
+meaning of the data within the buffer.
 
-Just use Emacs and
-M-x c-set-style RET linux RET
+Input and output might indeed be passed along as struct strbuf, even
+more so since the new API encourages its use as generic buffer (format
+can contain NULs).
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+>> +{
+>> +	unsigned long len =3D *sizep, result_len =3D 0;
+>> +	const char *a =3D format;
+>> +	char *result =3D NULL;
+>> +
+>> +	for (;;) {
+>> +		const char *b, *c;
+>> +		char *fmt, *formatted =3D NULL;
+>> +		unsigned long a_len, fmt_len, formatted_len, allocated =3D 0;
+>=20
+> Maybe initialise formatted_len, just to be on the safe side?
+
+I wish I could use C99 syntax and move its declaration down to its firs=
+t
+use, then it would be obvious that formatted_len is never used without
+initialization.
+
+>> +
+>> +		b =3D memchr(a, '$', len);
+>> +		if (!b || a + len < b + 9 || memcmp(b + 1, "Format:", 7))
+>> +			break;
+>=20
+> Wouldn't memmem(buffer, len, "$Format:", 8) be better here?
+
+Oh, that's a nice GNU extension, didn't know it before.  We might impor=
+t
+it to compat etc., but I think that's better left for a follow-up patch=
+=2E
+
+> A general comment: since you plan to output the result into a file an=
+yway,=20
+> it should be even easier to avoid realloc(), and do a=20
+> print_formatted_specfile() instead of a format_specfile(), no?
+
+Hmm, not sure what you mean.  At least archive-tar needs the expanded
+contents in a buffer (not immediately written to stdout) because it
+tries to mimic a real tar and always writes in blocks of 10k and
+therefore needs to buffer the output.
+
+Thanks!
+Ren=C3=A9
