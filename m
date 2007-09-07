@@ -1,62 +1,83 @@
-From: Walter Bright <boost@digitalmars.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Thu, 06 Sep 2007 22:09:26 -0700
-Organization: Digital Mars
-Message-ID: <fbqmdu$udg$1@sea.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se>  <1189004090.20311.12.camel@hinata.boston.redhat.com>  <vpq642pkoln.fsf@bauges.imag.fr>  <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>  <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Subject: [PATCH] git-merge-pack
+Date: Fri, 7 Sep 2007 08:24:20 +0100
+Message-ID: <200709070824.23541.andyparkins@gmail.com>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org> <alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org> <7v1wdb9ymf.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
+	Steven Grimm <koreth@midwinter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 09:20:18 2007
+X-From: git-owner@vger.kernel.org Fri Sep 07 09:24:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITY8U-0004b8-3A
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 09:20:14 +0200
+	id 1ITYCm-0005Yi-6A
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 09:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964919AbXIGHUI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 03:20:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964922AbXIGHUI
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 03:20:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:47518 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964918AbXIGHUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 03:20:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1ITY8I-0001vH-Gx
-	for git@vger.kernel.org; Fri, 07 Sep 2007 09:20:02 +0200
-Received: from c-24-16-50-251.hsd1.wa.comcast.net ([24.16.50.251])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 09:20:02 +0200
-Received: from boost by c-24-16-50-251.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 09:20:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.wa.comcast.net
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>
+	id S964847AbXIGHYf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 03:24:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbXIGHYf
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 03:24:35 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:3208 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314AbXIGHYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 03:24:34 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so365076fkz
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 00:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=gFL9UPUacb8tXzBkByVq50RHcbxRLhnJbVsy6egyLsI=;
+        b=eIE5jjJiD3GBcB/XuA+zB76r1eOKmNjbK+LWVn9oAWnvNzMT4TjDw9cD4Bvv+IdwT4hGoMk2gPkvnRwUKpUmGg9zyBeU/FY2wbLqLkcgGuwPFAIMqBppg7iXSWOmrB0VTyYBnEz9CesS6QpncUebdaW4A/XyebA83IDdCXvNXPk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=lKh3pGsGxJkkc/LiOjb3T71VxKmZTNkWIw3nPo/CKTi57Yw55CG9XrE2ePx7swYvl/BEjPrMuNu+JdKQelpu8lAotF3J5bEq2nhB/iOsSBCKOrRz4zPwZO77/Ah57HZlKs9uqsYr8TIh1ieqKnknwbAjq1NVk0wNaHDeBjZ56wA=
+Received: by 10.82.183.19 with SMTP id g19mr2018313buf.1189149869089;
+        Fri, 07 Sep 2007 00:24:29 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id h1sm425605nfh.2007.09.07.00.24.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Sep 2007 00:24:28 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7v1wdb9ymf.fsf_-_@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57995>
 
-Linus Torvalds wrote:
-> And if you want a fancier language, C++ is absolutely the worst one to 
-> choose. If you want real high-level, pick one that has true high-level 
-> features like garbage collection or a good system integration, rather than 
-> something that lacks both the sparseness and straightforwardness of C, 
-> *and* doesn't even have the high-level bindings to important concepts. 
-> 
-> IOW, C++ is in that inconvenient spot where it doesn't help make things 
-> simple enough to be truly usable for prototyping or simple GUI 
-> programming, and yet isn't the lean system programming language that C is 
-> that actively encourags you to use simple and direct constructs.
+On Friday 2007 September 07, Junio C Hamano wrote:
 
-The D programming language is a different take than C++ has on growing 
-C. I'm curious what your thoughts on that are (D has garbage collection, 
-while still retaining the ability to directly manage memory). Can you 
-enumerate what you feel are the important concepts?
+>  builtin-merge-pack.c |   87
+
+Can I suggest not calling it git-merge-pack?  It makes it look like it's a new 
+merge strategy called "pack"...
+
+git-merge-base
+git-merge-file
+git-merge-index
+git-merge-octopus
+git-merge-one-file
+git-merge-ours
+git-merge-recur
+git-merge-recursive
+git-merge-resolve
+git-merge-stupid
+git-merge-subtree
+git-merge-tree
+
+
+  
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
