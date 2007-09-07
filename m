@@ -1,64 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 00:30:27 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0709070020130.21186@xanadu.home>
-References: <46DDC500.5000606@etek.chalmers.se>
- <1189004090.20311.12.camel@hinata.boston.redhat.com>
- <vpq642pkoln.fsf@bauges.imag.fr>
- <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
- <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
- <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
- <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
- <loom.20070907T055946-637@post.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: very slow cherry-pick'ing (old-2.6-bkcvs tree)
+Date: Fri, 7 Sep 2007 00:42:23 -0400
+Message-ID: <20070907044223.GW18160@spearce.org>
+References: <200709062351.l86NpnAK004807@agora.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Paul Wankadia <junyer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 06:30:37 2007
+To: Erez Zadok <ezk@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 07 06:42:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITVUJ-0007VM-UA
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 06:30:36 +0200
+	id 1ITVfv-0001J1-Fv
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 06:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179AbXIGEa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 00:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbXIGEa3
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 00:30:29 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:10084 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbXIGEa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 00:30:28 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JNZ002P7DUR1DE0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 07 Sep 2007 00:30:28 -0400 (EDT)
-In-reply-to: <loom.20070907T055946-637@post.gmane.org>
-X-X-Sender: nico@xanadu.home
+	id S1751421AbXIGEm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 00:42:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbXIGEm2
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 00:42:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:57853 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249AbXIGEm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 00:42:27 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1ITVfm-0001HW-1N; Fri, 07 Sep 2007 00:42:26 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 568AD20FBAE; Fri,  7 Sep 2007 00:42:24 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200709062351.l86NpnAK004807@agora.fsl.cs.sunysb.edu>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57973>
 
-On Fri, 7 Sep 2007, Paul Wankadia wrote:
+Erez Zadok <ezk@cs.sunysb.edu> wrote:
+> Our group maintains Unionfs on the latest -rc kernel, but we also maintain
+> several backports going all the way to 2.6.9.  Once we complete the
+> development and testing of a feature/fix in -latest, we cherry-pick those
+> commits to older backports, and test those.  When I cherry-pick from -latest
+> to my 2.6.{22,21,20,19,18} repositories, it works reasonably fast.  But when
+> I cherry-pick to my 2.6.9 tree, it runs about 20 times slower!  Why?  Is
+> there anything I can do to inspect what's going on and perhaps speed up the
+> cherry-picking process?
 
-> Wincent Colaiuta <win <at> wincent.com> writes:
-> 
-> > > I just wanted to get a sense of how many people share this "Git should
-> > > be in pure C" doctrine.
-> > 
-> > Count me as one of them. Git is all about speed, and C is the best  
-> > choice for speed, especially in context of Git's workload.
-> 
-> I concur, but I also feel that D, Clean and OCaml are viable alternatives.
+I'm guessing its due to rename detection.
 
-I happen to have zero experience with any of those, so if Git 
-development was done with one of them, you'd have to count me out.
+git-cherry-pick is implemented in terms of git-merge-recursive,
+which always does rename detection when files are deleted or added.
+This can take some considerable time if there's a lot of files that
+have been added/deleted.
 
-C is simply the lingua franca when it comes to programming, and it 
-happens to be the fastest amongst portable languages too.
+What would probably be faster would be to dump the patches in
+question using git-format-patch and then apply them using git-am.
+This bypasses the rename detection as it is using strictly a diff
+and an apply.
 
-
-Nicolas
+-- 
+Shawn.
