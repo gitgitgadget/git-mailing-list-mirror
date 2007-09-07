@@ -1,70 +1,97 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [ANNOUNCE] git/gitweb.git repository
-Date: Fri, 7 Sep 2007 16:39:46 +1000
-Message-ID: <ee77f5c20709062339l54bbafc7ufaafdacc9da74ced@mail.gmail.com>
-References: <20070831000149.GK1219@pasky.or.cz>
-	 <ee77f5c20708301756k60b4d295j907da463af477982@mail.gmail.com>
-	 <ee77f5c20708312246u37f9c1bahe2211117abd05790@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Fri, 07 Sep 2007 08:47:47 +0200
+Message-ID: <85ejhb7yzw.fsf@lola.goethe.zz>
+References: <46DDC500.5000606@etek.chalmers.se>
+	<1189004090.20311.12.camel@hinata.boston.redhat.com>
+	<vpq642pkoln.fsf@bauges.imag.fr>
+	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
+	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jnareb@gmail.com, ltuikov@yahoo.com
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Sep 07 08:39:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+To: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 08:50:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITXVR-0004F5-0o
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:39:53 +0200
+	id 1ITXfJ-0006P7-SK
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:50:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932611AbXIGGjs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 02:39:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554AbXIGGjs
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:39:48 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:21923 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932523AbXIGGjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 02:39:47 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so353296rvb
-        for <git@vger.kernel.org>; Thu, 06 Sep 2007 23:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=9+CaLOIGAa4N+d4noD+o8tXecNOkH6mTGKx7UzHREyQ=;
-        b=RRT6ao+cWIdkSs0/dCv0SL6+z0HmdFrWDWI8xICrHNDbeUQJi/BxUa7QYvhu1tExJ1CNO1PDA22Iq+LPT2xnf94wez9VYQNkyfUs+X9ny1jriGqXCRl/1tTQ8+rujmtfdSQgAUN6YKnKG4jtO26+x85ggdQl6FMxDIcfj46tnH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pBqEo5chMwv+LCn+2nb1uG+G1CwbaD4katHPjbhvPHRkGqdTOfwqIRly0e66+ya5rWpNq4JhwIwa+AAW1WdysS/8CEvWRaHa8KDAEYuy829xuqLA2pD8o3THk23e8MkF5S6u2hfNaNU/nxv2gqtuK3cnQWmY0x9R2BDKII9IZLg=
-Received: by 10.140.126.14 with SMTP id y14mr597723rvc.1189147187063;
-        Thu, 06 Sep 2007 23:39:47 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Thu, 6 Sep 2007 23:39:46 -0700 (PDT)
-In-Reply-To: <ee77f5c20708312246u37f9c1bahe2211117abd05790@mail.gmail.com>
-Content-Disposition: inline
+	id S964936AbXIGGt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 02:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964918AbXIGGt5
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:49:57 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:42888 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932721AbXIGGt4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 02:49:56 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id BEBE11E4F8E;
+	Fri,  7 Sep 2007 08:49:53 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id A9A3D28EC4D;
+	Fri,  7 Sep 2007 08:49:53 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id E17378C467;
+	Fri,  7 Sep 2007 08:49:40 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 8CEF21CAD71B; Fri,  7 Sep 2007 08:47:47 +0200 (CEST)
+In-Reply-To: <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> (Dmitry Kakurin's message of "Thu\, 6 Sep 2007 17\:21\:37 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4175/Thu Sep  6 22:16:54 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57989>
 
-On 01/09/2007, David Symonds <dsymonds@gmail.com> wrote:
-> On 31/08/07, David Symonds <dsymonds@gmail.com> wrote:
-> > On 31/08/2007, Petr Baudis <pasky@suse.cz> wrote:
-> > >   Please feel encouraged to make random forks for your development
-> > > efforts, or push your random patches (preferrably just bugfixes,
-> > > something possibly controversial should be kept in safe containment like
-> > > a fork or separate branch) to the mob branch.
-> >
-> > Sorry, I'm still relatively new to git, and couldn't work out how to
-> > push to the mob branch, so it's inline below. It's fairly minor, just
-> > adding <span title="foo">..</span> around author names when they get
-> > abbreviated.
+"Dmitry Kakurin" <dmitry.kakurin@gmail.com> writes:
+
+> On 9/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>>
+>> In other words: the choice of C is the only sane choice. I know
+>> Miles Bader jokingly said "to piss you off", but it's actually
+>> true. I've come to the conclusion that any programmer that would
+>> prefer the project to be in C++ over C is likely a programmer that
+>> I really *would* prefer to piss off, so that he doesn't come and
+>> screw up any project I'm involved with.
 >
-> Okay, I worked out how to push to the mob branch: it's commit 37c8546.
-> I can refactor this somewhat if that's an issue.
+> As dinosaurs (who code exclusively in C) are becoming extinct, you
+> will soon find yourself alone with attitude like this.
 
-Has anyone taken a look at this? If it's bad/unwanted, just tell me
-and I'll drop it.
+As long as TeX, Emacs and vi are around, I would not worry too much
+about dinosaurs in general.  But C++ is a cancerous dinosaur.  It has
+growths that just don't belong on a C body.
 
+> I was coding in Assembly when there was no C.  Then in C before C++
+> was created.  Now days it's C++ and C#, and I have never looked
+> back.  Bad developers will write bad code in any language. But
+> penalizing good developers for this illusive reason of repealing bad
+> contributors is nonsense.
 
-Dave.
+The problem with C++ is that every C++ developer has his own style,
+and reuse is an illusion within that style.  Take a look at classes
+implementing matrix arithmetic: there are as many around as the day is
+long, and all of them are incompatible with one another.
+
+With regard to programming styles, C++ does not support multiple
+inheritance.  For a single project grown from a single start, you can
+get reasonable solutions.  But combining stuff is creating maintenance
+messes.
+
+With C, the situation is not dissimilar, but you spent less time
+fighting the illusion that you don't need to reimplement, anyway.
+
+> I just wanted to get a sense of how many people share this "Git
+> should be in pure C" doctrine.
+
+What nonsense.  Large parts of git already are shell scripts, so
+obviously there is no such doctrine.  Just because C++ is not a sane
+proposition does not mean that others might not work.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
