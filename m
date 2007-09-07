@@ -1,105 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 08:31:41 +0200
-Message-ID: <46E0F04D.7040101@op5.se>
-References: <46DDC500.5000606@etek.chalmers.se>	 <1189004090.20311.12.camel@hinata.boston.redhat.com>	 <vpq642pkoln.fsf@bauges.imag.fr>	 <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>	 <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>	 <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>	 <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>	 <a1bbc6950709061808q85cf75co75f2331dc2bdbcbe@mail.gmail.com>	 <alpine.LFD.0.999.0709070212300.5626@evo.linux-foundation.org> <a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Add a new lstat implementation based on Win32 API, and make stat use that implementation too.
+Date: Fri, 07 Sep 2007 08:36:08 +0200
+Message-ID: <85ir6n7zjb.fsf@lola.goethe.zz>
+References: <46DACD93.9000509@trolltech.com>
+	<200709022228.00733.robin.rosenberg.lists@dewire.com>
+	<Pine.LNX.4.64.0709022133190.28586@racer.site>
+	<200709022342.42733.robin.rosenberg.lists@dewire.com>
+	<46DBB2BE.8030505@eudaptics.com>
+	 =?ISO-8859-1?Q?=20<20070903112110.?= =?ISO-8859-1?Q?GE148=0453@genesis?= =?ISO-8859-1?Q?.fruga?=
+	=?ISO-8859-1?Q?lware.org>?=
+	<86y7fohtmw.fsf@lola.quinscape.zz>
+	<20070905160206.GY14853@genesis.frugalware.org>
+	<85abs1hr6t.fsf@lola.goethe.zz>
+	<20070906162657.GF2329@genesis.frugalware.org>
+	<85bqcfbvpe.fsf@lola.goethe.zz> <46E08DE9.4060701@11011.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 08:31:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Douglas Stockwell <doug@11011.net>
+X-From: git-owner@vger.kernel.org Fri Sep 07 08:36:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITXNd-0002am-KL
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:31:50 +0200
+	id 1ITXRy-0003X2-9e
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbXIGGbp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 02:31:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932342AbXIGGbo
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:31:44 -0400
-Received: from mail.op5.se ([193.201.96.20]:60851 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932247AbXIGGbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 02:31:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id DE7F31943E7;
-	Fri,  7 Sep 2007 08:31:42 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jN99Cz7AMns8; Fri,  7 Sep 2007 08:31:42 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 4542619439E;
-	Fri,  7 Sep 2007 08:31:42 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com>
+	id S932473AbXIGGgN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 02:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbXIGGgN
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:36:13 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:38935 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932342AbXIGGgM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 02:36:12 -0400
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 76D4131E7AE;
+	Fri,  7 Sep 2007 08:36:11 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 6A7212D3788;
+	Fri,  7 Sep 2007 08:36:11 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 44F991BF3D9;
+	Fri,  7 Sep 2007 08:36:11 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id E2E241CAD71B; Fri,  7 Sep 2007 08:36:08 +0200 (CEST)
+In-Reply-To: <46E08DE9.4060701@11011.net> (Douglas Stockwell's message of "Fri\, 07 Sep 2007 08\:31\:53 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4175/Thu Sep  6 22:16:54 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57987>
 
-Dmitry Kakurin wrote:
-> On 9/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->> On Thu, 6 Sep 2007, Dmitry Kakurin wrote:
->>> As it is right now, it's too hard to see the high-level logic thru
->>> this endless-busy-work of micro-managing strings and memory.
->> Total BS. The string/memory management is not at all relevant. Look at the
->> code (I bet you didn't). This isn't the important, or complex part.
-> 
-> Not only have I looked at the code, I've also debugged it quite a bit.
-> Granted most of my problems had to do with handling paths on Windows
-> (i.e. string manipulations).
-> 
-> Let me snip "C is better than C++" part ...
->> [ snip ]
-> ... and explain where I'm coming from:
-> My goal is to *use* Git. When something does not work *for me* I want
-> to be able to fix it (and contribute the fix) in *shortest time
-> possible* and with *minimal efforts*. As for me it's a diversion from
-> my main activities.
-> The fact that Git is written in C does not really contribute to that goal.
+Douglas Stockwell <doug@11011.net> writes:
 
+> David Kastrup wrote:
+>> If anybody is as fortunate as to actually have Vista available, it
+>> would be nice if he corroborated that relative links under Vista are
+>> indeed (as Microsoft appears to claim) relative with regard to the
+>> current work directory rather than the directory containing the link.
+>
+> I believe the wording "resolves the path relative to the current
+> directory" actually refers to the creation of links, not to their use.
+>
+> C:\stest>ver
+>
+> Microsoft Windows [Version 6.0.6000]
 
-Coupled with what you said in an earlier mail, namely
----%<---%<---
-> Obviously C++ developers can contribute C code. But assuming that they
-> prefer it that way is wrong.
-> 
-> I was coding in Assembly when there was no C.
-> Then in C before C++ was created.
-> Now days it's C++ and C#, and I have never looked back.
----%<---%<---
+[Examples]
 
-Considering C appeared in 1972, and C++ appeared in 1985, you have been
-writing C code for 13 years. And you're telling me that git being written
-in C prevents you from contributing?
-
-If you want to do something useful in C++ for git, make it easy for C++
-programmers to write apps for it.
-
-> 
-> Now, I realize that I'm a very infrequent contributor to Git, but I
-> want my opinion to be heard.
-> People who carry the main weight of developing and maintaining Git
-> should make the call.
-
-They already have, but every now and then someone comes along and suggest
-a complete rewrite in some other language. So far we've had Java (there's
-always one...), Python and now C++.
-
-It happens to all projects, sooner or later. The funny thing is that all those
-people that want their favourite software to be rewritten in their favourite
-programming language always wants someone else to rewrite it for them.
+Good.  So we will ultimately be able to support symlinks on some
+Windows versions.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
