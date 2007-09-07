@@ -1,102 +1,106 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
-Date: Fri, 7 Sep 2007 10:43:52 +0200
-Message-ID: <20070907084352.GD4538@xp.machine.xx>
-References: <20070906075104.GA10192@hand.yhbt.net> <1189096669534-git-send-email-hjemli@gmail.com> <20070906210155.GA20938@soma> <20070906213556.GA21234@soma> <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com> <20070906235516.GC4538@xp.machine.xx> <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 6/7] Eradicate yet-another-buffer implementation in  buitin-rerere.c
+Date: Fri, 07 Sep 2007 11:02:16 +0200
+Message-ID: <20070907090216.GG21418@artemis.corp>
+References: <11890776114037-git-send-email-madcoder@debian.org> <118907761140-git-send-email-madcoder@debian.org> <11890776111843-git-send-email-madcoder@debian.org> <11890776112292-git-send-email-madcoder@debian.org> <11890776111670-git-send-email-madcoder@debian.org> <11890776112309-git-send-email-madcoder@debian.org> <11890776112641-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0709061504521.28586@racer.site> <20070906171734.GG8451@artemis.corp> <7v642m7vhr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 10:44:52 2007
+Content-Type: multipart/signed; boundary="iJXiJc/TAIT2rh2r";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 11:02:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITZSH-0008HS-Dv
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:44:45 +0200
+	id 1ITZjN-0003ul-T4
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 11:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965222AbXIGIoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 04:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965218AbXIGIoA
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:44:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33244 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965205AbXIGIn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 04:43:58 -0400
-Received: (qmail invoked by alias); 07 Sep 2007 08:43:55 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp021) with SMTP; 07 Sep 2007 10:43:55 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/+UuN35gv+AmgleIZeRSzq+yyTicjFdWGikBy7mP
-	bY3eR9FSNSGBan
-Mail-Followup-To: Lars Hjemli <hjemli@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S964989AbXIGJCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 05:02:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757377AbXIGJCT
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 05:02:19 -0400
+Received: from pan.madism.org ([88.191.52.104]:52287 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757402AbXIGJCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 05:02:18 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 243B98B6;
+	Fri,  7 Sep 2007 11:02:17 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 33C6B88; Fri,  7 Sep 2007 11:02:16 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7v642m7vhr.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58007>
 
-On Fri, Sep 07, 2007 at 02:23:58AM +0200, Lars Hjemli wrote:
-> On 9/7/07, Peter Baumann <waste.manager@gmx.de> wrote:
-> > Wouldn't it be much more pleasant to say something like
-> >
-> >         git-svn dcommit --on the_branch
-> >
-> > whereas 'the_branch' is the name of the upstream branch as specified
-> > in the fetch/branch section in the git config?
-> 
-> Well, git-svn extracts the svn url, revision and repo uuid from the
-> commit message, while your proposal only specifies the url. But I'm
-> still not certain that there is a need for --upstream or anything
-> similar if git-svn always uses 'git log --first-parent' (see
-> http://article.gmane.org/gmane.comp.version-control.git/57951).
-> 
 
-First parent is a heuristic (and a good one, me thinks).
+--iJXiJc/TAIT2rh2r
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If you did something like this:
+On Fri, Sep 07, 2007 at 08:03:28AM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >   crap, and I did that in the 5th patch as well. well, I'll maybe send
+> > privately a "fixed" version of the patch to junio then, to avoid
+> > flooding the list with spacing issues.
+>=20
+> Heh, no need.  I can fix them up locally here.
 
-(1) Start state:
+  okay, perfect.
 
-       a-b-c-d-e    trunk	(both trunk and branch1 are imported
-          \			 from SVN)
-	   \-x-y    branch1
+> For me personally, your use of Mail-Followup-To: header is very
+> much more irritating.  When I want to talk to you, I want my MUA
+> to put YOUR name on To: header, not Johannes.  I consider it
+> rude and selfish to use M-F-T to avoid getting duplicates from a
+> mailing list you subscribe to.
+>=20
+> I have said this often enough in the past, and have been trying
+> not to say this unless necessary.  It is sad and happy at the
+> same time that I still occasionary need to bring this up.
+>=20
+> Sad because I have to get irritated enough before I say this,
 
-(2) Hm. My Branch 'branch1' should be ready to be merged to 'trunk', so
-   lets do it (not yet dcommited)
+  I'm sorry, I'll remove it (for the next mail though, I'm too lazy to
+change that right now). It's a policy on Debian lists to force M-F-T,
+and it's indeed not very practical on lists like the lkml or git. I
+could have guessed that myself.
 
-       a-b-c-d-e- m trunk
-          \	 /
-	   \ -x-y   branch1
+> and happy because it means I found another person who is worth
+> communicating with and expect to communicate again with on the
+> list.
 
-(3) ARGH. I just discovered a serious bug in 'branch1' and can't just merge
-   it into 'trunk', yet. But the merge was painfull enough so I don't want to
-   redo it again, so lets reset 'trunk' to its state before the merge and
-   'branch1' to the merge commit, before fixing the bug in 'branch1'.
+  heh, thanks :)
 
-       a-b-c-d-e    trunk
-          \	 \
-	   \ -x-y m branch1
+> Please, don't.
 
-Notice that this DAG is identical to the one in (2), but just the branch
-labels stick to different commits. And if you now want to commit the
-merge 'm' to 'branch1' before fixing the bug you are screwed, because
---first-parent will give you 'e' instead of 'y'.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Yes, I know that this example isn't something happening every day, but
-at least it shows that --first-parent could *only* be a heuristic and
-not something you would rely 100% on. And if you imagine several people
-who are sharing their git commits for codereview with pulling/pushing,
-it isn't obvious what branch got merged into the other, because it is
-possible that the other person did the merge.
+--iJXiJc/TAIT2rh2r
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Don't get me wrong, --first-parent *is* an improvement over the current
-behaviour, but I think it is simply not the *best* we can do.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
--Peter
+iD8DBQBG4ROYvGr7W6HudhwRAkZGAJ49gckTWhKJdAZrkYOXJy9Kky+ZTwCfTmVj
+yHeT7HzAqb4a1gXRUy5VpNY=
+=i/mh
+-----END PGP SIGNATURE-----
+
+--iJXiJc/TAIT2rh2r--
