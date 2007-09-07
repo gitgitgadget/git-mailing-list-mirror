@@ -1,94 +1,203 @@
-From: Walter Bright <boost@digitalmars.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Fri, 07 Sep 2007 16:16:28 -0700
-Organization: Digital Mars
-Message-ID: <fbsm43$ave$1@sea.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>    =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0709061839510.5?=
-	=?ISO-8859-1?Q?626@evo.linux-fo?= =?ISO-8859-1?Q?undation.or=04g>?= <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org> <fbqmdu$udg$1@sea.gmane.org> <85k5r27wkv.fsf@lola.goethe.zz>    =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?f=04br1a2$qm7$1@se?= =?ISO-8859-1?Q?a.gmane.org>?= <851wda7ufz.fsf@lola.goethe.zz> <fbr4oi$5ko$1@sea.gmane.org> <85wsv26cv8.fsf@lola.goethe.zz> <fbsbul$dg0$1@sea.gmane.org> <851wda2pbo.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] diff-delta.c: pack the index structure
+Date: Sat, 08 Sep 2007 01:38:20 +0200
+Organization: Organization?!?
+Message-ID: <85fy1q11xv.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 08 01:16:50 2007
+X-From: git-owner@vger.kernel.org Sat Sep 08 01:38:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITn48-00029R-2B
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 01:16:44 +0200
+	id 1ITnPC-0005Rp-Na
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 01:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbXIGXQi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 19:16:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbXIGXQi
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 19:16:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:45820 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751126AbXIGXQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 19:16:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ITn3u-0005Tu-G8
-	for git@vger.kernel.org; Sat, 08 Sep 2007 01:16:30 +0200
-Received: from c-24-16-50-251.hsd1.mn.comcast.net ([24.16.50.251])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Sep 2007 01:16:30 +0200
-Received: from boost by c-24-16-50-251.hsd1.mn.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Sep 2007 01:16:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.mn.comcast.net
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <851wda2pbo.fsf@lola.goethe.zz>
+	id S1752713AbXIGXiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 19:38:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbXIGXiY
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 19:38:24 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:37545 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751357AbXIGXiW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 19:38:22 -0400
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 8E34015B660
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 809DE2D3B28
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-039-212.pools.arcor-ip.net [84.61.39.212])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 55AFE30A919
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id C65FE1CAD71D; Sat,  8 Sep 2007 01:38:20 +0200 (CEST)
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4189/Sat Sep  8 01:10:12 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58091>
 
-David Kastrup wrote:
-> The problem is a toy problem: in real applications,
+In normal use cases, the performance wins are not overly impressive:
+we get something like 5-10% due to the slightly better locality of
+memory accesses using the packed structure.
 
-Necessarily, to make an example suitable for a n.g. post, I ruthlessly 
-cut down the size of it. This can have the inadvertent effect of making 
-it appear trivial.
+However, since the data structure for index entries saves 33% of
+memory on 32-bit platforms and 40% on 64-bit platforms, the behavior
+when memory gets limited should be nicer.
 
-> you'll need to
-> access several data structures using the same index, and you'll need
-> to be able to assign index values to temporary variables and so on.
+This is a rather well-contained change.  One obvious improvement would
+be sorting the elements in one bucket according to their hash, then
+using binary probing to find the elements with the right hash value.
 
-The index is available:
+As it stands, the output should be strictly the same as previously
+unless one uses the option for limiting the amount of used memory, in
+which case the created packs might be better.
 
-	foreach (index, value; array)
-	{
-		writefln("array[%s] = %s", index, value);
-	}
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ diff-delta.c |   62 +++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 46 insertions(+), 16 deletions(-)
 
-and it isn't necessary to worry about what the correct type for index 
-is, as it is inferred.
-
-> So being able to hide the type of an index in one very specific
-> application (looping through a single array completely)
-
-  foreach'ing over a subset (i.e. slice) of an array:
-
-	foreach (value; array[5 .. $])
-		... loop from 5 to the end ...
-
-> at one place is not going to buy you much.
-
-Experience with foreach in real code shows that the for loop is what 
-becomes a rarity. Simple as it is, foreach is one of the best liked 
-improvements D has. And I speak as one who has written so many for loops 
-that spewing out:
-
-	for (int i = 0; i < 10; i++)
-
-is a 'finger' macro for me, i.e. my fingers blit it out without even 
-thinking about it.
-
- > Anyway, D is pretty much irrelevant as a perspective for git, so you
- > should take it to a language advocacy group.
-
-I wished to answer your specific comments in this post.
+diff --git a/diff-delta.c b/diff-delta.c
+index 0dde2f2..cf0136f 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -115,9 +115,13 @@ static const unsigned int U[256] = {
+ struct index_entry {
+ 	const unsigned char *ptr;
+ 	unsigned int val;
+-	struct index_entry *next;
+ };
+ 
++struct unpacked_index_entry {
++	struct index_entry entry;
++	struct unpacked_index_entry *next;
++};	
++
+ struct delta_index {
+ 	unsigned long memsize;
+ 	const void *src_buf;
+@@ -131,7 +135,8 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
+ 	const unsigned char *data, *buffer = buf;
+ 	struct delta_index *index;
+-	struct index_entry *entry, **hash;
++	struct unpacked_index_entry *entry, **hash;
++	struct index_entry *aentry, **ahash;
+ 	void *mem;
+ 	unsigned long memsize;
+ 
+@@ -148,28 +153,21 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	hmask = hsize - 1;
+ 
+ 	/* allocate lookup index */
+-	memsize = sizeof(*index) +
+-		  sizeof(*hash) * hsize +
++	memsize = sizeof(*hash) * hsize +
+ 		  sizeof(*entry) * entries;
+ 	mem = malloc(memsize);
+ 	if (!mem)
+ 		return NULL;
+-	index = mem;
+-	mem = index + 1;
+ 	hash = mem;
+ 	mem = hash + hsize;
+ 	entry = mem;
+ 
+-	index->memsize = memsize;
+-	index->src_buf = buf;
+-	index->src_size = bufsize;
+-	index->hash_mask = hmask;
+ 	memset(hash, 0, hsize * sizeof(*hash));
+ 
+ 	/* allocate an array to count hash entries */
+ 	hash_count = calloc(hsize, sizeof(*hash_count));
+ 	if (!hash_count) {
+-		free(index);
++		free(hash);
+ 		return NULL;
+ 	}
+ 
+@@ -183,12 +181,13 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 			val = ((val << 8) | data[i]) ^ T[val >> RABIN_SHIFT];
+ 		if (val == prev_val) {
+ 			/* keep the lowest of consecutive identical blocks */
+-			entry[-1].ptr = data + RABIN_WINDOW;
++			entry[-1].entry.ptr = data + RABIN_WINDOW;
++			--entries;
+ 		} else {
+ 			prev_val = val;
+ 			i = val & hmask;
+-			entry->ptr = data + RABIN_WINDOW;
+-			entry->val = val;
++			entry->entry.ptr = data + RABIN_WINDOW;
++			entry->entry.val = val;
+ 			entry->next = hash[i];
+ 			hash[i] = entry++;
+ 			hash_count[i]++;
+@@ -212,15 +211,46 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 			continue;
+ 		entry = hash[i];
+ 		do {
+-			struct index_entry *keep = entry;
++			struct unpacked_index_entry *keep = entry;
+ 			int skip = hash_count[i] / HASH_LIMIT;
+ 			do {
++				--entries;
+ 				entry = entry->next;
+ 			} while(--skip && entry);
++			++entries;
+ 			keep->next = entry;
+ 		} while(entry);
+ 	}
+ 	free(hash_count);
++	memsize = sizeof(*index)
++		+sizeof(*ahash) * (hsize+1) +
++		+sizeof(*aentry) * entries;
++	mem=malloc(memsize);
++
++	if (!mem) {
++		free(hash);
++		return NULL;
++	}
++
++	index = mem;
++	index->memsize = memsize;
++	index->src_buf = buf;
++	index->src_size = bufsize;
++	index->hash_mask = hmask;
++
++	mem = index+1;
++	ahash = mem;
++	mem = ahash + (hsize+1);
++	aentry = mem;
++
++	for (i=0; i<hsize; i++) {
++		ahash[i] = aentry;
++		for (entry=hash[i]; entry; entry=entry->next)
++			*aentry++ = entry->entry;
++	}
++	ahash[hsize] = aentry;
++	assert(aentry-(struct index_entry *)mem == entries);
++	free(hash);
+ 
+ 	return index;
+ }
+@@ -302,7 +332,7 @@ create_delta(const struct delta_index *index,
+ 			val ^= U[data[-RABIN_WINDOW]];
+ 			val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
+ 			i = val & index->hash_mask;
+-			for (entry = index->hash[i]; entry; entry = entry->next) {
++			for (entry = index->hash[i]; entry<index->hash[i+1]; entry++) {
+ 				const unsigned char *ref = entry->ptr;
+ 				const unsigned char *src = data;
+ 				unsigned int ref_size = ref_top - ref;
+-- 
+1.5.3.GIT
