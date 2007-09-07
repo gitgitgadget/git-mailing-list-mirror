@@ -1,73 +1,99 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 08:52:44 +0200
-Message-ID: <85642n7yrn.fsf@lola.goethe.zz>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<1189004090.20311.12.camel@hinata.boston.redhat.com>
-	<vpq642pkoln.fsf@bauges.imag.fr>
-	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
-	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
-	<alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>
-	<a1bbc6950709061808q85cf75co75f2331dc2bdbcbe@mail.gmail.com>
-	<alpine.LFD.0.999.0709070212300.5626@evo.linux-foundation.org>
-	<a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: rebase from ambiguous ref discards changes
+Date: Fri, 07 Sep 2007 08:55:46 +0200
+Message-ID: <20070907065546.GA21418@artemis.corp>
+References: <1189115308.30308.9.camel@koto.keithp.com> <7vsl5r8jer.fsf@gitster.siamese.dyndns.org> <1189133898.30308.58.camel@koto.keithp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Matthieu Moy" <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 08:52:57 2007
+Content-Type: multipart/signed; boundary="C7zPtVaVf+AK4Oqc";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Keith Packard <keithp@keithp.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 08:55:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITXhz-00074B-9I
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:52:51 +0200
+	id 1ITXkw-0007hH-PE
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 08:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbXIGGwr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 02:52:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932721AbXIGGwq
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:52:46 -0400
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:55952 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932554AbXIGGwq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 02:52:46 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id A10BA32E72D;
-	Fri,  7 Sep 2007 08:52:44 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 925DA212FA9;
-	Fri,  7 Sep 2007 08:52:44 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 6C8B912F599;
-	Fri,  7 Sep 2007 08:52:44 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 17D991CAD71B; Fri,  7 Sep 2007 08:52:44 +0200 (CEST)
-In-Reply-To: <a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com> (Dmitry Kakurin's message of "Thu\, 6 Sep 2007 20\:09\:23 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4175/Thu Sep  6 22:16:54 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S964858AbXIGGzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 02:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932732AbXIGGzu
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 02:55:50 -0400
+Received: from pan.madism.org ([88.191.52.104]:39749 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932656AbXIGGzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 02:55:49 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 0865D1E102;
+	Fri,  7 Sep 2007 08:55:47 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 03048E618; Fri,  7 Sep 2007 08:55:46 +0200 (CEST)
+Mail-Followup-To: Keith Packard <keithp@keithp.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1189133898.30308.58.camel@koto.keithp.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57992>
 
-"Dmitry Kakurin" <dmitry.kakurin@gmail.com> writes:
 
-> ... and explain where I'm coming from:
-> My goal is to *use* Git. When something does not work *for me* I want
-> to be able to fix it (and contribute the fix) in *shortest time
-> possible* and with *minimal efforts*. As for me it's a diversion from
-> my main activities.
-> The fact that Git is written in C does not really contribute to that goal.
-> Suggestion to use C++ is the only alternative with existing C codebase.
-> So while C++ may not be the best choice "academically speaking" it's
-> pretty much the only practical choice.
+--C7zPtVaVf+AK4Oqc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, but for fixing things in C, I can look and work locally.  For
-fixing things in C++, I first need to understand the class
-hierarchies used in the project.
+On Fri, Sep 07, 2007 at 02:58:18AM +0000, Keith Packard wrote:
+> On Thu, 2007-09-06 at 16:26 -0700, Junio C Hamano wrote:
+>
+> > Perhaps you have ".git/master" by mistake?
+>
+> oops.
+>
+> $ find .git -name master
+> ..git/master
+> ..git/refs/heads/master
+> ..git/refs/remotes/kyle/master
+> ..git/refs/remotes/origin/master
+> ..git/refs/remotes/otc/master
+> ..git/logs/refs/heads/master
+> ..git/logs/refs/remotes/fdo/master
+> ..git/logs/refs/remotes/kyle/master
+> ..git/logs/refs/remotes/origin/master
+> ..git/logs/refs/remotes/otc/master
+>=20
+> So, I think that explains where the ambiguous master came from.  Seems
+> like rebase should be able to bail out before breaking things though.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+  Actually if I get this right, it didn't broke anything, it just
+rebased your ".git/master" :) It just chose the wrong desambiguation for
+some reason.
+
+
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--C7zPtVaVf+AK4Oqc
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG4PXyvGr7W6HudhwRAsXwAJ9de2u3R0BBz5ruXHGiT3Yd78CO7QCfV+kx
+yc4KJWKLvDTrBeR6CTM0JxM=
+=2MZj
+-----END PGP SIGNATURE-----
+
+--C7zPtVaVf+AK4Oqc--
