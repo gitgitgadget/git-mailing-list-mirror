@@ -1,153 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Fri, 07 Sep 2007 10:26:08 +0200
-Message-ID: <851wda7ufz.fsf@lola.goethe.zz>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<1189004090.20311.12.camel@hinata.boston.redhat.com>
-	<vpq642pkoln.fsf@bauges.imag.fr>
-	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
-	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
-	<alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>
-	<alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>
-	<fbqmdu$udg$1@sea.gmane.org> <85k5r27wkv.fsf@lola.goethe.zz>
-	<fbr1a2$qm7$1@sea.gmane.org>
+From: Walter Bright <boost@digitalmars.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Fri, 07 Sep 2007 01:36:56 -0700
+Organization: Digital Mars
+Message-ID: <fbr2iv$ugg$1@sea.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Walter Bright <boost@digitalmars.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 10:26:27 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 07 10:37:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITZAU-0003aC-3f
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:26:22 +0200
+	id 1ITZL6-0006OZ-M3
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964969AbXIGI0Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 04:26:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964945AbXIGI0P
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:26:15 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:56667 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964854AbXIGI0O (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 04:26:14 -0400
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id AA16A17F663;
-	Fri,  7 Sep 2007 10:26:13 +0200 (CEST)
-Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id 8F11228EBDA;
-	Fri,  7 Sep 2007 10:26:13 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 56B8D1280B;
-	Fri,  7 Sep 2007 10:26:09 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id CC62A1CAD71B; Fri,  7 Sep 2007 10:26:08 +0200 (CEST)
-In-Reply-To: <fbr1a2$qm7$1@sea.gmane.org> (Walter Bright's message of "Fri\, 07 Sep 2007 01\:15\:06 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4176/Fri Sep  7 08:46:21 2007 on mail-in-11.arcor-online.net
-X-Virus-Status: Clean
+	id S964970AbXIGIhN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 04:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964962AbXIGIhN
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:37:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:60152 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964953AbXIGIhL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 04:37:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ITZKn-00037b-AL
+	for git@vger.kernel.org; Fri, 07 Sep 2007 10:37:01 +0200
+Received: from c-24-16-50-251.hsd1.mn.comcast.net ([24.16.50.251])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:37:01 +0200
+Received: from boost by c-24-16-50-251.hsd1.mn.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:37:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.mn.comcast.net
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58005>
 
-Walter Bright <boost@digitalmars.com> writes:
+Wincent Colaiuta wrote:
+> Git is all about speed, and C is the best 
+> choice for speed, especially in context of Git's workload.
 
-> A canonical example is that of a loop. Consider a simple C loop over
-> an array:
->
-> void foo(int array[10])
-> {
->     for (int i = 0; i < 10; i++)
->     {   int value = array[i];
->         ... do something ...
->     }
-> }
->
-> It's simple, but it has a lot of problems:
->
-> 1) i should be size_t, not int
+I can appreciate that. I originally got into writing compilers because 
+my game (Empire) ran too slowly and I thought the existing compilers 
+could be dramatically improved.
 
-Wrong.  size_t is for holding the size of memory objects in bytes, not
-in terms of indices.  For indices, the best variable is of the same
-type as the declared index maximum size, so here it is typeof(10),
-namely int.
+And technically, yes, you can write code in C that is >= the speed of 
+any other language (other than asm). But practically, this isn't 
+necessarily so, for the following reasons:
 
-> 2) array is not checked for overflow
+1) You wind up having to implement the complex, dirty details of things 
+yourself. The consequences of this are:
 
-Why should it?
+    a) you pick a simpler algorithm (which is likely less efficient - I 
+run across bubble sorts all the time in code)
 
-> 3) 10 may not be the actual array dimension
+    b) once you implement, tune, and squeeze all the bugs out of those 
+complex, dirty details, you're reluctant to change it. You're reluctant 
+to try a different algorithm to see if it's faster. I've seen this 
+effect a lot in my own code. (I translated a large body of my own C++ 
+code that I'd spent months tuning to D, and quickly managed to get 
+significantly more speed out of it, because it was much simpler to try 
+out different algorithms/data structures.)
 
-Your point is?
+2) Garbage collection has an interesting and counterintuitive 
+consequence. If you compare n malloc/free's with n gcnew/collections, 
+the malloc/free will come out faster, and you conclude that gc is slow. 
+But that misses one huge speed advantage of gc - you can do FAR fewer 
+allocations! For example, I've done a lot of string manipulating 
+programs in C. The basic problem is keeping track of who owns each 
+string. This is done by, when in doubt, make a copy of the string.
 
-> 4) may be more efficient to step through the array with pointers,
-> rather than indices
+But if you have gc, you don't worry about who owns the string. You just 
+make another pointer to it. D takes this a step further with the concept 
+of array slicing, where one creates windows on existing arrays, or 
+windows on windows on windows, and no allocations are ever done. It's 
+just pointer fiddling.
 
-No.  It is a beginners' and advanced users' mistake to think using
-pointers for access is a good idea.  Trivial optimizations are what a
-compiler is best at, not the user.  Using pointer manipulation will
-more often than not break loop unrolling, loop reversal, strength
-reduction and other things.
-
-> 5) type of array may change, but the type of value may not get
-> updated
-
-Huh?
-
-> 6) crashes if array is NULL
-
-Certainly.  Your point being?
-
-> 7) only works with arrays and pointers
-
-Since there are only arrays and pointers in C, not really a restriction.
-
->
-> Since this thread is talking about C++, let's look at the C++ version:
->
-> void foo(std::vector<int> array)
-> {
->   for (std::vector<int>::const_iterator
->        i = array.begin();
->        i != array.end();
->        i++)
->   {
->     int value = *i;
->     ... do something ...
->   }
-> }
-
-Where is my barf bag?
-
-> Frankly, I don't want to write loops that way. I want to write them
-> like this:
->
-> void foo(int[] array)
-> {
->   foreach (value; array)
->   {
->     ... do something ...
->   }
-> }
->
-> As a programmer, I'm specifying exactly what I want to happen without
-> much extra puffery. It's less typing, simpler, and more resistant to
-> bugs.
->
-> 1) correct loop index type is selected based on the type of array
-> 2) arrays carry with them their dimension, so foreach is guaranteed to
-> step through the loop the correct number of times
-> 3) implementation decides if pointers will do a better job than
-> indices, based on the compilation target
-> 4) type of value is inferred automatically from the type of array, so
-> no worries if the type changes
-> 5) Null arrays have 0 length, so no crashing
-> 6) works with any collection type
-
-Most of those are toy concerns.  They prevent problems that don't
-actually occur much in practice.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+------
+Walter Bright
+http://www.digitalmars.com  C, C++, D programming language compilers
+http://www.astoriaseminar.com  Extraordinary C++
