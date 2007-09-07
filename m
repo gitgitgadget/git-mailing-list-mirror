@@ -1,90 +1,102 @@
-From: Walter Bright <boost@digitalmars.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 01:36:56 -0700
-Organization: Digital Mars
-Message-ID: <fbr2iv$ugg$1@sea.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
+Date: Fri, 7 Sep 2007 10:43:52 +0200
+Message-ID: <20070907084352.GD4538@xp.machine.xx>
+References: <20070906075104.GA10192@hand.yhbt.net> <1189096669534-git-send-email-hjemli@gmail.com> <20070906210155.GA20938@soma> <20070906213556.GA21234@soma> <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com> <20070906235516.GC4538@xp.machine.xx> <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 10:37:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 10:44:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITZL6-0006OZ-M3
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:37:21 +0200
+	id 1ITZSH-0008HS-Dv
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964970AbXIGIhN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 04:37:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964962AbXIGIhN
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:37:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:60152 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964953AbXIGIhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 04:37:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ITZKn-00037b-AL
-	for git@vger.kernel.org; Fri, 07 Sep 2007 10:37:01 +0200
-Received: from c-24-16-50-251.hsd1.mn.comcast.net ([24.16.50.251])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:37:01 +0200
-Received: from boost by c-24-16-50-251.hsd1.mn.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:37:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.mn.comcast.net
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
+	id S965222AbXIGIoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 04:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965218AbXIGIoA
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:44:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33244 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965205AbXIGIn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 04:43:58 -0400
+Received: (qmail invoked by alias); 07 Sep 2007 08:43:55 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp021) with SMTP; 07 Sep 2007 10:43:55 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/+UuN35gv+AmgleIZeRSzq+yyTicjFdWGikBy7mP
+	bY3eR9FSNSGBan
+Mail-Followup-To: Lars Hjemli <hjemli@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58006>
 
-Wincent Colaiuta wrote:
-> Git is all about speed, and C is the best 
-> choice for speed, especially in context of Git's workload.
+On Fri, Sep 07, 2007 at 02:23:58AM +0200, Lars Hjemli wrote:
+> On 9/7/07, Peter Baumann <waste.manager@gmx.de> wrote:
+> > Wouldn't it be much more pleasant to say something like
+> >
+> >         git-svn dcommit --on the_branch
+> >
+> > whereas 'the_branch' is the name of the upstream branch as specified
+> > in the fetch/branch section in the git config?
+> 
+> Well, git-svn extracts the svn url, revision and repo uuid from the
+> commit message, while your proposal only specifies the url. But I'm
+> still not certain that there is a need for --upstream or anything
+> similar if git-svn always uses 'git log --first-parent' (see
+> http://article.gmane.org/gmane.comp.version-control.git/57951).
+> 
 
-I can appreciate that. I originally got into writing compilers because 
-my game (Empire) ran too slowly and I thought the existing compilers 
-could be dramatically improved.
+First parent is a heuristic (and a good one, me thinks).
 
-And technically, yes, you can write code in C that is >= the speed of 
-any other language (other than asm). But practically, this isn't 
-necessarily so, for the following reasons:
+If you did something like this:
 
-1) You wind up having to implement the complex, dirty details of things 
-yourself. The consequences of this are:
+(1) Start state:
 
-    a) you pick a simpler algorithm (which is likely less efficient - I 
-run across bubble sorts all the time in code)
+       a-b-c-d-e    trunk	(both trunk and branch1 are imported
+          \			 from SVN)
+	   \-x-y    branch1
 
-    b) once you implement, tune, and squeeze all the bugs out of those 
-complex, dirty details, you're reluctant to change it. You're reluctant 
-to try a different algorithm to see if it's faster. I've seen this 
-effect a lot in my own code. (I translated a large body of my own C++ 
-code that I'd spent months tuning to D, and quickly managed to get 
-significantly more speed out of it, because it was much simpler to try 
-out different algorithms/data structures.)
+(2) Hm. My Branch 'branch1' should be ready to be merged to 'trunk', so
+   lets do it (not yet dcommited)
 
-2) Garbage collection has an interesting and counterintuitive 
-consequence. If you compare n malloc/free's with n gcnew/collections, 
-the malloc/free will come out faster, and you conclude that gc is slow. 
-But that misses one huge speed advantage of gc - you can do FAR fewer 
-allocations! For example, I've done a lot of string manipulating 
-programs in C. The basic problem is keeping track of who owns each 
-string. This is done by, when in doubt, make a copy of the string.
+       a-b-c-d-e- m trunk
+          \	 /
+	   \ -x-y   branch1
 
-But if you have gc, you don't worry about who owns the string. You just 
-make another pointer to it. D takes this a step further with the concept 
-of array slicing, where one creates windows on existing arrays, or 
-windows on windows on windows, and no allocations are ever done. It's 
-just pointer fiddling.
+(3) ARGH. I just discovered a serious bug in 'branch1' and can't just merge
+   it into 'trunk', yet. But the merge was painfull enough so I don't want to
+   redo it again, so lets reset 'trunk' to its state before the merge and
+   'branch1' to the merge commit, before fixing the bug in 'branch1'.
 
-------
-Walter Bright
-http://www.digitalmars.com  C, C++, D programming language compilers
-http://www.astoriaseminar.com  Extraordinary C++
+       a-b-c-d-e    trunk
+          \	 \
+	   \ -x-y m branch1
+
+Notice that this DAG is identical to the one in (2), but just the branch
+labels stick to different commits. And if you now want to commit the
+merge 'm' to 'branch1' before fixing the bug you are screwed, because
+--first-parent will give you 'e' instead of 'y'.
+
+Yes, I know that this example isn't something happening every day, but
+at least it shows that --first-parent could *only* be a heuristic and
+not something you would rely 100% on. And if you imagine several people
+who are sharing their git commits for codereview with pulling/pushing,
+it isn't obvious what branch got merged into the other, because it is
+possible that the other person did the merge.
+
+Don't get me wrong, --first-parent *is* an improvement over the current
+behaviour, but I think it is simply not the *best* we can do.
+
+-Peter
