@@ -1,68 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: very slow cherry-pick'ing (old-2.6-bkcvs tree)
-Date: Fri, 7 Sep 2007 00:42:23 -0400
-Message-ID: <20070907044223.GW18160@spearce.org>
-References: <200709062351.l86NpnAK004807@agora.fsl.cs.sunysb.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Subject: [PATCH] git-merge-pack
+Date: Thu, 06 Sep 2007 21:43:26 -0700
+Message-ID: <7vwsv36q6p.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+	<20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+	<46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+	<alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
+	<7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0709061651550.28586@racer.site>
+	<7vk5r3adlx.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org>
+	<7v1wdb9ymf.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.9999.0709061942320.21186@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Erez Zadok <ezk@cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 07 06:42:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nix <nix@esperi.org.uk>, Steven Grimm <koreth@midwinter.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Sep 07 06:43:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITVfv-0001J1-Fv
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 06:42:35 +0200
+	id 1ITVgz-0001Tw-65
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 06:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbXIGEm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 00:42:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbXIGEm2
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 00:42:28 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57853 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751249AbXIGEm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 00:42:27 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1ITVfm-0001HW-1N; Fri, 07 Sep 2007 00:42:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 568AD20FBAE; Fri,  7 Sep 2007 00:42:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200709062351.l86NpnAK004807@agora.fsl.cs.sunysb.edu>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751316AbXIGEng (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 00:43:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbXIGEng
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 00:43:36 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751434AbXIGEnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 00:43:35 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F2D3812E1E5;
+	Fri,  7 Sep 2007 00:43:49 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.9999.0709061942320.21186@xanadu.home> (Nicolas
+	Pitre's message of "Thu, 06 Sep 2007 20:51:58 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57974>
 
-Erez Zadok <ezk@cs.sunysb.edu> wrote:
-> Our group maintains Unionfs on the latest -rc kernel, but we also maintain
-> several backports going all the way to 2.6.9.  Once we complete the
-> development and testing of a feature/fix in -latest, we cherry-pick those
-> commits to older backports, and test those.  When I cherry-pick from -latest
-> to my 2.6.{22,21,20,19,18} repositories, it works reasonably fast.  But when
-> I cherry-pick to my 2.6.9 tree, it runs about 20 times slower!  Why?  Is
-> there anything I can do to inspect what's going on and perhaps speed up the
-> cherry-picking process?
+Nicolas Pitre <nico@cam.org> writes:
 
-I'm guessing its due to rename detection.
+> I would have concatenated all packs provided on the command line into a 
+> single one, simply by reading data from existing packs and writing it 
+> back without any processing at all.  The offset for OBJ_OFS_DELTA is 
+> relative so a simple concatenation will just work.
 
-git-cherry-pick is implemented in terms of git-merge-recursive,
-which always does rename detection when files are deleted or added.
-This can take some considerable time if there's a lot of files that
-have been added/deleted.
+As I was planning to do this outside of pack-objects, I did not
+want to write something that intimately knows the details of
+packfile format, but see below.
 
-What would probably be faster would be to dump the patches in
-question using git-format-patch and then apply them using git-am.
-This bypasses the rename detection as it is using strictly a diff
-and an apply.
+> All data is read once and written once making it no more costly than a 
+> simple file copy.  On the flip side it wouldn't get rid of duplicated 
+> objects (I don't know if that matters i.e. if something might break with 
+> the same object twice in a pack).
 
--- 
-Shawn.
+I do not think duplicates create problems, as long as the pack
+idx remains sane.  But a bigger issue is for people who fetch
+over dumb protocols, from a repository that repacks with "-a -d"
+every once in a while.  There, many duplicates are norm.
+
+> In fact, since we want to _also_ perform a repack of loose objects in 
+> the context of automatic repacking, I wonder why we wouldn't use that 
+> --unpacked= argument to also repack smallish packs at the same time in 
+> only one pack-objects pass.  Or maybe I'm missing something?
+
+I think this is a much better idea.  You obviously need some
+twist to the pack-objects, and being lazy that was the reason I
+did not want to do this that way.
+
+When a new parameter, perhaps --lossless, is given, together
+with the --unpacked= parameters, we can change pack-objects to
+iterate over all objects in the --unpacked= packs, and add the
+ones that are not marked for inclusion to the set of objects to
+be packed, after doing the usual "objects to be packed"
+discovery.
+
+I am not sure --lossless is a good option name from marketing
+point of view, though.
