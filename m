@@ -1,61 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] svnimport/cvsimport: force creation of tags that already exist.
-Date: Fri, 07 Sep 2007 13:54:01 -0700
-Message-ID: <7vzlzy2o46.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
+Date: Fri, 07 Sep 2007 22:56:04 +0200
+Message-ID: <20070907205604.GC23483@artemis.corp>
+References: <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org> <fbqmdu$udg$1@sea.gmane.org> <20070907094120.GA27754@artemis.corp> <fbs79k$tac$1@sea.gmane.org> <20070907194115.GA23483@artemis.corp> <fbsd0g$gt6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="TYecfFk8j8mZq+dy";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Michael Smith <msmith@cbnco.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 22:54:21 2007
+To: Walter Bright <boost@digitalmars.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 22:56:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITkqE-0006Xx-G6
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 22:54:14 +0200
+	id 1ITks8-000733-RA
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 22:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932755AbXIGUyJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 16:54:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbXIGUyJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 16:54:09 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48763 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752346AbXIGUyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 16:54:08 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BC64C130439;
-	Fri,  7 Sep 2007 16:54:25 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com> (Michael
-	Smith's message of "Fri, 7 Sep 2007 11:42:22 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755202AbXIGU4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 16:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965480AbXIGU4H
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 16:56:07 -0400
+Received: from pan.madism.org ([88.191.52.104]:49871 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753664AbXIGU4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 16:56:06 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 9349D1E882;
+	Fri,  7 Sep 2007 22:56:05 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id BAE1C1A389; Fri,  7 Sep 2007 22:56:04 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Walter Bright <boost@digitalmars.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <fbsd0g$gt6$1@sea.gmane.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58074>
 
-Michael Smith <msmith@cbnco.com> writes:
 
-> I understand moving tags is frowned upon in Git. I don't know how common 
-> the practise is in Subversion and CVS, or whether it makes sense to 
-> make the import scripts force tag creation by default.
+--TYecfFk8j8mZq+dy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the patch itself makes sense.  If for some reason the
-importer detects that the CVS or SVN history moved a tag, we
-either:
+On Fri, Sep 07, 2007 at 08:40:56PM +0000, Walter Bright wrote:
+> Pierre Habouzit wrote:
+> >And for that bit-fields are
+> >a really really fast and simple way to describe things.
+>
+> I should point out that inline functions are inlined, and there is no=20
+> speed difference in the result.
 
-    (1) have a way to keep track of the versions of the tag; or
-    (2) allow it and make it "last one wins" semantics; or
-    (3) ignore it and make it "first one wins" semantics.  
+  I know that, and that's why I said I was totally fine with the
+bitfield notation to be only syntactic sugar on a template thingy if
+that's the simplest way to have that it's OKay.
 
-Erroring out complaining that the tag cannot be created, as the
-current code does, does not make any sense.
+> >  Not to mention that the usual C idiom:
+> >  union {
+> >    unsigned flags;
+> >    struct {
+> >      // many bitfields
+> >    };
+> >  };
+> >  Would need an explicit copy_flags(const my_struct foo) function to
+> >work. Not pretty, not straightforward.
+>=20
+> I'm not following this. To copy a union, you just copy it with the=20
+> assignment operator:
+>=20
+> 	U a, b;
+> 	a =3D b;		// copies all the bit fields, too!
 
-The patch needs to be accompanied with a better commit log
-description.  I am guessing that with your change the semantics
-would become (2) above (assuming that cvsps or whoever reads the
-history of the other side gives events in chronological order),
-but you should not force readers of your commit log message to
-guess.
+  That was the point indeed. But if you don't have bitfields, you can't
+do the union. And if the bitfield is just syntactic sugar, it may be
+unpossible to have such a union. But I may be wrong.
+
+> >Right now, for D, only
+> >gdc exists, it lags behind dmd quite a lot afaict, and there is no other
+> >toolchain helpers yet.
+>=20
+> GDC was just released for D 1.020, which is behind D 1.021, but 1.021 was=
+=20
+> released just a couple days ago <g>.
+
+  Sure, but it does not works on amd64 properly (and it's the
+architecture I care about) and is not ready for the current gcc (4.2,
+only 4.1 builds) and so on. It's not as stable as DMD is. It does not
+lags too much version-wise, it lags in maturity. But well, youth has a
+cure: time :)
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--TYecfFk8j8mZq+dy
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG4brkvGr7W6HudhwRAjJ8AKCBDRCHEu/D2bkYFe08+tyaanVavgCgmDkn
+avcPtrv2lsp0d8QS5XlNCjs=
+=5s0z
+-----END PGP SIGNATURE-----
+
+--TYecfFk8j8mZq+dy--
