@@ -1,86 +1,67 @@
-From: Michael Smith <msmith@cbnco.com>
-Subject: [RFC] svnimport/cvsimport: force creation of tags that already exist.
-Date: Fri, 7 Sep 2007 11:42:22 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] basic threaded delta search
+Date: Fri, 07 Sep 2007 12:19:26 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0709071211420.21186@xanadu.home>
+References: <11890591912193-git-send-email-nico@cam.org>
+ <11890591923123-git-send-email-nico@cam.org>
+ <11890591923270-git-send-email-nico@cam.org>
+ <1189059193250-git-send-email-nico@cam.org>
+ <7vwsv4cm6b.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.9999.0709061014280.21186@xanadu.home>
+ <20070907061105.GA1379@auto.tuwien.ac.at>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 18:12:35 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Fri Sep 07 18:19:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITgRV-0003cr-PC
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 18:12:26 +0200
+	id 1ITgYR-0005sB-BP
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 18:19:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757448AbXIGQMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 12:12:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbXIGQMU
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 12:12:20 -0400
-Received: from mail1.cbnco.com ([207.164.182.72]:46274 "EHLO smtp.cbnco.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757409AbXIGQMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 12:12:18 -0400
-X-Greylist: delayed 1794 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Sep 2007 12:12:18 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.cbnco.com (Postfix) with ESMTP id ED4411E58BE
-	for <git@vger.kernel.org>; Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
-Received: from smtp.cbnco.com ([127.0.0.1])
- by localhost (mail.cbnco.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 08791-05 for <git@vger.kernel.org>;
- Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
-Received: from juice.ott.cti.com (auriga-dmzgw.cbnco.com [207.164.182.65])
-	by smtp.cbnco.com (Postfix) with ESMTP id C50C61E57ED
-	for <git@vger.kernel.org>; Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
-X-X-Sender: michael@juice.ott.cti.com
-X-Virus-Scanned: amavisd-new at cbnco.com
+	id S932441AbXIGQTa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 12:19:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757509AbXIGQTa
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 12:19:30 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27646 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757469AbXIGQT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 12:19:29 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JO000JJRAOEH720@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 07 Sep 2007 12:19:26 -0400 (EDT)
+In-reply-to: <20070907061105.GA1379@auto.tuwien.ac.at>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58047>
 
-Hi all,
+On Fri, 7 Sep 2007, Martin Koegler wrote:
 
-git-svnimport was changed recently to use git-tag to make tags (47ee8ed2). 
-I've had to add the "-f" option to import a repository where a tag was 
-moved. I think git-cvsimport would have the same problem.
+> On Thu, Sep 06, 2007 at 10:48:06AM -0400, Nicolas Pitre wrote:
+> > On Thu, 6 Sep 2007, Junio C Hamano wrote:
+> > > Also how would this interact with the LRU
+> > > delta base window we discussed a week or two ago?
+> > 
+> > This is completely orthogonal.
+> 
+> Maybe we should adjust the split point of the the object list so, that
+> objects with the same name hash are processed by one thread, as the LRU
+> could provide the most benefit for these objects.
+> 
+> I think of something like (totally untested):
+>         for (i = 0; i < NR_THREADS; i++) {
+>                 unsigned sublist_size = list_size / (NR_THREADS - i);
+> +		while (sublist_size < list_size && list[0]->hash == list[1]->hash)
+> +			sublist_size++;
 
-I understand moving tags is frowned upon in Git. I don't know how common 
-the practise is in Subversion and CVS, or whether it makes sense to 
-make the import scripts force tag creation by default.
+I guess you mean list[sublist_size-1]->hash == list[sublist_size]->hash.
+But yeah that is a good idea.
 
-Mike
 
----
- git-cvsimport.perl |    2 +-
- git-svnimport.perl |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index ba23eb8..2954fb8 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -779,7 +779,7 @@ sub commit {
- 		$xtag =~ tr/_/\./ if ( $opt_u );
- 		$xtag =~ s/[\/]/$opt_s/g;
- 
--		system('git-tag', $xtag, $cid) == 0
-+		system('git-tag', '-f', $xtag, $cid) == 0
- 			or die "Cannot create tag $xtag: $!\n";
- 
- 		print "Created tag '$xtag' on '$branch'\n" if $opt_v;
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 8c17fb5..d3ad5b9 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -873,7 +873,7 @@ sub commit {
- 
- 		$dest =~ tr/_/\./ if $opt_u;
- 
--		system('git-tag', $dest, $cid) == 0
-+		system('git-tag', '-f', $dest, $cid) == 0
- 			or die "Cannot create tag $dest: $!\n";
- 
- 		print "Created tag '$dest' on '$branch'\n" if $opt_v;
--- 
-1.5.2.1
+Nicolas
