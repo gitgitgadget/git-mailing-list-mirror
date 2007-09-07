@@ -1,79 +1,92 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Fri, 07 Sep 2007 09:40:00 +0200
-Message-ID: <85k5r27wkv.fsf@lola.goethe.zz>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<1189004090.20311.12.camel@hinata.boston.redhat.com>
-	<vpq642pkoln.fsf@bauges.imag.fr>
-	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
-	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
-	<alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>
-	<alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>
-	<fbqmdu$udg$1@sea.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Fri, 7 Sep 2007 08:41:25 +0100
+Message-ID: <200709070841.33057.andyparkins@gmail.com>
+References: <46DDC500.5000606@etek.chalmers.se> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <85ejhb7yzw.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Walter Bright <boost@digitalmars.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 09:40:15 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>,
+	"Dmitry Kakurin" <dmitry.kakurin@gmail.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 07 09:41:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITYRp-0000k9-I1
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 09:40:13 +0200
+	id 1ITYTM-00019r-MH
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 09:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbXIGHkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 03:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbXIGHkI
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 03:40:08 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:40459 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964927AbXIGHkG (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 03:40:06 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 55DFB17F5B9;
-	Fri,  7 Sep 2007 09:40:05 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 457A42DA967;
-	Fri,  7 Sep 2007 09:40:05 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 298D3292B61;
-	Fri,  7 Sep 2007 09:40:01 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id A7B141CAD71B; Fri,  7 Sep 2007 09:40:00 +0200 (CEST)
-In-Reply-To: <fbqmdu$udg$1@sea.gmane.org> (Walter Bright's message of "Thu\, 06 Sep 2007 22\:09\:26 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4176/Fri Sep  7 08:46:21 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S964949AbXIGHll (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 03:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964945AbXIGHll
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 03:41:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:28054 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964931AbXIGHlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 03:41:40 -0400
+Received: by nf-out-0910.google.com with SMTP id f5so322259nfh
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 00:41:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=0gAmaBLsIugvzLggMwFhRrLU/soNVbplSpBgITAA+A0=;
+        b=SShO3GCywBmAd7nDPmDKImP86eNjH1uy+dtNCusma+Fnkkh2EjnEdZkpPHPevNNE6aDWf3phQJlZf52KYZX+IrLQOCj5pgXyg4bO3m9hTzURHT2J9tsB4zHPnvJ2vnOe8nmWbOoA+InrK1uOU5bZb8SRRBIyo5aBeEJ9n18PSsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dquyRdSA3BbK20AeknF0TfBFMODcTsyV5mDAYXUP/3ge24OOPWQ0PmpKrhFB3wmNYTfAixWtvxPHJvTS7gCovquvoZ+sv8j6MT3ehhnDIuCPzLHBYulTSuXEHmpOhR+OVg8sqyt4Q7gwK0oP3aKNTafHpPsTnuL/HY5/O/dCAA4=
+Received: by 10.86.65.11 with SMTP id n11mr1230585fga.1189150898719;
+        Fri, 07 Sep 2007 00:41:38 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id f7sm2060621nfh.2007.09.07.00.41.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Sep 2007 00:41:36 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <85ejhb7yzw.fsf@lola.goethe.zz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58000>
 
-Walter Bright <boost@digitalmars.com> writes:
+On Friday 2007 September 07, David Kastrup wrote:
 
-> Linus Torvalds wrote:
->> And if you want a fancier language, C++ is absolutely the worst one
->> to choose. If you want real high-level, pick one that has true
->> high-level features like garbage collection or a good system
->> integration, rather than something that lacks both the sparseness
->> and straightforwardness of C, *and* doesn't even have the high-level
->> bindings to important concepts. 
->>
->> IOW, C++ is in that inconvenient spot where it doesn't help make
->> things simple enough to be truly usable for prototyping or simple
->> GUI programming, and yet isn't the lean system programming language
->> that C is that actively encourags you to use simple and direct
->> constructs.
->
-> The D programming language is a different take than C++ has on growing
-> C. I'm curious what your thoughts on that are (D has garbage
-> collection, while still retaining the ability to directly manage
-> memory). Can you enumerate what you feel are the important concepts?
+(Disclaimer: I'm certainly not joining the "C++ for git" chant; this reply is 
+merely to the statements made about C++ in David's message).
 
-A design is perfect not when there is no longer anything you can add
-to it, but if there is no longer anything you can take away.
+> The problem with C++ is that every C++ developer has his own style,
+> and reuse is an illusion within that style.  Take a look at classes
+> implementing matrix arithmetic: there are as many around as the day is
+> long, and all of them are incompatible with one another.
+
+One could say the same about any API.  "Take a look at that C library libXYZ - 
+it does exactly the same thing as libPQR but all the function calls and 
+structures are different.  Conclusion: C is shit".  Obviously nonsense.
+
+> With regard to programming styles, C++ does not support multiple
+> inheritance.  For a single project grown from a single start, you can
+
+Multiple inheritance is the spawn of the devil, but C++ _does_ support it.
+
+Forgetting about the terrible STL, to me there really is no difference between 
+C and C++; you can be object oriented in C.  Take a look at the Linux kernel, 
+it should be printed out, rolled up and used to beat the ideas into students 
+learning C++/Java/C#.   Object oriented design is a choice, and if you really 
+wanted you could do it in assembly.
+
+I would imagine the reason people often turn up wanting to rewrite Linux and 
+git in C++ is because they are so object oriented in nature already and it's 
+natural to think "wouldn't this be even better if I wrote it in an object 
+oriented language"?  Maybe, maybe not, but why bother?
+
+
+
+Andy
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
