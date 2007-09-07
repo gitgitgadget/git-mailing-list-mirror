@@ -1,203 +1,63 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] diff-delta.c: pack the index structure
-Date: Sat, 08 Sep 2007 01:38:20 +0200
-Organization: Organization?!?
-Message-ID: <85fy1q11xv.fsf@lola.goethe.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: how to access working tree from .git dir?
+Date: Fri, 07 Sep 2007 16:42:54 -0700
+Message-ID: <7vr6la11q9.fsf@gitster.siamese.dyndns.org>
+References: <1189120800.6203.23.camel@beauty>
+	<7v642m436q.fsf@gitster.siamese.dyndns.org>
+	<1189200421.12525.8.camel@beauty>
+	<7vhcm62lru.fsf@gitster.siamese.dyndns.org>
+	<1189203064.15140.2.camel@beauty>
+	<7vveam15w9.fsf@gitster.siamese.dyndns.org>
+	<1189204498.15140.4.camel@beauty>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 08 01:38:35 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Josh England <jjengla@comcast.net>
+X-From: git-owner@vger.kernel.org Sat Sep 08 01:43:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITnPC-0005Rp-Na
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 01:38:31 +0200
+	id 1ITnU7-0006dN-0o
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 01:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbXIGXiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 19:38:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbXIGXiY
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 19:38:24 -0400
-Received: from mail-in-01.arcor-online.net ([151.189.21.41]:37545 "EHLO
-	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751357AbXIGXiW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 19:38:22 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 8E34015B660
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 809DE2D3B28
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-039-212.pools.arcor-ip.net [84.61.39.212])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 55AFE30A919
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 01:38:21 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id C65FE1CAD71D; Sat,  8 Sep 2007 01:38:20 +0200 (CEST)
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4189/Sat Sep  8 01:10:12 2007 on mail-in-03.arcor-online.net
-X-Virus-Status: Clean
+	id S1753255AbXIGXnC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 19:43:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753242AbXIGXnB
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 19:43:01 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591AbXIGXnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 19:43:00 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B06C113025A;
+	Fri,  7 Sep 2007 19:43:18 -0400 (EDT)
+In-Reply-To: <1189204498.15140.4.camel@beauty> (Josh England's message of
+	"Fri, 07 Sep 2007 16:34:58 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58092>
 
-In normal use cases, the performance wins are not overly impressive:
-we get something like 5-10% due to the slightly better locality of
-memory accesses using the packed structure.
+Josh England <jjengla@comcast.net> writes:
 
-However, since the data structure for index entries saves 33% of
-memory on 32-bit platforms and 40% on 64-bit platforms, the behavior
-when memory gets limited should be nicer.
+> On Fri, 2007-09-07 at 15:12 -0700, Junio C Hamano wrote:
+>> Josh England <jjengla@comcast.net> writes:
+>> 
+>> > OK. Fair enough.  Maybe it would be good to note in git-sh-setup.sh that
+>> > many of the supplied functions will not work when called from within
+>> > $GIT_DIR.
+>> 
+>> Sorry, "supplied functions"?  Care to clarify with a patch?
+>
+> I guess really just the cd_to_topdir() function.  It will silently fail
+> when run from within $GIT_DIR.
 
-This is a rather well-contained change.  One obvious improvement would
-be sorting the elements in one bucket according to their hash, then
-using binary probing to find the elements with the right hash value.
+Ah, I see what you meant.
 
-As it stands, the output should be strictly the same as previously
-unless one uses the option for limiting the amount of used memory, in
-which case the created packs might be better.
-
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- diff-delta.c |   62 +++++++++++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 46 insertions(+), 16 deletions(-)
-
-diff --git a/diff-delta.c b/diff-delta.c
-index 0dde2f2..cf0136f 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -115,9 +115,13 @@ static const unsigned int U[256] = {
- struct index_entry {
- 	const unsigned char *ptr;
- 	unsigned int val;
--	struct index_entry *next;
- };
- 
-+struct unpacked_index_entry {
-+	struct index_entry entry;
-+	struct unpacked_index_entry *next;
-+};	
-+
- struct delta_index {
- 	unsigned long memsize;
- 	const void *src_buf;
-@@ -131,7 +135,8 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
- 	const unsigned char *data, *buffer = buf;
- 	struct delta_index *index;
--	struct index_entry *entry, **hash;
-+	struct unpacked_index_entry *entry, **hash;
-+	struct index_entry *aentry, **ahash;
- 	void *mem;
- 	unsigned long memsize;
- 
-@@ -148,28 +153,21 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
--	memsize = sizeof(*index) +
--		  sizeof(*hash) * hsize +
-+	memsize = sizeof(*hash) * hsize +
- 		  sizeof(*entry) * entries;
- 	mem = malloc(memsize);
- 	if (!mem)
- 		return NULL;
--	index = mem;
--	mem = index + 1;
- 	hash = mem;
- 	mem = hash + hsize;
- 	entry = mem;
- 
--	index->memsize = memsize;
--	index->src_buf = buf;
--	index->src_size = bufsize;
--	index->hash_mask = hmask;
- 	memset(hash, 0, hsize * sizeof(*hash));
- 
- 	/* allocate an array to count hash entries */
- 	hash_count = calloc(hsize, sizeof(*hash_count));
- 	if (!hash_count) {
--		free(index);
-+		free(hash);
- 		return NULL;
- 	}
- 
-@@ -183,12 +181,13 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 			val = ((val << 8) | data[i]) ^ T[val >> RABIN_SHIFT];
- 		if (val == prev_val) {
- 			/* keep the lowest of consecutive identical blocks */
--			entry[-1].ptr = data + RABIN_WINDOW;
-+			entry[-1].entry.ptr = data + RABIN_WINDOW;
-+			--entries;
- 		} else {
- 			prev_val = val;
- 			i = val & hmask;
--			entry->ptr = data + RABIN_WINDOW;
--			entry->val = val;
-+			entry->entry.ptr = data + RABIN_WINDOW;
-+			entry->entry.val = val;
- 			entry->next = hash[i];
- 			hash[i] = entry++;
- 			hash_count[i]++;
-@@ -212,15 +211,46 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 			continue;
- 		entry = hash[i];
- 		do {
--			struct index_entry *keep = entry;
-+			struct unpacked_index_entry *keep = entry;
- 			int skip = hash_count[i] / HASH_LIMIT;
- 			do {
-+				--entries;
- 				entry = entry->next;
- 			} while(--skip && entry);
-+			++entries;
- 			keep->next = entry;
- 		} while(entry);
- 	}
- 	free(hash_count);
-+	memsize = sizeof(*index)
-+		+sizeof(*ahash) * (hsize+1) +
-+		+sizeof(*aentry) * entries;
-+	mem=malloc(memsize);
-+
-+	if (!mem) {
-+		free(hash);
-+		return NULL;
-+	}
-+
-+	index = mem;
-+	index->memsize = memsize;
-+	index->src_buf = buf;
-+	index->src_size = bufsize;
-+	index->hash_mask = hmask;
-+
-+	mem = index+1;
-+	ahash = mem;
-+	mem = ahash + (hsize+1);
-+	aentry = mem;
-+
-+	for (i=0; i<hsize; i++) {
-+		ahash[i] = aentry;
-+		for (entry=hash[i]; entry; entry=entry->next)
-+			*aentry++ = entry->entry;
-+	}
-+	ahash[hsize] = aentry;
-+	assert(aentry-(struct index_entry *)mem == entries);
-+	free(hash);
- 
- 	return index;
- }
-@@ -302,7 +332,7 @@ create_delta(const struct delta_index *index,
- 			val ^= U[data[-RABIN_WINDOW]];
- 			val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
- 			i = val & index->hash_mask;
--			for (entry = index->hash[i]; entry; entry = entry->next) {
-+			for (entry = index->hash[i]; entry<index->hash[i+1]; entry++) {
- 				const unsigned char *ref = entry->ptr;
- 				const unsigned char *src = data;
- 				unsigned int ref_size = ref_top - ref;
--- 
-1.5.3.GIT
+I think you probably are supposed to check with is_bare_repository
+or something before calling that, as asking to cd to toplevel
+implies you know there is such a thing as toplevel ;-)
