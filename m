@@ -1,93 +1,136 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 10:08:24 +0200
-Message-ID: <85bqce7v9j.fsf@lola.goethe.zz>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
-	<85ejhb7yzw.fsf@lola.goethe.zz>
-	<200709070841.33057.andyparkins@gmail.com>
+From: Walter Bright <boost@digitalmars.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
+Date: Fri, 07 Sep 2007 01:15:06 -0700
+Organization: Digital Mars
+Message-ID: <fbr1a2$qm7$1@sea.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se>	<1189004090.20311.12.camel@hinata.boston.redhat.com>	<vpq642pkoln.fsf@bauges.imag.fr>	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>	<alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>	<alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>	<fbqmdu$udg$1@sea.gmane.org> <85k5r27wkv.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Dmitry Kakurin" <dmitry.kakurin@gmail.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Matthieu Moy" <Matthieu.Moy@imag.fr>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 10:08:50 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 07 10:15:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITYtV-0007nx-R3
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:08:50 +0200
+	id 1ITZ08-00016J-Ue
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 10:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964965AbXIGIIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 04:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964962AbXIGIIg
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:08:36 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:34408 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964963AbXIGIIe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 04:08:34 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 38C2F4C593;
-	Fri,  7 Sep 2007 10:08:33 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 1507C2D3BBD;
-	Fri,  7 Sep 2007 10:08:33 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-044-151.pools.arcor-ip.net [84.61.44.151])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id ADD8325D2E3;
-	Fri,  7 Sep 2007 10:08:24 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 425D01CAD71B; Fri,  7 Sep 2007 10:08:24 +0200 (CEST)
-In-Reply-To: <200709070841.33057.andyparkins@gmail.com> (Andy Parkins's message of "Fri\, 7 Sep 2007 08\:41\:25 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4176/Fri Sep  7 08:46:21 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S964966AbXIGIPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 04:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbXIGIPe
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 04:15:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:47821 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964937AbXIGIPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 04:15:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ITYzf-0000mH-VK
+	for git@vger.kernel.org; Fri, 07 Sep 2007 10:15:11 +0200
+Received: from c-24-16-50-251.hsd1.wa.comcast.net ([24.16.50.251])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:15:11 +0200
+Received: from boost by c-24-16-50-251.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 10:15:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.wa.comcast.net
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <85k5r27wkv.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58003>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+David Kastrup wrote:
+> Walter Bright <boost@digitalmars.com> writes:
+>> The D programming language is a different take than C++ has on growing
+>> C. I'm curious what your thoughts on that are (D has garbage
+>> collection, while still retaining the ability to directly manage
+>> memory). Can you enumerate what you feel are the important concepts?
+> 
+> A design is perfect not when there is no longer anything you can add
+> to it, but if there is no longer anything you can take away.
 
-> On Friday 2007 September 07, David Kastrup wrote:
->
-> (Disclaimer: I'm certainly not joining the "C++ for git" chant; this reply is 
-> merely to the statements made about C++ in David's message).
->
->> The problem with C++ is that every C++ developer has his own style,
->> and reuse is an illusion within that style.  Take a look at classes
->> implementing matrix arithmetic: there are as many around as the day is
->> long, and all of them are incompatible with one another.
->
-> One could say the same about any API.  "Take a look at that C
-> library libXYZ - it does exactly the same thing as libPQR but all
-> the function calls and structures are different.  Conclusion: C is
-> shit".  Obviously nonsense.
+I like to phrase that a slightly different way: anyone can make 
+something complicated, but it takes genius to make something simple.
 
-The difference is that you can pass structures from one library into
-another with tolerable efficiency.  Because there are only basically 2
-ways to lay out a two-dimensional array of floats.
+A very big goal for D is to make what should be simple code, simple. It 
+turns out that what's simple for a computer is complex for a human. So 
+to design a language that is simple for programmers is (unfortunately) a 
+rather complex problem. Or perhaps I'm just not smart enough <g>.
 
->> With regard to programming styles, C++ does not support multiple
->> inheritance.  For a single project grown from a single start, you
->> can
->
-> Multiple inheritance is the spawn of the devil, but C++ _does_
-> support it.
+A canonical example is that of a loop. Consider a simple C loop over an 
+array:
 
-What about "With regard to programming styles" did you not understand?
-I was not talking about a technical feature at class level, but about
-code merging from multiple sources.
+void foo(int array[10])
+{
+     for (int i = 0; i < 10; i++)
+     {   int value = array[i];
+         ... do something ...
+     }
+}
 
-> I would imagine the reason people often turn up wanting to rewrite
-> Linux and git in C++ is because they are so object oriented in
-> nature already and it's natural to think "wouldn't this be even
-> better if I wrote it in an object oriented language"?  Maybe, maybe
-> not, but why bother?
+It's simple, but it has a lot of problems:
 
-Maintainability and extensibility certainly are valid arguments for
-rewrites.  But C++ does not really shine in that regard.
+1) i should be size_t, not int
+2) array is not checked for overflow
+3) 10 may not be the actual array dimension
+4) may be more efficient to step through the array with pointers, rather 
+than indices
+5) type of array may change, but the type of value may not get updated
+6) crashes if array is NULL
+7) only works with arrays and pointers
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Since this thread is talking about C++, let's look at the C++ version:
+
+void foo(std::vector<int> array)
+{
+   for (std::vector<int>::const_iterator
+        i = array.begin();
+        i != array.end();
+        i++)
+   {
+     int value = *i;
+     ... do something ...
+   }
+}
+
+It has fewer latent bugs, but still:
+
+1) type of array may change, but the type of value may not get updated
+2) too darned much typing
+3) it's more complicated, not simpler
+
+Frankly, I don't want to write loops that way. I want to write them like 
+this:
+
+void foo(int[] array)
+{
+   foreach (value; array)
+   {
+     ... do something ...
+   }
+}
+
+As a programmer, I'm specifying exactly what I want to happen without 
+much extra puffery. It's less typing, simpler, and more resistant to bugs.
+
+1) correct loop index type is selected based on the type of array
+2) arrays carry with them their dimension, so foreach is guaranteed to 
+step through the loop the correct number of times
+3) implementation decides if pointers will do a better job than indices, 
+based on the compilation target
+4) type of value is inferred automatically from the type of array, so no 
+worries if the type changes
+5) Null arrays have 0 length, so no crashing
+6) works with any collection type
+
+[This example is extracted from a presentation I've made.]
+
+------
+Walter Bright
+http://www.digitalmars.com  C, C++, D programming language compilers
+http://www.astoriaseminar.com  Extraordinary C++
