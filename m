@@ -1,62 +1,109 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 7 Sep 2007 14:55:01 +0200
-Message-ID: <20070907125501.GA21142@diana.vm.bytemark.co.uk>
-References: <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com> <46E0EEC6.4020004@op5.se> <Pine.LNX.4.64.0709071155570.28586@racer.site> <46E13C0F.8040203@op5.se> <E4A6490A-ABA9-4383-978E-C7F2E4BC9C23@wincent.com>
+Date: Fri, 07 Sep 2007 15:58:34 +0200
+Message-ID: <46E1590A.4060504@op5.se>
+References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com> <46E0EEC6.4020004@op5.se> <Pine.LNX.4.64.0709071155570.28586@racer.site> <46E13C0F.8040203@op5.se> <E4A6490A-ABA9-4383-978E-C7F2E4BC9C23@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
 To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 14:56:03 2007
+X-From: git-owner@vger.kernel.org Fri Sep 07 15:58:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITdNG-00070P-Dj
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 14:55:50 +0200
+	id 1ITeMA-00024y-GV
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 15:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965305AbXIGMzp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 7 Sep 2007 08:55:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXIGMzp
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 08:55:45 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3374 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965132AbXIGMzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 08:55:44 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1ITdMT-0005fM-00; Fri, 07 Sep 2007 13:55:01 +0100
-Mail-Followup-To: Wincent Colaiuta <win@wincent.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S965301AbXIGN6j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 7 Sep 2007 09:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965288AbXIGN6i
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 09:58:38 -0400
+Received: from mail.op5.se ([193.201.96.20]:49502 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965284AbXIGN6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 09:58:38 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id EEA2519439E;
+	Fri,  7 Sep 2007 15:58:35 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Qx4RsbEJEO2w; Fri,  7 Sep 2007 15:58:35 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id 1D01219435A;
+	Fri,  7 Sep 2007 15:58:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
 In-Reply-To: <E4A6490A-ABA9-4383-978E-C7F2E4BC9C23@wincent.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58038>
 
-On 2007-09-07 14:33:42 +0200, Wincent Colaiuta wrote:
+Wincent Colaiuta wrote:
+> El 7/9/2007, a las 13:54, Andreas Ericsson escribi=F3:
+>=20
+>> Johannes Schindelin wrote:
+>>> Hi,
+>>> On Fri, 7 Sep 2007, Andreas Ericsson wrote:
+>>>> Wincent Colaiuta wrote:
+>>>>> El 7/9/2007, a las 2:21, Dmitry Kakurin escribi?:
+>>>>>
+>>>>>> I just wanted to get a sense of how many people share this "Git=20
+>>>>>> should
+>>>>>> be in pure C" doctrine.
+>>>>> Count me as one of them. Git is all about speed, and C is the bes=
+t=20
+>>>>> choice
+>>>>> for speed, especially in context of Git's workload.
+>>>>>
+>>>> Nono, hand-optimized assembly is the best choice for speed. C is j=
+ust
+>>>> a little more portable ;-)
+>>> I have a buck here that says that you cannot hand-optimise assembly=
+=20
+>>> (on modern processors at least) as good as even gcc.
+>>
+>>
+>> http://www.gelato.unsw.edu.au/archives/git/0504/1746.html
+>>
+>> I win. Donate $1 to FSF next time you get the opportunity ;-)
+>=20
+> Well, you picked a very specific algorithm amenable to that kind of=20
+> optimization: small, manageable, with a minimal and well-defined=20
+> performance critical section that could be written in assembly. Note =
+how=20
+> a good chunk of the implementation was still in C. At most I'd give y=
+ou=20
+> 75 cents for that one. ;-)
+>=20
 
-> Well, you picked a very specific algorithm amenable to that kind of
-> optimization: small, manageable, with a minimal and well-defined
-> performance critical section that could be written in assembly. Note
-> how a good chunk of the implementation was still in C.
+Yes, but that's what I said in the original email as well. C is just so
+much more pleasant to write in that the only place you'd (sanely) use
+asm is in exactly these tight loops, where the code is likely to be use=
+d
+and reused until the algorithm it describes is no longer a viable optio=
+n
+for doing what it was originally designed to do.
 
-And this is of course exactly the kind of spot where you _would_ use
-assembly in the real world. 99.99% of code is better written in C than
-assembler, but there is that 0.01% where hand-coded assembler is a
-better choice.
+It still proves the point though, as surely as n+1 > n for any value of=
+ n:
+Hand-optimized assembly is faster than compiler-optimized C code.
+
+It might be harder to do properly on some architectures than others (RI=
+SC
+comes to mind), but it's still possible.
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
