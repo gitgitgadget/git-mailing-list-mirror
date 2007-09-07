@@ -1,78 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clone: better error message if curl program is missing
-Date: Fri, 07 Sep 2007 14:19:32 -0700
-Message-ID: <7vtzq62mxn.fsf@gitster.siamese.dyndns.org>
-References: <20070907171400.28590.qmail@d780fac1e27de6.315fe32.mid.smarden.org>
+From: Josh England <jjengla@comcast.net>
+Subject: Re: how to access working tree from .git dir?
+Date: Fri, 07 Sep 2007 15:27:01 -0600
+Message-ID: <1189200421.12525.8.camel@beauty>
+References: <1189120800.6203.23.camel@beauty>
+	 <7v642m436q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Sep 07 23:19:43 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 23:26:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITlEq-00047B-1f
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 23:19:40 +0200
+	id 1ITlLg-0005Xz-Ll
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 23:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758420AbXIGVTe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 17:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758530AbXIGVTe
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 17:19:34 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47793 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758420AbXIGVTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 17:19:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070907211934.CMWK20651.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 7 Sep 2007 17:19:34 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id lZKZ1X0011gtr5g0000000; Fri, 07 Sep 2007 17:19:33 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758547AbXIGV0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 17:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758480AbXIGV0j
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 17:26:39 -0400
+Received: from rwcrmhc13.comcast.net ([204.127.192.83]:47078 "EHLO
+	rwcrmhc13.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305AbXIGV0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 17:26:38 -0400
+Received: from [192.168.0.133] (c-68-54-9-220.hsd1.nm.comcast.net[68.54.9.220])
+          by comcast.net (rwcrmhc13) with SMTP
+          id <20070907212637m13003lgcbe>; Fri, 7 Sep 2007 21:26:38 +0000
+In-Reply-To: <7v642m436q.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58078>
 
-Gerrit Pape <pape@smarden.org> writes:
+On Fri, 2007-09-07 at 13:43 -0700, Junio C Hamano wrote:
+> "Josh England" <jjengla@sandia.gov> writes:
+> 
+> > In messsing around with hooks, I've discovered that not all hooks are
+> > run in the same environment.  In particular, the current working
+> > directory in the post-receive hook (maybe others as well) is the GIT_DIR
+> > (.git) directory, instead of the root of the working tree (as in
+> > pre-commit).
+> 
+> It is not even "instead of"; that's the only sane thing to do
+> for post-receive, which is in response to git-push and usually
+> used for a bare repository, i.e. without any work tree.
 
-> If the curl program is not available, and git clone is started to clone a
-> repository through http, this is the output
->
->  Initialized empty Git repository in /tmp/puppet/.git/
->  /usr/bin/git-clone: line 37: curl: command not found
+I thought there was probably a sane reason for it.  That is perfectly
+acceptable, but the problem still exists that there doesn't seem to be a
+good way to access the top of the working tree from within the GIT_DIR.
+Since I now know that post-receive has a CWD in .git, I could just use
+`pwd`/../ , but I was hoping for a better (read: consistent between
+hooks) solution.
 
-Perhaps we should die at this point so that...
-
->  Cannot get remote repository information.
->  Perhaps git-update-server-info needs to be run there?
-
-the user does not have to see this.
-
-In other words, instead of this:
-
->  http_fetch () {
->  	# $1 = Remote, $2 = Local
-> +	type curl >/dev/null 2>&1 ||
-> +	    die "The curl program is not available"
->  	curl -nsfL $curl_extra_args "$1" >"$2"
->  }
-
-something like this, perhaps:
-
-	http_fetch () {
-        	# $1 = remote, $2 = local
-               	curl -nsfL $curl_extra_args "$1" >"$2" || exit
-	}
-
-Then the shell would say "curl: command not found" and we would
-stop.
-
-I am just hestating to use "type" there (yeah, I know mergetool
-has one but that one is not as close to the core of the workflow
-as git-fetch is).
-
-BTW, isn't it a packaging bug not to depend git-fetch on curl?
+-JE
