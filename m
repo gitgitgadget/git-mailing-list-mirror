@@ -1,57 +1,61 @@
-From: Walter Bright <boost@digitalmars.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Fri, 07 Sep 2007 13:49:23 -0700
-Organization: Digital Mars
-Message-ID: <fbsdga$iat$1@sea.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se>	<1189004090.20311.12.camel@hinata.boston.redhat.com>	<vpq642pkoln.fsf@bauges.imag.fr>	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>	<alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>	<alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>	<fbqmdu$udg$1@sea.gmane.org> <20070907094120.GA27754@artemis.corp>	<fbs79k$tac$1@sea.gmane.org> <85wsv22ry8.fsf@lola.goethe.zz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] svnimport/cvsimport: force creation of tags that already exist.
+Date: Fri, 07 Sep 2007 13:54:01 -0700
+Message-ID: <7vzlzy2o46.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 22:49:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Smith <msmith@cbnco.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 22:54:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITklj-0005Ra-Td
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 22:49:36 +0200
+	id 1ITkqE-0006Xx-G6
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 22:54:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167AbXIGUtb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 16:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbXIGUta
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 16:49:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:51372 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752465AbXIGUta (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 16:49:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1ITklW-0000k6-45
-	for git@vger.kernel.org; Fri, 07 Sep 2007 22:49:22 +0200
-Received: from c-24-16-50-251.hsd1.mn.comcast.net ([24.16.50.251])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 22:49:22 +0200
-Received: from boost by c-24-16-50-251.hsd1.mn.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Sep 2007 22:49:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-16-50-251.hsd1.mn.comcast.net
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <85wsv22ry8.fsf@lola.goethe.zz>
+	id S932755AbXIGUyJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 16:54:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbXIGUyJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 16:54:09 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48763 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752346AbXIGUyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 16:54:08 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BC64C130439;
+	Fri,  7 Sep 2007 16:54:25 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com> (Michael
+	Smith's message of "Fri, 7 Sep 2007 11:42:22 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58073>
 
-David Kastrup wrote:
-> In my opinion there is basically one area which C has botched up
-> seriously in order to be useful as a general purpose language, and
-> that is conflating pointers and arrays, and allowing pointer
-> arithmetic.  The consequences are absolutely awful with regard to
-> compilers being able to optimize, and it is pretty much the primary
-> reason that Fortran is still quite in use for numerical work.
+Michael Smith <msmith@cbnco.com> writes:
 
-I agree. It's one of those things that probably sounded like a good idea 
-at the time. The consequences were not foreseen. All languages have a 
-few of these (C++ has the infamous use of < > for template arguments).
+> I understand moving tags is frowned upon in Git. I don't know how common 
+> the practise is in Subversion and CVS, or whether it makes sense to 
+> make the import scripts force tag creation by default.
+
+I think the patch itself makes sense.  If for some reason the
+importer detects that the CVS or SVN history moved a tag, we
+either:
+
+    (1) have a way to keep track of the versions of the tag; or
+    (2) allow it and make it "last one wins" semantics; or
+    (3) ignore it and make it "first one wins" semantics.  
+
+Erroring out complaining that the tag cannot be created, as the
+current code does, does not make any sense.
+
+The patch needs to be accompanied with a better commit log
+description.  I am guessing that with your change the semantics
+would become (2) above (assuming that cvsps or whoever reads the
+history of the other side gives events in chronological order),
+but you should not force readers of your commit log message to
+guess.
