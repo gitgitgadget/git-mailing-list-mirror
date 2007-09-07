@@ -1,143 +1,86 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Fri, 07 Sep 2007 18:09:07 +0200
-Message-ID: <85ejha5ufw.fsf@lola.goethe.zz>
-References: <46DDC500.5000606@etek.chalmers.se>
-	<1189004090.20311.12.camel@hinata.boston.redhat.com>
-	<vpq642pkoln.fsf@bauges.imag.fr>
-	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
-	<alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
-	<a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
-	<D7BEA87D-1DCF-4A48-AD5B-0A3FDC973C8A@wincent.com>
-	<46E0EEC6.4020004@op5.se>
-	<Pine.LNX.4.64.0709071155570.28586@racer.site>
+From: Michael Smith <msmith@cbnco.com>
+Subject: [RFC] svnimport/cvsimport: force creation of tags that already exist.
+Date: Fri, 7 Sep 2007 11:42:22 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0709071125090.6203@juice.ott.cti.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Wincent Colaiuta <win@wincent.com>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 07 18:09:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 07 18:12:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITgOh-0002W4-Qm
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 18:09:32 +0200
+	id 1ITgRV-0003cr-PC
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 18:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932770AbXIGQJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 12:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbXIGQJS
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 12:09:18 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:38178 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965027AbXIGQJR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2007 12:09:17 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 743FA27B27F;
-	Fri,  7 Sep 2007 18:09:16 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 5C03C13F2C3;
-	Fri,  7 Sep 2007 18:09:16 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-039-212.pools.arcor-ip.net [84.61.39.212])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id EB2331C368A;
-	Fri,  7 Sep 2007 18:09:07 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9683E1CAD71B; Fri,  7 Sep 2007 18:09:07 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0709071155570.28586@racer.site> (Johannes Schindelin's message of "Fri\, 7 Sep 2007 11\:56\:42 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4178/Fri Sep  7 10:54:58 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1757448AbXIGQMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 12:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbXIGQMU
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 12:12:20 -0400
+Received: from mail1.cbnco.com ([207.164.182.72]:46274 "EHLO smtp.cbnco.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757409AbXIGQMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 12:12:18 -0400
+X-Greylist: delayed 1794 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Sep 2007 12:12:18 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.cbnco.com (Postfix) with ESMTP id ED4411E58BE
+	for <git@vger.kernel.org>; Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
+Received: from smtp.cbnco.com ([127.0.0.1])
+ by localhost (mail.cbnco.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 08791-05 for <git@vger.kernel.org>;
+ Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
+Received: from juice.ott.cti.com (auriga-dmzgw.cbnco.com [207.164.182.65])
+	by smtp.cbnco.com (Postfix) with ESMTP id C50C61E57ED
+	for <git@vger.kernel.org>; Fri,  7 Sep 2007 11:42:22 -0400 (EDT)
+X-X-Sender: michael@juice.ott.cti.com
+X-Virus-Scanned: amavisd-new at cbnco.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58046>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi all,
 
-> On Fri, 7 Sep 2007, Andreas Ericsson wrote:
->
->> Wincent Colaiuta wrote:
->> > El 7/9/2007, a las 2:21, Dmitry Kakurin escribi?:
->> > 
->> > > I just wanted to get a sense of how many people share this "Git should
->> > > be in pure C" doctrine.
->> > 
->> > Count me as one of them. Git is all about speed, and C is the best choice
->> > for speed, especially in context of Git's workload.
->> > 
->> 
->> Nono, hand-optimized assembly is the best choice for speed. C is just
->> a little more portable ;-)
->
-> I have a buck here that says that you cannot hand-optimise assembly
-> (on modern processors at least) as good as even gcc.
+git-svnimport was changed recently to use git-tag to make tags (47ee8ed2). 
+I've had to add the "-f" option to import a repository where a tag was 
+moved. I think git-cvsimport would have the same problem.
 
-That assumes that the original task can even expressed well in C.
-Multiple precision arithmetic, for example, requires access to the
-carry bit.  You can code around this, for example by writing something
-like
+I understand moving tags is frowned upon in Git. I don't know how common 
+the practise is in Subversion and CVS, or whether it makes sense to 
+make the import scripts force tag creation by default.
 
-unsigned a,b,carry;
+Mike
 
-[...]
+---
+ git-cvsimport.perl |    2 +-
+ git-svnimport.perl |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-carry = (a+b) < a;
-
-but the problem is that those are ad-hoc idioms with a variety of
-possibilities, and thus the compilers are not made to recognize them.
-Another thing is mixed-precision multiplications and divisions: those
-are _natural_ operations on a normal CPU, but have no representation
-in assembly language.
-
-As a consequence, most high performance multiple-precision packages
-contain assembly language in some form or other.
-
-gcc's assembly language template are excellent in that they actually
-cooperate nicely with the optimizer, so the optimizer can do all the
-address calculations and register assignments and opcode reorderings,
-and then the actual operations that are not expressible in C can be
-done by the programmer.
-
-But anyway, I have worked as a graphics driver programmer for some
-amount of time, and bit-stuffing memory-mapped areas with data was
-still something where hand assembly was best.
-
-I have also done BIOS terminal emulators, and being able to write
-something like
-
-ld b,whatever
-myloop:
-push bc
-push hl
-call nextchar
-pop hl
-pop bc
-ld (hl),a
-inc hl
-djnz myloop
-
-in order to suspend the terminal driver until the application comes up
-with the next `whatever' output characters in an escape sequence is
-_wagonloads_ more maintainable than using a state machine or whatever
-else for distributing material delivered into the driver.
-
-But this requires that nextchar can do something like
-nextchar: ld (driverstack),sp
-  ld sp,(appstack)
-  ret
-
-and the entrypoint, in contrast, does
-
-outchar: ld (appstack),sp
-  ld sp,(driverstack)
-  ret
-
-Cheap and expedient.  You just need to set up a small stack, and
-presto: coroutines, at absolutely negligible cost.  I know that there
-are some "portable" coroutine implementations that use setjmp/longjmp
-in a rather horrific way, but those are way more unnatural.
-
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index ba23eb8..2954fb8 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -779,7 +779,7 @@ sub commit {
+ 		$xtag =~ tr/_/\./ if ( $opt_u );
+ 		$xtag =~ s/[\/]/$opt_s/g;
+ 
+-		system('git-tag', $xtag, $cid) == 0
++		system('git-tag', '-f', $xtag, $cid) == 0
+ 			or die "Cannot create tag $xtag: $!\n";
+ 
+ 		print "Created tag '$xtag' on '$branch'\n" if $opt_v;
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 8c17fb5..d3ad5b9 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -873,7 +873,7 @@ sub commit {
+ 
+ 		$dest =~ tr/_/\./ if $opt_u;
+ 
+-		system('git-tag', $dest, $cid) == 0
++		system('git-tag', '-f', $dest, $cid) == 0
+ 			or die "Cannot create tag $dest: $!\n";
+ 
+ 		print "Created tag '$dest' on '$branch'\n" if $opt_v;
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.2.1
