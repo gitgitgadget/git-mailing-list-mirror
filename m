@@ -1,85 +1,104 @@
-From: Jeff Jenkins <Jeff@ShopWiki.com>
-Subject: checkout and rm
-Date: Thu, 6 Sep 2007 22:59:14 -0400
-Message-ID: <4F2CF06E-CCC6-4597-A1BF-663BC36B9A94@ShopWiki.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 05:18:00 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Subject: [PATCH] git-merge-pack
+Date: Fri, 7 Sep 2007 00:07:31 -0400
+Message-ID: <20070907040731.GT18160@spearce.org>
+References: <87odgh0zn6.fsf@hades.wkstn.nix> <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix> <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709061651550.28586@racer.site> <7vk5r3adlx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org> <7v1wdb9ymf.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.0.9999.0709061942320.21186@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nix <nix@esperi.org.uk>, Steven Grimm <koreth@midwinter.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Sep 07 06:08:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITUM2-0003zw-DA
-	for gcvg-git@gmane.org; Fri, 07 Sep 2007 05:17:58 +0200
+	id 1ITV8P-0003qO-Kv
+	for gcvg-git@gmane.org; Fri, 07 Sep 2007 06:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932728AbXIGDPT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 6 Sep 2007 23:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932720AbXIGDPS
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Sep 2007 23:15:18 -0400
-Received: from rs19.luxsci.com ([65.61.136.23]:59261 "EHLO rs19.luxsci.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932643AbXIGDPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2007 23:15:17 -0400
-X-Greylist: delayed 954 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Sep 2007 23:15:17 EDT
-Received: from [192.168.0.103] (cpe-69-201-182-174.nyc.res.rr.com [69.201.182.174])
-	(authenticated bits=0)
-	by rs19.luxsci.com (8.13.7/8.13.7) with ESMTP id l872xMDW017316
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 6 Sep 2007 21:59:22 -0500
-X-Mailer: Apple Mail (2.752.3)
+	id S1750785AbXIGEHw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 00:07:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750751AbXIGEHw
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 00:07:52 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:56844 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724AbXIGEHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 00:07:51 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1ITV7p-00079V-9M; Fri, 07 Sep 2007 00:07:21 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6891420FBAE; Fri,  7 Sep 2007 00:07:32 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.9999.0709061942320.21186@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/57970>
 
-I couldn't find a thread in the archive about this.  Here's the  
-abbreviated scenario:
+Nicolas Pitre <nico@cam.org> wrote:
+> I would have concatenated all packs provided on the command line into a 
+> single one, simply by reading data from existing packs and writing it 
+> back without any processing at all.  The offset for OBJ_OFS_DELTA is 
+> relative so a simple concatenation will just work.
+> 
+> Then the index for that pack can be created just as easily by reading 
+> existing pack index files and storing the data into an array of struct 
+> pack_idx_entry, adding the appropriate offset to object offsets, then 
+> call write_idx_file().
+> 
+> All data is read once and written once making it no more costly than a 
+> simple file copy.  On the flip side it wouldn't get rid of duplicated 
+> objects (I don't know if that matters i.e. if something might break with 
+> the same object twice in a pack).
 
-$ git add bar.c
-$ git-rm foo.c
-rm 'foo.c'
-$ git-status
-# On branch FOO
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   bar.c
-#       deleted:    foo.c
-#
+Yea, that's a really quick repack.  :-)  Plus its actually something
+that can be easily halted in the middle and resumed later.  Just need
+to save the list of packfiles you are concatenating so you can pick
+up later when you get more time.
 
-$ git-checkout master
-M       bar.c
-Switched to branch "master"
-$ git-status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   bar.c
-#
+There shouldn't be a problem with having duplicates in the packfile.
+You can do one of two things:
 
-When I change branches:
-- the modified files in the index/working directory stay there  
-(that's fine)
-- the *removed* files are re-added to the working directory when the  
-branch changes
-- the remove entries aren't in the index anymore
+  a) Omit the duplicates from the .idx when you merge the .idx tables
+     together to produce the new one.  Just take the object with the
+	 earliest offset.
 
-There was no warning about any the lost changes, and if the intent  
-was to commit these changes to master because you were in FOO by  
-accident, then only some would be committed if you weren't paying  
-close attention.  If working directory/index changes are going to be  
-kept when a branch switch is done, then the remove changes should be  
-propagated as well.
+  b) Leave the duplicates in the final .idx.  In this case the
+     binary search may pick any of them, but it wouldn't matter
+     which it finds.
 
-Ideally there would be a config setting which would stop checkouts if  
-the working directory or index were dirty (and a flag on checkout  
-which overrode the setting).    With stash in 1.5.3 the only reason I  
-can think of to allow working directory changes to propagate is gone  
-(though i haven't tested how stash works with rm'd files).  At the  
-very least, there should be a warning and a prompt if some of the  
-changes are going to vanish by a user action
+About the only process that might care about duplicates would be
+index-pack.  I don't think it makes sense to run index-pack on a
+packfile you already have a .idx for.  I don't think it would have
+a problem with the duplicate SHA-1s either, but it wouldn't be hard
+to make it do something reasonable when it finds them.
+ 
+> > To consolidate all packs that are smaller than a megabytes into
+> > one, you would use it in its current form like this:
+> > 
+> >     $ old=$(find .git/objects/pack -type f -name '*.pack' -size 1M)
+> >     $ new=$(echo "$old" | git merge-pack | git pack-objects pack)
+> >     $ for p in $old; do rm -f $p ${p%.pack}.idx; done
+> >     $ for s in pack idx; do mv pack-$new.$s .git/objects/pack/; done
+> 
+> You might want to move the new pack before removing the old ones though.
 
--Jeff Jenkins
+Not might, *must*.  If you delete the old ones before the new
+ones are ready then readers can run into problems trying to access
+the objects.  We've spent some effort trying to make these sorts
+of operations safe.  No sense in destroying that by getting the
+order wrong here.  :)
+
+-- 
+Shawn.
