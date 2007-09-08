@@ -1,217 +1,138 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] diff-delta.c: pack the index structure
-Date: Sat, 08 Sep 2007 11:31:31 +0200
-Organization: Organization?!?
-Message-ID: <0cd39105dcd57a60eca290db598613aafcc8c577.1189243702.git.dak@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] make sha1_file.c::matches_pack_name() available to others
+Date: Sat, 08 Sep 2007 02:50:06 -0700
+Message-ID: <7v4pi51o6p.fsf_-_@gitster.siamese.dyndns.org>
+References: <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
+	<20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
+	<46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
+	<alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
+	<7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0709061651550.28586@racer.site>
+	<7vk5r3adlx.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0709061906010.5626@evo.linux-foundation.org>
+	<7v1wdb9ymf.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.9999.0709061942320.21186@xanadu.home>
+	<7vwsv36q6p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 08 11:31:55 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nix <nix@esperi.org.uk>, Steven Grimm <koreth@midwinter.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Sep 08 11:50:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITwfS-0003Id-N0
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 11:31:55 +0200
+	id 1ITwxO-0006gX-Ua
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 11:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbXIHJbm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 05:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbXIHJbl
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 05:31:41 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:51194 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751424AbXIHJbk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2007 05:31:40 -0400
-Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id D431D30A821
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 11:31:39 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id D280A2D3D04
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 11:31:34 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-013-010.pools.arcor-ip.net [84.61.13.10])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id A2B93292B6B
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 11:31:34 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B476F1CAD71D; Sat,  8 Sep 2007 11:31:31 +0200 (CEST)
-X-From-Line: 0cd39105dcd57a60eca290db598613aafcc8c577 Mon Sep 17 00:00:00 2001
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4194/Sat Sep  8 06:33:29 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1752155AbXIHJuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 05:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbXIHJuV
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 05:50:21 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55076 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752122AbXIHJuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 05:50:20 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C6B461309B3;
+	Sat,  8 Sep 2007 05:50:32 -0400 (EDT)
+In-Reply-To: <7vwsv36q6p.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 06 Sep 2007 21:43:26 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58114>
 
-In normal use cases, the performance wins are not overly impressive:
-we get something like 5-10% due to the slightly better locality of
-memory accesses using the packed structure.
+Even though our convention is "zero return means good", it goes a
+bit too far for matches_pack_name() to return 0 when it found
+the pack is what the name refers to.  This fixes that silly and
+obvious interface bug.
 
-However, since the data structure for index entries saves 33% of
-memory on 32-bit platforms and 40% on 64-bit platforms, the behavior
-when memory gets limited should be nicer.
-
-This is a rather well-contained change.  One obvious improvement would
-be sorting the elements in one bucket according to their hash, then
-using binary probing to find the elements with the right hash value.
-
-As it stands, the output should be strictly the same as previously
-unless one uses the option for limiting the amount of used memory, in
-which case the created packs might be better.
-
-Signed-off-by: David Kastrup <dak@gnu.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff-delta.c |   74 +++++++++++++++++++++++++++++++++++++++++++++------------
- 1 files changed, 58 insertions(+), 16 deletions(-)
 
-diff --git a/diff-delta.c b/diff-delta.c
-index 0dde2f2..1b4b1c1 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -115,9 +115,13 @@ static const unsigned int U[256] = {
- struct index_entry {
- 	const unsigned char *ptr;
- 	unsigned int val;
--	struct index_entry *next;
- };
+ Junio C Hamano <gitster@pobox.com> writes:
+
+ > Nicolas Pitre <nico@cam.org> writes:
+ > ...
+ >> In fact, since we want to _also_ perform a repack of loose objects in 
+ >> the context of automatic repacking, I wonder why we wouldn't use that 
+ >> --unpacked= argument to also repack smallish packs at the same time in 
+ >> only one pack-objects pass.  Or maybe I'm missing something?
+ >
+ > I think this is a much better idea.  You obviously need some
+ > twist to the pack-objects, and being lazy that was the reason I
+ > did not want to do this that way.
+
+ So what follows is two-patch series, which still is a rough
+ sketch, as I am feeling a bit too tired to do tests and
+ documentation (help is always welcomed, hint hint).
+
+ This message contains the first one, which is more or less
+ independent, that exposes matches_pack_name() function from
+ sha1_file.c, while fixing a silly and obvious interface bug.
+
+ cache.h     |    1 +
+ sha1_file.c |   14 +++++++-------
+ 2 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 70abbd5..3fa5b8e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -529,6 +529,7 @@ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsign
+ extern unsigned long unpack_object_header_gently(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+ extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
+ extern const char *packed_object_info_detail(struct packed_git *, off_t, unsigned long *, unsigned long *, unsigned int *, unsigned char *);
++extern int matches_pack_name(struct packed_git *p, const char *name);
  
-+struct unpacked_index_entry {
-+	struct index_entry entry;
-+	struct unpacked_index_entry *next;
-+};	
-+
- struct delta_index {
- 	unsigned long memsize;
- 	const void *src_buf;
-@@ -131,7 +135,8 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
- 	const unsigned char *data, *buffer = buf;
- 	struct delta_index *index;
--	struct index_entry *entry, **hash;
-+	struct unpacked_index_entry *entry, **hash;
-+	struct index_entry *aentry, **ahash;
- 	void *mem;
- 	unsigned long memsize;
- 
-@@ -148,28 +153,21 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
--	memsize = sizeof(*index) +
--		  sizeof(*hash) * hsize +
-+	memsize = sizeof(*hash) * hsize +
- 		  sizeof(*entry) * entries;
- 	mem = malloc(memsize);
- 	if (!mem)
- 		return NULL;
--	index = mem;
--	mem = index + 1;
- 	hash = mem;
- 	mem = hash + hsize;
- 	entry = mem;
- 
--	index->memsize = memsize;
--	index->src_buf = buf;
--	index->src_size = bufsize;
--	index->hash_mask = hmask;
- 	memset(hash, 0, hsize * sizeof(*hash));
- 
- 	/* allocate an array to count hash entries */
- 	hash_count = calloc(hsize, sizeof(*hash_count));
- 	if (!hash_count) {
--		free(index);
-+		free(hash);
- 		return NULL;
- 	}
- 
-@@ -183,12 +181,13 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 			val = ((val << 8) | data[i]) ^ T[val >> RABIN_SHIFT];
- 		if (val == prev_val) {
- 			/* keep the lowest of consecutive identical blocks */
--			entry[-1].ptr = data + RABIN_WINDOW;
-+			entry[-1].entry.ptr = data + RABIN_WINDOW;
-+			--entries;
- 		} else {
- 			prev_val = val;
- 			i = val & hmask;
--			entry->ptr = data + RABIN_WINDOW;
--			entry->val = val;
-+			entry->entry.ptr = data + RABIN_WINDOW;
-+			entry->entry.val = val;
- 			entry->next = hash[i];
- 			hash[i] = entry++;
- 			hash_count[i]++;
-@@ -212,16 +211,59 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 			continue;
- 		entry = hash[i];
- 		do {
--			struct index_entry *keep = entry;
-+			struct unpacked_index_entry *keep = entry;
- 			int skip = hash_count[i] / HASH_LIMIT;
- 			do {
-+				--entries;
- 				entry = entry->next;
- 			} while(--skip && entry);
-+			++entries;
- 			keep->next = entry;
- 		} while(entry);
- 	}
- 	free(hash_count);
- 
-+	/* Now create the packed index in array form rather than
-+	 * linked lists */
-+
-+	memsize = sizeof(*index)
-+		+ sizeof(*ahash) * (hsize+1)
-+		+ sizeof(*aentry) * entries;
-+
-+	mem = malloc(memsize);
-+
-+	if (!mem) {
-+		free(hash);
-+		return NULL;
-+	}
-+
-+	index = mem;
-+	index->memsize = memsize;
-+	index->src_buf = buf;
-+	index->src_size = bufsize;
-+	index->hash_mask = hmask;
-+
-+	mem = index + 1;
-+	ahash = mem;
-+	mem = ahash + (hsize+1);
-+	aentry = mem;
-+
-+	/* Coalesce all entries belonging to one linked list into
-+	 * consecutive array entries */
-+
-+	for (i = 0; i < hsize; i++) {
-+		ahash[i] = aentry;
-+		for (entry = hash[i]; entry; entry = entry->next)
-+			*aentry++ = entry->entry;
-+	}
-+
-+	/* Sentinel value to indicate the length of the last hash
-+	 * bucket */
-+
-+	ahash[hsize] = aentry;
-+	assert(aentry - (struct index_entry *)mem == entries);
-+	free(hash);
-+
- 	return index;
+ /* Dumb servers support */
+ extern int update_server_info(int);
+diff --git a/sha1_file.c b/sha1_file.c
+index 9978a58..5801c3e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1684,22 +1684,22 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 	return 0;
  }
  
-@@ -302,7 +344,7 @@ create_delta(const struct delta_index *index,
- 			val ^= U[data[-RABIN_WINDOW]];
- 			val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
- 			i = val & index->hash_mask;
--			for (entry = index->hash[i]; entry; entry = entry->next) {
-+			for (entry = index->hash[i]; entry < index->hash[i+1]; entry++) {
- 				const unsigned char *ref = entry->ptr;
- 				const unsigned char *src = data;
- 				unsigned int ref_size = ref_top - ref;
--- 
-1.5.3.GIT
+-static int matches_pack_name(struct packed_git *p, const char *ig)
++int matches_pack_name(struct packed_git *p, const char *name)
+ {
+ 	const char *last_c, *c;
+ 
+-	if (!strcmp(p->pack_name, ig))
+-		return 0;
++	if (!strcmp(p->pack_name, name))
++		return 1;
+ 
+ 	for (c = p->pack_name, last_c = c; *c;)
+ 		if (*c == '/')
+ 			last_c = ++c;
+ 		else
+ 			++c;
+-	if (!strcmp(last_c, ig))
+-		return 0;
++	if (!strcmp(last_c, name))
++		return 1;
+ 
+-	return 1;
++	return 0;
+ }
+ 
+ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, const char **ignore_packed)
+@@ -1717,7 +1717,7 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, cons
+ 		if (ignore_packed) {
+ 			const char **ig;
+ 			for (ig = ignore_packed; *ig; ig++)
+-				if (!matches_pack_name(p, *ig))
++				if (matches_pack_name(p, *ig))
+ 					break;
+ 			if (*ig)
+ 				goto next;
