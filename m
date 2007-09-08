@@ -1,89 +1,234 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn 1.5.3 does not understand grafts?
-Date: Sat, 08 Sep 2007 12:53:57 -0700
-Message-ID: <7vfy1pyluy.fsf@gitster.siamese.dyndns.org>
-References: <20070908050146.GA28855@soma>
-	<045501c7f23f$c359c450$5267a8c0@Jocke>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] diff-delta.c: pack the index structure
+Date: Sat, 08 Sep 2007 22:50:20 +0200
+Message-ID: <85hcm4ubjn.fsf@lola.goethe.zz>
+References: <85fy1q11xv.fsf@lola.goethe.zz>
+	<alpine.LFD.0.9999.0709072215420.21186@xanadu.home>
+	<854pi5zh8q.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "'Eric Wong'" <normalperson@yhbt.net>,
-	"'git'" <git@vger.kernel.org>
-To: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Sat Sep 08 21:54:48 2007
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Sep 08 22:50:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IU6OC-00056M-NP
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 21:54:45 +0200
+	id 1IU7GI-0007VT-IT
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 22:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705AbXIHTyI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 15:54:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754688AbXIHTyH
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 15:54:07 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59778 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754556AbXIHTyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 15:54:06 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 65234130E62;
-	Sat,  8 Sep 2007 15:54:22 -0400 (EDT)
-In-Reply-To: <045501c7f23f$c359c450$5267a8c0@Jocke> (Joakim Tjernlund's
-	message of "Sat, 8 Sep 2007 19:43:27 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752149AbXIHUub (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 16:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbXIHUub
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 16:50:31 -0400
+Received: from mail-in-05.arcor-online.net ([151.189.21.45]:49395 "EHLO
+	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752073AbXIHUua (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2007 16:50:30 -0400
+Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id F3EF1183AF7;
+	Sat,  8 Sep 2007 22:50:28 +0200 (CEST)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id CFD0828EE19;
+	Sat,  8 Sep 2007 22:50:28 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-020-082.pools.arcor-ip.net [84.61.20.82])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 7D11735E73F;
+	Sat,  8 Sep 2007 22:50:20 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 106B21CAD71D; Sat,  8 Sep 2007 22:50:20 +0200 (CEST)
+In-Reply-To: <854pi5zh8q.fsf@lola.goethe.zz> (David Kastrup's message of "Sat\, 08 Sep 2007 10\:36\:05 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4200/Sat Sep  8 21:00:15 2007 on mail-in-06.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58135>
 
-"Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
+--=-=-=
 
-> hmm, I think git-cat-file is to blame.
-> git-cat-file commit da783cce390ce013b19f1d308ea6813269c6a6b5 does
-> not list list any parent...
+David Kastrup <dak@gnu.org> writes:
 
-The plumbing cat-file does not deal with grafts and this is
-deliberate.  Otherwise you would not be able to find the true
-set of parents when you'd want to.
+> Another option avoiding the realloc would be not to use linked lists
+> at all but just collect all entries sequentually in "packed" form,
+> and sort them into order afterwards.  That's an O(n lg n) operation
+> with a large n.  Even if one has a sorting algorithm with good
+> memory locality, I doubt that the locality would compensate for the
+> lg n factor, even when taking into account that we save ourselves
+> the copying.  And that is not even taken the possibility of having
+> to cull some buckets into account, another O(n) operation (which
+> amounts to copying everything once, too).
 
-So do not blame cat-file, but blame the Porcelain that uses
-cat-file to read a commit object, without annotating what it
-read with what is in grafts, in this case your command line
-experiment ;-).
+As an illustration, I have implemented a proof-of-concept.  This is a
+patch (not formatted for submission) against the current master.  It
+takes about a 20% performance hit on the whole git-pack-objects run,
+so the diffing code itself is likely affected worse.  For the
+proof-of-concept I did not do the hash bucket collision culling, nor
+did I realloc to the possibly reduced size.  So a fairer comparison
+would likely involve removing the culling code from master (or
+implementing the culling in the proof-of-concept, but I am too lazy
+for that).
 
-The log family of commands and rev-list plumbing while
-traversing commit ancestry chain do take grafts into account.
+I hope this addresses the not-in-place complaint.  It is conceivable
+that under tight memory conditions, this approach might actually work
+out better.  However, the glibc qsort implementation (at least it did
+so at one time) reverts to a mergesort for large numbers, and
+allocates a temporary buffer of the same size as the original data.
+If that is still the case, the memory impact would actually be worse
+here.  One would need to implement a custom _real_ in place sorter to
+get around this.  All in all, I don't think this approach is worth the
+trouble: the sorting overhead factor of lg n is just too much.
 
-One caveat is pretty=raw output format shows true parents
-without grafts on "parent " header line, while the "commit "
-fake header prepended in the output for each commit shows the
-parents that takes into account.
 
-To illustrate, if you forge the history and say the parent of
-1ddea77 is 5da1606 (when the true parent is 820eca68) with
-grafts mechanism, here is what happens:
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: attachment
 
-    $ echo '1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755' >.git/info/grafts
-    $ git show -s --pretty=raw --parents 1ddea77
-    commit 1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755
-    tree e9e61bc801438062978ff47b0963c536ed1e51a9
-    parent 820eca68c2577d7499d203d7f4f7ae479b577683
-    author Nick Hengeveld <nickh@reactrix.com> 1127757131 -0700
-    committer Junio C Hamano <junkio@cox.net> 1127805558 -0700
+diff --git a/diff-delta.c b/diff-delta.c
+index 0dde2f2..f6e2416 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -115,7 +115,6 @@ static const unsigned int U[256] = {
+ struct index_entry {
+ 	const unsigned char *ptr;
+ 	unsigned int val;
+-	struct index_entry *next;
+ };
+ 
+ struct delta_index {
+@@ -126,12 +125,24 @@ struct delta_index {
+ 	struct index_entry *hash[FLEX_ARRAY];
+ };
+ 
++static unsigned int cmp_hmask;
++
++static int cmp_index_entry(const void *va, const void *vb)
++{
++	const struct index_entry *a = va, *b = vb;
++	if ((a->val & cmp_hmask) != (b->val & cmp_hmask))
++		return (a->val & cmp_hmask) < (b->val & cmp_hmask) ? -1 : 1;
++	if (a->val != b->val)
++		return a->val < b->val ? -1 : 1;
++	return a->ptr < b->ptr ? -1 : 1;
++}
++
+ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ {
+-	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
++	unsigned int i, hsize, hmask, entries, prev_val, ihash;
+ 	const unsigned char *data, *buffer = buf;
+ 	struct delta_index *index;
+-	struct index_entry *entry, **hash;
++	struct index_entry *entry, **hash, *entry_base;
+ 	void *mem;
+ 	unsigned long memsize;
+ 
+@@ -149,7 +160,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 
+ 	/* allocate lookup index */
+ 	memsize = sizeof(*index) +
+-		  sizeof(*hash) * hsize +
++		  sizeof(*hash) * (hsize + 1) +
+ 		  sizeof(*entry) * entries;
+ 	mem = malloc(memsize);
+ 	if (!mem)
+@@ -157,21 +168,14 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	index = mem;
+ 	mem = index + 1;
+ 	hash = mem;
+-	mem = hash + hsize;
+-	entry = mem;
++	mem = hash + hsize + 1;
++	entry_base = mem;
++	entry = entry_base;
+ 
+ 	index->memsize = memsize;
+ 	index->src_buf = buf;
+ 	index->src_size = bufsize;
+ 	index->hash_mask = hmask;
+-	memset(hash, 0, hsize * sizeof(*hash));
+-
+-	/* allocate an array to count hash entries */
+-	hash_count = calloc(hsize, sizeof(*hash_count));
+-	if (!hash_count) {
+-		free(index);
+-		return NULL;
+-	}
+ 
+ 	/* then populate the index */
+ 	prev_val = ~0;
+@@ -184,29 +188,33 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		if (val == prev_val) {
+ 			/* keep the lowest of consecutive identical blocks */
+ 			entry[-1].ptr = data + RABIN_WINDOW;
++			--entries;
+ 		} else {
+ 			prev_val = val;
+ 			i = val & hmask;
+ 			entry->ptr = data + RABIN_WINDOW;
+ 			entry->val = val;
+-			entry->next = hash[i];
+-			hash[i] = entry++;
+-			hash_count[i]++;
++			entry++;
+ 		}
+ 	}
++	cmp_hmask = hmask;
++	qsort(entry_base, entries, sizeof(struct index_entry), cmp_index_entry);
++	ihash = 0;
++	
++	for (i=0; i<entries; i++) {
++		entry = &entry_base[i];
++		if ((entry->val & hmask) >= ihash) {
++			/* cull here */
++			do {
++				hash[ihash++] = entry;
++			} while ((entry->val & hmask) >= ihash);
++		}
++	}
++	while (ihash <= hsize) {
++		hash[ihash++] = &entry_base[entries];
++	}
+ 
+-	/*
+-	 * Determine a limit on the number of entries in the same hash
+-	 * bucket.  This guards us against pathological data sets causing
+-	 * really bad hash distribution with most entries in the same hash
+-	 * bucket that would bring us to O(m*n) computing costs (m and n
+-	 * corresponding to reference and target buffer sizes).
+-	 *
+-	 * Make sure none of the hash buckets has more entries than
+-	 * we're willing to test.  Otherwise we cull the entry list
+-	 * uniformly to still preserve a good repartition across
+-	 * the reference buffer.
+-	 */
++#if 0
+ 	for (i = 0; i < hsize; i++) {
+ 		if (hash_count[i] < HASH_LIMIT)
+ 			continue;
+@@ -221,6 +229,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		} while(entry);
+ 	}
+ 	free(hash_count);
++#endif
+ 
+ 	return index;
+ }
+@@ -302,7 +311,7 @@ create_delta(const struct delta_index *index,
+ 			val ^= U[data[-RABIN_WINDOW]];
+ 			val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
+ 			i = val & index->hash_mask;
+-			for (entry = index->hash[i]; entry; entry = entry->next) {
++			for (entry = index->hash[i]; entry < index->hash[i+1]; entry++) {
+ 				const unsigned char *ref = entry->ptr;
+ 				const unsigned char *src = data;
+ 				unsigned int ref_size = ref_top - ref;
 
-        [PATCH] Return CURL error message when object transfer fails
+--=-=-=
 
-        Return CURL error message when object transfer fails
-        ...
-    $ git-cat-file commit 1ddea77
-    tree e9e61bc801438062978ff47b0963c536ed1e51a9
-    parent 820eca68c2577d7499d203d7f4f7ae479b577683
-    author Nick Hengeveld <nickh@reactrix.com> 1127757131 -0700
-    committer Junio C Hamano <junkio@cox.net> 1127805558 -0700
 
-    [PATCH] Return CURL error message when object transfer fails
 
-    Return CURL error message when object transfer fails
-    ...
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
+
+--=-=-=--
