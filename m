@@ -1,122 +1,89 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] diff-delta.c: Rationalize culling of hash buckets
-Date: Sat, 08 Sep 2007 21:41:24 +0200
-Organization: Organization?!?
-Message-ID: <85zlzxt063.fsf@lola.goethe.zz>
-References: <f1161c08aeeca60b6c33af34ccea68fd99b9ea4e.1189243702.git.dak@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-svn 1.5.3 does not understand grafts?
+Date: Sat, 08 Sep 2007 12:53:57 -0700
+Message-ID: <7vfy1pyluy.fsf@gitster.siamese.dyndns.org>
+References: <20070908050146.GA28855@soma>
+	<045501c7f23f$c359c450$5267a8c0@Jocke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 08 21:41:58 2007
+Cc: "'Eric Wong'" <normalperson@yhbt.net>,
+	"'git'" <git@vger.kernel.org>
+To: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Sat Sep 08 21:54:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IU6Bk-0002qE-IK
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 21:41:52 +0200
+	id 1IU6OC-00056M-NP
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 21:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754636AbXIHTlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 15:41:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbXIHTlc
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 15:41:32 -0400
-Received: from mail-in-06.arcor-online.net ([151.189.21.46]:43313 "EHLO
-	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754566AbXIHTlb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2007 15:41:31 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id A402131ECD8
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:29 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 942D92DABFF
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:29 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-020-082.pools.arcor-ip.net [84.61.20.82])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 7151C19B326
-	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:25 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id BBB751CAD71D; Sat,  8 Sep 2007 21:41:24 +0200 (CEST)
-In-Reply-To: <f1161c08aeeca60b6c33af34ccea68fd99b9ea4e.1189243702.git.dak@gnu.org>
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4199/Sat Sep  8 20:36:00 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1754705AbXIHTyI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 15:54:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754688AbXIHTyH
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 15:54:07 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:59778 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754556AbXIHTyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 15:54:06 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 65234130E62;
+	Sat,  8 Sep 2007 15:54:22 -0400 (EDT)
+In-Reply-To: <045501c7f23f$c359c450$5267a8c0@Jocke> (Joakim Tjernlund's
+	message of "Sat, 8 Sep 2007 19:43:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58134>
 
-The previous hash bucket culling resulted in a somewhat unpredictable
-number of hash bucket entries in the order of magnitude of HASH_LIMIT.
+"Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
 
-Replace this with a Bresenham-like algorithm leaving us with exactly
-HASH_LIMIT entries by uniform culling.
----
+> hmm, I think git-cat-file is to blame.
+> git-cat-file commit da783cce390ce013b19f1d308ea6813269c6a6b5 does
+> not list list any parent...
 
-This is assuming that the previous patch series has been applied
-(lacking any final comments or Acks on it; but I think I addressed the
-issues).  The hash bucket code culling has really annoyed me with its
-unintuitive results.  If the preceding patch series is thrown out (I
-can't think why it would), one could rework this to fit the current
-master if really needed.
+The plumbing cat-file does not deal with grafts and this is
+deliberate.  Otherwise you would not be able to find the true
+set of parents when you'd want to.
 
- diff-delta.c |   41 +++++++++++++++++++++++++++++++----------
- 1 files changed, 31 insertions(+), 10 deletions(-)
+So do not blame cat-file, but blame the Porcelain that uses
+cat-file to read a commit object, without annotating what it
+read with what is in grafts, in this case your command line
+experiment ;-).
 
-diff --git a/diff-delta.c b/diff-delta.c
-index e7c33aa..98795c6 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -207,19 +207,40 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	 * the reference buffer.
- 	 */
- 	for (i = 0; i < hsize; i++) {
--		if (hash_count[i] < HASH_LIMIT)
-+		int acc;
-+
-+		if (hash_count[i] <= HASH_LIMIT)
- 			continue;
-+
-+		entries -= hash_count[i] - HASH_LIMIT;
-+		/* We leave exactly HASH_LIMIT entries in the bucket */
-+
- 		uentry = uhash[i];
-+		acc = 0;
- 		do {
--			struct unpacked_index_entry *keep = uentry;
--			int skip = hash_count[i] / HASH_LIMIT;
--			do {
--				--entries;
--				uentry = uentry->next;
--			} while(--skip && uentry);
--			++entries;
--			keep->next = uentry;
--		} while(uentry);
-+			acc += hash_count[i] - HASH_LIMIT;
-+			if (acc > 0) {
-+				struct unpacked_index_entry *keep = uentry;
-+				do {
-+					uentry = uentry->next;
-+					acc -= HASH_LIMIT;
-+				} while (acc > 0);
-+				keep->next = uentry->next;
-+			}
-+			uentry = uentry->next;
-+		} while (uentry);
-+
-+		/* Assume that this loop is gone through exactly
-+		 * HASH_LIMIT times and is entered and left with
-+		 * acc==0.  So the first statement in the loop
-+		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
-+		 * to the accumulator, and the inner loop consequently
-+		 * is run (hash_count[i]-HASH_LIMIT) times, removing
-+		 * one element from the list each time.  Since acc
-+		 * balances out to 0 at the final run, the inner loop
-+		 * body can't be left with uentry==NULL.  So we indeed
-+		 * encounter uentry==NULL in the outer loop only.
-+		 */
- 	}
- 	free(hash_count);
- 
--- 
-1.5.3.GIT
+The log family of commands and rev-list plumbing while
+traversing commit ancestry chain do take grafts into account.
+
+One caveat is pretty=raw output format shows true parents
+without grafts on "parent " header line, while the "commit "
+fake header prepended in the output for each commit shows the
+parents that takes into account.
+
+To illustrate, if you forge the history and say the parent of
+1ddea77 is 5da1606 (when the true parent is 820eca68) with
+grafts mechanism, here is what happens:
+
+    $ echo '1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755' >.git/info/grafts
+    $ git show -s --pretty=raw --parents 1ddea77
+    commit 1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755
+    tree e9e61bc801438062978ff47b0963c536ed1e51a9
+    parent 820eca68c2577d7499d203d7f4f7ae479b577683
+    author Nick Hengeveld <nickh@reactrix.com> 1127757131 -0700
+    committer Junio C Hamano <junkio@cox.net> 1127805558 -0700
+
+        [PATCH] Return CURL error message when object transfer fails
+
+        Return CURL error message when object transfer fails
+        ...
+    $ git-cat-file commit 1ddea77
+    tree e9e61bc801438062978ff47b0963c536ed1e51a9
+    parent 820eca68c2577d7499d203d7f4f7ae479b577683
+    author Nick Hengeveld <nickh@reactrix.com> 1127757131 -0700
+    committer Junio C Hamano <junkio@cox.net> 1127805558 -0700
+
+    [PATCH] Return CURL error message when object transfer fails
+
+    Return CURL error message when object transfer fails
+    ...
