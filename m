@@ -1,109 +1,101 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH] git-diff: don't squelch the new SHA1 in submodule diffs
-Date: Sat, 08 Sep 2007 12:30:22 +0200
-Message-ID: <20070908103022.GA15229MdfPADPa@greensroom.kotnet.org>
-Reply-To: skimo@liacs.nl
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: .git/info/exclude w/ CFLF fails in cygwin
+Date: Sat, 8 Sep 2007 12:36:03 +0200
+Message-ID: <200709081236.04411.robin.rosenberg.lists@dewire.com>
+References: <20070908010139.GA5501@falcon.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 12:30:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 12:34:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITxaC-0006UY-1O
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 12:30:32 +0200
+	id 1ITxe0-0007AM-O4
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 12:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbXIHKaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 06:30:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIHKaY
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 06:30:24 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:55151 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918AbXIHKaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 06:30:24 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JO100H4UP6M6R@psmtp09.wxs.nl> for git@vger.kernel.org; Sat,
- 08 Sep 2007 12:30:23 +0200 (MEST)
-Received: (qmail 15269 invoked by uid 500); Sat, 08 Sep 2007 10:30:22 +0000
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1750914AbXIHKeY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 8 Sep 2007 06:34:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIHKeX
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 06:34:23 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:28860 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750903AbXIHKeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 06:34:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5F4D78030C7;
+	Sat,  8 Sep 2007 12:26:23 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 09299-05; Sat,  8 Sep 2007 12:26:23 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 03C218030C4;
+	Sat,  8 Sep 2007 12:26:22 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070908010139.GA5501@falcon.digizenstudio.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58117>
 
-The code to squelch empty diffs introduced by commit
-fb13227e089f22dc31a3b1624559153821056848 would inadvertently
-populate filespec "two" of a submodule change using the uninitialized
-(null) SHA1, thereby replacing the submodule SHA1 by 0{40} in the output.
+l=F6rdag 08 september 2007 skrev Jing Xue:
+> (1.5.3.1 in cygwin, Win XP)
+> I have cygwin configured to operate in the DOS/text mode, which means
+> cygwin translates LF to CRLF when writing a file, and CRLF to LF when
+> reading.  Unfortunately cygwin's fstat() implementation doesn't take =
+the
+> mode into account when reporting stat.st_size, presumably for the sak=
+e
+> of performance, while read() does actually do the conversion.
 
-This change teaches diffcore_skip_stat_unmatch to handle
-submodule changes correctly.
+This is not just cygwin and applies to all CRLF environments.
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- diff.c                     |   21 +++++++++++++++++----
- t/t7400-submodule-basic.sh |    4 ++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+> That causes the function add_excludes_from_file_1() in dir.c to rejec=
+t a
+> .git/info/exclude file with CRLF ending, because the size actually re=
+ad
+> is not the same as the size reported by fstat().
 
-diff --git a/diff.c b/diff.c
-index 0d30d05..1aca5df 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3144,6 +3144,22 @@ static void diffcore_apply_filter(const char *filter)
- 	*q = outq;
- }
- 
-+/* Check whether two filespecs with the same mode and size are identical */
-+static int diff_filespec_is_identical(struct diff_filespec *one,
-+				      struct diff_filespec *two)
-+{
-+	if (S_ISGITLINK(one->mode)) {
-+		diff_fill_sha1_info(one);
-+		diff_fill_sha1_info(two);
-+		return !hashcmp(one->sha1, two->sha1);
-+	}
-+	if (diff_populate_filespec(one, 0))
-+		return 0;
-+	if (diff_populate_filespec(two, 0))
-+		return 0;
-+	return !memcmp(one->data, two->data, one->size);
-+}
-+
- static void diffcore_skip_stat_unmatch(struct diff_options *diffopt)
- {
- 	int i;
-@@ -3175,10 +3191,7 @@ static void diffcore_skip_stat_unmatch(struct diff_options *diffopt)
- 		    diff_populate_filespec(p->one, 1) ||
- 		    diff_populate_filespec(p->two, 1) ||
- 		    (p->one->size != p->two->size) ||
--
--		    diff_populate_filespec(p->one, 0) || /* (2) */
--		    diff_populate_filespec(p->two, 0) ||
--		    memcmp(p->one->data, p->two->data, p->one->size))
-+		    !diff_filespec_is_identical(p->one, p->two)) /* (2) */
- 			diff_q(&outq, p);
- 		else {
- 			/*
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 9d142ed..4fe3a41 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -152,6 +152,10 @@ test_expect_success 'the --cached sha1 should be rev1' '
- 	git-submodule --cached status | grep "^+$rev1"
- '
- 
-+test_expect_success 'git diff should report the SHA1 of the new submodule commit' '
-+	git-diff | grep "^+Subproject commit $rev2"
-+'
-+
- test_expect_success 'update should checkout rev1' '
- 	git-submodule update &&
- 	head=$(cd lib && git rev-parse HEAD) &&
--- 
-1.5.3.1.20.g3d038
+> The simplest fix I have found is to explicitly open the exclude file =
+in
+> binary mode, because the rest of the exclude file parsing code actual=
+ly
+> deals with CRLF quite fine.
+>=20
+> I would submit a patch but I am not sure if this is the appropriate f=
+ix.
+doubt it is worth it..
+>=20
+> By the way, parsing .git/config with CRLF in the same environment wor=
+ks
+> fine because the code reads the file by byte and doesn't do any size
+> validation.
+>=20
+> Any thoughts?
+
+I have cygwin in CRLF mode too, but I have binary-mounted the paths' wh=
+ere
+I use git to avoid the problem. I did a half-hearted attempt to fix git=
+ in CRLF mode,
+but it failed because in some places plumbing commands communicate via =
+files
+and in other pipes are used making it hard to get then right translatio=
+n mode.
+
+That is not to say it is impossible, but as I understand it the Cygwin =
+project have
+essentially given up on CRLF mode, so it will probably go away as progr=
+ams get
+updated and no longer works in translated mode.
+
+Try git in unix mode and, if you need it, use the core.autocrl setting =
+to have git
+translate explicitly. There are plenty editors that honour line endings=
+ in Windows
+so LF mode works out quite well nowadays (for me, on my machines).
+
+-- robin
