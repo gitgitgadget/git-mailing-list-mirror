@@ -1,63 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to access working tree from .git dir?
-Date: Fri, 07 Sep 2007 16:42:54 -0700
-Message-ID: <7vr6la11q9.fsf@gitster.siamese.dyndns.org>
-References: <1189120800.6203.23.camel@beauty>
-	<7v642m436q.fsf@gitster.siamese.dyndns.org>
-	<1189200421.12525.8.camel@beauty>
-	<7vhcm62lru.fsf@gitster.siamese.dyndns.org>
-	<1189203064.15140.2.camel@beauty>
-	<7vveam15w9.fsf@gitster.siamese.dyndns.org>
-	<1189204498.15140.4.camel@beauty>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Fri, 7 Sep 2007 17:32:09 -0700
+Message-ID: <a1bbc6950709071732s1f15e5ev28bdfc5c1ab5877b@mail.gmail.com>
+References: <46DDC500.5000606@etek.chalmers.se>
+	 <1189004090.20311.12.camel@hinata.boston.redhat.com>
+	 <vpq642pkoln.fsf@bauges.imag.fr>
+	 <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+	 <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
+	 <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>
+	 <Pine.LNX.4.64.0709071119510.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Josh England <jjengla@comcast.net>
-X-From: git-owner@vger.kernel.org Sat Sep 08 01:43:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Sep 08 02:32:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITnU7-0006dN-0o
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 01:43:35 +0200
+	id 1IToFF-0005Ij-96
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 02:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255AbXIGXnC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 7 Sep 2007 19:43:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753242AbXIGXnB
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 19:43:01 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50699 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753591AbXIGXnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2007 19:43:00 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B06C113025A;
-	Fri,  7 Sep 2007 19:43:18 -0400 (EDT)
-In-Reply-To: <1189204498.15140.4.camel@beauty> (Josh England's message of
-	"Fri, 07 Sep 2007 16:34:58 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751889AbXIHAcL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 7 Sep 2007 20:32:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbXIHAcL
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Sep 2007 20:32:11 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:22717 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbXIHAcJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2007 20:32:09 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so564063rvb
+        for <git@vger.kernel.org>; Fri, 07 Sep 2007 17:32:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=LdVlF7RlAVFClJ2m5W8rgTWgRCgftpR/6jZxHIirykc=;
+        b=dX9b9PWFzEVRROHp42YtuL567pWItycp7GHdbX/Dyuh6sO/7nhGlH9MIaU66AhUkaZ0dt3ah8WFxPesYe0ld6mlfeTIP0TZMUznt7fes+DIcdHWAe/vsH6f3Z1ksoe5Q0nsnLV1a/WtD18lV0SmI3iBIV2S1Hzgp91jt6GTojec=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GuZKP/ZwcxTnvbR9olyApM/aAiFTIqqmu1C8JuizkBS4BDDICxNcGa+GDJ9ec7nMPywkZ6wth8Q0qFoSWqgjFCpnLnClzWzuQv6CEjiwM4sdHwdtrJA2YKKHHcxEYiLbCwqSbisev5V4S/7HIhRu6w/wUJv38kNxLSUjoKGs7pM=
+Received: by 10.140.157.12 with SMTP id f12mr950918rve.1189211529220;
+        Fri, 07 Sep 2007 17:32:09 -0700 (PDT)
+Received: by 10.141.21.17 with HTTP; Fri, 7 Sep 2007 17:32:09 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0709071119510.28586@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58093>
 
-Josh England <jjengla@comcast.net> writes:
-
-> On Fri, 2007-09-07 at 15:12 -0700, Junio C Hamano wrote:
->> Josh England <jjengla@comcast.net> writes:
->> 
->> > OK. Fair enough.  Maybe it would be good to note in git-sh-setup.sh that
->> > many of the supplied functions will not work when called from within
->> > $GIT_DIR.
->> 
->> Sorry, "supplied functions"?  Care to clarify with a patch?
+On 9/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> I guess really just the cd_to_topdir() function.  It will silently fail
-> when run from within $GIT_DIR.
+> On Thu, 6 Sep 2007, Dmitry Kakurin wrote:
+>
+> > Anyway I don't mean to start a religious C vs. C++ war.
+>
+> You have a very strange way of not meaning to start a C vs. C++ war.
 
-Ah, I see what you meant.
+I honestly didn't. I didn't even think it's possible. In the
+environment of mainstream commercial software development the last war
+on this subj was over 8-10 years ago.
+Even wars like "do we use exceptions/templates/stl" are pretty much
+over. Now days it's "do we use Boost", or "do we use template
+metaprogramming". But even more often it's Java/C# vs. C++.
 
-I think you probably are supposed to check with is_bare_repository
-or something before calling that, as asking to cd to toplevel
-implies you know there is such a thing as toplevel ;-)
+That's why I was wondering how come C was chosen for Git.
+
+> > It's a matter of beliefs and as such pointless.
+>
+> No, it's not.  As has been shown by some very good _arguments_.  Once you
+> have facts to back up your claims, it is not any belief any longer.
+
+Well I've heard *opinions* and anecdotal evidence. No facts though.
+And it's not surprising. There could be no hard facts in such a
+matter. It always boils down to "most of all, I want my software to be
+X" where X is different for different people (fast,maintainable,quick
+to market, scalable, beautiful, etc ... to name a few).
+With different values of X any debate is pointless. And X is exactly
+the matter of believes.
+
+Anyway my curiosity is satisfied (thru the roof so to speak) and I
+think it's enough on the subj. It has reminded me of good old times
+though.
+
+-- 
+- Dmitry
