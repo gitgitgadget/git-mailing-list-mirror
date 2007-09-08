@@ -1,79 +1,111 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Button added to performs a GUI diff (inline)
-Date: Sun, 9 Sep 2007 00:34:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709090031260.28586@racer.site>
-References: <200709081231.26894.pmdumuid@pezdell>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 1/3] Add strbuf_rtrim (to remove trailing spaces).
+Date: Sun, 09 Sep 2007 00:53:53 +0200
+Message-ID: <20070908225353.GB13385@artemis.corp>
+References: <20070902224213.GB431@artemis.corp> <11892523992761-git-send-email-madcoder@debian.org> <1189252399433-git-send-email-madcoder@debian.org> <46E2CB4C.8050209@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; boundary="A6N2fC+uXW/VQSAv";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: pierre.dumuid@adelaide.edu.au
-X-From: git-owner@vger.kernel.org Sun Sep 09 10:48:15 2007
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Sep 09 10:48:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IUIOt-0004BX-Nz
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:15 +0200
-Received: from mail-mx1.uio.no ([129.240.10.29])
+	id 1IUIPE-0004Ds-Fb
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:36 +0200
+Received: from mail-mx3.uio.no ([129.240.10.44])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IU9vT-0002fp-Aj
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:41:19 +0200
+	id 1IU9HM-0003rm-8U
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 00:59:52 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx1.uio.no with esmtp (Exim 4.67)
+	by mail-mx3.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IU9vL-0005pZ-M2
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:41:19 +0200
+	id 1IU9HE-0002AO-I3
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 00:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208AbXIHXe6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 19:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755076AbXIHXe6
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 19:34:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39612 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754965AbXIHXe5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 19:34:57 -0400
-Received: (qmail invoked by alias); 08 Sep 2007 23:34:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp029) with SMTP; 09 Sep 2007 01:34:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+6DE59SgG6WGkzpif2wEowJaH7iKWKILpvLMQdzi
-	XIPPHgmyUVw/20
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200709081231.26894.pmdumuid@pezdell>
-X-Y-GMX-Trusted: 0
+	id S1754784AbXIHWx4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 18:53:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbXIHWx4
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 18:53:56 -0400
+Received: from pan.madism.org ([88.191.52.104]:44978 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754056AbXIHWxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 18:53:55 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 49B721EAEC;
+	Sun,  9 Sep 2007 00:53:54 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 85D861A9; Sun,  9 Sep 2007 00:53:53 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <46E2CB4C.8050209@lsrfire.ath.cx>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.500,UIO_VGER=-3)
-X-UiO-Scanned: F86370F39E390D436D391C1581D03F27605EA1A4
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 27 total 517784 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58145>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.529,UIO_VGER=-3)
+X-UiO-Scanned: 252A45D02B13A0F13E5E97A35B0CC09B90B7A1AF
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 39 total 517757 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58146>
 
-Hi,
 
-On Sat, 8 Sep 2007, Pierre Marc Dumuid wrote:
+--A6N2fC+uXW/VQSAv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> From bd43cca7aa88282455b6bbe6e2f9d8134da1029c Mon Sep 17 00:00:00 2001
-> From: Pierre Marc Dumuid <pierre.dumuid@adelaide.edu.au>
-> Date: Sat, 8 Sep 2007 00:32:10 +0930
-> Subject: [PATCH] Button added to performs a GUI diff
+On sam, sep 08, 2007 at 04:18:20 +0000, Ren=C3=A9 Scharfe wrote:
+> Pierre Habouzit schrieb:
+> > diff --git a/strbuf.c b/strbuf.c
+> > index acc7fc8..565c343 100644
+> > --- a/strbuf.c
+> > +++ b/strbuf.c
+> > @@ -28,6 +28,13 @@ void strbuf_grow(struct strbuf *sb, size_t extra) {
+> >  	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+> >  }
+> > =20
+> > +void strbuf_rtrim(struct strbuf *sb)
+> > +{
+> > +    while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
+> > +        sb->len--;
+> > +    sb->buf[sb->len] =3D '\0';
+> > +}
+>=20
+> Please use tabs instead of spaces to indent, just like you did in your
+> other patches. :)
 
-Almost!  Just make sure that you are sending this patch with the correct 
-Sender and put the Subject: line as subject of your mail.
+  yeah, good catch.
+  I've added some more patches tonight, and have added another function
+in strbufs, and thanks to the awsome git rebase -i, this patch
+integrates this new function as well, so this patch series is obsolete
+already. I wont repost it until I know if I should rebase it on next
+rather than master though.
 
-And then describe in more detail what the patch does (This commit adds a 
-button to gitk to easily look at diffs between a commit and its first 
-parent.  It uses the GUI tool selected in merge.tool to visualize the 
-diff, erroring out if none was specified.)
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-> +    if {[catch {exec git cat-file -p $sha1string^:$fname > .gitk_diffolder} err] 
-> +	|| [catch {exec git cat-file -p $sha1string:$fname > .gitk_diffnewer} err]} {
-> +	error_popup "Invalid file selected for comparison"
-> +	return
-> +    }
+--A6N2fC+uXW/VQSAv
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-I think I found a solution for removing the temporary files: man n after.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Ciao,
-Dscho
+iD8DBQBG4ygBvGr7W6HudhwRAkVeAKCjVy73msHQ91UodiztsbdVEDjLnwCfTXcD
+lVWfpT21zrWayds1wyybAMU=
+=0FAc
+-----END PGP SIGNATURE-----
+
+--A6N2fC+uXW/VQSAv--
