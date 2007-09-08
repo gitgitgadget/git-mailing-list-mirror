@@ -1,108 +1,122 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 3/3] Rework pretty_print_commit to use strbufs instead  of custom buffers.
-Date: Sat, 08 Sep 2007 20:49:07 +0200
-Message-ID: <20070908184907.GA13385@artemis.corp>
-References: <20070902224213.GB431@artemis.corp> <11892523992761-git-send-email-madcoder@debian.org> <1189252399433-git-send-email-madcoder@debian.org> <1189252399316-git-send-email-madcoder@debian.org> <11892523992038-git-send-email-madcoder@debian.org> <46E2EC88.6000500@lsrfire.ath.cx>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] diff-delta.c: Rationalize culling of hash buckets
+Date: Sat, 08 Sep 2007 21:41:24 +0200
+Organization: Organization?!?
+Message-ID: <85zlzxt063.fsf@lola.goethe.zz>
+References: <f1161c08aeeca60b6c33af34ccea68fd99b9ea4e.1189243702.git.dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="r5Pyd7+fXNt84Ff3";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Sep 08 20:49:18 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 08 21:41:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IU5Mr-0001WS-3S
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 20:49:17 +0200
+	id 1IU6Bk-0002qE-IK
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 21:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345AbXIHStL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 14:49:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbXIHStL
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 14:49:11 -0400
-Received: from pan.madism.org ([88.191.52.104]:45194 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754292AbXIHStJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 14:49:09 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id C3D881E18B;
-	Sat,  8 Sep 2007 20:49:08 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 157ED2E0F; Sat,  8 Sep 2007 20:49:08 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <46E2EC88.6000500@lsrfire.ath.cx>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754636AbXIHTlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 15:41:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbXIHTlc
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 15:41:32 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:43313 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754566AbXIHTlb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2007 15:41:31 -0400
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id A402131ECD8
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:29 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 942D92DABFF
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:29 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-020-082.pools.arcor-ip.net [84.61.20.82])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 7151C19B326
+	for <git@vger.kernel.org>; Sat,  8 Sep 2007 21:41:25 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id BBB751CAD71D; Sat,  8 Sep 2007 21:41:24 +0200 (CEST)
+In-Reply-To: <f1161c08aeeca60b6c33af34ccea68fd99b9ea4e.1189243702.git.dak@gnu.org>
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4199/Sat Sep  8 20:36:00 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58133>
 
+The previous hash bucket culling resulted in a somewhat unpredictable
+number of hash bucket entries in the order of magnitude of HASH_LIMIT.
 
---r5Pyd7+fXNt84Ff3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Replace this with a Bresenham-like algorithm leaving us with exactly
+HASH_LIMIT entries by uniform culling.
+---
 
-On Sat, Sep 08, 2007 at 06:40:08PM +0000, Ren=C3=A9 Scharfe wrote:
-> Pierre Habouzit schrieb:
-> >   Also remove the "len" parameter, as:
-> >   (1) it was used as a max boundary, and every caller used ~0u
-> >   (2) we check for final NUL no matter what, so it doesn't help for spe=
-ed.
-> >=20
-> >   As a result most of the pp_* function takes 3 arguments less, and we =
-need
-> > a lot less local variables, this makes the code way more readable, and
-> > easier to extend if needed.
-> >=20
-> >   This patch also fixes some spacing and cosmetic issues.
-> >=20
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  builtin-branch.c      |   15 +--
-> >  builtin-log.c         |   12 +-
-> >  builtin-rev-list.c    |   13 +-
-> >  builtin-show-branch.c |   13 +-
-> >  commit.c              |  330 ++++++++++++++++++-----------------------=
---------
-> >  commit.h              |    6 +-
-> >  log-tree.c            |   56 +++------
-> >  7 files changed, 171 insertions(+), 274 deletions(-)
->=20
-> Nice!  I wonder if we should #include strbuf.h from git-compat-util.h
-> (just like e.g. string.h) instead of from commit.h, in order to have
-> strbuf available everywhere in git.
->=20
-> Please be aware of the changes to commit.c already in next which your
-> patch conflicts with: format_commit_message() has been exported and is
-> used in builtin-archive.c there.
+This is assuming that the previous patch series has been applied
+(lacking any final comments or Acks on it; but I think I addressed the
+issues).  The hash bucket code culling has really annoyed me with its
+unintuitive results.  If the preceding patch series is thrown out (I
+can't think why it would), one could rework this to fit the current
+master if really needed.
 
-  Okay, then I'll hope than Junio will merge the first series and then
-rebase this one on next. If I'm going to propose more of those patches,
-should I write them rather on next or master (like I do now) ?
+ diff-delta.c |   41 +++++++++++++++++++++++++++++++----------
+ 1 files changed, 31 insertions(+), 10 deletions(-)
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---r5Pyd7+fXNt84Ff3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG4u6jvGr7W6HudhwRAnYMAJwLNrQ5G07cOTUhmXOPmRfrrItqRwCgo3Vb
-Uem7CkhkY9kNr9/DTVf/Y7o=
-=L9x/
------END PGP SIGNATURE-----
-
---r5Pyd7+fXNt84Ff3--
+diff --git a/diff-delta.c b/diff-delta.c
+index e7c33aa..98795c6 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -207,19 +207,40 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	 * the reference buffer.
+ 	 */
+ 	for (i = 0; i < hsize; i++) {
+-		if (hash_count[i] < HASH_LIMIT)
++		int acc;
++
++		if (hash_count[i] <= HASH_LIMIT)
+ 			continue;
++
++		entries -= hash_count[i] - HASH_LIMIT;
++		/* We leave exactly HASH_LIMIT entries in the bucket */
++
+ 		uentry = uhash[i];
++		acc = 0;
+ 		do {
+-			struct unpacked_index_entry *keep = uentry;
+-			int skip = hash_count[i] / HASH_LIMIT;
+-			do {
+-				--entries;
+-				uentry = uentry->next;
+-			} while(--skip && uentry);
+-			++entries;
+-			keep->next = uentry;
+-		} while(uentry);
++			acc += hash_count[i] - HASH_LIMIT;
++			if (acc > 0) {
++				struct unpacked_index_entry *keep = uentry;
++				do {
++					uentry = uentry->next;
++					acc -= HASH_LIMIT;
++				} while (acc > 0);
++				keep->next = uentry->next;
++			}
++			uentry = uentry->next;
++		} while (uentry);
++
++		/* Assume that this loop is gone through exactly
++		 * HASH_LIMIT times and is entered and left with
++		 * acc==0.  So the first statement in the loop
++		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
++		 * to the accumulator, and the inner loop consequently
++		 * is run (hash_count[i]-HASH_LIMIT) times, removing
++		 * one element from the list each time.  Since acc
++		 * balances out to 0 at the final run, the inner loop
++		 * body can't be left with uentry==NULL.  So we indeed
++		 * encounter uentry==NULL in the outer loop only.
++		 */
+ 	}
+ 	free(hash_count);
+ 
+-- 
+1.5.3.GIT
