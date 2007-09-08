@@ -1,98 +1,88 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Use more strbufs series [on top of next]
-Date: Sun, 09 Sep 2007 02:12:05 +0200
-Message-ID: <20070909001205.GD13385@artemis.corp>
-References: <11892962763548-git-send-email-madcoder@debian.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Sun, 9 Sep 2007 01:25:27 +0200
+Message-ID: <20070908232527.GB2645@steel.home>
+References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <Pine.LNX.4.64.0709071119510.28586@racer.site> <a1bbc6950709071732s1f15e5ev28bdfc5c1ab5877b@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Ycz6tD7Th1CMF4v7";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 09 10:44:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 09 10:44:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IUIOS-00040f-6R
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:43:48 +0200
-Received: from mail-mx3.uio.no ([129.240.10.44])
+	id 1IUIOw-0004BX-Fm
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:18 +0200
+Received: from mail-mx8.uio.no ([129.240.10.38])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUAVR-0001gT-HY
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 02:18:29 +0200
+	id 1IU9nn-0007E4-8f
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:33:23 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx3.uio.no with esmtp (Exim 4.67)
+	by mail-mx8.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUAVL-0007Ld-0D
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 02:18:29 +0200
+	id 1IU9ng-0007fD-PG
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340AbXIIAMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 20:12:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755335AbXIIAMI
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 20:12:08 -0400
-Received: from pan.madism.org ([88.191.52.104]:57437 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755338AbXIIAMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 20:12:07 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id CA31C1E18B
-	for <git@vger.kernel.org>; Sun,  9 Sep 2007 02:12:05 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 7266663FA; Sun,  9 Sep 2007 02:12:05 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	git@vger.kernel.org
+	id S1755030AbXIHXZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 19:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755027AbXIHXZ3
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 19:25:29 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:32099 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754965AbXIHXZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 19:25:28 -0400
+Received: from tigra.home (Fae2f.f.strato-dslnet.de [195.4.174.47])
+	by post.webmailer.de (fruni mo54) (RZmta 12.9)
+	with ESMTP id N00de1j88LNRiu ; Sun, 9 Sep 2007 01:25:26 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 929CF277BD;
+	Sun,  9 Sep 2007 01:25:26 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 77B7CBF13; Sun,  9 Sep 2007 01:25:27 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <11892962763548-git-send-email-madcoder@debian.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <a1bbc6950709071732s1f15e5ev28bdfc5c1ab5877b@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E31xFw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-1.7, required=12.0, autolearn=disabled, AWL=1.337,UIO_VGER=-3)
-X-UiO-Scanned: 1252669060C3F9EDC0ADE198820E126DE8C4ABF9
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -16 maxlevel 200 minaction 2 bait 0 mail/h: 10 total 517796 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58143>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-3.0, required=12.0, autolearn=disabled, UIO_VGER=-3)
+X-UiO-Scanned: ED09999401E5CED95AFC192E6FA4D3FC143AE014
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -29 maxlevel 200 minaction 2 bait 0 mail/h: 18 total 517775 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58144>
 
+Dmitry Kakurin, Sat, Sep 08, 2007 02:32:09 +0200:
+> On 9/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Thu, 6 Sep 2007, Dmitry Kakurin wrote:
+> >
+> > > Anyway I don't mean to start a religious C vs. C++ war.
+> >
+> > You have a very strange way of not meaning to start a C vs. C++ war.
+> 
+> I honestly didn't. I didn't even think it's possible. In the
+> environment of mainstream commercial software development the last war
+> on this subj was over 8-10 years ago.
 
---Ycz6tD7Th1CMF4v7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It is because the "environment of mainstream commercial software
+development" is stuck in "8-10" back from now.
 
-On Sun, Sep 09, 2007 at 12:04:30AM +0000, Pierre Habouzit wrote:
->   Here is a series of patches on top of next, which use strbufs in even
-> more places. Most notably, it uses it in the commit pretty printer (and
-> commit message formatter), and it supersedes definitely read_fd
-> (previously in sha1_file.c).
+> Even wars like "do we use exceptions/templates/stl" are pretty much
+> over. Now days it's "do we use Boost", or "do we use template
+> metaprogramming". But even more often it's Java/C# vs. C++.
 
-  A side note that could help the patch readers: in some places I've
-made hunks that basically rename variables called space or size into
-len. The reason is that (in my coding standards) length is the length of
-the object we are referring to, whereas space/size/... is the amount of
-memory we have allocated for it. For a string, the latter is strictly
-greater than the former because of the ending NUL of course.
+Now that's a stupid argument to bring up. Commercial software
+development is were the most stupid mistakes are done and repeated.
 
-  The rename is because my brain is used to this way of thinking and
-that it helps knowing if the off-by-some (off-by-one for a string) are
-included in the length-related number you work with or not. So please
-don't discard those :)
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+> That's why I was wondering how come C was chosen for Git.
 
---Ycz6tD7Th1CMF4v7
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG4zpVvGr7W6HudhwRAjlGAKCmycdelRJbteOlEh/FBBokPyoTkwCfRcBL
-16KiwV/veCuLExb8Aecw5Mo=
-=fRAC
------END PGP SIGNATURE-----
-
---Ycz6tD7Th1CMF4v7--
+"Just to annoy mainstream commercial software developers" would be a
+good reason.
