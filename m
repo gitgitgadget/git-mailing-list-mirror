@@ -1,36 +1,36 @@
 From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: [PATCH 3/3] Rework pretty_print_commit to use strbufs instead of custom buffers.
-Date: Sat, 08 Sep 2007 14:17:48 +0200
-Message-ID: <20070908121748.GA21864@artemis.corp>
+Date: Sat, 08 Sep 2007 14:28:34 +0200
+Message-ID: <20070908122834.GB21864@artemis.corp>
 References: <20070902224213.GB431@artemis.corp> <11892523992761-git-send-email-madcoder@debian.org> <1189252399433-git-send-email-madcoder@debian.org> <1189252399316-git-send-email-madcoder@debian.org> <11892523992038-git-send-email-madcoder@debian.org> <851wd9xt98.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="6TrnltStXW4iwmi0";
+Content-Type: multipart/signed; boundary="wzJLGUyc3ArbnUjN";
 	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
 To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Sep 08 14:18:00 2007
+X-From: git-owner@vger.kernel.org Sat Sep 08 14:28:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITzG8-0003Zu-3D
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 14:17:56 +0200
+	id 1ITzQj-0005kf-H5
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 14:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751028AbXIHMRv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 08:17:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750866AbXIHMRv
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 08:17:51 -0400
-Received: from pan.madism.org ([88.191.52.104]:45421 "EHLO hermes.madism.org"
+	id S1751176AbXIHM2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 08:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbXIHM2g
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 08:28:36 -0400
+Received: from pan.madism.org ([88.191.52.104]:57974 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750758AbXIHMRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 08:17:50 -0400
+	id S1751176AbXIHM2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 08:28:35 -0400
 Received: from madism.org (olympe.madism.org [82.243.245.108])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 1BF8D1E9D6;
-	Sat,  8 Sep 2007 14:17:49 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTP id 90EC41E9ED;
+	Sat,  8 Sep 2007 14:28:34 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id C615D7C95; Sat,  8 Sep 2007 14:17:48 +0200 (CEST)
+	id 179E06431; Sat,  8 Sep 2007 14:28:34 +0200 (CEST)
 Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
 	David Kastrup <dak@gnu.org>, git@vger.kernel.org
 Content-Disposition: inline
@@ -40,15 +40,15 @@ User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58125>
 
 
---6TrnltStXW4iwmi0
+--wzJLGUyc3ArbnUjN
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 08, 2007 at 11:59:31AM +0000, David Kastrup wrote:
+On sam, sep 08, 2007 at 11:59:31 +0000, David Kastrup wrote:
 > Pierre Habouzit <madcoder@debian.org> writes:
 >=20
 > >   Also remove the "len" parameter, as:
@@ -60,58 +60,72 @@ ed.
 > when it is found out that it leads to a performance issue.  Is it only
 > the pretty-print that is affected?
 
-  I removed the "len" argument of pretty_print_commit and all the sub
-pp_* functions it uses. This argument was supposed to tell which size
-the commit message you want to read to format the pretty printing.
+  Speaking of performance, here is a small interesting bench:
 
-  It leads to a lot of code that works like this:
+$ for i in `seq 1 10`; do time git-log >| /dev/null; done
+git-log >| /dev/null  2,12s user 0,08s system 99% cpu 2,205 total
+git-log >| /dev/null  2,14s user 0,06s system 99% cpu 2,208 total
+git-log >| /dev/null  2,12s user 0,08s system 99% cpu 2,205 total
+git-log >| /dev/null  2,10s user 0,10s system 99% cpu 2,209 total
+git-log >| /dev/null  2,14s user 0,07s system 99% cpu 2,211 total
+git-log >| /dev/null  2,11s user 0,09s system 99% cpu 2,210 total
+git-log >| /dev/null  2,15s user 0,05s system 99% cpu 2,213 total
+git-log >| /dev/null  2,12s user 0,07s system 99% cpu 2,203 total
+git-log >| /dev/null  2,13s user 0,06s system 99% cpu 2,204 total
+git-log >| /dev/null  2,17s user 0,09s system 100% cpu 2,254 total
 
-  if (position < len || *msg) /* test if len is overflowed or if we are
-                                 at the end of the string */
-    break;
+$ for i in `seq 1 10`; do time ~/dev/scm/git/git-log >| /dev/null; done
+~/dev/scm/git/git-log >| /dev/null  2,06s user 0,11s system 99% cpu 2,185 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,11s user 0,07s system 99% cpu 2,192 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,10s user 0,10s system 99% cpu 2,207 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,10s user 0,08s system 99% cpu 2,188 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,10s user 0,08s system 99% cpu 2,187 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,10s user 0,10s system 100% cpu 2,196 =
+total
+~/dev/scm/git/git-log >| /dev/null  2,08s user 0,11s system 99% cpu 2,195 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,11s user 0,08s system 99% cpu 2,193 t=
+otal
+~/dev/scm/git/git-log >| /dev/null  2,10s user 0,08s system 100% cpu 2,188 =
+total
+~/dev/scm/git/git-log >| /dev/null  2,12s user 0,07s system 98% cpu 2,213 t=
+otal
 
-  This impose us to maintain the len of the message while we make the
-"msg" pointer progress, and so on. And it's a limit of what to read in the
-commit message.
-
-Seeing where pretty_print_commit is used:
-
-builtin-branch.c:			pretty_print_commit(CMIT_FMT_ONELINE, commit,
-builtin-log.c:			pretty_print_commit(CMIT_FMT_ONELINE, commit,
-builtin-rev-list.c:		pretty_print_commit(revs.commit_format, commit,
-builtin-show-branch.c:		pretty_print_commit(CMIT_FMT_ONELINE, commit,
-commit.c:void pretty_print_commit(enum cmit_fmt fmt, const struct commit *c=
-ommit,
-log-tree.c:	pretty_print_commit(opt->commit_format, commit, &msgbuf,
+$ git rev-list --all | wc -l
+64271
 
 
-  I assume that the user would not be very pleased if we decide to crop
-his commits logs when he uses git-log. And given that git log in the
-linux repository on my laptop takes:
+  The underling repository is a not so old linux-2.6 git repository.
+git-log is the default unstable git-log, (a pristine 1.5.3.1,
+pre-new-strbuf).
 
-  2,13s user 0,06s system 99% cpu 2,213 total
+  ~/dev/scm/git/git-log is obviously the new one with the whole strbuf
+patch series applied. Strbufs definitely made the code more readable (at
+least it's my impression), here is the proof that it did not affected an
+inch from performance (we even seem to have a marginal 0.5% gain in
+performance ;p).
 
-when the repo is hot ... I hardly think it can ever be a performance
-issue :)
-
-  But if people disagree I can refactor a patch with the "len" argument
-kept.
 --=20
 =C2=B7O=C2=B7  Pierre Habouzit
 =C2=B7=C2=B7O                                                madcoder@debia=
 n.org
 OOO                                                http://www.madism.org
 
---6TrnltStXW4iwmi0
+--wzJLGUyc3ArbnUjN
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBG4pLsvGr7W6HudhwRAmjsAKCPccoIQ2ZvSZP2mLek2KJ3OKpUkQCgg+jo
-16wreHBZ+ZBVedKnucYbpN0=
-=+txd
+iD8DBQBG4pVyvGr7W6HudhwRAr7wAKCER8j34NNiHiG+PM1H55M4a3hy/QCghiA8
+vnEINfndAvlxMHeLtJZppqo=
+=6UAy
 -----END PGP SIGNATURE-----
 
---6TrnltStXW4iwmi0--
+--wzJLGUyc3ArbnUjN--
