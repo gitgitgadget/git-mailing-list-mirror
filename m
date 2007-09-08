@@ -1,101 +1,134 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: .git/info/exclude w/ CFLF fails in cygwin
-Date: Sat, 8 Sep 2007 12:36:03 +0200
-Message-ID: <200709081236.04411.robin.rosenberg.lists@dewire.com>
-References: <20070908010139.GA5501@falcon.digizenstudio.com>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git-svn 1.5.3 does not understand grafts?
+Date: Sat, 8 Sep 2007 13:04:12 +0200
+Message-ID: <000001c7f207$fd7562d0$5267a8c0@Jocke>
+References: <20070908050146.GA28855@soma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jing Xue <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 12:34:34 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'git'" <git@vger.kernel.org>
+To: "'Eric Wong'" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Sep 08 13:04:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITxe0-0007AM-O4
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 12:34:29 +0200
+	id 1ITy7B-0004gN-Iy
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 13:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbXIHKeY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 8 Sep 2007 06:34:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXIHKeX
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 06:34:23 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:28860 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750903AbXIHKeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 06:34:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 5F4D78030C7;
-	Sat,  8 Sep 2007 12:26:23 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 09299-05; Sat,  8 Sep 2007 12:26:23 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 03C218030C4;
-	Sat,  8 Sep 2007 12:26:22 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070908010139.GA5501@falcon.digizenstudio.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1752351AbXIHLEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 07:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752316AbXIHLEa
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 07:04:30 -0400
+Received: from mail.transmode.se ([83.241.175.147]:29860 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751156AbXIHLEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 07:04:30 -0400
+Received: from Jocke ([84.217.81.206]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sat, 8 Sep 2007 13:04:27 +0200
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: Acfx1V30U/W1iTgcSeShGvjb0ZFRrwAJvlwQ
+In-Reply-To: <20070908050146.GA28855@soma>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+X-OriginalArrivalTime: 08 Sep 2007 11:04:28.0070 (UTC) FILETIME=[062E3460:01C7F208]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58118>
 
-l=F6rdag 08 september 2007 skrev Jing Xue:
-> (1.5.3.1 in cygwin, Win XP)
-> I have cygwin configured to operate in the DOS/text mode, which means
-> cygwin translates LF to CRLF when writing a file, and CRLF to LF when
-> reading.  Unfortunately cygwin's fstat() implementation doesn't take =
-the
-> mode into account when reporting stat.st_size, presumably for the sak=
-e
-> of performance, while read() does actually do the conversion.
+> -----Original Message-----
+> From: Eric Wong [mailto:normalperson@yhbt.net] 
+> Sent: den 8 september 2007 07:02
+> To: Joakim Tjernlund
+> Cc: git
+> Subject: Re: git-svn 1.5.3 does not understand grafts?
+> 
+> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > On Fri, 2007-09-07 at 18:52 +0200, Joakim Tjernlund wrote:
+> > > On Fri, 2007-09-07 at 18:41 +0200, Joakim Tjernlund wrote:
+> > > > svnadmin create /usr/local/src/TM/svn-tst/7720-svn/
+> > > > svn mkdir  
+> file:///usr/local/src/TM/svn-tst/7720-svn/trunk -m "Add trunk dir"
+> > > > svn mkdir  
+> file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp -m "Add swp dir"
+> > > > 
+> > > > In my git repo I do
+> > > > git-svn init  
+> file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp 
+> > > > git-svn fetch
+> > > > git branch svn remotes/git-svn
+> > > > #make remotes/git-svn parent to the initial commit in 
+> my git tree
+> > > > graftid=`git-show-ref -s svn`
+> > > > echo da783cce390ce013b19f1d308ea6813269c6a6b5 $graftid 
+> > .git/info/grafts
+> > > > #da783... is the initial commit in my git tree.
+> > > > git-svn dcommit
+> > > > 
+> > > > fails with:
+> > > > Committing to 
+> file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp ...
+> > > > Commit da783cce390ce013b19f1d308ea6813269c6a6b5
+> > > > has no parent commit, and therefore nothing to diff against.
+> > > > You should be working from a repository originally 
+> created by git-svn
+> > > 
+> > > Using filter-branch helps, but git-svn isn't too happy:
+> > > 
+> > > git-svn init  file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp 
+> > > git-svn fetch
+> > > git branch svn remotes/git-svn
+> > > #make remotes/git-svn parent to the initial commit in my git tree
+> > > graftid=`git-show-ref -s svn`
+> > > echo da783cce390ce013b19f1d308ea6813269c6a6b5 $graftid > 
+> .git/info/grafts
+> > > #da783... is the initial commit in my git tree.
+> > > git filter-branch $graftid..HEAD
+> > > git-svn dcommit
+> > > 
+> > > Now I get alot of complaints, but it commits to svn.
+> > > It takes forever though:
+> > > r3 = 55a489bd4f66dd1f641a4676359d7b8911dc7d83 (git-svn)
+> > > W: HEAD and refs/remotes/git-svn differ, using rebase:
+> > > :100644 100644 f85ae11af7715a224015582724cb2bab87ec914a
+> 
+> I haven't used filter-branch myself, but you probably need to 
+> remove all
+> .rev_db* files in $GIT_DIR after running it (git-svn can recreate them
+> unless you use the svmRevProps or noMetadata options.
 
-This is not just cygwin and applies to all CRLF environments.
+havn't used it either, but I wanted to see if it makes a difference.
+I will remember to remove the .rev_db* files next time I try.
 
-> That causes the function add_excludes_from_file_1() in dir.c to rejec=
-t a
-> .git/info/exclude file with CRLF ending, because the size actually re=
-ad
-> is not the same as the size reported by fstat().
+filter branch is overkill if the grafts file works as git-svn will rewrite
+the commits so once the first dcommit has been made, I can remove the
+grafts file.
 
-> The simplest fix I have found is to explicitly open the exclude file =
-in
-> binary mode, because the rest of the exclude file parsing code actual=
-ly
-> deals with CRLF quite fine.
->=20
-> I would submit a patch but I am not sure if this is the appropriate f=
-ix.
-doubt it is worth it..
->=20
-> By the way, parsing .git/config with CRLF in the same environment wor=
-ks
-> fine because the code reads the file by byte and doesn't do any size
-> validation.
->=20
-> Any thoughts?
+I do have another project though were I want to fix som odd parenting caused
+by set-tree, there I will have to used filter-branch to make it permanet.
 
-I have cygwin in CRLF mode too, but I have binary-mounted the paths' wh=
-ere
-I use git to avoid the problem. I did a half-hearted attempt to fix git=
- in CRLF mode,
-but it failed because in some places plumbing commands communicate via =
-files
-and in other pipes are used making it hard to get then right translatio=
-n mode.
+> 
+> > [SNIP]
+> > 
+> > Just wanted to add that 1.5.2.2 works with grafts and 
+> > that I suspect sub read_commit_parents in git-svn, but as I don't
+> > do perl I am stuck.
+> 
+> Crap, it looks like I completely forgot about the existence
+> of grafts while doing this function.
 
-That is not to say it is impossible, but as I understand it the Cygwin =
-project have
-essentially given up on CRLF mode, so it will probably go away as progr=
-ams get
-updated and no longer works in translated mode.
+:)
+Do you have to worry about grafts in git-svn? 
+Can't git plumbing do this for you?
 
-Try git in unix mode and, if you need it, use the core.autocrl setting =
-to have git
-translate explicitly. There are plenty editors that honour line endings=
- in Windows
-so LF mode works out quite well nowadays (for me, on my machines).
-
--- robin
+> 
+> >      Jocke
+> > Oh, Eric W. CC:ed as well this time
+> 
+> Thanks.
+> 
+> -- 
+> Eric Wong
+> 
+> 
