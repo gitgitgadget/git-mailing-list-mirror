@@ -1,110 +1,128 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
-Date: Sun, 09 Sep 2007 01:50:34 +0200
-Message-ID: <46E3354A.7030407@op5.se>
-References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>      =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0709061839510.5?=
-	=?ISO-8859-1?Q?626@evo.linux-fo?= =?ISO-8859-1?Q?undation.or=04g>?= <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org> <fbqmdu$udg$1@sea.gmane.org> <85k5r27wkv.fsf@lola.goethe.zz>      =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?f=04br1a2$qm7$1@se?= =?ISO-8859-1?Q?a.gmane.org>?= <851wda7ufz.fsf@lola.goethe.zz> <fbr4oi$5ko$1@sea.gmane.org> <85wsv26cv8.fsf@lola.goethe.zz> <fbsbul$dg0$1@sea.gmane.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: understand grafts when doing dcommit
+Date: Sat, 8 Sep 2007 16:33:08 -0700
+Message-ID: <20070908233308.GA14915@mayonaise>
+References: <20070908050146.GA28855@soma> <045501c7f23f$c359c450$5267a8c0@Jocke> <7vfy1pyluy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Walter Bright <boost@digitalmars.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 10:52:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 09 10:52:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IUIOn-00046X-Dq
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:09 +0200
-Received: from mail-mx2.uio.no ([129.240.10.30])
+	id 1IUIP0-0004Ds-Sr
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:22 +0200
+Received: from mail-mx8.uio.no ([129.240.10.38])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUA4k-0006MX-R9
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:50:54 +0200
+	id 1IU9or-0007Uy-As
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:34:29 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx2.uio.no with esmtp (Exim 4.67)
+	by mail-mx8.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUA4d-0006Ap-7f
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:50:54 +0200
+	id 1IU9ol-0007fD-D3
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755212AbXIHXuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 19:50:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755208AbXIHXuk
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 19:50:40 -0400
-Received: from mail.op5.se ([193.201.96.20]:42785 "EHLO mail.op5.se"
+	id S1755035AbXIHXdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 19:33:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755057AbXIHXdL
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 19:33:11 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:36664 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753115AbXIHXuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 19:50:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 8696519443B;
-	Sun,  9 Sep 2007 01:50:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UE0QGBtZa8Ad; Sun,  9 Sep 2007 01:50:36 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id CA4D9194414;
-	Sun,  9 Sep 2007 01:50:35 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <fbsbul$dg0$1@sea.gmane.org>
+	id S1750877AbXIHXdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 19:33:10 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 70EEA2DC08D;
+	Sat,  8 Sep 2007 16:33:08 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 08 Sep 2007 16:33:08 -0700
+Content-Disposition: inline
+In-Reply-To: <7vfy1pyluy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.500,UIO_VGER=-3)
-X-UiO-Scanned: EF88270898128662EFCD1F0EF316A23502696107
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 29 total 517786 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58149>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-3.0, required=12.0, autolearn=disabled, UIO_VGER=-3)
+X-UiO-Scanned: 1425C07E6CC99ED0EE7490690408CF87E750BDFD
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -29 maxlevel 200 minaction 2 bait 0 mail/h: 21 total 517778 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58150>
 
-Walter Bright wrote:
-> David Kastrup wrote:
->> Again, C won't keep you from shooting yourself in the foot.
-> 
-> Right, it won't. A good systems language should do what it can to 
-> prevent the programmer from *inadvertently* shooting himself in the 
-> foot, while allowing him to *deliberately* shoot himself in the foot.
-> 
+Use the rev-list --parents functionality to read the parents
+of the commit.  cat-file only shows the raw object with the
+original parents and doesn't take into account grafts; so
+we'll rely on rev-list machinery for the smarts here.
 
-No, a good systems language should do exactly what it's told. Supporting
-tools should tell the programmer if he's risking shooting himself in the
-foot.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+  Junio C Hamano <gitster@pobox.com> wrote:
+  > "Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
+  > 
+  > > hmm, I think git-cat-file is to blame.
+  > > git-cat-file commit da783cce390ce013b19f1d308ea6813269c6a6b5 does
+  > > not list list any parent...
+  > 
+  > The plumbing cat-file does not deal with grafts and this is
+  > deliberate.  Otherwise you would not be able to find the true
+  > set of parents when you'd want to.
+  > 
+  > So do not blame cat-file, but blame the Porcelain that uses
+  > cat-file to read a commit object, without annotating what it
+  > read with what is in grafts, in this case your command line
+  > experiment ;-).
+  > 
+  > The log family of commands and rev-list plumbing while
+  > traversing commit ancestry chain do take grafts into account.
+  > 
+  > One caveat is pretty=raw output format shows true parents
+  > without grafts on "parent " header line, while the "commit "
+  > fake header prepended in the output for each commit shows the
+  > parents that takes into account.
+  > 
+  > To illustrate, if you forge the history and say the parent of
+  > 1ddea77 is 5da1606 (when the true parent is 820eca68) with
+  > grafts mechanism, here is what happens:
+  > 
+  >     $ echo '1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755' >.git/info/grafts
+  >     $ git show -s --pretty=raw --parents 1ddea77
+  >     commit 1ddea77e449ef28d8a7c74521af21121ab01abc0 5da1606d0bf5b970fadfa0ca91618a1e871f6755
+  >     tree e9e61bc801438062978ff47b0963c536ed1e51a9
+  >     parent 820eca68c2577d7499d203d7f4f7ae479b577683
+  >     author Nick Hengeveld <nickh@reactrix.com> 1127757131 -0700
+  >     committer Junio C Hamano <junkio@cox.net> 1127805558 -0700
+  > 
+  >         [PATCH] Return CURL error message when object transfer fails
+  > 
+  >         Return CURL error message when object transfer fails
+  >         ...
 
-> 
->> You can tell C compilers to
->> check all array accesses, but that is a performance issue.
-> 
-> Runtime checking of arrays in D is a performance issue too, so it is 
-> selectable via a command line switch.
+  Interesting.  I didn't know about the --parents option before.
 
-Same as in C then.
+ git-svn.perl |   11 +++--------
+ 1 files changed, 3 insertions(+), 8 deletions(-)
 
-> But more importantly,
-> 
-> 2) For dynamically sized arrays, the dimension of the array is carried 
-> with the array, so loops automatically loop the correct number of times. 
-> No runtime check is necessary, and it's easier for the code reviewer to 
-> visually check the code for correctness.
-> 
-
-But this introduces handy but, strictly speaking, unnecessary overhead as
-well, meaning, in short; 'D is slower than C, but easier to write code in'.
-
-So in essence, it's a bit like Python, but a teensy bit faster and a lot
-easier to shoot yourself in the foot with.
-
-What was the niche you were going for when you thought up D? It can't have
-been systems programming, because *any* extra baggage is baggage one would
-like to get rid of. If it was application programming I fail to see how one
-more language would help, as there will be portability problems galore and
-it's still considerably slower to develop in than fe Python, while at the
-same time being considerably easier to mess up in.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index fbd4691..f818160 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -841,14 +841,9 @@ sub working_head_info {
+ 
+ sub read_commit_parents {
+ 	my ($parents, $c) = @_;
+-	my ($fh, $ctx) = command_output_pipe(qw/cat-file commit/, $c);
+-	while (<$fh>) {
+-		chomp;
+-		last if '';
+-		/^parent ($sha1)/ or next;
+-		push @{$parents->{$c}}, $1;
+-	}
+-	close $fh; # break the pipe
++	chomp(my $p = command_oneline(qw/rev-list --parents -1/, $c));
++	$p =~ s/^($c)\s*// or die "rev-list --parents -1 $c failed!\n";
++	@{$parents->{$c}} = split(/ /, $p);
+ }
+ 
+ sub linearize_history {
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Eric Wong
