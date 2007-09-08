@@ -1,97 +1,136 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn 1.5.3 does not understand grafts?
-Date: Fri, 7 Sep 2007 22:01:46 -0700
-Message-ID: <20070908050146.GA28855@soma>
-References: <1189183276.14841.10.camel@gentoo-jocke.transmode.se> <1189183934.14841.18.camel@gentoo-jocke.transmode.se> <1189196635.14841.24.camel@gentoo-jocke.transmode.se>
+Subject: Re: git-svn: Branching clarifications
+Date: Fri, 7 Sep 2007 22:21:26 -0700
+Message-ID: <20070908052126.GB28855@soma>
+References: <46E18095.60501@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Sat Sep 08 07:01:57 2007
+Cc: git@vger.kernel.org
+To: Russ Brown <pickscrape@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 07:21:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ITsS9-00063u-3P
-	for gcvg-git@gmane.org; Sat, 08 Sep 2007 07:01:53 +0200
+	id 1ITslC-0008N5-4S
+	for gcvg-git@gmane.org; Sat, 08 Sep 2007 07:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750922AbXIHFBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 01:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbXIHFBr
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 01:01:47 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35148 "EHLO hand.yhbt.net"
+	id S1751054AbXIHFV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 01:21:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbXIHFV2
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 01:21:28 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:35180 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750871AbXIHFBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 01:01:47 -0400
+	id S1750963AbXIHFV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 01:21:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 70CD92DC08D;
-	Fri,  7 Sep 2007 22:01:46 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id E1B3E2DC08D;
+	Fri,  7 Sep 2007 22:21:26 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1189196635.14841.24.camel@gentoo-jocke.transmode.se>
+In-Reply-To: <46E18095.60501@gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58101>
 
-Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
-> On Fri, 2007-09-07 at 18:52 +0200, Joakim Tjernlund wrote:
-> > On Fri, 2007-09-07 at 18:41 +0200, Joakim Tjernlund wrote:
-> > > svnadmin create /usr/local/src/TM/svn-tst/7720-svn/
-> > > svn mkdir  file:///usr/local/src/TM/svn-tst/7720-svn/trunk -m "Add trunk dir"
-> > > svn mkdir  file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp -m "Add swp dir"
-> > > 
-> > > In my git repo I do
-> > > git-svn init  file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp 
-> > > git-svn fetch
-> > > git branch svn remotes/git-svn
-> > > #make remotes/git-svn parent to the initial commit in my git tree
-> > > graftid=`git-show-ref -s svn`
-> > > echo da783cce390ce013b19f1d308ea6813269c6a6b5 $graftid > .git/info/grafts
-> > > #da783... is the initial commit in my git tree.
-> > > git-svn dcommit
-> > > 
-> > > fails with:
-> > > Committing to file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp ...
-> > > Commit da783cce390ce013b19f1d308ea6813269c6a6b5
-> > > has no parent commit, and therefore nothing to diff against.
-> > > You should be working from a repository originally created by git-svn
-> > 
-> > Using filter-branch helps, but git-svn isn't too happy:
-> > 
-> > git-svn init  file:///usr/local/src/TM/svn-tst/7720-svn/trunk/swp 
-> > git-svn fetch
-> > git branch svn remotes/git-svn
-> > #make remotes/git-svn parent to the initial commit in my git tree
-> > graftid=`git-show-ref -s svn`
-> > echo da783cce390ce013b19f1d308ea6813269c6a6b5 $graftid > .git/info/grafts
-> > #da783... is the initial commit in my git tree.
-> > git filter-branch $graftid..HEAD
-> > git-svn dcommit
-> > 
-> > Now I get alot of complaints, but it commits to svn.
-> > It takes forever though:
-> > r3 = 55a489bd4f66dd1f641a4676359d7b8911dc7d83 (git-svn)
-> > W: HEAD and refs/remotes/git-svn differ, using rebase:
-> > :100644 100644 f85ae11af7715a224015582724cb2bab87ec914a
-
-I haven't used filter-branch myself, but you probably need to remove all
-.rev_db* files in $GIT_DIR after running it (git-svn can recreate them
-unless you use the svmRevProps or noMetadata options.
-
-> [SNIP]
+Russ Brown <pickscrape@gmail.com> wrote:
+> I have a few questions about how/when to use git branches when using
+> git-svn (I'm a tad confused...)
 > 
-> Just wanted to add that 1.5.2.2 works with grafts and 
-> that I suspect sub read_commit_parents in git-svn, but as I don't
-> do perl I am stuck.
+> Say I've initialised and fetched a git repo involving trunk and one
+> branch (say branch1) from an svn repository.
+> 
+> If I do git branch -a, I see similar to the following:
+> 
+> * master
+>   branch1
+>   trunk
+> 
+> (branch1 and trunk are in red for me, which I figure means they're
+> remotely tracked or something like that?)
 
-Crap, it looks like I completely forgot about the existence
-of grafts while doing this function.
+Yes, that seems to be the case (I just enabled color.branch=auto in
+.git/config for the first time).
 
->      Jocke
-> Oh, Eric W. CC:ed as well this time
+> OK, so that's telling me that I currently have master checked out into
+> my working copy. My question is: where did master come from? Is it a
+> local branch of trunk?
 
-Thanks.
+git-svn sets "master" to the most recently committed-to branch
+in SVN the first time it fetches.  "git-log master" will tell
+you (look at the git-svn-id: lines).
+
+After you do your initial fetch/clone, it should say something like:
+
+  ----------------------------------------------------------------------
+  Checked out HEAD:
+    svn://my-repository-here/branches/foo r12345
+  ----------------------------------------------------------------------
+
+> Moving on, say I want to work on branch1. Can I simply issue git
+> checkout branch1? If I do so I get this:
+> 
+> $ git branch -a
+> * (no branch)
+>   master
+>   branch1
+>   trunk
+> 
+> Which is a bit scary. It seems my working copy is orphaned...
+
+Yes it is.  Branches under the refs/remotes/ hierarchy were created
+back in the day to tell the local user they should not commit to
+them directly.
+
+> OK, so let's assume I'm supposed to create a local branch of each remote
+> branch I want to work on. So:
+> 
+> $ git branch local/branch1 branch1
+> $ git checkout local/branch1
+> 
+> $ git-branch -a
+> * local/branch1
+>   master
+>   branch1
+>   trunk
+
+That's correct.  You can also use "git checkout -b local/branch1 branch1"
+instead of those two commands.
+
+> Am I supposed to have used --track when creating  this branch? What are
+> the implications for specifying or not specifying that flag when using
+> git-svn?
+
+--track has no effect with git-svn.  dcommit will automatically figure
+out which branch it should commit to[1].  Running "git-svn dcommit -n"
+with 1.5.3 will tell you which URL you'll commit to.
+
+> So I do some editing on this branch, commit and dcommit. The changes
+> appear as expected in the repo.
+> 
+> At this point if I checkout master, the contents look like
+> local/branch1, which isn't what I'd suspected (that it would be a branch
+> of trunk). What does master represent?
+
+(see above)
+
+> So I checkout local/trunk, and create a new file, commit and dcommit.
+> Umm, it's been committed to branch1 on the repo: not trunk,
+> 
+> So I figure I'm quite obviously doing something wrong here. Could
+> someone give me a hand and tell me what it is I'm getting wrong?
+
+If you run "git-log local/trunk", does the first commit to show
+a "git-svn-id: " line have the URL pointing to trunk or branch1?
+
+Again, if you're unsure about where you're committing to,
+"git-svn dcommit -n" in 1.5.3 is your friend.
+
+[1] - as long as you don't use git-merge or git-pull.  If you decide to
+      do those things, make sure you have Lars's latest patches
+      that enables --first-parent.
+      Otherwise stick with format-patch/am/cherry-pick/fetch/rebase
 
 -- 
 Eric Wong
