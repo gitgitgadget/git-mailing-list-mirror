@@ -1,103 +1,118 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Sun, 09 Sep 2007 02:29:40 +0200
-Message-ID: <46E33E74.20105@op5.se>
-References: <46DDC500.5000606@etek.chalmers.se>	 <vpq642pkoln.fsf@bauges.imag.fr>	 <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>	 <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>	 <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com>	 <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org>	 <a1bbc6950709061808q85cf75co75f2331dc2bdbcbe@mail.gmail.com>	 <alpine.LFD.0.999.0709070212300.5626@evo.linux-foundation.org>	 <a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com>	 <46E0F04D.7040101@op5.se> <a1bbc6950709071517n7e7e99ffl3dd351092e7f19d6@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 1/3] Add strbuf_rtrim (to remove trailing spaces).
+Date: Sun, 09 Sep 2007 01:44:25 +0200
+Message-ID: <20070908234425.GC13385@artemis.corp>
+References: <20070902224213.GB431@artemis.corp> <11892523992761-git-send-email-madcoder@debian.org> <1189252399433-git-send-email-madcoder@debian.org> <46E2CB4C.8050209@lsrfire.ath.cx> <20070908225353.GB13385@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, Git <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 10:50:47 2007
+Content-Type: multipart/signed; boundary="4ZLFUWh1odzi/v6L";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 09 10:52:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IUIOI-0003uy-Ss
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:43:38 +0200
-Received: from mail-mx8.uio.no ([129.240.10.38])
+	id 1IUIOo-0003oI-4W
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 10:44:10 +0200
+Received: from mail-mx2.uio.no ([129.240.10.30])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUAme-0007iQ-Ho
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 02:36:16 +0200
+	id 1IUA4d-0006Fp-7W
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:50:47 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx8.uio.no with esmtp (Exim 4.67)
+	by mail-mx2.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IUAmY-0007RN-Ul
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 02:36:16 +0200
+	id 1IUA4T-0006Ap-Ir
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 01:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068AbXIIA3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 20:29:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755034AbXIIA3o
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 20:29:44 -0400
-Received: from mail.op5.se ([193.201.96.20]:43732 "EHLO mail.op5.se"
+	id S1755141AbXIHXo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 8 Sep 2007 19:44:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755076AbXIHXo1
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 19:44:27 -0400
+Received: from pan.madism.org ([88.191.52.104]:50202 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752342AbXIIA3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 20:29:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 8566F194428;
-	Sun,  9 Sep 2007 02:29:42 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6HpeCEWyExvW; Sun,  9 Sep 2007 02:29:42 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 6B8F8194390;
-	Sun,  9 Sep 2007 02:29:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <a1bbc6950709071517n7e7e99ffl3dd351092e7f19d6@mail.gmail.com>
+	id S1755057AbXIHXo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 19:44:26 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id BE82E1EB09;
+	Sun,  9 Sep 2007 01:44:25 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 6F37463FA; Sun,  9 Sep 2007 01:44:25 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070908225353.GB13385@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-2.8, required=12.0, autolearn=disabled, AWL=0.250,UIO_VGER=-3)
-X-UiO-Scanned: EE4BAEFB31EB13B3967C477E2E8C1644F15CCBFB
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -27 maxlevel 200 minaction 2 bait 0 mail/h: 24 total 517810 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58147>
-
-Dmitry Kakurin wrote:
-> On 9/6/07, Andreas Ericsson <ae@op5.se> wrote:
->> They already have, but every now and then someone comes along and suggest
->> a complete rewrite in some other language. So far we've had Java (there's
->> always one...), Python and now C++.
-> 
-> Since this "complete rewrite" was mentioned in multiple emails I'd
-> like to rectify that:
-> What I'm offering (for Git) is to use C++ as a "better C".
-> Don't change any existing *working* code, but start introducing simple
-> C++ constructs in the new code.
-> Git is simple enough to not require any high-level abstractions. But
-> some utility classes could make code much simpler.
-> 
-
-There are far too many highly valuable contributors that have spoken
-against C++ for me to believe that C++ and C will ever co-exist in the
-official git repo. Good thing utility classes can be developed on top
-of the existing C-code, but in a separate repo, and packed into a
-library. That way, you get some hacking ground for your beloved C++
-coderswhile the current git contributors can keep contributing in the
-language they like best.
+X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.500,UIO_VGER=-3)
+X-UiO-Scanned: 20E3EEEBBD5EED0D14648BEFF604830CEF5F8BCE
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 28 total 517785 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58148>
 
 
-> And BTW, I don't even like C++ that much :-), I just like it much
-> better than C.  I've been saying that C++ is a legacy language for
-> quite some time now. But we will use it for many years to come because
-> the size of this legacy code is huge, so there will be plenty of C++
-> developers available (to contribute to Git :-).
+--4ZLFUWh1odzi/v6L
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The C code base is a lot larger and C++ will drop dead pretty fast if it's
-ever removed or left unmaintained. So much for dinosaurs...
+On Sat, Sep 08, 2007 at 10:53:53PM +0000, Pierre Habouzit wrote:
+> On sam, sep 08, 2007 at 04:18:20 +0000, Ren=C3=A9 Scharfe wrote:
+> > Pierre Habouzit schrieb:
+> > > diff --git a/strbuf.c b/strbuf.c
+> > > index acc7fc8..565c343 100644
+> > > --- a/strbuf.c
+> > > +++ b/strbuf.c
+> > > @@ -28,6 +28,13 @@ void strbuf_grow(struct strbuf *sb, size_t extra) {
+> > >  	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+> > >  }
+> > > =20
+> > > +void strbuf_rtrim(struct strbuf *sb)
+> > > +{
+> > > +    while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1=
+]))
+> > > +        sb->len--;
+> > > +    sb->buf[sb->len] =3D '\0';
+> > > +}
+> >=20
+> > Please use tabs instead of spaces to indent, just like you did in your
+> > other patches. :)
+>=20
+>   yeah, good catch.
+>   I've added some more patches tonight, and have added another function
+> in strbufs, and thanks to the awsome git rebase -i, this patch
+> integrates this new function as well, so this patch series is obsolete
+> already. I wont repost it until I know if I should rebase it on next
+> rather than master though.
 
-> And C++ is the only way to move with existing C codebase.
+  Okay I'm stupid, Junio already merged my patches in next, doh.
 
-Complete and utter BS. It can also stay in C, or get language bindings for
-Python/Perl/PHP/LUA(?)/whatever, or both.
+  I've seen the conflict btw, and there is a memory leak (on the format)
+in builtin-archive.c now... but I'm going to fix it (hopefuly) :)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--4ZLFUWh1odzi/v6L
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG4zPZvGr7W6HudhwRAjiSAJ46cKMbSeErfsujnnbeVJkEwmK/CACdH0Lo
+WyW84BhvAPE7MjAOCKz0I24=
+=Gao9
+-----END PGP SIGNATURE-----
+
+--4ZLFUWh1odzi/v6L--
