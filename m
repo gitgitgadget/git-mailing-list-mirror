@@ -1,162 +1,189 @@
-From: Carlos Rica <jasampler@gmail.com>
-Subject: [PATCH] git-tag -s must fail if gpg cannot sign the tag.
-Date: Sun, 09 Sep 2007 03:37:55 +0200
-Message-ID: <46E34E73.3080308@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String   Library.
+Date: Sun, 09 Sep 2007 03:36:25 +0200
+Message-ID: <46E34E19.8050402@op5.se>
+References: <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org> <fbqmdu$udg$1@sea.gmane.org> <85k5r27wkv.fsf@lola.goethe.zz> <851wda7ufz.fsf@lola.goethe.zz> <fbr4oi$5ko$1@sea.gmane.org> <85wsv26cv8.fsf@lola.goethe.zz> <fbsbul$dg0$1@sea.gmane.org> <46E3354A.7030407@op5.se> <20070909003718.GE13385@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Pierre Habouzit <madcoder@debian.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Walter Bright <boost@digitalmars.com>, git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Sep 09 03:39:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IUBlm-0000vK-Vj
-	for gcvg-git@gmane.org; Sun, 09 Sep 2007 03:39:27 +0200
+	id 1IUBlm-0000vK-6a
+	for gcvg-git@gmane.org; Sun, 09 Sep 2007 03:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755317AbXIIBiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 8 Sep 2007 21:38:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbXIIBiG
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 21:38:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:36810 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755291AbXIIBiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2007 21:38:05 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so374896ugc
-        for <git@vger.kernel.org>; Sat, 08 Sep 2007 18:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        bh=emD04yjHS/w97MwTRTjQndoDoGhvJaDVsAhXVpAz8C4=;
-        b=Z67CPFfE0CI1U7dipUY4a1lx+lK0GAzLXZew2h3JjPYSHvdb0P8TQa1GlV+LbwrXX60pX8zE35SRJsTac6RKvDazKlQdOUAmvz9K1lhdxmT1oYnhS7ecHecjon7U159EF5sY3dgM7KxSFfVzqHCqMdkgqfFthKSSrK7E4JLrNyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=F6mUdVsuP73dbE/kOO7O1EAU6JpdX121yl7axBH9dbEtnyP7HWRHPNIg63JJiqordHrq+5BH6IBbXJ7r7DpWIrn6E1CNaGbkpegJuVausxbAq1fcdKiujMY2yAi93ZfXlULMZgy4db7zIZmlj8LgfgsbckNXtG+KuWe/teCT6sA=
-Received: by 10.67.117.18 with SMTP id u18mr3043230ugm.1189301883355;
-        Sat, 08 Sep 2007 18:38:03 -0700 (PDT)
-Received: from ?192.168.0.192? ( [212.145.102.186])
-        by mx.google.com with ESMTPS id 39sm2673220ugb.2007.09.08.18.38.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 08 Sep 2007 18:38:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+	id S1755162AbXIIBgb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 8 Sep 2007 21:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbXIIBgb
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Sep 2007 21:36:31 -0400
+Received: from mail.op5.se ([193.201.96.20]:45290 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751084AbXIIBga (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2007 21:36:30 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7E7D3194414;
+	Sun,  9 Sep 2007 03:36:28 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fVx5uFpRAAOs; Sun,  9 Sep 2007 03:36:27 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 442B91943B6;
+	Sun,  9 Sep 2007 03:36:27 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <20070909003718.GE13385@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58142>
 
-If the user has misconfigured `user.signingkey` in their .git/config
-or just doesn't have any secret keys on their keyring and they ask
-for a signed tag with `git tag -s` we better make sure the resulting
-tag was actually signed by gpg.
+Pierre Habouzit wrote:
+> On Sat, Sep 08, 2007 at 11:50:34PM +0000, Andreas Ericsson wrote:
+>=20
+>>>> You can tell C compilers to
+>>>> check all array accesses, but that is a performance issue.
+>>> Runtime checking of arrays in D is a performance issue too, so it i=
+s=20
+>>> selectable via a command line switch.
+>> Same as in C then.
+>=20
+>   HAHAHAHAHAHA. Please, who do you try to convince here ? Except in t=
+he
+> local scope, there is few differences between a foo* and a foo[] in C=
+=2E
+>=20
 
-Prior versions of builtin git-tag allowed this failure to slip
-by without error as they were not checking the return value of
-the finish_command() so they did not notice when gpg exited with
-an error exit status.  They also did not fail if gpg produced an
-empty output or if read_in_full received an error from the read
-system call while trying to read the pipe back from gpg.
+"Runtime checking of arrays is a performance issue." It's true whether =
+it's
+done manually by the coder or by the compiler. The difference is that i=
+n C,
+you get to choose where it should be done.
 
-Finally, we did not actually honor any return value from the do_sign
-function as it returns ssize_t but was being stored into an unsigned
-long.  This caused the compiler to optimize out the die condition,
-allowing git-tag to continue along and create the tag object.
 
-However, when gpg gets a wrong username, it exits before any read was done
-and then the writing process receives SIGNPIPE and program is terminated.
-By ignoring this signal, anyway, the function write_or_die gets EPIPE from
-write_in_full and exits returning 0 to the system without a message.
-Here we better call to write_in_full directly so the next read can fail
-printing a message and return safely to the caller.
+>>> But more importantly,
+>>> 2) For dynamically sized arrays, the dimension of the array is carr=
+ied
+>>> with the array, so loops automatically loop the correct number of t=
+imes.
+>>> No runtime check is necessary, and it's easier for the code reviewe=
+r to
+>>> visually check the code for correctness.
+>> But this introduces handy but, strictly speaking, unnecessary overhe=
+ad
+>> as well, meaning, in short; 'D is slower than C, but easier to write
+>> code in'.
+>=20
+>   That's BS. See the strbuf API I've been pushing recently ? It has
+> simplified git's code a lot, because each time git had to deal with a
+> growing string, it had to deal with at least three variables: the buf=
+fer
+> pointer, the current occupied length, and its allocated size. That wa=
+s
+> three thing to have variable names for, and to pass to functions.
+>=20
 
-With these issues fixed `git-tag -s` will now fail to create the
-tag and will report a non-zero exit status to its caller, thereby
-allowing automated helper scripts to detect (and recover from)
-failure if gpg is not working properly.
+Yup. I applaud your efforts, but it does come with a slight overhead,
+except where it replaces faulty code. In practice, it's probably better
+to use the api for all the string-handling, as none of it is performanc=
+e-
+critical.
 
-Signed-off-by: Carlos Rica <jasampler@gmail.com>
----
 
-   This patch was initially sent by Shawn in a previous email:
-   http://marc.info/?l=git&m=118905254711808&w=2
-   I made many tests trying to know the reason for the problem
-   and these changes are the result.  I'm not sure how to send this
-   right, because the patch was almost entirely from Shawn and I
-   only changed a few things.  Please, see if the new test now pass
-   for everybody.  Comments about the change are also welcomed.
+>   Now instead, it's just one struct. D gives that gratis. There is no
+> performance loss because you _need_ to do the same. How do you deal w=
+ith
+> dynamic arrays if you dont't store their lenght and size somewhere ? =
+Or
+> are you the kind of programmer that write:
+>=20
+>   /* 640kb should be enough for everyone=E2=80=A6 */
+>   some_type *array =3D malloc(640 << 10);
+>=20
 
-   I always CC to my mentor, Johannes Sch., because that was
-   usual when the GSoC project was active, so I continue
-   doing it that way to make him able to track my contributions.
-   Tell me if that's no longer necessary or it'is anoying.
+No, but it would depend on what I am to do with it.
 
- builtin-tag.c  |   14 ++++++++++----
- t/t7004-tag.sh |    7 +++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+>=20
+>> So in essence, it's a bit like Python, but a teensy bit faster and a
+>> lot easier to shoot yourself in the foot with.
+>=20
+>> What was the niche you were going for when you thought up D? It can'=
+t
+>> have been systems programming, because *any* extra baggage is baggag=
+e
+>> one would like to get rid of. If it was application programming I fa=
+il
+>> to see how one more language would help, as there will be portabilit=
+y
+>> problems galore and it's still considerably slower to develop in tha=
+n
+>> fe Python, while at the same time being considerably easier to mess =
+up
+>> in.
+>=20
+>   Right now I'm just laughing. There is for sure overheads in some
+> places of D, but the example you take, and what you try to attack in =
+D
+> is definitely not where you lose any kind of performance. You could h=
+ave
+> attacked the GC instead (which is after all an easy classical target)=
+=2E
+>=20
 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 348919c..c9be69a 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -200,6 +200,10 @@ static ssize_t do_sign(char *buffer, size_t size, size_t max)
- 			bracket[1] = '\0';
- 	}
+I was asking what role D was designed to fill. I didn't mean it as an
+attack, but re-reading what I wrote earlier I see it came off a bit har=
+sh.
 
-+	/* When the username signingkey is bad, program could be terminated
-+	 * because gpg exits without reading and then write gets SIGNPIPE. */
-+	signal(SIGPIPE, SIG_IGN);
-+
- 	memset(&gpg, 0, sizeof(gpg));
- 	gpg.argv = args;
- 	gpg.in = -1;
-@@ -212,12 +216,13 @@ static ssize_t do_sign(char *buffer, size_t size, size_t max)
- 	if (start_command(&gpg))
- 		return error("could not run gpg.");
 
--	write_or_die(gpg.in, buffer, size);
-+	write_in_full(gpg.in, buffer, size);
- 	close(gpg.in);
- 	gpg.close_in = 0;
- 	len = read_in_full(gpg.out, buffer + size, max - size);
+>   Just to evaluate the silliness of your arguments:
+>   * http://www.digitalmars.com/d/comparison.html so that you can tell
+>     what the D features really are,
 
--	finish_command(&gpg);
-+	if (finish_command(&gpg) || !len || len < 0)
-+		return error("gpg failed to sign the tag");
+You may notice that the feature-list is being provided by the creators
+and marketeers of the D language. Walter Bright certainly seems like a
+nice enough person, but it's possible it's a tad biased.
 
- 	if (len == max - size)
- 		return error("could not read the entire signature from gpg.");
-@@ -310,9 +315,10 @@ static void create_tag(const unsigned char *object, const char *tag,
- 	size += header_len;
 
- 	if (sign) {
--		size = do_sign(buffer, size, max_size);
--		if (size < 0)
-+		ssize_t r = do_sign(buffer, size, max_size);
-+		if (r < 0)
- 			die("unable to sign the tag");
-+		size = r;
- 	}
+>   * http://shootout.alioth.debian.org/gp4/benchmark.php?test=3Dall&la=
+ng=3Dall
+>     so that you can know what the D performance really is about. Of
+>     course those are only micro benchmarks, but well, python is "just=
+"
+>     15 times slower than D, and D seems to be 10% slower.
 
- 	if (write_sha1_file(buffer, size, tag_type, result) < 0)
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 606d4f2..0d07bc3 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -990,6 +990,13 @@ test_expect_success \
- 	git diff expect actual
- '
 
-+# try to sign with bad user.signingkey
-+git config user.signingkey BobTheMouse
-+test_expect_failure \
-+	'git-tag -s fails if gpg is misconfigured' \
-+	'git tag -s -m tail tag-gpg-failure'
-+git config --unset user.signingkey
-+
- # try to verify without gpg:
+I get it to 7.7xC and 1.2xC, respectively, but whatever. It still means
+performance-critical apps will be written in C, while
+insert-script-language-of-choice will still be used for prototyping and
+not-so performance-critical apps.
 
- rm -rf gpghome
--- 
-1.5.0
+
+> Well then I'm
+>     okay with D, I'm ready to buy 10% faster CPUs and avoid a lot of
+>     painful debugging time. In my world, 10% faster hardware is cheap=
+er
+>     by many orders of magnitude than skilled programmers, but YMMV.
+>=20
+
+I'm curious as to how many fewer bugs D developers write compared to C
+programmers. I guess it's hard to do a fair test given the comparativel=
+y
+shallow pool of D gurus around, but it'd still be interesting to see a
+practical test. 20% increase in runtime is certainly acceptable for
+never having to see a bug again, but is it acceptable for 10% fewer bug=
+s?
+Or 20% fewer?
+
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
