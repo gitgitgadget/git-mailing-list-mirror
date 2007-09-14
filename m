@@ -1,72 +1,90 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH 03/13] Moved that status function to the status command file
-Date: Sat, 15 Sep 2007 00:36:47 +0200
-Message-ID: <877imsdgcg.fsf@morpheus.local>
-References: <20070914222819.7001.55921.stgit@morpheus.local> <20070914223124.7001.29374.stgit@morpheus.local>
+From: Shawn Pearce <spearce@blink.home.spearce.org>
+Subject: [PATCH 1/2] Fix builtin-fetch memory corruption by not overstepping array
+Date: Fri, 14 Sep 2007 18:56:13 -0400
+Message-ID: <20070914225613.GA16512@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 00:37:05 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 00:56:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWJmW-0002aG-V4
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 00:37:01 +0200
+	id 1IWK5F-0006ez-O7
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 00:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757230AbXINWg5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Sep 2007 18:36:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756993AbXINWg5
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 18:36:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:46945 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752747AbXINWg5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2007 18:36:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IWJmP-00022R-Hh
-	for git@vger.kernel.org; Sat, 15 Sep 2007 00:36:53 +0200
-Received: from c83-253-242-75.bredband.comhem.se ([83.253.242.75])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Sep 2007 00:36:53 +0200
-Received: from davidk by c83-253-242-75.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Sep 2007 00:36:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-242-75.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:HOPRwlsUoARrz5y5QnRPu4ICSGY=
+	id S1753713AbXINW4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2007 18:56:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbXINW4R
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 18:56:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50889 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753697AbXINW4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 18:56:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IWK5M-0000Or-Nk; Fri, 14 Sep 2007 18:56:28 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 63BFA20FBAE; Fri, 14 Sep 2007 18:56:13 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58207>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+A long time ago Junio added this line to always ensure that the
+output array created by remove_duplicates() had a NULL as its
+terminating node.  Today none of the downstream consumers of this
+array care about a NULL terminator; they only pay attention to the
+size of the array (as indicated by nr_heads).  In (nearly?) all
+cases passing a NULL element will cause SIGSEGV failures.  So this
+NULL terminal is not actually necessary.
 
-> diff --git a/t/t0002-status.sh b/t/t0002-status.sh
-> index 790b9fb..d0c31b2 100755
-> --- a/t/t0002-status.sh
-> +++ b/t/t0002-status.sh
-> @@ -60,6 +60,14 @@ test_expect_success 'Status with an added file' '
->  '
-> =20
->  cat > expected.txt <<EOF
-> +foo/bar
-> +EOF
-> +test_expect_success 'Status with an added file and -n option' '
-> +    stg status -n > output.txt &&
-> +    diff -u expected.txt output.txt
-> +'
-> +
-> +cat > expected.txt <<EOF
->  EOF
->  test_expect_success 'Status after refresh' '
->      stg new -m "first patch" &&
->
+Unfortunately we cannot continue to NULL terminate the array at
+this point as the array may only have been allocated large enough
+to match the input of nr_heads.  If there are no duplicates than
+we would be trying to store NULL into heads[nr_heads] and that may
+be outside of the array.
 
-Oops, that should have been in the first patch.
+My recent series to cleanup builtin-fetch changed the allocation of
+the heads array from 256 entries to exactly nr_heads thus ensuring
+we were always overstepping the array and causing memory corruption.
 
---=20
-David K=C3=A5gedal
+Signed-off-by: Shawn Pearce <spearce@blink.home.spearce.org>
+---
+
+ This patch is meant for the top of the db/fetch-pack series
+ (currently in pu) but it may actually need to be applied back on
+ prior versions (e.g. maint).  The code affected seems to predate
+ builtin-fetch by quite a bit and we may just be getting lucky that
+ the array is always allocated large enough for this extra entry.
+
+ It almost fixes the corruption Junio saw in t3200.  When combined
+ with the next patch (2/2) that corruption appears to be fixed on
+ both my Mac OS X and my Linux amd64 system.
+
+ builtin-fetch-pack.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index b0936cc..2977a94 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -654,7 +654,6 @@ static int remove_duplicates(int nr_heads, char **heads)
+ 			heads[dst] = heads[src];
+ 		dst++;
+ 	}
+-	heads[dst] = 0;
+ 	return dst;
+ }
+ 
+-- 
+1.5.3.1.921.g8c3b
