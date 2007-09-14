@@ -1,202 +1,166 @@
 From: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [StGit PATCH 02/13] Clear up semantics of tree_status
-Date: Sat, 15 Sep 2007 00:31:19 +0200
-Message-ID: <20070914223119.7001.23842.stgit@morpheus.local>
+Subject: [StGit PATCH 04/13] Split Series.push_patch in two
+Date: Sat, 15 Sep 2007 00:31:29 +0200
+Message-ID: <20070914223129.7001.11068.stgit@morpheus.local>
 References: <20070914222819.7001.55921.stgit@morpheus.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org, catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Sat Sep 15 00:31:45 2007
+X-From: git-owner@vger.kernel.org Sat Sep 15 00:31:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWJhO-0001NS-Ka
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 00:31:43 +0200
+	id 1IWJhP-0001NS-Qw
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 00:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757958AbXINWb2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Sep 2007 18:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757762AbXINWb2
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 18:31:28 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:56496 "EHLO
+	id S1757762AbXINWbf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Sep 2007 18:31:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbXINWbe
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 18:31:34 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:56501 "EHLO
 	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757251AbXINWb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2007 18:31:27 -0400
+	with ESMTP id S1757271AbXINWbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 18:31:33 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 8AE35200A1CE;
-	Sat, 15 Sep 2007 00:31:26 +0200 (CEST)
+	by mail.lysator.liu.se (Postfix) with ESMTP id C2B27200A1CE;
+	Sat, 15 Sep 2007 00:31:32 +0200 (CEST)
 Received: from mail.lysator.liu.se ([127.0.0.1])
 	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 05544-01-36; Sat, 15 Sep 2007 00:31:23 +0200 (CEST)
+	with LMTP id 02165-01-80; Sat, 15 Sep 2007 00:31:29 +0200 (CEST)
 Received: from morpheus (c83-253-242-75.bredband.comhem.se [83.253.242.75])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id B003F200A1D3;
-	Sat, 15 Sep 2007 00:31:19 +0200 (CEST)
+	by mail.lysator.liu.se (Postfix) with ESMTP id D6EE1200A1B8;
+	Sat, 15 Sep 2007 00:31:29 +0200 (CEST)
 Received: from morpheus.local (morpheus [127.0.0.1])
-	by morpheus (Postfix) with ESMTP id 60B8ABFA59;
-	Sat, 15 Sep 2007 00:31:19 +0200 (CEST)
+	by morpheus (Postfix) with ESMTP id 87D95BFA59;
+	Sat, 15 Sep 2007 00:31:29 +0200 (CEST)
 In-Reply-To: <20070914222819.7001.55921.stgit@morpheus.local>
 User-Agent: StGIT/0.13
 X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58197>
 
-The tree_status() function does a few slightly different things
-depending on the arguments.  This patch adds checks that the arguments
-are consistent and that the returned value looks good.
+The push_patch() function has a complex control flow and actually does
+two different things depending on the 'empty' parameter. This patch
+splits in in two functions without other code changes.
 
-It also changes the semantics slightly.  If the 'files' parameter is
-None, it will run status on all files.  If 'files' is a list, it will
-run status on only those files.  This changes two things:
-
- 1) If 'files' is the empty list, it will run status on no files.
- 2) It 'files' is a list, it will never return the status for other fil=
-es
-
-Clearing this up will make it easier to understand code that is using
-this function.
+Later patches will refactor the code to simplify it.
 
 Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
 ---
 
- stgit/commands/status.py |    3 +++
- stgit/git.py             |   44 +++++++++++++++++++++++---------------=
-------
- 2 files changed, 26 insertions(+), 21 deletions(-)
+ stgit/commands/common.py |    2 +
+ stgit/stack.py           |   62 ++++++++++++++++++++++++++++++++++++++=
+--------
+ 2 files changed, 52 insertions(+), 12 deletions(-)
 
 
-diff --git a/stgit/commands/status.py b/stgit/commands/status.py
-index 156552b..de88ba0 100644
---- a/stgit/commands/status.py
-+++ b/stgit/commands/status.py
-@@ -82,6 +82,9 @@ def func(parser, options, args):
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index f3fa89d..eaaf5fc 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -184,7 +184,7 @@ def push_patches(patches, check_merged =3D False):
+         out.start('Pushing patch "%s"' % p)
+=20
+         if p in merged:
+-            crt_series.push_patch(p, empty =3D True)
++            crt_series.push_empty_patch(p)
+             out.done('merged upstream')
          else:
-             diff_flags =3D []
+             modified =3D crt_series.push_patch(p)
+diff --git a/stgit/stack.py b/stgit/stack.py
+index 906e6b1..79d6cf3 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -1022,7 +1022,55 @@ class Series(PatchSet):
 =20
-+        # No args means all files
-+        if not args:
-+            args =3D None
-         git.status(args, options.modified, options.new, options.delete=
-d,
-                    options.conflict, options.unknown, options.noexclud=
-e,
-                    diff_flags =3D diff_flags)
-diff --git a/stgit/git.py b/stgit/git.py
-index 539d699..8dda1ed 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -167,15 +167,20 @@ def exclude_files():
+         return merged
 =20
- def tree_status(files =3D None, tree_id =3D 'HEAD', unknown =3D False,
-                   noexclude =3D True, verbose =3D False, diff_flags =3D=
- []):
--    """Returns a list of pairs - (status, filename)
-+    """Get the status of all changed files, or of a selected set of
-+    files. Returns a list of pairs - (status, filename).
+-    def push_patch(self, name, empty =3D False):
++    def push_empty_patch(self, name):
++        """Pushes an empty patch on the stack
++        """
++        unapplied =3D self.get_unapplied()
++        assert(name in unapplied)
 +
-+    If 'files' is None, it will check all files, and optionally all
-+    unknown files.  If 'files' is a list, it will only check the files
-+    in the list.
-     """
-+    assert files =3D=3D None or not unknown
++        patch =3D self.get_patch(name)
 +
-     if verbose:
-         out.start('Checking for changes in the working directory')
++        head =3D git.get_head()
++        bottom =3D patch.get_bottom()
++        top =3D patch.get_top()
++
++        ex =3D None
++        modified =3D False
++
++        # top !=3D bottom always since we have a commit for each patch
++        # just make an empty patch (top =3D bottom =3D HEAD). This
++        # option is useful to allow undoing already merged
++        # patches. The top is updated by refresh_patch since we
++        # need an empty commit
++        patch.set_bottom(head, backup =3D True)
++        patch.set_top(head, backup =3D True)
++        modified =3D True
++
++        append_string(self.__applied_file, name)
++
++        unapplied.remove(name)
++        write_strings(self.__unapplied_file, unapplied)
++
++        # head =3D=3D bottom case doesn't need to refresh the patch
++        if not ex:
++            # if the merge was OK and no conflicts, just refresh the p=
+atch
++            # The GIT cache was already updated by the merge operation
++            if modified:
++                log =3D 'push(m)'
++            else:
++                log =3D 'push'
++            self.refresh_patch(cache_update =3D False, log =3D log)
++        else:
++            # we store the correctly merged files only for
++            # tracking the conflict history. Note that the
++            # git.merge() operations should always leave the index
++            # in a valid state (i.e. only stage 0 files)
++            self.refresh_patch(cache_update =3D False, log =3D 'push(c=
+)')
++            raise StackException, str(ex)
++
++        return modified
++
++    def push_patch(self, name):
+         """Pushes a patch on the stack
+         """
+         unapplied =3D self.get_unapplied()
+@@ -1038,15 +1086,7 @@ class Series(PatchSet):
+         modified =3D False
 =20
-     refresh_index()
+         # top !=3D bottom always since we have a commit for each patch
+-        if empty:
+-            # just make an empty patch (top =3D bottom =3D HEAD). This
+-            # option is useful to allow undoing already merged
+-            # patches. The top is updated by refresh_patch since we
+-            # need an empty commit
+-            patch.set_bottom(head, backup =3D True)
+-            patch.set_top(head, backup =3D True)
+-            modified =3D True
+-        elif head =3D=3D bottom:
++        if head =3D=3D bottom:
+             # reset the backup information. No need for logging
+             patch.set_bottom(bottom, backup =3D True)
+             patch.set_top(top, backup =3D True)
+@@ -1079,7 +1119,7 @@ class Series(PatchSet):
+         write_strings(self.__unapplied_file, unapplied)
 =20
--    if not files:
--        files =3D []
-     cache_files =3D []
-=20
-     # unknown files
-@@ -197,11 +202,14 @@ def tree_status(files =3D None, tree_id =3D 'HEAD=
-', unknown =3D False,
-     conflicts =3D get_conflicts()
-     if not conflicts:
-         conflicts =3D []
--    cache_files +=3D [('C', filename) for filename in conflicts]
-+    cache_files +=3D [('C', filename) for filename in conflicts
-+                    if files =3D=3D None or filename in files]
-=20
-     # the rest
--    for line in GRun('git-diff-index', *(diff_flags + [tree_id, '--'] =
-+ files)
--                     ).output_lines():
-+    args =3D diff_flags + [tree_id]
-+    if files !=3D None:
-+        args +=3D ['--'] + files
-+    for line in GRun('git-diff-index', *args).output_lines():
-         fs =3D tuple(line.rstrip().split(' ',4)[-1].split('\t',1))
-         if fs[1] not in conflicts:
-             cache_files.append(fs)
-@@ -209,6 +217,7 @@ def tree_status(files =3D None, tree_id =3D 'HEAD',=
- unknown =3D False,
-     if verbose:
-         out.done()
-=20
-+    assert files =3D=3D None or set(f for s,f in cache_files) <=3D set=
-(files)
-     return cache_files
-=20
- def local_changes(verbose =3D True):
-@@ -538,9 +547,6 @@ def committer():
- def update_cache(files =3D None, force =3D False):
-     """Update the cache information for the given files
-     """
--    if not files:
--        files =3D []
--
-     cache_files =3D tree_status(files, verbose =3D False)
-=20
-     # everything is up-to-date
-@@ -569,8 +575,6 @@ def commit(message, files =3D None, parents =3D Non=
-e, allowempty =3D False,
-            committer_name =3D None, committer_email =3D None):
-     """Commit the current tree to repository
-     """
--    if not files:
--        files =3D []
-     if not parents:
-         parents =3D []
-=20
-@@ -712,14 +716,13 @@ def status(files =3D None, modified =3D False, ne=
-w =3D False, deleted =3D False,
-            diff_flags =3D []):
-     """Show the tree status
-     """
--    if not files:
--        files =3D []
--
--    cache_files =3D tree_status(files, unknown =3D True, noexclude =3D=
- noexclude,
--                                diff_flags =3D diff_flags)
--    all =3D not (modified or new or deleted or conflict or unknown)
-+    cache_files =3D tree_status(files,
-+                              unknown =3D (files =3D=3D None),
-+                              noexclude =3D noexclude,
-+                              diff_flags =3D diff_flags)
-+    filtered =3D (modified or new or deleted or conflict or unknown)
-=20
--    if not all:
-+    if filtered:
-         filestat =3D []
-         if modified:
-             filestat.append('M')
-@@ -735,9 +738,8 @@ def status(files =3D None, modified =3D False, new =
-=3D False, deleted =3D False,
-         cache_files =3D [x for x in cache_files if x[0] in filestat]
-=20
-     for fs in cache_files:
--        if files and not fs[1] in files:
--            continue
--        if all:
-+        assert files =3D=3D None or fs[1] in files
-+        if not filtered:
-             out.stdout('%s %s' % (fs[0], fs[1]))
-         else:
-             out.stdout('%s' % fs[1])
+         # head =3D=3D bottom case doesn't need to refresh the patch
+-        if empty or head !=3D bottom:
++        if head !=3D bottom:
+             if not ex:
+                 # if the merge was OK and no conflicts, just refresh t=
+he patch
+                 # The GIT cache was already updated by the merge opera=
+tion
