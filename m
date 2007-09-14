@@ -1,67 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/2] Fix "git diff" setup code
-Date: Fri, 14 Sep 2007 11:30:53 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0709141129451.16478@woody.linux-foundation.org>
-References: <20070905234941.GA643@nomad.office.altlinux.org>
- <20070906022539.GG18160@spearce.org> <20070906101648.GD6665@basalt.office.altlinux.org>
- <20070909044648.GH18160@spearce.org> <7vir6fjmuv.fsf@gitster.siamese.dyndns.org>
- <20070913035137.GM3099@spearce.org> <7vr6l2gxyw.fsf@gitster.siamese.dyndns.org>
- <20070914000108.GE3619@basalt.office.altlinux.org> <7vr6l2f6k1.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.999.0709131850060.16478@woody.linux-foundation.org>
- <20070914024303.GH3619@basalt.office.altlinux.org>
- <alpine.LFD.0.999.0709132123570.16478@woody.linux-foundation.org>
- <alpine.LFD.0.999.0709141002360.16478@woody.linux-foundation.org>
- <alpine.LFD.0.999.0709141014130.16478@woody.linux-foundation.org>
- <7v4phxaz3o.fsf@gitster.siamese.dyndns.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Remove extra dots from doc of git-archive option --format
+Date: Fri, 14 Sep 2007 21:38:02 +0300
+Organization: Private
+Message-ID: <7imtt7n9.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Dmitry V. Levin" <ldv@altlinux.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 20:38:30 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 14 20:42:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWFws-0006g4-Kh
-	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 20:31:27 +0200
+	id 1IWG09-0007oI-Qj
+	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 20:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926AbXINSbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2007 14:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754254AbXINSbW
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 14:31:22 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:60956 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753971AbXINSbW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2007 14:31:22 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8EIUkNV017520
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Sep 2007 11:30:47 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8EIUkgU018604;
-	Fri, 14 Sep 2007 11:30:46 -0700
-In-Reply-To: <7v4phxaz3o.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-3.239 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.34__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754827AbXINSeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2007 14:34:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbXINSeq
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 14:34:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:49832 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751971AbXINSep (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 14:34:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IWFzu-0001jU-Mk
+	for git@vger.kernel.org; Fri, 14 Sep 2007 20:34:34 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Sep 2007 20:34:34 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Sep 2007 20:34:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:AdBGpaA4kDR6qPnNr/I6/hoz7UM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58177>
+
+The description of the option gave impression that there
+were several formats available by using three dots. There are
+no other formats than tar and gzip.
+
+Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
+---
+ Documentation/git-archive.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index f2080eb..04771dc 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -31,7 +31,7 @@ OPTIONS
+ -------
+ 
+ --format=<fmt>::
+-	Format of the resulting archive: 'tar', 'zip'...  The default
++	Format of the resulting archive: 'tar' or 'zip'.  The default
+ 	is 'tar'.
+ 
+ --list, -l::
+-- 
+1.5.3
 
 
-
-On Fri, 14 Sep 2007, Junio C Hamano wrote:
-> 
-> So I tend to think the attached is a better fix.
-
-Ahh, yes, that explains the conditional. 
-
-But whatever gets us to actually verify our options, and fill in the right 
-defaults is ok by me!
-
-		Linus
+-- 
+Welcome to FOSS revolution: we fix and modify until it shines
