@@ -1,65 +1,80 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Re: Track /etc directory using Git
-Date: Fri, 14 Sep 2007 23:26:43 +0200
-Message-ID: <20070914212643.GA10970@amy.inscure.wireless.home.vilz.de>
-References: <38b2ab8a0709130511q7a506c5cvb0f8785a1d7ed7ad@mail.gmail.com> <20070913123137.GA31735@piper.oerlikon.madduck.net> <38b2ab8a0709140108v2a9c3569i93b39f351f1d4ec3@mail.gmail.com> <20070914091545.GA26432@piper.oerlikon.madduck.net> <e47324780709141031t79981b04q3a91984668ea723e@mail.gmail.com>
+From: "Bryan Larsen" <bryan@larsen.st>
+Subject: [PATCH] Remove non-POSIX alternation in sed script in instaweb
+Date: Fri, 14 Sep 2007 17:41:07 -0400
+Message-ID: <256f7ba80709141441l3bd2d3ecu9ce53809c686cec4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	Francis Moreau <francis.moro@gmail.com>
-To: "Thomas Harning Jr." <harningt@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 23:27:18 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 14 23:41:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWIgz-0002Bo-1b
-	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 23:27:13 +0200
+	id 1IWIvC-00063C-E2
+	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 23:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757075AbXINV1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2007 17:27:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757100AbXINV1H
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 17:27:07 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.20.118.28]:55104 "EHLO
-	pandorra.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757045AbXINV1G (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2007 17:27:06 -0400
-Received: from localhost (point-14.secure.wireless.home.vilz.de [::ffff:192.168.151.14])
-  by pandorra.geht-ab-wie-schnitzel.de with esmtp; Fri, 14 Sep 2007 23:27:02 +0200
-  id 0015AF06.46EAFCA6.00000B73
+	id S1753193AbXINVlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2007 17:41:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbXINVlJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 17:41:09 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:6279 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693AbXINVlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 17:41:08 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1112900wah
+        for <git@vger.kernel.org>; Fri, 14 Sep 2007 14:41:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=ivp+F3ldN+hVDBSHcx5js+YywfEms6IzR6BkOlYTxeM=;
+        b=hOWEGNCSsX6wrwLDABRmrGR2ByR4Xehl75x5lH8Wd1uCCpxiLhKZyqDXOESJIM1R5QvkVW/3Qnm4wPkNP1AsUkTZg4bs4OrDeGnsVu/f5vs4ypWqfbXHFv90xurOFwrM5sGzm/SDs5sJ02yCluVvt9XJKMNdFFEhrnTm4V/o/s4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=D2cS+K/nGBiSH+mmSF7ZQLi8wBhUWvM09ygQSAs8L9F3p+75YCUdsCDlDE2WxQprapk/7EW6k+3ezvFJ75uMmOPerVfCfLNWqVhzjhVFCD0paGyIESPDt6EV2QY4Xl+Ekzp9LXsEpfImk0pIGYEndV7+aYFftmUcgU6UFKG4k7I=
+Received: by 10.114.194.1 with SMTP id r1mr495345waf.1189806067956;
+        Fri, 14 Sep 2007 14:41:07 -0700 (PDT)
+Received: by 10.114.81.11 with HTTP; Fri, 14 Sep 2007 14:41:07 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <e47324780709141031t79981b04q3a91984668ea723e@mail.gmail.com>
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Google-Sender-Auth: 68e0300f35e8768b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58186>
 
-On Fri, Sep 14, 2007 at 01:31:06PM -0400, Thomas Harning Jr. wrote:
-> On 9/14/07, martin f krafft <madduck@madduck.net> wrote:
-> > also sprach Francis Moreau <francis.moro@gmail.com> [2007.09.14.1008 +0200]:
-> > > Did you find an alternative to git in this case ?
-> >
-> > No, and I did not look anywhere, but I know of no other VCS that can
-> > adequatly track permissions.
-> Has anyone checked out metastore?  http://repo.or.cz/w/metastore.git
-> ... there's an XML error in there somewhere, so its not loading the
-> 'main' page, but http://repo.or.cz/w/metastore.git?a=shortlog should
-> work.
-> 
-> It looks like it could work.... any thoughts on this?
+git-instaweb.sh uses alternation in a sed script.  Unfortunately,
+this is not POSIX compliant and does not work on some BSD's.  This
+patch removes the alternation via the simple expedient of doubling
+the number of lines in the sed script.
 
-I use that tool. If you just have one branch, it works. With the
-commit-hook, which also updates the metadata, you have current
-permission tracking. 
+Signed-off-by: Bryan Larsen <bryan@larsen.st>
+---
+ git-instaweb.sh |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-There is a lack of a checkout-hook, which sets the permissions, so you
-have to remeber todo a metastore -a after you checked out a revision.
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index b79c6b6..ce631a0 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -207,10 +207,14 @@ EOF
+ }
 
-But if you have several branches which fork the master branch and try to
-rebase the branches on master, you get trouble, because the metadata gets
-corrupted somehow. I will think about a solution on this sometime.
+ script='
+-s#^\(my\|our\) $projectroot =.*#\1 $projectroot = "'`dirname $fqgitdir`'";#
+-s#\(my\|our\) $gitbin =.*#\1 $gitbin = "'$GIT_EXEC_PATH'";#
+-s#\(my\|our\) $projects_list =.*#\1 $projects_list = $projectroot;#
+-s#\(my\|our\) $git_temp =.*#\1 $git_temp = "'$fqgitdir/gitweb/tmp'";#'
++s#^my $projectroot =.*#my $projectroot = "'`dirname $fqgitdir`'";#
++s#^our $projectroot =.*#our $projectroot = "'`dirname $fqgitdir`'";#
++s#my $gitbin =.*#my $gitbin = "'$GIT_EXEC_PATH'";#
++s#our $gitbin =.*#our $gitbin = "'$GIT_EXEC_PATH'";#
++s#my $projects_list =.*#my $projects_list = $projectroot;#
++s#our $projects_list =.*#our $projects_list = $projectroot;#
++s#my $git_temp =.*#my $git_temp = "'$fqgitdir/gitweb/tmp'";#
++s#our $git_temp =.*#our $git_temp = "'$fqgitdir/gitweb/tmp'";#'
 
-Nicolas
+ gitweb_cgi () {
+        cat > "$1.tmp" <<\EOFGITWEB
+-- 
+1.5.3.1
