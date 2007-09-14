@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git commit workflow question
-Date: Fri, 14 Sep 2007 14:14:17 -0400
-Message-ID: <20070914181417.GU3099@spearce.org>
-References: <20070914103348.GA22621@bulgaria>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 14 Sep 2007 14:30:28 -0400
+Message-ID: <20070914183028.GV3099@spearce.org>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org> <7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Brian Swetland <swetland@google.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 20:26:20 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 20:35:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWFgQ-0001xS-DS
-	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 20:14:26 +0200
+	id 1IWFw4-0006Ul-Ks
+	for gcvg-git-2@gmane.org; Fri, 14 Sep 2007 20:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbXINSOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2007 14:14:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754102AbXINSOW
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 14:14:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39307 "EHLO
+	id S1755345AbXINSad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2007 14:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755135AbXINSac
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 14:30:32 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40124 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754262AbXINSOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2007 14:14:21 -0400
+	with ESMTP id S1754870AbXINSac (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 14:30:32 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IWFgZ-0004xQ-Qt; Fri, 14 Sep 2007 14:14:35 -0400
+	id 1IWFwE-0005v0-MO; Fri, 14 Sep 2007 14:30:46 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CE77D20FBAE; Fri, 14 Sep 2007 14:14:17 -0400 (EDT)
+	id 046CD20FBAE; Fri, 14 Sep 2007 14:30:29 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070914103348.GA22621@bulgaria>
+In-Reply-To: <7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,42 +40,21 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58172>
 
-Brian Swetland <swetland@google.com> wrote:
-> With perforce I often have a bunch of files modified (having p4 add'd
-> or p4 edit'd them) and then only commit a subset of them.  I can do
-> this interactively by doing a p4 submit and just removing the files
-> I don't want to check in from the list in the changelist description
-> when I'm writing up the change description in $EDITOR, invoked by
-> p4 submit.
-> 
-> It seems like my options with git are to invoke git commit with
-> a specific list of things to commit, invoke git commit --interactive
-> and use the interactive menu thing to shuffle stuff around, or
-> manually unstage things until I have the index in a state where
-> a git commit without other arguments will do what I want.
+Junio C Hamano <gitster@pobox.com> wrote:
+> * db/fetch-pack (Fri Sep 14 03:31:25 2007 -0400) 22 commits
+...
+> This is Daniel's fetch-pack in C plus fixups from Shawn.
+> Unfortunately the fixups breaks t3200 ("*** glibc detected ***
+> fetch: free(): invalid pointer xxx ***"), which I haven't looked
+> into yet.
 
-Or use git-citool/git-gui to make commits, in which case that
-will help you to arrange the index with what you want to commit.
-But yes, git-commit does not pay any attention to modifications
-made to the template in the edit buffer.
+Doesn't crash out on my Mac OS X system but I am getting the
+above failure on my amd64 Linux system.  I'm debugging it now.
+I'll have to quit in about an hour and pick it up later, so don't
+expect a patch immediately.  But I'll certainly send something soon.
+Clearly I made a change in my fixups that I shouldn't have.  ;-)
 
-I'm not sure how the Git community would react to being able to edit
-the list of files being committed from within the commit message
-buffer.  I think most Git users run at least `git diff --cached`
-before they commit to make sure they are happy with the difference.
-I know a lot of users who do that.  Most/all of those users also do
-not stage something into the index until they are happy with the
-change, which means there isn't any list of files to remove when
-it comes time to make the commit as the contents of the index is
-exactly what should be committed.
-
-I used p4 for a while before Git was invented.  I found the file
-editing feature useful then because there was no concept of the
-index.  Now with Git I've embraced the index so much that I'm not
-sure I can work without it, and I don't need to remove files from
-my index during the actual commit itself.
- 
 -- 
 Shawn.
