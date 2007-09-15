@@ -1,108 +1,67 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] strbuf's in builtin-apply
-Date: Sat, 15 Sep 2007 19:07:27 +0200
-Message-ID: <20070915170727.GF27494@artemis.corp>
-References: <20070915141210.GA27494@artemis.corp>
+From: "Nikodemus Siivola" <nikodemus@random-state.net>
+Subject: Re: Data Integrity & un-Commited Branches
+Date: Sat, 15 Sep 2007 20:14:51 +0300
+Message-ID: <6bcc356f0709151014j9606a3ape6b62770304560ba@mail.gmail.com>
+References: <2a8a071a0709140028o472bcr8c82bd88e37cc4e9@mail.gmail.com>
+	 <2a8a071a0709140036l5db62c0fl5af01f75f35610ba@mail.gmail.com>
+	 <7vk5qtd3le.fsf@gitster.siamese.dyndns.org>
+	 <2a8a071a0709141740l144b60aevdfec2b6cdab8bb60@mail.gmail.com>
+	 <20070915025129.GY3099@spearce.org>
+	 <20070915073845.GB3782@efreet.light.src>
+	 <20070915075144.GB3099@spearce.org>
+	 <6bcc356f0709150611i97d31f0yb91016e53c4f5e9f@mail.gmail.com>
+	 <85myvoav1g.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="i3lJ51RuaGWuFYNw";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 15 19:07:36 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, "Jan Hudec" <bulb@ucw.cz>,
+	"Brian Scott Dobrovodsky" <brian@pontech.com>, git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Sep 15 19:15:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWb7I-0007YU-0k
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 19:07:36 +0200
+	id 1IWbEQ-0001gZ-1p
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 19:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbXIORHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 13:07:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbXIORHb
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 13:07:31 -0400
-Received: from pan.madism.org ([88.191.52.104]:33468 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753251AbXIORHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 13:07:30 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 05ED81E396;
-	Sat, 15 Sep 2007 19:07:28 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 3839133083B; Sat, 15 Sep 2007 19:07:27 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+	id S1752941AbXIOROy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 13:14:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbXIOROx
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 13:14:53 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:35701 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379AbXIOROx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 13:14:53 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so1066193fkz
+        for <git@vger.kernel.org>; Sat, 15 Sep 2007 10:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=Nli6sM5Aj3jSEls/hCRljioRe/E8jcb9gztsJ2l6uz4=;
+        b=aIfF3hbFp3VjPKsRg8HUGeKSfpvoQVDHHuE7pWdXXUMSekH2I40XdlI6lPpJxYwr01HkAIj/XKYOlCUpPT7NyrjaLZhlPJ3rTuYaIBwWnrgOiBeUsbMe7z2qnql1/VVF07PtH8U+N72RUTRDMmt6hbGXFUvjarANB3FLObki454=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=fTvVsVbrP17Tzw0lfKE/umZ6TzRwKQeywZzpf4o1LPvBwYST4y+W4ehlh5h4Xi8TsTccXBd6QSyfiU6J5/y8KRU14p46hUuzt0r3NbcCVPcuaryibuqkHdXFOYlEVoKmUzFXrOSBLqOtWmVCGQmKWhQFnx2PuKTz1/0iwn3Dfwo=
+Received: by 10.86.70.8 with SMTP id s8mr2242146fga.1189876491426;
+        Sat, 15 Sep 2007 10:14:51 -0700 (PDT)
+Received: by 10.86.4.5 with HTTP; Sat, 15 Sep 2007 10:14:51 -0700 (PDT)
+In-Reply-To: <85myvoav1g.fsf@lola.goethe.zz>
 Content-Disposition: inline
-In-Reply-To: <20070915141210.GA27494@artemis.corp>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+X-Google-Sender-Auth: 955f2c6f3f5ec6ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58264>
 
+On 9/15/07, David Kastrup <dak@gnu.org> wrote:
 
---i3lJ51RuaGWuFYNw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> "Take a while"?  What's wrong with git-reflog?
 
-On Sat, Sep 15, 2007 at 02:12:10PM +0000, Pierre Habouzit wrote:
-> +		nsize =3D buf->len;
-> +		nbuf =3D convert_to_git(path, buf->buf, &nsize);
-> +		if (nbuf)
-> +			strbuf_embed(buf, nbuf, nsize, nsize);
+Not needing it as a part of my regular workflow, and therefore
+not thinking about it. *blush*
 
-  Okay, I managed to be able to be sure that convert_to_git always have
-an extra ending NUL byte, with an intermediate patch.  So now I call
-strbuf_embed with nsize, nsize + 1 which has negligible cost.
+Cheers,
 
-  Though this question remains:
-
->   Another suspicious hunk is:
->=20
-> -	data =3D (void*) fragment->patch;
-> [...]
->  	case BINARY_LITERAL_DEFLATED:
-> -		free(desc->buffer);
-> -		desc->buffer =3D data;
-> -		dst_size =3D fragment->size;
-> -		break;
-> +		strbuf_embed(buf, fragment->patch, fragment->size, fragment->size);
-> +		return 0;
->=20
->   TTBOMK the ->patch pointer is a pointer inside a buffer, not a buffer
-> that has been malloc'ed (and there are code paths before my patch that
-> would still realloc the buffer so I don't think I introduce an issue).
-> It passes the test-suite without crashing, but well, maybe this should
-> be a copy instead.
->=20
->   The rest is pretty straightforward.
->=20
-> --=20
-> =C2=B7O=C2=B7  Pierre Habouzit
-> =C2=B7=C2=B7O                                                madcoder@deb=
-ian.org
-> OOO                                                http://www.madism.org
-
-
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---i3lJ51RuaGWuFYNw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG7BFPvGr7W6HudhwRAmFaAJ9TwoOkKXZ01nBu0TbxpPB03YIrqACdEPRM
-Lsna0ugqDXnHrAFK6mx5u8Y=
-=ouJT
------END PGP SIGNATURE-----
-
---i3lJ51RuaGWuFYNw--
+ -- Nikodemus
