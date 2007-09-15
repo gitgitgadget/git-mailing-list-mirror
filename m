@@ -1,85 +1,114 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: STG, problem with pop/push of alternative versions of a patch
-Date: Sat, 15 Sep 2007 10:25:39 -0400
-Message-ID: <9e4733910709150725k73bec66bw753c4b3c01244cff@mail.gmail.com>
-References: <9e4733910709142049k6dcec6acuf851c21ed6704287@mail.gmail.com>
-	 <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Track /etc directory using Git
+Date: Sat, 15 Sep 2007 16:29:32 +0200
+Message-ID: <20070915142932.GB27494@artemis.corp>
+References: <38b2ab8a0709130511q7a506c5cvb0f8785a1d7ed7ad@mail.gmail.com> <20070913123137.GA31735@piper.oerlikon.madduck.net> <38b2ab8a0709140108v2a9c3569i93b39f351f1d4ec3@mail.gmail.com> <20070914091545.GA26432@piper.oerlikon.madduck.net> <e47324780709141031t79981b04q3a91984668ea723e@mail.gmail.com> <20070914212643.GA10970@amy.inscure.wireless.home.vilz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 15 16:25:48 2007
+Content-Type: multipart/signed; boundary="Yylu36WmvOXNoKYn";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "Thomas Harning Jr." <harningt@gmail.com>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Francis Moreau <francis.moro@gmail.com>
+To: Nicolas Vilz <niv@iaglans.de>
+X-From: git-owner@vger.kernel.org Sat Sep 15 16:29:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWYaf-0003yc-KE
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 16:25:46 +0200
+	id 1IWYeQ-00055Z-Bf
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 16:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266AbXIOOZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 10:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbXIOOZl
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 10:25:41 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:48344 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800AbXIOOZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 10:25:40 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1335611wah
-        for <git@vger.kernel.org>; Sat, 15 Sep 2007 07:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=6/JTKqlzJSMmVMuCJzC0NFvSMNNCqsT0cRRug2b2uwk=;
-        b=T3sTFe9+VtErlsUHn4a6f6gOcIPlqgy994pIlV5AnSV3YNxzKjVwAROLF+0A49nI5t7f1m2uoqvxx2lIA7MVNowkXeEnNSNJZ1V6CLnpdcjHhnqj03hn9oRL5DmguG76M1fYgS/Cq5wsf8PoWvpM6CtPEiYVJREC+53rEbtSo6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WYHa4n7VxAYFfHM2V0dFE6M9HNvTNXWUa6mTnFVIhaJozh/Y97+AF837MiTWBeAmCqnfR8EdobfAdyTOxzvG5Qn/bjRWBLQK3YXrXdDFL6Qu5YxUUTFKZnApW2C8BO3+VRS5YsVnmdCsABcgZkEVKzn6eNqAr+4dYBLqiHyaC1o=
-Received: by 10.114.156.1 with SMTP id d1mr2903783wae.1189866339422;
-        Sat, 15 Sep 2007 07:25:39 -0700 (PDT)
-Received: by 10.114.195.5 with HTTP; Sat, 15 Sep 2007 07:25:39 -0700 (PDT)
-In-Reply-To: <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
+	id S1751585AbXIOO3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 10:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbXIOO3e
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 10:29:34 -0400
+Received: from pan.madism.org ([88.191.52.104]:42181 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751027AbXIOO3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 10:29:34 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id F2E2878B;
+	Sat, 15 Sep 2007 16:29:32 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 7140B4C151; Sat, 15 Sep 2007 16:29:32 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Nicolas Vilz <niv@iaglans.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Francis Moreau <francis.moro@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <20070914212643.GA10970@amy.inscure.wireless.home.vilz.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58249>
-
-On 9/15/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> On 15/09/2007, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > I trying to test two different versions of a patch that add files.
-> > These patches create a new directory and add several files. When I pop
-> > a version of the patch the directory and files and not getting
-> > removed. This causes an error when I push the alternative version of
-> > the patch.
->
-> This shouldn't happen AFAICT (at least for the files, as GIT doesn't
-> care much about directories). What GIT/StGIT version are you using?
-> StGIT simply calls GIT to do the HEAD switch.
-
-I have played around with some more. It is more complicated than the
-simple case I described.  Earlier I noticed a message about applying a
-patch that was empty that shouldn't have been. I checked and the patch
-is indeed empty. The empty patch probably caused the files to be left.
-I had been using hide/unide and reordering with on the patch and had
-encountered a couple errors in stg. I'll try and track down the
-sequence that caused the contents of the patch to be lost.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58250>
 
 
->
-> Could you run 'stg patches drivers/net/fec_mpc52xx/Kconfig' with the
-> initial series pushed? It should show which patches touch this file.
-> If it doesn't show any, maybe the files weren't added to any patch and
-> hence the error.
->
-> Thanks.
->
-> --
-> Catalin
->
+--Yylu36WmvOXNoKYn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Sep 14, 2007 at 09:26:43PM +0000, Nicolas Vilz wrote:
+> On Fri, Sep 14, 2007 at 01:31:06PM -0400, Thomas Harning Jr. wrote:
+> > On 9/14/07, martin f krafft <madduck@madduck.net> wrote:
+> > > also sprach Francis Moreau <francis.moro@gmail.com> [2007.09.14.1008 =
++0200]:
+> > > > Did you find an alternative to git in this case ?
+> > >
+> > > No, and I did not look anywhere, but I know of no other VCS that can
+> > > adequatly track permissions.
+> > Has anyone checked out metastore?  http://repo.or.cz/w/metastore.git
+> > ... there's an XML error in there somewhere, so its not loading the
+> > 'main' page, but http://repo.or.cz/w/metastore.git?a=3Dshortlog should
+> > work.
+> >=20
+> > It looks like it could work.... any thoughts on this?
+>=20
+> I use that tool. If you just have one branch, it works. With the
+> commit-hook, which also updates the metadata, you have current
+> permission tracking.=20
+>=20
+> There is a lack of a checkout-hook, which sets the permissions, so you
+> have to remeber todo a metastore -a after you checked out a revision.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+  Note that having metastore run by a hook makes it unsuitable for /etc
+versioning, because you may have short period of times during which
+s3kr3t files are readable by more people that what it should be.
+
+  The sole sane way to do that would be to track permissions, acls,
+whatever _in_ git. Though, I'm still not convinced that it is such a
+good idea at all. I mean for source code you absolutely _don't_ want git
+to track permissions (outside from the +x bit). You don't want git to
+try to chown your files to "madcoder:madcoder" because I was the last
+one committing. So that would mean that you want sometimes to track
+permissions, sometimes not. So you need a bunch of tools to list files
+whose permissions have to be tracked, and whose permissions don't need
+to be.
+
+  I fear that you'll end up with quite a big bloat of git, for a use
+case that is fairly limited.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Yylu36WmvOXNoKYn
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG6+xMvGr7W6HudhwRAt0+AJ4m4O0xWyOeWSV6W4bXe1rO30cfqACeJq5y
+d9yMMOUx1rkFkYC7UpKQZAg=
+=WvlS
+-----END PGP SIGNATURE-----
+
+--Yylu36WmvOXNoKYn--
