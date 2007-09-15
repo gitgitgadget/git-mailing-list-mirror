@@ -1,82 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Data Integrity & un-Commited Branches
-Date: Sat, 15 Sep 2007 03:51:44 -0400
-Message-ID: <20070915075144.GB3099@spearce.org>
-References: <2a8a071a0709140028o472bcr8c82bd88e37cc4e9@mail.gmail.com> <2a8a071a0709140036l5db62c0fl5af01f75f35610ba@mail.gmail.com> <7vk5qtd3le.fsf@gitster.siamese.dyndns.org> <2a8a071a0709141740l144b60aevdfec2b6cdab8bb60@mail.gmail.com> <20070915025129.GY3099@spearce.org> <20070915073845.GB3782@efreet.light.src>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: STG, problem with pop/push of alternative versions of a patch
+Date: Sat, 15 Sep 2007 09:07:05 +0100
+Message-ID: <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
+References: <9e4733910709142049k6dcec6acuf851c21ed6704287@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Scott Dobrovodsky <brian@pontech.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 15 09:51:53 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 10:07:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWSRV-0000eM-EJ
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 09:51:53 +0200
+	id 1IWSgN-0003VX-Ts
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 10:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbXIOHvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 03:51:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752257AbXIOHvu
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 03:51:50 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36490 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238AbXIOHvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 03:51:49 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IWSRM-0007Se-EW; Sat, 15 Sep 2007 03:51:44 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8A1F320FBAE; Sat, 15 Sep 2007 03:51:44 -0400 (EDT)
+	id S1752836AbXIOIHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 04:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752200AbXIOIHJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 04:07:09 -0400
+Received: from rv-out-0910.google.com ([209.85.198.191]:47170 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752836AbXIOIHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 04:07:06 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so870918rvb
+        for <git@vger.kernel.org>; Sat, 15 Sep 2007 01:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4Dwojydx4fLSKe1cPhgso26k0//NIM7rIZXI1qft3jU=;
+        b=ShyXN8+lwNLv//OfFF4UEuJbzL/S8t7PxUP6eujQuAQ3kz+xaYpgOrj0w3+Pu+0Fu0waDmCoLJj4T4S2N7blYn4U6o64jD/3fvVd1UvMinWwVpGv/bz2BQQ7HmHOCJGkrvc73NQSJZWtw50uvyUuOYSROJAR0XNTreO3oFBFdZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=You9Ujn2F33xUfrDEbEWn+84Vk8HNOkX1/gbB4KcLADzSM5eC7tcV2g13qNK1TxsNGNZVIIobB3h8+TrPNmx9CmL/mxEF0PEevzB3rLAKawOAIZ9MK4XOM3Ob63Cp0Ms94nNqa4BPZJp8nb+a8e4c6mm21d+eHHTRYNsb64QwYY=
+Received: by 10.141.196.13 with SMTP id y13mr171520rvp.1189843625438;
+        Sat, 15 Sep 2007 01:07:05 -0700 (PDT)
+Received: by 10.140.158.1 with HTTP; Sat, 15 Sep 2007 01:07:05 -0700 (PDT)
+In-Reply-To: <9e4733910709142049k6dcec6acuf851c21ed6704287@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070915073845.GB3782@efreet.light.src>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58231>
 
-Jan Hudec <bulb@ucw.cz> wrote:
-> On Fri, Sep 14, 2007 at 22:51:29 -0400, Shawn O. Pearce wrote:
-> > It isn't unreasonable to want Git to save uncommitted work for the
-> > current branch and then you switch to another, ending up with a
-> > clean working directory when you finally get there.  Today we have
-> > git-stash to help you with this, but I'm thinking maybe we want to
-> > connect git-checkout with it?
-> 
-> I think it would be reasonable if it just forced you to decide about it. That
-> is reading the documentation, checkout only switches branches if the merge of
-> each modified file is trivial and only does 3-way merge if it got -m option.
-> 
-> It might be reasonable to requre that option for all cases, where there are
-> local changes and the branches don't point to the same commit and without it,
-> checkout should say something like:
-> 
->   Cannot switch branches, because the tree is modified. You can apply the
->   modifications to the target branch by using -m option
+On 15/09/2007, Jon Smirl <jonsmirl@gmail.com> wrote:
+> I trying to test two different versions of a patch that add files.
+> These patches create a new directory and add several files. When I pop
+> a version of the patch the directory and files and not getting
+> removed. This causes an error when I push the alternative version of
+> the patch.
 
-The thing there is `git checkout` by default does a switch only
-if the merge is really trivial.  In such cases its probably sane
-to carry the changes with you to the new branch/parent commit.
-At worst you can safely carry them right back.  Or stash them.
-But -m does a three-way file merge, which isn't trivial, and can
-result in conflicts.
+This shouldn't happen AFAICT (at least for the files, as GIT doesn't
+care much about directories). What GIT/StGIT version are you using?
+StGIT simply calls GIT to do the HEAD switch.
 
-So I know that myself and Junio both rely on the default behavior
-to tell us if a switch is even a good idea right now, or if we
-should stash the changes and *then* do the switch.  Because if you
-do the switch with -m and there are conflicts you are up a creek
-with no paddle... and there's a mighty big water fall coming up
-in 3 feet... 2 feet... oh crap!
+Could you run 'stg patches drivers/net/fec_mpc52xx/Kconfig' with the
+initial series pushed? It should show which patches touch this file.
+If it doesn't show any, maybe the files weren't added to any patch and
+hence the error.
 
-Making -m the only way to switch with dirty state is not a feature.
-Its a regression.
+Thanks.
 
 -- 
-Shawn.
+Catalin
