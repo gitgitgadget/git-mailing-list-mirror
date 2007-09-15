@@ -1,61 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 13/13] Remove the 'top' field
-Date: Sun, 16 Sep 2007 01:36:32 +0200
-Message-ID: <20070915233632.GC25507@diana.vm.bytemark.co.uk>
-References: <20070914222819.7001.55921.stgit@morpheus.local> <20070914223215.7001.80066.stgit@morpheus.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Conflicting "-n" short options for git-pull?
+Date: Sat, 15 Sep 2007 16:39:45 -0700
+Message-ID: <7vfy1f8pmm.fsf@gitster.siamese.dyndns.org>
+References: <200709152114.54985.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, catalin.marinas@gmail.com
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Sun Sep 16 01:36:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Sun Sep 16 01:39:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWhBs-0007pR-4L
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 01:36:44 +0200
+	id 1IWhEx-0008UV-IL
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 01:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306AbXIOXgj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Sep 2007 19:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753289AbXIOXgi
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 19:36:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4436 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753213AbXIOXgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 19:36:37 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IWhBg-0006iw-00; Sun, 16 Sep 2007 00:36:32 +0100
-Content-Disposition: inline
-In-Reply-To: <20070914223215.7001.80066.stgit@morpheus.local>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753313AbXIOXjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 19:39:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbXIOXjw
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 19:39:52 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35684 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753289AbXIOXjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 19:39:51 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2B591135B4A;
+	Sat, 15 Sep 2007 19:40:09 -0400 (EDT)
+In-Reply-To: <200709152114.54985.elendil@planet.nl> (Frans Pop's message of
+	"Sat, 15 Sep 2007 21:14:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58281>
 
-On 2007-09-15 00:32:15 +0200, David K=E5gedal wrote:
+Frans Pop <elendil@planet.nl> writes:
 
-> @@ -436,7 +422,13 @@ class Series(PatchSet):
->                  patch =3D patch.strip()
->                  os.rename(os.path.join(branch_dir, patch),
->                            os.path.join(patch_dir, patch))
-> -                Patch(patch, patch_dir, refs_base).update_top_ref()
-> +                topfield =3D os.path.join(patch_dir, patch, 'top')
-> +                if os.path.isfile(topfield):
-> +                    top =3D read_string(topfield, False)
-> +                else:
-> +                    top =3D None
-> +                if top:
-> +                    git.set_ref(refs_base + '/' + patch, top)
->              set_format_version(1)
-> =20
->          # Update 1 -> 2.
+> According to the man page for git-pull from git-core 1.5.3.1 (Debian 
+> package), two options are defined as having the short option "-n":
+>
+>      -n, --no-summary
+>          Do not show diffstat at the end of the merge.
+> [...]
+>      -n, --no-tags
+>          By default, git-fetch fetches tags that point at objects that are
+>          downloaded from the remote repository and stores them locally. This
+>          option disables this automatic tag following.
 
-And remove the top file, maybe? (Or I may be mistaken; I don't have a
-copy of the surrounding code handy.)
+The manpage option descriptions are shared between the
+commands.  Maybe we should drop mention of the shorthand form.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+When git-fetch is used -n means --no-tags because there is no
+other -n; when git-pull indirectly invokes git-fetch, you need
+to spell it --no-tags because --no-summary takes precedence.
