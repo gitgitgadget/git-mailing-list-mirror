@@ -1,95 +1,68 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: Track /etc directory using Git
-Date: Sat, 15 Sep 2007 17:42:25 +0200
-Organization: The Debian project
-Message-ID: <20070915154225.GA17704@piper.oerlikon.madduck.net>
-References: <38b2ab8a0709130511q7a506c5cvb0f8785a1d7ed7ad@mail.gmail.com> <20070913123137.GA31735@piper.oerlikon.madduck.net> <38b2ab8a0709140108v2a9c3569i93b39f351f1d4ec3@mail.gmail.com> <20070914091545.GA26432@piper.oerlikon.madduck.net> <e47324780709141031t79981b04q3a91984668ea723e@mail.gmail.com> <20070914212643.GA10970@amy.inscure.wireless.home.vilz.de> <20070915142932.GB27494@artemis.corp> <20070915152455.GA16223@piper.oerlikon.madduck.net> <20070915152724.GC27494@artemis.corp>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
+Date: Sat, 15 Sep 2007 17:49:35 +0200
+Message-ID: <20070915154935.GC4957@xp.machine.xx>
+References: <20070906210155.GA20938@soma> <20070906213556.GA21234@soma> <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com> <20070906235516.GC4538@xp.machine.xx> <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com> <20070907084352.GD4538@xp.machine.xx> <8c5c35580709070313l4b815ddbg70be8fb0aef4eefd@mail.gmail.com> <8c5c35580709150708k5acdeabdh17fc7ef30ee3eb79@mail.gmail.com> <20070915143743.GB4957@xp.machine.xx> <8c5c35580709150824l6eb4fa40l7ef77db03a48af4b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="azLHFNyN32YCQGCU"
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Nicolas Vilz <niv@iaglans.de>,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 17:42:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 17:50:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWZnD-0008BV-F9
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 17:42:47 +0200
+	id 1IWZuQ-0001o4-FU
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 17:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbXIOPmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 11:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbXIOPmn
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 11:42:43 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:45263 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774AbXIOPmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 11:42:42 -0400
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 0CF48BA3A9;
-	Sat, 15 Sep 2007 17:42:26 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 8BDCB9F161;
-	Sat, 15 Sep 2007 17:42:25 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 566E1B3106; Sat, 15 Sep 2007 17:42:25 +0200 (CEST)
+	id S1751331AbXIOPuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 11:50:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbXIOPuJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 11:50:09 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:36966 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751118AbXIOPuI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2007 11:50:08 -0400
+Received: (qmail 28467 invoked by uid 0); 15 Sep 2007 15:50:06 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 15 Sep 2007 15:50:06 -0000
 Content-Disposition: inline
-In-Reply-To: <20070915152724.GC27494@artemis.corp>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+In-Reply-To: <8c5c35580709150824l6eb4fa40l7ef77db03a48af4b@mail.gmail.com>
 User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4279/Sat Sep 15 14:53:34 2007 on clegg.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58257>
 
+On Sat, Sep 15, 2007 at 05:24:02PM +0200, Lars Hjemli wrote:
+> On 9/15/07, Peter Baumann <waste.manager@gmx.de> wrote:
+> > On Sat, Sep 15, 2007 at 04:08:31PM +0200, Lars Hjemli wrote:
+> > > On 9/7/07, Lars Hjemli <hjemli@gmail.com> wrote:
+> > > > On 9/7/07, Peter Baumann <waste.manager@gmx.de> wrote:
+> > > > >    lets reset 'trunk' to its state before the merge and
+> > > > >    'branch1' to the merge commit, before fixing the bug in 'branch1'.
+> > > > >
+> > > > >        a-b-c-d-e    trunk
+> > > > >           \      \
+> > > > >            \ -x-y m branch1
+> > > >
+> > > > Yeah, this would certainly not be handled correctly by dcommit using
+> > > > --first-parent (but it could be handled by (a correct implementation
+> > > > of) --upstream).
+> > >
+> > > Actually, I don't think there's any way to handle this correctly. The
+> > > current git-svn will do the right thing except in cases like the one
+> > > you described, and in these cases it can be _forced_ to do the right
+> > > thing by editing the grafts file, so I'll drop the whole --upstream
+> > > idea.
+> > >
+> >
+> > What do you mean by editing the graft file? Remove (the wrong) parent
+> > from the merge commit by a graft?
+> 
+> I imagined just changing the order of the parents.
+> 
 
---azLHFNyN32YCQGCU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Doh. I missed the obvious.
 
-also sprach Pierre Habouzit <madcoder@debian.org> [2007.09.15.1727 +0200]:
-> > I think it doesn't get bloated until you try to support the model of
-> > tracking different stuff for different files in the same repo. If
-> > you just track one set of data across all files in the repo, I don't
-> > think it'll cause too much bloat.
->=20
->   Yeah but if the stuff is opaque to git, you'll definitely end up with
-> security issues, which makes it also a no-go for /etc versionning.
-
-With "opaque to git" do you mean "implemented outside git"?
-
-I'd say if done properly inside git, the security issues could be
-prevented.
-
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"this sentence contradicts itself -- no actually it doesn't."
-                                                 -- douglas hofstadter
-
---azLHFNyN32YCQGCU
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG6/1hIgvIgzMMSnURAuQyAKCn8AXxIVgexM9xW8/ByIFJOk4RQgCgvfTP
-FzRWK0CxFF5qoH2t+bvBdAY=
-=u76K
------END PGP SIGNATURE-----
-
---azLHFNyN32YCQGCU--
+-Peter
