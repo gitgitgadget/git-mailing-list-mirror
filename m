@@ -1,68 +1,85 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
-Date: Sat, 15 Sep 2007 17:49:35 +0200
-Message-ID: <20070915154935.GC4957@xp.machine.xx>
-References: <20070906210155.GA20938@soma> <20070906213556.GA21234@soma> <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com> <20070906235516.GC4538@xp.machine.xx> <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com> <20070907084352.GD4538@xp.machine.xx> <8c5c35580709070313l4b815ddbg70be8fb0aef4eefd@mail.gmail.com> <8c5c35580709150708k5acdeabdh17fc7ef30ee3eb79@mail.gmail.com> <20070915143743.GB4957@xp.machine.xx> <8c5c35580709150824l6eb4fa40l7ef77db03a48af4b@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Track /etc directory using Git
+Date: Sat, 15 Sep 2007 18:32:09 +0200
+Message-ID: <20070915163209.GA18508@piper.oerlikon.madduck.net>
+References: <38b2ab8a0709130511q7a506c5cvb0f8785a1d7ed7ad@mail.gmail.com> <20070913122002.GO671@genesis.frugalware.org> <38b2ab8a0709140120k50f5b474oc8a841ea0a5fda50@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 15 17:50:14 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Kj7319i9nmIyA2yE"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 15 18:32:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWZuQ-0001o4-FU
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 17:50:14 +0200
+	id 1IWaZ9-0004DP-9Y
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 18:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbXIOPuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 11:50:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbXIOPuJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 11:50:09 -0400
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:36966 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751118AbXIOPuI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2007 11:50:08 -0400
-Received: (qmail 28467 invoked by uid 0); 15 Sep 2007 15:50:06 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 15 Sep 2007 15:50:06 -0000
+	id S1751462AbXIOQcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 12:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbXIOQcP
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 12:32:15 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:44016 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793AbXIOQcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 12:32:14 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id CA9F1BA3AE
+	for <git@vger.kernel.org>; Sat, 15 Sep 2007 18:32:10 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id D8A649F161
+	for <git@vger.kernel.org>; Sat, 15 Sep 2007 18:32:09 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 9186CB3106; Sat, 15 Sep 2007 18:32:09 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <8c5c35580709150824l6eb4fa40l7ef77db03a48af4b@mail.gmail.com>
+In-Reply-To: <38b2ab8a0709140120k50f5b474oc8a841ea0a5fda50@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
 User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4280/Sat Sep 15 17:03:14 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58259>
 
-On Sat, Sep 15, 2007 at 05:24:02PM +0200, Lars Hjemli wrote:
-> On 9/15/07, Peter Baumann <waste.manager@gmx.de> wrote:
-> > On Sat, Sep 15, 2007 at 04:08:31PM +0200, Lars Hjemli wrote:
-> > > On 9/7/07, Lars Hjemli <hjemli@gmail.com> wrote:
-> > > > On 9/7/07, Peter Baumann <waste.manager@gmx.de> wrote:
-> > > > >    lets reset 'trunk' to its state before the merge and
-> > > > >    'branch1' to the merge commit, before fixing the bug in 'branch1'.
-> > > > >
-> > > > >        a-b-c-d-e    trunk
-> > > > >           \      \
-> > > > >            \ -x-y m branch1
-> > > >
-> > > > Yeah, this would certainly not be handled correctly by dcommit using
-> > > > --first-parent (but it could be handled by (a correct implementation
-> > > > of) --upstream).
-> > >
-> > > Actually, I don't think there's any way to handle this correctly. The
-> > > current git-svn will do the right thing except in cases like the one
-> > > you described, and in these cases it can be _forced_ to do the right
-> > > thing by editing the grafts file, so I'll drop the whole --upstream
-> > > idea.
-> > >
-> >
-> > What do you mean by editing the graft file? Remove (the wrong) parent
-> > from the merge commit by a graft?
-> 
-> I imagined just changing the order of the parents.
-> 
 
-Doh. I missed the obvious.
+--Kj7319i9nmIyA2yE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Peter
+also sprach Francis Moreau <francis.moro@gmail.com> [2007.09.14.1020 +0200]:
+> The funny thing is that this tool is based on git/cogito but the
+> scm used to manage it is darc.
+
+They switched to git after running their heads too many times
+against darcs walls.
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+if god had meant for us to be naked,
+we would have been born that way.
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Kj7319i9nmIyA2yE
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG7AkJIgvIgzMMSnURAiKKAKDXr9obsFCVw/FbbssJgJnRxXQB/wCfZTlm
+c6iWP6Q+PZzHn1otYiKgqfM=
+=o0wP
+-----END PGP SIGNATURE-----
+
+--Kj7319i9nmIyA2yE--
