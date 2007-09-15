@@ -1,72 +1,102 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Data Integrity & un-Commited Branches
-Date: Sat, 15 Sep 2007 19:33:00 +0200
-Message-ID: <85tzpval6b.fsf@lola.goethe.zz>
-References: <2a8a071a0709140028o472bcr8c82bd88e37cc4e9@mail.gmail.com>
-	<2a8a071a0709140036l5db62c0fl5af01f75f35610ba@mail.gmail.com>
-	<7vk5qtd3le.fsf@gitster.siamese.dyndns.org>
-	<2a8a071a0709141740l144b60aevdfec2b6cdab8bb60@mail.gmail.com>
-	<20070915025129.GY3099@spearce.org>
-	<20070915073845.GB3782@efreet.light.src>
-	<20070915075144.GB3099@spearce.org>
-	<6bcc356f0709150611i97d31f0yb91016e53c4f5e9f@mail.gmail.com>
-	<85myvoav1g.fsf@lola.goethe.zz>
-	<6bcc356f0709151014j9606a3ape6b62770304560ba@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] revision walker: --cherry-pick is a limited operation
+Date: Sat, 15 Sep 2007 18:39:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709151838270.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, "Jan Hudec" <bulb@ucw.cz>,
-	"Brian Scott Dobrovodsky" <brian@pontech.com>, git@vger.kernel.org
-To: "Nikodemus Siivola" <nikodemus@random-state.net>
-X-From: git-owner@vger.kernel.org Sat Sep 15 19:33:37 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1006391016-1189877992=:28586"
+To: mbaehr@iaeste.at, gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 15 19:40:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWbWR-00083x-I5
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 19:33:35 +0200
+	id 1IWbdJ-00021i-WE
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 19:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752080AbXIORdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 13:33:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbXIORdH
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 13:33:07 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:39145 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755923AbXIORdE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2007 13:33:04 -0400
-Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 14EAB2CB0E2;
-	Sat, 15 Sep 2007 19:33:03 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 01B87279401;
-	Sat, 15 Sep 2007 19:33:03 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-048-000.pools.arcor-ip.net [84.61.48.0])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id B8FEF19B324;
-	Sat, 15 Sep 2007 19:33:02 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 59DB11C0024C; Sat, 15 Sep 2007 19:33:00 +0200 (CEST)
-In-Reply-To: <6bcc356f0709151014j9606a3ape6b62770304560ba@mail.gmail.com> (Nikodemus Siivola's message of "Sat\, 15 Sep 2007 20\:14\:51 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4281/Sat Sep 15 18:07:24 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1752898AbXIORki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 13:40:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbXIORki
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 13:40:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49564 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752709AbXIORkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 13:40:37 -0400
+Received: (qmail invoked by alias); 15 Sep 2007 17:40:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp057) with SMTP; 15 Sep 2007 19:40:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+iNMcdTtai7CueepncxYLJqwthR7soVQC+MOt3l4
+	dJNZxFYMDaTLMk
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58267>
 
-"Nikodemus Siivola" <nikodemus@random-state.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 9/15/07, David Kastrup <dak@gnu.org> wrote:
->
->> "Take a while"?  What's wrong with git-reflog?
->
-> Not needing it as a part of my regular workflow, and therefore
-> not thinking about it. *blush*
+--8323584-1006391016-1189877992=:28586
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-"Oh no, what have I done now?"
 
-I am afraid that working with git still exposes me to this question
-time and again.  And git-reflog usually provides the answer, as well
-as what I need to recover.
+We used to rely on the fact that cherry-pick would trigger the code path 
+to set limited = 1 in handle_commit(), when an uninteresting commit was 
+encountered.
 
+However, when cherry picking between two independent branches, i.e. when 
+there are no merge bases, and there is only linear development (which can 
+happen when you cvsimport a fork of a project), no uninteresting commit 
+will be encountered.
+
+So set limited = 1 when --cherry-pick was asked for.
+
+Noticed by Martin Bähr.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ revision.c                           |    1 +
+ t/t6007-rev-list-cherry-pick-file.sh |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index c193c3e..33d092c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1024,6 +1024,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 			}
+ 			if (!strcmp(arg, "--cherry-pick")) {
+ 				revs->cherry_pick = 1;
++				revs->limited = 1;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--objects")) {
+diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
+index 3faeae6..4b8611c 100755
+--- a/t/t6007-rev-list-cherry-pick-file.sh
++++ b/t/t6007-rev-list-cherry-pick-file.sh
+@@ -40,4 +40,18 @@ test_expect_success '--cherry-pick bar does not come up empty' '
+ 	! test -z "$(git rev-list --left-right --cherry-pick B...C -- bar)"
+ '
+ 
++test_expect_success '--cherry-pick with independent, but identical branches' '
++	git symbolic-ref HEAD refs/heads/independent &&
++	rm .git/index &&
++	echo Hallo > foo &&
++	git add foo &&
++	test_tick &&
++	git commit -m "independent" &&
++	echo Bello > foo &&
++	test_tick &&
++	git commit -m "independent, too" foo &&
++	test -z "$(git rev-list --left-right --cherry-pick \
++		HEAD...master -- foo)"
++'
++
+ test_done
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.1.949.g98c3
+
+--8323584-1006391016-1189877992=:28586--
