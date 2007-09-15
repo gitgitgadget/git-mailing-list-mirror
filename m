@@ -1,85 +1,89 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] git-svn: remove --first-parent, add --upstream
-Date: Sat, 15 Sep 2007 17:24:02 +0200
-Message-ID: <8c5c35580709150824l6eb4fa40l7ef77db03a48af4b@mail.gmail.com>
-References: <20070906075104.GA10192@hand.yhbt.net>
-	 <20070906210155.GA20938@soma> <20070906213556.GA21234@soma>
-	 <8c5c35580709061514n1de6f141v5e596074cfa9fb42@mail.gmail.com>
-	 <20070906235516.GC4538@xp.machine.xx>
-	 <8c5c35580709061723m7e01c9d4p1b1936dc1d590459@mail.gmail.com>
-	 <20070907084352.GD4538@xp.machine.xx>
-	 <8c5c35580709070313l4b815ddbg70be8fb0aef4eefd@mail.gmail.com>
-	 <8c5c35580709150708k5acdeabdh17fc7ef30ee3eb79@mail.gmail.com>
-	 <20070915143743.GB4957@xp.machine.xx>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: Track /etc directory using Git
+Date: Sat, 15 Sep 2007 17:24:55 +0200
+Organization: The Debian project
+Message-ID: <20070915152455.GA16223@piper.oerlikon.madduck.net>
+References: <38b2ab8a0709130511q7a506c5cvb0f8785a1d7ed7ad@mail.gmail.com> <20070913123137.GA31735@piper.oerlikon.madduck.net> <38b2ab8a0709140108v2a9c3569i93b39f351f1d4ec3@mail.gmail.com> <20070914091545.GA26432@piper.oerlikon.madduck.net> <e47324780709141031t79981b04q3a91984668ea723e@mail.gmail.com> <20070914212643.GA10970@amy.inscure.wireless.home.vilz.de> <20070915142932.GB27494@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Peter Baumann" <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Sep 15 17:24:14 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6TrnltStXW4iwmi0"
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Nicolas Vilz <niv@iaglans.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 15 17:25:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWZVD-0003f3-7e
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 17:24:11 +0200
+	id 1IWZWK-0003tf-0u
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 17:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbXIOPYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 11:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbXIOPYG
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 11:24:06 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:49298 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbXIOPYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 11:24:03 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so923617rvb
-        for <git@vger.kernel.org>; Sat, 15 Sep 2007 08:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=OjeCLVV4V63jYfGzB+B5Gtrf8qh+lv2c+JnylxNTelM=;
-        b=cDHRa/Irf/gxEANfHZBJ4xYfNhFwwOHYnbhgqPfAL0PmT6RZKZy+VsZ92WtkqJmdPhUCyFL/V4VLXUEBslQjguA9BA5lrEf+I76xOyD3xzCXv4zvVry6jlbAm+xcktDf+cWO0Qrwcj+5FEm6IRFloGvRnW9hnlHWnyAXpby0Z+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qxqSonDVL17u9wLaBY/CAVqwCAmn33aByQOArTUxVI8ZllW82txBTDYVJ7sNnobnWRPB8AGtGKadAA8KtMJ0I/umcbKqyNXxL4NTvq18tW406LeMdEhAcWRaMrQJ5+qQfebIsWglz+VDqYwpYAtLr4Kqn3gxPKb7MDF4oyq2kp8=
-Received: by 10.114.135.1 with SMTP id i1mr1141822wad.1189869842647;
-        Sat, 15 Sep 2007 08:24:02 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Sat, 15 Sep 2007 08:24:02 -0700 (PDT)
-In-Reply-To: <20070915143743.GB4957@xp.machine.xx>
+	id S1751118AbXIOPZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 11:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbXIOPZQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 11:25:16 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:55409 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbXIOPZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 11:25:15 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 2F733BA3A7;
+	Sat, 15 Sep 2007 17:24:56 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 949129F161;
+	Sat, 15 Sep 2007 17:24:55 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 5DB42B3106; Sat, 15 Sep 2007 17:24:55 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20070915142932.GB27494@artemis.corp>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4279/Sat Sep 15 14:53:34 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58255>
 
-On 9/15/07, Peter Baumann <waste.manager@gmx.de> wrote:
-> On Sat, Sep 15, 2007 at 04:08:31PM +0200, Lars Hjemli wrote:
-> > On 9/7/07, Lars Hjemli <hjemli@gmail.com> wrote:
-> > > On 9/7/07, Peter Baumann <waste.manager@gmx.de> wrote:
-> > > >    lets reset 'trunk' to its state before the merge and
-> > > >    'branch1' to the merge commit, before fixing the bug in 'branch1'.
-> > > >
-> > > >        a-b-c-d-e    trunk
-> > > >           \      \
-> > > >            \ -x-y m branch1
-> > >
-> > > Yeah, this would certainly not be handled correctly by dcommit using
-> > > --first-parent (but it could be handled by (a correct implementation
-> > > of) --upstream).
-> >
-> > Actually, I don't think there's any way to handle this correctly. The
-> > current git-svn will do the right thing except in cases like the one
-> > you described, and in these cases it can be _forced_ to do the right
-> > thing by editing the grafts file, so I'll drop the whole --upstream
-> > idea.
-> >
->
-> What do you mean by editing the graft file? Remove (the wrong) parent
-> from the merge commit by a graft?
 
-I imagined just changing the order of the parents.
+--6TrnltStXW4iwmi0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-larsh
+also sprach Pierre Habouzit <madcoder@debian.org> [2007.09.15.1629 +0200]:
+>   I fear that you'll end up with quite a big bloat of git, for a use
+> case that is fairly limited.
+
+I think it doesn't get bloated until you try to support the model of
+tracking different stuff for different files in the same repo. If
+you just track one set of data across all files in the repo, I don't
+think it'll cause too much bloat.
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+gentoo: the performance placebo.
+
+--6TrnltStXW4iwmi0
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG6/lHIgvIgzMMSnURAkENAKCTQXIOsOO+p+IyH2+1fhirF3oMtACg3NZe
+l32K7xGXDxYXGnnI1al9EGs=
+=nscR
+-----END PGP SIGNATURE-----
+
+--6TrnltStXW4iwmi0--
