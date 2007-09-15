@@ -1,68 +1,67 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: STG, problem with pop/push of alternative versions of a patch
-Date: Sat, 15 Sep 2007 23:44:03 +0100
-Message-ID: <b0943d9e0709151544p1f40508cqad2663416187e15@mail.gmail.com>
-References: <9e4733910709142049k6dcec6acuf851c21ed6704287@mail.gmail.com>
-	 <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
-	 <9e4733910709150725k73bec66bw753c4b3c01244cff@mail.gmail.com>
-	 <b0943d9e0709151031m70b9d03bw4068805e697e97f5@mail.gmail.com>
-	 <9e4733910709151042p7c681e25o386be2ca2719daa9@mail.gmail.com>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: git-svn error when cloning apache repo
+Date: Sat, 15 Sep 2007 19:08:33 -0400
+Message-ID: <20070915230833.GA8525@falcon.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 16 00:44:12 2007
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 16 01:18:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWgN0-000616-BM
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 00:44:10 +0200
+	id 1IWgtk-0003sm-7g
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 01:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbXIOWoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 18:44:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbXIOWoF
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 18:44:05 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:13553 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028AbXIOWoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 18:44:04 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so986150rvb
-        for <git@vger.kernel.org>; Sat, 15 Sep 2007 15:44:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Q+4fgtjS6j03uzSUp1PNxeY20jA99fdz+8Zk2gi9JJY=;
-        b=AKJnvTClS9SZhPdgKTZndnn6R85bOLEHdOy1eH2Ak8l7p7E0QROeY29m+nPhalh653pvmrZqEzFz39b9nVATcVagg6kA1sxjUfbRHlBYgDnnseXrh/m4LEI8WundLxUQ13742Q5LP4oddBqSP5rfupCyz/DAw5k9xOnAvfECxjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=a8feF/IOiUI0wZypELMLfr0dUvtyzYspoeZ+llKoPOLcvRPrjMzJJy3EksbswrVVmi/5+2zvufRjTcDMiIN8Cd4/veayLwBfeQ13Isqtn7HlaDwU+tksr8WsBik/D6JJGRy1O+rH3T5l67ZEooXLoJ5S1IQ1/62myK3+Ffhihvc=
-Received: by 10.141.195.18 with SMTP id x18mr420624rvp.1189896243391;
-        Sat, 15 Sep 2007 15:44:03 -0700 (PDT)
-Received: by 10.140.158.1 with HTTP; Sat, 15 Sep 2007 15:44:03 -0700 (PDT)
-In-Reply-To: <9e4733910709151042p7c681e25o386be2ca2719daa9@mail.gmail.com>
+	id S1752750AbXIOXRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 19:17:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbXIOXRz
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 19:17:55 -0400
+Received: from k2smtpout05-02.prod.mesa1.secureserver.net ([64.202.189.57]:59889
+	"HELO k2smtpout05-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752643AbXIOXRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 19:17:54 -0400
+Received: (qmail 5368 invoked from network); 15 Sep 2007 23:17:54 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout05-02.prod.mesa1.secureserver.net (64.202.189.57) with ESMTP; 15 Sep 2007 23:17:53 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 15332100A33
+	for <git@vger.kernel.org>; Sat, 15 Sep 2007 23:08:40 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H4OrDwbldT3T for <git@vger.kernel.org>;
+	Sat, 15 Sep 2007 19:08:34 -0400 (EDT)
+Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 352FD100A0B
+	for <git@vger.kernel.org>; Sat, 15 Sep 2007 19:08:34 -0400 (EDT)
+Received: by falcon (Postfix, from userid 1000)
+	id 250657B520; Sat, 15 Sep 2007 19:08:33 -0400 (EDT)
+Mail-Followup-To: git <git@vger.kernel.org>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58276>
 
-On 15/09/2007, Jon Smirl <jonsmirl@gmail.com> wrote:
-> I was not happy when my patch disappeared. Luckily I had exported it a
-> little while earlier.
+I'm trying to clone the Apache Ivy repo and got this error. What does
+the "Using higher level of URL" mean?  Also, of course, what does the
+error message mean?
 
-Otherwise, the patch log should be present and it shows each commit id
-of the patch.
+$ git svn clone https://svn.apache.org/repos/asf/incubator/ivy/core/ ivy-core -T trunk -b branches -t tags
+Initialized empty Git repository in .git/
+Using higher level of URL: https://svn.apache.org/repos/asf/incubator/ivy/core => https://svn.apache.org/repos/asf
+W: Ignoring error from SVN, path probably does not exist: (175002): RA layer request failed: REPORT request failed on '/repos/asf/!svn/bc/100': REPORT of '/repos/asf/!svn/bc/100': Could not read chunk size: Secure connection truncated (https://svn.apache.org)
+branch_from: /incubator/ivy/tags => /incubator/ivy/tags/1.4.1
+Found possible branch point: https://svn.apache.org/repos/asf/incubator/ivy/tags/1.4.1 => https://svn.apache.org/repos/asf/incubator/ivy/core/tags/1.4.1, 499505
+Initializing parent: tags/1.4.1@499505
+Found possible branch point: https://svn.apache.org/repos/asf/incubator/ivy/trunk => https://svn.apache.org/repos/asf/incubator/ivy/tags/1.4.1, 488008
+Initializing parent: tags/1.4.1@488008
+RA layer request failed: REPORT request failed on '/repos/asf/!svn/vcc/default': REPORT of '/repos/asf/!svn/vcc/default': 400 Bad Request (https://svn.apache.org) at /home/jingxue/bin/git-svn line 3155
 
-Since we are at this, I think we need a config option to automatically
-back up (export) the patches. Since StGIT detects whether the patch
-applied cleanly or it was modified (with a diff3 merge), it only needs
-to export in a few cases and not affect the performance (diff3 takes
-significantly longer anyway).
+Any thoughts are appreciated.
 
-Thanks for reporting this issue.
-
+Thanks.
 -- 
-Catalin
+Jing Xue
