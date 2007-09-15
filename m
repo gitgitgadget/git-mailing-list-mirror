@@ -1,90 +1,78 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: xmemdup patches
-Date: Mon, 17 Sep 2007 18:11:13 +0200
-Message-ID: <20070917161113.GB460@artemis.corp>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ZfOjI3PrQbgiZnxM";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 17 18:11:20 2007
+Subject: [PATCH 1/2] Add xmemdup that duplicates a block of memory, and NUL terminates it.
+Date: Sat, 15 Sep 2007 23:53:05 +0200
+Message-ID: <20070917161141.CC8AA344A49@madism.org>
+References: <20070917161113.GB460@artemis.corp>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 18:11:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXJBv-0004rt-Nf
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 18:11:20 +0200
+	id 1IXJCP-00052A-4t
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 18:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751970AbXIQQLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 12:11:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXIQQLP
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 12:11:15 -0400
-Received: from pan.madism.org ([88.191.52.104]:48338 "EHLO hermes.madism.org"
+	id S1751983AbXIQQLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 12:11:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbXIQQLo
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 12:11:44 -0400
+Received: from pan.madism.org ([88.191.52.104]:48341 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751220AbXIQQLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 12:11:15 -0400
+	id S1751969AbXIQQLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 12:11:43 -0400
 Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id BCBC26AB
-	for <git@vger.kernel.org>; Mon, 17 Sep 2007 18:11:13 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTP id 9D0096AB;
+	Mon, 17 Sep 2007 18:11:42 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id 0FD72344A49; Mon, 17 Sep 2007 18:11:13 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>
-Content-Disposition: inline
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id CC8AA344A49; Mon, 17 Sep 2007 18:11:41 +0200 (CEST)
+In-Reply-To: <20070917161113.GB460@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58456>
 
+Implement xstrndup using it.
 
---ZfOjI3PrQbgiZnxM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ git-compat-util.h |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
 
-  I noticed a lot of places in git's code use code like:
-
-  char *res;
-
-  ...
-
-  res =3D xmalloc(len + 1);
-  memcpy(res, src, len);
-  res[len] =3D '\0';
-  return res;
-
-  I've added a "xmemdup" function that duplicates a portion of memory,
-also adding an extra NUL after the end of the buffer. There was a
-xstrndup already, doing almost the same, except that it worked like
-strndup, meaning that it duplicates the memory areay up to len or the
-first embeded NUL. The extra scan costs, and is often not necessary (as
-we want to extract a token from a buffer we just validated e.g.).
-
-  There were 41 of those places.
-
-
-  I'm not a huge fan of "xmemdup" as I would not have supposed that a
-function called like that would add the extra NUL, so I'm 100% okay with
-someone coming up with any better name.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---ZfOjI3PrQbgiZnxM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG7qchvGr7W6HudhwRAkcoAJ9/D9QcatcPVOUb1c/FpXjcqWOoTACePhrC
-2eibtKhKBvAag4+IKvToNLU=
-=TbQw
------END PGP SIGNATURE-----
-
---ZfOjI3PrQbgiZnxM--
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 1bfbdeb..429b0a3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -211,19 +211,20 @@ static inline void *xmalloc(size_t size)
+ 	return ret;
+ }
+ 
+-static inline char *xstrndup(const char *str, size_t len)
++static inline void *xmemdup(const void *data, size_t len)
+ {
+-	char *p;
+-
+-	p = memchr(str, '\0', len);
+-	if (p)
+-		len = p - str;
+-	p = xmalloc(len + 1);
+-	memcpy(p, str, len);
++	char *p = xmalloc(len + 1);
++	memcpy(p, data, len);
+ 	p[len] = '\0';
+ 	return p;
+ }
+ 
++static inline char *xstrndup(const char *str, size_t len)
++{
++	char *p = memchr(str, '\0', len);
++	return xmemdup(str, p ? p - str : len);
++}
++
+ static inline void *xrealloc(void *ptr, size_t size)
+ {
+ 	void *ret = realloc(ptr, size);
+-- 
+1.5.3.1
