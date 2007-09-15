@@ -1,59 +1,75 @@
-From: "Brian Scott Dobrovodsky" <brian@pontech.com>
-Subject: Re: Data Integrity & un-Commited Branches
-Date: Fri, 14 Sep 2007 17:40:56 -0700
-Message-ID: <2a8a071a0709141740l144b60aevdfec2b6cdab8bb60@mail.gmail.com>
-References: <2a8a071a0709140028o472bcr8c82bd88e37cc4e9@mail.gmail.com>
-	 <2a8a071a0709140036l5db62c0fl5af01f75f35610ba@mail.gmail.com>
-	 <7vk5qtd3le.fsf@gitster.siamese.dyndns.org>
+From: Russ Brown <pickscrape@gmail.com>
+Subject: Mailing patch series'
+Date: Fri, 14 Sep 2007 20:06:35 -0500
+Message-ID: <46EB301B.8050602@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 02:41:03 2007
+X-From: git-owner@vger.kernel.org Sat Sep 15 03:06:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWLiY-0001Qm-6B
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 02:41:02 +0200
+	id 1IWM7V-0005Zf-76
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 03:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759616AbXIOAk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2007 20:40:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759530AbXIOAk6
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 20:40:58 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:1180 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758919AbXIOAk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2007 20:40:58 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so888013fkz
-        for <git@vger.kernel.org>; Fri, 14 Sep 2007 17:40:56 -0700 (PDT)
+	id S1759759AbXIOBGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2007 21:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759677AbXIOBGo
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Sep 2007 21:06:44 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:47489 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752520AbXIOBGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2007 21:06:44 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so944085wxd
+        for <git@vger.kernel.org>; Fri, 14 Sep 2007 18:06:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=ASduKfhR+gby7cvaHzVkkigkSN7eCqIaxWYsf5Qq46M=;
-        b=ePawQAUJ75rut3IKDHGUbEr/o6GsmJGI5Lj+jhYRAA13R7LP6XZzik7yRzKYe7/ibg4YTfRI/s+c4pEUA7FW0hyyx502W95wnR2FAhYCuZd2RXtKMyBVErjxUvv6g/+je6YcZYzyx2V0XDMf1qPYbhxrfk8aL/81xhxO3I1Z0D8=
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=0Iy4cepS0XreXtVomjbLvXv7umefFiMhzj0vfa0K3u0=;
+        b=lB1IPSds3QDkBV138V0tmoy1CRqCuntAB01uvl5sEHqfm2DbifRix5jDUjDKfpiCGlKrqMQwBKgM11EH/VGNoTcjOIGKE7dWHaXjK98tnQZXCShTdjr4n8ZYy6s08k0wlr2KarlNcoKJxRd2vsutk88bEjt5dZNWvGLhWmy6qoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=bnv2yGthM/4Bx8WWBSg2rufqrStB9a5XWvgZ3zUerwO9mQyDe3iW9GAlO6EgV+biLO7W6TmXrqVBJGfG0P/ak9oWJjRTx8BSUaBS8iyxynKZ53oyo0nQniPJLpmhrGA10Of3txbRG4Q/4rxI4KWg7m1OXCFY96yCi2By8GoOwDU=
-Received: by 10.82.107.15 with SMTP id f15mr627847buc.1189816856177;
-        Fri, 14 Sep 2007 17:40:56 -0700 (PDT)
-Received: by 10.82.161.6 with HTTP; Fri, 14 Sep 2007 17:40:56 -0700 (PDT)
-In-Reply-To: <7vk5qtd3le.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 96efbcd3df643cad
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=b2vf0M/0rL7q3Dlt+7RP+pzdEXqRcdyRpn+fATGjHgb1H1prWMY7O/ZBjPifLBuOuK4uBxy3vHzyvGRMNh81CHQvPoVXdclvz7xljoLYK5KdnTb6nUQD5rwb+btRsVw0K0T8Jw9n+EMFjv/EoMx3rPhpIqJ36NHMUWO5w8zawgQ=
+Received: by 10.90.96.7 with SMTP id t7mr587532agb.1189818402933;
+        Fri, 14 Sep 2007 18:06:42 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.170.8.213])
+        by mx.google.com with ESMTPS id 7sm1812904aga.2007.09.14.18.06.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 14 Sep 2007 18:06:42 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58215>
 
-It was a misunderstanding of Git's work flow. By switching from 'an
-un-committed demo' to a previously committed master: I was expecting
-Git to give me the content last commited to master while at the same
-time preserving(without having to commit) the changes made in demo.
-Intuitively, this is how I expected Git to function.
+Hi,
 
-Indeed, I read through the Crash Courses: 'Git for everyone' & 'Git
-for SVN users'.
+I've noticed the method of mailing series' of patches on this mailing
+list, and I'd like to know a little more about how it's done, as I'm
+considering how well it might work for us as a workflow and review process.
+
+Particularly, where does the series of patches come from? Is this a
+usage scenario for stacked git (something else I don't fully understand
+the rationale behind as yet)? I'm imagining the developer has a local
+branch to which he commits his changes, and then rebases resulting in
+his branches being at the end of the local branch. How are they then
+extracted and mailed out?
+
+My next question, is supposing that the patches are reviewed and changes
+suggested. How does the developer then go about amending, say the second
+patch and getting the subsequent ones rebased off that? I'm assuming
+there's a nice clever way of doing it that doesn't involve manually
+messing with individual patch files etc.
+
+Please excuse my ignorance: I'm still getting my head around this. Once
+I do that I'm usually away and happy, but it takes a while for that
+'click' moment to hit me sometimes :)
+
+Thanks.
+
 -- 
-Brian Scott Dobrovodsky
+
+Russ
