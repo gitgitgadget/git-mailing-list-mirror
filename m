@@ -1,57 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Conflicting "-n" short options for git-pull?
-Date: Sat, 15 Sep 2007 16:39:45 -0700
-Message-ID: <7vfy1f8pmm.fsf@gitster.siamese.dyndns.org>
-References: <200709152114.54985.elendil@planet.nl>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 00/13] Eliminate 'top' and 'bottom' files
+Date: Sun, 16 Sep 2007 01:42:44 +0200
+Message-ID: <20070915234244.GD25507@diana.vm.bytemark.co.uk>
+References: <20070914222819.7001.55921.stgit@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Frans Pop <elendil@planet.nl>
-X-From: git-owner@vger.kernel.org Sun Sep 16 01:39:57 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, catalin.marinas@gmail.com
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Sun Sep 16 01:42:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWhEx-0008UV-IL
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 01:39:55 +0200
+	id 1IWhHo-0000a7-Pq
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 01:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbXIOXjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 19:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbXIOXjw
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 19:39:52 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35684 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289AbXIOXjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 19:39:51 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2B591135B4A;
-	Sat, 15 Sep 2007 19:40:09 -0400 (EDT)
-In-Reply-To: <200709152114.54985.elendil@planet.nl> (Frans Pop's message of
-	"Sat, 15 Sep 2007 21:14:54 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753283AbXIOXmt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Sep 2007 19:42:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbXIOXmt
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 19:42:49 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4607 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084AbXIOXms (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 19:42:48 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IWhHg-0006kf-00; Sun, 16 Sep 2007 00:42:44 +0100
+Content-Disposition: inline
+In-Reply-To: <20070914222819.7001.55921.stgit@morpheus.local>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58282>
 
-Frans Pop <elendil@planet.nl> writes:
+On 2007-09-15 00:31:09 +0200, David K=E5gedal wrote:
 
-> According to the man page for git-pull from git-core 1.5.3.1 (Debian 
-> package), two options are defined as having the short option "-n":
->
->      -n, --no-summary
->          Do not show diffstat at the end of the merge.
-> [...]
->      -n, --no-tags
->          By default, git-fetch fetches tags that point at objects that are
->          downloaded from the remote repository and stores them locally. This
->          option disables this automatic tag following.
+> The following series removes the 'bottom' and 'top' files for each
+> patch, and instead uses the commit objects to keep track of the
+> patches.
 
-The manpage option descriptions are shared between the
-commands.  Maybe we should drop mention of the shorthand form.
+Wonderful! Does this ensure that there's a bijection between patches
+and commits at _all_ times, or am I missing something?
 
-When git-fetch is used -n means --no-tags because there is no
-other -n; when git-pull indirectly invokes git-fetch, you need
-to spell it --no-tags because --no-summary takes precedence.
+> The last two patches do the final cleansing. Obviously, this changes
+> the format, and the format version should be increased and and
+> update function be written. So it's not really ready to go in yet.
+
+It's a trivial format update, though: just delete those two files and
+increase the number from 2 to 3.
+
+Hmm, wait, no. Right. We also have to create commits for those patches
+that don't have exactly one commit object. Not that there'll be many
+of them, but better not make assumptions ...
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
