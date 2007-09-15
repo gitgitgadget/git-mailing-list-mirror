@@ -1,73 +1,85 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: metastore
-Date: Sat, 15 Sep 2007 16:16:14 +0200
-Message-ID: <85ejh0aua9.fsf@lola.goethe.zz>
-References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
-	<Pine.LNX.4.64.0709151507310.28586@racer.site>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: STG, problem with pop/push of alternative versions of a patch
+Date: Sat, 15 Sep 2007 10:25:39 -0400
+Message-ID: <9e4733910709150725k73bec66bw753c4b3c01244cff@mail.gmail.com>
+References: <9e4733910709142049k6dcec6acuf851c21ed6704287@mail.gmail.com>
+	 <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Nicolas Vilz <niv@iaglans.de>,
-	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Sep 15 16:16:29 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 16:25:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWYRc-00012P-Qo
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 16:16:25 +0200
+	id 1IWYaf-0003yc-KE
+	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 16:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbXIOOQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 10:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbXIOOQV
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 10:16:21 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:57864 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750717AbXIOOQU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2007 10:16:20 -0400
-Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id C6C312F2B7F;
-	Sat, 15 Sep 2007 16:16:19 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id B59A02DA967;
-	Sat, 15 Sep 2007 16:16:19 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-048-000.pools.arcor-ip.net [84.61.48.0])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 6C17522D163;
-	Sat, 15 Sep 2007 16:16:15 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 168DE1C0024C; Sat, 15 Sep 2007 16:16:14 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0709151507310.28586@racer.site> (Johannes Schindelin's message of "Sat\, 15 Sep 2007 15\:10\:01 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4279/Sat Sep 15 14:53:34 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S1751266AbXIOOZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 10:25:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbXIOOZl
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 10:25:41 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:48344 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750800AbXIOOZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 10:25:40 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1335611wah
+        for <git@vger.kernel.org>; Sat, 15 Sep 2007 07:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6/JTKqlzJSMmVMuCJzC0NFvSMNNCqsT0cRRug2b2uwk=;
+        b=T3sTFe9+VtErlsUHn4a6f6gOcIPlqgy994pIlV5AnSV3YNxzKjVwAROLF+0A49nI5t7f1m2uoqvxx2lIA7MVNowkXeEnNSNJZ1V6CLnpdcjHhnqj03hn9oRL5DmguG76M1fYgS/Cq5wsf8PoWvpM6CtPEiYVJREC+53rEbtSo6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WYHa4n7VxAYFfHM2V0dFE6M9HNvTNXWUa6mTnFVIhaJozh/Y97+AF837MiTWBeAmCqnfR8EdobfAdyTOxzvG5Qn/bjRWBLQK3YXrXdDFL6Qu5YxUUTFKZnApW2C8BO3+VRS5YsVnmdCsABcgZkEVKzn6eNqAr+4dYBLqiHyaC1o=
+Received: by 10.114.156.1 with SMTP id d1mr2903783wae.1189866339422;
+        Sat, 15 Sep 2007 07:25:39 -0700 (PDT)
+Received: by 10.114.195.5 with HTTP; Sat, 15 Sep 2007 07:25:39 -0700 (PDT)
+In-Reply-To: <b0943d9e0709150107o27571446v9bef8e31517777e1@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58249>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 9/15/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> On 15/09/2007, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > I trying to test two different versions of a patch that add files.
+> > These patches create a new directory and add several files. When I pop
+> > a version of the patch the directory and files and not getting
+> > removed. This causes an error when I push the alternative version of
+> > the patch.
+>
+> This shouldn't happen AFAICT (at least for the files, as GIT doesn't
+> care much about directories). What GIT/StGIT version are you using?
+> StGIT simply calls GIT to do the HEAD switch.
 
-> Hi,
->
-> On Sat, 15 Sep 2007, martin f krafft wrote:
->
->> The problem with metdata getting corrupted, which Nicolas reported,
->> may well have to do with the use of a single file.
->
-> Then the tool is corrupt.  Introducing a shadow hierarchy, as you
-> propose, is very inefficient.
->
->> Anyway, this *really* should go into git itself!
->
-> No.  Git is a source code management system.  Everything else that
-> you can do with it is a bonus, a second class citizen.  Should we
-> really try to support your use case, we will invariably affect the
-> primary use case.
+I have played around with some more. It is more complicated than the
+simple case I described.  Earlier I noticed a message about applying a
+patch that was empty that shouldn't have been. I checked and the patch
+is indeed empty. The empty patch probably caused the files to be left.
+I had been using hide/unide and reordering with on the patch and had
+encountered a couple errors in stg. I'll try and track down the
+sequence that caused the contents of the patch to be lost.
 
-That's what bad design is all about, after all.
+
+>
+> Could you run 'stg patches drivers/net/fec_mpc52xx/Kconfig' with the
+> initial series pushed? It should show which patches touch this file.
+> If it doesn't show any, maybe the files weren't added to any patch and
+> hence the error.
+>
+> Thanks.
+>
+> --
+> Catalin
+>
+
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Jon Smirl
+jonsmirl@gmail.com
