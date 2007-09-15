@@ -1,67 +1,67 @@
-From: Anupam Srivastava <srivasta@itt.uni-stuttgart.de>
-Subject: [PATCH] git-sh-setup.sh
-Date: Sat, 15 Sep 2007 22:38:04 +0200
-Message-ID: <46EC42AC.8060204@itt.uni-stuttgart.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: metastore (was: Track /etc directory using Git)
+Date: Sat, 15 Sep 2007 23:14:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709152310380.28586@racer.site>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151430040.5298@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030002080300070903070103"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 22:38:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>,
+	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Sep 16 00:15:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWePC-0001p5-Mp
-	for gcvg-git-2@gmane.org; Sat, 15 Sep 2007 22:38:19 +0200
+	id 1IWfvF-00085v-Jg
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 00:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbXIOUiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 16:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbXIOUiL
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 16:38:11 -0400
-Received: from ittli1.itt.uni-stuttgart.de ([129.69.36.101]:6701 "EHLO
-	ittli1.itt.uni-stuttgart.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751171AbXIOUiL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2007 16:38:11 -0400
-Received: from [129.69.36.169] (fornax.itt.uni-stuttgart.de [129.69.36.169])
-	by ittli1.itt.uni-stuttgart.de (Postfix) with ESMTP id 71EA3623F8
-	for <git@vger.kernel.org>; Sat, 15 Sep 2007 22:38:06 +0200 (CEST)
-User-Agent: Thunderbird 3.0a1pre (X11/2007091204)
+	id S1751896AbXIOWPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 18:15:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbXIOWPX
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 18:15:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36249 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751600AbXIOWPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 18:15:23 -0400
+Received: (qmail invoked by alias); 15 Sep 2007 22:15:19 -0000
+Received: from unknown (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp055) with SMTP; 16 Sep 2007 00:15:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/tsO9uAs3tjFC+l6eB54uy3yom94gCKoELe6HbUn
+	+eIPdDuz2qbGXT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0709151430040.5298@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58273>
 
-This is a multi-part message in MIME format.
---------------030002080300070903070103
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-English is not my native language but I think this patch corrects a 
-grammar mistake.
+On Sat, 15 Sep 2007, Daniel Barkalow wrote:
 
-I am not subscribed so please CC to me if replying.
+> Git doesn't have any way to represent owners or groups, and they would 
+> need to be represented carefully in order to make sense across multiple 
+> computers.
 
-Anupam
+[speaking mostly to the proponents of git-as-a-backup-tool]
 
---------------030002080300070903070103
-Content-Type: text/x-patch;
- name="doc.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="doc.patch"
+While at it, you should invent a fallback what to do when the owner is not 
+present on the system you check out on.  And a fallback when checking out 
+on a filesystem that does not support owners.
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 185c5c6..3c325fd 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -6,7 +6,7 @@
- # it dies.
- 
- # Having this variable in your environment would break scripts because
--# you would cause "cd" to be be taken to unexpected places.  If you
-+# you would cause "cd" to be taken to unexpected places.  If you
- # like CDPATH, define it for your interactive shell sessions without
- # exporting it.
- unset CDPATH
+And a fallback when a non-root user uses it.
 
---------------030002080300070903070103--
+Oh, and while you're at it (you said that it would be nice not to restrict 
+git in any way: "it is a content tracker") support the Windows style 
+"Group-or-User-or-something:[FRW]" ACLs.
+
+Looking forward to your patches,
+Dscho
