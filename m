@@ -1,129 +1,95 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] New strbuf APIs: splice and embed.
-Date: Sun, 16 Sep 2007 10:10:12 +0200
-Message-ID: <20070916081012.GA21810@artemis.corp>
-References: <20070915141210.GA27494@artemis.corp> <20070915141335.ECB4B4C152@madism.org> <7vwsur77g7.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 5/5] Remove unnecessary 'fetch' argument from transport_get API
+Date: Sun, 16 Sep 2007 04:11:29 -0400
+Message-ID: <20070916081129.GE3099@spearce.org>
+References: <20070915072314.GE20346@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Nq2Wo0NMKNjxTN9z";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 16 10:10:30 2007
+To: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Sep 16 10:11:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWpCv-0001F2-NR
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 10:10:22 +0200
+	id 1IWpEJ-0001eg-VG
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 10:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbXIPIKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 04:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbXIPIKR
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 04:10:17 -0400
-Received: from pan.madism.org ([88.191.52.104]:60349 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751407AbXIPIKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 04:10:14 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id BE5E578B;
-	Sun, 16 Sep 2007 10:10:13 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A97F3D6E5; Sun, 16 Sep 2007 10:10:12 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1751410AbXIPILo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 04:11:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbXIPILn
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 04:11:43 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46399 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbXIPILl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 04:11:41 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IWpE1-0000gY-Ei; Sun, 16 Sep 2007 04:11:29 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DCD8520FBAE; Sun, 16 Sep 2007 04:11:29 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vwsur77g7.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20070915072314.GE20346@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58303>
 
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> We don't actually need to know at the time of transport_get if the
+> caller wants to fetch, push, or do both on the returned object.
+> It is easier to just delay the initialization of the HTTP walker
+> until we know we will need it by providing a CURL specific fetch
+> function in the curl_transport that makes sure the walker instance
+> is initialized before use.
 
---Nq2Wo0NMKNjxTN9z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Daniel privately emailed me his rationale for why this fetch argument
+was here in the first place and I mostly agree with him, but will
+be working up a more clear API replacement in the near future.
+The "1/0","fetch/push" thing is not the clearest way that we could
+define the API.
 
-On Sun, Sep 16, 2007 at 12:57:44AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > * strbuf_splice replace a portion of the buffer with another.
-> > * strbuf_embed replace a strbuf buffer with the given one, that should =
-be
-> >   malloc'ed. Then it enforces strbuf's invariants. If alloc > len, then=
- this
-> >   function has negligible cost, else it will perform a realloc, possibly
-> >   with a cost.
->=20
-> "embed" does not sound quite right, does it?  It is a reverse
-> operation of strbuf_detach() as far as I can tell.
+Right now this patch is required to go along with my 1/5 bug fix,
+as without this patch we get the sequence:
 
-  Well I don't like either, and indeed strbuf_attach() seems better.
+	http_init()
+	http_init()
+	... use http ...
+	http_cleanup()
+	... try to use http again and barf ...
 
-> > -void strbuf_rtrim(struct strbuf *sb)
-> > -{
-> > +void strbuf_rtrim(struct strbuf *sb) {
-> >  	while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
-> >  		sb->len--;
-> >  	sb->buf[sb->len] =3D '\0';
->=20
-> This is changing the style in the wrong direction, isn't it?  We
-> start our functions like this:
->=20
-> 	type name(proto)
->         {
+This 5/5 makes the sequence be in proper order by delaying creation
+of the HTTP walker object (and thus one of the http_init() calls)
+to after the first http_cleanup(), so we get the nice neat order of:
 
-  Well that's what I usually do for my code, but I thought git was
-putting the opening brace on the same line, my bad.
+	http_init()
+	... use http ...
+	http_cleanup()
+	http_init()
+	... use http just fine ...
+	http_cleanup()
 
-> > +void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
-> > +				   const void *data, size_t dlen)
-> > +{
-> > +	if (pos + len < pos)
-> > +		die("you want to splice outside from the buffer");
->=20
-> That is a funny error message for an integer wrap-around check.
+I'll be honest here; I did not test 1/5 or 5/5 on their own.
+I only tested the combined result of them, and that creates a
+working HTTP fetch.  But I'm pretty sure that one of these patches
+alone will still cause SIGSEGV/SIGBUS errors during HTTP fetch due
+to either the bad cleanup (1/5 fixes) or the bad init ordering I'm
+talking about above (5/5 fixes).
 
-  right ;)
-
->=20
-> > +	if (pos > sb->len)
-> > +		pos =3D sb->len;
->
-> Shouldn't this be flagged as a programming error?
->=20
-> > +	if (pos + len > sb->len)
-> > +		len =3D sb->len - pos;
->=20
-> Likewise.
-
-  I just attached the same semantics that was chose for strbuf_insert
-when the insertion position is outside from the buffer. Though I can
-enforce those to stay inside the buffer and just die(). I don't care
-much I shall say. Maybe it hides some programmers being sloppy, hence is
-a bad semantics. I'll propose a patch where the check die()s instead of
-"fixing" the values.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---Nq2Wo0NMKNjxTN9z
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG7OTkvGr7W6HudhwRAi19AKCW08fy3Wp7MPeG9rF2YOTDBUCPbgCbBNMR
-V7yoSbdBfkdXzEsJgQZNR60=
-=pwM/
------END PGP SIGNATURE-----
-
---Nq2Wo0NMKNjxTN9z--
+Reinstating a replacement for the fetch parameter that I removed
+in this patch isn't critical for functionality, but will be
+necessary to do performance optimization in the form of reusing
+the connection between ref discovery and pack transfer in the
+native protocol.  Right now I'm focusing on making builtin-fetch
+stable and implementing prior behavior.  Once its solid enough to
+graduate to `next` we can start doing some of the optimization work.
+ 
+-- 
+Shawn.
