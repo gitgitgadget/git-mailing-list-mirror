@@ -1,9 +1,10 @@
 From: "J. Bruce Fields" <bfields@citi.umich.edu>
-Subject: [PATCH 2/3] git-apply: complain about >=8 consecutive spaces in initial indent
-Date: Sun, 16 Sep 2007 18:49:01 -0400
-Message-ID: <1189982942187-git-send-email-bfields@citi.umich.edu>
+Subject: [PATCH 3/3] git-apply: add tests for stripping of leading and trailing whitespace
+Date: Sun, 16 Sep 2007 18:49:02 -0400
+Message-ID: <11899829421064-git-send-email-bfields@citi.umich.edu>
 References: <11899829424040-git-send-email-bfields@citi.umich.edu>
  <11899829424173-git-send-email-bfields@citi.umich.edu>
+ <1189982942187-git-send-email-bfields@citi.umich.edu>
 Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>
 To: Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Mon Sep 17 00:49:30 2007
@@ -11,124 +12,177 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX2vf-0005CX-U8
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 00:49:28 +0200
+	id 1IX2vf-0005CX-BL
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 00:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545AbXIPWtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 18:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753555AbXIPWtN
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 18:49:13 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:48532 "EHLO fieldses.org"
+	id S1753459AbXIPWtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 18:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbXIPWtK
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 18:49:10 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:48528 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753479AbXIPWtF (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753074AbXIPWtF (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 16 Sep 2007 18:49:05 -0400
 Received: from bfields by fieldses.org with local (Exim 4.67)
 	(envelope-from <bfields@fieldses.org>)
-	id 1IX2vG-00038p-Je; Sun, 16 Sep 2007 18:49:02 -0400
+	id 1IX2vG-00038r-MB; Sun, 16 Sep 2007 18:49:02 -0400
 X-Mailer: git-send-email 1.5.3
-In-Reply-To: <11899829424173-git-send-email-bfields@citi.umich.edu>
+In-Reply-To: <1189982942187-git-send-email-bfields@citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58362>
 
-Complain if we find 8 spaces or more in a row as part of the initial
-whitespace on a line, and (with --whitespace=stripspace) replace such by
-a tab.
+Add tests to make sure we strip leading and trailing whitespace correctly.
 
-Well, linux's checkpatch.pl complains about this sort of thing.
+Of the four tests, the first two should always have passed, the third
+requires the "fix whitespace stripping" patch, and the fourth requires
+the "complain about >= 8 consecutive spaces in initial indent" patch.
+
+Note that this patch itself adds leading and trailing whitespace.
 
 Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 ---
- builtin-apply.c |   34 +++++++++++++++++++++++++++-------
- 1 files changed, 27 insertions(+), 7 deletions(-)
+ t/t4124-apply-whitespace-strip.sh |   43 +++++++++++++++++++++++++++++++++++++
+ t/t4124/1-after                   |    3 ++
+ t/t4124/1-before                  |    3 ++
+ t/t4124/2-after                   |    3 ++
+ t/t4124/2-before                  |    3 ++
+ t/t4124/3-after                   |    1 +
+ t/t4124/3-before                  |    1 +
+ t/t4124/4-after                   |    5 ++++
+ t/t4124/4-before                  |    5 ++++
+ 9 files changed, 67 insertions(+), 0 deletions(-)
+ create mode 100644 t/t4124-apply-whitespace-strip.sh
+ create mode 100644 t/t4124/1-after
+ create mode 100644 t/t4124/1-before
+ create mode 100644 t/t4124/2-after
+ create mode 100644 t/t4124/2-before
+ create mode 100644 t/t4124/3-after
+ create mode 100644 t/t4124/3-before
+ create mode 100644 t/t4124/4-after
+ create mode 100644 t/t4124/4-before
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 70359c1..fb63089 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -918,6 +918,7 @@ static void check_whitespace(const char *line, int len)
- {
- 	const char *err = "Adds trailing whitespace";
- 	int seen_space = 0;
-+	int consecutive_spaces = 0;
- 	int i;
- 
- 	/*
-@@ -944,6 +945,18 @@ static void check_whitespace(const char *line, int len)
- 		else
- 			break;
- 	}
+diff --git a/t/t4124-apply-whitespace-strip.sh b/t/t4124-apply-whitespace-strip.sh
+new file mode 100644
+index 0000000..3b5f58b
+--- /dev/null
++++ b/t/t4124-apply-whitespace-strip.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
 +
-+	err = "Initial indent contains eight or more spaces in a row";
-+	for (i = 1; i < len; i++) {
-+		if (line[i] == ' ')
-+			consecutive_spaces++;
-+		else if (line[i] == '\t')
-+			consecutive_spaces = 0;
-+		else
-+			break;
-+		if (consecutive_spaces == 8)
-+			goto error;
-+	}
- 	return;
- 
-  error:
-@@ -1607,9 +1620,10 @@ static int apply_line(char *output, const char *patch, int plen)
- 	int i;
- 	int add_nl_to_tail = 0;
- 	int fixed = 0;
--	int last_tab_in_indent = -1;
-+	int after_indent = -1;
- 	int last_space_in_indent = -1;
- 	int need_fix_leading_space = 0;
-+	int consecutive_spaces = 0;
- 	char *buf;
- 
- 	if ((new_whitespace != strip_whitespace) || !whitespace_error ||
-@@ -1630,23 +1644,27 @@ static int apply_line(char *output, const char *patch, int plen)
- 	for (i = 1; i < plen; i++) {
- 		char ch = patch[i];
- 		if (ch == '\t') {
--			last_tab_in_indent = i;
-+			consecutive_spaces = 0;
- 			if (0 <= last_space_in_indent)
- 				need_fix_leading_space = 1;
- 		}
--		else if (ch == ' ')
-+		else if (ch == ' ') {
-+			consecutive_spaces++;
- 			last_space_in_indent = i;
--		else
-+		} else
- 			break;
-+		if (consecutive_spaces == 8)
-+			need_fix_leading_space = 1;
- 	}
-+	after_indent=i;
- 
- 	buf = output;
- 	if (need_fix_leading_space) {
--		int consecutive_spaces = 0;
-+		consecutive_spaces = 0;
- 		/* between patch[1..last_tab_in_indent] strip the
- 		 * funny spaces, updating them to tab as needed.
- 		 */
--		for (i = 1; i < last_tab_in_indent; i++, plen--) {
-+		for (i = 1; i < after_indent; i++, plen--) {
- 			char ch = patch[i];
- 			if (ch != ' ') {
- 				consecutive_spaces = 0;
-@@ -1660,7 +1678,9 @@ static int apply_line(char *output, const char *patch, int plen)
- 			}
- 		}
- 		fixed = 1;
--		i = last_tab_in_indent;
-+		i = after_indent;
-+		i -= consecutive_spaces;
-+		plen += consecutive_spaces;
- 	}
- 	else
- 		i = 1;
++test_description='handle space and tab combinations with --whitespace=strip'
++
++. ./test-lib.sh
++
++# The directory t4124/ contains pairs of files "n-before" and "n-after",
++# identicaly except leading and trailing whitespace are stripped from
++# the latter.
++#
++# Check that we strip whitespace correctly by checking that the diff
++# between the two files, applied to the first (with --whitespace=strip)
++# produces the second.
++
++mkpatch () {
++	cp "$1" foo
++	git diff /dev/null foo >patch
++	rm foo
++}
++
++checkstrip () {
++	mkpatch "../t4124/$1-before"
++	git apply --whitespace=strip patch
++	git diff foo "../t4124/$1-after"
++}
++
++test_expect_success \
++	'trailing tabs and spaces' \
++	'checkstrip 1'
++
++test_expect_success \
++	'spaces before tabs' \
++	'checkstrip 2' 
++
++test_expect_success \
++	'8 or more non-consecutive initial spaces' \
++	'checkstrip 3'
++
++test_expect_success \
++	'8 or more consecutive initial spaces' \
++	'checkstrip 4'
++
++test_done
+diff --git a/t/t4124/1-after b/t/t4124/1-after
+new file mode 100644
+index 0000000..cf5dfce
+--- /dev/null
++++ b/t/t4124/1-after
+@@ -0,0 +1,3 @@
++trailing space
++trailing tab
++trailing spaces and tabs
+diff --git a/t/t4124/1-before b/t/t4124/1-before
+new file mode 100644
+index 0000000..1f2505b
+--- /dev/null
++++ b/t/t4124/1-before
+@@ -0,0 +1,3 @@
++trailing space 
++trailing tab 
++trailing spaces and tabs 	 	 	
+diff --git a/t/t4124/2-after b/t/t4124/2-after
+new file mode 100644
+index 0000000..f198144
+--- /dev/null
++++ b/t/t4124/2-after
+@@ -0,0 +1,3 @@
++	space tab
++	space space tab
++		tab space tab
+diff --git a/t/t4124/2-before b/t/t4124/2-before
+new file mode 100644
+index 0000000..8fc35bb
+--- /dev/null
++++ b/t/t4124/2-before
+@@ -0,0 +1,3 @@
++ 	space tab
++  	space space tab
++	 	tab space tab
+diff --git a/t/t4124/3-after b/t/t4124/3-after
+new file mode 100644
+index 0000000..4db0e80
+--- /dev/null
++++ b/t/t4124/3-after
+@@ -0,0 +1 @@
++		4 spaces, tab, 4 spaces, tab
+diff --git a/t/t4124/3-before b/t/t4124/3-before
+new file mode 100644
+index 0000000..f0e2b9c
+--- /dev/null
++++ b/t/t4124/3-before
+@@ -0,0 +1 @@
++    	    	4 spaces, tab, 4 spaces, tab
+diff --git a/t/t4124/4-after b/t/t4124/4-after
+new file mode 100644
+index 0000000..a9b8cf6
+--- /dev/null
++++ b/t/t4124/4-after
+@@ -0,0 +1,5 @@
++       7 spaces
++	8 spaces
++	 9 spaces
++		tab 8 spaces
++		 tab 9 spaces
+diff --git a/t/t4124/4-before b/t/t4124/4-before
+new file mode 100644
+index 0000000..a35b624
+--- /dev/null
++++ b/t/t4124/4-before
+@@ -0,0 +1,5 @@
++       7 spaces
++        8 spaces
++         9 spaces
++	        tab 8 spaces
++	         tab 9 spaces
 -- 
 1.5.3.1.42.gfe5df
