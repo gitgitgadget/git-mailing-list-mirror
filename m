@@ -1,72 +1,57 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH 05/12] user-manual: rewrite index discussion
-Date: Sat, 15 Sep 2007 22:20:30 -0400
-Message-ID: <20070916022030.GB5118@fieldses.org>
-References: <11893670592247-git-send-email-bfields@citi.umich.edu> <11893670593767-git-send-email-bfields@citi.umich.edu> <1189367059977-git-send-email-bfields@citi.umich.edu> <11893670591013-git-send-email-bfields@citi.umich.edu> <11893670592312-git-send-email-bfields@citi.umich.edu> <11893670593596-git-send-email-bfields@citi.umich.edu> <7vsl5nh4io.fsf@gitster.siamese.dyndns.org> <20070909222450.GC12147@fieldses.org> <7vbqcbuzgj.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: metastore (was: Track /etc directory using Git)
+Date: Sun, 16 Sep 2007 03:48:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709160348110.28586@racer.site>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <Pine.LNX.4.64.0709152310380.28586@racer.site>
+ <Pine.LNX.4.64.0709151737400.24221@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 16 04:20:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>,
+	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Sun Sep 16 04:49:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWjkc-0000Cp-5D
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 04:20:46 +0200
+	id 1IWkCj-0003yu-Hh
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 04:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbXIPCUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2007 22:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbXIPCUk
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 22:20:40 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:42321 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752474AbXIPCUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2007 22:20:39 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IWjkM-0002hh-Uk; Sat, 15 Sep 2007 22:20:30 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbqcbuzgj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1752750AbXIPCtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2007 22:49:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbXIPCtm
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Sep 2007 22:49:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41473 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752668AbXIPCtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2007 22:49:42 -0400
+Received: (qmail invoked by alias); 16 Sep 2007 02:49:40 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp015) with SMTP; 16 Sep 2007 04:49:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/svfUyc8/sobjCVkwpUJm9ZZBFGn2jIrsIHmvCHX
+	g6Xp36PbdRYjuP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0709151737400.24221@asgard.lang.hm>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58293>
 
-On Sun, Sep 09, 2007 at 05:38:20PM -0700, Junio C Hamano wrote:
-> At the end of first paragraph as a note would be good.  People
-> may scan from top to bottom (maybe "Find...") to look for
-> "cache" and find the sentence "this chapter is about index but
-> that is what you are looking for".  That feels a natural flow.
+Hi,
 
-OK, I've addressed all the comments I've gotten and pushed an updated
-version to:
+On Sat, 15 Sep 2007, david@lang.hm wrote:
 
-  git://linux-nfs.org/~bfields/git.git maint
+> so would changes like this be acceptable?
 
-Please pull if it looks ready.
+Would they be acceptable for you?  If so, go ahead.  If not, don't.
 
---b.
-
-J. Bruce Fields (12):
-      user-manual: adjust section levels in "git internals"
-      user-manual: move object format details to hacking-git chapter
-      user-manual: rename "git internals" to "git concepts"
-      user-manual: create new "low-level git operations" chapter
-      user-manual: rewrite index discussion
-      user-manual: reorder commit, blob, tree discussion
-      user-manual: rewrite object database discussion
-      user-manual: move packfile and dangling object discussion
-      user-manual: fix introduction to packfiles
-      user-manual: todo updates and cleanup
-      documentation: replace Discussion section by link to user-manual chapter
-      core-tutorial: minor cleanup
-
- Documentation/Makefile          |    2 +-
- Documentation/core-intro.txt    |  592 --------------------------
- Documentation/core-tutorial.txt |   32 +-
- Documentation/git.txt           |   57 +++-
- Documentation/user-manual.txt   |  868 ++++++++++++++++++++++-----------------
- 5 files changed, 548 insertions(+), 1003 deletions(-)
- delete mode 100644 Documentation/core-intro.txt
+Hth,
+Dscho
