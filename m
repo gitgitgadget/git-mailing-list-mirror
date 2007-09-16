@@ -1,56 +1,85 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: git-svn error when cloning apache repo
-Date: Sun, 16 Sep 2007 23:46:49 +1200
-Message-ID: <46ED17A9.2010603@vilain.net>
-References: <20070915230833.GA8525@falcon.digizenstudio.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: git-gui i18n status?
+Date: Sun, 16 Sep 2007 14:03:50 +0200
+Message-ID: <200709161403.50780.stimming@tuhh.de>
+References: <20070901042924.GE18160@spearce.org> <20070902022444.GK18160@spearce.org> <Pine.LNX.4.64.0709021320230.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: jingxue@digizenstudio.com
-X-From: git-owner@vger.kernel.org Sun Sep 16 13:52:21 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Sep 16 14:05:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWsfl-0002uo-2g
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 13:52:21 +0200
+	id 1IWssO-0006DH-KI
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 14:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbXIPLqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 07:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbXIPLqF
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 07:46:05 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52891 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589AbXIPLqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 07:46:04 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id F1F4520C2CA; Sun, 16 Sep 2007 23:45:57 +1200 (NZST)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 21E1221CFB4;
-	Sun, 16 Sep 2007 23:45:53 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <20070915230833.GA8525@falcon.digizenstudio.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1752564AbXIPMFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 08:05:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751698AbXIPMFU
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 08:05:20 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:48332 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751463AbXIPMFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 08:05:20 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l8GC4pNh012897
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 16 Sep 2007 14:04:51 +0200
+Received: from [192.168.2.102] (p54903878.dip0.t-ipconnect.de [84.144.56.120])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l8GC4m5K026239
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 16 Sep 2007 14:04:51 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0709021320230.28586@racer.site>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58314>
 
-Jing Xue wrote:
-> $ git svn clone https://svn.apache.org/repos/asf/incubator/ivy/core/ ivy-core -T trunk -b branches -t tags
-> Initialized empty Git repository in .git/
-> Using higher level of URL: https://svn.apache.org/repos/asf/incubator/ivy/core => https://svn.apache.org/repos/asf
->   
+Hi Shawn et al.,
 
-I'm fairly sure this is where it went wrong. Try editing .git/config and
-putting your original URL in the source URL, and re-try the fetch.
+Am Sonntag, 2. September 2007 14:20 schrieb Johannes Schindelin:
+> > > > Hmm.  I am not enough involved in i18n stuff to form a proper opinion
+> > > > here...  Do you suggest to move the initialisation earlier?
+> > >
+> > > Yea, I think that's what we are going to have to do here.  If we don't
+> > > setup the directory for the .msg files early enough than we cannot do
+> > > translations through [mc].  Unfortunately that means we have to also
+> > > break up the library initialization.
+> > >
+> > > I'll try to work up a patch that does this.
+> >
+> > This two patch series is based on my current master (gitgui-0.8.2).
+> > Its also now in my pu branch.
+>
+> Sound both good to me.  Christian?
 
-Sam.
+Thanks for including the i18n framework and existing translations into the 
+master of git-gui. I loosely watched the progress here, but due to other 
+commitments I cannot spend as much time on git-gui i18n as I initially 
+thought. I'd happily update and polish the German translation, though (will 
+send other email for that), but I probably can't follow any of the ongoing 
+i18n cleanup work.
+
+One question came up when seeing the i18n code really in git-gui.git: How are 
+translators supposed to submit new or updated translations? Is 
+git-gui-i18n.git of any use anymore? This doesn't seem so. Should updated 
+translations just be submitted by email to git@vger? In any case, the 
+instructions in po/README should probably be updated to explain the 
+recommended way of submitting translation updates. 
+
+Oh, and po/git-gui.pot should probably be updated to reflect the latest string 
+additions and changes. 
+
+Thanks a lot.
+
+Christian
