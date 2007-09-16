@@ -1,188 +1,68 @@
-From: "J. Bruce Fields" <bfields@citi.umich.edu>
-Subject: [PATCH 3/3] git-apply: add tests for stripping of leading and trailing whitespace
-Date: Sun, 16 Sep 2007 18:49:02 -0400
-Message-ID: <11899829421064-git-send-email-bfields@citi.umich.edu>
-References: <11899829424040-git-send-email-bfields@citi.umich.edu>
- <11899829424173-git-send-email-bfields@citi.umich.edu>
- <1189982942187-git-send-email-bfields@citi.umich.edu>
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Sep 17 00:49:30 2007
+From: Niki Guldbrand <niki.guldbrand@gmail.com>
+Subject: git-archive not working correctly ?
+Date: Mon, 17 Sep 2007 00:50:26 +0200
+Message-ID: <1189983026.22727.61.camel@niki2.guldbrand.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 17 00:50:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX2vf-0005CX-BL
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 00:49:27 +0200
+	id 1IX2x1-0005Xf-29
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 00:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753459AbXIPWtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 18:49:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbXIPWtK
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 18:49:10 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:48528 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753074AbXIPWtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 18:49:05 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IX2vG-00038r-MB; Sun, 16 Sep 2007 18:49:02 -0400
-X-Mailer: git-send-email 1.5.3
-In-Reply-To: <1189982942187-git-send-email-bfields@citi.umich.edu>
+	id S1753541AbXIPWur convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Sep 2007 18:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbXIPWur
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 18:50:47 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:54636 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751919AbXIPWuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 18:50:46 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so1394409fkz
+        for <git@vger.kernel.org>; Sun, 16 Sep 2007 15:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=Re0rtcA7bUVVk/lBH2MiXFZ41aoXhxaOYwI+C3a0G34=;
+        b=CDZQWPIclXHXALsezev50z+t7PZERK17wY5WOkh2o1CGyFNeaxgYT70KhUnFAWQE1dd4OcRvAYN/54ZSWErMDOQq1vVOY8zJl4SZp50DEmh3RkR2KCUmZ9NTu4+YcFLW6rnMlE8vlVPKhjcu8a2ov0UgBnWDHPAgpuiuPuWMsIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=hFbbTLXdHUWddIN+VQtTZliKdDf8topXoe6Bbpt0w3a/55Iromx9nP7z1hzhGFb23H+ZFjI9RN4TlkBJHlhUwoDFJZ/usLB6qsjTRMVYRhD3R3/scCXP7yX0U2ICMZ+9ZFTfrIoFnMkfewpx/J0MwdPROIecNcQEgVPV30j731A=
+Received: by 10.82.186.5 with SMTP id j5mr4574557buf.1189983044604;
+        Sun, 16 Sep 2007 15:50:44 -0700 (PDT)
+Received: from ?10.5.20.82? ( [85.83.22.156])
+        by mx.google.com with ESMTPS id i3sm2899973nfh.2007.09.16.15.50.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 16 Sep 2007 15:50:43 -0700 (PDT)
+X-Mailer: Evolution 2.10.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58363>
 
-Add tests to make sure we strip leading and trailing whitespace correctly.
+Hi.
 
-Of the four tests, the first two should always have passed, the third
-requires the "fix whitespace stripping" patch, and the fourth requires
-the "complain about >= 8 consecutive spaces in initial indent" patch.
+I have been playing with git-archive for and hour or so, but can't get
+it to pass "extra" options to tar as it's documented that it should, or
+am i reading the docs wrong ?
 
-Note that this patch itself adds leading and trailing whitespace.
+git-archive --format=3D<fmt> [--list] [--prefix=3D<prefix>/] [<extra>]
+[--remote=3D<repo>] <tree-ish> [path=85]
 
-Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
----
- t/t4124-apply-whitespace-strip.sh |   43 +++++++++++++++++++++++++++++++++++++
- t/t4124/1-after                   |    3 ++
- t/t4124/1-before                  |    3 ++
- t/t4124/2-after                   |    3 ++
- t/t4124/2-before                  |    3 ++
- t/t4124/3-after                   |    1 +
- t/t4124/3-before                  |    1 +
- t/t4124/4-after                   |    5 ++++
- t/t4124/4-before                  |    5 ++++
- 9 files changed, 67 insertions(+), 0 deletions(-)
- create mode 100644 t/t4124-apply-whitespace-strip.sh
- create mode 100644 t/t4124/1-after
- create mode 100644 t/t4124/1-before
- create mode 100644 t/t4124/2-after
- create mode 100644 t/t4124/2-before
- create mode 100644 t/t4124/3-after
- create mode 100644 t/t4124/3-before
- create mode 100644 t/t4124/4-after
- create mode 100644 t/t4124/4-before
+<extra>
+        This can be any options that the archiver backend understand.
+        See next section.
+       =20
+I want to git tar the "--exclude=3Doption", but i can't get it through.
+Is this option only valid for the zip format with the options "-0" and
+"-9" ?
 
-diff --git a/t/t4124-apply-whitespace-strip.sh b/t/t4124-apply-whitespace-strip.sh
-new file mode 100644
-index 0000000..3b5f58b
---- /dev/null
-+++ b/t/t4124-apply-whitespace-strip.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='handle space and tab combinations with --whitespace=strip'
-+
-+. ./test-lib.sh
-+
-+# The directory t4124/ contains pairs of files "n-before" and "n-after",
-+# identicaly except leading and trailing whitespace are stripped from
-+# the latter.
-+#
-+# Check that we strip whitespace correctly by checking that the diff
-+# between the two files, applied to the first (with --whitespace=strip)
-+# produces the second.
-+
-+mkpatch () {
-+	cp "$1" foo
-+	git diff /dev/null foo >patch
-+	rm foo
-+}
-+
-+checkstrip () {
-+	mkpatch "../t4124/$1-before"
-+	git apply --whitespace=strip patch
-+	git diff foo "../t4124/$1-after"
-+}
-+
-+test_expect_success \
-+	'trailing tabs and spaces' \
-+	'checkstrip 1'
-+
-+test_expect_success \
-+	'spaces before tabs' \
-+	'checkstrip 2' 
-+
-+test_expect_success \
-+	'8 or more non-consecutive initial spaces' \
-+	'checkstrip 3'
-+
-+test_expect_success \
-+	'8 or more consecutive initial spaces' \
-+	'checkstrip 4'
-+
-+test_done
-diff --git a/t/t4124/1-after b/t/t4124/1-after
-new file mode 100644
-index 0000000..cf5dfce
---- /dev/null
-+++ b/t/t4124/1-after
-@@ -0,0 +1,3 @@
-+trailing space
-+trailing tab
-+trailing spaces and tabs
-diff --git a/t/t4124/1-before b/t/t4124/1-before
-new file mode 100644
-index 0000000..1f2505b
---- /dev/null
-+++ b/t/t4124/1-before
-@@ -0,0 +1,3 @@
-+trailing space 
-+trailing tab 
-+trailing spaces and tabs 	 	 	
-diff --git a/t/t4124/2-after b/t/t4124/2-after
-new file mode 100644
-index 0000000..f198144
---- /dev/null
-+++ b/t/t4124/2-after
-@@ -0,0 +1,3 @@
-+	space tab
-+	space space tab
-+		tab space tab
-diff --git a/t/t4124/2-before b/t/t4124/2-before
-new file mode 100644
-index 0000000..8fc35bb
---- /dev/null
-+++ b/t/t4124/2-before
-@@ -0,0 +1,3 @@
-+ 	space tab
-+  	space space tab
-+	 	tab space tab
-diff --git a/t/t4124/3-after b/t/t4124/3-after
-new file mode 100644
-index 0000000..4db0e80
---- /dev/null
-+++ b/t/t4124/3-after
-@@ -0,0 +1 @@
-+		4 spaces, tab, 4 spaces, tab
-diff --git a/t/t4124/3-before b/t/t4124/3-before
-new file mode 100644
-index 0000000..f0e2b9c
---- /dev/null
-+++ b/t/t4124/3-before
-@@ -0,0 +1 @@
-+    	    	4 spaces, tab, 4 spaces, tab
-diff --git a/t/t4124/4-after b/t/t4124/4-after
-new file mode 100644
-index 0000000..a9b8cf6
---- /dev/null
-+++ b/t/t4124/4-after
-@@ -0,0 +1,5 @@
-+       7 spaces
-+	8 spaces
-+	 9 spaces
-+		tab 8 spaces
-+		 tab 9 spaces
-diff --git a/t/t4124/4-before b/t/t4124/4-before
-new file mode 100644
-index 0000000..a35b624
---- /dev/null
-+++ b/t/t4124/4-before
-@@ -0,0 +1,5 @@
-+       7 spaces
-+        8 spaces
-+         9 spaces
-+	        tab 8 spaces
-+	         tab 9 spaces
--- 
-1.5.3.1.42.gfe5df
+
+Kind regards
+
+Niki Guldbrand
