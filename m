@@ -1,75 +1,154 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 00/13] Eliminate 'top' and 'bottom' files
-Date: Sun, 16 Sep 2007 08:28:53 +0100
-Message-ID: <b0943d9e0709160028h41a67474g6b379a45c4c88432@mail.gmail.com>
-References: <20070914222819.7001.55921.stgit@morpheus.local>
-	 <20070915234244.GD25507@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: metastore
+Date: Sun, 16 Sep 2007 01:06:45 -0700
+Message-ID: <7vwsur590q.fsf@gitster.siamese.dyndns.org>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+	<Pine.LNX.4.64.0709151507310.28586@racer.site>
+	<20070915145437.GA12875@piper.oerlikon.madduck.net>
+	<Pine.LNX.4.64.0709151430040.5298@iabervon.org>
+	<Pine.LNX.4.64.0709152310380.28586@racer.site>
+	<Pine.LNX.4.64.0709151737400.24221@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Sep 16 09:28:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>,
+	David =?utf-8?Q?H=C3=A4rdeman?= <david@hardeman.nu>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Sun Sep 16 10:07:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWoYt-0008CU-71
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 09:28:59 +0200
+	id 1IWp9n-0000J5-GP
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 10:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbXIPH2z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Sep 2007 03:28:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbXIPH2y
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 03:28:54 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:14115 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751205AbXIPH2y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Sep 2007 03:28:54 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1028584rvb
-        for <git@vger.kernel.org>; Sun, 16 Sep 2007 00:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=sf5B2304Srify1JFs/uI1gz3ySB6Lsk3pxyu5ln6Kko=;
-        b=Ku4WsIxfeyXUGro1n9TSadr8J1BTaFzSV3XKgEhRfluOacEn7vbAIV+pu4rgo4IWxKhiP2XTb38/CfMeHYuh/7RKCshUT5eUsDvczTN/ubTar/JVqAvY/ayujInbyKLIjYlEEftnEheiu47QexWp/j2QRzYark5bffP+h8DX+i8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oFh934CuR28PYs7QOkbi8Blm0a9pY+UFMRd+UxQDSgRfZ4KloFE6iXG35awPBKrs9CqTVAWHSIoQ6+OewldE7EKRj9wrhOA/MxlP9aSWS9WLKjaMJgwJ1YqVgqd/X1lJubt/iR6jrct8em7h4zzCp4UTuqK2lEDRGlENlYLaJWU=
-Received: by 10.141.78.14 with SMTP id f14mr488382rvl.1189927733253;
-        Sun, 16 Sep 2007 00:28:53 -0700 (PDT)
-Received: by 10.140.158.1 with HTTP; Sun, 16 Sep 2007 00:28:53 -0700 (PDT)
-In-Reply-To: <20070915234244.GD25507@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1751495AbXIPIHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 04:07:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbXIPIHA
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 04:07:00 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:40043 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351AbXIPIG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 04:06:58 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A7DE135E40;
+	Sun, 16 Sep 2007 04:07:09 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709151737400.24221@asgard.lang.hm>
+	(david@lang.hm's message of "Sat, 15 Sep 2007 18:30:53 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58302>
 
-On 16/09/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-09-15 00:31:09 +0200, David K=E5gedal wrote:
+david@lang.hm writes:
+
+> git has pre-commit hooks that could be used to gather the permission
+> information and store it into a file.
 >
-> > The following series removes the 'bottom' and 'top' files for each
-> > patch, and instead uses the commit objects to keep track of the
-> > patches.
+> git now has the ability to define cusom merge strategies for specific
+> file types, which could be used to handle merges for the permission
+> files.
+> ...
+> There are some significant advantages of having the permission store
+> be just a text file.
 >
-> Wonderful! Does this ensure that there's a bijection between patches
-> and commits at _all_ times, or am I missing something?
+> 1. it doesn't require a special API to a new datastore in git
+>
+> 2. when working in an environment that doesn't allow for implementing the
+>    permissions (either a filesystem that can't store the permissions or
+>    when not working as root so that you can't set the ownership) the file
+>    can just be written and then edited with normal tools.
+>
+> 3. normal merge tools do a reasonable job of merging them.
+>
+> however to do this git would need to gain the ability to say 'this
+> filename is special, it must be checked out before any other file is
+> checked out' (either on a per-directory or per-repository level)
 
-We should get rid of top.old and bottom.old as well.
+I'd rather not implement it at such a low level where a true
+"checkout" happens.  For one thing, I am afraid that the special
+casing will affect the normal codepath too much and would make
+it into a maintenance nightmare.  But more importantly, if you
+are switching between commits (this includes switching branches,
+checking out a different commit to a detached HEAD, or
+pulling/merging updates your HEAD and updates your work tree),
+and the contents of a path does not change between the original
+commit and the switched-to commit, you may still have to
+"checkout" the external information for that path if your
+"permission information file" are different between these two
+commits.  To the underlying checkout aka "two tree merge"
+operation, that kind of change is invisible and it should stay
+so for performance reasons, not to harm the normal operation.
+IOW, I do not want the core level to even know about the
+existence of "permission information file", even the code that
+implements it is well isolated, ifdefed out or made conditional
+based on some config variable.
 
-My question - does this conflict with the DAG patches in any way? I
-intend to include the them at some point, once I get a chance to test
-the performance penalty with a big tree like the Linux kernel.
+I however think your idea to have extra "permission information
+file" is very interesting.  What would be more palatable, than
+mucking with the core level git, would be to have an external
+command that takes two tree object names that tells it what the
+old and new trees our work tree is switching between, and have
+that command to:
 
-> Hmm, wait, no. Right. We also have to create commits for those patche=
-s
-> that don't have exactly one commit object. Not that there'll be many
-> of them, but better not make assumptions ...
+ - inspect the diff-tree output to find out what were checked
+   out and might need their permission information tweaked;
 
-Is there any patch which consists of more than one commit? Maybe only
-uncommit could generate one but I think we put some tests in place.
+ - inspect the differences between the "permission information
+   file" in these trees to find out what were _not_ checked out,
+   but still need their permission information tweaked.
 
---=20
-Catalin
+ - tweak whatever external information you are interested in
+   expressing in your "permission information file" in the work
+   tree for the paths it discovered in the above two steps.
+   This step may involve actions specific to projects and call
+   hook scripts with <path, info from "permission information
+   file" for that path> tuples to carry out the actual tweaking.
+
+If we go that route, I am not deeply opposed to add code to
+Porcelains to call that new command after they "checkout" a new
+commit at the very end of their processing (namely, git-commit,
+git-merge, git-am, and git-rebase).
+
+Yes, I am very well aware that somebody already mentioned "there
+is a window between the true checkout and permission tweaking".
+If you need to touch the core level in order to close that
+window, I am not interested.
+
+> The ability to handle /etc comes up every few months. it's got to be
+> the most common unimplemented request git has seen.
+
+Asking a pony for many times does not necessary make it the
+right for you to have the pony.  The sane way to implement this
+is in your Makefile, as Randal and other people with more
+experience have already pointed out, and I happen to agree with
+them.
+
+My gut feeling is that the approach to use an external hook that
+reads your "permission information file" could be done with
+negligible impact to the normal operation of git.  I suspect
+that the "new command" I suggested above that would run after
+"checkout" actions would perform what people need to do in their
+Makefiles' "install" rules (if they have the work tree vs target
+tree distinction), or "post-checkout" rules (if they want to use
+the work tree in-place), and not having to write/reinvent a
+Makefile target for this in every project would hopefully make
+it easier to use.  That is the only reason I am writing this
+message on this topic.
+
+> so would changes like this be acceptable?
+
+That is a different question.  Is having an extention to help
+people who want to manage perm bits a worthy goal?  Perhaps, but
+it depends.  Is it worthy enough goal to complicate the really
+core parts of the code and add huge maintenance burden?
+Absolutely not.  Can it be made in such a way that it does not
+have much impact to the core parts?  We need to see how it is
+done.
