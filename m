@@ -1,67 +1,60 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: Blaming diffs
-Date: Sun, 16 Sep 2007 19:05:35 +0200
-Message-ID: <20070916170534.GU22865@planck.djpig.de>
-References: <20070916163829.GA6679@glandium.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Rewrite convert_to_{git,working_tree} to use strbuf's.
+Date: Sun, 16 Sep 2007 11:27:36 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0709161126020.16478@woody.linux-foundation.org>
+References: <20070916172134.GA26457@artemis.corp>
+ <20070916172233.90C9E1835B@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Sep 16 19:39:12 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Sep 16 20:28:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWy5P-0004CH-Nt
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 19:39:12 +0200
+	id 1IWyr7-00017E-IL
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 20:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbXIPRjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 13:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752137AbXIPRjG
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 13:39:06 -0400
-Received: from planck.djpig.de ([85.10.192.180]:1704 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751526AbXIPRjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 13:39:05 -0400
-X-Greylist: delayed 2004 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Sep 2007 13:39:05 EDT
+	id S1754390AbXIPS2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 14:28:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753428AbXIPS2H
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 14:28:07 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43144 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754391AbXIPS2F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Sep 2007 14:28:05 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8GIRQ54029085
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 16 Sep 2007 11:27:31 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id BE3CB88102;
-	Sun, 16 Sep 2007 19:05:39 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id V+TpwHXMHoNI; Sun, 16 Sep 2007 19:05:35 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 8005888105; Sun, 16 Sep 2007 19:05:35 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070916163829.GA6679@glandium.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8GIRPkD027308;
+	Sun, 16 Sep 2007 11:27:25 -0700
+In-Reply-To: <20070916172233.90C9E1835B@madism.org>
+X-Spam-Status: No, hits=-4.739 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.34__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58335>
 
-On Sun, Sep 16, 2007 at 06:38:29PM +0200, Mike Hommey wrote:
-> It seems to me there is no tool to "blame diffs", i.e. something to know
-> what commit(s) is(are) responsible for a set of changes.
-> 
-> For example, the following script tries to get the set of commits
-> involved in the changes between $A and $B. Note it only works for text
-> additions. 
-> 
-> git diff --unified=0 $A $B | awk 'BEGIN { FS="(^(--- a/|+++ b/)|^@@ -[0-9,]+ \\+| @@)" } /^---/ || ( /^+++ b\/(.*)/ && file=="" ) { file = $2 } /^@@/ {split($2, a, /,/); a[2] = a[2] ? a[2] + a[1] - 1 : a[1]; print "git blame -l -L " a[1] "," a[2], "'$A..$B'", file }' | sh | cut -f 1 -d " " | sort -u
-> 
-> Has anyone tried to work on something similar yet ?
-> 
-> If not, as git users, what kind of output would you expect from such a
-> tool, and where do you think this should lie (extension to git diff, or
-> separate tool) ?
 
-What do you use for $A and $B? commits? What is the difference between
-your script and "git log --pretty=format:%H $A..$B"
-then?
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+On Sun, 16 Sep 2007, Pierre Habouzit wrote:
+..
+>  7 files changed, 240 insertions(+), 317 deletions(-)
+
+I like how all these patches seem to be removing more lines than 
+they add.
+
+The end result looks good from a visual standpoint too.
+
+So:
+
+	Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+
+for the whole series.
+
+		Linus
