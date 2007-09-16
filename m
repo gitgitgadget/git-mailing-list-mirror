@@ -1,95 +1,96 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 5/5] Remove unnecessary 'fetch' argument from transport_get API
-Date: Sun, 16 Sep 2007 04:11:29 -0400
-Message-ID: <20070916081129.GE3099@spearce.org>
-References: <20070915072314.GE20346@spearce.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] builtin-apply: use strbuf's instead of buffer_desc's.
+Date: Sun, 16 Sep 2007 10:15:19 +0200
+Message-ID: <20070916081519.GB21810@artemis.corp>
+References: <20070915141210.GA27494@artemis.corp> <20070915141340.334CA4C152@madism.org> <7v4phv8m26.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; boundary="DKU6Jbt7q3WqK7+M";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Sep 16 10:11:52 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 16 10:15:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWpEJ-0001eg-VG
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 10:11:48 +0200
+	id 1IWpHr-0002pf-HO
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 10:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410AbXIPILo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 04:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbXIPILn
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 04:11:43 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46399 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358AbXIPILl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 04:11:41 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IWpE1-0000gY-Ei; Sun, 16 Sep 2007 04:11:29 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DCD8520FBAE; Sun, 16 Sep 2007 04:11:29 -0400 (EDT)
+	id S1751443AbXIPIPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 04:15:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbXIPIPW
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 04:15:22 -0400
+Received: from pan.madism.org ([88.191.52.104]:45792 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407AbXIPIPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 04:15:20 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 73B1E78B;
+	Sun, 16 Sep 2007 10:15:19 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 197F14CA97; Sun, 16 Sep 2007 10:15:19 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20070915072314.GE20346@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <7v4phv8m26.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> We don't actually need to know at the time of transport_get if the
-> caller wants to fetch, push, or do both on the returned object.
-> It is easier to just delay the initialization of the HTTP walker
-> until we know we will need it by providing a CURL specific fetch
-> function in the curl_transport that makes sure the walker instance
-> is initialized before use.
 
-Daniel privately emailed me his rationale for why this fetch argument
-was here in the first place and I mostly agree with him, but will
-be working up a more clear API replacement in the near future.
-The "1/0","fetch/push" thing is not the clearest way that we could
-define the API.
+--DKU6Jbt7q3WqK7+M
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Right now this patch is required to go along with my 1/5 bug fix,
-as without this patch we get the sequence:
+On Sun, Sep 16, 2007 at 12:56:49AM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >  1 files changed, 73 insertions(+), 130 deletions(-)
+>=20
+> Nice reduction.
+>=20
+> > -		}
+> > -		return got !=3D size;
+> > +
+> > +		nsize =3D buf->len;
+> > +		nbuf =3D convert_to_git(path, buf->buf, &nsize);
+> > +		if (nbuf)
+> > +			strbuf_embed(buf, nbuf, nsize, nsize);
+> > +		return 0;
+>=20
+>=20
+> I suspect that changing the convert_to_git() interface to work
+> on strbuf instead of (char*, size_t *) pair might make things
+> simpler and easier.
 
-	http_init()
-	http_init()
-	... use http ...
-	http_cleanup()
-	... try to use http again and barf ...
+  Well, yes, maybe it could use:
+  (const char *, char *, size_t, struct strbuf *out);
 
-This 5/5 makes the sequence be in proper order by delaying creation
-of the HTTP walker object (and thus one of the http_init() calls)
-to after the first http_cleanup(), so we get the nice neat order of:
+  But this function is used elsewhere where there isn't strbuf's (yet ?)
+so I wasn't willing to do such a big change. But as you seem to think it
+would help, I'll evaluate where it's going.
 
-	http_init()
-	... use http ...
-	http_cleanup()
-	http_init()
-	... use http just fine ...
-	http_cleanup()
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-I'll be honest here; I did not test 1/5 or 5/5 on their own.
-I only tested the combined result of them, and that creates a
-working HTTP fetch.  But I'm pretty sure that one of these patches
-alone will still cause SIGSEGV/SIGBUS errors during HTTP fetch due
-to either the bad cleanup (1/5 fixes) or the bad init ordering I'm
-talking about above (5/5 fixes).
+--DKU6Jbt7q3WqK7+M
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Reinstating a replacement for the fetch parameter that I removed
-in this patch isn't critical for functionality, but will be
-necessary to do performance optimization in the form of reusing
-the connection between ref discovery and pack transfer in the
-native protocol.  Right now I'm focusing on making builtin-fetch
-stable and implementing prior behavior.  Once its solid enough to
-graduate to `next` we can start doing some of the optimization work.
- 
--- 
-Shawn.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG7OYXvGr7W6HudhwRAiXzAJ49i59QD/sow5mFaTh19dOwM5QutgCfdR90
+V4xv7/f7v8DPjT60BRaufZk=
+=JWWt
+-----END PGP SIGNATURE-----
+
+--DKU6Jbt7q3WqK7+M--
