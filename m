@@ -1,83 +1,123 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: db/fetch-pack topic (was: What's cooking in git.git (topics))
-Date: Sun, 16 Sep 2007 00:03:21 -0400
-Message-ID: <20070916040321.GC3099@spearce.org>
-References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org> <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <20070914183028.GV3099@spearce.org> <20070915074759.GA3099@spearce.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: metastore (was: Track /etc directory using Git)
+Date: Sun, 16 Sep 2007 08:08:59 +0200
+Message-ID: <20070916060859.GB24124@piper.oerlikon.madduck.net>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0709151430040.5298@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SkvwRMAIpAhPCcCJ"
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>,
+	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 16 06:03:32 2007
+X-From: git-owner@vger.kernel.org Sun Sep 16 08:09:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWlM3-0005Ed-Nh
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 06:03:32 +0200
+	id 1IWnK0-00056k-BL
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 08:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765AbXIPED0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 00:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbXIPED0
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 00:03:26 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41554 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750747AbXIPEDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 00:03:25 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IWlLi-0005oG-VB
-	for git@vger.kernel.org; Sun, 16 Sep 2007 00:03:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DB98720FBAE; Sun, 16 Sep 2007 00:03:21 -0400 (EDT)
+	id S1751139AbXIPGJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 02:09:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbXIPGJY
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 02:09:24 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:56580 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121AbXIPGJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 02:09:23 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 04D30BA3DD;
+	Sun, 16 Sep 2007 08:09:00 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id C50DD9F161;
+	Sun, 16 Sep 2007 08:08:59 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 8EBBFB3106; Sun, 16 Sep 2007 08:08:59 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070915074759.GA3099@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <Pine.LNX.4.64.0709151430040.5298@iabervon.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4288/Sun Sep 16 07:22:35 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58296>
 
-> "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> > > * db/fetch-pack (Fri Sep 14 03:31:25 2007 -0400) 22 commits
-> > ...
-> > > This is Daniel's fetch-pack in C plus fixups from Shawn.
-> > > Unfortunately the fixups breaks t3200 ("*** glibc detected ***
-> > > fetch: free(): invalid pointer xxx ***"), which I haven't looked
-> > > into yet.
 
-With all of my fixups applied I took some performance measurements
-today from two of my larger day-job repositories:
+--SkvwRMAIpAhPCcCJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  A.git (356 branches):
-    Current Fetch             New "Builtin" Fetch
-    ------------------        --------------------
-    real    3m19.921s         real    0m9.969s
-    user    1m58.050s         user    0m1.449s
-    sys     2m4.747s          sys     0m4.465s
+also sprach Daniel Barkalow <barkalow@iabervon.org> [2007.09.15.2156 +0200]:
+> Configuration options only apply to the local aspects of the repository.=
+=20
+> That is, when you clone a repository, you don't get the configuration=20
+> options from it, in general. And changing configuration options on a=20
+> repository does not have any effect on the content it contains. So=20
+> configuration options aren't appropriate.
 
-  B.git (24 branches):
-    Current Fetch             New "Builtin" Fetch
-    ------------------        --------------------
-    real    0m21.250s         real    0m4.735s
-    user    0m10.981s         user    0m0.510s
-    sys     0m12.387s         sys     0m1.481s
+Sure they are. Just like git-commit figures out your email address=20
+if user.email is missing from git-config, or core.sharedRepository=20
+or core.umask deal with permissions only when you tell them to,=20
+you'd have to enable core.track or else git would just do what it
+does right now.
 
-All runs were a no-op fetch over SSH on the LAN.  The system running
-git-fetch was a Cygwin/Windows 2000 box and the server was Solaris 9.
-Just starting an SSH connection (`ssh solsrv echo hi`) takes me on
-average 1 second so a 4.7s no-op fetch on the smaller repository
-is very respectable.
+> Git doesn't have any way to represent owners or groups, and they
+> would need to be represented carefully in order to make sense
+> across multiple computers. If you're adding support for
+> metadata-as-content (for more than "is this a script?"), you
+> should be able to cover all of the common cases of extended stuff,
+> like AFS-style ACLs.
 
-3m19s vs. 9s?  I'll take 9s, thankyouverymuch.  Even if I have
-more testing and debugging to do.  Especially since the two repos
-above are only a sampling of the actual set I have to deal with on
-a daily basis.
+Ideally, git should be able to store an open-ended number of
+properties for each object, yes.
 
--- 
-Shawn.
+> And if you want to allow meaningful development with this
+> mechanism (as opposed to just archival of a sequence of states of
+> a live system), the normal case will be that the metadata beyond
+> +x is manipulated by ordinary users in some way other than
+> modifying their working directory.
+
+I have no idea what you mean with that.
+
+> So the normal case here will be like working on a filesystem that
+> doesn't support symlinks or an executable bit when this is
+> important content.
+
+=2E.. and yet, we support symlinks and executable files. But anyway,
+I really don't understand what you're trying to say.
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"ist gott eine erfindung des teufels?"
+                                                 - friedrich nietzsche
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--SkvwRMAIpAhPCcCJ
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG7Mh7IgvIgzMMSnURAqlJAKC+B3Io0Vr/aGN7cpTtbf0aYf3v2wCfTRh7
+wVIZ4S/4NValFwPmz2Gw6bo=
+=hN3b
+-----END PGP SIGNATURE-----
+
+--SkvwRMAIpAhPCcCJ--
