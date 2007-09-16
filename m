@@ -1,97 +1,77 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH] preserve executable bits in zip archives
-Date: Sun, 16 Sep 2007 21:07:38 +0400
-Message-ID: <20070916170738.GA30175@potapov>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Blaming diffs
+Date: Sun, 16 Sep 2007 19:16:35 +0200
+Organization: glandium.org
+Message-ID: <20070916171635.GA8868@glandium.org>
+References: <20070916163829.GA6679@glandium.org> <20070916170534.GU22865@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 16 19:15:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun Sep 16 19:17:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IWxij-0005qJ-5N
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 19:15:45 +0200
+	id 1IWxkY-0006Y9-RT
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 19:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbXIPRPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 13:15:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbXIPRPk
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 13:15:40 -0400
-Received: from smtp05.mtu.ru ([62.5.255.52]:56924 "EHLO smtp05.mtu.ru"
+	id S1752492AbXIPRRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 13:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbXIPRRf
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 13:17:35 -0400
+Received: from vawad.err.no ([85.19.200.177]:54487 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753055AbXIPRPj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 13:15:39 -0400
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Sep 2007 13:15:39 EDT
-Received: from potapov.private (ppp85-141-191-134.pppoe.mtu-net.ru [85.141.191.134])
-	by smtp05.mtu.ru (Postfix) with ESMTP id 487253BF818
-	for <git@vger.kernel.org>; Sun, 16 Sep 2007 21:07:39 +0400 (MSD)
-Received: from potapov.private (localhost [127.0.0.1])
-	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l8GH7dMT030280
-	for <git@vger.kernel.org>; Sun, 16 Sep 2007 21:07:39 +0400
-Received: (from dpotapov@localhost)
-	by potapov.private (8.13.8/8.13.8/Submit) id l8GH7cr8030279
-	for git@vger.kernel.org; Sun, 16 Sep 2007 21:07:38 +0400
-X-Authentication-Warning: potapov.private: dpotapov set sender to dpotapov@gmail.com using -f
+	id S1752472AbXIPRRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 13:17:34 -0400
+Received: from aputeaux-153-1-25-44.w82-124.abo.wanadoo.fr ([82.124.187.44] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IWxkN-0008Ae-3a; Sun, 16 Sep 2007 19:17:31 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IWxjX-0002Jk-EZ; Sun, 16 Sep 2007 19:16:35 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070916170534.GU22865@planck.djpig.de>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58325>
 
+On Sun, Sep 16, 2007 at 07:05:35PM +0200, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> On Sun, Sep 16, 2007 at 06:38:29PM +0200, Mike Hommey wrote:
+> > It seems to me there is no tool to "blame diffs", i.e. something to know
+> > what commit(s) is(are) responsible for a set of changes.
+> > 
+> > For example, the following script tries to get the set of commits
+> > involved in the changes between $A and $B. Note it only works for text
+> > additions. 
+> > 
+> > git diff --unified=0 $A $B | awk 'BEGIN { FS="(^(--- a/|+++ b/)|^@@ -[0-9,]+ \\+| @@)" } /^---/ || ( /^+++ b\/(.*)/ && file=="" ) { file = $2 } /^@@/ {split($2, a, /,/); a[2] = a[2] ? a[2] + a[1] - 1 : a[1]; print "git blame -l -L " a[1] "," a[2], "'$A..$B'", file }' | sh | cut -f 1 -d " " | sort -u
+> > 
+> > Has anyone tried to work on something similar yet ?
+> > 
+> > If not, as git users, what kind of output would you expect from such a
+> > tool, and where do you think this should lie (extension to git diff, or
+> > separate tool) ?
+> 
+> What do you use for $A and $B? commits? What is the difference between
+> your script and "git log --pretty=format:%H $A..$B"
+> then?
 
---EeQfGwPcQSOJBaQU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In my typical usecase, $A is upstream and $B is HEAD. What happens is
+that my work branch includes some changes that have been merged upstream
+and some others that are not yet, or won't because it's not appropriate.
+I obviously occasionally merge the upstream branch back, in which case
+my changes that were committed upstream don't appear in a git diff $A $B
+anymore.
 
-Correct `git-archive --format=3Dzip' command to preserve executable bits in
-zip archives.
+git log --pretty=format:%H $A..$B would give me the list of all commits
+that occurred on my branch, while my script only gives the commits
+containing changes that are still not applied upstream.
 
----
- archive-zip.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/archive-zip.c b/archive-zip.c
-index 444e162..5f9b7e6 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -191,7 +191,8 @@ static int write_zip_entry(const unsigned char *sha1,
- 		compressed_size =3D 0;
- 	} else if (S_ISREG(mode) || S_ISLNK(mode)) {
- 		method =3D 0;
--		attr2 =3D S_ISLNK(mode) ? ((mode | 0777) << 16) : 0;
-+		attr2 =3D S_ISLNK(mode) ? ((mode | 0777) << 16) :=20
-+			(mode & 0111) ? ((mode) << 16) : 0;
- 		if (S_ISREG(mode) && zlib_compression_level !=3D 0)
- 			method =3D 8;
- 		result =3D 0;
-@@ -229,7 +230,8 @@ static int write_zip_entry(const unsigned char *sha1,
- 	}
-=20
- 	copy_le32(dirent.magic, 0x02014b50);
--	copy_le16(dirent.creator_version, S_ISLNK(mode) ? 0x0317 : 0);
-+	copy_le16(dirent.creator_version,
-+		S_ISLNK(mode) || (S_ISREG(mode) && (mode & 0111)) ? 0x0317 : 0);
- 	copy_le16(dirent.version, 10);
- 	copy_le16(dirent.flags, 0);
- 	copy_le16(dirent.compression_method, method);
---=20
-1.5.3.1
-
-
---EeQfGwPcQSOJBaQU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFG7WLaDZYoqjZ/Cn0RArMiAJ4/Fd4eYlZwrsVpTXsP0ZL7BA3+OwCeJki/
-5UOOl1TXh3E/daZkVeuKLJY=
-=c+3L
------END PGP SIGNATURE-----
-
---EeQfGwPcQSOJBaQU--
+Mike
