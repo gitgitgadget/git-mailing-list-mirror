@@ -1,76 +1,81 @@
-From: david@lang.hm
-Subject: Re: metastore (was: Track /etc directory using Git)
-Date: Sun, 16 Sep 2007 13:36:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0709161321360.24221@asgard.lang.hm>
-References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <Pine.LNX.4.64.0709152310380.28586@racer.site>
- <Pine.LNX.4.64.0709151737400.24221@asgard.lang.hm> <20070916155913.GB30476@efreet.light.src>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] New strbuf APIs: splice and attach.
+Date: Sun, 16 Sep 2007 22:51:36 +0200
+Message-ID: <20070916205136.GE26457@artemis.corp>
+References: <20070916172134.GA26457@artemis.corp> <20070916172233.8B8AD1835F@madism.org> <874phugy6h.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Nicolas Vilz <niv@iaglans.de>,
-	David =?utf-8?B?SMOkcmRlbWFu?= <david@hardeman.nu>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Sep 16 22:36:45 2007
+Content-Type: multipart/signed; boundary="Ns7jmDPpOpCD+GE/";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sun Sep 16 22:51:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX0rE-0006Gx-LL
-	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 22:36:45 +0200
+	id 1IX15l-0001dR-Rn
+	for gcvg-git-2@gmane.org; Sun, 16 Sep 2007 22:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752354AbXIPUgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 16:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752123AbXIPUgl
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 16:36:41 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:48832
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277AbXIPUgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 16:36:40 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l8GKa8jT025528;
-	Sun, 16 Sep 2007 13:36:08 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20070916155913.GB30476@efreet.light.src>
+	id S1752310AbXIPUvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 16:51:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbXIPUvl
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 16:51:41 -0400
+Received: from pan.madism.org ([88.191.52.104]:39053 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750780AbXIPUvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 16:51:41 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 2ED0B20333;
+	Sun, 16 Sep 2007 22:51:36 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 40F983565; Sun, 16 Sep 2007 22:51:36 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <874phugy6h.fsf@mid.deneb.enyo.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58345>
 
-On Sun, 16 Sep 2007, Jan Hudec wrote:
 
-> On Sat, Sep 15, 2007 at 18:30:53 -0700, david@lang.hm wrote:
->> 1. whatever is trying to write the files with the correct permissions
->>    needs to be able to query the permission store before files are
->>    written. This needs to either be an API call into git to retreive the
->>    information for any file when it's written, or the ability to define a
->>    specific file to be checked out first so that it can be used for
->>    everything else.
->
-> You seem to be forgetting about the index. Git never writes trees directly to
-> filesystem, but always with intermediate step in the index. So the API
-> actually exists -- simply read from the index.
+--Ns7jmDPpOpCD+GE/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ok, this sounds promising.
+On Sun, Sep 16, 2007 at 08:20:06PM +0000, Florian Weimer wrote:
+> * Pierre Habouzit:
+>=20
+> > +void strbuf_grow(struct strbuf *sb, size_t extra)
+> > +{
+> >  	if (sb->len + extra + 1 <=3D sb->len)
+> >  		die("you want to use way too much memory");
+>=20
+> By the way, this comparison is always false because sb->len is signed.
 
-looking into one approach here.
+  News to me. Actually it's not, it's a size_t :)
 
-assume for the moment that at write time an external program gets called.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-this program reads the file contents from stdin and gets it's other 
-information from git as command line parameters
-   parameters I can think it would need are
-    path to write the file to
-    length of file
-    name of the permission file
-    id of the commit this is part of (possibly)
+--Ns7jmDPpOpCD+GE/
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-how does this program access the contents of the permission file in the 
-index?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-David Lang
+iD8DBQBG7ZdYvGr7W6HudhwRAo3FAKCO2s+2ilnXyO6l74FcDKPsFedGSACbBGJb
+axqfqkwFXq2+Lu3G1uKb9r0=
+=W3On
+-----END PGP SIGNATURE-----
+
+--Ns7jmDPpOpCD+GE/--
