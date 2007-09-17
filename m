@@ -1,56 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-archive not working correctly ?
-Date: Sun, 16 Sep 2007 17:35:19 -0700
-Message-ID: <7vtzpu3z94.fsf@gitster.siamese.dyndns.org>
-References: <1189983026.22727.61.camel@niki2.guldbrand.net>
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: [PATCH] apply --index-info: fall back to current index for
+	mode changes
+Date: Sun, 16 Sep 2007 20:46:23 -0400
+Message-ID: <20070917004623.GA3826@pe.Belkin>
+References: <Pine.LNX.4.64.0709170119270.28586@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Niki Guldbrand <niki.guldbrand@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 02:35:29 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 17 02:46:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX4aG-0008Qf-3Q
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 02:35:28 +0200
+	id 1IX4kv-0001pS-L6
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 02:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbXIQAfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 20:35:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbXIQAfY
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 20:35:24 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49732 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbXIQAfX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 20:35:23 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D3821365D0;
-	Sun, 16 Sep 2007 20:35:42 -0400 (EDT)
-In-Reply-To: <1189983026.22727.61.camel@niki2.guldbrand.net> (Niki Guldbrand's
-	message of "Mon, 17 Sep 2007 00:50:26 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751385AbXIQAqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 20:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbXIQAqZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 20:46:25 -0400
+Received: from eastrmmtao104.cox.net ([68.230.240.46]:48467 "EHLO
+	eastrmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346AbXIQAqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 20:46:24 -0400
+Received: from eastrmimpo02.cox.net ([68.1.16.120])
+          by eastrmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070917004624.LIPX21140.eastrmmtao104.cox.net@eastrmimpo02.cox.net>;
+          Sun, 16 Sep 2007 20:46:24 -0400
+Received: from localhost ([68.0.253.29])
+	by eastrmimpo02.cox.net with bizsmtp
+	id pCmP1X0030epFYL0000000; Sun, 16 Sep 2007 20:46:23 -0400
+Received: from chris by localhost with local (Exim 4.66)
+	(envelope-from <c.shoemaker@cox.net>)
+	id 1IX4kp-000101-Bo; Sun, 16 Sep 2007 20:46:23 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709170119270.28586@racer.site>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58371>
 
-Niki Guldbrand <niki.guldbrand@gmail.com> writes:
+On Mon, Sep 17, 2007 at 01:24:57AM +0100, Johannes Schindelin wrote:
+> 
+> "git diff" does not record index lines for pure mode changes (i.e. no
+> lines changed).  Therefore, apply --index-info would call out a bogus
+> error.
+> 
+> Instead, fall back to reading the info from the current index.
+> 
+> Incidentally, this fixes an error where git-rebase would not rebase a 
+> commit including a pure mode change, and changes requiring a threeway 
+> merge.
+> 
+> Noticed by Chris Shoemaker.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> git-archive --format=<fmt> [--list] [--prefix=<prefix>/] [<extra>]
-> [--remote=<repo>] <tree-ish> [path...]
->
-> <extra>
->         This can be any options that the archiver backend understand.
->         See next section.
->         
-> I want to git tar the "--exclude=option", but i can't get it through.
-> Is this option only valid for the zip format with the options "-0" and
-> "-9" ?
+Works for me.  Thanks.
 
-The "next section" that sentence refers to is "BACKEND EXTRA
-OPTIONS" section, which lists -0 and -9 for zip backend.  There
-is no --exclude=option in either tar or zip backend.
-
-Note that we do not use GNU tar or zip as archiver backends.
+Acked-by: Chris Shoemaker <chris.shoemaker@cox.net>
