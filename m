@@ -1,70 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Lars Hjemli" <hjemli@gmail.com>
 Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Mon, 17 Sep 2007 14:57:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709171454031.28586@racer.site>
-References: <11900314321506-git-send-email-hjemli@gmail.com>  <46EE7584.8010202@op5.se>
-  <8c5c35580709170616i49a8836hb60423c5eebf601d@mail.gmail.com> 
- <Pine.LNX.4.64.0709171422340.28586@racer.site>
- <8c5c35580709170638mc0c8279pa86d71bd79fd3084@mail.gmail.com>
+Date: Mon, 17 Sep 2007 16:12:56 +0200
+Message-ID: <8c5c35580709170712v2f5df7b1w8fa0377b69f24988@mail.gmail.com>
+References: <11900314321506-git-send-email-hjemli@gmail.com>
+	 <46EE7584.8010202@op5.se>
+	 <8c5c35580709170616i49a8836hb60423c5eebf601d@mail.gmail.com>
+	 <Pine.LNX.4.64.0709171422340.28586@racer.site>
+	 <8c5c35580709170638mc0c8279pa86d71bd79fd3084@mail.gmail.com>
+	 <Pine.LNX.4.64.0709171454031.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 15:58:23 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Eric Wong" <normalperson@yhbt.net>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 17 16:13:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXH7G-0003ZJ-Be
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 15:58:22 +0200
+	id 1IXHLx-0001ZR-Sf
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 16:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbXIQN6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 09:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652AbXIQN6S
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 09:58:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54518 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753105AbXIQN6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 09:58:17 -0400
-Received: (qmail invoked by alias); 17 Sep 2007 13:58:16 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp017) with SMTP; 17 Sep 2007 15:58:16 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ctdEsN2qcXcFJlqqdAab9b19H2jam5rwVaWgb9S
-	AXCZ8CdtReYqpc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8c5c35580709170638mc0c8279pa86d71bd79fd3084@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1754778AbXIQOM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 10:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754154AbXIQOM7
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 10:12:59 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:3379 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753194AbXIQOM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 10:12:58 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2045685wah
+        for <git@vger.kernel.org>; Mon, 17 Sep 2007 07:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=VxU1iDvYT9SOz0hsMdlFQcz2mqQyygyGj4K3uO2eN94=;
+        b=AN1Tl2iNKSV+sdRad4SFeCPXSxL4WumsZbzvgyRxBBasPAEytmjPGJrULNRL2bBSpXgbVZkMbNs0790tdbN11c224y/0DNNXVUAtL5EFwL5Om8p7O4Hda685050+/p1GBj9OkaOBoJbFVQOtLPicD8VqH6gNWBPKyiA8m3fdIf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a/eD+87icV4Borppq/7VHPodm6jzkKFJxuFpE5jOIVGG7xXjCApiyF84suLYXjNeghjd97g1gVyCG+xxFEoFMm+JE5leAAA7gj+xJ3N1RrI1dk1GLeSO9nuvems2zE2ebRwBiQH5ggN5wpRv8ogM3e4JwCIMptSARh0JZGordoY=
+Received: by 10.114.190.6 with SMTP id n6mr1927613waf.1190038376512;
+        Mon, 17 Sep 2007 07:12:56 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Mon, 17 Sep 2007 07:12:56 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0709171454031.28586@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58447>
 
-Hi,
+On 9/17/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> But then, I do not use svn branches here, and that might be the problem?
 
-On Mon, 17 Sep 2007, Lars Hjemli wrote:
+Probably. The case I'm trying to solve is:
+  -git-svn branch A is merged into git-svn branch B
+  -A is a fast-forward of B
 
-> [Cc'd Eric since he's the expert on git-svn]
-> 
-> On 9/17/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> > Ah, I think I know what you're trying to get at.  But "git svn fetch 
-> > && git rebase git-svn" might be a better approach than "git svn fetch 
-> > && git merge --no-ff git-svn", no?
-> 
-> If I'm understanding you right: no. After a rebase, the commits would be 
-> ignored by git-svn when looking for the subversion upstream branch 
-> (since the commit SHA1's would no longer match the ones stored in 
-> git-svn's rev_db), but the subversion history would look like 
-> 'cherry-picked n commits from merged branch' after dcommit.
+This might look unrealistic, but it happened to me today when I wanted
+to merge a feature-branch into a relase-branch. The release-branch had
+previously been merged into the feature-branch (to get a few
+bugfixes), but the release-branch had not changed since this merge. So
+when merging the feature-branch into the release-branch it just
+fast-forwarded, leaving me with an 'un-dcomittable' release-branch. I
+obviously could have done the merge in subversion (haha!), but doing
+it in git preserves the correct history.
 
-I feel that I am not really qualified here, since I am a strict git-svn 
-_user_, but AFAICT it worked here all the time, _especially_ with fast 
-forwards.  The trick is that all commits that were added after the branch 
-point do _not_ contain any svn lines.
+Btw: I have redone the merge with --no-ff, and dcommit then worked
+like a charm ;-)
 
-But then, I do not use svn branches here, and that might be the problem?
-
-Ciao,
-Dscho
+-- 
+larsh
