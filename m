@@ -1,70 +1,56 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-archive not working correctly ?
-Date: Mon, 17 Sep 2007 02:31:15 +0200
-Message-ID: <20070917003115.GV22865@planck.djpig.de>
+Date: Sun, 16 Sep 2007 17:35:19 -0700
+Message-ID: <7vtzpu3z94.fsf@gitster.siamese.dyndns.org>
 References: <1189983026.22727.61.camel@niki2.guldbrand.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Niki Guldbrand <niki.guldbrand@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 02:31:32 2007
+X-From: git-owner@vger.kernel.org Mon Sep 17 02:35:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX4WS-0007ne-9s
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 02:31:32 +0200
+	id 1IX4aG-0008Qf-3Q
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 02:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035AbXIQAbY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Sep 2007 20:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbXIQAbY
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 20:31:24 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4026 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751992AbXIQAbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 20:31:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id D7C3788102;
-	Mon, 17 Sep 2007 02:31:19 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bGzPF9J5R9tx; Mon, 17 Sep 2007 02:31:15 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id AEC3988105; Mon, 17 Sep 2007 02:31:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1189983026.22727.61.camel@niki2.guldbrand.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752220AbXIQAfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 20:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbXIQAfY
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 20:35:24 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:49732 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbXIQAfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 20:35:23 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D3821365D0;
+	Sun, 16 Sep 2007 20:35:42 -0400 (EDT)
+In-Reply-To: <1189983026.22727.61.camel@niki2.guldbrand.net> (Niki Guldbrand's
+	message of "Mon, 17 Sep 2007 00:50:26 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58370>
 
-On Mon, Sep 17, 2007 at 12:50:26AM +0200, Niki Guldbrand wrote:
-> I have been playing with git-archive for and hour or so, but can't ge=
-t
-> it to pass "extra" options to tar as it's documented that it should, =
-or
-> am i reading the docs wrong ?
->=20
-> git-archive --format=3D<fmt> [--list] [--prefix=3D<prefix>/] [<extra>=
-]
-> [--remote=3D<repo>] <tree-ish> [path=E2=80=A6]
->=20
+Niki Guldbrand <niki.guldbrand@gmail.com> writes:
+
+> git-archive --format=<fmt> [--list] [--prefix=<prefix>/] [<extra>]
+> [--remote=<repo>] <tree-ish> [path...]
+>
 > <extra>
 >         This can be any options that the archiver backend understand.
 >         See next section.
->        =20
-> I want to git tar the "--exclude=3Doption", but i can't get it throug=
-h.
-> Is this option only valid for the zip format with the options "-0" an=
-d
+>         
+> I want to git tar the "--exclude=option", but i can't get it through.
+> Is this option only valid for the zip format with the options "-0" and
 > "-9" ?
 
-Yes. The tar backend currently doesn't support any extra options.
+The "next section" that sentence refers to is "BACKEND EXTRA
+OPTIONS" section, which lists -0 and -9 for zip backend.  There
+is no --exclude=option in either tar or zip backend.
 
-Gruesse,
---=20
-=46rank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Note that we do not use GNU tar or zip as archiver backends.
