@@ -1,181 +1,81 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 3/3] fast-import optimization:
-Date: Mon, 17 Sep 2007 14:00:38 +0200
-Message-ID: <20070917125259.2DE83344A4A@madism.org>
-References: <20070917125211.GA18176@artemis.corp>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 14:53:25 2007
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: metastore
+Date: Mon, 17 Sep 2007 15:04:18 +0200
+Message-ID: <38b2ab8a0709170604u8f4474fyd990f61fb250bc93@mail.gmail.com>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+	 <Pine.LNX.4.64.0709151507310.28586@racer.site>
+	 <20070915145437.GA12875@piper.oerlikon.madduck.net>
+	 <Pine.LNX.4.63.0709151819200.19941@alpha.polcom.net>
+	 <86veaby050.fsf@blue.stonehenge.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Grzegorz Kulewski" <kangur@polcom.net>,
+	"martin f krafft" <madduck@madduck.net>, git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 15:04:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXG6L-0004ic-0f
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 14:53:21 +0200
+	id 1IXGH8-0000qu-IF
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 15:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753459AbXIQMxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 08:53:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbXIQMxG
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 08:53:06 -0400
-Received: from pan.madism.org ([88.191.52.104]:43272 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752960AbXIQMxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 08:53:00 -0400
-Received: from madism.org (beacon-free2.intersec.com [82.236.12.71])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 76A462053F;
-	Mon, 17 Sep 2007 14:52:59 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 2DE83344A4A; Mon, 17 Sep 2007 14:52:59 +0200 (CEST)
-In-Reply-To: <20070917125211.GA18176@artemis.corp>
+	id S1753885AbXIQNEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 09:04:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753876AbXIQNEU
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 09:04:20 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:34104 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754862AbXIQNET (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 09:04:19 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1296844rvb
+        for <git@vger.kernel.org>; Mon, 17 Sep 2007 06:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=1ukNuXEcakqUM/hKPCqtFrhS7TvfZk6W4ud6wHHKgHw=;
+        b=TLLSXg5Mc/ZGdMUVLQ3orvApnem7BGjz++d2LSWhjNdR87tyAi65SLWRN3/JjshBikNFLzvL6vSvGIySo5/5gTzSHxyxjwpVRl5Si8YJm/EtDZY0Ds3uQmZllFYD07PcsinJK6bgOxZ8+WZTSqcinKr3gfy9+vlWc2kxnO52TZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Cyi7Xa2OHVXscW5js4mvUj+CyOZmnyLARAKDag95HjoNCjW/BXI/6kkza5t7DGMEwKh2+lhbXEW3s/0LVXrWrDRhxHjjHSPAv6aVhuRDXnBCtQWpuKJDKzJ9JZPI+5tB1tGQ6/WC2MZG6s3lxZVrcedBL4a98CcFtzevyBxnGRo=
+Received: by 10.114.197.1 with SMTP id u1mr4769243waf.1190034258241;
+        Mon, 17 Sep 2007 06:04:18 -0700 (PDT)
+Received: by 10.115.47.5 with HTTP; Mon, 17 Sep 2007 06:04:18 -0700 (PDT)
+In-Reply-To: <86veaby050.fsf@blue.stonehenge.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58437>
 
-Now that cmd_data acts on a strbuf, make last_object stashed buffer be a
-strbuf as well. On new stash, don't free the last stashed buffer, rather
-swap it with the one you will stash, this way, callers of store_object can
-act on static strbufs, and at some point, fast-import won't allocate new
-memory for objects buffers.
----
- fast-import.c |   52 ++++++++++++++++++++--------------------------------
- 1 files changed, 20 insertions(+), 32 deletions(-)
+Hello,
 
-diff --git a/fast-import.c b/fast-import.c
-index e456eab..e2a4834 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -182,11 +182,10 @@ struct mark_set
- 
- struct last_object
- {
--	void *data;
--	unsigned long len;
-+	struct strbuf data;
- 	uint32_t offset;
- 	unsigned int depth;
--	unsigned no_free:1;
-+	unsigned no_swap : 1;
- };
- 
- struct mem_pool
-@@ -310,7 +309,7 @@ static struct mark_set *marks;
- static const char* mark_file;
- 
- /* Our last blob */
--static struct last_object last_blob;
-+static struct last_object last_blob = { STRBUF_INIT, 0, 0, 0 };
- 
- /* Tree management */
- static unsigned int tree_entry_alloc = 1000;
-@@ -950,9 +949,7 @@ static void end_packfile(void)
- 	free(old_p);
- 
- 	/* We can't carry a delta across packfiles. */
--	free(last_blob.data);
--	last_blob.data = NULL;
--	last_blob.len = 0;
-+	strbuf_release(&last_blob.data);
- 	last_blob.offset = 0;
- 	last_blob.depth = 0;
- }
-@@ -1024,8 +1021,8 @@ static int store_object(
- 		return 1;
- 	}
- 
--	if (last && last->data && last->depth < max_depth) {
--		delta = diff_delta(last->data, last->len,
-+	if (last && last->data.buf && last->depth < max_depth) {
-+		delta = diff_delta(last->data.buf, last->data.len,
- 			dat->buf, dat->len,
- 			&deltalen, 0);
- 		if (delta && deltalen >= dat->len) {
-@@ -1111,11 +1108,14 @@ static int store_object(
- 	free(out);
- 	free(delta);
- 	if (last) {
--		if (!last->no_free)
--			free(last->data);
-+		if (last->no_swap) {
-+			last->data = *dat;
-+		} else {
-+			struct strbuf tmp = *dat;
-+			*dat = last->data;
-+			last->data = tmp;
-+		}
- 		last->offset = e->offset;
--		last->data = dat->buf;
--		last->len = dat->len;
- 	}
- 	return 0;
- }
-@@ -1242,7 +1242,7 @@ static void store_tree(struct tree_entry *root)
- {
- 	struct tree_content *t = root->tree;
- 	unsigned int i, j, del;
--	struct last_object lo;
-+	struct last_object lo = { STRBUF_INIT, 0, 0, /* no_swap */ 1 };
- 	struct object_entry *le;
- 
- 	if (!is_null_sha1(root->versions[1].sha1))
-@@ -1254,19 +1254,11 @@ static void store_tree(struct tree_entry *root)
- 	}
- 
- 	le = find_object(root->versions[0].sha1);
--	if (!S_ISDIR(root->versions[0].mode)
--		|| !le
--		|| le->pack_id != pack_id) {
--		lo.data = NULL;
--		lo.depth = 0;
--		lo.no_free = 0;
--	} else {
-+	if (S_ISDIR(root->versions[0].mode) && le && le->pack_id == pack_id) {
- 		mktree(t, 0, &old_tree);
--		lo.len  = old_tree.len;
--		lo.data = old_tree.buf;
-+		lo.data = old_tree;
- 		lo.offset = le->offset;
- 		lo.depth = t->delta_depth;
--		lo.no_free = 1;
- 	}
- 
- 	mktree(t, 1, &new_tree);
-@@ -1714,14 +1706,12 @@ static char *parse_ident(const char *buf)
- 
- static void cmd_new_blob(void)
- {
--	struct strbuf buf;
-+	static struct strbuf buf = STRBUF_INIT;
- 
- 	read_next_command();
- 	cmd_mark();
--	strbuf_init(&buf, 0);
- 	cmd_data(&buf);
--	if (store_object(OBJ_BLOB, &buf, &last_blob, NULL, next_mark))
--		strbuf_release(&buf);
-+	store_object(OBJ_BLOB, &buf, &last_blob, NULL, next_mark);
- }
- 
- static void unload_one_branch(void)
-@@ -1817,15 +1807,13 @@ static void file_change_m(struct branch *b)
- 	}
- 
- 	if (inline_data) {
--		struct strbuf buf;
-+		static struct strbuf buf = STRBUF_INIT;
- 
- 		if (!p_uq)
- 			p = p_uq = xstrdup(p);
- 		read_next_command();
--		strbuf_init(&buf, 0);
- 		cmd_data(&buf);
--		if (store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0))
--			strbuf_release(&buf);
-+		store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0);
- 	} else if (oe) {
- 		if (oe->type != OBJ_BLOB)
- 			die("Not a blob (actually a %s): %s",
+On 9/16/07, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+> >>>>> "Grzegorz" == Grzegorz Kulewski <kangur@polcom.net> writes:
+>
+> Grzegorz> Not only for tracking /etc or /home but also for example for "web
+> Grzegorz> applications" (for example in PHP). In that case file and directory
+> Grzegorz> permissions can be as important as the source code tracked and it is pain to
+> Grzegorz> chmod (and sometimes chown) all files to different values after each
+> Grzegorz> checkout. Not speaking about potential race.
+>
+> Uh, works just fine for me to manage my web site content.  The point is
+> that I treat git for what it is... a source code management system.
+> And then I have a Makefile that "installs" my source code into the live
+> directory, with the right modes during installation.
+>
+> Why does everyone keep wanting "work dir == live dir".  Ugh!  The work dir is
+> the *source*... it gets *copied* into your live dir *somehow*.  And *that* is
+> where the meta information needs to be.  In that "somehow".
+>
+
+Interesting. Could you show us what this makefile actually looks ?
+
+How would you create a repo to track /etc ? I'm thinking of importing
+this directory by using tar, do you think it's correct ?
+
+thanks.
 -- 
-1.5.3.1
+Francis
